@@ -9,19 +9,19 @@
     },
     {
       "key": "camera.height",
-      "value": 4.5
+      "value": 8
     },
     {
       "key": "camera.backOffset",
-      "value": 2.0
+      "value": 5
     },
     {
       "key": "camera.lookAtHeight",
-      "value": 1.6
+      "value": 0.4
     },
     {
       "key": "camera.fovDeg",
-      "value": 62
+      "value": 90
     },
     {
       "key": "placeholders.visible",

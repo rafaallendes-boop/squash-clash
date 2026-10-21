@@ -22,3 +22,28 @@ Diez parámetros de I2, sin defaults en el catálogo. `DefaultPreset.json` conti
 `JsonUtility` serializa/deserializa el DTO. Se añade una comprobación interna limitada a la forma del esquema v1 para rechazar campos requeridos omitidos, tipos incorrectos, JSON truncado, basura al final y campos JSON duplicados; así no se convierten silenciosamente en valores cero. Las claves repetidas de `values` se comprueban después de deserializar. No se añade una librería JSON ni un framework de serialización. Coste: mantener este lector pequeño junto al esquema v1; no hay migraciones.
 
 TDD: **30/30 fallos RED** por comportamiento pendiente; suite EditMode completa **79/79 GREEN**. Se cubren schema 0/2, JSON corrupto, claves duplicadas/desconocidas/ausentes, tipos numéricos incorrectos, booleanos fraccionarios, no finitos en overlays, recorte con avisos, elecciones inválidas, inmutabilidad y hash independiente de cultura/orden. Un error de nombre en el helper de tests impidió la primera compilación; el runner rechazó correctamente el XML anterior y se corrigió antes del RED válido. Logs/XML: `Logs/i2-config-red-*`, `Logs/i2-t22-green-*`.
+
+## Vista y cámara — T2.3
+
+La escena referencia CourtView, CourtCameraRig y PlaceholderPlayers; el arranque carga el preset estricto, crea la instantánea y aplica los mismos datos a los tres consumidores. Cinco superficies y 12 franjas a 1 mm hacia dentro, sin colisionadores. Dos cápsulas de 1,80 m, azul/humano y roja/rival, con posiciones y visibilidad del preset. Geometría y recursos generados se reemplazan y liberan al reconstruir. La etiqueta de versión/FPS de I1 pasa a una cabecera transparente para dejar visible la cancha.
+
+Materiales URP Unlit guardados en Resources (incluida la variante transparente para evitar depender solo de Shader.Find y de variantes no referenciadas en el Player). Suelo con textura de madera clara generada, paredes blancas, mismo rojo para todas las líneas y pared trasera alfa 0,25. Las cápsulas usan malla sin el collider que añadiría CreatePrimitive.
+
+### Ajuste de encuadre autorizado por T2.3
+
+| Clave | Propuesta inicial del plan | Valor final de I2 |
+|---|---:|---:|
+| `camera.height` | 4,5 | 8 |
+| `camera.backOffset` | 2 | 5 |
+| `camera.lookAtHeight` | 1,6 | 0,4 |
+| `camera.fovDeg` | 62 | 90 |
+
+El preset inicial falló dos pruebas de encuadre: una esquina del frontis daba x viewport 1,00824, fuera de [0,1]. El primer ajuste (8 / 5 / 1,6 / 88) pasó los seis puntos originales, pero la inspección visual mostró los extremos de la línea trasera recortados. Se añadieron los dos extremos superiores de esa franja a 2,18 m al test: RED, x viewport 1,02180. Con los valores finales los ocho puntos quedan dentro. Solo se modificaron claves camera.* del JSON, dentro de los rangos del catálogo, según el permiso explícito de T2.3; ninguna medida o umbral deportivo cambió. Coste: perspectiva más amplia y cámara elevada, pendiente del juicio visual del PO en el teléfono.
+
+TDD runtime: contratos RED **7/7 fallos**; implementación con preset inicial **7/9 pasan**, con dos fallos de encuadre. Test adicional de línea trasera RED **2 fallos de 3**; final PlayMode **9/9 GREEN**. Un conflicto del nombre de namespace Camera con el smoke anterior se resolvió calificando UnityEngine.Camera antes del RED válido. Captura real del render de cámara a 1206×2622: `Logs/i2-court-editor.png` (sin la UI overlay); inspeccionada visualmente. La captura no sustituye la instalación ni la aceptación del PO.
+
+## Pendiente antes del punto de control
+
+- Build e instalación dev en el iPhone; firma, arranque, UI y captura reales.
+- Revisión interna final de rama y PR hacia main para Claude.
+- Validación del PO: reconocer la cancha, proporción de líneas y referencias en vertical. No fusionar hasta revisión de Claude y aceptación del PO.
