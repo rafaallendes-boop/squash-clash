@@ -65,8 +65,14 @@ El 2026-10-21 el PO confirmó en la build instalada `prod`:
 - Contador: 60 FPS.
 - Giro físico realizado: la app se mantiene vertical.
 
-**Validación de prod aceptada. I1 continúa abierto solo por la validación equivalente de dev.** Esta confirmación no autoriza T1.4, E2 ni T3.1.
+**Validación de prod aceptada.** Tras esta confirmación I1 seguía abierto solo por la validación equivalente de dev. Esta confirmación no autoriza T1.4, E2 ni T3.1.
 
 ## Validación del PO en el iPhone — dev
 
-El 2026-10-21, tras instalar y lanzar `dev`, el PO confirmó el rótulo `0.1.0+ea0a1e1 dev`, 60 FPS y el mismo título Squash Clash — First Ball. **Comprobación visual de dev aceptada; solo queda confirmar el giro físico en dev para cerrar I1.** El mensaje no confirma todavía ese giro ni autoriza T1.4, E2 o T3.1.
+El 2026-10-21, tras instalar y lanzar `dev`, el PO confirmó el rótulo `0.1.0+ea0a1e1 dev`, 60 FPS y el mismo título Squash Clash — First Ball. En el mensaje siguiente, respondiendo específicamente sobre el giro en dev, confirmó: «Si, lo giré y se mantuvo vertical». **Validación física y visual de dev aceptada.**
+
+## Cierre de E1/I1
+
+**E1/I1 (T1.1–T1.3) cerrado el 2026-10-21**, con revisión de Claude aprobada y validación del PO en el iPhone de ambas builds: título, versión/perfil, 60 FPS y permanencia en vertical tras girar físicamente el teléfono. El [informe de E1](../validation/e1-first-installation.md) conserva los resultados y la evidencia técnica.
+
+Las dos observaciones menores de Claude se mantienen para su seguimiento posterior. Este cierre no autoriza T1.4 (remoto GitHub), E2/I2 ni T3.1; no se ha autorizado ningún incremento nuevo. `AGENTS.md` refleja el cierre y la espera de la siguiente autorización.

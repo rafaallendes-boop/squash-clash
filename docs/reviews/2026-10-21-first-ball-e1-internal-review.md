@@ -26,4 +26,4 @@ Después del rango revisado, la integración encontró una suposición de ruta: 
 
 ## Revisión de Claude recibida
 
-I1 utiliza `main` como bootstrap y no tiene remoto. El PO transmitió el 2026-10-21 la [revisión de Claude](2026-10-21-first-ball-e1-review-claude.md) sobre código y estado del repositorio hasta `8b39812`: aprobada con dos observaciones menores no bloqueantes. Esa revisión es independiente de la revisión interna descrita arriba. El cierre de I1 requiere todavía la validación física y visual del PO conforme al flujo acordado.
+I1 utiliza `main` como bootstrap y no tiene remoto. El PO transmitió el 2026-10-21 la [revisión de Claude](2026-10-21-first-ball-e1-review-claude.md) sobre código y estado del repositorio hasta `8b39812`: aprobada con dos observaciones menores no bloqueantes. Esa revisión es independiente de la revisión interna descrita arriba. Posteriormente el PO completó la validación física y visual de ambas builds, incluido el giro; I1 queda cerrado según el [registro del PO](2026-10-21-first-ball-po-approvals.md). Este cierre no amplía el rango de código de ninguna revisión.

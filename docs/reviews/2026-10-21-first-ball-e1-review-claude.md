@@ -4,7 +4,7 @@ Fecha: 2026-10-21. Origen: revisión de Claude transmitida por el PO en la conve
 
 ## Veredicto
 
-**APROBADA con dos observaciones menores, ninguna bloqueante.** La revisión técnica queda satisfecha; el cierre de I1 sigue pendiente de la validación física y visual del PO en `prod` y `dev`.
+**APROBADA con dos observaciones menores, ninguna bloqueante.** Al recibir la revisión quedaba pendiente la validación física y visual del PO en `prod` y `dev`; posteriormente completada, como se registra abajo.
 
 ## Comprobaciones comunicadas
 
@@ -24,8 +24,8 @@ Fecha: 2026-10-21. Origen: revisión de Claude transmitida por el PO en la conve
 
 La advertencia libc++ y el vencimiento del perfil el **2026-10-28T14:59:31Z** se consideran correctamente documentados. La renovación y reinstalación deben tenerse presentes para futuras pruebas; este registro no crea una tarea programada.
 
-## Punto de control pendiente
+## Punto de control y cierre posterior
 
-El PO debe comprobar en ambas builds título, versión, perfil, FPS y permanencia en vertical al girar físicamente el teléfono. La aceptación o los fallos se registrarán en el [informe de E1](../validation/e1-first-installation.md) y en el [registro del PO](2026-10-21-first-ball-po-approvals.md).
+El PO completó el 2026-10-21 la comprobación de título, versión, perfil, FPS y permanencia en vertical al girar físicamente el teléfono en ambas builds. La aceptación y el cierre de I1 están registrados en el [informe de E1](../validation/e1-first-installation.md) y en el [registro del PO](2026-10-21-first-ball-po-approvals.md). Este seguimiento no amplía el rango de código revisado por Claude.
 
-Las propuestas de crear un remoto privado, iniciar I2 en `firstball/i2-court` o adelantar T3.1 son siguientes pasos recomendados, **no autorizaciones vigentes**. I1 sigue abierto únicamente por la validación del PO; T1.4, E2 y T3.1 continúan sin autorización.
+Las propuestas de crear un remoto privado, iniciar I2 en `firstball/i2-court` o adelantar T3.1 son siguientes pasos recomendados, **no autorizaciones vigentes**. I1 está cerrado; T1.4, E2 y T3.1 continúan sin autorización.

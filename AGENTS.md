@@ -1,7 +1,7 @@
 # Reglas de trabajo
 
 - Fuente de verdad: `docs/superpowers/plans/2026-10-20-squash-clash-first-ball.md` (r2), spec v0.3, revisiones y decisiones registradas del PO.
-- Trabajar solo en el incremento autorizado. Actualmente: **E1 / I1 (T1.1–T1.3)**. Detenerse para validación del PO. T1.4 (remoto GitHub), E2 y etapas posteriores no están autorizadas.
+- Trabajar solo en el incremento autorizado. **E1 / I1 (T1.1–T1.3) cerrado el 2026-10-21**, con revisión de Claude aprobada y validación del PO de ambas builds, incluido el giro físico. Detenerse hasta nueva autorización. T1.4 (remoto GitHub), E2, T3.1 y etapas posteriores no están autorizadas.
 - I1 se hace en `main` como excepción de bootstrap. Commits pequeños y coherentes; Claude revisa el commit local. Desde I2, incrementos en ramas y PR según el plan.
 - No modificar `docs/superpowers/specs/`. No cambiar umbrales, escenarios ni decisiones deportivas para hacer pasar pruebas. Reportar discrepancias y registrar las aclaraciones autorizadas.
 - TDD para comportamiento de producto con `scripts/test.sh editmode|playmode [filtro]`; comprobar el fallo antes de implementar y la suite verde después. Los experimentos de física no son regresión ni criterio de CI.

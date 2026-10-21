@@ -1,6 +1,6 @@
 # E1 — proyecto Unity y primera instalación
 
-Fecha: 2026-10-21. Alcance autorizado: I1 / T1.1–T1.3 del plan First Ball r2. **Implementación y comprobación técnica completadas: dev y prod compiladas, firmadas, instaladas y ejecutadas en el iPhone 16 Pro con iOS 26.6.2.** Revisión de Claude aprobada con dos observaciones menores, transmitida por el PO el 2026-10-21. El PO ya validó `prod`, incluido el giro físico, y la pantalla de `dev`; para cerrar I1 solo falta su confirmación del giro físico en `dev`. No se ha comenzado E2 ni creado un remoto.
+Fecha: 2026-10-21. Alcance autorizado: I1 / T1.1–T1.3 del plan First Ball r2. **E1/I1 cerrado: dev y prod compiladas, firmadas, instaladas, ejecutadas y validadas por el PO en el iPhone 16 Pro con iOS 26.6.2, incluido el giro físico en ambas builds.** Revisión de Claude aprobada con dos observaciones menores, transmitida por el PO el 2026-10-21. No se ha comenzado E2 ni creado un remoto; T1.4, E2 y T3.1 requieren autorización independiente.
 
 ## Implementación y comprobaciones
 
@@ -43,7 +43,7 @@ Fecha: 2026-10-21. Alcance autorizado: I1 / T1.1–T1.3 del plan First Ball r2. 
 | Instalación y lanzamiento | Verificados con `install-ios.sh dev --console` | `install-ios.sh prod`: código 0; arranque con y sin consola verificado |
 | Rótulo y FPS | Verificados visualmente, 60 FPS | Verificados visualmente, 60 FPS |
 | Orientación | Portrait en plist, log y captura | Portrait en plist, log y captura |
-| Validación física y visual del PO | Título, versión/perfil y 60 FPS confirmados; giro físico pendiente | Aceptada: título, versión/perfil, 60 FPS y vertical tras el giro |
+| Validación física y visual del PO | Aceptada: título, versión/perfil, 60 FPS y vertical tras el giro | Aceptada: título, versión/perfil, 60 FPS y vertical tras el giro |
 
 Log real de `dev`:
 
@@ -97,14 +97,15 @@ El 2026-10-21 el PO confirmó en el iPhone la build instalada `prod`: título Sq
 
 Después de esa confirmación se reinstaló la build `dev` existente, sin recompilar ni cambiar código: firma verificada con `codesign --verify --deep --strict`, `scripts/install-ios.sh dev` con código 0 y JSON de instalación/lanzamiento con `outcome=success`. Se deja `dev` instalada y lanzada para la prueba del PO; conserva el código `ea0a1e1`. Evidencia local en `Logs/device-dev-po-signature.log`, `Logs/device-dev-po-install.log`, `Logs/install-dev.json` y `Logs/launch-dev.json`.
 
-El PO confirmó después en `dev` el mismo título, el rótulo `0.1.0+ea0a1e1 dev` y 60 FPS. Queda únicamente su confirmación del giro físico en esta build. No se infiere a partir del resultado de prod ni de sus capturas anteriores.
+El PO confirmó después en `dev` el mismo título, el rótulo `0.1.0+ea0a1e1 dev` y 60 FPS. Ante la pregunta específica por el giro en esta build respondió: «Si, lo giré y se mantuvo vertical». **Dev aceptada** para el punto de control de I1; la comprobación física procede de su confirmación directa.
 
-## Revisión de Claude y resultados pendientes
+## Cierre de I1 y seguimientos posteriores
 
 El PO transmitió la revisión de Claude sobre código y repositorio hasta `8b39812`: **aprobada**, sin bloqueos. Se registraron dos observaciones: comprobar la persistencia del ajuste IL2CPP y su efecto en `gitDirty` al usar `debug` por primera vez; mantener consciente la presencia del Team ID antes de T1.4. No se cambió código ni se ejecutaron builds adicionales por estas observaciones. El [registro de la revisión](../reviews/2026-10-21-first-ball-e1-review-claude.md) conserva su alcance y seguimiento.
 
-- Confirmación del PO de permanencia en vertical tras girar físicamente el teléfono en `dev`. La pantalla de `dev` y la comprobación completa de `prod` ya están aceptadas.
-- Registrar la aceptación o los fallos del PO para cerrar I1. La aprobación de la revisión de Claude no sustituye ese punto de control. T1.4, E2 y T3.1 no están autorizadas.
+Con la revisión técnica aprobada y las confirmaciones del PO de título, versión/perfil, FPS y orientación tras el giro en ambas builds, **se cierra I1 / T1.1–T1.3 el 2026-10-21**. La aceptación también queda en el [registro del PO](../reviews/2026-10-21-first-ball-po-approvals.md). No queda ninguna comprobación pendiente del punto de control de I1.
+
+Se conservan para su momento los seguimientos menores de Claude y la renovación del perfil de firma al vencer el 28 de octubre. No requieren ampliar este incremento. T1.4, E2 y T3.1 continúan sin autorización; el trabajo se detiene aquí.
 
 No quedan bloqueos técnicos observados para esta primera instalación. No se probaron el perfil `debug`, App Store/TestFlight ni dispositivos o versiones de sistema adicionales, porque no son objetivos de E1.
 
