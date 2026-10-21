@@ -110,3 +110,6 @@ El PO aceptó la cancha en el iPhone para esta primera versión: «La cancha la 
 - El PO autoriza actualizar exclusivamente estas referencias del plan r2, registrar la aclaración, añadir una prueba de proyección de `LeftWall` en la mitad izquierda con cámara por defecto y volver a instalar dev. La spec y las demás decisiones deportivas/umbrales permanecen sin cambios.
 
 **T3.1 y etapas posteriores siguen expresamente sin autorización.** La autorización de corregir e instalar no se interpreta como orden de fusionar automáticamente la PR. Se registrarán debajo la verificación y el nuevo build antes de entregar el resultado.
+
+
+**Ejecución de AX-1:** commit de producto `1b333ad`; EditMode 79/79 y PlayMode 11/11, con RED previo verificado. Build dev limpia `0.1.0+1b333ad`, código 0 y firma/ARM64 comprobados; reinstalación devicectl código 0. El nuevo arranque está pendiente del desbloqueo del teléfono. No se infiere una nueva aceptación visual a partir de una instalación. La aceptación de la cancha comunicada arriba y la sugerencia de encuadre quedan registradas.
