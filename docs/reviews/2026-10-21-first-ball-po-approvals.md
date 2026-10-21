@@ -85,3 +85,5 @@ El 2026-10-21, después del cierre de I1, el PO autorizó explícitamente:
 2. **I2 / T2.1–T2.3:** implementar cancha y cámara fija en la rama `firstball/i2-court`, con PR hacia `main` para revisión de Claude y punto de control del PO en el iPhone.
 
 **T3.1 y etapas posteriores siguen sin autorización.** El permiso de I2 no autoriza fusionar sin revisión y validación, ni cambiar decisiones deportivas, criterios o la spec. `AGENTS.md` se actualiza con este alcance.
+
+T1.4 ejecutada el 2026-10-21: remoto [rafaallendes-boop/squash-clash](https://github.com/rafaallendes-boop/squash-clash) creado y publicado, con `visibility: PRIVATE` y rama predeterminada `main`. Resultado y comprobaciones en el [informe de T1.4](../validation/github-remote.md).

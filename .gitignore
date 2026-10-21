@@ -111,6 +111,7 @@ InitTestScene*.unity*
 # Squash Clash: local environment and task scratch
 .DS_Store
 .superpowers/
+.worktrees/
 scripts/device.env
 .tmp-unity/
 .idea/
