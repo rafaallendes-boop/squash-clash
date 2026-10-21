@@ -1,6 +1,6 @@
 # E1 — proyecto Unity y primera instalación
 
-Fecha: 2026-10-21. Alcance autorizado: I1 / T1.1–T1.3 del plan First Ball r2. **Implementación y comprobación técnica completadas: dev y prod compiladas, firmadas, instaladas y ejecutadas en el iPhone 16 Pro con iOS 26.6.2.** Revisión de Claude aprobada con dos observaciones menores, transmitida por el PO el 2026-10-21. El cierre de I1 sigue pendiente de validación del PO. Al terminar las comprobaciones se dejó `prod` instalada y abierta. No se ha comenzado E2 ni creado un remoto.
+Fecha: 2026-10-21. Alcance autorizado: I1 / T1.1–T1.3 del plan First Ball r2. **Implementación y comprobación técnica completadas: dev y prod compiladas, firmadas, instaladas y ejecutadas en el iPhone 16 Pro con iOS 26.6.2.** Revisión de Claude aprobada con dos observaciones menores, transmitida por el PO el 2026-10-21. El PO ya validó `prod`, incluido el giro físico; el cierre de I1 sigue pendiente de su validación equivalente de `dev`. No se ha comenzado E2 ni creado un remoto.
 
 ## Implementación y comprobaciones
 
@@ -43,6 +43,7 @@ Fecha: 2026-10-21. Alcance autorizado: I1 / T1.1–T1.3 del plan First Ball r2. 
 | Instalación y lanzamiento | Verificados con `install-ios.sh dev --console` | `install-ios.sh prod`: código 0; arranque con y sin consola verificado |
 | Rótulo y FPS | Verificados visualmente, 60 FPS | Verificados visualmente, 60 FPS |
 | Orientación | Portrait en plist, log y captura | Portrait en plist, log y captura |
+| Validación física y visual del PO | Pendiente | Aceptada: título, versión/perfil, 60 FPS y vertical tras el giro |
 
 Log real de `dev`:
 
@@ -90,11 +91,19 @@ El perfil es `iOS Team Provisioning Profile: cl.rafaallendes.squashclash`, con v
 
 El SDK iOS 27.1 emite `The selected platform is no longer supported by libc++` al compilar parte de IL2CPP con `-mios-version-min=11.0`. Su propio header `__configuration/availability.h` advierte para targets inferiores a iOS 15. El proyecto, el enlace UnityFramework y el plist final tienen mínimo iOS **15.0**. Ambas builds compilaron, se firmaron y arrancaron en iOS **26.6.2**. Se registra esta diferencia de flags internos de IL2CPP; no se considera un fallo de compatibilidad en el dispositivo probado ni se extrapola soporte a otros sistemas sin probarlos. No se cambiaron herramientas ni se añadieron flags de linker para ocultar el aviso.
 
+## Validación física y visual del PO
+
+El 2026-10-21 el PO confirmó en el iPhone la build instalada `prod`: título Squash Clash — First Ball, rótulo `0.1.0+ea0a1e1 prod`, 60 FPS y permanencia en vertical tras girar físicamente el teléfono. **Prod aceptada** para el punto de control de I1. Esta confirmación completa la prueba de giro de prod que no podía obtenerse mediante Duplicación del iPhone.
+
+Después de esa confirmación se reinstaló la build `dev` existente, sin recompilar ni cambiar código: firma verificada con `codesign --verify --deep --strict`, `scripts/install-ios.sh dev` con código 0 y JSON de instalación/lanzamiento con `outcome=success`. Se deja `dev` instalada y lanzada para la prueba del PO; conserva el código `ea0a1e1`. Evidencia local en `Logs/device-dev-po-signature.log`, `Logs/device-dev-po-install.log`, `Logs/install-dev.json` y `Logs/launch-dev.json`.
+
+La validación equivalente de `dev` sigue pendiente del PO. No se infiere a partir del resultado de prod ni de sus capturas anteriores.
+
 ## Revisión de Claude y resultados pendientes
 
 El PO transmitió la revisión de Claude sobre código y repositorio hasta `8b39812`: **aprobada**, sin bloqueos. Se registraron dos observaciones: comprobar la persistencia del ajuste IL2CPP y su efecto en `gitDirty` al usar `debug` por primera vez; mantener consciente la presencia del Team ID antes de T1.4. No se cambió código ni se ejecutaron builds adicionales por estas observaciones. El [registro de la revisión](../reviews/2026-10-21-first-ball-e1-review-claude.md) conserva su alcance y seguimiento.
 
-- Giro físico del teléfono y aceptación visual final del PO en ambas builds. La configuración, los logs y las capturas verticales ya están verificados para dev y prod; no se ha comprobado todavía el giro físico.
+- Giro físico del teléfono y aceptación visual final del PO en `dev`. La comprobación equivalente de `prod` ya está aceptada.
 - Registrar la aceptación o los fallos del PO para cerrar I1. La aprobación de la revisión de Claude no sustituye ese punto de control. T1.4, E2 y T3.1 no están autorizadas.
 
 No quedan bloqueos técnicos observados para esta primera instalación. No se probaron el perfil `debug`, App Store/TestFlight ni dispositivos o versiones de sistema adicionales, porque no son objetivos de E1.

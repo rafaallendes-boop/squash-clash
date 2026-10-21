@@ -54,4 +54,15 @@ El 2026-10-21 el PO transmitió y aprobó como revisión de Claude sobre I1 el r
 - Queda pendiente comprobar, al primer uso de `debug`, si el ajuste persistente de configuración IL2CPP modifica `ProjectSettings.asset` y afecta la marca de workspace sucio de la siguiente build.
 - La presencia del Team ID en los informes se considera aceptable en el contexto del futuro repositorio privado; se mantiene explícita para la decisión de T1.4.
 
-**I1 no está cerrado todavía:** falta la validación física y visual del PO en ambas builds, incluido girar el teléfono. El mensaje propone crear el remoto e iniciar I2 como siguientes decisiones; no autoriza T1.4, E2 ni T3.1. Se mantiene el alcance de `AGENTS.md` en E1/I1 hasta nueva autorización expresa.
+Al recibir esa revisión, I1 seguía pendiente de la validación física y visual del PO en ambas builds, incluido girar el teléfono. El mensaje propone crear el remoto e iniciar I2 como siguientes decisiones; no autoriza T1.4, E2 ni T3.1. Se mantiene el alcance de `AGENTS.md` en E1/I1 hasta nueva autorización expresa.
+
+## Validación del PO en el iPhone — prod
+
+El 2026-10-21 el PO confirmó en la build instalada `prod`:
+
+- Título: Squash Clash — First Ball.
+- Versión y perfil: `0.1.0+ea0a1e1 prod`.
+- Contador: 60 FPS.
+- Giro físico realizado: la app se mantiene vertical.
+
+**Validación de prod aceptada. I1 continúa abierto solo por la validación equivalente de dev.** Esta confirmación no autoriza T1.4, E2 ni T3.1.
