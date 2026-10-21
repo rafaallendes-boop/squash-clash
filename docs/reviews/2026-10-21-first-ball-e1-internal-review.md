@@ -24,6 +24,6 @@ Los XML leídos mostraban EditMode 3/3 y PlayMode 2/2; el filtro sin coincidenci
 
 Después del rango revisado, la integración encontró una suposición de ruta: Unity genera `SquashClash.app`, no `Squash Clash.app`. Se corrigieron dos rutas en los scripts (`ea0a1e1`) y se ejecutaron `build-ios.sh dev` y `build-ios.sh prod` completos, ambos con código 0, firma válida e instalación/lanzamiento verificados. No cambió el código C# después de la revisión. Las comprobaciones de dispositivo posteriores son del agente principal; no amplían retroactivamente el rango de la revisión independiente.
 
-## Revisión de Claude pendiente
+## Revisión de Claude recibida
 
-I1 utiliza `main` como bootstrap y no tiene remoto. Claude puede revisar el estado local con `git log --oneline`, `git diff 40b22ca..HEAD`, el plan r2 T1.1–T1.3 y el [informe con evidencia](../validation/e1-first-installation.md). Debe centrarse en scripts, perfiles, metadata y arranque; no exigir funcionalidades de E2 o posteriores. El cierre de I1 requiere la revisión de Claude y la validación del PO conforme al flujo acordado.
+I1 utiliza `main` como bootstrap y no tiene remoto. El PO transmitió el 2026-10-21 la [revisión de Claude](2026-10-21-first-ball-e1-review-claude.md) sobre código y estado del repositorio hasta `8b39812`: aprobada con dos observaciones menores no bloqueantes. Esa revisión es independiente de la revisión interna descrita arriba. El cierre de I1 requiere todavía la validación física y visual del PO conforme al flujo acordado.

@@ -46,3 +46,12 @@ Posteriormente, el PO revisó el [diagnóstico de E0](../validation/environment.
 La autorización vigente termina en E1. El PO exige registrar pruebas y evidencia y detenerse para su validación. **T1.4 (remoto GitHub) y E2 no están autorizadas.** No instalar otro Xcode ni implementar cancha, pelota, física o sistemas posteriores. Los ajustes estáticos de proyecto enumerados en T1.2 no implementan una simulación. Continúan vigentes los criterios aprobados, los incrementos pequeños, la revisión de Claude y la validación del PO en el iPhone.
 
 Durante la primera instalación, el PO confió manualmente en su desarrollador en el iPhone y confirmó: «Confié y se pudo abrir». También abrió Duplicación del iPhone para que Codex verificara la pantalla. Se comprobaron allí ambas builds y se registró la evidencia en el [informe de E1](../validation/e1-first-installation.md). Esa confirmación resuelve la confianza inicial; no se interpreta como cierre de E1, aprobación del giro físico ni autorización de E2.
+
+## Revisión de Claude sobre I1 recibida
+
+El 2026-10-21 el PO transmitió y aprobó como revisión de Claude sobre I1 el resultado de la inspección de código y repositorio hasta `8b39812`: **aprobada con dos observaciones menores, ninguna bloqueante**. Se conserva el detalle en el [registro de revisión de Claude](2026-10-21-first-ball-e1-review-claude.md).
+
+- Queda pendiente comprobar, al primer uso de `debug`, si el ajuste persistente de configuración IL2CPP modifica `ProjectSettings.asset` y afecta la marca de workspace sucio de la siguiente build.
+- La presencia del Team ID en los informes se considera aceptable en el contexto del futuro repositorio privado; se mantiene explícita para la decisión de T1.4.
+
+**I1 no está cerrado todavía:** falta la validación física y visual del PO en ambas builds, incluido girar el teléfono. El mensaje propone crear el remoto e iniciar I2 como siguientes decisiones; no autoriza T1.4, E2 ni T3.1. Se mantiene el alcance de `AGENTS.md` en E1/I1 hasta nueva autorización expresa.

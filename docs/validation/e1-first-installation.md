@@ -1,6 +1,6 @@
 # E1 — proyecto Unity y primera instalación
 
-Fecha: 2026-10-21. Alcance autorizado: I1 / T1.1–T1.3 del plan First Ball r2. **Implementación y comprobación técnica completadas: dev y prod compiladas, firmadas, instaladas y ejecutadas en el iPhone 16 Pro con iOS 26.6.2.** El cierre de I1 sigue pendiente de revisión de Claude y validación del PO. Se deja `prod` instalada y abierta. No se ha comenzado E2 ni creado un remoto.
+Fecha: 2026-10-21. Alcance autorizado: I1 / T1.1–T1.3 del plan First Ball r2. **Implementación y comprobación técnica completadas: dev y prod compiladas, firmadas, instaladas y ejecutadas en el iPhone 16 Pro con iOS 26.6.2.** Revisión de Claude aprobada con dos observaciones menores, transmitida por el PO el 2026-10-21. El cierre de I1 sigue pendiente de validación del PO. Al terminar las comprobaciones se dejó `prod` instalada y abierta. No se ha comenzado E2 ni creado un remoto.
 
 ## Implementación y comprobaciones
 
@@ -72,6 +72,7 @@ Evidencia versionable, sin identificadores personales del iPhone:
 - [Log de arranque prod](evidence/2026-10-21-prod-boot.txt).
 - [Resultados de tests, RED→GREEN y filtro vacío](evidence/2026-10-21-tests.json), extraídos de los XML y logs locales con sus hashes SHA-256.
 - [Revisión interna de código](../reviews/2026-10-21-first-ball-e1-internal-review.md).
+- [Revisión de Claude aprobada y observaciones menores](../reviews/2026-10-21-first-ball-e1-review-claude.md).
 
 Logs completos locales, ignorados por Git: `Logs/dev-build-summary.log`, `Logs/prod-build-summary.log`, `Logs/build-dev.log`, `Logs/build-prod.log`, `Logs/device-dev-console.log`, `Logs/device-prod-install.log` y `Logs/device-prod-console.log`. Los artefactos están en `Builds/DerivedData-<perfil>/Build/Products/Release-iphoneos/SquashClash.app`.
 
@@ -89,10 +90,12 @@ El perfil es `iOS Team Provisioning Profile: cl.rafaallendes.squashclash`, con v
 
 El SDK iOS 27.1 emite `The selected platform is no longer supported by libc++` al compilar parte de IL2CPP con `-mios-version-min=11.0`. Su propio header `__configuration/availability.h` advierte para targets inferiores a iOS 15. El proyecto, el enlace UnityFramework y el plist final tienen mínimo iOS **15.0**. Ambas builds compilaron, se firmaron y arrancaron en iOS **26.6.2**. Se registra esta diferencia de flags internos de IL2CPP; no se considera un fallo de compatibilidad en el dispositivo probado ni se extrapola soporte a otros sistemas sin probarlos. No se cambiaron herramientas ni se añadieron flags de linker para ocultar el aviso.
 
-## Resultados pendientes
+## Revisión de Claude y resultados pendientes
+
+El PO transmitió la revisión de Claude sobre código y repositorio hasta `8b39812`: **aprobada**, sin bloqueos. Se registraron dos observaciones: comprobar la persistencia del ajuste IL2CPP y su efecto en `gitDirty` al usar `debug` por primera vez; mantener consciente la presencia del Team ID antes de T1.4. No se cambió código ni se ejecutaron builds adicionales por estas observaciones. El [registro de la revisión](../reviews/2026-10-21-first-ball-e1-review-claude.md) conserva su alcance y seguimiento.
 
 - Giro físico del teléfono y aceptación visual final del PO en ambas builds. La configuración, los logs y las capturas verticales ya están verificados para dev y prod; no se ha comprobado todavía el giro físico.
-- Revisión de Claude sobre los commits locales y validación visual del PO. T1.4 y E2 no están autorizadas.
+- Registrar la aceptación o los fallos del PO para cerrar I1. La aprobación de la revisión de Claude no sustituye ese punto de control. T1.4, E2 y T3.1 no están autorizadas.
 
 No quedan bloqueos técnicos observados para esta primera instalación. No se probaron el perfil `debug`, App Store/TestFlight ni dispositivos o versiones de sistema adicionales, porque no son objetivos de E1.
 

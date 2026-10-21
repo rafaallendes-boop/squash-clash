@@ -2,7 +2,7 @@
 
 Fecha: 2026-10-21. Workspace: `/Users/rafaallendes/Projects/Squash Clash`.
 
-**Estado: E0 cerrada y aprobada por el PO; comprobación técnica de E1 completada, pendiente de revisión de Claude y validación del PO.** T0.1 y T0.2 completadas. La reconexión del cable resolvió el bloqueo del iPhone y el PO confirmó el bundle ID. **Compatibilidad Unity 6000.3.27f1–Xcode 27.1–iOS 26.6.2 VERIFICADA** con compilación, firma, instalación y arranque reales de `dev` y `prod` en el iPhone 16 Pro. Véase el [informe de E1 con evidencia](e1-first-installation.md). No se ha avanzado a E2 ni creado un remoto.
+**Estado: E0 cerrada y aprobada por el PO; comprobación técnica de E1 completada y revisión de Claude aprobada con dos observaciones menores; pendiente la validación del PO.** T0.1 y T0.2 completadas. La reconexión del cable resolvió el bloqueo del iPhone y el PO confirmó el bundle ID. **Compatibilidad Unity 6000.3.27f1–Xcode 27.1–iOS 26.6.2 VERIFICADA** con compilación, firma, instalación y arranque reales de `dev` y `prod` en el iPhone 16 Pro. Véase el [informe de E1 con evidencia](e1-first-installation.md). No se ha avanzado a E2 ni creado un remoto.
 
 ## Alcance y fuentes
 
@@ -158,4 +158,4 @@ Las salidas se resumen y omiten emails, tokens e identificadores completos del t
 
 Se comprobaron los SHA-256 de los cuatro documentos fuente antes y después de E0: sin cambios. Se verificaron los enlaces locales de los documentos nuevos y la sintaxis de `device.env.example` con `zsh -n` (código 0). Al cierre de E0 todavía no existían `.git`, `Assets`, `Packages` ni `ProjectSettings`; se crearon posteriormente en E1 autorizada.
 
-No quedan acciones manuales pendientes para la preparación de E0. El PO revisó este diagnóstico y autorizó E1 el 2026-10-21. La comprobación técnica de E1 está completada; quedan revisión de Claude y validación del PO, incluido el giro físico. El detalle, comandos, resultados y capturas están en el [informe de E1](e1-first-installation.md). Se detiene el trabajo antes de E2 y de crear un remoto.
+No quedan acciones manuales pendientes para la preparación de E0. El PO revisó este diagnóstico y autorizó E1 el 2026-10-21. La comprobación técnica de E1 está completada y la revisión de Claude aprobada; queda la validación del PO, incluido el giro físico en ambas builds. El detalle, comandos, resultados y capturas están en el [informe de E1](e1-first-installation.md). Se detiene el trabajo antes de E2 y de crear un remoto.

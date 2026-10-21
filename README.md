@@ -22,4 +22,4 @@ scripts/install-ios.sh prod
 
 I1 se prepara en `main` como excepción de bootstrap; Claude revisa los commits locales y el PO valida ambas builds en el iPhone. El remoto requiere autorización independiente. No avanzar a E2 sin validar I1.
 
-Comprobación técnica de E1 completada: `dev` y `prod` compiladas, firmadas y ejecutadas en el iPhone 16 Pro con iOS 26.6.2; ambas muestran `0.1.0+ea0a1e1` y 60 FPS. Pendientes la revisión de Claude y la validación final del PO, incluido el giro físico. El informe enlazado contiene las capturas y las limitaciones de esta comprobación.
+Comprobación técnica de E1 completada: `dev` y `prod` compiladas, firmadas y ejecutadas en el iPhone 16 Pro con iOS 26.6.2; ambas muestran `0.1.0+ea0a1e1` y 60 FPS. Revisión de Claude aprobada con dos observaciones menores; pendiente la validación final del PO, incluido el giro físico en ambas builds. El informe enlazado contiene las capturas y las limitaciones de esta comprobación.
