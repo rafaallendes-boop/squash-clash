@@ -31,8 +31,8 @@ namespace SquashClash.Core.Court
             {
                 case SurfaceId.FrontWall: return Vector3.forward;
                 case SurfaceId.BackWall: return Vector3.back;
-                case SurfaceId.LeftWall: return Vector3.right;
-                case SurfaceId.RightWall: return Vector3.left;
+                case SurfaceId.LeftWall: return Vector3.left;
+                case SurfaceId.RightWall: return Vector3.right;
                 case SurfaceId.Floor: return Vector3.up;
                 default: throw new ArgumentOutOfRangeException(nameof(surface));
             }

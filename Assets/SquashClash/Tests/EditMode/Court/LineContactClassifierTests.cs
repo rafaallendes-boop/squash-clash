@@ -24,14 +24,14 @@ namespace SquashClash.Core.Tests.Court
         [TestCase(LineId.BackOut, 3.2f, 2.1199f, 0.010f, false)]
         [TestCase(LineId.HalfCourt, 3.165f, 8f, 0.010f, true)]
         [TestCase(LineId.HalfCourt, 3.1649f, 8f, 0.010f, false)]
-        [TestCase(LineId.LeftBoxSide, 1.590f, 6f, 0.010f, true)]
-        [TestCase(LineId.LeftBoxSide, 1.5899f, 6f, 0.010f, false)]
-        [TestCase(LineId.LeftBoxBack, 1f, 7.150f, 0.010f, true)]
-        [TestCase(LineId.LeftBoxBack, 1f, 7.1501f, 0.010f, false)]
-        [TestCase(LineId.RightBoxSide, 4.740f, 6f, 0.010f, true)]
-        [TestCase(LineId.RightBoxSide, 4.7399f, 6f, 0.010f, false)]
-        [TestCase(LineId.RightBoxBack, 5f, 7.150f, 0.010f, true)]
-        [TestCase(LineId.RightBoxBack, 5f, 7.1501f, 0.010f, false)]
+        [TestCase(LineId.RightBoxSide, 1.590f, 6f, 0.010f, true)]
+        [TestCase(LineId.RightBoxSide, 1.5899f, 6f, 0.010f, false)]
+        [TestCase(LineId.RightBoxBack, 1f, 7.150f, 0.010f, true)]
+        [TestCase(LineId.RightBoxBack, 1f, 7.1501f, 0.010f, false)]
+        [TestCase(LineId.LeftBoxSide, 4.740f, 6f, 0.010f, true)]
+        [TestCase(LineId.LeftBoxSide, 4.7399f, 6f, 0.010f, false)]
+        [TestCase(LineId.LeftBoxBack, 5f, 7.150f, 0.010f, true)]
+        [TestCase(LineId.LeftBoxBack, 5f, 7.1501f, 0.010f, false)]
         public void Footprint_MatchesApprovedEdges(LineId id, float u, float v, float radius, bool expected)
         {
             var band = CourtLines.Build(CourtDimensions.Standard()).Single(b => b.Id == id);

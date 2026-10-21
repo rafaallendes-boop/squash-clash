@@ -77,8 +77,8 @@ namespace SquashClash.Runtime.Court
             {
                 case SurfaceId.FrontWall: return new Vector3(uv.x, uv.y, 0);
                 case SurfaceId.BackWall: return new Vector3(uv.x, uv.y, d.Length);
-                case SurfaceId.LeftWall: return new Vector3(0, uv.y, uv.x);
-                case SurfaceId.RightWall: return new Vector3(d.Width, uv.y, uv.x);
+                case SurfaceId.LeftWall: return new Vector3(d.Width, uv.y, uv.x);
+                case SurfaceId.RightWall: return new Vector3(0, uv.y, uv.x);
                 case SurfaceId.Floor: return new Vector3(uv.x, 0, uv.y);
                 default: throw new ArgumentOutOfRangeException(nameof(surface));
             }

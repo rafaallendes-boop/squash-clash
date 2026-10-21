@@ -31,6 +31,28 @@ namespace SquashClash.Runtime.Tests
         }
 
         [UnityTest]
+        public IEnumerator SideWalls_UseApprovedWorldPlanesAndInwardLineInsets()
+        {
+            root.AddComponent<CourtView>().Build(CourtDimensions.Standard());
+            yield return null;
+            foreach (var left in new[] { true, false })
+            {
+                var side = left ? SurfaceId.LeftWall : SurfaceId.RightWall;
+                var x = left ? 6.4f : 0f;
+                var normal = left ? Vector3.left : Vector3.right;
+                var surface = root.GetComponentsInChildren<SurfaceTag>().Single(s => s.Surface == side);
+                var mesh = surface.GetComponent<MeshFilter>().sharedMesh;
+                foreach (var vertex in mesh.vertices)
+                    Assert.That(vertex.x, Is.EqualTo(x).Within(1e-5), side.ToString());
+                foreach (var n in mesh.normals)
+                    Assert.That(Vector3.Distance(n, normal), Is.LessThan(1e-5), side.ToString());
+                var line = root.transform.Find("Geometry/Lines/" + (left ? "LeftSideOut" : "RightSideOut"));
+                foreach (var vertex in line.GetComponent<MeshFilter>().sharedMesh.vertices)
+                    Assert.That(vertex.x, Is.EqualTo(left ? 6.399f : 0.001f).Within(1e-5), line.name);
+            }
+        }
+
+        [UnityTest]
         public IEnumerator Build_Twice_ReplacesPreviousAndReleasesOwnedMesh()
         {
             var view = root.AddComponent<CourtView>();

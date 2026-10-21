@@ -26,11 +26,12 @@ namespace SquashClash.Core.Court
             Add(LineId.ShortLine, SurfaceId.Floor, new Vector2(0, shortFar - d.LineWidth), new Vector2(d.Width, shortFar - d.LineWidth), up);
             Add(LineId.HalfCourt, SurfaceId.Floor, new Vector2(d.Width / 2 - d.LineWidth / 2, shortFar), new Vector2(d.Width / 2 - d.LineWidth / 2, d.Length), Vector2.right);
             var boxBack = shortFar + d.ServiceBoxInner;
-            var rightSide = d.Width - d.ServiceBoxInner - d.LineWidth;
-            Add(LineId.LeftBoxSide, SurfaceId.Floor, new Vector2(d.ServiceBoxInner, shortFar), new Vector2(d.ServiceBoxInner, boxBack + d.LineWidth), Vector2.right);
-            Add(LineId.LeftBoxBack, SurfaceId.Floor, new Vector2(0, boxBack), new Vector2(d.ServiceBoxInner + d.LineWidth, boxBack), up);
-            Add(LineId.RightBoxSide, SurfaceId.Floor, new Vector2(rightSide, shortFar), new Vector2(rightSide, boxBack + d.LineWidth), Vector2.right);
-            Add(LineId.RightBoxBack, SurfaceId.Floor, new Vector2(rightSide, boxBack), new Vector2(d.Width, boxBack), up);
+            // Left/right are viewed from behind the court: +X appears on screen left.
+            var leftSide = d.Width - d.ServiceBoxInner - d.LineWidth;
+            Add(LineId.RightBoxSide, SurfaceId.Floor, new Vector2(d.ServiceBoxInner, shortFar), new Vector2(d.ServiceBoxInner, boxBack + d.LineWidth), Vector2.right);
+            Add(LineId.RightBoxBack, SurfaceId.Floor, new Vector2(0, boxBack), new Vector2(d.ServiceBoxInner + d.LineWidth, boxBack), up);
+            Add(LineId.LeftBoxSide, SurfaceId.Floor, new Vector2(leftSide, shortFar), new Vector2(leftSide, boxBack + d.LineWidth), Vector2.right);
+            Add(LineId.LeftBoxBack, SurfaceId.Floor, new Vector2(leftSide, boxBack), new Vector2(d.Width, boxBack), up);
             return bands.AsReadOnly();
         }
     }

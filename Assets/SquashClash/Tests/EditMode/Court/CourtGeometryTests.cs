@@ -32,10 +32,10 @@ namespace SquashClash.Core.Tests.Court
             Check(bands[LineId.BackOut], SurfaceId.BackWall, 0, 2.13f, 6.4f, 2.13f, 0, 1);
             Check(bands[LineId.ShortLine], SurfaceId.Floor, 0, 5.44f, 6.4f, 5.44f, 0, 1);
             Check(bands[LineId.HalfCourt], SurfaceId.Floor, 3.175f, 5.49f, 3.175f, 9.75f, 1, 0);
-            Check(bands[LineId.LeftBoxSide], SurfaceId.Floor, 1.6f, 5.49f, 1.6f, 7.14f, 1, 0);
-            Check(bands[LineId.LeftBoxBack], SurfaceId.Floor, 0, 7.09f, 1.65f, 7.09f, 0, 1);
-            Check(bands[LineId.RightBoxSide], SurfaceId.Floor, 4.75f, 5.49f, 4.75f, 7.14f, 1, 0);
-            Check(bands[LineId.RightBoxBack], SurfaceId.Floor, 4.75f, 7.09f, 6.4f, 7.09f, 0, 1);
+            Check(bands[LineId.RightBoxSide], SurfaceId.Floor, 1.6f, 5.49f, 1.6f, 7.14f, 1, 0);
+            Check(bands[LineId.RightBoxBack], SurfaceId.Floor, 0, 7.09f, 1.65f, 7.09f, 0, 1);
+            Check(bands[LineId.LeftBoxSide], SurfaceId.Floor, 4.75f, 5.49f, 4.75f, 7.14f, 1, 0);
+            Check(bands[LineId.LeftBoxBack], SurfaceId.Floor, 4.75f, 7.09f, 6.4f, 7.09f, 0, 1);
             foreach (var id in new[] { LineId.LeftSideOut, LineId.RightSideOut })
             {
                 Assert.That(bands[id].A, Is.EqualTo(new Vector2(0, 4.57f)));
@@ -81,8 +81,8 @@ namespace SquashClash.Core.Tests.Court
 
         [TestCase(SurfaceId.FrontWall, 1, 2, 0, 0, 1)]
         [TestCase(SurfaceId.BackWall, 1, 2, 0, 0, -1)]
-        [TestCase(SurfaceId.LeftWall, 3, 2, 1, 0, 0)]
-        [TestCase(SurfaceId.RightWall, 3, 2, -1, 0, 0)]
+        [TestCase(SurfaceId.LeftWall, 3, 2, -1, 0, 0)]
+        [TestCase(SurfaceId.RightWall, 3, 2, 1, 0, 0)]
         [TestCase(SurfaceId.Floor, 1, 3, 0, 1, 0)]
         public void ToSurfaceUV_FollowsPlanConvention(SurfaceId surface, float u, float v, float nx, float ny, float nz)
         {

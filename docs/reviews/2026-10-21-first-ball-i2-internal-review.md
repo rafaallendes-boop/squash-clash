@@ -31,3 +31,8 @@ El código respeta la pose explícita del plan. En I2 no hay interacción direcc
 ## Punto de control
 
 Faltan revisión de Claude en la PR y aceptación del PO de la cancha en el iPhone. No fusionar hasta ambas. El [informe de I2](../validation/i2-court.md) registra por separado la compilación, firma, instalación y el arranque reales; su estado no se infiere de esta revisión.
+
+
+## Resolución posterior de la observación menor — AX-1
+
+El 2026-10-21, el PO transmitió la revisión de Claude sin bugs de implementación y autorizó conservar coordenadas/cámara y corregir nombres: LeftWall x=6,40, RightWall x=0, cajas intercambiadas y S3 «lateral derecha» sin reflexión. La observación queda atendida mediante esa aclaración explícita, registrada en las [aprobaciones del PO](2026-10-21-first-ball-po-approvals.md). Nuevas suites: EditMode 79/79 y PlayMode 11/11; la nueva prueba usa las mallas con SurfaceTag y la cámara del preset, y se verificó RED antes de corregir el producto. Detalle en [I2 / AX-1](../validation/i2-court.md#ax-1--convención-izquierdaderecha-tras-la-revisión-de-claude). Esta anotación no atribuye una nueva revisión independiente a los cambios posteriores al rango original de este informe.

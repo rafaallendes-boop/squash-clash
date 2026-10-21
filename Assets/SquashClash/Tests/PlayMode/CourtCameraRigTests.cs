@@ -1,5 +1,6 @@
 using System.Collections;
 using System.IO;
+using System.Linq;
 using NUnit.Framework;
 using SquashClash.Core.Config;
 using SquashClash.Core.Court;
@@ -28,6 +29,32 @@ namespace SquashClash.Runtime.Tests
             root.AddComponent<CourtCameraRig>().Apply(Default(), CourtDimensions.Standard());
             yield return null;
             AssertFraming(camera);
+        }
+
+        [UnityTest]
+        public IEnumerator Fixed_DefaultCamera_ProjectsLeftWallInLeftHalfAndRightWallInRightHalf()
+        {
+            var cameraObject = new GameObject("Default camera");
+            cameraObject.transform.SetParent(root.transform, false);
+            var camera = cameraObject.AddComponent<UnityEngine.Camera>();
+            camera.aspect = 1206f / 2622f;
+            cameraObject.AddComponent<CourtCameraRig>().Apply(Default(), CourtDimensions.Standard());
+            root.AddComponent<CourtView>().Build(CourtDimensions.Standard());
+            yield return null;
+            var surfaces = root.GetComponentsInChildren<SurfaceTag>();
+            foreach (var side in new[] { SurfaceId.LeftWall, SurfaceId.RightWall })
+            {
+                var surface = surfaces.Single(s => s.Surface == side);
+                var mesh = surface.GetComponent<MeshFilter>().sharedMesh;
+                var viewport = camera.WorldToViewportPoint(surface.transform.TransformPoint(mesh.bounds.center));
+                Assert.That(viewport.z, Is.GreaterThan(0), side.ToString());
+                Assert.That(viewport.y, Is.InRange(0f, 1f), side.ToString());
+                Assert.That(viewport.x, Is.InRange(0f, 1f), side.ToString());
+                if (side == SurfaceId.LeftWall)
+                    Assert.That(viewport.x, Is.LessThan(0.5f), side.ToString());
+                else
+                    Assert.That(viewport.x, Is.GreaterThan(0.5f), side.ToString());
+            }
         }
 
         [UnityTest]

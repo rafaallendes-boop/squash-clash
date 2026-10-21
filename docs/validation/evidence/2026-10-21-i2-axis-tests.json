@@ -1,0 +1,105 @@
+{
+  "clarification": "AX-1",
+  "preFixProductCommit": "3b602cb",
+  "runs": [
+    {
+      "run": "editmode-red",
+      "command": "scripts/test.sh editmode",
+      "xmlFile": "i2-axis-editmode-red-results.xml",
+      "xmlSha256": "24e7fe68fe22266feee97c21c1eec41da060240469d2c47579e7bb93fd1701d5",
+      "result": {
+        "result": "Failed(Child)",
+        "total": "79",
+        "passed": "72",
+        "failed": "7",
+        "skipped": "0"
+      },
+      "failedTests": [
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.Build_PlacesAllBandsOnApprovedReferenceEdges",
+          "message": "Expected: less than 1.0000000000000001E-05d\n  But was:  3.1500001f"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ToSurfaceUV_FollowsPlanConvention(LeftWall,3,2,-1,0,0)",
+          "message": "Expected: (-1.00, 0.00, 0.00)\n  But was:  (1.00, 0.00, 0.00)"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ToSurfaceUV_FollowsPlanConvention(RightWall,3,2,1,0,0)",
+          "message": "Expected: (1.00, 0.00, 0.00)\n  But was:  (-1.00, 0.00, 0.00)"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(RightBoxSide,1.59f,6.0f,0.01f,True)",
+          "message": "Expected: True\n  But was:  False"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(RightBoxBack,1.0f,7.15f,0.01f,True)",
+          "message": "Expected: True\n  But was:  False"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(LeftBoxSide,4.74f,6.0f,0.01f,True)",
+          "message": "Expected: True\n  But was:  False"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(LeftBoxBack,5.0f,7.15f,0.01f,True)",
+          "message": "Expected: True\n  But was:  False"
+        }
+      ]
+    },
+    {
+      "run": "playmode-red",
+      "command": "scripts/test.sh playmode",
+      "xmlFile": "i2-axis-playmode-red-results.xml",
+      "xmlSha256": "b124905557d25ef36276f269de68dc89c60a7d2f4187534a55ef870ea89780d5",
+      "result": {
+        "result": "Failed(Child)",
+        "total": "11",
+        "passed": "9",
+        "failed": "2",
+        "skipped": "0"
+      },
+      "failedTests": [
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.Fixed_DefaultCamera_ProjectsLeftWallInLeftHalfAndRightWallInRightHalf",
+          "message": "LeftWall\n  Expected: in range (0,0.49999)\n  But was:  0.814282596f"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.SideWalls_UseApprovedWorldPlanesAndInwardLineInsets",
+          "message": "LeftWall\n  Expected: 6.4000001f +/- 1.0000000000000001E-05d\n  But was:  0.0f"
+        }
+      ]
+    },
+    {
+      "run": "editmode-green",
+      "command": "scripts/test.sh editmode",
+      "xmlFile": "i2-axis-editmode-green-results.xml",
+      "xmlSha256": "7f4da888d87a4507da31d6062d89eb3638f1b5aebb318679d07c4e0e736f6a1a",
+      "result": {
+        "result": "Passed",
+        "total": "79",
+        "passed": "79",
+        "failed": "0",
+        "skipped": "0"
+      },
+      "failedTests": []
+    },
+    {
+      "run": "playmode-green",
+      "command": "scripts/test.sh playmode",
+      "xmlFile": "i2-axis-playmode-green-results.xml",
+      "xmlSha256": "f82578c73e939bbb90de9cccd296f635c7e6063b18d6aeff7b9248547b30a02b",
+      "result": {
+        "result": "Passed",
+        "total": "11",
+        "passed": "11",
+        "failed": "0",
+        "skipped": "0"
+      },
+      "failedTests": []
+    }
+  ],
+  "newCoverage": [
+    "actual tagged LeftWall projects in left half; RightWall in right half with default camera",
+    "side planes x=6.40/0, inward mesh normals and 1 mm line insets"
+  ],
+  "note": "Final green suites include all current regression tests. No physics experiment or performance gate evaluated."
+}
