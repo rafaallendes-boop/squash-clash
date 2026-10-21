@@ -16,7 +16,7 @@ fi
 profile="$1"
 source "$(dirname "$0")/unity-env.sh"
 : "${DEVICE_ID:?Falta DEVICE_ID}" "${BUNDLE_ID:?Falta BUNDLE_ID}"
-app="$ROOT/Builds/DerivedData-$profile/Build/Products/$configuration-iphoneos/Squash Clash.app"
+app="$ROOT/Builds/DerivedData-$profile/Build/Products/$configuration-iphoneos/SquashClash.app"
 if [[ ! -d "$app" ]]; then
     printf 'No existe la app; ejecutar primero build-ios.sh %s.\n' "$profile" >&2
     exit 1

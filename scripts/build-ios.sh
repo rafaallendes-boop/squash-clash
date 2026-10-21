@@ -33,7 +33,7 @@ if ! xcodebuild -project "$ROOT/Builds/iOS-$profile/Unity-iPhone.xcodeproj" \
     printf 'Falló xcodebuild. Log: %s\n' "$xcode_log" >&2
     exit 1
 fi
-app="$ROOT/Builds/DerivedData-$profile/Build/Products/$configuration-iphoneos/Squash Clash.app"
+app="$ROOT/Builds/DerivedData-$profile/Build/Products/$configuration-iphoneos/SquashClash.app"
 python3 - "$app" "$BUNDLE_ID" <<'PY'
 import sys,plistlib
 from pathlib import Path

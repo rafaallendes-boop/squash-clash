@@ -26,6 +26,7 @@ Fecha: 2026-10-21. Alcance autorizado: I1 / T1.1–T1.3 del plan First Ball r2. 
 5. `BuildInfo.json` y su meta se generan e importan en cada build y quedan ignorados. Se cargan por nombre desde Resources, sin referencia serializada a su GUID. Así su generación no marca falsamente el código como sucio.
 6. El seguimiento de tareas usa un ledger local: los scripts de `executing-plans` buscan encabezados `Task`, pero el plan usa `Tarea`. Se mantiene el plan original intacto.
 7. El bootstrap se hace en la raíz y `main`, conforme a la excepción explícita autorizada; no se crea worktree. Los scripts/configuración se verifican mediante ejecución e integración; el comportamiento de metadata y UI tiene pruebas RED→GREEN. `test.sh` se adelantó internamente para validar T1.2 con el runner real.
+8. El primer `xcodebuild dev` terminó con `BUILD SUCCEEDED`, pero la comprobación final del wrapper falló porque asumía `Squash Clash.app`. Unity genera el producto `SquashClash.app`; se corrigieron ambos scripts según el artefacto real. Es resolución de ruta de salida, no incompatibilidad del toolchain. El log inicial se conserva en `Logs/dev-build-initial-summary.log`.
 
 ## Resultados pendientes
 
