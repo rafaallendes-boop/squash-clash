@@ -1,0 +1,23 @@
+{
+  "build": "0.1.0+1cbf00c dev",
+  "gitDirty": false,
+  "nativeLaunchVerified": true,
+  "fpsSample": 60,
+  "orientation": "Portrait",
+  "resolution": [
+    1206,
+    2622
+  ],
+  "configHash": "007325f26460",
+  "configHashIndependentlyVerified": true,
+  "screenshotDisplay": "primary LCD, activeOn",
+  "mirroringUsedForScreenshot": false,
+  "diagnosticConsoleStopped": true,
+  "finalLaunchWithoutConsole": "rejected: Locked",
+  "installInitialLaunchFailure": "Locked; native launch verified after PO unlocked iPhone",
+  "appLeftInstalled": true,
+  "appLeftOpen": "not certified after phone locked again",
+  "poVisualAcceptance": "pending",
+  "claudePrReview": "pending",
+  "performanceGateEvaluated": false
+}

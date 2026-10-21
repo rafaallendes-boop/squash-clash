@@ -24,4 +24,4 @@ I1 se preparó en `main` como excepción de bootstrap; Claude revisó los commit
 
 **E1/I1 (T1.1–T1.3) cerrado el 2026-10-21**, con revisión de Claude y validación del PO de ambas builds en el iPhone, incluido el giro físico. **T1.4 completada:** [remoto privado verificado](docs/validation/github-remote.md).
 
-**I2 autorizado y en comprobación** en `firstball/i2-court`: T2.1–T2.3, cancha visual, configuración y cámara fija, con PR hacia `main` para Claude y punto de control del PO en el iPhone. No fusionar antes de ambas validaciones. T3.1 y etapas posteriores siguen sin autorización.
+**I2 implementado y verificado técnicamente** en `firstball/i2-court`: T2.1–T2.3, cancha visual, configuración y cámara fija. Dev ejecutada en el iPhone con cancha, `0.1.0+1cbf00c dev` y 60 FPS. [PR #1 hacia main](https://github.com/rafaallendes-boop/squash-clash/pull/1), pendiente de revisión de Claude y aceptación visual del PO. No fusionar antes de ambas validaciones. T3.1 y etapas posteriores siguen sin autorización.

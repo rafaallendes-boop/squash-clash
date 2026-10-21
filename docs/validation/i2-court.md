@@ -1,6 +1,6 @@
 # I2 — cancha y cámara fija
 
-Fecha: 2026-10-21. Rama: `firstball/i2-court`, base `6ad2961`. Alcance autorizado: T2.1–T2.3; T3.1 y posteriores excluidas. **Código y suites completos; dev compilada e instalada, pendiente de desbloqueo para verificar el arranque.** [PR #1](https://github.com/rafaallendes-boop/squash-clash/pull/1) hacia main. La revisión de Claude y la validación del PO en el iPhone serán el punto de control antes de fusionar.
+Fecha: 2026-10-21. Rama: `firstball/i2-court`, base `6ad2961`. Alcance autorizado: T2.1–T2.3; T3.1 y posteriores excluidas. **Implementación y comprobación técnica completadas: dev compilada, firmada, instalada y ejecutada en el iPhone, con cancha visible, versión y 60 FPS.** [PR #1](https://github.com/rafaallendes-boop/squash-clash/pull/1) hacia main. I2 sigue pendiente de revisión de Claude y validación visual del PO antes de fusionar. Se deja dev instalada para esa validación.
 
 ## Geometría — T2.1
 
@@ -47,13 +47,19 @@ TDD runtime: contratos RED **7/7 fallos**; implementación con preset inicial **
 - Suites finales: EditMode **79/79**, PlayMode **9/9**, cero fallos y cero omitidos. [Resultados y hashes de XML](evidence/2026-10-21-i2-tests.json), [captura del editor](evidence/2026-10-21-i2-editor.png).
 - `scripts/build-ios.sh dev`: código 0 y `BUILD SUCCEEDED`, usando Unity 6000.3.27f1 / Xcode 27.1. Metadata `0.1.0+1cbf00c dev`, `gitDirty=false`, Player no Development y Release. Ese hash identifica el código compilado; las actualizaciones posteriores de documentación no cambian la app.
 - Firma estricta, bundle, equipo, perfil, dispositivo registrado y ARM64 del ejecutable y UnityFramework comprobados. [Inspección de la app](evidence/2026-10-21-i2-dev-inspection.json). El perfil vence el 28 de octubre, igual que en I1.
-- El iPhone se consultó conectado por cable, paired/connected, Modo de desarrollador enabled, DDI disponible e iOS 26.6.2. La instalación tuvo éxito; el lanzamiento fue rechazado como `Locked` (CoreDevice 10002 / FBS error 7). Duplicación del iPhone pide autenticación local del Mac. Se solicitó al PO desbloquear el teléfono o la duplicación; no es un fallo de compilación ni de confianza del certificado.
-- Logs locales: `Logs/i2-dev-build-summary.log`, `Logs/build-dev.log`, `Logs/xcode-dev.log`, `Logs/i2-device-install.log`, `Logs/i2-device-console.log` y JSON de instalación/lanzamiento. No se publican logs con identificadores del dispositivo.
+- El iPhone se consultó conectado por cable, paired/connected, Modo de desarrollador enabled, DDI disponible e iOS 26.6.2. La instalación tuvo éxito; el primer lanzamiento fue rechazado como `Locked` (CoreDevice 10002 / FBS error 7). **Resuelto:** el PO confirmó el teléfono desbloqueado y conectado; el arranque posterior funcionó. No se cambiaron herramientas, firma ni ajustes de seguridad.
+- Arranque real: `0.1.0+1cbf00c dev`, `development=False`, `squashDev=True`, `devpanel=absent`. El log informa 60 FPS, Portrait, 1206×2622 y configuración `007325f26460`; se comprobó ese hash también de forma independiente a partir del JSON ordenado. [Log de arranque](evidence/2026-10-21-i2-dev-boot.txt), [resumen de ejecución](evidence/2026-10-21-i2-dev-run.json).
+- [Captura nativa del iPhone](evidence/2026-10-21-i2-dev.png), inspeccionada visualmente: título/versión/FPS, suelo de madera clara, paredes, líneas rojas, tin y ambas cápsulas. Procede del LCD primario activo, sin duplicación; no es la captura del editor. La proporción y legibilidad definitivas siguen sujetas al PO.
+- Tras guardar la captura y los logs se detuvo la consola de diagnóstico con Ctrl-C. El intento posterior de lanzamiento sin consola volvió a ser rechazado por `Locked`: el teléfono ya se había bloqueado de nuevo. Se registra como fallo de ese último comando, sin atribuirle código 0 ni certificar que la app quede abierta. El arranque previo y la captura real sí quedaron verificados. Dev permanece instalada y el PO puede abrir Squash Clash para su aceptación.
+- Logs locales: `Logs/i2-dev-build-summary.log`, `Logs/build-dev.log`, `Logs/xcode-dev.log`, `Logs/i2-device-install.log`, `Logs/i2-device-console-final.log`, `Logs/i2-launch-final.log` y JSON de instalación/lanzamiento/captura. No se publican logs con identificadores del dispositivo.
+
+El contador a 60 FPS es una muestra de arranque de una cancha estática; no acredita percentiles, temperatura, 15 minutos ni rendimiento de física/predicción de First Ball. Esta entrega de T2.3 usa dev; no se recompiló prod ni se probó debug en I2.
 
 ## Revisión y pendientes
 
 La [revisión independiente interna](../reviews/2026-10-21-first-ball-i2-internal-review.md) de `6ad2961..1cbf00c` no encontró Critical ni Important. **Observación menor diferida:** el texto del plan define +X hacia la derecha desde atrás, pero la pose explícita de cámara hace que se vea hacia la izquierda; el rival x=4,5 aparece a la izquierda del humano x=3,2. Se conserva la fórmula del plan, sin invertir ejes ni reflejar proyección por cuenta propia. Claude/PO deben aclarar la correspondencia antes de controles o decisiones direccionales; no afecta a interacción deportiva en esta cancha estática.
 
-- Verificar arranque, UI y captura reales después del desbloqueo.
 - Revisión de Claude en la PR, distinta de la revisión interna ya completada.
 - Validación del PO: reconocer la cancha, proporción de líneas y referencias en vertical. No fusionar hasta revisión de Claude y aceptación del PO.
+
+La vía de entrega ya está autorizada por el PO: PR hacia main, sin menú adicional de merge/push y sin fusión automática. El worktree se conserva para esa revisión. No se cambia la spec ni se avanza a T3.1.

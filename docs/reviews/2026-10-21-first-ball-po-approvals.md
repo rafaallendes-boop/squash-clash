@@ -87,3 +87,9 @@ El 2026-10-21, después del cierre de I1, el PO autorizó explícitamente:
 **T3.1 y etapas posteriores siguen sin autorización.** El permiso de I2 no autoriza fusionar sin revisión y validación, ni cambiar decisiones deportivas, criterios o la spec. `AGENTS.md` se actualiza con este alcance.
 
 T1.4 ejecutada el 2026-10-21: remoto [rafaallendes-boop/squash-clash](https://github.com/rafaallendes-boop/squash-clash) creado y publicado, con `visibility: PRIVATE` y rama predeterminada `main`. Resultado y comprobaciones en el [informe de T1.4](../validation/github-remote.md).
+
+## I2 — entrega para revisión y punto de control
+
+El PO confirmó después el iPhone desbloqueado y conectado para verificar el arranque de I2. Con ello se resolvió el rechazo inicial por `Locked`; Codex comprobó la cancha en una captura del LCD real, rótulo `0.1.0+1cbf00c dev`, 60 FPS y Portrait. Implementación T2.1–T2.3 y comprobación técnica registradas en el [informe de I2](../validation/i2-court.md), con [PR #1](https://github.com/rafaallendes-boop/squash-clash/pull/1) hacia main.
+
+**El desbloqueo no es aceptación visual de I2.** Quedan revisión de Claude sobre la PR y valoración del PO de cancha, encuadre y proporción de líneas en el iPhone. No se ha fusionado ni cerrado I2. T3.1 y posteriores continúan sin autorización. La observación menor sobre la orientación horizontal se presenta en la PR para aclaración; no se invierten ejes ni se modifica el plan unilateralmente.
