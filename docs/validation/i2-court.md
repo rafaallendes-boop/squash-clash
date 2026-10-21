@@ -14,3 +14,11 @@ TDD: con contratos mínimos sin comportamiento, geometría RED 11/11 fallos; GRE
 - El helper de tareas de `executing-plans` busca encabezados `Task`; se lee cada sección `Tarea` directamente y se mantiene un ledger local sin modificar el plan. Coste: seguimiento manual respaldado por commits y evidencia.
 - Los contratos mínimos que lanzan `NotImplementedException` permiten ejecutar primero los tests tipados. Solo se implementa comportamiento después del RED; no se conservan stubs al completar cada tarea.
 - Los miembros de `EffectiveConfig` indicados para T3.1/T3.3 se incorporarán entonces. En I2 solo se construye la configuración que la cancha y la cámara consumen; no se crean tipos vacíos de pelota o simulación.
+
+## Configuración — T2.2
+
+Diez parámetros de I2, sin defaults en el catálogo. `DefaultPreset.json` contiene todos los valores; `ParamSet` conserva una copia inmutable ordenada y hashes SHA-256 de 12 hex independientes del orden y la cultura. `EffectiveConfig` deriva la cancha y separa el hash de simulación del de cámara. Una copia mutable de `CourtDimensions` no puede alterar la instantánea.
+
+`JsonUtility` serializa/deserializa el DTO. Se añade una comprobación interna limitada a la forma del esquema v1 para rechazar campos requeridos omitidos, tipos incorrectos, JSON truncado, basura al final y campos JSON duplicados; así no se convierten silenciosamente en valores cero. Las claves repetidas de `values` se comprueban después de deserializar. No se añade una librería JSON ni un framework de serialización. Coste: mantener este lector pequeño junto al esquema v1; no hay migraciones.
+
+TDD: **30/30 fallos RED** por comportamiento pendiente; suite EditMode completa **79/79 GREEN**. Se cubren schema 0/2, JSON corrupto, claves duplicadas/desconocidas/ausentes, tipos numéricos incorrectos, booleanos fraccionarios, no finitos en overlays, recorte con avisos, elecciones inválidas, inmutabilidad y hash independiente de cultura/orden. Un error de nombre en el helper de tests impidió la primera compilación; el runner rechazó correctamente el XML anterior y se corrigió antes del RED válido. Logs/XML: `Logs/i2-config-red-*`, `Logs/i2-t22-green-*`.
