@@ -66,3 +66,7 @@ El 2026-10-21 el PO confirmó en la build instalada `prod`:
 - Giro físico realizado: la app se mantiene vertical.
 
 **Validación de prod aceptada. I1 continúa abierto solo por la validación equivalente de dev.** Esta confirmación no autoriza T1.4, E2 ni T3.1.
+
+## Validación del PO en el iPhone — dev
+
+El 2026-10-21, tras instalar y lanzar `dev`, el PO confirmó el rótulo `0.1.0+ea0a1e1 dev`, 60 FPS y el mismo título Squash Clash — First Ball. **Comprobación visual de dev aceptada; solo queda confirmar el giro físico en dev para cerrar I1.** El mensaje no confirma todavía ese giro ni autoriza T1.4, E2 o T3.1.
