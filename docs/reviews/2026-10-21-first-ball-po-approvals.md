@@ -76,3 +76,12 @@ El 2026-10-21, tras instalar y lanzar `dev`, el PO confirmó el rótulo `0.1.0+e
 **E1/I1 (T1.1–T1.3) cerrado el 2026-10-21**, con revisión de Claude aprobada y validación del PO en el iPhone de ambas builds: título, versión/perfil, 60 FPS y permanencia en vertical tras girar físicamente el teléfono. El [informe de E1](../validation/e1-first-installation.md) conserva los resultados y la evidencia técnica.
 
 Las dos observaciones menores de Claude se mantienen para su seguimiento posterior. Este cierre no autoriza T1.4 (remoto GitHub), E2/I2 ni T3.1; no se ha autorizado ningún incremento nuevo. `AGENTS.md` refleja el cierre y la espera de la siguiente autorización.
+
+## Autorización posterior — T1.4 e I2
+
+El 2026-10-21, después del cierre de I1, el PO autorizó explícitamente:
+
+1. **T1.4:** crear el remoto privado `squash-clash` mediante `gh repo create squash-clash --private --source . --push`, verificar `visibility: PRIVATE` y registrar el resultado.
+2. **I2 / T2.1–T2.3:** implementar cancha y cámara fija en la rama `firstball/i2-court`, con PR hacia `main` para revisión de Claude y punto de control del PO en el iPhone.
+
+**T3.1 y etapas posteriores siguen sin autorización.** El permiso de I2 no autoriza fusionar sin revisión y validación, ni cambiar decisiones deportivas, criterios o la spec. `AGENTS.md` se actualiza con este alcance.
