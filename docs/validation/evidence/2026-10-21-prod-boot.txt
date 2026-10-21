@@ -1,0 +1,2 @@
+[SquashClash] boot 0.1.0+ea0a1e1 prod devpanel=absent development=False squashDev=False unity=6000.3.27f1
+[SquashClash] display profile=prod fps=60,0 orientation=Portrait resolution=1206x2622

@@ -1,0 +1,134 @@
+{
+  "recordedOn": "2026-10-21",
+  "unityVersion": "6000.3.27f1",
+  "scope": "E1 / T1.1-T1.3; physics experiments and performance gates not evaluated",
+  "suites": [
+    {
+      "suite": "EditMode regression",
+      "command": "scripts/test.sh editmode",
+      "sourceLog": "Logs/editmode-results.xml",
+      "sourceSha256": "596dd893d786f244ff271fbad3cbb7537822c9d085ed98f4a4979633e93484c0",
+      "result": "Passed",
+      "total": "3",
+      "passed": "3",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-10-21 14:56:14Z",
+      "end-time": "2026-10-21 14:56:14Z",
+      "tests": [
+        {
+          "name": "SquashClash.Core.Tests.BootstrapSmokeTests.RegressionRunner_UsesPinnedEditor",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.BuildInfoTests.FromJson_ReadsAllFields_AndLabelMarksDirty(True,\"0.1.0+a1b2c3d* dev\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.BuildInfoTests.FromJson_ReadsAllFields_AndLabelMarksDirty(False,\"0.1.0+a1b2c3d dev\")",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "suite": "PlayMode regression",
+      "command": "scripts/test.sh playmode",
+      "sourceLog": "Logs/playmode-results.xml",
+      "sourceSha256": "673d43e6b4dcd5321355dd888c33b4b1e581d6ce604f50c272cd1dbe175236cf",
+      "result": "Passed",
+      "total": "2",
+      "passed": "2",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-10-21 14:57:07Z",
+      "end-time": "2026-10-21 14:57:09Z",
+      "tests": [
+        {
+          "name": "SquashClash.Runtime.Tests.BootScreenTests.MainScene_ShowsBuildAndLiveFps",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.BootstrapSmokeTests.MainScene_LoadsWithCameraAndRenderPipeline",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "suite": "Experiments smoke only",
+      "command": "Unity -runTests -testPlatform PlayMode -assemblyNames SquashClash.Experiments",
+      "sourceLog": "Logs/experiments-smoke-results.xml",
+      "sourceSha256": "65f952815e68b087c9bc6378dee3ac097c0af828350b3bab078ad883006938b1",
+      "result": "Passed",
+      "total": "1",
+      "passed": "1",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-10-21 14:43:12Z",
+      "end-time": "2026-10-21 14:43:12Z",
+      "tests": [
+        {
+          "name": "SquashClash.Experiments.BootstrapSmokeTests.ExperimentRunner_EntersPlayMode",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "suite": "BuildInfo RED before implementation",
+      "command": "scripts/test.sh editmode BuildInfoTests",
+      "sourceLog": "Logs/buildinfo-red-results.xml",
+      "sourceSha256": "6d69b93af6e2a5c1fcfa5b45cd54fc091e50a6fd864c199224905a3356283a3b",
+      "result": "Failed(Child)",
+      "total": "3",
+      "passed": "1",
+      "failed": "2",
+      "skipped": "0",
+      "start-time": "2026-10-21 14:46:31Z",
+      "end-time": "2026-10-21 14:46:31Z",
+      "tests": [
+        {
+          "name": "SquashClash.Core.Tests.BootstrapSmokeTests.RegressionRunner_UsesPinnedEditor",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.BuildInfoTests.FromJson_ReadsAllFields_AndLabelMarksDirty(True,\"0.1.0+a1b2c3d* dev\")",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.BuildInfoTests.FromJson_ReadsAllFields_AndLabelMarksDirty(False,\"0.1.0+a1b2c3d dev\")",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "suite": "Boot screen RED before implementation",
+      "command": "scripts/test.sh playmode BootScreenTests",
+      "sourceLog": "Logs/bootscreen-red-results.xml",
+      "sourceSha256": "bbdcbbc266291d3aa9903eca24210e8284210e6c5c4569730c679355f19f8bac",
+      "result": "Failed(Child)",
+      "total": "2",
+      "passed": "1",
+      "failed": "1",
+      "skipped": "0",
+      "start-time": "2026-10-21 14:47:26Z",
+      "end-time": "2026-10-21 14:47:27Z",
+      "tests": [
+        {
+          "name": "SquashClash.Runtime.Tests.BootScreenTests.MainScene_ShowsBuildAndLiveFps",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.BootstrapSmokeTests.MainScene_LoadsWithCameraAndRenderPipeline",
+          "result": "Passed"
+        }
+      ]
+    }
+  ],
+  "zeroTestGuard": {
+    "command": "scripts/test.sh editmode NoSuchFirstBallTest_ExpectedZero",
+    "observedExitCode": 1,
+    "resultLine": "RESULT: total=0 passed=0 failed=0 skipped=0",
+    "sourceLog": "Logs/zero-tests-summary.log",
+    "sourceSha256": "6ead32971e62350e470b00cdd5762dd6dbb2ef3f1ef985284c8a84a6103b0f3d",
+    "note": "Regression suites were rerun afterward; current EditMode XML is the final green run."
+  }
+}

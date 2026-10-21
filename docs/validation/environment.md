@@ -2,13 +2,13 @@
 
 Fecha: 2026-10-21. Workspace: `/Users/rafaallendes/Projects/Squash Clash`.
 
-**Estado: E0 cerrada y aprobada por el PO; E1 autorizada y en curso.** T0.1 y los preparativos de T0.2 completados. La reconexión del cable resolvió el bloqueo del iPhone y el PO confirmó el bundle ID. La compatibilidad completa de Unity–Xcode–iOS y la firma efectiva se verifican en T1.3, con instalación y arranque de las builds `dev` y `prod`.
+**Estado: E0 cerrada y aprobada por el PO; comprobación técnica de E1 completada, pendiente de revisión de Claude y validación del PO.** T0.1 y T0.2 completadas. La reconexión del cable resolvió el bloqueo del iPhone y el PO confirmó el bundle ID. **Compatibilidad Unity 6000.3.27f1–Xcode 27.1–iOS 26.6.2 VERIFICADA** con compilación, firma, instalación y arranque reales de `dev` y `prod` en el iPhone 16 Pro. Véase el [informe de E1 con evidencia](e1-first-installation.md). No se ha avanzado a E2 ni creado un remoto.
 
 ## Alcance y fuentes
 
-Se ejecutó únicamente E0 del [plan r2](../superpowers/plans/2026-10-20-squash-clash-first-ball.md), contrastada con la [spec v0.3](../superpowers/specs/2026-10-20-squash-clash-design-v0.3.md), la [respuesta de Claude](../reviews/2026-10-20-first-ball-plan-review-response-claude.md) y la [revisión de Codex](../reviews/2026-10-20-first-ball-plan-review-codex.md). Las aprobaciones D-1–D-6 y aclaraciones C-1–C-4 están en un [registro separado](../reviews/2026-10-21-first-ball-po-approvals.md).
+El diagnóstico inicial corresponde a E0 del [plan r2](../superpowers/plans/2026-10-20-squash-clash-first-ball.md), contrastada con la [spec v0.3](../superpowers/specs/2026-10-20-squash-clash-design-v0.3.md), la [respuesta de Claude](../reviews/2026-10-20-first-ball-plan-review-response-claude.md) y la [revisión de Codex](../reviews/2026-10-20-first-ball-plan-review-codex.md). Tras la autorización expresa de E1, se actualizaron aquí las comprobaciones antes pendientes de T1.2/T1.3. Las aprobaciones D-1–D-6 y aclaraciones C-1–C-4 están en un [registro separado](../reviews/2026-10-21-first-ball-po-approvals.md).
 
-El PO autorizó operar su computador para completar los preparativos interactivos. Se instaló el editor mediante Unity Hub. No se creó repositorio local o remoto, proyecto Unity, escena, código de producto ni build. Los cuatro documentos fuente se conservan intactos.
+El PO autorizó operar su computador para completar los preparativos interactivos. Durante E0 se instaló el editor mediante Unity Hub y todavía no se creó repositorio, proyecto ni build. Durante E1 se crearon el repositorio local, proyecto y pantalla de arranque, con pruebas y builds; el remoto sigue ausente. Los cuatro documentos fuente se conservan intactos.
 
 ## Inventario verificado
 
@@ -19,7 +19,7 @@ El PO autorizó operar su computador para completar los preparativos interactivo
 | Unity Hub | 3.22.3, sesión iniciada | VERIFICADO en interfaz |
 | Licencia Unity | Personal; activada el 2026-10-19 | VERIFICADO en Hub → Settings → Licenses |
 | Editor elegido | **6000.3.27f1**, changeset **672d562a42a7**, Apple silicon | VERIFICADO en Hub, binario e Info.plist |
-| iOS Build Support | Instalado para 6000.3.27f1; directorios `il2cpp` y `arm64` presentes | VERIFICADO; compilación PENDIENTE — T1.3 |
+| iOS Build Support | Instalado para 6000.3.27f1; directorios `il2cpp` y `arm64` presentes | VERIFICADO; exportación y compilación completadas en T1.3 |
 | Otro editor existente | 6000.6.6f1, arm64, sin módulo iOS | Presente; no elegido para First Ball |
 | Xcode activo | 27.1, build 27A9275 | VERIFICADO |
 | Developer directory | `/Applications/Xcode.app/Contents/Developer` | VERIFICADO |
@@ -48,16 +48,16 @@ La [página oficial de soporte](https://unity.com/releases/unity-6/support) iden
 
 | Relación | Evidencia | Conclusión |
 |---|---|---|
-| Unity 6.3 / Mac arm64 | Editor instalado nativo; Unity documenta macOS 13+ y Apple M1+ | Instalación VERIFICADA; apertura del proyecto PENDIENTE — T1.2 |
-| Unity 6.3 / plataforma iOS | Unity documenta iOS 15+, Metal y Xcode 16 o posterior; módulo iOS presente | Requisitos generales cubiertos; exportación y compilación PENDIENTES — T1.3 |
+| Unity 6.3 / Mac arm64 | Editor nativo; proyecto creado, configuración aplicada dos veces y tests ejecutados | VERIFICADO — T1.2/T1.3 |
+| Unity 6.3 / plataforma iOS | Módulo iOS; exportación dev/prod y compilación nativa completadas | VERIFICADO — T1.3 |
 | Xcode 27.1 / macOS 26.6.2 | Apple requiere macOS 26.6 o posterior; CLI ejecutable | Requisito de host VERIFICADO |
-| Xcode 27.1 / iOS 26.6.2 | Apple lista soporte de dispositivos iOS 17 o posterior; CoreDevice conectado y xcdevice disponible | Conexión de desarrollo VERIFICADA; instalación PENDIENTE — T1.3 |
-| Unity 6000.3.27f1 / Xcode 27.1 / iPhone físico | No se ha exportado, compilado, firmado, instalado ni lanzado First Ball | **PENDIENTE — T1.3** |
-| IL2CPP/ARM64 | Componentes instalados; falta proyecto y configuración de Player | **PENDIENTE — T1.2/T1.3** |
+| Xcode 27.1 / iOS 26.6.2 | CoreDevice conectado; instalación y lanzamiento por devicectl de ambas builds | VERIFICADO — T1.3 |
+| Unity 6000.3.27f1 / Xcode 27.1 / iPhone físico | dev/prod: exportación, compilación con código 0, firma verificada, instalación y arranque con versión y 60 FPS | **VERIFICADO — T1.3** para esta combinación y pantalla de arranque |
+| IL2CPP/ARM64 | Player IL2CPP Release; ejecutable y UnityFramework ARM64 inspeccionados en ambas apps | **VERIFICADO — T1.2/T1.3** |
 
 Fuentes: [requisitos de Unity 6.3](https://docs.unity3d.com/6000.3/Documentation/Manual/system-requirements.html), [matriz de SDK y soporte de Xcode](https://developer.apple.com/xcode/system-requirements). El rango publicado no prueba que la combinación exacta de exportación de Unity y toolchain funcione. El SDK iOS 27.1 del Mac y el sistema iOS 26.6.2 del teléfono son datos distintos.
 
-No se instaló otra versión de Xcode. Si T1.3 encuentra una incompatibilidad real del toolchain, se aplica el orden de diagnóstico del plan y se pide autorización antes de instalar Xcode alternativo.
+No se instaló otra versión de Xcode. No se detectó una incompatibilidad que impidiera compilar y ejecutar. Se observó una advertencia libc++ por flags internos de IL2CPP con mínimo iOS 11, pese a que el proyecto, enlace y plist final usan iOS 15. Está descrita en el [informe de E1](e1-first-installation.md#advertencia-del-compilador-observada); no se ocultó ni se extrapola soporte a otros dispositivos o sistemas. La pantalla inicial a 60 FPS no evalúa todavía los criterios de física o rendimiento de First Ball.
 
 ## iPhone: conexión verificada e incidencia resuelta
 
@@ -96,21 +96,21 @@ Se siguió el flujo de conexión por cable y confianza de [Device Hub](https://d
 
 Se observaron dos identificadores distintos: UDID de hardware y UUID CoreDevice. La consulta inicial con UDID falló mientras el dispositivo no estaba conectado correctamente. **Después de reconectar, `devicectl --device <UDID>` sí funciona**. Se puede usar el mismo UDID como `DEVICE_UDID` para Xcode y como `DEVICE_ID` para `devicectl`, conforme a T0.2.3; no es necesario configurar dos valores distintos en este entorno.
 
-Los identificadores completos del dispositivo no se copian a este documento ni al ejemplo versionable. Se obtendrán de nuevo mediante las mismas herramientas al crear la configuración local. El archivo local `scripts/device.env` se creará después de que T1.1 establezca su exclusión en `.gitignore`.
+Los identificadores completos del dispositivo no se copian a este documento ni al ejemplo versionable. En E1 se creó `scripts/device.env` después de verificar su exclusión en `.gitignore`; es local y tiene permisos 0600.
 
 ## Cuenta y requisitos de firma
 
 - Xcode → Settings → Apple Accounts contiene la cuenta del PO y muestra **Personal Team**. No se acreditó una membresía de pago; no es un requisito que se haya añadido a First Ball.
 - El llavero tiene **una identidad Apple Development válida**, con clave de firma utilizable según `security find-identity -v -p codesigning`.
-- El certificado tiene **Team ID `PYXNMVF47Z`** en el campo OU, válido desde 2026-07-10 hasta 2027-07-10. El sufijo entre paréntesis del nombre del certificado no es el Team ID. Falta comprobar la selección efectiva de ese equipo al firmar Squash Clash en T1.3.
-- El único perfil local encontrado es `iOS Team Provisioning Profile: cl.rallyiq.app`, vencido el **2026-08-11**. No sirve como evidencia de firma para Squash Clash. No se borró ni se reutilizó.
-- No hay un perfil local de Squash Clash. Con el bundle ID confirmado y el dispositivo conectado, T1.3 deberá resolver el perfil apropiado mediante firma automática con la cuenta de Xcode, el equipo y el destino correctos. `-allowProvisioningUpdates` no sustituye la cuenta ni garantiza por sí solo el éxito.
+- El certificado tiene **Team ID `PYXNMVF47Z`** en el campo OU, válido desde 2026-07-10 hasta 2027-07-10. El sufijo entre paréntesis del nombre del certificado no es el Team ID. Ambas apps firmadas incluyen efectivamente ese equipo.
+- En E0, el único perfil local encontrado era `iOS Team Provisioning Profile: cl.rallyiq.app`, vencido el **2026-08-11**. No se borró ni se reutilizó.
+- En T1.3 la firma automática con `-allowProvisioningUpdates` resolvió un perfil nuevo: `iOS Team Provisioning Profile: cl.rafaallendes.squashclash`, equipo correcto y dispositivo registrado. Vence el **2026-10-28T14:59:31Z**; después será necesario renovar el perfil y reinstalar. La firma es Apple Development/Personal Team en ambos perfiles de Player; `prod` aquí es una instalación local, no una distribución App Store.
 - Bundle ID **confirmado explícitamente por el PO el 2026-10-21**: `cl.rafaallendes.squashclash`.
-- Firma, instalación y arranque de `dev` y `prod`: **PENDIENTES — T1.3**. No se necesita crear ahora un certificado de distribución para comprobar esas instalaciones locales.
+- Firma, instalación y arranque de `dev` y `prod`: **VERIFICADOS — T1.3**. El primer lanzamiento requirió confiar manualmente en el desarrollador en el iPhone; el PO lo hizo y confirmó que abrió. Los lanzamientos posteriores por CLI funcionaron. No se creó un certificado de distribución.
 
 No se exportaron claves privadas ni credenciales. El ejemplo de entorno contiene placeholders para los identificadores personales.
 
-## Acciones realizadas en las aplicaciones
+## Acciones realizadas en las aplicaciones durante E0
 
 - Unity Hub: instalación oficial de 6000.3.27f1 Apple silicon con **solo iOS Build Support** como módulo adicional; comprobación de licencia Personal existente.
 - Xcode: finalización de las pantallas iniciales; no se descargó el runtime adicional de simulador iOS 27.1, porque el SDK para dispositivo ya está instalado. Se eligió **Never** en la pantalla inicial de acceso de agentes externos. La automatización CLI del plan no requiere conceder ese acceso.
@@ -136,7 +136,7 @@ Las salidas se resumen y omiten emails, tokens e identificadores completos del t
 | `gh auth status` | Sesión existente; token no transcrito |
 | `security find-identity -v -p codesigning` | Una identidad válida |
 | Certificado público → `openssl x509 -noout -subject -dates` | OU y vigencia indicados arriba |
-| Perfil local → `security cms -D` | Bundle RallyIQ; expirado; sin perfil de Squash Clash |
+| Perfil local → `security cms -D` | E0: RallyIQ expirado. E1: perfil nuevo Squash Clash, equipo y dispositivo comprobados; vencimiento indicado arriba |
 | `xcrun devicectl list devices --json-output -` | Tras reconectar: iPhone físico conectado, emparejado y por cable |
 | `xcrun xctrace list devices` | Tras reconectar: iPhone 26.6.2 bajo Devices |
 | `xcrun xcdevice list --timeout 5` | Tras reconectar: iPhone físico, `available=true`, `interface=usb`, sin error |
@@ -156,6 +156,6 @@ Las salidas se resumen y omiten emails, tokens e identificadores completos del t
 - [x] T0.2.3: iPhone conectado/emparejado, con identificadores consultados y UDID aceptado por ambas herramientas.
 - [x] T0.2.4: `scripts/device.env.example` creado con versión fijada y placeholders.
 
-Se comprobaron los SHA-256 de los cuatro documentos fuente antes y después de E0: sin cambios. Se verificaron los enlaces locales de los documentos nuevos y la sintaxis de `device.env.example` con `zsh -n` (código 0). `.git`, `Assets`, `Packages` y `ProjectSettings` siguen ausentes.
+Se comprobaron los SHA-256 de los cuatro documentos fuente antes y después de E0: sin cambios. Se verificaron los enlaces locales de los documentos nuevos y la sintaxis de `device.env.example` con `zsh -n` (código 0). Al cierre de E0 todavía no existían `.git`, `Assets`, `Packages` ni `ProjectSettings`; se crearon posteriormente en E1 autorizada.
 
-No quedan acciones manuales pendientes para la preparación de E0. El PO revisó este diagnóstico y autorizó E1 el 2026-10-21. E1 se ejecuta por esa autorización explícita y termina antes de E2 y de crear un remoto.
+No quedan acciones manuales pendientes para la preparación de E0. El PO revisó este diagnóstico y autorizó E1 el 2026-10-21. La comprobación técnica de E1 está completada; quedan revisión de Claude y validación del PO, incluido el giro físico. El detalle, comandos, resultados y capturas están en el [informe de E1](e1-first-installation.md). Se detiene el trabajo antes de E2 y de crear un remoto.
