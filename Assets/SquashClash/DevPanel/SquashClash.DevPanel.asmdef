@@ -1,0 +1,12 @@
+{
+  "name": "SquashClash.DevPanel",
+  "rootNamespace": "SquashClash.DevPanel",
+  "references": [
+    "SquashClash.Core",
+    "SquashClash.Runtime",
+    "Unity.InputSystem"
+  ],
+  "defineConstraints": [
+    "SQUASH_DEV || UNITY_EDITOR"
+  ]
+}

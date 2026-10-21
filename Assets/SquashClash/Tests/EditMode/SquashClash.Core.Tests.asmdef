@@ -1,0 +1,13 @@
+{
+  "name": "SquashClash.Core.Tests",
+  "rootNamespace": "SquashClash.Core.Tests",
+  "references": [
+    "SquashClash.Core"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

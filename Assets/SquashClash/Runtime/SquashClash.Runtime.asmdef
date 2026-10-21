@@ -1,0 +1,8 @@
+{
+  "name": "SquashClash.Runtime",
+  "rootNamespace": "SquashClash.Runtime",
+  "references": [
+    "SquashClash.Core",
+    "Unity.InputSystem"
+  ]
+}

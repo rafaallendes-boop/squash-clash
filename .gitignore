@@ -114,3 +114,8 @@ InitTestScene*.unity*
 scripts/device.env
 .tmp-unity/
 .idea/
+/TempUnityBootstrap/
+
+# Metadata regenerated and synchronously imported for every build (T1.3).
+/Assets/SquashClash/Runtime/Resources/BuildInfo.json
+/Assets/SquashClash/Runtime/Resources/BuildInfo.json.meta

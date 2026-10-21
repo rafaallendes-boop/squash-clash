@@ -1,0 +1,12 @@
+{
+  "name": "SquashClash.Editor",
+  "rootNamespace": "SquashClash.Editor",
+  "references": [
+    "SquashClash.Core",
+    "SquashClash.Runtime",
+    "Unity.RenderPipelines.Universal.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}
