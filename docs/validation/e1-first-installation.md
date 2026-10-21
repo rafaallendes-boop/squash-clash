@@ -11,7 +11,11 @@ Fecha: 2026-10-21. Alcance autorizado: I1 / T1.1–T1.3 del plan First Ball r2. 
 - Siete asmdefs del árbol del plan: Core, Runtime, DevPanel, Editor, Core.Tests, Runtime.Tests y Experiments. Editor incluye la referencia al paquete URP necesaria para crear sus assets.
 - `ProjectSetup.Apply`: serialización ForceText, meta visibles, Input System nuevo, URP asignado en Graphics y Quality, iOS IL2CPP/ARM64, vertical sin autorrotación, firma automática, bundle ID confirmado y Frame Timing Stats. Minimum iOS conserva el valor del editor: 15.0.
 - Se aplicaron únicamente los ajustes estáticos de Physics enumerados en T1.2; no hay simulación, cancha ni pelota.
-- T1.2, primeras ejecuciones: EditMode 1/1 y PlayMode 1/1, sin fallos. Evidencia local en `Logs/t12-editmode-summary.log`, `Logs/t12-playmode-summary.log` y los XML de cada runner.
+- T1.2, primeras ejecuciones: EditMode 1/1, PlayMode 1/1 y Experiments smoke 1/1, sin fallos. Configuración aplicada dos veces; una cámara y una escena de build, sin duplicados. Evidencia local en `Logs/t12-editmode-summary.log`, `Logs/t12-playmode-summary.log` y `Logs/experiments-smoke-results.xml`.
+- T1.3: `BuildInfo` lee los seis campos de metadata y compone el rótulo, con asterisco para un workspace sucio. La pantalla UI Toolkit muestra título, versión/hash/perfil y FPS actualizados cada 0,5 s. El Editor puede usar metadata de sesión local si aún no hay build; el Player exige el recurso generado.
+- TDD: antes de implementar, EditMode registró dos fallos por ausencia de BuildInfo; PlayMode, uno por ausencia de UIDocument. Después: EditMode 3/3 y PlayMode 2/2. XML rojos conservados en `Logs/buildinfo-red-results.xml` y `Logs/bootscreen-red-results.xml`. Las pruebas de BuildInfo se refactorizaron a referencias tipadas después de verificar el primer verde.
+- `scripts/test.sh editmode NoSuchFirstBallTest_ExpectedZero` terminó con código 1 y `RESULT: total=0 passed=0 failed=0 skipped=0`, como exige el contrato. Evidencia: `Logs/zero-tests-summary.log`.
+- El runner de regresión selecciona explícitamente su ensamblado; no ejecuta `SquashClash.Experiments`. Los scripts de build y de instalación validan argumentos y respetan rutas con espacios.
 
 ## Ajustes de ejecución registrados
 
@@ -21,10 +25,11 @@ Fecha: 2026-10-21. Alcance autorizado: I1 / T1.1–T1.3 del plan First Ball r2. 
 4. El helper temporal de Package Manager se eliminó después de resolver y fijar las versiones. No se conserva infraestructura de instalación de paquetes innecesaria.
 5. `BuildInfo.json` y su meta se generan e importan en cada build y quedan ignorados. Se cargan por nombre desde Resources, sin referencia serializada a su GUID. Así su generación no marca falsamente el código como sucio.
 6. El seguimiento de tareas usa un ledger local: los scripts de `executing-plans` buscan encabezados `Task`, pero el plan usa `Tarea`. Se mantiene el plan original intacto.
+7. El bootstrap se hace en la raíz y `main`, conforme a la excepción explícita autorizada; no se crea worktree. Los scripts/configuración se verifican mediante ejecución e integración; el comportamiento de metadata y UI tiene pruebas RED→GREEN. `test.sh` se adelantó internamente para validar T1.2 con el runner real.
 
 ## Resultados pendientes
 
-- Pruebas de BuildInfo y pantalla inicial; rechazo de un filtro sin tests.
+- Última ejecución completa tras refactor de tests y rótulo diagnóstico de los defines de compilación.
 - Compilación `dev` y `prod`, firma automática y comprobación de sus perfiles.
 - Instalación, lanzamiento, versión/FPS y orientación en el iPhone.
 - Revisión de Claude sobre los commits locales y validación visual del PO. T1.4 y E2 no están autorizadas.

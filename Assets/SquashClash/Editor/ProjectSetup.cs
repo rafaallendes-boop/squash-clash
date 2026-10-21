@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using SquashClash.Runtime.App;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.SceneManagement;
@@ -7,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 namespace SquashClash.EditorTools
 {
@@ -31,6 +33,7 @@ namespace SquashClash.EditorTools
             PlayerSettings.bundleVersion = "0.1.0";
             PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.iOS, bundleId);
             PlayerSettings.SetScriptingBackend(NamedBuildTarget.iOS, ScriptingImplementation.IL2CPP);
+            PlayerSettings.SetIl2CppCompilerConfiguration(NamedBuildTarget.iOS, Il2CppCompilerConfiguration.Release);
             PlayerSettings.SetArchitecture(NamedBuildTarget.iOS, 1);
             PlayerSettings.iOS.appleEnableAutomaticSigning = true;
             PlayerSettings.iOS.appleDeveloperTeamID = Environment.GetEnvironmentVariable("TEAM_ID") ?? "";
@@ -51,6 +54,7 @@ namespace SquashClash.EditorTools
             physics.ApplyModifiedPropertiesWithoutUndo();
 
             Directory.CreateDirectory("Assets/SquashClash/Runtime/App");
+            Directory.CreateDirectory("Assets/SquashClash/Runtime/Resources");
             Directory.CreateDirectory("Assets/SquashClash/Scenes");
             AssetDatabase.Refresh();
             const string rendererPath = "Assets/SquashClash/Runtime/App/MainRenderer.asset";
@@ -90,6 +94,25 @@ namespace SquashClash.EditorTools
             camera.backgroundColor = new Color(0.035f, 0.09f, 0.12f);
             if (!camera.TryGetComponent<UniversalAdditionalCameraData>(out _))
                 camera.gameObject.AddComponent<UniversalAdditionalCameraData>();
+
+            const string panelPath = "Assets/SquashClash/Runtime/App/AppPanelSettings.asset";
+            var panel = AssetDatabase.LoadAssetAtPath<PanelSettings>(panelPath);
+            if (panel == null)
+            {
+                panel = ScriptableObject.CreateInstance<PanelSettings>();
+                AssetDatabase.CreateAsset(panel, panelPath);
+            }
+            panel.scaleMode = PanelScaleMode.ScaleWithScreenSize;
+            panel.referenceResolution = new Vector2Int(390, 844);
+            panel.screenMatchMode = PanelScreenMatchMode.MatchWidthOrHeight;
+            panel.match = 0.5f;
+            panel.themeStyleSheet = AssetDatabase.LoadAssetAtPath<ThemeStyleSheet>("Assets/SquashClash/Runtime/App/DefaultRuntimeTheme.tss");
+            if (panel.themeStyleSheet == null)
+                throw new InvalidOperationException("The default runtime theme must be imported.");
+            EditorUtility.SetDirty(panel);
+            var bootstrap = UnityEngine.Object.FindFirstObjectByType<AppBootstrap>();
+            if (bootstrap == null) bootstrap = new GameObject("App").AddComponent<AppBootstrap>();
+            bootstrap.GetComponent<UIDocument>().panelSettings = panel;
             EditorSceneManager.SaveScene(scene, MainScene);
             EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(MainScene, true) };
             AssetDatabase.SaveAssets();
