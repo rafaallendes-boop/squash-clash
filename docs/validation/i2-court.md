@@ -1,6 +1,6 @@
 # I2 — cancha y cámara fija
 
-Fecha: 2026-10-21. Rama: `firstball/i2-court`, base `6ad2961`. Alcance autorizado: T2.1–T2.3; T3.1 y posteriores excluidas. **En implementación.** La revisión de Claude y la validación del PO en el iPhone serán el punto de control antes de fusionar.
+Fecha: 2026-10-21. Rama: `firstball/i2-court`, base `6ad2961`. Alcance autorizado: T2.1–T2.3; T3.1 y posteriores excluidas. **Código y suites completos; dev compilada e instalada, pendiente de desbloqueo para verificar el arranque.** [PR #1](https://github.com/rafaallendes-boop/squash-clash/pull/1) hacia main. La revisión de Claude y la validación del PO en el iPhone serán el punto de control antes de fusionar.
 
 ## Geometría — T2.1
 
@@ -42,8 +42,18 @@ El preset inicial falló dos pruebas de encuadre: una esquina del frontis daba x
 
 TDD runtime: contratos RED **7/7 fallos**; implementación con preset inicial **7/9 pasan**, con dos fallos de encuadre. Test adicional de línea trasera RED **2 fallos de 3**; final PlayMode **9/9 GREEN**. Un conflicto del nombre de namespace Camera con el smoke anterior se resolvió calificando UnityEngine.Camera antes del RED válido. Captura real del render de cámara a 1206×2622: `Logs/i2-court-editor.png` (sin la UI overlay); inspeccionada visualmente. La captura no sustituye la instalación ni la aceptación del PO.
 
-## Pendiente antes del punto de control
+## Evidencia y dispositivo
 
-- Build e instalación dev en el iPhone; firma, arranque, UI y captura reales.
-- Revisión interna final de rama y PR hacia main para Claude.
+- Suites finales: EditMode **79/79**, PlayMode **9/9**, cero fallos y cero omitidos. [Resultados y hashes de XML](evidence/2026-10-21-i2-tests.json), [captura del editor](evidence/2026-10-21-i2-editor.png).
+- `scripts/build-ios.sh dev`: código 0 y `BUILD SUCCEEDED`, usando Unity 6000.3.27f1 / Xcode 27.1. Metadata `0.1.0+1cbf00c dev`, `gitDirty=false`, Player no Development y Release. Ese hash identifica el código compilado; las actualizaciones posteriores de documentación no cambian la app.
+- Firma estricta, bundle, equipo, perfil, dispositivo registrado y ARM64 del ejecutable y UnityFramework comprobados. [Inspección de la app](evidence/2026-10-21-i2-dev-inspection.json). El perfil vence el 28 de octubre, igual que en I1.
+- El iPhone se consultó conectado por cable, paired/connected, Modo de desarrollador enabled, DDI disponible e iOS 26.6.2. La instalación tuvo éxito; el lanzamiento fue rechazado como `Locked` (CoreDevice 10002 / FBS error 7). Duplicación del iPhone pide autenticación local del Mac. Se solicitó al PO desbloquear el teléfono o la duplicación; no es un fallo de compilación ni de confianza del certificado.
+- Logs locales: `Logs/i2-dev-build-summary.log`, `Logs/build-dev.log`, `Logs/xcode-dev.log`, `Logs/i2-device-install.log`, `Logs/i2-device-console.log` y JSON de instalación/lanzamiento. No se publican logs con identificadores del dispositivo.
+
+## Revisión y pendientes
+
+La [revisión independiente interna](../reviews/2026-10-21-first-ball-i2-internal-review.md) de `6ad2961..1cbf00c` no encontró Critical ni Important. **Observación menor diferida:** el texto del plan define +X hacia la derecha desde atrás, pero la pose explícita de cámara hace que se vea hacia la izquierda; el rival x=4,5 aparece a la izquierda del humano x=3,2. Se conserva la fórmula del plan, sin invertir ejes ni reflejar proyección por cuenta propia. Claude/PO deben aclarar la correspondencia antes de controles o decisiones direccionales; no afecta a interacción deportiva en esta cancha estática.
+
+- Verificar arranque, UI y captura reales después del desbloqueo.
+- Revisión de Claude en la PR, distinta de la revisión interna ya completada.
 - Validación del PO: reconocer la cancha, proporción de líneas y referencias en vertical. No fusionar hasta revisión de Claude y aceptación del PO.

@@ -1,0 +1,34 @@
+{
+  "profile": "dev",
+  "metadata": {
+    "version": "0.1.0",
+    "gitHash": "1cbf00c",
+    "profile": "dev",
+    "builtAtUtc": "2026-10-21T16:52:01.6337150Z",
+    "unityVersion": "6000.3.27f1",
+    "gitDirty": false
+  },
+  "bundleIdentifier": "cl.rafaallendes.squashclash",
+  "displayName": "Squash Clash",
+  "version": "0.1.0",
+  "minimumOSVersion": "15.0",
+  "supportedOrientations": [
+    "UIInterfaceOrientationPortrait"
+  ],
+  "architectures": {
+    "executable": "Mach-O 64-bit executable arm64",
+    "unityFramework": "Mach-O 64-bit dynamically linked shared library arm64"
+  },
+  "codesignVerified": true,
+  "signingTeam": [
+    "PYXNMVF47Z"
+  ],
+  "provisioningProfile": "iOS Team Provisioning Profile: cl.rafaallendes.squashclash",
+  "profileExpiresUtc": "2026-10-28T14:59:31Z",
+  "developmentSigningGetTaskAllow": true,
+  "deviceRegistered": true,
+  "productIl2CppModules": [
+    "g_SquashClash_Core_CodeGenModule",
+    "g_SquashClash_Runtime_CodeGenModule"
+  ]
+}

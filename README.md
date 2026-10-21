@@ -2,7 +2,7 @@
 
 Prototipo de squash para iPhone en Unity 6.3 LTS: validación progresiva, empezando por First Ball.
 
-[Spec v0.3](docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md) · [Plan First Ball r2](docs/superpowers/plans/2026-10-20-squash-clash-first-ball.md) · [Entorno](docs/validation/environment.md) · [E1: instalación y evidencia](docs/validation/e1-first-installation.md)
+[Spec v0.3](docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md) · [Plan First Ball r2](docs/superpowers/plans/2026-10-20-squash-clash-first-ball.md) · [Entorno](docs/validation/environment.md) · [E1: instalación y evidencia](docs/validation/e1-first-installation.md) · [I2: cancha y cámara](docs/validation/i2-court.md)
 
 Editor fijado: **6000.3.27f1 (Apple silicon)** con iOS Build Support. Configurar `scripts/device.env` a partir de `scripts/device.env.example`; el archivo real queda excluido de Git. Requiere la cuenta del PO en Xcode y el iPhone conectado, desbloqueado y con Modo de desarrollador.
 
@@ -22,4 +22,6 @@ scripts/install-ios.sh prod
 
 I1 se preparó en `main` como excepción de bootstrap; Claude revisó los commits locales y el PO validó ambas builds en el iPhone. El remoto y E2 requieren autorización independiente.
 
-**E1/I1 (T1.1–T1.3) cerrado el 2026-10-21.** `dev` y `prod` compiladas, firmadas y ejecutadas en el iPhone 16 Pro con iOS 26.6.2; ambas muestran `0.1.0+ea0a1e1` y 60 FPS. Revisión de Claude aprobada con dos observaciones menores y validación del PO de título, versión/perfil, FPS y permanencia en vertical al girar el teléfono en ambas builds. El informe enlazado contiene las capturas, los seguimientos y los límites de esta comprobación. T1.4, E2 y T3.1 siguen sin autorización.
+**E1/I1 (T1.1–T1.3) cerrado el 2026-10-21**, con revisión de Claude y validación del PO de ambas builds en el iPhone, incluido el giro físico. **T1.4 completada:** [remoto privado verificado](docs/validation/github-remote.md).
+
+**I2 autorizado y en comprobación** en `firstball/i2-court`: T2.1–T2.3, cancha visual, configuración y cámara fija, con PR hacia `main` para Claude y punto de control del PO en el iPhone. No fusionar antes de ambas validaciones. T3.1 y etapas posteriores siguen sin autorización.
