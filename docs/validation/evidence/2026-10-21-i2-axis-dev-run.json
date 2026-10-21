@@ -1,0 +1,30 @@
+{
+  "clarification": "AX-1",
+  "build": "0.1.0+1b333ad dev",
+  "gitDirty": false,
+  "nativeLaunchVerified": true,
+  "launchCommand": "xcrun devicectl device process launch --device <local device> --terminate-existing cl.rafaallendes.squashclash",
+  "launchExitCode": 0,
+  "launchOutcome": "success",
+  "diagnosticConsoleAttached": false,
+  "screenshotCommand": "xcrun devicectl device capture screenshot --device <local device> --destination <local PNG>",
+  "screenshotExitCode": 0,
+  "screenshotOutcome": "success",
+  "screenshotDisplay": "primary display (devicectl default)",
+  "screenshotFile": "2026-10-21-i2-axis-dev.png",
+  "screenshotSha256": "9e5e3b1e738a79cbe64fa27412237f2b9ef192a0705d7101995bd015d1009dd0",
+  "resolution": [
+    1206,
+    2622
+  ],
+  "orientationObserved": "Portrait",
+  "fpsCounterObserved": 60,
+  "visualInspection": "Native screenshot inspected: court, red lines, tin, blue/red capsules, title and corrected build label visible.",
+  "cameraAndPresetChanged": false,
+  "priorPoCourtAcceptance": "accepted in chat before AX-1; keep framing improvement for later gameplay work",
+  "claudeReview": "reported by PO: no implementation bugs; requested axis clarification addressed by AX-1",
+  "nativeVerificationAfterPoConfirmedReady": true,
+  "performanceGateEvaluated": false,
+  "pullRequestMerged": false,
+  "t31Authorized": false
+}
