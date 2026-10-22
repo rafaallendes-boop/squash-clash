@@ -1,0 +1,31 @@
+[
+  {
+    "variant": "baseline",
+    "executionCode": "cd7fc2a",
+    "original": "docs/validation/evidence/physics-spike-P1/editor-cd7fc2a-baseline-original.md",
+    "sha256": "652be89ffe3d4c28d0eee5b28c5fff89beda2870ea9702e8726e3d4b3b715397",
+    "corrected": "docs/validation/evidence/physics-spike-P1/editor-cd7fc2a-baseline-c13-corrected.md",
+    "correctedSha256": "c284dd598e9f25881d7f3b249ed037a7a912ca5f0daf4891fc607c7250e9adf6",
+    "c13Correction": {
+      "sampleCount": 2,
+      "storedFloat32Samples": [
+        1.2370189428329468,
+        1.273307204246521
+      ],
+      "conventionalMedianFloat32": 1.2551630735397339,
+      "method": "recover exact two float32 values from R-formatted minimum and upper central value at n=2; average; round float32; no other data modified"
+    },
+    "audit": {
+      "other17CriterionRowsUnchanged": true,
+      "c13ThresholdVerdictPopulationUnchanged": true,
+      "onlyMedianChanged": true
+    }
+  },
+  {
+    "variant": "speculative",
+    "executionCode": "cd7fc2a",
+    "original": "docs/validation/evidence/physics-spike-P1/editor-cd7fc2a-speculative-original.md",
+    "sha256": "a664ba0cb99a44f554a8080dd8efaa1c112a0d5fe93980797b8408f51ffe1e22",
+    "c13Correction": "not needed: 15 evaluable samples, odd population; original central value is conventional median"
+  }
+]

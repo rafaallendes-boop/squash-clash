@@ -181,3 +181,13 @@ Ejecutado RED→GREEN: cuatro tests nuevos, RED 155/159 → GREEN 159/159; PlayM
 Después de la fusión se continúa con I4b/T4.3–T4.4 en `firstball/i4b-physics-run` y PR propia. Detenerse al entregar su informe. I4c, P2/T4.5 e I5+ siguen sin autorizar. Renovar perfil antes de instalar después del 28 de octubre y comprobar siempre vigencia.
 
 **Fusión ejecutada:** PR #3 MERGED, merge commit `ca50142e4c15854b45dc5d7285d0c57bd89860a3`, head `3c66bad7ba3f9a111e824c995796a735816faae7`; main sincronizada. I4a cerrado, condición para I4b cumplida.
+
+## I4b — entrega parcial, campaña del editor completa (2026-10-22)
+
+Alcance autorizado T4.3–T4.4 en `firstball/i4b-physics-run`, código final `ee76086`, [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4). Runner, benchmark y controles implementados; **EditMode 170/170 y PlayMode 43/43**, cero fallos/omitidos. Exclusión nativa prod verificada RED→GREEN contra exports nuevos; una revisión interna fresca detectó dos Important corregidos en un único pase RED→GREEN, sin segunda revisión. No sustituye la revisión de Claude.
+
+Cinco variantes completas del editor, 10.053 lanzamientos de robustez por variante. Ninguna cumple todos los criterios físicos; incumplimientos y no evaluables conservados. Baseline/speculative de cd7fc2a con procedencia explícita y corrección derivada de la mediana C13 par de baseline, originales intactos; otras tres ejecutadas en ee76086. No se atribuye a Claude una clasificación causal aún no recibida.
+
+Build dev final 0.1.0+ee76086 limpia, Release ARM64 firmada y metadata embebida comprobada. **Instalada y abierta** tras conexión del PO; Escenario S1→S2 y cancelación comprobados desde Duplicación, informe INCOMPLETO guardado/copiado y térmico nominal→nominal. Campaña completa y C17 nativo pendientes. La firma no los sustituye. Perfil vigente al compilar hasta 2026-10-28T14:59:31Z; comprobar vigencia al instalar y renovar si corresponde, siempre antes de una instalación posterior al 28 de octubre.
+
+[Informe físico parcial](2026-10-22-first-ball-physics-spike-P1.md), [validación, evidencia y resoluciones](../validation/i4b-physics-run.md). **No es aceptación del PO, revisión de Claude, cierre ni autorización de fusionar I4b.** No se modificó spec/plan, preset, escenarios numéricos, umbrales ni decisiones deportivas. I4c/P2/I5+ siguen sin autorizar; al completar el informe de I4b se detendrá para PO/Claude.

@@ -1,0 +1,198 @@
+{
+  "date": "2026-10-22",
+  "baseCommit": "6fd04e0",
+  "productCodeCommit": "ee76086ae48f688a62bc1ff23463eb94a5fad8de",
+  "runs": [
+    {
+      "xml": "Logs/i4b-diagnostics-green-results.xml",
+      "sha256": "86d83207d229bb7146043bf1dac38dc8d5f4c67eb3c857d94f8e3cd569e6f054",
+      "counts": {
+        "total": 168,
+        "passed": 168,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "xml": "Logs/i4b-diagnostics-red-results.xml",
+      "sha256": "a1df0572222cdf44b9fbb914d142a8ce98c387967d1c5c2ded19cebffa7979be",
+      "counts": {
+        "total": 168,
+        "passed": 166,
+        "failed": 2,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Reports_C15IncludesBothDistinctSurfaceSteps",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Reports_InvalidEnergyIsExplicitInEachDiagnosticPopulation"
+      ]
+    },
+    {
+      "xml": "Logs/i4b-metadata-green-results.xml",
+      "sha256": "2905133ed87900ea453bb489221630ead178d620c8591c8b97eb22a6121f6cb7",
+      "counts": {
+        "total": 41,
+        "passed": 41,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "xml": "Logs/i4b-metadata-red-results.xml",
+      "sha256": "16f02798c6c2b12f66d468b7e05b50600d1ad30fb6d3253a433a4e120b5c7872",
+      "counts": {
+        "total": 41,
+        "passed": 40,
+        "failed": 1,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Runtime.Tests.SpikeSectionTests.Background_CancelsSavesIncompleteAndRestoresSleepTimeout"
+      ]
+    },
+    {
+      "xml": "Logs/i4b-t43-green-results.xml",
+      "sha256": "2c264b502a2fad01c0c2bc8fd83eb1067b43c3e8cf2ec5cd21c6217d73036433",
+      "counts": {
+        "total": 166,
+        "passed": 166,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "xml": "Logs/i4b-t43-play-results.xml",
+      "sha256": "2eaf19f2520fe147dac7e339145c83fcbd44480bdfdcf5edc6b922d188a97355",
+      "counts": {
+        "total": 37,
+        "passed": 37,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "xml": "Logs/i4b-t43-red-results.xml",
+      "sha256": "b7e890e343f58d127ed704f40a880f42b320b4608aa5be5bb35b8208673cd0fd",
+      "counts": {
+        "total": 166,
+        "passed": 159,
+        "failed": 7,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Benchmark_CancelReleasesInstanceAndRejectsPartialStatistics",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Benchmark_DiscardsWarmup",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Cancel_ProducesIncompleteResult",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Exception_ReleasesAllInstancesAndLeavesIncompleteResult",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Reports_EnergyNotApplicableSeparately_AndAllEighteenRows",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Run_KeepsAtMostThreeLiveInstances_AndReleasesAll",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Step_RespectsBudget_AndCompletesOverManyCalls"
+      ]
+    },
+    {
+      "xml": "Logs/ui-validation/i4b-t44-green-results.xml",
+      "sha256": "49fb063b727ab4d2bc63d2db45c57d7e8b14b77eb18a2ce6ff0c6e741d677c66",
+      "counts": {
+        "total": 41,
+        "passed": 41,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "xml": "Logs/ui-validation/i4b-t44-red-results.xml",
+      "sha256": "cf3160a5965e8939d80921cb53634f0bc7338d7b769aebd619be9954c0f313f9",
+      "counts": {
+        "total": 41,
+        "passed": 35,
+        "failed": 6,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Runtime.Tests.AppBootstrapTests.SystemPause_ShowsResumeOverlay_WithoutDevPanelDependency",
+        "SquashClash.Runtime.Tests.AppBootstrapTests.SystemResume_DiscardsDeltaOfResumeFrame",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.ReleaseForExperiment_DisposesBothAndReplayCreatesNewPair",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.ScenarioLaunchAndReplay_PreserveStateAndFullHorizon",
+        "SquashClash.Runtime.Tests.SpikeSectionTests.Background_CancelsSavesIncompleteAndRestoresSleepTimeout",
+        "SquashClash.Runtime.Tests.SpikeSectionTests.ScenarioButton_LaunchesS1ThenS2WithApprovedState"
+      ]
+    },
+    {
+      "xml": "Logs/i4b-review-fix-green-edit-results.xml",
+      "sha256": "fb60a2e48b0cba6581e35fe7ab90b26afa5b31cc0a944ee795a8ca1d3de00888",
+      "counts": {
+        "total": 170,
+        "passed": 170,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "xml": "Logs/i4b-review-fix-green-play-results.xml",
+      "sha256": "738741ac71b14ecc77ec6b44ef91ed577724d30a3b5bbeb6e1a38f0c59a87c27",
+      "counts": {
+        "total": 43,
+        "passed": 43,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "xml": "Logs/i4b-review-fix-red-edit-results.xml",
+      "sha256": "8589cfff19d412b8f6a3467fd0f6843888deb0f35b7967ab28c38b5e6b11dc39",
+      "counts": {
+        "total": 170,
+        "passed": 169,
+        "failed": 1,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Reports_C13MedianUsesConventionalEvenAndOddSamples(False)"
+      ]
+    },
+    {
+      "xml": "Logs/i4b-review-fix-red-play-results.xml",
+      "sha256": "408e0861d5e8f0da29a26948c541c20c075f436d4ce44105851c6d9a449c186d",
+      "counts": {
+        "total": 43,
+        "passed": 41,
+        "failed": 2,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Runtime.Tests.SpikeSectionTests.Cancellation_SaveFailureStillShowsReportAndRecoversHost",
+        "SquashClash.Runtime.Tests.SpikeSectionTests.Completion_SaveFailureStillShowsReportAndRecoversHost"
+      ]
+    }
+  ],
+  "notes": [
+    "T4.3 compile-only iterator typo rejected by fresh XML check; not counted as RED.",
+    "UI RED included four new expected failures and two legacy zero-lifetime-drop assumptions; GREEN uses unchanged-before/after-pause metric.",
+    "Native exclusion RED: one ThermalState.mm incorrectly in prod; GREEN fresh exports dev present / prod absent, product modules correct.",
+    "Five complete editor variants; native dev signed and ready, not installed; device execution and physical-failure classification pending. No I4c decision.",
+    "Single fresh independent code review: two Important findings; one RED-to-GREEN fix pass at ee76086, no re-review.",
+    "Native helper exclusion rechecked against fresh dev/prod exports at ee76086; sanitized manifests stored alongside this file.",
+    "Interrupted initial solver12 and redundant no-ed runs are not used as complete results. Only fresh complete XML/report pairs are listed in editor-runs manifest."
+  ],
+  "finalRegression": {
+    "EditMode": {
+      "total": 170,
+      "passed": 170,
+      "failed": 0,
+      "skipped": 0
+    },
+    "PlayMode": {
+      "total": 43,
+      "passed": 43,
+      "failed": 0,
+      "skipped": 0
+    }
+  }
+}

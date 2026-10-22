@@ -19,7 +19,7 @@ scripts/install-ios.sh prod
 
 `dev` usa `SQUASH_DEV`, IL2CPP Release y Xcode Release, sin Development Player. `prod` omite el define. `debug` es Development Player e IL2CPP/Xcode Debug; sus métricas no son comparables. `--console` mantiene la sesión hasta cerrar la app; sin esa opción la instalación y el lanzamiento retornan.
 
-`scripts/spike.sh` se incorporará en E4 para experimentos de física separados de las pruebas de regresión. No existe aún durante E1.
+`scripts/spike.sh baseline|speculative|offset05|solver12|no-ed` ejecuta la campaña de física del editor separada de la regresión. Salida 0 exige informe completo y limpieza de recursos; los veredictos físicos pueden ser Fail y se reportan como datos.
 
 I1 se preparó en `main` como excepción de bootstrap; Claude revisó los commits locales y el PO validó ambas builds en el iPhone. El remoto y E2 requieren autorización independiente.
 
@@ -44,3 +44,5 @@ El bloqueo previo de acceso a Duplicación quedó resuelto por el PO. Su observa
 Entrega I4a publicada en [PR #3](https://github.com/rafaallendes-boop/squash-clash/pull/3), abierta hacia main. Worktree conservado para la revisión; I4b no iniciado.
 
 I4a cerrado: PR #3 fusionada (`ca50142`), ajustes de Claude verificados RED→GREEN, EditMode 159/159 y PlayMode 37/37. I4b autorizado; gate I4c/P2/I5+ pendientes de autorización.
+
+**Estado actual — I4b, entrega parcial:** [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), código `ee76086`, EditMode170/170 y PlayMode43/43. Runner incremental, benchmark y controles de escenario/prueba en dev; exclusión real de prod verificada. Cinco variantes completas del editor, ninguna cumple todos los criterios: [informe físico](docs/reviews/2026-10-22-first-ball-physics-spike-P1.md). Build dev Release ARM64 firmada instalada/abierta; escenario/cancelación comprobados en iPhone, falta campaña completa y C17 nativo. Clasificación de Claude pendiente. [Validación y resoluciones](docs/validation/i4b-physics-run.md). I4b no cerrado; I4c/P2/I5+ siguen sin autorizar.

@@ -1,0 +1,835 @@
+{
+  "date": "2026-10-22",
+  "configHash": "c86243b15a97",
+  "seed": 20261020,
+  "robustnessLaunchesPerVariant": 10053,
+  "sourceProvenance": "baseline derived C13 median from original cd7fc2a n=2; speculative odd C13 unchanged; other runs executed at ee76086; see existing-runs manifest",
+  "editorTiming": "informative only; concurrent editor/build activity; no native C17 certification",
+  "runs": [
+    {
+      "variant": "baseline",
+      "executionCode": "cd7fc2a",
+      "report": "docs/validation/evidence/physics-spike-P1/editor-cd7fc2a-baseline-c13-corrected.md",
+      "reportSha256": "c284dd598e9f25881d7f3b249ed037a7a912ca5f0daf4891fc607c7250e9adf6",
+      "xmlLocal": "Logs/cd7fc2a-complete-runs/spike-baseline-results.xml",
+      "xmlSha256": "bb577bd4e8e6414223b022cb26f0cd31fdc8779e8722d716575c340b804d7ab0",
+      "counts": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-22 20:50:43Z",
+      "endedUtc": "2026-10-22 21:08:09Z",
+      "durationSeconds": 1046.3364423,
+      "allGatingPass": false,
+      "resourceCleanupAssertionsPassed": true,
+      "criteria": {
+        "C1": {
+          "measurement": "fallos=8008; evaluados=10053; no evaluables=0; atravesamientos=138736; salidas superiores=1745; seed=20261020; S8=10000; S8d=36",
+          "threshold": "0 atravesamientos",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "10053/0/10053",
+          "coverage": "cerrada"
+        },
+        "C2": {
+          "measurement": "fallos=0; evaluados=67787; no evaluables=0",
+          "threshold": "Todos finitos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "67787/0/67787",
+          "coverage": "cerrada"
+        },
+        "C3": {
+          "measurement": "fallos=25; evaluados=1443; no evaluables=414; no aplica (sin pasos de esquina, fuera de población)=8182; Corner [Measured=1443, NotApplicable=8182, NotEvaluable=414]: máximo entre casos medidos: S8-4348 Measured, ganancia=5.92081356, paso=14, rapidez antes=1.05337 m/s, después=2.40061784 m/s; CornerWithImpact [Measured=1676, NotApplicable=8182, NotEvaluable=181]: máximo entre casos medidos: S8-2697 Measured, ganancia=0.0178474355, paso=321, rapidez antes=0.13078326 m/s, después=0.0956399739 m/s; CornerPersistentOnly [Measured=1235, NotApplicable=8390, NotEvaluable=414]: máximo entre casos medidos: S8-4348 Measured, ganancia=5.92081356, paso=14, rapidez antes=1.05337 m/s, después=2.40061784 m/s",
+          "threshold": "≤ 1e-5 (ruido float)",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "1443/414/1857",
+          "coverage": "cerrada"
+        },
+        "C4": {
+          "measurement": "fallos=0; evaluados=4; no evaluables=0; impactos repetidos=0",
+          "threshold": "0 (|vn| > 0,5 m/s; no persistentes)",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "4/0/4",
+          "coverage": "cerrada"
+        },
+        "C5": {
+          "measurement": "fallos=1; evaluados=117; no evaluables=0",
+          "threshold": "Igualdad de estados y contactos",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "117/0/117",
+          "coverage": "cerrada"
+        },
+        "C6": {
+          "measurement": "fallos=92; evaluados=10017; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "10017/0/10017",
+          "coverage": "cerrada"
+        },
+        "C7": {
+          "measurement": "fallos=144; evaluados=18778; no evaluables=1254",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "18778/1254/20032",
+          "coverage": "cerrada"
+        },
+        "C8": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C9": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Diagnóstico; no decide el gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C10": {
+          "measurement": "fallos=9; evaluados=9; no evaluables=0; error máximo mm=17.86533",
+          "threshold": "≤ 1 mm [EXPERIMENTO, D-1]",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "9/0/9",
+          "coverage": "cerrada"
+        },
+        "C11": {
+          "measurement": "fallos=2; evaluados=6; no evaluables=0",
+          "threshold": "Igual a ExpectTouch",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "6/0/6",
+          "coverage": "cerrada"
+        },
+        "C12": {
+          "measurement": "fallos=0; evaluados=11; no evaluables=0",
+          "threshold": "Informe al gate; sin umbral inventado",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "11/0/11",
+          "coverage": "cerrada"
+        },
+        "C13": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=38; mínimo=1.237019; mediana=1.25516307",
+          "threshold": "Informe al gate; ratio sin umbral",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/38/40",
+          "coverage": "cerrada"
+        },
+        "C14": {
+          "measurement": "máximo impactos no persistentes/paso=3; tope configurable=False; parámetro maxImpactsPerStep no operativo con P1",
+          "threshold": "Informe al gate; tope configurable sí/no (P1: no)",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        },
+        "C15": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Mismo paso y ContactTiming; informe al gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C16": {
+          "measurement": "penetración máxima=49804.1445 mm; muestras persistentes=2155202 (todas las trayectorias ejecutadas)",
+          "threshold": "Informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        },
+        "C17": {
+          "measurement": "n=200; warmup=20; median=14.030450; p95=15.528800; p99=15.900300; max=16.308300 ms; percentiles nearest rank",
+          "threshold": "p95 ≤ 1 ms en iPhone; editor informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "200/0/200",
+          "coverage": "cerrada"
+        },
+        "C18": {
+          "measurement": "RunsInEditMode=False; timing=Estimated",
+          "threshold": "Preferencia, no gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        }
+      }
+    },
+    {
+      "variant": "speculative",
+      "executionCode": "cd7fc2a",
+      "report": "docs/validation/evidence/physics-spike-P1/editor-cd7fc2a-speculative-original.md",
+      "reportSha256": "a664ba0cb99a44f554a8080dd8efaa1c112a0d5fe93980797b8408f51ffe1e22",
+      "xmlLocal": "Logs/cd7fc2a-complete-runs/spike-speculative-results.xml",
+      "xmlSha256": "44477c0594bd5ce60b689d9ea1f1c70ee8458b8e09d3bf4d561bcdeee331c3a5",
+      "counts": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-22 20:53:20Z",
+      "endedUtc": "2026-10-22 21:10:04Z",
+      "durationSeconds": 1004.069509,
+      "allGatingPass": false,
+      "resourceCleanupAssertionsPassed": true,
+      "criteria": {
+        "C1": {
+          "measurement": "fallos=0; evaluados=10053; no evaluables=0; atravesamientos=0; salidas superiores=2105; seed=20261020; S8=10000; S8d=36",
+          "threshold": "0 atravesamientos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "10053/0/10053",
+          "coverage": "cerrada"
+        },
+        "C2": {
+          "measurement": "fallos=0; evaluados=67789; no evaluables=0",
+          "threshold": "Todos finitos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "67789/0/67789",
+          "coverage": "cerrada"
+        },
+        "C3": {
+          "measurement": "fallos=17; evaluados=2772; no evaluables=0; no aplica (sin pasos de esquina, fuera de población)=7267; Corner [Measured=2772, NotApplicable=7267, NotEvaluable=0]: máximo entre casos medidos: S8-8469 Measured, ganancia=0.0273839571, paso=322, rapidez antes=0.06398784 m/s, después=0.06558204 m/s; CornerWithImpact [Measured=2772, NotApplicable=7267, NotEvaluable=0]: máximo entre casos medidos: S8-8469 Measured, ganancia=0.0273839571, paso=322, rapidez antes=0.06398784 m/s, después=0.06558204 m/s; CornerPersistentOnly [Measured=2689, NotApplicable=7350, NotEvaluable=0]: máximo entre casos medidos: S8-9384 Measured, ganancia=0.0273839273, paso=344, rapidez antes=0.06382191 m/s, después=0.06550735 m/s",
+          "threshold": "≤ 1e-5 (ruido float)",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "2772/0/2772",
+          "coverage": "cerrada"
+        },
+        "C4": {
+          "measurement": "fallos=0; evaluados=4; no evaluables=0; impactos repetidos=0",
+          "threshold": "0 (|vn| > 0,5 m/s; no persistentes)",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "4/0/4",
+          "coverage": "cerrada"
+        },
+        "C5": {
+          "measurement": "fallos=0; evaluados=117; no evaluables=0",
+          "threshold": "Igualdad de estados y contactos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "117/0/117",
+          "coverage": "cerrada"
+        },
+        "C6": {
+          "measurement": "fallos=139; evaluados=10017; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "10017/0/10017",
+          "coverage": "cerrada"
+        },
+        "C7": {
+          "measurement": "fallos=183; evaluados=18779; no evaluables=1253",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "18779/1253/20032",
+          "coverage": "cerrada"
+        },
+        "C8": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C9": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Diagnóstico; no decide el gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C10": {
+          "measurement": "fallos=9; evaluados=9; no evaluables=0; error máximo mm=77.24857",
+          "threshold": "≤ 1 mm [EXPERIMENTO, D-1]",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "9/0/9",
+          "coverage": "cerrada"
+        },
+        "C11": {
+          "measurement": "fallos=3; evaluados=6; no evaluables=0",
+          "threshold": "Igual a ExpectTouch",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "6/0/6",
+          "coverage": "cerrada"
+        },
+        "C12": {
+          "measurement": "fallos=0; evaluados=11; no evaluables=0",
+          "threshold": "Informe al gate; sin umbral inventado",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "11/0/11",
+          "coverage": "cerrada"
+        },
+        "C13": {
+          "measurement": "fallos=0; evaluados=15; no evaluables=16; mínimo=1.32343864; mediana=8.159093",
+          "threshold": "Informe al gate; ratio sin umbral",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "15/16/31",
+          "coverage": "cerrada"
+        },
+        "C14": {
+          "measurement": "máximo impactos no persistentes/paso=2; tope configurable=False; parámetro maxImpactsPerStep no operativo con P1",
+          "threshold": "Informe al gate; tope configurable sí/no (P1: no)",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        },
+        "C15": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Mismo paso y ContactTiming; informe al gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C16": {
+          "measurement": "penetración máxima=0.612672448 mm; muestras persistentes=1774348 (todas las trayectorias ejecutadas)",
+          "threshold": "Informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        },
+        "C17": {
+          "measurement": "n=200; warmup=20; median=8.805900; p95=10.167000; p99=10.915200; max=14.535700 ms; percentiles nearest rank",
+          "threshold": "p95 ≤ 1 ms en iPhone; editor informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "200/0/200",
+          "coverage": "cerrada"
+        },
+        "C18": {
+          "measurement": "RunsInEditMode=False; timing=Estimated",
+          "threshold": "Preferencia, no gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        }
+      }
+    },
+    {
+      "variant": "offset05",
+      "executionCode": "ee76086",
+      "report": "docs/validation/evidence/physics-spike-P1/editor-ee76086-offset05.md",
+      "reportSha256": "50039a490f6103fcba8158795da7c2b4c87dedd1644ba662ae24c28698ba8ca7",
+      "xmlLocal": "Logs/spike-offset05-results.xml",
+      "xmlSha256": "8cd674863d404407d77cd90175b1cd64e3ce3763efb0b3fe834af1634fbaa87e",
+      "counts": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-22 21:17:53Z",
+      "endedUtc": "2026-10-22 21:33:19Z",
+      "durationSeconds": 926.1195521,
+      "allGatingPass": false,
+      "resourceCleanupAssertionsPassed": true,
+      "criteria": {
+        "C1": {
+          "measurement": "fallos=8115; evaluados=10053; no evaluables=0; atravesamientos=146621; salidas superiores=1746; seed=20261020; S8=10000; S8d=36",
+          "threshold": "0 atravesamientos",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "10053/0/10053",
+          "coverage": "cerrada"
+        },
+        "C2": {
+          "measurement": "fallos=0; evaluados=67787; no evaluables=0",
+          "threshold": "Todos finitos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "67787/0/67787",
+          "coverage": "cerrada"
+        },
+        "C3": {
+          "measurement": "fallos=26; evaluados=1408; no evaluables=443; no aplica (sin pasos de esquina, fuera de población)=8188; Corner [Measured=1408, NotApplicable=8188, NotEvaluable=443]: máximo entre casos medidos: S8-4348 Measured, ganancia=5.92081356, paso=14, rapidez antes=1.05337 m/s, después=2.40061784 m/s; CornerWithImpact [Measured=1673, NotApplicable=8188, NotEvaluable=178]: máximo entre casos medidos: S8-7425 Measured, ganancia=0.0263401587, paso=116, rapidez antes=0.082883954 m/s, después=0.0740853548 m/s; CornerPersistentOnly [Measured=1152, NotApplicable=8444, NotEvaluable=443]: máximo entre casos medidos: S8-4348 Measured, ganancia=5.92081356, paso=14, rapidez antes=1.05337 m/s, después=2.40061784 m/s",
+          "threshold": "≤ 1e-5 (ruido float)",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "1408/443/1851",
+          "coverage": "cerrada"
+        },
+        "C4": {
+          "measurement": "fallos=0; evaluados=4; no evaluables=0; impactos repetidos=0",
+          "threshold": "0 (|vn| > 0,5 m/s; no persistentes)",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "4/0/4",
+          "coverage": "cerrada"
+        },
+        "C5": {
+          "measurement": "fallos=1; evaluados=117; no evaluables=0",
+          "threshold": "Igualdad de estados y contactos",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "117/0/117",
+          "coverage": "cerrada"
+        },
+        "C6": {
+          "measurement": "fallos=81; evaluados=10017; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "10017/0/10017",
+          "coverage": "cerrada"
+        },
+        "C7": {
+          "measurement": "fallos=138; evaluados=18778; no evaluables=1254",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "18778/1254/20032",
+          "coverage": "cerrada"
+        },
+        "C8": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C9": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Diagnóstico; no decide el gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C10": {
+          "measurement": "fallos=9; evaluados=9; no evaluables=0; error máximo mm=17.86533",
+          "threshold": "≤ 1 mm [EXPERIMENTO, D-1]",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "9/0/9",
+          "coverage": "cerrada"
+        },
+        "C11": {
+          "measurement": "fallos=2; evaluados=6; no evaluables=0",
+          "threshold": "Igual a ExpectTouch",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "6/0/6",
+          "coverage": "cerrada"
+        },
+        "C12": {
+          "measurement": "fallos=0; evaluados=11; no evaluables=0",
+          "threshold": "Informe al gate; sin umbral inventado",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "11/0/11",
+          "coverage": "cerrada"
+        },
+        "C13": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=38; mínimo=1.237019; mediana=1.25516307",
+          "threshold": "Informe al gate; ratio sin umbral",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/38/40",
+          "coverage": "cerrada"
+        },
+        "C14": {
+          "measurement": "máximo impactos no persistentes/paso=3; tope configurable=False; parámetro maxImpactsPerStep no operativo con P1",
+          "threshold": "Informe al gate; tope configurable sí/no (P1: no)",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        },
+        "C15": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Mismo paso y ContactTiming; informe al gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C16": {
+          "measurement": "penetración máxima=49804.1445 mm; muestras persistentes=1914937 (todas las trayectorias ejecutadas)",
+          "threshold": "Informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        },
+        "C17": {
+          "measurement": "n=200; warmup=20; median=13.983900; p95=15.643200; p99=16.046700; max=16.974000 ms; percentiles nearest rank",
+          "threshold": "p95 ≤ 1 ms en iPhone; editor informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "200/0/200",
+          "coverage": "cerrada"
+        },
+        "C18": {
+          "measurement": "RunsInEditMode=False; timing=Estimated",
+          "threshold": "Preferencia, no gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        }
+      }
+    },
+    {
+      "variant": "solver12",
+      "executionCode": "ee76086",
+      "report": "docs/validation/evidence/physics-spike-P1/editor-ee76086-solver12.md",
+      "reportSha256": "9425c86edbf46e39a2998753b70c7933fa0675ba5a1c1d506b7dba3f76b3bc5f",
+      "xmlLocal": "Logs/spike-solver12-results.xml",
+      "xmlSha256": "43745523b592c6f9cff1d77a985afc95fe3f28802a53d956bd73a25a952c7d6d",
+      "counts": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-22 21:21:40Z",
+      "endedUtc": "2026-10-22 21:38:55Z",
+      "durationSeconds": 1034.2698268,
+      "allGatingPass": false,
+      "resourceCleanupAssertionsPassed": true,
+      "criteria": {
+        "C1": {
+          "measurement": "fallos=8010; evaluados=10053; no evaluables=0; atravesamientos=137936; salidas superiores=1745; seed=20261020; S8=10000; S8d=36",
+          "threshold": "0 atravesamientos",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "10053/0/10053",
+          "coverage": "cerrada"
+        },
+        "C2": {
+          "measurement": "fallos=0; evaluados=67787; no evaluables=0",
+          "threshold": "Todos finitos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "67787/0/67787",
+          "coverage": "cerrada"
+        },
+        "C3": {
+          "measurement": "fallos=23; evaluados=1436; no evaluables=415; no aplica (sin pasos de esquina, fuera de población)=8188; Corner [Measured=1436, NotApplicable=8188, NotEvaluable=415]: máximo entre casos medidos: S8-4348 Measured, ganancia=0.7470622, paso=14, rapidez antes=1.022299 m/s, después=1.11270988 m/s; CornerWithImpact [Measured=1588, NotApplicable=8188, NotEvaluable=263]: máximo entre casos medidos: S8-7425 Measured, ganancia=0.0168201, paso=112, rapidez antes=0.134184122 m/s, después=0.09717035 m/s; CornerPersistentOnly [Measured=1223, NotApplicable=8401, NotEvaluable=415]: máximo entre casos medidos: S8-4348 Measured, ganancia=0.7470622, paso=14, rapidez antes=1.022299 m/s, después=1.11270988 m/s",
+          "threshold": "≤ 1e-5 (ruido float)",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "1436/415/1851",
+          "coverage": "cerrada"
+        },
+        "C4": {
+          "measurement": "fallos=0; evaluados=4; no evaluables=0; impactos repetidos=0",
+          "threshold": "0 (|vn| > 0,5 m/s; no persistentes)",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "4/0/4",
+          "coverage": "cerrada"
+        },
+        "C5": {
+          "measurement": "fallos=0; evaluados=117; no evaluables=0",
+          "threshold": "Igualdad de estados y contactos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "117/0/117",
+          "coverage": "cerrada"
+        },
+        "C6": {
+          "measurement": "fallos=96; evaluados=10017; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "10017/0/10017",
+          "coverage": "cerrada"
+        },
+        "C7": {
+          "measurement": "fallos=155; evaluados=18778; no evaluables=1254",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "18778/1254/20032",
+          "coverage": "cerrada"
+        },
+        "C8": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C9": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Diagnóstico; no decide el gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C10": {
+          "measurement": "fallos=9; evaluados=9; no evaluables=0; error máximo mm=17.86533",
+          "threshold": "≤ 1 mm [EXPERIMENTO, D-1]",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "9/0/9",
+          "coverage": "cerrada"
+        },
+        "C11": {
+          "measurement": "fallos=2; evaluados=6; no evaluables=0",
+          "threshold": "Igual a ExpectTouch",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "6/0/6",
+          "coverage": "cerrada"
+        },
+        "C12": {
+          "measurement": "fallos=0; evaluados=11; no evaluables=0",
+          "threshold": "Informe al gate; sin umbral inventado",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "11/0/11",
+          "coverage": "cerrada"
+        },
+        "C13": {
+          "measurement": "fallos=0; evaluados=3; no evaluables=37; mínimo=1.16505456; mediana=1.2733072",
+          "threshold": "Informe al gate; ratio sin umbral",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "3/37/40",
+          "coverage": "cerrada"
+        },
+        "C14": {
+          "measurement": "máximo impactos no persistentes/paso=3; tope configurable=False; parámetro maxImpactsPerStep no operativo con P1",
+          "threshold": "Informe al gate; tope configurable sí/no (P1: no)",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        },
+        "C15": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Mismo paso y ContactTiming; informe al gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C16": {
+          "measurement": "penetración máxima=44927.8 mm; muestras persistentes=2158187 (todas las trayectorias ejecutadas)",
+          "threshold": "Informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        },
+        "C17": {
+          "measurement": "n=200; warmup=20; median=13.768450; p95=15.024300; p99=15.476700; max=15.703500 ms; percentiles nearest rank",
+          "threshold": "p95 ≤ 1 ms en iPhone; editor informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "200/0/200",
+          "coverage": "cerrada"
+        },
+        "C18": {
+          "measurement": "RunsInEditMode=False; timing=Estimated",
+          "threshold": "Preferencia, no gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        }
+      }
+    },
+    {
+      "variant": "no-ed",
+      "executionCode": "ee76086",
+      "report": "docs/validation/evidence/physics-spike-P1/editor-ee76086-no-ed.md",
+      "reportSha256": "b3ba55447fcdfb07fd77dc261a2f1a8ebf91924e78d87fe23a7f340219b2c35a",
+      "xmlLocal": "Logs/spike-no-ed-results.xml",
+      "xmlSha256": "6ab731cd2a463de2cdf1f0bccee324a9f7bc0f2290f16e274f4717318e565306",
+      "counts": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-22 21:34:38Z",
+      "endedUtc": "2026-10-22 21:46:54Z",
+      "durationSeconds": 735.4077917,
+      "allGatingPass": false,
+      "resourceCleanupAssertionsPassed": true,
+      "criteria": {
+        "C1": {
+          "measurement": "fallos=8008; evaluados=10053; no evaluables=0; atravesamientos=137525; salidas superiores=1745; seed=20261020; S8=10000; S8d=36",
+          "threshold": "0 atravesamientos",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "10053/0/10053",
+          "coverage": "cerrada"
+        },
+        "C2": {
+          "measurement": "fallos=0; evaluados=67787; no evaluables=0",
+          "threshold": "Todos finitos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "67787/0/67787",
+          "coverage": "cerrada"
+        },
+        "C3": {
+          "measurement": "fallos=187; evaluados=1622; no evaluables=235; no aplica (sin pasos de esquina, fuera de población)=8182; Corner [Measured=1622, NotApplicable=8182, NotEvaluable=235]: máximo entre casos medidos: S8-5306 Measured, ganancia=14.834444, paso=23, rapidez antes=0.3995601 m/s, después=4.76837158E-07 m/s; CornerWithImpact [Measured=1729, NotApplicable=8182, NotEvaluable=128]: máximo entre casos medidos: S8-6637 Measured, ganancia=0.0209993273, paso=159, rapidez antes=0.1140756 m/s, después=0.08812153 m/s; CornerPersistentOnly [Measured=1410, NotApplicable=8394, NotEvaluable=235]: máximo entre casos medidos: S8-5306 Measured, ganancia=14.834444, paso=23, rapidez antes=0.3995601 m/s, después=4.76837158E-07 m/s",
+          "threshold": "≤ 1e-5 (ruido float)",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "1622/235/1857",
+          "coverage": "cerrada"
+        },
+        "C4": {
+          "measurement": "fallos=0; evaluados=4; no evaluables=0; impactos repetidos=0",
+          "threshold": "0 (|vn| > 0,5 m/s; no persistentes)",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "4/0/4",
+          "coverage": "cerrada"
+        },
+        "C5": {
+          "measurement": "fallos=2; evaluados=117; no evaluables=0",
+          "threshold": "Igualdad de estados y contactos",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "117/0/117",
+          "coverage": "cerrada"
+        },
+        "C6": {
+          "measurement": "fallos=97; evaluados=10017; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "10017/0/10017",
+          "coverage": "cerrada"
+        },
+        "C7": {
+          "measurement": "fallos=127; evaluados=18778; no evaluables=1254",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "18778/1254/20032",
+          "coverage": "cerrada"
+        },
+        "C8": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C9": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Diagnóstico; no decide el gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C10": {
+          "measurement": "fallos=9; evaluados=9; no evaluables=0; error máximo mm=17.86533",
+          "threshold": "≤ 1 mm [EXPERIMENTO, D-1]",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "9/0/9",
+          "coverage": "cerrada"
+        },
+        "C11": {
+          "measurement": "fallos=2; evaluados=6; no evaluables=0",
+          "threshold": "Igual a ExpectTouch",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "6/0/6",
+          "coverage": "cerrada"
+        },
+        "C12": {
+          "measurement": "fallos=0; evaluados=11; no evaluables=0",
+          "threshold": "Informe al gate; sin umbral inventado",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "11/0/11",
+          "coverage": "cerrada"
+        },
+        "C13": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=38; mínimo=1.237019; mediana=1.25516307",
+          "threshold": "Informe al gate; ratio sin umbral",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/38/40",
+          "coverage": "cerrada"
+        },
+        "C14": {
+          "measurement": "máximo impactos no persistentes/paso=3; tope configurable=False; parámetro maxImpactsPerStep no operativo con P1",
+          "threshold": "Informe al gate; tope configurable sí/no (P1: no)",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        },
+        "C15": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Mismo paso y ContactTiming; informe al gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "cerrada"
+        },
+        "C16": {
+          "measurement": "penetración máxima=49804.1445 mm; muestras persistentes=2073903 (todas las trayectorias ejecutadas)",
+          "threshold": "Informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        },
+        "C17": {
+          "measurement": "n=200; warmup=20; median=8.402250; p95=9.509700; p99=10.229300; max=10.545200 ms; percentiles nearest rank",
+          "threshold": "p95 ≤ 1 ms en iPhone; editor informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "200/0/200",
+          "coverage": "cerrada"
+        },
+        "C18": {
+          "measurement": "RunsInEditMode=False; timing=Estimated",
+          "threshold": "Preferencia, no gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "1/0/1",
+          "coverage": "cerrada"
+        }
+      }
+    }
+  ]
+}
