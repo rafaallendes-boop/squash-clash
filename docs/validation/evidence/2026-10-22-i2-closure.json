@@ -1,0 +1,27 @@
+{
+  "reviewedHead": "b772d49eb76b6505ead94f2e8a0f05d9578022ea",
+  "mergeCommit": "9ef742280fbbb7655c019d930cbcf8fb8fdeff76",
+  "mergeMethod": "merge commit",
+  "pullRequest": 1,
+  "claudeApprovalAfterAx1": "communicated explicitly by PO on 2026-10-22",
+  "poCourtAcceptance": "recorded on 2026-10-21",
+  "preMergeRegressionRuns": [
+    {
+      "suite": "editmode",
+      "total": 79,
+      "passed": 79,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "f56aff4f5eb1c84f5750fbdac737d0661859c8eade241ed9431b19bf279def0c"
+    },
+    {
+      "suite": "playmode",
+      "total": 11,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "6769b9735380a0a0855d663b52fe30505473a6baa29828859ab371be84361844"
+    }
+  ],
+  "iphoneEvidence": "2026-10-21-i2-axis-dev-run.json"
+}

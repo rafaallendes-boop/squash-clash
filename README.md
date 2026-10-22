@@ -24,4 +24,6 @@ I1 se preparó en `main` como excepción de bootstrap; Claude revisó los commit
 
 **E1/I1 (T1.1–T1.3) cerrado el 2026-10-21**, con revisión de Claude y validación del PO de ambas builds en el iPhone, incluido el giro físico. **T1.4 completada:** [remoto privado verificado](docs/validation/github-remote.md).
 
-**I2 implementado y verificado técnicamente** en `firstball/i2-court`: T2.1–T2.3, cancha visual, configuración y cámara fija. Dev ejecutada en el iPhone con cancha y 60 FPS. [PR #1 hacia main](https://github.com/rafaallendes-boop/squash-clash/pull/1), revisada por Claude sin bugs de implementación y aceptada visualmente por el PO (revisión comunicada en el chat). Corrección AX-1 de izquierda/derecha autorizada antes de fusionar; resultados en el informe de I2. La PR sigue abierta. T3.1 y etapas posteriores siguen sin autorización.
+**I2 cerrado el 2026-10-22**: PR #1 aprobada por Claude tras AX-1, aceptación visual del PO y merge commit `9ef7422`. Cancha, configuración y cámara fija verificadas; [informe de I2](docs/validation/i2-court.md).
+
+**I3 (T3.1–T3.3) autorizado** en `firstball/i3-ball`, con PR a main y revisión de Claude. P1/PhysX se implementa como candidato; la elección de backend sigue reservada al gate I4c. El PO conectará el iPhone al finalizar para el punto de control. I4 y posteriores sin autorización.

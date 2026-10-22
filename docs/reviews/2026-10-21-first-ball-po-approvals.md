@@ -113,3 +113,12 @@ El PO aceptó la cancha en el iPhone para esta primera versión: «La cancha la 
 
 
 **Ejecución de AX-1:** commit de producto `1b333ad`; EditMode 79/79 y PlayMode 11/11, con RED previo verificado. Build dev limpia `0.1.0+1b333ad`, código 0 y firma/ARM64 comprobados; reinstalación devicectl código 0. El PO confirmó después «Está listo!» para abrir y comprobar dev. **Nuevo arranque verificado en el iPhone:** devicectl sin consola código 0, captura nativa inspeccionada con `0.1.0+1b333ad dev`, 60 FPS y cancha en vertical (1206×2622). [Evidencia de AX-1](../validation/evidence/2026-10-21-i2-axis-dev-run.json). La confirmación de desbloqueo habilita la comprobación técnica; no se presenta como una nueva revisión de Claude o aceptación adicional del PO. La aceptación de la cancha comunicada arriba y la sugerencia de encuadre quedan registradas.
+
+
+## Cierre de I2 y autorización de I3 — 2026-10-22
+
+El PO confirmó: «Claude aprueba la PR #1 tras AX-1» y autorizó fusionar con **merge commit**, registrar el cierre de I2, sincronizar main y eliminar el worktree de I2. Ejecutado: PR #1 `MERGED`, merge commit `9ef742280fbbb7655c019d930cbcf8fb8fdeff76`; main sincronizada. Suites previas a fusión: EditMode 79/79 y PlayMode 11/11. La aceptación visual y la verificación nativa ya constan arriba. **I2 cerrado.** [Informe y evidencia](../validation/i2-court.md#cierre-de-i2--2026-10-22).
+
+El PO autoriza **I3 / T3.1–T3.3**, rama `firstball/i3-ball`, con PR hacia main para revisión de Claude: reloj y contratos, adaptador P1 con escenas aisladas, host/vista de pelota, barra mínima de desarrollo, pausa del sistema y exclusión del panel de producción. La integración de PhysX es un candidato de la prueba, **no una elección de backend**. Esa decisión sigue reservada al gate de **I4c**; P2 y etapas posteriores no están autorizadas.
+
+El PO conectará el iPhone al finalizar todo para realizar la verificación. Hasta entonces se completan implementación, pruebas, builds y PR; la comprobación física y el cierre de I3 quedan pendientes y no se presentan como aprobados. No se fusiona I3 automáticamente.
