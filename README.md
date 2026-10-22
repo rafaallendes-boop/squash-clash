@@ -27,8 +27,10 @@ I1 se preparó en `main` como excepción de bootstrap; Claude revisó los commit
 
 **I2 cerrado el 2026-10-22**: PR #1 aprobada por Claude tras AX-1, aceptación visual del PO y merge commit `9ef7422`. Cancha, configuración y cámara fija verificadas; [informe de I2](docs/validation/i2-court.md).
 
-**I3 (T3.1–T3.3) implementado para revisión** — [PR #2](https://github.com/rafaallendes-boop/squash-clash/pull/2) en `firstball/i3-ball`: reloj/contratos, candidato P1 con escenas aisladas, pelota visible, barra mínima dev y pausa del sistema en Runtime. **EditMode 109/109, PlayMode 37/37 y RELEASE-CHECK: OK**. Builds dev/prod `0.1.0+f075217`, firmadas ARM64, con yaw positivo hacia la derecha de pantalla (−X), probado por proyección RED→GREEN. [Informe y evidencia de I3](docs/validation/i3-ball.md).
+**I3 (T3.1–T3.3) implementado para revisión** — [PR #2](https://github.com/rafaallendes-boop/squash-clash/pull/2) en `firstball/i3-ball`: reloj/contratos, candidato P1 con escenas aisladas, pelota negra, barra mínima dev y pausa del sistema en Runtime. **PlayMode 37/37 y RELEASE-CHECK: OK**; Core conserva EditMode 109/109 de `f075217`, sin cambios posteriores. Builds dev/prod `0.1.0+c49d99b`, firmadas ARM64, con yaw positivo hacia la derecha de pantalla (−X), probado por proyección RED→GREEN. [Informe y evidencia de I3](docs/validation/i3-ball.md).
 
 El PO comunicó la revisión de Claude sin bugs bloqueantes y autorizó la corrección de yaw y la instalación dev/prod para su checkpoint. La pérdida de pausa manual tras «Toca para continuar» queda registrada para I5, sin corregirla ahora. La aceptación del PO sigue pendiente: I3 no está cerrado ni fusionado. P1 no constituye elección de backend: la decisión pertenece al gate I4c. I4 y posteriores sin autorización.
 
 Dev y prod se instalaron correctamente; dev quedó instalada. iOS rechazó abrirlas con `Locked`: arranque y controles nativos pendientes de desbloqueo y checkpoint, sin atribuir éxito de ejecución a la instalación.
+
+El PO pide probar desde Duplicación del iPhone; esa ventana volvió a solicitar la contraseña del Mac y requiere que el usuario complete el desbloqueo. Su observación de pelota demasiado pequeña queda registrada para las ayudas/escala visual de T6.2, sin cambiar el radio de 20 mm ni adelantar esa etapa.
