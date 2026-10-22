@@ -27,6 +27,6 @@ I1 se preparó en `main` como excepción de bootstrap; Claude revisó los commit
 
 **I2 cerrado el 2026-10-22**: PR #1 aprobada por Claude tras AX-1, aceptación visual del PO y merge commit `9ef7422`. Cancha, configuración y cámara fija verificadas; [informe de I2](docs/validation/i2-court.md).
 
-**I3 (T3.1–T3.3) implementado para revisión** en `firstball/i3-ball`: reloj/contratos, candidato P1 con escenas aisladas, pelota visible, barra mínima dev y pausa del sistema en Runtime. **EditMode 109/109, PlayMode 36/36 y RELEASE-CHECK: OK**. Builds dev/prod `0.1.0+a538bc5`, firmadas ARM64 y preparadas para instalar. [Informe y evidencia de I3](docs/validation/i3-ball.md).
+**I3 (T3.1–T3.3) implementado para revisión** — [PR #2](https://github.com/rafaallendes-boop/squash-clash/pull/2) en `firstball/i3-ball`: reloj/contratos, candidato P1 con escenas aisladas, pelota visible, barra mínima dev y pausa del sistema en Runtime. **EditMode 109/109, PlayMode 36/36 y RELEASE-CHECK: OK**. Builds dev/prod `0.1.0+a538bc5`, firmadas ARM64 y preparadas para instalar. [Informe y evidencia de I3](docs/validation/i3-ball.md).
 
 Revisión de Claude y punto de control del PO en el iPhone pendientes; el PO lo conectará después de preparar esta entrega. I3 no está cerrado ni fusionado. P1 no constituye elección de backend: la decisión pertenece al gate I4c. I4 y posteriores sin autorización.

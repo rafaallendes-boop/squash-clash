@@ -1,6 +1,6 @@
 # I3 — primera pelota visible
 
-Fecha: 2026-10-22. Rama `firstball/i3-ball`, base `6f8da64`. Autorización del PO: T3.1–T3.3 con PR hacia main y revisión de Claude; validación en iPhone pendiente hasta que el PO lo conecte al finalizar. **Entrega técnica preparada: EditMode 109/109, PlayMode 36/36, release-check y builds nativas dev/prod verificados con código `a538bc5`. I3 no cerrado ni fusionado. P1/PhysX es un candidato; la elección de backend sigue reservada al gate I4c. I4 y posteriores no están autorizados.**
+Fecha: 2026-10-22. Rama `firstball/i3-ball`, base `6f8da64`. [PR #2 hacia main](https://github.com/rafaallendes-boop/squash-clash/pull/2), abierta para Claude. Autorización del PO: T3.1–T3.3 con PR hacia main y revisión de Claude; validación en iPhone pendiente hasta que el PO lo conecte al finalizar. **Entrega técnica preparada: EditMode 109/109, PlayMode 36/36, release-check y builds nativas dev/prod verificados con código `a538bc5`. I3 no cerrado ni fusionado. P1/PhysX es un candidato; la elección de backend sigue reservada al gate I4c. I4 y posteriores no están autorizados.**
 
 ## Implementación y regresión
 

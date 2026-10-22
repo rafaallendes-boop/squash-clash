@@ -129,3 +129,5 @@ El PO conectará el iPhone al finalizar todo para realizar la verificación. Has
 T3.1–T3.3 implementadas en `firstball/i3-ball`. Código de artefactos finales `a538bc5`: EditMode 109/109 y PlayMode 36/36, release-check de exports nuevos correcto y builds nativas dev/prod Release firmadas ARM64 con código 0. Una revisión interna independiente detectó un retroceso visual al continuar; corregido con cinco tests RED→GREEN. No sustituye la revisión de Claude. [Informe y evidencia I3](../validation/i3-ball.md).
 
 **No es aceptación del PO ni cierre de I3.** El PO indicó que conectará el teléfono al finalizar; instalación, cuatro controles, pausa/bloqueo real, prod sin barra y logs devpanel en dispositivo siguen pendientes. La PR hacia main queda para revisión de Claude y no se fusiona automáticamente. PhysX continúa como candidato P1; no se eligió backend ni se avanzó a I4.
+
+Entrega publicada en [PR #2](https://github.com/rafaallendes-boop/squash-clash/pull/2) hacia main, estado OPEN, sin fusionar. Worktree `firstball/i3-ball` conservado para revisión y checkpoint del iPhone; el de I2 ya fue eliminado conforme a la autorización.
