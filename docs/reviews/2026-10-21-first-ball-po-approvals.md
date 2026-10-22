@@ -155,3 +155,11 @@ El PO confirmó **«Squash Clash ya se ve en Duplicación»**. Codex comprobó l
 Para el bloqueo físico no sustituible por Duplicación, se pidió al PO probar en dev Lanzar → bloqueo con botón lateral → desbloqueo → volver → tocar. El PO respondió **«Aparece el aviso y continúa correctamente»**. **Prueba física de reanudación de dev confirmada por el PO.** No se atribuye una segunda prueba física en prod ni una medición de precisión/salto; prod sí tuvo prueba de segundo plano y su overlay Runtime.
 
 T3.3 tiene su checkpoint técnico registrado en el [informe](../validation/i3-ball.md#checkpoint-técnico-en-el-iphone-completado--2026-10-22) y [manifiesto con capturas/logs](../validation/evidence/2026-10-22-i3-iphone-checkpoint.json). **Esta respuesta confirma esa prueba, no constituye aún aceptación global explícita de I3 ni autorización de fusionar PR #2.** Legibilidad/tamaño pendiente para T6.2; pausa manual para I5 conforme a la decisión anterior. I3 sigue abierto; I4 no autorizado y PhysX sigue como candidato hasta I4c.
+
+## Cierre de I3 y autorización escalonada I4a/I4b — 2026-10-22
+
+El PO declara: «El PO acepta I3 en el iPhone y Claude aprueba la PR #2». Autoriza merge commit, cierre de informe/aprobaciones/AGENTS.md, sincronizar main y eliminar worktree. **Ejecutado: PR #2 MERGED, merge `e09a5432cf2aff32cd568ca2f9408013ffd20d65`, head `f967f10f3af0bf6cd1e76d7d3984bf09539718f4`; main sincronizada, worktree eliminado y Logs archivados localmente. I3 cerrado.** Aprobación de Claude comunicada por el PO, sin atribuir una GitHub Review. [Informe y evidencia](../validation/i3-ball.md#cierre-de-i3--2026-10-22).
+
+Autoriza **I4a / T4.1–T4.2**, rama `firstball/i4a-physics-measures` y PR, y **condicionalmente I4b / T4.3–T4.4**, rama `firstball/i4b-physics-run` con su propia PR **solo después de que I4a esté fusionado tras revisión de Claude**. Detenerse al entregar el informe de I4b. Esta autorización no permite saltar la revisión ni ejecutar I4b antes de la fusión de I4a.
+
+**Sin cambios de escenarios, umbrales ni criterios para hacer pasar resultados. Si no cumplen, se reportan.** Gate I4c y cualquier trabajo P2/T4.5 requieren autorización expresa del PO. I5 y etapas posteriores siguen sin autorizar. Renovar el perfil antes de cualquier instalación posterior al 28 de octubre de 2026, además de verificar su vigencia efectiva.

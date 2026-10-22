@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-22",
+  "increment": "I3",
+  "poAcceptance": "explicit in chat",
+  "claudeApproval": "reported by PO in chat",
+  "pullRequest": 2,
+  "state": "MERGED",
+  "reviewedHead": "f967f10f3af0bf6cd1e76d7d3984bf09539718f4",
+  "mergeCommit": "e09a5432cf2aff32cd568ca2f9408013ffd20d65",
+  "mergedAtUtc": "2026-10-22T16:53:31Z",
+  "mergeMethod": "merge commit",
+  "productCodeCommit": "c49d99b",
+  "mainSynced": true,
+  "worktreeRemoved": true,
+  "localLogsArchived": "Logs/archive/i3-2026-10-22/",
+  "physicsGateEvaluated": false,
+  "backendChosen": false,
+  "i4aAuthorized": true,
+  "i4bAuthorizedCondition": "Only after I4a Claude review and merge",
+  "i4cAuthorized": false,
+  "p2Authorized": false,
+  "i5Authorized": false
+}

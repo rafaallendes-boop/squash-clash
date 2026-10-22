@@ -34,3 +34,7 @@ El PO comunicó la revisión de Claude sin bugs bloqueantes y autorizó la corre
 **Checkpoint técnico en iPhone realizado:** dev/prod arrancan como `0.1.0+c49d99b`, 60 FPS observados y Portrait. Cuatro controles dev probados desde Duplicación; prod sin barra, logs `devpanel=present|absent` y reanudación desde segundo plano verificados. El PO confirma bloqueo/desbloqueo físico y «Toca para continuar» correcto en dev. Dev restaurada. [Capturas y resultados](docs/validation/i3-ball.md#checkpoint-técnico-en-el-iphone-completado--2026-10-22).
 
 El bloqueo previo de acceso a Duplicación quedó resuelto por el PO. Su observación de pelota demasiado pequeña queda registrada para las ayudas/escala visual de T6.2, sin cambiar el radio de 20 mm ni adelantar esa etapa. Aceptación global del PO y fusión de I3 pendientes; no se inicia I4 ni se elige backend.
+
+**I3 cerrado el 2026-10-22:** aceptado por el PO en el iPhone y PR #2 aprobada por Claude, fusionada con merge commit `e09a543`. Main sincronizada y worktree I3 retirado. El texto de entrega anterior describe su historial previo al cierre.
+
+**Siguiente incremento autorizado: I4a / T4.1–T4.2**, escenarios y mediciones puras en `firstball/i4a-physics-measures`, con PR para Claude. I4b solo después de su revisión y fusión, en `firstball/i4b-physics-run`; detenerse al entregar su informe. Gate I4c, P2 e I5+ sin autorización. Los resultados que no cumplan se reportan sin cambiar criterios.
