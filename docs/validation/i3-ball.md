@@ -1,6 +1,6 @@
 # I3 — primera pelota visible
 
-Fecha: 2026-10-22. Rama `firstball/i3-ball`, base `6f8da64`. Autorización del PO: T3.1–T3.3 con PR hacia main y revisión de Claude; validación en iPhone pendiente hasta que el PO lo conecte al finalizar. **I3 no cerrado ni fusionado. P1/PhysX es un candidato; la elección de backend sigue reservada al gate I4c. I4 y posteriores no están autorizados.**
+Fecha: 2026-10-22. Rama `firstball/i3-ball`, base `6f8da64`. Autorización del PO: T3.1–T3.3 con PR hacia main y revisión de Claude; validación en iPhone pendiente hasta que el PO lo conecte al finalizar. **Entrega técnica preparada: EditMode 109/109, PlayMode 36/36, release-check y builds nativas dev/prod verificados con código `a538bc5`. I3 no cerrado ni fusionado. P1/PhysX es un candidato; la elección de backend sigue reservada al gate I4c. I4 y posteriores no están autorizados.**
 
 ## Implementación y regresión
 
@@ -28,11 +28,31 @@ La documentación de Unity confirma que la simulación local afecta solo a su es
 
 ## Pendientes antes de cerrar I3
 
-- Release-check real, builds dev/prod y firma ARM64: registrar resultados.
-- Revisión interna final y PR hacia main para Claude.
+- Revisión interna final completada; I1 de interpolación corregido con RED→GREEN.
+- Revisión de Claude de la PR hacia main pendiente; no fusionar automáticamente.
 - iPhone del PO: ambas builds, exclusión de barra en prod, cuatro acciones en dev, bloquear/desbloquear en pleno vuelo y continuar sin salto. El PO lo conectará al terminar. No se ha instalado ni validado I3 en el dispositivo.
 
 
 ## Revisión interna y pase único de corrección
 
 La [revisión independiente](../reviews/2026-10-22-first-ball-i3-internal-review.md) no encontró Critical y detectó un Important de presentación al continuar: pausa mostraba Current, pero continuar podía volver al estado visual anterior. Se reprodujo con **5/5 fallos RED** (manual/sistema, Alpha=0/0,5, congelación en pausa), y se corrigió solo el historial visual: pausa sin paso congela la imagen, paso solicitado rebasa el historial para evitar retroceso. **PlayMode completo 36/36 GREEN** tras el cambio; Current, parámetros, paso físico y fracciones del reloj no se alteran. El informe recoge cada conducta que el revisor dejó para I4, I5/I6 o el iPhone; no quedan silenciosamente aprobadas.
+
+
+## Artefactos finales y evidencia
+
+Código compilado: **`a538bc5`**, metadata `gitDirty=false` en ambas builds. Los commits posteriores de documentación no cambian la app. [Manifiesto de tests y hashes XML](evidence/2026-10-22-i3-tests.json): **EditMode 109/109 y PlayMode 36/36**, cero fallos/omitidos, incluida la corrección de la revisión interna.
+
+- `scripts/check-release.sh`: código 0, **RELEASE-CHECK: OK**. Exports de dev/prod recién generados por BuildScript en directorios vacíos, archivos posteriores al inicio y metadata de su perfil. Dev contiene Core/Runtime/DevPanel; prod contiene Core/Runtime. [Dev](evidence/2026-10-22-i3-release-dev.json), [prod](evidence/2026-10-22-i3-release-prod.json).
+- `xcodebuild` en Release para **generic/platform=iOS**, con firma automática y el equipo local, terminó con código 0 / BUILD SUCCEEDED en ambos perfiles. No requiere un iPhone conectado para compilar. [Resumen de builds y advertencias](evidence/2026-10-22-i3-builds.json).
+- Unity **6000.3.27f1**, Xcode **27.1 (27A9275)**, IL2CPP/ARM64. Inspección estricta de firma, bundle `cl.rafaallendes.squashclash`, Portrait, mínimo iOS 15.0, ejecutable/UnityFramework ARM64 y módulos compilados: [dev](evidence/2026-10-22-i3-dev-inspection.json), [prod](evidence/2026-10-22-i3-prod-inspection.json).
+- Ambas apps usan el perfil de desarrollo local ya conocido; esto no es una distribución App Store. El perfil contiene el dispositivo registrado y vence el **28 de octubre de 2026**, igual que en I1/I2. Los UDID quedan fuera de la evidencia versionada.
+- Sin errores nativos; cada perfil conserva 14 mensajes únicos de advertencia, enumerados en el resumen. Incluyen libc++ por flags internos de IL2CPP, APIs de Unity obsoletas en el SDK y objetos sin símbolos. La advertencia libc++ ya estaba documentada en I1; el proyecto/app sigue con mínimo iOS 15.0 y ambas compilaciones finalizaron. No se cambió Xcode ni se ocultaron avisos.
+
+Los comandos nativos usan el proyecto `Builds/iOS-<perfil>/Unity-iPhone.xcodeproj`, esquema Unity-iPhone, configuración Release, `-destination generic/platform=iOS`, `-derivedDataPath Builds/DerivedData-<perfil>`, `-allowProvisioningUpdates`, `DEVELOPMENT_TEAM` del entorno local y `CODE_SIGN_STYLE=Automatic`. Artefactos preparados para instalar:
+
+- `Builds/DerivedData-dev/Build/Products/Release-iphoneos/SquashClash.app`
+- `Builds/DerivedData-prod/Build/Products/Release-iphoneos/SquashClash.app`
+
+**I3 todavía no se ha instalado ni ejecutado en el iPhone.** Cuando lo conecte el PO se usarán `scripts/install-ios.sh dev` y `scripts/install-ios.sh prod`, sin atribuir éxito antes de comprobarlo. En dev: cuatro acciones, dos botes, pausa y paso sin retroceso; en ambos perfiles: bloqueo/desbloqueo en vuelo, «Toca para continuar» sin salto, versión/perfil y orientación. En prod además ausencia funcional de barra y log `devpanel=absent`; en dev `devpanel=present`. Se dejará dev al terminar el checkpoint si el PO no indica otra cosa.
+
+No se han ejecutado criterios C1–C9, escenarios S1–S10, benchmark de 200 predicciones ni prueba térmica sostenida. I4 y posteriores siguen sin autorización y la decisión de backend sigue reservada al PO en I4c. Las suites de regresión y la compilación nativa no sustituyen esas mediciones.

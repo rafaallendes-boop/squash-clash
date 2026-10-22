@@ -122,3 +122,10 @@ El PO confirmó: «Claude aprueba la PR #1 tras AX-1» y autorizó fusionar con 
 El PO autoriza **I3 / T3.1–T3.3**, rama `firstball/i3-ball`, con PR hacia main para revisión de Claude: reloj y contratos, adaptador P1 con escenas aisladas, host/vista de pelota, barra mínima de desarrollo, pausa del sistema y exclusión del panel de producción. La integración de PhysX es un candidato de la prueba, **no una elección de backend**. Esa decisión sigue reservada al gate de **I4c**; P2 y etapas posteriores no están autorizadas.
 
 El PO conectará el iPhone al finalizar todo para realizar la verificación. Hasta entonces se completan implementación, pruebas, builds y PR; la comprobación física y el cierre de I3 quedan pendientes y no se presentan como aprobados. No se fusiona I3 automáticamente.
+
+
+## I3 — entrega técnica para revisión, pendiente del iPhone (2026-10-22)
+
+T3.1–T3.3 implementadas en `firstball/i3-ball`. Código de artefactos finales `a538bc5`: EditMode 109/109 y PlayMode 36/36, release-check de exports nuevos correcto y builds nativas dev/prod Release firmadas ARM64 con código 0. Una revisión interna independiente detectó un retroceso visual al continuar; corregido con cinco tests RED→GREEN. No sustituye la revisión de Claude. [Informe y evidencia I3](../validation/i3-ball.md).
+
+**No es aceptación del PO ni cierre de I3.** El PO indicó que conectará el teléfono al finalizar; instalación, cuatro controles, pausa/bloqueo real, prod sin barra y logs devpanel en dispositivo siguen pendientes. La PR hacia main queda para revisión de Claude y no se fusiona automáticamente. PhysX continúa como candidato P1; no se eligió backend ni se avanzó a I4.

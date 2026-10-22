@@ -1,0 +1,55 @@
+{
+  "productCodeCommit": "a538bc5",
+  "unityVersion": "6000.3.27f1",
+  "nativeToolchain": "Xcode 27.1\nBuild version 27A9275",
+  "xcodeDestination": "generic/platform=iOS",
+  "releaseCheckExitCode": 0,
+  "releaseCheck": "OK",
+  "nativeBuildExitCodes": {
+    "dev": 0,
+    "prod": 0
+  },
+  "nativeWarnings": {
+    "dev": [
+      "\"The selected platform is no longer supported by libc++.\" [-W#warnings]",
+      "'1lokf3afp9oc.o' has no symbols",
+      "'SecTrustGetCertificateAtIndex' is deprecated: first deprecated in iOS 15.0 [-Wdeprecated-declarations]",
+      "'controllerPausedHandler' is deprecated: first deprecated in iOS 13.0 - Use the Menu button found on the controller's input profile, if it exists. [-Wdeprecated-declarations]",
+      "'dpq7x247cs28.o' has no symbols",
+      "'hasAttitudeAndRotationRate' is deprecated: first deprecated in iOS 14.0 - Use -hasAttitude and -hasRotationRate methods instead [-Wdeprecated-declarations]",
+      "'i397hiuvx8xm.o' has no symbols",
+      "'ts632ckg0gqd.o' has no symbols",
+      "'useCVTextureCache' is deprecated [-Wdeprecated-declarations]",
+      "'zhh3jw1aulnk.o' has no symbols",
+      "A 1024x1024 app store icon is required for iOS apps",
+      "Run script build phase 'Run Script' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking \"Based on dependency analysis\" in the script phase. (in target 'GameAssembly' from project 'Unity-iPhone')",
+      "implementing deprecated method [-Wdeprecated-implementations]",
+      "unused variable 'depthFmtChanged' [-Wunused-variable]"
+    ],
+    "prod": [
+      "\"The selected platform is no longer supported by libc++.\" [-W#warnings]",
+      "'1lokf3afp9oc.o' has no symbols",
+      "'SecTrustGetCertificateAtIndex' is deprecated: first deprecated in iOS 15.0 [-Wdeprecated-declarations]",
+      "'controllerPausedHandler' is deprecated: first deprecated in iOS 13.0 - Use the Menu button found on the controller's input profile, if it exists. [-Wdeprecated-declarations]",
+      "'dpq7x247cs28.o' has no symbols",
+      "'hasAttitudeAndRotationRate' is deprecated: first deprecated in iOS 14.0 - Use -hasAttitude and -hasRotationRate methods instead [-Wdeprecated-declarations]",
+      "'i397hiuvx8xm.o' has no symbols",
+      "'ts632ckg0gqd.o' has no symbols",
+      "'useCVTextureCache' is deprecated [-Wdeprecated-declarations]",
+      "'zhh3jw1aulnk.o' has no symbols",
+      "A 1024x1024 app store icon is required for iOS apps",
+      "Run script build phase 'Run Script' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking \"Based on dependency analysis\" in the script phase. (in target 'GameAssembly' from project 'Unity-iPhone')",
+      "implementing deprecated method [-Wdeprecated-implementations]",
+      "unused variable 'depthFmtChanged' [-Wunused-variable]"
+    ]
+  },
+  "signedArm64Verified": {
+    "dev": true,
+    "prod": true
+  },
+  "iphoneInstallation": "not performed; waiting for PO connection",
+  "iphoneFunctionalValidation": "pending",
+  "claudePrReview": "pending",
+  "physicsGateEvaluated": false,
+  "backendChosen": false
+}
