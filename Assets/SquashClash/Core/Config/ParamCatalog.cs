@@ -8,6 +8,12 @@ namespace SquashClash.Core.Config
     {
         private static readonly IReadOnlyList<ParamDef> definitions = Array.AsReadOnly(new[]
         {
+            new ParamDef("pace.tempo", "Tempo", "", "Pace", ParamKind.Float, 0.3, 1, 0.01, ApplyClass.NextLaunch),
+            new ParamDef("pace.launchScale", "Launch scale", "", "Pace", ParamKind.Float, 0.5, 1.5, 0.01, ApplyClass.NextLaunch),
+            new ParamDef("physics.gravity", "Gravity", "m/s²", "Physics", ParamKind.Float, 5, 15, 0.01, ApplyClass.NextLaunch),
+            new ParamDef("physics.stepHz", "Step rate", "Hz", "Physics", ParamKind.Choice, 60, 240, 60, ApplyClass.NextLaunch,
+                new ChoiceOption(60, "60"), new ChoiceOption(120, "120"), new ChoiceOption(240, "240")),
+            new ParamDef("physics.maxImpactsPerStep", "Impact cap", "", "Physics", ParamKind.Int, 1, 8, 1, ApplyClass.NextLaunch),
             new ParamDef("court.tinTop", "Tin", "m", "Court", ParamKind.Choice, 0.43, 0.48, 0.05, ApplyClass.NextLaunch,
                 new ChoiceOption(0.48, "WSF"), new ChoiceOption(0.43, "PSA")),
             new ParamDef("camera.height", "Height", "m", "Camera", ParamKind.Float, 2, 8, 0.1, ApplyClass.Immediate),

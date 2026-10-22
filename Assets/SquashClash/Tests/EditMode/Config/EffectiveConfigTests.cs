@@ -17,6 +17,18 @@ namespace SquashClash.Core.Tests.Config
         }
 
         [Test]
+        public void EffectiveConfig_PhysicsAndPaceUseSourceValues() {
+            var a=EffectiveConfig.From(ConfigFixtures.Default());
+            Assert.That(a.Tempo,Is.EqualTo(0.65)); Assert.That(a.LaunchScale,Is.EqualTo(1));
+            Assert.That(a.Physics.Gravity,Is.EqualTo(9.81f)); Assert.That(a.Physics.StepHz,Is.EqualTo(120));
+            Assert.That(a.Physics.MaxImpactsPerStep,Is.EqualTo(4));
+            var changed=EffectiveConfig.From(a.Source.With("physics.gravity",12).With("pace.tempo",0.8));
+            Assert.That(changed.Physics.Gravity,Is.EqualTo(12)); Assert.That(changed.Tempo,Is.EqualTo(0.8));
+            Assert.That(changed.SimulationKey,Is.Not.EqualTo(a.SimulationKey));
+            changed.Physics.Gravity=99; Assert.That(changed.Physics.Gravity,Is.EqualTo(12));
+        }
+
+        [Test]
         public void EffectiveConfig_ExternalCourtMutationCannotChangeSnapshot()
         {
             var a = EffectiveConfig.From(ConfigFixtures.Default());

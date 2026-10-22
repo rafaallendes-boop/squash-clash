@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "name": "First Ball default",
-  "createdBuild": "I2",
+  "createdBuild": "I3",
   "values": [
     {
       "key": "court.tinTop",
@@ -42,6 +42,26 @@
     {
       "key": "rival.z",
       "value": 6.5
+    },
+    {
+      "key": "pace.tempo",
+      "value": 0.65
+    },
+    {
+      "key": "pace.launchScale",
+      "value": 1
+    },
+    {
+      "key": "physics.gravity",
+      "value": 9.81
+    },
+    {
+      "key": "physics.stepHz",
+      "value": 120
+    },
+    {
+      "key": "physics.maxImpactsPerStep",
+      "value": 4
     }
   ]
 }

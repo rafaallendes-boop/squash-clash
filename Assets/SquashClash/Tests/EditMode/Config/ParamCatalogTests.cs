@@ -11,7 +11,7 @@ namespace SquashClash.Core.Tests.Config
         public void DefaultPreset_IsCompleteAndValid()
         {
             var p = ConfigFixtures.Default();
-            Assert.That(p.Ordered.Count, Is.EqualTo(10));
+            Assert.That(p.Ordered.Count, Is.EqualTo(15));
             Assert.That(p.Ordered.Select(e => e.Key), Is.EquivalentTo(ParamCatalog.All.Select(d => d.Key)));
             Assert.That(p.Get("court.tinTop"), Is.EqualTo(0.48));
             Assert.That(p.GetBool("placeholders.visible"), Is.True);

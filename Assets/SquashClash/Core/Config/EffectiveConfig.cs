@@ -1,14 +1,21 @@
 using System;
 using SquashClash.Core.Court;
+using SquashClash.Core.Simulation;
 
 namespace SquashClash.Core.Config
 {
-    // I2 snapshot. Ball/clock/launch members are added only in their authorized increments.
+    // Immutable source; mutable geometry/physics DTOs are derived as independent copies.
     public sealed class EffectiveConfig
     {
         public ParamSet Source { get; }
         public string Hash => Source.Hash;
         public string SimulationKey { get; }
+        public double Tempo => Source.Get("pace.tempo");
+        public double LaunchScale => Source.Get("pace.launchScale");
+        public PhysicsParams Physics => new PhysicsParams {
+            Gravity = (float)Source.Get("physics.gravity"), StepHz = Source.GetInt("physics.stepHz"),
+            MaxImpactsPerStep = Source.GetInt("physics.maxImpactsPerStep")
+        };
         // CourtDimensions is mutable for geometry authoring; consumers receive their own copy.
         public CourtDimensions Court => CourtDimensions.WithTinTop((float)Source.Get("court.tinTop"));
 
