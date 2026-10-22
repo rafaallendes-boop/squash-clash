@@ -177,6 +177,47 @@
         "skipped": 0
       },
       "failedTests": []
+    },
+    {
+      "run": "claude-red",
+      "xml": "Logs/i4a-claude-red-results.xml",
+      "sha256": "4307dbc41a74a91389bdb211fbd7ff14873b9de04d9810153c087bec8a1ae421",
+      "counts": {
+        "total": 159,
+        "passed": 155,
+        "failed": 4,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.CornerEnergy_InvalidDataIsNotEvaluable_EvenWithoutCorner",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.CornerEnergy_NoCornerIsNotApplicable_NotInvalid",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.CornerEnergy_SplitsImpactAndPersistentOnlyWithoutChangingOverallMaximum",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.EdgeDirected_RobustnessRunsFullHorizonEvenAfterSecondBounce"
+      ]
+    },
+    {
+      "run": "claude-green",
+      "xml": "Logs/i4a-claude-green-results.xml",
+      "sha256": "3596a35e03baabde6ed78261eb72fce6c460e54d3853e790fb339b0e56fcf1f7",
+      "counts": {
+        "total": 159,
+        "passed": 159,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "claude-play",
+      "xml": "Logs/i4a-claude-play-results.xml",
+      "sha256": "319cab7040b581da35b9aeb4ede4557f53d6779ffb5aa1e8c71ca4d74b958837",
+      "counts": {
+        "total": 37,
+        "passed": 37,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
     }
   ],
   "review": {

@@ -58,6 +58,32 @@ namespace SquashClash.Core.Tests.Spike {
    var t=Path(State(0,Vector3.one),State(1,Vector3.one));
    Assert.That(float.IsNaN(PhysicsMeasures.MaxRelativeEnergyGain(t,Params(),true,out _)),Is.True);
   }
+  [Test] public void CornerEnergy_NoCornerIsNotApplicable_NotInvalid() {
+   var t=Path(State(0,Vector3.one),State(1,Vector3.one));t.Contacts.Add(Contact(SurfaceId.Floor,1));
+   var value=PhysicsMeasures.MaxRelativeEnergyGain(t,Params(),EnergyStepPopulation.Corner);
+   Assert.That(value.Status,Is.EqualTo(MeasurementStatus.NotApplicable));Assert.That(value.Step,Is.EqualTo(-1));
+  }
+  [Test] public void CornerEnergy_InvalidDataIsNotEvaluable_EvenWithoutCorner() {
+   var invalid=Path(State(0,new Vector3(float.NaN,1,1)));
+   Assert.That(PhysicsMeasures.MaxRelativeEnergyGain(invalid,Params(),EnergyStepPopulation.Corner).Status,Is.EqualTo(MeasurementStatus.NotEvaluable));
+   var missing=Path(State(0,Vector3.one),State(2,Vector3.one));missing.Contacts.Add(Contact(SurfaceId.Floor,2));missing.Contacts.Add(Contact(SurfaceId.FrontWall,2));
+   Assert.That(PhysicsMeasures.MaxRelativeEnergyGain(missing,Params(),EnergyStepPopulation.Corner).Status,Is.EqualTo(MeasurementStatus.NotEvaluable));
+  }
+  [Test] public void CornerEnergy_SplitsImpactAndPersistentOnlyWithoutChangingOverallMaximum() {
+   var p=Params();p.Gravity=0;
+   var t=Path(State(0,Vector3.one,Vector3.right*10),State(1,Vector3.one,Vector3.right*11),State(2,Vector3.one,Vector3.right*12));
+   t.Contacts.Add(Contact(SurfaceId.Floor,1));t.Contacts.Add(Contact(SurfaceId.FrontWall,1,true));
+   t.Contacts.Add(Contact(SurfaceId.Floor,2,true));t.Contacts.Add(Contact(SurfaceId.FrontWall,2,true));
+   var impact=PhysicsMeasures.MaxRelativeEnergyGain(t,p,EnergyStepPopulation.CornerWithImpact);
+   var stay=PhysicsMeasures.MaxRelativeEnergyGain(t,p,EnergyStepPopulation.CornerPersistentOnly);
+   var all=PhysicsMeasures.MaxRelativeEnergyGain(t,p,EnergyStepPopulation.Corner);
+   Assert.That(impact.Status,Is.EqualTo(MeasurementStatus.Measured));Assert.That(impact.Step,Is.EqualTo(1));Assert.That(impact.SpeedBefore,Is.EqualTo(10));Assert.That(impact.SpeedAfter,Is.EqualTo(11));
+   Assert.That(stay.Status,Is.EqualTo(MeasurementStatus.Measured));Assert.That(stay.Step,Is.EqualTo(2));Assert.That(stay.SpeedBefore,Is.EqualTo(11));Assert.That(stay.SpeedAfter,Is.EqualTo(12));
+   Assert.That(all.RelativeGain,Is.EqualTo(.21f).Within(1e-6));Assert.That(all.RelativeGain,Is.EqualTo(PhysicsMeasures.MaxRelativeEnergyGain(t,p,true,out _)));
+   t.States[2]=State(2,Vector3.one,Vector3.right*13);
+   all=PhysicsMeasures.MaxRelativeEnergyGain(t,p,EnergyStepPopulation.Corner);
+   Assert.That(all.Step,Is.EqualTo(2),"persistent-only remains in the unchanged C3 population");
+  }
   [Test] public void IsCornerStep_RecognizesDistinctSurfacesInSameOrAdjacentSteps() {
    var t=Path(State(0,Vector3.one),State(1,Vector3.one),State(2,Vector3.one));
    t.Contacts.Add(Contact(SurfaceId.Floor,1));t.Contacts.Add(Contact(SurfaceId.FrontWall,2));

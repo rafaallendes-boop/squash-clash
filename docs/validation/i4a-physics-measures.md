@@ -55,3 +55,9 @@ La [revisión independiente](../reviews/2026-10-22-first-ball-i4a-internal-revie
 Dos resoluciones adicionales: (11) Expected/CoverageComplete amplían el DTO mínimo para impedir casos omitidos; coste: el futuro productor debe rellenarlos y demostrar el cierre de cobertura, sin reducirla. (12) C4 inválido lanza ArgumentException porque su firma devuelve int; coste: I4b debe convertir el caso en no evaluable, nunca en cero ni en aprobación. Las dieciséis áreas que el revisor no evaluó y sus costes se conservan en su informe.
 
 No hay cambios a Runtime, adaptador P1, DefaultPreset, spec, plan, escenarios numéricos ni umbrales. Solo Core/Spike, tests y documentación. No hay resultados de experimentos para el gate: los C1–C18 del motor siguen sin evaluar. I4b permanece condicionado a revisión de Claude y fusión de I4a.
+
+## Ajustes de Claude previos a fusión — 2026-10-22
+
+Revisión de PR #3 transmitida por el PO: sin bugs; confirmada interpretación de S8d a velocidad total/arco bajo. Ejecutadas las tres condiciones de fusión: API de energía con Measured/NotApplicable/NotEvaluable, desglose por paso con impacto no persistente frente a solo persistentes (paso y rapidez antes/después), y horizonte completo de S8d. El máximo global y umbral de C3 se conservan, incluidos los persistentes; los casos inválidos no se excluyen como si no aplicaran. Esta aclaración sustituye la resolución 4 anterior en el caso de ausencia de esquina: ya no se confunde con dato inválido.
+
+Evidencia: RED 159 tests, 4 fallos esperados; GREEN EditMode 159/159, PlayMode 37/37. XML/hash en el manifiesto existente. El PO autoriza merge commit y continuación I4b; no es una decisión de backend ni cierre del gate.

@@ -93,6 +93,12 @@ namespace SquashClash.Core.Tests.Spike
                 Assert.That(trajectory.States.Last().Step,Is.EqualTo(360));
             }
         }
+        [Test] public void EdgeDirected_RobustnessRunsFullHorizonEvenAfterSecondBounce() {
+            foreach(var s in PhysicsScenarios.EdgeDirected(d,p)) using(var simulation=new EveryStepFloorSimulation()) {
+                var trajectory=TrajectoryRunner.Run(simulation,s.Start,s.MaxSteps,s.Stop,d);
+                Assert.That(trajectory.States.Last().Step,Is.EqualTo(360),s.Id);
+            }
+        }
         private sealed class EveryStepFloorSimulation:IBallSimulation {
             private BallState state;
             public BackendCapabilities Capabilities=>new BackendCapabilities{RunsInEditMode=true};

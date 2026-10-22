@@ -71,7 +71,7 @@ namespace SquashClash.Core.Spike
                 double time=Math.Sqrt(2*distanceSquared/(a+Math.Sqrt(discriminant)));
                 double horizontalDistance=Math.Sqrt(Math.Pow((double)center.x-start.x,2)+Math.Pow((double)center.z-start.z,2));
                 s.Start.Velocity=Ballistics.SolveCenterTo(start,center,(float)(horizontalDistance/time),p.Gravity);
-                result.Add(s);
+                s.Stop=StopCondition.MaxSteps; result.Add(s);
             }
             return result.AsReadOnly();
         }

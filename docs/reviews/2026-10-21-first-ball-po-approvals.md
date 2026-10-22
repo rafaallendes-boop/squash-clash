@@ -171,3 +171,11 @@ T4.1–T4.2 implementadas en `firstball/i4a-physics-measures`, base `c396fe4`, c
 [Informe I4a](../validation/i4a-physics-measures.md), [evidencia](../validation/evidence/2026-10-22-i4a-tests.json) y [revisión interna](2026-10-22-first-ball-i4a-internal-review.md). No se modifican escenarios, umbrales, spec/plan ni criterios para hacer pasar PhysX. No se ejecuta todavía la campaña de I4b ni hay build/instalación nueva. **I4a pendiente de Claude y fusión; I4b autorizado solo después de esa condición.** I4c/P2/I5+ siguen sin autorizar y se conserva la orden de detenerse al entregar el informe de I4b.
 
 I4a publicado en [PR #3](https://github.com/rafaallendes-boop/squash-clash/pull/3), estado OPEN hacia main. Esto no registra aprobación de Claude ni fusión de I4a; I4b sigue sin iniciar por la condición autorizada.
+
+## I4a — revisión de Claude y autorización de fusión / I4b (2026-10-22)
+
+El PO comunica revisión de Claude de PR #3 **sin bugs**, confirma S8d como velocidad total con arco bajo y autoriza fusionar con merge commit tras tres ajustes: distinguir ausencia de pasos de esquina (NotApplicable, fuera de C3) de dato inválido (NotEvaluable); preparar máximos separados de C3 para pasos con al menos un impacto no persistente y pasos solo persistentes, con rapidez antes/después; usar todo el horizonte de S8d, como S8. No cambian umbral, población global ni veredicto de C3: incluye ambos tipos de pasos de esquina.
+
+Ejecutado RED→GREEN: cuatro tests nuevos, RED 155/159 → GREEN 159/159; PlayMode 37/37. La API estructurada `MaxRelativeEnergyGain` expone estado, ganancia, paso y rapideces; la firma numérica anterior se conserva como envoltura. La separación se refiere a los contactos **del paso evaluado**, aunque la esquina se detecte por superficies en pasos contiguos. S8d mantiene 36 lanzamientos y sus números; ahora Stop=MaxSteps (360 a 120 Hz; salida superior legítima conservada).
+
+Después de la fusión se continúa con I4b/T4.3–T4.4 en `firstball/i4b-physics-run` y PR propia. Detenerse al entregar su informe. I4c, P2/T4.5 e I5+ siguen sin autorizar. Renovar perfil antes de instalar después del 28 de octubre y comprobar siempre vigencia.

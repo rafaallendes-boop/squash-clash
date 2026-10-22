@@ -65,21 +65,35 @@ namespace SquashClash.Core.Spike
 
         public static float MaxRelativeEnergyGain(Trajectory t, PhysicsParams p, bool cornerStepsOnly, out long step)
         {
-            step = -1;
-            if (!AllFinite(t, out _) || !Finite(p.Gravity) || !Finite(p.BallMass) || p.BallMass <= 0) return float.NaN;
+            var result = MaxRelativeEnergyGain(t, p, cornerStepsOnly ? EnergyStepPopulation.Corner : EnergyStepPopulation.AllContacts);
+            step = result.Step;
+            return result.RelativeGain;
+        }
+
+        public static EnergyGainSample MaxRelativeEnergyGain(Trajectory t, PhysicsParams p, EnergyStepPopulation population)
+        {
+            if (!AllFinite(t, out _) || !Finite(p.Gravity) || !Finite(p.BallMass) || p.BallMass <= 0)
+                return new EnergyGainSample(MeasurementStatus.NotEvaluable);
             var considered = new HashSet<long>();
-            double maximum = 0;
+            var result = new EnergyGainSample(MeasurementStatus.NotApplicable);
             foreach (var c in t.Contacts)
             {
-                if (!considered.Add(c.Step) || (cornerStepsOnly && !IsCornerStep(t, c.Step))) continue;
+                if (!considered.Add(c.Step) || (population != EnergyStepPopulation.AllContacts && !IsCornerStep(t, c.Step))) continue;
+                bool hasImpact = false;
+                foreach (var other in t.Contacts) if (other.Step == c.Step && !other.Persistent) { hasImpact = true; break; }
+                if ((population == EnergyStepPopulation.CornerWithImpact && !hasImpact) ||
+                    (population == EnergyStepPopulation.CornerPersistentOnly && hasImpact)) continue;
                 int index = StateIndex(t, c.Step);
-                if (index < 1 || t.States[index - 1].Step != c.Step - 1) return float.NaN;
-                double before = Energy(t.States[index - 1], p), after = Energy(t.States[index], p);
-                if (before < 0) return float.NaN;
-                double gain = before == 0 ? (after > 0 ? double.PositiveInfinity : 0) : (after - before) / before;
-                if (step < 0 || gain > maximum) { maximum = Math.Max(0, gain); step = c.Step; }
+                if (index < 1 || t.States[index - 1].Step != c.Step - 1)
+                    return new EnergyGainSample(MeasurementStatus.NotEvaluable);
+                var beforeState = t.States[index - 1]; var afterState = t.States[index];
+                double before = Energy(beforeState, p), after = Energy(afterState, p);
+                if (before < 0 || after < 0) return new EnergyGainSample(MeasurementStatus.NotEvaluable);
+                double gain = before == 0 ? (after > 0 ? double.PositiveInfinity : 0) : Math.Max(0, (after - before) / before);
+                if (result.Status != MeasurementStatus.Measured || gain > result.RelativeGain)
+                    result = new EnergyGainSample(MeasurementStatus.Measured, (float)gain, c.Step, beforeState.Velocity.magnitude, afterState.Velocity.magnitude);
             }
-            return step < 0 ? float.NaN : (float)maximum;
+            return result;
         }
 
         public static bool IsCornerStep(Trajectory t, long step)
