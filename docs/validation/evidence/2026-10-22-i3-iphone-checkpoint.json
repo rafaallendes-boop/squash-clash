@@ -1,0 +1,197 @@
+{
+  "date": "2026-10-22",
+  "recordedAtUtc": "2026-10-22T15:22:51.956336+00:00",
+  "codeCommit": "c49d99b",
+  "buildVersion": "0.1.0+c49d99b",
+  "deviceModel": "iPhone 16 Pro",
+  "deviceOS": "26.6.2",
+  "unityVersion": "6000.3.27f1",
+  "method": "CUA native iPhone Mirroring controls; devicectl captures and launch logs on Wireless display",
+  "profiles": {
+    "dev": {
+      "installOutcome": "success",
+      "launchOutcome": "success",
+      "launchDisplay": "Wireless (iPhone Mirroring)",
+      "bootLog": "[SquashClash] boot 0.1.0+c49d99b dev devpanel=present development=False squashDev=True unity=6000.3.27f1",
+      "readyLog": "[SquashClash] ball ready candidate=P1-PhysX visualColliders=0 localPhysicsScenes=2 config=c86243b15a97 predictedSteps=168",
+      "displayLog": "[SquashClash] display profile=dev fps=60,0 orientation=Portrait resolution=1206x2622",
+      "diagnosticConsoleExitCode": 2,
+      "diagnosticConsoleTimeoutSeconds": 8,
+      "diagnosticTimeoutExplanation": "Intentional bounded console attachment; startup lines and native screenshots verified, followed by successful launch without console",
+      "observedFps": 60,
+      "orientationObserved": "Portrait",
+      "devBarVisible": true,
+      "backgroundResumeOverlayObserved": true,
+      "tapDismissesOverlay": true
+    },
+    "prod": {
+      "installOutcome": "success",
+      "launchOutcome": "success",
+      "launchDisplay": "Wireless (iPhone Mirroring)",
+      "bootLog": "[SquashClash] boot 0.1.0+c49d99b prod devpanel=absent development=False squashDev=False unity=6000.3.27f1",
+      "readyLog": "[SquashClash] ball ready candidate=P1-PhysX visualColliders=0 localPhysicsScenes=2 config=c86243b15a97 predictedSteps=168",
+      "displayLog": "[SquashClash] display profile=prod fps=60,0 orientation=Portrait resolution=1206x2622",
+      "diagnosticConsoleExitCode": 2,
+      "diagnosticConsoleTimeoutSeconds": 8,
+      "diagnosticTimeoutExplanation": "Intentional bounded console attachment; startup lines and native screenshots verified, followed by successful launch without console",
+      "observedFps": 60,
+      "orientationObserved": "Portrait",
+      "devBarVisible": false,
+      "backgroundResumeOverlayObserved": true,
+      "tapDismissesOverlay": true
+    }
+  },
+  "devControls": {
+    "launch": "Flight starts; Pausa freezes a visible black ball",
+    "pauseContinue": "Label changes Pausa/Continuar; Continue resumes visible motion",
+    "step": "One click changes the paused ball image; subsequent captures retain its position",
+    "replay": "Returns to initial launch image while preserving manual pause; Continue starts flight"
+  },
+  "pixelObservations": {
+    "method": "Read-only CoreGraphics/ImageIO inspection of native PNGs; dark pixels <65 in each RGB channel in previously observed ball region",
+    "pausedA": {
+      "darkPixelBounds": [
+        601,
+        1410,
+        604,
+        1413
+      ]
+    },
+    "afterOneStep": {
+      "darkPixelBounds": [
+        601,
+        1396,
+        604,
+        1399
+      ]
+    },
+    "subsequentPausedCapture": {
+      "darkPixelBounds": [
+        601,
+        1396,
+        604,
+        1399
+      ]
+    },
+    "replayBeforeContinue": {
+      "darkPixelBounds": [
+        601,
+        1655,
+        604,
+        1660
+      ]
+    },
+    "interpretation": "Screen motion/freeze only; no claim about contact accuracy, determinism, performance budget or exact physics step count from pixels"
+  },
+  "physicalDeviceLockTest": {
+    "profile": "dev",
+    "method": "PO on physical iPhone: Launch, side-button lock, unlock, return to app, tap",
+    "reportedBy": "PO in chat",
+    "answer": "Aparece el aviso y continúa correctamente",
+    "result": "passed as reported by PO",
+    "prodPhysicalLockSeparatelyTested": false,
+    "prodBackgroundResumeTested": true
+  },
+  "screenshots": [
+    {
+      "label": "dev-paused-a",
+      "file": "2026-10-22-i3-checkpoint-dev-paused-a.png",
+      "sha256": "8fa24069733283515e3613bb59957fdf63d327bb053e7e5f23e17d986a39d264",
+      "source": "native iPhone Wireless display via devicectl",
+      "resolution": [
+        1206,
+        2622
+      ],
+      "capturedAtUtc": "2026-10-22T15:12:59.600013+00:00"
+    },
+    {
+      "label": "dev-step-a",
+      "file": "2026-10-22-i3-checkpoint-dev-step-a.png",
+      "sha256": "091516780567de33fef0199a34d89c791d90e6c20f44e262d5b9ba29a6a5a9c4",
+      "source": "native iPhone Wireless display via devicectl",
+      "resolution": [
+        1206,
+        2622
+      ],
+      "capturedAtUtc": "2026-10-22T15:13:23.603014+00:00"
+    },
+    {
+      "label": "dev-paused-b",
+      "file": "2026-10-22-i3-checkpoint-dev-paused-b.png",
+      "sha256": "091516780567de33fef0199a34d89c791d90e6c20f44e262d5b9ba29a6a5a9c4",
+      "source": "native iPhone Wireless display via devicectl",
+      "resolution": [
+        1206,
+        2622
+      ],
+      "capturedAtUtc": "2026-10-22T15:13:23.947183+00:00"
+    },
+    {
+      "label": "dev-resume-overlay",
+      "file": "2026-10-22-i3-checkpoint-dev-resume-overlay.png",
+      "sha256": "c731b965a3e8af067b9d5d1a5bc560c6089e34bb58bfe5ee45d353574006f3be",
+      "source": "native iPhone Wireless display via devicectl",
+      "resolution": [
+        1206,
+        2622
+      ],
+      "capturedAtUtc": "2026-10-22T15:17:04.267769+00:00"
+    },
+    {
+      "label": "prod-running",
+      "file": "2026-10-22-i3-checkpoint-prod-running.png",
+      "sha256": "ebad9b4d0c5985f6369d3e1229844ed2d5a637e6708955bc3e6798db61487438",
+      "source": "native iPhone Wireless display via devicectl",
+      "resolution": [
+        1206,
+        2622
+      ],
+      "capturedAtUtc": "2026-10-22T15:19:01.919302+00:00"
+    },
+    {
+      "label": "prod-resume-overlay",
+      "file": "2026-10-22-i3-checkpoint-prod-resume-overlay.png",
+      "sha256": "a7e9e4554e4ecea15fe1886823cb6a29046c090bb3730357ff14faca24ee7229",
+      "source": "native iPhone Wireless display via devicectl",
+      "resolution": [
+        1206,
+        2622
+      ],
+      "capturedAtUtc": "2026-10-22T15:19:28.829428+00:00"
+    },
+    {
+      "label": "dev-restored",
+      "file": "2026-10-22-i3-checkpoint-dev-restored.png",
+      "sha256": "9f7178d06dc09d1ce70512651df8b06ac13c499dbd7c0d8000963358e19cb92e",
+      "source": "native iPhone Wireless display via devicectl",
+      "resolution": [
+        1206,
+        2622
+      ],
+      "capturedAtUtc": "2026-10-22T15:20:26.751340+00:00"
+    }
+  ],
+  "screenRecording": {
+    "supported": false,
+    "error": "CoreDevice reports Screen Recording capability unsupported; native PNGs used instead"
+  },
+  "legibility": {
+    "ballColor": "black observed",
+    "size": "PO finds it too small; black core approximately four pixels wide in sampled native flight screenshot",
+    "accepted": false,
+    "visualScaleImplemented": false,
+    "physicalAndVisualRadiusMeters": 0.02,
+    "followup": "T6.2; no I6 authorization inferred"
+  },
+  "installedProfileAtEnd": "dev",
+  "devRestoredLaunchVerified": true,
+  "profileExpiresUtc": "2026-10-28T14:59:31Z",
+  "profileValidAtReinstallation": true,
+  "poAcceptanceOfI3": "not yet explicitly granted",
+  "manualPauseAfterSystemContinue": "deferred to I5 as instructed by PO",
+  "productCodeChangedThisCheckpoint": false,
+  "physicsGateEvaluated": false,
+  "backendChosen": false,
+  "pullRequestMerged": false,
+  "incrementClosed": false
+}
