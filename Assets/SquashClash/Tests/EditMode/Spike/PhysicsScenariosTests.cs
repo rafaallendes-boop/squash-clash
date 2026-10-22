@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
 using NUnit.Framework;
 using SquashClash.Core.Config;
 using SquashClash.Core.Court;
@@ -84,6 +85,21 @@ namespace SquashClash.Core.Tests.Spike
         [Test] public void S9_TinTargetsFollowSelectedTinWithoutChangingMargins() {
             d.TinTop=.43f;var s=Scenario("S9d");Assert.That(s.ContactPoint.Value.y,Is.EqualTo(.443f).Within(1e-6));
             Assert.That(Scenario("S2").ContactPoint.Value.y,Is.EqualTo(.48f).Within(1e-6));
+        }
+        [Test] public void Random_RobustnessRunsAll360StepsEvenAfterSecondBounce() {
+            var s=PhysicsScenarios.Random(d,p,1,7).Single();
+            using(var simulation=new EveryStepFloorSimulation()) {
+                var trajectory=TrajectoryRunner.Run(simulation,s.Start,s.MaxSteps,s.Stop,d);
+                Assert.That(trajectory.States.Last().Step,Is.EqualTo(360));
+            }
+        }
+        private sealed class EveryStepFloorSimulation:IBallSimulation {
+            private BallState state;
+            public BackendCapabilities Capabilities=>new BackendCapabilities{RunsInEditMode=true};
+            public BallState State=>state;
+            public void Reset(in BallState initial){state=initial;state.Position=new Vector3(3,.02f,5);}
+            public void Step(List<ContactEvent> contacts){state.Step++;contacts.Clear();contacts.Add(new ContactEvent(SurfaceId.Floor,state.Position,Vector2.zero,Vector3.up,state.Step,0,ContactTiming.Exact,Vector3.down,false));}
+            public void Dispose(){}
         }
         [Test] public void Random_IsReproducibleForSeed() {
             var a=PhysicsScenarios.Random(d,p,32,7).ToArray();var b=PhysicsScenarios.Random(d,p,32,7).ToArray();

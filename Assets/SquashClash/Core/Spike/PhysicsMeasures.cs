@@ -98,7 +98,13 @@ namespace SquashClash.Core.Spike
             int count = 0;
             var steps = new HashSet<(SurfaceId surface, long step)>();
             foreach (var c in t.Contacts)
-                if (!c.Persistent && Mathf.Abs(Vector3.Dot(c.ApproachVelocity, c.Normal)) > minNormalSpeed) steps.Add((c.Surface, c.Step));
+            {
+                if (c.Persistent) continue;
+                // Unknown timing is valid here; unknown normal speed is not.
+                if (!Finite(c.ApproachVelocity) || !Finite(c.Normal) || c.Normal.normalized == Vector3.zero)
+                    throw new ArgumentException("C4 requires finite approach velocity and a usable contact normal.", nameof(t));
+                if (Mathf.Abs(Vector3.Dot(c.ApproachVelocity, c.Normal.normalized)) > minNormalSpeed) steps.Add((c.Surface, c.Step));
+            }
             foreach (var entry in steps) if (steps.Contains((entry.surface, entry.step - 1))) count++;
             return count;
         }

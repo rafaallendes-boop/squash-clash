@@ -42,7 +42,10 @@ namespace SquashClash.Core.Spike
                 var position=new Vector3((float)(.3+random.NextDouble()*5.8),(float)(.3+random.NextDouble()*2.2),(float)(.3+random.NextDouble()*9.15));
                 double y=2*random.NextDouble()-1, phi=2*Math.PI*random.NextDouble(), horizontal=Math.Sqrt(1-y*y);
                 var direction=new Vector3((float)(horizontal*Math.Cos(phi)),(float)y,(float)(horizontal*Math.Sin(phi)));
-                yield return Directed("S8-"+i,"Lanzamiento aleatorio",position,direction,(float)(2+33*random.NextDouble()),0,p);
+                var scenario=Directed("S8-"+i,"Lanzamiento aleatorio",position,direction,(float)(2+33*random.NextDouble()),0,p);
+                // Robustness observes the full horizon, including after two bounces.
+                scenario.Stop=StopCondition.MaxSteps;
+                yield return scenario;
             }
         }
 

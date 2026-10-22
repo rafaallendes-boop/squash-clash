@@ -15,8 +15,8 @@ namespace SquashClash.Core.Spike
             text.AppendLine($"Backend: {Escape(r.Backend)}; variante: {Escape(r.Variant)}; build: {Escape(r.Build)}");
             text.AppendLine($"Dispositivo: {Escape(r.Device)}; configuración: {Escape(r.ConfigHash)}");
             text.AppendLine($"ProjectPhysics: {Escape(r.ProjectPhysics)}\n");
-            text.AppendLine("| ID | Requisito | Escenarios | Medición | Umbral | Veredicto | Gate | evaluados/no evaluables |");
-            text.AppendLine("|---|---|---|---|---|---|---|---|");
+            text.AppendLine("| ID | Requisito | Escenarios | Medición | Umbral | Veredicto | Gate | evaluados/no evaluables/esperados | Cobertura |");
+            text.AppendLine("|---|---|---|---|---|---|---|---|---|");
             var expected = SpikeCriteria.CreateResults(!string.Equals(r.Device, "editor", StringComparison.OrdinalIgnoreCase));
             var known = new HashSet<string>();
             foreach (var definition in expected)
@@ -33,7 +33,7 @@ namespace SquashClash.Core.Spike
             return text.ToString();
         }
         private static void WriteRow(StringBuilder text, CriterionResult c) => text.AppendLine(
-            $"| {Escape(c.Id)} | {Escape(c.Requirement)} | {Escape(c.Scenarios)} | {Escape(c.Measured)} | {Escape(c.Threshold)} | {c.Verdict} | {(c.Gating ? "sí" : "no")} | {c.Evaluated}/{c.NotEvaluable} |");
+            $"| {Escape(c.Id)} | {Escape(c.Requirement)} | {Escape(c.Scenarios)} | {Escape(c.Measured)} | {Escape(c.Threshold)} | {c.Verdict} | {(c.Gating ? "sí" : "no")} | {c.Evaluated}/{c.NotEvaluable}/{c.Expected} | {(c.CoverageComplete ? "cerrada" : "abierta")} |");
         private static string Escape(string value) => (value ?? "—").Replace("|", "\\|").Replace("\r", "").Replace("\n", "<br>");
     }
 }

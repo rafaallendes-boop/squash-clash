@@ -69,6 +69,21 @@ namespace SquashClash.Core.Tests.Spike {
    t.Contacts[1]=Contact(SurfaceId.Floor,11);Assert.That(PhysicsMeasures.RepeatedImpacts(t,.5f),Is.EqualTo(1));
    t.Contacts[1]=Contact(SurfaceId.Floor,11,speed:.1f);Assert.That(PhysicsMeasures.RepeatedImpacts(t,.5f),Is.Zero);
   }
+  [TestCase(float.NaN)][TestCase(float.PositiveInfinity)]
+  public void RepeatedImpacts_RejectsNonfiniteContactData(float invalid) {
+   var t=Path(State(0,Vector3.one));
+   foreach(long step in new[]{10L,11L})t.Contacts.Add(new ContactEvent(SurfaceId.Floor,Vector3.zero,Vector2.zero,Vector3.up,step,float.NaN,ContactTiming.StepOnly,new Vector3(0,invalid,0),false));
+   Assert.That(PhysicsMeasures.AllFinite(t,out _),Is.True);
+   Assert.Throws<ArgumentException>(()=>PhysicsMeasures.RepeatedImpacts(t,.5f));
+   t.Contacts[0]=new ContactEvent(SurfaceId.Floor,Vector3.zero,Vector2.zero,new Vector3(0,invalid,0),10,0,ContactTiming.Exact,Vector3.down,false);
+   Assert.Throws<ArgumentException>(()=>PhysicsMeasures.RepeatedImpacts(t,.5f));
+  }
+  [Test] public void RepeatedImpacts_RejectsZeroNormalAndAcceptsUnknownTime() {
+   var t=new Trajectory();t.Contacts.Add(new ContactEvent(SurfaceId.Floor,Vector3.zero,Vector2.zero,Vector3.zero,10,0,ContactTiming.Exact,Vector3.down,false));
+   Assert.Throws<ArgumentException>(()=>PhysicsMeasures.RepeatedImpacts(t,.5f));
+   t.Contacts.Clear();t.Contacts.Add(Contact(SurfaceId.Floor,10,time:float.NaN,timing:ContactTiming.StepOnly));t.Contacts.Add(Contact(SurfaceId.Floor,11,time:float.NaN,timing:ContactTiming.StepOnly));
+   Assert.That(PhysicsMeasures.RepeatedImpacts(t,.5f),Is.EqualTo(1));
+  }
   [Test] public void Bitwise_FindsFirstDifferingIndexAndSignedZero() {
    var a=new Trajectory();var b=new Trajectory();for(int i=0;i<9;i++){a.States.Add(State(i,Vector3.one));b.States.Add(State(i,Vector3.one));}
    Assert.That(PhysicsMeasures.TrajectoriesBitwiseEqual(a,b,out _),Is.True);

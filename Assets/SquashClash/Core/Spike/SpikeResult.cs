@@ -24,7 +24,13 @@ namespace SquashClash.Core.Spike
                         found = c;
                     }
                     if (found == null || found.Gating != definition.Gating) return false;
-                    if (found.Gating && (found.Verdict != Verdict.Pass || found.Evaluated <= 0 || found.NotEvaluable != 0 || string.IsNullOrWhiteSpace(found.Measured))) return false;
+                    if (found.Gating)
+                    {
+                        if (found.Verdict != Verdict.Pass || !found.CoverageComplete || found.Expected <= 0 ||
+                            found.Evaluated != found.Expected || found.NotEvaluable != 0 || string.IsNullOrWhiteSpace(found.Measured)) return false;
+                        if (definition.Expected > 0 && found.Expected != definition.Expected) return false;
+                        if (found.Id == "C2" && found.Expected < SpikeCriteria.RequiredRobustnessLaunches) return false;
+                    }
                 }
                 return true;
             }
