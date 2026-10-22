@@ -40,11 +40,18 @@ namespace SquashClash.Experiments
             PredictionBenchmarkRun benchmark = null;
             try
             {
-                while (!run.Step(8)) yield return null;
+                int mark = -1;
+                while (!run.Step(8)) {
+                    int next = (int)(run.Progress * 20);
+                    if (next != mark) { mark = next; Debug.Log($"[SquashClash] spike {name} {run.Progress:P0} {run.Phase}"); }
+                    yield return null;
+                }
                 benchmark = new PredictionBenchmarkRun(factory, config.Physics, config.Court);
                 while (!benchmark.Step(8)) yield return null;
                 benchmark.ApplyTo(run.Result);
                 Assert.That(run.Result.Complete, Is.True);
+                run.Result.Profile = "editor"; run.Result.OS = SystemInfo.operatingSystem;
+                run.Result.ThermalStart = run.Result.ThermalEnd = "not measured / editor";
                 string report = SpikeReportWriter.ToMarkdown(run.Result);
                 Directory.CreateDirectory("Logs");
                 File.WriteAllText("Logs/physics-spike-P1-" + name + ".md", report);

@@ -88,7 +88,7 @@ namespace SquashClash.DevPanel
                     if (HasPhysicsScenes()) return;
                     waiting = false; factory = new PhysXBallSimulationFactory();
                     run = new SpikeRun(factory, config.Physics, config.Court, new SpikeOptions {
-                        Device = SystemInfo.deviceModel, Build = app.Build.Label, ConfigHash = config.Hash,
+                        Device = Application.isEditor ? "editor" : SystemInfo.deviceModel, Build = app.Build.Label, ConfigHash = config.Hash,
                         Variant = "baseline/" + PhysXVariant.Baseline.Name,
                         ProjectPhysics = "EnhancedDeterminism=true; bounceThreshold=" + UnityEngine.Physics.bounceThreshold + "; Unity=" + Application.unityVersion
                     }); result = run.Result;
@@ -114,7 +114,7 @@ namespace SquashClash.DevPanel
             if (!IsRunning) return;
             run?.Cancel(); benchmark?.Cancel();
             if (result == null) result = new SpikeResult { Backend = "P1-PhysX", Variant = "baseline/" + PhysXVariant.Baseline.Name,
-                Build = app.Build.Label, ConfigHash = config.Hash, Device = SystemInfo.deviceModel,
+                Build = app.Build.Label, ConfigHash = config.Hash, Device = Application.isEditor ? "editor" : SystemInfo.deviceModel,
                 Criteria = SpikeCriteria.CreateResults(Application.platform == RuntimePlatform.IPhonePlayer) };
             result.Complete = false; result.Details.Add(reason); Finish("INCOMPLETO — " + reason);
         }

@@ -60,7 +60,13 @@ namespace SquashClash.EditorTools
                     extraScriptingDefines = profile == "prod" ? Array.Empty<string>() : new[] { "SQUASH_DEV" }
                 };
                 Debug.Log($"[SquashClash] build {info.Label} development={debug} il2cpp={(debug ? "Debug" : "Release")} extraDefines={string.Join(",", options.extraScriptingDefines)}");
-                var report = BuildPipeline.BuildPlayer(options);
+                var thermal = AssetImporter.GetAtPath("Assets/SquashClash/DevPanel/Native/ThermalState.mm") as PluginImporter;
+                if (thermal == null) throw new InvalidOperationException("Missing native thermal diagnostic importer.");
+                // Native .mm inclusion is explicit; assembly constraints alone cannot exclude it.
+                thermal.SetIncludeInBuildDelegate(_ => profile != "prod");
+                BuildReport report;
+                try { report = BuildPipeline.BuildPlayer(options); }
+                finally { thermal.SetIncludeInBuildDelegate(null); }
                 if (report.summary.result != BuildResult.Succeeded)
                     throw new InvalidOperationException($"iOS export failed: {report.summary.result}, errors={report.summary.totalErrors}");
                 Debug.Log($"[SquashClash] iOS export succeeded: {output}");

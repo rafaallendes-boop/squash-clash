@@ -24,7 +24,7 @@ namespace SquashClash.Runtime.Tests
             Assert.That(Screen.sleepTimeout,Is.EqualTo(SleepTimeout.NeverSleep));
             section.SendMessage("OnApplicationPause",true);
             Assert.That(section.IsRunning,Is.False);Assert.That(Screen.sleepTimeout,Is.EqualTo(sleep));
-            Assert.That(section.LastReport,Does.Contain("INCOMPLETO"));Assert.That(section.LastReport,Does.Contain("Segundo plano"));
+            Assert.That(section.LastReport,Does.Contain("INCOMPLETO"));Assert.That(section.LastReport,Does.Contain("Segundo plano"));Assert.That(section.LastReport,Does.Contain("Dispositivo: editor"));
             Assert.That(File.ReadAllText(section.LastReportPath),Is.EqualTo(section.LastReport));Assert.That(GUIUtility.systemCopyBuffer,Is.EqualTo(section.LastReport));
         }
         [UnityTest] public IEnumerator ScenarioButton_LaunchesS1ThenS2WithApprovedState() {

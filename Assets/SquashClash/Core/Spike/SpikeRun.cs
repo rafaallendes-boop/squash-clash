@@ -24,6 +24,7 @@ namespace SquashClash.Core.Spike
         private readonly Dictionary<string, int> failures = new Dictionary<string, int>();
         private readonly Dictionary<string, int> notes = new Dictionary<string, int>();
         private readonly Dictionary<EnergyStepPopulation, (EnergyGainSample sample, string scenario)> energy = new Dictionary<EnergyStepPopulation, (EnergyGainSample, string)>();
+        private readonly Dictionary<(EnergyStepPopulation, MeasurementStatus), int> energyCounts = new Dictionary<(EnergyStepPopulation, MeasurementStatus), int>();
         private readonly List<float> remaining = new List<float>();
         private IBallSimulation game, predictor;
         private bool finished;
@@ -122,7 +123,8 @@ namespace SquashClash.Core.Spike
                 else Record("C3", all.Status == MeasurementStatus.NotEvaluable ? (bool?)null : all.RelativeGain <= SpikeCriteria.CornerEnergyGainLimit, s.Id + " " + EnergyText(all));
                 foreach (var population in new[] { EnergyStepPopulation.Corner, EnergyStepPopulation.CornerWithImpact, EnergyStepPopulation.CornerPersistentOnly })
                 {
-                    var sample = PhysicsMeasures.MaxRelativeEnergyGain(t, physics, population);
+                    var sample = population == EnergyStepPopulation.Corner ? all : PhysicsMeasures.MaxRelativeEnergyGain(t, physics, population);
+                    var key = (population, sample.Status); energyCounts.TryGetValue(key, out int count); energyCounts[key] = count + 1;
                     if (sample.Status == MeasurementStatus.Measured && (!energy.TryGetValue(population, out var old) || sample.RelativeGain > old.sample.RelativeGain)) energy[population] = (sample, s.Id);
                 }
             }
@@ -163,8 +165,9 @@ namespace SquashClash.Core.Spike
             if (s.Id == "S4" || s.Id == "S6")
             {
                 var first = FirstImpact(t);
-                var sameStep = first.HasValue ? t.Contacts.Where(c => c.Step == first.Value.Step && !c.Persistent).ToArray() : Array.Empty<ContactEvent>();
-                Record("C15", first.HasValue ? true : (bool?)null, s.Id + ": primer paso=" + (first?.Step.ToString() ?? "ausente") + "; " + string.Join("; ", sameStep.Select(c => $"{c.Surface}, {c.Timing}, t={F(c.TimeInStep)}")), true);
+                var distinct = t.Contacts.Where(c => !c.Persistent).GroupBy(c => c.Surface).Select(g => g.First()).Take(2).ToArray();
+                bool together = distinct.Length == 2 && distinct[0].Step == distinct[1].Step;
+                Record("C15", first.HasValue ? true : (bool?)null, s.Id + ": primer paso=" + (first?.Step.ToString() ?? "ausente") + "; mismo paso=" + together + "; " + string.Join("; ", distinct.Select(c => $"{c.Surface}, paso={c.Step}, {c.Timing}, t={F(c.TimeInStep)}")), true);
             }
         }
         private void Relaunch(PhysicsScenario s, Trajectory baseline, long k, string label)
@@ -220,7 +223,10 @@ namespace SquashClash.Core.Spike
             Row("C1").Measured += $"; atravesamientos={crossings}; salidas superiores={overTop}; seed={options.Seed}; S8={options.RandomCount}; S8d=36";
             Row("C3").Measured += "; no aplica (sin pasos de esquina, fuera de población)=" + noCorner;
             foreach (var population in new[] { EnergyStepPopulation.Corner, EnergyStepPopulation.CornerWithImpact, EnergyStepPopulation.CornerPersistentOnly })
-                Row("C3").Measured += "; " + population + ": " + (energy.TryGetValue(population, out var max) ? max.scenario + " " + EnergyText(max.sample) : "no aplica / sin muestra medida");
+            {
+                string counts = string.Join(", ", new[] { MeasurementStatus.Measured, MeasurementStatus.NotApplicable, MeasurementStatus.NotEvaluable }.Select(status => status + "=" + (energyCounts.TryGetValue((population, status), out int n) ? n : 0)));
+                Row("C3").Measured += "; " + population + " [" + counts + "]: " + (energy.TryGetValue(population, out var max) ? "máximo entre casos medidos: " + max.scenario + " " + EnergyText(max.sample) : "sin máximo medido; consultar estados explícitos");
+            }
             Row("C4").Measured += "; impactos repetidos=" + repeated;
             Row("C10").Measured += "; error máximo mm=" + F(maxPrecision);
             remaining.Sort(); Row("C13").Measured += remaining.Count == 0 ? "; sin ratios disponibles" : "; mínimo=" + F(remaining[0]) + "; mediana=" + F(remaining[remaining.Count / 2]);
