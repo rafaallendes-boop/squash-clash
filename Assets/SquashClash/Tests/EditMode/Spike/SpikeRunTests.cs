@@ -26,8 +26,17 @@ namespace SquashClash.Core.Tests.Spike {
   [Test] public void Reports_EnergyNotApplicableSeparately_AndAllEighteenRows(){var f=new FakeFactory();var run=Run(f);while(!run.Step(2)){}Assert.That(run.Result.Criteria.Count,Is.EqualTo(18));Assert.That(run.Result.Criteria.Find(c=>c.Id=="C3").Measured,Does.Contain("no aplica"));}
   [Test] public void Reports_InvalidEnergyIsExplicitInEachDiagnosticPopulation(){var f=new FakeFactory{InvalidState=true,TwoSurfaces=true};var run=Run(f);while(!run.Step(2)){}var row=run.Result.Criteria.Find(c=>c.Id=="C3");Assert.That(row.NotEvaluable,Is.GreaterThan(0));Assert.That(row.Measured,Does.Contain("NotEvaluable="));}
   [Test] public void Reports_C15IncludesBothDistinctSurfaceSteps(){var f=new FakeFactory{AlternateSurfaces=true};var run=Run(f);while(!run.Step(2)){}Assert.That(run.Result.Details,Has.Some.Contains("mismo paso=False"));}
+  [TestCase(false)][TestCase(true)] public void Reports_C13MedianUsesConventionalEvenAndOddSamples(bool odd){
+   var f=new FakeFactory{PositiveVelocities=true,FirstRatioUnavailable=odd};var run=Run(f);while(!run.Step(2)){}
+   var row=run.Result.Criteria.Find(c=>c.Id=="C13");
+   double low=(1-p.BallRadius)/(4*(p.StepSeconds-.001f)), high=(1-p.BallRadius)/(2*(p.StepSeconds-.001f));
+   var match=System.Text.RegularExpressions.Regex.Match(row.Measured,@"mediana=([0-9.Ee+\-]+)");Assert.That(match.Success,Is.True);
+   double actual=double.Parse(match.Groups[1].Value,System.Globalization.CultureInfo.InvariantCulture);
+   Assert.That(actual,Is.EqualTo(odd?low:(low+high)/2).Within(.001));
+   Assert.That(row.Evaluated%2,Is.EqualTo(odd?1:0));
+  }
   private sealed class FakeFactory:IBallSimulationFactory {
-   public string Name=>"fake";public int LiveInstances{get;private set;}public int Peak,Resets;public double DelayMs;public bool WarmupDelay,ThrowAtStep,InvalidState,TwoSurfaces,AlternateSurfaces;
+   public string Name=>"fake";public int LiveInstances{get;private set;}public int Peak,Resets;public double DelayMs;public bool WarmupDelay,ThrowAtStep,InvalidState,TwoSurfaces,AlternateSurfaces,PositiveVelocities,FirstRatioUnavailable;
    public IBallSimulation Create(PhysicsParams p,CourtDimensions d){LiveInstances++;Peak=Math.Max(Peak,LiveInstances);return new Fake(this);}
    private sealed class Fake:IBallSimulation {
     private readonly FakeFactory owner;private BallState state;private bool disposed;private int steps;
@@ -38,6 +47,8 @@ namespace SquashClash.Core.Tests.Spike {
      contacts.Add(new ContactEvent(SurfaceId.Floor,new Vector3(3,0,5),new Vector2(3,5),Vector3.up,state.Step,.001f,ContactTiming.Exact,Vector3.down,false));
      if(owner.AlternateSurfaces && steps==2){contacts.Clear();contacts.Add(new ContactEvent(SurfaceId.FrontWall,Vector3.zero,Vector2.zero,Vector3.forward,state.Step,.001f,ContactTiming.Exact,Vector3.back,false));}
      if(owner.TwoSurfaces)contacts.Add(new ContactEvent(SurfaceId.FrontWall,Vector3.zero,Vector2.zero,Vector3.forward,state.Step,.001f,ContactTiming.Exact,Vector3.back,false));
+     if(owner.PositiveVelocities)state.Velocity=Vector3.up*(steps==1?2:4);
+     if(owner.FirstRatioUnavailable&&owner.Resets==1&&steps==1)state.Velocity=Vector3.down;
      if(owner.InvalidState)state.Velocity=new Vector3(float.NaN,0,0);
     }
     public void Dispose(){if(disposed)return;disposed=true;owner.LiveInstances--;}

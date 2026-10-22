@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using SquashClash.Core.Config;
@@ -26,14 +27,16 @@ namespace SquashClash.DevPanel
         private Vector3 savedGravity;
         private int previousSleepTimeout, scenarioIndex, progressMark;
         private bool waiting, restoreHost;
-        private string started, thermalStart;
+        private string started, thermalStart, reportDirectory;
         public bool IsRunning { get; private set; }
         public string LastReport { get; private set; }
         public string LastReportPath { get; private set; }
         public string SelectedScenario { get; private set; }
-        public void Initialize(AppBootstrap app, VisualElement root)
+        public void Initialize(AppBootstrap app, VisualElement root, string reportDirectory = null)
         {
             this.app = app;
+            this.reportDirectory = reportDirectory ?? Path.Combine(Application.persistentDataPath, "spike");
+            layer?.RemoveFromHierarchy();
             layer = new VisualElement { name = "spike-section" };
             layer.style.position = Position.Absolute; layer.style.left = Length.Percent(3); layer.style.right = Length.Percent(3);
             layer.style.top = Length.Percent(17); layer.style.bottom = Length.Percent(21);
@@ -120,19 +123,32 @@ namespace SquashClash.DevPanel
         }
         private void Finish(string message)
         {
-            IsRunning = waiting = false; run?.Cancel(); benchmark?.Cancel();
-            UnityEngine.Physics.gravity = savedGravity; Screen.sleepTimeout = previousSleepTimeout;
+            IsRunning = waiting = false;
+            try { run?.Cancel(); benchmark?.Cancel(); }
+            finally
+            {
+                UnityEngine.Physics.gravity = savedGravity; Screen.sleepTimeout = previousSleepTimeout;
+                restoreHost = true;
+            }
             result.Profile = app.Build.profile; result.OS = SystemInfo.operatingSystem;
             result.StartedAtUtc = started; result.EndedAtUtc = DateTime.UtcNow.ToString("O");
             result.ThermalStart = thermalStart; result.ThermalEnd = ThermalState();
-            LastReport = SpikeReportWriter.ToMarkdown(result); GUIUtility.systemCopyBuffer = LastReport;
-            var directory = Path.Combine(Application.persistentDataPath, "spike"); Directory.CreateDirectory(directory);
-            LastReportPath = Path.Combine(directory, "P1-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff") + ".md");
-            File.WriteAllText(LastReportPath, LastReport);
-            status.text = message + "\nInforme guardado y copiado."; reportLabel.text = LastReport;
-            scroll.style.display = DisplayStyle.Flex; cancel.style.display = DisplayStyle.None; close.style.display = DisplayStyle.Flex;
-            restoreHost = true;
-            Debug.Log("[SquashClash] spike saved complete=" + result.Complete + " thermal=" + result.ThermalStart + "→" + result.ThermalEnd + " path=" + LastReportPath);
+            LastReport = SpikeReportWriter.ToMarkdown(result); LastReportPath = null;
+            // Recover controls and present the in-memory result before attempting independent outputs.
+            reportLabel.text = LastReport; scroll.style.display = DisplayStyle.Flex;
+            cancel.style.display = DisplayStyle.None; close.style.display = DisplayStyle.Flex;
+            var outputs = new List<string>();
+            try { GUIUtility.systemCopyBuffer = LastReport; outputs.Add("Informe copiado."); }
+            catch (Exception e) { outputs.Add("No se pudo copiar: " + e.GetType().Name); Debug.LogWarning("[SquashClash] " + outputs[outputs.Count - 1]); }
+            try
+            {
+                Directory.CreateDirectory(reportDirectory);
+                var path = Path.Combine(reportDirectory, "P1-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff") + ".md");
+                File.WriteAllText(path, LastReport); LastReportPath = path; outputs.Add("Informe guardado.");
+            }
+            catch (Exception e) { outputs.Add("No se pudo guardar: " + e.GetType().Name); Debug.LogWarning("[SquashClash] " + outputs[outputs.Count - 1]); }
+            status.text = message + "\n" + string.Join("\n", outputs);
+            Debug.Log("[SquashClash] spike output complete=" + result.Complete + " thermal=" + result.ThermalStart + "→" + result.ThermalEnd + " saved=" + (LastReportPath != null));
         }
         private static bool HasPhysicsScenes() => Enumerable.Range(0, SceneManager.sceneCount).Select(SceneManager.GetSceneAt).Any(s => s.name.StartsWith("P1-PhysX-", StringComparison.Ordinal));
         private void OnApplicationPause(bool paused) { if (paused) CancelRun("Segundo plano"); }

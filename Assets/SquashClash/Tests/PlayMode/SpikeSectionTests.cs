@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using System.Reflection;
+using SquashClash.Core.Spike;
 using System.IO;
 using NUnit.Framework;
 using SquashClash.DevPanel;
@@ -6,6 +9,8 @@ using SquashClash.Runtime.App;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+using Object=UnityEngine.Object;
 namespace SquashClash.Runtime.Tests
 {
     public sealed class SpikeSectionTests
@@ -26,6 +31,32 @@ namespace SquashClash.Runtime.Tests
             Assert.That(section.IsRunning,Is.False);Assert.That(Screen.sleepTimeout,Is.EqualTo(sleep));
             Assert.That(section.LastReport,Does.Contain("INCOMPLETO"));Assert.That(section.LastReport,Does.Contain("Segundo plano"));Assert.That(section.LastReport,Does.Contain("Dispositivo: editor"));
             Assert.That(File.ReadAllText(section.LastReportPath),Is.EqualTo(section.LastReport));Assert.That(GUIUtility.systemCopyBuffer,Is.EqualTo(section.LastReport));
+        }
+        [UnityTest] public IEnumerator Completion_SaveFailureStillShowsReportAndRecoversHost()=>SaveFailure(false);
+        [UnityTest] public IEnumerator Cancellation_SaveFailureStillShowsReportAndRecoversHost()=>SaveFailure(true);
+        private IEnumerator SaveFailure(bool cancelled) {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
+            var app=AppBootstrap.Instance;var host=app.Host;host.enabled=false;int generation=host.SimulationGeneration;
+            var section=Object.FindFirstObjectByType<SpikeSection>();
+            var root=app.GetComponent<UnityEngine.UIElements.UIDocument>().rootVisualElement;
+            string blocked=Path.Combine(Path.GetTempPath(),"squash-report-"+Guid.NewGuid().ToString("N"));File.WriteAllText(blocked,"occupied directory path");
+            var gravity=UnityEngine.Physics.gravity;
+            try {
+                section.Initialize(app,root,blocked);section.Begin();
+                if(cancelled)Assert.DoesNotThrow(()=>section.CancelRun("test cancellation"));
+                else {
+                    // Inject a completed result at the output boundary, avoiding a 10k physical experiment in regression.
+                    typeof(SpikeSection).GetField("result",BindingFlags.NonPublic|BindingFlags.Instance).SetValue(section,new SpikeResult{Complete=true,Device="editor",Build=app.Build.Label,ConfigHash=app.Config.Hash,Criteria=SpikeCriteria.CreateResults(false)});
+                    Assert.DoesNotThrow(()=>typeof(SpikeSection).GetMethod("Finish",BindingFlags.NonPublic|BindingFlags.Instance).Invoke(section,new object[]{"Prueba completa"}));
+                }
+                Assert.That(section.IsRunning,Is.False);Assert.That(section.LastReport,Does.Contain(cancelled?"**INCOMPLETO**":"**COMPLETO**"));
+                Assert.That(section.LastReportPath,Is.Null);Assert.That(Screen.sleepTimeout,Is.EqualTo(sleep));Assert.That(UnityEngine.Physics.gravity,Is.EqualTo(gravity));
+                var label=root.Q<UnityEngine.UIElements.Label>("spike-report");Assert.That(label.text,Is.EqualTo(section.LastReport));
+                Assert.That(root.Q<UnityEngine.UIElements.Label>("spike-status").text,Does.Contain("No se pudo guardar"));
+                Assert.That(root.Q<UnityEngine.UIElements.Button>("spike-close").style.display.value,Is.EqualTo(UnityEngine.UIElements.DisplayStyle.Flex));
+                for(int i=0;i<120&&host.SimulationGeneration==generation;i++)yield return null;
+                Assert.That(host.SimulationGeneration,Is.EqualTo(generation+1));Assert.That(host.Clock.Paused,Is.True);
+            } finally {File.Delete(blocked);}
         }
         [UnityTest] public IEnumerator ScenarioButton_LaunchesS1ThenS2WithApprovedState() {
             yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;

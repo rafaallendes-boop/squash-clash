@@ -229,7 +229,15 @@ namespace SquashClash.Core.Spike
             }
             Row("C4").Measured += "; impactos repetidos=" + repeated;
             Row("C10").Measured += "; error máximo mm=" + F(maxPrecision);
-            remaining.Sort(); Row("C13").Measured += remaining.Count == 0 ? "; sin ratios disponibles" : "; mínimo=" + F(remaining[0]) + "; mediana=" + F(remaining[remaining.Count / 2]);
+            remaining.Sort();
+            if (remaining.Count == 0) Row("C13").Measured += "; sin ratios disponibles";
+            else
+            {
+                int middle = remaining.Count / 2;
+                float median = remaining.Count % 2 == 0 ? (float)(((double)remaining[middle - 1] + remaining[middle]) / 2) : remaining[middle];
+                Row("C13").Measured += "; mínimo=" + F(remaining[0]) + "; mediana=" + F(median);
+                Result.Details.Add("C13 ratios medidos ordenados (float32, R): " + string.Join(", ", remaining.Select(F)));
+            }
             Inform("C14", $"máximo impactos no persistentes/paso={maxImpacts}; tope configurable={capabilities.ImpactCapConfigurable}; parámetro maxImpactsPerStep no operativo con P1");
             Inform("C16", $"penetración máxima={F(maxPenetration * 1000)} mm; muestras persistentes={persistent} (todas las trayectorias ejecutadas)");
             Inform("C18", "RunsInEditMode=" + capabilities.RunsInEditMode + "; timing=" + capabilities.Timing);
