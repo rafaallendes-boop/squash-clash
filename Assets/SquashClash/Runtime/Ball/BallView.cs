@@ -28,8 +28,8 @@ namespace SquashClash.Runtime.Ball
                 }
                 mesh = new Mesh { name="Ball visual", vertices=vertices, normals=normals, triangles=triangles }; mesh.RecalculateBounds();
                 GetComponent<MeshFilter>().sharedMesh = mesh;
-                material = new Material(Resources.Load<Material>("CourtMaterials/CourtBlue")) { name="Ball visual yellow" };
-                material.SetColor("_BaseColor", new Color(1,0.92f,0.08f));
+                material = new Material(Resources.Load<Material>("CourtMaterials/CourtBlue")) { name="Ball visual black" };
+                material.SetColor("_BaseColor", Color.black);
                 GetComponent<MeshRenderer>().sharedMaterial = material;
             }
             transform.localScale = Vector3.one * (radius * 2);
