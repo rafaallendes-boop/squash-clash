@@ -146,6 +146,14 @@ namespace SquashClash.EditorTools
             AssetDatabase.SaveAssets();
             Debug.Log($"[SquashClash] setup complete unity={Application.unityVersion} bundle={bundleId} minIOS={PlayerSettings.iOS.targetOSVersionString}");
         }
+        // Experiment-only entry point: do not rebuild the scene or overwrite defaults.
+        public static void ConfigureSpikePhysics()
+        {
+            var physics = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/DynamicsManager.asset")[0]);
+            physics.FindProperty("m_EnableEnhancedDeterminism").boolValue = Environment.GetEnvironmentVariable("SQUASH_SPIKE_VARIANT") != "no-ed";
+            physics.ApplyModifiedPropertiesWithoutUndo(); AssetDatabase.SaveAssets();
+        }
+
         private static void CourtMaterial(string name, Color color, bool transparent = false, bool twoSided = false)
         {
             var path = "Assets/SquashClash/Runtime/Resources/CourtMaterials/" + name + ".mat";
