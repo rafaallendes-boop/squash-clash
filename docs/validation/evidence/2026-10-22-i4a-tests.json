@@ -1,0 +1,249 @@
+{
+  "date": "2026-10-22",
+  "increment": "I4a",
+  "tasks": [
+    "T4.1",
+    "T4.2"
+  ],
+  "baseCommit": "c396fe4",
+  "reviewedHead": "b5d0d9a",
+  "finalProductCodeCommit": "980529d",
+  "runs": [
+    {
+      "run": "baseline-editmode",
+      "xml": "Logs/i4a-baseline-editmode-results.xml",
+      "sha256": "3c2760a1d3abf2f635d8a414c7f2a9e53fabb0a48c038d2472761a05b7b4f20b",
+      "counts": {
+        "total": 109,
+        "passed": 109,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "baseline-playmode",
+      "xml": "Logs/i4a-baseline-playmode-results.xml",
+      "sha256": "650ab8996ca40069a7fa5e15382af2cefdad4c315405e99431d7c0c951b342e8",
+      "counts": {
+        "total": 37,
+        "passed": 37,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "t41-red",
+      "xml": "Logs/i4a-t41-red-results.xml",
+      "sha256": "326ed24db7cdbc5f4ebb206a6a7e0099a0894be59f528e8eef8ffaebd95337a4",
+      "counts": {
+        "total": 13,
+        "passed": 0,
+        "failed": 13,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.EdgeDirected_Has36LaunchesInsideCourtAtSpecifiedTotalSpeeds",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.FrontTargets_AreFirstImpactAtIdealPoint(\"S1\",0.6f,2.2f,28.0f)",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.FrontTargets_AreFirstImpactAtIdealPoint(\"S2\",5.5f,0.53f,6.0f)",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.FrontTargets_AreFirstImpactAtIdealPoint(\"S5\",0.025f,1.5f,15.0f)",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.Random_CoversSphereAndApprovedRangesWithoutPolarBias",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.Random_IsReproducibleForSeed",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.S10_RunsSixSecondsWithoutStoppingAtSecondBounce",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.S3_FirstHitsRightWallAtRealIncidenceBelowTenDegrees",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.S4_SideAndFloorArriveInSameStep",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.S6_BothBackCornerPlanesAreInsideSameStepAwayFromEdges",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.S7_FirstHitsBackWall",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.S9_ReferenceClassificationMatchesDesign",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.S9_TinTargetsFollowSelectedTinWithoutChangingMargins"
+      ]
+    },
+    {
+      "run": "t41-green",
+      "xml": "Logs/i4a-t41-green-results.xml",
+      "sha256": "e10a7a3e4ee817b265b77f2c2a460bea18d8288dafbd863352312b691b8cf979",
+      "counts": {
+        "total": 122,
+        "passed": 122,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "t42-red",
+      "xml": "Logs/i4a-t42-red-results.xml",
+      "sha256": "c462027748fc6c96179282381952856a3645fc6d1191df345b5699c1de7da3f8",
+      "counts": {
+        "total": 148,
+        "passed": 122,
+        "failed": 26,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.AllFinite_FindsBadStateAndRejectsNoSamples",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.Bitwise_ComparesContactsTooAndReportsStateIndexOfContact",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.Bitwise_FindsFirstDifferingIndexAndSignedZero",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.ContactPrecision_UsesFirstImpactWithoutSkippingWrongSurface",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.Crossings_DetectsCenterBeyondFrontWallEvenWithEvent",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.Crossings_DetectsSegmentCrossingWithoutContact",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.Crossings_FindsFloorAndBothSidesOfAnEscapedCorner",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.Crossings_IgnoresExitOverTopButNotEarlierEscape",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.EnergyGain_DetectsContactGain",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.EnergyGain_IgnoresGravityWork",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.EnergyGain_WithNoEligibleContactIsUnavailable",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.IsCornerStep_RecognizesDistinctSurfacesInSameOrAdjacentSteps",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.MaxImpacts_ExcludesPersistentSamples",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.Penetration_IsNotCrossing",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.RemainingTime_FullAndStalled",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.RemainingTime_MissingTimingOrMultipleImpactsIsUnavailable",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.RepeatedImpacts_IgnoresPersistentSamplesAndLowSpeed",
+        "SquashClash.Core.Tests.Spike.SpikeReportWriterTests.Criteria_CoverageAndGateFlagsMatchApprovedDecisions",
+        "SquashClash.Core.Tests.Spike.SpikeReportWriterTests.Report_IncompleteRunIsNeverPass",
+        "SquashClash.Core.Tests.Spike.SpikeReportWriterTests.Report_MissingRowsAreShownAsNotEvaluatedAndMarkdownIsEscaped",
+        "SquashClash.Core.Tests.Spike.SpikeReportWriterTests.Report_NotEvaluatedIsNeverPass_AndListsTraceability(NotEvaluated)",
+        "SquashClash.Core.Tests.Spike.SpikeReportWriterTests.Report_NotEvaluatedIsNeverPass_AndListsTraceability(Fail)",
+        "SquashClash.Core.Tests.Spike.SpikeReportWriterTests.Report_NotEvaluatedIsNeverPass_AndListsTraceability(Info)",
+        "SquashClash.Core.Tests.Spike.SpikeReportWriterTests.Report_PerformanceIsGatingOnlyOnIphone",
+        "SquashClash.Core.Tests.Spike.SpikeReportWriterTests.Report_RejectsMissingDuplicateOrDisabledGateCriterion",
+        "SquashClash.Core.Tests.Spike.SpikeReportWriterTests.Report_ZeroOrPartialCoverageIsNotPass"
+      ]
+    },
+    {
+      "run": "t42-green",
+      "xml": "Logs/i4a-t42-green-results.xml",
+      "sha256": "eafa2eaa705d304953fd9a4532926515ab96436a91e82011e2e906bbb0d1967c",
+      "counts": {
+        "total": 148,
+        "passed": 148,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "final-playmode",
+      "xml": "Logs/i4a-final-playmode-results.xml",
+      "sha256": "91eec0a6e5cda5a83c274eb7db84aad9a7055c4044a20e5f10a6c92af56c6845",
+      "counts": {
+        "total": 37,
+        "passed": 37,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "review-fix-red",
+      "xml": "Logs/i4a-review-fix-red-results.xml",
+      "sha256": "af7b7a81bff16093e25a634aa8f83a11090cbd4a252124c4f5190a71bc228f1c",
+      "counts": {
+        "total": 155,
+        "passed": 148,
+        "failed": 7,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.RepeatedImpacts_RejectsNonfiniteContactData(float.NaN)",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.RepeatedImpacts_RejectsNonfiniteContactData(float.PositiveInfinity)",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.RepeatedImpacts_RejectsZeroNormalAndAcceptsUnknownTime",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.Random_RobustnessRunsAll360StepsEvenAfterSecondBounce",
+        "SquashClash.Core.Tests.Spike.SpikeReportWriterTests.Report_CannotApproveOneOfNineS9PrecisionCases",
+        "SquashClash.Core.Tests.Spike.SpikeReportWriterTests.Report_EligibleCoverageMustBeDeclaredAndClosed",
+        "SquashClash.Core.Tests.Spike.SpikeReportWriterTests.Report_ReducedS8BatchCannotApproveRobustness"
+      ]
+    },
+    {
+      "run": "review-fix-green",
+      "xml": "Logs/i4a-review-fix-green-results.xml",
+      "sha256": "5b9cabae12f9b33a4caba9923f414b1ea4fbcacebe72b061986502c0b6b9af2b",
+      "counts": {
+        "total": 155,
+        "passed": 155,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "post-review-playmode",
+      "xml": "Logs/i4a-post-review-playmode-results.xml",
+      "sha256": "a9f84a9a6f10ba49ebfea6c1ddad43b2d4af83e0e313b25001deed7a8d8cec93",
+      "counts": {
+        "total": 37,
+        "passed": 37,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "claude-red",
+      "xml": "Logs/i4a-claude-red-results.xml",
+      "sha256": "4307dbc41a74a91389bdb211fbd7ff14873b9de04d9810153c087bec8a1ae421",
+      "counts": {
+        "total": 159,
+        "passed": 155,
+        "failed": 4,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.CornerEnergy_InvalidDataIsNotEvaluable_EvenWithoutCorner",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.CornerEnergy_NoCornerIsNotApplicable_NotInvalid",
+        "SquashClash.Core.Tests.Spike.PhysicsMeasuresTests.CornerEnergy_SplitsImpactAndPersistentOnlyWithoutChangingOverallMaximum",
+        "SquashClash.Core.Tests.Spike.PhysicsScenariosTests.EdgeDirected_RobustnessRunsFullHorizonEvenAfterSecondBounce"
+      ]
+    },
+    {
+      "run": "claude-green",
+      "xml": "Logs/i4a-claude-green-results.xml",
+      "sha256": "3596a35e03baabde6ed78261eb72fce6c460e54d3853e790fb339b0e56fcf1f7",
+      "counts": {
+        "total": 159,
+        "passed": 159,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "claude-play",
+      "xml": "Logs/i4a-claude-play-results.xml",
+      "sha256": "319cab7040b581da35b9aeb4ede4557f53d6779ffb5aa1e8c71ca4d74b958837",
+      "counts": {
+        "total": 37,
+        "passed": 37,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    }
+  ],
+  "review": {
+    "critical": 0,
+    "important": 3,
+    "minor": 0,
+    "importantFixedByRedGreen": true,
+    "secondReviewPerformed": false
+  },
+  "fixedScenarios": 17,
+  "edgeDirectedScenarios": 36,
+  "randomSeedInConstructionTest": 20261020,
+  "randomStopAfterFix": "MaxSteps (360 baseline steps), not second bounce",
+  "s4InitialZ": 4,
+  "s6InitialZ": 6,
+  "originalScenarioCoordinatesChanged": false,
+  "physicsAcceptanceThresholdsChanged": false,
+  "actualPhysXSpikeExecuted": false,
+  "physicalCriteriaVerdicts": "NotEvaluated: only synthetic regression and scenario construction measured",
+  "newNativeBuildOrInstall": false,
+  "backendChosen": false,
+  "i4bStarted": false,
+  "i4bCondition": "Claude review and merge of I4a",
+  "i4cAuthorized": false,
+  "p2Authorized": false,
+  "i5Authorized": false,
+  "pullRequest": "https://github.com/rafaallendes-boop/squash-clash/pull/3",
+  "pullRequestStateAtDelivery": "OPEN"
+}
