@@ -62,6 +62,26 @@ namespace SquashClash.Runtime.Tests {
             Assert.That(bounces,Is.EqualTo(2));Assert.That(host.IsRunning,Is.False);
             var last=host.Current;host.Advance(30);AssertStateBits(host.Current,last);yield return null;
         }
+        [UnityTest] public IEnumerator ManualContinueAfterStep_ZeroAlpha_DoesNotRewind()=>ContinueAfterStep(0,false);
+        [UnityTest] public IEnumerator ManualContinueAfterStep_FractionalAlpha_DoesNotRewind()=>ContinueAfterStep(0.5,false);
+        [UnityTest] public IEnumerator SystemContinueAfterStep_ZeroAlpha_DoesNotRewind()=>ContinueAfterStep(0,true);
+        [UnityTest] public IEnumerator SystemContinueAfterStep_FractionalAlpha_DoesNotRewind()=>ContinueAfterStep(0.5,true);
+        private IEnumerator ContinueAfterStep(double fraction,bool system) {
+            host.Launch(Default());host.Advance(fraction/120/0.65);host.Clock.Paused=true;
+            host.Clock.RequestSingleStep();host.Advance(0);var shown=host.RenderPosition;var authority=host.Current;
+            Assert.That(shown,Is.EqualTo(authority.Position));
+            if(system) {host.ResumeAfterSystemPause();host.SendMessage("Update");}
+            else {host.Clock.Paused=false;host.Advance(0);}
+            Assert.That(host.RenderPosition,Is.EqualTo(shown),"Continuar must not rewind the displayed single step.");AssertStateBits(host.Current,authority);
+            yield return null;
+        }
+        [UnityTest] public IEnumerator SystemPauseAndResume_PreserveInterpolatedRenderWithoutChangingAuthority() {
+            host.Launch(Default());host.Advance(1.5/120/0.65);var shown=host.RenderPosition;var authority=host.Current;
+            host.Clock.Paused=true;host.Advance(30);
+            Assert.That(host.RenderPosition,Is.EqualTo(shown),"Pause must freeze the displayed interpolated point.");AssertStateBits(host.Current,authority);
+            host.ResumeAfterSystemPause();host.SendMessage("Update");
+            Assert.That(host.RenderPosition,Is.EqualTo(shown),"The suppressed resume frame must not rewind presentation.");AssertStateBits(host.Current,authority);yield return null;
+        }
         private static void AssertStateBits(BallState a,BallState b) {
             foreach(var pair in new[]{(a.Position.x,b.Position.x),(a.Position.y,b.Position.y),(a.Position.z,b.Position.z),
                 (a.Velocity.x,b.Velocity.x),(a.Velocity.y,b.Velocity.y),(a.Velocity.z,b.Velocity.z)})

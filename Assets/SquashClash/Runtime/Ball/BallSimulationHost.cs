@@ -80,7 +80,14 @@ namespace SquashClash.Runtime.Ball
                 if (floorBounces >= 2 || current.Position.y > wallHeight || current.Step >= maxSteps)
                 { IsRunning = false; break; }
             }
-            RenderPosition = Clock.Paused || !IsRunning ? current.Position : Vector3.Lerp(previous.Position, current.Position, Clock.Alpha);
+            if (!IsRunning) RenderPosition = current.Position;
+            else if (Clock.Paused)
+            {
+                // No step: freeze the last interpolated image. A requested step
+                // presents current and rebases history so Continue cannot rewind.
+                if (count > 0) { previous = current; RenderPosition = current.Position; }
+            }
+            else RenderPosition = Vector3.Lerp(previous.Position, current.Position, Clock.Alpha);
         }
         private static bool SameBits(BallState a, BallState b) => a.Step == b.Step &&
             Same(a.Position.x,b.Position.x) && Same(a.Position.y,b.Position.y) && Same(a.Position.z,b.Position.z) &&
