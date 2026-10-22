@@ -12,7 +12,7 @@ namespace SquashClash.Runtime.Tests
         public IEnumerator MainScene_LoadsWithCameraAndRenderPipeline()
         {
             yield return SceneManager.LoadSceneAsync("Main", LoadSceneMode.Single);
-            Assert.That(Camera.main, Is.Not.Null);
+            Assert.That(UnityEngine.Camera.main, Is.Not.Null);
             Assert.That(UnityEngine.Rendering.GraphicsSettings.currentRenderPipeline, Is.Not.Null);
         }
     }

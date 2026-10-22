@@ -1,0 +1,850 @@
+{
+  "unityVersion": "6000.3.27f1",
+  "sourceCommit": "1cbf00c",
+  "suites": [
+    {
+      "label": "geometry RED",
+      "sourceLog": "Logs/i2-geometry-red-results.xml",
+      "sourceSha256": "b9608f42fa82ac3309d9b166d814bea1ce7b8348658bfead89c16f8819f9e84a",
+      "result": "Failed(Child)",
+      "total": "11",
+      "passed": "0",
+      "failed": "11",
+      "skipped": "0",
+      "start-time": "2026-10-21 16:26:43Z",
+      "end-time": "2026-10-21 16:26:43Z",
+      "tests": [
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.Build_PlacesAllBandsOnApprovedReferenceEdges",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.Build_Returns12Bands_WithUnitPerpendicularGrowth",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.Equals_RecognizesEquivalentGeometryAndTinChanges",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ShortLine_SpansFrom5_44To5_49FromFrontWall",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.SideOut_PerpendicularWidthIs50mm",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.Standard_UsesVerifiedWsfValues",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ToSurfaceUV_FollowsPlanConvention(FrontWall,1,2,0,0,1)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ToSurfaceUV_FollowsPlanConvention(BackWall,1,2,0,0,-1)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ToSurfaceUV_FollowsPlanConvention(LeftWall,3,2,1,0,0)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ToSurfaceUV_FollowsPlanConvention(RightWall,3,2,-1,0,0)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ToSurfaceUV_FollowsPlanConvention(Floor,1,3,0,1,0)",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "classifier RED",
+      "sourceLog": "Logs/i2-classifier-red-results.xml",
+      "sourceSha256": "ae55c72d436b0023a2479c80316d15ffee0142f2dbd49ce41a461a5cb7e6b672",
+      "result": "Failed(Child)",
+      "total": "35",
+      "passed": "0",
+      "failed": "35",
+      "skipped": "0",
+      "start-time": "2026-10-21 16:28:28Z",
+      "end-time": "2026-10-21 16:28:28Z",
+      "tests": [
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.CornerFootprint_UsesCircleRatherThanExpandedRectangle(-0.007f,5.433f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.CornerFootprint_UsesCircleRatherThanExpandedRectangle(-0.008f,5.432f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.CornerFootprint_UsesCircleRatherThanExpandedRectangle(6.407f,5.433f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.CornerFootprint_UsesCircleRatherThanExpandedRectangle(6.408f,5.432f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.DiagonalFootprint_UsesPerpendicularDistanceAndEndpoints(LeftSideOut,4.875f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.DiagonalFootprint_UsesPerpendicularDistanceAndEndpoints(LeftSideOut,4.875f,0.0101f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.DiagonalFootprint_UsesPerpendicularDistanceAndEndpoints(LeftSideOut,0.0f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.DiagonalFootprint_UsesPerpendicularDistanceAndEndpoints(RightSideOut,4.875f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.DiagonalFootprint_UsesPerpendicularDistanceAndEndpoints(RightSideOut,4.875f,0.0101f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.DiagonalFootprint_UsesPerpendicularDistanceAndEndpoints(RightSideOut,9.75f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(FrontOut,3.2f,4.559f,0.01f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(FrontOut,3.2f,4.56f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(FrontOut,3.2f,4.6f,0.0f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(FrontOut,3.2f,4.63f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(Tin,3.2f,0.49f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(Tin,3.2f,0.4911f,0.01f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(Service,3.2f,1.77f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(Service,3.2f,1.8405f,0.01f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(Service,3.2f,4.56f,0.01f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(ShortLine,1.0f,5.43f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(ShortLine,1.0f,5.4289f,0.01f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(ShortLine,1.0f,5.5011f,0.01f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(BackOut,3.2f,2.12f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(BackOut,3.2f,2.1199f,0.01f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(HalfCourt,3.165f,8.0f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(HalfCourt,3.1649f,8.0f,0.01f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(LeftBoxSide,1.59f,6.0f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(LeftBoxSide,1.5899f,6.0f,0.01f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(LeftBoxBack,1.0f,7.15f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(LeftBoxBack,1.0f,7.1501f,0.01f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(RightBoxSide,4.74f,6.0f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(RightBoxSide,4.7399f,6.0f,0.01f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(RightBoxBack,5.0f,7.15f,0.01f,True)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(RightBoxBack,5.0f,7.1501f,0.01f,False)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Overlapping_FiltersSurfaceAndReplacesPreviousResults",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "config RED",
+      "sourceLog": "Logs/i2-config-red-results.xml",
+      "sourceSha256": "5db6af973c42a88443e5faed2fab7600c0211164be4bc89dd563278c60f7541a",
+      "result": "Failed(Child)",
+      "total": "30",
+      "passed": "0",
+      "failed": "30",
+      "skipped": "0",
+      "start-time": "2026-10-21 16:34:12Z",
+      "end-time": "2026-10-21 16:34:12Z",
+      "tests": [
+        {
+          "name": "SquashClash.Core.Tests.Config.EffectiveConfigTests.EffectiveConfig_ExternalCourtMutationCannotChangeSnapshot",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.EffectiveConfigTests.EffectiveConfig_SimulationKeyIgnoresCameraButNotCourt",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.Catalog_ChoiceAndBoolHaveExplicitValues",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.DefaultPreset_IsCompleteAndValid",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.With_RejectsInvalidValuesWithoutMutatingSource(\"placeholders.visible\",0.5d)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.With_RejectsInvalidValuesWithoutMutatingSource(\"camera.height\",99)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.With_RejectsInvalidValuesWithoutMutatingSource(\"camera.height\",double.NaN)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.With_RejectsInvalidValuesWithoutMutatingSource(\"court.tinTop\",0.45d)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.With_ValidValueLeavesSourceUnchanged",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.Hash_IndependentOfEntryOrder_And12Hex",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.LoadDefault_MissingKey_Throws_ListingKey",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.LoadDefault_UnknownKeyOrOutOfRange_ThrowsWithAllProblems",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.Overlay_FollowsTable",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.Overlay_InvalidDiscreteValueKeepsBase(\"court.tinTop\",0.5d)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.Overlay_InvalidDiscreteValueKeepsBase(\"placeholders.visible\",0.5d)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_DuplicateKeys_IsRejected",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(null)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"\")",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{not json\")",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{}\")",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"null\")",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"[]\")",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{\\\"schemaVersion\\\":1,\\\"values\\\":null}\")",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{\\\"schemaVersion\\\":1,\\\"values\\\":[]},garbage\")",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{\\\"schemaVersion\\\":1,\\\"values\\\":[{\\\"key\\\":\\\"camera.height\\\"}]}\")",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{\\\"schemaVersion\\\":1,\\\"values\\\":[{\\\"key\\\":\\\"camera.height\\\",\\\"value\\\":\\\"4.5\\\"}]}\")",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{\\\"schemaVersion\\\":1,\\\"values\\\":[{\\\"key\\\":\\\"camera.height\\\",\\\"value\\\":4.5,}]}\")",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{\\\"schemaVersion\\\":1.5,\\\"values\\\":[]}\")",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_OtherSchema_IsRejected(0)",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_OtherSchema_IsRejected(2)",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "runtime RED",
+      "sourceLog": "Logs/i2-runtime-red-results.xml",
+      "sourceSha256": "b00f517af514f91d75bfaba74ac480ccaa46dfa4ea18f667d86dffc89b532132",
+      "result": "Failed(Child)",
+      "total": "7",
+      "passed": "0",
+      "failed": "7",
+      "skipped": "0",
+      "start-time": "2026-10-21 16:42:20Z",
+      "end-time": "2026-10-21 16:42:21Z",
+      "tests": [
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.Fixed_ApplyUsesConfig_AndTickLeavesCameraStationary",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.Fixed_DefaultFraming_ShowsFrontWallAndBackFloorCorners",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.MainScene_WiresEffectiveConfigCourtAndPlayers",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.Build_CreatesFiveSurfacesAndTwelveLines_NoColliders",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.Build_Twice_ReplacesPreviousAndReleasesOwnedMesh",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.FrontOutMesh_UsesApprovedReferenceAndOneMillimetreInset",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.Placeholders_ApplyPositionsVisibilityAndHeightWithoutColliders",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "initial framing RED",
+      "sourceLog": "Logs/i2-framing-red-results.xml",
+      "sourceSha256": "37c69143522d59b5a09dcef561a841727fc42ee20722c33fca33215abd7eb11f",
+      "result": "Failed(Child)",
+      "total": "9",
+      "passed": "7",
+      "failed": "2",
+      "skipped": "0",
+      "start-time": "2026-10-21 16:44:51Z",
+      "end-time": "2026-10-21 16:44:55Z",
+      "tests": [
+        {
+          "name": "SquashClash.Runtime.Tests.BootScreenTests.MainScene_ShowsBuildAndLiveFps",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.BootstrapSmokeTests.MainScene_LoadsWithCameraAndRenderPipeline",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.Fixed_ApplyUsesConfig_AndTickLeavesCameraStationary",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.Fixed_DefaultFraming_ShowsFrontWallAndBackFloorCorners",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.MainScene_WiresEffectiveConfigCourtAndPlayers",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.Build_CreatesFiveSurfacesAndTwelveLines_NoColliders",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.Build_Twice_ReplacesPreviousAndReleasesOwnedMesh",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.FrontOutMesh_UsesApprovedReferenceAndOneMillimetreInset",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.Placeholders_ApplyPositionsVisibilityAndHeightWithoutColliders",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "back line RED",
+      "sourceLog": "Logs/i2-back-line-red-results.xml",
+      "sourceSha256": "d9be165a967bb2575b7a51170f776e22a919ac7ab984c7df279137fc7f98c162",
+      "result": "Failed(Child)",
+      "total": "3",
+      "passed": "1",
+      "failed": "2",
+      "skipped": "0",
+      "start-time": "2026-10-21 16:48:07Z",
+      "end-time": "2026-10-21 16:48:08Z",
+      "tests": [
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.Fixed_ApplyUsesConfig_AndTickLeavesCameraStationary",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.Fixed_DefaultFraming_ShowsFrontWallAndBackFloorCorners",
+          "result": "Failed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.MainScene_WiresEffectiveConfigCourtAndPlayers",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "EditMode final",
+      "sourceLog": "Logs/i2-final-editmode-results.xml",
+      "sourceSha256": "f6224a044c5cad968594ef2cc30329c511eb2060d8b15e15d5caffd49a27e319",
+      "result": "Passed",
+      "total": "79",
+      "passed": "79",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-10-21 16:50:12Z",
+      "end-time": "2026-10-21 16:50:12Z",
+      "tests": [
+        {
+          "name": "SquashClash.Core.Tests.BootstrapSmokeTests.RegressionRunner_UsesPinnedEditor",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.BuildInfoTests.FromJson_ReadsAllFields_AndLabelMarksDirty(True,\"0.1.0+a1b2c3d* dev\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.BuildInfoTests.FromJson_ReadsAllFields_AndLabelMarksDirty(False,\"0.1.0+a1b2c3d dev\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.EffectiveConfigTests.EffectiveConfig_ExternalCourtMutationCannotChangeSnapshot",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.EffectiveConfigTests.EffectiveConfig_SimulationKeyIgnoresCameraButNotCourt",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.Catalog_ChoiceAndBoolHaveExplicitValues",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.DefaultPreset_IsCompleteAndValid",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.With_RejectsInvalidValuesWithoutMutatingSource(\"placeholders.visible\",0.5d)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.With_RejectsInvalidValuesWithoutMutatingSource(\"camera.height\",99)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.With_RejectsInvalidValuesWithoutMutatingSource(\"camera.height\",double.NaN)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.With_RejectsInvalidValuesWithoutMutatingSource(\"court.tinTop\",0.45d)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.ParamCatalogTests.With_ValidValueLeavesSourceUnchanged",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.Hash_IndependentOfEntryOrder_And12Hex",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.LoadDefault_MissingKey_Throws_ListingKey",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.LoadDefault_UnknownKeyOrOutOfRange_ThrowsWithAllProblems",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.Overlay_FollowsTable",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.Overlay_InvalidDiscreteValueKeepsBase(\"court.tinTop\",0.5d)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.Overlay_InvalidDiscreteValueKeepsBase(\"placeholders.visible\",0.5d)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_DuplicateKeys_IsRejected",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(null)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{not json\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{}\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"null\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"[]\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{\\\"schemaVersion\\\":1,\\\"values\\\":null}\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{\\\"schemaVersion\\\":1,\\\"values\\\":[]},garbage\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{\\\"schemaVersion\\\":1,\\\"values\\\":[{\\\"key\\\":\\\"camera.height\\\"}]}\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{\\\"schemaVersion\\\":1,\\\"values\\\":[{\\\"key\\\":\\\"camera.height\\\",\\\"value\\\":\\\"4.5\\\"}]}\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{\\\"schemaVersion\\\":1,\\\"values\\\":[{\\\"key\\\":\\\"camera.height\\\",\\\"value\\\":4.5,}]}\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_Malformed_ReturnsFalseWithoutThrowing(\"{\\\"schemaVersion\\\":1.5,\\\"values\\\":[]}\")",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_OtherSchema_IsRejected(0)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Config.PresetCodecTests.TryParse_OtherSchema_IsRejected(2)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.Build_PlacesAllBandsOnApprovedReferenceEdges",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.Build_Returns12Bands_WithUnitPerpendicularGrowth",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.Equals_RecognizesEquivalentGeometryAndTinChanges",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ShortLine_SpansFrom5_44To5_49FromFrontWall",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.SideOut_PerpendicularWidthIs50mm",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.Standard_UsesVerifiedWsfValues",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ToSurfaceUV_FollowsPlanConvention(FrontWall,1,2,0,0,1)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ToSurfaceUV_FollowsPlanConvention(BackWall,1,2,0,0,-1)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ToSurfaceUV_FollowsPlanConvention(LeftWall,3,2,1,0,0)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ToSurfaceUV_FollowsPlanConvention(RightWall,3,2,-1,0,0)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.CourtGeometryTests.ToSurfaceUV_FollowsPlanConvention(Floor,1,3,0,1,0)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.CornerFootprint_UsesCircleRatherThanExpandedRectangle(-0.007f,5.433f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.CornerFootprint_UsesCircleRatherThanExpandedRectangle(-0.008f,5.432f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.CornerFootprint_UsesCircleRatherThanExpandedRectangle(6.407f,5.433f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.CornerFootprint_UsesCircleRatherThanExpandedRectangle(6.408f,5.432f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.DiagonalFootprint_UsesPerpendicularDistanceAndEndpoints(LeftSideOut,4.875f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.DiagonalFootprint_UsesPerpendicularDistanceAndEndpoints(LeftSideOut,4.875f,0.0101f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.DiagonalFootprint_UsesPerpendicularDistanceAndEndpoints(LeftSideOut,0.0f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.DiagonalFootprint_UsesPerpendicularDistanceAndEndpoints(RightSideOut,4.875f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.DiagonalFootprint_UsesPerpendicularDistanceAndEndpoints(RightSideOut,4.875f,0.0101f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.DiagonalFootprint_UsesPerpendicularDistanceAndEndpoints(RightSideOut,9.75f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(FrontOut,3.2f,4.559f,0.01f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(FrontOut,3.2f,4.56f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(FrontOut,3.2f,4.6f,0.0f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(FrontOut,3.2f,4.63f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(Tin,3.2f,0.49f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(Tin,3.2f,0.4911f,0.01f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(Service,3.2f,1.77f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(Service,3.2f,1.8405f,0.01f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(Service,3.2f,4.56f,0.01f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(ShortLine,1.0f,5.43f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(ShortLine,1.0f,5.4289f,0.01f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(ShortLine,1.0f,5.5011f,0.01f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(BackOut,3.2f,2.12f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(BackOut,3.2f,2.1199f,0.01f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(HalfCourt,3.165f,8.0f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(HalfCourt,3.1649f,8.0f,0.01f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(LeftBoxSide,1.59f,6.0f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(LeftBoxSide,1.5899f,6.0f,0.01f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(LeftBoxBack,1.0f,7.15f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(LeftBoxBack,1.0f,7.1501f,0.01f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(RightBoxSide,4.74f,6.0f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(RightBoxSide,4.7399f,6.0f,0.01f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(RightBoxBack,5.0f,7.15f,0.01f,True)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Footprint_MatchesApprovedEdges(RightBoxBack,5.0f,7.1501f,0.01f,False)",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Core.Tests.Court.LineContactClassifierTests.Overlapping_FiltersSurfaceAndReplacesPreviousResults",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "PlayMode final",
+      "sourceLog": "Logs/i2-t23-green-results.xml",
+      "sourceSha256": "e3209d8ba99c3d0fbd0900efead6dcf37fe7b29f25aa0c8cdea3f6d1058439b9",
+      "result": "Passed",
+      "total": "9",
+      "passed": "9",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-10-21 16:49:07Z",
+      "end-time": "2026-10-21 16:49:09Z",
+      "tests": [
+        {
+          "name": "SquashClash.Runtime.Tests.BootScreenTests.MainScene_ShowsBuildAndLiveFps",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.BootstrapSmokeTests.MainScene_LoadsWithCameraAndRenderPipeline",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.Fixed_ApplyUsesConfig_AndTickLeavesCameraStationary",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.Fixed_DefaultFraming_ShowsFrontWallAndBackFloorCorners",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.MainScene_WiresEffectiveConfigCourtAndPlayers",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.Build_CreatesFiveSurfacesAndTwelveLines_NoColliders",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.Build_Twice_ReplacesPreviousAndReleasesOwnedMesh",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.FrontOutMesh_UsesApprovedReferenceAndOneMillimetreInset",
+          "result": "Passed"
+        },
+        {
+          "name": "SquashClash.Runtime.Tests.CourtViewTests.Placeholders_ApplyPositionsVisibilityAndHeightWithoutColliders",
+          "result": "Passed"
+        }
+      ]
+    }
+  ]
+}

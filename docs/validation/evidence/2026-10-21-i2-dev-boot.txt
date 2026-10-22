@@ -1,0 +1,3 @@
+[SquashClash] boot 0.1.0+1cbf00c dev devpanel=absent development=False squashDev=True unity=6000.3.27f1
+[SquashClash] court ready lines=12 surfaces=5 colliders=0 config=007325f26460 tin=0,48
+[SquashClash] display profile=dev fps=60,0 orientation=Portrait resolution=1206x2622

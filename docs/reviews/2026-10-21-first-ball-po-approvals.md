@@ -87,3 +87,29 @@ El 2026-10-21, después del cierre de I1, el PO autorizó explícitamente:
 **T3.1 y etapas posteriores siguen sin autorización.** El permiso de I2 no autoriza fusionar sin revisión y validación, ni cambiar decisiones deportivas, criterios o la spec. `AGENTS.md` se actualiza con este alcance.
 
 T1.4 ejecutada el 2026-10-21: remoto [rafaallendes-boop/squash-clash](https://github.com/rafaallendes-boop/squash-clash) creado y publicado, con `visibility: PRIVATE` y rama predeterminada `main`. Resultado y comprobaciones en el [informe de T1.4](../validation/github-remote.md).
+
+## I2 — entrega para revisión y punto de control
+
+El PO confirmó después el iPhone desbloqueado y conectado para verificar el arranque de I2. Con ello se resolvió el rechazo inicial por `Locked`; Codex comprobó la cancha en una captura del LCD real, rótulo `0.1.0+1cbf00c dev`, 60 FPS y Portrait. Implementación T2.1–T2.3 y comprobación técnica registradas en el [informe de I2](../validation/i2-court.md), con [PR #1](https://github.com/rafaallendes-boop/squash-clash/pull/1) hacia main.
+
+**El desbloqueo no es aceptación visual de I2.** Quedan revisión de Claude sobre la PR y valoración del PO de cancha, encuadre y proporción de líneas en el iPhone. No se ha fusionado ni cerrado I2. T3.1 y posteriores continúan sin autorización. La observación menor sobre la orientación horizontal se presenta en la PR para aclaración; no se invierten ejes ni se modifica el plan unilateralmente.
+
+
+## I2 — revisión de Claude, aceptación visual y aclaración del eje X
+
+El 2026-10-21, el PO transmitió la revisión de Claude sobre la PR #1: **sin bugs de implementación**, con corrección de la convención izquierda/derecha requerida antes de fusionar. Esta revisión fue comunicada en el chat; no se presenta como una aprobación registrada mediante GitHub Reviews.
+
+El PO aceptó la cancha en el iPhone para esta primera versión: «La cancha la veo bien para una primera versión, podría cubrir un poco mas pantalla. Pero vayamos avanzando y esto lo iremos mejorando a medida que vaya avanzando la jugabilidad». **Punto de control visual de I2 aceptado.** Ampliar la ocupación de pantalla queda como mejora futura; no se cambia ahora la cámara.
+
+**Aclaración autorizada del plan, AX-1:**
+
+- Se conservan las coordenadas numéricas, UV, pose/proyección de cámara y posiciones de las cápsulas. Con la cámara por defecto mirando hacia −Z, +X se ve hacia la izquierda de la pantalla.
+- `LeftWall`: x = 6,40 m, normal interior (−1, 0, 0). `RightWall`: x = 0, normal interior (1, 0, 0). El origen está por tanto en el suelo entre frontis y lateral derecha, visto desde atrás.
+- Se intercambian los identificadores LeftBox/RightBox de las franjas de las cajas de saque y sus tests; sus rectángulos físicos y anchos no cambian. Las diagonales siguen asociadas al lado homónimo y a 50 mm perpendiculares.
+- De las dos alternativas autorizadas para S3, se elige **reetiquetar «lateral derecha»**: se mantienen inicio (0,8; 1,0; 8,0), dirección (−sin 8°, 0, −cos 8°) y velocidad 20 m/s. No se refleja el escenario ni se implementa su simulación en I2.
+- El PO autoriza actualizar exclusivamente estas referencias del plan r2, registrar la aclaración, añadir una prueba de proyección de `LeftWall` en la mitad izquierda con cámara por defecto y volver a instalar dev. La spec y las demás decisiones deportivas/umbrales permanecen sin cambios.
+
+**T3.1 y etapas posteriores siguen expresamente sin autorización.** La autorización de corregir e instalar no se interpreta como orden de fusionar automáticamente la PR. Se registrarán debajo la verificación y el nuevo build antes de entregar el resultado.
+
+
+**Ejecución de AX-1:** commit de producto `1b333ad`; EditMode 79/79 y PlayMode 11/11, con RED previo verificado. Build dev limpia `0.1.0+1b333ad`, código 0 y firma/ARM64 comprobados; reinstalación devicectl código 0. El PO confirmó después «Está listo!» para abrir y comprobar dev. **Nuevo arranque verificado en el iPhone:** devicectl sin consola código 0, captura nativa inspeccionada con `0.1.0+1b333ad dev`, 60 FPS y cancha en vertical (1206×2622). [Evidencia de AX-1](../validation/evidence/2026-10-21-i2-axis-dev-run.json). La confirmación de desbloqueo habilita la comprobación técnica; no se presenta como una nueva revisión de Claude o aceptación adicional del PO. La aceptación de la cancha comunicada arriba y la sugerencia de encuadre quedan registradas.

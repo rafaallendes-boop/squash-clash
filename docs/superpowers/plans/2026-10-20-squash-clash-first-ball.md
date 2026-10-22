@@ -6,6 +6,8 @@
 >
 > **Revisión r2 (2026-10-20):** incorpora la revisión técnica de Codex (`docs/reviews/2026-10-20-first-ball-plan-review-codex.md`) y las directrices del PO. La respuesta a cada hallazgo está en `docs/reviews/2026-10-20-first-ball-plan-review-response-claude.md`. La versión anterior queda en `2026-10-20-squash-clash-first-ball.r1.md`. Las referencias `[Hnn]` remiten a los hallazgos de Codex.
 
+> **Aclaración autorizada por el PO (2026-10-21, PR #1):** se conservan las coordenadas numéricas y la cámara de T2.3. Visto desde atrás, +X aparece a la izquierda: `LeftWall` está en x = 6,40 y `RightWall` en x = 0; se intercambian los nombres de las cajas de saque. S3 conserva su inicio y dirección y se etiqueta lateral derecha. Alcance y aceptación en [aprobaciones del PO](../../reviews/2026-10-21-first-ball-po-approvals.md#i2--revisión-de-claude-aceptación-visual-y-aclaración-del-eje-x). No autoriza T3.1.
+
 **Goal:** dejar instalada en el iPhone 16 Pro del PO una app vertical que lanza una pelota de squash en una cancha WSF, la muestra de forma legible, permite calibrarla con un panel de desarrollador y produce la evidencia para elegir la física (§8.2 de la spec).
 
 **Architecture:** un proyecto Unity en la raíz del repositorio, con cuatro ensamblados de producto y tres de pruebas:
@@ -160,14 +162,14 @@ Cada PR es **un incremento coherente y verificable**, no necesariamente una tare
 - **Experimentos en su propio ensamblado de tests,** para que `test.sh` ejecute solo regresión y `spike.sh` solo experimentos, sin depender de filtros por categoría [H16, directriz 10].
 - **El panel no se referencia desde la escena.** Lo crea `DevPanelBootstrap` con `[RuntimeInitializeOnLoadMethod]`, así que en producción no quedan scripts faltantes.
 
-**Convención de coordenadas** (la usan todas las tareas): origen en la esquina del suelo con el frontis y la pared izquierda, vista desde atrás. `x` va de 0 a 6,40 hacia la derecha, `y` es la altura y `z` va de 0 en el frontis a 9,75 en la pared trasera.
+**Convención de coordenadas** (la usan todas las tareas): origen en la esquina del suelo con el frontis y la pared derecha, vista desde atrás. `x` va de 0 a 6,40 hacia la izquierda de la pantalla con la cámara fija de T2.3, `y` es la altura y `z` va de 0 en el frontis a 9,75 en la pared trasera. Se mantienen las coordenadas y la pose de cámara; izquierda/derecha nombran los lados vistos desde atrás [aclaración del PO, 2026-10-21].
 
 | Superficie | u | v | Normal interior |
 |---|---|---|---|
 | Frontis (z = 0) | x | y | (0, 0, 1) |
 | Pared trasera (z = 9,75) | x | y | (0, 0, −1) |
-| Lateral izquierda (x = 0) | z | y | (1, 0, 0) |
-| Lateral derecha (x = 6,40) | z | y | (−1, 0, 0) |
+| Lateral izquierda (x = 6,40) | z | y | (−1, 0, 0) |
+| Lateral derecha (x = 0) | z | y | (1, 0, 0) |
 | Suelo (y = 0) | x | z | (0, 1, 0) |
 
 **Centro y punto de contacto [H04]:** un **punto de contacto** está sobre la superficie. El **centro** de la pelota en ese contacto es `punto + normal interior · r`. Los escenarios se construyen con puntos de contacto y se resuelven hacia el centro.
@@ -409,10 +411,10 @@ public static class LineContactClassifier {
 | LeftSideOut / RightSideOut | Left/RightWall | (0, 4.57) → (9.75, 2.13) | normal unitaria hacia arriba: (0.24278, 0.97012) | 0.05 |
 | ShortLine | Floor | (0, 5.44) → (6.40, 5.44) | (0, 1) | 0.05 |
 | HalfCourt | Floor | (3.175, 5.49) → (3.175, 9.75) | (1, 0) | 0.05 |
-| LeftBoxSide | Floor | (1.60, 5.49) → (1.60, 7.14) | (1, 0) | 0.05 |
-| LeftBoxBack | Floor | (0, 7.09) → (1.65, 7.09) | (0, 1) | 0.05 |
-| RightBoxSide | Floor | (4.75, 5.49) → (4.75, 7.14) | (1, 0) | 0.05 |
-| RightBoxBack | Floor | (4.75, 7.09) → (6.40, 7.09) | (0, 1) | 0.05 |
+| RightBoxSide | Floor | (1.60, 5.49) → (1.60, 7.14) | (1, 0) | 0.05 |
+| RightBoxBack | Floor | (0, 7.09) → (1.65, 7.09) | (0, 1) | 0.05 |
+| LeftBoxSide | Floor | (4.75, 5.49) → (4.75, 7.14) | (1, 0) | 0.05 |
+| LeftBoxBack | Floor | (4.75, 7.09) → (6.40, 7.09) | (0, 1) | 0.05 |
 
 **Diagonal lateral [H18]:** el borde inferior une (0; 4,57) y (9,75; 2,13), y la franja tiene **50 mm de ancho perpendicular**. Crecer 50 mm en vertical daría unos 48,5 mm perpendiculares. La spec (§8.7.2) marca esta franja como interpretación de Claude ("crece 50 mm hacia arriba desde el borde inferior"). El plan la precisa como ancho perpendicular, sin cambiar la referencia del borde inferior, y la aclaración queda pendiente de registrar en la spec (ver la respuesta a la revisión, decisión D-6).
 
@@ -899,7 +901,7 @@ public static class PhysicsScenarios {
 |---|---|---|---|---|---|
 | S1 | Drive paralelo rápido, 3 rebotes | (1.0, 0.9, 7.5) | frontis (0.6, 2.2) | 28 m/s horiz. | primer plano = frontis en el punto previsto ± 1e-5 m. `MinContactsBeforeStop = 3` |
 | S2 | Drop bajo, 5 cm sobre el tin | (4.5, 0.6, 3.0) | frontis (5.5, TinTop + 0.05) | 6 m/s horiz. | ídem |
-| S3 | Rasante en la lateral (< 10°) | (0.8, 1.0, 8.0) | dirección (−sin 8°, 0, −cos 8°) | 20 m/s | primer plano = lateral izquierda, incidencia real (con gravedad) < 10° |
+| S3 | Rasante en la lateral derecha (< 10°) | (0.8, 1.0, 8.0) | dirección (−sin 8°, 0, −cos 8°) | 20 m/s | primer plano = lateral derecha, incidencia real (con gravedad) < 10° |
 | S4 | Unión entre la lateral y el suelo (nick) | (1.5, 1.0, 4.0) | centro (r, r, 2.5) | 12 m/s horiz. | lateral y suelo alcanzados en el **mismo paso** |
 | S5 | Frontis y lateral cerca de la esquina frontal | (2.0, 1.5, 3.0) | frontis (r + 0.005, 1.5) | 15 m/s horiz. | primer plano = frontis; la lateral está a ≤ 5 mm del punto |
 | S6 | Dos contactos en un paso (esquina trasera) | (3.2, 1.0, 6.0) | centro (6.40 − r, 1.0, 9.75 − r) | 25 m/s horiz. | los dos planos en el **mismo paso**, a ≥ 1 ms de sus bordes |

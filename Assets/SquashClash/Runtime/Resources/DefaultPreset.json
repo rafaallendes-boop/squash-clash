@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "name": "First Ball default",
+  "createdBuild": "I2",
+  "values": [
+    {
+      "key": "court.tinTop",
+      "value": 0.48
+    },
+    {
+      "key": "camera.height",
+      "value": 8
+    },
+    {
+      "key": "camera.backOffset",
+      "value": 5
+    },
+    {
+      "key": "camera.lookAtHeight",
+      "value": 0.4
+    },
+    {
+      "key": "camera.fovDeg",
+      "value": 90
+    },
+    {
+      "key": "placeholders.visible",
+      "value": 1
+    },
+    {
+      "key": "human.x",
+      "value": 3.2
+    },
+    {
+      "key": "human.z",
+      "value": 5.5
+    },
+    {
+      "key": "rival.x",
+      "value": 4.5
+    },
+    {
+      "key": "rival.z",
+      "value": 6.5
+    }
+  ]
+}
