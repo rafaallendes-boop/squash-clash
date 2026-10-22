@@ -29,6 +29,16 @@ namespace SquashClash.Core.Tests.Config
         }
 
         [Test]
+        public void EffectiveConfig_MaterialsAndBackendComeFromPreset() {
+            var a=EffectiveConfig.From(ConfigFixtures.Default());
+            Assert.That(a.Backend,Is.EqualTo("P1-PhysX")); Assert.That(a.Physics.Floor.Restitution,Is.EqualTo(0.45f));
+            Assert.That(a.Physics.FrontWall.Restitution,Is.EqualTo(0.55f)); Assert.That(a.Physics.SideWalls.TangentialFriction,Is.EqualTo(0.2f));
+            var changed=EffectiveConfig.From(a.Source.With("physics.floor.restitution",0.6));
+            Assert.That(changed.Physics.Floor.Restitution,Is.EqualTo(0.6f)); changed.Physics.Floor.Restitution=99;
+            Assert.That(changed.Physics.Floor.Restitution,Is.EqualTo(0.6f));
+        }
+
+        [Test]
         public void EffectiveConfig_ExternalCourtMutationCannotChangeSnapshot()
         {
             var a = EffectiveConfig.From(ConfigFixtures.Default());

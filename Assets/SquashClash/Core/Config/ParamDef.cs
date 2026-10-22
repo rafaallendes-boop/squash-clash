@@ -32,8 +32,8 @@ namespace SquashClash.Core.Config
             choices = (ChoiceOption[])options.Clone();
         }
 
-        // All I2 parameters are independent of the future ball backend.
-        public bool OperativeFor(string backend) => true;
+        // P1 exposes the requested cap but PhysX does not let this adapter enforce it.
+        public bool OperativeFor(string backend) => Key != "physics.maxImpactsPerStep" || (backend != "P1" && backend != "P1-PhysX");
 
         internal string Error(double value, bool checkRange = true)
         {
