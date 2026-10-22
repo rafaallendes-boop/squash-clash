@@ -14,6 +14,8 @@ namespace SquashClash.Core.Spike
             text.AppendLine("Este cálculo no elige backend ni autoriza el gate I4c.\n");
             text.AppendLine($"Backend: {Escape(r.Backend)}; variante: {Escape(r.Variant)}; build: {Escape(r.Build)}");
             text.AppendLine($"Dispositivo: {Escape(r.Device)}; configuración: {Escape(r.ConfigHash)}");
+            text.AppendLine($"Perfil: {Escape(r.Profile)}; OS: {Escape(r.OS)}; UTC: {Escape(r.StartedAtUtc)} → {Escape(r.EndedAtUtc)}");
+            text.AppendLine($"Térmico: {Escape(r.ThermalStart)} → {Escape(r.ThermalEnd)}");
             text.AppendLine($"ProjectPhysics: {Escape(r.ProjectPhysics)}\n");
             text.AppendLine("| ID | Requisito | Escenarios | Medición | Umbral | Veredicto | Gate | evaluados/no evaluables/esperados | Cobertura |");
             text.AppendLine("|---|---|---|---|---|---|---|---|---|");

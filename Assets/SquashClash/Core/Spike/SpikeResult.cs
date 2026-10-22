@@ -5,6 +5,7 @@ namespace SquashClash.Core.Spike
     public sealed class SpikeResult
     {
         public string Backend, Variant, ProjectPhysics, Build, Device, ConfigHash;
+        public string Profile, OS, StartedAtUtc, EndedAtUtc, ThermalStart, ThermalEnd;
         public bool Complete;
         public readonly List<string> Details = new List<string>();
         public List<CriterionResult> Criteria = new List<CriterionResult>();
