@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-22",
+  "profile": "dev",
+  "metadata": {
+    "version": "0.1.0",
+    "gitHash": "f075217",
+    "profile": "dev",
+    "builtAtUtc": "2026-10-22T13:33:56.8971420Z",
+    "unityVersion": "6000.3.27f1",
+    "gitDirty": false
+  },
+  "bundleIdentifier": "cl.rafaallendes.squashclash",
+  "version": "0.1.0",
+  "supportedOrientations": [
+    "UIInterfaceOrientationPortrait"
+  ],
+  "minimumOSVersion": "15.0",
+  "architectures": {
+    "executable": "arm64",
+    "unityFramework": "arm64"
+  },
+  "codesignVerified": true,
+  "signingTeam": [
+    "PYXNMVF47Z"
+  ],
+  "profileExpiresUtc": "2026-10-28T14:59:31+00:00",
+  "profileValidAtInspection": true,
+  "deviceRegistered": true,
+  "developmentSigningGetTaskAllow": true,
+  "nativeBuildExitCode": 0,
+  "xcodeDestination": "generic/platform=iOS",
+  "nativeWarnings": [
+    "\"The selected platform is no longer supported by libc++.\" [-W#warnings]",
+    "'1lokf3afp9oc.o' has no symbols",
+    "'SecTrustGetCertificateAtIndex' is deprecated: first deprecated in iOS 15.0 [-Wdeprecated-declarations]",
+    "'controllerPausedHandler' is deprecated: first deprecated in iOS 13.0 - Use the Menu button found on the controller's input profile, if it exists. [-Wdeprecated-declarations]",
+    "'dpq7x247cs28.o' has no symbols",
+    "'hasAttitudeAndRotationRate' is deprecated: first deprecated in iOS 14.0 - Use -hasAttitude and -hasRotationRate methods instead [-Wdeprecated-declarations]",
+    "'i397hiuvx8xm.o' has no symbols",
+    "'ts632ckg0gqd.o' has no symbols",
+    "'useCVTextureCache' is deprecated [-Wdeprecated-declarations]",
+    "'zhh3jw1aulnk.o' has no symbols",
+    "A 1024x1024 app store icon is required for iOS apps",
+    "Run script build phase 'Run Script' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking \"Based on dependency analysis\" in the script phase. (in target 'GameAssembly' from project 'Unity-iPhone')",
+    "implementing deprecated method [-Wdeprecated-implementations]",
+    "unused variable 'depthFmtChanged' [-Wunused-variable]"
+  ],
+  "productIl2CppModules": [
+    "g_SquashClash_Core_CodeGenModule",
+    "g_SquashClash_DevPanel_CodeGenModule",
+    "g_SquashClash_Runtime_CodeGenModule"
+  ],
+  "physicsGateEvaluated": false,
+  "backendChosen": false
+}
