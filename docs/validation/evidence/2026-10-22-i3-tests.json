@@ -1,0 +1,276 @@
+{
+  "base": "6f8da64",
+  "productCodeCommit": "a538bc5",
+  "runs": [
+    {
+      "run": "baseline-editmode",
+      "xmlFile": "i3-baseline-editmode-results.xml",
+      "xmlSha256": "e01c4be2a9ca3c627644a25b7b5c1bf5eb9979b1cd5b49a1cdecf08128b0e44d",
+      "summary": {
+        "total": 79,
+        "passed": 79,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "baseline-playmode",
+      "xmlFile": "i3-baseline-playmode-results.xml",
+      "xmlSha256": "7911579d1e6b3f6dedaef4faed75fd82598e83a441e90684d9115c846c7065f3",
+      "summary": {
+        "total": 11,
+        "passed": 11,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "t31-red",
+      "xmlFile": "i3-t31-red-results.xml",
+      "xmlSha256": "b18a0a37746e09667ed576169561bfed09f6be14b52c845afea5c3a9678af0bd",
+      "summary": {
+        "total": 107,
+        "passed": 78,
+        "failed": 29,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Core.Tests.Config.EffectiveConfigTests.EffectiveConfig_PhysicsAndPaceUseSourceValues",
+        "SquashClash.Core.Tests.Config.ParamCatalogTests.DefaultPreset_IsCompleteAndValid",
+        "SquashClash.Core.Tests.Simulation.BallisticsTests.CenterForContact_OffsetsAlongApprovedInwardNormal(FrontWall,3.2f,4.56f,0,3.2f,4.56f,0.02f)",
+        "SquashClash.Core.Tests.Simulation.BallisticsTests.CenterForContact_OffsetsAlongApprovedInwardNormal(LeftWall,6.4f,1,3,6.38f,1,3)",
+        "SquashClash.Core.Tests.Simulation.BallisticsTests.CenterForContact_OffsetsAlongApprovedInwardNormal(RightWall,0,1,3,0.02f,1,3)",
+        "SquashClash.Core.Tests.Simulation.BallisticsTests.FirstPlaneHit_FromFloorMovingUp_SkipsSeparatingContact",
+        "SquashClash.Core.Tests.Simulation.BallisticsTests.FirstPlaneHit_FrontWallContactMatchesTarget",
+        "SquashClash.Core.Tests.Simulation.BallisticsTests.FirstPlaneHit_ReportsNoHitInsideShortHorizonOrAboveWalls",
+        "SquashClash.Core.Tests.Simulation.BallisticsTests.FirstPlaneHit_UsesAx1SideNames(-10,RightWall)",
+        "SquashClash.Core.Tests.Simulation.BallisticsTests.FirstPlaneHit_UsesAx1SideNames(10,LeftWall)",
+        "SquashClash.Core.Tests.Simulation.BallisticsTests.PhysicsParams_EqualityIncludesSurfaceCoefficientsAndStep",
+        "SquashClash.Core.Tests.Simulation.BallisticsTests.SolveCenterTo_ReachesCenterAnalytically",
+        "SquashClash.Core.Tests.Simulation.BallisticsTests.ToState_AppliesLaunchScale",
+        "SquashClash.Core.Tests.Simulation.SimClockTests.Advance_AccumulatesFractions",
+        "SquashClash.Core.Tests.Simulation.SimClockTests.Advance_HugeDelta_CapsAndCountsDropped",
+        "SquashClash.Core.Tests.Simulation.SimClockTests.Advance_InvalidDeltaIsRejected(-1)",
+        "SquashClash.Core.Tests.Simulation.SimClockTests.Advance_InvalidDeltaIsRejected(double.NaN)",
+        "SquashClash.Core.Tests.Simulation.SimClockTests.Advance_InvalidDeltaIsRejected(double.PositiveInfinity)",
+        "SquashClash.Core.Tests.Simulation.SimClockTests.Advance_Tempo065_AccumulatesWithoutDrift(60,78)",
+        "SquashClash.Core.Tests.Simulation.SimClockTests.Advance_Tempo065_AccumulatesWithoutDrift(36000,46800)",
+        "SquashClash.Core.Tests.Simulation.SimClockTests.Advance_Tempo1_SixtiethSecond_TwoSteps",
+        "SquashClash.Core.Tests.Simulation.SimClockTests.Advance_WhilePaused_DiscardsTime",
+        "SquashClash.Core.Tests.Simulation.SimClockTests.Configure_ChangesHz_AndRestartClearsFraction",
+        "SquashClash.Core.Tests.Simulation.SimClockTests.Paused_SingleStep_RunsExactlyOne",
+        "SquashClash.Core.Tests.Simulation.SimClockTests.SlowMotion_MarksMetricsInvalid_Sticky",
+        "SquashClash.Core.Tests.Simulation.TrajectoryRunnerTests.Run_AboveWallHeight_RecordsOverTopWithoutInventingCeilingContact",
+        "SquashClash.Core.Tests.Simulation.TrajectoryRunnerTests.Run_MaxSteps_DoesNotStopAtSecondBounce",
+        "SquashClash.Core.Tests.Simulation.TrajectoryRunnerTests.Run_ResetsToExactInitialState_AndZeroStepsStillHasInitialState",
+        "SquashClash.Core.Tests.Simulation.TrajectoryRunnerTests.Run_SecondBounce_StopsAtTwenty_KeepingPersistentSamples"
+      ]
+    },
+    {
+      "run": "t31-green",
+      "xmlFile": "i3-t31-green-results.xml",
+      "xmlSha256": "2ec90ad8d23c6ff52e9a9321f65ec9e948b783af3db36a113f7d72dbc80cee64",
+      "summary": {
+        "total": 107,
+        "passed": 107,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "t32-red",
+      "xmlFile": "i3-t32-red-results.xml",
+      "xmlSha256": "fec298de485115af9782f14afaced750215bb575fbe457bf5b9cfd39b98883fa",
+      "summary": {
+        "total": 7,
+        "passed": 0,
+        "failed": 7,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Runtime.Tests.PhysXLifecycleTests.Create_PutsAllObjectsInOwnScene_WithAx1Planes",
+        "SquashClash.Runtime.Tests.PhysXLifecycleTests.Create_WithOtherGravityWhileAlive_ThrowsAcrossFactories",
+        "SquashClash.Runtime.Tests.PhysXLifecycleTests.Dispose_UnloadsScenesAndMaterials",
+        "SquashClash.Runtime.Tests.PhysXLifecycleTests.Drop_HitsFloor_WithSurfaceUVAndEstimatedTime",
+        "SquashClash.Runtime.Tests.PhysXLifecycleTests.Instances_DoNotInterfere",
+        "SquashClash.Runtime.Tests.PhysXLifecycleTests.Materials_FollowParams_AndCallerMutationCannotChangeInstance",
+        "SquashClash.Runtime.Tests.PhysXLifecycleTests.Stay_RetainsPersistentContactSamples"
+      ]
+    },
+    {
+      "run": "t32-config-red",
+      "xmlFile": "i3-t32-config-red-results.xml",
+      "xmlSha256": "41cbb4cabd82741744e9fa19b78185417cfe0b4d6576e12df00edb4b2be85030",
+      "summary": {
+        "total": 108,
+        "passed": 105,
+        "failed": 3,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Core.Tests.Config.EffectiveConfigTests.EffectiveConfig_MaterialsAndBackendComeFromPreset",
+        "SquashClash.Core.Tests.Config.ParamCatalogTests.Catalog_ChoiceAndBoolHaveExplicitValues",
+        "SquashClash.Core.Tests.Config.ParamCatalogTests.DefaultPreset_IsCompleteAndValid"
+      ]
+    },
+    {
+      "run": "t32-green",
+      "xmlFile": "i3-t32-green-results.xml",
+      "xmlSha256": "fca0075e264cc5f500e754a30042a4ea10762c04879e86c7a47d551b74237b82",
+      "summary": {
+        "total": 8,
+        "passed": 8,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "t32-config-green",
+      "xmlFile": "i3-t32-config-green-results.xml",
+      "xmlSha256": "8e1a7d0ddf5d59d8e2a95ce7fb958285a2bbb6a3feb08eddf7f5b5842b371ad6",
+      "summary": {
+        "total": 108,
+        "passed": 108,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "t32-playmode",
+      "xmlFile": "i3-t32-playmode-results.xml",
+      "xmlSha256": "c54f4889a7a9df383fe5b945bee5690b9b99df3dc2c3cab8655ad864e7fdbc77",
+      "summary": {
+        "total": 19,
+        "passed": 19,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "t33-red",
+      "xmlFile": "i3-t33-red-results.xml",
+      "xmlSha256": "feabe8839851c48203122ebeff064cddf054ddeb4d0d5f344109f1a99d89051d",
+      "summary": {
+        "total": 11,
+        "passed": 0,
+        "failed": 11,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Runtime.Tests.AppBootstrapTests.EditorDevToolbar_FourActionsControlHost",
+        "SquashClash.Runtime.Tests.AppBootstrapTests.Launch_UsesEffectiveConfigInEveryConsumer",
+        "SquashClash.Runtime.Tests.AppBootstrapTests.Main_BallViewUsesPhysicalRadiusAndHasNoCollider",
+        "SquashClash.Runtime.Tests.AppBootstrapTests.SystemPause_ShowsResumeOverlay_WithoutDevPanelDependency",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.Flight_StopsOnSecondNonpersistentFloorBounce",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.Launch_GravityChangeDisposesBothBeforeCreatingReplacements",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.Launch_PredictionStartsFromSimulationState",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.Launch_SameSimulationKey_KeepsInstances",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.Paused_SingleStepAdvancesAndRendersCurrentState_WithoutCatchup",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.Relaunch_ClearsInterpolationAndFraction_AndReplayUsesActiveSnapshot",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.RenderInterpolation_DoesNotChangeAuthoritativeState"
+      ]
+    },
+    {
+      "run": "t33-config-red",
+      "xmlFile": "i3-t33-config-red-results.xml",
+      "xmlSha256": "ff68e0aa8fcc16d9c56df6ef9e099b7fa260a79b9d209311593e181572006954",
+      "summary": {
+        "total": 109,
+        "passed": 107,
+        "failed": 2,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Core.Tests.Config.EffectiveConfigTests.EffectiveConfig_LaunchUsesPresetAndKeepsPaceSeparate",
+        "SquashClash.Core.Tests.Config.ParamCatalogTests.DefaultPreset_IsCompleteAndValid"
+      ]
+    },
+    {
+      "run": "resume-frame-red",
+      "xmlFile": "i3-resume-frame-red-results.xml",
+      "xmlSha256": "8ed076f4f7802f15af1b3c18b65de7d14516e00567e319cbdd84e2d02d51d496",
+      "summary": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Runtime.Tests.AppBootstrapTests.SystemResume_DiscardsDeltaOfResumeFrame"
+      ]
+    },
+    {
+      "run": "final-playmode",
+      "xmlFile": "i3-t33-green-results.xml",
+      "xmlSha256": "8178bbee6a023a0cc9c36c54bb5b8e1bb5832850ddf1baf6a018fe1a7c8f08d6",
+      "summary": {
+        "total": 31,
+        "passed": 31,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "final-editmode",
+      "xmlFile": "i3-t33-config-green-results.xml",
+      "xmlSha256": "be9ff70b1575271a93f0e41212cb4870aab8ecdbabe38fe61625c943ed851cb4",
+      "summary": {
+        "total": 109,
+        "passed": 109,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "review-fix-red",
+      "xmlFile": "i3-review-fix-red-results.xml",
+      "xmlSha256": "1f8c67a45e8c9a97844953d34da4377a506be7e10d9cb96fb628aec83afb9120",
+      "summary": {
+        "total": 5,
+        "passed": 0,
+        "failed": 5,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.ManualContinueAfterStep_FractionalAlpha_DoesNotRewind",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.ManualContinueAfterStep_ZeroAlpha_DoesNotRewind",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.SystemContinueAfterStep_FractionalAlpha_DoesNotRewind",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.SystemContinueAfterStep_ZeroAlpha_DoesNotRewind",
+        "SquashClash.Runtime.Tests.BallSimulationHostTests.SystemPauseAndResume_PreserveInterpolatedRenderWithoutChangingAuthority"
+      ]
+    },
+    {
+      "run": "final-playmode-after-review",
+      "xmlFile": "i3-review-fix-green-results.xml",
+      "xmlSha256": "5fc659ac0a0e1ac9aac5ff72004bead920ce5d9bd2d4e129af0759b5964c6aa0",
+      "summary": {
+        "total": 36,
+        "passed": 36,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "run": "final-editmode-after-review",
+      "xmlFile": "i3-final-editmode-results.xml",
+      "xmlSha256": "087f88254724896206cfe0d1fe58a4adbb2b66391e5d18d6bea81cda1bc2c9d5",
+      "summary": {
+        "total": 109,
+        "passed": 109,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    }
+  ],
+  "note": "Regressions only. No physics acceptance gate or device performance criterion evaluated."
+}

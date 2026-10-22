@@ -4,6 +4,7 @@ using System.Linq;
 using NUnit.Framework;
 using SquashClash.Core.Config;
 using SquashClash.Core.Court;
+using SquashClash.Core.Simulation;
 using SquashClash.Runtime.App;
 using SquashClash.Runtime.Camera;
 using SquashClash.Runtime.Court;
@@ -58,6 +59,33 @@ namespace SquashClash.Runtime.Tests
         }
 
         [UnityTest]
+        public IEnumerator Launcher_PositiveYawProjectsRightAndNegativeYawProjectsLeft()
+        {
+            var camera = root.AddComponent<UnityEngine.Camera>();
+            camera.aspect = 1206f / 2622f;
+            var parameters = Default();
+            root.AddComponent<CourtCameraRig>().Apply(parameters, CourtDimensions.Standard());
+            yield return null;
+
+            foreach (var yaw in new[] { 15f, -15f })
+            {
+                var config = EffectiveConfig.From(parameters.With("launcher.yawDeg", yaw));
+                var state = Launcher.ToState(config.Launch, config.LaunchScale);
+                var start = camera.WorldToViewportPoint(state.Position);
+                var ahead = camera.WorldToViewportPoint(state.Position + state.Velocity * 0.1f);
+                Assert.That(ahead.z, Is.GreaterThan(0), $"yaw={yaw}");
+                Assert.That((ahead.x - start.x) * Mathf.Sign(yaw), Is.GreaterThan(0),
+                    $"Positive yaw must move right on screen; yaw={yaw}");
+                Assert.That(state.Velocity.x * Mathf.Sign(yaw), Is.LessThan(0),
+                    "AX-1: screen right is -X with the default camera.");
+                Assert.That(state.Velocity.z, Is.LessThan(0));
+            }
+
+            var straight = EffectiveConfig.From(parameters.With("launcher.yawDeg", 0));
+            Assert.That(Launcher.ToState(straight.Launch, straight.LaunchScale).Velocity.x, Is.Zero);
+        }
+
+        [UnityTest]
         public IEnumerator Fixed_ApplyUsesConfig_AndTickLeavesCameraStationary()
         {
             var camera = root.AddComponent<UnityEngine.Camera>();
@@ -82,8 +110,8 @@ namespace SquashClash.Runtime.Tests
             Assert.That(app.Params, Is.Not.Null);
             Assert.That(app.Config.Hash, Is.EqualTo(app.Params.Hash));
             Assert.That(Object.FindFirstObjectByType<CourtView>(), Is.Not.Null);
-            Assert.That(Object.FindObjectsByType<SurfaceTag>(FindObjectsSortMode.None).Length, Is.EqualTo(5));
-            Assert.That(Object.FindObjectsByType<Collider>(FindObjectsSortMode.None), Is.Empty);
+            Assert.That(Object.FindObjectsByType<SurfaceTag>(FindObjectsSortMode.None).Count(t => t.gameObject.scene == SceneManager.GetActiveScene()), Is.EqualTo(5));
+            Assert.That(Object.FindObjectsByType<Collider>(FindObjectsSortMode.None).Where(c => c.gameObject.scene == SceneManager.GetActiveScene()), Is.Empty);
             Assert.That(Object.FindFirstObjectByType<PlaceholderPlayers>(), Is.Not.Null);
             var camera = UnityEngine.Camera.main;
             var texture = new RenderTexture(1206, 2622, 24);

@@ -122,3 +122,36 @@ El PO confirmó: «Claude aprueba la PR #1 tras AX-1» y autorizó fusionar con 
 El PO autoriza **I3 / T3.1–T3.3**, rama `firstball/i3-ball`, con PR hacia main para revisión de Claude: reloj y contratos, adaptador P1 con escenas aisladas, host/vista de pelota, barra mínima de desarrollo, pausa del sistema y exclusión del panel de producción. La integración de PhysX es un candidato de la prueba, **no una elección de backend**. Esa decisión sigue reservada al gate de **I4c**; P2 y etapas posteriores no están autorizadas.
 
 El PO conectará el iPhone al finalizar todo para realizar la verificación. Hasta entonces se completan implementación, pruebas, builds y PR; la comprobación física y el cierre de I3 quedan pendientes y no se presentan como aprobados. No se fusiona I3 automáticamente.
+
+
+## I3 — entrega técnica para revisión, pendiente del iPhone (2026-10-22)
+
+T3.1–T3.3 implementadas en `firstball/i3-ball`. Código de artefactos finales `a538bc5`: EditMode 109/109 y PlayMode 36/36, release-check de exports nuevos correcto y builds nativas dev/prod Release firmadas ARM64 con código 0. Una revisión interna independiente detectó un retroceso visual al continuar; corregido con cinco tests RED→GREEN. No sustituye la revisión de Claude. [Informe y evidencia I3](../validation/i3-ball.md).
+
+**No es aceptación del PO ni cierre de I3.** El PO indicó que conectará el teléfono al finalizar; instalación, cuatro controles, pausa/bloqueo real, prod sin barra y logs devpanel en dispositivo siguen pendientes. La PR hacia main queda para revisión de Claude y no se fusiona automáticamente. PhysX continúa como candidato P1; no se eligió backend ni se avanzó a I4.
+
+Entrega publicada en [PR #2](https://github.com/rafaallendes-boop/squash-clash/pull/2) hacia main, estado OPEN, sin fusionar. Worktree `firstball/i3-ball` conservado para revisión y checkpoint del iPhone; el de I2 ya fue eliminado conforme a la autorización.
+
+## I3 — revisión de Claude y aclaración de yaw (2026-10-22)
+
+El PO comunica que Claude revisó PR #2 **sin bugs bloqueantes**. Es una revisión transmitida en el chat, no una GitHub Review atribuida a Claude. Antes de instalar, autoriza corregir `launcher.yawDeg`: **positivo hacia la derecha de pantalla, componente −X**, coherente con AX-1 y la cámara por defecto; negativo hacia la izquierda. Yaw cero, coordenadas, cámara, preset, pitch, velocidad, escenarios y umbrales no cambian. Esta aclaración sustituye la resolución inicial del ejecutor que asociaba yaw positivo a +X.
+
+Exige una prueba RED→GREEN por proyección, anotación trazable y posterior instalación de dev/prod para el checkpoint del iPhone. El PO informa el teléfono conectado y desbloqueado y pide revisar en dev. Se dejará dev instalada al finalizar las comprobaciones. Si una reinstalación ocurre después del 28 de octubre, se renovará primero el perfil; además se verificará siempre su vigencia efectiva antes de instalar.
+
+**Pendiente aceptado para I5:** «Toca para continuar» pierde una pausa manual previa. Se registra para distinguir y restaurar la intención de pausa manual cuando se trabaje I5; no se corrige ni se presenta como resuelto en I3. Esta aceptación no autoriza I5. **I4 sigue sin autorizar, P1 no es una selección de backend y no se autoriza fusionar ni cerrar I3 antes del checkpoint del PO.** Los resultados de la corrección e instalación se registrarán en el informe de I3.
+
+**Ejecución:** corrección de producto `f075217`; prueba de proyección RED 1/1 → GREEN, PlayMode completo 37/37 y EditMode 109/109. Release-check y builds dev/prod limpias, firmadas ARM64, correctos. Perfil vigente hasta `2026-10-28T14:59:31Z`, comprobado antes de instalar. Ambas instalaciones mediante devicectl terminaron correctamente; dev quedó instalada. iOS rechazó abrir ambas por **Locked** tras volver a bloquearse el teléfono; se solicitó desbloquear. No hay aún arranque funcional verificado de I3 ni aceptación del PO. [Resultado y evidencia](../validation/i3-ball.md#instalación-completada-checkpoint-bloqueado-por-el-bloqueo-del-iphone).
+
+## I3 — observaciones visuales y pruebas desde Duplicación (2026-10-22)
+
+El PO informa Duplicación desbloqueada y solicita que Codex realice desde allí las pruebas. Observa: **«la pelota debería ser negra y se ve muy pequeña»**. Se aplica negro al material visual; el amarillo previo era una elección del ejecutor, sin decisión deportiva que conservar. El radio físico y visual de I3 sigue siendo 20 mm, tal como exige T3.3. Se registra el tamaño insuficiente como observación de legibilidad del PO para las ayudas/escala visual de T6.2; no se adelanta ese sistema ni se interpreta la observación como autorización de I4/I6. I3 aún requiere checkpoint y aceptación expresa del PO.
+
+**Ejecución:** `c49d99b`, solo color de material; PlayMode 37/37, release-check y ambas builds nativas Release firmadas ARM64 correctos. Dev/prod limpias reinstaladas con perfil vigente; dev quedó instalada. Los dos lanzamientos fueron rechazados por iOS con Locked. Al reconectar Duplicación apareció de nuevo la contraseña del Mac; se pidió completarla en esa ventana y bloquear el iPhone físico para mantener la sesión de duplicación, y se dejó la ventana al frente. **Las pruebas solicitadas desde Duplicación siguen pendientes de ese acceso; no hay aceptación del PO, cierre ni fusión de I3.** [Evidencia consolidada](../validation/evidence/2026-10-22-i3-black-delivery.json).
+
+## I3 — resultado del checkpoint de iPhone (2026-10-22)
+
+El PO confirmó **«Squash Clash ya se ve en Duplicación»**. Codex comprobó la app nativa `0.1.0+c49d99b` desde esa ventana: cuatro controles dev, pelota negra, pausa/paso/repetición/continuación, salida y vuelta desde segundo plano con aviso en ambos perfiles, prod sin barra y 60 FPS observados/Portrait. Logs nativos: `devpanel=present` en dev y `devpanel=absent` en prod. Instalación y arranque de ambos verificados mediante devicectl en la pantalla Wireless de Duplicación. Dev reinstalada y abierta al finalizar, con perfil vigente.
+
+Para el bloqueo físico no sustituible por Duplicación, se pidió al PO probar en dev Lanzar → bloqueo con botón lateral → desbloqueo → volver → tocar. El PO respondió **«Aparece el aviso y continúa correctamente»**. **Prueba física de reanudación de dev confirmada por el PO.** No se atribuye una segunda prueba física en prod ni una medición de precisión/salto; prod sí tuvo prueba de segundo plano y su overlay Runtime.
+
+T3.3 tiene su checkpoint técnico registrado en el [informe](../validation/i3-ball.md#checkpoint-técnico-en-el-iphone-completado--2026-10-22) y [manifiesto con capturas/logs](../validation/evidence/2026-10-22-i3-iphone-checkpoint.json). **Esta respuesta confirma esa prueba, no constituye aún aceptación global explícita de I3 ni autorización de fusionar PR #2.** Legibilidad/tamaño pendiente para T6.2; pausa manual para I5 conforme a la decisión anterior. I3 sigue abierto; I4 no autorizado y PhysX sigue como candidato hasta I4c.

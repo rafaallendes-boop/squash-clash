@@ -9,6 +9,7 @@ Editor fijado: **6000.3.27f1 (Apple silicon)** con iOS Build Support. Configurar
 ```bash
 scripts/test.sh editmode
 scripts/test.sh playmode
+scripts/check-release.sh
 scripts/test.sh editmode BuildInfoTests
 scripts/build-ios.sh dev
 scripts/install-ios.sh dev --console
@@ -26,4 +27,10 @@ I1 se preparó en `main` como excepción de bootstrap; Claude revisó los commit
 
 **I2 cerrado el 2026-10-22**: PR #1 aprobada por Claude tras AX-1, aceptación visual del PO y merge commit `9ef7422`. Cancha, configuración y cámara fija verificadas; [informe de I2](docs/validation/i2-court.md).
 
-**I3 (T3.1–T3.3) autorizado** en `firstball/i3-ball`, con PR a main y revisión de Claude. P1/PhysX se implementa como candidato; la elección de backend sigue reservada al gate I4c. El PO conectará el iPhone al finalizar para el punto de control. I4 y posteriores sin autorización.
+**I3 (T3.1–T3.3) implementado para revisión** — [PR #2](https://github.com/rafaallendes-boop/squash-clash/pull/2) en `firstball/i3-ball`: reloj/contratos, candidato P1 con escenas aisladas, pelota negra, barra mínima dev y pausa del sistema en Runtime. **PlayMode 37/37 y RELEASE-CHECK: OK**; Core conserva EditMode 109/109 de `f075217`, sin cambios posteriores. Builds dev/prod `0.1.0+c49d99b`, firmadas ARM64, con yaw positivo hacia la derecha de pantalla (−X), probado por proyección RED→GREEN. [Informe y evidencia de I3](docs/validation/i3-ball.md).
+
+El PO comunicó la revisión de Claude sin bugs bloqueantes y autorizó la corrección de yaw y la instalación dev/prod para su checkpoint. La pérdida de pausa manual tras «Toca para continuar» queda registrada para I5, sin corregirla ahora. La aceptación del PO sigue pendiente: I3 no está cerrado ni fusionado. P1 no constituye elección de backend: la decisión pertenece al gate I4c. I4 y posteriores sin autorización.
+
+**Checkpoint técnico en iPhone realizado:** dev/prod arrancan como `0.1.0+c49d99b`, 60 FPS observados y Portrait. Cuatro controles dev probados desde Duplicación; prod sin barra, logs `devpanel=present|absent` y reanudación desde segundo plano verificados. El PO confirma bloqueo/desbloqueo físico y «Toca para continuar» correcto en dev. Dev restaurada. [Capturas y resultados](docs/validation/i3-ball.md#checkpoint-técnico-en-el-iphone-completado--2026-10-22).
+
+El bloqueo previo de acceso a Duplicación quedó resuelto por el PO. Su observación de pelota demasiado pequeña queda registrada para las ayudas/escala visual de T6.2, sin cambiar el radio de 20 mm ni adelantar esa etapa. Aceptación global del PO y fusión de I3 pendientes; no se inicia I4 ni se elige backend.

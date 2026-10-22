@@ -11,7 +11,7 @@ namespace SquashClash.Core.Tests.Config
         public void DefaultPreset_IsCompleteAndValid()
         {
             var p = ConfigFixtures.Default();
-            Assert.That(p.Ordered.Count, Is.EqualTo(10));
+            Assert.That(p.Ordered.Count, Is.EqualTo(30));
             Assert.That(p.Ordered.Select(e => e.Key), Is.EquivalentTo(ParamCatalog.All.Select(d => d.Key)));
             Assert.That(p.Get("court.tinTop"), Is.EqualTo(0.48));
             Assert.That(p.GetBool("placeholders.visible"), Is.True);
@@ -24,10 +24,10 @@ namespace SquashClash.Core.Tests.Config
             {
                 Assert.That(ParamCatalog.TryGet(def.Key, out var found), Is.True);
                 Assert.That(found.Key, Is.EqualTo(def.Key));
-                Assert.That(def.OperativeFor("P1"), Is.True);
+                Assert.That(def.OperativeFor("P1"), Is.EqualTo(def.Key != "physics.maxImpactsPerStep"));
                 if (def.Kind == ParamKind.Choice)
                 {
-                    Assert.That(def.Choices.Length, Is.GreaterThanOrEqualTo(2));
+                    Assert.That(def.Choices.Length, Is.GreaterThanOrEqualTo(1));
                     Assert.That(def.Choices.Select(c => c.Value).Distinct().Count(), Is.EqualTo(def.Choices.Length));
                 }
                 if (def.Kind == ParamKind.Bool) Assert.That(def.Choices, Is.Null.Or.Empty);

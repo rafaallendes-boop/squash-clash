@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using SquashClash.Runtime.App;
 using SquashClash.Runtime.Court;
+using SquashClash.Runtime.Ball;
 using SquashClash.Runtime.Camera;
 using UnityEditor;
 using UnityEditor.Build;
@@ -114,6 +115,8 @@ namespace SquashClash.EditorTools
             EditorUtility.SetDirty(panel);
             var bootstrap = UnityEngine.Object.FindFirstObjectByType<AppBootstrap>();
             if (bootstrap == null) bootstrap = new GameObject("App").AddComponent<AppBootstrap>();
+            if (bootstrap.GetComponent<BallSimulationHost>() == null) bootstrap.gameObject.AddComponent<BallSimulationHost>();
+            if (bootstrap.GetComponent<ResumeOverlay>() == null) bootstrap.gameObject.AddComponent<ResumeOverlay>();
             bootstrap.GetComponent<UIDocument>().panelSettings = panel;
             Directory.CreateDirectory("Assets/SquashClash/Runtime/Resources/CourtMaterials");
             AssetDatabase.Refresh();
@@ -130,7 +133,10 @@ namespace SquashClash.EditorTools
             if (players == null) players = new GameObject("Reference Players").AddComponent<PlaceholderPlayers>();
             var rig = camera.GetComponent<CourtCameraRig>();
             if (rig == null) rig = camera.gameObject.AddComponent<CourtCameraRig>();
+            var ball = UnityEngine.Object.FindFirstObjectByType<BallView>();
+            if (ball == null) ball = new GameObject("Ball View").AddComponent<BallView>();
             var app = new SerializedObject(bootstrap);
+            app.FindProperty("ballView").objectReferenceValue = ball;
             app.FindProperty("courtView").objectReferenceValue = court;
             app.FindProperty("placeholderPlayers").objectReferenceValue = players;
             app.FindProperty("cameraRig").objectReferenceValue = rig;

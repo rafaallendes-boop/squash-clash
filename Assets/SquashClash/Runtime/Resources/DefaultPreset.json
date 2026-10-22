@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "name": "First Ball default",
-  "createdBuild": "I2",
+  "createdBuild": "I3",
   "values": [
     {
       "key": "court.tinTop",
@@ -42,6 +42,86 @@
     {
       "key": "rival.z",
       "value": 6.5
+    },
+    {
+      "key": "pace.tempo",
+      "value": 0.65
+    },
+    {
+      "key": "pace.launchScale",
+      "value": 1
+    },
+    {
+      "key": "physics.gravity",
+      "value": 9.81
+    },
+    {
+      "key": "physics.stepHz",
+      "value": 120
+    },
+    {
+      "key": "physics.maxImpactsPerStep",
+      "value": 4
+    },
+    {
+      "key": "physics.floor.restitution",
+      "value": 0.45
+    },
+    {
+      "key": "physics.floor.friction",
+      "value": 0.3
+    },
+    {
+      "key": "physics.front.restitution",
+      "value": 0.55
+    },
+    {
+      "key": "physics.front.friction",
+      "value": 0.2
+    },
+    {
+      "key": "physics.side.restitution",
+      "value": 0.55
+    },
+    {
+      "key": "physics.side.friction",
+      "value": 0.2
+    },
+    {
+      "key": "physics.back.restitution",
+      "value": 0.55
+    },
+    {
+      "key": "physics.back.friction",
+      "value": 0.2
+    },
+    {
+      "key": "physics.backend",
+      "value": 0
+    },
+    {
+      "key": "launcher.x",
+      "value": 3.2
+    },
+    {
+      "key": "launcher.y",
+      "value": 1
+    },
+    {
+      "key": "launcher.z",
+      "value": 7
+    },
+    {
+      "key": "launcher.yawDeg",
+      "value": 0
+    },
+    {
+      "key": "launcher.pitchDeg",
+      "value": 10
+    },
+    {
+      "key": "launcher.speed",
+      "value": 15
     }
   ]
 }
