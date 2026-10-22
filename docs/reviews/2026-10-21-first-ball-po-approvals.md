@@ -163,3 +163,9 @@ El PO declara: «El PO acepta I3 en el iPhone y Claude aprueba la PR #2». Autor
 Autoriza **I4a / T4.1–T4.2**, rama `firstball/i4a-physics-measures` y PR, y **condicionalmente I4b / T4.3–T4.4**, rama `firstball/i4b-physics-run` con su propia PR **solo después de que I4a esté fusionado tras revisión de Claude**. Detenerse al entregar el informe de I4b. Esta autorización no permite saltar la revisión ni ejecutar I4b antes de la fusión de I4a.
 
 **Sin cambios de escenarios, umbrales ni criterios para hacer pasar resultados. Si no cumplen, se reportan.** Gate I4c y cualquier trabajo P2/T4.5 requieren autorización expresa del PO. I5 y etapas posteriores siguen sin autorizar. Renovar el perfil antes de cualquier instalación posterior al 28 de octubre de 2026, además de verificar su vigencia efectiva.
+
+## I4a — entrega técnica para revisión de Claude (2026-10-22)
+
+T4.1–T4.2 implementadas en `firstball/i4a-physics-measures`, base `c396fe4`, código final `980529d`: escenarios construidos analíticamente y mediciones/informe verificados con datos sintéticos. **EditMode 155/155 y PlayMode 37/37**, cero fallos/omitidos. La revisión interna encontró tres Important, reproducidos con siete fallos RED y corregidos: horizonte S8, cobertura esperada/cerrada y datos C4 inválidos. No sustituye la revisión de Claude.
+
+[Informe I4a](../validation/i4a-physics-measures.md), [evidencia](../validation/evidence/2026-10-22-i4a-tests.json) y [revisión interna](2026-10-22-first-ball-i4a-internal-review.md). No se modifican escenarios, umbrales, spec/plan ni criterios para hacer pasar PhysX. No se ejecuta todavía la campaña de I4b ni hay build/instalación nueva. **I4a pendiente de Claude y fusión; I4b autorizado solo después de esa condición.** I4c/P2/I5+ siguen sin autorizar y se conserva la orden de detenerse al entregar el informe de I4b.
