@@ -131,3 +131,11 @@ T3.1–T3.3 implementadas en `firstball/i3-ball`. Código de artefactos finales 
 **No es aceptación del PO ni cierre de I3.** El PO indicó que conectará el teléfono al finalizar; instalación, cuatro controles, pausa/bloqueo real, prod sin barra y logs devpanel en dispositivo siguen pendientes. La PR hacia main queda para revisión de Claude y no se fusiona automáticamente. PhysX continúa como candidato P1; no se eligió backend ni se avanzó a I4.
 
 Entrega publicada en [PR #2](https://github.com/rafaallendes-boop/squash-clash/pull/2) hacia main, estado OPEN, sin fusionar. Worktree `firstball/i3-ball` conservado para revisión y checkpoint del iPhone; el de I2 ya fue eliminado conforme a la autorización.
+
+## I3 — revisión de Claude y aclaración de yaw (2026-10-22)
+
+El PO comunica que Claude revisó PR #2 **sin bugs bloqueantes**. Es una revisión transmitida en el chat, no una GitHub Review atribuida a Claude. Antes de instalar, autoriza corregir `launcher.yawDeg`: **positivo hacia la derecha de pantalla, componente −X**, coherente con AX-1 y la cámara por defecto; negativo hacia la izquierda. Yaw cero, coordenadas, cámara, preset, pitch, velocidad, escenarios y umbrales no cambian. Esta aclaración sustituye la resolución inicial del ejecutor que asociaba yaw positivo a +X.
+
+Exige una prueba RED→GREEN por proyección, anotación trazable y posterior instalación de dev/prod para el checkpoint del iPhone. El PO informa el teléfono conectado y desbloqueado y pide revisar en dev. Se dejará dev instalada al finalizar las comprobaciones. Si una reinstalación ocurre después del 28 de octubre, se renovará primero el perfil; además se verificará siempre su vigencia efectiva antes de instalar.
+
+**Pendiente aceptado para I5:** «Toca para continuar» pierde una pausa manual previa. Se registra para distinguir y restaurar la intención de pausa manual cuando se trabaje I5; no se corrige ni se presenta como resuelto en I3. Esta aceptación no autoriza I5. **I4 sigue sin autorizar, P1 no es una selección de backend y no se autoriza fusionar ni cerrar I3 antes del checkpoint del PO.** Los resultados de la corrección e instalación se registrarán en el informe de I3.

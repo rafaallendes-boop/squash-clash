@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-22",
+  "change": "PO clarification: positive launcher.yawDeg projects right (-X), negative left; zero unchanged",
+  "projection": "Default CourtCameraRig, iPhone 16 Pro portrait aspect 1206/2622, EffectiveConfig -> Launcher -> WorldToViewportPoint",
+  "sourcePlanUnchanged": true,
+  "runs": [
+    {
+      "label": "RED projection",
+      "xml": "Logs/i3-yaw-red-results.xml",
+      "sha256": "303cc035a3431662e15a1191c140156811b43d636720d3d8a3221830d9bc4754",
+      "counts": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      },
+      "failedTests": [
+        {
+          "name": "SquashClash.Runtime.Tests.CourtCameraRigTests.Launcher_PositiveYawProjectsRightAndNegativeYawProjectsLeft",
+          "message": "  Positive yaw must move right on screen; yaw=15\n  Expected: greater than 0\n  But was:  -0.0369616449f\n"
+        }
+      ]
+    },
+    {
+      "label": "GREEN full PlayMode",
+      "xml": "Logs/i3-yaw-green-results.xml",
+      "sha256": "c843b039ce03ce09b67ebdb85d789af72eb5ed8d3515e673908b3dd2743c71c3",
+      "counts": {
+        "total": 37,
+        "passed": 37,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    },
+    {
+      "label": "GREEN full EditMode",
+      "xml": "Logs/i3-yaw-editmode-results.xml",
+      "sha256": "14ace4757e05d49da342afd98d38cc57187db7b1d1e15d0ecb5fdd7bea1b60cc",
+      "counts": {
+        "total": 109,
+        "passed": 109,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
+    }
+  ],
+  "physicsGateEvaluated": false
+}
