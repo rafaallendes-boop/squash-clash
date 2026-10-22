@@ -1,6 +1,6 @@
 # I4a — escenarios y mediciones de física
 
-Fecha: 2026-10-22. Rama `firstball/i4a-physics-measures`, base `c396fe4`. Alcance autorizado: **T4.1–T4.2 únicamente**, con PR para revisión de Claude. Implementación inicial en `cc1e619` y `b5d0d9a`; código final `980529d` tras corregir tres hallazgos de la revisión interna. **EditMode 155/155 y PlayMode 37/37**. No se fusiona ni comienza I4b antes de la revisión de Claude y fusión de I4a. Gate I4c, P2/T4.5, I5 y posteriores sin autorización.
+Fecha: 2026-10-22. Rama `firstball/i4a-physics-measures`, base `c396fe4`. Alcance autorizado: **T4.1–T4.2 únicamente**, con [PR #3 hacia main](https://github.com/rafaallendes-boop/squash-clash/pull/3) abierta para revisión de Claude. Implementación inicial en `cc1e619` y `b5d0d9a`; código final `980529d` tras corregir tres hallazgos de la revisión interna. **EditMode 155/155 y PlayMode 37/37**. No se fusiona ni comienza I4b antes de la revisión de Claude y fusión de I4a. Gate I4c, P2/T4.5, I5 y posteriores sin autorización.
 
 ## Implementación
 
