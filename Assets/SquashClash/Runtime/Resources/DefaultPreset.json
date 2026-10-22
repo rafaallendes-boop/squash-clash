@@ -98,6 +98,30 @@
     {
       "key": "physics.backend",
       "value": 0
+    },
+    {
+      "key": "launcher.x",
+      "value": 3.2
+    },
+    {
+      "key": "launcher.y",
+      "value": 1
+    },
+    {
+      "key": "launcher.z",
+      "value": 7
+    },
+    {
+      "key": "launcher.yawDeg",
+      "value": 0
+    },
+    {
+      "key": "launcher.pitchDeg",
+      "value": 10
+    },
+    {
+      "key": "launcher.speed",
+      "value": 15
     }
   ]
 }

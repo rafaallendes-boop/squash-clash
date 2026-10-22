@@ -19,7 +19,7 @@ namespace SquashClash.Runtime.Tests
         private Vector3 gravity;
         private readonly List<IBallSimulation> sims=new List<IBallSimulation>();
         private readonly List<PhysXBallSimulationFactory> factories=new List<PhysXBallSimulationFactory>();
-        [SetUp] public void SetUp() { gravity=UPhysics.gravity; }
+        [UnitySetUp] public IEnumerator SetUp() { yield return PlayModeTestWorld.ClearApp(); gravity=UPhysics.gravity; }
         [UnityTearDown] public IEnumerator TearDown() {
             foreach(var s in sims) s.Dispose(); sims.Clear();
             for(int i=0;i<120 && factories.Any(f=>f.PendingUnloads!=0);i++) yield return null;

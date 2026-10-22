@@ -39,6 +39,16 @@ namespace SquashClash.Core.Tests.Config
         }
 
         [Test]
+        public void EffectiveConfig_LaunchUsesPresetAndKeepsPaceSeparate() {
+            var a=EffectiveConfig.From(ConfigFixtures.Default());
+            Assert.That(a.Launch.Position,Is.EqualTo(new UnityEngine.Vector3(3.2f,1,7)));
+            Assert.That(a.Launch.SpeedRealMps,Is.EqualTo(15));Assert.That(a.Launch.Direction.y,Is.EqualTo(0.17364818f).Within(1e-6));
+            Assert.That(a.Launch.Direction.z,Is.EqualTo(-0.98480775f).Within(1e-6));
+            var b=EffectiveConfig.From(a.Source.With("pace.tempo",0.8).With("launcher.speed",20));
+            Assert.That(b.SimulationKey,Is.EqualTo(a.SimulationKey));Assert.That(b.Launch.SpeedRealMps,Is.EqualTo(20));Assert.That(b.Tempo,Is.EqualTo(0.8));
+        }
+
+        [Test]
         public void EffectiveConfig_ExternalCourtMutationCannotChangeSnapshot()
         {
             var a = EffectiveConfig.From(ConfigFixtures.Default());

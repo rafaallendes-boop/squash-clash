@@ -10,6 +10,15 @@ namespace SquashClash.Core.Config
         public ParamSet Source { get; }
         public string Hash => Source.Hash;
         public string SimulationKey { get; }
+        public LaunchSpec Launch
+        {
+            get
+            {
+                double yaw = Source.Get("launcher.yawDeg") * Math.PI / 180, pitch = Source.Get("launcher.pitchDeg") * Math.PI / 180;
+                var direction = new UnityEngine.Vector3((float)(Math.Sin(yaw)*Math.Cos(pitch)), (float)Math.Sin(pitch), (float)(-Math.Cos(yaw)*Math.Cos(pitch)));
+                return new LaunchSpec(new UnityEngine.Vector3((float)Source.Get("launcher.x"),(float)Source.Get("launcher.y"),(float)Source.Get("launcher.z")), direction, (float)Source.Get("launcher.speed"));
+            }
+        }
         public string Backend => Source.GetInt("physics.backend") == 0 ? "P1-PhysX" : throw new InvalidOperationException("Backend not authorized.");
         public double Tempo => Source.Get("pace.tempo");
         public double LaunchScale => Source.Get("pace.launchScale");

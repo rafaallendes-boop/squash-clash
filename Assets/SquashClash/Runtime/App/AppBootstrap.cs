@@ -2,21 +2,28 @@ using System;
 using SquashClash.Core.Diagnostics;
 using SquashClash.Core.Config;
 using SquashClash.Runtime.Court;
+using SquashClash.Runtime.Ball;
+using SquashClash.Runtime.Physics;
+using SquashClash.Core.Simulation;
+using SquashClash.Core.Court;
 using SquashClash.Runtime.Camera;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace SquashClash.Runtime.App
 {
-    [RequireComponent(typeof(UIDocument))]
+    [RequireComponent(typeof(UIDocument), typeof(BallSimulationHost), typeof(ResumeOverlay))]
     public sealed class AppBootstrap : MonoBehaviour
     {
         public static AppBootstrap Instance { get; private set; }
         public BuildInfo Build { get; private set; }
+        public SquashClash.Runtime.Ball.BallSimulationHost Host => GetComponent<SquashClash.Runtime.Ball.BallSimulationHost>();
         public ParamSet Params { get; private set; }
         public EffectiveConfig Config { get; private set; }
 
         [SerializeField] private CourtView courtView;
+        [SerializeField] private BallView ballView;
+        private CourtDimensions shownCourt;
         [SerializeField] private PlaceholderPlayers placeholderPlayers;
         [SerializeField] private CourtCameraRig cameraRig;
 
@@ -55,11 +62,8 @@ namespace SquashClash.Runtime.App
 
         private void Start()
         {
-            if (courtView == null || placeholderPlayers == null || cameraRig == null)
+            if (courtView == null || placeholderPlayers == null || cameraRig == null || ballView == null)
                 throw new InvalidOperationException("The main scene must reference court, camera and players.");
-            courtView.Build(Config.Court);
-            placeholderPlayers.Apply(Params);
-            cameraRig.Apply(Params, Config.Court);
 
             var root = GetComponent<UIDocument>().rootVisualElement;
             root.Clear();
@@ -94,7 +98,12 @@ namespace SquashClash.Runtime.App
             fpsLabel.style.marginLeft = 12;
             fpsLabel.style.color = new Color(0.72f, 0.93f, 0.83f);
             row.Add(fpsLabel);
-            Debug.Log($"[SquashClash] court ready lines=12 surfaces=5 colliders=0 config={Config.Hash} tin={Config.Court.TinTop}");
+            Host.Initialize(new IBallSimulationFactory[] { new PhysXBallSimulationFactory() }, new SimClock(Config.Physics.StepHz, Config.Tempo));
+            Host.Launched += OnLaunched;
+            GetComponent<ResumeOverlay>().Initialize(Host.Clock);
+            ballView.Initialize(Host, Config.Physics.BallRadius);
+            Host.Launch(Config);
+            Debug.Log($"[SquashClash] ball ready candidate={Config.Backend} visualColliders=0 localPhysicsScenes=2 config={Config.Hash} predictedSteps={Host.Prediction.States.Count-1}");
         }
 
         private void Update()
@@ -114,8 +123,18 @@ namespace SquashClash.Runtime.App
             }
         }
 
+        private void OnLaunched(EffectiveConfig cfg)
+        {
+            Config=cfg; Params=cfg.Source;
+            var court=cfg.Court;
+            if (shownCourt==null || !shownCourt.Equals(court)) { courtView.Build(court); shownCourt=court; }
+            placeholderPlayers.Apply(cfg.Source); cameraRig.Apply(cfg.Source,court);
+        }
+        private void OnApplicationPause(bool paused) { if (paused) GetComponent<ResumeOverlay>().Suspend(); }
+        private void OnApplicationFocus(bool focused) { if (!focused) GetComponent<ResumeOverlay>().Suspend(); }
         private void OnDestroy()
         {
+            if (Host != null) Host.Launched -= OnLaunched;
             if (Instance == this) Instance = null;
         }
     }

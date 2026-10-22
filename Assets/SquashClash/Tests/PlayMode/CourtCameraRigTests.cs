@@ -82,8 +82,8 @@ namespace SquashClash.Runtime.Tests
             Assert.That(app.Params, Is.Not.Null);
             Assert.That(app.Config.Hash, Is.EqualTo(app.Params.Hash));
             Assert.That(Object.FindFirstObjectByType<CourtView>(), Is.Not.Null);
-            Assert.That(Object.FindObjectsByType<SurfaceTag>(FindObjectsSortMode.None).Length, Is.EqualTo(5));
-            Assert.That(Object.FindObjectsByType<Collider>(FindObjectsSortMode.None), Is.Empty);
+            Assert.That(Object.FindObjectsByType<SurfaceTag>(FindObjectsSortMode.None).Count(t => t.gameObject.scene == SceneManager.GetActiveScene()), Is.EqualTo(5));
+            Assert.That(Object.FindObjectsByType<Collider>(FindObjectsSortMode.None).Where(c => c.gameObject.scene == SceneManager.GetActiveScene()), Is.Empty);
             Assert.That(Object.FindFirstObjectByType<PlaceholderPlayers>(), Is.Not.Null);
             var camera = UnityEngine.Camera.main;
             var texture = new RenderTexture(1206, 2622, 24);
