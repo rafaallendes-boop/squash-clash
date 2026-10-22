@@ -179,3 +179,5 @@ El PO comunica revisión de Claude de PR #3 **sin bugs**, confirma S8d como velo
 Ejecutado RED→GREEN: cuatro tests nuevos, RED 155/159 → GREEN 159/159; PlayMode 37/37. La API estructurada `MaxRelativeEnergyGain` expone estado, ganancia, paso y rapideces; la firma numérica anterior se conserva como envoltura. La separación se refiere a los contactos **del paso evaluado**, aunque la esquina se detecte por superficies en pasos contiguos. S8d mantiene 36 lanzamientos y sus números; ahora Stop=MaxSteps (360 a 120 Hz; salida superior legítima conservada).
 
 Después de la fusión se continúa con I4b/T4.3–T4.4 en `firstball/i4b-physics-run` y PR propia. Detenerse al entregar su informe. I4c, P2/T4.5 e I5+ siguen sin autorizar. Renovar perfil antes de instalar después del 28 de octubre y comprobar siempre vigencia.
+
+**Fusión ejecutada:** PR #3 MERGED, merge commit `ca50142e4c15854b45dc5d7285d0c57bd89860a3`, head `3c66bad7ba3f9a111e824c995796a735816faae7`; main sincronizada. I4a cerrado, condición para I4b cumplida.

@@ -7,7 +7,7 @@
   ],
   "baseCommit": "c396fe4",
   "reviewedHead": "b5d0d9a",
-  "finalProductCodeCommit": "980529d",
+  "finalProductCodeCommit": "3c66bad7ba3f9a111e824c995796a735816faae7",
   "runs": [
     {
       "run": "baseline-editmode",
@@ -245,5 +245,6 @@
   "p2Authorized": false,
   "i5Authorized": false,
   "pullRequest": "https://github.com/rafaallendes-boop/squash-clash/pull/3",
-  "pullRequestStateAtDelivery": "OPEN"
+  "pullRequestStateAtDelivery": "OPEN",
+  "mergeCommit": "ca50142e4c15854b45dc5d7285d0c57bd89860a3"
 }

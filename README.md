@@ -42,3 +42,5 @@ El bloqueo previo de acceso a Duplicación quedó resuelto por el PO. Su observa
 **I4a preparado para revisión:** T4.1–T4.2 en `firstball/i4a-physics-measures`; escenarios analíticos y mediciones/informe sintéticos, **155/155 EditMode y 37/37 PlayMode**, código `980529d`. [Informe y evidencia](docs/validation/i4a-physics-measures.md). I4b aún no empieza: requiere revisión de Claude y fusión de I4a. No hay campaña PhysX, gate, elección P1/P2 ni instalación nueva en esta entrega.
 
 Entrega I4a publicada en [PR #3](https://github.com/rafaallendes-boop/squash-clash/pull/3), abierta hacia main. Worktree conservado para la revisión; I4b no iniciado.
+
+I4a cerrado: PR #3 fusionada (`ca50142`), ajustes de Claude verificados RED→GREEN, EditMode 159/159 y PlayMode 37/37. I4b autorizado; gate I4c/P2/I5+ pendientes de autorización.

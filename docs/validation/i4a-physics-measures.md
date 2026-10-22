@@ -61,3 +61,7 @@ No hay cambios a Runtime, adaptador P1, DefaultPreset, spec, plan, escenarios nu
 Revisión de PR #3 transmitida por el PO: sin bugs; confirmada interpretación de S8d a velocidad total/arco bajo. Ejecutadas las tres condiciones de fusión: API de energía con Measured/NotApplicable/NotEvaluable, desglose por paso con impacto no persistente frente a solo persistentes (paso y rapidez antes/después), y horizonte completo de S8d. El máximo global y umbral de C3 se conservan, incluidos los persistentes; los casos inválidos no se excluyen como si no aplicaran. Esta aclaración sustituye la resolución 4 anterior en el caso de ausencia de esquina: ya no se confunde con dato inválido.
 
 Evidencia: RED 159 tests, 4 fallos esperados; GREEN EditMode 159/159, PlayMode 37/37. XML/hash en el manifiesto existente. El PO autoriza merge commit y continuación I4b; no es una decisión de backend ni cierre del gate.
+
+## Cierre I4a — 2026-10-22
+
+PR #3 MERGED con merge commit `ca50142e4c15854b45dc5d7285d0c57bd89860a3`; head aprobado y corregido `3c66bad7ba3f9a111e824c995796a735816faae7`. Main sincronizada. I4a cerrado; I4b autorizado y en preparación. No hubo experimento físico ni instalación en I4a.
