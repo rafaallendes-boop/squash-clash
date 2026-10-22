@@ -1,0 +1,432 @@
+{
+  "codeCommit": "ee76086ae48f688a62bc1ff23463eb94a5fad8de",
+  "nativeProfile": "dev/IL2CPP-Release/ARM64/non-Development",
+  "configHash": "c86243b15a97",
+  "variant": "baseline/ccdDyn-co1mm-it6-1",
+  "completeCampaignPending": true,
+  "runs": [
+    {
+      "report": "docs/validation/evidence/physics-spike-P1/iphone-ee76086-P1-20261022-230441-230.md",
+      "sha256": "06363b3f9dbad69217d14229331e581d083e9256464ceaf1629ba738f65d1d0d",
+      "complete": false,
+      "metadata": [
+        "Backend: P1-PhysX; variante: baseline/ccdDyn-co1mm-it6-1; build: 0.1.0+ee76086 dev",
+        "Dispositivo: iPhone17,1; configuración: c86243b15a97",
+        "Perfil: dev; OS: iOS 26.6.2; UTC: 2026-10-22T23:04:34.0064530Z → 2026-10-22T23:04:41.2187430Z",
+        "Térmico: nominal → nominal",
+        "ProjectPhysics: EnhancedDeterminism=true; bounceThreshold=0,1; Unity=6000.3.27f1"
+      ],
+      "terminationReason": "Cancelado por usuario",
+      "criteria": {
+        "C1": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "113/0/10053",
+          "coverage": "abierta"
+        },
+        "C2": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "774/0/774",
+          "coverage": "abierta"
+        },
+        "C3": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "16/3/19",
+          "coverage": "abierta"
+        },
+        "C4": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "4/0/4",
+          "coverage": "abierta"
+        },
+        "C5": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "18/0/117",
+          "coverage": "abierta"
+        },
+        "C6": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "113/0/10017",
+          "coverage": "abierta"
+        },
+        "C7": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "198/25/223",
+          "coverage": "abierta"
+        },
+        "C8": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "0/0/2",
+          "coverage": "abierta"
+        },
+        "C9": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "abierta"
+        },
+        "C10": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "9/0/9",
+          "coverage": "abierta"
+        },
+        "C11": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "6/0/6",
+          "coverage": "abierta"
+        },
+        "C12": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "11/0/11",
+          "coverage": "abierta"
+        },
+        "C13": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/38/40",
+          "coverage": "abierta"
+        },
+        "C14": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "0/0/0",
+          "coverage": "abierta"
+        },
+        "C15": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "abierta"
+        },
+        "C16": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "0/0/0",
+          "coverage": "abierta"
+        },
+        "C17": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "0/0/200",
+          "coverage": "abierta"
+        },
+        "C18": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "0/0/0",
+          "coverage": "abierta"
+        }
+      }
+    },
+    {
+      "report": "docs/validation/evidence/physics-spike-P1/iphone-ee76086-P1-20261022-233900-984.md",
+      "sha256": "0d4128f870ebbf0b7dda27519ec01de05c23a43b8f7c6f17852d09f9282f079b",
+      "complete": false,
+      "metadata": [
+        "Backend: P1-PhysX; variante: baseline/ccdDyn-co1mm-it6-1; build: 0.1.0+ee76086 dev",
+        "Dispositivo: iPhone17,1; configuración: c86243b15a97",
+        "Perfil: dev; OS: iOS 26.6.2; UTC: 2026-10-22T23:38:40.6859740Z → 2026-10-22T23:39:00.9817450Z",
+        "Térmico: nominal → nominal",
+        "ProjectPhysics: EnhancedDeterminism=true; bounceThreshold=0,1; Unity=6000.3.27f1"
+      ],
+      "terminationReason": "Pérdida de foco",
+      "criteria": {
+        "C1": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "317/0/10053",
+          "coverage": "abierta"
+        },
+        "C2": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "2158/0/2158",
+          "coverage": "abierta"
+        },
+        "C3": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "43/14/57",
+          "coverage": "abierta"
+        },
+        "C4": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "4/0/4",
+          "coverage": "abierta"
+        },
+        "C5": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "20/0/117",
+          "coverage": "abierta"
+        },
+        "C6": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "316/0/10017",
+          "coverage": "abierta"
+        },
+        "C7": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "584/46/630",
+          "coverage": "abierta"
+        },
+        "C8": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "0/0/2",
+          "coverage": "abierta"
+        },
+        "C9": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "abierta"
+        },
+        "C10": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "9/0/9",
+          "coverage": "abierta"
+        },
+        "C11": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "6/0/6",
+          "coverage": "abierta"
+        },
+        "C12": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "11/0/11",
+          "coverage": "abierta"
+        },
+        "C13": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/38/40",
+          "coverage": "abierta"
+        },
+        "C14": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "0/0/0",
+          "coverage": "abierta"
+        },
+        "C15": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "abierta"
+        },
+        "C16": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "0/0/0",
+          "coverage": "abierta"
+        },
+        "C17": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "0/0/200",
+          "coverage": "abierta"
+        },
+        "C18": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "0/0/0",
+          "coverage": "abierta"
+        }
+      }
+    },
+    {
+      "report": "docs/validation/evidence/physics-spike-P1/iphone-ee76086-P1-20261022-234234-166.md",
+      "sha256": "de31e29da3d8b44eacc2156838ba8024468662f90f0bf7ee0093cbe6d6e06ac7",
+      "complete": false,
+      "metadata": [
+        "Backend: P1-PhysX; variante: baseline/ccdDyn-co1mm-it6-1; build: 0.1.0+ee76086 dev",
+        "Dispositivo: iPhone17,1; configuración: c86243b15a97",
+        "Perfil: dev; OS: iOS 26.6.2; UTC: 2026-10-22T23:42:32.3586790Z → 2026-10-22T23:42:34.1625440Z",
+        "Térmico: nominal → nominal",
+        "ProjectPhysics: EnhancedDeterminism=true; bounceThreshold=0,1; Unity=6000.3.27f1"
+      ],
+      "terminationReason": "Pérdida de foco",
+      "criteria": {
+        "C1": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "19/0/10053",
+          "coverage": "abierta"
+        },
+        "C2": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "168/0/168",
+          "coverage": "abierta"
+        },
+        "C3": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "3/0/3",
+          "coverage": "abierta"
+        },
+        "C4": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "4/0/4",
+          "coverage": "abierta"
+        },
+        "C5": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "18/0/117",
+          "coverage": "abierta"
+        },
+        "C6": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "19/0/10017",
+          "coverage": "abierta"
+        },
+        "C7": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "36/0/36",
+          "coverage": "abierta"
+        },
+        "C8": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "0/0/2",
+          "coverage": "abierta"
+        },
+        "C9": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "abierta"
+        },
+        "C10": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "9/0/9",
+          "coverage": "abierta"
+        },
+        "C11": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "6/0/6",
+          "coverage": "abierta"
+        },
+        "C12": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "11/0/11",
+          "coverage": "abierta"
+        },
+        "C13": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/38/40",
+          "coverage": "abierta"
+        },
+        "C14": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "0/0/0",
+          "coverage": "abierta"
+        },
+        "C15": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "abierta"
+        },
+        "C16": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "0/0/0",
+          "coverage": "abierta"
+        },
+        "C17": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "0/0/200",
+          "coverage": "abierta"
+        },
+        "C18": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "0/0/0",
+          "coverage": "abierta"
+        }
+      }
+    }
+  ]
+}

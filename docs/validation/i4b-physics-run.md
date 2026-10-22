@@ -26,8 +26,8 @@ Artefacto local listo en `Builds/DerivedData-dev/Build/Products/Release-iphoneos
 
 ## Pendientes que impiden el cierre
 
-1. Instalación/arranque, Escenario S1→S2 y Cancelar ya observados en nativo; cancelación por segundo plano aún pendiente de observación nativa. Capturas e informe INCOMPLETO conservados.
-2. Campaña completa baseline/hash c86243b15a97 en teléfono nominal al empezar; térmico final, metadata y 200 mediciones C17, recuperación del informe de Documents/spike y comprobación de sus 18 filas.
+1. Instalación/arranque, Escenario S1→S2 y Cancelar ya observados en nativo; pérdida de foco nativa también canceló un segundo intento a los 20 s (nominal→nominal). No se atribuye al callback de pausa; los tests cubren la ruta de segundo plano. Capturas e informes INCOMPLETO conservados.
+2. Tres intentos INCOMPLETO conservados, cancelación manual y dos pérdidas de foco; [manifiesto nativo](evidence/2026-10-22-i4b-iphone-runs.json). Campaña completa baseline/hash c86243b15a97 en teléfono nominal al empezar; térmico final, metadata y 200 mediciones C17, recuperación del informe de Documents/spike y comprobación de sus 18 filas.
 3. Clasificación de Claude del paso 6 de T4.3: adaptador, prueba o limitación del motor para cada incumplimiento; no atribuirla por cuenta propia. Si exige corrección, repetir evidencia afectada.
 4. Completar informe y detenerse para el PO/Claude. No aceptación del PO, cierre/fusión de I4b ni decisión de gate implícita.
 

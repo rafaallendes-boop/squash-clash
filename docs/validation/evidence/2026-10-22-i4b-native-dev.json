@@ -20,7 +20,7 @@
   "minimumOSVersion": "15.0",
   "frameworkSha256": "394f5ff4e1936925c497518212901daa5b2302ebe51fd4dc4134416e57ca4b71",
   "installed": true,
-  "iphoneRun": "launched; controls/cancellation checked; full campaign pending",
+  "iphoneRun": "launched; scenario and manual/focus cancellation checked; complete campaign pending",
   "embeddedBuildMetadataVerified": true,
   "metadataArtifactLocations": [
     "Data/resources.assets"
@@ -34,5 +34,17 @@
     "ddiServicesAvailable": true,
     "tunnel": "connected",
     "transport": "wired"
-  }
+  },
+  "appEventEvidence": [
+    "[SquashClash] boot 0.1.0+ee76086 dev devpanel=present development=False squashDev=True unity=6000.3.27f1",
+    "[SquashClash] ball ready candidate=P1-PhysX visualColliders=0 localPhysicsScenes=2 config=c86243b15a97 predictedSteps=168",
+    "[SquashClash] display profile=dev fps=60,0 orientation=Portrait resolution=1206x2622",
+    "[SquashClash] spike 0 % — S1 robustez",
+    "[SquashClash] spike output complete=False thermal=nominal→nominal saved=True",
+    "[SquashClash] spike 0 % — S1 robustez",
+    "[SquashClash] spike output complete=False thermal=nominal→nominal saved=True",
+    "[SquashClash] spike 0 % — S1 robustez",
+    "[SquashClash] spike output complete=False thermal=nominal→nominal saved=True"
+  ],
+  "appEventEvidenceScope": "selected app-owned diagnostic lines; raw device/console logs remain ignored locally"
 }

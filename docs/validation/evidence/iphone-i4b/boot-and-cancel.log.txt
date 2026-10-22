@@ -1,5 +1,0 @@
-[SquashClash] boot 0.1.0+ee76086 dev devpanel=present development=False squashDev=True unity=6000.3.27f1
-[SquashClash] ball ready candidate=P1-PhysX visualColliders=0 localPhysicsScenes=2 config=c86243b15a97 predictedSteps=168
-[SquashClash] display profile=dev fps=60,0 orientation=Portrait resolution=1206x2622
-[SquashClash] spike 0 % — S1 robustez
-[SquashClash] spike output complete=False thermal=nominal→nominal saved=True
