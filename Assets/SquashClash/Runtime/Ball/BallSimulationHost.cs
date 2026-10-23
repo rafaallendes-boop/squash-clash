@@ -46,6 +46,11 @@ namespace SquashClash.Runtime.Ball
             if (backends == null) throw new InvalidOperationException("Initialize the host before launch.");
             if (cfg == null) throw new ArgumentNullException(nameof(cfg));
             var physics = cfg.Physics; var court = cfg.Court;
+            // P2 Reset assumes a valid center inside the floor/lateral bounds. Validate before mutating the live host.
+            if(!Finite(initial.Position)||!Finite(initial.Velocity)||initial.Step<0||initial.Step>int.MaxValue-horizonSteps||
+                initial.Position.x<physics.BallRadius||initial.Position.x>court.Width-physics.BallRadius||
+                initial.Position.z<physics.BallRadius||initial.Position.z>court.Length-physics.BallRadius||initial.Position.y<physics.BallRadius)
+                throw new ArgumentOutOfRangeException(nameof(initial),"Launch state must be finite and inside the court center bounds.");
             if (game == null || ActiveConfig.SimulationKey != cfg.SimulationKey)
             {
                 DisposeSimulations();
@@ -99,6 +104,8 @@ namespace SquashClash.Runtime.Ball
             }
             else RenderPosition = Vector3.Lerp(previous.Position, current.Position, Clock.Alpha);
         }
+        private static bool Finite(Vector3 v)=>Finite(v.x)&&Finite(v.y)&&Finite(v.z);
+        private static bool Finite(float v)=>!float.IsNaN(v)&&!float.IsInfinity(v);
         private static bool SameBits(BallState a, BallState b) => a.Step == b.Step &&
             Same(a.Position.x,b.Position.x) && Same(a.Position.y,b.Position.y) && Same(a.Position.z,b.Position.z) &&
             Same(a.Velocity.x,b.Velocity.x) && Same(a.Velocity.y,b.Velocity.y) && Same(a.Velocity.z,b.Velocity.z);

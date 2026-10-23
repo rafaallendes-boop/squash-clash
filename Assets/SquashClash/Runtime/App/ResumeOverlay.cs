@@ -9,7 +9,7 @@ namespace SquashClash.Runtime.App
     {
         private SimClock clock;
         private VisualElement layer;
-        private bool needsResume;
+        private bool needsResume, wasManuallyPaused;
         public bool IsVisible => layer != null && layer.style.display.value != DisplayStyle.None;
         public void Initialize(SimClock clock)
         {
@@ -27,15 +27,19 @@ namespace SquashClash.Runtime.App
         }
         public void Suspend()
         {
+            if(!needsResume&&clock!=null)wasManuallyPaused=clock.Paused;
             needsResume=true;
             if (clock != null) clock.Paused=true;
             if (layer != null) { layer.style.display=DisplayStyle.Flex; layer.BringToFront(); }
         }
         public void Continue()
         {
-            if (needsResume && TryGetComponent<BallSimulationHost>(out var host) && host.Clock != null) host.ResumeAfterSystemPause();
-            needsResume=false;
-            if (clock != null) clock.Paused=false;
+            if(needsResume)
+            {
+                if(TryGetComponent<BallSimulationHost>(out var host)&&host.Clock!=null)host.ResumeAfterSystemPause();
+                if(clock!=null)clock.Paused=wasManuallyPaused;
+                needsResume=false;
+            }
             if (layer != null) layer.style.display=DisplayStyle.None;
         }
     }
