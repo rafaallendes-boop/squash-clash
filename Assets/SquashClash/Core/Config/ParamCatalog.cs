@@ -22,7 +22,7 @@ namespace SquashClash.Core.Config
             new ParamDef("physics.side.friction", "side friction", "", "Materials", ParamKind.Float, 0, 1, 0.01, ApplyClass.NextLaunch),
             new ParamDef("physics.back.restitution", "back restitution", "", "Materials", ParamKind.Float, 0, 1, 0.01, ApplyClass.NextLaunch),
             new ParamDef("physics.back.friction", "back friction", "", "Materials", ParamKind.Float, 0, 1, 0.01, ApplyClass.NextLaunch),
-            new ParamDef("physics.backend", "Candidate backend", "", "Physics", ParamKind.Choice, 0, 0, 1, ApplyClass.NextLaunch, new ChoiceOption(0, "P1-PhysX")),
+            new ParamDef("physics.backend", "Backend", "", "Physics", ParamKind.Choice, 0, 1, 1, ApplyClass.NextLaunch, new ChoiceOption(0, "P1-PhysX"), new ChoiceOption(1, "P2-Analytic")),
             new ParamDef("launcher.x", "Launch x", "m", "Launcher", ParamKind.Float, 0.3, 6.1, 0.1, ApplyClass.NextLaunch),
             new ParamDef("launcher.y", "Launch y", "m", "Launcher", ParamKind.Float, 0.1, 5, 0.1, ApplyClass.NextLaunch),
             new ParamDef("launcher.z", "Launch z", "m", "Launcher", ParamKind.Float, 0.3, 9.45, 0.1, ApplyClass.NextLaunch),
