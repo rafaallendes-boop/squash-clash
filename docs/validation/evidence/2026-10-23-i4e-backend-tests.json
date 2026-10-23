@@ -1,0 +1,116 @@
+{
+  "scope": "I4e: dos ciclos RED válidos de comportamiento antes de implementar; GREEN de suites completas. Sin campaña física nueva ni cambio del motor. XML frescos y no cero tests; sin errores CS.",
+  "stages": [
+    {
+      "stage": "01-config-red",
+      "counts": {
+        "total": 6,
+        "passed": 4,
+        "failed": 2,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/i4e-tdd/01-config-red/editmode-results.xml",
+      "xmlSha256": "32c5b0b8aa89ca8582ea021730e9971965cefc0babce9ae4fff428c68bc31f9d",
+      "logSha256": "d6e46b1da810db5763418e618414e2fff219bfb1ad38f31ea785bcb62619ddf4",
+      "sourceSnapshotHashes": {
+        "AppBootstrap.cs": "558633b030d3bac7f7a4d0b1bc4521d997278d73e2934269fb9ae8906787f56c",
+        "AppBootstrapTests.cs": "d5a166378a2d312fab91028e1b2249e1835a55f2232d354da0637365939e342a",
+        "EffectiveConfig.cs": "f091e92e8d50efef81c1275eca6d6e5f488ccc5b38328559ffc77f50ff50bd38",
+        "EffectiveConfigTests.cs": "2b7c8da8dd3ad8a8bf43fb9cc83f12b9f4298276162e278b3c8f2d28d2cb46c8",
+        "ParamCatalog.cs": "e7b4c1a309ff0d4bfcb529c94f466e704fd5e43c06dee29ee936743a42c48d73",
+        "DefaultPreset.json": "d8787d257ee5b48bef35f19985316fb76097e148c4cec5606772d5144be3bdd0"
+      },
+      "failedTests": [
+        {
+          "name": "BackendSelection_P1RemainsConfigurableAndRoundTripsAlongsideP2",
+          "message": "System.ArgumentOutOfRangeException : physics.backend: value is not an allowed option.\nParameter name: value"
+        },
+        {
+          "name": "EffectiveConfig_MaterialsAndBackendComeFromPreset",
+          "message": "  Expected string length 11 but was 8. Strings differ at index 1.\n  Expected: \"P2-Analytic\"\n  But was:  \"P1-PhysX\"\n  ------------^\n"
+        }
+      ]
+    },
+    {
+      "stage": "01-config-green",
+      "counts": {
+        "total": 222,
+        "passed": 222,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/i4e-tdd/01-config-green/editmode-results.xml",
+      "xmlSha256": "bbdf22f4679b5cd1ef51d9070ea13dc956e5fc1c98d8f028d26a3bb1181da115",
+      "logSha256": "45bbf1a4540bb67cece38abd28691a38d51b53d6d30409e3106ee74521fe2ca6",
+      "sourceSnapshotHashes": {
+        "AppBootstrap.cs": "558633b030d3bac7f7a4d0b1bc4521d997278d73e2934269fb9ae8906787f56c",
+        "AppBootstrapTests.cs": "d5a166378a2d312fab91028e1b2249e1835a55f2232d354da0637365939e342a",
+        "EffectiveConfig.cs": "746f97550b2ef6f6a73e24f5d7d578b3e03d1320d7db945e65b7bd672bb4a98c",
+        "EffectiveConfigTests.cs": "2b7c8da8dd3ad8a8bf43fb9cc83f12b9f4298276162e278b3c8f2d28d2cb46c8",
+        "ParamCatalog.cs": "b34ee0afb84ec576d90a9ebd4a429c4d4ba47badb708585e7daca4879ab072ce",
+        "DefaultPreset.json": "9cb2cff13972b2f16725beaf6aa2d45bcdc31263f0f102e56bb927495de23e8a"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "02-host-red",
+      "counts": {
+        "total": 3,
+        "passed": 0,
+        "failed": 3,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/i4e-tdd/02-host-red/playmode-results.xml",
+      "xmlSha256": "ec0bf730ab2f008d25b99f0a57ff6b0d5b5ef6cdc7a47b94f3292ddffa0c1ac3",
+      "logSha256": "f2d8138378631dccb2c840792d2767a1d7b0ae9a26c098c321a78eace9fdc625",
+      "sourceSnapshotHashes": {
+        "AppBootstrap.cs": "558633b030d3bac7f7a4d0b1bc4521d997278d73e2934269fb9ae8906787f56c",
+        "AppBootstrapTests.cs": "6a06fd5b30d986c5519bbfb6ce84c8f53efde55e921e9bdf11a634c208b7b9ed",
+        "EffectiveConfig.cs": "746f97550b2ef6f6a73e24f5d7d578b3e03d1320d7db945e65b7bd672bb4a98c",
+        "EffectiveConfigTests.cs": "2b7c8da8dd3ad8a8bf43fb9cc83f12b9f4298276162e278b3c8f2d28d2cb46c8",
+        "ParamCatalog.cs": "b34ee0afb84ec576d90a9ebd4a429c4d4ba47badb708585e7daca4879ab072ce",
+        "DefaultPreset.json": "9cb2cff13972b2f16725beaf6aa2d45bcdc31263f0f102e56bb927495de23e8a"
+      },
+      "failedTests": [
+        {
+          "name": "Main_BallViewUsesPhysicalRadiusAndHasNoCollider",
+          "message": "Unhandled log message: '[Exception] InvalidOperationException: Sequence contains no matching element'. Use UnityEngine.TestTools.LogAssert.Expect"
+        },
+        {
+          "name": "Main_ConfiguredP1RemainsAvailableAndCanReturnToP2",
+          "message": "Unhandled log message: '[Exception] InvalidOperationException: Sequence contains no matching element'. Use UnityEngine.TestTools.LogAssert.Expect\nTearDown : Unhandled log message: '[Exception] NullReferenceException: Object reference not set to an instance of an object'. Use UnityEngine.TestTools.LogAssert.Expect"
+        },
+        {
+          "name": "Main_DefaultHostUsesP2ForGameAndPredictionAndBounces",
+          "message": "Unhandled log message: '[Exception] InvalidOperationException: Sequence contains no matching element'. Use UnityEngine.TestTools.LogAssert.Expect"
+        }
+      ]
+    },
+    {
+      "stage": "02-host-green",
+      "counts": {
+        "total": 63,
+        "passed": 63,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/i4e-tdd/02-host-green/playmode-results.xml",
+      "xmlSha256": "1a04c519b103d242c01f389b6bd5dcafbebac857222f6a35ab3004b1d7d3eaad",
+      "logSha256": "91c397af29f99155789d32e2dd6eb71db384ce5715a0bcbebc7e969fc46a407b",
+      "sourceSnapshotHashes": {
+        "AppBootstrap.cs": "5a97d7c0bf14b8fa2aaa053b4e85a82a6f19c8cfd2e4bf8b6c0caa9912bb4360",
+        "AppBootstrapTests.cs": "6a06fd5b30d986c5519bbfb6ce84c8f53efde55e921e9bdf11a634c208b7b9ed",
+        "EffectiveConfig.cs": "746f97550b2ef6f6a73e24f5d7d578b3e03d1320d7db945e65b7bd672bb4a98c",
+        "EffectiveConfigTests.cs": "2b7c8da8dd3ad8a8bf43fb9cc83f12b9f4298276162e278b3c8f2d28d2cb46c8",
+        "ParamCatalog.cs": "b34ee0afb84ec576d90a9ebd4a429c4d4ba47badb708585e7daca4879ab072ce",
+        "DefaultPreset.json": "9cb2cff13972b2f16725beaf6aa2d45bcdc31263f0f102e56bb927495de23e8a"
+      },
+      "failedTests": []
+    }
+  ],
+  "configHashBefore": "c86243b15a97",
+  "configHashAfter": "f6a394a12daf",
+  "configHashProof": "Test Main_DefaultHostUsesP2ForGameAndPredictionAndBounces, salida XML DEFAULT_CONFIG_HASH=f6a394a12daf; misma ruta PresetCodec/EffectiveConfig del arranque.",
+  "fixtureClarification": "Fixtures P1 de host/materiales y prueba de aislamiento de campaña ahora seleccionan backend=0 explícitamente; conservan sus aserciones y su propósito. Nuevos tests verifican host normal P2, dos botes, predictor bit a bit y cambio P2→P1→P2.",
+  "protectedSource": "Core/Simulation, Core/Spike, Runtime/Physics, ProjectSettings y spec byte-identical to 508d333."
+}
