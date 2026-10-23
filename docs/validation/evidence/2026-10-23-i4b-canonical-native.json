@@ -55,7 +55,7 @@
   "installVerified": true,
   "launchVerified": true,
   "launchStatus": "Successfully launched after PO confirmed unlock; installed app running, no console session. Campaign not started by tools.",
-  "campaignStatus": "PO completed run; saved report audited. Started at 75% battery with case on; outside approved conditions. Required compliant campaign remains pending. C17 Fail, p95 14.9234 ms.",
+  "campaignStatus": "PO completó campaña autorizada con batería inicial 90 % y condiciones confirmadas. Informe auditado: 18 criterios, 200 medidas C17, p95 14.3221 ms Fail. Térmico nominal inicial, fair en C17/final, cero interrupciones. Informe entregado; detenerse para Claude/PO, I4b abierto.",
   "regressionScope": "Only documentation and a test comment changed after c7da32e; no new behavior and no suites repeated. Prior regression evidence retained.",
   "editorBenchmarkConditions": {
     "build": "da98fd4",
@@ -76,6 +76,7 @@
   },
   "runningProcessVerified": true,
   "launchVerifiedAtUtc": null,
-  "campaignApprovedConditionsMet": false,
-  "campaignReportManifest": "docs/validation/evidence/2026-10-23-i4b-native-canonical-runs.json"
+  "campaignApprovedConditionsMet": true,
+  "campaignReportManifest": "docs/validation/evidence/2026-10-23-i4b-native-compliant-run.json",
+  "previousCampaignReportManifest": "docs/validation/evidence/2026-10-23-i4b-native-canonical-runs.json"
 }
