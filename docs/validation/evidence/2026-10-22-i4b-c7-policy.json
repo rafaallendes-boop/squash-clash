@@ -1,0 +1,27 @@
+{
+  "approvedByPO": "2026-10-22 review of PR4 point5b",
+  "red": {
+    "total": 7,
+    "passed": 0,
+    "failed": 7,
+    "xmlSha256": "018a942c1dc9af654d3ef57911b672aa0169ce0d3d23196a359113a41a5acc49",
+    "note": "OtherTermination expected count corrected from48 to16:32random scenarios legitimately run fullhorizon,16fixed stopafter2bounces. Other failures demonstrate missingstatusandNA."
+  },
+  "green": {
+    "total": 180,
+    "passed": 180,
+    "failed": 0,
+    "skipped": 0,
+    "xmlSha256": "9a9df6948cc2bb423caf71630e2e48db91344c4740b249c90bfac89c7fd2a933"
+  },
+  "classification": "Only clean overtop or horizon missingcheckpoint: NA excludedExpected. Nonfinite/crossing/discontinuoussteps/nonfinitecontact or other earlytermination: NE inExpected. Availablecheckpoint alwayscomparedbitwise. Zeroeligiblepopulation cannotapprove.",
+  "divergenceDiagnostics": {
+    "red": {
+      "total": 3,
+      "passed": 0,
+      "failed": 3,
+      "xmlSha256": "26a590f1a54be99dfc7ad67a4ccb0affb940a8a7f935337d6ff3feb89cf7e35d"
+    },
+    "firstDifference": "C5/C6/C7 first mismatch records actual step,index,previous/current state with six float32 hex bits per state and contacts on that step. Bounded one case per criterion independently of twelve general examples. Equality measurement unchanged."
+  }
+}

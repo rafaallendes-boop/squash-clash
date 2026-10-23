@@ -25,6 +25,7 @@ namespace SquashClash.Core.Spike
         private readonly Dictionary<string, int> notes = new Dictionary<string, int>();
         private readonly Dictionary<EnergyStepPopulation, (EnergyGainSample sample, string scenario)> energy = new Dictionary<EnergyStepPopulation, (EnergyGainSample, string)>();
         private readonly Dictionary<(EnergyStepPopulation, MeasurementStatus), int> energyCounts = new Dictionary<(EnergyStepPopulation, MeasurementStatus), int>();
+        private readonly HashSet<string> diagnosedDifferences = new HashSet<string>();
         private readonly List<float> remaining = new List<float>();
         private IBallSimulation game, predictor;
         private bool finished;
@@ -174,9 +175,31 @@ namespace SquashClash.Core.Spike
         {
             Phase = s.Id + " C7 " + label;
             int index = baseline.States.FindIndex(state => state.Step == k);
-            if (index < 0 || k < 0 || index >= s.MaxSteps) { Record("C7", null, Phase + ": checkpoint no observable antes del fin/salida superior"); return; }
+            if (index < 0 || k < 0 || index >= s.MaxSteps)
+            {
+                bool clean = CleanCheckpointHistory(baseline, s);
+                bool legitimateEnd = clean && (baseline.Exit == TrajectoryExit.OverTop ||
+                    baseline.States.Count == s.MaxSteps + 1);
+                if (legitimateEnd) {
+                    Row("C7").NotApplicable++;
+                    AddDetail("C7", Phase + ": NotApplicable; checkpoint fuera de trayectoria limpia por " +
+                        (baseline.Exit == TrajectoryExit.OverTop ? "salida superior" : "fin del horizonte"));
+                }
+                else Record("C7", null, Phase + ": NotEvaluable; checkpoint ausente tras anomalía u otra terminación");
+                return;
+            }
             var from = baseline.States[index]; int length = s.MaxSteps - index;
             Compare("C7", Phase, Run(game, from, length, StopCondition.SecondFloorBounce), Run(predictor, from, length, StopCondition.SecondFloorBounce));
+        }
+        private bool CleanCheckpointHistory(Trajectory t, PhysicsScenario s)
+        {
+            if (!PhysicsMeasures.AllFinite(t, out _) || PhysicsMeasures.Crossings(t, court, out _) != 0) return false;
+            for (int i = 0; i < t.States.Count; i++) if (t.States[i].Step != s.Start.Step + i) return false;
+            foreach (var c in t.Contacts)
+                if (!Finite(c.Point) || !Finite(c.Normal) || !Finite(c.UV) || !Finite(c.ApproachVelocity) ||
+                    c.Step <= s.Start.Step || c.Step > t.States[t.States.Count - 1].Step ||
+                    (c.Timing != ContactTiming.StepOnly && (float.IsNaN(c.TimeInStep) || float.IsInfinity(c.TimeInStep)))) return false;
+            return t.Exit != TrajectoryExit.OverTop || t.States[t.States.Count - 1].Position.y > court.WallHeight;
         }
         private void ContinueWithoutReset(PhysicsScenario s)
         {
@@ -198,7 +221,24 @@ namespace SquashClash.Core.Spike
         {
             bool equal = PhysicsMeasures.TrajectoriesBitwiseEqual(a, b, out int first);
             Record(id, equal, scenario + ": primera diferencia índice=" + first);
+            if (!equal && (id == "C5" || id == "C6" || id == "C7") && diagnosedDifferences.Add(id))
+            {
+                long step = first < a.States.Count ? a.States[first].Step : first < b.States.Count ? b.States[first].Step : -1;
+                Result.Details.Add(id + " diagnóstico: " + scenario + $"; primer paso divergente={step}; índice={first}; " +
+                    "previo A=" + StateText(a, first - 1) + "; previo B=" + StateText(b, first - 1) +
+                    "; A=" + StateText(a, first) + "; B=" + StateText(b, first) +
+                    "; contactos A=" + ContactsText(a, step) + "; contactos B=" + ContactsText(b, step));
+            }
         }
+        private static string StateText(Trajectory t, int index)
+        {
+            if (index < 0 || index >= t.States.Count) return "ausente";
+            var s = t.States[index];
+            return $"paso={s.Step}, p={s.Position.ToString("R", CultureInfo.InvariantCulture)}, v={s.Velocity.ToString("R", CultureInfo.InvariantCulture)}, bits=" +
+                string.Join(",", new[] {s.Position.x,s.Position.y,s.Position.z,s.Velocity.x,s.Velocity.y,s.Velocity.z}.Select(v => BitConverter.SingleToInt32Bits(v).ToString("X8", CultureInfo.InvariantCulture)));
+        }
+        private static string ContactsText(Trajectory t, long step) => "[" + string.Join("; ", t.Contacts.Where(c => c.Step == step).Select(c =>
+            $"{c.Surface}@{c.Step} persistent={c.Persistent}, {c.Timing}, t={F(c.TimeInStep)}, p={c.Point.ToString("R", CultureInfo.InvariantCulture)}, n={c.Normal.ToString("R", CultureInfo.InvariantCulture)}, approach={c.ApproachVelocity.ToString("R", CultureInfo.InvariantCulture)}")) + "]";
         private CriterionResult Row(string id) => Result.Criteria.Single(c => c.Id == id);
         private void Record(string id, bool? pass, string detail, bool alwaysDetail = false)
         {
@@ -206,10 +246,11 @@ namespace SquashClash.Core.Spike
             if (id == "C2" || id == "C3" || id == "C7" || id == "C9" || id == "C12" || id == "C13" || id == "C15") c.Expected++;
             if (pass.HasValue) { c.Evaluated++; if (!pass.Value) { failures.TryGetValue(id, out int count); failures[id] = count + 1; } }
             else c.NotEvaluable++;
-            if (alwaysDetail || pass != true)
-            {
-                notes.TryGetValue(id, out int n); if (n < 12) Result.Details.Add(id + " " + detail); notes[id] = n + 1;
-            }
+            if (alwaysDetail || pass != true) AddDetail(id, detail);
+        }
+        private void AddDetail(string id, string detail)
+        {
+            notes.TryGetValue(id, out int n); if (n < 12) Result.Details.Add(id + " " + detail); notes[id] = n + 1;
         }
         private void Finish()
         {
@@ -221,12 +262,14 @@ namespace SquashClash.Core.Spike
                 c.Verdict = FailureCount(c.Id) > 0 ? Verdict.Fail : !c.CoverageComplete || c.NotEvaluable > 0 ? Verdict.NotEvaluated : c.Gating ? Verdict.Pass : Verdict.Info;
             }
             Row("C1").Measured += $"; atravesamientos={crossings}; salidas superiores={overTop}; seed={options.Seed}; S8={options.RandomCount}; S8d=36";
+            Row("C3").NotApplicable = noCorner;
             Row("C3").Measured += "; no aplica (sin pasos de esquina, fuera de población)=" + noCorner;
             foreach (var population in new[] { EnergyStepPopulation.Corner, EnergyStepPopulation.CornerWithImpact, EnergyStepPopulation.CornerPersistentOnly })
             {
                 string counts = string.Join(", ", new[] { MeasurementStatus.Measured, MeasurementStatus.NotApplicable, MeasurementStatus.NotEvaluable }.Select(status => status + "=" + (energyCounts.TryGetValue((population, status), out int n) ? n : 0)));
                 Row("C3").Measured += "; " + population + " [" + counts + "]: " + (energy.TryGetValue(population, out var max) ? "máximo entre casos medidos: " + max.scenario + " " + EnergyText(max.sample) : "sin máximo medido; consultar estados explícitos");
             }
+            Row("C7").Measured += $"; Measured={Row("C7").Evaluated}; NotApplicable={Row("C7").NotApplicable}; NotEvaluable={Row("C7").NotEvaluable} (no aplica fuera de población)";
             Row("C4").Measured += "; impactos repetidos=" + repeated;
             Row("C10").Measured += "; error máximo mm=" + F(maxPrecision);
             remaining.Sort();
@@ -246,6 +289,7 @@ namespace SquashClash.Core.Spike
         private int FailureCount(string id) => failures.TryGetValue(id, out int n) ? n : 0;
         private void Inform(string id, string measured) { var c = Row(id); c.Measured = measured; c.Expected = c.Evaluated = 1; c.CoverageComplete = true; c.Verdict = Verdict.Info; }
         private static ContactEvent? FirstImpact(Trajectory t) { foreach (var c in t.Contacts) if (!c.Persistent) return c; return null; }
+        private static bool Finite(Vector3 value) => Finite(new Vector2(value.x, value.y)) && !float.IsNaN(value.z) && !float.IsInfinity(value.z);
         private static bool Finite(Vector2 value) => !float.IsNaN(value.x) && !float.IsInfinity(value.x) && !float.IsNaN(value.y) && !float.IsInfinity(value.y);
         private static string F(float value) => value.ToString("R", CultureInfo.InvariantCulture);
         private static string EnergyText(EnergyGainSample s) => $"{s.Status}, ganancia={F(s.RelativeGain)}, paso={s.Step}, rapidez antes={F(s.SpeedBefore)} m/s, después={F(s.SpeedAfter)} m/s";
