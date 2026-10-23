@@ -1,0 +1,38 @@
+{
+  "experiment": "PhysXResetExperiment.ResetAfterContactHistory_ComparedWithFreshAndSameHistoryControls",
+  "sourceLabel": "492685b-diagnostic-worktree",
+  "sourceFileSha256": "f9db7e0460ce7a6c8aab899b25183ed253b7eb150818ba5c2bd93d7f0250c7a8",
+  "execution": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "xmlSha256": "7ad241e3712abcf369d50bb874117ca6aebe1b899d79f3eac487f37966e7c4f9"
+  },
+  "configuration": "c86243b15a97,baseline ContinuousDynamic,fastMotionThreshold0.01",
+  "comparisons": 25,
+  "equal": 25,
+  "different": 0,
+  "histories": {
+    "S6": 8,
+    "S10": 653
+  },
+  "targets": [
+    "S1",
+    "S5",
+    "S6",
+    "S8-62",
+    "S8-4000"
+  ],
+  "controls": [
+    "fresh/fresh",
+    "S6/fresh",
+    "S6/S6",
+    "S10/fresh",
+    "S10/S10"
+  ],
+  "resetChanged": false,
+  "limits": "Selected diagnostics only; does not prove absence of internal cached contact state, nor approve full C5-C7. Source was a dirty diagnostic snapshot, exact source file hash retained and committed unchanged. Full five campaigns must be fresh clean-source executions.",
+  "report": "docs/validation/evidence/physics-spike-P1/editor-reset-history-ccd.md",
+  "reportSha256": "c7a6868de2ff1e9f3bea31842cda54656e1d7cb17e561ad82443daf0c2d465a8"
+}
