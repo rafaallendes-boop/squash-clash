@@ -16,34 +16,47 @@ namespace SquashClash.Core.Simulation
         public BallState State { get { CheckAlive(); return state; } }
         public long ImpactCapReachedCount { get; private set; }
         internal AnalyticBallSimulation(PhysicsParams p, CourtDimensions d, float threshold, Action released)
-        { physics=p; court=d; bounceThreshold=threshold; this.released=released; }
+        {
+            physics=new PhysicsParams {Gravity=p.Gravity,BallRadius=p.BallRadius,BallMass=p.BallMass,StepHz=p.StepHz,MaxImpactsPerStep=p.MaxImpactsPerStep,
+                Floor=Copy(p.Floor),FrontWall=Copy(p.FrontWall),SideWalls=Copy(p.SideWalls),BackWall=Copy(p.BackWall)};
+            court=new CourtDimensions {Width=d.Width,Length=d.Length,WallHeight=d.WallHeight,LineWidth=d.LineWidth,TinTop=d.TinTop,
+                FrontOutLower=d.FrontOutLower,ServiceLower=d.ServiceLower,BackOutLower=d.BackOutLower,ShortLineNearBackEdgeFromBack=d.ShortLineNearBackEdgeFromBack,ServiceBoxInner=d.ServiceBoxInner};
+            bounceThreshold=threshold;this.released=released;
+        }
+        private static SurfaceMaterial Copy(SurfaceMaterial m)=>new SurfaceMaterial {Restitution=m.Restitution,TangentialFriction=m.TangentialFriction};
         public void Reset(in BallState initial) { CheckAlive(); state=initial; ImpactCapReachedCount=0; }
         public void Step(List<ContactEvent> contacts)
         {
             CheckAlive(); if(contacts==null)throw new ArgumentNullException(nameof(contacts)); contacts.Clear();
-            state.Step++; double remaining=physics.StepSeconds,elapsed=0;int guard=0;
+            state.Step++; double remaining=physics.StepSeconds,elapsed=0;int impacts=0;
             bool persistentFloor=Supported(state);
             if(persistentFloor)AddContact(contacts,SurfaceId.Floor,0,state.Velocity,true);
             while(remaining>0)
             {
                 double time=FindHits(remaining);
                 if(double.IsPositiveInfinity(time)) { Advance(remaining);break; }
-                if(++guard>64)throw new InvalidOperationException("Unresolved contact sequence.");
                 Advance(time);elapsed+=time;remaining-=time;
-                var incoming=state.Velocity;var outgoing=incoming;
+                var incoming=state.Velocity;var outgoing=incoming;var tangent=incoming;double frictionImpulse=0;
                 for(int i=0;i<5;i++) if(hitTimes[i]<=time+SimultaneousEpsilon)
                 {
                     var surface=(SurfaceId)i;var normal=CourtDimensions.InwardNormal(surface);
                     Snap(surface);float vn=Vector3.Dot(incoming,normal);
                     float reflected=-vn<bounceThreshold?0:-Material(surface).Restitution*vn;
                     outgoing+=(reflected-vn)*normal;
+                    tangent-=vn*normal;
+                    frictionImpulse+=(double)Material(surface).TangentialFriction*(1+Material(surface).Restitution)*-vn;
                 }
+                // Simultaneous normals are resolved jointly. Friction acts in their common tangent space.
+                double tangentSpeed=Math.Sqrt((double)tangent.x*tangent.x+(double)tangent.y*tangent.y+(double)tangent.z*tangent.z);
+                if(tangentSpeed>0)outgoing-=tangent*(float)Math.Min(1,frictionImpulse/tangentSpeed);
                 for(int i=0;i<5;i++) if(hitTimes[i]<=time+SimultaneousEpsilon)
                 {
                     AddContact(contacts,(SurfaceId)i,elapsed,incoming,false);
                 }
                 state.Velocity=outgoing;
                 if(!persistentFloor&&Supported(state)) {AddContact(contacts,SurfaceId.Floor,elapsed,outgoing,true);persistentFloor=true;}
+                // A simultaneous set is one atomic collision instant. Never integrate unchecked after the cap.
+                if(++impacts>=physics.MaxImpactsPerStep) {ImpactCapReachedCount++;break;}
             }
         }
         private const double SimultaneousEpsilon=1e-6;
@@ -69,8 +82,8 @@ namespace SquashClash.Core.Simulation
             if(double.IsNaN(time)||time<0||time>limit)return;
             var hit=Integrated(state,time);var p=hit.Position;var v=hit.Velocity;
             if(Vector3.Dot(v,CourtDimensions.InwardNormal(surface))>=0)return;
-            bool finite=surface==SurfaceId.Floor?p.x>=0&&p.x<=court.Width&&p.z>=0&&p.z<=court.Length:
-                p.y>=0&&p.y<=court.WallHeight&&(surface==SurfaceId.FrontWall||surface==SurfaceId.BackWall?p.x>=0&&p.x<=court.Width:p.z>=0&&p.z<=court.Length);
+            // The approved planar simplification clips walls by center height only; the floor is unbounded.
+            bool finite=surface==SurfaceId.Floor||(p.y>=0&&p.y<=court.WallHeight);
             if(finite)hitTimes[(int)surface]=time;
         }
         private void Snap(SurfaceId surface)

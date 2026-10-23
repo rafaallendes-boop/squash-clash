@@ -82,5 +82,79 @@ namespace SquashClash.Core.Tests
             var p=Params(10,10);using var sim=Create(p);sim.Reset(State(new Vector3(p.BallRadius,2,5),new Vector3(-incoming,-1,0)));var cs=new List<ContactEvent>();sim.Step(cs);
             Assert.That(sim.State.Velocity.x,Is.EqualTo(outgoing).Within(1e-7));Assert.That(sim.State.Position.y,Is.EqualTo(1.85f).Within(1e-6));Assert.That(sim.State.Velocity.y,Is.EqualTo(-2f));sim.Step(cs);Assert.That(sim.State.Velocity.y,Is.EqualTo(-3f));
         }
+        [Test] public void ImpactCap_DiscardsRemainderWithReflectedVelocityAndCountsEveryReachedCap()
+        {
+            using var sim=Create(Params(0,10,cap:1));var initial=State(new Vector3(.07f,2,5),new Vector3(-1,0,0));sim.Reset(initial);var cs=new List<ContactEvent>();sim.Step(cs);
+            Assert.That(sim.State.Position.x,Is.EqualTo(.02f));Assert.That(sim.State.Velocity.x,Is.EqualTo(.5f));Assert.That(sim.State.Step,Is.EqualTo(1));Assert.That(((AnalyticBallSimulation)sim).ImpactCapReachedCount,Is.EqualTo(1));
+            sim.Step(cs);Assert.That(sim.State.Position.x,Is.EqualTo(.07f).Within(1e-7));Assert.That(((AnalyticBallSimulation)sim).ImpactCapReachedCount,Is.EqualTo(1));
+            sim.Reset(initial);Assert.That(((AnalyticBallSimulation)sim).ImpactCapReachedCount,Is.Zero);
+        }
+        [Test] public void ImpactCap_SimultaneousGroupIsAtomicAndNeverIntegratesThroughWall()
+        {
+            using var sim=Create(Params(0,10,cap:1,restitution:1));sim.Reset(State(new Vector3(.07f,.07f,.07f),new Vector3(-1,-1,-1)));var cs=new List<ContactEvent>();sim.Step(cs);
+            Assert.That(cs.Count,Is.EqualTo(3));Assert.That(sim.State.Position,Is.EqualTo(new Vector3(.02f,.02f,.02f)));Assert.That(sim.State.Velocity,Is.EqualTo(Vector3.one));Assert.That(((AnalyticBallSimulation)sim).ImpactCapReachedCount,Is.EqualTo(1));
+        }
+        [Test] public void ImpactCap_CountsRepeatedCappedStepsAndStopsAtLastImpact()
+        {
+            var d=new CourtDimensions {Width=.24f};using var sim=Create(Params(0,1,cap:2,restitution:1),d);sim.Reset(State(new Vector3(.1f,2,5),new Vector3(-4,0,0)));var cs=new List<ContactEvent>();
+            for(int i=0;i<3;i++){sim.Step(cs);Assert.That(cs.Count,Is.EqualTo(2));Assert.That(((AnalyticBallSimulation)sim).ImpactCapReachedCount,Is.EqualTo(i+1));Assert.That(sim.State.Position.x,Is.InRange(.02f,.22f));}
+        }
+        [Test] public void Floor_HasNoHorizontalLimit()
+        {
+            using var sim=Create(Params(0,10));sim.Reset(State(new Vector3(-2,.07f,30),new Vector3(0,-1,0)));var cs=new List<ContactEvent>();sim.Step(cs);
+            Assert.That(cs.Count,Is.EqualTo(1));Assert.That(cs[0].Surface,Is.EqualTo(SurfaceId.Floor));Assert.That(cs[0].Point,Is.EqualTo(new Vector3(-2,0,30)));Assert.That(sim.State.Position.y,Is.EqualTo(.045f).Within(1e-7));
+        }
+        [TestCase(6f,true)] [TestCase(6.01f,false)] [TestCase(-.01f,false)]
+        public void Wall_UsesCenterHeightAtImpactAndHasNoTopEdge(float height,bool hit)
+        {
+            using var sim=Create(Params(0,10));sim.Reset(State(new Vector3(.07f,height,5),new Vector3(-1,0,0)));var cs=new List<ContactEvent>();sim.Step(cs);Assert.That(cs.Count,Is.EqualTo(hit?1:0));
+        }
+        [TestCase(6.1f,-4f,true)] [TestCase(5.9f,4f,false)]
+        public void Wall_EvaluatesHeightAtTimeOfImpactRatherThanAtStepStart(float y,float vy,bool hit)
+        {
+            using var sim=Create(Params(0,10));sim.Reset(State(new Vector3(.07f,y,5),new Vector3(-1,vy,0)));var cs=new List<ContactEvent>();sim.Step(cs);Assert.That(cs.Exists(c=>c.Surface==SurfaceId.RightWall),Is.EqualTo(hit));
+        }
+        [Test] public void UpperExit_UsesUnmodifiedRunnerDefinition()
+        {
+            using var sim=Create(Params(0,10));var trajectory=TrajectoryRunner.Run(sim,State(new Vector3(.07f,6.01f,5),new Vector3(-1,0,0)),5,StopCondition.MaxSteps,new CourtDimensions());
+            Assert.That(trajectory.Exit,Is.EqualTo(TrajectoryExit.OverTop));Assert.That(trajectory.States.Count,Is.EqualTo(2));Assert.That(trajectory.Contacts,Is.Empty);
+        }
+        [TestCase(2f,1.4f)] [TestCase(.1f,0f)]
+        public void WallImpact_AppliesMultiplicativePresetFrictionImpulseWithoutReversal(float tangent,float expected)
+        {
+            using var sim=Create(Params(0,10,friction:.2f));sim.Reset(State(new Vector3(.12f,2,5),new Vector3(-2,0,tangent)));var cs=new List<ContactEvent>();sim.Step(cs);
+            Assert.That(sim.State.Velocity.x,Is.EqualTo(1));Assert.That(sim.State.Velocity.z,Is.EqualTo(expected).Within(1e-6));Assert.That(cs[0].ApproachVelocity.z,Is.EqualTo(tangent));
+        }
+        [Test] public void FloorImpact_ReducesTangentialSpeedByCoulombImpulse()
+        {
+            using var sim=Create(Params(0,10,friction:.2f));sim.Reset(State(new Vector3(3,.12f,5),new Vector3(1,-2,0)));var cs=new List<ContactEvent>();sim.Step(cs);
+            Assert.That(sim.State.Velocity.x,Is.EqualTo(.4f).Within(1e-6));Assert.That(sim.State.Velocity.y,Is.EqualTo(1));
+        }
+        [Test] public void SimultaneousFriction_UsesJointTangentAndDoesNotAlterReflectedNormals()
+        {
+            using var sim=Create(Params(0,10,friction:.2f));sim.Reset(State(new Vector3(.07f,.07f,5),new Vector3(-1,-1,3)));var cs=new List<ContactEvent>();sim.Step(cs);
+            Assert.That(sim.State.Velocity.x,Is.EqualTo(.5f));Assert.That(sim.State.Velocity.y,Is.EqualTo(.5f));Assert.That(sim.State.Velocity.z,Is.EqualTo(2.4f).Within(1e-6));Assert.That(cs[0].ApproachVelocity,Is.EqualTo(cs[1].ApproachVelocity));
+        }
+        [Test] public void Configuration_IsCopiedAtCreateIncludingNestedMaterialsAndCourt()
+        {
+            var p=Params(0,10);var d=new CourtDimensions();float wall=d.Width;using var sim=Create(p,d);
+            p.Gravity=10;p.StepHz=60;p.SideWalls.Restitution=1;p.SideWalls.TangentialFriction=1;d.Width=10;
+            sim.Reset(State(new Vector3(wall-.07f,2,5),Vector3.right));var cs=new List<ContactEvent>();sim.Step(cs);
+            Assert.That(cs.Count,Is.EqualTo(1));Assert.That(cs[0].Surface,Is.EqualTo(SurfaceId.LeftWall));Assert.That(sim.State.Velocity,Is.EqualTo(new Vector3(-.5f,0,0)));Assert.That(sim.State.Position.y,Is.EqualTo(2));
+        }
+        [Test] public void Factory_RejectsIncompleteOrNonfiniteConfigurationWithoutLeaking()
+        {
+            var f=new AnalyticBallSimulationFactory(.1f);Assert.Throws<ArgumentNullException>(()=>f.Create(null,new CourtDimensions()));Assert.Throws<ArgumentNullException>(()=>f.Create(Params(),null));
+            var p=Params();p.MaxImpactsPerStep=0;Assert.Throws<ArgumentException>(()=>f.Create(p,new CourtDimensions()));
+            p=Params(float.NaN);Assert.Throws<ArgumentException>(()=>f.Create(p,new CourtDimensions()));
+            p=Params();p.Floor.TangentialFriction=float.NaN;Assert.Throws<ArgumentException>(()=>f.Create(p,new CourtDimensions()));
+            Assert.Throws<ArgumentOutOfRangeException>(()=>new AnalyticBallSimulationFactory(-1));Assert.That(f.LiveInstances,Is.Zero);
+        }
+        [Test] public void SuppliedBounceThreshold_IsEffectiveAndDoesNotChangeGlobalPhysics()
+        {
+            var gravity=UnityEngine.Physics.gravity;var threshold=UnityEngine.Physics.bounceThreshold;
+            var f=new AnalyticBallSimulationFactory(.3f);using var sim=f.Create(Params(0,10),new CourtDimensions());sim.Reset(State(new Vector3(.02f,2,5),new Vector3(-.2f,0,0)));sim.Step(new List<ContactEvent>());
+            Assert.That(sim.State.Velocity.x,Is.Zero);Assert.That(UnityEngine.Physics.gravity,Is.EqualTo(gravity));Assert.That(UnityEngine.Physics.bounceThreshold,Is.EqualTo(threshold));
+        }
     }
 }
