@@ -7,6 +7,7 @@ namespace SquashClash.Core.Simulation
         private readonly float bounceThreshold;
         public string Name => "P2-Analytic";
         public int LiveInstances { get; private set; }
+        public long ImpactCapReachedCount { get; private set; }
         // The caller passes the same effective project setting used by P1.
         public AnalyticBallSimulationFactory(float bounceThreshold)
         {
@@ -20,7 +21,7 @@ namespace SquashClash.Core.Simulation
                 !Valid(p.Floor)||!Valid(p.FrontWall)||!Valid(p.SideWalls)||!Valid(p.BackWall)||
                 !Finite(d.Width)||!Finite(d.Length)||!Finite(d.WallHeight)||d.Width<=2*p.BallRadius||d.Length<=2*p.BallRadius||d.WallHeight<=0)
                 throw new ArgumentException("Incomplete or invalid analytic physics configuration.");
-            var simulation = new AnalyticBallSimulation(p, d, bounceThreshold, () => LiveInstances--);
+            var simulation = new AnalyticBallSimulation(p, d, bounceThreshold, () => LiveInstances--, () => ImpactCapReachedCount++);
             LiveInstances++; return simulation;
         }
         private static bool Finite(float v)=>!float.IsNaN(v)&&!float.IsInfinity(v);

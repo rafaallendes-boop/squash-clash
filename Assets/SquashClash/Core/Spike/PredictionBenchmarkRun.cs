@@ -59,6 +59,7 @@ namespace SquashClash.Core.Spike
         public void ApplyTo(SpikeResult result)
         {
             var stats = ResultMs;
+            result.PredictionSamplesMs.Clear();result.PredictionSamplesMs.AddRange(samples);
             var c = result.Criteria.Find(row => row.Id == "C17");
             c.Evaluated = Samples; c.NotEvaluable = 0; c.Expected = 200; c.CoverageComplete = warmup == 20 && runs == 200;
             c.Measured = FormattableString.Invariant($"n={Samples}; warmup={warmup}; median={stats.median:F6}; p95={stats.p95:F6}; p99={stats.p99:F6}; max={stats.max:F6} ms; percentiles nearest rank");

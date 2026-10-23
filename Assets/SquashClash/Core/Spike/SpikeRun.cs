@@ -33,6 +33,7 @@ namespace SquashClash.Core.Spike
         private float maxPenetration, maxPrecision;
         private string penetrationProvenance;
         private BackendCapabilities capabilities;
+        private readonly long capCountAtStart;
         public SpikeResult Result { get; }
         public string Phase { get; private set; } = "Preparando";
         public float Progress => finished ? (Result.Complete ? 1 : Mathf.Min(.999f, (float)completedJobs / expectedJobs)) : (float)completedJobs / expectedJobs;
@@ -42,6 +43,7 @@ namespace SquashClash.Core.Spike
             if (o.RandomCount < 0) throw new ArgumentOutOfRangeException(nameof(o.RandomCount));
             Result = new SpikeResult { Backend = f.Name, Build = o.Build, ConfigHash = o.ConfigHash, Variant = o.Variant, Device = o.Device, ProjectPhysics = o.ProjectPhysics,
                 Criteria = SpikeCriteria.CreateResults(!string.Equals(o.Device, "editor", StringComparison.OrdinalIgnoreCase)) };
+            capCountAtStart=(f as AnalyticBallSimulationFactory)?.ImpactCapReachedCount??0;
             expectedJobs = 17 * 5 - 2 + o.RandomCount * 4 + (o.RandomCount + 99) / 100 + 36 + 2 + 2;
             jobs = Jobs();
         }
@@ -341,7 +343,12 @@ namespace SquashClash.Core.Spike
                 Row("C13").Measured += "; mínimo=" + F(remaining[0]) + "; mediana=" + F(median);
                 Result.Details.Add("C13 ratios medidos ordenados (float32, R): " + string.Join(", ", remaining.Select(F)));
             }
-            Inform("C14", $"máximo impactos no persistentes/paso={maxImpacts}; tope configurable={capabilities.ImpactCapConfigurable}; parámetro maxImpactsPerStep no operativo con P1");
+            string capDiagnostic=capabilities.ImpactCapConfigurable?
+                "maxImpactsPerStep="+physics.MaxImpactsPerStep+"; veces que se alcanzó el tope="+
+                (factory is AnalyticBallSimulationFactory analytic?(analytic.ImpactCapReachedCount-capCountAtStart).ToString(CultureInfo.InvariantCulture):"no disponible")+
+                "; unidad del tope=instantes de impacto (simultáneos atómicos); todas las simulaciones de la campaña, benchmark separado":
+                "parámetro maxImpactsPerStep no operativo con P1";
+            Inform("C14", $"máximo impactos no persistentes/paso={maxImpacts}; tope configurable={capabilities.ImpactCapConfigurable}; "+capDiagnostic);
             Inform("C16", $"penetración máxima={F(maxPenetration * 1000)} mm; muestras persistentes={persistent} (todas las trayectorias ejecutadas)");
             if (penetrationProvenance != null) Result.Details.Add(penetrationProvenance);
             Inform("C18", "RunsInEditMode=" + capabilities.RunsInEditMode + "; timing=" + capabilities.Timing);

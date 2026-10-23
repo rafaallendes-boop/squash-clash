@@ -9,19 +9,19 @@ namespace SquashClash.Core.Simulation
         private readonly PhysicsParams physics;
         private readonly CourtDimensions court;
         private readonly float bounceThreshold;
-        private readonly Action released;
+        private readonly Action released, capReached;
         private BallState state;
         private bool disposed;
         public BackendCapabilities Capabilities => new BackendCapabilities { Timing = ContactTiming.Exact, ImpactCapConfigurable = true, RunsInEditMode = true };
         public BallState State { get { CheckAlive(); return state; } }
         public long ImpactCapReachedCount { get; private set; }
-        internal AnalyticBallSimulation(PhysicsParams p, CourtDimensions d, float threshold, Action released)
+        internal AnalyticBallSimulation(PhysicsParams p, CourtDimensions d, float threshold, Action released, Action capReached)
         {
             physics=new PhysicsParams {Gravity=p.Gravity,BallRadius=p.BallRadius,BallMass=p.BallMass,StepHz=p.StepHz,MaxImpactsPerStep=p.MaxImpactsPerStep,
                 Floor=Copy(p.Floor),FrontWall=Copy(p.FrontWall),SideWalls=Copy(p.SideWalls),BackWall=Copy(p.BackWall)};
             court=new CourtDimensions {Width=d.Width,Length=d.Length,WallHeight=d.WallHeight,LineWidth=d.LineWidth,TinTop=d.TinTop,
                 FrontOutLower=d.FrontOutLower,ServiceLower=d.ServiceLower,BackOutLower=d.BackOutLower,ShortLineNearBackEdgeFromBack=d.ShortLineNearBackEdgeFromBack,ServiceBoxInner=d.ServiceBoxInner};
-            bounceThreshold=threshold;this.released=released;
+            bounceThreshold=threshold;this.released=released;this.capReached=capReached;
         }
         private static SurfaceMaterial Copy(SurfaceMaterial m)=>new SurfaceMaterial {Restitution=m.Restitution,TangentialFriction=m.TangentialFriction};
         public void Reset(in BallState initial) { CheckAlive(); state=initial; ImpactCapReachedCount=0; }
@@ -56,7 +56,7 @@ namespace SquashClash.Core.Simulation
                 state.Velocity=outgoing;
                 if(!persistentFloor&&Supported(state)) {AddContact(contacts,SurfaceId.Floor,elapsed,outgoing,true);persistentFloor=true;}
                 // A simultaneous set is one atomic collision instant. Never integrate unchecked after the cap.
-                if(++impacts>=physics.MaxImpactsPerStep) {ImpactCapReachedCount++;break;}
+                if(++impacts>=physics.MaxImpactsPerStep) {ImpactCapReachedCount++;capReached();break;}
             }
         }
         private const double SimultaneousEpsilon=1e-6;
