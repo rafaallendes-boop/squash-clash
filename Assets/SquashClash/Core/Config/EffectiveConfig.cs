@@ -20,7 +20,12 @@ namespace SquashClash.Core.Config
                 return new LaunchSpec(new UnityEngine.Vector3((float)Source.Get("launcher.x"),(float)Source.Get("launcher.y"),(float)Source.Get("launcher.z")), direction, (float)Source.Get("launcher.speed"));
             }
         }
-        public string Backend => Source.GetInt("physics.backend") == 0 ? "P1-PhysX" : throw new InvalidOperationException("Backend not authorized.");
+        public string Backend => Source.GetInt("physics.backend") switch
+        {
+            0 => "P1-PhysX",
+            1 => "P2-Analytic",
+            _ => throw new InvalidOperationException("Backend not authorized.")
+        };
         public double Tempo => Source.Get("pace.tempo");
         public double LaunchScale => Source.Get("pace.launchScale");
         public PhysicsParams Physics => new PhysicsParams {

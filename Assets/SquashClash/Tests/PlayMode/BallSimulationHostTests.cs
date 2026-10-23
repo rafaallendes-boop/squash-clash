@@ -12,7 +12,7 @@ using Object=UnityEngine.Object;
 namespace SquashClash.Runtime.Tests {
     public sealed class BallSimulationHostTests {
         private GameObject root; private BallSimulationHost host; private PhysXBallSimulationFactory factory;private Vector3 gravity;
-        private static EffectiveConfig Default()=>EffectiveConfig.From(PresetCodec.LoadDefault(Resources.Load<TextAsset>("DefaultPreset").text));
+        private static EffectiveConfig Default()=>EffectiveConfig.From(PresetCodec.LoadDefault(Resources.Load<TextAsset>("DefaultPreset").text).With("physics.backend",0));
         [UnitySetUp] public IEnumerator SetUp() {
             yield return PlayModeTestWorld.ClearApp();gravity=UnityEngine.Physics.gravity;
             root=new GameObject("Test host");host=root.AddComponent<BallSimulationHost>();host.enabled=false;

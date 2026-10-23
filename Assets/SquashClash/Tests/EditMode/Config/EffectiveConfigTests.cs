@@ -31,11 +31,29 @@ namespace SquashClash.Core.Tests.Config
         [Test]
         public void EffectiveConfig_MaterialsAndBackendComeFromPreset() {
             var a=EffectiveConfig.From(ConfigFixtures.Default());
-            Assert.That(a.Backend,Is.EqualTo("P1-PhysX")); Assert.That(a.Physics.Floor.Restitution,Is.EqualTo(0.45f));
+            Assert.That(a.Backend,Is.EqualTo("P2-Analytic")); Assert.That(a.Physics.Floor.Restitution,Is.EqualTo(0.45f));
             Assert.That(a.Physics.FrontWall.Restitution,Is.EqualTo(0.55f)); Assert.That(a.Physics.SideWalls.TangentialFriction,Is.EqualTo(0.2f));
             var changed=EffectiveConfig.From(a.Source.With("physics.floor.restitution",0.6));
             Assert.That(changed.Physics.Floor.Restitution,Is.EqualTo(0.6f)); changed.Physics.Floor.Restitution=99;
             Assert.That(changed.Physics.Floor.Restitution,Is.EqualTo(0.6f));
+        }
+
+        [Test]
+        public void BackendSelection_P1RemainsConfigurableAndRoundTripsAlongsideP2()
+        {
+            var defaults = ConfigFixtures.Default();
+            var p1 = defaults.With("physics.backend", 0);
+            var p2 = defaults.With("physics.backend", 1);
+            Assert.That(EffectiveConfig.From(p1).Backend, Is.EqualTo("P1-PhysX"));
+            Assert.That(EffectiveConfig.From(p2).Backend, Is.EqualTo("P2-Analytic"));
+            Assert.That(EffectiveConfig.From(p1).SimulationKey, Is.Not.EqualTo(EffectiveConfig.From(p2).SimulationKey));
+            foreach (var set in new[] { p1, p2 })
+            {
+                var json = PresetCodec.ToJson(PresetCodec.FromSet(set, "backend selection", "test"));
+                Assert.That(PresetCodec.LoadDefault(json).Hash, Is.EqualTo(set.Hash));
+            }
+            Assert.That(defaults.GetInt("physics.backend"), Is.EqualTo(1), "Defaults come only from DefaultPreset.json.");
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => defaults.With("physics.backend", 2));
         }
 
         [Test]
