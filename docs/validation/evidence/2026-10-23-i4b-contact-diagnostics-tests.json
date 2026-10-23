@@ -1,0 +1,68 @@
+{
+  "purpose": "Diagnostic-only classification of EVERY C5-C7 failure and C16 argmax; unchanged adapter, comparator, criteria and Reset.",
+  "tests": [
+    {
+      "name": "diagnostics-red",
+      "xmlLocal": "Logs/contact-order-tests/diagnostics-red.xml",
+      "xmlSha256": "14134b6aad137ba0552ec52825f4f5efd4b819506bc0a839239895856c2e54d2",
+      "logSha256": "d0aa9dd006127f2e5354223fa9a14833fae4e613ee62b25dcbf229a857cd1f3e",
+      "counts": {
+        "total": 28,
+        "passed": 21,
+        "failed": 7,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 10:40:06Z",
+      "endedUtc": "2026-10-23 10:40:12Z",
+      "compilerErrors": false
+    },
+    {
+      "name": "diagnostics-green",
+      "xmlLocal": "Logs/contact-order-tests/diagnostics-green.xml",
+      "xmlSha256": "f1c936e2c2b3625cb20abf8a9b656eca0adb2cf02c45780f717dc52f470868d0",
+      "logSha256": "2261884a769811bb2c70aa999ff74162d2abc623e0d2af7002d3d9c3827737db",
+      "counts": {
+        "total": 28,
+        "passed": 28,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 10:41:10Z",
+      "endedUtc": "2026-10-23 10:41:16Z",
+      "compilerErrors": false
+    },
+    {
+      "name": "diagnostics-edit-all",
+      "xmlLocal": "Logs/contact-order-tests/diagnostics-edit-all.xml",
+      "xmlSha256": "5c1302312f9aa0cc6be35e71b842882091fba768a00935c908cff01811314308",
+      "logSha256": "c309626b4f4dbbf83a895b05d11fe06e24df27f5b331a81efe4cb24d39523f47",
+      "counts": {
+        "total": 187,
+        "passed": 187,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 10:41:43Z",
+      "endedUtc": "2026-10-23 10:41:49Z",
+      "compilerErrors": false
+    },
+    {
+      "name": "diagnostics-play-all",
+      "xmlLocal": "Logs/contact-order-tests/diagnostics-play-all.xml",
+      "xmlSha256": "405b124611f8760134f112870b562e1df999c7b467464e907999ab1eb4ed1b5b",
+      "logSha256": "70e7d5d067954d88dfe9f368598440c2c0b10fa35af8de0812234344036822c9",
+      "counts": {
+        "total": 54,
+        "passed": 54,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 10:41:57Z",
+      "endedUtc": "2026-10-23 10:42:05Z",
+      "compilerErrors": false
+    }
+  ],
+  "red": "7 assertion failures: six complete classification records missing and C16 provenance missing; no compilation errors.",
+  "green": "28/28 focused, EditMode 187/187, PlayMode 54/54.",
+  "historicalReport": "docs/reviews/2026-10-23-first-ball-physics-spike-P1-pre-canonical.md"
+}

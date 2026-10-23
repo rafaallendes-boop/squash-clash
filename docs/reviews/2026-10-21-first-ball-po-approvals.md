@@ -228,3 +228,21 @@ Próximo intento nativo, solo tras correcciones/editor y revisión de Claude: te
 Cinco campañas frescas del editor, mismo código **16ad653**, 1/1 completas por variante, 10.053 lanzamientos y 200 medidas cada una; historiales previos conservados. Baseline: C1=0 cruces; C5/C6 pasan; C3 cinco fallos, C7 tres/18.753 medidos y 1.279 no aplicables (NE=0), C10 máximo13,6164427mm y C11 tres/6 fallos. Ninguna variante cumple todo. Primer C7 detallado con estados idénticos y orden distinto de contactos; no se ordena ni reinterpreta para aprobar. Clasificación de Claude permanece preliminar hasta revisar estos nuevos datos. [Informe y cinco variantes](2026-10-22-first-ball-physics-spike-P1.md), [diagnóstico y commits](2026-10-22-first-ball-ccd-diagnostic.md), [validación](../validation/i4b-physics-run.md).
 
 **Sin build/instalación/campaña nueva del iPhone. Se detiene para Claude antes de retomarlo.** La política de firma del 27 de octubre y las condiciones físicas/sin herramientas del siguiente intento quedan vigentes. No es aceptación del PO, aprobación de Claude de los cambios, cierre/fusión de I4b ni autorización de I4c/P2/I5+.
+
+
+## I4b — revisión de Claude tras CCD y orden canónico aprobado (2026-10-23)
+
+El PO comunica la revisión de Claude y aprueba expresamente el punto 1b: **el adaptador debe entregar los contactos de cada paso en un orden canónico y determinista**. Sustituye la restricción anterior de no ordenar la salida del adaptador; no autoriza ordenar/agrupar en la comparación ni cambiar `TrajectoriesBitwiseEqual`, C7, Reset, escenarios, umbrales, preset o geometría. Se conservan como aprobados CCD `fastMotionThreshold=0,01 m` en asset/ProjectSetup, elegibilidad C7, política de foco y térmico informativo de C17.
+
+Clasificación final de Claude (sustituye a la preliminar; transcripción literal):
+
+- C1: adaptador/configuración. Resuelto con 0 cruces.
+- C10: motor. Es el sesgo del integrador semimplícito frente a la referencia analítica (g·dt·T/2 ≈ 13,6 mm). No se compensa; se decide en I4c.
+- C11: consecuencia de C10. Los puntos S9c, S9d y S9i quedan unos 13,6 mm por debajo, al borde de una línea.
+- C3 residual: motor. Es el solver en contacto persistente en reposo (unos 6 cm/s); con impacto, la ganancia es 0. Sigue en Fail. Un posible piso de velocidad se decide en I4c.
+- C13: motor (CCD de una pasada). Informativo, sin cambios.
+- C7: adaptador. Expone un orden de contactos no canónico. Los estados coinciden bit a bit, pero el orden de los pares interno de PhysX depende de la historia de cada instancia.
+
+Orden autorizado: (1) clasificar todas las divergencias de C5–C7 antes de cambiar comportamiento, con conteos por criterio/variante; (2) localizar escenario/paso/tipo del máximo de C16; (3) RED físico con dos instancias de historias distintas, después orden en el adaptador por TimeInStep, superficie, persistencia y desempate determinista documentado; conservar divergencias de estado como Fail; (4) suites GREEN y cinco campañas nuevas del editor, conservando las de `16ad653` históricas y actualizando informe/tabla/manifiesto; (5) **detenerse para revisión de Claude antes de generar build nativa**. PR #4 sigue borrador, sin fusionar; I4c, P2/T4.5 e I5+ no autorizados.
+
+Solo después de esa revisión: una build dev y campaña nativa completa, teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda, térmico nominal al empezar y sin capturas/devicectl/otras herramientas durante la ejecución; recuperar informe al terminar. C17 nativo prioritario; p95 del editor 24,1 ms es informativo, no certifica el umbral de 1 ms del iPhone. Comprobar siempre vigencia de firma; renovar antes de instalar el 2026-10-27 o después. No cambiar Xcode ni herramientas.

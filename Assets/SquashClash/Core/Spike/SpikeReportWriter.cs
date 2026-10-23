@@ -34,7 +34,7 @@ namespace SquashClash.Core.Spike
             }
             if (r.Criteria != null) foreach (var row in r.Criteria)
                 if (row != null && !known.Contains(row.Id ?? "")) { text.AppendLine("\nCriterio desconocido (no permite aprobación):"); WriteRow(text, row); }
-            text.AppendLine("\n## Evidencia por caso (hasta 12 ejemplos por criterio; contadores completos arriba)\n");
+            text.AppendLine("\n## Evidencia por caso (hasta 12 notas generales por criterio; clasificación de todas las divergencias C5–C7 y máximo C16 sin ese límite)\n");
             foreach (var detail in r.Details) text.AppendLine("- " + Escape(detail));
             return text.ToString();
         }

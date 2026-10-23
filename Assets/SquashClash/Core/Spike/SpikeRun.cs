@@ -31,6 +31,7 @@ namespace SquashClash.Core.Spike
         private bool finished;
         private int completedJobs, expectedJobs, noCorner, overTop, crossings, repeated, maxImpacts, persistent;
         private float maxPenetration, maxPrecision;
+        private string penetrationProvenance;
         private BackendCapabilities capabilities;
         public SpikeResult Result { get; }
         public string Phase { get; private set; } = "Preparando";
@@ -108,7 +109,10 @@ namespace SquashClash.Core.Spike
             Record("C2", finite, $"{Phase}; estado inválido índice={bad}");
             maxImpacts = Math.Max(maxImpacts, PhysicsMeasures.MaxImpactsInOneStep(t)); persistent += PhysicsMeasures.PersistentSamples(t);
             var penetration = PhysicsMeasures.MaxPenetration(t, court, physics.BallRadius);
-            if (!float.IsNaN(penetration)) maxPenetration = Math.Max(maxPenetration, penetration);
+            if (!float.IsNaN(penetration) && penetration > maxPenetration) {
+                maxPenetration = penetration;
+                penetrationProvenance = PenetrationProvenance(t, penetration);
+            }
         }
         private void Robust(PhysicsScenario s, Trajectory t)
         {
@@ -221,6 +225,9 @@ namespace SquashClash.Core.Spike
         {
             bool equal = PhysicsMeasures.TrajectoriesBitwiseEqual(a, b, out int first);
             Record(id, equal, scenario + ": primera diferencia índice=" + first);
+            // Diagnostic only: every failure, with no 12-example cap. Never used by Record or the comparator.
+            if (!equal && (id == "C5" || id == "C6" || id == "C7"))
+                Result.Details.Add(DifferenceClassification(id, scenario, a, b, first));
             if (!equal && (id == "C5" || id == "C6" || id == "C7") && diagnosedDifferences.Add(id))
             {
                 long step = first < a.States.Count ? a.States[first].Step : first < b.States.Count ? b.States[first].Step : -1;
@@ -239,6 +246,50 @@ namespace SquashClash.Core.Spike
         }
         private static string ContactsText(Trajectory t, long step) => "[" + string.Join("; ", t.Contacts.Where(c => c.Step == step).Select(c =>
             $"{c.Surface}@{c.Step} persistent={c.Persistent}, {c.Timing}, t={F(c.TimeInStep)}, p={c.Point.ToString("R", CultureInfo.InvariantCulture)}, n={c.Normal.ToString("R", CultureInfo.InvariantCulture)}, approach={c.ApproachVelocity.ToString("R", CultureInfo.InvariantCulture)}")) + "]";
+        private static string DifferenceClassification(string id, string scenario, Trajectory a, Trajectory b, int first)
+        {
+            bool statesEqual = a.States.Count == b.States.Count;
+            for (int i = 0; statesEqual && i < a.States.Count; i++)
+                statesEqual = StateText(a, i) == StateText(b, i); // Includes Step and all six exact float bit patterns.
+            // Multiset of FULL immutable event values, retaining multiplicity and exact float bits.
+            // No sorting/mutation of either trajectory, no reuse in TrajectoriesBitwiseEqual/C7.
+            var counts = new Dictionary<string, int>();
+            foreach (var c in a.Contacts) { string key = ContactKey(c); counts.TryGetValue(key, out int n); counts[key] = n + 1; }
+            bool contactsEqual = a.Contacts.Count == b.Contacts.Count;
+            foreach (var c in b.Contacts) {
+                string key = ContactKey(c);
+                if (!counts.TryGetValue(key, out int n) || n == 0) contactsEqual = false;
+                else counts[key] = n - 1;
+            }
+            contactsEqual &= counts.Values.All(n => n == 0);
+            long step = first < a.States.Count ? a.States[first].Step : first < b.States.Count ? b.States[first].Step : -1;
+            return $"{id} clasificación: {scenario}; tipo={(statesEqual && contactsEqual ? "solo orden de contactos" : "estado/contactos distintos")}; " +
+                $"estadosBitsIguales={statesEqual}; multiconjuntoContactosCompletosIgual={contactsEqual}; primerPaso={step}; índice={first}; " +
+                $"checkpoint={a.States[0].Step}; estados={a.States.Count}/{b.States.Count}; contactos={a.Contacts.Count}/{b.Contacts.Count}";
+        }
+        private static string ContactKey(ContactEvent c) => $"{c.Step}/{c.Surface}/{c.Persistent}/{c.Timing}/" +
+            string.Join(",", new[] { c.TimeInStep, c.Point.x, c.Point.y, c.Point.z, c.UV.x, c.UV.y, c.Normal.x, c.Normal.y, c.Normal.z,
+                c.ApproachVelocity.x, c.ApproachVelocity.y, c.ApproachVelocity.z }.Select(v => BitConverter.SingleToInt32Bits(v).ToString("X8", CultureInfo.InvariantCulture)));
+        private string PenetrationProvenance(Trajectory t, float maximum)
+        {
+            // Mirrors the five plane distances and height domain of MaxPenetration, only to locate its argmax.
+            // That measure, its scalar result and C16's informative status remain unchanged.
+            for (int i = 0; i < t.States.Count; i++) {
+                var s = t.States[i];
+                var faces = new[] { SurfaceId.Floor, SurfaceId.FrontWall, SurfaceId.BackWall, SurfaceId.RightWall, SurfaceId.LeftWall };
+                var distances = new[] { (double)s.Position.y, s.Position.z, (double)court.Length - s.Position.z, s.Position.x, (double)court.Width - s.Position.x };
+                for (int j = 0; j < faces.Length; j++) {
+                    if (j != 0 && (s.Position.y < 0 || s.Position.y > court.WallHeight)) continue;
+                    if ((float)(physics.BallRadius - distances[j]) != maximum) continue;
+                    var contacts = t.Contacts.Where(c => c.Step == s.Step && c.Surface == faces[j]).ToArray();
+                    string type = contacts.Any(c => !c.Persistent) ? "impacto" : contacts.Length > 0 ? "solo persistentes (reposo/contacto sostenido)" : "sin contacto reportado";
+                    return $"C16 máximo: {Phase}; paso={s.Step}; superficie={faces[j]}; tipo={type}; " +
+                        $"penetración={F(maximum * 1000)} mm; rapidez={F(s.Velocity.magnitude)} m/s; " +
+                        "previo=" + StateText(t, i - 1) + "; estado=" + StateText(t, i) + "; contactos=" + ContactsText(t, s.Step);
+                }
+            }
+            throw new InvalidOperationException("Cannot locate measured C16 penetration maximum.");
+        }
         private CriterionResult Row(string id) => Result.Criteria.Single(c => c.Id == id);
         private void Record(string id, bool? pass, string detail, bool alwaysDetail = false)
         {
@@ -283,6 +334,7 @@ namespace SquashClash.Core.Spike
             }
             Inform("C14", $"máximo impactos no persistentes/paso={maxImpacts}; tope configurable={capabilities.ImpactCapConfigurable}; parámetro maxImpactsPerStep no operativo con P1");
             Inform("C16", $"penetración máxima={F(maxPenetration * 1000)} mm; muestras persistentes={persistent} (todas las trayectorias ejecutadas)");
+            if (penetrationProvenance != null) Result.Details.Add(penetrationProvenance);
             Inform("C18", "RunsInEditMode=" + capabilities.RunsInEditMode + "; timing=" + capabilities.Timing);
             Result.Complete = true; finished = true; Phase = "Física completa; benchmark pendiente"; Release();
         }
