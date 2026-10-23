@@ -76,3 +76,18 @@ La evidencia nativa P1 conserva C3/C10/C11/C17 en Fail y C13 NotEvaluated; P2 pa
 Build **0.1.0+557d3ff dev instalada**, export limpio Release ARM64 firmado, Player no Development, metadata exacta verificada, perfil vigente comprobado inmediatamente antes de instalar; prod nuevo sin DevPanel/puente y herramientas intactas. [Comprobación previa y resultado](../validation/2026-10-23-i4d-native-preflight.md), [evidencia de build](../validation/evidence/2026-10-23-i4d-native-build.json). El lanzamiento por herramientas fue rechazado por Locked; el PO abrió manualmente y el informe completo verifica el arranque de la build correcta. Física y mediciones no cambiaron desde los experimentos del editor.
 
 **Se detiene aquí para revisión de Claude y decisión del PO. I4d no cerrado; [PR #6 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/6), sin fusionar.** Backend definitivo pendiente del gate posterior; P1 sigue de respaldo. Sin congelación/promoción de variante/preset, cambios de escenarios/umbrales/criterios/spec ni inicio de I5. No se solicita otra campaña.
+
+
+## Revisión final de Claude y decisión del PO — 2026-10-23
+
+El PO comunica **aprobación de Claude de PR #6 / T4.5–I4d**: P2 cumple la adenda r2 incluida la precisión de paredes; resultados y muestras persistidas verificados. Nativo: 11 criterios de gate Pass, C10 ≈0,00095 mm, C16 ≈0,00002 mm (informativo), C17 p95 0,0114 ms con las 200 muestras guardadas. Se conserva C17 del editor como Info según el criterio original; no se altera su clasificación.
+
+Observaciones de Claude, registradas **sin cambiar código**:
+
+- **(a) Precondición para I5+:** Reset de P2 supone un estado dentro de la cancha; quien inyecte estados (el golpe de raqueta) debe garantizarlo, o se agrega una validación cuando exista ese golpe. No se implementa ni autoriza I5 ahora.
+- **(b) Calibración:** bajo bounceThreshold, la fricción usa μ·(1+e)·|v_n|, literal según la adenda. Queda anotada para la calibración, sin cambio ahora.
+- **(c) C14:** el acoplamiento de SpikeRun con AnalyticBallSimulationFactory es aceptable en First Ball.
+
+Claude verificó además que no existe riesgo de atravesar planos por redondeo al final del paso, porque el redondeo al float más cercano es monótono y los planos son valores float exactos. Conclusión de la revisión comunicada por el PO, sin nuevo cambio de implementación.
+
+El PO autoriza marcar PR #6 lista y fusionarla con merge commit, sincronizar main y registrar el cierre. Decide **P2-Analytic como backend de First Ball** por la regla de §8.2.3, alternativa más simple que cumple invariantes y umbrales; P1 conserva C3/C10/C11/C17 Fail y queda como respaldo configurable. Esto sustituye la detención y el backend pendiente consignados arriba como estado de entrega anterior. Aplicación del default y decisión documentada en I4e, rama firstball/i4e-physics-backend, PR para Claude; verificación corta de arranque/rebote P2 en iPhone sin repetir campaña. Spec intacta, entrada preparada para T7.3 sujeta a autorización PO; aceptación completa P2 en T7.1. I5 no autorizado.
