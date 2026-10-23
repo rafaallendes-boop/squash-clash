@@ -43,6 +43,32 @@ namespace SquashClash.Core.Tests.Config
             Assert.That(File.ReadAllText(blocker),Is.EqualTo("keep"));
             Assert.That(store.TrySetLastActive("missing",out _),Is.False);
         }
+        [Test] public void ReadOnlyDirectory_ReturnsErrorsAndKeepsSavedFiles()
+        {
+            var p=ConfigFixtures.Default();Assert.That(store.TrySave(PresetCodec.FromSet(p,"good","test"),out _),Is.True);
+            Assert.That(store.TrySetLastActive("good",out _),Is.True);
+            void Mode(string mode)
+            {
+                using(var process=System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("/bin/chmod",mode+" \""+directory+"\""){UseShellExecute=false}))
+                {process.WaitForExit();Assert.That(process.ExitCode,Is.Zero);}
+            }
+            try
+            {
+                Mode("555");
+                Assert.That(store.TrySave(PresetCodec.FromSet(p.With("launcher.speed",20),"good","test"),out var error),Is.False);Assert.That(error,Is.Not.Empty);
+                Assert.That(store.TrySetLastActive("good",out _),Is.False);
+                Assert.That(store.TryLoad("good",out var f,out _),Is.True);Assert.That(PresetCodec.LoadDefault(PresetCodec.ToJson(f)).Hash,Is.EqualTo(p.Hash));
+                Assert.That(store.LastActiveName,Is.EqualTo("good"));
+            }
+            finally{Mode("755");}
+        }
+        [Test] public void Boot_NoActiveSelection_UsesDefaultsWithNoticeAndNoPending()
+        {
+            var d=ConfigFixtures.Default();var warnings=new List<string>();
+            var applied=store.LoadStartup(d,warnings,out var name,out var hash);
+            Assert.That(applied.Hash,Is.EqualTo(d.Hash));Assert.That(name,Is.EqualTo("Default"));Assert.That(hash,Is.Null);
+            Assert.That(warnings,Has.Count.EqualTo(1));Assert.That(new TuningState(d,applied).PendingKeys,Is.Empty);
+        }
         [Test] public void Boot_CorruptLastActive_FallsBackToDefaultsWithOneWarning()
         {
             Directory.CreateDirectory(directory);File.WriteAllText(Path.Combine(directory,"last-active.txt"),"bad");File.WriteAllText(Path.Combine(directory,"bad.json"),"{not json");

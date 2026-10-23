@@ -40,10 +40,10 @@ namespace SquashClash.Core.Config
         {
             if(defaults==null||warnings==null)throw new ArgumentNullException(defaults==null?nameof(defaults):nameof(warnings));
             name="Default";fileHash=null;
-            // A first launch has no selection and needs no warning. I/O errors remain distinguishable.
+            // Missing or unreadable selection falls back to the known base with a notice.
             try
             {
-                if(!File.Exists(ActivePath)&&!Directory.Exists(ActivePath))return defaults;
+                if(!File.Exists(ActivePath)&&!Directory.Exists(ActivePath)){warnings.Add("No last active preset; using defaults.");return defaults;}
                 var selected=File.ReadAllText(ActivePath);
                 if(!Read(selected,out var f,out var hash,out var error))throw new IOException(error);
                 var applied=PresetCodec.Overlay(defaults,f,warnings);name=selected;fileHash=hash;return applied;
