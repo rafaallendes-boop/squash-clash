@@ -1,0 +1,436 @@
+# Prueba de física
+
+Estado: **COMPLETO**
+Criterios de gate: **NO APROBADOS / NO EVALUADOS**
+Este cálculo no elige backend ni autoriza el gate I4c.
+
+Backend: P1-PhysX; variante: speculative/ContinuousSpeculative-co1mm-it6-1; build: editor/1c47621
+Dispositivo: editor; configuración: c86243b15a97
+Perfil: editor; OS: Mac OS X 26.6.2; UTC: — → —
+Térmico: not measured / editor → not measured / editor
+Térmico al iniciar benchmark C17 (informativo): not measured / editor
+Interrupciones de foco: 0; solo una ejecución completa permite evaluar sus criterios.
+ProjectPhysics: EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1
+
+| ID | Requisito | Escenarios | Medición | Umbral | Veredicto | Gate | evaluados/no evaluables/esperados | No aplica (fuera de población) | Cobertura |
+|---|---|---|---|---|---|---|---|---|---|
+| C1 | Robustez (§8.2.2, §17.A.1): Crossings | S1–S10; S8 (10 000); S8d | fallos=0; evaluados=10053; no evaluables=0; atravesamientos=0; salidas superiores=2105; seed=20261020; S8=10000; S8d=36 | 0 atravesamientos | Pass | sí | 10053/0/10053 | 0 | cerrada |
+| C2 | Estados finitos: AllFinite | Todos | fallos=0; evaluados=67789; no evaluables=0 | Todos finitos | Pass | sí | 67789/0/67789 | 0 | cerrada |
+| C3 | Esquinas sin ganancia (§8.2.2): MaxRelativeEnergyGain | S4, S5, S6, S8, S8d; pasos de esquina | fallos=17; evaluados=2772; no evaluables=0; no aplica (sin pasos de esquina, fuera de población)=7267; Corner [Measured=2772, NotApplicable=7267, NotEvaluable=0]: máximo entre casos medidos: S8-8469 Measured, ganancia=0.0273839571, paso=322, rapidez antes=0.06398784 m/s, después=0.06558204 m/s; CornerWithImpact [Measured=2772, NotApplicable=7267, NotEvaluable=0]: máximo entre casos medidos: S8-8469 Measured, ganancia=0.0273839571, paso=322, rapidez antes=0.06398784 m/s, después=0.06558204 m/s; CornerPersistentOnly [Measured=2689, NotApplicable=7350, NotEvaluable=0]: máximo entre casos medidos: S8-9384 Measured, ganancia=0.0273839273, paso=344, rapidez antes=0.06382191 m/s, después=0.06550735 m/s | ≤ 1e-5 (ruido float) | Fail | sí | 2772/0/2772 | 7267 | cerrada |
+| C4 | Sin vibración (§8.2.2): RepeatedImpacts | S4, S5, S6, S10 | fallos=0; evaluados=4; no evaluables=0; impactos repetidos=0 | 0 (\|vn\| > 0,5 m/s; no persistentes) | Pass | sí | 4/0/4 | 0 | cerrada |
+| C5 | Consistencia (§17.A.2): igualdad bit a bit | S1–S7, S9, S10 nuevas; 1/100 S8 reutilizada/nueva | fallos=0; evaluados=117; no evaluables=0 | Igualdad de estados y contactos | Pass | sí | 117/0/117 | 0 | cerrada |
+| C6 | Predicción desde lanzamiento (§8.2.1, §17.A.3) | S1–S10 y S8 completo; Reset(s) | fallos=139; evaluados=10017; no evaluables=0 | Igualdad bit a bit | Fail | sí | 10017/0/10017 | 0 | cerrada |
+| C7 | Relanzamiento en vuelo (§17.A.3) | S1–S7, S9, S8 completo; k=30 y siguiente al primer contacto; Reset de ambos | fallos=183; evaluados=18779; no evaluables=0; Measured=18779; NotApplicable=1253; NotEvaluable=0 (no aplica fuera de población) | Igualdad bit a bit | Fail | sí | 18779/0/18779 | 1253 | cerrada |
+| C8 | Reutilización (§8.2.1 cond.1) | S10→S10b (S1 reutilizada), S6→S1 frente a nueva | fallos=0; evaluados=2; no evaluables=0 | Igualdad bit a bit | Pass | sí | 2/0/2 | 0 | cerrada |
+| C9 | Continuación sin reiniciar el juego (D-3) | S1, S6; k=30 | fallos=0; evaluados=2; no evaluables=0 | Diagnóstico; no decide el gate | Info | no | 2/0/2 | 0 | cerrada |
+| C10 | Precisión de contacto S9: ContactPrecisionMm | S9a–i | fallos=9; evaluados=9; no evaluables=0; error máximo mm=77.24857 | ≤ 1 mm [EXPERIMENTO, D-1] | Fail | sí | 9/0/9 | 0 | cerrada |
+| C11 | Clasificación de líneas: punto observado | S9 fuera/dentro; borde exacto solo precisión | fallos=3; evaluados=6; no evaluables=0 | Igual a ExpectTouch | Fail | sí | 6/0/6 | 0 | cerrada |
+| C12 | Primer impacto (§8.3.1) | S5, S6, S9 | fallos=0; evaluados=11; no evaluables=0 | Informe al gate; sin umbral inventado | Info | no | 11/0/11 | 0 | cerrada |
+| C13 | Tiempo restante (§8.3.2): mediana y mínimo | Impactos únicos S1, S2, S7, S9 | fallos=0; evaluados=15; no evaluables=16; mínimo=1.32343864; mediana=8.159093 | Informe al gate; ratio sin umbral | NotEvaluated | no | 15/16/31 | 0 | cerrada |
+| C14 | Impactos por paso (§8.3.2) | Todos | máximo impactos no persistentes/paso=2; tope configurable=False; parámetro maxImpactsPerStep no operativo con P1 | Informe al gate; tope configurable sí/no (P1: no) | Info | no | 1/0/1 | 0 | cerrada |
+| C15 | Simultáneos e instante (§8.3.3, §8.3.7) | S4, S6 | fallos=0; evaluados=2; no evaluables=0 | Mismo paso y ContactTiming; informe al gate | Info | no | 2/0/2 | 0 | cerrada |
+| C16 | Penetración y muestras persistentes | Todos | penetración máxima=0.612672448 mm; muestras persistentes=1774348 (todas las trayectorias ejecutadas) | Informativo | Info | no | 1/0/1 | 0 | cerrada |
+| C17 | Rendimiento (§8.2.2, §17.C, D-2) | S1 hasta segundo bote; Reset incluido; 20 warmup y 200 mediciones | n=200; warmup=20; median=8.141900; p95=9.240200; p99=10.312500; max=10.548400 ms; percentiles nearest rank | p95 ≤ 1 ms en iPhone; editor informativo | Info | no | 200/0/200 | 0 | cerrada |
+| C18 | Facilidad de prueba (§8.2.2) | Capabilities.RunsInEditMode | RunsInEditMode=False; timing=Estimated | Preferencia, no gate | Info | no | 1/0/1 | 0 | cerrada |
+
+## Evidencia por caso (hasta 12 notas generales por criterio; clasificación de todas las divergencias C5–C7 y máximo C16 sin ese límite)
+
+- C13 S1 paso=112 timing=StepOnly
+- C13 S1 paso=185 timing=StepOnly
+- C13 S2 paso=127 timing=StepOnly
+- C15 S4: primer paso=20; mismo paso=False; Floor, paso=20, StepOnly, t=NaN; RightWall, paso=21, StepOnly, t=NaN
+- C12 S5: observado=RightWall, punto=(0.000000, 1.505522, 0.186758), paso=28; ideal=FrontWall, t=0.2383370663362244, punto=(0.025000, 1.500000, 0.000000)
+- C12 S6: observado=LeftWall, punto=(6.400000, 1.003953, 9.487833), paso=23; ideal=LeftWall, t=0.19606242690409423, punto=(6.400000, 1.000000, 9.730000)
+- C15 S6: primer paso=23; mismo paso=False; LeftWall, paso=23, StepOnly, t=NaN; BackWall, paso=24, Estimated, t=0.004395852
+- C7 S6 C7 postcontacto: primera diferencia índice=1
+- C7 clasificación: S6 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=25; índice=1; checkpoint=24; estados=81/81; contactos=14/14
+- C7 diagnóstico: S6 C7 postcontacto; primer paso divergente=25; índice=1; previo A=paso=24, p=(6.291402, 0.9879622, 9.626079), v=(-8.9206295, -1.00031424, -10.4635029), bits=40C9532A,3F7CEB17,411A046B,C10EBAE6,BF800A4C,C1276A82; previo B=paso=24, p=(6.291402, 0.9879622, 9.626079), v=(-8.9206295, -1.00031424, -10.4635029), bits=40C9532A,3F7CEB17,411A046B,C10EBAE6,BF800A4C,C1276A82; A=paso=25, p=(6.21706343, 0.978944957, 9.538883), v=(-8.9206295, -1.08206427, -10.4635029), bits=40C6F22F,3F7A9C23,41189F44,C10EBAE6,BF8A8115,C1276A82; B=paso=25, p=(6.21706343, 0.978944957, 9.538883), v=(-8.9206295, -1.08206427, -10.4635029), bits=40C6F22F,3F7A9C23,41189F44,C10EBAE6,BF8A8115,C1276A82; contactos A=[BackWall@25 persistent=False, StepOnly, t=NaN, p=(6.291402, 0.987962246, 9.75), n=(0, 0, -1), approach=(-8.9206295, -1.00031424, -10.4635029); LeftWall@25 persistent=False, StepOnly, t=NaN, p=(6.4, 0.987962246, 9.626079), n=(-1, 0, 0), approach=(-8.9206295, -1.00031424, -10.4635029)]; contactos B=[LeftWall@25 persistent=False, StepOnly, t=NaN, p=(6.4, 0.987962246, 9.626079), n=(-1, 0, 0), approach=(-8.9206295, -1.00031424, -10.4635029); BackWall@25 persistent=False, StepOnly, t=NaN, p=(6.291402, 0.987962246, 9.75), n=(0, 0, -1), approach=(-8.9206295, -1.00031424, -10.4635029)]
+- C13 S7 paso=104 timing=StepOnly
+- C13 S7 paso=165 timing=StepOnly
+- C10 S9a: error mm=77.1217346
+- C12 S9a: observado=FrontWall, punto=(3.200000, 4.479878, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 4.557000, 0.000000)
+- C10 S9b: error mm=77.18468
+- C12 S9b: observado=FrontWall, punto=(3.200000, 4.482815, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 4.560000, 0.000000)
+- C10 S9c: error mm=77.24857
+- C11 S9c: superficie=FrontWall; UV=(3.200000, 4.485751); observado=False, esperado=True
+- C12 S9c: observado=FrontWall, punto=(3.200000, 4.485751, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 4.563000, 0.000000)
+- C10 S9d: error mm=8.564293
+- C12 S9d: observado=FrontWall, punto=(3.200000, 0.501564, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 0.493000, 0.000000)
+- C13 S9d paso=54 timing=StepOnly
+- C13 S9d paso=102 timing=StepOnly
+- C10 S9e: error mm=8.627444
+- C12 S9e: observado=FrontWall, punto=(3.200000, 0.498627, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 0.490000, 0.000000)
+- C13 S9e paso=54 timing=StepOnly
+- C13 S9e paso=102 timing=StepOnly
+- C10 S9f: error mm=8.690596
+- C11 S9f: superficie=FrontWall; UV=(3.200000, 0.495691); observado=False, esperado=True
+- C12 S9f: observado=FrontWall, punto=(3.200000, 0.495691, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 0.487000, 0.000000)
+- C13 S9f paso=53 timing=StepOnly
+- C13 S9f paso=98 timing=StepOnly
+- C10 S9g: error mm=18.2968369
+- C12 S9g: observado=FrontWall, punto=(3.200000, 1.748703, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 1.767000, 0.000000)
+- C13 S9g paso=119 timing=StepOnly
+- C10 S9h: error mm=18.3599
+- C12 S9h: observado=FrontWall, punto=(3.200000, 1.751640, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 1.770000, 0.000000)
+- C10 S9i: error mm=18.4231987
+- C11 S9i: superficie=FrontWall; UV=(3.200000, 1.754577); observado=False, esperado=True
+- C12 S9i: observado=FrontWall, punto=(3.200000, 1.754577, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 1.773000, 0.000000)
+- C7 S8-4 C7 k30: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-10 C7 postcontacto: primera diferencia índice=1
+- C7 clasificación: S8-10 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=27; índice=1; checkpoint=26; estados=242/242; contactos=13/13
+- C6 S8-15: primera diferencia índice=9
+- C6 clasificación: S8-15; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=9; índice=9; checkpoint=0; estados=140/140; contactos=12/12
+- C6 diagnóstico: S8-15; primer paso divergente=9; índice=9; previo A=paso=8, p=(6.254115, 0.156560749, 9.378976), v=(21.90985, -13.9011793, 7.35492134), bits=40C821B6,3E205176,41161049,41AF475F,C15E6B3B,40EB5B84; previo B=paso=8, p=(6.254115, 0.156560749, 9.378976), v=(21.90985, -13.9011793, 7.35492134), bits=40C821B6,3E205176,41161049,41AF475F,C15E6B3B,40EB5B84; A=paso=9, p=(6.254403, 0.0473121256, 9.440267), v=(-12.0504169, -13.1098337, 7.35492134), bits=40C82412,3D41CA5C,41170B55,C140CE82,C151C1E1,40EB5B84; B=paso=9, p=(6.254403, 0.0473121256, 9.440267), v=(-12.0504169, -13.1098337, 7.35492134), bits=40C82412,3D41CA5C,41170B55,C140CE82,C151C1E1,40EB5B84; contactos A=[Floor@9 persistent=False, StepOnly, t=NaN, p=(6.254115, 0, 9.378976), n=(0, 1, 0), approach=(21.90985, -13.9011793, 7.35492134); LeftWall@9 persistent=False, Estimated, t=0.00574558927, p=(6.4, 0.156560659, 9.378976), n=(-0.99999994, 0, 0), approach=(21.90985, -13.9011793, 7.35492134)]; contactos B=[LeftWall@9 persistent=False, Estimated, t=0.00574558927, p=(6.4, 0.156560659, 9.378976), n=(-0.99999994, 0, 0), approach=(21.90985, -13.9011793, 7.35492134); Floor@9 persistent=False, StepOnly, t=NaN, p=(6.254115, 0, 9.378976), n=(0, 1, 0), approach=(21.90985, -13.9011793, 7.35492134)]
+- C7 S8-18 C7 postcontacto: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C3 S8-22 Measured, ganancia=0.02738387, paso=237, rapidez antes=0.06412517 m/s, después=0.06564382 m/s
+- C7 S8-25 C7 k30: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-25 C7 postcontacto: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-26 C7 k30: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C6 S8-33: primera diferencia índice=75
+- C6 clasificación: S8-33; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=75; índice=75; checkpoint=0; estados=76/76; contactos=33/33
+- C7 S8-40 C7 postcontacto: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-46 C7 k30: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-46 C7 postcontacto: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-48 C7 postcontacto: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-49 C7 k30: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C6 S8-77: primera diferencia índice=31
+- C6 clasificación: S8-77; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=31; checkpoint=0; estados=106/106; contactos=16/16
+- C7 clasificación: S8-77 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=1; checkpoint=30; estados=119/119; contactos=18/18
+- C7 clasificación: S8-77 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=16; checkpoint=15; estados=134/134; contactos=26/26
+- C7 clasificación: S8-120 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=1; checkpoint=30; estados=211/211; contactos=14/14
+- C7 clasificación: S8-120 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=33; índice=1; checkpoint=32; estados=209/209; contactos=10/10
+- C6 S8-195: primera diferencia índice=179
+- C6 clasificación: S8-195; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=179; índice=179; checkpoint=0; estados=180/180; contactos=6/6
+- C7 clasificación: S8-195 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=179; índice=149; checkpoint=30; estados=150/150; contactos=4/4
+- C7 clasificación: S8-195 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=179; índice=163; checkpoint=16; estados=164/164; contactos=4/4
+- C6 S8-218: primera diferencia índice=12
+- C6 clasificación: S8-218; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=12; índice=12; checkpoint=0; estados=172/172; contactos=15/15
+- C6 S8-257: primera diferencia índice=9
+- C6 clasificación: S8-257; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=9; índice=9; checkpoint=0; estados=97/97; contactos=11/11
+- C6 S8-303: primera diferencia índice=89
+- C6 clasificación: S8-303; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=89; índice=89; checkpoint=0; estados=233/233; contactos=11/11
+- C7 clasificación: S8-303 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=89; índice=59; checkpoint=30; estados=315/315; contactos=10/10
+- C7 clasificación: S8-303 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=89; índice=85; checkpoint=4; estados=341/341; contactos=10/10
+- C6 S8-322: primera diferencia índice=113
+- C6 clasificación: S8-322; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=113; índice=113; checkpoint=0; estados=114/114; contactos=28/28
+- C7 clasificación: S8-322 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=113; índice=83; checkpoint=30; estados=84/84; contactos=28/28
+- C7 clasificación: S8-322 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=113; índice=81; checkpoint=32; estados=82/82; contactos=27/27
+- C6 S8-334: primera diferencia índice=134
+- C6 clasificación: S8-334; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=134; índice=134; checkpoint=0; estados=135/135; contactos=11/11
+- C7 clasificación: S8-334 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=134; índice=104; checkpoint=30; estados=105/105; contactos=10/10
+- C7 clasificación: S8-334 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=134; índice=128; checkpoint=6; estados=129/129; contactos=10/10
+- C6 S8-403: primera diferencia índice=91
+- C6 clasificación: S8-403; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=91; índice=91; checkpoint=0; estados=128/128; contactos=18/18
+- C7 clasificación: S8-403 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=91; índice=61; checkpoint=30; estados=98/98; contactos=15/15
+- C7 clasificación: S8-403 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=91; índice=69; checkpoint=22; estados=106/106; contactos=16/16
+- C6 S8-491: primera diferencia índice=130
+- C6 clasificación: S8-491; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=130; índice=130; checkpoint=0; estados=215/215; contactos=6/6
+- C7 clasificación: S8-491 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=130; índice=100; checkpoint=30; estados=185/185; contactos=6/6
+- C7 clasificación: S8-491 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=130; índice=95; checkpoint=35; estados=180/180; contactos=5/5
+- C7 clasificación: S8-500 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=13; índice=1; checkpoint=12; estados=97/97; contactos=3/3
+- C7 clasificación: S8-598 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=11; índice=1; checkpoint=10; estados=47/47; contactos=3/3
+- C6 S8-752: primera diferencia índice=3
+- C6 clasificación: S8-752; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=3; índice=3; checkpoint=0; estados=120/120; contactos=11/11
+- C6 clasificación: S8-978; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=2; índice=2; checkpoint=0; estados=60/60; contactos=6/6
+- C7 clasificación: S8-978 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=4; índice=1; checkpoint=3; estados=57/57; contactos=2/2
+- C3 S8-1009 Measured, ganancia=0.0273837652, paso=335, rapidez antes=0.06366151 m/s, después=0.065435186 m/s
+- C6 clasificación: S8-1016; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=75; índice=75; checkpoint=0; estados=146/146; contactos=7/7
+- C7 clasificación: S8-1016 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=75; índice=45; checkpoint=30; estados=116/116; contactos=6/6
+- C7 clasificación: S8-1016 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=75; índice=64; checkpoint=11; estados=135/135; contactos=6/6
+- C6 clasificación: S8-1047; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=77; índice=77; checkpoint=0; estados=140/140; contactos=3/3
+- C7 clasificación: S8-1047 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=77; índice=47; checkpoint=30; estados=110/110; contactos=3/3
+- C7 clasificación: S8-1091 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=9; índice=1; checkpoint=8; estados=274/274; contactos=13/13
+- C6 clasificación: S8-1111; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=119; índice=119; checkpoint=0; estados=120/120; contactos=4/4
+- C7 clasificación: S8-1111 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=119; índice=89; checkpoint=30; estados=90/90; contactos=4/4
+- C7 clasificación: S8-1111 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=119; índice=86; checkpoint=33; estados=129/129; contactos=5/5
+- C6 clasificación: S8-1135; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=154; índice=154; checkpoint=0; estados=155/155; contactos=11/11
+- C7 clasificación: S8-1135 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=154; índice=124; checkpoint=30; estados=162/162; contactos=9/9
+- C7 clasificación: S8-1135 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=154; índice=148; checkpoint=6; estados=149/149; contactos=9/9
+- C6 clasificación: S8-1143; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=11; índice=11; checkpoint=0; estados=14/14; contactos=3/3
+- C6 clasificación: S8-1250; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=18; índice=18; checkpoint=0; estados=171/171; contactos=13/13
+- C7 clasificación: S8-1286 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=26; índice=1; checkpoint=25; estados=36/36; contactos=6/6
+- C3 S8-1352 Measured, ganancia=0.0273570064, paso=346, rapidez antes=0.0603772365 m/s, después=0.06395726 m/s
+- C7 clasificación: S8-1383 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=1; checkpoint=30; estados=24/24; contactos=13/13
+- C6 clasificación: S8-1444; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=21; índice=21; checkpoint=0; estados=85/85; contactos=6/6
+- C6 clasificación: S8-1493; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=133; índice=133; checkpoint=0; estados=134/134; contactos=6/6
+- C7 clasificación: S8-1493 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=133; índice=103; checkpoint=30; estados=156/156; contactos=5/5
+- C7 clasificación: S8-1493 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=133; índice=118; checkpoint=15; estados=171/171; contactos=7/7
+- C3 S8-1508 Measured, ganancia=0.0168146, paso=275, rapidez antes=0.114391387 m/s, después=0.08151313 m/s
+- C7 clasificación: S8-1667 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=8; índice=1; checkpoint=7; estados=94/94; contactos=14/14
+- C7 clasificación: S8-1671 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=1; checkpoint=30; estados=286/286; contactos=9/9
+- C6 clasificación: S8-1698; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=79; índice=79; checkpoint=0; estados=157/157; contactos=8/8
+- C7 clasificación: S8-1698 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=79; índice=49; checkpoint=30; estados=127/127; contactos=6/6
+- C7 clasificación: S8-1698 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=79; índice=63; checkpoint=16; estados=141/141; contactos=6/6
+- C7 clasificación: S8-1705 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=4; índice=1; checkpoint=3; estados=79/79; contactos=3/3
+- C7 clasificación: S8-1712 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=19; índice=1; checkpoint=18; estados=310/310; contactos=13/13
+- C6 clasificación: S8-1730; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=232; índice=232; checkpoint=0; estados=244/244; contactos=20/20
+- C7 clasificación: S8-1730 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=232; índice=202; checkpoint=30; estados=296/296; contactos=11/11
+- C7 clasificación: S8-1730 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=232; índice=223; checkpoint=9; estados=235/235; contactos=18/18
+- C6 clasificación: S8-1757; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=12; índice=12; checkpoint=0; estados=236/236; contactos=10/10
+- C6 clasificación: S8-1817; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=131; índice=131; checkpoint=0; estados=197/197; contactos=6/6
+- C7 clasificación: S8-1817 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=131; índice=101; checkpoint=30; estados=167/167; contactos=5/5
+- C7 clasificación: S8-1817 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=131; índice=111; checkpoint=20; estados=177/177; contactos=5/5
+- C6 clasificación: S8-1838; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=2; índice=2; checkpoint=0; estados=117/117; contactos=10/10
+- C6 clasificación: S8-1865; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=10; índice=10; checkpoint=0; estados=244/244; contactos=52/52
+- C7 clasificación: S8-1927 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=9; índice=1; checkpoint=8; estados=251/251; contactos=9/9
+- C6 clasificación: S8-1928; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=17; índice=17; checkpoint=0; estados=173/173; contactos=11/11
+- C7 clasificación: S8-1928 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=17; índice=9; checkpoint=8; estados=165/165; contactos=9/9
+- C6 clasificación: S8-1955; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=20; índice=20; checkpoint=0; estados=170/170; contactos=16/16
+- C6 clasificación: S8-2099; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=107; índice=107; checkpoint=0; estados=108/108; contactos=19/19
+- C7 clasificación: S8-2099 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=107; índice=77; checkpoint=30; estados=78/78; contactos=14/14
+- C6 clasificación: S8-2219; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=6; índice=6; checkpoint=0; estados=172/172; contactos=25/25
+- C6 clasificación: S8-2246; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=174; índice=174; checkpoint=0; estados=175/175; contactos=10/10
+- C7 clasificación: S8-2246 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=174; índice=144; checkpoint=30; estados=223/223; contactos=5/5
+- C7 clasificación: S8-2246 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=174; índice=162; checkpoint=12; estados=241/241; contactos=11/11
+- C6 clasificación: S8-2255; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=75; índice=75; checkpoint=0; estados=139/139; contactos=8/8
+- C7 clasificación: S8-2255 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=75; índice=45; checkpoint=30; estados=109/109; contactos=7/7
+- C7 clasificación: S8-2255 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=75; índice=53; checkpoint=22; estados=117/117; contactos=7/7
+- C6 clasificación: S8-2420; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=62; índice=62; checkpoint=0; estados=101/101; contactos=15/15
+- C7 clasificación: S8-2420 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=62; índice=32; checkpoint=30; estados=104/104; contactos=17/17
+- C7 clasificación: S8-2420 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=62; índice=35; checkpoint=27; estados=107/107; contactos=20/20
+- C3 S8-2452 Measured, ganancia=0.02738362, paso=321, rapidez antes=0.06443971 m/s, después=0.06578538 m/s
+- C6 clasificación: S8-2490; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=29; índice=29; checkpoint=0; estados=67/67; contactos=5/5
+- C6 clasificación: S8-2546; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=28; índice=28; checkpoint=0; estados=226/226; contactos=5/5
+- C7 clasificación: S8-2582 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=161; índice=94; checkpoint=67; estados=95/95; contactos=6/6
+- C6 clasificación: S8-2624; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=27; índice=27; checkpoint=0; estados=271/271; contactos=14/14
+- C6 clasificación: S8-2651; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=14; índice=14; checkpoint=0; estados=91/91; contactos=5/5
+- C6 clasificación: S8-2704; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=192; índice=192; checkpoint=0; estados=193/193; contactos=10/10
+- C7 clasificación: S8-2704 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=192; índice=162; checkpoint=30; estados=227/227; contactos=8/8
+- C7 clasificación: S8-2704 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=192; índice=189; checkpoint=3; estados=254/254; contactos=11/11
+- C6 clasificación: S8-2725; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=221; índice=221; checkpoint=0; estados=222/222; contactos=10/10
+- C7 clasificación: S8-2725 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=221; índice=191; checkpoint=30; estados=294/294; contactos=25/25
+- C7 clasificación: S8-2725 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=221; índice=212; checkpoint=9; estados=315/315; contactos=25/25
+- C7 clasificación: S8-2828 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=13; índice=1; checkpoint=12; estados=328/328; contactos=11/11
+- C6 clasificación: S8-2835; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=30; índice=30; checkpoint=0; estados=31/31; contactos=2/2
+- C7 clasificación: S8-2835 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=1; checkpoint=30; estados=2/2; contactos=2/2
+- C6 clasificación: S8-2912; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=106; índice=106; checkpoint=0; estados=107/107; contactos=8/8
+- C7 clasificación: S8-2912 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=106; índice=76; checkpoint=30; estados=79/79; contactos=4/4
+- C7 clasificación: S8-2912 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=106; índice=94; checkpoint=12; estados=97/97; contactos=7/7
+- C6 clasificación: S8-2935; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=30; índice=30; checkpoint=0; estados=145/145; contactos=12/12
+- C6 clasificación: S8-2963; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=89; índice=89; checkpoint=0; estados=146/146; contactos=4/4
+- C7 clasificación: S8-2963 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=89; índice=59; checkpoint=30; estados=116/116; contactos=4/4
+- C6 clasificación: S8-3029; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=189; índice=189; checkpoint=0; estados=190/190; contactos=6/6
+- C7 clasificación: S8-3029 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=189; índice=159; checkpoint=30; estados=228/228; contactos=8/8
+- C7 clasificación: S8-3029 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=189; índice=176; checkpoint=13; estados=245/245; contactos=8/8
+- C6 clasificación: S8-3032; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=42; índice=42; checkpoint=0; estados=84/84; contactos=7/7
+- C7 clasificación: S8-3032 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=42; índice=12; checkpoint=30; estados=54/54; contactos=7/7
+- C3 S8-3045 Measured, ganancia=0.0273813829, paso=351, rapidez antes=0.0628606 m/s, después=0.06507477 m/s
+- C6 clasificación: S8-3106; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=19; índice=19; checkpoint=0; estados=102/102; contactos=5/5
+- C7 clasificación: S8-3200 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=29; índice=1; checkpoint=28; estados=17/17; contactos=5/5
+- C6 clasificación: S8-3205; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=10; índice=10; checkpoint=0; estados=13/13; contactos=3/3
+- C6 clasificación: S8-3222; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=122; índice=122; checkpoint=0; estados=123/123; contactos=11/11
+- C7 clasificación: S8-3222 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=122; índice=92; checkpoint=30; estados=93/93; contactos=10/10
+- C7 clasificación: S8-3222 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=122; índice=114; checkpoint=8; estados=115/115; contactos=10/10
+- C6 clasificación: S8-3255; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=34; índice=34; checkpoint=0; estados=202/202; contactos=13/13
+- C7 clasificación: S8-3255 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=34; índice=4; checkpoint=30; estados=172/172; contactos=13/13
+- C6 clasificación: S8-3288; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=31; checkpoint=0; estados=80/80; contactos=15/15
+- C6 clasificación: S8-3347; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=15; índice=15; checkpoint=0; estados=205/205; contactos=14/14
+- C7 clasificación: S8-3347 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=15; índice=10; checkpoint=5; estados=296/296; contactos=17/17
+- C6 clasificación: S8-3444; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=12; índice=12; checkpoint=0; estados=193/193; contactos=10/10
+- C7 clasificación: S8-3797 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=7; índice=1; checkpoint=6; estados=23/23; contactos=7/7
+- C6 clasificación: S8-3826; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=122; índice=122; checkpoint=0; estados=203/203; contactos=6/6
+- C7 clasificación: S8-3826 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=122; índice=92; checkpoint=30; estados=173/173; contactos=6/6
+- C7 clasificación: S8-3826 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=122; índice=85; checkpoint=37; estados=166/166; contactos=5/5
+- C7 clasificación: S8-3959 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=152; índice=135; checkpoint=17; estados=136/136; contactos=15/15
+- C6 clasificación: S8-4018; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=117; índice=117; checkpoint=0; estados=118/118; contactos=9/9
+- C7 clasificación: S8-4018 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=117; índice=87; checkpoint=30; estados=88/88; contactos=9/9
+- C7 clasificación: S8-4018 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=117; índice=81; checkpoint=36; estados=82/82; contactos=8/8
+- C6 clasificación: S8-4028; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=164; índice=164; checkpoint=0; estados=246/246; contactos=44/44
+- C3 S8-4048 Measured, ganancia=0.0273828115, paso=356, rapidez antes=0.06323272 m/s, después=0.06524223 m/s
+- C6 clasificación: S8-4053; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=6; índice=6; checkpoint=0; estados=93/93; contactos=6/6
+- C6 clasificación: S8-4066; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=25; índice=25; checkpoint=0; estados=66/66; contactos=11/11
+- C7 clasificación: S8-4066 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=27; índice=1; checkpoint=26; estados=40/40; contactos=7/7
+- C7 clasificación: S8-4166 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=12; índice=1; checkpoint=11; estados=63/63; contactos=7/7
+- C3 S8-4194 Measured, ganancia=0.0273838285, paso=350, rapidez antes=0.06370747 m/s, después=0.0654558539 m/s
+- C7 clasificación: S8-4225 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=1; checkpoint=30; estados=286/286; contactos=16/16
+- C7 clasificación: S8-4230 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=15; índice=1; checkpoint=14; estados=43/43; contactos=7/7
+- C6 clasificación: S8-4253; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=59; índice=59; checkpoint=0; estados=60/60; contactos=13/13
+- C7 clasificación: S8-4253 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=59; índice=29; checkpoint=30; estados=34/34; contactos=3/3
+- C7 clasificación: S8-4253 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=59; índice=40; checkpoint=19; estados=45/45; contactos=12/12
+- C7 clasificación: S8-4268 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=1; checkpoint=30; estados=195/195; contactos=15/15
+- C7 clasificación: S8-4268 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=23; checkpoint=8; estados=217/217; contactos=19/19
+- C6 clasificación: S8-4269; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=72; índice=72; checkpoint=0; estados=127/127; contactos=7/7
+- C7 clasificación: S8-4269 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=72; índice=42; checkpoint=30; estados=97/97; contactos=5/5
+- C7 clasificación: S8-4269 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=72; índice=42; checkpoint=30; estados=97/97; contactos=5/5
+- C6 clasificación: S8-4276; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=128; índice=128; checkpoint=0; estados=198/198; contactos=12/12
+- C7 clasificación: S8-4276 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=128; índice=98; checkpoint=30; estados=168/168; contactos=9/9
+- C7 clasificación: S8-4276 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=128; índice=120; checkpoint=8; estados=190/190; contactos=10/10
+- C7 clasificación: S8-4277 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=21; índice=1; checkpoint=20; estados=99/99; contactos=27/27
+- C6 clasificación: S8-4360; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=6; índice=6; checkpoint=0; estados=105/105; contactos=14/14
+- C6 clasificación: S8-4396; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=112; índice=112; checkpoint=0; estados=113/113; contactos=7/7
+- C7 clasificación: S8-4396 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=112; índice=82; checkpoint=30; estados=111/111; contactos=5/5
+- C7 clasificación: S8-4396 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=112; índice=108; checkpoint=4; estados=109/109; contactos=5/5
+- C6 clasificación: S8-4457; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=12; índice=12; checkpoint=0; estados=159/159; contactos=8/8
+- C6 clasificación: S8-4510; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=31; checkpoint=0; estados=122/122; contactos=17/17
+- C7 clasificación: S8-4510 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=1; checkpoint=30; estados=92/92; contactos=17/17
+- C7 clasificación: S8-4510 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=33; índice=1; checkpoint=32; estados=90/90; contactos=13/13
+- C6 clasificación: S8-4541; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=14; índice=14; checkpoint=0; estados=234/234; contactos=10/10
+- C6 clasificación: S8-4555; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=47; índice=47; checkpoint=0; estados=75/75; contactos=4/4
+- C7 clasificación: S8-4555 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=47; índice=17; checkpoint=30; estados=45/45; contactos=4/4
+- C6 clasificación: S8-4557; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=13; índice=13; checkpoint=0; estados=127/127; contactos=12/12
+- C6 clasificación: S8-4654; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=13; índice=13; checkpoint=0; estados=215/215; contactos=5/5
+- C6 clasificación: S8-4796; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=10; índice=10; checkpoint=0; estados=43/43; contactos=13/13
+- C7 clasificación: S8-4796 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=12; índice=1; checkpoint=11; estados=32/32; contactos=9/9
+- C7 clasificación: S8-4865 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=9; índice=1; checkpoint=8; estados=244/244; contactos=11/11
+- C6 clasificación: S8-4875; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=30; índice=30; checkpoint=0; estados=301/301; contactos=11/11
+- C6 clasificación: S8-4877; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=25; índice=25; checkpoint=0; estados=86/86; contactos=14/14
+- C6 clasificación: S8-4901; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=30; índice=30; checkpoint=0; estados=101/101; contactos=11/11
+- C7 clasificación: S8-4901 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=30; índice=3; checkpoint=27; estados=74/74; contactos=9/9
+- C6 clasificación: S8-4931; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=6; índice=6; checkpoint=0; estados=9/9; contactos=4/4
+- C7 clasificación: S8-4938 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=9; índice=1; checkpoint=8; estados=136/136; contactos=8/8
+- C6 clasificación: S8-5152; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=14; índice=14; checkpoint=0; estados=49/49; contactos=9/9
+- C6 clasificación: S8-5162; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=135; índice=135; checkpoint=0; estados=136/136; contactos=7/7
+- C7 clasificación: S8-5162 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=135; índice=105; checkpoint=30; estados=106/106; contactos=7/7
+- C7 clasificación: S8-5162 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=135; índice=84; checkpoint=51; estados=85/85; contactos=5/5
+- C6 clasificación: S8-5243; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=81; índice=81; checkpoint=0; estados=174/174; contactos=14/14
+- C7 clasificación: S8-5243 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=81; índice=51; checkpoint=30; estados=220/220; contactos=12/12
+- C7 clasificación: S8-5243 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=81; índice=69; checkpoint=12; estados=238/238; contactos=17/17
+- C6 clasificación: S8-5244; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=15; índice=15; checkpoint=0; estados=39/39; contactos=6/6
+- C7 clasificación: S8-5244 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=17; índice=1; checkpoint=16; estados=23/23; contactos=2/2
+- C6 clasificación: S8-5248; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=4; índice=4; checkpoint=0; estados=211/211; contactos=6/6
+- C3 S8-5267 Measured, ganancia=0.0273838174, paso=357, rapidez antes=0.06382197 m/s, después=0.06550744 m/s
+- C6 clasificación: S8-5399; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=11; índice=11; checkpoint=0; estados=202/202; contactos=13/13
+- C6 clasificación: S8-5402; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=173; índice=173; checkpoint=0; estados=174/174; contactos=9/9
+- C7 clasificación: S8-5402 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=173; índice=143; checkpoint=30; estados=212/212; contactos=13/13
+- C7 clasificación: S8-5402 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=173; índice=170; checkpoint=3; estados=239/239; contactos=17/17
+- C6 clasificación: S8-5411; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=11; índice=11; checkpoint=0; estados=124/124; contactos=9/9
+- C6 clasificación: S8-5451; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=64; índice=64; checkpoint=0; estados=65/65; contactos=5/5
+- C7 clasificación: S8-5451 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=64; índice=34; checkpoint=30; estados=51/51; contactos=12/12
+- C7 clasificación: S8-5451 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=64; índice=42; checkpoint=22; estados=59/59; contactos=13/13
+- C6 clasificación: S8-5453; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=49; índice=49; checkpoint=0; estados=255/255; contactos=17/17
+- C7 clasificación: S8-5453 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=49; índice=19; checkpoint=30; estados=312/312; contactos=16/16
+- C7 clasificación: S8-5453 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=49; índice=46; checkpoint=3; estados=339/339; contactos=17/17
+- C6 clasificación: S8-5472; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=45; índice=45; checkpoint=0; estados=114/114; contactos=7/7
+- C7 clasificación: S8-5472 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=45; índice=15; checkpoint=30; estados=84/84; contactos=7/7
+- C7 clasificación: S8-5579 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=16; índice=1; checkpoint=15; estados=13/13; contactos=8/8
+- C3 S8-5580 Measured, ganancia=0.0273835734, paso=348, rapidez antes=0.0635587 m/s, después=0.0653889 m/s
+- C6 clasificación: S8-5672; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=195; índice=195; checkpoint=0; estados=278/278; contactos=9/9
+- C7 clasificación: S8-5672 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=195; índice=165; checkpoint=30; estados=248/248; contactos=9/9
+- C7 clasificación: S8-5672 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=195; índice=119; checkpoint=76; estados=202/202; contactos=7/7
+- C7 clasificación: S8-5739 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=28; índice=1; checkpoint=27; estados=314/314; contactos=10/10
+- C6 clasificación: S8-5839; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=261; índice=261; checkpoint=0; estados=263/263; contactos=17/17
+- C7 clasificación: S8-5839 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=261; índice=231; checkpoint=30; estados=233/233; contactos=10/10
+- C7 clasificación: S8-5890 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=5; índice=1; checkpoint=4; estados=156/156; contactos=15/15
+- C7 clasificación: S8-5970 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=21; índice=1; checkpoint=20; estados=10/10; contactos=8/8
+- C6 clasificación: S8-5993; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=63; índice=63; checkpoint=0; estados=141/141; contactos=36/36
+- C7 clasificación: S8-5993 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=63; índice=33; checkpoint=30; estados=111/111; contactos=35/35
+- C7 clasificación: S8-5993 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=63; índice=59; checkpoint=4; estados=137/137; contactos=35/35
+- C7 clasificación: S8-6005 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=110; índice=84; checkpoint=26; estados=85/85; contactos=12/12
+- C6 clasificación: S8-6023; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=22; índice=22; checkpoint=0; estados=47/47; contactos=4/4
+- C6 clasificación: S8-6143; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=10; índice=10; checkpoint=0; estados=146/146; contactos=9/9
+- C7 clasificación: S8-6238 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=149; índice=110; checkpoint=39; estados=111/111; contactos=9/9
+- C7 clasificación: S8-6249 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=96; índice=1; checkpoint=95; estados=184/184; contactos=5/5
+- C6 clasificación: S8-6436; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=12; índice=12; checkpoint=0; estados=136/136; contactos=22/22
+- C6 clasificación: S8-6531; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=12; índice=12; checkpoint=0; estados=257/257; contactos=13/13
+- C3 S8-6591 Measured, ganancia=0.0273839235, paso=271, rapidez antes=0.06410801 m/s, después=0.0656361 m/s
+- C7 clasificación: S8-6591 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=147; índice=117; checkpoint=30; estados=118/118; contactos=5/5
+- C7 clasificación: S8-6591 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=147; índice=142; checkpoint=5; estados=143/143; contactos=6/6
+- C6 clasificación: S8-6592; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=37; índice=37; checkpoint=0; estados=125/125; contactos=5/5
+- C7 clasificación: S8-6592 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=37; índice=7; checkpoint=30; estados=95/95; contactos=5/5
+- C6 clasificación: S8-6689; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=11; índice=11; checkpoint=0; estados=157/157; contactos=14/14
+- C6 clasificación: S8-6719; tipo=estado/contactos distintos; estadosBitsIguales=False; multiconjuntoContactosCompletosIgual=False; primerPaso=156; índice=156; checkpoint=0; estados=226/156; contactos=14/13
+- C7 clasificación: S8-6741 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=158; índice=128; checkpoint=30; estados=129/129; contactos=3/3
+- C7 clasificación: S8-6741 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=158; índice=149; checkpoint=9; estados=150/150; contactos=4/4
+- C6 clasificación: S8-6865; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=20; índice=20; checkpoint=0; estados=175/175; contactos=12/12
+- C6 clasificación: S8-6866; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=17; índice=17; checkpoint=0; estados=179/179; contactos=12/12
+- C6 clasificación: S8-6915; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=3; índice=3; checkpoint=0; estados=130/130; contactos=9/9
+- C7 clasificación: S8-6917 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=43; índice=1; checkpoint=42; estados=82/82; contactos=8/8
+- C6 clasificación: S8-6949; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=26; índice=26; checkpoint=0; estados=335/335; contactos=22/22
+- C6 clasificación: S8-6954; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=68; índice=68; checkpoint=0; estados=144/144; contactos=3/3
+- C7 clasificación: S8-6954 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=68; índice=38; checkpoint=30; estados=114/114; contactos=3/3
+- C6 clasificación: S8-7069; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=94; índice=94; checkpoint=0; estados=95/95; contactos=23/23
+- C7 clasificación: S8-7069 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=94; índice=64; checkpoint=30; estados=65/65; contactos=21/21
+- C7 clasificación: S8-7069 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=94; índice=66; checkpoint=28; estados=67/67; contactos=21/21
+- C6 clasificación: S8-7072; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=23; índice=23; checkpoint=0; estados=162/162; contactos=9/9
+- C7 clasificación: S8-7105 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=9; índice=1; checkpoint=8; estados=249/249; contactos=19/19
+- C6 clasificación: S8-7258; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=8; índice=8; checkpoint=0; estados=199/199; contactos=8/8
+- C7 clasificación: S8-7298 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=17; índice=1; checkpoint=16; estados=62/62; contactos=8/8
+- C6 clasificación: S8-7299; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=137; índice=137; checkpoint=0; estados=138/138; contactos=7/7
+- C7 clasificación: S8-7299 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=137; índice=107; checkpoint=30; estados=108/108; contactos=6/6
+- C7 clasificación: S8-7299 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=137; índice=120; checkpoint=17; estados=121/121; contactos=6/6
+- C6 clasificación: S8-7329; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=63; índice=63; checkpoint=0; estados=110/110; contactos=4/4
+- C7 clasificación: S8-7329 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=63; índice=33; checkpoint=30; estados=80/80; contactos=4/4
+- C6 clasificación: S8-7398; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=88; índice=88; checkpoint=0; estados=160/160; contactos=3/3
+- C7 clasificación: S8-7398 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=88; índice=58; checkpoint=30; estados=130/130; contactos=3/3
+- C6 clasificación: S8-7623; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=2; índice=2; checkpoint=0; estados=207/207; contactos=13/13
+- C7 clasificación: S8-7758 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=6; índice=1; checkpoint=5; estados=174/174; contactos=15/15
+- C6 clasificación: S8-7860; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=8; índice=8; checkpoint=0; estados=237/237; contactos=15/15
+- C7 clasificación: S8-7860 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=9; índice=1; checkpoint=8; estados=333/333; contactos=20/20
+- C7 clasificación: S8-7889 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=231; índice=201; checkpoint=30; estados=202/202; contactos=10/10
+- C3 S8-7989 Measured, ganancia=0.0273838323, paso=337, rapidez antes=0.0636903048 m/s, después=0.0654481351 m/s
+- C6 clasificación: S8-8043; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=71; índice=71; checkpoint=0; estados=113/113; contactos=13/13
+- C7 clasificación: S8-8043 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=71; índice=41; checkpoint=30; estados=83/83; contactos=12/12
+- C7 clasificación: S8-8043 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=71; índice=56; checkpoint=15; estados=98/98; contactos=12/12
+- C6 clasificación: S8-8054; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=16; índice=16; checkpoint=0; estados=123/123; contactos=11/11
+- C7 clasificación: S8-8054 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=16; índice=12; checkpoint=4; estados=168/168; contactos=14/14
+- C6 clasificación: S8-8091; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=180; índice=180; checkpoint=0; estados=181/181; contactos=17/17
+- C7 clasificación: S8-8091 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=180; índice=150; checkpoint=30; estados=208/208; contactos=14/14
+- C7 clasificación: S8-8091 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=180; índice=176; checkpoint=4; estados=177/177; contactos=15/15
+- C6 clasificación: S8-8105; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=46; índice=46; checkpoint=0; estados=91/91; contactos=10/10
+- C7 clasificación: S8-8105 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=46; índice=16; checkpoint=30; estados=61/61; contactos=10/10
+- C6 clasificación: S8-8127; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=189; índice=189; checkpoint=0; estados=190/190; contactos=13/13
+- C7 clasificación: S8-8127 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=189; índice=159; checkpoint=30; estados=233/233; contactos=7/7
+- C7 clasificación: S8-8127 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=189; índice=184; checkpoint=5; estados=258/258; contactos=15/15
+- C6 clasificación: S8-8214; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=287; índice=287; checkpoint=0; estados=288/288; contactos=10/10
+- C7 clasificación: S8-8214 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=287; índice=257; checkpoint=30; estados=258/258; contactos=9/9
+- C7 clasificación: S8-8214 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=287; índice=267; checkpoint=20; estados=268/268; contactos=9/9
+- C6 clasificación: S8-8236; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=6; índice=6; checkpoint=0; estados=119/119; contactos=8/8
+- C7 clasificación: S8-8347 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=8; índice=1; checkpoint=7; estados=39/39; contactos=5/5
+- C6 clasificación: S8-8415; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=45; índice=45; checkpoint=0; estados=115/115; contactos=16/16
+- C7 clasificación: S8-8415 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=45; índice=15; checkpoint=30; estados=85/85; contactos=16/16
+- C6 clasificación: S8-8448; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=11; índice=11; checkpoint=0; estados=245/245; contactos=16/16
+- C6 clasificación: S8-8518; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=7; índice=7; checkpoint=0; estados=122/122; contactos=13/13
+- C6 clasificación: S8-8536; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=58; índice=58; checkpoint=0; estados=89/89; contactos=15/15
+- C7 clasificación: S8-8536 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=58; índice=28; checkpoint=30; estados=91/91; contactos=10/10
+- C7 clasificación: S8-8536 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=58; índice=52; checkpoint=6; estados=83/83; contactos=13/13
+- C6 clasificación: S8-8602; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=39; índice=39; checkpoint=0; estados=73/73; contactos=19/19
+- C7 clasificación: S8-8602 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=39; índice=9; checkpoint=30; estados=43/43; contactos=19/19
+- C6 clasificación: S8-8696; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=37; índice=37; checkpoint=0; estados=122/122; contactos=10/10
+- C7 clasificación: S8-8696 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=37; índice=7; checkpoint=30; estados=92/92; contactos=8/8
+- C7 clasificación: S8-8696 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=37; índice=8; checkpoint=29; estados=93/93; contactos=8/8
+- C6 clasificación: S8-8697; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=144; índice=144; checkpoint=0; estados=145/145; contactos=14/14
+- C7 clasificación: S8-8697 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=144; índice=114; checkpoint=30; estados=115/115; contactos=12/12
+- C7 clasificación: S8-8697 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=144; índice=140; checkpoint=4; estados=141/141; contactos=12/12
+- C7 clasificación: S8-8709 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=8; índice=1; checkpoint=7; estados=153/153; contactos=10/10
+- C6 clasificación: S8-8912; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=33; índice=33; checkpoint=0; estados=90/90; contactos=6/6
+- C7 clasificación: S8-8912 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=33; índice=3; checkpoint=30; estados=60/60; contactos=6/6
+- C6 clasificación: S8-8945; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=10; índice=10; checkpoint=0; estados=251/251; contactos=14/14
+- C6 clasificación: S8-9027; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=39; índice=39; checkpoint=0; estados=164/164; contactos=14/14
+- C7 clasificación: S8-9027 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=39; índice=9; checkpoint=30; estados=189/189; contactos=10/10
+- C7 clasificación: S8-9027 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=39; índice=14; checkpoint=25; estados=194/194; contactos=13/13
+- C6 clasificación: S8-9053; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=13; índice=13; checkpoint=0; estados=334/334; contactos=15/15
+- C6 clasificación: S8-9054; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=21; índice=21; checkpoint=0; estados=25/25; contactos=7/7
+- C6 clasificación: S8-9077; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=126; índice=126; checkpoint=0; estados=127/127; contactos=7/7
+- C7 clasificación: S8-9077 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=126; índice=96; checkpoint=30; estados=97/97; contactos=5/5
+- C7 clasificación: S8-9077 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=126; índice=110; checkpoint=16; estados=111/111; contactos=5/5
+- C7 clasificación: S8-9132 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=24; índice=1; checkpoint=23; estados=11/11; contactos=4/4
+- C6 clasificación: S8-9176; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=38; índice=38; checkpoint=0; estados=88/88; contactos=6/6
+- C7 clasificación: S8-9176 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=38; índice=8; checkpoint=30; estados=58/58; contactos=6/6
+- C6 clasificación: S8-9227; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=45; índice=45; checkpoint=0; estados=79/79; contactos=15/15
+- C7 clasificación: S8-9227 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=45; índice=15; checkpoint=30; estados=49/49; contactos=15/15
+- C7 clasificación: S8-9227 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=45; índice=12; checkpoint=33; estados=46/46; contactos=13/13
+- C6 clasificación: S8-9402; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=294; índice=294; checkpoint=0; estados=295/295; contactos=10/10
+- C7 clasificación: S8-9402 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=294; índice=264; checkpoint=30; estados=265/265; contactos=7/7
+- C7 clasificación: S8-9402 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=294; índice=285; checkpoint=9; estados=286/286; contactos=8/8
+- C7 clasificación: S8-9439 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=29; índice=23; checkpoint=6; estados=355/355; contactos=333/333
+- C7 clasificación: S8-9480 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=17; índice=1; checkpoint=16; estados=80/80; contactos=3/3
+- C6 clasificación: S8-9498; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=69; índice=69; checkpoint=0; estados=70/70; contactos=20/20
+- C7 clasificación: S8-9498 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=69; índice=39; checkpoint=30; estados=40/40; contactos=20/20
+- C7 clasificación: S8-9498 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=69; índice=31; checkpoint=38; estados=44/44; contactos=19/19
+- C7 clasificación: S8-9637 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=36; índice=1; checkpoint=35; estados=39/39; contactos=15/15
+- C7 clasificación: S8-9657 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=11; índice=1; checkpoint=10; estados=132/132; contactos=10/10
+- C6 clasificación: S8-9664; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=9; índice=9; checkpoint=0; estados=22/22; contactos=12/12
+- C7 clasificación: S8-9664 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=11; índice=1; checkpoint=10; estados=12/12; contactos=8/8
+- C7 clasificación: S8-9697 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=1; checkpoint=30; estados=331/331; contactos=15/15
+- C6 clasificación: S8-9734; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=26; índice=26; checkpoint=0; estados=122/122; contactos=11/11
+- C7 clasificación: S8-9794 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=5; índice=1; checkpoint=4; estados=117/117; contactos=10/10
+- C7 clasificación: S8-9826 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=46; índice=1; checkpoint=45; estados=25/25; contactos=3/3
+- C6 clasificación: S8-9852; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=140; índice=140; checkpoint=0; estados=225/225; contactos=11/11
+- C7 clasificación: S8-9852 C7 k30; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=140; índice=110; checkpoint=30; estados=195/195; contactos=6/6
+- C7 clasificación: S8-9852 C7 postcontacto; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=140; índice=120; checkpoint=20; estados=205/205; contactos=9/9
+- C6 clasificación: S8-9871; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=29; índice=29; checkpoint=0; estados=100/100; contactos=19/19
+- C6 clasificación: S8-9906; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=21; índice=21; checkpoint=0; estados=76/76; contactos=3/3
+- C6 clasificación: S8-9973; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=7; índice=7; checkpoint=0; estados=92/92; contactos=10/10
+- C6 clasificación: S8-9977; tipo=solo orden de contactos; estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True; primerPaso=31; índice=31; checkpoint=0; estados=80/80; contactos=11/11
+- C13 ratios medidos ordenados (float32, R): 1.32343864, 2.03264618, 2.9091382, 8.159093, 8.159093, 8.159093, 8.159093, 8.159093, 8.159093, 8.159093, 8.159093, 8.159093, 9.831801, 15.6146765, 35.7052078
+- C16 máximo: S8-3821 robustez; paso=193; superficie=Floor; tipo=solo persistentes (reposo/contacto sostenido); penetración=0.612672448 mm; rapidez=5.8087306 m/s; previo=paso=192, p=(0.033009734, 0.02016184, 5.663484), v=(-2.65445018, -0.07766926, 6.766849), bits=3D073537,3CA52A71,40B53B43,C029E283,BD9F1110,40D88A07; estado=paso=193, p=(0.0451759659, 0.0193873271, 5.71094227), v=(1.45994782, -0.09155713, 5.621523), bits=3D390A6F,3C9ED22C,40B6C00A,3FBADF92,BDBB824E,40B3E384; contactos=[Floor@193 persistent=True, StepOnly, t=NaN, p=(0.0330097675, 0, 5.663484), n=(0, 0.99999994, 0), approach=(-2.65445018, -0.07766926, 6.766849); RightWall@193 persistent=True, StepOnly, t=NaN, p=(0, 0.0201618671, 5.663484), n=(1, 0, 0), approach=(-2.65445018, -0.07766926, 6.766849)]
