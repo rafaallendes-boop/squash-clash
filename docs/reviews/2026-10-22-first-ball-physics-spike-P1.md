@@ -1,6 +1,6 @@
 # I4b — P1 tras orden canónico de contactos
 
-Estado: **orden canónico de c7da32e aprobado por Claude, comunicado por el PO el 2026-10-23; campaña nativa autorizada y en preparación**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. I4b no cerrado; I4c, P2/T4.5 e I5+ no autorizados. PhysX sigue como candidato, sin elección de backend.
+Estado: **orden canónico de c7da32e aprobado por Claude, comunicado por el PO el 2026-10-23; build dev instalada y campaña nativa autorizada, pendiente de arranque y ejecución por el PO**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. I4b no cerrado; I4c, P2/T4.5 e I5+ no autorizados. PhysX sigue como candidato, sin elección de backend.
 
 Código de las cinco ejecuciones: **da98fd4**, Unity 6000.3.27f1. Preset **c86243b15a97**, seed **20261020**, 10.053 lanzamientos de robustez por variante (17 fijos + 10.000 S8 + 36 S8d), 20 calentamientos y 200 mediciones C17. `fastMotionThreshold=0.01 m` en ProjectPhysics. Se mantienen escenarios, umbrales, geometría, preset, Reset y comparador. El único cambio de salida física es el orden de los contactos de cada paso, aprobado expresamente por el PO.
 
@@ -155,3 +155,5 @@ La revisión de Claude sobre c7da32e habilita una build dev actual y la campaña
 El PO ejecutará la campaña en teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda y térmico nominal al comenzar. Sin capturas, devicectl ni herramientas durante la ejecución. Solo después de confirmar su término se recuperará Documents/spike para verificar 18 filas, hash de build/configuración, variante, 200 mediciones C17, térmico al inicio del benchmark e interrupciones de foco. C17 conserva **p95 ≤1 ms**; si no cumple será **Fail**. Cancelado/incompleto/NotEvaluated nunca aprueba.
 
 Comprobar vigencia efectiva antes de instalar; renovar si la instalación ocurre el 2026-10-27 o después. No cambiar Xcode ni herramientas. Finalizar el informe I4b tras recuperar la campaña y detenerse para revisión de Claude y decisión del PO. PR #4 borrador y sin fusionar; I4b abierto. I4c, P2/T4.5 e I5+ siguen sin autorizar. [Decisiones del PO](2026-10-21-first-ball-po-approvals.md).
+
+[Comprobación previa nativa](../validation/2026-10-23-i4b-native-preflight.md): build dev 2fdede5 instalada, Release ARM64 firmada, metadata y perfil verificados; prod excluye el puente. ProjectPhysics fastMotionThreshold=0.01 documentado con procedencia. Lanzamiento pendiente de desbloqueo; campaña e informe final aún pendientes.

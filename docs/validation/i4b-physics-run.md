@@ -4,6 +4,12 @@ Estado actual, 2026-10-23: **Claude aprobó el orden canónico de c7da32e; PO au
 
 [Autorización y condiciones](../reviews/2026-10-21-first-ball-po-approvals.md#revisión-claude-de-c7da32e-y-autorización-nativa--2026-10-23) · [Clasificación vigente y condiciones de C17 editor](../reviews/2026-10-22-first-ball-physics-spike-P1.md#revisión-de-claude-sobre-c7da32e-y-clasificación-vigente). La detención previa que se conserva debajo como historial quedó satisfecha por esta revisión; no autoriza cierre, merge ni I4c.
 
+## Preparación nativa actual
+
+Build dev **2fdede5 instalada**, export limpio, Release ARM64 firmada, Player no Development y metadata embebida verificada. Prod nuevo excluye DevPanel y el puente nativo. Perfil efectivo vigente hasta 2026-10-28T14:59:31Z, comprobado justo antes de instalar; herramientas intactas. [Comprobación corta ProjectPhysics fastMotionThreshold=0.01 y procedencia](2026-10-23-i4b-native-preflight.md), [evidencia saneada](evidence/2026-10-23-i4b-canonical-native.json).
+
+iOS rechazó el arranque por teléfono bloqueado; pendiente de desbloqueo del PO. Campaña aún sin iniciar. El informe I4b no está terminado: faltan campaña física completa y auditoría de sus 18 filas/hash/variante/200 muestras C17/térmico benchmark/foco. C17 mantiene p95 ≤1 ms (Fail si incumple). No habrá herramientas durante la ejecución y Documents/spike se recuperará solo cuando el PO confirme término. Sin cierre ni merge.
+
 ## Entrega de orden canónico
 
 La decisión PO 1b y la clasificación final de Claude están registradas literalmente en [aprobaciones](../reviews/2026-10-21-first-ball-po-approvals.md). Antes de cambiar comportamiento se repitieron baseline/speculative sobre 1c47621: baseline C7 3/3 solo orden; speculative C6 138 solo orden + 1 trayectoria/contactos distintos, C7 183/183 solo orden; C5 cero en ambas. Registro de cada divergencia, no una extrapolación del primer ejemplo.
