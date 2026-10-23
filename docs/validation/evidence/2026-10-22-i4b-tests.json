@@ -1,7 +1,7 @@
 {
   "date": "2026-10-22",
   "baseCommit": "6fd04e0",
-  "productCodeCommit": "ee76086ae48f688a62bc1ff23463eb94a5fad8de",
+  "productCodeCommit": "d14df6fc4cbfdb43b4747613954e5ba1c2685768",
   "runs": [
     {
       "xml": "Logs/i4b-diagnostics-green-results.xml",
@@ -206,7 +206,8 @@
     "Native helper exclusion rechecked against fresh dev/prod exports at ee76086; sanitized manifests stored alongside this file.",
     "Interrupted initial solver12 and redundant no-ed runs are not used as complete results. Only fresh complete XML/report pairs are listed in editor-runs manifest.",
     "Lifecycle diagnostic added after native attempt 4 unexpectedly lost focus despite PO reporting app foreground/no input. Two tests RED45/43pass/2fail → GREEN45/45. Cancellation remains unchanged; native getter linking/export validation pending.",
-    "No Core, physics, runner, scenarios, thresholds or preset changed by lifecycle diagnostics; existing EditMode170 remains evidence for unchanged Core."
+    "No Core, physics, runner, scenarios, thresholds or preset changed by lifecycle diagnostics; existing EditMode170 remains evidence for unchanged Core. Fresh dev/prod exports and Xcode27.1 ReleaseARM64 build succeeded at d14df6f clean; signature, embedded metadata and internal definitions/direct IL2CPP calls verified. Public-only nm filter was inapplicable and not counted as a RED test.",
+    "Diagnostic d14df6f installed after first CoreDevice XPC failure/retry success. PO verified launch and an intentional short Home interruption; native context fields persisted, nominal→nominal. This verifies diagnostics, not physics criteria or C17."
   ],
   "finalRegression": {
     "EditMode": {
@@ -222,5 +223,6 @@
       "skipped": 0
     }
   },
-  "lifecycleDiagnosticBase": "a02a74a"
+  "lifecycleDiagnosticBase": "a02a74a",
+  "measurementCodeCommit": "ee76086"
 }

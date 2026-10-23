@@ -1,6 +1,6 @@
 # I4b — ejecución de la prueba física P1
 
-Estado: **ENTREGA PARCIAL; pendiente de iPhone y clasificación de Claude**. [PR #4, borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), rama `firstball/i4b-physics-run`, base `6fd04e0`, código `ee76086`. I4a cerrado con merge commit `ca50142` tras las condiciones de Claude/PO (`3c66bad`, EditMode 159/159, PlayMode 37/37). S8d confirmado como velocidad total con arco bajo. I4b no se fusiona ni cierra con esta entrega.
+Estado: **ENTREGA PARCIAL; pendiente de iPhone y clasificación de Claude**. [PR #4, borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), rama `firstball/i4b-physics-run`, base `6fd04e0`, runner/mediciones `ee76086` y diagnóstico posterior `d14df6f`. I4a cerrado con merge commit `ca50142` tras las condiciones de Claude/PO (`3c66bad`, EditMode 159/159, PlayMode 37/37). S8d confirmado como velocidad total con arco bajo. I4b no se fusiona ni cierra con esta entrega.
 
 ## Implementación y regresión
 
@@ -55,6 +55,8 @@ Resoluciones del ejecutor en orden, con coste si resultan incorrectas. No son nu
 16. Preparar baseline como referencia nativa provisional porque ninguna alternativa domina los criterios. Coste: una revisión puede pedir una segunda variante (máximo dos); no congela ni elige backend.
 17. Conservar ledger y no marcar tareas completas mientras faltan clasificación y teléfono, aunque la revisión de código terminó. Coste: limpieza/cierre diferidos; no hay falsa aceptación.
 
+18. Añadir diagnóstico de ciclo de vida dentro de T4.4 tras la nueva interrupción física, sin otra revisión interna ni cambiar cancelación/mediciones. Coste: build y comprobación nativa adicionales; los valores son instantáneos y no prueban causa, como mostró el control de Inicio con UIKit aún active. Claude deberá revisar también este cambio posterior.
+
 **Deferred minors:** ninguno. Las áreas que el revisor dejó sin juzgar están recogidas arriba y en su informe, con su coste.
 
 ## Límites
@@ -63,4 +65,6 @@ Los fallos de P1 son datos. No se reconstruye Rigidbody, cambia integrador, cali
 
 ## Diagnóstico tras el cuarto intento
 
-La prueba física no llegó a C17. El PO informa ausencia de interacción y app al frente; no se atribuye el callback a una acción del usuario ni al estado serious. Se añaden únicamente datos de ciclo de vida/temporizador/progreso al informe de cancelación, sin cambiar su comportamiento ni las mediciones. Dos tests RED43/45 → GREEN45/45; fuentes UIKit y limitaciones en el informe físico. Build nativa diagnóstica aún pendiente; los cuatro intentos conservan procedencia ee76086 y no son una campaña completa. No se marca task-done ni se avanza a I4c.
+La prueba física no llegó a C17. El PO informa ausencia de interacción y app al frente; no se atribuye el callback a una acción del usuario ni al estado serious. Se añaden únicamente datos de ciclo de vida/temporizador/progreso al informe de cancelación, sin cambiar su comportamiento ni las mediciones. Dos tests RED43/45 → GREEN45/45; fuentes UIKit y limitaciones en el informe físico. Diagnóstico d14df6f con exports nuevos dev/prod correctos y build Xcode27.1 ReleaseARM64 firmada, metadata limpia y enlaces internos verificados; instalación por reintento correcta, arranque confirmado por el PO y diagnóstico verificado con salida voluntaria a Inicio. los cuatro intentos conservan procedencia ee76086 y no son una campaña completa. No se marca task-done ni se avanza a I4c.
+
+La prueba corta d14df6f duró 8,320 s, nominal→nominal: foco=false, UIKit=active, idleTimerDisabled=true, sleepTimeout=-1, S8-109, 0,013027 y benchmarkSamples=0. Informe INCOMPLETO esperado, guardado/copiado y recuperado; [evidencia](evidence/2026-10-22-i4b-lifecycle-check.json). Ese UIKit active también ocurre en la interrupción voluntaria y no prueba falso positivo. Causa del cuarto intento sin resolver, C17 nativo sin medir. I4b continúa parcial; ninguna tarea se marca completa. No se pidió una nueva campaña larga con esta misma entrega.
