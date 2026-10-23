@@ -27,6 +27,7 @@ namespace SquashClash.DevPanel
         private Vector3 savedGravity;
         private int previousSleepTimeout, scenarioIndex, progressMark;
         private bool waiting, restoreHost;
+        private double startedRealtime;
         private string started, thermalStart, reportDirectory;
         public bool IsRunning { get; private set; }
         public string LastReport { get; private set; }
@@ -73,6 +74,7 @@ namespace SquashClash.DevPanel
                 cancel.style.display = DisplayStyle.None; close.style.display = DisplayStyle.Flex; return;
             }
             started = DateTime.UtcNow.ToString("O"); thermalStart = thermal;
+            startedRealtime = Time.realtimeSinceStartupAsDouble;
             config = EffectiveConfig.From(app.Params); savedGravity = UnityEngine.Physics.gravity;
             previousSleepTimeout = Screen.sleepTimeout; Screen.sleepTimeout = SleepTimeout.NeverSleep;
             app.Host.ReleaseForExperiment(); IsRunning = true; waiting = true; progressMark = -1;
@@ -112,13 +114,15 @@ namespace SquashClash.DevPanel
             }
             catch (Exception e) { Debug.LogException(e); CancelRun("Excepción: " + e.GetType().Name + ": " + e.Message); }
         }
-        public void CancelRun(string reason)
+        public void CancelRun(string reason) => CancelRun(reason, null);
+        private void CancelRun(string reason, string lifecycleContext)
         {
             if (!IsRunning) return;
             run?.Cancel(); benchmark?.Cancel();
             if (result == null) result = new SpikeResult { Backend = "P1-PhysX", Variant = "baseline/" + PhysXVariant.Baseline.Name,
                 Build = app.Build.Label, ConfigHash = config.Hash, Device = Application.isEditor ? "editor" : SystemInfo.deviceModel,
                 Criteria = SpikeCriteria.CreateResults(Application.platform == RuntimePlatform.IPhonePlayer) };
+            if (lifecycleContext != null) result.Details.Add(lifecycleContext);
             result.Complete = false; result.Details.Add(reason); Finish("INCOMPLETO — " + reason);
         }
         private void Finish(string message)
@@ -151,11 +155,25 @@ namespace SquashClash.DevPanel
             Debug.Log("[SquashClash] spike output complete=" + result.Complete + " thermal=" + result.ThermalStart + "→" + result.ThermalEnd + " saved=" + (LastReportPath != null));
         }
         private static bool HasPhysicsScenes() => Enumerable.Range(0, SceneManager.sceneCount).Select(SceneManager.GetSceneAt).Any(s => s.name.StartsWith("P1-PhysX-", StringComparison.Ordinal));
-        private void OnApplicationPause(bool paused) { if (paused) CancelRun("Segundo plano"); }
-        private void OnApplicationFocus(bool focused) { if (!focused) CancelRun("Pérdida de foco"); }
+        private string LifecycleContext(string lifecycleEvent)
+        {
+            string phase = waiting ? "Preparando escenas" : benchmark != null ? "Benchmark" : run?.Phase ?? "sin runner";
+            float progress = run?.Progress ?? 0;
+            string uikitState = "editor-unavailable", idleTimerDisabled = "editor-unavailable";
+#if UNITY_IOS && !UNITY_EDITOR
+            switch (SquashClashApplicationState())
+            { case 0: uikitState = "active"; break; case 1: uikitState = "inactive"; break; case 2: uikitState = "background"; break; default: uikitState = "unknown"; break; }
+            idleTimerDisabled = SquashClashIdleTimerDisabled() == 1 ? "true" : "false";
+#endif
+            return FormattableString.Invariant($"Lifecycle event={lifecycleEvent}; utc={DateTime.UtcNow:O}; elapsedSeconds={Time.realtimeSinceStartupAsDouble - startedRealtime:F3}; frame={Time.frameCount}; unityFocused={Application.isFocused}; uikitState={uikitState}; uikitIdleTimerDisabled={idleTimerDisabled}; sleepTimeout={Screen.sleepTimeout}; thermal={ThermalState()}; phase={phase}; progress={progress:F6}; benchmarkSamples={benchmark?.Samples ?? 0}");
+        }
+        private void OnApplicationPause(bool paused) { if (paused && IsRunning) CancelRun("Segundo plano", LifecycleContext("pause(true)")); }
+        private void OnApplicationFocus(bool focused) { if (!focused && IsRunning) CancelRun("Pérdida de foco", LifecycleContext("focus(false)")); }
         private void OnDestroy() { CancelRun("Sección destruida"); layer?.RemoveFromHierarchy(); }
 #if UNITY_IOS && !UNITY_EDITOR
         [DllImport("__Internal")] private static extern int SquashClashThermalState();
+        [DllImport("__Internal")] private static extern int SquashClashApplicationState();
+        [DllImport("__Internal")] private static extern int SquashClashIdleTimerDisabled();
 #endif
         private static string ThermalState()
         {

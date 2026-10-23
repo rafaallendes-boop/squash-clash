@@ -33,3 +33,7 @@ Las ejecuciones completas cd7fc2a de línea base y especulativa se conservan con
 | Declarar T4.3/T4.4 terminadas con datos en curso | No se declara; revisión de código adelantada y borrador explícito. Coste: no hay aceptación/fusión automática. |
 
 No hay Minor diferidos. No habrá una segunda revisión interna: se verifican las correcciones con RED→GREEN y suites completas; Claude revisará la PR según el flujo autorizado.
+
+## Diagnóstico posterior a la revisión
+
+El cuarto intento nativo físico terminó incompleto a los 649,693 s por foco, térmico serious, mientras el PO declara app al frente sin interacción. Se incorpora contexto UIKit/idle timer/progreso a la cancelación de T4.4, con dos tests RED→GREEN, PlayMode45/45. Es trabajo de diagnóstico nuevo posterior a esta revisión y al único pase de sus dos Important; no se presenta como revisado por este agente ni se solicita segunda revisión interna. No cambia cancelación ni mediciones. Claude deberá revisar la PR completa antes de fusionar; iPhone/C17 siguen sin completar.

@@ -34,6 +34,20 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator Completion_SaveFailureStillShowsReportAndRecoversHost()=>SaveFailure(false);
         [UnityTest] public IEnumerator Cancellation_SaveFailureStillShowsReportAndRecoversHost()=>SaveFailure(true);
+        [UnityTest] public IEnumerator FocusLoss_RecordsLifecycleContextAndStillCancels()=>LifecycleCancellation(false);
+        [UnityTest] public IEnumerator Background_RecordsLifecycleContextAndStillCancels()=>LifecycleCancellation(true);
+        private IEnumerator LifecycleCancellation(bool paused) {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
+            var section=Object.FindFirstObjectByType<SpikeSection>();section.Begin();
+            section.SendMessage(paused?"OnApplicationPause":"OnApplicationFocus",paused);
+            Assert.That(section.IsRunning,Is.False);Assert.That(section.LastReport,Does.Contain("**INCOMPLETO**"));
+            Assert.That(section.LastReport,Does.Contain(paused?"Segundo plano":"Pérdida de foco"));
+            Assert.That(section.LastReport,Does.Contain(paused?"Lifecycle event=pause(true)":"Lifecycle event=focus(false)"));
+            foreach(var field in new[]{"utc=","elapsedSeconds=","frame=","unityFocused=","uikitState=editor-unavailable","uikitIdleTimerDisabled=editor-unavailable","sleepTimeout=-1","thermal=","phase=Preparando escenas","progress=0.000000","benchmarkSamples=0"})
+                Assert.That(section.LastReport,Does.Contain(field));
+            Assert.That(File.ReadAllText(section.LastReportPath),Is.EqualTo(section.LastReport));
+            Assert.That(Screen.sleepTimeout,Is.EqualTo(sleep));
+        }
         private IEnumerator SaveFailure(bool cancelled) {
             yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
             var app=AppBootstrap.Instance;var host=app.Host;host.enabled=false;int generation=host.SimulationGeneration;

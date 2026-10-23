@@ -98,6 +98,25 @@ Perfil válido al compilar, vence **2026-10-28T14:59:31Z**. Comprobar vigencia a
 
 Pendiente: observar cancelación por segundo plano y ejecutar prueba completa con térmico **nominal** al inicio, guardar térmico final y metadata; recuperar Documents/spike y verificar sus 18 filas, hash, variante y 200 mediciones nativas. C17 nativo **no evaluado**. Después completar este informe y detenerse para el PO/Claude; no fusionar automáticamente, ni I4c, P2 o I5+.
 
+## Cuarto intento físico y diagnóstico de ciclo de vida
+
+El PO confirmó ejecución en el iPhone físico, sin Duplicación activa, y luego declaró **«No toqué nada; la app seguía al frente»** al preguntar por la interrupción. Codex no activó CUA ni Duplicación durante esa campaña: observó capturas directas de la pantalla primaria en 5 %, 26 %, 41 %, 54 %, 67 % y 78 %, y leyó Documents/spike periódicamente. El log adjunto al proceso anterior de Duplicación no se usa como prueba del proceso físico.
+
+[Cuarto informe nativo sin alterar](../validation/evidence/physics-spike-P1/iphone-ee76086-P1-20261023-000205-032.md), fuente `ee76086`:
+
+- Inicio UTC 2026-10-22T23:51:15.3341060Z; fin 2026-10-23T00:02:05.0271650Z. Hora local de Santiago del **22 de octubre**: 20:51:15 → 21:02:05, duración 649,693 s.
+- **INCOMPLETO — Pérdida de foco**, 8.732/10.053 lanzamientos de robustez registrados. No fue un resultado completo ni una excepción capturada por el runner.
+- Térmico **nominal → serious**. C17 **0/200**, no evaluado; no se alcanzó el benchmark. Todas las coberturas permanecen abiertas, incluso donde ya hay contadores parciales.
+- La configuración existente adapta FPS a 30 en serious; coincide con los 30 FPS observados al 78 %. El código no cancela por temperatura durante la campaña; solo exige nominal al iniciar. La coincidencia no identifica la causa de pérdida de foco.
+
+**Causa todavía no establecida.** La condición directa en código es `OnApplicationFocus(false)` → cancelación. No hay evidencia suficiente para afirmar que la app fue enviada a segundo plano, que el PO interactuó, que hubo un cierre por memoria, o que el calor provocó ese callback. La app guardó el informe de cancelación. No se pide otra repetición larga idéntica ni se desactiva la cancelación para obtener un resultado favorable.
+
+Se añade un diagnóstico mínimo al informe de cancelación: evento exacto foco/pausa, UTC, segundos desde inicio, frame, foco de Unity, estado de UIKit, temporizador de bloqueo nativo, sleepTimeout solicitado, temperatura, fase/progreso y muestras de benchmark. El puente nativo es de lectura y sigue excluido de prod. `UIApplication.applicationState` representa la app o su escena más activa; **no identifica por sí solo la causa ni cada escena de Duplicación**. El temporizador se lee al recibir el evento, no demuestra retrospectivamente su estado durante los diez minutos.
+
+Dos tests nuevos reproducen la ausencia de ese contexto: **RED 43/45 → GREEN 45/45 PlayMode**. Verifican tanto foco como pausa, reporte persistido, INCOMPLETO, restauración del sleepTimeout y cancelación conservada. No se modifican Core, P1, mediciones, números de escenarios, umbrales, presupuesto de 8 ms, 20 warmup o 200 mediciones. La compilación/enlace iOS y exclusión prod de este diagnóstico se validarán antes de instalarlo. Este cambio no convierte ningún intento parcial en válido ni atribuye una nueva revisión a Claude.
+
+Fuentes: [Unity 6.3 OnApplicationFocus](https://docs.unity3d.com/6000.3/Documentation/ScriptReference/MonoBehaviour.OnApplicationFocus.html), [UIKit applicationState](https://developer.apple.com/documentation/uikit/uiapplication/applicationstate), [estado inactive](https://developer.apple.com/documentation/uikit/uiapplication/state/inactive), [idleTimerDisabled](https://developer.apple.com/documentation/uikit/uiapplication/isidletimerdisabled), [Apple serious](https://developer.apple.com/documentation/foundation/processinfo/thermalstate-swift.enum/serious).
+
 ## Fuentes técnicas
 
 - [Apple ProcessInfo.ThermalState](https://developer.apple.com/documentation/foundation/processinfo/thermalstate-swift.enum): lectura real de nominal/fair/serious/critical.

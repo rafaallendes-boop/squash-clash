@@ -12,7 +12,7 @@ T4.4 añade Escenario (S1–S10, S8 representativo y nueve S9) y Prueba física 
 
 El estado térmico iOS se lee con un puente mínimo a NSProcessInfo; inicio nativo bloqueado hasta nominal. Exclusión real del puente de prod con PluginImporter.SetIncludeInBuildDelegate, además de la exclusión del ensamblado DevPanel. Exports nuevos RED (prod incluía un archivo nativo) → GREEN (dev incluye, prod excluye; módulos C# correctos). Repetidos sobre `ee76086`, ambos metadata limpia: [dev](evidence/2026-10-22-i4b-release-dev.json) y [prod](evidence/2026-10-22-i4b-release-prod.json). No se cambian defines persistentes, presets ni configuración física base.
 
-**Regresión final: EditMode 170/170, PlayMode 43/43**, cero omitidos/fallos. [Manifiesto RED/GREEN](evidence/2026-10-22-i4b-tests.json). Una revisión interna fresca detectó dos Important (mediana par C13, recuperación tras fallo de escritura); ambos reproducidos RED→GREEN y corregidos en un único pase, sin segunda revisión. No sustituye la revisión de Claude. [Revisión y resoluciones](../reviews/2026-10-22-first-ball-i4b-internal-review.md).
+**Regresión: Core sin cambios conserva EditMode 170/170; PlayMode actual 45/45**, cero omitidos/fallos. [Manifiesto RED/GREEN](evidence/2026-10-22-i4b-tests.json). Una revisión interna fresca detectó dos Important (mediana par C13, recuperación tras fallo de escritura); ambos reproducidos RED→GREEN y corregidos en un único pase, sin segunda revisión. No sustituye la revisión de Claude. [Revisión y resoluciones](../reviews/2026-10-22-first-ball-i4b-internal-review.md).
 
 ## Campaña y artefacto nativo
 
@@ -27,7 +27,7 @@ Artefacto local listo en `Builds/DerivedData-dev/Build/Products/Release-iphoneos
 ## Pendientes que impiden el cierre
 
 1. Instalación/arranque, Escenario S1→S2 y Cancelar ya observados en nativo; pérdida de foco nativa también canceló un segundo intento a los 20 s (nominal→nominal). No se atribuye al callback de pausa; los tests cubren la ruta de segundo plano. Capturas e informes INCOMPLETO conservados.
-2. Tres intentos INCOMPLETO conservados, cancelación manual y dos pérdidas de foco; [manifiesto nativo](evidence/2026-10-22-i4b-iphone-runs.json). Campaña completa baseline/hash c86243b15a97 en teléfono nominal al empezar; térmico final, metadata y 200 mediciones C17, recuperación del informe de Documents/spike y comprobación de sus 18 filas.
+2. Cuatro intentos INCOMPLETO conservados; último físico 649,693 s, 8.732/10.053 lanzamientos, nominal→serious y pérdida de foco pese a app al frente según PO; [manifiesto nativo](evidence/2026-10-22-i4b-iphone-runs.json). Campaña completa baseline/hash c86243b15a97 en teléfono nominal al empezar; térmico final, metadata y 200 mediciones C17, recuperación del informe de Documents/spike y comprobación de sus 18 filas.
 3. Clasificación de Claude del paso 6 de T4.3: adaptador, prueba o limitación del motor para cada incumplimiento; no atribuirla por cuenta propia. Si exige corrección, repetir evidencia afectada.
 4. Completar informe y detenerse para el PO/Claude. No aceptación del PO, cierre/fusión de I4b ni decisión de gate implícita.
 
@@ -60,3 +60,7 @@ Resoluciones del ejecutor en orden, con coste si resultan incorrectas. No son nu
 ## Límites
 
 Los fallos de P1 son datos. No se reconstruye Rigidbody, cambia integrador, calibran escenarios, relajan umbrales ni elige backend para hacer pasar resultados. I4c, P2/T4.5 e I5+ no autorizados. Spec/plan originales sin modificar. El worktree principal de I4b se conserva para Claude y el checkpoint del iPhone.
+
+## Diagnóstico tras el cuarto intento
+
+La prueba física no llegó a C17. El PO informa ausencia de interacción y app al frente; no se atribuye el callback a una acción del usuario ni al estado serious. Se añaden únicamente datos de ciclo de vida/temporizador/progreso al informe de cancelación, sin cambiar su comportamiento ni las mediciones. Dos tests RED43/45 → GREEN45/45; fuentes UIKit y limitaciones en el informe físico. Build nativa diagnóstica aún pendiente; los cuatro intentos conservan procedencia ee76086 y no son una campaña completa. No se marca task-done ni se avanza a I4c.

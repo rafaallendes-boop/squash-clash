@@ -170,6 +170,31 @@
         "SquashClash.Runtime.Tests.SpikeSectionTests.Cancellation_SaveFailureStillShowsReportAndRecoversHost",
         "SquashClash.Runtime.Tests.SpikeSectionTests.Completion_SaveFailureStillShowsReportAndRecoversHost"
       ]
+    },
+    {
+      "xml": "Logs/i4b-lifecycle-red-results.xml",
+      "sha256": "bf52e5a02b08fa171d073ad1118ef2c8c4b731f83e3f1630eb63bc1e8fa9e6f9",
+      "counts": {
+        "total": 45,
+        "passed": 43,
+        "failed": 2,
+        "skipped": 0
+      },
+      "failedTests": [
+        "SquashClash.Runtime.Tests.SpikeSectionTests.Background_RecordsLifecycleContextAndStillCancels",
+        "SquashClash.Runtime.Tests.SpikeSectionTests.FocusLoss_RecordsLifecycleContextAndStillCancels"
+      ]
+    },
+    {
+      "xml": "Logs/i4b-lifecycle-green-results.xml",
+      "sha256": "59940383cbd769eaef6535b924f8c4a4d18010d61bee452d1a4065c50a3d4d03",
+      "counts": {
+        "total": 45,
+        "passed": 45,
+        "failed": 0,
+        "skipped": 0
+      },
+      "failedTests": []
     }
   ],
   "notes": [
@@ -179,7 +204,9 @@
     "Five complete editor variants; native dev signed and ready, not installed; device execution and physical-failure classification pending. No I4c decision.",
     "Single fresh independent code review: two Important findings; one RED-to-GREEN fix pass at ee76086, no re-review.",
     "Native helper exclusion rechecked against fresh dev/prod exports at ee76086; sanitized manifests stored alongside this file.",
-    "Interrupted initial solver12 and redundant no-ed runs are not used as complete results. Only fresh complete XML/report pairs are listed in editor-runs manifest."
+    "Interrupted initial solver12 and redundant no-ed runs are not used as complete results. Only fresh complete XML/report pairs are listed in editor-runs manifest.",
+    "Lifecycle diagnostic added after native attempt 4 unexpectedly lost focus despite PO reporting app foreground/no input. Two tests RED45/43pass/2fail → GREEN45/45. Cancellation remains unchanged; native getter linking/export validation pending.",
+    "No Core, physics, runner, scenarios, thresholds or preset changed by lifecycle diagnostics; existing EditMode170 remains evidence for unchanged Core."
   ],
   "finalRegression": {
     "EditMode": {
@@ -189,10 +216,11 @@
       "skipped": 0
     },
     "PlayMode": {
-      "total": 43,
-      "passed": 43,
+      "total": 45,
+      "passed": 45,
       "failed": 0,
       "skipped": 0
     }
-  }
+  },
+  "lifecycleDiagnosticBase": "a02a74a"
 }

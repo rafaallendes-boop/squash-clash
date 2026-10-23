@@ -427,6 +427,148 @@
           "coverage": "abierta"
         }
       }
+    },
+    {
+      "report": "docs/validation/evidence/physics-spike-P1/iphone-ee76086-P1-20261023-000205-032.md",
+      "sha256": "9771caf59c91bdffb801bb6984f4b3133928ae78b94385d8a058f4885aeb30ad",
+      "complete": false,
+      "metadata": [
+        "Backend: P1-PhysX; variante: baseline/ccdDyn-co1mm-it6-1; build: 0.1.0+ee76086 dev",
+        "Dispositivo: iPhone17,1; configuración: c86243b15a97",
+        "Perfil: dev; OS: iOS 26.6.2; UTC: 2026-10-22T23:51:15.3341060Z → 2026-10-23T00:02:05.0271650Z",
+        "Térmico: nominal → serious",
+        "ProjectPhysics: EnhancedDeterminism=true; bounceThreshold=0,1; Unity=6000.3.27f1"
+      ],
+      "terminationReason": "Pérdida de foco",
+      "criteria": {
+        "C1": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "8732/0/10053",
+          "coverage": "abierta"
+        },
+        "C2": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "59066/0/59066",
+          "coverage": "abierta"
+        },
+        "C3": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "1237/340/1577",
+          "coverage": "abierta"
+        },
+        "C4": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "4/0/4",
+          "coverage": "abierta"
+        },
+        "C5": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "105/0/117",
+          "coverage": "abierta"
+        },
+        "C6": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "8731/0/10017",
+          "coverage": "abierta"
+        },
+        "C7": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "16373/1087/17460",
+          "coverage": "abierta"
+        },
+        "C8": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "0/0/2",
+          "coverage": "abierta"
+        },
+        "C9": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "abierta"
+        },
+        "C10": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "9/0/9",
+          "coverage": "abierta"
+        },
+        "C11": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "6/0/6",
+          "coverage": "abierta"
+        },
+        "C12": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "11/0/11",
+          "coverage": "abierta"
+        },
+        "C13": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/38/40",
+          "coverage": "abierta"
+        },
+        "C14": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "0/0/0",
+          "coverage": "abierta"
+        },
+        "C15": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "2/0/2",
+          "coverage": "abierta"
+        },
+        "C16": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "0/0/0",
+          "coverage": "abierta"
+        },
+        "C17": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": true,
+          "evaluatedNotEvaluableExpected": "0/0/200",
+          "coverage": "abierta"
+        },
+        "C18": {
+          "measurement": "No evaluado",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluatedNotEvaluableExpected": "0/0/0",
+          "coverage": "abierta"
+        }
+      }
     }
-  ]
+  ],
+  "fourthAttemptOperatorStatement": "PO: no interaction; app remained foreground. No CUA operations during physical run; primary-display captures and app-container copies only. Origin of focus callback is not established."
 }
