@@ -1,0 +1,19 @@
+{
+  "authorization": "PO PR4 review point5a/5c,2026-10-22",
+  "red": {
+    "suite": "SpikeSectionTests",
+    "total": 12,
+    "passed": 5,
+    "failed": 7,
+    "xmlSha256": "ebbe091e5c0d0923f6710635e234a28f34d2cdf574dcd4f569debd42981ff595"
+  },
+  "green": {
+    "suite": "all PlayMode",
+    "total": 54,
+    "passed": 54,
+    "failed": 0,
+    "skipped": 0,
+    "xmlSha256": "55ef2738a9f8b77da71b3b47d9fb5ab52696e4aedaecec42de24528be0d9a4de"
+  },
+  "scope": "Robustness focusloss suspends/resumes<60s; >=60s cancels in Update or focusreturn. Background cancels. C17focusloss cancels. Interruptioncount,UTC,duration,phase/progress,lifecycle and benchmarkstartthermal recorded. No new thermal threshold. Native not run under new policy; iPhone paused for Claude."
+}

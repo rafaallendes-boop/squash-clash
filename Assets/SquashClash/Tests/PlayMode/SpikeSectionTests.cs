@@ -34,7 +34,88 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator Completion_SaveFailureStillShowsReportAndRecoversHost()=>SaveFailure(false);
         [UnityTest] public IEnumerator Cancellation_SaveFailureStillShowsReportAndRecoversHost()=>SaveFailure(true);
-        [UnityTest] public IEnumerator FocusLoss_RecordsLifecycleContextAndStillCancels()=>LifecycleCancellation(false);
+        [UnityTest] public IEnumerator FocusLoss_RobustnessWaitsAndResumes_RecordsTwoInterruptions()
+        {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
+            var section=Object.FindFirstObjectByType<SpikeSection>();var app=AppBootstrap.Instance;
+            section.Begin();
+            for(int i=0;i<120&&Field(section,"run")==null;i++)yield return null;
+            var run=(SpikeRun)Field(section,"run");Assert.That(run,Is.Not.Null);float before=run.Progress;
+            section.SendMessage("OnApplicationFocus",false);app.SendMessage("OnApplicationFocus",false);
+            Assert.That(section.IsRunning,Is.True);Assert.That(section.LastReport,Is.Null);
+            for(int i=0;i<3;i++)yield return null;
+            Assert.That(run.Progress,Is.EqualTo(before),"no jobs while focus is absent");
+            section.SendMessage("OnApplicationFocus",false); // duplicate loss is one interval
+            section.SendMessage("OnApplicationFocus",true);
+            Assert.That(app.GetComponent<SquashClash.Runtime.App.ResumeOverlay>().IsVisible,Is.False,"experiment resumes without an extra tap");
+            yield return null;Assert.That(run.Progress,Is.GreaterThan(before));
+            section.SendMessage("OnApplicationFocus",false);yield return null;section.SendMessage("OnApplicationFocus",true);
+            section.CancelRun("test output");
+            Assert.That(section.LastReport,Does.Contain("Interrupciones de foco: 2"));Assert.That(section.LastReport,Does.Contain("focus(false)"));Assert.That(section.LastReport,Does.Contain("focus(true)"));
+            foreach(var field in new[]{"utc=","durationSeconds=","phase=","progress=","uikitState=","outcome=resumed"})Assert.That(section.LastReport,Does.Contain(field));
+            Assert.That(section.LastReport,Does.Contain("INCOMPLETO"),"logged interruptions do not approve a cancelled run");
+        }
+        [UnityTest] public IEnumerator FocusLoss_BenchmarkStillCancelsAndCountsInterruption()
+        {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
+            var section=Object.FindFirstObjectByType<SpikeSection>();section.Begin();section.enabled=false;
+            var cfg=AppBootstrap.Instance.Config;
+            var benchmark=new PredictionBenchmarkRun(new SquashClash.Runtime.Physics.PhysXBallSimulationFactory(),cfg.Physics,cfg.Court);
+            SetField(section,"benchmark",benchmark);SetField(section,"waiting",false);
+            section.SendMessage("OnApplicationFocus",false);
+            Assert.That(section.IsRunning,Is.False);Assert.That(section.LastReport,Does.Contain("Pérdida de foco"));
+            Assert.That(section.LastReport,Does.Contain("phase=Benchmark"));Assert.That(section.LastReport,Does.Contain("Interrupciones de foco: 1"));
+            Assert.That(section.LastReport,Does.Contain("INCOMPLETO"));
+        }
+        [UnityTest] public IEnumerator FocusLoss_TimeoutAt60Seconds_CancelsEvenWhenFocusReturns()=>FocusTimeout(true);
+        [UnityTest] public IEnumerator FocusLoss_TimeoutAt60Seconds_CancelsWithoutRecovery()=>FocusTimeout(false);
+        private IEnumerator FocusTimeout(bool recover)
+        {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
+            var section=Object.FindFirstObjectByType<SpikeSection>();section.Begin();section.enabled=false;
+            section.SendMessage("OnApplicationFocus",false);Assert.That(section.IsRunning,Is.True);
+            // Move the monotonic loss timestamp to avoid a 60-second test sleep.
+            SetField(section,"focusLostAt",Time.realtimeSinceStartupAsDouble-60.01);
+            if(recover)section.SendMessage("OnApplicationFocus",true);else section.SendMessage("Update");
+            Assert.That(section.IsRunning,Is.False);Assert.That(section.LastReport,Does.Contain("60 s"));
+            Assert.That(section.LastReport,Does.Contain("INCOMPLETO"));Assert.That(section.LastReport,Does.Contain("durationSeconds="));
+        }
+        [UnityTest] public IEnumerator FocusLoss_RecoveryBefore60Seconds_ThenBackgroundStillCancels()
+        {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
+            var section=Object.FindFirstObjectByType<SpikeSection>();section.Begin();section.enabled=false;
+            section.SendMessage("OnApplicationFocus",false);Assert.That(section.IsRunning,Is.True);
+            SetField(section,"focusLostAt",Time.realtimeSinceStartupAsDouble-59);
+            section.SendMessage("OnApplicationFocus",true);Assert.That(section.IsRunning,Is.True);
+            section.SendMessage("OnApplicationPause",true);Assert.That(section.IsRunning,Is.False);
+            Assert.That(section.LastReport,Does.Contain("Segundo plano"));Assert.That(section.LastReport,Does.Contain("Interrupciones de foco: 1"));
+        }
+        [UnityTest] public IEnumerator CompletedReport_WithFocusInterruptionKeepsCompleteStatus()
+        {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
+            var section=Object.FindFirstObjectByType<SpikeSection>();section.Begin();section.enabled=false;
+            section.SendMessage("OnApplicationFocus",false);Assert.That(section.IsRunning,Is.True);section.SendMessage("OnApplicationFocus",true);
+            SetField(section,"result",new SpikeResult{Complete=true,Device="editor",Criteria=SpikeCriteria.CreateResults(false)});
+            typeof(SpikeSection).GetMethod("Finish",BindingFlags.NonPublic|BindingFlags.Instance).Invoke(section,new object[]{"Prueba completa"});
+            Assert.That(section.LastReport,Does.Contain("**COMPLETO**"));Assert.That(section.LastReport,Does.Contain("Interrupciones de foco: 1"));
+            Assert.That(section.LastReport,Does.Contain("NO APROBADOS / NO EVALUADOS"),"completion alone does not approve physics");
+        }
+        [UnityTest] public IEnumerator BenchmarkStart_RecordsThermalStateBeforeAnyMeasurements()
+        {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
+            var section=Object.FindFirstObjectByType<SpikeSection>();section.Begin();section.enabled=false;
+            var cfg=AppBootstrap.Instance.Config;var factory=new SquashClash.Runtime.Physics.PhysXBallSimulationFactory();
+            var run=new SpikeRun(factory,cfg.Physics,cfg.Court,new SpikeOptions{RandomCount=0,Device="editor"});
+            // Inject only the completed-robustness boundary; no 10k physical campaign in a UI regression.
+            typeof(SpikeRun).GetField("finished",BindingFlags.NonPublic|BindingFlags.Instance).SetValue(run,true);run.Result.Complete=true;
+            SetField(section,"run",run);SetField(section,"result",run.Result);SetField(section,"factory",factory);SetField(section,"waiting",false);
+            section.SendMessage("Update");Assert.That(((PredictionBenchmarkRun)Field(section,"benchmark")).Samples,Is.Zero);
+            section.CancelRun("thermal metadata check");
+            Assert.That(section.LastReport,Does.Contain("Térmico al iniciar benchmark C17 (informativo): editor / no disponible"));
+            Assert.That(section.LastReport,Does.Contain("INCOMPLETO"));
+        }
+        private static object Field(SpikeSection section,string name)=>typeof(SpikeSection).GetField(name,BindingFlags.NonPublic|BindingFlags.Instance).GetValue(section);
+        private static void SetField(SpikeSection section,string name,object value)=>typeof(SpikeSection).GetField(name,BindingFlags.NonPublic|BindingFlags.Instance).SetValue(section,value);
         [UnityTest] public IEnumerator Background_RecordsLifecycleContextAndStillCancels()=>LifecycleCancellation(true);
         private IEnumerator LifecycleCancellation(bool paused) {
             yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;

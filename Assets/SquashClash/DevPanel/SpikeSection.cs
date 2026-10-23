@@ -27,7 +27,11 @@ namespace SquashClash.DevPanel
         private Vector3 savedGravity;
         private int previousSleepTimeout, scenarioIndex, progressMark;
         private bool waiting, restoreHost;
-        private double startedRealtime;
+        private double startedRealtime, focusLostAt;
+        private bool waitingForFocus;
+        private int focusInterruptionCount;
+        private readonly List<string> focusEvents = new List<string>();
+        private string focusLossContext, thermalBenchmarkStart;
         private string started, thermalStart, reportDirectory;
         public bool IsRunning { get; private set; }
         public string LastReport { get; private set; }
@@ -75,6 +79,8 @@ namespace SquashClash.DevPanel
             }
             started = DateTime.UtcNow.ToString("O"); thermalStart = thermal;
             startedRealtime = Time.realtimeSinceStartupAsDouble;
+            waitingForFocus = false; focusInterruptionCount = 0; focusEvents.Clear();
+            focusLossContext = thermalBenchmarkStart = null;
             config = EffectiveConfig.From(app.Params); savedGravity = UnityEngine.Physics.gravity;
             previousSleepTimeout = Screen.sleepTimeout; Screen.sleepTimeout = SleepTimeout.NeverSleep;
             app.Host.ReleaseForExperiment(); IsRunning = true; waiting = true; progressMark = -1;
@@ -86,6 +92,12 @@ namespace SquashClash.DevPanel
             if (restoreHost && !IsRunning && !HasPhysicsScenes() && app != null && app.Host != null)
             { restoreHost = false; app.Host.Replay(); app.Host.Clock.Paused = true; }
             if (!IsRunning) return;
+            if (waitingForFocus)
+            {
+                if (Time.realtimeSinceStartupAsDouble - focusLostAt >= 60)
+                    CancelRun("Foco no recuperado en 60 s", LifecycleContext("focus(timeout)"));
+                return; // No robustness jobs or benchmark samples while focus is absent.
+            }
             try
             {
                 if (waiting)
@@ -104,8 +116,8 @@ namespace SquashClash.DevPanel
                     int mark = (int)(run.Progress * 20);
                     if (mark != progressMark) { progressMark = mark; Debug.Log("[SquashClash] spike " + status.text); }
                     if (!done) return;
+                    thermalBenchmarkStart = ThermalState(); // Informational snapshot before scene creation/warmup.
                     benchmark = new PredictionBenchmarkRun(factory, config.Physics, config.Court);
-                    result.Details.Add("Térmico antes del benchmark=" + ThermalState());
                     return; // Separate frames; do not spend two budgets in one frame.
                 }
                 status.text = "Benchmark — 20 calentamientos y 200 mediciones; n=" + benchmark.Samples;
@@ -118,6 +130,7 @@ namespace SquashClash.DevPanel
         private void CancelRun(string reason, string lifecycleContext)
         {
             if (!IsRunning) return;
+            EndFocusInterruption("cancelled", "focus(end)");
             run?.Cancel(); benchmark?.Cancel();
             if (result == null) result = new SpikeResult { Backend = "P1-PhysX", Variant = "baseline/" + PhysXVariant.Baseline.Name,
                 Build = app.Build.Label, ConfigHash = config.Hash, Device = Application.isEditor ? "editor" : SystemInfo.deviceModel,
@@ -137,6 +150,8 @@ namespace SquashClash.DevPanel
             result.Profile = app.Build.profile; result.OS = SystemInfo.operatingSystem;
             result.StartedAtUtc = started; result.EndedAtUtc = DateTime.UtcNow.ToString("O");
             result.ThermalStart = thermalStart; result.ThermalEnd = ThermalState();
+            result.ThermalBenchmarkStart = thermalBenchmarkStart;
+            result.FocusInterruptions = focusInterruptionCount; result.Details.AddRange(focusEvents);
             LastReport = SpikeReportWriter.ToMarkdown(result); LastReportPath = null;
             // Recover controls and present the in-memory result before attempting independent outputs.
             reportLabel.text = LastReport; scroll.style.display = DisplayStyle.Flex;
@@ -168,7 +183,35 @@ namespace SquashClash.DevPanel
             return FormattableString.Invariant($"Lifecycle event={lifecycleEvent}; utc={DateTime.UtcNow:O}; elapsedSeconds={Time.realtimeSinceStartupAsDouble - startedRealtime:F3}; frame={Time.frameCount}; unityFocused={Application.isFocused}; uikitState={uikitState}; uikitIdleTimerDisabled={idleTimerDisabled}; sleepTimeout={Screen.sleepTimeout}; thermal={ThermalState()}; phase={phase}; progress={progress:F6}; benchmarkSamples={benchmark?.Samples ?? 0}");
         }
         private void OnApplicationPause(bool paused) { if (paused && IsRunning) CancelRun("Segundo plano", LifecycleContext("pause(true)")); }
-        private void OnApplicationFocus(bool focused) { if (!focused && IsRunning) CancelRun("Pérdida de foco", LifecycleContext("focus(false)")); }
+        private void OnApplicationFocus(bool focused)
+        {
+            if (!IsRunning) return;
+            if (!focused)
+            {
+                if (!waitingForFocus)
+                {
+                    waitingForFocus = true; focusLostAt = Time.realtimeSinceStartupAsDouble;
+                    focusInterruptionCount++; focusLossContext = LifecycleContext("focus(false)");
+                }
+                if (benchmark != null) CancelRun("Pérdida de foco durante C17");
+                return;
+            }
+            if (!waitingForFocus) return;
+            if (Time.realtimeSinceStartupAsDouble - focusLostAt >= 60)
+            { CancelRun("Foco no recuperado en 60 s", LifecycleContext("focus(true)")); return; }
+            EndFocusInterruption("resumed", "focus(true)");
+            // The Runtime overlay also receives focus(false). Resume this experiment
+            // automatically without changing normal gameplay's tap-to-resume policy.
+            app.GetComponent<ResumeOverlay>().Continue(); app.Host.Clock.Paused = true;
+        }
+        private void EndFocusInterruption(string outcome, string lifecycleEvent)
+        {
+            if (!waitingForFocus) return;
+            string endContext = LifecycleContext(lifecycleEvent);
+            focusEvents.Add(focusLossContext);
+            focusEvents.Add(FormattableString.Invariant($"Focus interruption={focusInterruptionCount}; durationSeconds={Time.realtimeSinceStartupAsDouble - focusLostAt:F3}; outcome={outcome}; {endContext}"));
+            waitingForFocus = false;
+        }
         private void OnDestroy() { CancelRun("Sección destruida"); layer?.RemoveFromHierarchy(); }
 #if UNITY_IOS && !UNITY_EDITOR
         [DllImport("__Internal")] private static extern int SquashClashThermalState();

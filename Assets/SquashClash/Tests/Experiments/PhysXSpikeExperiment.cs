@@ -51,6 +51,7 @@ namespace SquashClash.Experiments
                     if (next != mark) { mark = next; Debug.Log($"[SquashClash] spike {name} {run.Progress:P0} {run.Phase}"); }
                     yield return null;
                 }
+                run.Result.ThermalBenchmarkStart = "not measured / editor";
                 benchmark = new PredictionBenchmarkRun(factory, config.Physics, config.Court);
                 while (!benchmark.Step(8)) yield return null;
                 benchmark.ApplyTo(run.Result);
