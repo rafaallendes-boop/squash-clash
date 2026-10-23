@@ -1,6 +1,6 @@
 # I4b — P1 tras orden canónico de contactos
 
-Estado: **orden canónico de c7da32e aprobado por Claude, comunicado por el PO el 2026-10-23; campaña nativa completa bajo condiciones aprobadas auditada e informe I4b completado para revisión de Claude y decisión del PO; ejecución detenida**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. I4b no cerrado; I4c, P2/T4.5 e I5+ no autorizados. PhysX sigue como candidato, sin elección de backend.
+Estado: **I4b / T4.3–T4.4 cerrado el 2026-10-23 tras aprobación final de Claude comunicada por el PO**. [PR #4 fusionada](https://github.com/rafaallendes-boop/squash-clash/pull/4), merge `0e08daa8133206361a6017c2527bf84c0fcbf5f6`. Los fallos físicos se conservan: el cierre no aprueba P1 ni elige backend. Decisión PO B: documentar I4c y evaluar P2 solo después de fusionar esa PR documental; I5 no autorizado.
 
 Código de las cinco ejecuciones: **da98fd4**, Unity 6000.3.27f1. Preset **c86243b15a97**, seed **20261020**, 10.053 lanzamientos de robustez por variante (17 fijos + 10.000 S8 + 36 S8d), 20 calentamientos y 200 mediciones C17. `fastMotionThreshold=0.01 m` en ProjectPhysics. Se mantienen escenarios, umbrales, geometría, preset, Reset y comparador. El único cambio de salida física es el orden de los contactos de cada paso, aprobado expresamente por el PO.
 
@@ -224,8 +224,14 @@ C17 se evalúa con el umbral aprobado **p95 ≤1 ms** y queda **Fail**. Se verif
 
 C16 conserva la procedencia S8-9948, paso 246, RightWall, sin contacto de pared en ese paso y respuesta en 247; queda informativo para la revisión posterior de I4c, sin iniciarla. C3/C10/C11 siguen Fail en esta corrida. Baseline C5/C6/C7 pasan dentro del mismo binario y dispositivo; no se afirma igualdad bit a bit entre plataformas.
 
-## Entrega y detención
+## Entrega y detención previas a la aprobación final
 
 **Informe I4b completado y entregado para revisión de Claude y decisión del PO.** La campaña nativa bajo condiciones aprobadas está completa y auditada; su C17 queda Fail. Las cinco campañas del editor, el RED físico, la clasificación de Claude, las verificaciones dev/prod/firma/metadata y ambas corridas nativas quedan trazables en sus manifiestos. La regresión de código previamente registrada es EditMode 188/188 y PlayMode 58/58; no se repiten suites por documentación/evidencia y el comentario del test posteriores.
 
 **Se detiene la ejecución. I4b sigue abierto, PR #4 en borrador y sin fusionar.** No se elige backend, congela o promueve ninguna variante/preset, compensa física ni cambia Reset, escenarios, umbrales o criterios. I4c, P2/T4.5 e I5+ no autorizados. No se solicita otra campaña ni se implementa una optimización por cuenta propia. La revisión de Claude se coordina con el PO, sin mensajes externos por herramientas. [Decisiones y confirmaciones del PO](2026-10-21-first-ball-po-approvals.md).
+
+## Cierre autorizado — 2026-10-23
+
+Claude aprobó la entrega T4.3–T4.4, comunicado por el PO, que autorizó el cierre. PR #4 lista y fusionada con merge commit **0e08daa8133206361a6017c2527bf84c0fcbf5f6**; main sincronizada, worktree eliminado y artefactos locales preservados fuera de él en ruta ignorada. **I4b cerrado.** Resultados nativos intactos: C17 **Fail, p95 14,3221 ms**, C3/C10/C11 Fail, C1/C2/C4–C8 Pass; C13 NotEvaluated. No se repite la campaña I4b.
+
+Las observaciones menores (fastMotionThreshold en encabezado nativo y persistencia de las 200 muestras C17) pasan a la próxima campaña nativa. El PO decidió B: evaluar P2 con escenarios/criterios/umbrales intactos, conservando P1 de respaldo. I4c se documenta en PR separada para Claude; P2 solo después de fusionarla. No se elige backend definitivo, se congela ninguna variante ni se modifica la spec; I5 no autorizado. [Aprobación y orden de ejecución](2026-10-21-first-ball-po-approvals.md#cierre-de-i4b-y-decisión-po-b-para-i4cp2--2026-10-23).

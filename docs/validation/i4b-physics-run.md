@@ -1,6 +1,6 @@
 # I4b — ejecución de la prueba física P1
 
-Estado actual, 2026-10-23: **campaña nativa bajo condiciones aprobadas completa y auditada; informe I4b completado y ejecución detenida para revisión de Claude y decisión del PO**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. Rama firstball/i4b-physics-run, base main 6fd04e0. I4b abierto; no se marca cerrado. I4c, P2/T4.5 e I5+ no autorizados.
+Estado actual, 2026-10-23: **I4b / T4.3–T4.4 cerrado por aprobación final de Claude y autorización del PO**. [PR #4 fusionada](https://github.com/rafaallendes-boop/squash-clash/pull/4) con merge commit **0e08daa8133206361a6017c2527bf84c0fcbf5f6**, head f563284. Main sincronizada, worktree I4b eliminado; logs/builds preservados localmente en ruta ignorada. C17 Fail (p95 14,3221 ms), C3/C10/C11 Fail; C1/C2/C4–C8 Pass. Este cierre no aprueba P1. I4c documental autorizado con decisión B; P2 solo tras fusionarlo. No se elige backend final ni se inicia I5.
 
 ## Estado nativo final de esta entrega
 
@@ -98,3 +98,9 @@ Resoluciones del ejecutor en orden, con coste si resultan incorrectas. No son nu
 22. **Histórico, clasificación final de Claude registrada el 2026-10-23:** tratar el ajuste al modelo semimplícito y el resto temporal próximo a cero como inferencias con fuentes/limitaciones, no inspección del binario de Unity. Coste: la clasificación final puede exigir otra prueba; no se altera gravedad, integrador, escenarios o umbral.
 
 **Deferred minors:** ninguno. Se conservan explícitamente los pendientes I5/I6 ya aprobados, sin adelantar su implementación.
+
+## Cierre y observaciones diferidas — 2026-10-23
+
+El PO comunica aprobación final de Claude de T4.3–T4.4; PR #4 lista y fusionada con merge `0e08daa8133206361a6017c2527bf84c0fcbf5f6`. **I4b cerrado**, sin alterar veredictos físicos ni repetir la campaña. Las detenciones anteriores quedan como histórico. fastMotionThreshold en encabezado nativo y las 200 muestras C17 persistidas se incorporarán en la próxima campaña nativa que exista. Evidencia de I4b y ambas corridas preservadas.
+
+Decisión PO B: documentar I4c en su rama/PR, detenerse para Claude y, solo después de fusionarla, implementar/evaluar P2 en rama/PR propia con los mismos escenarios, criterios y umbrales. P1 respaldo, backend final pendiente del gate con datos P2; sin congelación ni spec modificada. [Registro de aprobación](../reviews/2026-10-21-first-ball-po-approvals.md#cierre-de-i4b-y-decisión-po-b-para-i4cp2--2026-10-23).

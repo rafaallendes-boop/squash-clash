@@ -278,3 +278,18 @@ Respuesta literal del PO a la solicitud de repetición: **«Prueba completa - Ba
 Informe P1-20261023-142516-831, build 2fdede5, configuración c86243b15a97, baseline: 18 criterios únicos, 20 calentamientos/200 medidas C17. **C17 Fail, p95 14,322100 ms**, umbral ≤1 ms intacto. Térmico nominal inicial, **fair al iniciar C17 y al final**, cero interrupciones de foco. El térmico de C17 es informativo según la política ya aprobada, sin nuevo umbral ni atribución causal. C3/C10/C11 Fail, C13 NotEvaluated; sin elegir backend ni cambiar preset, Reset, escenarios, variantes o criterios. Corrida anterior 75 %/funda preservada como histórico fuera de condiciones.
 
 [Informe I4b completado](2026-10-22-first-ball-physics-spike-P1.md), [auditoría de campaña](../validation/evidence/2026-10-23-i4b-native-compliant-run.json). Se detiene para revisión de Claude y decisión del PO; **I4b sigue abierto, PR #4 borrador sin fusionar**. I4c, P2/T4.5 e I5+ no autorizados. No se solicita nueva campaña ni se optimiza física por cuenta propia.
+
+
+## Cierre de I4b y decisión PO B para I4c/P2 — 2026-10-23
+
+El PO comunica la revisión final de Claude: **entrega T4.3–T4.4 aprobada**, y autoriza marcar PR #4 lista, fusionar con merge commit, sincronizar main, registrar el cierre y eliminar el worktree. No se atribuye una GitHub Review distinta de esta aprobación comunicada por el PO.
+
+**Ejecutado:** PR #4 marcada lista y **MERGED**, merge commit `0e08daa8133206361a6017c2527bf84c0fcbf5f6`, head `f56328484451e68e7154b536e9e640dada772652`; main sincronizada, worktree I4b eliminado. Logs, builds y registro local de tareas preservados fuera del worktree en `Logs/archive-i4b-20261023` (ignorado, sin versionar datos locales/personales). **I4b / T4.3–T4.4 cerrado.**
+
+Resultado nativo final P1-20261023-142516-831, dev 2fdede5, baseline, config c86243b15a97, batería inicial 90 % y condiciones aprobadas confirmadas: **C17 Fail, p95 14,3221 ms** (200 medidas; umbral ≤1 ms); **C3, C10 y C11 Fail; C1, C2 y C4–C8 Pass**. Térmico nominal inicial, fair al iniciar C17/final, cero interrupciones. C13 NotEvaluated. El cierre acepta la entrega y evidencia, no el cumplimiento de P1. [Informe P1](2026-10-22-first-ball-physics-spike-P1.md), [auditoría final](../validation/evidence/2026-10-23-i4b-native-compliant-run.json).
+
+Observaciones menores de Claude diferidas por el PO a **la próxima campaña nativa que exista**: imprimir fastMotionThreshold en el encabezado (relevante solo para P1) y guardar las 200 muestras individuales C17. **No repetir I4b** por estas observaciones.
+
+**I4c, decisión B del PO:** P1 no cumple; C17 está unas 14 veces por encima del umbral y C10/C11 y C3 fallan por limitaciones del motor. Autoriza evaluar **P2/T4.5, simulación analítica propia**, manteniendo escenarios, criterios y umbrales; P1 sigue de respaldo. No se elige backend final, no se cambian umbrales ni spec, no se congela ninguna variante. La elección definitiva se hará con los datos de P2 en un gate posterior.
+
+**Orden de ejecución obligatorio:** I4c solo documentación en `firstball/i4c-physics-decision`, con informe de decisión y adenda literal de cuatro puntos a T4.5 del plan r2 aprobada el 2026-10-23. PR para Claude; **detenerse cuando esté lista y no fusionarla sin su revisión**. Solo después de fusionar I4c, P2 en `firstball/i4d-p2-analytic`, PR de física propia, TDD RED válido por comportamiento, suites GREEN, mismo experimento en EditMode/editor y una campaña nativa bajo condiciones aprobadas. Esta próxima campaña incorpora las dos observaciones menores. Comprobar perfil y renovar antes de instalar el 2026-10-27 o después; herramientas sin cambios. Entregar comparación de 18 criterios P1/P2 y detenerse para Claude/PO. I5 no autorizado.
