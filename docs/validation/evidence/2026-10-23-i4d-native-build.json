@@ -1,0 +1,68 @@
+{
+  "buildMetadata": {
+    "version": "0.1.0",
+    "gitHash": "557d3ff",
+    "profile": "dev",
+    "builtAtUtc": "2026-10-23T20:31:38.8880330Z",
+    "unityVersion": "6000.3.27f1",
+    "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+    "gitDirty": false
+  },
+  "freshUnityExport": true,
+  "playerDevelopment": false,
+  "il2cpp": "Release",
+  "xcode": "Xcode 27.1; Build version 27A9275",
+  "xcodeConfiguration": "Release",
+  "architectures": [
+    "arm64"
+  ],
+  "codesignStrictVerified": true,
+  "embeddedBuildMetadataVerified": true,
+  "embeddedMetadataLocation": "Data/resources.assets",
+  "profileCheckedAtUtc": "2026-10-23T20:34:14.279050+00:00",
+  "profileCreatedAtUtc": "2026-10-21T14:59:31Z",
+  "profileExpiresAtUtc": "2026-10-28T14:59:31+00:00",
+  "embeddedProfileValid": true,
+  "embeddedProfileMatchesDeviceAndBundle": true,
+  "frameworkSha256": "93d2e019e7fcb283e7d3b47ed0e990c09ce240b6ea306fa3a08b71da6c5b5ef3",
+  "resourcesSha256": "d3b74cd18877f076ad0cc3b3dc63a67202a1be1adeb96235e80c4d8de6c6e716",
+  "projectPhysics": {
+    "fastMotionThreshold": 0.01,
+    "enhancedDeterminism": true,
+    "bounceThreshold": 0.1,
+    "source": "ProjectSettings/DynamicsManager.asset, byte-identical to committed build source",
+    "sourceSha256": "056979610bab2b1ddf56f692ad5cb565a181660cc4f1a28d7e6d004cb8820fb1",
+    "scope": "Configuración del export capturada en BuildInfo embebido e impresa por el informe nativo; no getter runtime de fastMotionThreshold, relevante solo para P1."
+  },
+  "productionExport": {
+    "profile": "prod",
+    "metadata": {
+      "version": "0.1.0",
+      "gitHash": "557d3ff",
+      "profile": "prod",
+      "builtAtUtc": "2026-10-23T20:30:22.1520100Z",
+      "unityVersion": "6000.3.27f1",
+      "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+      "gitDirty": false
+    },
+    "freshExport": true,
+    "productIl2CppModules": [
+      "g_SquashClash_Core_CodeGenModule",
+      "g_SquashClash_Runtime_CodeGenModule"
+    ],
+    "nativeThermalBridge": false
+  },
+  "installed": true,
+  "campaignComplete": false,
+  "experimentBackend": "P2-Analytic",
+  "experimentVariant": "analytic/r2-20261023",
+  "embeddedP2ExperimentVerified": true,
+  "physicalSourceHashes": {
+    "Assets/SquashClash/Core/Simulation/AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+    "Assets/SquashClash/Core/Simulation/AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab"
+  },
+  "launchVerified": false,
+  "launchStatus": "iOS rechazó lanzamiento por pantalla bloqueada; apertura manual por PO pendiente. Ninguna campaña nativa P2 iniciada por herramientas.",
+  "campaignStatus": "Pendiente: una campaña P2 bajo condiciones aprobadas. Recuperar informe solo tras aviso PO de término.",
+  "pr": "https://github.com/rafaallendes-boop/squash-clash/pull/6"
+}

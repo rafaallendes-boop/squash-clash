@@ -1,6 +1,6 @@
 # T4.5 / I4d — P2 analítico y comparación con P1
 
-Estado, 2026-10-23: **implementación y regresión GREEN; experimentos completos de P2 en EditMode y PlayMode; campaña nativa y entrega final pendientes**. Rama `firstball/i4d-p2-analytic`, PR de física propia. P1 sigue como respaldo; backend definitivo pendiente del gate con datos de P2. Sin elección, congelación/promoción, spec modificada ni I5. No se fusiona esta entrega por cuenta propia.
+Estado, 2026-10-23: **implementación y regresión GREEN; experimentos completos de P2 en EditMode y PlayMode; build dev 557d3ff instalada, campaña nativa y entrega final pendientes**. Rama `firstball/i4d-p2-analytic`, PR de física propia. P1 sigue como respaldo; backend definitivo pendiente del gate con datos de P2. Sin elección, congelación/promoción, spec modificada ni I5. No se fusiona esta entrega por cuenta propia.
 
 ## Autorización y contrato
 
@@ -66,3 +66,9 @@ P1 corresponde a su campaña nativa final bajo condiciones aprobadas; P2 editor 
 | C18 | Info, RunsInEditMode=False | Info, RunsInEditMode=True | Pendiente |
 
 Tras recuperar la campaña nativa se completará esta comparación y se detendrá para Claude/PO. No se elige backend, congela/promueve variante/preset, modifica spec/umbrales o inicia I5.
+
+## Preparación nativa completada — campaña pendiente
+
+Build **0.1.0+557d3ff dev instalada**, export limpio Release ARM64 firmado y metadata exacta verificada, perfil vigente comprobado antes de instalar, prod sin DevPanel/puente y herramientas intactas. Encabezado ProjectPhysics con fastMotionThreshold=0.01 capturado en BuildInfo embebido; P2 y persistencia de muestras comprobados en IL2CPP. [Comprobación previa](../validation/2026-10-23-i4d-native-preflight.md), [evidencia](../validation/evidence/2026-10-23-i4d-native-build.json).
+
+iOS rechazó el lanzamiento por pantalla bloqueada; apertura manual del PO pendiente. No hubo campaña nativa P2 por herramientas. [PR #6 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/6), sin fusionar; falta recuperar la única campaña bajo condiciones aprobadas y completar comparación, después detenerse para Claude/PO.

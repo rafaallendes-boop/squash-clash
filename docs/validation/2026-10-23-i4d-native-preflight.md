@@ -1,0 +1,13 @@
+# T4.5 / I4d — comprobación previa nativa P2
+
+Build **0.1.0+557d3ff dev instalada**, sin cambios pendientes al compilar. Export limpio Unity 6000.3.27f1, Player no Development, SQUASH_DEV por extraScriptingDefines, IL2CPP Release, Xcode 27.1 (27A9275) Release y ejecutable/UnityFramework **ARM64**. Firma estricta y metadata exacta embebida en Data/resources.assets verificadas. [Evidencia saneada](evidence/2026-10-23-i4d-native-build.json).
+
+**ProjectPhysics embebido:** EnhancedDeterminism=True; **fastMotionThreshold=0.01**; bounceThreshold=0.1; Unity=6000.3.27f1. Capturado por BuildScript desde la configuración del export e impreso por SpikeSection; fastMotionThreshold relevante solo para P1, sin afirmar getter en runtime. P2 recibe bounceThreshold efectivo de UnityEngine.Physics. Backend P2-Analytic, variante analytic/r2-20261023 y texto de guardado de muestras verificados también en metadata IL2CPP. El informe completo guarda las **200 muestras C17** en orden de adquisición, con precisión round-trip, además de agregados.
+
+Prod nuevo del mismo commit contiene solo Core/Runtime, sin DevPanel ni ThermalState.mm. No se instaló prod. El host normal conserva P1; solo el botón **Prueba física P2** ejecuta la campaña P2. Física y mediciones idénticas a las dos campañas c8e5923 del editor; cambio posterior solo de prefijo de archivo guardado en DevPanel (P2-).
+
+Perfil embebido vigente hasta **2026-10-28T14:59:31Z**, coincide con dispositivo/bundle y comprobado inmediatamente antes de instalar, sin publicar identificadores personales. Fecha de instalación 2026-10-23: no aplica renovación obligatoria desde el 27; si hubiera otra instalación el 27 o después, renovar antes. Herramientas sin cambios.
+
+Instalación confirmada. iOS rechazó lanzamiento por **teléfono bloqueado**; el PO debe abrir Squash Clash manualmente. No se presenta como arranque verificado ni campaña ejecutada. Una sola campaña P2 autorizada, todavía pendiente: teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda y térmico nominal al empezar. Sin capturas, duplicación, devicectl u otras herramientas durante la ejecución. Avisar al terminar antes de recuperar Documents/spike.
+
+Auditoría pendiente: 18 criterios únicos, build 557d3ff, configuración c86243b15a97, variante analytic/r2-20261023, 20 calentamientos y 200 muestras C17 persistidas, percentiles recalculados, térmico inicial/benchmark/final e interrupciones de foco. C17 p95 ≤1 ms; si no cumple, Fail. Cancelado/incompleto/NotEvaluated no aprueba. [Informe comparativo parcial](../reviews/2026-10-23-first-ball-physics-spike-P2.md), [PR #6 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/6), sin fusionar. Backend final pendiente e I5 no autorizado.
