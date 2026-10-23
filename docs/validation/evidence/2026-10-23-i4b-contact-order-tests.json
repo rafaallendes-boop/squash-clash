@@ -29,5 +29,17 @@
   "reducedHistoryControl": {
     "xmlLocal": "Logs/contact-order-tests/physical-reduced-history-no-repro.xml",
     "result": "1/1 passes before correction: isolated S8-109 histories did not reproduce callback-order divergence. Not counted as RED; real campaign prefix retained."
+  },
+  "focusedGreen": {
+    "xmlLocal": "Logs/contact-order-tests/order-focused-green.xml",
+    "xmlSha256": "a2ec0f8ff7e35735e34b8837dff7a483bd0af9ca58d135795cc90bcbed2e304a",
+    "logSha256": "ee63fe3a9f2abdc6969f7553c21ba97a30eb9a64a9e8657d66be081fba78b268",
+    "counts": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0
+    },
+    "coverage": "Same physical RED now passes; key priority, unknown times, all tie-break fields/float bits, 120 permutations and duplicate preservation. Enum keys subsequently cast to int to avoid boxing; complete suite required below."
   }
 }
