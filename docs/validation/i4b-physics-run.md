@@ -8,7 +8,7 @@ Estado actual, 2026-10-23: **Claude aprobó el orden canónico de c7da32e; PO au
 
 Build dev **2fdede5 instalada**, export limpio, Release ARM64 firmada, Player no Development y metadata embebida verificada. Prod nuevo excluye DevPanel y el puente nativo. Perfil efectivo vigente hasta 2026-10-28T14:59:31Z, comprobado justo antes de instalar; herramientas intactas. [Comprobación corta ProjectPhysics fastMotionThreshold=0.01 y procedencia](2026-10-23-i4b-native-preflight.md), [evidencia saneada](evidence/2026-10-23-i4b-canonical-native.json).
 
-iOS rechazó el arranque por teléfono bloqueado; pendiente de desbloqueo del PO. Campaña aún sin iniciar. El informe I4b no está terminado: faltan campaña física completa y auditoría de sus 18 filas/hash/variante/200 muestras C17/térmico benchmark/foco. C17 mantiene p95 ≤1 ms (Fail si incumple). No habrá herramientas durante la ejecución y Documents/spike se recuperará solo cuando el PO confirme término. Sin cierre ni merge.
+El primer arranque fue rechazado por teléfono bloqueado. Tras confirmar el PO el desbloqueo, lanzamiento exitoso y proceso de la app instalada verificado, sin sesión de consola. Campaña aún sin iniciar por este flujo; lista para ejecución manual del PO. El informe I4b no está terminado: faltan campaña física completa y auditoría de sus 18 filas/hash/variante/200 muestras C17/térmico benchmark/foco. C17 mantiene p95 ≤1 ms (Fail si incumple). No habrá herramientas durante la ejecución y Documents/spike se recuperará solo cuando el PO confirme término. Sin cierre ni merge.
 
 ## Entrega de orden canónico
 

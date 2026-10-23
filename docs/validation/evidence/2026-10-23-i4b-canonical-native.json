@@ -53,9 +53,9 @@
   "installed": true,
   "campaignComplete": false,
   "installVerified": true,
-  "launchVerified": false,
-  "launchStatus": "iOS denied launch because the device was locked; awaiting PO unlock. No campaign started.",
-  "campaignStatus": "Pending PO execution under approved physical conditions; do not retrieve report before completion.",
+  "launchVerified": true,
+  "launchStatus": "Successfully launched after PO confirmed unlock; installed app running, no console session. Campaign not started by tools.",
+  "campaignStatus": "Ready for PO execution under approved physical conditions; stop device tools before handoff and retrieve Documents/spike only after PO confirms completion.",
   "regressionScope": "Only documentation and a test comment changed after c7da32e; no new behavior and no suites repeated. Prior regression evidence retained.",
   "editorBenchmarkConditions": {
     "build": "da98fd4",
@@ -73,5 +73,7 @@
     "historicalBuild": "16ad653",
     "historicalP95Ms": 24.1201,
     "interpretation": "Conditions and values only; no cause assigned and no native comparison."
-  }
+  },
+  "runningProcessVerified": true,
+  "launchVerifiedAtUtc": null
 }
