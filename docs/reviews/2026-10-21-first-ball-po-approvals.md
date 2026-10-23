@@ -239,10 +239,17 @@ Clasificación final de Claude (sustituye a la preliminar; transcripción litera
 - C1: adaptador/configuración. Resuelto con 0 cruces.
 - C10: motor. Es el sesgo del integrador semimplícito frente a la referencia analítica (g·dt·T/2 ≈ 13,6 mm). No se compensa; se decide en I4c.
 - C11: consecuencia de C10. Los puntos S9c, S9d y S9i quedan unos 13,6 mm por debajo, al borde de una línea.
-- C3 residual: motor. Es el solver en contacto persistente en reposo (unos 6 cm/s); con impacto, la ganancia es 0. Sigue en Fail. Un posible piso de velocidad se decide en I4c.
+- C3 residual: motor. Es el solver en contacto persistente en reposo (unos 6 cm/s); con impacto, la ganancia es 0. Sigue en Fail. Un posible piso de velocidad se decide en I4c.
 - C13: motor (CCD de una pasada). Informativo, sin cambios.
 - C7: adaptador. Expone un orden de contactos no canónico. Los estados coinciden bit a bit, pero el orden de los pares interno de PhysX depende de la historia de cada instancia.
 
 Orden autorizado: (1) clasificar todas las divergencias de C5–C7 antes de cambiar comportamiento, con conteos por criterio/variante; (2) localizar escenario/paso/tipo del máximo de C16; (3) RED físico con dos instancias de historias distintas, después orden en el adaptador por TimeInStep, superficie, persistencia y desempate determinista documentado; conservar divergencias de estado como Fail; (4) suites GREEN y cinco campañas nuevas del editor, conservando las de `16ad653` históricas y actualizando informe/tabla/manifiesto; (5) **detenerse para revisión de Claude antes de generar build nativa**. PR #4 sigue borrador, sin fusionar; I4c, P2/T4.5 e I5+ no autorizados.
 
 Solo después de esa revisión: una build dev y campaña nativa completa, teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda, térmico nominal al empezar y sin capturas/devicectl/otras herramientas durante la ejecución; recuperar informe al terminar. C17 nativo prioritario; p95 del editor 24,1 ms es informativo, no certifica el umbral de 1 ms del iPhone. Comprobar siempre vigencia de firma; renovar antes de instalar el 2026-10-27 o después. No cambiar Xcode ni herramientas.
+
+
+### Resultado de la revisión de orden canónico — 2026-10-23
+
+Ejecución técnica, **pendiente de la nueva revisión de Claude**: diagnóstico sin cambio de comportamiento 1c47621; RED físico 0ff9297; corrección del adaptador 3de1367; código final y trazas da98fd4. Regresión 188/188 EditMode y 58/58 PlayMode. Cinco campañas nuevas completas, 1/1 cada una. Baseline C7 pasa, junto con C5/C6; C1 cero cruces. C3/C10/C11 siguen Fail. Speculative conserva C6 de persistencia del contacto y distinta terminación, sin divergencia numérica en el prefijo común; C7 pasa. Los resultados restantes por variante constan en el informe. C16 baseline localizado en S8-9948, paso 246, impacto lateral RightWall con callback en 247, sin criterio nuevo.
+
+[Informe P1](2026-10-22-first-ball-physics-spike-P1.md), [manifiesto actual](../validation/evidence/2026-10-23-i4b-editor-canonical-runs.json), [RED→GREEN](../validation/evidence/2026-10-23-i4b-contact-order-tests.json). Históricos 16ad653 conservados; no se cambian criterios, Reset, comparador, escenarios, preset o geometría. **Sin build nativa ni instalación; PR #4 sigue borrador y sin fusionar, I4b abierto.** Se detiene para Claude, sin atribuir esta ejecución a aprobación suya o del PO. I4c, P2/T4.5 e I5+ siguen sin autorizar.

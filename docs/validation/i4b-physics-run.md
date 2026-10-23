@@ -1,5 +1,25 @@
 # I4b — ejecución de la prueba física P1
 
+Estado actual, 2026-10-23: **orden canónico implementado, cinco campañas nuevas del editor completas; detenido antes de generar build nativa para revisión de Claude**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. Código **da98fd4**, rama firstball/i4b-physics-run, base main 6fd04e0. I4b abierto: revisión nueva de Claude y campaña completa/C17 nativo pendientes. I4c, P2/T4.5 e I5+ no autorizados.
+
+## Entrega de orden canónico
+
+La decisión PO 1b y la clasificación final de Claude están registradas literalmente en [aprobaciones](../reviews/2026-10-21-first-ball-po-approvals.md). Antes de cambiar comportamiento se repitieron baseline/speculative sobre 1c47621: baseline C7 3/3 solo orden; speculative C6 138 solo orden + 1 trayectoria/contactos distintos, C7 183/183 solo orden; C5 cero en ambas. Registro de cada divergencia, no una extrapolación del primer ejemplo.
+
+RED físico: S8-109, checkpoint 50, paso 127, estados y multiconjunto completo de contactos iguales, salida LeftWall/Floor frente a Floor/LeftWall. El intento aislado de historia reducida no reprodujo el fallo; se preserva como control, no como RED. El prefijo real hasta S8-109 sí falla 1/1 antes de la corrección. Orden del adaptador al terminar Simulate: TimeInStep (NaN desconocido al final), superficie, persistencia y desempate completo por campos/bits. No ordena/agrega en el criterio. Comparador, C7, Reset, umbrales, escenarios, geometría, preset y variantes intactos.
+
+Regresión final **EditMode 188/188, PlayMode 58/58**. Cinco experimentos nuevos **1/1 cada uno**, con 10.053 lanzamientos de robustez y 200 medidas C17 por variante. Tres editores al principio y dos después, en worktrees aislados: tiempos informativos, sin comparación aislada ni certificación nativa. Resultados 16ad653 preservados como históricos.
+
+Baseline nueva: C1 cero cruces; C5/C6/C7 pasan (C7 18.753 medidos, 1.279 no aplicables, cero no evaluables). C3 conserva cinco fallos; C10 nueve (13,6164427 mm máximo); C11 tres/6. Speculative C6 conserva S8-6719: prefijo de estados igual pero Persistent de Floor distinto en paso 1, terminación en 225 frente a 155; Fail sin tocar Reset. C7 por variante: baseline=0, speculative=0, offset05=0, solver12=0, no-ed=3. Ninguna variante cumple todos los criterios de gate.
+
+C16 baseline: S8-9948 robustez, paso 246, RightWall, 11,3993931 mm. **Impacto lateral, no reposo:** vx=−1,69069779 m/s; en 246 solo hay Floor y en 247 aparece RightWall no persistente y vx=+0,9298841. Centro todavía positivo en 246, por eso no es cruce C1. Diagnóstico sin criterio nuevo. C17 nativo prioritario: editor no certifica el umbral de 1 ms del iPhone.
+
+[Informe P1 y tabla de variantes](../reviews/2026-10-22-first-ball-physics-spike-P1.md) · [Diagnóstico completo previo](evidence/2026-10-23-i4b-editor-contact-diagnostic-runs.json) · [Cinco campañas actuales](evidence/2026-10-23-i4b-editor-canonical-runs.json) · [RED→GREEN y hashes](evidence/2026-10-23-i4b-contact-order-tests.json).
+
+Sin exportación, compilación nativa, instalación ni interacción con el iPhone en esta revisión. Solo tras la revisión de Claude: una build dev y campaña física bajo las condiciones del PO. Comprobar siempre firma; renovar antes de instalar el 2026-10-27 o después. No cambiar herramientas, elegir backend ni avanzar a I4c/P2/I5+.
+
+## Historial de la entrega CCD 16ad653 (superado por la entrega actual)
+
 Estado: **corrección CCD y cinco campañas nuevas del editor entregadas; detenido para revisión de Claude antes del iPhone**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. Rama firstball/i4b-physics-run, base main 6fd04e0, código final de esta revisión **16ad653**. I4b no cerrado; T4.3 pendiente de clasificación final y T4.4 de campaña completa/C17 nativo. I4c, P2/T4.5 e I5+ sin autorización.
 
 ## Cambios de la revisión
@@ -59,8 +79,8 @@ Resoluciones del ejecutor en orden, con coste si resultan incorrectas. No son nu
 18. **Histórico d14df6f; la política de foco se sustituye por PO 5a:** añadir diagnóstico de ciclo de vida dentro de T4.4 tras la nueva interrupción física, sin otra revisión interna ni cambiar cancelación/mediciones. Coste: build y comprobación nativa adicionales; los valores son instantáneos y no prueban causa, como mostró el control de Inicio con UIKit aún active. Claude deberá revisar también este cambio posterior.
 
 19. Corregir la configuración común de P1 en asset/ProjectSetup, pues la reproducción sin adaptador también fallaba. Coste: más trabajo CCD y nueva respuesta física; repetición completa de editor y después iPhone, sin elegir backend.
-20. No modificar Reset ni el orden de contactos para hacer pasar C7. Coste: conserva incumplimientos hasta clasificación de Claude; controles seleccionados no demuestran ausencia de caché.
-21. Diagnóstico detallado acotado al primer desacuerdo por criterio, aparte de hasta doce notas generales; contadores completos. Coste: no se atribuye automáticamente el mismo motivo a los demás fallos.
-22. Tratar el ajuste al modelo semimplícito y el resto temporal próximo a cero como inferencias con fuentes/limitaciones, no inspección del binario de Unity. Coste: la clasificación final puede exigir otra prueba; no se altera gravedad, integrador, escenarios o umbral.
+20. **Histórico, sustituido por PO 1b el 2026-10-23 solo para el orden de salida del adaptador; Reset sigue intacto:** no modificar Reset ni el orden de contactos para hacer pasar C7. Coste: conserva incumplimientos hasta clasificación de Claude; controles seleccionados no demuestran ausencia de caché.
+21. **Histórico, sustituido por el diagnóstico completo del 2026-10-23:** diagnóstico detallado acotado al primer desacuerdo por criterio, aparte de hasta doce notas generales; contadores completos. Coste: no se atribuye automáticamente el mismo motivo a los demás fallos.
+22. **Histórico, clasificación final de Claude registrada el 2026-10-23:** tratar el ajuste al modelo semimplícito y el resto temporal próximo a cero como inferencias con fuentes/limitaciones, no inspección del binario de Unity. Coste: la clasificación final puede exigir otra prueba; no se altera gravedad, integrador, escenarios o umbral.
 
 **Deferred minors:** ninguno. Se conservan explícitamente los pendientes I5/I6 ya aprobados, sin adelantar su implementación.

@@ -1,32 +1,60 @@
-# I4b — prueba física P1 tras revisión de CCD
+# I4b — P1 tras orden canónico de contactos
 
-Estado: **cinco campañas nuevas del editor completas; detenido para revisión de Claude antes de volver al iPhone**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. I4b no está cerrado. I4c, P2/T4.5 e I5+ no autorizados.
+Estado: **cinco campañas nuevas del editor completas; detenido antes de generar build nativa para revisión de Claude**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. I4b no cerrado; I4c, P2/T4.5 e I5+ no autorizados. PhysX sigue como candidato, sin elección de backend.
 
-Código de las cinco ejecuciones: **16ad653**, Unity 6000.3.27f1. Cada variante volvió a ejecutar 10.053 lanzamientos de robustez (17 fijos + 10.000 S8 con seed 20261020 + 36 S8d), comparaciones y benchmark de 20 calentamientos + 200 medidas. Configuración del preset **c86243b15a97** intacta. Corrección común de integración P1: `fastMotionThreshold=0.01 m`, registrada aparte en ProjectPhysics, porque el hash del preset no representa ese ajuste global. Ejes de las cinco variantes sin cambios. Escenarios, materiales, medidas físicas y umbrales intactos; elegibilidad C7 según decisión explícita del PO.
+Código de las cinco ejecuciones: **da98fd4**, Unity 6000.3.27f1. Preset **c86243b15a97**, seed **20261020**, 10.053 lanzamientos de robustez por variante (17 fijos + 10.000 S8 + 36 S8d), 20 calentamientos y 200 mediciones C17. `fastMotionThreshold=0.01 m` en ProjectPhysics. Se mantienen escenarios, umbrales, geometría, preset, Reset y comparador. El único cambio de salida física es el orden de los contactos de cada paso, aprobado expresamente por el PO.
 
-Las campañas son experimentos separados de la regresión: **1/1** acredita ejecución completa y limpieza, aunque sus veredictos sean Fail. Ninguna aprobación de backend ni gate se deduce de ello. Dos procesos del editor en worktrees aislados, aplicaciones del Mac activas: los tiempos del editor son informativos, no una comparación aislada de rendimiento y no certifican C17 en el iPhone.
+[Manifiesto de las cinco variantes nuevas](../validation/evidence/2026-10-23-i4b-editor-canonical-runs.json). Histórico `16ad653`: [informe íntegro](2026-10-23-first-ball-physics-spike-P1-pre-canonical.md), [manifiesto y cinco campañas](../validation/evidence/2026-10-22-i4b-editor-ccd-runs.json). También se conserva el [histórico anterior a CCD](2026-10-22-first-ball-physics-spike-P1-pre-ccd.md). No se sustituyen sus resultados.
 
-[Manifiesto con 18 filas, XML/hash, fechas y duración de las cinco ejecuciones](../validation/evidence/2026-10-22-i4b-editor-ccd-runs.json). [Histórico anterior íntegro](2026-10-22-first-ball-physics-spike-P1-pre-ccd.md) y sus informes crudos conservados; no se sobrescriben ni se usan medianas derivadas en esta campaña nueva.
+Las suites de regresión y las campañas son poblaciones distintas: 1/1 en cada experimento significa ejecución completa y limpieza de recursos; no convierte fallos físicos en Pass. Los editores concurrentes usan worktrees aislados y actividad normal del Mac; los tiempos son **informativos**, sin comparación aislada ni certificación de C17 nativo.
 
-## CCD: diagnóstico y corrección separados
+## Diagnóstico completo antes del cambio de comportamiento
 
-Reproducción mínima RED en escena local y por defecto, ambas con Simulate: esfera de radio 20 mm a 25 m/s, caja estática de espesor 1 m, 120 Hz, ContinuousDynamic. Centro a z=−0,116666675 en el paso 2; contacto en el 3. S1: centro detrás del frontis en 33–34, contacto 34. El modo del Rigidbody sí estaba configurado; el fallo se reproduce sin usar el adaptador.
+Código diagnóstico **1c47621**, adaptador aún idéntico al de `16ad653`. Dos campañas completas nuevas (baseline y speculative), no una extrapolación del primer ejemplo. [Manifiesto con cada divergencia, checkpoint y primer paso](../validation/evidence/2026-10-23-i4b-editor-contact-diagnostic-runs.json).
 
-El valor global heredado `m_FastMotionThreshold=3.4028235e+38` dejaba actuar el descarte geométrico de CCD. Se descartaron FreezeRotation y varios Simulate en un frame. Cambiar solo el ajuste a 0,01 m hizo pasar la reproducción; restaurarlo reprodujo los tres RED. Corrección en asset y ProjectSetup, sin parchear trayectorias ni Reset: **commit diagnóstico 8a1304d**, **corrección 492685b**. Tras corregir: mínimo z≈0,02; contacto mínimo paso 2 y S1 paso 33. No se sustituyó ContinuousDynamic por speculative.
+«Solo orden» exige igualdad de todos los estados (Step y seis float32 bit a bit) y del multiconjunto de **todos** los campos de ContactEvent, con multiplicidad y bits exactos, incluidos NaN. Es un diagnóstico adicional de fallos ya declarados; no reordena las trayectorias ni participa en el comparador o el veredicto. Una diferencia de estado, valor o multiplicidad se clasifica como «estado/contactos distintos».
 
-[Diagnóstico, fuentes oficiales Unity/PhysX y trazas S1 30–36 antes/después](2026-10-22-first-ball-ccd-diagnostic.md). El valor 0,01 m es configuración de integración común, no tolerancia de aceptación ni variante nueva. Puede aumentar el coste y cambia contactos antes resueltos por penetración; no garantiza precisión ni todos los criterios.
+| Variante | Criterio | Solo orden | Estado/contactos distintos | Trayectoria de estado distinta (incl. longitud) | Total fallos |
+|---|---|---:|---:|---:|---:|
+| [baseline](../validation/evidence/physics-spike-P1/editor-1c47621-baseline-contact-diagnostic.md) | C5 | 0 | 0 | 0 | 0 |
+| [baseline](../validation/evidence/physics-spike-P1/editor-1c47621-baseline-contact-diagnostic.md) | C6 | 0 | 0 | 0 | 0 |
+| [baseline](../validation/evidence/physics-spike-P1/editor-1c47621-baseline-contact-diagnostic.md) | C7 | 3 | 0 | 0 | 3 |
+| [speculative](../validation/evidence/physics-spike-P1/editor-1c47621-speculative-contact-diagnostic.md) | C5 | 0 | 0 | 0 | 0 |
+| [speculative](../validation/evidence/physics-spike-P1/editor-1c47621-speculative-contact-diagnostic.md) | C6 | 138 | 1 | 1 | 139 |
+| [speculative](../validation/evidence/physics-spike-P1/editor-1c47621-speculative-contact-diagnostic.md) | C7 | 183 | 0 | 0 | 183 |
 
-## Baseline corregida: 18 criterios
+## C16: procedencia del máximo
 
-| ID | Medición del editor | Estado | Gate en editor |
+`MaxPenetration` no cambia: mismos cinco planos y dominio de altura, sin criterio nuevo. El máximo baseline de **11,3993931 mm** está en **S8-9948 robustez, paso 246, RightWall**. Es **impacto lateral, no reposo**: rapidez 1,77920949 m/s y vx=−1,69069779 m/s. En ese paso solo se reporta Floor; RightWall aparece como impacto no persistente en 247.
+
+| Paso | Centro x (m) | vx (m/s) | Contactos reportados |
+|---|---:|---:|---|
+| 246 | 0,008600607 | −1,69069779 | Floor no persistente; sin RightWall |
+| 247 | 0,01634964 | +0,9298841 | Floor persistente; RightWall no persistente |
+
+El centro sigue positivo en 246: hay penetración de la esfera frente al plano, sin cruce del centro C1. La traza del paso siguiente confirma el impacto lateral; no se inventa contacto en 246. [Traza anterior al orden](../validation/evidence/physics-spike-P1/editor-1c47621-baseline-contact-diagnostic.md) y [traza nueva con estados/bits/contactos en 245–247](../validation/evidence/physics-spike-P1/editor-da98fd4-baseline-canonical.md).
+
+Speculative tiene otro máximo: S8-3821 robustez, paso 193, Floor, 0,612672448 mm, solo contactos persistentes. La rapidez es 5,8087306 m/s: contacto sostenido en movimiento, no se deduce reposo de `Persistent`. Los cinco argmax y contextos completos están en el [manifiesto](../validation/evidence/2026-10-23-i4b-editor-canonical-runs.json).
+
+## Orden canónico y TDD
+
+[RED→GREEN, hashes y regresión](../validation/evidence/2026-10-23-i4b-contact-order-tests.json). El RED usa dos instancias PhysX reales con historias distintas y el mismo checkpoint; observa los estados iguales y contactos intercambiados antes de la corrección. No fabrica una permutación en el comparador. Los datos de la reproducción y el alcance de las suites constan en el manifiesto.
+
+El adaptador ordena la lista al terminar correctamente Simulate. Claves: (1) TimeInStep numérico ascendente, tiempo desconocido NaN al final, sin inventar tiempo; (2) SurfaceId en su orden enum Floor, FrontWall, LeftWall, RightWall, BackWall; (3) Persistent false antes de true. Desempate lexicográfico: Step, Timing, bits sin signo de TimeInStep, Point, UV, Normal y ApproachVelocity. Así se distinguen ±0 y payloads NaN; eventos idénticos en todos sus bits son indistinguibles y no requieren estabilidad. Sin IDs de instancia ni orden de callbacks, sin eliminar/agrupar contactos o modificar valores.
+
+`TrajectoriesBitwiseEqual` y C7 permanecen intactos. Tampoco se reinicia o recrea el cuerpo en Reset, se cambia el integrador ni se compensa la gravedad. C17 incluye el coste de ordenar dentro de Step; la clasificación diagnóstica de la campaña no está dentro del benchmark.
+
+## Baseline nueva: 18 criterios
+
+| ID | Medición | Veredicto | Gate editor |
 |---|---|---|---|
 | C1 | fallos=0; evaluados=10053; no evaluables=0; atravesamientos=0; salidas superiores=2341; seed=20261020; S8=10000; S8d=36 | Pass | sí |
 | C2 | fallos=0; evaluados=67737; no evaluables=0 | Pass | sí |
-| C3 | fallos=5; evaluados=3501; no evaluables=0; no aplica (sin pasos de esquina, fuera de población)=6538; máximo global=S8-9456 Measured, ganancia=0.0273839869, paso=218, rapidez antes=0.06392491 m/s, después=0.06555371 m/s | Fail | sí |
+| C3 | fallos=5; evaluados=3501; no evaluables=0; no aplica (sin pasos de esquina, fuera de población)=6538; máximo entre casos medidos: S8-9456 Measured, ganancia=0.0273839869, paso=218, rapidez antes=0.06392491 m/s, después=0.06555371 m/s | Fail | sí |
 | C4 | fallos=0; evaluados=4; no evaluables=0; impactos repetidos=0 | Pass | sí |
 | C5 | fallos=0; evaluados=117; no evaluables=0 | Pass | sí |
 | C6 | fallos=0; evaluados=10017; no evaluables=0 | Pass | sí |
-| C7 | fallos=3; evaluados=18753; no evaluables=0; Measured=18753; NotApplicable=1279; NotEvaluable=0 (no aplica fuera de población) | Fail | sí |
+| C7 | fallos=0; evaluados=18753; no evaluables=0; Measured=18753; NotApplicable=1279; NotEvaluable=0 (no aplica fuera de población) | Pass | sí |
 | C8 | fallos=0; evaluados=2; no evaluables=0 | Pass | sí |
 | C9 | fallos=0; evaluados=2; no evaluables=0 | Info | no |
 | C10 | fallos=9; evaluados=9; no evaluables=0; error máximo mm=13.6164427 | Fail | sí |
@@ -36,30 +64,56 @@ El valor global heredado `m_FastMotionThreshold=3.4028235e+38` dejaba actuar el 
 | C14 | máximo impactos no persistentes/paso=2; tope configurable=False; parámetro maxImpactsPerStep no operativo con P1 | Info | no |
 | C15 | fallos=0; evaluados=2; no evaluables=0 | Info | no |
 | C16 | penetración máxima=11.3993931 mm; muestras persistentes=1147120 (todas las trayectorias ejecutadas) | Info | no |
-| C17 | n=200; warmup=20; median=22.451200; p95=24.120100; p99=25.168000; max=26.091300 ms; percentiles nearest rank | Info | no |
+| C17 | n=200; warmup=20; median=33.391100; p95=34.927300; p99=35.498200; max=35.722500 ms; percentiles nearest rank | Info | no |
 | C18 | RunsInEditMode=False; timing=Estimated | Info | no |
 
-[Baseline íntegra](../validation/evidence/physics-spike-P1/editor-16ad653-baseline-ccd.md). Umbrales originales: C3 ≤1e-5, C10 ≤1 mm experimental, C17 p95 ≤1 ms con 200 mediciones **solo en iPhone**. C7 sigue decidiendo; C9 informativo.
+[Baseline íntegra](../validation/evidence/physics-spike-P1/editor-da98fd4-baseline-canonical.md). C3 ≤1e−5, C10 ≤1 mm experimental, C17 p95 ≤1 ms con 200 mediciones en el iPhone. C7 decide el gate; C9 informativo.
 
-## Cinco variantes regeneradas
+## Cinco variantes nuevas
 
-F = fallos medidos. C1 población 10.053; C5 117; C6 10.017. C7 tiene **20.032 oportunidades**: Measured + NotApplicable + NotEvaluable. NotApplicable queda fuera de la población elegible; Expected = Measured + NotEvaluable. No evaluable no es aprobado. Contadores y umbrales contrastados automáticamente con los informes y el histórico.
+F = fallos. C1: 10.053; C5: 117; C6: 10.017. C7: 20.032 oportunidades = Measured + NotApplicable + NotEvaluable; Expected = Measured + NotEvaluable. NotApplicable fuera de población; NotEvaluable no aprueba.
 
 | Variante | C1 F | C3 F/NE | C5 F | C6 F | C7 F | C7 M/NA/NE | C10 máx. mm | C11 F/6 | p95 editor ms (info) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| [baseline](../validation/evidence/physics-spike-P1/editor-16ad653-baseline-ccd.md) | 0 | 5/0 | 0 | 0 | 3 | 18753/1279/0 | 13.6164427 | 3 | 24.120100 |
-| [speculative](../validation/evidence/physics-spike-P1/editor-16ad653-speculative-ccd.md) | 0 | 17/0 | 0 | 139 | 183 | 18779/1253/0 | 77.24857 | 3 | 17.265600 |
-| [offset05](../validation/evidence/physics-spike-P1/editor-16ad653-offset05-ccd.md) | 0 | 7/0 | 0 | 0 | 3 | 18754/1278/0 | 13.6164427 | 3 | 29.577600 |
-| [solver12](../validation/evidence/physics-spike-P1/editor-16ad653-solver12-ccd.md) | 0 | 7/0 | 0 | 0 | 3 | 18753/1279/0 | 13.6164427 | 3 | 25.834200 |
-| [no-ed](../validation/evidence/physics-spike-P1/editor-16ad653-no-ed-ccd.md) | 0 | 5/0 | 0 | 0 | 3 | 18753/1279/0 | 13.6164427 | 3 | 19.497600 |
+| [baseline](../validation/evidence/physics-spike-P1/editor-da98fd4-baseline-canonical.md) | 0 | 5/0 | 0 | 0 | 0 | 18753/1279/0 | 13.6164427 | 3 | 34.927300 |
+| [speculative](../validation/evidence/physics-spike-P1/editor-da98fd4-speculative-canonical.md) | 0 | 17/0 | 0 | 1 | 0 | 18779/1253/0 | 77.24857 | 3 | 27.595400 |
+| [offset05](../validation/evidence/physics-spike-P1/editor-da98fd4-offset05-canonical.md) | 0 | 7/0 | 0 | 0 | 0 | 18754/1278/0 | 13.6164427 | 3 | 36.710500 |
+| [solver12](../validation/evidence/physics-spike-P1/editor-da98fd4-solver12-canonical.md) | 0 | 7/0 | 0 | 0 | 0 | 18753/1279/0 | 13.6164427 | 3 | 24.032000 |
+| [no-ed](../validation/evidence/physics-spike-P1/editor-da98fd4-no-ed-canonical.md) | 0 | 5/0 | 0 | 0 | 3 | 18753/1279/0 | 13.6164427 | 3 | 18.628600 |
 
 **Ninguna variante cumple todos los criterios de gate. No se promueve ninguna.**
 
-### C3: impacto y solo persistentes
+### Divergencias después del orden canónico
 
-El umbral y la población global conservan ambos tipos de pasos. Los máximos siguientes son diagnósticos entre casos medidos, con rapidez antes/después; los conteos de las tres subpoblaciones constan en los informes crudos.
+Se clasifican todos los fallos restantes con el mismo diagnóstico completo. Las divergencias de estado se conservan como Fail y se reportan como límite del motor para esa variante y población; ordenar no las corrige ni las oculta.
 
-| Variante | Paso con impacto no persistente | Paso solo persistente |
+| Variante | Criterio | Solo orden | Estado/contactos distintos | Trayectoria de estado distinta (incl. longitud) | Bits distintos en tramo común |
+|---|---|---:|---:|---:|---:|
+| baseline | C5 | 0 | 0 | 0 | 0 |
+| baseline | C6 | 0 | 0 | 0 | 0 |
+| baseline | C7 | 0 | 0 | 0 | 0 |
+| speculative | C5 | 0 | 0 | 0 | 0 |
+| speculative | C6 | 0 | 1 | 1 | 0 |
+| speculative | C7 | 0 | 0 | 0 | 0 |
+| offset05 | C5 | 0 | 0 | 0 | 0 |
+| offset05 | C6 | 0 | 0 | 0 | 0 |
+| offset05 | C7 | 0 | 0 | 0 | 0 |
+| solver12 | C5 | 0 | 0 | 0 | 0 |
+| solver12 | C6 | 0 | 0 | 0 | 0 |
+| solver12 | C7 | 0 | 0 | 0 | 0 |
+| no-ed | C5 | 0 | 0 | 0 | 0 |
+| no-ed | C6 | 0 | 0 | 0 | 0 |
+| no-ed | C7 | 0 | 3 | 3 | 3 |
+
+Speculative C6 conserva S8-6719: estados 226/156, **prefijo común bit a bit igual**, sin diferencia numérica en ese tramo. En el paso 1 el mismo contacto Floor es Persistent=True en A y False en B; B cuenta antes el segundo bote y termina en 155, A en 225. Es un límite observado del ciclo Enter/Stay de PhysX frente a la historia de la instancia; no se modifica Reset ni el criterio y permanece Fail. No se atribuye una divergencia numérica a ese caso. Las diferencias numéricas que aparezcan en otras variantes se cuentan en la última columna y se conservan como Fail.
+
+**No-ed C7 conserva tres divergencias numéricas de estado**, con multiconjunto completo de contactos igual: S8-109 C7 postcontacto (checkpoint 50, paso 127), S8-3429 C7 k30 (checkpoint 30, paso 101), S8-3429 C7 postcontacto (checkpoint 9, paso 101). Se reportan como límite observado del motor con Enhanced Determinism desactivado; quedan en Fail. El orden canónico no modifica el orden interno del solver ni corrige esas diferencias. No se generaliza este resultado a baseline ni se cambia Reset.
+
+### C3: máximos con impacto y solo persistentes
+
+Umbral y población global conservan ambos. Máximos medidos y rapidez antes/después; conteos Measured/NotApplicable/NotEvaluable completos en cada informe.
+
+| Variante | Con impacto no persistente | Solo persistentes |
 |---|---|---|
 | baseline | máximo entre casos medidos: S4 Measured, ganancia=0, paso=21, rapidez antes=13.5786324 m/s, después=12.3445759 m/s | máximo entre casos medidos: S8-9456 Measured, ganancia=0.0273839869, paso=218, rapidez antes=0.06392491 m/s, después=0.06555371 m/s |
 | speculative | máximo entre casos medidos: S8-8469 Measured, ganancia=0.0273839571, paso=322, rapidez antes=0.06398784 m/s, después=0.06558204 m/s | máximo entre casos medidos: S8-9384 Measured, ganancia=0.0273839273, paso=344, rapidez antes=0.06382191 m/s, después=0.06550735 m/s |
@@ -67,44 +121,21 @@ El umbral y la población global conservan ambos tipos de pasos. Los máximos si
 | solver12 | máximo entre casos medidos: S4 Measured, ganancia=0, paso=21, rapidez antes=13.5786324 m/s, después=12.3445759 m/s | máximo entre casos medidos: S8-9456 Measured, ganancia=0.0273840241, paso=218, rapidez antes=0.06393062 m/s, después=0.06555627 m/s |
 | no-ed | máximo entre casos medidos: S4 Measured, ganancia=0, paso=21, rapidez antes=13.5786324 m/s, después=12.3445759 m/s | máximo entre casos medidos: S8-9456 Measured, ganancia=0.0273839869, paso=218, rapidez antes=0.06392491 m/s, después=0.06555371 m/s |
 
-## C5–C7 y Reset
+## Clasificación final de Claude
 
-Baseline pasa C5 y C6 completos. Conserva tres fallos de C7. El primer caso registrado es S8-109 postcontacto, primer desacuerdo en paso 127 (índice 77 del relanzamiento desde paso 50): estados previo y actual bit a bit iguales; A entrega LeftWall/Floor y B Floor/LeftWall en ese paso. Los puntos/normales de cada superficie del ejemplo también coinciden. En speculative, primeros ejemplos C6 S8-15 paso 9 y C7 S6 paso 25 muestran igualmente orden distinto con estados iguales. Es evidencia de esos ejemplos, **no clasificación automática de todas las divergencias**. El diagnóstico conserva una traza detallada del primer desacuerdo por criterio y hasta doce notas generales; los contadores son completos.
+Comunicada por el PO, sustituye a la preliminar y se transcribe tal cual; no se atribuye una GitHub Review:
 
-Se mantiene la comparación aprobada de la lista de contactos por superficie/paso: **no se ordena, agrupa ni suaviza para aprobar**. Determinar si esto es un defecto de la prueba o un límite de orden de callbacks de la integración requiere revisión de Claude y cualquier cambio de criterio requiere el PO.
+- C1: adaptador/configuración. Resuelto con 0 cruces.
+- C10: motor. Es el sesgo del integrador semimplícito frente a la referencia analítica (g·dt·T/2 ≈ 13,6 mm). No se compensa; se decide en I4c.
+- C11: consecuencia de C10. Los puntos S9c, S9d y S9i quedan unos 13,6 mm por debajo, al borde de una línea.
+- C3 residual: motor. Es el solver en contacto persistente en reposo (unos 6 cm/s); con impacto, la ganancia es 0. Sigue en Fail. Un posible piso de velocidad se decide en I4c.
+- C13: motor (CCD de una pasada). Informativo, sin cambios.
+- C7: adaptador. Expone un orden de contactos no canónico. Los estados coinciden bit a bit, pero el orden de los pares interno de PhysX depende de la historia de cada instancia.
 
-Experimento independiente de Reset: 25/25 comparaciones iguales entre cinco objetivos, nueva/nueva, S6/nueva, S6/S6, S10/nueva y S10/S10. Historias con 8 y 653 contactos. [Datos y límites](../validation/evidence/2026-10-22-i4b-reset-history.json), [informe](../validation/evidence/physics-spike-P1/editor-reset-history-ccd.md). No demuestra ausencia de caché interna ni certifica todos los historiales/checkpoints. **Reset no se modificó**: no hay RED que justifique un parche del estado.
+La clasificación se conserva literal con el contexto baseline de la revisión; la tabla nueva informa separadamente cualquier divergencia de otras variantes, sin generalizar igualdad a todas ellas. C3/C10/C11 no se compensan ni se suavizan. [Cálculo C10](../validation/evidence/2026-10-22-i4b-c10-residual.json), [integrador PhysX oficial](https://github.com/NVIDIA-Omniverse/PhysX/blob/106.0-physx-5.4.1/physx/source/lowleveldynamics/src/DyBodyCoreIntegrator.h), [CCD oficial](https://nvidia-omniverse.github.io/PhysX/physx/5.4.1/docs/AdvancedCollisionDetection.html#tuning-ccd). [Diagnóstico CCD previo](2026-10-22-first-ball-ccd-diagnostic.md). No se afirma inspección del binario interno de Unity.
 
-C7 ausente por salida superior limpia o horizonte: NotApplicable. Anomalías (cruce, no finitos, discontinuidad de pasos/contactos inválidos) u otra terminación temprana no inferida: NotEvaluable. No se excluyen silenciosamente. El informe muestra los tres estados y los 20.032 casos se contabilizan por variante.
+## Estado nativo y siguiente punto de control
 
-## C10–C16: observaciones después de activar CCD
+No se genera build nativa ni se instala en esta entrega. La última build instalada por este flujo fue la dev d14df6f previa a CCD, no representa este código; las campañas nativas anteriores fueron incompletas y no midieron C17. El p95 del editor no permite estimar ni aprobar 1 ms en el iPhone.
 
-C10 baseline sigue fallando 9/9: 13,6151314–13,6164427 mm. Ya no es únicamente el contacto tardío de la configuración anterior. **Inferencia diagnóstica:** gravedad semimplícita seguida de un barrido lineal predice un sesgo vertical de 13,61628 mm para S9 (g=9,81; dt=1/120; T=4,98/15; impacto paso 40; resto 0,007 s). Desviación máxima respecto a los nueve errores: 0,0011486 mm. [Cálculo y observaciones](../validation/evidence/2026-10-22-i4b-c10-residual.json), [referencia oficial del integrador PhysX](https://github.com/NVIDIA-Omniverse/PhysX/blob/106.0-physx-5.4.1/physx/source/lowleveldynamics/src/DyBodyCoreIntegrator.h). Es consistencia con ese modelo, no inspección del binario interno exacto de Unity ni clasificación final de Claude. No se compensa velocidad, cambia gravedad/integrador o relaja 1 mm. C11 baseline falla S9c, S9d y S9i; geometría/huella/clasificador intactos.
-
-C13 baseline: 35/36 ratios medidos, uno StepOnly no evaluable; mínimo −0,0002015136 y mediana −1,69331327e−6, próximos a cero, sin clamp. La [documentación oficial de CCD PhysX](https://nvidia-omniverse.github.io/PhysX/physx/5.4.1/docs/AdvancedCollisionDetection.html#tuning-ccd) describe descarte del resto temporal con una pasada. Es una explicación compatible con la traza, **no se verificó el número de pasadas interno de Unity**. Se conserva Estimated y StepOnly honestos; no se inventa instante exacto ni umbral para C13.
-
-C14 sigue sin tope configurable en P1. C15 baseline: S4 suelo paso 21/lateral derecha 22; S6 trasera 24/lateral izquierda 25; Estimated, no simultaneidad exacta certificada. C16 baseline alcanza 11,3993931 mm frente a planos aunque C1 no tenga cruces; es informativo y no se omite. C12–C16 no reciben criterios nuevos.
-
-## Clasificación preliminar de Claude y evidencia nueva
-
-La clasificación siguiente fue comunicada por el PO **como preliminar**; no es una aprobación de la corrección ni una GitHub Review atribuida a Claude.
-
-| Grupo | Preliminar de Claude | Evidencia tras corrección, pendiente de su revisión |
-|---|---|---|
-| C1 | Adaptador/configuración probable | Reproducción A→B→A confirma defecto de configuración P1; baseline 0 cruces tras ajuste común |
-| C10/C11/C13 y grandes C3 | Consecuencia probable de C1 | Desaparecen los cruces y grandes ganancias de baseline; C10/C11 persisten y C13 ahora mide resto próximo a cero. No asumir que corregir CCD resuelve todo |
-| C3 residual en reposo | Posible límite del motor, reevaluar | Baseline: cinco fallos; máximo ≈0,027384 solo persistentes; máximos con impacto no persistente =0. Clasificación final pendiente |
-| C5–C7 | Indeterminado | Baseline C5/C6 pasan; C7 falla tres. Primeros ejemplos detallados: orden de contactos con estados iguales. Sin cambio de Reset o comparación |
-| C7 no evaluables | Definición de prueba | Decisión PO 5b implementada y contada en las cinco variantes; la elegibilidad ya no penaliza un fin superior/horizonte limpio |
-
-No se etiqueta el conjunto de fallos como limitación definitiva de PhysX ni se elige backend.
-
-## Decisiones del PO y estado nativo
-
-[Decisiones registradas](2026-10-21-first-ball-po-approvals.md): robustez suspende por foco, registra UTC/duración/fase/progreso/contexto, recupera antes de 60 s y cancela al alcanzar el plazo; segundo plano y foco durante C17 cancelan. Conteo de interrupciones visible, ejecución válida solo si completa. Térmico al iniciar benchmark informativo. RED→GREEN: **EditMode 180/180, PlayMode 54/54**. [Manifiesto de la revisión](../validation/evidence/2026-10-22-i4b-review-fixes-tests.json).
-
-**No se generaron builds ni instalaciones nuevas del iPhone, ni se ejecutó una campaña nativa en esta revisión.** La dev d14df6f y todos los intentos INCOMPLETO previos pertenecen al código/configuración anterior; se preservan como históricos, no certifican el código corregido ni C17. [Histórico nativo y diagnóstico de foco](2026-10-22-first-ball-physics-spike-P1-pre-ccd.md#resultados-en-el-iphone-16-pro).
-
-Antes de la próxima instalación: comprobar vigencia; renovar si ocurre el **2026-10-27 o después** (perfil actual vence 2026-10-28T14:59:31Z), sin cambiar Xcode/herramientas. Próximo intento solo después de esta revisión de Claude: teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda, térmico nominal al comenzar. Sin capturas, devicectl u otras interacciones de herramientas durante la ejecución; recuperar informe al terminar.
-
-**Punto de detención:** entregar estos datos a Claude. PR #4 permanece borrador, sin fusionar; I4b/T4.4 no cerrado. I4c/P2/I5+ sin autorización.
+**Se detiene para revisión de Claude.** Solo después de esa revisión: una build dev y campaña completa en teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda y térmico nominal al comenzar. Sin capturas, devicectl ni herramientas durante la ejecución; recuperar informe al terminar. Política de foco y térmico C17 aprobados ya implementados. Comprobar siempre firma; renovar antes de instalar el 27 de octubre de 2026 o después. No cambiar Xcode/herramientas. I4c, P2/T4.5 e I5+ siguen sin autorizar. [Decisiones del PO](2026-10-21-first-ball-po-approvals.md).

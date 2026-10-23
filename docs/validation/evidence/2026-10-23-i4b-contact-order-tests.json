@@ -109,5 +109,7 @@
     "docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md": "fb4e314e7944bd332377d1fc61d8a53735c9e1dde1c8fef14b27eb3020bbc05b"
   },
   "protectedFilesUnchangedFrom16ad653": true,
-  "resetUnchangedByteForByte": true
+  "resetUnchangedByteForByte": true,
+  "codeCommit": "da98fd4ab0707c72998972b06648efdc6fbb3c22",
+  "c7RelaunchUnchangedByteForByte": true
 }
