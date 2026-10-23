@@ -1,6 +1,8 @@
 # I4b — ejecución de la prueba física P1
 
-Estado actual, 2026-10-23: **orden canónico implementado, cinco campañas nuevas del editor completas; detenido antes de generar build nativa para revisión de Claude**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. Código **da98fd4**, rama firstball/i4b-physics-run, base main 6fd04e0. I4b abierto: revisión nueva de Claude y campaña completa/C17 nativo pendientes. I4c, P2/T4.5 e I5+ no autorizados.
+Estado actual, 2026-10-23: **Claude aprobó el orden canónico de c7da32e; PO autorizó build y campaña nativa**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. Rama firstball/i4b-physics-run, base main 6fd04e0. I4b abierto: campaña completa/C17 nativo e informe final pendientes. I4c, P2/T4.5 e I5+ no autorizados.
+
+[Autorización y condiciones](../reviews/2026-10-21-first-ball-po-approvals.md#revisión-claude-de-c7da32e-y-autorización-nativa--2026-10-23) · [Clasificación vigente y condiciones de C17 editor](../reviews/2026-10-22-first-ball-physics-spike-P1.md#revisión-de-claude-sobre-c7da32e-y-clasificación-vigente). La detención previa que se conserva debajo como historial quedó satisfecha por esta revisión; no autoriza cierre, merge ni I4c.
 
 ## Entrega de orden canónico
 

@@ -118,6 +118,8 @@ namespace SquashClash.Runtime.Tests
             // Replay the real job prefix through S8-109. The two persistent instances have different
             // histories (only game runs robustness); C7 resets BOTH to the same checkpoint state.
             // The isolated S8-109 history is insufficient: its earlier prefix matters to PhysX pair order.
+            // This RED reproduction depends on pair ordering in this PhysX version; a Unity update
+            // that changes pair ordering may stop reproducing the pre-fix RED with this history.
             try {
                 while(!run.Step(8))yield return null;
                 Assert.That(run.Result.Complete,Is.True);

@@ -1,6 +1,6 @@
 # I4b — P1 tras orden canónico de contactos
 
-Estado: **cinco campañas nuevas del editor completas; detenido antes de generar build nativa para revisión de Claude**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. I4b no cerrado; I4c, P2/T4.5 e I5+ no autorizados. PhysX sigue como candidato, sin elección de backend.
+Estado: **orden canónico de c7da32e aprobado por Claude, comunicado por el PO el 2026-10-23; campaña nativa autorizada y en preparación**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. I4b no cerrado; I4c, P2/T4.5 e I5+ no autorizados. PhysX sigue como candidato, sin elección de backend.
 
 Código de las cinco ejecuciones: **da98fd4**, Unity 6000.3.27f1. Preset **c86243b15a97**, seed **20261020**, 10.053 lanzamientos de robustez por variante (17 fijos + 10.000 S8 + 36 S8d), 20 calentamientos y 200 mediciones C17. `fastMotionThreshold=0.01 m` en ProjectPhysics. Se mantienen escenarios, umbrales, geometría, preset, Reset y comparador. El único cambio de salida física es el orden de los contactos de cada paso, aprobado expresamente por el PO.
 
@@ -121,7 +121,7 @@ Umbral y población global conservan ambos. Máximos medidos y rapidez antes/des
 | solver12 | máximo entre casos medidos: S4 Measured, ganancia=0, paso=21, rapidez antes=13.5786324 m/s, después=12.3445759 m/s | máximo entre casos medidos: S8-9456 Measured, ganancia=0.0273840241, paso=218, rapidez antes=0.06393062 m/s, después=0.06555627 m/s |
 | no-ed | máximo entre casos medidos: S4 Measured, ganancia=0, paso=21, rapidez antes=13.5786324 m/s, después=12.3445759 m/s | máximo entre casos medidos: S8-9456 Measured, ganancia=0.0273839869, paso=218, rapidez antes=0.06392491 m/s, después=0.06555371 m/s |
 
-## Clasificación final de Claude
+## Clasificación histórica de Claude previa a c7da32e
 
 Comunicada por el PO, sustituye a la preliminar y se transcribe tal cual; no se atribuye una GitHub Review:
 
@@ -134,8 +134,24 @@ Comunicada por el PO, sustituye a la preliminar y se transcribe tal cual; no se 
 
 La clasificación se conserva literal con el contexto baseline de la revisión; la tabla nueva informa separadamente cualquier divergencia de otras variantes, sin generalizar igualdad a todas ellas. C3/C10/C11 no se compensan ni se suavizan. [Cálculo C10](../validation/evidence/2026-10-22-i4b-c10-residual.json), [integrador PhysX oficial](https://github.com/NVIDIA-Omniverse/PhysX/blob/106.0-physx-5.4.1/physx/source/lowleveldynamics/src/DyBodyCoreIntegrator.h), [CCD oficial](https://nvidia-omniverse.github.io/PhysX/physx/5.4.1/docs/AdvancedCollisionDetection.html#tuning-ccd). [Diagnóstico CCD previo](2026-10-22-first-ball-ccd-diagnostic.md). No se afirma inspección del binario interno de Unity.
 
+## Revisión de Claude sobre c7da32e y clasificación vigente
+
+Comunicada por el PO el 2026-10-23; no se atribuye una GitHub Review. Aprobados PhysXContactOrder, el ordenamiento en Step, el RED físico y la clasificación diagnóstica. El test DifferentHistories_SameCheckpoint_ReturnSameContactOrder documenta que su reproducción del RED depende del orden de pares de esta versión de PhysX y podría dejar de reproducirlo si Unity lo cambia.
+
+- Baseline C5/C6/C7 pasan; las divergencias anteriores eran solo de orden y se resolvieron en el adaptador.
+- no-ed, C7: motor/configuración. Son divergencias numéricas reales y confirman que Enhanced Determinism es necesario.
+- speculative, C6 (S8-6719): motor/variante, terminación distinta con el mismo prefijo.
+- C10/C11 y C3 residual: sin cambios (motor).
+- C16: motor, falta el barrido CCD en la esquina suelo/RightWall con la pelota rodando (paso 246, sin contacto de pared; respuesta por despenetración en el 247). Sigue siendo informativo y queda anotado para el análisis de I4c porque afecta a la zona del nick. Este registro no inicia ni autoriza I4c.
+
+## Condiciones de la última medición C17 en el editor
+
+Baseline da98fd4, Unity 6000.3.27f1, preset c86243b15a97, seed 20261020, 20 calentamientos y 200 mediciones; p95 nearest rank **34,927300 ms** (34,9 ms). Campañas en worktrees aislados, tres editores al principio y dos después, con actividad normal del Mac. Sin control aislado de carga ni registro térmico del Mac. El histórico 16ad653 registró **24,120100 ms** (24,1 ms), con dos editores parcialmente concurrentes. Se documentan las condiciones y ambos valores; no se atribuye causa a la diferencia ni se interpretan o comparan con la medición nativa.
+
 ## Estado nativo y siguiente punto de control
 
-No se genera build nativa ni se instala en esta entrega. La última build instalada por este flujo fue la dev d14df6f previa a CCD, no representa este código; las campañas nativas anteriores fueron incompletas y no midieron C17. El p95 del editor no permite estimar ni aprobar 1 ms en el iPhone.
+La revisión de Claude sobre c7da32e habilita una build dev actual y la campaña completa. Preparación: export limpio, Player no Development, SQUASH_DEV mediante extraScriptingDefines, IL2CPP/Xcode Release ARM64 firmado, metadata y perfil efectivo verificados; prod debe excluir DevPanel y el puente nativo. Antes de iniciar se verificará ProjectPhysics con fastMotionThreshold=0.01 en la app o en un informe corto del artefacto.
 
-**Se detiene para revisión de Claude.** Solo después de esa revisión: una build dev y campaña completa en teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda y térmico nominal al comenzar. Sin capturas, devicectl ni herramientas durante la ejecución; recuperar informe al terminar. Política de foco y térmico C17 aprobados ya implementados. Comprobar siempre firma; renovar antes de instalar el 27 de octubre de 2026 o después. No cambiar Xcode/herramientas. I4c, P2/T4.5 e I5+ siguen sin autorizar. [Decisiones del PO](2026-10-21-first-ball-po-approvals.md).
+El PO ejecutará la campaña en teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda y térmico nominal al comenzar. Sin capturas, devicectl ni herramientas durante la ejecución. Solo después de confirmar su término se recuperará Documents/spike para verificar 18 filas, hash de build/configuración, variante, 200 mediciones C17, térmico al inicio del benchmark e interrupciones de foco. C17 conserva **p95 ≤1 ms**; si no cumple será **Fail**. Cancelado/incompleto/NotEvaluated nunca aprueba.
+
+Comprobar vigencia efectiva antes de instalar; renovar si la instalación ocurre el 2026-10-27 o después. No cambiar Xcode ni herramientas. Finalizar el informe I4b tras recuperar la campaña y detenerse para revisión de Claude y decisión del PO. PR #4 borrador y sin fusionar; I4b abierto. I4c, P2/T4.5 e I5+ siguen sin autorizar. [Decisiones del PO](2026-10-21-first-ball-po-approvals.md).
