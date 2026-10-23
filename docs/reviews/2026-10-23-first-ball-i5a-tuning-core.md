@@ -1,6 +1,6 @@
 # I5a / T5.1–T5.2 — estado de edición, presets y diagnóstico
 
-Estado, 2026-10-23: **implementación y regresión completas; comprobación de exports/compilación iOS en curso**. Rama `firstball/i5a-tuning-core`, PR para revisión de Claude; I5a abierto. Al entregar el informe se detiene, sin fusionar ni empezar I5b/T5.3.
+Estado, 2026-10-23: **entrega completa para revisión de Claude; I5a abierto**. Rama `firstball/i5a-tuning-core`, PR para revisión de Claude; I5a abierto. Al entregar el informe se detiene, sin fusionar ni empezar I5b/T5.3.
 
 ## Cierre previo y autorización
 
@@ -60,8 +60,12 @@ Fases free/spike/benchmark/session; normal sin sorteo usa seed=0, experimento S8
 
 Un primer filtro enfocado omitió los parámetros del fixture y produjo **0 tests**: rechazado, no evidencia de aprobación; sustituido por 2/2 RED reales. El intento completo 90/92 tampoco se declaró GREEN. Fuentes probadas coinciden por SHA-256 con las del commit de implementación; motores/preset/settings/spec y escenarios sin cambios.
 
-Comprobación de exports y compilación iOS: **pendiente de completar**. Sin instalación ni campaña nativa en I5a; el perfil debe renovarse **antes de cualquier instalación desde el 2026-10-27**, y comprobarse siempre antes de instalar. Herramientas sin cambios.
+**Exports limpios dev/prod verificados y build dev iOS compilada y firmada:** **0.1.0+7ce86f6 dev**, gitDirty=false, Player no Development, IL2CPP/Xcode Release ARM64, firma estricta, BuildInfo y DefaultPreset exactos comprobados en el artefacto. Hash f6a394a12daf. [Evidencia saneada de build](../validation/evidence/2026-10-23-i5a-native-build.json). Ambos exports incluyen SquashThermal.mm runtime; prod excluye DevPanel y el puente Spike. Símbolo local `t _SquashThermalState` presente en Mach-O y wrapper IL2CPP con llamada directa comprobado en dev/prod. Prod exportado, sin compilación Xcode adicional.
+
+Xcode no encontró el destino físico conectado; se compiló con **generic/platform=iOS**, sin cambiar proyecto o herramientas. El intento sin destino disponible no se cuenta como compilación exitosa. Fuentes compiladas coinciden con los hashes de las pruebas. La primera exportación marcada dirty por documentación pendiente se sustituyó por exports limpios antes de esta verificación.
+
+**Sin instalación, campaña ni medición en el iPhone en I5a.** No se atribuyen valores de CPU/GPU/térmico o corrección física en dispositivo a esta compilación; la pausa y los sensores se verifican con regresión de editor y el enlace nativo. El perfil embebido se comprobó vigente hasta 2026-10-28T14:59:31Z. Debe renovarse **antes de cualquier instalación desde el 2026-10-27**, y comprobarse siempre antes de instalar. Herramientas sin cambios.
 
 ## Entrega y límites
 
-I5a queda para revisión de Claude con PR e informe; no se cierra ni fusiona automáticamente. No se adelanta el panel T5.3, activación de edición mediante panel, calibración, ayudas ni gameplay posterior. La comprobación física/aceptación que corresponda a I5b/T7.1 sigue pendiente de su autorización. Spec intacta y entrada de backend preparada para T7.3, escrita solo con autorización PO.
+**Se entrega I5a con PR e informe y se detiene para revisión de Claude.** I5a sigue abierto, sin fusionar. No se adelanta el panel T5.3, activación de edición mediante panel, calibración, ayudas ni gameplay posterior. La comprobación física/aceptación que corresponda a I5b/T7.1 sigue pendiente de su autorización. Spec intacta y entrada de backend preparada para T7.3, escrita solo con autorización PO.

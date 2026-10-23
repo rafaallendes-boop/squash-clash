@@ -1,0 +1,88 @@
+{
+  "buildMetadata": {
+    "version": "0.1.0",
+    "gitHash": "7ce86f6",
+    "profile": "dev",
+    "builtAtUtc": "2026-10-23T23:21:54.1907670Z",
+    "unityVersion": "6000.3.27f1",
+    "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+    "gitDirty": false
+  },
+  "exports": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "7ce86f6",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-23T23:21:11.9662820Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "7ce86f6",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-23T23:21:32.7263600Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "freshExport": true,
+  "playerDevelopment": false,
+  "il2cpp": "Release",
+  "xcode": "Xcode 27.1; Build version 27A9275",
+  "xcodeConfiguration": "Release",
+  "xcodeDestination": "generic/platform=iOS",
+  "deviceDestinationAttempt": "Destino físico no disponible; se verificó compilación con destino genérico sin instalar.",
+  "architectures": [
+    "arm64"
+  ],
+  "codesignStrictVerified": true,
+  "embeddedMetadataVerified": true,
+  "embeddedDefaultPresetVerified": true,
+  "defaultEffectiveHash": "f6a394a12daf",
+  "runtimeThermalBridgeSymbolVerified": true,
+  "runtimeThermalBinding": "Símbolo t local presente en Mach-O; wrapper IL2CPP llama directamente a SquashThermalState en dev y prod.",
+  "frameworkSha256": "460c5d9c8008714c6551e4731a2394e0d4018d0dd0368beaaad6e3c621741cdf",
+  "resourcesSha256": "7fd9ece4180d8982a4e6d58cc4b7b851eab363d6e0a6f03e23cc248dec3fea4f",
+  "profileCheckedAtUtc": "2026-10-23T23:28:00.003052+00:00",
+  "profileExpiresAtUtc": "2026-10-28T14:59:31+00:00",
+  "embeddedProfileValid": true,
+  "profileMatchesDeviceAndBundle": true,
+  "installed": false,
+  "nativeCampaignRun": false,
+  "deviceMetricsMeasured": false,
+  "installationPolicy": "Renovar antes de cualquier instalación desde 2026-10-27 y comprobar siempre vigencia; no se instala en I5a.",
+  "testedSourceCommit": "58f4305fc365c11305554da7696753a93a1f38f1",
+  "builtSourceMatchesTestedHashes": true,
+  "atomicReplaceImplementation": {
+    "editor": "Unity 6000.3.27f1",
+    "source": "PlaybackEngines/iOSSupport/il2cpp/libil2cpp/os/Posix/File.cpp",
+    "sourceSha256": "d684b2d4810d86e95820d7238588c8c2a7439db64eac0641e044ced9123056da",
+    "method": "File::ReplaceFile",
+    "noBackupImplementation": "rename(sourceFileName.c_str(), destinationFileName.c_str())"
+  },
+  "scope": "Exports limpios dev/prod y compilación/firma iOS dev. Prod exportado, no compilado con Xcode ni instalado. Puente runtime en ambos perfiles; puente Spike/DevPanel excluido de prod. Sin datos de rendimiento nativo."
+}
