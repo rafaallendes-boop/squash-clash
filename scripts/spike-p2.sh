@@ -2,14 +2,14 @@
 set -euo pipefail
 source "$(dirname "$0")/unity-env.sh"
 mode="${1:-editmode}"
-case "$mode" in editmode) platform=EditMode;; playmode) platform=PlayMode;; *) printf 'Uso: scripts/spike-p2.sh editmode|playmode\n' >&2; exit 1;; esac
+case "$mode" in editmode) platform=EditMode; assembly=SquashClash.EditMode.Experiments; filter=SquashClash.Experiments.EditMode.AnalyticEditModeSpikeExperiment;; playmode) platform=PlayMode; assembly=SquashClash.Experiments; filter=SquashClash.Experiments.AnalyticSpikeExperiment;; *) printf 'Uso: scripts/spike-p2.sh editmode|playmode\n' >&2; exit 1;; esac
 mkdir -p "$ROOT/Logs"
 export SQUASH_SPIKE_COMMIT="$(git -C "$ROOT" rev-parse --short HEAD)"
 started_ns="$(python3 -c 'import time; print(time.time_ns())')"
 xml="$ROOT/Logs/spike-p2-$mode-results.xml"
 report="$ROOT/Logs/physics-spike-P2-$mode.md"
 log="$ROOT/Logs/spike-p2-$mode.log"
-args=(-batchmode -projectPath "$ROOT" -runTests -testPlatform "$platform" -assemblyNames SquashClash.Experiments -testFilter SquashClash.Experiments.AnalyticSpikeExperiment -testResults "$xml" -logFile "$log")
+args=(-batchmode -projectPath "$ROOT" -runTests -testPlatform "$platform" -assemblyNames "$assembly" -testFilter "$filter" -testResults "$xml" -logFile "$log")
 if [[ "$mode" == editmode ]]; then args+=(-nographics); fi
 unity_rc=0
 "$UNITY" "${args[@]}" > "$ROOT/Logs/spike-p2-$mode-console.log" 2>&1 || unity_rc=$?

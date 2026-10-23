@@ -1,0 +1,13 @@
+{
+  "name": "SquashClash.EditMode.Experiments",
+  "rootNamespace": "SquashClash.Experiments.EditMode",
+  "references": [
+    "SquashClash.Experiments"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}
