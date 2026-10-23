@@ -46,10 +46,12 @@ namespace SquashClash.Runtime.Ball
             if (backends == null) throw new InvalidOperationException("Initialize the host before launch.");
             if (cfg == null) throw new ArgumentNullException(nameof(cfg));
             var physics = cfg.Physics; var court = cfg.Court;
+            // Store derived limits as float fields, just like BallState, before comparison (Mono may retain arithmetic precision).
+            var maximumCenter=new Vector3(court.Width-physics.BallRadius,0,court.Length-physics.BallRadius);
             // P2 Reset assumes a valid center inside the floor/lateral bounds. Validate before mutating the live host.
             if(!Finite(initial.Position)||!Finite(initial.Velocity)||initial.Step<0||initial.Step>int.MaxValue-horizonSteps||
-                initial.Position.x<physics.BallRadius||initial.Position.x>court.Width-physics.BallRadius||
-                initial.Position.z<physics.BallRadius||initial.Position.z>court.Length-physics.BallRadius||initial.Position.y<physics.BallRadius)
+                initial.Position.x<physics.BallRadius||initial.Position.x>maximumCenter.x||
+                initial.Position.z<physics.BallRadius||initial.Position.z>maximumCenter.z||initial.Position.y<physics.BallRadius)
                 throw new ArgumentOutOfRangeException(nameof(initial),"Launch state must be finite and inside the court center bounds.");
             if (game == null || ActiveConfig.SimulationKey != cfg.SimulationKey)
             {

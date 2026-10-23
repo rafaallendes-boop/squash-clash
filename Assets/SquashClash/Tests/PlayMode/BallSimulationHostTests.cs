@@ -98,6 +98,20 @@ namespace SquashClash.Runtime.Tests {
             Assert.That(LiveInstances,Is.Zero);Assert.That(host.Clock.Paused,Is.True);Assert.That(host.IsRunning,Is.False);
             host.Advance(1);AssertStateBits(host.Current,initial);host.Replay();Assert.That(LiveInstances,Is.EqualTo(2));yield return null;
         }
+        [UnityTest] public IEnumerator Launch_BoundaryCentersAndOverTopRemainValid()
+        {
+            var cfg=Default();float r=cfg.Physics.BallRadius;
+            foreach(var position in new[]{new Vector3(r,r,r),new Vector3(cfg.Court.Width-r,r,cfg.Court.Length-r),new Vector3(3.2f,cfg.Court.WallHeight+1,5)})
+            {
+                TestContext.WriteLine("Valid boundary center: "+position.ToString("R"));
+                host.Launch(cfg,new BallState{Position=position,Velocity=Vector3.zero},1,StopCondition.MaxSteps);
+                Assert.That(host.Current.Position,Is.EqualTo(position));Assert.That(host.Prediction.States,Is.Not.Empty);
+            }
+            var maximum=new Vector3(cfg.Court.Width-r,0,cfg.Court.Length-r);
+            float nextOutside=BitConverter.Int32BitsToSingle(BitConverter.SingleToInt32Bits(maximum.x)+1);
+            Assert.Throws<ArgumentOutOfRangeException>(()=>host.Launch(cfg,new BallState{Position=new Vector3(nextOutside,1,5)},1,StopCondition.MaxSteps));
+            yield return null;
+        }
         private static void AssertStateBits(BallState a,BallState b) {
             foreach(var pair in new[]{(a.Position.x,b.Position.x),(a.Position.y,b.Position.y),(a.Position.z,b.Position.z),
                 (a.Velocity.x,b.Velocity.x),(a.Velocity.y,b.Velocity.y),(a.Velocity.z,b.Velocity.z)})
