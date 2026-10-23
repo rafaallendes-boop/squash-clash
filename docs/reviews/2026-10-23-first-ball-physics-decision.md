@@ -96,3 +96,11 @@ El PO autoriza **P2/T4.5**, una simulación analítica propia, como alternativa 
 6. **Entrega P2:** informe comparativo P1/P2 de 18 criterios y detenerse para Claude/PO. Sin elegir backend, congelar variantes, modificar spec o iniciar I5.
 
 Este documento registra la decisión del PO y prepara su revisión documental. No contiene implementación P2, resultados P2 ni aprobación anticipada de su gate.
+
+## Precisión aprobada tras revisión de Claude — 2026-10-23
+
+Claude aprobó la PR #5 y propuso precisar el tratamiento de los impactos lentos contra paredes para que la semántica coincida con P1. El PO aprobó el agregado y autorizó fusionar I4c con merge commit e iniciar T4.5 después. Se añade literalmente al final del punto 1 de la adenda r2:
+
+> En paredes, un impacto con velocidad normal menor que bounceThreshold anula la componente normal sin rebote. No existe estado de reposo en paredes.
+
+No introduce reposo en paredes ni parámetro nuevo. El resto de los cuatro puntos se conserva; no cambian escenarios, criterios, umbrales o spec. La aprobación fue comunicada por el PO; no se atribuye una GitHub Review adicional. Después de fusionar y registrar el cierre, T4.5 seguirá la secuencia ya registrada en su rama y PR de física propias, hasta la entrega comparativa para Claude/PO. Backend definitivo pendiente e I5 no autorizado.
