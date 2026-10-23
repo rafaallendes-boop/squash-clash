@@ -1,0 +1,29 @@
+{
+  "type": "Analytical diagnostic/inference; not replacement metric or modified acceptance criterion",
+  "sourceRun": "16ad653 baseline",
+  "originalCriterion": "C10 ContactPrecisionMm, experimental <=1mm unchanged",
+  "inputs": {
+    "g": 9.81,
+    "dt": 0.008333333333333333,
+    "T": 0.332,
+    "step": 40,
+    "tau": 0.007000000000000006
+  },
+  "formulaMillimetres": "0.5*g*((n-1)*dt^2+2*dt*tau-tau^2)*1000",
+  "model": "Semiimplicit gravity integration and linear TOI sweep on final step",
+  "predictedVerticalBiasMm": 13.616280000000001,
+  "observedPrecisionErrorMm": {
+    "S9a": 13.6156082,
+    "S9b": 13.6151314,
+    "S9c": 13.6160851,
+    "S9d": 13.6162338,
+    "S9e": 13.616353,
+    "S9f": 13.6164427,
+    "S9g": 13.6158466,
+    "S9h": 13.6157274,
+    "S9i": 13.6157274
+  },
+  "maxAbsoluteResidualMm": 0.0011486000000022756,
+  "officialSource": "https://github.com/NVIDIA-Omniverse/PhysX/blob/106.0-physx-5.4.1/physx/source/lowleveldynamics/src/DyBodyCoreIntegrator.h",
+  "limits": "Consistent with integration bias, not inspection of exact Unity native binary, not final Claude classification. No launch compensation/custom gravity/integrator or threshold change."
+}

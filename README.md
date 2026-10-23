@@ -4,6 +4,8 @@ Prototipo de squash para iPhone en Unity 6.3 LTS: validación progresiva, empeza
 
 [Spec v0.3](docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md) · [Plan First Ball r2](docs/superpowers/plans/2026-10-20-squash-clash-first-ball.md) · [Entorno](docs/validation/environment.md) · [E1: instalación y evidencia](docs/validation/e1-first-installation.md) · [I2: cancha y cámara](docs/validation/i2-court.md)
 
+**Estado actual — I4b, revisión CCD para Claude:** PR #4 sigue borrador, sin fusionar. Código 16ad653, EditMode 180/180 y PlayMode 54/54; cinco campañas nuevas del editor completas. Baseline ya no cruza paredes y pasa C5/C6, pero siguen fallando C3/C7/C10/C11. [Informe actualizado](docs/reviews/2026-10-22-first-ball-physics-spike-P1.md) y [diagnóstico CCD](docs/reviews/2026-10-22-first-ball-ccd-diagnostic.md). iPhone pausado hasta revisión de Claude, sin instalación nueva. I4c/P2/I5+ no autorizados. Los estados de entregas anteriores se conservan debajo como historial.
+
 Editor fijado: **6000.3.27f1 (Apple silicon)** con iOS Build Support. Configurar `scripts/device.env` a partir de `scripts/device.env.example`; el archivo real queda excluido de Git. Requiere la cuenta del PO en Xcode y el iPhone conectado, desbloqueado y con Modo de desarrollador.
 
 ```bash
@@ -45,7 +47,7 @@ Entrega I4a publicada en [PR #3](https://github.com/rafaallendes-boop/squash-cla
 
 I4a cerrado: PR #3 fusionada (`ca50142`), ajustes de Claude verificados RED→GREEN, EditMode 159/159 y PlayMode 37/37. I4b autorizado; gate I4c/P2/I5+ pendientes de autorización.
 
-**Estado actual — I4b, entrega parcial:** [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), código `ee76086`, EditMode170/170 y PlayMode43/43. Runner incremental, benchmark y controles de escenario/prueba en dev; exclusión real de prod verificada. Cinco variantes completas del editor, ninguna cumple todos los criterios: [informe físico](docs/reviews/2026-10-22-first-ball-physics-spike-P1.md). Build dev Release ARM64 firmada instalada/abierta; escenario/cancelación comprobados en iPhone, falta campaña completa y C17 nativo. Clasificación de Claude pendiente. [Validación y resoluciones](docs/validation/i4b-physics-run.md). I4b no cerrado; I4c/P2/I5+ siguen sin autorizar.
+**Entrega histórica — I4b antes de CCD:** [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), código `ee76086`, EditMode170/170 y PlayMode43/43. Runner incremental, benchmark y controles de escenario/prueba en dev; exclusión real de prod verificada. Cinco variantes completas del editor, ninguna cumple todos los criterios: [informe físico](docs/reviews/2026-10-22-first-ball-physics-spike-P1.md). Build dev Release ARM64 firmada instalada/abierta; escenario/cancelación comprobados en iPhone, falta campaña completa y C17 nativo. Clasificación de Claude pendiente. [Validación y resoluciones](docs/validation/i4b-physics-run.md). I4b no cerrado; I4c/P2/I5+ siguen sin autorizar.
 
 **Seguimiento de I4b:** cuarto intento físico incompleto por foco, 10 min50 s, nominal→serious, C17 no medido; PO declara app al frente sin interacción. Diagnóstico mínimo de ciclo de vida añadido sin cambiar cancelación ni criterios, PlayMode45/45 RED→GREEN. Sigue pendiente la campaña completa y la revisión/clasificación de Claude; [detalle](docs/reviews/2026-10-22-first-ball-physics-spike-P1.md#cuarto-intento-físico-y-diagnóstico-de-ciclo-de-vida).
 

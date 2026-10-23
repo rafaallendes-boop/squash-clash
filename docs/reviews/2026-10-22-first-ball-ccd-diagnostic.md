@@ -1,6 +1,6 @@
 # I4b — diagnóstico de CCD (2026-10-22)
 
-Estado: reproducción y corrección de configuración confirmadas; campaña nueva pendiente. PR #4 borrador, sin fusionar. iPhone pausado hasta revisión de Claude. I4c/P2/I5+ no autorizados.
+Estado: reproducción y corrección de configuración confirmadas; cinco campañas nuevas del editor completas; pendiente de revisión de Claude y del iPhone. PR #4 borrador, sin fusionar. iPhone pausado hasta revisión de Claude. I4c/P2/I5+ no autorizados.
 
 El defecto se reproduce **también fuera del adaptador**: esfera de radio 20 mm, 25 m/s hacia −Z, caja estática de 1 m de espesor, paso 1/120 s, ContinuousDynamic. En escenas local y por defecto, el centro pasa z=0 en el paso 2 (z=−0,116666675 m) y el callback llega en el 3. S1 tiene z=−0,1890124 en el 33 y primer contacto en el 34. Speculative reporta en el 33 sin cruce. [Trazas previas](../validation/evidence/ccd-before/ccd-s1-baseline.csv), [reproducción local](../validation/evidence/ccd-before/ccd-minimal-local.csv), [escena por defecto](../validation/evidence/ccd-before/ccd-minimal-default.csv), [speculative](../validation/evidence/ccd-before/ccd-s1-speculative.csv).
 
@@ -33,3 +33,10 @@ C7 aplica la decisión del PO con contadores separados: Measured/NotApplicable/N
 Foco en robustez: detiene trabajos mientras falta, registra cada intervalo (duplicados de focus(false) no duplican el conteo), recupera automáticamente la vista del experimento al volver y cancela si pasan 60 s, también si el primer callback posterior es focus(true). Segundo plano y cualquier pérdida de foco durante C17 cancelan. El Runtime fuera del experimento conserva «Toca para continuar» y el pendiente I5 de pausa manual. Se registra el térmico al comenzar C17, sin umbral nuevo. Siete fallos RED en doce pruebas de sección → suite final **PlayMode 54/54**. [Evidencia](../validation/evidence/2026-10-22-i4b-focus-policy.json). No se ha probado aún esta política en el iPhone.
 
 Las comparaciones C5–C7 ahora conservan el primer desacuerdo de cada criterio con paso/índice, estados previo/actual, seis float32 en hexadecimal y contactos. No se cambia la medida de igualdad (superficie/paso para contactos). Un experimento separado compara 25 controles: cinco objetivos, nueva/nueva y con historia S6 (8 contactos) o S10 (653 contactos), frente a nueva o a la misma historia. **25/25 iguales** tras corregir CCD. Esto no demuestra que PhysX carezca de caché ni certifica la población completa. **Reset permanece sin cambios**, sin prueba que justifique un parche. [Comparaciones](../validation/evidence/physics-spike-P1/editor-reset-history-ccd.md), [procedencia y límites](../validation/evidence/2026-10-22-i4b-reset-history.json).
+
+
+## Campaña nueva y detención
+
+Las cinco variantes se ejecutaron completas sobre 16ad653, con umbrales/escenarios/medidas/preset conservados y elegibilidad C7 aprobada. [Resultados y procedencia](2026-10-22-first-ball-physics-spike-P1.md). Baseline elimina C1, pasa C5/C6 y conserva fallos C3/C7/C10/C11. El primer C7 difiere en orden de contactos del mismo paso con estados idénticos; no se cambia la comparación. C10 residual de ≈13,616mm coincide con el cálculo semimplícito/TOI lineal documentado como inferencia, sin ajustar el lanzamiento. No es aún clasificación final de Claude ni elección del motor.
+
+No se volvió al iPhone: PR #4 continúa borrador, sin fusionar, para revisión de Claude. I4c/P2/I5+ no autorizados.
