@@ -7,7 +7,7 @@ namespace SquashClash.Core.Spike
         public string Id, Requirement, Scenarios, Measured, Threshold;
         public Verdict Verdict = Verdict.NotEvaluated;
         public bool Gating;
-        public int Evaluated, NotEvaluable, Expected;
+        public int Evaluated, NotEvaluable, NotApplicable, Expected;
         // The runner closes the full prescribed population, including eligibility.
         // Missing measurements remain in Expected and NotEvaluable, never omitted.
         public bool CoverageComplete;

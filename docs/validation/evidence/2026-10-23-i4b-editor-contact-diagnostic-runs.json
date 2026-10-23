@@ -1,0 +1,6357 @@
+{
+  "date": "2026-10-23",
+  "executionCode": "1c47621c2e93f468d127ff036bb8012790653c6f",
+  "phase": "contact-diagnostic",
+  "configHash": "c86243b15a97",
+  "seed": 20261020,
+  "fastMotionThresholdMetres": 0.01,
+  "robustnessLaunchesPerVariant": 10053,
+  "c7OpportunitiesPerVariant": 20032,
+  "classificationDefinition": "Diagnostic only; states: Step and six float bits; contacts: multiset of ALL ContactEvent fields, exact bits and multiplicity. Comparisons/verdicts remain untouched. No sorting/grouping in TrajectoriesBitwiseEqual/C7.",
+  "editorTiming": "Informative only; concurrent editors in isolated worktrees and normal Mac activity. Does not certify native C17.",
+  "thresholdAudit": {
+    "criteriaPerVariant": 18,
+    "allEqualTo16ad653": true,
+    "gateFlagsEqual": true
+  },
+  "runs": [
+    {
+      "variant": "baseline",
+      "executionCode": "1c47621c2e93f468d127ff036bb8012790653c6f",
+      "report": "docs/validation/evidence/physics-spike-P1/editor-1c47621-baseline-contact-diagnostic.md",
+      "reportSha256": "bbe560373e2bb2edbd85452da488ba412259a3fed53b202593ec1e621dc5fb08",
+      "xmlLocal": "Logs/contact-editor-1c47621-contact-diagnostic/spike-baseline-results.xml",
+      "xmlSha256": "bddc2701d6a80d57d1aba8196e998ab1cc8c68e02e73f554fd408eca64869515",
+      "unityLogLocal": "Logs/contact-editor-1c47621-contact-diagnostic/spike-baseline.log",
+      "unityLogSha256": "bb67f85883499e2b2c01bc8b19a1bb2cddde42ffb9987ad921989d2c8b46fbcb",
+      "counts": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 10:43:00Z",
+      "endedUtc": "2026-10-23 10:58:06Z",
+      "durationSeconds": 905.1937973,
+      "allGatingPass": false,
+      "resourceCleanupAssertionsPassed": true,
+      "criteria": {
+        "C1": {
+          "measurement": "fallos=0; evaluados=10053; no evaluables=0; atravesamientos=0; salidas superiores=2341; seed=20261020; S8=10000; S8d=36",
+          "threshold": "0 atravesamientos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluated": 10053,
+          "notEvaluable": 0,
+          "expected": 10053,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C2": {
+          "measurement": "fallos=0; evaluados=67737; no evaluables=0",
+          "threshold": "Todos finitos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluated": 67737,
+          "notEvaluable": 0,
+          "expected": 67737,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C3": {
+          "measurement": "fallos=5; evaluados=3501; no evaluables=0; no aplica (sin pasos de esquina, fuera de población)=6538; Corner [Measured=3501, NotApplicable=6538, NotEvaluable=0]: máximo entre casos medidos: S8-9456 Measured, ganancia=0.0273839869, paso=218, rapidez antes=0.06392491 m/s, después=0.06555371 m/s; CornerWithImpact [Measured=3501, NotApplicable=6538, NotEvaluable=0]: máximo entre casos medidos: S4 Measured, ganancia=0, paso=21, rapidez antes=13.5786324 m/s, después=12.3445759 m/s; CornerPersistentOnly [Measured=3396, NotApplicable=6643, NotEvaluable=0]: máximo entre casos medidos: S8-9456 Measured, ganancia=0.0273839869, paso=218, rapidez antes=0.06392491 m/s, después=0.06555371 m/s",
+          "threshold": "≤ 1e-5 (ruido float)",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluated": 3501,
+          "notEvaluable": 0,
+          "expected": 3501,
+          "notApplicable": 6538,
+          "coverage": "cerrada"
+        },
+        "C4": {
+          "measurement": "fallos=0; evaluados=4; no evaluables=0; impactos repetidos=0",
+          "threshold": "0 (|vn| > 0,5 m/s; no persistentes)",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluated": 4,
+          "notEvaluable": 0,
+          "expected": 4,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C5": {
+          "measurement": "fallos=0; evaluados=117; no evaluables=0",
+          "threshold": "Igualdad de estados y contactos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluated": 117,
+          "notEvaluable": 0,
+          "expected": 117,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C6": {
+          "measurement": "fallos=0; evaluados=10017; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluated": 10017,
+          "notEvaluable": 0,
+          "expected": 10017,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C7": {
+          "measurement": "fallos=3; evaluados=18753; no evaluables=0; Measured=18753; NotApplicable=1279; NotEvaluable=0 (no aplica fuera de población)",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluated": 18753,
+          "notEvaluable": 0,
+          "expected": 18753,
+          "notApplicable": 1279,
+          "coverage": "cerrada"
+        },
+        "C8": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluated": 2,
+          "notEvaluable": 0,
+          "expected": 2,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C9": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Diagnóstico; no decide el gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 2,
+          "notEvaluable": 0,
+          "expected": 2,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C10": {
+          "measurement": "fallos=9; evaluados=9; no evaluables=0; error máximo mm=13.6164427",
+          "threshold": "≤ 1 mm [EXPERIMENTO, D-1]",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluated": 9,
+          "notEvaluable": 0,
+          "expected": 9,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C11": {
+          "measurement": "fallos=3; evaluados=6; no evaluables=0",
+          "threshold": "Igual a ExpectTouch",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluated": 6,
+          "notEvaluable": 0,
+          "expected": 6,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C12": {
+          "measurement": "fallos=0; evaluados=11; no evaluables=0",
+          "threshold": "Informe al gate; sin umbral inventado",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 11,
+          "notEvaluable": 0,
+          "expected": 11,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C13": {
+          "measurement": "fallos=0; evaluados=35; no evaluables=1; mínimo=-0.0002015136; mediana=-1.69331327E-06",
+          "threshold": "Informe al gate; ratio sin umbral",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluated": 35,
+          "notEvaluable": 1,
+          "expected": 36,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C14": {
+          "measurement": "máximo impactos no persistentes/paso=2; tope configurable=False; parámetro maxImpactsPerStep no operativo con P1",
+          "threshold": "Informe al gate; tope configurable sí/no (P1: no)",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 1,
+          "notEvaluable": 0,
+          "expected": 1,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C15": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Mismo paso y ContactTiming; informe al gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 2,
+          "notEvaluable": 0,
+          "expected": 2,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C16": {
+          "measurement": "penetración máxima=11.3993931 mm; muestras persistentes=1147120 (todas las trayectorias ejecutadas)",
+          "threshold": "Informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 1,
+          "notEvaluable": 0,
+          "expected": 1,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C17": {
+          "measurement": "n=200; warmup=20; median=22.071000; p95=24.842200; p99=25.599700; max=26.448600 ms; percentiles nearest rank",
+          "threshold": "p95 ≤ 1 ms en iPhone; editor informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 200,
+          "notEvaluable": 0,
+          "expected": 200,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C18": {
+          "measurement": "RunsInEditMode=False; timing=Estimated",
+          "threshold": "Preferencia, no gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 1,
+          "notEvaluable": 0,
+          "expected": 1,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        }
+      },
+      "divergenceClassification": {
+        "C5": {
+          "orderOnly": 0,
+          "stateOrContactsDifferent": 0,
+          "statesDifferent": 0,
+          "fullContactMultisetDifferent": 0
+        },
+        "C6": {
+          "orderOnly": 0,
+          "stateOrContactsDifferent": 0,
+          "statesDifferent": 0,
+          "fullContactMultisetDifferent": 0
+        },
+        "C7": {
+          "orderOnly": 3,
+          "stateOrContactsDifferent": 0,
+          "statesDifferent": 0,
+          "fullContactMultisetDifferent": 0
+        }
+      },
+      "divergences": [
+        {
+          "criterion": "C7",
+          "scenario": "S8-109 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 127,
+          "firstIndex": 77,
+          "checkpoint": 50,
+          "stateCounts": [
+            78,
+            78
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3429 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 101,
+          "firstIndex": 71,
+          "checkpoint": 30,
+          "stateCounts": [
+            72,
+            72
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3429 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 101,
+          "firstIndex": 92,
+          "checkpoint": 9,
+          "stateCounts": [
+            93,
+            93
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        }
+      ],
+      "c16Maximum": "C16 máximo: S8-9948 robustez; paso=246; superficie=RightWall; tipo=sin contacto reportado; penetración=11.3993931 mm; rapidez=1.77920949 m/s; previo=paso=245, p=(0.022689756, 0.0217045043, 2.7492857), v=(-1.69069779, -0.0396833122, -0.540722966), bits=3CB9DFDE,3CB1CDA5,402FF44C,BFD868C9,BD228AF8,BF0A6CD2; estado=paso=246, p=(0.008600607, 0.02069256, 2.74477959), v=(-1.69069779, -0.121433318, -0.540722966), bits=3C0CE98F,3CA98372,402FAA78,BFD868C9,BDF8B208,BF0A6CD2; contactos=[Floor@246 persistent=False, StepOnly, t=NaN, p=(0.02268982, 0, 2.7492857), n=(0, 1, 0), approach=(-1.69069779, -0.0396833122, -0.540722966)]"
+    },
+    {
+      "variant": "speculative",
+      "executionCode": "1c47621c2e93f468d127ff036bb8012790653c6f",
+      "report": "docs/validation/evidence/physics-spike-P1/editor-1c47621-speculative-contact-diagnostic.md",
+      "reportSha256": "e70b17c7d10d2a3694e5b73dc4d5ce147ed11b617bde6ff7ecf90b427afa22f7",
+      "xmlLocal": "Logs/contact-editor-1c47621-contact-diagnostic/spike-speculative-results.xml",
+      "xmlSha256": "b46c35dd6170b944cb641f269aa567b173f30fa6dfb3f00e7b3b659b71a9a8f8",
+      "unityLogLocal": "Logs/contact-editor-1c47621-contact-diagnostic/spike-speculative.log",
+      "unityLogSha256": "bd55ba6c02cac2227a4a57555f5718f2a5ba498e3346d9b7a81a0cdb12642892",
+      "counts": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 10:43:13Z",
+      "endedUtc": "2026-10-23 10:58:19Z",
+      "durationSeconds": 905.5275697,
+      "allGatingPass": false,
+      "resourceCleanupAssertionsPassed": true,
+      "criteria": {
+        "C1": {
+          "measurement": "fallos=0; evaluados=10053; no evaluables=0; atravesamientos=0; salidas superiores=2105; seed=20261020; S8=10000; S8d=36",
+          "threshold": "0 atravesamientos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluated": 10053,
+          "notEvaluable": 0,
+          "expected": 10053,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C2": {
+          "measurement": "fallos=0; evaluados=67789; no evaluables=0",
+          "threshold": "Todos finitos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluated": 67789,
+          "notEvaluable": 0,
+          "expected": 67789,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C3": {
+          "measurement": "fallos=17; evaluados=2772; no evaluables=0; no aplica (sin pasos de esquina, fuera de población)=7267; Corner [Measured=2772, NotApplicable=7267, NotEvaluable=0]: máximo entre casos medidos: S8-8469 Measured, ganancia=0.0273839571, paso=322, rapidez antes=0.06398784 m/s, después=0.06558204 m/s; CornerWithImpact [Measured=2772, NotApplicable=7267, NotEvaluable=0]: máximo entre casos medidos: S8-8469 Measured, ganancia=0.0273839571, paso=322, rapidez antes=0.06398784 m/s, después=0.06558204 m/s; CornerPersistentOnly [Measured=2689, NotApplicable=7350, NotEvaluable=0]: máximo entre casos medidos: S8-9384 Measured, ganancia=0.0273839273, paso=344, rapidez antes=0.06382191 m/s, después=0.06550735 m/s",
+          "threshold": "≤ 1e-5 (ruido float)",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluated": 2772,
+          "notEvaluable": 0,
+          "expected": 2772,
+          "notApplicable": 7267,
+          "coverage": "cerrada"
+        },
+        "C4": {
+          "measurement": "fallos=0; evaluados=4; no evaluables=0; impactos repetidos=0",
+          "threshold": "0 (|vn| > 0,5 m/s; no persistentes)",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluated": 4,
+          "notEvaluable": 0,
+          "expected": 4,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C5": {
+          "measurement": "fallos=0; evaluados=117; no evaluables=0",
+          "threshold": "Igualdad de estados y contactos",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluated": 117,
+          "notEvaluable": 0,
+          "expected": 117,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C6": {
+          "measurement": "fallos=139; evaluados=10017; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluated": 10017,
+          "notEvaluable": 0,
+          "expected": 10017,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C7": {
+          "measurement": "fallos=183; evaluados=18779; no evaluables=0; Measured=18779; NotApplicable=1253; NotEvaluable=0 (no aplica fuera de población)",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluated": 18779,
+          "notEvaluable": 0,
+          "expected": 18779,
+          "notApplicable": 1253,
+          "coverage": "cerrada"
+        },
+        "C8": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Igualdad bit a bit",
+          "verdict": "Pass",
+          "gating": true,
+          "evaluated": 2,
+          "notEvaluable": 0,
+          "expected": 2,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C9": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Diagnóstico; no decide el gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 2,
+          "notEvaluable": 0,
+          "expected": 2,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C10": {
+          "measurement": "fallos=9; evaluados=9; no evaluables=0; error máximo mm=77.24857",
+          "threshold": "≤ 1 mm [EXPERIMENTO, D-1]",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluated": 9,
+          "notEvaluable": 0,
+          "expected": 9,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C11": {
+          "measurement": "fallos=3; evaluados=6; no evaluables=0",
+          "threshold": "Igual a ExpectTouch",
+          "verdict": "Fail",
+          "gating": true,
+          "evaluated": 6,
+          "notEvaluable": 0,
+          "expected": 6,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C12": {
+          "measurement": "fallos=0; evaluados=11; no evaluables=0",
+          "threshold": "Informe al gate; sin umbral inventado",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 11,
+          "notEvaluable": 0,
+          "expected": 11,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C13": {
+          "measurement": "fallos=0; evaluados=15; no evaluables=16; mínimo=1.32343864; mediana=8.159093",
+          "threshold": "Informe al gate; ratio sin umbral",
+          "verdict": "NotEvaluated",
+          "gating": false,
+          "evaluated": 15,
+          "notEvaluable": 16,
+          "expected": 31,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C14": {
+          "measurement": "máximo impactos no persistentes/paso=2; tope configurable=False; parámetro maxImpactsPerStep no operativo con P1",
+          "threshold": "Informe al gate; tope configurable sí/no (P1: no)",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 1,
+          "notEvaluable": 0,
+          "expected": 1,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C15": {
+          "measurement": "fallos=0; evaluados=2; no evaluables=0",
+          "threshold": "Mismo paso y ContactTiming; informe al gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 2,
+          "notEvaluable": 0,
+          "expected": 2,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C16": {
+          "measurement": "penetración máxima=0.612672448 mm; muestras persistentes=1774348 (todas las trayectorias ejecutadas)",
+          "threshold": "Informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 1,
+          "notEvaluable": 0,
+          "expected": 1,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C17": {
+          "measurement": "n=200; warmup=20; median=8.141900; p95=9.240200; p99=10.312500; max=10.548400 ms; percentiles nearest rank",
+          "threshold": "p95 ≤ 1 ms en iPhone; editor informativo",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 200,
+          "notEvaluable": 0,
+          "expected": 200,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        },
+        "C18": {
+          "measurement": "RunsInEditMode=False; timing=Estimated",
+          "threshold": "Preferencia, no gate",
+          "verdict": "Info",
+          "gating": false,
+          "evaluated": 1,
+          "notEvaluable": 0,
+          "expected": 1,
+          "notApplicable": 0,
+          "coverage": "cerrada"
+        }
+      },
+      "divergenceClassification": {
+        "C5": {
+          "orderOnly": 0,
+          "stateOrContactsDifferent": 0,
+          "statesDifferent": 0,
+          "fullContactMultisetDifferent": 0
+        },
+        "C6": {
+          "orderOnly": 138,
+          "stateOrContactsDifferent": 1,
+          "statesDifferent": 1,
+          "fullContactMultisetDifferent": 1
+        },
+        "C7": {
+          "orderOnly": 183,
+          "stateOrContactsDifferent": 0,
+          "statesDifferent": 0,
+          "fullContactMultisetDifferent": 0
+        }
+      },
+      "divergences": [
+        {
+          "criterion": "C7",
+          "scenario": "S6 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 25,
+          "firstIndex": 1,
+          "checkpoint": 24,
+          "stateCounts": [
+            81,
+            81
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-10 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 27,
+          "firstIndex": 1,
+          "checkpoint": 26,
+          "stateCounts": [
+            242,
+            242
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-15",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 9,
+          "firstIndex": 9,
+          "checkpoint": 0,
+          "stateCounts": [
+            140,
+            140
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-33",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 75,
+          "firstIndex": 75,
+          "checkpoint": 0,
+          "stateCounts": [
+            76,
+            76
+          ],
+          "contactCounts": [
+            33,
+            33
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-77",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 31,
+          "checkpoint": 0,
+          "stateCounts": [
+            106,
+            106
+          ],
+          "contactCounts": [
+            16,
+            16
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-77 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 1,
+          "checkpoint": 30,
+          "stateCounts": [
+            119,
+            119
+          ],
+          "contactCounts": [
+            18,
+            18
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-77 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 16,
+          "checkpoint": 15,
+          "stateCounts": [
+            134,
+            134
+          ],
+          "contactCounts": [
+            26,
+            26
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-120 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 1,
+          "checkpoint": 30,
+          "stateCounts": [
+            211,
+            211
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-120 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 33,
+          "firstIndex": 1,
+          "checkpoint": 32,
+          "stateCounts": [
+            209,
+            209
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-195",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 179,
+          "firstIndex": 179,
+          "checkpoint": 0,
+          "stateCounts": [
+            180,
+            180
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-195 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 179,
+          "firstIndex": 149,
+          "checkpoint": 30,
+          "stateCounts": [
+            150,
+            150
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-195 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 179,
+          "firstIndex": 163,
+          "checkpoint": 16,
+          "stateCounts": [
+            164,
+            164
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-218",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 12,
+          "firstIndex": 12,
+          "checkpoint": 0,
+          "stateCounts": [
+            172,
+            172
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-257",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 9,
+          "firstIndex": 9,
+          "checkpoint": 0,
+          "stateCounts": [
+            97,
+            97
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-303",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 89,
+          "firstIndex": 89,
+          "checkpoint": 0,
+          "stateCounts": [
+            233,
+            233
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-303 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 89,
+          "firstIndex": 59,
+          "checkpoint": 30,
+          "stateCounts": [
+            315,
+            315
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-303 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 89,
+          "firstIndex": 85,
+          "checkpoint": 4,
+          "stateCounts": [
+            341,
+            341
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-322",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 113,
+          "firstIndex": 113,
+          "checkpoint": 0,
+          "stateCounts": [
+            114,
+            114
+          ],
+          "contactCounts": [
+            28,
+            28
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-322 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 113,
+          "firstIndex": 83,
+          "checkpoint": 30,
+          "stateCounts": [
+            84,
+            84
+          ],
+          "contactCounts": [
+            28,
+            28
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-322 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 113,
+          "firstIndex": 81,
+          "checkpoint": 32,
+          "stateCounts": [
+            82,
+            82
+          ],
+          "contactCounts": [
+            27,
+            27
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-334",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 134,
+          "firstIndex": 134,
+          "checkpoint": 0,
+          "stateCounts": [
+            135,
+            135
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-334 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 134,
+          "firstIndex": 104,
+          "checkpoint": 30,
+          "stateCounts": [
+            105,
+            105
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-334 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 134,
+          "firstIndex": 128,
+          "checkpoint": 6,
+          "stateCounts": [
+            129,
+            129
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-403",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 91,
+          "firstIndex": 91,
+          "checkpoint": 0,
+          "stateCounts": [
+            128,
+            128
+          ],
+          "contactCounts": [
+            18,
+            18
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-403 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 91,
+          "firstIndex": 61,
+          "checkpoint": 30,
+          "stateCounts": [
+            98,
+            98
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-403 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 91,
+          "firstIndex": 69,
+          "checkpoint": 22,
+          "stateCounts": [
+            106,
+            106
+          ],
+          "contactCounts": [
+            16,
+            16
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-491",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 130,
+          "firstIndex": 130,
+          "checkpoint": 0,
+          "stateCounts": [
+            215,
+            215
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-491 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 130,
+          "firstIndex": 100,
+          "checkpoint": 30,
+          "stateCounts": [
+            185,
+            185
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-491 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 130,
+          "firstIndex": 95,
+          "checkpoint": 35,
+          "stateCounts": [
+            180,
+            180
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-500 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 13,
+          "firstIndex": 1,
+          "checkpoint": 12,
+          "stateCounts": [
+            97,
+            97
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-598 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 11,
+          "firstIndex": 1,
+          "checkpoint": 10,
+          "stateCounts": [
+            47,
+            47
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-752",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 3,
+          "firstIndex": 3,
+          "checkpoint": 0,
+          "stateCounts": [
+            120,
+            120
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-978",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 2,
+          "firstIndex": 2,
+          "checkpoint": 0,
+          "stateCounts": [
+            60,
+            60
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-978 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 4,
+          "firstIndex": 1,
+          "checkpoint": 3,
+          "stateCounts": [
+            57,
+            57
+          ],
+          "contactCounts": [
+            2,
+            2
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1016",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 75,
+          "firstIndex": 75,
+          "checkpoint": 0,
+          "stateCounts": [
+            146,
+            146
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1016 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 75,
+          "firstIndex": 45,
+          "checkpoint": 30,
+          "stateCounts": [
+            116,
+            116
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1016 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 75,
+          "firstIndex": 64,
+          "checkpoint": 11,
+          "stateCounts": [
+            135,
+            135
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1047",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 77,
+          "firstIndex": 77,
+          "checkpoint": 0,
+          "stateCounts": [
+            140,
+            140
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1047 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 77,
+          "firstIndex": 47,
+          "checkpoint": 30,
+          "stateCounts": [
+            110,
+            110
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1091 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 9,
+          "firstIndex": 1,
+          "checkpoint": 8,
+          "stateCounts": [
+            274,
+            274
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1111",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 119,
+          "firstIndex": 119,
+          "checkpoint": 0,
+          "stateCounts": [
+            120,
+            120
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1111 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 119,
+          "firstIndex": 89,
+          "checkpoint": 30,
+          "stateCounts": [
+            90,
+            90
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1111 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 119,
+          "firstIndex": 86,
+          "checkpoint": 33,
+          "stateCounts": [
+            129,
+            129
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1135",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 154,
+          "firstIndex": 154,
+          "checkpoint": 0,
+          "stateCounts": [
+            155,
+            155
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1135 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 154,
+          "firstIndex": 124,
+          "checkpoint": 30,
+          "stateCounts": [
+            162,
+            162
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1135 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 154,
+          "firstIndex": 148,
+          "checkpoint": 6,
+          "stateCounts": [
+            149,
+            149
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1143",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 11,
+          "firstIndex": 11,
+          "checkpoint": 0,
+          "stateCounts": [
+            14,
+            14
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1250",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 18,
+          "firstIndex": 18,
+          "checkpoint": 0,
+          "stateCounts": [
+            171,
+            171
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1286 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 26,
+          "firstIndex": 1,
+          "checkpoint": 25,
+          "stateCounts": [
+            36,
+            36
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1383 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 1,
+          "checkpoint": 30,
+          "stateCounts": [
+            24,
+            24
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1444",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 21,
+          "firstIndex": 21,
+          "checkpoint": 0,
+          "stateCounts": [
+            85,
+            85
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1493",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 133,
+          "firstIndex": 133,
+          "checkpoint": 0,
+          "stateCounts": [
+            134,
+            134
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1493 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 133,
+          "firstIndex": 103,
+          "checkpoint": 30,
+          "stateCounts": [
+            156,
+            156
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1493 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 133,
+          "firstIndex": 118,
+          "checkpoint": 15,
+          "stateCounts": [
+            171,
+            171
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1667 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 8,
+          "firstIndex": 1,
+          "checkpoint": 7,
+          "stateCounts": [
+            94,
+            94
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1671 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 1,
+          "checkpoint": 30,
+          "stateCounts": [
+            286,
+            286
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1698",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 79,
+          "firstIndex": 79,
+          "checkpoint": 0,
+          "stateCounts": [
+            157,
+            157
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1698 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 79,
+          "firstIndex": 49,
+          "checkpoint": 30,
+          "stateCounts": [
+            127,
+            127
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1698 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 79,
+          "firstIndex": 63,
+          "checkpoint": 16,
+          "stateCounts": [
+            141,
+            141
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1705 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 4,
+          "firstIndex": 1,
+          "checkpoint": 3,
+          "stateCounts": [
+            79,
+            79
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1712 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 19,
+          "firstIndex": 1,
+          "checkpoint": 18,
+          "stateCounts": [
+            310,
+            310
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1730",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 232,
+          "firstIndex": 232,
+          "checkpoint": 0,
+          "stateCounts": [
+            244,
+            244
+          ],
+          "contactCounts": [
+            20,
+            20
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1730 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 232,
+          "firstIndex": 202,
+          "checkpoint": 30,
+          "stateCounts": [
+            296,
+            296
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1730 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 232,
+          "firstIndex": 223,
+          "checkpoint": 9,
+          "stateCounts": [
+            235,
+            235
+          ],
+          "contactCounts": [
+            18,
+            18
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1757",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 12,
+          "firstIndex": 12,
+          "checkpoint": 0,
+          "stateCounts": [
+            236,
+            236
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1817",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 131,
+          "firstIndex": 131,
+          "checkpoint": 0,
+          "stateCounts": [
+            197,
+            197
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1817 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 131,
+          "firstIndex": 101,
+          "checkpoint": 30,
+          "stateCounts": [
+            167,
+            167
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1817 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 131,
+          "firstIndex": 111,
+          "checkpoint": 20,
+          "stateCounts": [
+            177,
+            177
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1838",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 2,
+          "firstIndex": 2,
+          "checkpoint": 0,
+          "stateCounts": [
+            117,
+            117
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1865",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 10,
+          "firstIndex": 10,
+          "checkpoint": 0,
+          "stateCounts": [
+            244,
+            244
+          ],
+          "contactCounts": [
+            52,
+            52
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1927 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 9,
+          "firstIndex": 1,
+          "checkpoint": 8,
+          "stateCounts": [
+            251,
+            251
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1928",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 17,
+          "firstIndex": 17,
+          "checkpoint": 0,
+          "stateCounts": [
+            173,
+            173
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-1928 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 17,
+          "firstIndex": 9,
+          "checkpoint": 8,
+          "stateCounts": [
+            165,
+            165
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-1955",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 20,
+          "firstIndex": 20,
+          "checkpoint": 0,
+          "stateCounts": [
+            170,
+            170
+          ],
+          "contactCounts": [
+            16,
+            16
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2099",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 107,
+          "firstIndex": 107,
+          "checkpoint": 0,
+          "stateCounts": [
+            108,
+            108
+          ],
+          "contactCounts": [
+            19,
+            19
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2099 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 107,
+          "firstIndex": 77,
+          "checkpoint": 30,
+          "stateCounts": [
+            78,
+            78
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2219",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 6,
+          "firstIndex": 6,
+          "checkpoint": 0,
+          "stateCounts": [
+            172,
+            172
+          ],
+          "contactCounts": [
+            25,
+            25
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2246",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 174,
+          "firstIndex": 174,
+          "checkpoint": 0,
+          "stateCounts": [
+            175,
+            175
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2246 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 174,
+          "firstIndex": 144,
+          "checkpoint": 30,
+          "stateCounts": [
+            223,
+            223
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2246 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 174,
+          "firstIndex": 162,
+          "checkpoint": 12,
+          "stateCounts": [
+            241,
+            241
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2255",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 75,
+          "firstIndex": 75,
+          "checkpoint": 0,
+          "stateCounts": [
+            139,
+            139
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2255 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 75,
+          "firstIndex": 45,
+          "checkpoint": 30,
+          "stateCounts": [
+            109,
+            109
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2255 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 75,
+          "firstIndex": 53,
+          "checkpoint": 22,
+          "stateCounts": [
+            117,
+            117
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2420",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 62,
+          "firstIndex": 62,
+          "checkpoint": 0,
+          "stateCounts": [
+            101,
+            101
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2420 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 62,
+          "firstIndex": 32,
+          "checkpoint": 30,
+          "stateCounts": [
+            104,
+            104
+          ],
+          "contactCounts": [
+            17,
+            17
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2420 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 62,
+          "firstIndex": 35,
+          "checkpoint": 27,
+          "stateCounts": [
+            107,
+            107
+          ],
+          "contactCounts": [
+            20,
+            20
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2490",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 29,
+          "firstIndex": 29,
+          "checkpoint": 0,
+          "stateCounts": [
+            67,
+            67
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2546",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 28,
+          "firstIndex": 28,
+          "checkpoint": 0,
+          "stateCounts": [
+            226,
+            226
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2582 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 161,
+          "firstIndex": 94,
+          "checkpoint": 67,
+          "stateCounts": [
+            95,
+            95
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2624",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 27,
+          "firstIndex": 27,
+          "checkpoint": 0,
+          "stateCounts": [
+            271,
+            271
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2651",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 14,
+          "firstIndex": 14,
+          "checkpoint": 0,
+          "stateCounts": [
+            91,
+            91
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2704",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 192,
+          "firstIndex": 192,
+          "checkpoint": 0,
+          "stateCounts": [
+            193,
+            193
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2704 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 192,
+          "firstIndex": 162,
+          "checkpoint": 30,
+          "stateCounts": [
+            227,
+            227
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2704 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 192,
+          "firstIndex": 189,
+          "checkpoint": 3,
+          "stateCounts": [
+            254,
+            254
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2725",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 221,
+          "firstIndex": 221,
+          "checkpoint": 0,
+          "stateCounts": [
+            222,
+            222
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2725 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 221,
+          "firstIndex": 191,
+          "checkpoint": 30,
+          "stateCounts": [
+            294,
+            294
+          ],
+          "contactCounts": [
+            25,
+            25
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2725 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 221,
+          "firstIndex": 212,
+          "checkpoint": 9,
+          "stateCounts": [
+            315,
+            315
+          ],
+          "contactCounts": [
+            25,
+            25
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2828 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 13,
+          "firstIndex": 1,
+          "checkpoint": 12,
+          "stateCounts": [
+            328,
+            328
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2835",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 30,
+          "firstIndex": 30,
+          "checkpoint": 0,
+          "stateCounts": [
+            31,
+            31
+          ],
+          "contactCounts": [
+            2,
+            2
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2835 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 1,
+          "checkpoint": 30,
+          "stateCounts": [
+            2,
+            2
+          ],
+          "contactCounts": [
+            2,
+            2
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2912",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 106,
+          "firstIndex": 106,
+          "checkpoint": 0,
+          "stateCounts": [
+            107,
+            107
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2912 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 106,
+          "firstIndex": 76,
+          "checkpoint": 30,
+          "stateCounts": [
+            79,
+            79
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2912 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 106,
+          "firstIndex": 94,
+          "checkpoint": 12,
+          "stateCounts": [
+            97,
+            97
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2935",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 30,
+          "firstIndex": 30,
+          "checkpoint": 0,
+          "stateCounts": [
+            145,
+            145
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-2963",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 89,
+          "firstIndex": 89,
+          "checkpoint": 0,
+          "stateCounts": [
+            146,
+            146
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-2963 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 89,
+          "firstIndex": 59,
+          "checkpoint": 30,
+          "stateCounts": [
+            116,
+            116
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-3029",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 189,
+          "firstIndex": 189,
+          "checkpoint": 0,
+          "stateCounts": [
+            190,
+            190
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3029 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 189,
+          "firstIndex": 159,
+          "checkpoint": 30,
+          "stateCounts": [
+            228,
+            228
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3029 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 189,
+          "firstIndex": 176,
+          "checkpoint": 13,
+          "stateCounts": [
+            245,
+            245
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-3032",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 42,
+          "firstIndex": 42,
+          "checkpoint": 0,
+          "stateCounts": [
+            84,
+            84
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3032 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 42,
+          "firstIndex": 12,
+          "checkpoint": 30,
+          "stateCounts": [
+            54,
+            54
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-3106",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 19,
+          "firstIndex": 19,
+          "checkpoint": 0,
+          "stateCounts": [
+            102,
+            102
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3200 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 29,
+          "firstIndex": 1,
+          "checkpoint": 28,
+          "stateCounts": [
+            17,
+            17
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-3205",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 10,
+          "firstIndex": 10,
+          "checkpoint": 0,
+          "stateCounts": [
+            13,
+            13
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-3222",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 122,
+          "firstIndex": 122,
+          "checkpoint": 0,
+          "stateCounts": [
+            123,
+            123
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3222 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 122,
+          "firstIndex": 92,
+          "checkpoint": 30,
+          "stateCounts": [
+            93,
+            93
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3222 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 122,
+          "firstIndex": 114,
+          "checkpoint": 8,
+          "stateCounts": [
+            115,
+            115
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-3255",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 34,
+          "firstIndex": 34,
+          "checkpoint": 0,
+          "stateCounts": [
+            202,
+            202
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3255 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 34,
+          "firstIndex": 4,
+          "checkpoint": 30,
+          "stateCounts": [
+            172,
+            172
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-3288",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 31,
+          "checkpoint": 0,
+          "stateCounts": [
+            80,
+            80
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-3347",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 15,
+          "firstIndex": 15,
+          "checkpoint": 0,
+          "stateCounts": [
+            205,
+            205
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3347 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 15,
+          "firstIndex": 10,
+          "checkpoint": 5,
+          "stateCounts": [
+            296,
+            296
+          ],
+          "contactCounts": [
+            17,
+            17
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-3444",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 12,
+          "firstIndex": 12,
+          "checkpoint": 0,
+          "stateCounts": [
+            193,
+            193
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3797 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 7,
+          "firstIndex": 1,
+          "checkpoint": 6,
+          "stateCounts": [
+            23,
+            23
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-3826",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 122,
+          "firstIndex": 122,
+          "checkpoint": 0,
+          "stateCounts": [
+            203,
+            203
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3826 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 122,
+          "firstIndex": 92,
+          "checkpoint": 30,
+          "stateCounts": [
+            173,
+            173
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3826 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 122,
+          "firstIndex": 85,
+          "checkpoint": 37,
+          "stateCounts": [
+            166,
+            166
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-3959 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 152,
+          "firstIndex": 135,
+          "checkpoint": 17,
+          "stateCounts": [
+            136,
+            136
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4018",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 117,
+          "firstIndex": 117,
+          "checkpoint": 0,
+          "stateCounts": [
+            118,
+            118
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4018 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 117,
+          "firstIndex": 87,
+          "checkpoint": 30,
+          "stateCounts": [
+            88,
+            88
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4018 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 117,
+          "firstIndex": 81,
+          "checkpoint": 36,
+          "stateCounts": [
+            82,
+            82
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4028",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 164,
+          "firstIndex": 164,
+          "checkpoint": 0,
+          "stateCounts": [
+            246,
+            246
+          ],
+          "contactCounts": [
+            44,
+            44
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4053",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 6,
+          "firstIndex": 6,
+          "checkpoint": 0,
+          "stateCounts": [
+            93,
+            93
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4066",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 25,
+          "firstIndex": 25,
+          "checkpoint": 0,
+          "stateCounts": [
+            66,
+            66
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4066 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 27,
+          "firstIndex": 1,
+          "checkpoint": 26,
+          "stateCounts": [
+            40,
+            40
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4166 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 12,
+          "firstIndex": 1,
+          "checkpoint": 11,
+          "stateCounts": [
+            63,
+            63
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4225 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 1,
+          "checkpoint": 30,
+          "stateCounts": [
+            286,
+            286
+          ],
+          "contactCounts": [
+            16,
+            16
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4230 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 15,
+          "firstIndex": 1,
+          "checkpoint": 14,
+          "stateCounts": [
+            43,
+            43
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4253",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 59,
+          "firstIndex": 59,
+          "checkpoint": 0,
+          "stateCounts": [
+            60,
+            60
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4253 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 59,
+          "firstIndex": 29,
+          "checkpoint": 30,
+          "stateCounts": [
+            34,
+            34
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4253 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 59,
+          "firstIndex": 40,
+          "checkpoint": 19,
+          "stateCounts": [
+            45,
+            45
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4268 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 1,
+          "checkpoint": 30,
+          "stateCounts": [
+            195,
+            195
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4268 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 23,
+          "checkpoint": 8,
+          "stateCounts": [
+            217,
+            217
+          ],
+          "contactCounts": [
+            19,
+            19
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4269",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 72,
+          "firstIndex": 72,
+          "checkpoint": 0,
+          "stateCounts": [
+            127,
+            127
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4269 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 72,
+          "firstIndex": 42,
+          "checkpoint": 30,
+          "stateCounts": [
+            97,
+            97
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4269 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 72,
+          "firstIndex": 42,
+          "checkpoint": 30,
+          "stateCounts": [
+            97,
+            97
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4276",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 128,
+          "firstIndex": 128,
+          "checkpoint": 0,
+          "stateCounts": [
+            198,
+            198
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4276 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 128,
+          "firstIndex": 98,
+          "checkpoint": 30,
+          "stateCounts": [
+            168,
+            168
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4276 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 128,
+          "firstIndex": 120,
+          "checkpoint": 8,
+          "stateCounts": [
+            190,
+            190
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4277 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 21,
+          "firstIndex": 1,
+          "checkpoint": 20,
+          "stateCounts": [
+            99,
+            99
+          ],
+          "contactCounts": [
+            27,
+            27
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4360",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 6,
+          "firstIndex": 6,
+          "checkpoint": 0,
+          "stateCounts": [
+            105,
+            105
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4396",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 112,
+          "firstIndex": 112,
+          "checkpoint": 0,
+          "stateCounts": [
+            113,
+            113
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4396 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 112,
+          "firstIndex": 82,
+          "checkpoint": 30,
+          "stateCounts": [
+            111,
+            111
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4396 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 112,
+          "firstIndex": 108,
+          "checkpoint": 4,
+          "stateCounts": [
+            109,
+            109
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4457",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 12,
+          "firstIndex": 12,
+          "checkpoint": 0,
+          "stateCounts": [
+            159,
+            159
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4510",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 31,
+          "checkpoint": 0,
+          "stateCounts": [
+            122,
+            122
+          ],
+          "contactCounts": [
+            17,
+            17
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4510 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 1,
+          "checkpoint": 30,
+          "stateCounts": [
+            92,
+            92
+          ],
+          "contactCounts": [
+            17,
+            17
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4510 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 33,
+          "firstIndex": 1,
+          "checkpoint": 32,
+          "stateCounts": [
+            90,
+            90
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4541",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 14,
+          "firstIndex": 14,
+          "checkpoint": 0,
+          "stateCounts": [
+            234,
+            234
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4555",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 47,
+          "firstIndex": 47,
+          "checkpoint": 0,
+          "stateCounts": [
+            75,
+            75
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4555 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 47,
+          "firstIndex": 17,
+          "checkpoint": 30,
+          "stateCounts": [
+            45,
+            45
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4557",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 13,
+          "firstIndex": 13,
+          "checkpoint": 0,
+          "stateCounts": [
+            127,
+            127
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4654",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 13,
+          "firstIndex": 13,
+          "checkpoint": 0,
+          "stateCounts": [
+            215,
+            215
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4796",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 10,
+          "firstIndex": 10,
+          "checkpoint": 0,
+          "stateCounts": [
+            43,
+            43
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4796 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 12,
+          "firstIndex": 1,
+          "checkpoint": 11,
+          "stateCounts": [
+            32,
+            32
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4865 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 9,
+          "firstIndex": 1,
+          "checkpoint": 8,
+          "stateCounts": [
+            244,
+            244
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4875",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 30,
+          "firstIndex": 30,
+          "checkpoint": 0,
+          "stateCounts": [
+            301,
+            301
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4877",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 25,
+          "firstIndex": 25,
+          "checkpoint": 0,
+          "stateCounts": [
+            86,
+            86
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4901",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 30,
+          "firstIndex": 30,
+          "checkpoint": 0,
+          "stateCounts": [
+            101,
+            101
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4901 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 30,
+          "firstIndex": 3,
+          "checkpoint": 27,
+          "stateCounts": [
+            74,
+            74
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-4931",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 6,
+          "firstIndex": 6,
+          "checkpoint": 0,
+          "stateCounts": [
+            9,
+            9
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-4938 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 9,
+          "firstIndex": 1,
+          "checkpoint": 8,
+          "stateCounts": [
+            136,
+            136
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5152",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 14,
+          "firstIndex": 14,
+          "checkpoint": 0,
+          "stateCounts": [
+            49,
+            49
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5162",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 135,
+          "firstIndex": 135,
+          "checkpoint": 0,
+          "stateCounts": [
+            136,
+            136
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5162 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 135,
+          "firstIndex": 105,
+          "checkpoint": 30,
+          "stateCounts": [
+            106,
+            106
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5162 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 135,
+          "firstIndex": 84,
+          "checkpoint": 51,
+          "stateCounts": [
+            85,
+            85
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5243",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 81,
+          "firstIndex": 81,
+          "checkpoint": 0,
+          "stateCounts": [
+            174,
+            174
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5243 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 81,
+          "firstIndex": 51,
+          "checkpoint": 30,
+          "stateCounts": [
+            220,
+            220
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5243 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 81,
+          "firstIndex": 69,
+          "checkpoint": 12,
+          "stateCounts": [
+            238,
+            238
+          ],
+          "contactCounts": [
+            17,
+            17
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5244",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 15,
+          "firstIndex": 15,
+          "checkpoint": 0,
+          "stateCounts": [
+            39,
+            39
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5244 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 17,
+          "firstIndex": 1,
+          "checkpoint": 16,
+          "stateCounts": [
+            23,
+            23
+          ],
+          "contactCounts": [
+            2,
+            2
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5248",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 4,
+          "firstIndex": 4,
+          "checkpoint": 0,
+          "stateCounts": [
+            211,
+            211
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5399",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 11,
+          "firstIndex": 11,
+          "checkpoint": 0,
+          "stateCounts": [
+            202,
+            202
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5402",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 173,
+          "firstIndex": 173,
+          "checkpoint": 0,
+          "stateCounts": [
+            174,
+            174
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5402 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 173,
+          "firstIndex": 143,
+          "checkpoint": 30,
+          "stateCounts": [
+            212,
+            212
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5402 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 173,
+          "firstIndex": 170,
+          "checkpoint": 3,
+          "stateCounts": [
+            239,
+            239
+          ],
+          "contactCounts": [
+            17,
+            17
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5411",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 11,
+          "firstIndex": 11,
+          "checkpoint": 0,
+          "stateCounts": [
+            124,
+            124
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5451",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 64,
+          "firstIndex": 64,
+          "checkpoint": 0,
+          "stateCounts": [
+            65,
+            65
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5451 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 64,
+          "firstIndex": 34,
+          "checkpoint": 30,
+          "stateCounts": [
+            51,
+            51
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5451 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 64,
+          "firstIndex": 42,
+          "checkpoint": 22,
+          "stateCounts": [
+            59,
+            59
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5453",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 49,
+          "firstIndex": 49,
+          "checkpoint": 0,
+          "stateCounts": [
+            255,
+            255
+          ],
+          "contactCounts": [
+            17,
+            17
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5453 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 49,
+          "firstIndex": 19,
+          "checkpoint": 30,
+          "stateCounts": [
+            312,
+            312
+          ],
+          "contactCounts": [
+            16,
+            16
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5453 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 49,
+          "firstIndex": 46,
+          "checkpoint": 3,
+          "stateCounts": [
+            339,
+            339
+          ],
+          "contactCounts": [
+            17,
+            17
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5472",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 45,
+          "firstIndex": 45,
+          "checkpoint": 0,
+          "stateCounts": [
+            114,
+            114
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5472 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 45,
+          "firstIndex": 15,
+          "checkpoint": 30,
+          "stateCounts": [
+            84,
+            84
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5579 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 16,
+          "firstIndex": 1,
+          "checkpoint": 15,
+          "stateCounts": [
+            13,
+            13
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5672",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 195,
+          "firstIndex": 195,
+          "checkpoint": 0,
+          "stateCounts": [
+            278,
+            278
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5672 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 195,
+          "firstIndex": 165,
+          "checkpoint": 30,
+          "stateCounts": [
+            248,
+            248
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5672 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 195,
+          "firstIndex": 119,
+          "checkpoint": 76,
+          "stateCounts": [
+            202,
+            202
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5739 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 28,
+          "firstIndex": 1,
+          "checkpoint": 27,
+          "stateCounts": [
+            314,
+            314
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5839",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 261,
+          "firstIndex": 261,
+          "checkpoint": 0,
+          "stateCounts": [
+            263,
+            263
+          ],
+          "contactCounts": [
+            17,
+            17
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5839 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 261,
+          "firstIndex": 231,
+          "checkpoint": 30,
+          "stateCounts": [
+            233,
+            233
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5890 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 5,
+          "firstIndex": 1,
+          "checkpoint": 4,
+          "stateCounts": [
+            156,
+            156
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5970 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 21,
+          "firstIndex": 1,
+          "checkpoint": 20,
+          "stateCounts": [
+            10,
+            10
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-5993",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 63,
+          "firstIndex": 63,
+          "checkpoint": 0,
+          "stateCounts": [
+            141,
+            141
+          ],
+          "contactCounts": [
+            36,
+            36
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5993 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 63,
+          "firstIndex": 33,
+          "checkpoint": 30,
+          "stateCounts": [
+            111,
+            111
+          ],
+          "contactCounts": [
+            35,
+            35
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-5993 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 63,
+          "firstIndex": 59,
+          "checkpoint": 4,
+          "stateCounts": [
+            137,
+            137
+          ],
+          "contactCounts": [
+            35,
+            35
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-6005 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 110,
+          "firstIndex": 84,
+          "checkpoint": 26,
+          "stateCounts": [
+            85,
+            85
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-6023",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 22,
+          "firstIndex": 22,
+          "checkpoint": 0,
+          "stateCounts": [
+            47,
+            47
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-6143",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 10,
+          "firstIndex": 10,
+          "checkpoint": 0,
+          "stateCounts": [
+            146,
+            146
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-6238 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 149,
+          "firstIndex": 110,
+          "checkpoint": 39,
+          "stateCounts": [
+            111,
+            111
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-6249 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 96,
+          "firstIndex": 1,
+          "checkpoint": 95,
+          "stateCounts": [
+            184,
+            184
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-6436",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 12,
+          "firstIndex": 12,
+          "checkpoint": 0,
+          "stateCounts": [
+            136,
+            136
+          ],
+          "contactCounts": [
+            22,
+            22
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-6531",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 12,
+          "firstIndex": 12,
+          "checkpoint": 0,
+          "stateCounts": [
+            257,
+            257
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-6591 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 147,
+          "firstIndex": 117,
+          "checkpoint": 30,
+          "stateCounts": [
+            118,
+            118
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-6591 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 147,
+          "firstIndex": 142,
+          "checkpoint": 5,
+          "stateCounts": [
+            143,
+            143
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-6592",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 37,
+          "firstIndex": 37,
+          "checkpoint": 0,
+          "stateCounts": [
+            125,
+            125
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-6592 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 37,
+          "firstIndex": 7,
+          "checkpoint": 30,
+          "stateCounts": [
+            95,
+            95
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-6689",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 11,
+          "firstIndex": 11,
+          "checkpoint": 0,
+          "stateCounts": [
+            157,
+            157
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-6719",
+          "classification": "estado/contactos distintos",
+          "statesBitwiseEqual": false,
+          "fullContactMultisetEqual": false,
+          "firstStep": 156,
+          "firstIndex": 156,
+          "checkpoint": 0,
+          "stateCounts": [
+            226,
+            156
+          ],
+          "contactCounts": [
+            14,
+            13
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-6741 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 158,
+          "firstIndex": 128,
+          "checkpoint": 30,
+          "stateCounts": [
+            129,
+            129
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-6741 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 158,
+          "firstIndex": 149,
+          "checkpoint": 9,
+          "stateCounts": [
+            150,
+            150
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-6865",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 20,
+          "firstIndex": 20,
+          "checkpoint": 0,
+          "stateCounts": [
+            175,
+            175
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-6866",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 17,
+          "firstIndex": 17,
+          "checkpoint": 0,
+          "stateCounts": [
+            179,
+            179
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-6915",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 3,
+          "firstIndex": 3,
+          "checkpoint": 0,
+          "stateCounts": [
+            130,
+            130
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-6917 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 43,
+          "firstIndex": 1,
+          "checkpoint": 42,
+          "stateCounts": [
+            82,
+            82
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-6949",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 26,
+          "firstIndex": 26,
+          "checkpoint": 0,
+          "stateCounts": [
+            335,
+            335
+          ],
+          "contactCounts": [
+            22,
+            22
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-6954",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 68,
+          "firstIndex": 68,
+          "checkpoint": 0,
+          "stateCounts": [
+            144,
+            144
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-6954 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 68,
+          "firstIndex": 38,
+          "checkpoint": 30,
+          "stateCounts": [
+            114,
+            114
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-7069",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 94,
+          "firstIndex": 94,
+          "checkpoint": 0,
+          "stateCounts": [
+            95,
+            95
+          ],
+          "contactCounts": [
+            23,
+            23
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-7069 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 94,
+          "firstIndex": 64,
+          "checkpoint": 30,
+          "stateCounts": [
+            65,
+            65
+          ],
+          "contactCounts": [
+            21,
+            21
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-7069 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 94,
+          "firstIndex": 66,
+          "checkpoint": 28,
+          "stateCounts": [
+            67,
+            67
+          ],
+          "contactCounts": [
+            21,
+            21
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-7072",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 23,
+          "firstIndex": 23,
+          "checkpoint": 0,
+          "stateCounts": [
+            162,
+            162
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-7105 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 9,
+          "firstIndex": 1,
+          "checkpoint": 8,
+          "stateCounts": [
+            249,
+            249
+          ],
+          "contactCounts": [
+            19,
+            19
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-7258",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 8,
+          "firstIndex": 8,
+          "checkpoint": 0,
+          "stateCounts": [
+            199,
+            199
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-7298 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 17,
+          "firstIndex": 1,
+          "checkpoint": 16,
+          "stateCounts": [
+            62,
+            62
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-7299",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 137,
+          "firstIndex": 137,
+          "checkpoint": 0,
+          "stateCounts": [
+            138,
+            138
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-7299 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 137,
+          "firstIndex": 107,
+          "checkpoint": 30,
+          "stateCounts": [
+            108,
+            108
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-7299 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 137,
+          "firstIndex": 120,
+          "checkpoint": 17,
+          "stateCounts": [
+            121,
+            121
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-7329",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 63,
+          "firstIndex": 63,
+          "checkpoint": 0,
+          "stateCounts": [
+            110,
+            110
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-7329 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 63,
+          "firstIndex": 33,
+          "checkpoint": 30,
+          "stateCounts": [
+            80,
+            80
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-7398",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 88,
+          "firstIndex": 88,
+          "checkpoint": 0,
+          "stateCounts": [
+            160,
+            160
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-7398 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 88,
+          "firstIndex": 58,
+          "checkpoint": 30,
+          "stateCounts": [
+            130,
+            130
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-7623",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 2,
+          "firstIndex": 2,
+          "checkpoint": 0,
+          "stateCounts": [
+            207,
+            207
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-7758 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 6,
+          "firstIndex": 1,
+          "checkpoint": 5,
+          "stateCounts": [
+            174,
+            174
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-7860",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 8,
+          "firstIndex": 8,
+          "checkpoint": 0,
+          "stateCounts": [
+            237,
+            237
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-7860 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 9,
+          "firstIndex": 1,
+          "checkpoint": 8,
+          "stateCounts": [
+            333,
+            333
+          ],
+          "contactCounts": [
+            20,
+            20
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-7889 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 231,
+          "firstIndex": 201,
+          "checkpoint": 30,
+          "stateCounts": [
+            202,
+            202
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8043",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 71,
+          "firstIndex": 71,
+          "checkpoint": 0,
+          "stateCounts": [
+            113,
+            113
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8043 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 71,
+          "firstIndex": 41,
+          "checkpoint": 30,
+          "stateCounts": [
+            83,
+            83
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8043 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 71,
+          "firstIndex": 56,
+          "checkpoint": 15,
+          "stateCounts": [
+            98,
+            98
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8054",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 16,
+          "firstIndex": 16,
+          "checkpoint": 0,
+          "stateCounts": [
+            123,
+            123
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8054 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 16,
+          "firstIndex": 12,
+          "checkpoint": 4,
+          "stateCounts": [
+            168,
+            168
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8091",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 180,
+          "firstIndex": 180,
+          "checkpoint": 0,
+          "stateCounts": [
+            181,
+            181
+          ],
+          "contactCounts": [
+            17,
+            17
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8091 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 180,
+          "firstIndex": 150,
+          "checkpoint": 30,
+          "stateCounts": [
+            208,
+            208
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8091 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 180,
+          "firstIndex": 176,
+          "checkpoint": 4,
+          "stateCounts": [
+            177,
+            177
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8105",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 46,
+          "firstIndex": 46,
+          "checkpoint": 0,
+          "stateCounts": [
+            91,
+            91
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8105 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 46,
+          "firstIndex": 16,
+          "checkpoint": 30,
+          "stateCounts": [
+            61,
+            61
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8127",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 189,
+          "firstIndex": 189,
+          "checkpoint": 0,
+          "stateCounts": [
+            190,
+            190
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8127 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 189,
+          "firstIndex": 159,
+          "checkpoint": 30,
+          "stateCounts": [
+            233,
+            233
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8127 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 189,
+          "firstIndex": 184,
+          "checkpoint": 5,
+          "stateCounts": [
+            258,
+            258
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8214",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 287,
+          "firstIndex": 287,
+          "checkpoint": 0,
+          "stateCounts": [
+            288,
+            288
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8214 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 287,
+          "firstIndex": 257,
+          "checkpoint": 30,
+          "stateCounts": [
+            258,
+            258
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8214 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 287,
+          "firstIndex": 267,
+          "checkpoint": 20,
+          "stateCounts": [
+            268,
+            268
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8236",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 6,
+          "firstIndex": 6,
+          "checkpoint": 0,
+          "stateCounts": [
+            119,
+            119
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8347 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 8,
+          "firstIndex": 1,
+          "checkpoint": 7,
+          "stateCounts": [
+            39,
+            39
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8415",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 45,
+          "firstIndex": 45,
+          "checkpoint": 0,
+          "stateCounts": [
+            115,
+            115
+          ],
+          "contactCounts": [
+            16,
+            16
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8415 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 45,
+          "firstIndex": 15,
+          "checkpoint": 30,
+          "stateCounts": [
+            85,
+            85
+          ],
+          "contactCounts": [
+            16,
+            16
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8448",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 11,
+          "firstIndex": 11,
+          "checkpoint": 0,
+          "stateCounts": [
+            245,
+            245
+          ],
+          "contactCounts": [
+            16,
+            16
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8518",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 7,
+          "firstIndex": 7,
+          "checkpoint": 0,
+          "stateCounts": [
+            122,
+            122
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8536",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 58,
+          "firstIndex": 58,
+          "checkpoint": 0,
+          "stateCounts": [
+            89,
+            89
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8536 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 58,
+          "firstIndex": 28,
+          "checkpoint": 30,
+          "stateCounts": [
+            91,
+            91
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8536 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 58,
+          "firstIndex": 52,
+          "checkpoint": 6,
+          "stateCounts": [
+            83,
+            83
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8602",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 39,
+          "firstIndex": 39,
+          "checkpoint": 0,
+          "stateCounts": [
+            73,
+            73
+          ],
+          "contactCounts": [
+            19,
+            19
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8602 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 39,
+          "firstIndex": 9,
+          "checkpoint": 30,
+          "stateCounts": [
+            43,
+            43
+          ],
+          "contactCounts": [
+            19,
+            19
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8696",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 37,
+          "firstIndex": 37,
+          "checkpoint": 0,
+          "stateCounts": [
+            122,
+            122
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8696 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 37,
+          "firstIndex": 7,
+          "checkpoint": 30,
+          "stateCounts": [
+            92,
+            92
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8696 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 37,
+          "firstIndex": 8,
+          "checkpoint": 29,
+          "stateCounts": [
+            93,
+            93
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8697",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 144,
+          "firstIndex": 144,
+          "checkpoint": 0,
+          "stateCounts": [
+            145,
+            145
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8697 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 144,
+          "firstIndex": 114,
+          "checkpoint": 30,
+          "stateCounts": [
+            115,
+            115
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8697 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 144,
+          "firstIndex": 140,
+          "checkpoint": 4,
+          "stateCounts": [
+            141,
+            141
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8709 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 8,
+          "firstIndex": 1,
+          "checkpoint": 7,
+          "stateCounts": [
+            153,
+            153
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8912",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 33,
+          "firstIndex": 33,
+          "checkpoint": 0,
+          "stateCounts": [
+            90,
+            90
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-8912 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 33,
+          "firstIndex": 3,
+          "checkpoint": 30,
+          "stateCounts": [
+            60,
+            60
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-8945",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 10,
+          "firstIndex": 10,
+          "checkpoint": 0,
+          "stateCounts": [
+            251,
+            251
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9027",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 39,
+          "firstIndex": 39,
+          "checkpoint": 0,
+          "stateCounts": [
+            164,
+            164
+          ],
+          "contactCounts": [
+            14,
+            14
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9027 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 39,
+          "firstIndex": 9,
+          "checkpoint": 30,
+          "stateCounts": [
+            189,
+            189
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9027 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 39,
+          "firstIndex": 14,
+          "checkpoint": 25,
+          "stateCounts": [
+            194,
+            194
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9053",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 13,
+          "firstIndex": 13,
+          "checkpoint": 0,
+          "stateCounts": [
+            334,
+            334
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9054",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 21,
+          "firstIndex": 21,
+          "checkpoint": 0,
+          "stateCounts": [
+            25,
+            25
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9077",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 126,
+          "firstIndex": 126,
+          "checkpoint": 0,
+          "stateCounts": [
+            127,
+            127
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9077 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 126,
+          "firstIndex": 96,
+          "checkpoint": 30,
+          "stateCounts": [
+            97,
+            97
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9077 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 126,
+          "firstIndex": 110,
+          "checkpoint": 16,
+          "stateCounts": [
+            111,
+            111
+          ],
+          "contactCounts": [
+            5,
+            5
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9132 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 24,
+          "firstIndex": 1,
+          "checkpoint": 23,
+          "stateCounts": [
+            11,
+            11
+          ],
+          "contactCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9176",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 38,
+          "firstIndex": 38,
+          "checkpoint": 0,
+          "stateCounts": [
+            88,
+            88
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9176 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 38,
+          "firstIndex": 8,
+          "checkpoint": 30,
+          "stateCounts": [
+            58,
+            58
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9227",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 45,
+          "firstIndex": 45,
+          "checkpoint": 0,
+          "stateCounts": [
+            79,
+            79
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9227 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 45,
+          "firstIndex": 15,
+          "checkpoint": 30,
+          "stateCounts": [
+            49,
+            49
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9227 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 45,
+          "firstIndex": 12,
+          "checkpoint": 33,
+          "stateCounts": [
+            46,
+            46
+          ],
+          "contactCounts": [
+            13,
+            13
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9402",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 294,
+          "firstIndex": 294,
+          "checkpoint": 0,
+          "stateCounts": [
+            295,
+            295
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9402 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 294,
+          "firstIndex": 264,
+          "checkpoint": 30,
+          "stateCounts": [
+            265,
+            265
+          ],
+          "contactCounts": [
+            7,
+            7
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9402 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 294,
+          "firstIndex": 285,
+          "checkpoint": 9,
+          "stateCounts": [
+            286,
+            286
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9439 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 29,
+          "firstIndex": 23,
+          "checkpoint": 6,
+          "stateCounts": [
+            355,
+            355
+          ],
+          "contactCounts": [
+            333,
+            333
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9480 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 17,
+          "firstIndex": 1,
+          "checkpoint": 16,
+          "stateCounts": [
+            80,
+            80
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9498",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 69,
+          "firstIndex": 69,
+          "checkpoint": 0,
+          "stateCounts": [
+            70,
+            70
+          ],
+          "contactCounts": [
+            20,
+            20
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9498 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 69,
+          "firstIndex": 39,
+          "checkpoint": 30,
+          "stateCounts": [
+            40,
+            40
+          ],
+          "contactCounts": [
+            20,
+            20
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9498 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 69,
+          "firstIndex": 31,
+          "checkpoint": 38,
+          "stateCounts": [
+            44,
+            44
+          ],
+          "contactCounts": [
+            19,
+            19
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9637 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 36,
+          "firstIndex": 1,
+          "checkpoint": 35,
+          "stateCounts": [
+            39,
+            39
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9657 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 11,
+          "firstIndex": 1,
+          "checkpoint": 10,
+          "stateCounts": [
+            132,
+            132
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9664",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 9,
+          "firstIndex": 9,
+          "checkpoint": 0,
+          "stateCounts": [
+            22,
+            22
+          ],
+          "contactCounts": [
+            12,
+            12
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9664 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 11,
+          "firstIndex": 1,
+          "checkpoint": 10,
+          "stateCounts": [
+            12,
+            12
+          ],
+          "contactCounts": [
+            8,
+            8
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9697 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 1,
+          "checkpoint": 30,
+          "stateCounts": [
+            331,
+            331
+          ],
+          "contactCounts": [
+            15,
+            15
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9734",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 26,
+          "firstIndex": 26,
+          "checkpoint": 0,
+          "stateCounts": [
+            122,
+            122
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9794 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 5,
+          "firstIndex": 1,
+          "checkpoint": 4,
+          "stateCounts": [
+            117,
+            117
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9826 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 46,
+          "firstIndex": 1,
+          "checkpoint": 45,
+          "stateCounts": [
+            25,
+            25
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9852",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 140,
+          "firstIndex": 140,
+          "checkpoint": 0,
+          "stateCounts": [
+            225,
+            225
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9852 C7 k30",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 140,
+          "firstIndex": 110,
+          "checkpoint": 30,
+          "stateCounts": [
+            195,
+            195
+          ],
+          "contactCounts": [
+            6,
+            6
+          ]
+        },
+        {
+          "criterion": "C7",
+          "scenario": "S8-9852 C7 postcontacto",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 140,
+          "firstIndex": 120,
+          "checkpoint": 20,
+          "stateCounts": [
+            205,
+            205
+          ],
+          "contactCounts": [
+            9,
+            9
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9871",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 29,
+          "firstIndex": 29,
+          "checkpoint": 0,
+          "stateCounts": [
+            100,
+            100
+          ],
+          "contactCounts": [
+            19,
+            19
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9906",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 21,
+          "firstIndex": 21,
+          "checkpoint": 0,
+          "stateCounts": [
+            76,
+            76
+          ],
+          "contactCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9973",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 7,
+          "firstIndex": 7,
+          "checkpoint": 0,
+          "stateCounts": [
+            92,
+            92
+          ],
+          "contactCounts": [
+            10,
+            10
+          ]
+        },
+        {
+          "criterion": "C6",
+          "scenario": "S8-9977",
+          "classification": "solo orden de contactos",
+          "statesBitwiseEqual": true,
+          "fullContactMultisetEqual": true,
+          "firstStep": 31,
+          "firstIndex": 31,
+          "checkpoint": 0,
+          "stateCounts": [
+            80,
+            80
+          ],
+          "contactCounts": [
+            11,
+            11
+          ]
+        }
+      ],
+      "c16Maximum": "C16 máximo: S8-3821 robustez; paso=193; superficie=Floor; tipo=solo persistentes (reposo/contacto sostenido); penetración=0.612672448 mm; rapidez=5.8087306 m/s; previo=paso=192, p=(0.033009734, 0.02016184, 5.663484), v=(-2.65445018, -0.07766926, 6.766849), bits=3D073537,3CA52A71,40B53B43,C029E283,BD9F1110,40D88A07; estado=paso=193, p=(0.0451759659, 0.0193873271, 5.71094227), v=(1.45994782, -0.09155713, 5.621523), bits=3D390A6F,3C9ED22C,40B6C00A,3FBADF92,BDBB824E,40B3E384; contactos=[Floor@193 persistent=True, StepOnly, t=NaN, p=(0.0330097675, 0, 5.663484), n=(0, 0.99999994, 0), approach=(-2.65445018, -0.07766926, 6.766849); RightWall@193 persistent=True, StepOnly, t=NaN, p=(0, 0.0201618671, 5.663484), n=(1, 0, 0), approach=(-2.65445018, -0.07766926, 6.766849)]"
+    }
+  ]
+}

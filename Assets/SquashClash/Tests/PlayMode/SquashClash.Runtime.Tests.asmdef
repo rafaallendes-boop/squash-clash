@@ -3,7 +3,8 @@
   "rootNamespace": "SquashClash.Runtime.Tests",
   "references": [
     "SquashClash.Core",
-    "SquashClash.Runtime"
+    "SquashClash.Runtime",
+    "SquashClash.DevPanel"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"

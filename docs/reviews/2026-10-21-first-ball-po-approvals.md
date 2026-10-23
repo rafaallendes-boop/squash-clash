@@ -181,3 +181,100 @@ Ejecutado RED→GREEN: cuatro tests nuevos, RED 155/159 → GREEN 159/159; PlayM
 Después de la fusión se continúa con I4b/T4.3–T4.4 en `firstball/i4b-physics-run` y PR propia. Detenerse al entregar su informe. I4c, P2/T4.5 e I5+ siguen sin autorizar. Renovar perfil antes de instalar después del 28 de octubre y comprobar siempre vigencia.
 
 **Fusión ejecutada:** PR #3 MERGED, merge commit `ca50142e4c15854b45dc5d7285d0c57bd89860a3`, head `3c66bad7ba3f9a111e824c995796a735816faae7`; main sincronizada. I4a cerrado, condición para I4b cumplida.
+
+## I4b — entrega parcial, campaña del editor completa (2026-10-22)
+
+Alcance autorizado T4.3–T4.4 en `firstball/i4b-physics-run`, código final `ee76086`, [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4). Runner, benchmark y controles implementados; **EditMode 170/170 y PlayMode 43/43**, cero fallos/omitidos. Exclusión nativa prod verificada RED→GREEN contra exports nuevos; una revisión interna fresca detectó dos Important corregidos en un único pase RED→GREEN, sin segunda revisión. No sustituye la revisión de Claude.
+
+Cinco variantes completas del editor, 10.053 lanzamientos de robustez por variante. Ninguna cumple todos los criterios físicos; incumplimientos y no evaluables conservados. Baseline/speculative de cd7fc2a con procedencia explícita y corrección derivada de la mediana C13 par de baseline, originales intactos; otras tres ejecutadas en ee76086. No se atribuye a Claude una clasificación causal aún no recibida.
+
+Build dev final 0.1.0+ee76086 limpia, Release ARM64 firmada y metadata embebida comprobada. **Instalada y abierta** tras conexión del PO; Escenario S1→S2 y cancelación comprobados desde Duplicación, informe INCOMPLETO guardado/copiado y térmico nominal→nominal. Campaña completa y C17 nativo pendientes. La firma no los sustituye. Perfil vigente al compilar hasta 2026-10-28T14:59:31Z; comprobar vigencia al instalar y renovar si corresponde, siempre antes de una instalación posterior al 28 de octubre.
+
+[Informe físico parcial](2026-10-22-first-ball-physics-spike-P1.md), [validación, evidencia y resoluciones](../validation/i4b-physics-run.md). **No es aceptación del PO, revisión de Claude, cierre ni autorización de fusionar I4b.** No se modificó spec/plan, preset, escenarios numéricos, umbrales ni decisiones deportivas. I4c/P2/I5+ siguen sin autorizar; al completar el informe de I4b se detendrá para PO/Claude.
+
+**Seguimiento nativo:** el PO confirmó que la campaña avanzaba; el archivo recuperado registra cancelación por Pérdida de foco a los 20 s, nominal→nominal, INCOMPLETO y C17 no evaluado. Se conserva separado del primer intento cancelado manualmente. Se solicita reiniciar manteniendo Squash Clash al frente, preferiblemente en el teléfono físico y respondiendo desde el Mac. Esta respuesta del PO confirma el inicio, no la terminación ni aprobación de I4b.
+
+El PO confirmó otro inicio en Duplicación. Tercer informe: cancelado por Pérdida de foco a los 1,8 s, nominal→nominal y C17 no evaluado, sin interacción CUA entre reinicio y cancelación. Se pidió pasar la ejecución al teléfono físico sin Duplicación activa y mantener la app al frente; no se modifica el comportamiento para evitar la cancelación. [Manifiesto de intentos nativos](../validation/evidence/2026-10-22-i4b-iphone-runs.json).
+
+**Cuarto intento, teléfono físico:** PO confirma avance y luego «No toqué nada; la app seguía al frente». Informe 20:51:15→21:02:05 del 22 de octubre (Santiago), 649,693 s, 8.732/10.053 lanzamientos, INCOMPLETO por Pérdida de foco, nominal→serious y C17 no evaluado. No hubo acciones CUA durante la campaña. Se preservan archivo/hash y captura de progreso. Causa del evento no establecida; no se culpa a interacción ni a temperatura.
+
+Se continúa el diagnóstico dentro de T4.4 añadiendo contexto de ciclo de vida y temporizador de iOS a los informes, sin cambiar cancelación, escenarios ni criterios. Dos tests nuevos RED43/45→GREEN45/45; enlace/export/instalación nuevos pendientes. No se pide al PO repetir una campaña larga sin datos nuevos. Este registro no acepta ni cierra I4b ni autoriza I4c/P2/I5+.
+
+**Diagnóstico nativo preparado y verificado:** `d14df6f`, PlayMode45/45, Core sin cambios conserva EditMode170/170; exports nuevos dev/prod correctos, Xcode27.1 ReleaseARM64 firmado y metadata limpia verificados. Instalación inicial falló por conexión CoreDevice inválida; reintento correcto. El PO confirmó «Sí, muestra d14df6f dev y está conectado» y ejecutó la interrupción corta solicitada, respondiendo «Informe INCOMPLETO, copiado y guardado».
+
+Archivo recuperado: 8,320 s, nominal→nominal, contexto nativo presente (Unity foco=false; UIKit active; temporizador desactivado), S8-109 y C17=0. Es una comprobación deliberada de diagnóstico, no aceptación de física ni un intento completo. UIKit active también aparece en esa salida real a Inicio y no se usa para declarar falso el evento anterior. Causa de la cancelación larga sin confirmar. I4b sigue parcial, PR #4 borrador, sin fusionar; I4c/P2/I5+ no autorizados.
+
+
+## I4b — revisión de Claude, diagnóstico CCD y decisiones del PO (2026-10-22)
+
+Revisión de Claude comunicada por el PO, no una GitHub Review atribuida automáticamente. PR #4 sigue **borrador, sin fusionar**. Se pausan campañas largas del iPhone hasta diagnosticar CCD y aplicar las decisiones siguientes; después se repiten las cinco variantes del editor conservando los resultados actuales como históricos. Entregar diagnóstico/correcciones/editor y **detenerse para revisión de Claude antes de volver al iPhone**. I4c, P2/T4.5 e I5+ siguen sin autorizar.
+
+El PO pide trazas de S1 pasos 30–36 (baseline y speculative), reproducción PlayMode mínima con esfera de radio 20 mm a 25 m/s, BoxCollider de espesor 1 m, 120 Hz y ContinuousDynamic, comparando escena local/manual con escena por defecto, RED antes de corregir. Identificar causa con fuente oficial Unity/PhysX; separar commits del diagnóstico y la corrección. No tocar escenarios, umbrales, medidas, preset ni variantes. Si persisten C5–C7, instrumentar la primera diferencia y comparar Reset tras muchos contactos con instancia nueva; **no cambiar Reset sin evidencia RED**.
+
+Decisiones aprobadas, con TDD RED→GREEN:
+
+- **Foco:** `pause(true)`/segundo plano cancela. `focus(false)` en robustez suspende el avance, registra UTC, duración, fase/progreso y contexto de ciclo de vida, y continúa al volver el foco. A los 60 s sin recuperación cancela como INCOMPLETO. En C17, `focus(false)` sigue cancelando. El informe cuenta las interrupciones; un intento con interrupciones solo es válido si termina completo.
+- **C7:** checkpoint ausente por salida superior legítima aprobada o fin del horizonte: NotApplicable, fuera de población. Ausencia por cruce, estado no finito u otra anomalía: NotEvaluable. Informar Measured/NotApplicable/NotEvaluable por separado, también en las cinco variantes regeneradas. No se cambia el umbral de igualdad ni el carácter decisorio de C7.
+- **Térmico:** registrar al inicio del benchmark, informativo; no añade un umbral ni convierte un intento incompleto en válido.
+- **Firma:** renovar antes de la próxima instalación si ocurre el **2026-10-27 o después**; comprobar siempre vigencia antes de instalar. Expiración actual: **2026-10-28T14:59:31Z**. Sustituye el plazo operativo anterior del 28 de octubre. No cambiar Xcode ni otras herramientas.
+
+Clasificación **preliminar**, pendiente del diagnóstico y nuevas campañas: C1 adaptador/configuración probable; C10/C11/C13 y casos grandes C3 posibles consecuencias de C1; C3 residual en reposo posible límite del motor a reevaluar; C5–C7 indeterminados; no evaluables C7 sujetos a la definición aprobada arriba. No se registra clasificación causal final ni elección de backend.
+
+Próximo intento nativo, solo tras correcciones/editor y revisión de Claude: teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda y térmico nominal al inicio. **Sin capturas, devicectl u otras interacciones de herramientas durante la ejecución**; recuperar informe al terminar. Esta autorización no inicia ese intento ahora.
+
+
+**Ejecución de la revisión CCD / decisiones PO 5 (2026-10-22):** diagnóstico RED 8a1304d y corrección separada 492685b: el modo ContinuousDynamic sí estaba solicitado; el ajuste global Fast Motion Threshold heredado impedía barridos de la esfera frente a cajas gruesas. A→B→A reproducido en escena local y por defecto; asset/ProjectSetup corregidos a 0,01 m. Escenarios, preset, geometría, medidas, umbrales y ejes de variantes conservados. C7 (3fe6fd7) y foco/térmico (9764a88) aplican exclusivamente lo aprobado. **EditMode180/180, PlayMode54/54**, con RED→GREEN documentado. Reset no cambiado; 25 controles seleccionados iguales (16ad653).
+
+Cinco campañas frescas del editor, mismo código **16ad653**, 1/1 completas por variante, 10.053 lanzamientos y 200 medidas cada una; historiales previos conservados. Baseline: C1=0 cruces; C5/C6 pasan; C3 cinco fallos, C7 tres/18.753 medidos y 1.279 no aplicables (NE=0), C10 máximo13,6164427mm y C11 tres/6 fallos. Ninguna variante cumple todo. Primer C7 detallado con estados idénticos y orden distinto de contactos; no se ordena ni reinterpreta para aprobar. Clasificación de Claude permanece preliminar hasta revisar estos nuevos datos. [Informe y cinco variantes](2026-10-22-first-ball-physics-spike-P1.md), [diagnóstico y commits](2026-10-22-first-ball-ccd-diagnostic.md), [validación](../validation/i4b-physics-run.md).
+
+**Sin build/instalación/campaña nueva del iPhone. Se detiene para Claude antes de retomarlo.** La política de firma del 27 de octubre y las condiciones físicas/sin herramientas del siguiente intento quedan vigentes. No es aceptación del PO, aprobación de Claude de los cambios, cierre/fusión de I4b ni autorización de I4c/P2/I5+.
+
+
+## I4b — revisión de Claude tras CCD y orden canónico aprobado (2026-10-23)
+
+El PO comunica la revisión de Claude y aprueba expresamente el punto 1b: **el adaptador debe entregar los contactos de cada paso en un orden canónico y determinista**. Sustituye la restricción anterior de no ordenar la salida del adaptador; no autoriza ordenar/agrupar en la comparación ni cambiar `TrajectoriesBitwiseEqual`, C7, Reset, escenarios, umbrales, preset o geometría. Se conservan como aprobados CCD `fastMotionThreshold=0,01 m` en asset/ProjectSetup, elegibilidad C7, política de foco y térmico informativo de C17.
+
+Clasificación final de Claude (sustituye a la preliminar; transcripción literal):
+
+- C1: adaptador/configuración. Resuelto con 0 cruces.
+- C10: motor. Es el sesgo del integrador semimplícito frente a la referencia analítica (g·dt·T/2 ≈ 13,6 mm). No se compensa; se decide en I4c.
+- C11: consecuencia de C10. Los puntos S9c, S9d y S9i quedan unos 13,6 mm por debajo, al borde de una línea.
+- C3 residual: motor. Es el solver en contacto persistente en reposo (unos 6 cm/s); con impacto, la ganancia es 0. Sigue en Fail. Un posible piso de velocidad se decide en I4c.
+- C13: motor (CCD de una pasada). Informativo, sin cambios.
+- C7: adaptador. Expone un orden de contactos no canónico. Los estados coinciden bit a bit, pero el orden de los pares interno de PhysX depende de la historia de cada instancia.
+
+Orden autorizado: (1) clasificar todas las divergencias de C5–C7 antes de cambiar comportamiento, con conteos por criterio/variante; (2) localizar escenario/paso/tipo del máximo de C16; (3) RED físico con dos instancias de historias distintas, después orden en el adaptador por TimeInStep, superficie, persistencia y desempate determinista documentado; conservar divergencias de estado como Fail; (4) suites GREEN y cinco campañas nuevas del editor, conservando las de `16ad653` históricas y actualizando informe/tabla/manifiesto; (5) **detenerse para revisión de Claude antes de generar build nativa**. PR #4 sigue borrador, sin fusionar; I4c, P2/T4.5 e I5+ no autorizados.
+
+Solo después de esa revisión: una build dev y campaña nativa completa, teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda, térmico nominal al empezar y sin capturas/devicectl/otras herramientas durante la ejecución; recuperar informe al terminar. C17 nativo prioritario; p95 del editor 24,1 ms es informativo, no certifica el umbral de 1 ms del iPhone. Comprobar siempre vigencia de firma; renovar antes de instalar el 2026-10-27 o después. No cambiar Xcode ni herramientas.
+
+
+### Resultado de la revisión de orden canónico — 2026-10-23
+
+Ejecución técnica, **pendiente de la nueva revisión de Claude**: diagnóstico sin cambio de comportamiento 1c47621; RED físico 0ff9297; corrección del adaptador 3de1367; código final y trazas da98fd4. Regresión 188/188 EditMode y 58/58 PlayMode. Cinco campañas nuevas completas, 1/1 cada una. Baseline C7 pasa, junto con C5/C6; C1 cero cruces. C3/C10/C11 siguen Fail. Speculative conserva C6 de persistencia del contacto y distinta terminación, sin divergencia numérica en el prefijo común; C7 pasa. Los resultados restantes por variante constan en el informe. C16 baseline localizado en S8-9948, paso 246, impacto lateral RightWall con callback en 247, sin criterio nuevo.
+
+[Informe P1](2026-10-22-first-ball-physics-spike-P1.md), [manifiesto actual](../validation/evidence/2026-10-23-i4b-editor-canonical-runs.json), [RED→GREEN](../validation/evidence/2026-10-23-i4b-contact-order-tests.json). Históricos 16ad653 conservados; no se cambian criterios, Reset, comparador, escenarios, preset o geometría. **Sin build nativa ni instalación; PR #4 sigue borrador y sin fusionar, I4b abierto.** Se detiene para Claude, sin atribuir esta ejecución a aprobación suya o del PO. I4c, P2/T4.5 e I5+ siguen sin autorizar.
+
+
+### Revisión Claude de c7da32e y autorización nativa — 2026-10-23
+
+Comunicada expresamente por el PO. Aprobados PhysXContactOrder, el ordenamiento en Step, RED físico y clasificación diagnóstica. Añadir al test físico la dependencia del orden de pares de esta versión de PhysX; una actualización de Unity puede dejar de reproducir el RED. [Clasificación vigente literal y condiciones C17 del editor en el informe P1](2026-10-22-first-ball-physics-spike-P1.md#revisión-de-claude-sobre-c7da32e-y-clasificación-vigente).
+
+Autorizada ahora la campaña nativa: comprobar vigencia del perfil y renovarlo antes de instalar el 27 de octubre o después; sin cambiar herramientas. Build dev del código actual, export limpio, Release ARM64 firmada y metadata verificada; comprobar exclusión del puente nativo en prod. Instalar y verificar antes de la campaña, en app o informe corto, ProjectPhysics fastMotionThreshold=0.01. Pedir al PO campaña física completa: No molestar, batería ≥80 %, bajo consumo desactivado, sin funda, térmico nominal al inicio, sin capturas/devicectl/herramientas durante la ejecución. Recuperar Documents/spike al terminar; verificar 18 filas, hash, variante, 200 mediciones C17, térmico inicial del benchmark e interrupciones de foco. C17 p95 ≤1 ms; incumplimiento es Fail. Registrar condiciones del editor (34,9 ms; histórico 24,1 ms) sin interpretar ni comparar con nativo.
+
+Completar informe I4b y detenerse para Claude/PO. PR #4 sigue borrador sin fusionar, I4b no cerrado. No elegir backend ni cambiar umbrales, escenarios, preset o Reset. I4c, P2/T4.5 e I5+ sin autorizar.
+
+
+### Primera corrida nativa posterior al orden canónico — 2026-10-23
+
+El PO informó que terminó («Prueba completa, informe copiado, informe guardado») y autorizó mirar pantalla/continuar. Declaró **75 % de batería y funda puesta**. Esto registra las condiciones reales; **no constituye una autorización explícita para relajar las condiciones anteriores**. No molestar/bajo consumo no confirmados. Sin actividad de herramientas del agente durante la ejecución; recuperación de Documents/spike posterior al aviso de término.
+
+Corrida completa P1-20261023-133222-324, build 2fdede5, baseline, configuración c86243b15a97: 18 criterios, 20 calentamientos y 200 medidas C17; térmico nominal al inicio/final/benchmark y cero interrupciones de foco. C17 **Fail, p95 14,923400 ms**, umbral ≤1 ms intacto. Informe íntegro y auditoría preservados; sin interpretar el rendimiento ni compararlo con editor. Campaña bajo condiciones aprobadas todavía pendiente, misma build instalada para repetir. I4b abierto; PR #4 borrador sin fusionar. [Informe P1](2026-10-22-first-ball-physics-spike-P1.md).
+
+
+### Confirmación de campaña nativa bajo condiciones aprobadas — 2026-10-23
+
+Respuesta literal del PO a la solicitud de repetición: **«Prueba completa - Batería inicial 90%. Se cumplen las condiciones»**. Confirma ejecución completa con teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda, térmico nominal al inicio y sin capturas/duplicación/devicectl/otras herramientas durante la ejecución. No hubo herramientas del agente hasta el aviso de término; después se recuperó Documents/spike. Es confirmación de condiciones, no aprobación del resultado ni decisión del gate.
+
+Informe P1-20261023-142516-831, build 2fdede5, configuración c86243b15a97, baseline: 18 criterios únicos, 20 calentamientos/200 medidas C17. **C17 Fail, p95 14,322100 ms**, umbral ≤1 ms intacto. Térmico nominal inicial, **fair al iniciar C17 y al final**, cero interrupciones de foco. El térmico de C17 es informativo según la política ya aprobada, sin nuevo umbral ni atribución causal. C3/C10/C11 Fail, C13 NotEvaluated; sin elegir backend ni cambiar preset, Reset, escenarios, variantes o criterios. Corrida anterior 75 %/funda preservada como histórico fuera de condiciones.
+
+[Informe I4b completado](2026-10-22-first-ball-physics-spike-P1.md), [auditoría de campaña](../validation/evidence/2026-10-23-i4b-native-compliant-run.json). Se detiene para revisión de Claude y decisión del PO; **I4b sigue abierto, PR #4 borrador sin fusionar**. I4c, P2/T4.5 e I5+ no autorizados. No se solicita nueva campaña ni se optimiza física por cuenta propia.

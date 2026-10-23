@@ -35,8 +35,9 @@ namespace SquashClash.Runtime.Tests {
             var app=AppBootstrap.Instance;app.Host.enabled=false;var overlay=app.GetComponent<ResumeOverlay>();
             Assert.That(typeof(ResumeOverlay).Assembly.GetName().Name,Is.EqualTo("SquashClash.Runtime"));
             overlay.Continue();app.Host.Launch(EffectiveConfig.From(app.Params));
+            long dropsBeforePause=app.Host.Clock.DroppedSteps;
             app.SendMessage("OnApplicationPause",true);Assert.That(app.Host.Clock.Paused,Is.True);Assert.That(overlay.IsVisible,Is.True);
-            app.Host.Advance(30);Assert.That(app.Host.Current.Step,Is.Zero);Assert.That(app.Host.Clock.DroppedSteps,Is.Zero);
+            app.Host.Advance(30);Assert.That(app.Host.Current.Step,Is.Zero);Assert.That(app.Host.Clock.DroppedSteps,Is.EqualTo(dropsBeforePause));
             app.SendMessage("OnApplicationPause",false);app.SendMessage("OnApplicationFocus",true);
             Assert.That(app.Host.Clock.Paused,Is.True);
             using(var tap=PointerDownEvent.GetPooled()) {var layer=app.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("resume-overlay");tap.target=layer;layer.SendEvent(tap);}
@@ -48,12 +49,13 @@ namespace SquashClash.Runtime.Tests {
             var app=AppBootstrap.Instance;app.Host.enabled=false;app.GetComponent<ResumeOverlay>().Continue();
             app.Host.Launch(EffectiveConfig.From(app.Params));
             app.Host.Clock.Advance(0.99/(120*0.65));
+            long dropsBeforePause=app.Host.Clock.DroppedSteps;
             app.SendMessage("OnApplicationPause",true);app.Host.Advance(30);
             var layer=app.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("resume-overlay");
             using(var tap=PointerDownEvent.GetPooled()){tap.target=layer;layer.SendEvent(tap);}
             app.Host.SendMessage("Update");
             Assert.That(app.Host.Current.Step,Is.Zero,"The resume frame must discard time measured while paused.");
-            Assert.That(app.Host.Clock.Alpha,Is.EqualTo(0.99f).Within(1e-6));Assert.That(app.Host.Clock.DroppedSteps,Is.Zero);
+            Assert.That(app.Host.Clock.Alpha,Is.EqualTo(0.99f).Within(1e-6));Assert.That(app.Host.Clock.DroppedSteps,Is.EqualTo(dropsBeforePause));
         }
         [UnityTest] public IEnumerator EditorDevToolbar_FourActionsControlHost() {
             Assert.That(System.Type.GetType("SquashClash.DevPanel.DevPanelBootstrap, SquashClash.DevPanel"),Is.Not.Null);

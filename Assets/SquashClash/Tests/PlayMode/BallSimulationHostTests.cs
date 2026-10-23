@@ -82,6 +82,17 @@ namespace SquashClash.Runtime.Tests {
             host.ResumeAfterSystemPause();host.SendMessage("Update");
             Assert.That(host.RenderPosition,Is.EqualTo(shown),"The suppressed resume frame must not rewind presentation.");AssertStateBits(host.Current,authority);yield return null;
         }
+        [UnityTest] public IEnumerator ScenarioLaunchAndReplay_PreserveStateAndFullHorizon() {
+            var cfg=Default();var initial=new BallState{Position=new Vector3(3.2f,.3f,5),Velocity=Vector3.down,Step=7};
+            host.Launch(cfg,initial,720,StopCondition.MaxSteps);
+            AssertStateBits(host.Current,initial);Assert.That(host.Prediction.States[host.Prediction.States.Count-1].Step,Is.EqualTo(727));
+            host.Advance(1.0/60);host.Replay();AssertStateBits(host.Current,initial);yield return null;
+        }
+        [UnityTest] public IEnumerator ReleaseForExperiment_DisposesBothAndReplayCreatesNewPair() {
+            host.Launch(Default());var initial=host.Current;host.ReleaseForExperiment();
+            Assert.That(factory.LiveInstances,Is.Zero);Assert.That(host.Clock.Paused,Is.True);Assert.That(host.IsRunning,Is.False);
+            host.Advance(1);AssertStateBits(host.Current,initial);host.Replay();Assert.That(factory.LiveInstances,Is.EqualTo(2));yield return null;
+        }
         private static void AssertStateBits(BallState a,BallState b) {
             foreach(var pair in new[]{(a.Position.x,b.Position.x),(a.Position.y,b.Position.y),(a.Position.z,b.Position.z),
                 (a.Velocity.x,b.Velocity.x),(a.Velocity.y,b.Velocity.y),(a.Velocity.z,b.Velocity.z)})

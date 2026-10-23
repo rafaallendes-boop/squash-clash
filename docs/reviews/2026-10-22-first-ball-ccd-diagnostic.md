@@ -1,0 +1,42 @@
+# I4b — diagnóstico de CCD (2026-10-22)
+
+Estado: reproducción y corrección de configuración confirmadas; cinco campañas nuevas del editor completas; pendiente de revisión de Claude y del iPhone. PR #4 borrador, sin fusionar. iPhone pausado hasta revisión de Claude. I4c/P2/I5+ no autorizados.
+
+El defecto se reproduce **también fuera del adaptador**: esfera de radio 20 mm, 25 m/s hacia −Z, caja estática de 1 m de espesor, paso 1/120 s, ContinuousDynamic. En escenas local y por defecto, el centro pasa z=0 en el paso 2 (z=−0,116666675 m) y el callback llega en el 3. S1 tiene z=−0,1890124 en el 33 y primer contacto en el 34. Speculative reporta en el 33 sin cruce. [Trazas previas](../validation/evidence/ccd-before/ccd-s1-baseline.csv), [reproducción local](../validation/evidence/ccd-before/ccd-minimal-local.csv), [escena por defecto](../validation/evidence/ccd-before/ccd-minimal-default.csv), [speculative](../validation/evidence/ccd-before/ccd-s1-speculative.csv).
+
+Se descartaron aisladamente FreezeRotation y varios Simulate en un mismo frame: las dos reproducciones siguieron fallando al quitar la restricción o dejar un frame entre pasos. No se cambió Reset.
+
+Causa de configuración comprobada mediante A→B→A: `m_FastMotionThreshold=3.4028235e+38` (valor heredado del proyecto). Cambiar **solo** ese ajuste a 0,01 m convierte los tres tests a GREEN (contacto mínimo en el 2; S1 en el 33 a z=0,02). Restaurarlo reproduce los tres RED. El defecto no es exclusivo de escenas locales/manuales ni requiere cambiar el modo ContinuousDynamic.
+
+[Unity 6.3, Physics Settings](https://docs.unity3d.com/6000.3/Documentation/Manual/class-PhysicsManager.html) documenta Fast Motion Threshold como umbral de movimiento de CCD barrida y el valor predeterminado equivalente a infinito. [Nota oficial UUM-57910](https://unity.com/releases/editor/beta/6000.0.0b13) explica su introducción para cuerpos pequeños rápidos frente a otros mayores. La relación causal en este proyecto procede de la reproducción A→B→A; no se atribuye al motor un defecto interno demostrado por su código fuente.
+
+La corrección propuesta es **configuración requerida para la integración P1**, aplicada en el asset y ProjectSetup para conservarla al regenerar el proyecto, no un cambio de escenarios, tolerancias de aceptación, preset, geometría o variantes. El valor 0,01 m es la mitad del radio físico actual; deja de excluir desplazamientos de esta escala en la reproducción. Es un ajuste técnico explícito, no un nuevo criterio de gate ni una garantía de precisión. Su riesgo es incrementar trabajo CCD y cambiar el comportamiento/contactos que antes se resolvían por penetración; deben repetirse las cinco variantes y posteriormente el iPhone. La línea base sigue siendo ContinuousDynamic y ninguna variante se promueve.
+
+Evidencia RED: tres tests ejecutados, cero aprobados, tres fallos de aserción; un intento anterior con API NUnit incompatible fue rechazado por el contrato de XML fresco y no cuenta como RED. [Manifiesto](../validation/evidence/2026-10-22-i4b-ccd-diagnostic.json).
+
+La clasificación de Claude continúa **preliminar**: C1 adaptador/configuración probable; C10/C11/C13 y grandes C3 posibles consecuencias; C3 residual posible límite a reevaluar; C5–C7 indeterminados. Los resultados de la campaña nueva determinarán qué permanece, sin cambiar umbrales.
+
+
+## Corrección verificada
+
+La corrección reside en `ProjectSettings/DynamicsManager.asset` y los dos puntos de configuración de `ProjectSetup` (proyecto y experimento). No se ha modificado el algoritmo de `PhysXBallSimulation`, Reset ni la variante baseline: la reproducción mínima sin adaptador fallaba igual. Introducir un parche de trayectoria en el adaptador habría ocultado la configuración incorrecta. El informe experimental ahora lee y registra el valor efectivo del asset. No hay API pública de Unity 6.3 para ese ajuste en Runtime; no se introduce reflexión ni un puente nativo para forzarlo.
+
+Referencia explicativa adicional: [PhysX 5.4.1, PxsCCD.cpp](https://github.com/NVIDIA-Omniverse/PhysX/blob/106.0-physx-5.4.1/physx/source/lowlevel/software/src/PxsCCD.cpp#L222). Ese código calcula umbrales geométricos de 0,75 × radio para esfera y 0,75 × semieje mínimo para caja, y limita su suma por el umbral de escena antes de decidir el barrido. Para la reproducción: 0,015 + 0,375 = **0,39 m**, mayor que 25/120 = **0,208333 m**. La documentación de Unity y el A→B→A sustentan la corrección en esta integración; esta referencia de PhysX es explicativa, no una afirmación de que se haya inspeccionado el binario interno exacto de Unity.
+
+GREEN: **PlayMode 48/48**, incluidos los tres RED anteriores. Escena local y por defecto: contacto paso 2, mínimo z=0,019999966 m. S1: contacto paso 33, z=0,02 m, `Estimated`, punto aproximadamente (0,5999993; 2,189034; 0). Las posiciones/velocidades y contactos de pasos 30–36 se conservan [después de corregir](../validation/evidence/ccd-after/ccd-s1-baseline.csv). No se declara C10 aprobado por este test: el punto conserva una diferencia vertical frente al objetivo analítico, que debe cuantificarse en la campaña.
+
+
+## Elegibilidad, foco y diagnóstico de repetibilidad
+
+C7 aplica la decisión del PO con contadores separados: Measured/NotApplicable/NotEvaluable. Salida superior o horizonte solo excluyen un checkpoint ausente si el historial es limpio; estados/contactos no finitos, cruce o discontinuidad de pasos conservan NotEvaluable. Otra terminación temprana no se excluye por inferencia. Los checkpoints disponibles conservan comparación bit a bit y C7 sigue siendo gate. La ausencia de población medida no equivale a Pass. Siete casos RED → GREEN; junto con tres pruebas RED de diagnóstico de divergencias, **EditMode 180/180**. [Evidencia](../validation/evidence/2026-10-22-i4b-c7-policy.json).
+
+Foco en robustez: detiene trabajos mientras falta, registra cada intervalo (duplicados de focus(false) no duplican el conteo), recupera automáticamente la vista del experimento al volver y cancela si pasan 60 s, también si el primer callback posterior es focus(true). Segundo plano y cualquier pérdida de foco durante C17 cancelan. El Runtime fuera del experimento conserva «Toca para continuar» y el pendiente I5 de pausa manual. Se registra el térmico al comenzar C17, sin umbral nuevo. Siete fallos RED en doce pruebas de sección → suite final **PlayMode 54/54**. [Evidencia](../validation/evidence/2026-10-22-i4b-focus-policy.json). No se ha probado aún esta política en el iPhone.
+
+Las comparaciones C5–C7 ahora conservan el primer desacuerdo de cada criterio con paso/índice, estados previo/actual, seis float32 en hexadecimal y contactos. No se cambia la medida de igualdad (superficie/paso para contactos). Un experimento separado compara 25 controles: cinco objetivos, nueva/nueva y con historia S6 (8 contactos) o S10 (653 contactos), frente a nueva o a la misma historia. **25/25 iguales** tras corregir CCD. Esto no demuestra que PhysX carezca de caché ni certifica la población completa. **Reset permanece sin cambios**, sin prueba que justifique un parche. [Comparaciones](../validation/evidence/physics-spike-P1/editor-reset-history-ccd.md), [procedencia y límites](../validation/evidence/2026-10-22-i4b-reset-history.json).
+
+
+## Campaña nueva y detención
+
+Las cinco variantes se ejecutaron completas sobre 16ad653, con umbrales/escenarios/medidas/preset conservados y elegibilidad C7 aprobada. [Resultados y procedencia](2026-10-22-first-ball-physics-spike-P1.md). Baseline elimina C1, pasa C5/C6 y conserva fallos C3/C7/C10/C11. El primer C7 difiere en orden de contactos del mismo paso con estados idénticos; no se cambia la comparación. C10 residual de ≈13,616mm coincide con el cálculo semimplícito/TOI lineal documentado como inferencia, sin ajustar el lanzamiento. No es aún clasificación final de Claude ni elección del motor.
+
+No se volvió al iPhone: PR #4 continúa borrador, sin fusionar, para revisión de Claude. I4c/P2/I5+ no autorizados.

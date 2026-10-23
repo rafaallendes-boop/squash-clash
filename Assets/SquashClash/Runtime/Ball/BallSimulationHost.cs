@@ -16,6 +16,9 @@ namespace SquashClash.Runtime.Ball
         private int floorBounces, maxSteps;
         private int discardDeltaFrame = -1;
         private float wallHeight;
+        private BallState launchState;
+        private StopCondition stopCondition;
+        private int launchMaxSteps;
         public SimClock Clock { get; private set; }
         public EffectiveConfig ActiveConfig { get; private set; }
         public int SimulationGeneration { get; private set; }
@@ -34,6 +37,12 @@ namespace SquashClash.Runtime.Ball
         }
         public void Launch(EffectiveConfig cfg)
         {
+            if (cfg == null) throw new ArgumentNullException(nameof(cfg));
+            Launch(cfg, Launcher.ToState(cfg.Launch, cfg.LaunchScale), cfg.Physics.StepHz * 10, StopCondition.SecondFloorBounce);
+        }
+        public void Launch(EffectiveConfig cfg, BallState initial, int horizonSteps, StopCondition stop)
+        {
+            if (horizonSteps <= 0) throw new ArgumentOutOfRangeException(nameof(horizonSteps));
             if (backends == null) throw new InvalidOperationException("Initialize the host before launch.");
             if (cfg == null) throw new ArgumentNullException(nameof(cfg));
             var physics = cfg.Physics; var court = cfg.Court;
@@ -46,16 +55,17 @@ namespace SquashClash.Runtime.Ball
                 SimulationGeneration++;
             }
             Clock.Configure(physics.StepHz, cfg.Tempo); Clock.Restart();
-            var initial = Launcher.ToState(cfg.Launch, cfg.LaunchScale);
+            launchState = initial; launchMaxSteps = horizonSteps; stopCondition = stop;
             game.Reset(initial); predictor.Reset(initial);
             // Bounded preview, not a physics-quality or performance acceptance criterion.
-            maxSteps = physics.StepHz * 10; wallHeight = court.WallHeight;
-            Prediction = TrajectoryRunner.Run(predictor, initial, maxSteps, StopCondition.SecondFloorBounce, court);
+            maxSteps = checked((int)initial.Step + horizonSteps); wallHeight = court.WallHeight;
+            Prediction = TrajectoryRunner.Run(predictor, initial, horizonSteps, stop, court);
             previous = current = initial; RenderPosition = initial.Position;
             floorBounces = 0; PredictionMatchesBitwise = true; IsRunning = true;
             ActiveConfig = cfg; Launched?.Invoke(cfg);
         }
-        public void Replay() { if (ActiveConfig != null) Launch(ActiveConfig); }
+        public void Replay() { if (ActiveConfig != null) Launch(ActiveConfig, launchState, launchMaxSteps, stopCondition); }
+        public void ReleaseForExperiment() { Clock.Paused = true; DisposeSimulations(); }
         public void ResumeAfterSystemPause()
         {
             Clock.Paused = false;
@@ -77,7 +87,7 @@ namespace SquashClash.Runtime.Ball
                     if (contact.Surface == SurfaceId.Floor && !contact.Persistent) floorBounces++;
                     ContactRaised?.Invoke(contact);
                 }
-                if (floorBounces >= 2 || current.Position.y > wallHeight || current.Step >= maxSteps)
+                if ((stopCondition == StopCondition.SecondFloorBounce && floorBounces >= 2) || current.Position.y > wallHeight || current.Step >= maxSteps)
                 { IsRunning = false; break; }
             }
             if (!IsRunning) RenderPosition = current.Position;

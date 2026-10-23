@@ -1,0 +1,52 @@
+{
+  "codeCommit": "d14df6fc4cbfdb43b4747613954e5ba1c2685768",
+  "metadata": {
+    "version": "0.1.0",
+    "gitHash": "d14df6f",
+    "profile": "dev",
+    "builtAtUtc": "2026-10-23T00:12:53.0948630Z",
+    "unityVersion": "6000.3.27f1",
+    "gitDirty": false
+  },
+  "nativeBuildExitCode": 0,
+  "signatureVerified": true,
+  "bundleId": "cl.rafaallendes.squashclash",
+  "architecture": "arm64",
+  "frameworkSha256": "4c8986c9ab00f1a41d333aa5e01cf500af52081c7a20766e136af23250db32a6",
+  "profileExpiresUtc": "2026-10-28T14:59:31+00:00",
+  "profileValidAtCheck": true,
+  "embeddedMetadataLocations": [
+    "Data/resources.assets"
+  ],
+  "installed": true,
+  "controlledLifecycleCheck": "verified on iPhone by intentional short Home interruption; expected incomplete, native fields present",
+  "fullCampaignComplete": false,
+  "measurementCriteriaChanged": false,
+  "cancellationPolicyChanged": false,
+  "nativePublicSymbols": {
+    "SquashClashThermalState": false,
+    "SquashClashApplicationState": false,
+    "SquashClashIdleTimerDisabled": false
+  },
+  "nativeDefinedSymbols": {
+    "SquashClashThermalState": true,
+    "SquashClashApplicationState": true,
+    "SquashClashIdleTimerDisabled": true
+  },
+  "il2cppDirectCalls": {
+    "SquashClashThermalState": true,
+    "SquashClashApplicationState": true,
+    "SquashClashIdleTimerDisabled": true
+  },
+  "symbolCheckMethod": "nm -U verifies defined local text symbols and generated IL2CPP direct calls; public-export-only -g filter was inapplicable to these internal functions; binary unchanged",
+  "installation": {
+    "firstAttempt": "failed IXRemoteErrorDomain6 Connection invalid",
+    "retryExitCode": 0,
+    "transportAtInstall": "localNetwork"
+  },
+  "launch": {
+    "command": "timeout after10seconds",
+    "verifiedByPO": true,
+    "observedVersionByPO": "0.1.0+d14df6f dev"
+  }
+}

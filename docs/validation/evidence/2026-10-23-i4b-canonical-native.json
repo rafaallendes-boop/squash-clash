@@ -1,0 +1,82 @@
+{
+  "buildMetadata": {
+    "version": "0.1.0",
+    "gitHash": "2fdede5",
+    "profile": "dev",
+    "builtAtUtc": "2026-10-23T13:00:06.5471990Z",
+    "unityVersion": "6000.3.27f1",
+    "gitDirty": false
+  },
+  "freshUnityExport": true,
+  "playerDevelopment": false,
+  "il2cpp": "Release",
+  "xcode": "Xcode 27.1; Build version 27A9275",
+  "xcodeConfiguration": "Release",
+  "architectures": [
+    "arm64"
+  ],
+  "codesignStrictVerified": true,
+  "embeddedBuildMetadataVerified": true,
+  "embeddedMetadataLocation": "Data/resources.assets",
+  "profileCheckedAtUtc": "2026-10-23T13:01:45.198996+00:00",
+  "profileCreatedAtUtc": "2026-10-21T14:59:31Z",
+  "profileExpiresAtUtc": "2026-10-28T14:59:31+00:00",
+  "embeddedProfileValid": true,
+  "embeddedProfileMatchesDeviceAndBundle": true,
+  "frameworkSha256": "5e37a334363ec05e9641bd0b6c0aa7ecd5bfc27a71106fe5ae200a8f0bf2065e",
+  "resourcesSha256": "9fa4d71268c49299fc446b3df3f66b6d5b5063272b46ca067114c800ee1ddf3e",
+  "projectPhysics": {
+    "fastMotionThreshold": 0.01,
+    "enhancedDeterminism": true,
+    "bounceThreshold": 0.1,
+    "source": "ProjectSettings/DynamicsManager.asset, byte-identical to committed build source",
+    "sourceSha256": "056979610bab2b1ddf56f692ad5cb565a181660cc4f1a28d7e6d004cb8820fb1",
+    "scope": "Build source configuration; no claim of runtime getter measurement. Native report header omits fastMotionThreshold."
+  },
+  "productionExport": {
+    "profile": "prod",
+    "metadata": {
+      "version": "0.1.0",
+      "gitHash": "2fdede5",
+      "profile": "prod",
+      "builtAtUtc": "2026-10-23T12:59:10.0701980Z",
+      "unityVersion": "6000.3.27f1",
+      "gitDirty": false
+    },
+    "freshExport": true,
+    "productIl2CppModules": [
+      "g_SquashClash_Core_CodeGenModule",
+      "g_SquashClash_Runtime_CodeGenModule"
+    ],
+    "nativeThermalBridge": false
+  },
+  "installed": true,
+  "campaignComplete": true,
+  "installVerified": true,
+  "launchVerified": true,
+  "launchStatus": "Successfully launched after PO confirmed unlock; installed app running, no console session. Campaign not started by tools.",
+  "campaignStatus": "PO completó campaña autorizada con batería inicial 90 % y condiciones confirmadas. Informe auditado: 18 criterios, 200 medidas C17, p95 14.3221 ms Fail. Térmico nominal inicial, fair en C17/final, cero interrupciones. Informe entregado; detenerse para Claude/PO, I4b abierto.",
+  "regressionScope": "Only documentation and a test comment changed after c7da32e; no new behavior and no suites repeated. Prior regression evidence retained.",
+  "editorBenchmarkConditions": {
+    "build": "da98fd4",
+    "unity": "6000.3.27f1",
+    "os": "macOS 26.6.2 (25G83)",
+    "architecture": "arm64 native, no Rosetta",
+    "memoryMB": 16384,
+    "workloads": "Three editor processes initially, then two; isolated worktrees, normal Mac activity; no isolated load or Mac thermal capture.",
+    "baselineRunStartUtc": "2026-10-23T11:06:47Z",
+    "baselineRunEndUtc": "2026-10-23T11:29:53Z",
+    "warmup": 20,
+    "samples": 200,
+    "percentiles": "nearest rank",
+    "p95Ms": 34.9273,
+    "historicalBuild": "16ad653",
+    "historicalP95Ms": 24.1201,
+    "interpretation": "Conditions and values only; no cause assigned and no native comparison."
+  },
+  "runningProcessVerified": true,
+  "launchVerifiedAtUtc": null,
+  "campaignApprovedConditionsMet": true,
+  "campaignReportManifest": "docs/validation/evidence/2026-10-23-i4b-native-compliant-run.json",
+  "previousCampaignReportManifest": "docs/validation/evidence/2026-10-23-i4b-native-canonical-runs.json"
+}

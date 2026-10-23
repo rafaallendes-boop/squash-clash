@@ -54,6 +54,9 @@ namespace SquashClash.EditorTools
             Physics.defaultContactOffset = 0.001f;
             var physics = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/DynamicsManager.asset")[0]);
             physics.FindProperty("m_EnableEnhancedDeterminism").boolValue = true;
+            // Required by P1's small sphere / thick boxes: the inherited infinity
+            // lets the size-based CCD cutoff skip sweeps at 120 Hz (CCD regression).
+            physics.FindProperty("m_FastMotionThreshold").floatValue = 0.01f;
             physics.ApplyModifiedPropertiesWithoutUndo();
 
             Directory.CreateDirectory("Assets/SquashClash/Runtime/App");
@@ -146,6 +149,16 @@ namespace SquashClash.EditorTools
             AssetDatabase.SaveAssets();
             Debug.Log($"[SquashClash] setup complete unity={Application.unityVersion} bundle={bundleId} minIOS={PlayerSettings.iOS.targetOSVersionString}");
         }
+        // Experiment-only entry point: do not rebuild the scene or overwrite defaults.
+        public static void ConfigureSpikePhysics()
+        {
+            var physics = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/DynamicsManager.asset")[0]);
+            physics.FindProperty("m_EnableEnhancedDeterminism").boolValue = Environment.GetEnvironmentVariable("SQUASH_SPIKE_VARIANT") != "no-ed";
+            // Same integration correction for all five variants; not a variant axis.
+            physics.FindProperty("m_FastMotionThreshold").floatValue = 0.01f;
+            physics.ApplyModifiedPropertiesWithoutUndo(); AssetDatabase.SaveAssets();
+        }
+
         private static void CourtMaterial(string name, Color color, bool transparent = false, bool twoSided = false)
         {
             var path = "Assets/SquashClash/Runtime/Resources/CourtMaterials/" + name + ".mat";

@@ -1,0 +1,18 @@
+{
+  "profile": "dev",
+  "metadata": {
+    "version": "0.1.0",
+    "gitHash": "d14df6f",
+    "profile": "dev",
+    "builtAtUtc": "2026-10-23T00:12:53.0948630Z",
+    "unityVersion": "6000.3.27f1",
+    "gitDirty": false
+  },
+  "freshExport": true,
+  "productIl2CppModules": [
+    "g_SquashClash_Core_CodeGenModule",
+    "g_SquashClash_DevPanel_CodeGenModule",
+    "g_SquashClash_Runtime_CodeGenModule"
+  ],
+  "nativeThermalBridge": true
+}

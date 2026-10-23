@@ -4,6 +4,8 @@ Prototipo de squash para iPhone en Unity 6.3 LTS: validación progresiva, empeza
 
 [Spec v0.3](docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md) · [Plan First Ball r2](docs/superpowers/plans/2026-10-20-squash-clash-first-ball.md) · [Entorno](docs/validation/environment.md) · [E1: instalación y evidencia](docs/validation/e1-first-installation.md) · [I2: cancha y cámara](docs/validation/i2-court.md)
 
+**Estado actual — I4b, orden canónico para Claude:** PR #4 borrador, sin fusionar. Código da98fd4, EditMode 188/188 y PlayMode 58/58; cinco campañas nuevas del editor completas. Baseline pasa C5/C6/C7 y no cruza paredes; siguen fallando C3/C10/C11. Speculative conserva un fallo C6 de persistencia/terminación. [Informe, clasificación final y variantes](docs/reviews/2026-10-22-first-ball-physics-spike-P1.md). Históricos 16ad653 conservados. Detenido antes de generar build nativa para revisión de Claude; C17 del iPhone pendiente. I4c/P2/I5+ no autorizados.
+
 Editor fijado: **6000.3.27f1 (Apple silicon)** con iOS Build Support. Configurar `scripts/device.env` a partir de `scripts/device.env.example`; el archivo real queda excluido de Git. Requiere la cuenta del PO en Xcode y el iPhone conectado, desbloqueado y con Modo de desarrollador.
 
 ```bash
@@ -19,7 +21,7 @@ scripts/install-ios.sh prod
 
 `dev` usa `SQUASH_DEV`, IL2CPP Release y Xcode Release, sin Development Player. `prod` omite el define. `debug` es Development Player e IL2CPP/Xcode Debug; sus métricas no son comparables. `--console` mantiene la sesión hasta cerrar la app; sin esa opción la instalación y el lanzamiento retornan.
 
-`scripts/spike.sh` se incorporará en E4 para experimentos de física separados de las pruebas de regresión. No existe aún durante E1.
+`scripts/spike.sh baseline|speculative|offset05|solver12|no-ed` ejecuta la campaña de física del editor separada de la regresión. Salida 0 exige informe completo y limpieza de recursos; los veredictos físicos pueden ser Fail y se reportan como datos.
 
 I1 se preparó en `main` como excepción de bootstrap; Claude revisó los commits locales y el PO validó ambas builds en el iPhone. El remoto y E2 requieren autorización independiente.
 
@@ -44,3 +46,9 @@ El bloqueo previo de acceso a Duplicación quedó resuelto por el PO. Su observa
 Entrega I4a publicada en [PR #3](https://github.com/rafaallendes-boop/squash-clash/pull/3), abierta hacia main. Worktree conservado para la revisión; I4b no iniciado.
 
 I4a cerrado: PR #3 fusionada (`ca50142`), ajustes de Claude verificados RED→GREEN, EditMode 159/159 y PlayMode 37/37. I4b autorizado; gate I4c/P2/I5+ pendientes de autorización.
+
+**Entrega histórica — I4b antes de CCD:** [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), código `ee76086`, EditMode170/170 y PlayMode43/43. Runner incremental, benchmark y controles de escenario/prueba en dev; exclusión real de prod verificada. Cinco variantes completas del editor, ninguna cumple todos los criterios: [informe físico](docs/reviews/2026-10-22-first-ball-physics-spike-P1.md). Build dev Release ARM64 firmada instalada/abierta; escenario/cancelación comprobados en iPhone, falta campaña completa y C17 nativo. Clasificación de Claude pendiente. [Validación y resoluciones](docs/validation/i4b-physics-run.md). I4b no cerrado; I4c/P2/I5+ siguen sin autorizar.
+
+**Seguimiento de I4b:** cuarto intento físico incompleto por foco, 10 min50 s, nominal→serious, C17 no medido; PO declara app al frente sin interacción. Diagnóstico mínimo de ciclo de vida añadido sin cambiar cancelación ni criterios, PlayMode45/45 RED→GREEN. Sigue pendiente la campaña completa y la revisión/clasificación de Claude; [detalle](docs/reviews/2026-10-22-first-ball-physics-spike-P1.md#cuarto-intento-físico-y-diagnóstico-de-ciclo-de-vida).
+
+Diagnóstico `d14df6f` instalado y verificado en el iPhone con interrupción corta deliberada: conserva cancelación, registra foco/UIKit/temporizador/fase y mantiene C17 no evaluado. La causa del intento largo sigue sin confirmar; no hay campaña completa nueva ni cierre de I4b. [Evidencia nativa del diagnóstico](docs/validation/evidence/2026-10-22-i4b-lifecycle-check.json).

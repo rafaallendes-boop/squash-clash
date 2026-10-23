@@ -97,6 +97,7 @@ namespace SquashClash.Runtime.Physics
             contactsThisStep.Clear(); beforeStep = State; currentContacts = contactsThisStep; step++;
             try { physicsScene.Simulate((float)parameters.StepSeconds); }
             finally { currentContacts = null; }
+            if (contactsThisStep.Count > 1) contactsThisStep.Sort(PhysXContactOrder.Instance);
         }
         internal void Record(Collision collision, bool persistent)
         {

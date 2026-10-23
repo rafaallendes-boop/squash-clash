@@ -1,0 +1,13 @@
+{
+  "sourceCode": "d14df6f",
+  "report": "docs/validation/evidence/physics-spike-P1/iphone-d14df6f-P1-20261023-002208-752.md",
+  "reportSha256": "49b4ea329e2b17c5ad836079af26060a6784ab9d91d54c8e7a9cc461b9c48f41",
+  "operatorAction": "PO intentionally started probe, left to Home, returned to app; short test, not full campaign",
+  "expectedIncomplete": true,
+  "diagnosticFieldsVerifiedOnIPhone": true,
+  "context": "Lifecycle event=focus(false); utc=2026-10-23T00:22:08.7495660Z; elapsedSeconds=8.318; frame=1575; unityFocused=False; uikitState=active; uikitIdleTimerDisabled=true; sleepTimeout=-1; thermal=nominal; phase=S8-109 robustez; progress=0.013027; benchmarkSamples=0",
+  "thermal": "nominal→nominal",
+  "c17Evaluated": 0,
+  "fullCampaignComplete": false,
+  "interpretationLimit": "UIKit active is a point-in-time/most-active-scene snapshot; observed even in intentional Home transition, so not proof of a false Unity event or cause of prior interruption."
+}

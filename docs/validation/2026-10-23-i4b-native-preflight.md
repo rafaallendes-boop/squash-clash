@@ -1,0 +1,21 @@
+# I4b — comprobación previa a la campaña nativa
+
+2026-10-23. Build instalada **0.1.0+2fdede5 dev**, metadata sin cambios pendientes; campaña posterior bajo condiciones aprobadas completa y auditada; entrega I4b detenida para Claude/PO. [Evidencia saneada](evidence/2026-10-23-i4b-canonical-native.json).
+
+**ProjectPhysics: EnhancedDeterminism=true; fastMotionThreshold=0.01 m; bounceThreshold=0.1.** Comprobado en `ProjectSettings/DynamicsManager.asset`, idéntico byte a byte al código versionado de la build. Procedencia: configuración fuente del export limpio; no se presenta como una lectura de getter en runtime. El encabezado actual de la campaña nativa no imprime fastMotionThreshold; esta comprobación separada cubre el informe corto pedido por el PO.
+
+Export Unity limpio, Unity 6000.3.27f1, SQUASH_DEV por extraScriptingDefines, Player no Development, IL2CPP Release y Xcode 27.1 (27A9275) Release, ejecutable y UnityFramework ARM64. Firma validada con codesign --verify --deep --strict. Metadata exacta encontrada en Data/resources.assets del .app firmado; hash y perfil dev verificados. Export prod nuevo del mismo commit: solo Core y Runtime, sin DevPanel, sin ThermalState.mm. No se instaló prod.
+
+Perfil embebido comprobado inmediatamente antes de instalar: vigente hasta **2026-10-28T14:59:31Z**, incluye el teléfono y coincide con team/bundle, sin publicar identificadores personales. Instalación confirmada por devicectl. El primer lanzamiento fue rechazado por teléfono bloqueado; tras confirmar el PO el desbloqueo, el nuevo lanzamiento terminó correctamente y se verificó un único proceso de la app instalada en ejecución, sin sesión de consola. Campaña todavía sin iniciar por este flujo. Si hubiera otra instalación el 27 de octubre o después, renovar antes aunque aún figure vigente. Herramientas sin cambios.
+
+Condiciones y auditoría previstas antes de ejecutar: teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda, térmico nominal al inicio. Sin capturas, devicectl ni herramientas durante la ejecución. El PO debe avisar al finalizar antes de recuperar Documents/spike. Auditar 18 criterios, hash 2fdede5, configuración c86243b15a97, variante baseline/ccdDyn-co1mm-it6-1, 20 calentamientos y 200 mediciones C17, térmico al inicio del benchmark e interrupciones de foco. **C17 p95 ≤1 ms; si incumple, Fail**. No interpretar tiempos de editor ni compararlos con nativo.
+
+Regresión previa conservada: EditMode 188/188, PlayMode 58/58; no se repiten suites por documentación y comentario de test. No hay cambio de comportamiento, escenarios, umbrales, variantes, preset, Reset o selección de backend. PR #4 borrador sin fusionar, I4b abierto. Informe final pendiente de campaña; detenerse después para Claude y PO. I4c, P2/T4.5 e I5+ sin autorizar.
+
+## Histórico: primera corrida fuera de condiciones
+
+El PO completó la corrida UTC 13:20:23–13:32:22 con **75 % de batería y funda puesta**. [Auditoría](evidence/2026-10-23-i4b-native-canonical-runs.json): 18 criterios, hash/variante correctos, C17 200 medidas y p95 **14,923400 ms: Fail** con umbral ≤1 ms; térmico inicial/final/benchmark nominal y cero interrupciones de foco. Es evidencia completa conservada, fuera de las condiciones aprobadas. En esa entrega parcial la campaña conforme quedó pendiente; fue completada después, como se documenta en la sección siguiente. No se atribuye causa a la desviación de condiciones. [Informe P1 actualizado](../reviews/2026-10-22-first-ball-physics-spike-P1.md).
+
+## Campaña conforme y entrega posterior
+
+PO: **«Prueba completa - Batería inicial 90%. Se cumplen las condiciones»**. Misma build instalada; informe P1-20261023-142516-831 completo, recuperado después del aviso. [Auditoría final](evidence/2026-10-23-i4b-native-compliant-run.json): 18 criterios, hash/configuración/variante verificados, 20 calentamientos y 200 medidas C17, p95 **14,322100 ms: Fail** frente a ≤1 ms. Térmico nominal al inicio, **fair al iniciar C17 y al final**, cero interrupciones de foco. El térmico del benchmark es informativo, sin nuevo umbral ni atribución causal. Históricos conservados. Informe I4b completado, ejecución detenida para Claude/PO; I4b abierto y PR #4 borrador sin fusionar. I4c/P2/T4.5/I5+ no autorizados.

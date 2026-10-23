@@ -6,6 +6,7 @@ using NUnit.Framework;
 using SquashClash.Core.Config;
 using SquashClash.Core.Court;
 using SquashClash.Core.Simulation;
+using SquashClash.Core.Spike;
 using SquashClash.Runtime.Physics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -110,6 +111,28 @@ namespace SquashClash.Runtime.Tests
             var contacts=new List<ContactEvent>();bool persistent=false;
             for(int i=0;i<120;i++) {s.Step(contacts);persistent|=contacts.Any(c=>c.Surface==SurfaceId.Floor&&c.Persistent);}
             Assert.That(persistent,Is.True);yield return null;
+        }
+        [UnityTest, Timeout(180000)] public IEnumerator DifferentHistories_SameCheckpoint_ReturnSameContactOrder() {
+            var cfg=EffectiveConfig.From(PresetCodec.LoadDefault(Resources.Load<TextAsset>("DefaultPreset").text));
+            var f=Factory();var run=new SpikeRun(f,cfg.Physics,cfg.Court,new SpikeOptions {RandomCount=110,Seed=20261020,Variant="contact-order-regression"});
+            // Replay the real job prefix through S8-109. The two persistent instances have different
+            // histories (only game runs robustness); C7 resets BOTH to the same checkpoint state.
+            // The isolated S8-109 history is insufficient: its earlier prefix matters to PhysX pair order.
+            // This RED reproduction depends on pair ordering in this PhysX version; a Unity update
+            // that changes pair ordering may stop reproducing the pre-fix RED with this history.
+            try {
+                while(!run.Step(8))yield return null;
+                Assert.That(run.Result.Complete,Is.True);
+                var c7=run.Result.Criteria.Single(c=>c.Id=="C7");Assert.That(c7.Evaluated,Is.GreaterThan(0));
+                foreach(var detail in run.Result.Details.Where(v=>v.StartsWith("C7 diagnóstico:")||v.StartsWith("C7 clasificación:")))Debug.Log("[ContactOrder] "+detail);
+                var failure=run.Result.Details.Find(v=>v.StartsWith("C7 clasificación: S8-109 C7 postcontacto"));
+                if(failure!=null) {
+                    Assert.That(failure,Does.Contain("estadosBitsIguales=True; multiconjuntoContactosCompletosIgual=True"));
+                    Assert.That(failure,Does.Contain("primerPaso=127; índice=77; checkpoint=50"));
+                }
+                Assert.That(c7.Measured,Does.StartWith("fallos=0;"),"ordered contacts from two real PhysX instances; pre-fix failure records prove identical state bits and full contact values");
+            }
+            finally {run.Cancel();}
         }
     }
 }

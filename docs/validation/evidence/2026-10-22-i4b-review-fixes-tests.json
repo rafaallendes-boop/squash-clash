@@ -1,0 +1,156 @@
+{
+  "date": "2026-10-22",
+  "codeCommit": "16ad6533307692a218db04a4d248d5a1074a7906",
+  "runs": [
+    {
+      "xmlLocal": "Logs/ccd-final-red-results.xml",
+      "sha256": "d2df4ae87f5e6a709d2d9d4b09d0335edde31daf84c9d35cf076d115eda39559",
+      "counts": {
+        "total": 3,
+        "passed": 0,
+        "failed": 3,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 00:44:25Z",
+      "endedUtc": "2026-10-23 00:44:25Z",
+      "failedTests": [
+        "SquashClash.Runtime.Tests.CcdDiagnosticsTests.RawSphere_DefaultScene_CcdPreventsCrossingAndReportsImpactStep",
+        "SquashClash.Runtime.Tests.CcdDiagnosticsTests.RawSphere_LocalScene_CcdPreventsCrossingAndReportsImpactStep",
+        "SquashClash.Runtime.Tests.CcdDiagnosticsTests.S1_BaselineAndSpeculative_WriteSteps30To36"
+      ]
+    },
+    {
+      "xmlLocal": "Logs/ccd-green-full-playmode-results.xml",
+      "sha256": "93c870608b3699b220d1e87db6cc3a2e9f9be1bd2716c7c7f3f595b52dea653e",
+      "counts": {
+        "total": 48,
+        "passed": 48,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 00:46:26Z",
+      "endedUtc": "2026-10-23 00:46:47Z",
+      "failedTests": []
+    },
+    {
+      "xmlLocal": "Logs/c7-red-results.xml",
+      "sha256": "018a942c1dc9af654d3ef57911b672aa0169ce0d3d23196a359113a41a5acc49",
+      "counts": {
+        "total": 7,
+        "passed": 0,
+        "failed": 7,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 00:49:10Z",
+      "endedUtc": "2026-10-23 00:49:11Z",
+      "failedTests": [
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.C7_AbsentAfterAnomaly_RemainsNotEvaluable(\"nonfinite\")",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.C7_AbsentAfterAnomaly_RemainsNotEvaluable(\"crossing\")",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.C7_AbsentAfterAnomaly_RemainsNotEvaluable(\"steps\")",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.C7_AbsentAfterAnomaly_RemainsNotEvaluable(\"contact\")",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.C7_AbsentAfterCleanOverTop_IsNotApplicableOutsidePopulation",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.C7_EarlyOtherTerminationIsNotSilentlyExcluded",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.C7_NoFirstContactAtCleanHorizon_IsNotApplicable_AndK30StillMeasured"
+      ]
+    },
+    {
+      "xmlLocal": "Logs/c7-divergence-green-editmode-results.xml",
+      "sha256": "9a9df6948cc2bb423caf71630e2e48db91344c4740b249c90bfac89c7fd2a933",
+      "counts": {
+        "total": 180,
+        "passed": 180,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 00:57:01Z",
+      "endedUtc": "2026-10-23 00:57:04Z",
+      "failedTests": []
+    },
+    {
+      "xmlLocal": "Logs/divergence-red-results.xml",
+      "sha256": "26a590f1a54be99dfc7ad67a4ccb0affb940a8a7f935337d6ff3feb89cf7e35d",
+      "counts": {
+        "total": 3,
+        "passed": 0,
+        "failed": 3,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 00:56:08Z",
+      "endedUtc": "2026-10-23 00:56:09Z",
+      "failedTests": [
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Divergence_ReportsFirstStepStatesBitsAndContacts(\"C5\")",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Divergence_ReportsFirstStepStatesBitsAndContacts(\"C6\")",
+        "SquashClash.Core.Tests.Spike.SpikeRunTests.Divergence_ReportsFirstStepStatesBitsAndContacts(\"C7\")"
+      ]
+    },
+    {
+      "xmlLocal": "Logs/focus-thermal-red-results.xml",
+      "sha256": "ebbe091e5c0d0923f6710635e234a28f34d2cdf574dcd4f569debd42981ff595",
+      "counts": {
+        "total": 12,
+        "passed": 5,
+        "failed": 7,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 00:53:32Z",
+      "endedUtc": "2026-10-23 00:53:36Z",
+      "failedTests": [
+        "SquashClash.Runtime.Tests.SpikeSectionTests.BenchmarkStart_RecordsThermalStateBeforeAnyMeasurements",
+        "SquashClash.Runtime.Tests.SpikeSectionTests.CompletedReport_WithFocusInterruptionKeepsCompleteStatus",
+        "SquashClash.Runtime.Tests.SpikeSectionTests.FocusLoss_BenchmarkStillCancelsAndCountsInterruption",
+        "SquashClash.Runtime.Tests.SpikeSectionTests.FocusLoss_RecoveryBefore60Seconds_ThenBackgroundStillCancels",
+        "SquashClash.Runtime.Tests.SpikeSectionTests.FocusLoss_RobustnessWaitsAndResumes_RecordsTwoInterruptions",
+        "SquashClash.Runtime.Tests.SpikeSectionTests.FocusLoss_TimeoutAt60Seconds_CancelsEvenWhenFocusReturns",
+        "SquashClash.Runtime.Tests.SpikeSectionTests.FocusLoss_TimeoutAt60Seconds_CancelsWithoutRecovery"
+      ]
+    },
+    {
+      "xmlLocal": "Logs/final-review-fixes-playmode-results.xml",
+      "sha256": "55ef2738a9f8b77da71b3b47d9fb5ab52696e4aedaecec42de24528be0d9a4de",
+      "counts": {
+        "total": 54,
+        "passed": 54,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 01:00:12Z",
+      "endedUtc": "2026-10-23 01:00:28Z",
+      "failedTests": []
+    },
+    {
+      "xmlLocal": "Logs/reset-diagnostic-results.xml",
+      "sha256": "7ad241e3712abcf369d50bb874117ca6aebe1b899d79f3eac487f37966e7c4f9",
+      "counts": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "startedUtc": "2026-10-23 00:58:54Z",
+      "endedUtc": "2026-10-23 00:58:56Z",
+      "failedTests": []
+    }
+  ],
+  "limits": "No new iPhone build/export/install; older native evidence applies to older versions only. Final code content unchanged after tests, committed in separate commits. Reset experiment equality is data, 1/1 checks only completeness/cleanup.",
+  "sourceHashes": {
+    "Assets/SquashClash/Core/Spike/SpikeCriteria.cs": "4bd7d738808e81e90c428238838ba3796e381392e5571c89c0517c9fe043e36e",
+    "Assets/SquashClash/Core/Spike/PhysicsScenarios.cs": "1d652c13c822236294592cebe0edc230e39550cf5d150787ccf671dced42b668",
+    "Assets/SquashClash/Core/Spike/SpikeResult.cs": "1ec5ea7d72d3ed23e67ed6fe8d3ad0e7366262edbabde0930de6af8409cedb4d",
+    "Assets/SquashClash/Core/Spike/SpikeRun.cs": "bd1ae42a0a1fa598197b68df47d3d7bbe7bfd812feaf75b06d03dfc2a919a89a",
+    "Assets/SquashClash/Core/Spike/PredictionBenchmarkRun.cs": "f9b06e3bda257cecd2db276ed5e4588108f6411262dabe854b76d918ad7cdd8d",
+    "Assets/SquashClash/Core/Spike/PhysicsScenario.cs": "c88cd28611f4b097939055d0a8fa89ff1202c37263bd973e50ef924fec276964",
+    "Assets/SquashClash/Core/Spike/EnergyGainSample.cs": "57c1b42c1e683bfe448881e1462e395bedb94fda63d3be104f2667245b015df2",
+    "Assets/SquashClash/Core/Spike/SpikeReportWriter.cs": "af969d8fea4fdc07a3c3ff30869d3386cbe5cb45a51f8f2606dea52d768856cb",
+    "Assets/SquashClash/Core/Spike/PhysicsMeasures.cs": "8363906afada9629f77540d064fd39bbb08510c3c7ba0e5de3477144df37b740",
+    "Assets/SquashClash/Runtime/Physics/PhysXBallSimulation.cs": "ad8f330ebf0653eb808f5089f9e8742da9ea0f04847535306af8569532f586e0",
+    "Assets/SquashClash/Runtime/Physics/PhysXBallSimulationFactory.cs": "2a04a1e0f035820e174e67672c14cb64d5960986d93f7037be708d9669ae508c",
+    "Assets/SquashClash/Runtime/Physics/PhysXVariant.cs": "670ecd24ad8da64d5fa3bafb57f2bbb1fce1d122b76355c00991cebb295a96b1",
+    "Assets/SquashClash/Runtime/Physics/PhysXContactCollector.cs": "838bdb484e0910db853f9f730d092fee2ed9b3e991ca0f59533f0fe6cfe8797d",
+    "Assets/SquashClash/Runtime/Physics/SurfaceTag.cs": "e9b39407d59ff36cbc9923c1a5d155ea6b944d7d0df1a33b2af88eb372b1ccb9",
+    "Assets/SquashClash/DevPanel/DevBar.cs": "3f1b6d9706338d976bbabe40a2ce32a94c4539d0bf89f021b726282730da5a80",
+    "Assets/SquashClash/DevPanel/DevPanelBootstrap.cs": "2f9941b4fa7ac1fe0c318efd14e4756404ad9450b6b1da5fe550a8a7966ebae3",
+    "Assets/SquashClash/DevPanel/SpikeSection.cs": "4587b7fbe57103f99a97359a94baee8dd33c78ffbcb0dc6e2efc26188df127d1",
+    "Assets/SquashClash/Editor/ProjectSetup.cs": "183715abb6740cb97bbaefc3c7f61dfa15efed27d1df3c8a905f52b9dd0fd472",
+    "Assets/SquashClash/Editor/BuildScript.cs": "dd4a228137ae528db8cf8c038bce6010c0d4ccf1fb3fa6552ed38292bf563be2"
+  }
+}
