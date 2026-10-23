@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using SquashClash.Core.Config;
 using SquashClash.Core.Spike;
+using SquashClash.Core.Simulation;
+using System.Globalization;
 using SquashClash.Runtime.App;
 using SquashClash.Runtime.Physics;
 using UnityEngine;
@@ -21,7 +23,8 @@ namespace SquashClash.DevPanel
         private Button cancel, close;
         private SpikeRun run;
         private PredictionBenchmarkRun benchmark;
-        private PhysXBallSimulationFactory factory;
+        private IBallSimulationFactory factory;
+        private const string ExperimentBackend="P2-Analytic", ExperimentVariant="analytic/r2-20261023";
         private EffectiveConfig config;
         private SpikeResult result;
         private Vector3 savedGravity;
@@ -85,7 +88,7 @@ namespace SquashClash.DevPanel
             previousSleepTimeout = Screen.sleepTimeout; Screen.sleepTimeout = SleepTimeout.NeverSleep;
             app.Host.ReleaseForExperiment(); IsRunning = true; waiting = true; progressMark = -1;
             run = null; benchmark = null; result = null; LastReport = null; LastReportPath = null;
-            status.text = "Preparando escenas…";
+            status.text = "Preparando prueba P2…";
         }
         private void Update()
         {
@@ -103,11 +106,11 @@ namespace SquashClash.DevPanel
                 if (waiting)
                 {
                     if (HasPhysicsScenes()) return;
-                    waiting = false; factory = new PhysXBallSimulationFactory();
+                    waiting = false; factory = new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
                     run = new SpikeRun(factory, config.Physics, config.Court, new SpikeOptions {
                         Device = Application.isEditor ? "editor" : SystemInfo.deviceModel, Build = app.Build.Label, ConfigHash = config.Hash,
-                        Variant = "baseline/" + PhysXVariant.Baseline.Name,
-                        ProjectPhysics = "EnhancedDeterminism=true; bounceThreshold=" + UnityEngine.Physics.bounceThreshold + "; Unity=" + Application.unityVersion
+                        Variant = ExperimentVariant,
+                        ProjectPhysics = ProjectPhysicsDescription()
                     }); result = run.Result;
                 }
                 if (benchmark == null)
@@ -126,13 +129,25 @@ namespace SquashClash.DevPanel
             }
             catch (Exception e) { Debug.LogException(e); CancelRun("Excepción: " + e.GetType().Name + ": " + e.Message); }
         }
+        private string ProjectPhysicsDescription()
+        {
+            string description=app.Build.projectPhysics;
+#if UNITY_EDITOR
+            var settings=new UnityEditor.SerializedObject(UnityEditor.AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/DynamicsManager.asset")[0]);
+            description="EnhancedDeterminism="+settings.FindProperty("m_EnableEnhancedDeterminism").boolValue+
+                "; fastMotionThreshold="+settings.FindProperty("m_FastMotionThreshold").floatValue.ToString("R",CultureInfo.InvariantCulture)+
+                "; bounceThreshold="+UnityEngine.Physics.bounceThreshold.ToString("R",CultureInfo.InvariantCulture)+"; Unity="+Application.unityVersion;
+#endif
+            return (description??"ProjectPhysics no disponible")+"; fastMotionThreshold relevante solo para P1; bounceThreshold efectivo P2="+
+                UnityEngine.Physics.bounceThreshold.ToString("R",CultureInfo.InvariantCulture);
+        }
         public void CancelRun(string reason) => CancelRun(reason, null);
         private void CancelRun(string reason, string lifecycleContext)
         {
             if (!IsRunning) return;
             EndFocusInterruption("cancelled", "focus(end)");
             run?.Cancel(); benchmark?.Cancel();
-            if (result == null) result = new SpikeResult { Backend = "P1-PhysX", Variant = "baseline/" + PhysXVariant.Baseline.Name,
+            if (result == null) result = new SpikeResult { Backend = ExperimentBackend, Variant = ExperimentVariant, ProjectPhysics=ProjectPhysicsDescription(),
                 Build = app.Build.Label, ConfigHash = config.Hash, Device = Application.isEditor ? "editor" : SystemInfo.deviceModel,
                 Criteria = SpikeCriteria.CreateResults(Application.platform == RuntimePlatform.IPhonePlayer) };
             if (lifecycleContext != null) result.Details.Add(lifecycleContext);

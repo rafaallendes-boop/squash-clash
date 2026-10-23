@@ -32,6 +32,31 @@ namespace SquashClash.Runtime.Tests
             Assert.That(section.LastReport,Does.Contain("INCOMPLETO"));Assert.That(section.LastReport,Does.Contain("Segundo plano"));Assert.That(section.LastReport,Does.Contain("Dispositivo: editor"));
             Assert.That(File.ReadAllText(section.LastReportPath),Is.EqualTo(section.LastReport));Assert.That(GUIUtility.systemCopyBuffer,Is.EqualTo(section.LastReport));
         }
+        [UnityTest] public IEnumerator Campaign_CancelBeforeRunnerStillIdentifiesBackendAndSettings()
+        {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
+            var section=Object.FindFirstObjectByType<SpikeSection>();section.Begin();section.CancelRun("early cancellation");
+            Assert.That(section.LastReport,Does.Contain("Backend: P2-Analytic; variante: analytic/r2-20261023"));Assert.That(section.LastReport,Does.Contain("fastMotionThreshold=0.01"));Assert.That(section.LastReport,Does.Contain("INCOMPLETO"));
+        }
+        [UnityTest] public IEnumerator Campaign_UsesP2WithoutSelectingRuntimeBackend()
+        {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
+            var app=AppBootstrap.Instance;Assert.That(app.Config.Backend,Is.EqualTo("P1-PhysX"));
+            var section=Object.FindFirstObjectByType<SpikeSection>();section.Begin();
+            for(int i=0;i<120&&Field(section,"run")==null;i++)yield return null;
+            Assert.That(Field(section,"run"),Is.Not.Null);section.CancelRun("test output");
+            Assert.That(section.LastReport,Does.Contain("Backend: P2-Analytic; variante: analytic/r2-20261023"));
+            Assert.That(app.Config.Backend,Is.EqualTo("P1-PhysX"));
+            Assert.That(app.GetComponent<UIDocument>().rootVisualElement.Q<Button>("physics-spike").text,Does.Contain("P2"));
+        }
+        [UnityTest] public IEnumerator CampaignHeader_RecordsEffectiveFastMotionThresholdAndItsP1Scope()
+        {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
+            var section=Object.FindFirstObjectByType<SpikeSection>();section.Begin();
+            for(int i=0;i<120&&Field(section,"run")==null;i++)yield return null;
+            Assert.That(Field(section,"run"),Is.Not.Null);section.CancelRun("test output");
+            Assert.That(section.LastReport,Does.Contain("fastMotionThreshold=0.01"));Assert.That(section.LastReport,Does.Contain("fastMotionThreshold relevante solo para P1"));
+        }
         [UnityTest] public IEnumerator Completion_SaveFailureStillShowsReportAndRecoversHost()=>SaveFailure(false);
         [UnityTest] public IEnumerator Cancellation_SaveFailureStillShowsReportAndRecoversHost()=>SaveFailure(true);
         [UnityTest] public IEnumerator FocusLoss_RobustnessWaitsAndResumes_RecordsTwoInterruptions()

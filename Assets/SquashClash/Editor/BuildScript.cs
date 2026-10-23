@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Globalization;
 using System.Text;
 using SquashClash.Core.Diagnostics;
 using UnityEditor;
@@ -35,6 +36,10 @@ namespace SquashClash.EditorTools
                     builtAtUtc = DateTime.UtcNow.ToString("O"),
                     unityVersion = Application.unityVersion
                 };
+                var projectPhysics = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/DynamicsManager.asset")[0]);
+                info.projectPhysics = "EnhancedDeterminism=" + projectPhysics.FindProperty("m_EnableEnhancedDeterminism").boolValue +
+                    "; fastMotionThreshold=" + projectPhysics.FindProperty("m_FastMotionThreshold").floatValue.ToString("R",CultureInfo.InvariantCulture) +
+                    "; bounceThreshold=" + UnityEngine.Physics.bounceThreshold.ToString("R",CultureInfo.InvariantCulture) + "; Unity=" + Application.unityVersion;
                 const string metadataPath = "Assets/SquashClash/Runtime/Resources/BuildInfo.json";
                 var json = JsonUtility.ToJson(info, true);
                 Directory.CreateDirectory(Path.GetDirectoryName(metadataPath));
