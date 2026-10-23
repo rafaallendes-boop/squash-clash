@@ -1,6 +1,6 @@
 # T4.5 / I4d — P2 analítico y comparación con P1
 
-Estado, 2026-10-23: **implementación y regresión GREEN; experimentos completos de P2 en EditMode y PlayMode; build dev 557d3ff instalada, campaña nativa y entrega final pendientes**. Rama `firstball/i4d-p2-analytic`, PR de física propia. P1 sigue como respaldo; backend definitivo pendiente del gate con datos de P2. Sin elección, congelación/promoción, spec modificada ni I5. No se fusiona esta entrega por cuenta propia.
+Estado, 2026-10-23: **entrega técnica completa para revisión de Claude y decisión del PO; I4d abierto**. Regresión GREEN, experimentos completos EditMode/PlayMode y una campaña nativa P2 auditada, todos los criterios de gate de P2 en Pass. Rama `firstball/i4d-p2-analytic`, PR de física propia. P1 sigue como respaldo; backend definitivo pendiente del gate con datos de P2. Sin elección, congelación/promoción, spec modificada ni I5. No se fusiona esta entrega por cuenta propia.
 
 ## Autorización y contrato
 
@@ -32,43 +32,47 @@ Condiciones C17 del editor: un proceso Unity a la vez, worktree propio, activida
 
 El primer intento EditMode produjo **0 tests** y ningún informe: rechazado, no cuenta como completo. El ensamblado de experimentos original era PlayMode; se añadió una entrada exclusiva Editor que llama al mismo método. Verificado en código instalado Unity Test Framework 1.6.0 y en la [documentación oficial de Unity sobre ensamblados EditMode](https://docs.unity.com/en-us/engine/6000.7/manual/programming-environment/test-framework-introduction/getting-started/edit-mode-vs-play-mode-tests). La ejecución válida posterior 1/1 se conserva aparte.
 
-## Campaña nativa P2 pendiente
+## Única campaña nativa P2 — completa y auditada
 
-Autorizada una campaña, después de los experimentos del editor. El botón **«Prueba física P2»** selecciona P2 solo para el experimento; host normal/escenarios visuales siguen con P1, sin cambiar catálogo o preset. Se conserva liberación/restauración del host y la política de foco/térmico aprobada. Una cancelación se reporta INCOMPLETO, incluso antes de crear runner.
+Build **0.1.0+557d3ff dev**, variante **analytic/r2-20261023**, configuración **c86243b15a97**, seed **20261020**. Informe **P2-20261023-204715-409**, UTC **20:47:02.4840920Z → 20:47:15.4061240Z** del 2026-10-23: 17 fijos +10.000 S8 +36 S8d, **10.053 lanzamientos**, 18 criterios únicos con cobertura cerrada, cero no evaluables. [Informe íntegro](../validation/evidence/physics-spike-P2/iphone-557d3ff-P2-20261023-204715-409.md), [auditoría con 200 muestras y condiciones](../validation/evidence/2026-10-23-i4d-p2-native-run.json). Archivo **16.649 bytes**, SHA-256 `4a350b411f348c00d43aaf4f08704e78b0536c5269f6b11e3eb65c1b56472b99`.
 
-La próxima build dev incorpora ProjectPhysics en BuildInfo desde el asset efectivo de exportación y lo imprime en el encabezado, incluido **fastMotionThreshold**, marcado **relevante solo para P1**. La fábrica P2 usa el bounceThreshold efectivo de runtime. No se afirma getter runtime de fastMotionThreshold. Las 200 muestras C17 se guardan en el mismo archivo `P2-…md` y permiten recalcular estadísticas tras recuperarlo.
+El PO confirmó término («Listo. Prueba completada») y condiciones («SI, al 80% y todo según lo solicitado»): teléfono físico, **batería inicial 80 %**, No molestar, bajo consumo desactivado, sin funda, sin capturas/duplicación/devicectl/otras herramientas durante ejecución. No hubo herramientas del agente hasta el aviso de término. **Térmico nominal al inicio, al iniciar C17 y al final; cero interrupciones de foco.** Recuperación de Documents/spike posterior; hubo errores de conexión antes de recuperar el archivo, sin nueva ejecución ni instalación. El térmico de C17 sigue siendo informativo, sin atribución causal o umbral nuevo.
 
-Antes de instalar: export limpio, no Development, Release ARM64 firmado, metadata/perfil verificados y prod sin DevPanel/puente nativo. Renovar perfil si la instalación ocurre el 27 de octubre o después, sin cambiar herramientas. PO ejecuta con teléfono físico, No molestar, batería ≥80 %, bajo consumo apagado, sin funda y térmico nominal al inicio; sin capturas/duplicación/devicectl/herramientas durante ejecución. Recuperar Documents/spike solo tras aviso de término; auditar 18 filas/hash/config/variante/200 muestras/térmico/foco. C17 mantiene **p95 ≤1 ms**, Fail si incumple. No se repite I4b.
+**C17 Pass: p95 0,011400 ms ≤1 ms**, 20 calentamientos descartados y **200 muestras individuales persistidas**. Mediana **0,008600 ms**, p99 **0,127200 ms**, máximo **0,158700 ms**. Recalculados desde las muestras finitas en orden de adquisición: mediana como promedio central, p95 rango 190 y p99 rango 198 (nearest rank); coinciden con el encabezado a seis decimales. No se compara rendimiento del editor con nativo.
 
-## Comparación de 18 criterios — estado parcial
+**Los 11 criterios de gate nativos pasan:** C1–C8, C10, C11 y C17. Los otros siete son informativos, no aprobaciones añadidas. C3 0/1.701, C7 0/18.797 con 1.235 no aplicables y NE=0; C10 máximo **0,0009536743 mm**, C11 0/6. C14 tope 4 configurable, máximo 3 contactos no persistentes/paso y **0 topes alcanzados**. C15 Exact, S4 mismo paso 22 y S6 mismo paso 24. C16 penetración máxima **1,86264515E−05 mm**, 1.217.571 muestras persistentes. C13 40/40, mínimo 1 y mediana **1,00529957**. Se conservan las diferencias informativas frente a editor (mediana C13 1,00529981; persistentes C16 1.217.572); C5–C7 no exigen igualdad entre plataformas.
 
-P1 corresponde a su campaña nativa final bajo condiciones aprobadas; P2 editor a sus dos experimentos completos. Las columnas son resultados separados; no son comparaciones bit a bit entre backends/plataformas. **Falta P2 nativo para completar la entrega.** [P1 final](../validation/evidence/2026-10-23-i4b-native-compliant-run.json).
+Encabezado nativo verificado: **EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1**, fastMotionThreshold marcado relevante solo para P1 y bounceThreshold efectivo P2=0.1. Fuente de fastMotionThreshold: configuración de export capturada en BuildInfo embebido, sin afirmar getter runtime. Quedan resueltas en esta campaña las dos observaciones menores diferidas de I4b; I4b no se repitió.
+
+## Comparación de 18 criterios — completa
+
+P1 corresponde a su campaña nativa final bajo condiciones aprobadas; P2 editor a sus dos experimentos completos y P2 nativo a la única campaña autorizada. Las columnas son resultados separados; no son comparaciones bit a bit entre backends/plataformas. El rendimiento editor sigue siendo informativo y no se compara con nativo. [P1 final](../validation/evidence/2026-10-23-i4b-native-compliant-run.json).
 
 | Criterio | P1 nativo final | P2 editor (ambos modos) | P2 nativo |
 |---|---|---|---|
-| C1 | Pass, 0 cruces/10.053 | Pass, 0 cruces/10.053 | Pendiente |
-| C2 | Pass, 67.737 evaluados | Pass, 67.825 evaluados | Pendiente |
-| C3 | Fail, 5/3.501 | Pass, 0/1.701 | Pendiente |
-| C4 | Pass, 0/4 fallos | Pass, 0/4 fallos | Pendiente |
-| C5 | Pass, 0/117 | Pass, 0/117 | Pendiente |
-| C6 | Pass, 0/10.017 | Pass, 0/10.017 | Pendiente |
-| C7 | Pass, 0/18.753; NA 1.279 | Pass, 0/18.797; NA 1.235 | Pendiente |
-| C8 | Pass, 0/2 | Pass, 0/2 | Pendiente |
-| C9 | Info, 0/2 | Info, 0/2 | Pendiente |
-| C10 | Fail, máx. 13,6164722 mm | Pass, máx. 0,0009536743 mm | Pendiente |
-| C11 | Fail, 3/6 | Pass, 0/6 | Pendiente |
-| C12 | Info, 11 medidos | Info, 11 medidos | Pendiente |
-| C13 | NotEvaluated, 35/36 | Info, 40/40 | Pendiente |
-| C14 | Info, máx. 2; tope no configurable | Info, máx. 3; tope 4, 0 alcanzados | Pendiente |
-| C15 | Info, Estimated; pasos distintos | Info, Exact; mismo paso S4/S6 | Pendiente |
-| C16 | Info, 11,3993931 mm | Info, 1,86264515E−05 mm | Pendiente |
-| C17 | **Fail, p95 14,3221 ms** | Info, sin extrapolar | Pendiente |
-| C18 | Info, RunsInEditMode=False | Info, RunsInEditMode=True | Pendiente |
+| C1 | Pass, 0 cruces/10.053 | Pass, 0 cruces/10.053 | Pass, 0 cruces/10.053 |
+| C2 | Pass, 67.737 evaluados | Pass, 67.825 evaluados | Pass, 67.825 evaluados |
+| C3 | Fail, 5/3.501 | Pass, 0/1.701 | Pass, 0/1.701 |
+| C4 | Pass, 0/4 fallos | Pass, 0/4 fallos | Pass, 0/4 fallos |
+| C5 | Pass, 0/117 | Pass, 0/117 | Pass, 0/117 |
+| C6 | Pass, 0/10.017 | Pass, 0/10.017 | Pass, 0/10.017 |
+| C7 | Pass, 0/18.753; NA 1.279 | Pass, 0/18.797; NA 1.235 | Pass, 0/18.797; NA 1.235 |
+| C8 | Pass, 0/2 | Pass, 0/2 | Pass, 0/2 |
+| C9 | Info, 0/2 | Info, 0/2 | Info, 0/2 |
+| C10 | Fail, máx. 13,6164722 mm | Pass, máx. 0,0009536743 mm | Pass, máx. 0,0009536743 mm |
+| C11 | Fail, 3/6 | Pass, 0/6 | Pass, 0/6 |
+| C12 | Info, 11 medidos | Info, 11 medidos | Info, 11 medidos |
+| C13 | NotEvaluated, 35/36 | Info, 40/40 | Info, 40/40; mín. 1, mediana 1,00529957 |
+| C14 | Info, máx. 2; tope no configurable | Info, máx. 3; tope 4, 0 alcanzados | Info, máx. 3; tope 4, 0 alcanzados |
+| C15 | Info, Estimated; pasos distintos | Info, Exact; mismo paso S4/S6 | Info, Exact; mismo paso S4/S6 |
+| C16 | Info, 11,3993931 mm | Info, 1,86264515E−05 mm | Info, 1,86264515E−05 mm; 1.217.571 persistentes |
+| C17 | **Fail, p95 14,3221 ms** | Info, sin extrapolar | **Pass, p95 0,0114 ms** |
+| C18 | Info, RunsInEditMode=False | Info, RunsInEditMode=True | Info, RunsInEditMode=True |
 
-Tras recuperar la campaña nativa se completará esta comparación y se detendrá para Claude/PO. No se elige backend, congela/promueve variante/preset, modifica spec/umbrales o inicia I5.
+La evidencia nativa P1 conserva C3/C10/C11/C17 en Fail y C13 NotEvaluated; P2 pasa los criterios de gate evaluados en esta campaña. No se deduce identidad física con PhysX ni una elección de backend. Simplificaciones y semántica de simultáneos/tope declaradas arriba quedan para revisión de Claude con la adenda, sin ajustes posteriores a los resultados.
 
-## Preparación nativa completada — campaña pendiente
+## Build, entrega y detención
 
-Build **0.1.0+557d3ff dev instalada**, export limpio Release ARM64 firmado y metadata exacta verificada, perfil vigente comprobado antes de instalar, prod sin DevPanel/puente y herramientas intactas. Encabezado ProjectPhysics con fastMotionThreshold=0.01 capturado en BuildInfo embebido; P2 y persistencia de muestras comprobados en IL2CPP. [Comprobación previa](../validation/2026-10-23-i4d-native-preflight.md), [evidencia](../validation/evidence/2026-10-23-i4d-native-build.json).
+Build **0.1.0+557d3ff dev instalada**, export limpio Release ARM64 firmado, Player no Development, metadata exacta verificada, perfil vigente comprobado inmediatamente antes de instalar; prod nuevo sin DevPanel/puente y herramientas intactas. [Comprobación previa y resultado](../validation/2026-10-23-i4d-native-preflight.md), [evidencia de build](../validation/evidence/2026-10-23-i4d-native-build.json). El lanzamiento por herramientas fue rechazado por Locked; el PO abrió manualmente y el informe completo verifica el arranque de la build correcta. Física y mediciones no cambiaron desde los experimentos del editor.
 
-iOS rechazó el lanzamiento por pantalla bloqueada; apertura manual del PO pendiente. No hubo campaña nativa P2 por herramientas. [PR #6 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/6), sin fusionar; falta recuperar la única campaña bajo condiciones aprobadas y completar comparación, después detenerse para Claude/PO.
+**Se detiene aquí para revisión de Claude y decisión del PO. I4d no cerrado; [PR #6 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/6), sin fusionar.** Backend definitivo pendiente del gate posterior; P1 sigue de respaldo. Sin congelación/promoción de variante/preset, cambios de escenarios/umbrales/criterios/spec ni inicio de I5. No se solicita otra campaña.

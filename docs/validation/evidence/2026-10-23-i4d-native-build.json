@@ -53,7 +53,7 @@
     "nativeThermalBridge": false
   },
   "installed": true,
-  "campaignComplete": false,
+  "campaignComplete": true,
   "experimentBackend": "P2-Analytic",
   "experimentVariant": "analytic/r2-20261023",
   "embeddedP2ExperimentVerified": true,
@@ -61,8 +61,9 @@
     "Assets/SquashClash/Core/Simulation/AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
     "Assets/SquashClash/Core/Simulation/AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab"
   },
-  "launchVerified": false,
-  "launchStatus": "iOS rechazó lanzamiento por pantalla bloqueada; apertura manual por PO pendiente. Ninguna campaña nativa P2 iniciada por herramientas.",
-  "campaignStatus": "Pendiente: una campaña P2 bajo condiciones aprobadas. Recuperar informe solo tras aviso PO de término.",
-  "pr": "https://github.com/rafaallendes-boop/squash-clash/pull/6"
+  "launchVerified": true,
+  "launchStatus": "Apertura manual por PO; arranque comprobado por informe completo P2-20261023-204715-409, build 0.1.0+557d3ff dev. El intento anterior por herramientas fue rechazado por Locked y no se reescribe como exitoso.",
+  "campaignStatus": "Única campaña P2 completa y auditada, batería inicial 80% y condiciones aprobadas confirmadas por PO. 18 criterios, 200 muestras C17; gate Pass, p95 0.0114 ms; térmico nominal inicial/benchmark/final, foco 0.",
+  "pr": "https://github.com/rafaallendes-boop/squash-clash/pull/6",
+  "campaignEvidence": "docs/validation/evidence/2026-10-23-i4d-p2-native-run.json"
 }
