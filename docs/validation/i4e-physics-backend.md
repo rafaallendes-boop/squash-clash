@@ -1,6 +1,6 @@
 # I4e — validación del backend por defecto
 
-Estado: código y regresión completos; build dev 8fb5d0c instalada, arranque nativo P2 verificado por consola; observación visual breve del PO pendiente. I4e abierto, sin merge. [Decisión de backend y comparación de 18 criterios](../reviews/2026-10-23-first-ball-physics-backend-decision.md).
+Estado: **entrega completa para revisión de Claude**; código y regresión completos, build dev 8fb5d0c instalada, arranque nativo P2 verificado por consola y comprobación visual breve confirmada por el PO. **I4e abierto, [PR #7 lista para revisión](https://github.com/rafaallendes-boop/squash-clash/pull/7), sin fusionar.** [Decisión de backend y comparación de 18 criterios](../reviews/2026-10-23-first-ball-physics-backend-decision.md).
 
 ## TDD y regresión
 
@@ -22,6 +22,6 @@ Instalación y lanzamiento aceptados. Captura corta de consola, cerrada expresam
 [SquashClash] ball ready backend=P2-Analytic visualColliders=0 localPhysicsScenes=0 config=f6a394a12daf predictedSteps=166
 ```
 
-Cero marcadores de excepciones en la ventana de arranque observada. Se solicitó al PO abrir la app y pulsar «Lanzar» en vista normal, confirmar arranque y rebote; **observación visual pendiente**. No se pulsó ni ejecutó la campaña física. No se toma esta comprobación como aceptación completa: esa prueba queda para T7.1.
+Cero marcadores de excepciones en la ventana de arranque observada. Se solicitó al PO abrir la build instalada y pulsar «Lanzar» en vista normal, confirmar arranque y rebote. Respondió **«si, funciona lanzar»**: comprobación corta confirmada en el contexto de esa solicitud. No se pulsó ni ejecutó la campaña física. No se toma esta comprobación como aceptación completa: esa prueba queda para T7.1.
 
-Entrada de spec preparada en el documento de decisión para T7.3, sin escribirla ni modificar la spec. I5 no autorizado. Al completar la observación breve, entregar PR de I4e y detenerse para revisión de Claude; no fusionar por cuenta propia.
+Entrada de spec preparada en el documento de decisión para T7.3, sin escribirla ni modificar la spec. I5 no autorizado. **Se entrega PR #7 y se detiene para revisión de Claude**, sin cerrar I4e ni fusionar por cuenta propia. No se atribuye a esta confirmación una aprobación de Claude de I4e.

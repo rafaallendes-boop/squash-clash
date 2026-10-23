@@ -59,7 +59,7 @@
   "defaultPresetSha256": "9cb2cff13972b2f16725beaf6aa2d45bcdc31263f0f102e56bb927495de23e8a",
   "purpose": "Verificación corta de integración I4e; no campaña ni aceptación completa T7.1.",
   "launchVerified": true,
-  "visualBounceVerified": false,
+  "visualBounceVerified": true,
   "sourceHashes": {
     "Assets/SquashClash/Core/Simulation/AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
     "Assets/SquashClash/Core/Simulation/AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
@@ -80,7 +80,13 @@
     ],
     "exceptionMarkers": 0,
     "consoleSha256": "808b907b2b27181553197874f5f2477efe7846224f421ce6159f428a5721e490",
-    "scope": "Arranque corto con consola; sin ejecutar campaña. Observación visual por PO pendiente. La captura de consola se cerró al terminar la comprobación."
+    "scope": "Arranque corto con consola, sin ejecutar campaña; captura cerrada tras la comprobación. Comprobación visual posterior confirmada por el PO."
   },
-  "visualCheckStatus": "Pendiente de confirmación PO en vista normal; solicitud breve, sin campaña."
+  "visualCheckStatus": "Comprobación corta completada: PO responde «si, funciona lanzar» a la solicitud de abrir la build instalada y confirmar arranque/rebote en vista normal.",
+  "visualCheck": {
+    "source": "Respuesta del PO en esta conversación",
+    "answer": "si, funciona lanzar",
+    "requestContext": "Build 0.1.0+8fb5d0c dev instalada; abrir Squash Clash, pulsar Lanzar en vista normal y confirmar que la app abre y la pelota rebota. No pulsar Prueba física P2.",
+    "scope": "Confirmación de la comprobación corta de integración; no aceptación completa T7.1, nueva campaña, aprobación de Claude de I4e ni autorización de merge."
+  }
 }
