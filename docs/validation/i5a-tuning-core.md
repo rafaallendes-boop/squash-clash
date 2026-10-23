@@ -1,6 +1,6 @@
 # I5a — validación de T5.1–T5.2
 
-**Entrega completa para revisión de Claude**, rama firstball/i5a-tuning-core, incremento abierto y sin fusionar. [Informe](../reviews/2026-10-23-first-ball-i5a-tuning-core.md), [TDD y regresión](evidence/2026-10-23-i5a-tuning-core-tests.json).
+**Entrega completa para revisión de Claude**, rama firstball/i5a-tuning-core, [PR #8](https://github.com/rafaallendes-boop/squash-clash/pull/8), incremento abierto y sin fusionar. [Informe](../reviews/2026-10-23-first-ball-i5a-tuning-core.md), [TDD y regresión](evidence/2026-10-23-i5a-tuning-core-tests.json).
 
 - Nueve ciclos de comportamiento RED válido→GREEN; **250/250 EditMode y 92/92 PlayMode**, cero fallos/omitidos, XML frescos y sin errores CS.
 - TuningState inmediato/pendiente, guardado de Visible, Overlay sobre Defaults; Store atómico, selección activa, corrupción y directorio de solo lectura real en macOS.

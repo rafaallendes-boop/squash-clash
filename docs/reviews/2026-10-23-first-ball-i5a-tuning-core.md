@@ -1,6 +1,6 @@
 # I5a / T5.1–T5.2 — estado de edición, presets y diagnóstico
 
-Estado, 2026-10-23: **entrega completa para revisión de Claude; I5a abierto**. Rama `firstball/i5a-tuning-core`, PR para revisión de Claude; I5a abierto. Al entregar el informe se detiene, sin fusionar ni empezar I5b/T5.3.
+Estado, 2026-10-23: **entrega completa para revisión de Claude; I5a abierto**. Rama `firstball/i5a-tuning-core`, [PR #8 lista para revisión de Claude](https://github.com/rafaallendes-boop/squash-clash/pull/8); I5a abierto. Al entregar el informe se detiene, sin fusionar ni empezar I5b/T5.3.
 
 ## Cierre previo y autorización
 
