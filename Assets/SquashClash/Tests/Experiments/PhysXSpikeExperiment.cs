@@ -33,9 +33,14 @@ namespace SquashClash.Experiments
             }
             var config = EffectiveConfig.From(PresetCodec.LoadDefault(Resources.Load<TextAsset>("DefaultPreset").text));
             var factory = new PhysXBallSimulationFactory(variant);
+            string fastMotionThreshold = "unavailable";
+#if UNITY_EDITOR
+            fastMotionThreshold = new UnityEditor.SerializedObject(UnityEditor.AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/DynamicsManager.asset")[0]).FindProperty("m_FastMotionThreshold").floatValue.ToString("R", System.Globalization.CultureInfo.InvariantCulture);
+#endif
             var run = new SpikeRun(factory, config.Physics, config.Court, new SpikeOptions {
                 Variant = name + "/" + variant.Name, Build = "editor/" + (Environment.GetEnvironmentVariable("SQUASH_SPIKE_COMMIT") ?? "unknown"), ConfigHash = config.Hash,
-                ProjectPhysics = "EnhancedDeterminism=" + (name != "no-ed") + "; bounceThreshold=" + UnityEngine.Physics.bounceThreshold + "; Unity=" + Application.unityVersion
+                ProjectPhysics = "EnhancedDeterminism=" + (name != "no-ed") + "; fastMotionThreshold=" + fastMotionThreshold +
+                    "; bounceThreshold=" + UnityEngine.Physics.bounceThreshold + "; Unity=" + Application.unityVersion
             });
             PredictionBenchmarkRun benchmark = null;
             try

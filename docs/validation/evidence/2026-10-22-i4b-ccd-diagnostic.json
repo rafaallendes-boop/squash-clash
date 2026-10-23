@@ -20,5 +20,23 @@
     "restoreOriginalThreshold": "3/3 fail again; config and adapter remain original in diagnostic commit"
   },
   "firstCompileAttempt": "Assert.Multiple unavailable in bundled NUnit; fresh XML contract rejected run. Corrected test API; not counted as RED.",
-  "thresholdIsAcceptanceCriterion": false
+  "thresholdIsAcceptanceCriterion": false,
+  "diagnosticCommit": "8a1304d",
+  "correction": {
+    "kind": "P1 project configuration, not adapter trajectory algorithm",
+    "fastMotionThresholdMetres": 0.01,
+    "playmode": {
+      "total": 48,
+      "passed": 48,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "93c870608b3699b220d1e87db6cc3a2e9f9be1bd2716c7c7f3f595b52dea653e"
+    },
+    "traces": {
+      "ccd-minimal-default.csv": "0d02584929a969240a48b24f3b8ddf3759da887c61108813a7da2db2457ec76a",
+      "ccd-minimal-local.csv": "0d02584929a969240a48b24f3b8ddf3759da887c61108813a7da2db2457ec76a",
+      "ccd-s1-baseline.csv": "a4eb6d9b0a47a1d13f358e2f968f6b2b5c9c938d059906d53ee6c9ac8fa70a6a",
+      "ccd-s1-speculative.csv": "6573c3439e5fe893588aee5e48834c40d160bf9c307054ccda411fb6f00c7087"
+    }
+  }
 }
