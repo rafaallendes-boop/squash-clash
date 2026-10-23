@@ -177,7 +177,7 @@ namespace SquashClash.DevPanel
             try
             {
                 Directory.CreateDirectory(reportDirectory);
-                var path = Path.Combine(reportDirectory, "P1-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff") + ".md");
+                var path = Path.Combine(reportDirectory, (result.Backend == ExperimentBackend ? "P2-" : "P1-") + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff") + ".md");
                 File.WriteAllText(path, LastReport); LastReportPath = path; outputs.Add("Informe guardado.");
             }
             catch (Exception e) { outputs.Add("No se pudo guardar: " + e.GetType().Name); Debug.LogWarning("[SquashClash] " + outputs[outputs.Count - 1]); }

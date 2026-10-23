@@ -36,6 +36,7 @@ namespace SquashClash.Runtime.Tests
         {
             yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
             var section=Object.FindFirstObjectByType<SpikeSection>();section.Begin();section.CancelRun("early cancellation");
+            Assert.That(Path.GetFileName(section.LastReportPath),Does.StartWith("P2-"));
             Assert.That(section.LastReport,Does.Contain("Backend: P2-Analytic; variante: analytic/r2-20261023"));Assert.That(section.LastReport,Does.Contain("fastMotionThreshold=0.01"));Assert.That(section.LastReport,Does.Contain("INCOMPLETO"));
         }
         [UnityTest] public IEnumerator Campaign_UsesP2WithoutSelectingRuntimeBackend()
