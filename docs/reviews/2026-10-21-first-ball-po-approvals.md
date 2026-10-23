@@ -203,3 +203,21 @@ Se continúa el diagnóstico dentro de T4.4 añadiendo contexto de ciclo de vida
 **Diagnóstico nativo preparado y verificado:** `d14df6f`, PlayMode45/45, Core sin cambios conserva EditMode170/170; exports nuevos dev/prod correctos, Xcode27.1 ReleaseARM64 firmado y metadata limpia verificados. Instalación inicial falló por conexión CoreDevice inválida; reintento correcto. El PO confirmó «Sí, muestra d14df6f dev y está conectado» y ejecutó la interrupción corta solicitada, respondiendo «Informe INCOMPLETO, copiado y guardado».
 
 Archivo recuperado: 8,320 s, nominal→nominal, contexto nativo presente (Unity foco=false; UIKit active; temporizador desactivado), S8-109 y C17=0. Es una comprobación deliberada de diagnóstico, no aceptación de física ni un intento completo. UIKit active también aparece en esa salida real a Inicio y no se usa para declarar falso el evento anterior. Causa de la cancelación larga sin confirmar. I4b sigue parcial, PR #4 borrador, sin fusionar; I4c/P2/I5+ no autorizados.
+
+
+## I4b — revisión de Claude, diagnóstico CCD y decisiones del PO (2026-10-22)
+
+Revisión de Claude comunicada por el PO, no una GitHub Review atribuida automáticamente. PR #4 sigue **borrador, sin fusionar**. Se pausan campañas largas del iPhone hasta diagnosticar CCD y aplicar las decisiones siguientes; después se repiten las cinco variantes del editor conservando los resultados actuales como históricos. Entregar diagnóstico/correcciones/editor y **detenerse para revisión de Claude antes de volver al iPhone**. I4c, P2/T4.5 e I5+ siguen sin autorizar.
+
+El PO pide trazas de S1 pasos 30–36 (baseline y speculative), reproducción PlayMode mínima con esfera de radio 20 mm a 25 m/s, BoxCollider de espesor 1 m, 120 Hz y ContinuousDynamic, comparando escena local/manual con escena por defecto, RED antes de corregir. Identificar causa con fuente oficial Unity/PhysX; separar commits del diagnóstico y la corrección. No tocar escenarios, umbrales, medidas, preset ni variantes. Si persisten C5–C7, instrumentar la primera diferencia y comparar Reset tras muchos contactos con instancia nueva; **no cambiar Reset sin evidencia RED**.
+
+Decisiones aprobadas, con TDD RED→GREEN:
+
+- **Foco:** `pause(true)`/segundo plano cancela. `focus(false)` en robustez suspende el avance, registra UTC, duración, fase/progreso y contexto de ciclo de vida, y continúa al volver el foco. A los 60 s sin recuperación cancela como INCOMPLETO. En C17, `focus(false)` sigue cancelando. El informe cuenta las interrupciones; un intento con interrupciones solo es válido si termina completo.
+- **C7:** checkpoint ausente por salida superior legítima aprobada o fin del horizonte: NotApplicable, fuera de población. Ausencia por cruce, estado no finito u otra anomalía: NotEvaluable. Informar Measured/NotApplicable/NotEvaluable por separado, también en las cinco variantes regeneradas. No se cambia el umbral de igualdad ni el carácter decisorio de C7.
+- **Térmico:** registrar al inicio del benchmark, informativo; no añade un umbral ni convierte un intento incompleto en válido.
+- **Firma:** renovar antes de la próxima instalación si ocurre el **2026-10-27 o después**; comprobar siempre vigencia antes de instalar. Expiración actual: **2026-10-28T14:59:31Z**. Sustituye el plazo operativo anterior del 28 de octubre. No cambiar Xcode ni otras herramientas.
+
+Clasificación **preliminar**, pendiente del diagnóstico y nuevas campañas: C1 adaptador/configuración probable; C10/C11/C13 y casos grandes C3 posibles consecuencias de C1; C3 residual en reposo posible límite del motor a reevaluar; C5–C7 indeterminados; no evaluables C7 sujetos a la definición aprobada arriba. No se registra clasificación causal final ni elección de backend.
+
+Próximo intento nativo, solo tras correcciones/editor y revisión de Claude: teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda y térmico nominal al inicio. **Sin capturas, devicectl u otras interacciones de herramientas durante la ejecución**; recuperar informe al terminar. Esta autorización no inicia ese intento ahora.

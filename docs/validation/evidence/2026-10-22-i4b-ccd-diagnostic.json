@@ -1,0 +1,24 @@
+{
+  "sourceBase": "b61fd017622303fe7ca7e0b87284a5935ddb4c6f",
+  "unity": "6000.3.27f1",
+  "before": {
+    "testTotal": 3,
+    "passed": 0,
+    "failed": 3,
+    "settingsFastMotionThreshold": "3.4028235e+38",
+    "traces": {
+      "ccd-minimal-default.csv": "97febe8771140fea2603d38d860382c8a6ceef9a48f3ccb79c60aea9135da8aa",
+      "ccd-minimal-local.csv": "97febe8771140fea2603d38d860382c8a6ceef9a48f3ccb79c60aea9135da8aa",
+      "ccd-s1-baseline.csv": "5eb794cc405f51150efaf5e00d731ed6215db427daba3205b75599995b720eae",
+      "ccd-s1-speculative.csv": "6573c3439e5fe893588aee5e48834c40d160bf9c307054ccda411fb6f00c7087"
+    }
+  },
+  "hypotheses": {
+    "removeFreezeRotation": "2/2 still fail, rejected",
+    "oneStepPerFrame": "2/2 still fail, rejected",
+    "onlyFastMotionThreshold001": "3/3 passed; raw contact step2 center min0.019999966; S1 contact step33 z0.02",
+    "restoreOriginalThreshold": "3/3 fail again; config and adapter remain original in diagnostic commit"
+  },
+  "firstCompileAttempt": "Assert.Multiple unavailable in bundled NUnit; fresh XML contract rejected run. Corrected test API; not counted as RED.",
+  "thresholdIsAcceptanceCriterion": false
+}
