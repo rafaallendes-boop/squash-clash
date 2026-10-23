@@ -70,6 +70,7 @@ namespace SquashClash.Core.Tests.Spike {
    var records=run.Result.Details.FindAll(v=>v.StartsWith(id+" clasificación:"));
    Assert.That(failures,Is.GreaterThan(0));Assert.That(records.Count,Is.EqualTo(failures));
    foreach(var record in records)Assert.That(record,Does.Contain(orderOnly?"solo orden de contactos":"estado/contactos distintos"));
+   if(!orderOnly)Assert.That(run.Result.Details,Has.Some.Contains(id+" valores distintos:"));
    Assert.That(row.Verdict,Is.EqualTo(Verdict.Fail),"classification never changes the criterion");
   }
   [Test] public void C16_ReportsProvenance_WithoutChangingMaximum(){
@@ -77,9 +78,15 @@ namespace SquashClash.Core.Tests.Spike {
    var row=run.Result.Criteria.Find(v=>v.Id=="C16");
    Assert.That(row.Measured,Does.Contain("penetración máxima=10"));
    Assert.That(run.Result.Details,Has.Some.Contains("C16 máximo: S1 robustez; paso=1; superficie=Floor; tipo=impacto"));
+   Assert.That(run.Result.Details,Has.Some.Contains("siguiente=paso=2"));
+  }
+  [Test] public void Divergence_DifferentTermination_DistinguishesLengthFromNumericStateDifference(){
+   var run=Run(new FakeFactory{DifferentContactTermination=true});while(!run.Step(2)){}
+   Assert.That(run.Result.Details,Has.Some.Contains("C6 valores distintos: S1; prefijoEstadosBitsIgual=True; primerEstadoNuméricoDiferente=-1"));
+   Assert.That(run.Result.Criteria.Find(v=>v.Id=="C6").Verdict,Is.EqualTo(Verdict.Fail));
   }
   private sealed class FakeFactory:IBallSimulationFactory {
-   public string Name=>"fake";public int LiveInstances{get;private set;}public int Peak,Resets;public double DelayMs;public bool WarmupDelay,ThrowAtStep,InvalidState,TwoSurfaces,AlternateSurfaces,PositiveVelocities,FirstRatioUnavailable,OverTop,NoContacts,CrossesWall,BadSteps,InvalidContact,DivergentResets,ReverseContactOrder,PenetratesFloor;
+   public string Name=>"fake";public int LiveInstances{get;private set;}public int Peak,Resets;public double DelayMs;public bool WarmupDelay,ThrowAtStep,InvalidState,TwoSurfaces,AlternateSurfaces,PositiveVelocities,FirstRatioUnavailable,OverTop,NoContacts,CrossesWall,BadSteps,InvalidContact,DivergentResets,ReverseContactOrder,PenetratesFloor,DifferentContactTermination;
    public IBallSimulation Create(PhysicsParams p,CourtDimensions d){LiveInstances++;Peak=Math.Max(Peak,LiveInstances);return new Fake(this);}
    private sealed class Fake:IBallSimulation {
     private readonly FakeFactory owner;private BallState state;private bool disposed;private int steps,lastReset;
@@ -95,6 +102,7 @@ namespace SquashClash.Core.Tests.Spike {
      if(owner.DivergentResets)state.Position.z=lastReset%2==0?5.000001f:5f;
      if(owner.ReverseContactOrder){contacts.Add(new ContactEvent(SurfaceId.LeftWall,Vector3.zero,Vector2.zero,Vector3.left,state.Step,float.NaN,ContactTiming.StepOnly,Vector3.right,false));if(lastReset%2==0)contacts.Reverse();}
      if(owner.PenetratesFloor)state.Position.y=.01f;
+     if(owner.DifferentContactTermination&&steps==2&&lastReset%2==0)contacts[0]=new ContactEvent(SurfaceId.Floor,new Vector3(3,0,5),new Vector2(3,5),Vector3.up,state.Step,.001f,ContactTiming.Exact,Vector3.down,true);
      if(owner.OverTop)state.Position=new Vector3(3,7,5);
      if(owner.CrossesWall&&steps==1)state.Position=new Vector3(-1,1,5);
      if(owner.BadSteps)state.Step++;

@@ -246,11 +246,13 @@ namespace SquashClash.Core.Spike
         }
         private static string ContactsText(Trajectory t, long step) => "[" + string.Join("; ", t.Contacts.Where(c => c.Step == step).Select(c =>
             $"{c.Surface}@{c.Step} persistent={c.Persistent}, {c.Timing}, t={F(c.TimeInStep)}, p={c.Point.ToString("R", CultureInfo.InvariantCulture)}, n={c.Normal.ToString("R", CultureInfo.InvariantCulture)}, approach={c.ApproachVelocity.ToString("R", CultureInfo.InvariantCulture)}")) + "]";
-        private static string DifferenceClassification(string id, string scenario, Trajectory a, Trajectory b, int first)
+        private string DifferenceClassification(string id, string scenario, Trajectory a, Trajectory b, int first)
         {
-            bool statesEqual = a.States.Count == b.States.Count;
-            for (int i = 0; statesEqual && i < a.States.Count; i++)
-                statesEqual = StateText(a, i) == StateText(b, i); // Includes Step and all six exact float bit patterns.
+            int firstNumericDifference = -1;
+            for (int i = 0; i < Math.Min(a.States.Count, b.States.Count); i++)
+                if (StateText(a, i) != StateText(b, i)) { firstNumericDifference = i; break; }
+            bool prefixEqual = firstNumericDifference < 0;
+            bool statesEqual = prefixEqual && a.States.Count == b.States.Count;
             // Multiset of FULL immutable event values, retaining multiplicity and exact float bits.
             // No sorting/mutation of either trajectory, no reuse in TrajectoriesBitwiseEqual/C7.
             var counts = new Dictionary<string, int>();
@@ -263,6 +265,12 @@ namespace SquashClash.Core.Spike
             }
             contactsEqual &= counts.Values.All(n => n == 0);
             long step = first < a.States.Count ? a.States[first].Step : first < b.States.Count ? b.States[first].Step : -1;
+            if (!statesEqual || !contactsEqual) {
+                int context = firstNumericDifference < 0 ? first : firstNumericDifference;
+                Result.Details.Add($"{id} valores distintos: {scenario}; prefijoEstadosBitsIgual={prefixEqual}; primerEstadoNuméricoDiferente={firstNumericDifference}; " +
+                    $"estados={a.States.Count}/{b.States.Count}; previo A={StateText(a,context-1)}; previo B={StateText(b,context-1)}; A={StateText(a,context)}; B={StateText(b,context)}; " +
+                    "secuenciaContactosCompletosBits A=[" + string.Join("; ", a.Contacts.Select(ContactKey)) + "]; B=[" + string.Join("; ", b.Contacts.Select(ContactKey)) + "]");
+            }
             return $"{id} clasificación: {scenario}; tipo={(statesEqual && contactsEqual ? "solo orden de contactos" : "estado/contactos distintos")}; " +
                 $"estadosBitsIguales={statesEqual}; multiconjuntoContactosCompletosIgual={contactsEqual}; primerPaso={step}; índice={first}; " +
                 $"checkpoint={a.States[0].Step}; estados={a.States.Count}/{b.States.Count}; contactos={a.Contacts.Count}/{b.Contacts.Count}";
@@ -285,7 +293,8 @@ namespace SquashClash.Core.Spike
                     string type = contacts.Any(c => !c.Persistent) ? "impacto" : contacts.Length > 0 ? "solo persistentes (reposo/contacto sostenido)" : "sin contacto reportado";
                     return $"C16 máximo: {Phase}; paso={s.Step}; superficie={faces[j]}; tipo={type}; " +
                         $"penetración={F(maximum * 1000)} mm; rapidez={F(s.Velocity.magnitude)} m/s; " +
-                        "previo=" + StateText(t, i - 1) + "; estado=" + StateText(t, i) + "; contactos=" + ContactsText(t, s.Step);
+                        "previo=" + StateText(t, i - 1) + "; estado=" + StateText(t, i) + "; contactos=" + ContactsText(t, s.Step) +
+                        "; siguiente=" + StateText(t, i + 1) + "; contactos siguientes=" + ContactsText(t, s.Step + 1);
                 }
             }
             throw new InvalidOperationException("Cannot locate measured C16 penetration maximum.");
