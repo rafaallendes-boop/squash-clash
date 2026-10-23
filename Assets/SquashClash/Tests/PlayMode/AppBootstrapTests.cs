@@ -3,6 +3,8 @@ using System.Linq;
 using NUnit.Framework;
 using SquashClash.Core.Config;
 using SquashClash.Core.Court;
+using SquashClash.Core.Simulation;
+using SquashClash.Core.Spike;
 using SquashClash.Runtime.App;
 using SquashClash.Runtime.Ball;
 using SquashClash.Runtime.Court;
@@ -16,10 +18,50 @@ namespace SquashClash.Runtime.Tests {
     public sealed class AppBootstrapTests {
         [UnitySetUp] public IEnumerator SetUp() {yield return PlayModeTestWorld.ClearApp();}
         [UnityTearDown] public IEnumerator TearDown() {yield return PlayModeTestWorld.ClearApp();}
+        [UnityTest] public IEnumerator Main_DefaultHostUsesP2ForGameAndPredictionAndBounces()
+        {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;
+            var app=AppBootstrap.Instance;app.Host.enabled=false;
+            app.GetComponent<ResumeOverlay>().Continue();app.Host.Launch(EffectiveConfig.From(app.Params));
+            var cfg=app.Config;
+            Assert.That(cfg.Backend,Is.EqualTo("P2-Analytic"));
+            Assert.That(cfg.Hash,Is.EqualTo(PresetCodec.LoadDefault(Resources.Load<TextAsset>("DefaultPreset").text).Hash));
+            Assert.That(Object.FindObjectsByType<SurfaceTag>(FindObjectsSortMode.None).Where(t=>t.GetComponent<BoxCollider>()!=null),Is.Empty,"P2 does not create PhysX simulation scenes.");
+            var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
+            Trajectory expected;
+            using(var simulation=factory.Create(cfg.Physics,cfg.Court))
+                expected=TrajectoryRunner.Run(simulation,Launcher.ToState(cfg.Launch,cfg.LaunchScale),cfg.Physics.StepHz*10,StopCondition.SecondFloorBounce,cfg.Court);
+            Assert.That(PhysicsMeasures.TrajectoriesBitwiseEqual(app.Host.Prediction,expected,out _),Is.True);
+            Assert.That(expected.Contacts,Is.Not.Empty);
+            Assert.That(expected.Contacts.All(c=>c.Timing==ContactTiming.Exact),Is.True);
+            int bounces=0;app.Host.ContactRaised+=c=>{if(c.Surface==SurfaceId.Floor&&!c.Persistent)bounces++;};
+            for(int i=0;i<1000&&app.Host.IsRunning;i++)app.Host.Advance(1.0/60);
+            Assert.That(bounces,Is.EqualTo(2));Assert.That(app.Host.IsRunning,Is.False);
+            Assert.That(app.Host.PredictionMatchesBitwise,Is.True);
+            Assert.That(app.Host.Current.Step,Is.EqualTo(expected.States[expected.States.Count-1].Step));
+            TestContext.WriteLine("DEFAULT_CONFIG_HASH="+cfg.Hash);
+        }
+        [UnityTest] public IEnumerator Main_ConfiguredP1RemainsAvailableAndCanReturnToP2()
+        {
+            yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;
+            var app=AppBootstrap.Instance;app.Host.enabled=false;var defaults=app.Config;
+            Assert.That(defaults.Backend,Is.EqualTo("P2-Analytic"));
+            int generation=app.Host.SimulationGeneration;
+            app.Host.Launch(EffectiveConfig.From(defaults.Source.With("physics.backend",0)));
+            Assert.That(app.Host.ActiveConfig.Backend,Is.EqualTo("P1-PhysX"));
+            Assert.That(app.Host.SimulationGeneration,Is.EqualTo(generation+1));
+            Assert.That(app.Host.Prediction.Contacts.Any(c=>c.Timing==ContactTiming.Estimated),Is.True);
+            Assert.That(Object.FindObjectsByType<SurfaceTag>(FindObjectsSortMode.None).Count(t=>t.Surface==SurfaceId.Floor&&t.GetComponent<BoxCollider>()!=null),Is.EqualTo(2));
+            app.Host.Launch(defaults);
+            Assert.That(app.Host.ActiveConfig.Backend,Is.EqualTo("P2-Analytic"));
+            Assert.That(app.Host.SimulationGeneration,Is.EqualTo(generation+2));
+            Assert.That(app.Host.Prediction.Contacts.All(c=>c.Timing==ContactTiming.Exact),Is.True);
+            yield return null;
+        }
         [UnityTest] public IEnumerator Launch_UsesEffectiveConfigInEveryConsumer() {
             yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;
             var app=AppBootstrap.Instance;app.Host.enabled=false;int generation=app.Host.SimulationGeneration;
-            var cfg=EffectiveConfig.From(app.Params.With("physics.floor.restitution",0.6).With("physics.stepHz",240).With("pace.tempo",0.8).With("court.tinTop",0.43));
+            var cfg=EffectiveConfig.From(app.Params.With("physics.backend",0).With("physics.floor.restitution",0.6).With("physics.stepHz",240).With("pace.tempo",0.8).With("court.tinTop",0.43));
             app.Host.Launch(cfg);
             Assert.That(app.Host.SimulationGeneration,Is.EqualTo(generation+1));Assert.That(app.Host.Clock.StepHz,Is.EqualTo(240));Assert.That(app.Host.Clock.Tempo,Is.EqualTo(0.8));
             Assert.That(app.Host.ActiveConfig.Physics.Floor.Restitution,Is.EqualTo(0.6f));

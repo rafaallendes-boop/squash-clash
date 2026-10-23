@@ -42,7 +42,8 @@ namespace SquashClash.Runtime.Tests
         [UnityTest] public IEnumerator Campaign_UsesP2WithoutSelectingRuntimeBackend()
         {
             yield return SceneManager.LoadSceneAsync("Main",LoadSceneMode.Single);yield return null;yield return null;
-            var app=AppBootstrap.Instance;Assert.That(app.Config.Backend,Is.EqualTo("P1-PhysX"));
+            var app=AppBootstrap.Instance;app.Host.Launch(SquashClash.Core.Config.EffectiveConfig.From(app.Params.With("physics.backend",0)));
+            Assert.That(app.Config.Backend,Is.EqualTo("P1-PhysX"));
             var section=Object.FindFirstObjectByType<SpikeSection>();section.Begin();
             for(int i=0;i<120&&Field(section,"run")==null;i++)yield return null;
             Assert.That(Field(section,"run"),Is.Not.Null);section.CancelRun("test output");

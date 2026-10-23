@@ -98,12 +98,14 @@ namespace SquashClash.Runtime.App
             fpsLabel.style.marginLeft = 12;
             fpsLabel.style.color = new Color(0.72f, 0.93f, 0.83f);
             row.Add(fpsLabel);
-            Host.Initialize(new IBallSimulationFactory[] { new PhysXBallSimulationFactory() }, new SimClock(Config.Physics.StepHz, Config.Tempo));
+            var physX = new PhysXBallSimulationFactory();
+            Host.Initialize(new IBallSimulationFactory[] { physX, new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold) },
+                new SimClock(Config.Physics.StepHz, Config.Tempo));
             Host.Launched += OnLaunched;
             GetComponent<ResumeOverlay>().Initialize(Host.Clock);
             ballView.Initialize(Host, Config.Physics.BallRadius);
             Host.Launch(Config);
-            Debug.Log($"[SquashClash] ball ready candidate={Config.Backend} visualColliders=0 localPhysicsScenes=2 config={Config.Hash} predictedSteps={Host.Prediction.States.Count-1}");
+            Debug.Log($"[SquashClash] ball ready backend={Config.Backend} visualColliders=0 localPhysicsScenes={physX.LiveInstances} config={Config.Hash} predictedSteps={Host.Prediction.States.Count-1}");
         }
 
         private void Update()
