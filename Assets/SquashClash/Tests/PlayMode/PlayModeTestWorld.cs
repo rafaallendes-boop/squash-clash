@@ -7,8 +7,10 @@ using UnityEngine.SceneManagement;
 namespace SquashClash.Runtime.Tests {
     internal static class PlayModeTestWorld {
         internal static IEnumerator ClearApp() {
+            string metrics=AppBootstrap.Instance?.Metrics?.CurrentFilePath;
             if(AppBootstrap.Instance!=null) Object.Destroy(AppBootstrap.Instance.gameObject);
             yield return null;
+            if(metrics!=null&&System.IO.File.Exists(metrics))System.IO.File.Delete(metrics);
             for(int i=0;i<120 && HasPhysicsScenes();i++) yield return null;
             Assert.That(HasPhysicsScenes(),Is.False,"Previous app-owned physics scenes must unload.");
         }

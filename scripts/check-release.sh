@@ -31,10 +31,12 @@ if profile=='dev':expected.append('g_SquashClash_DevPanel_CodeGenModule')
 if modules!=sorted(expected):raise SystemExit('Unexpected product modules for '+profile+': '+repr(modules))
 native=list((root/f'Builds/iOS-{profile}').rglob('ThermalState.mm'))
 if bool(native)!=(profile=='dev'):raise SystemExit('Native thermal bridge inclusion mismatch for '+profile+': '+str(len(native)))
+runtime_native=list((root/f'Builds/iOS-{profile}').rglob('SquashThermal.mm'))
+if len(runtime_native)!=1:raise SystemExit('Runtime thermal diagnostic bridge missing/duplicated: '+profile)
 info=json.loads(metadata.read_text())
 if info['profile']!=profile:raise SystemExit('Wrong build metadata profile.')
 shutil.copyfile(metadata,root/f'Logs/evidence/buildinfo-{profile}.json')
-(root/f'Logs/evidence/release-{profile}.json').write_text(json.dumps({'profile':profile,'metadata':info,'freshExport':True,'productIl2CppModules':modules,'nativeThermalBridge':bool(native)},indent=2)+'\n')
+(root/f'Logs/evidence/release-{profile}.json').write_text(json.dumps({'profile':profile,'metadata':info,'freshExport':True,'productIl2CppModules':modules,'nativeThermalBridge':bool(native),'runtimeThermalBridge':bool(runtime_native)},indent=2)+'\n')
 print('RELEASE-CHECK: '+profile+' modules='+','.join(modules))
 PY
 done
