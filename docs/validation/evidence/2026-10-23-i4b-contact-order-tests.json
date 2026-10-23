@@ -1,0 +1,33 @@
+{
+  "physicalRed": {
+    "xmlLocal": "Logs/contact-order-tests/physical-red.xml",
+    "xmlSha256": "16dc821ebc54c83850c5a6b6ad536abd69bbfb9d9bf78c9bac7d06002d148dbf",
+    "logSha256": "fcb77e8d0f571278d2741489dc85c96dd18d36a2856e65c9c9d9eebe4fa30827",
+    "counts": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0
+    },
+    "testSourceSha256": "99fbc685ffed1d80e62f843ef28dd80d51746da817d2820189d9edce981be732",
+    "scenario": "S8-109 C7 postcontacto",
+    "checkpoint": 50,
+    "firstDivergentStep": 127,
+    "firstDivergentIndex": 77,
+    "statesBitwiseEqual": true,
+    "fullContactMultisetEqual": true,
+    "orderA": [
+      "LeftWall",
+      "Floor"
+    ],
+    "orderB": [
+      "Floor",
+      "LeftWall"
+    ],
+    "cause": "Assertion of ordered contact output; no compiler errors. Real two-instance history prefix, no synthetic permutation."
+  },
+  "reducedHistoryControl": {
+    "xmlLocal": "Logs/contact-order-tests/physical-reduced-history-no-repro.xml",
+    "result": "1/1 passes before correction: isolated S8-109 histories did not reproduce callback-order divergence. Not counted as RED; real campaign prefix retained."
+  }
+}
