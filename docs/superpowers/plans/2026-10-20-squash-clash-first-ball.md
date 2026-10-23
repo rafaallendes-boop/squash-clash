@@ -1114,6 +1114,18 @@ public sealed class PredictionBenchmarkRun {   // 20 mediciones de calentamiento
 
 **Algoritmo (§8.3), a completar con la condición previa:** primer impacto de la esfera contra los planos desplazados por el radio, en cada paso (cuadrático en `y`, lineal en `x` y `z`); integración exacta hasta ese instante; reflexión de la componente normal por `Restitution`; consumo del tiempo restante hasta `MaxImpactsPerStep`; impactos separados por menos de ε = 1e-6 s resueltos juntos; posición exacta `p += v·dt + ½·g·dt²`.
 
+#### Adenda r2 — contrato de P2 aprobado por el PO el 2026-10-23
+
+La decisión B del PO autoriza evaluar P2/T4.5 y completa la condición previa de esta tarea. Este contrato prevalece en estos cuatro puntos sobre la descripción preliminar pendiente de completar; el asentamiento incluye deslizamiento sin rodar. Se mantienen la spec, los escenarios, los criterios, los umbrales y el preset. La implementación solo comienza **después de fusionar I4c tras revisión de Claude**, en `firstball/i4d-p2-analytic` y PR de física propia. [Registro de decisión I4c](../../reviews/2026-10-23-first-ball-physics-decision.md).
+
+1. Asentamiento y reposo: si la velocidad normal hacia el suelo es menor que bounceThreshold (0,1 m/s, la misma fuente efectiva que P1, sin parámetro nuevo en el preset), la componente normal se anula y la pelota queda apoyada (y = r, sin aceleración vertical). Mientras está apoyada desliza sin rodar, igual que P1 con la rotación congelada: fricción de Coulomb μ·g en sentido opuesto a la velocidad tangencial, hasta detenerse y sin invertir el sentido. Cada paso apoyado emite un contacto persistente con Floor. Los impactos contra paredes mientras está apoyada se resuelven normalmente; solo hay reposo sobre el suelo. En paredes, un impacto con velocidad normal menor que bounceThreshold anula la componente normal sin rebote. No existe estado de reposo en paredes.
+
+2. Tope de MaxImpactsPerStep: al alcanzarlo se descarta el tiempo restante del paso. La pelota queda en el punto del último impacto con la velocidad reflejada y el reloj avanza un paso. Nunca se integra sin detección de colisiones. Cada vez que se alcanza el tope se cuenta, y el contador se informa en C14.
+
+3. Límites superiores: las paredes existen solo para 0 ≤ y ≤ WallHeight; el suelo no tiene límite. Un impacto contra una pared cuenta solo si el centro de la pelota está a una altura ≤ WallHeight en el instante del impacto. OverTop usa la misma definición del runner que P1. El borde superior de la pared no se modela (simplificación declarada; las diferencias en casos rasantes se reportan sin ajustarlas).
+
+4. Fricción: coeficientes del preset combinados por multiplicación con 1 (la pelota), igual que P1, con μ estático igual al dinámico. En el impacto: v_n' = −e·v_n; la velocidad tangencial se reduce en min(|v_t|, μ·(1+e)·|v_n|), en sentido opuesto a v_t. No se afirma igualdad numérica con PhysX; cada backend se evalúa por separado.
+
 ---
 
 ## Etapa 5 — Panel, presets y calibración
