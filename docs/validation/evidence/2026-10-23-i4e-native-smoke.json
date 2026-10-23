@@ -1,0 +1,86 @@
+{
+  "buildMetadata": {
+    "version": "0.1.0",
+    "gitHash": "8fb5d0c",
+    "profile": "dev",
+    "builtAtUtc": "2026-10-23T21:11:56.3084210Z",
+    "unityVersion": "6000.3.27f1",
+    "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+    "gitDirty": false
+  },
+  "freshUnityExport": true,
+  "playerDevelopment": false,
+  "il2cpp": "Release",
+  "xcode": "Xcode 27.1; Build version 27A9275",
+  "xcodeConfiguration": "Release",
+  "architectures": [
+    "arm64"
+  ],
+  "codesignStrictVerified": true,
+  "embeddedBuildMetadataVerified": true,
+  "embeddedMetadataLocation": "Data/resources.assets",
+  "profileCheckedAtUtc": "2026-10-23T21:14:52.859113+00:00",
+  "profileCreatedAtUtc": "2026-10-21T14:59:31Z",
+  "profileExpiresAtUtc": "2026-10-28T14:59:31+00:00",
+  "embeddedProfileValid": true,
+  "embeddedProfileMatchesDeviceAndBundle": true,
+  "frameworkSha256": "642a266518eec9d68ae7c3f91cb912494d241d6a41b6da1df3332d71121b7513",
+  "resourcesSha256": "dac319b1fd4df0e0beacaf20205b2f4facfa2da851b786c1a394bf6d281c6c51",
+  "projectPhysics": {
+    "fastMotionThreshold": 0.01,
+    "enhancedDeterminism": true,
+    "bounceThreshold": 0.1,
+    "source": "ProjectSettings/DynamicsManager.asset, byte-identical to committed build source",
+    "sourceSha256": "056979610bab2b1ddf56f692ad5cb565a181660cc4f1a28d7e6d004cb8820fb1",
+    "scope": "Configuración de export capturada en BuildInfo embebido; sin afirmar getter runtime de fastMotionThreshold, relevante solo para P1."
+  },
+  "productionExport": {
+    "profile": "prod",
+    "metadata": {
+      "version": "0.1.0",
+      "gitHash": "8fb5d0c",
+      "profile": "prod",
+      "builtAtUtc": "2026-10-23T21:11:24.6511850Z",
+      "unityVersion": "6000.3.27f1",
+      "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+      "gitDirty": false
+    },
+    "freshExport": true,
+    "productIl2CppModules": [
+      "g_SquashClash_Core_CodeGenModule",
+      "g_SquashClash_Runtime_CodeGenModule"
+    ],
+    "nativeThermalBridge": false
+  },
+  "installed": true,
+  "defaultBackend": "P2-Analytic",
+  "defaultConfigHash": "f6a394a12daf",
+  "embeddedDefaultPresetVerified": true,
+  "defaultPresetSha256": "9cb2cff13972b2f16725beaf6aa2d45bcdc31263f0f102e56bb927495de23e8a",
+  "purpose": "Verificación corta de integración I4e; no campaña ni aceptación completa T7.1.",
+  "launchVerified": true,
+  "visualBounceVerified": false,
+  "sourceHashes": {
+    "Assets/SquashClash/Core/Simulation/AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+    "Assets/SquashClash/Core/Simulation/AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+    "Assets/SquashClash/Runtime/App/AppBootstrap.cs": "5a97d7c0bf14b8fa2aaa053b4e85a82a6f19c8cfd2e4bf8b6c0caa9912bb4360"
+  },
+  "installAccepted": true,
+  "installResultSha256": "196e055a82a33635cf8e2507f06a7c7cc4a1b4b277e4261d76c01ebe3efa98af",
+  "launchAccepted": true,
+  "launchResultSha256": "83a4621769dc2b00e3addf787adce95556a0fb9a012c5f33e2c0db16f59c61fa",
+  "startup": {
+    "build": "0.1.0+8fb5d0c dev",
+    "defaultBackend": "P2-Analytic",
+    "configHash": "f6a394a12daf",
+    "startupLog": [
+      "[SquashClash] boot 0.1.0+8fb5d0c dev devpanel=present development=False squashDev=True unity=6000.3.27f1",
+      "[SquashClash] ball ready backend=P2-Analytic visualColliders=0 localPhysicsScenes=0 config=f6a394a12daf predictedSteps=166",
+      "[SquashClash] display profile=dev fps=60,0 orientation=Portrait resolution=1206x2622"
+    ],
+    "exceptionMarkers": 0,
+    "consoleSha256": "808b907b2b27181553197874f5f2477efe7846224f421ce6159f428a5721e490",
+    "scope": "Arranque corto con consola; sin ejecutar campaña. Observación visual por PO pendiente. La captura de consola se cerró al terminar la comprobación."
+  },
+  "visualCheckStatus": "Pendiente de confirmación PO en vista normal; solicitud breve, sin campaña."
+}
