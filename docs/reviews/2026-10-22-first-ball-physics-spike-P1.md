@@ -1,6 +1,6 @@
 # I4b — P1 tras orden canónico de contactos
 
-Estado: **orden canónico de c7da32e aprobado por Claude, comunicado por el PO el 2026-10-23; build dev instalada y campaña nativa autorizada, arranque verificado y ejecución por el PO pendiente**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. I4b no cerrado; I4c, P2/T4.5 e I5+ no autorizados. PhysX sigue como candidato, sin elección de backend.
+Estado: **orden canónico de c7da32e aprobado por Claude, comunicado por el PO el 2026-10-23; build dev instalada y primera corrida nativa completa auditada, fuera de las condiciones aprobadas; campaña conforme pendiente**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. I4b no cerrado; I4c, P2/T4.5 e I5+ no autorizados. PhysX sigue como candidato, sin elección de backend.
 
 Código de las cinco ejecuciones: **da98fd4**, Unity 6000.3.27f1. Preset **c86243b15a97**, seed **20261020**, 10.053 lanzamientos de robustez por variante (17 fijos + 10.000 S8 + 36 S8d), 20 calentamientos y 200 mediciones C17. `fastMotionThreshold=0.01 m` en ProjectPhysics. Se mantienen escenarios, umbrales, geometría, preset, Reset y comparador. El único cambio de salida física es el orden de los contactos de cada paso, aprobado expresamente por el PO.
 
@@ -148,12 +148,45 @@ Comunicada por el PO el 2026-10-23; no se atribuye una GitHub Review. Aprobados 
 
 Baseline da98fd4, Unity 6000.3.27f1, preset c86243b15a97, seed 20261020, 20 calentamientos y 200 mediciones; p95 nearest rank **34,927300 ms** (34,9 ms). Campañas en worktrees aislados, tres editores al principio y dos después, con actividad normal del Mac. Sin control aislado de carga ni registro térmico del Mac. El histórico 16ad653 registró **24,120100 ms** (24,1 ms), con dos editores parcialmente concurrentes. Se documentan las condiciones y ambos valores; no se atribuye causa a la diferencia ni se interpretan o comparan con la medición nativa.
 
+## Corrida nativa completa del 2026-10-23 — condiciones no conformes
+
+El PO comunicó «Prueba completa, informe copiado, informe guardado» y autorizó recuperar el resultado después de terminar. Declaró **75 % de batería y funda puesta**, frente a ≥80 % y sin funda exigidos. No confirmó No molestar ni bajo consumo desactivado. El térmico nominal sí consta en el informe. Se conserva íntegra la corrida como evidencia, pero **no sustituye la campaña bajo las condiciones aprobadas**. No se atribuye el tiempo a la batería, la funda u otra causa ni se cambia su veredicto.
+
+Build **0.1.0+2fdede5 dev**, P1-PhysX, variante **baseline/ccdDyn-co1mm-it6-1**, configuración **c86243b15a97**, Unity 6000.3.27f1, iPhone17,1 físico, iOS 26.6.2. Export limpio Release ARM64 firmado y metadata previamente comprobados; código de producción/física idéntico a c7da32e. UTC **13:20:23.0247000 → 13:32:22.3195200**, ejecución completa. Térmico **nominal → nominal**, también **nominal al iniciar C17**; **0 interrupciones de foco**. Sin herramientas del agente durante la ejecución; recuperación de Documents/spike posterior al aviso del PO. La actividad de herramientas del lado del PO no fue confirmada expresamente.
+
+[Informe guardado íntegro](../validation/evidence/physics-spike-P1/iphone-2fdede5-P1-20261023-133222-324.md) · [Auditoría de 18 filas, metadata y condiciones](../validation/evidence/2026-10-23-i4b-native-canonical-runs.json) · [Build y ProjectPhysics previo](../validation/2026-10-23-i4b-native-preflight.md). Archivo de 11.523 bytes, SHA-256 **53208d4c848d556a9d73a542e4e570bc73a890872a8b47c3d6aa8ac2cc1a7a55**, copia exacta sin editar. El encabezado nativo no imprime fastMotionThreshold; el informe corto separado registra 0.01 m desde la configuración fuente de esa build, sin afirmar lectura de getter en runtime.
+
+### 18 criterios de la corrida nativa
+
+Son los veredictos de esta corrida, sin convertir ejecución completa en aceptación de las condiciones ni en decisión de gate.
+
+| ID | Medición nativa | Veredicto | Gate |
+|---|---|---|---|
+| C1 | 0 fallos / 10.053; 0 atravesamientos; S8=10.000, S8d=36; seed=20261020 | Pass | sí |
+| C2 | 0 fallos / 67.737 | Pass | sí |
+| C3 | 5 fallos / 3.501; 6.538 no aplicables; ganancia máxima 0,0273839869, S8-9456 paso 218 | Fail | sí |
+| C4 | 0 fallos / 4; 0 impactos repetidos | Pass | sí |
+| C5 | 0 fallos / 117 | Pass | sí |
+| C6 | 0 fallos / 10.017 | Pass | sí |
+| C7 | 0 fallos / 18.753 medidos; 1.279 no aplicables; 0 no evaluables | Pass | sí |
+| C8 | 0 fallos / 2 | Pass | sí |
+| C9 | 0 fallos / 2 | Info | no |
+| C10 | 9 fallos / 9; error máximo 13,6164722 mm | Fail | sí |
+| C11 | 3 fallos / 6 | Fail | sí |
+| C12 | 11 evaluados, 0 no evaluables | Info | no |
+| C13 | 35 evaluados, 1 no evaluable / 36; mínimo −0,0002015136, mediana −1,69331327E−06 | NotEvaluated | no |
+| C14 | máximo 2 impactos no persistentes/paso; tope no configurable | Info | no |
+| C15 | 2 evaluados; instantes Estimated y contactos en pasos distintos, detalle íntegro preservado | Info | no |
+| C16 | penetración máxima 11,3993931 mm; 1.147.120 muestras persistentes | Info | no |
+| C17 | 20 calentamientos; 200 medidas; mediana 14,569850, p95 **14,923400**, p99 14,984100, máximo 15,201600 ms | **Fail** | sí |
+| C18 | RunsInEditMode=False; Timing=Estimated | Info | no |
+
+C17 se evalúa con el umbral aprobado **p95 ≤1 ms** y queda **Fail**. Se verificaron n=200, warmup=20 y cobertura 200/0/200 en el archivo; no se persisten las muestras individuales, por lo que no se recalculan los percentiles de manera independiente. El térmico al iniciar el benchmark es informativo, sin umbral nuevo. No se interpreta ni compara esta medición con los tiempos del editor.
+
+C16 conserva la procedencia S8-9948, paso 246, RightWall, sin contacto de pared en ese paso y respuesta en 247; queda informativo para la revisión posterior de I4c, sin iniciarla. C3/C10/C11 siguen Fail en esta corrida. Baseline C5/C6/C7 pasan dentro del mismo binario y dispositivo; no se afirma igualdad bit a bit entre plataformas.
+
 ## Estado nativo y siguiente punto de control
 
-La revisión de Claude sobre c7da32e habilita una build dev actual y la campaña completa. Preparación: export limpio, Player no Development, SQUASH_DEV mediante extraScriptingDefines, IL2CPP/Xcode Release ARM64 firmado, metadata y perfil efectivo verificados; prod debe excluir DevPanel y el puente nativo. Antes de iniciar se verificará ProjectPhysics con fastMotionThreshold=0.01 en la app o en un informe corto del artefacto.
+Falta repetir la campaña completa con las condiciones ya autorizadas: teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda y térmico nominal al inicio. No hace falta generar otra build para repetir esta medición: permanece instalada la dev 2fdede5. No capturas, devicectl ni herramientas durante la ejecución; recuperar el siguiente informe solo después del aviso de término del PO. La corrida anterior se conserva y la nueva se identificará por su propio archivo/hash, sin sobrescribirla.
 
-El PO ejecutará la campaña en teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda y térmico nominal al comenzar. Sin capturas, devicectl ni herramientas durante la ejecución. Solo después de confirmar su término se recuperará Documents/spike para verificar 18 filas, hash de build/configuración, variante, 200 mediciones C17, térmico al inicio del benchmark e interrupciones de foco. C17 conserva **p95 ≤1 ms**; si no cumple será **Fail**. Cancelado/incompleto/NotEvaluated nunca aprueba.
-
-Comprobar vigencia efectiva antes de instalar; renovar si la instalación ocurre el 2026-10-27 o después. No cambiar Xcode ni herramientas. Finalizar el informe I4b tras recuperar la campaña y detenerse para revisión de Claude y decisión del PO. PR #4 borrador y sin fusionar; I4b abierto. I4c, P2/T4.5 e I5+ siguen sin autorizar. [Decisiones del PO](2026-10-21-first-ball-po-approvals.md).
-
-[Comprobación previa nativa](../validation/2026-10-23-i4b-native-preflight.md): build dev 2fdede5 instalada, Release ARM64 firmada, metadata y perfil verificados; prod excluye el puente. ProjectPhysics fastMotionThreshold=0.01 documentado con procedencia. Arranque y proceso de la app instalada verificados tras desbloqueo del PO, sin sesión de consola. Campaña e informe final aún pendientes.
+Esta actualización deja el informe al día con la evidencia disponible; **no finaliza la campaña aprobada ni cierra I4b**. Tras la corrida conforme se completará la entrega de I4b y se detendrá para revisión de Claude y decisión del PO. PR #4 sigue borrador y sin fusionar. No se elige backend ni se cambia Reset, preset, variantes, umbrales, escenarios o criterios. I4c, P2/T4.5 e I5+ siguen sin autorizar. Si fuera necesaria otra instalación el 2026-10-27 o después, renovar antes el perfil; herramientas sin cambios. [Decisiones del PO](2026-10-21-first-ball-po-approvals.md).

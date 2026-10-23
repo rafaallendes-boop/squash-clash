@@ -51,11 +51,11 @@
     "nativeThermalBridge": false
   },
   "installed": true,
-  "campaignComplete": false,
+  "campaignComplete": true,
   "installVerified": true,
   "launchVerified": true,
   "launchStatus": "Successfully launched after PO confirmed unlock; installed app running, no console session. Campaign not started by tools.",
-  "campaignStatus": "Ready for PO execution under approved physical conditions; stop device tools before handoff and retrieve Documents/spike only after PO confirms completion.",
+  "campaignStatus": "PO completed run; saved report audited. Started at 75% battery with case on; outside approved conditions. Required compliant campaign remains pending. C17 Fail, p95 14.9234 ms.",
   "regressionScope": "Only documentation and a test comment changed after c7da32e; no new behavior and no suites repeated. Prior regression evidence retained.",
   "editorBenchmarkConditions": {
     "build": "da98fd4",
@@ -75,5 +75,7 @@
     "interpretation": "Conditions and values only; no cause assigned and no native comparison."
   },
   "runningProcessVerified": true,
-  "launchVerifiedAtUtc": null
+  "launchVerifiedAtUtc": null,
+  "campaignApprovedConditionsMet": false,
+  "campaignReportManifest": "docs/validation/evidence/2026-10-23-i4b-native-canonical-runs.json"
 }

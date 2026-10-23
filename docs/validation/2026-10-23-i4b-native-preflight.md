@@ -1,6 +1,6 @@
 # I4b — comprobación previa a la campaña nativa
 
-2026-10-23. Build instalada **0.1.0+2fdede5 dev**, metadata sin cambios pendientes; campaña todavía sin iniciar. [Evidencia saneada](evidence/2026-10-23-i4b-canonical-native.json).
+2026-10-23. Build instalada **0.1.0+2fdede5 dev**, metadata sin cambios pendientes; primera corrida posterior completa auditada, fuera de las condiciones aprobadas; repetición conforme pendiente. [Evidencia saneada](evidence/2026-10-23-i4b-canonical-native.json).
 
 **ProjectPhysics: EnhancedDeterminism=true; fastMotionThreshold=0.01 m; bounceThreshold=0.1.** Comprobado en `ProjectSettings/DynamicsManager.asset`, idéntico byte a byte al código versionado de la build. Procedencia: configuración fuente del export limpio; no se presenta como una lectura de getter en runtime. El encabezado actual de la campaña nativa no imprime fastMotionThreshold; esta comprobación separada cubre el informe corto pedido por el PO.
 
@@ -11,3 +11,7 @@ Perfil embebido comprobado inmediatamente antes de instalar: vigente hasta **202
 Campaña manual pendiente: teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda, térmico nominal al inicio. Sin capturas, devicectl ni herramientas durante la ejecución. El PO debe avisar al finalizar antes de recuperar Documents/spike. Auditar 18 criterios, hash 2fdede5, configuración c86243b15a97, variante baseline/ccdDyn-co1mm-it6-1, 20 calentamientos y 200 mediciones C17, térmico al inicio del benchmark e interrupciones de foco. **C17 p95 ≤1 ms; si incumple, Fail**. No interpretar tiempos de editor ni compararlos con nativo.
 
 Regresión previa conservada: EditMode 188/188, PlayMode 58/58; no se repiten suites por documentación y comentario de test. No hay cambio de comportamiento, escenarios, umbrales, variantes, preset, Reset o selección de backend. PR #4 borrador sin fusionar, I4b abierto. Informe final pendiente de campaña; detenerse después para Claude y PO. I4c, P2/T4.5 e I5+ sin autorizar.
+
+## Resultado posterior al control previo
+
+El PO completó la corrida UTC 13:20:23–13:32:22 con **75 % de batería y funda puesta**. [Auditoría](evidence/2026-10-23-i4b-native-canonical-runs.json): 18 criterios, hash/variante correctos, C17 200 medidas y p95 **14,923400 ms: Fail** con umbral ≤1 ms; térmico inicial/final/benchmark nominal y cero interrupciones de foco. Es evidencia completa conservada, fuera de las condiciones aprobadas. La campaña conforme sigue pendiente; no se atribuye causa a la desviación de condiciones. [Informe P1 actualizado](../reviews/2026-10-22-first-ball-physics-spike-P1.md).

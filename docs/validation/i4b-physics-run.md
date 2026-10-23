@@ -1,14 +1,18 @@
 # I4b — ejecución de la prueba física P1
 
-Estado actual, 2026-10-23: **Claude aprobó el orden canónico de c7da32e; PO autorizó build y campaña nativa**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. Rama firstball/i4b-physics-run, base main 6fd04e0. I4b abierto: campaña completa/C17 nativo e informe final pendientes. I4c, P2/T4.5 e I5+ no autorizados.
+Estado actual, 2026-10-23: **orden canónico aprobado por Claude; build dev instalada y primera corrida nativa completa auditada, fuera de las condiciones aprobadas**. [PR #4 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/4), sin fusionar. Rama firstball/i4b-physics-run, base main 6fd04e0. I4b abierto: campaña conforme y entrega final pendientes. I4c, P2/T4.5 e I5+ no autorizados.
 
-[Autorización y condiciones](../reviews/2026-10-21-first-ball-po-approvals.md#revisión-claude-de-c7da32e-y-autorización-nativa--2026-10-23) · [Clasificación vigente y condiciones de C17 editor](../reviews/2026-10-22-first-ball-physics-spike-P1.md#revisión-de-claude-sobre-c7da32e-y-clasificación-vigente). La detención previa que se conserva debajo como historial quedó satisfecha por esta revisión; no autoriza cierre, merge ni I4c.
+## Estado nativo actual
 
-## Preparación nativa actual
+Build dev **2fdede5 instalada**, export limpio, Release ARM64 firmada, Player no Development, metadata embebida y arranque verificados. Prod nuevo excluye DevPanel y el puente nativo. Perfil efectivo vigente hasta 2026-10-28T14:59:31Z, comprobado justo antes de instalar; herramientas intactas. [Comprobación corta ProjectPhysics fastMotionThreshold=0.01 y procedencia](2026-10-23-i4b-native-preflight.md), [evidencia de build](evidence/2026-10-23-i4b-canonical-native.json).
 
-Build dev **2fdede5 instalada**, export limpio, Release ARM64 firmada, Player no Development y metadata embebida verificada. Prod nuevo excluye DevPanel y el puente nativo. Perfil efectivo vigente hasta 2026-10-28T14:59:31Z, comprobado justo antes de instalar; herramientas intactas. [Comprobación corta ProjectPhysics fastMotionThreshold=0.01 y procedencia](2026-10-23-i4b-native-preflight.md), [evidencia saneada](evidence/2026-10-23-i4b-canonical-native.json).
+El PO completó la corrida P1-20261023-133222-324 y confirmó **75 % de batería, funda puesta**; No molestar/bajo consumo no confirmados. Se preserva como corrida completa fuera de las condiciones aprobadas, **sin sustituir la campaña exigida ni atribuir causas**. Recuperación después del aviso del PO, copia exacta con hash; 18 criterios únicos, build 2fdede5, configuración c86243b15a97, variante baseline/ccdDyn-co1mm-it6-1. UTC 13:20:23 → 13:32:22, térmico nominal al inicio/final y al iniciar C17, cero interrupciones de foco. Sin herramientas del agente durante la ejecución.
 
-El primer arranque fue rechazado por teléfono bloqueado. Tras confirmar el PO el desbloqueo, lanzamiento exitoso y proceso de la app instalada verificado, sin sesión de consola. Campaña aún sin iniciar por este flujo; lista para ejecución manual del PO. El informe I4b no está terminado: faltan campaña física completa y auditoría de sus 18 filas/hash/variante/200 muestras C17/térmico benchmark/foco. C17 mantiene p95 ≤1 ms (Fail si incumple). No habrá herramientas durante la ejecución y Documents/spike se recuperará solo cuando el PO confirme término. Sin cierre ni merge.
+**C17 Fail: p95 14,923400 ms frente a ≤1 ms**, 20 calentamientos y 200 medidas (200/0/200). Mediana 14,569850; p99 14,984100; máximo 15,201600 ms. Conteo y agregados verificados; sin muestras individuales persistidas para recalcular percentiles. No se interpreta ni compara con el editor. C1=0; C5/C6/C7 pasan. C3 cinco fallos; C10 nueve (máximo 13,6164722 mm); C11 tres/6. C13 sigue NotEvaluated (35/36 medidos). C16 informativo 11,3993931 mm en S8-9948 paso 246 RightWall.
+
+[Informe P1 actualizado con 18 filas nativas](../reviews/2026-10-22-first-ball-physics-spike-P1.md#corrida-nativa-completa-del-2026-10-23--condiciones-no-conformes) · [Informe nativo íntegro](evidence/physics-spike-P1/iphone-2fdede5-P1-20261023-133222-324.md) · [Auditoría y condiciones](evidence/2026-10-23-i4b-native-canonical-runs.json).
+
+Siguiente paso aún dentro de la autorización: repetir con teléfono físico, No molestar, batería ≥80 %, bajo consumo desactivado, sin funda, térmico nominal inicial y sin capturas/devicectl/herramientas durante la ejecución. Misma build instalada; conservar ambos informes. Completar entrega I4b solo con esa evidencia y detenerse para Claude/PO. Sin cierre, merge ni gate.
 
 ## Entrega de orden canónico
 
