@@ -1,0 +1,602 @@
+{
+  "scope": "Regresión y TDD separados de los experimentos físicos. RED de aserciones con XML fresco, sin errores CS; once grupos conservados localmente.",
+  "stages": [
+    {
+      "stage": "01-flight-green",
+      "counts": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/01-flight-green/editmode-results.xml",
+      "xmlSha256": "56739add55de1391528f3290976bae739ef30d90846abe90067758ee50450bc5",
+      "logSha256": "d6fc4650f82e8405abaed039286c828215431f1a62337bfb3cc9258736b1871d",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "416e9ea0d0f858e38ce772f1dedd941a439cc9d0880f47425286ac50ba6c9c8f",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "AnalyticBallSimulationTests.cs": "1e71bc01598f5258df428486a87f6af1524a4d7955fae38b4932f37cfee72f39"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "01-flight-red",
+      "counts": {
+        "total": 4,
+        "passed": 1,
+        "failed": 3,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/01-flight-red/editmode-results.xml",
+      "xmlSha256": "939244e245944eb60380272d6a6892863dbd231247889d376582e6a7cb227b5f",
+      "logSha256": "f45cfdae382fa877e42bca6475ca25095031ce37cff8d174fbae18c3775a32d7",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "dd9d4a5e384bd6c32000490bd4b65d897380f824aef14b7552791129fb32d56f",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "tests.cs": "1e71bc01598f5258df428486a87f6af1524a4d7955fae38b4932f37cfee72f39"
+      },
+      "failedTests": [
+        {
+          "name": "FloorImpact_SolvesQuadraticAndThenIntegratesGravity",
+          "message": "  Expected: 1\n  But was:  0\n"
+        },
+        {
+          "name": "FreeFlight_IntegratesExactGravityAndAdvancesOneStep",
+          "message": "  Expected: (3.01, 2.02, 4.98)\n  But was:  (3.00, 2.00, 5.00)\n"
+        },
+        {
+          "name": "WallImpact_UsesExactTimeAndConsumesRemainder",
+          "message": "  Expected: 1\n  But was:  0\n"
+        }
+      ]
+    },
+    {
+      "stage": "02-corners-green",
+      "counts": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/02-corners-green/editmode-results.xml",
+      "xmlSha256": "027e32b6d005f00ee3b6ad016af4ff5d8b544cf6a6d7482e109d5392515aa048",
+      "logSha256": "2305cee4d9640680a195d11e4c1e21cc4197875c23402597df96fcc3589f9f65",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "849788d56e298d795a33edcf8dfb2db7550e2e9570a9f6cef08be070cf8f06ed",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "AnalyticBallSimulationTests.cs": "65fe4dade879f499dafa8f6302c44bca3cba130414e7e32cc7b216a2e063b838"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "02-corners-red",
+      "counts": {
+        "total": 7,
+        "passed": 5,
+        "failed": 2,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/02-corners-red/editmode-results.xml",
+      "xmlSha256": "6d164cec08474ae97103353e4af062fb03719f94f8f4220662e5e4f89d26c922",
+      "logSha256": "793a9f13ec9956be05f3a25221d88a23038bd1c98fbebc5591d3901e999f8484",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "416e9ea0d0f858e38ce772f1dedd941a439cc9d0880f47425286ac50ba6c9c8f",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "AnalyticBallSimulationTests.cs": "65fe4dade879f499dafa8f6302c44bca3cba130414e7e32cc7b216a2e063b838"
+      },
+      "failedTests": [
+        {
+          "name": "Corner_GroupsOnlyImpactsWithinEpsilon(5E-07.0f,True)",
+          "message": "  Expected: 0.0500000007f\n  But was:  0.0500004999f\n"
+        },
+        {
+          "name": "ThreePlaneCorner_ReflectsAllNormalsTogetherInSurfaceOrder",
+          "message": "  Expected is <SquashClash.Core.Court.SurfaceId[3]>, actual is <System.Collections.Generic.List`1[SquashClash.Core.Court.SurfaceId]> with 3 elements\n  Values differ at index [0]\n  Expected: Floor\n  But was:  RightWall\n"
+        }
+      ]
+    },
+    {
+      "stage": "03-support-green",
+      "counts": {
+        "total": 12,
+        "passed": 12,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/03-support-green/editmode-results.xml",
+      "xmlSha256": "dcff9a76153178a70b98d43a8a91cc12e6f0d59b53fb203238079552b6264f1b",
+      "logSha256": "b23f14cbdbe2937f6535e4e91d26691eac2812c6bf5b37ccc184e9ecd3a3b3ee",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "3c8429a95f84824598693ad72c01370dbbd6aaf9ad2da0b209fb2e03fadcefe2",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "AnalyticBallSimulationTests.cs": "4dfd914a6bf305e8e544a7db9b35e506800c32d28580a49b9bf155e321aae8a2"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "03-support-red",
+      "counts": {
+        "total": 12,
+        "passed": 8,
+        "failed": 4,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/03-support-red/editmode-results.xml",
+      "xmlSha256": "532884d26cfa3e48cd86bfdbb8b721234011fd8ee2797a2fca46435973f2edc1",
+      "logSha256": "39c384603cf855ff661b15b0aa633235478dcdcadc5cc2af259194534d8bc4d1",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "849788d56e298d795a33edcf8dfb2db7550e2e9570a9f6cef08be070cf8f06ed",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "AnalyticBallSimulationTests.cs": "4dfd914a6bf305e8e544a7db9b35e506800c32d28580a49b9bf155e321aae8a2"
+      },
+      "failedTests": [
+        {
+          "name": "SlowFloorImpact_SettlesAndEverySupportedStepReportsFloor",
+          "message": "  Expected: 0.0199999996f\n  But was:  0.0200017355f\n"
+        },
+        {
+          "name": "SupportedSlide_DeceleratesByCoulombToRestWithoutReversing",
+          "message": "  Expected: 3.07500005f +/- 9.9999999999999995E-07d\n  But was:  3.0999999f\n"
+        },
+        {
+          "name": "SupportedSlide_StillDetectsAndReflectsWall",
+          "message": "  Expected: 0.0199999996f\n  But was:  -0.0299999993f\n"
+        },
+        {
+          "name": "WallThreshold_StopsOnlySmallNormalSpeedAndNeverSupportsOnWall(0.05f,0.0f)",
+          "message": "  Expected: 0.0f +/- 9.9999999999999995E-08d\n  But was:  0.0250000022f\n"
+        }
+      ]
+    },
+    {
+      "stage": "04-cap-green",
+      "counts": {
+        "total": 15,
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/04-cap-green/editmode-results.xml",
+      "xmlSha256": "1c91fca4d5381360f7d63bd1581afd39cc62643b9a51b3cac5155c429b03f7d4",
+      "logSha256": "bae53dc2097346f04df4cf63b3c752f17751a7a892b0a4bed6f76ebdb9b49aad",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "b17489cf5e6ba9af668a3a03bade906757dea9c9daef5b0b90d29f3d76589eb9",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "AnalyticBallSimulationTests.cs": "c7b77657ac7e3b12dad629c22ab9f11e8e0d7ddd075488bf36a9cd69b62eedf5"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "04-cap-red",
+      "counts": {
+        "total": 15,
+        "passed": 12,
+        "failed": 3,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/04-cap-red/editmode-results.xml",
+      "xmlSha256": "a2449ae36dd11c143f8fa66b5e025b8d1ef31d666318909bcc3b06446a35083e",
+      "logSha256": "b7029357e5fc258157ba2f8ff2f99496f64a8c3fb02d570d242d623bf964ed06",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "3c8429a95f84824598693ad72c01370dbbd6aaf9ad2da0b209fb2e03fadcefe2",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "AnalyticBallSimulationTests.cs": "c7b77657ac7e3b12dad629c22ab9f11e8e0d7ddd075488bf36a9cd69b62eedf5"
+      },
+      "failedTests": [
+        {
+          "name": "ImpactCap_CountsRepeatedCappedStepsAndStopsAtLastImpact",
+          "message": "  Expected: 2\n  But was:  20\n"
+        },
+        {
+          "name": "ImpactCap_DiscardsRemainderWithReflectedVelocityAndCountsEveryReachedCap",
+          "message": "  Expected: 0.0199999996f\n  But was:  0.0449999981f\n"
+        },
+        {
+          "name": "ImpactCap_SimultaneousGroupIsAtomicAndNeverIntegratesThroughWall",
+          "message": "  Expected: (0.02, 0.02, 0.02)\n  But was:  (0.07, 0.07, 0.07)\n"
+        }
+      ]
+    },
+    {
+      "stage": "05-limits-green",
+      "counts": {
+        "total": 22,
+        "passed": 22,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/05-limits-green/editmode-results.xml",
+      "xmlSha256": "eb73b8e6f1f0e4b1b5f8b349530a479ac1b3bff26dbc6f525d9cd832a588d300",
+      "logSha256": "1938d5da9d4c31da800b80e901b3babcac02fe0d5e2aceaa160b861a0e1cd3b5",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "03f9a35b6c6a20b889a6459ceb42d354ca556b2054e49f1240dc388097b04038",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "AnalyticBallSimulationTests.cs": "346f1d5fef63146f338b6231242b464478c3431d2119ca0de20696a5fb052f1f"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "05-limits-red",
+      "counts": {
+        "total": 22,
+        "passed": 21,
+        "failed": 1,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/05-limits-red/editmode-results.xml",
+      "xmlSha256": "e6683678e3a8c30d4691b1cf82c3095fdf2e041e22597f20096f6729f4c7cf6a",
+      "logSha256": "747633e0788e76cd4d80ffa91215554d7d50088bb5dfb7d3204b638378e6d3d0",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "b17489cf5e6ba9af668a3a03bade906757dea9c9daef5b0b90d29f3d76589eb9",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "AnalyticBallSimulationTests.cs": "346f1d5fef63146f338b6231242b464478c3431d2119ca0de20696a5fb052f1f"
+      },
+      "failedTests": [
+        {
+          "name": "Floor_HasNoHorizontalLimit",
+          "message": "  Expected: 1\n  But was:  0\n"
+        }
+      ]
+    },
+    {
+      "stage": "06-friction-green",
+      "counts": {
+        "total": 26,
+        "passed": 26,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/06-friction-green/editmode-results.xml",
+      "xmlSha256": "911e4f7d0ad0f0f598683d66e3baeb64613ce7243fc5c1401cc044e724ea6541",
+      "logSha256": "f952ffd2d3bf16b0cb208f2b8aae63a51cfcb718d38b4e520d8fe2e7c0685996",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "7e14a8763cd79ac2a7eda94e35e8ad1b1d9d712909a6c37410cd22f82fb864ff",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "AnalyticBallSimulationTests.cs": "8391282ca0e724fa9bac41af755cc6a6fddcf4428d431229c03f5bad752172b8"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "06-friction-red",
+      "counts": {
+        "total": 26,
+        "passed": 22,
+        "failed": 4,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/06-friction-red/editmode-results.xml",
+      "xmlSha256": "9aebee8b1017fda4c20290782cd2ef6e9231d6629c35b8e00f94303621e754b9",
+      "logSha256": "ca4ad37b20d57f3b78dc918f965376833dc1431b57b97a63acbe68491c187f3f",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "03f9a35b6c6a20b889a6459ceb42d354ca556b2054e49f1240dc388097b04038",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "AnalyticBallSimulationTests.cs": "8391282ca0e724fa9bac41af755cc6a6fddcf4428d431229c03f5bad752172b8"
+      },
+      "failedTests": [
+        {
+          "name": "FloorImpact_ReducesTangentialSpeedByCoulombImpulse",
+          "message": "  Expected: 0.400000006f +/- 9.9999999999999995E-07d\n  But was:  1.0f\n"
+        },
+        {
+          "name": "SimultaneousFriction_UsesJointTangentAndDoesNotAlterReflectedNormals",
+          "message": "  Expected: 2.4000001f +/- 9.9999999999999995E-07d\n  But was:  3.0f\n"
+        },
+        {
+          "name": "WallImpact_AppliesMultiplicativePresetFrictionImpulseWithoutReversal(2.0f,1.4f)",
+          "message": "  Expected: 1.39999998f +/- 9.9999999999999995E-07d\n  But was:  2.0f\n"
+        },
+        {
+          "name": "WallImpact_AppliesMultiplicativePresetFrictionImpulseWithoutReversal(0.1f,0.0f)",
+          "message": "  Expected: 0.0f +/- 9.9999999999999995E-07d\n  But was:  0.100000001f\n"
+        }
+      ]
+    },
+    {
+      "stage": "07-config-green",
+      "counts": {
+        "total": 29,
+        "passed": 29,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/07-config-green/editmode-results.xml",
+      "xmlSha256": "dedca2ec9381dfd97aae4d72fbe075a8a5d5590ae5e02ae65ea773c772cb007a",
+      "logSha256": "60fa7ec53a87383bf690c4238cac9f5203480f935b77cd5a6f4cda5634fda012",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "9c509ac34b20cb59b29ebcc3abae55d70598d023e38d058690cebc5838300f76",
+        "AnalyticBallSimulationFactory.cs": "e787da9d3ab45596a45b8913b70edab4a5a746e3fa0633262c8679b90df51292",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "07-config-red",
+      "counts": {
+        "total": 29,
+        "passed": 27,
+        "failed": 2,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/07-config-red/editmode-results.xml",
+      "xmlSha256": "c2d5bc75162f9baeae64389b51dedf45871a9896bcc7daae97e92dd1b2d9210d",
+      "logSha256": "4ce86dbc37585b3a8c2545d53bb5eb4e77d8e5bc110bdec4b33e876d17cc4f5d",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "7e14a8763cd79ac2a7eda94e35e8ad1b1d9d712909a6c37410cd22f82fb864ff",
+        "AnalyticBallSimulationFactory.cs": "40984b490a76b3531d4c067d5abd9465044df9e8be8f363a99edf6c1b22a199d",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa"
+      },
+      "failedTests": [
+        {
+          "name": "Configuration_IsCopiedAtCreateIncludingNestedMaterialsAndCourt",
+          "message": "  Expected: 1\n  But was:  0\n"
+        },
+        {
+          "name": "Factory_RejectsIncompleteOrNonfiniteConfigurationWithoutLeaking",
+          "message": "  Expected: <System.ArgumentNullException>\n  But was:  null\n"
+        }
+      ]
+    },
+    {
+      "stage": "08-diagnostics-green",
+      "counts": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/08-diagnostics-green/editmode-results.xml",
+      "xmlSha256": "0f60d7ff51c7533efd08fc6317b0922fcd6e9962058a1efa5d8797bca9c5fe58",
+      "logSha256": "5aaaa1ea9ac0d7ce217f93e93f8cced67b449a6d3347e2da9b32e944d2dc29ce",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+        "AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "08-diagnostics-red",
+      "counts": {
+        "total": 4,
+        "passed": 0,
+        "failed": 4,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/08-diagnostics-red/editmode-results.xml",
+      "xmlSha256": "9831b05c2076202cf1b3a5cf93a4a8c8b0a65fe591261fce8233cba07cf18354",
+      "logSha256": "cb1006d8b0844068904ee04fd12c3fba28250e43ca001b444ae8e1e3db6e39da",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "9c509ac34b20cb59b29ebcc3abae55d70598d023e38d058690cebc5838300f76",
+        "AnalyticBallSimulationFactory.cs": "1c93ffb35ef6563c87aa29cdc290c667f0d19d064401d3755126c9d7dedfc145",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa",
+        "tests.cs": "a9ef7739f0346d2e603bb1e9c842fc6d89e6249d30cc658673afeceee850a076"
+      },
+      "failedTests": [
+        {
+          "name": "Benchmark_PreservesMeasuredSamplesInAcquisitionOrderAndRejectsReducedCoverage",
+          "message": "  Expected: 3\n  But was:  0\n"
+        },
+        {
+          "name": "C14_ReportsConfiguredCapAndEveryReachedCapInCampaign",
+          "message": "  Expected: greater than 0\n  But was:  0\n"
+        },
+        {
+          "name": "FactoryCapCounter_SurvivesResetAndDisposedInstances",
+          "message": "  Expected: 1\n  But was:  0\n"
+        },
+        {
+          "name": "Report_PersistsAll200IndividualSamplesWithRoundTripPrecision",
+          "message": "  Expected: 200\n  But was:  0\n"
+        }
+      ]
+    },
+    {
+      "stage": "09-native-bridge-green",
+      "counts": {
+        "total": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/09-native-bridge-green/playmode-results.xml",
+      "xmlSha256": "75fe4d9ac02977fc64431d424c9a6a203126c6d4f8100d4d77e9c512da95ccec",
+      "logSha256": "ca8d119be035ec66da5f08d90b6a20be6ee39454f067efc0a48de8af645be556",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+        "AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "09-native-bridge-red",
+      "counts": {
+        "total": 2,
+        "passed": 0,
+        "failed": 2,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/09-native-bridge-red/playmode-results.xml",
+      "xmlSha256": "c81a8ad8834c78631ff934746541f9575525318e0d0c5803d0d93828c70ec65d",
+      "logSha256": "4b54e13636f9a8ba1fac83196725d50ada98d169d6534b6b368dd84bec885f52",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+        "AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa",
+        "tests.cs": "e5eb1c71b8ff8056042e49d97bc51a4f3dfb3bf96df5eeeda29c25981d88e4b4"
+      },
+      "failedTests": [
+        {
+          "name": "Campaign_UsesP2WithoutSelectingRuntimeBackend",
+          "message": "  Expected: String containing \"Backend: P2-Analytic; variante: analytic/r2-20261023\"\n  But was:  \"# Prueba de física\n\nEstado: **INCOMPLETO**\nCriterios de gate: **NO APROBADOS / NO EVALUADOS**\nEste cálculo no elige backend ni autoriza el gate I4c.\n\nBackend: P1-PhysX; variante: baseline/ccdDyn-co1mm-it6-1; build: 0.1.0+editor editor\nDispositivo: edit"
+        },
+        {
+          "name": "CampaignHeader_RecordsEffectiveFastMotionThresholdAndItsP1Scope",
+          "message": "  Expected: String containing \"fastMotionThreshold=0.01\"\n  But was:  \"# Prueba de física\n\nEstado: **INCOMPLETO**\nCriterios de gate: **NO APROBADOS / NO EVALUADOS**\nEste cálculo no elige backend ni autoriza el gate I4c.\n\nBackend: P1-PhysX; variante: baseline/ccdDyn-co1mm-it6-1; build: 0.1.0+editor editor\nDispositivo: editor; configuración: c86243b15"
+        }
+      ]
+    },
+    {
+      "stage": "10-early-cancel-green",
+      "counts": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/10-early-cancel-green/playmode-results.xml",
+      "xmlSha256": "d1689b36c7ca9d7906df1b176f5dd80701a1a5bcee289629f0ad367b83bd4e6d",
+      "logSha256": "f4e03f2da017b1de77cf624a2c323f68c59da4824e8cdd2b7f1f1505badc2fc1",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+        "AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "10-early-cancel-red",
+      "counts": {
+        "total": 3,
+        "passed": 2,
+        "failed": 1,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/10-early-cancel-red/playmode-results.xml",
+      "xmlSha256": "da81861fdc1d6d43851fdae419db63b5257f54d05dcd8fbd59d7ce343b8ae0e9",
+      "logSha256": "d3e4cd1d9e9ddda23ed2ea09397c99a58814d5cbe397f2b16158a53b6ccc3785",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+        "AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa"
+      },
+      "failedTests": [
+        {
+          "name": "Campaign_CancelBeforeRunnerStillIdentifiesBackendAndSettings",
+          "message": "  Expected: String containing \"Backend: P2-Analytic; variante: analytic/r2-20261023\"\n  But was:  \"# Prueba de física\n\nEstado: **INCOMPLETO**\nCriterios de gate: **NO APROBADOS / NO EVALUADOS**\nEste cálculo no elige backend ni autoriza el gate I4c.\n\nBackend: P1-PhysX; variante: analytic/r2-20261023; build: 0.1.0+editor editor\nDispositivo: editor; con"
+        }
+      ]
+    },
+    {
+      "stage": "11-report-name-green",
+      "counts": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/11-report-name-green/playmode-results.xml",
+      "xmlSha256": "bd00a36512867b28f57634b7e0a6320adae5d4468ab304b96996d9522d70e1be",
+      "logSha256": "3ee48e9356b887d3a4b671cf46170bc49f3c9a1617467f11889528b454e441d7",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+        "AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "11-report-name-red",
+      "counts": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/11-report-name-red/playmode-results.xml",
+      "xmlSha256": "831ed02a6f075c6530cacf66f32c35ae5aeb5b3a8dd8cb7ddfb9e299bfbb5408",
+      "logSha256": "051d134a3f54226f779b7ff69b2fad7c149b0ed8f9c1587d4376f628f300bda3",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+        "AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa"
+      },
+      "failedTests": [
+        {
+          "name": "Campaign_CancelBeforeRunnerStillIdentifiesBackendAndSettings",
+          "message": "  Expected: String starting with \"P2-\"\n  But was:  \"P1-20261023-202449-807.md\"\n"
+        }
+      ]
+    },
+    {
+      "stage": "final-editmode",
+      "counts": {
+        "total": 221,
+        "passed": 221,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/final-editmode/editmode-results.xml",
+      "xmlSha256": "b3bc98aa1c23a502d46b0e4a2b861022446c468a54bee4d4d007eca67b887390",
+      "logSha256": "9b19839f46558b7f110c778945d6b9a3191a769fad877a78c2d306f96d27d51e",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+        "AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "final-playmode",
+      "counts": {
+        "total": 61,
+        "passed": 61,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/final-playmode/playmode-results.xml",
+      "xmlSha256": "7996d13bd7cf8f8e5b1c299875087f00d0315a2b3695e8d5f426ce9ceb215178",
+      "logSha256": "93458809f3c9437d2f4cda66142a00833ed2194aabb5e3e8f272074971cf310a",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+        "AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa"
+      },
+      "failedTests": []
+    },
+    {
+      "stage": "final-playmode-after-output-fix",
+      "counts": {
+        "total": 61,
+        "passed": 61,
+        "failed": 0,
+        "skipped": 0
+      },
+      "xmlLocal": "Logs/p2-tdd/final-playmode-after-output-fix/playmode-results.xml",
+      "xmlSha256": "5521a7270c348cbc4ac8547e2d0baec0db76d6ffa5402b80a49788245667eba5",
+      "logSha256": "b65c47f8f9521098125fa3d0a4a7a122dbaf58bc70f7092030ac805fd41b183a",
+      "sourceSnapshotHashes": {
+        "AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+        "AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+        "AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa"
+      },
+      "failedTests": []
+    }
+  ],
+  "groups": {
+    "01": "Vuelo e impacto dentro del paso",
+    "02": "Esquinas dentro de epsilon y resolución conjunta",
+    "03": "Asentamiento, deslizamiento y umbral en paredes sin reposo",
+    "04": "Tope de impactos, descarte y contador por instancia",
+    "05": "Suelo ilimitado y paredes según altura del centro",
+    "06": "Fricción de impacto con tangente conjunta",
+    "07": "Copia de configuración y validación",
+    "08": "Contador C14 y persistencia de muestras C17",
+    "09": "Puente P2 y encabezado ProjectPhysics",
+    "10": "Cancelación antes de crear runner conserva metadata P2",
+    "11": "Prefijo de archivo P2"
+  },
+  "lastEditModeCounts": {
+    "total": 221,
+    "passed": 221,
+    "failed": 0,
+    "skipped": 0
+  },
+  "lastPlayModeCounts": {
+    "total": 61,
+    "passed": 61,
+    "failed": 0,
+    "skipped": 0
+  },
+  "codeNotes": "EditMode completo tras implementación física e instrumentación; PlayMode completo repetido tras corrección del nombre de archivo. Entrada experimental Editor-only no cambia código físico."
+}

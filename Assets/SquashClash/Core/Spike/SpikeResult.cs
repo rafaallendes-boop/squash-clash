@@ -7,6 +7,7 @@ namespace SquashClash.Core.Spike
         public string Backend, Variant, ProjectPhysics, Build, Device, ConfigHash;
         public string Profile, OS, StartedAtUtc, EndedAtUtc, ThermalStart, ThermalEnd, ThermalBenchmarkStart;
         public int FocusInterruptions;
+        public readonly List<double> PredictionSamplesMs = new List<double>();
         public bool Complete;
         public readonly List<string> Details = new List<string>();
         public List<CriterionResult> Criteria = new List<CriterionResult>();

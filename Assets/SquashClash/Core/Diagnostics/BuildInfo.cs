@@ -6,7 +6,7 @@ namespace SquashClash.Core.Diagnostics
     [Serializable]
     public sealed class BuildInfo
     {
-        public string version, gitHash, profile, builtAtUtc, unityVersion;
+        public string version, gitHash, profile, builtAtUtc, unityVersion, projectPhysics;
         public bool gitDirty;
 
         public static BuildInfo FromJson(string json) => JsonUtility.FromJson<BuildInfo>(json);

@@ -34,6 +34,12 @@ namespace SquashClash.Core.Spike
             }
             if (r.Criteria != null) foreach (var row in r.Criteria)
                 if (row != null && !known.Contains(row.Id ?? "")) { text.AppendLine("\nCriterio desconocido (no permite aprobación):"); WriteRow(text, row); }
+            if(r.PredictionSamplesMs.Count>0)
+            {
+                text.AppendLine("\n## Muestras individuales C17 (ms, orden de adquisición; calentamientos descartados)\n");
+                for(int i=0;i<r.PredictionSamplesMs.Count;i++)
+                    text.AppendLine(FormattableString.Invariant($"- C17 muestra {i+1:D3}: {r.PredictionSamplesMs[i]:R} ms"));
+            }
             text.AppendLine("\n## Evidencia por caso (hasta 12 notas generales por criterio; clasificación de todas las divergencias C5–C7 y máximo C16 sin ese límite)\n");
             foreach (var detail in r.Details) text.AppendLine("- " + Escape(detail));
             return text.ToString();

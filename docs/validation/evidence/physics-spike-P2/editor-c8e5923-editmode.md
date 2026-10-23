@@ -1,0 +1,267 @@
+# Prueba de física
+
+Estado: **COMPLETO**
+Criterios de gate evaluados: **Pass**
+Este cálculo no elige backend ni autoriza el gate I4c.
+
+Backend: P2-Analytic; variante: analytic/r2-20261023; build: editor/c8e5923
+Dispositivo: editor; configuración: c86243b15a97
+Perfil: editor-editmode; OS: Mac OS X 26.6.2; UTC: 2026-10-23T20:23:12.9016920Z → 2026-10-23T20:23:24.5809110Z
+Térmico: no medido / editor → no medido / editor
+Térmico al iniciar benchmark C17 (informativo): no medido / editor
+Interrupciones de foco: 0; solo una ejecución completa permite evaluar sus criterios.
+ProjectPhysics: fastMotionThreshold=0.01 (relevante solo para P1); bounceThreshold=0.1; Unity=6000.3.27f1
+
+| ID | Requisito | Escenarios | Medición | Umbral | Veredicto | Gate | evaluados/no evaluables/esperados | No aplica (fuera de población) | Cobertura |
+|---|---|---|---|---|---|---|---|---|---|
+| C1 | Robustez (§8.2.2, §17.A.1): Crossings | S1–S10; S8 (10 000); S8d | fallos=0; evaluados=10053; no evaluables=0; atravesamientos=0; salidas superiores=1747; seed=20261020; S8=10000; S8d=36 | 0 atravesamientos | Pass | sí | 10053/0/10053 | 0 | cerrada |
+| C2 | Estados finitos: AllFinite | Todos | fallos=0; evaluados=67825; no evaluables=0 | Todos finitos | Pass | sí | 67825/0/67825 | 0 | cerrada |
+| C3 | Esquinas sin ganancia (§8.2.2): MaxRelativeEnergyGain | S4, S5, S6, S8, S8d; pasos de esquina | fallos=0; evaluados=1701; no evaluables=0; no aplica (sin pasos de esquina, fuera de población)=8338; Corner [Measured=1701, NotApplicable=8338, NotEvaluable=0]: máximo entre casos medidos: S4 Measured, ganancia=0, paso=22, rapidez antes=13.6170807 m/s, después=6.26383972 m/s; CornerWithImpact [Measured=1701, NotApplicable=8338, NotEvaluable=0]: máximo entre casos medidos: S4 Measured, ganancia=0, paso=22, rapidez antes=13.6170807 m/s, después=6.26383972 m/s; CornerPersistentOnly [Measured=1234, NotApplicable=8805, NotEvaluable=0]: máximo entre casos medidos: S8-12 Measured, ganancia=0, paso=223, rapidez antes=4.41149855 m/s, después=4.38697338 m/s | ≤ 1e-5 (ruido float) | Pass | sí | 1701/0/1701 | 8338 | cerrada |
+| C4 | Sin vibración (§8.2.2): RepeatedImpacts | S4, S5, S6, S10 | fallos=0; evaluados=4; no evaluables=0; impactos repetidos=0 | 0 (\|vn\| > 0,5 m/s; no persistentes) | Pass | sí | 4/0/4 | 0 | cerrada |
+| C5 | Consistencia (§17.A.2): igualdad bit a bit | S1–S7, S9, S10 nuevas; 1/100 S8 reutilizada/nueva | fallos=0; evaluados=117; no evaluables=0 | Igualdad de estados y contactos | Pass | sí | 117/0/117 | 0 | cerrada |
+| C6 | Predicción desde lanzamiento (§8.2.1, §17.A.3) | S1–S10 y S8 completo; Reset(s) | fallos=0; evaluados=10017; no evaluables=0 | Igualdad bit a bit | Pass | sí | 10017/0/10017 | 0 | cerrada |
+| C7 | Relanzamiento en vuelo (§17.A.3) | S1–S7, S9, S8 completo; k=30 y siguiente al primer contacto; Reset de ambos | fallos=0; evaluados=18797; no evaluables=0; Measured=18797; NotApplicable=1235; NotEvaluable=0 (no aplica fuera de población) | Igualdad bit a bit | Pass | sí | 18797/0/18797 | 1235 | cerrada |
+| C8 | Reutilización (§8.2.1 cond.1) | S10→S10b (S1 reutilizada), S6→S1 frente a nueva | fallos=0; evaluados=2; no evaluables=0 | Igualdad bit a bit | Pass | sí | 2/0/2 | 0 | cerrada |
+| C9 | Continuación sin reiniciar el juego (D-3) | S1, S6; k=30 | fallos=0; evaluados=2; no evaluables=0 | Diagnóstico; no decide el gate | Info | no | 2/0/2 | 0 | cerrada |
+| C10 | Precisión de contacto S9: ContactPrecisionMm | S9a–i | fallos=0; evaluados=9; no evaluables=0; error máximo mm=0.0009536743 | ≤ 1 mm [EXPERIMENTO, D-1] | Pass | sí | 9/0/9 | 0 | cerrada |
+| C11 | Clasificación de líneas: punto observado | S9 fuera/dentro; borde exacto solo precisión | fallos=0; evaluados=6; no evaluables=0 | Igual a ExpectTouch | Pass | sí | 6/0/6 | 0 | cerrada |
+| C12 | Primer impacto (§8.3.1) | S5, S6, S9 | fallos=0; evaluados=11; no evaluables=0 | Informe al gate; sin umbral inventado | Info | no | 11/0/11 | 0 | cerrada |
+| C13 | Tiempo restante (§8.3.2): mediana y mínimo | Impactos únicos S1, S2, S7, S9 | fallos=0; evaluados=40; no evaluables=0; mínimo=1; mediana=1.00529981 | Informe al gate; ratio sin umbral | Info | no | 40/0/40 | 0 | cerrada |
+| C14 | Impactos por paso (§8.3.2) | Todos | máximo impactos no persistentes/paso=3; tope configurable=True; maxImpactsPerStep=4; veces que se alcanzó el tope=0; unidad del tope=instantes de impacto (simultáneos atómicos); todas las simulaciones de la campaña, benchmark separado | Informe al gate; tope configurable sí/no (P1: no) | Info | no | 1/0/1 | 0 | cerrada |
+| C15 | Simultáneos e instante (§8.3.3, §8.3.7) | S4, S6 | fallos=0; evaluados=2; no evaluables=0 | Mismo paso y ContactTiming; informe al gate | Info | no | 2/0/2 | 0 | cerrada |
+| C16 | Penetración y muestras persistentes | Todos | penetración máxima=1.86264515E-05 mm; muestras persistentes=1217572 (todas las trayectorias ejecutadas) | Informativo | Info | no | 1/0/1 | 0 | cerrada |
+| C17 | Rendimiento (§8.2.2, §17.C, D-2) | S1 hasta segundo bote; Reset incluido; 20 warmup y 200 mediciones | n=200; warmup=20; median=0.017200; p95=0.020300; p99=0.021900; max=0.023400 ms; percentiles nearest rank | p95 ≤ 1 ms en iPhone; editor informativo | Info | no | 200/0/200 | 0 | cerrada |
+| C18 | Facilidad de prueba (§8.2.2) | Capabilities.RunsInEditMode | RunsInEditMode=True; timing=Exact | Preferencia, no gate | Info | no | 1/0/1 | 0 | cerrada |
+
+## Muestras individuales C17 (ms, orden de adquisición; calentamientos descartados)
+
+- C17 muestra 001: 0.016800000000000002 ms
+- C17 muestra 002: 0.0176 ms
+- C17 muestra 003: 0.0179 ms
+- C17 muestra 004: 0.017 ms
+- C17 muestra 005: 0.0206 ms
+- C17 muestra 006: 0.0179 ms
+- C17 muestra 007: 0.021400000000000002 ms
+- C17 muestra 008: 0.019100000000000002 ms
+- C17 muestra 009: 0.021500000000000002 ms
+- C17 muestra 010: 0.0211 ms
+- C17 muestra 011: 0.0181 ms
+- C17 muestra 012: 0.0171 ms
+- C17 muestra 013: 0.0172 ms
+- C17 muestra 014: 0.016800000000000002 ms
+- C17 muestra 015: 0.016900000000000002 ms
+- C17 muestra 016: 0.016800000000000002 ms
+- C17 muestra 017: 0.0176 ms
+- C17 muestra 018: 0.017400000000000002 ms
+- C17 muestra 019: 0.016900000000000002 ms
+- C17 muestra 020: 0.016800000000000002 ms
+- C17 muestra 021: 0.0172 ms
+- C17 muestra 022: 0.0173 ms
+- C17 muestra 023: 0.0175 ms
+- C17 muestra 024: 0.0171 ms
+- C17 muestra 025: 0.0171 ms
+- C17 muestra 026: 0.016800000000000002 ms
+- C17 muestra 027: 0.017 ms
+- C17 muestra 028: 0.0195 ms
+- C17 muestra 029: 0.0175 ms
+- C17 muestra 030: 0.0172 ms
+- C17 muestra 031: 0.017 ms
+- C17 muestra 032: 0.0166 ms
+- C17 muestra 033: 0.0172 ms
+- C17 muestra 034: 0.0172 ms
+- C17 muestra 035: 0.0171 ms
+- C17 muestra 036: 0.017 ms
+- C17 muestra 037: 0.0165 ms
+- C17 muestra 038: 0.016800000000000002 ms
+- C17 muestra 039: 0.017 ms
+- C17 muestra 040: 0.017 ms
+- C17 muestra 041: 0.0179 ms
+- C17 muestra 042: 0.016900000000000002 ms
+- C17 muestra 043: 0.0166 ms
+- C17 muestra 044: 0.0164 ms
+- C17 muestra 045: 0.016900000000000002 ms
+- C17 muestra 046: 0.0171 ms
+- C17 muestra 047: 0.017400000000000002 ms
+- C17 muestra 048: 0.016900000000000002 ms
+- C17 muestra 049: 0.0165 ms
+- C17 muestra 050: 0.017 ms
+- C17 muestra 051: 0.0172 ms
+- C17 muestra 052: 0.0171 ms
+- C17 muestra 053: 0.0172 ms
+- C17 muestra 054: 0.0173 ms
+- C17 muestra 055: 0.017 ms
+- C17 muestra 056: 0.016800000000000002 ms
+- C17 muestra 057: 0.016900000000000002 ms
+- C17 muestra 058: 0.0172 ms
+- C17 muestra 059: 0.0179 ms
+- C17 muestra 060: 0.0176 ms
+- C17 muestra 061: 0.016900000000000002 ms
+- C17 muestra 062: 0.019700000000000002 ms
+- C17 muestra 063: 0.017400000000000002 ms
+- C17 muestra 064: 0.0188 ms
+- C17 muestra 065: 0.021400000000000002 ms
+- C17 muestra 066: 0.019100000000000002 ms
+- C17 muestra 067: 0.0172 ms
+- C17 muestra 068: 0.017 ms
+- C17 muestra 069: 0.0165 ms
+- C17 muestra 070: 0.017 ms
+- C17 muestra 071: 0.0178 ms
+- C17 muestra 072: 0.0166 ms
+- C17 muestra 073: 0.017 ms
+- C17 muestra 074: 0.0171 ms
+- C17 muestra 075: 0.0171 ms
+- C17 muestra 076: 0.0173 ms
+- C17 muestra 077: 0.018600000000000002 ms
+- C17 muestra 078: 0.0166 ms
+- C17 muestra 079: 0.016800000000000002 ms
+- C17 muestra 080: 0.0176 ms
+- C17 muestra 081: 0.016900000000000002 ms
+- C17 muestra 082: 0.017400000000000002 ms
+- C17 muestra 083: 0.017400000000000002 ms
+- C17 muestra 084: 0.019700000000000002 ms
+- C17 muestra 085: 0.0167 ms
+- C17 muestra 086: 0.0172 ms
+- C17 muestra 087: 0.0171 ms
+- C17 muestra 088: 0.016900000000000002 ms
+- C17 muestra 089: 0.0171 ms
+- C17 muestra 090: 0.0167 ms
+- C17 muestra 091: 0.0165 ms
+- C17 muestra 092: 0.016900000000000002 ms
+- C17 muestra 093: 0.0167 ms
+- C17 muestra 094: 0.0175 ms
+- C17 muestra 095: 0.017400000000000002 ms
+- C17 muestra 096: 0.016800000000000002 ms
+- C17 muestra 097: 0.018000000000000002 ms
+- C17 muestra 098: 0.0165 ms
+- C17 muestra 099: 0.0173 ms
+- C17 muestra 100: 0.0172 ms
+- C17 muestra 101: 0.0171 ms
+- C17 muestra 102: 0.0172 ms
+- C17 muestra 103: 0.0167 ms
+- C17 muestra 104: 0.0176 ms
+- C17 muestra 105: 0.016900000000000002 ms
+- C17 muestra 106: 0.016900000000000002 ms
+- C17 muestra 107: 0.0177 ms
+- C17 muestra 108: 0.0167 ms
+- C17 muestra 109: 0.0167 ms
+- C17 muestra 110: 0.017 ms
+- C17 muestra 111: 0.0172 ms
+- C17 muestra 112: 0.0176 ms
+- C17 muestra 113: 0.0184 ms
+- C17 muestra 114: 0.0171 ms
+- C17 muestra 115: 0.016900000000000002 ms
+- C17 muestra 116: 0.0173 ms
+- C17 muestra 117: 0.020200000000000003 ms
+- C17 muestra 118: 0.0175 ms
+- C17 muestra 119: 0.018500000000000003 ms
+- C17 muestra 120: 0.0219 ms
+- C17 muestra 121: 0.020300000000000002 ms
+- C17 muestra 122: 0.017 ms
+- C17 muestra 123: 0.016800000000000002 ms
+- C17 muestra 124: 0.0173 ms
+- C17 muestra 125: 0.0179 ms
+- C17 muestra 126: 0.017 ms
+- C17 muestra 127: 0.0172 ms
+- C17 muestra 128: 0.017 ms
+- C17 muestra 129: 0.017 ms
+- C17 muestra 130: 0.017 ms
+- C17 muestra 131: 0.0175 ms
+- C17 muestra 132: 0.017 ms
+- C17 muestra 133: 0.0172 ms
+- C17 muestra 134: 0.017 ms
+- C17 muestra 135: 0.0165 ms
+- C17 muestra 136: 0.0187 ms
+- C17 muestra 137: 0.0176 ms
+- C17 muestra 138: 0.016900000000000002 ms
+- C17 muestra 139: 0.0199 ms
+- C17 muestra 140: 0.0177 ms
+- C17 muestra 141: 0.0172 ms
+- C17 muestra 142: 0.0172 ms
+- C17 muestra 143: 0.0175 ms
+- C17 muestra 144: 0.0167 ms
+- C17 muestra 145: 0.0167 ms
+- C17 muestra 146: 0.0171 ms
+- C17 muestra 147: 0.0166 ms
+- C17 muestra 148: 0.017400000000000002 ms
+- C17 muestra 149: 0.017400000000000002 ms
+- C17 muestra 150: 0.0167 ms
+- C17 muestra 151: 0.0173 ms
+- C17 muestra 152: 0.0172 ms
+- C17 muestra 153: 0.016900000000000002 ms
+- C17 muestra 154: 0.0172 ms
+- C17 muestra 155: 0.018600000000000002 ms
+- C17 muestra 156: 0.0171 ms
+- C17 muestra 157: 0.0234 ms
+- C17 muestra 158: 0.0194 ms
+- C17 muestra 159: 0.0175 ms
+- C17 muestra 160: 0.020800000000000003 ms
+- C17 muestra 161: 0.0222 ms
+- C17 muestra 162: 0.016800000000000002 ms
+- C17 muestra 163: 0.016900000000000002 ms
+- C17 muestra 164: 0.0175 ms
+- C17 muestra 165: 0.016900000000000002 ms
+- C17 muestra 166: 0.016800000000000002 ms
+- C17 muestra 167: 0.0175 ms
+- C17 muestra 168: 0.016800000000000002 ms
+- C17 muestra 169: 0.0167 ms
+- C17 muestra 170: 0.017 ms
+- C17 muestra 171: 0.0183 ms
+- C17 muestra 172: 0.0175 ms
+- C17 muestra 173: 0.0175 ms
+- C17 muestra 174: 0.0219 ms
+- C17 muestra 175: 0.0189 ms
+- C17 muestra 176: 0.017400000000000002 ms
+- C17 muestra 177: 0.017 ms
+- C17 muestra 178: 0.017400000000000002 ms
+- C17 muestra 179: 0.0175 ms
+- C17 muestra 180: 0.0167 ms
+- C17 muestra 181: 0.016800000000000002 ms
+- C17 muestra 182: 0.016900000000000002 ms
+- C17 muestra 183: 0.0167 ms
+- C17 muestra 184: 0.017 ms
+- C17 muestra 185: 0.0177 ms
+- C17 muestra 186: 0.0172 ms
+- C17 muestra 187: 0.016900000000000002 ms
+- C17 muestra 188: 0.0172 ms
+- C17 muestra 189: 0.017400000000000002 ms
+- C17 muestra 190: 0.0173 ms
+- C17 muestra 191: 0.0176 ms
+- C17 muestra 192: 0.0166 ms
+- C17 muestra 193: 0.0195 ms
+- C17 muestra 194: 0.0173 ms
+- C17 muestra 195: 0.017 ms
+- C17 muestra 196: 0.0172 ms
+- C17 muestra 197: 0.0178 ms
+- C17 muestra 198: 0.0171 ms
+- C17 muestra 199: 0.0171 ms
+- C17 muestra 200: 0.0171 ms
+
+## Evidencia por caso (hasta 12 notas generales por criterio; clasificación de todas las divergencias C5–C7 y máximo C16 sin ese límite)
+
+- C15 S4: primer paso=22; mismo paso=True; Floor, paso=22, Exact, t=0.0006021214; RightWall, paso=22, Exact, t=0.0006021214
+- C12 S5: observado=FrontWall, punto=(0.025000, 1.500000, 0.000000), paso=29; ideal=FrontWall, t=0.2383370663362244, punto=(0.025000, 1.500000, 0.000000)
+- C12 S6: observado=LeftWall, punto=(6.400000, 1.000000, 9.730000), paso=24; ideal=LeftWall, t=0.19606242690409423, punto=(6.400000, 1.000000, 9.730000)
+- C15 S6: primer paso=24; mismo paso=True; LeftWall, paso=24, Exact, t=0.004395852; BackWall, paso=24, Exact, t=0.004395852
+- C12 S9a: observado=FrontWall, punto=(3.200000, 4.557000, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 4.557000, 0.000000)
+- C12 S9b: observado=FrontWall, punto=(3.200000, 4.560001, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 4.560000, 0.000000)
+- C12 S9c: observado=FrontWall, punto=(3.200000, 4.563001, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 4.563000, 0.000000)
+- C12 S9d: observado=FrontWall, punto=(3.200000, 0.493000, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 0.493000, 0.000000)
+- C12 S9e: observado=FrontWall, punto=(3.200000, 0.490000, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 0.490000, 0.000000)
+- C12 S9f: observado=FrontWall, punto=(3.200000, 0.487000, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 0.487000, 0.000000)
+- C12 S9g: observado=FrontWall, punto=(3.200000, 1.767000, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 1.767000, 0.000000)
+- C12 S9h: observado=FrontWall, punto=(3.200000, 1.770000, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 1.770000, 0.000000)
+- C12 S9i: observado=FrontWall, punto=(3.200000, 1.773000, 0.000000), paso=40; ideal=FrontWall, t=0.33200000002980234, punto=(3.200000, 1.773000, 0.000000)
+- C7 S8-4 C7 k30: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-18 C7 postcontacto: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-25 C7 k30: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-25 C7 postcontacto: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-26 C7 k30: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-40 C7 postcontacto: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-46 C7 k30: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-46 C7 postcontacto: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-48 C7 postcontacto: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-49 C7 k30: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-49 C7 postcontacto: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C7 S8-51 C7 k30: NotApplicable; checkpoint fuera de trayectoria limpia por salida superior
+- C13 ratios medidos ordenados (float32, R): 1, 1.00000012, 1.00000012, 1.00000012, 1.00000012, 1.00000012, 1.00000012, 1.00000012, 1.00000012, 1.00000012, 1.00000024, 1.0000062, 1.00000918, 1.00001538, 1.00001538, 1.00001538, 1.00042129, 1.00312912, 1.00401914, 1.00526643, 1.00533319, 1.00661314, 1.00759828, 1.007836, 1.00858974, 1.01037025, 1.01216209, 1.013383, 1.0201714, 1.0207212, 1.02489793, 1.0257237, 1.02619755, 1.028216, 1.031335, 1.03539264, 1.03594148, 1.04199588, 1.0532186, 1.06042528
+- C16 máximo: S8-1175 robustez; paso=260; superficie=LeftWall; tipo=impacto; penetración=1.86264515E-05 mm; rapidez=0.6785764 m/s; previo=paso=259, p=(6.379922, 0.02, 1.97235942), v=(0.0403194278, 0, 0.7154914), bits=40CC2852,3CA3D70A,3FFC7646,3D2525FC,00000000,3F372A72; estado=paso=260, p=(6.38, 0.02, 1.97814047), v=(0, 0, 0.6785764), bits=40CC28F6,3CA3D70A,3FFD33B5,00000000,00000000,3F2DB72F; contactos=[Floor@260 persistent=True, Exact, t=0, p=(6.379922, 0, 1.97235942), n=(0, 1, 0), approach=(0.0403194278, 0, 0.7154914); LeftWall@260 persistent=False, Exact, t=0.00194686465, p=(6.4, 0.02, 1.97374678), n=(-1, 0, 0), approach=(0.0399970636, 0, 0.709770858)]; siguiente=paso=261, p=(6.38, 0.02, 1.98369312), v=(0, 0, 0.6540514), bits=40CC28F6,3CA3D70A,3FFDE9A8,00000000,00000000,3F276FEA; contactos siguientes=[Floor@261 persistent=True, Exact, t=0, p=(6.38, 0, 1.97814047), n=(0, 1, 0), approach=(0, 0, 0.6785764)]

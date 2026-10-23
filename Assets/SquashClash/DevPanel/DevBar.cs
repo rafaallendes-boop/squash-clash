@@ -29,7 +29,7 @@ namespace SquashClash.DevPanel
             var tests = new VisualElement(); tests.style.flexDirection=FlexDirection.Row; bar.Add(tests);
             scenario=new Button(()=>spike.LaunchNextScenario()) {text="Escenario",name="scenario"};
             scenario.style.flexGrow=1;scenario.style.height=44;tests.Add(scenario);
-            var test=new Button(()=>spike.Begin()) {text="Prueba física",name="physics-spike"};
+            var test=new Button(()=>spike.Begin()) {text="Prueba física P2",name="physics-spike"};
             test.style.flexGrow=1;test.style.height=44;tests.Add(test);
             // Insert below the runtime resume overlay so it blocks all controls.
             root.Insert(0,bar);root.RegisterCallback<GeometryChangedEvent>(_=>PlaceInSafeArea());PlaceInSafeArea();
