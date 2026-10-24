@@ -468,3 +468,10 @@ Observaciones de Claude:
 2. Sombra no escala con aids.ballVisualScale: mantener experimental para juicio del PO en H1, **sin cambios ahora**.
 
 **I6b / T6.3 autorizado** en `firstball/i6b-legibility-launches`: L1–L6 con condiciones numéricas y selector en barra, más corrección de pausa anterior. TDD, PR para Claude e informe; detenerse sin fusionar por cuenta propia. No adelantar H1, Etapa 7 ni gameplay, sin modificar spec/criterios/umbrales. Renovar perfil antes de instalaciones desde el 27 de octubre y comprobar siempre vigencia efectiva; herramientas intactas.
+
+
+## I6b implementado, comprobación nativa en preparación — 2026-10-24
+
+Dentro de la autorización anterior: fuente **2109af8**, L1–L6 con Ballistics/condiciones del plan y selector en barra, corrección de edades de estela/marcas mientras Clock.Paused. Cuatro grupos RED válidos→GREEN, regresión **269/269 EditMode y 130/130 PlayMode**, cero fallos/omitidos, XML frescos y sin CS. Defaults **0d39e6016bd8**, 41 claves intactas y P2 por defecto; P1 configurable, selector probado con ambos. No cambios en host, reloj, motores, spec, criterios/umbrales, escenarios del spike ni settings. Sombra experimental sin cambio de escala, H1 posterior.
+
+Exports limpios dev/prod RELEASE-CHECK: OK y metadata limpia; build dev Release ARM64 firmada en preparación. Recorrido corto L1–L6 con ambas cámaras todavía pendiente; no se declara instalación/aceptación nativa antes de completar. Sin campaña física/rendimiento ni H1/Etapa 7/gameplay. [Informe](2026-10-24-first-ball-i6b-legibility-launches.md), [pruebas](../validation/evidence/2026-10-24-i6b-tests.json). PR para Claude, sin fusión/cierre de I6b por cuenta propia. Perfil: renovación antes de instalación desde el 27 y comprobación de vigencia siempre.

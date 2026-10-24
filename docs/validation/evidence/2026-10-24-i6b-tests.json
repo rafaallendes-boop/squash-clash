@@ -1,0 +1,384 @@
+{
+  "scope": "I6b/T6.3 y pausa de ayudas; regresión con defaults y P2, no H1 ni campaña de física/rendimiento",
+  "testedSourceCommit": "2109af8a3abb45b915210a7a7da736c45825b406",
+  "defaultEffectiveHash": "0d39e6016bd8",
+  "runs": [
+    {
+      "total": 2,
+      "passed": 0,
+      "failed": 2,
+      "skipped": 0,
+      "stage": "01-pause-red",
+      "platform": "playmode",
+      "expected": "red",
+      "xmlSha256": "f9612057c87e578d05009a0c14090a78a3cf7bd886fdfa8511b1ee99fe8f693d",
+      "logSha256": "a2abe2185647a3fe9e1e9530231575a857ad87dd6ecf267c17fc36f8e8113d23",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "name": "PausedMarks_DoNotFadeDuringWaitOrSingleSteps_ThenResumeAging",
+          "message": "  Paused inspection must retain the mark\n  Expected: 1\n  But was:  0\n"
+        },
+        {
+          "name": "PausedTrail_RetainsHistoryDuringRealWaitAndSingleStep_ThenExpires",
+          "message": "  Single-step inspection retains old points\n  Expected is <UnityEngine.Vector3[6]>, actual is <System.Linq.Enumerable+ListPartition`1[UnityEngine.Vector3]>\n  Values differ at index [0]\n  Expected: (3.20, 1.00, 7.00)\n  But was:  (2.40, 2.00, 5.00)\n"
+        }
+      ]
+    },
+    {
+      "total": 12,
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "stage": "03-pause-green",
+      "platform": "playmode",
+      "expected": "green",
+      "xmlSha256": "86ad542e0e059d476e67a0ad03c383971b0ba2cbd2f34ee9ad46b6a53a85d6b0",
+      "logSha256": "4677c70110973bb3e9f588a821dcdb793186bf622803754804a7689b34c7a5ee",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "total": 7,
+      "passed": 0,
+      "failed": 7,
+      "skipped": 0,
+      "stage": "04-launch-catalog-red",
+      "platform": "editmode",
+      "expected": "red",
+      "xmlSha256": "41a64d2f5d6eb48411034bab88791340dfdb9b90f695f7f1b73866fba78068fe",
+      "logSha256": "9d002fecac757fdff0a22277832eab5199a4e36d1be59afddb942b65075b7206",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "name": "Catalog_HasExactlyL1ThroughL6",
+          "message": "  Expected is <System.String[6]>, actual is <System.Linq.EmptyPartition`1[System.String]>\n  Values differ at index [0]\n"
+        },
+        {
+          "name": "Launch_StartsStrictlyInsideAndAimsAtFrontWithBallistics(\"L1\")",
+          "message": "System.InvalidOperationException : Sequence contains no matching element"
+        },
+        {
+          "name": "Launch_StartsStrictlyInsideAndAimsAtFrontWithBallistics(\"L2\")",
+          "message": "System.InvalidOperationException : Sequence contains no matching element"
+        },
+        {
+          "name": "Launch_StartsStrictlyInsideAndAimsAtFrontWithBallistics(\"L3\")",
+          "message": "System.InvalidOperationException : Sequence contains no matching element"
+        },
+        {
+          "name": "Launch_StartsStrictlyInsideAndAimsAtFrontWithBallistics(\"L4\")",
+          "message": "System.InvalidOperationException : Sequence contains no matching element"
+        },
+        {
+          "name": "Launch_StartsStrictlyInsideAndAimsAtFrontWithBallistics(\"L5\")",
+          "message": "System.InvalidOperationException : Sequence contains no matching element"
+        },
+        {
+          "name": "Launch_StartsStrictlyInsideAndAimsAtFrontWithBallistics(\"L6\")",
+          "message": "System.InvalidOperationException : Sequence contains no matching element"
+        }
+      ]
+    },
+    {
+      "total": 6,
+      "passed": 0,
+      "failed": 6,
+      "skipped": 0,
+      "stage": "05-launch-physics-red",
+      "platform": "playmode",
+      "expected": "red",
+      "xmlSha256": "1e93d973c29628a953c55ff1e437fdf639b106fd0c47a2b6de3e7486581b6f67",
+      "logSha256": "4eeb75ca4d3a0006399a0ce99d8998837faaf9cf3e14e8c5bbcc1075b9fdfab1",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "name": "DefaultP2_MeetsUnchangedLegibilityConditionBeforeSecondBounce(\"L1\")",
+          "message": "System.InvalidOperationException : Sequence contains no matching element"
+        },
+        {
+          "name": "DefaultP2_MeetsUnchangedLegibilityConditionBeforeSecondBounce(\"L2\")",
+          "message": "System.InvalidOperationException : Sequence contains no matching element"
+        },
+        {
+          "name": "DefaultP2_MeetsUnchangedLegibilityConditionBeforeSecondBounce(\"L3\")",
+          "message": "System.InvalidOperationException : Sequence contains no matching element"
+        },
+        {
+          "name": "DefaultP2_MeetsUnchangedLegibilityConditionBeforeSecondBounce(\"L4\")",
+          "message": "System.InvalidOperationException : Sequence contains no matching element"
+        },
+        {
+          "name": "DefaultP2_MeetsUnchangedLegibilityConditionBeforeSecondBounce(\"L5\")",
+          "message": "System.InvalidOperationException : Sequence contains no matching element"
+        },
+        {
+          "name": "DefaultP2_MeetsUnchangedLegibilityConditionBeforeSecondBounce(\"L6\")",
+          "message": "System.InvalidOperationException : Sequence contains no matching element"
+        }
+      ]
+    },
+    {
+      "total": 7,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "stage": "06-launch-catalog-green",
+      "platform": "editmode",
+      "expected": "green",
+      "xmlSha256": "11ff6e52bef30fb5a4aa6f68531007e05243a0bf7145b6a0c60a854d93ca34fe",
+      "logSha256": "b573ec8331ca174ef583d2583e3a713f691846d1a9aaa3e7552cca0e9114602b",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "stage": "07-launch-physics-check",
+      "platform": "playmode",
+      "expected": "green",
+      "xmlSha256": "ae6e7a331ac083b4ace3462ecba7a289e5b99244be8258e893c1ef2726fe3b9a",
+      "logSha256": "42f6467cd440e9038cdf5deba32617c9793953ce6216ce8dc1aae48ace662c3b",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "total": 2,
+      "passed": 0,
+      "failed": 2,
+      "skipped": 0,
+      "stage": "08-selector-red",
+      "platform": "playmode",
+      "expected": "red",
+      "xmlSha256": "5ba6639af37000f08c34e39cf0587d1447a674bcf54a1685f58baf4d55ad7d2f",
+      "logSha256": "1acd6604b6a47940c68d1b86ac21e2285ecca1db88b0b4ec4613ab34d65fd411",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "name": "Selector_UsesAllSixLaunchesAndPreservesConfig_P1",
+          "message": "  L1–L6 selector in the bar\n  Expected: not null\n  But was:  null\n"
+        },
+        {
+          "name": "Selector_UsesAllSixLaunchesAndPreservesConfig_P2",
+          "message": "  L1–L6 selector in the bar\n  Expected: not null\n  But was:  null\n"
+        }
+      ]
+    },
+    {
+      "total": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "stage": "09-selector-green",
+      "platform": "playmode",
+      "expected": "green",
+      "xmlSha256": "d49779f5512c7729075a9d69d3c6aefcfbfd64052cac345c953781ce0b23b01c",
+      "logSha256": "2a350a2f0b89305d29f843273c17fc286779853df2c1a1e8d72dd56c58a7f567",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "total": 269,
+      "passed": 269,
+      "failed": 0,
+      "skipped": 0,
+      "stage": "10-final-edit-green",
+      "platform": "editmode",
+      "expected": "green",
+      "xmlSha256": "872a473a4fcc4fbe16f16cd74b94948b8f774cd82a47e1d14be390773f0cab27",
+      "logSha256": "8cfee10dda98cb4bbd705772d0315d338b5094d98ac0cde5ac94b39b6de0b0d4",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "total": 130,
+      "passed": 130,
+      "failed": 0,
+      "skipped": 0,
+      "stage": "11-final-play-green",
+      "platform": "playmode",
+      "expected": "green",
+      "xmlSha256": "5dd5b5b08600efc8f712423fc7779d2025187d950a6ecd1e40d680bdf5a9fa90",
+      "logSha256": "b8114bdb21718920aed76ef0b70ff0b8ccc01e26bf971c5050f837741ef1edd6",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    }
+  ],
+  "rejectedRuns": [
+    {
+      "stage": "02-pause-green",
+      "reason": "GREEN fallido 11/12: el test de duración extendida esperaba dos puntos, aunque uno ya tenía más de 0,3 s acumulados. Se reinició explícitamente la historia antes de comprobar 0,3 s; no cambio de criterio ni corrección adicional de producción.",
+      "xmlSha256": "3aa12adbc4ecec8c28e82662bf2f0234a416f4d12890a2186df41a36fea62e05",
+      "failed": 1
+    }
+  ],
+  "sourceHashes": {
+    "Assets/SquashClash/Core/Config/ApplyClass.cs": "959578504371b48be07ec468d3662a3eb5728bd23eec73007317e75d1a8863ad",
+    "Assets/SquashClash/Core/Config/EffectiveConfig.cs": "746f97550b2ef6f6a73e24f5d7d578b3e03d1320d7db945e65b7bd672bb4a98c",
+    "Assets/SquashClash/Core/Config/LaunchPresets.cs": "79822dc58fba054fe4cf8595efd9a177d3d244a8cca57120b98698f9220ac48e",
+    "Assets/SquashClash/Core/Config/ParamCatalog.cs": "d5f3ff86ed625f30393fdab8a9a395f7010cdbf3bb0a231a1af4882cf6151a4a",
+    "Assets/SquashClash/Core/Config/ParamDef.cs": "fca589361b177022a193fc4caa772e119c7d8933999b6bd56dac53c26a914f05",
+    "Assets/SquashClash/Core/Config/ParamKind.cs": "001629f4b5a733bf6576135a6d9d504ae45c44d2737fd1c91ed691bb17e2142e",
+    "Assets/SquashClash/Core/Config/ParamSet.cs": "86105715dbd4e8a83d39e582143f67fd055e9136c38e384b0429c85f5773c51d",
+    "Assets/SquashClash/Core/Config/PresetCodec.cs": "8ce9515b349357b3032e984783cae796b643723ce7f7846d282642d779bae597",
+    "Assets/SquashClash/Core/Config/PresetFile.cs": "7fe026820782d2c3179301ef98b14a283fb6422661d812265d8de9aa34fdc292",
+    "Assets/SquashClash/Core/Config/PresetJsonShape.cs": "ba76600f7373665aac1ef571a04c7a05ac3e2b05181ed9bea2ebdbe7fe76ecaa",
+    "Assets/SquashClash/Core/Config/PresetStore.cs": "bf9b982b96fde1ad71c0b9400baf611a35a75139882666aecf8aa7b7fd469593",
+    "Assets/SquashClash/Core/Config/TuningState.cs": "47080091b8d05b9f9787edbded2687b7c15c3efec7e8cf2ec03912856ae2d47c",
+    "Assets/SquashClash/Core/Court/CourtDimensions.cs": "fd7b4c9d4574421b32374fec81da954726af664148d1cf3c460a314091a41546",
+    "Assets/SquashClash/Core/Court/CourtLines.cs": "e843855be96aadd1c0d43a7a2757547508f8e0bdd83806ffc31a5f68e4e25a81",
+    "Assets/SquashClash/Core/Court/LineBand.cs": "4601b2097e0eabbd906f487619540e0e69ae9c16296c1d26434b5a7d619f16dc",
+    "Assets/SquashClash/Core/Court/LineContactClassifier.cs": "7ce1d61e117878033016c0462af32aa65481d7532f57458b59d95c6bc00e4981",
+    "Assets/SquashClash/Core/Court/LineId.cs": "e635dc294046472314d5ba86a30132719632c787b3b5df81621e5ab36d08fe68",
+    "Assets/SquashClash/Core/Court/SurfaceId.cs": "74a3a572072cb748b5fe58221da77c0cb8cdae97009264b3d7c3d0aa03dfbe99",
+    "Assets/SquashClash/Core/Diagnostics/BuildInfo.cs": "2cb7b9f5fe509b7cc4195b1333b5fe088ed937b887eb71554680893ced44139f",
+    "Assets/SquashClash/Core/Diagnostics/FrameTimeStats.cs": "130e0f6d99088475667b6fa04f598b6ff41bc2b73857caf2bfed47a46400ad28",
+    "Assets/SquashClash/Core/Diagnostics/MetricsLog.cs": "6ee21396bf16c7024cfaee362462549f307781c638bb316c1d8f9909e1a634f8",
+    "Assets/SquashClash/Core/Simulation/AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+    "Assets/SquashClash/Core/Simulation/AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+    "Assets/SquashClash/Core/Simulation/BallState.cs": "bf2613ffb614750e5e53998d91783007e1a3adf5aeb09ce0a8342af2d7909825",
+    "Assets/SquashClash/Core/Simulation/Ballistics.cs": "caaab79469ce107223a881ec552fed696c9e058d0e55e6484137a23310d8cd06",
+    "Assets/SquashClash/Core/Simulation/ContactEvent.cs": "126813c787684da37bcedab50d963dd0334cad654f663a79665c5948c88b4e86",
+    "Assets/SquashClash/Core/Simulation/IBallSimulation.cs": "3c29d80dd3537df8a1358f8623b3de35d151bdee6772a9135d9f55a3df66733d",
+    "Assets/SquashClash/Core/Simulation/LaunchSpec.cs": "310afba0a53e56b4b8a1274906c31b5057402b4ac3b880d9bd860e6e0e0dd04f",
+    "Assets/SquashClash/Core/Simulation/Launcher.cs": "a3189a763b4c7d4a75415b93953f49c021cef3caa0eff89b64cb24d17b613b88",
+    "Assets/SquashClash/Core/Simulation/PhysicsParams.cs": "fd5c83d8ba49ce6b498ded522e35bd4aa429f10187a8921c587de5b2c6b8a740",
+    "Assets/SquashClash/Core/Simulation/SimClock.cs": "63e62e0fe0bc9bbb7717b894602cc125c3b9f3980845797f91c058236ac367d3",
+    "Assets/SquashClash/Core/Simulation/SurfaceMaterial.cs": "7e4fb3175f2ad0259026761a1648bbc55ab9b54b8a15d25c36cff67d658c52a2",
+    "Assets/SquashClash/Core/Simulation/Trajectory.cs": "e7c92da28261a9f3ff12ee501bc8560ce8e8d4264c82e7c3bbba10560bfc723c",
+    "Assets/SquashClash/Core/Simulation/TrajectoryRunner.cs": "d995f28452b2b53ffec2acd357a68b43a34b56706752377326079bf93f09c89c",
+    "Assets/SquashClash/Core/Spike/EnergyGainSample.cs": "57c1b42c1e683bfe448881e1462e395bedb94fda63d3be104f2667245b015df2",
+    "Assets/SquashClash/Core/Spike/PhysicsMeasures.cs": "8363906afada9629f77540d064fd39bbb08510c3c7ba0e5de3477144df37b740",
+    "Assets/SquashClash/Core/Spike/PhysicsScenario.cs": "c88cd28611f4b097939055d0a8fa89ff1202c37263bd973e50ef924fec276964",
+    "Assets/SquashClash/Core/Spike/PhysicsScenarios.cs": "1d652c13c822236294592cebe0edc230e39550cf5d150787ccf671dced42b668",
+    "Assets/SquashClash/Core/Spike/PredictionBenchmarkRun.cs": "7338b1770447bcf069ae6a50b69b53e641fadc4159c2aa8b5cf917cc471f0189",
+    "Assets/SquashClash/Core/Spike/SpikeCriteria.cs": "4bd7d738808e81e90c428238838ba3796e381392e5571c89c0517c9fe043e36e",
+    "Assets/SquashClash/Core/Spike/SpikeReportWriter.cs": "c21c055dcc5e17ced0867a6b871234f643b21f09f7fa57623709e518235c79cb",
+    "Assets/SquashClash/Core/Spike/SpikeResult.cs": "c7d0b09dd7f2b1c75a3f70b8ce81452c7ab01c1eeafc54b9ff7286a506d79ef6",
+    "Assets/SquashClash/Core/Spike/SpikeRun.cs": "66c6fdffa2ef71e0e6dce96cedb912a06aaa0fd6614eca30a8ecc41906b75a80",
+    "Assets/SquashClash/DevPanel/DevBar.cs": "2d3c8cf5c1386a58e0304cb37036046596ac71ae3c91f015cc13bbf59b3b4f96",
+    "Assets/SquashClash/DevPanel/DevPanelBootstrap.cs": "2f9941b4fa7ac1fe0c318efd14e4756404ad9450b6b1da5fe550a8a7966ebae3",
+    "Assets/SquashClash/DevPanel/DevPanelView.cs": "1ab74ed0c8975d44248ab7cfb69081c1b9508e9e7b42c207b4f520db503b3ef4",
+    "Assets/SquashClash/DevPanel/DiagnosticsSection.cs": "ce3d5d9cb62c935dcdf3988c9e8166c2f50fd94c12d6a24c9763d67111676f7d",
+    "Assets/SquashClash/DevPanel/ParamSection.cs": "2352f19a6728f69576e000117c886d18014cc0d21e4e7c85eae195df777c7d8f",
+    "Assets/SquashClash/DevPanel/PresetsSection.cs": "c49ba8d30d578c1aece3b89ebf1ce669349ccb260c6ec5a00ed423d9bfc32bbc",
+    "Assets/SquashClash/DevPanel/SpikeSection.cs": "59d4ce978199e15d727b8c51bbcd2c77d59232cacb2498af7a2416c0e3cad125",
+    "Assets/SquashClash/DevPanel/ThreeFingerHold.cs": "0fd1997a9d09c2fc10888e2217d62820729cf3dc9f6999fc8d70a8eca00e52db",
+    "Assets/SquashClash/Editor/BuildScript.cs": "7d26764eba96b5d9bbf94e00c73ee3927988c138bcb63391ed312e2a67d48c6a",
+    "Assets/SquashClash/Editor/ProjectSetup.cs": "183715abb6740cb97bbaefc3c7f61dfa15efed27d1df3c8a905f52b9dd0fd472",
+    "Assets/SquashClash/Runtime/App/AppBootstrap.cs": "92d868b5a6cb3fb868e09d1e51406b590019d325dc2bbd18d271c37d524276b9",
+    "Assets/SquashClash/Runtime/App/FrameTimingSampler.cs": "d6c79d4a719836f8ad6ba764aabba5b2b09e33efcdb3c1d564ebdc3a55fc4114",
+    "Assets/SquashClash/Runtime/App/PlaceholderPlayers.cs": "f044b6900ec4ecdf26793a0482e6284902b86371b446a93e9a42e1dc06ec0b3b",
+    "Assets/SquashClash/Runtime/App/ResumeOverlay.cs": "6c3c094ce6639d85439b5a34e6f61407aaaf5fb9e8f7f52198c0465dc2a1031f",
+    "Assets/SquashClash/Runtime/App/ThermalMonitor.cs": "ef01958d79a96b4c3f3d07491e19fa5195e9bd0c5038bfa562f09e8b61c24e71",
+    "Assets/SquashClash/Runtime/Ball/BallSimulationHost.cs": "179078d973df1b859d4e89824afcfd08f599470f4996815b4ec165156c88822b",
+    "Assets/SquashClash/Runtime/Ball/BallView.cs": "2721112697996cebc8890948bb299f18aef5e08e804aad7fe611577ad1d90cf4",
+    "Assets/SquashClash/Runtime/Ball/LegibilityAids.cs": "5a950b3388123b2a302106142c335446fb5e5600f52d784070522d97a33fa833",
+    "Assets/SquashClash/Runtime/Camera/CourtCameraRig.cs": "188f1933b52f7bab50c525667b2a7999481520e8f34c1f184fadfa84b3a37092",
+    "Assets/SquashClash/Runtime/Court/CourtView.cs": "ac8c658a44b56185b8e18d19c3b9c77729f2dbb57c6b5b86408b568fd9981c55",
+    "Assets/SquashClash/Runtime/Physics/PhysXBallSimulation.cs": "17b01f3ff6727ef125731bece48a6689dfe5c0815bb87c8b86623327ab81b0a3",
+    "Assets/SquashClash/Runtime/Physics/PhysXBallSimulationFactory.cs": "2a04a1e0f035820e174e67672c14cb64d5960986d93f7037be708d9669ae508c",
+    "Assets/SquashClash/Runtime/Physics/PhysXContactCollector.cs": "838bdb484e0910db853f9f730d092fee2ed9b3e991ca0f59533f0fe6cfe8797d",
+    "Assets/SquashClash/Runtime/Physics/PhysXContactOrder.cs": "cd455068bfac9a8e7f4ba7f7b4caf29225dd397df313440fbe9b50e564447f3b",
+    "Assets/SquashClash/Runtime/Physics/PhysXVariant.cs": "670ecd24ad8da64d5fa3bafb57f2bbb1fce1d122b76355c00991cebb295a96b1",
+    "Assets/SquashClash/Runtime/Physics/SurfaceTag.cs": "e9b39407d59ff36cbc9923c1a5d155ea6b944d7d0df1a33b2af88eb372b1ccb9",
+    "Assets/SquashClash/Runtime/Resources/DefaultPreset.json": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+    "Assets/SquashClash/Runtime/Resources/Legibility.shader": "460524ca61d69b08b45ce9586d6a70ddda538ba9d5c46c0a849b713382fe7134",
+    "Assets/SquashClash/Tests/EditMode/BootstrapSmokeTests.cs": "67e0d757eb4240928c86385f97f13689813001b2f0f61de627b6ecbcb157cf9a",
+    "Assets/SquashClash/Tests/EditMode/Config/ConfigFixtures.cs": "d76d000cc09b7d160bd6514a8846e1f40474809243208af6522290d0197b33bd",
+    "Assets/SquashClash/Tests/EditMode/Config/EffectiveConfigTests.cs": "2b7c8da8dd3ad8a8bf43fb9cc83f12b9f4298276162e278b3c8f2d28d2cb46c8",
+    "Assets/SquashClash/Tests/EditMode/Config/I6aConfigTests.cs": "8afb604ef9fd58af4fd396b4f8fa3d613f6de6e0c81cfabe7ae409cd28472796",
+    "Assets/SquashClash/Tests/EditMode/Config/LaunchPresetsTests.cs": "8c711839a490530fcdf1a2dc3456225861d10a2f77aed5d3eeff39f5f71de775",
+    "Assets/SquashClash/Tests/EditMode/Config/ParamCatalogTests.cs": "b267fabfdcfc66714195b3cc55cac7e824e0def446e13c3646bbe1aa6fcb809f",
+    "Assets/SquashClash/Tests/EditMode/Config/PresetCodecTests.cs": "871cd1d93fbc60ba7ef193f79df261f99494fd4b359895b9b803b1031d360999",
+    "Assets/SquashClash/Tests/EditMode/Config/PresetStoreTests.cs": "32a3747b784b8374d68a2c93419f39d86e479165a76c3a89d5b74c0e60c197a3",
+    "Assets/SquashClash/Tests/EditMode/Config/TuningStateTests.cs": "1f39893fbcbda5ac2b2b108b548bfaf965f9f61cc109246abf38fc0079f37239",
+    "Assets/SquashClash/Tests/EditMode/Court/CourtGeometryTests.cs": "fc0d8547228288e615dd843434b4cb9625aeacebbef211cb3212e62d79896877",
+    "Assets/SquashClash/Tests/EditMode/Court/LineContactClassifierTests.cs": "662fd4c243e5ce956e3af0765030295651b9b5529c67377776ca3746ba97a9c1",
+    "Assets/SquashClash/Tests/EditMode/Diagnostics/BuildInfoTests.cs": "065883eeedb95045f78babc376914bd4b0eb9939806a2b44e21a63b4c9e0615a",
+    "Assets/SquashClash/Tests/EditMode/Diagnostics/FrameTimeStatsTests.cs": "8a31cccd82202219dc5814865a1579c4134b2c17eebe6cf0e88d63f5e0e60628",
+    "Assets/SquashClash/Tests/EditMode/Diagnostics/MetricsLogTests.cs": "725fd83c87bfe6224ad89394d075761178d55faa808528e8a7c08a8d479e8697",
+    "Assets/SquashClash/Tests/EditMode/Simulation/AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa",
+    "Assets/SquashClash/Tests/EditMode/Simulation/BallisticsTests.cs": "275f71fa1e4169b8df4064c6ea8e57729f9d04f01ddb4aea984b40e2a8b8d170",
+    "Assets/SquashClash/Tests/EditMode/Simulation/SimClockTests.cs": "1a903f33f1f2a483c418c10a7acb97f9d192fcf94476d0cd9afa3340ad58c31b",
+    "Assets/SquashClash/Tests/EditMode/Simulation/TrajectoryRunnerTests.cs": "1b0633483e31259ca07ab0fb6b9aca6d8410b4f604a90c466188adab878da912",
+    "Assets/SquashClash/Tests/EditMode/Spike/AnalyticReportingTests.cs": "a9ef7739f0346d2e603bb1e9c842fc6d89e6249d30cc658673afeceee850a076",
+    "Assets/SquashClash/Tests/EditMode/Spike/PhysicsMeasuresTests.cs": "65f4d670e7b942faf2b66db84687c949b924423047f7c3fde4c68f12ce4d6256",
+    "Assets/SquashClash/Tests/EditMode/Spike/PhysicsScenariosTests.cs": "159039c75ac843377ffe21cbeec60ea95272f286743efe0cfb7aae02b16687da",
+    "Assets/SquashClash/Tests/EditMode/Spike/SpikeReportWriterTests.cs": "166c39ed748fbb8c5ea247a87297f530af7f6dbf3af98fef431ec8084a236431",
+    "Assets/SquashClash/Tests/EditMode/Spike/SpikeRunTests.cs": "1315389bdaa78a28bcceef1bd1147bca3a4da5aa1bb0e6252dce701f7615f57a",
+    "Assets/SquashClash/Tests/Experiments/AnalyticSpikeExperiment.cs": "f2d73fb10f1a98a0045be9fc0917f85bf8d75f2ccc7832fd070eab4943502ff4",
+    "Assets/SquashClash/Tests/Experiments/BootstrapSmokeTests.cs": "2430bf99629e3faf3e1753a89bfdc63efcf00a222bb7b69dac043cd6985f0d64",
+    "Assets/SquashClash/Tests/Experiments/EditMode/AnalyticEditModeSpikeExperiment.cs": "b395ecfb4bb651c9ec48139114cb49fedd9aefa282907ec022b28a00d549410b",
+    "Assets/SquashClash/Tests/Experiments/PhysXResetExperiment.cs": "f9db7e0460ce7a6c8aab899b25183ed253b7eb150818ba5c2bd93d7f0250c7a8",
+    "Assets/SquashClash/Tests/Experiments/PhysXSpikeExperiment.cs": "08eee10093eed3c553e89c083bd788678baba931a6be3c510b86d2f17da8bb0c",
+    "Assets/SquashClash/Tests/PlayMode/AppBootstrapTests.cs": "bae3a2d2a6573dc0c18e6097d1d87791ed361a140c15ff0c7d3a4ebe6fb7fe31",
+    "Assets/SquashClash/Tests/PlayMode/BallSimulationHostTests.cs": "5b106b157bd4a10bad4747945955c52508987ff220205b88d23b95a8868b251b",
+    "Assets/SquashClash/Tests/PlayMode/BootScreenTests.cs": "e3ef9f597a66ee6796b3192c315a181fd452aca52e2ad37f8aba25a364e55024",
+    "Assets/SquashClash/Tests/PlayMode/BootstrapSmokeTests.cs": "d25d24c95074a29ea9e32acbafedc4507a4a436034ecc0dcf741cdca771555af",
+    "Assets/SquashClash/Tests/PlayMode/CcdDiagnosticsTests.cs": "3a861f2b9593236bc7faabbf1edf7d45685c5ae887db3db31b88bdebf9293293",
+    "Assets/SquashClash/Tests/PlayMode/CourtCameraRigTests.cs": "ea9c25b66dc41e9339eee2822fbee29f6531e3c95e104db6f758c10a574be041",
+    "Assets/SquashClash/Tests/PlayMode/CourtViewTests.cs": "ba6292eeefc921a35ffe152ad42341e8fe939e09dd044c1daf49a2d3d6d30024",
+    "Assets/SquashClash/Tests/PlayMode/DevPanelIntegrationTests.cs": "2a6b3ca197bf658bcfc8ea72e6663d6fd0f9b08d75a402e19ad9dd88c6a9eca3",
+    "Assets/SquashClash/Tests/PlayMode/DevPanelViewTests.cs": "ec306d07a23d975d4e4d71889a2efabb39760d180d7f321d15f7a6ef81fefd81",
+    "Assets/SquashClash/Tests/PlayMode/FollowCameraTests.cs": "f4f96243a61b0de542e885f4d36d9a72cfb743ce4fe35f37a4fc3f6561a5a82b",
+    "Assets/SquashClash/Tests/PlayMode/I6aAppIntegrationTests.cs": "49dab90fa6186b23dc16057267a0964f057b15830f0bbee1a3c024d87462585c",
+    "Assets/SquashClash/Tests/PlayMode/LaunchPresetsPhysicsTests.cs": "9e204eab3c980b0148a5b695a92950bfe9f0723bf0430a3dc6e6300919165d78",
+    "Assets/SquashClash/Tests/PlayMode/LegibilityAidsTests.cs": "10b4cc0b0e7f3473070bf053603ebcc5866c8ef6ada62fc16c7d655d24584f09",
+    "Assets/SquashClash/Tests/PlayMode/LegibilitySelectorTests.cs": "90f52ab48b3572b8edf5f3479fd9bbfe3fedfb03ce6e6549009e11fd64533b1f",
+    "Assets/SquashClash/Tests/PlayMode/PhysXContactOrderTests.cs": "bb68519d7d30f5dbd590bff9dfdf3734fee5d2a2b963ce1f63d3edfdb71b8b62",
+    "Assets/SquashClash/Tests/PlayMode/PhysXLifecycleTests.cs": "0eb97edba2210d2bebf98bb584442067b3dbbebfa5689d31ba34cf71464243f7",
+    "Assets/SquashClash/Tests/PlayMode/PlayModeTestWorld.cs": "02eaa6930349fb750f1a23d8602c8a5382d4bb675594d5b8584de0ddbb8139b7",
+    "Assets/SquashClash/Tests/PlayMode/RuntimeDiagnosticsTests.cs": "1d9e4606e4a9b04691bf40ed2bd4e823db262f1fe169635b1e17bdeb1fce085a",
+    "Assets/SquashClash/Tests/PlayMode/SpikeSectionTests.cs": "1d2e28957a850b8c37a255e4b27e1ad0176e6acd7853474fc42ac4cf8cd2bd55",
+    "Assets/SquashClash/Tests/PlayMode/TuningDiagnosticsIntegrationTests.cs": "44770a47b815e450b01b64cccdad4394a967dacc335afdd39cc11cd46320c3d8"
+  },
+  "numericLaunchResults": [
+    {
+      "test": "DefaultP2_MeetsUnchangedLegibilityConditionBeforeSecondBounce(\"L1\")",
+      "result": "Passed",
+      "output": "L1: config=0d39e6016bd8 steps=124 firstBounceZ=8.11292 secondBounceZ=8.206879 maxY=1.266381"
+    },
+    {
+      "test": "DefaultP2_MeetsUnchangedLegibilityConditionBeforeSecondBounce(\"L2\")",
+      "result": "Passed",
+      "output": "L2: config=0d39e6016bd8 steps=86 firstBounceZ=2.587868 secondBounceZ=4.64055729 maxY=0.4099273\npostFrontFraction=1"
+    },
+    {
+      "test": "DefaultP2_MeetsUnchangedLegibilityConditionBeforeSecondBounce(\"L3\")",
+      "result": "Passed",
+      "output": "L3: config=0d39e6016bd8 steps=145 firstBounceZ=0.645076156 secondBounceZ=1.00812876 maxY=1.29844368"
+    },
+    {
+      "test": "DefaultP2_MeetsUnchangedLegibilityConditionBeforeSecondBounce(\"L4\")",
+      "result": "Passed",
+      "output": "L4: config=0d39e6016bd8 steps=275 firstBounceZ=7.63591957 secondBounceZ=8.759343 maxY=4.19999266"
+    },
+    {
+      "test": "DefaultP2_MeetsUnchangedLegibilityConditionBeforeSecondBounce(\"L5\")",
+      "result": "Passed",
+      "output": "L5: config=0d39e6016bd8 steps=147 firstBounceZ=2.8155396 secondBounceZ=4.642487 maxY=1.22302854\noccludedSteps=46"
+    },
+    {
+      "test": "DefaultP2_MeetsUnchangedLegibilityConditionBeforeSecondBounce(\"L6\")",
+      "result": "Passed",
+      "output": "L6: config=0d39e6016bd8 steps=140 firstBounceZ=7.93787146 secondBounceZ=8.333349 maxY=1.51222491\ncornerContacts=LeftWall:(6.40, 0.18, 8.95);BackWall:(6.23, 0.26, 9.75)"
+    }
+  ],
+  "editorVisualQa": {
+    "imageSha256": "c2a8c0d52fef5229b1a884fdd8cf178cdc6f350d0430437d09edb0a91f3f52a2",
+    "scope": "Captura generada por regresión I6a con el código I6b; dibujo de pelota/sombra/marca, sin H1."
+  }
+}
