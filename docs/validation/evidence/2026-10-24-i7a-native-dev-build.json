@@ -58,14 +58,15 @@
   "testedSourceCommit": "e0f9071e9a2ff8baca3377ed389beefc52e8cbb3",
   "builtSourceMatchesTestedHashes": true,
   "installed": true,
-  "nativeCampaignRun": false,
+  "nativeCampaignRun": true,
   "installationResult": "devicectl install exit=0; recovered preset files unchanged byte for byte",
-  "startup": "Automatic launch denied because iPhone locked; manual startup pending",
+  "startup": "Manual launch by PO confirmed through e0f9071 native campaign and launch metrics",
   "projectPhysicsPreCampaignCheck": "Embedded build metadata verified before install: fastMotionThreshold=0.01; bounceThreshold=0.1; fastMotionThreshold relevant only to P1",
   "presetBackupAndPostInstallHashes": {
     "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
     "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
     "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
   },
-  "campaignPreparation": "Manual Default load/Apply/0 pending required before starting P2; mirroring requires Mac authentication, physical-phone handoff used instead"
+  "campaignPreparation": "Manual Default load/Apply/0 pending required before starting P2; mirroring requires Mac authentication, physical-phone handoff used instead",
+  "campaignAudit": "docs/validation/evidence/2026-10-24-i7a-p2-native.json"
 }

@@ -565,3 +565,10 @@ Builds I7a preparadas **dev/prod 0.1.0+e0f9071**, ambas Release ARM64 firmadas, 
 
 
 Conexión restablecida por PO («ahora si, conectado y desbloqueado»). Perfil/firma/metadata/fuentes dev revalidados **antes** de instalar; dev e0f9071 instalada, exit=0. Presets/last-active respaldados y recuperados tras instalación, idénticos byte a byte. App no lanzada automáticamente por bloqueo posterior del teléfono; Duplicación pide autenticación Mac. Se solicita recorrido directo al PO: abrir build, cargar/aplicar **Default**, comprobar P2/cero pendientes y campaña con condiciones aprobadas. Metadata embebida verificada antes de campaña: fastMotionThreshold=0,01, bounceThreshold=0,1. Arranque manual/campaña aún pendientes; no herramientas durante ejecución. Prod/H17 pendientes.
+
+
+## I7a: aceptación nativa P2 y prod instalada — 2026-10-24
+
+PO: «Prueba completa. El iphone sigue conectado. Todo según lo solicitado». Recuperación solo posterior a ese aviso; sin herramientas durante campaña. Dev e0f9071, **Default 0d39e6016bd8 / SimulationKey 166a96e319c7**, 18 filas únicas y **11 gate Pass**, sin regresiones frente a I4d. C17 **p95 0,0188 ms≤1 ms**, 200 muestras/20 warmup, percentiles recalculados; C10 0,0009536743 mm, C16 informativo 0,0000186264515 mm. Térmico nominal inicial/benchmark/final y foco 0. Condiciones aprobadas confirmadas globalmente por PO; batería≥80 %, porcentaje exacto no comunicado. Métricas verifican Default aplicado/cero pendientes antes de iniciar. Presets guardados intactos; last-active eliminado por cargar Default. [Auditoría](../validation/evidence/2026-10-24-i7a-p2-native.json).
+
+Prod e0f9071 instalada tras volver a verificar perfil/firma/metadata/fuentes. Boot **devpanel=absent development=False squashDev=False**, P2/hash Default, sin excepciones; display 60 FPS es dato de arranque, no rendimiento H17. Consola cerrada de forma controlada. Gesto de tres dedos/sin DEV solicitado al PO directamente en teléfono, pendiente de respuesta. H17 de 15 min sigue pendiente; PR #13 borrador, I7a sin cerrar. Sin spec/defaults/criterios/umbrales ni T7.3/gameplay.

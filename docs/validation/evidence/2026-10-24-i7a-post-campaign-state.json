@@ -1,0 +1,92 @@
+{
+  "presetJsonFilesUnchanged": true,
+  "lastActiveClearedByDefaultLoad": true,
+  "presetHashes": {
+    "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+  },
+  "newDevRecordCount": 34,
+  "launches": [
+    {
+      "ts": "2026-10-24T23:31:58.3532790Z",
+      "build": "0.1.0+e0f9071 dev",
+      "effectiveHash": "8de3f2ecb217",
+      "presetName": "P0-calib-1",
+      "pending": 0,
+      "phase": "free",
+      "seed": 0
+    },
+    {
+      "ts": "2026-10-24T23:32:01.3558490Z",
+      "build": "0.1.0+e0f9071 dev",
+      "effectiveHash": "8de3f2ecb217",
+      "presetName": "P0-calib-1",
+      "pending": 0,
+      "phase": "free",
+      "seed": 0
+    },
+    {
+      "ts": "2026-10-24T23:32:04.3560760Z",
+      "build": "0.1.0+e0f9071 dev",
+      "effectiveHash": "8de3f2ecb217",
+      "presetName": "P0-calib-1",
+      "pending": 0,
+      "phase": "free",
+      "seed": 0
+    },
+    {
+      "ts": "2026-10-24T23:32:07.3711690Z",
+      "build": "0.1.0+e0f9071 dev",
+      "effectiveHash": "8de3f2ecb217",
+      "presetName": "P0-calib-1",
+      "pending": 0,
+      "phase": "free",
+      "seed": 0
+    },
+    {
+      "ts": "2026-10-24T23:32:10.3718070Z",
+      "build": "0.1.0+e0f9071 dev",
+      "effectiveHash": "8de3f2ecb217",
+      "presetName": "P0-calib-1",
+      "pending": 0,
+      "phase": "free",
+      "seed": 0
+    },
+    {
+      "ts": "2026-10-24T23:32:13.3731140Z",
+      "build": "0.1.0+e0f9071 dev",
+      "effectiveHash": "8de3f2ecb217",
+      "presetName": "P0-calib-1",
+      "pending": 0,
+      "phase": "free",
+      "seed": 0
+    },
+    {
+      "ts": "2026-10-24T23:32:16.3731500Z",
+      "build": "0.1.0+e0f9071 dev",
+      "effectiveHash": "8de3f2ecb217",
+      "presetName": "P0-calib-1",
+      "pending": 0,
+      "phase": "free",
+      "seed": 0
+    },
+    {
+      "ts": "2026-10-24T23:32:33.5085920Z",
+      "build": "0.1.0+e0f9071 dev",
+      "effectiveHash": "0d39e6016bd8",
+      "presetName": "Default",
+      "pending": 0,
+      "phase": "free",
+      "seed": 0
+    },
+    {
+      "ts": "2026-10-24T23:33:21.2957080Z",
+      "build": "0.1.0+e0f9071 dev",
+      "effectiveHash": "0d39e6016bd8",
+      "presetName": "Default",
+      "pending": 0,
+      "phase": "free",
+      "seed": 0
+    }
+  ]
+}

@@ -26,10 +26,10 @@ Comentarios conservados: PO ve bien los seis escenarios y las mecánicas; prefer
 ## 2. Física
 
 - Backend de First Ball: **P2-Analytic**, variante **analytic/r2-20261023**; [decisión del gate](../reviews/2026-10-23-first-ball-physics-backend-decision.md), [informe P2](../reviews/2026-10-23-first-ball-physics-spike-P2.md), [18 criterios nativos del gate](evidence/2026-10-23-i4d-p2-native-run.json). P1 configurable como respaldo.
-- Aceptación T7.1: **pendiente campaña nativa I7a y auditoría**. Editor EditMode/PlayMode completos, diez criterios aplicables de gate Pass; C17 informativo en editor. No confundir con regresión de tests.
+- Aceptación de física T7.1: **Pass**, [campaña nativa auditada](evidence/2026-10-24-i7a-p2-native.json), 18 filas y **11 criterios de gate Pass**, C17 p95 **0,0188 ms**/200 muestras, térmico nominal inicial/benchmark/final y foco 0. Default aplicado antes de iniciar confirmado en JSONL. Editor EditMode/PlayMode completos, diez criterios aplicables de gate Pass; C17 informativo en editor. No confundir con regresión de tests.
 - Configuración de campaña: cargar **Default**, hash **0d39e6016bd8**. SimulationKey efectivo P2 **166a96e319c7**. Gate histórico c86243b15a97 tenía backend=0 en el archivo y fábrica P2 inyectada; key cruda **04372f672e9e**. Con selección efectiva P2, key **166a96e319c7**: mismos valores físicos/cancha, bounceThreshold 0,1 y variante. No se afirma igualdad entre las keys crudas. El cambio de selección fue aprobado en I4e; las once claves posteriores añadidas son no físicas (repetición/cámara/depuración/ayudas), explican el resto del hash completo.
 - Preset del punto de control de Etapa 5: **P0-calib-1 / 8de3f2ecb217**; solo difiere de Default en launcher.repeatSeconds=3. **No se usa para la campaña del gate ni se promueve a defaults.** Po-1 sigue prueba funcional.
-- Batería final, informe y evidencias I7a: **pendientes de enlazar al completar**. Cualquier gate antes Pass que falle: regresión, detenerse.
+- Batería final **270/270 EditMode y 136/136 PlayMode**, [evidencia](evidence/2026-10-24-i7a-tests.json), [informe I7a en curso](../reviews/2026-10-24-first-ball-i7a-validation.md). Cualquier gate antes Pass que falle: regresión, detenerse.
 
 ## 3. Rendimiento (H17)
 
@@ -57,11 +57,11 @@ Percentiles completos provienen de histogramas de toda H17, no del promedio de p
 
 | Invariante | Estado y evidencia |
 |---|---|
-| 1. Una autoridad, cero atravesamientos, esquinas sin ganancia | Gate P2 aprobado; aceptación nueva C1/C3 y regresión host pendientes de enlazar |
-| 2. Consistencia en mismo binario/dispositivo | Gate C5/C8 aprobado; aceptación nueva pendiente |
-| 3. Predicción bit a bit | Gate C6/C7 aprobado; aceptación nueva pendiente; C17 nativo≤1 ms se informa aparte |
-| 10. Panel excluido de prod | check-release.sh, compilación/instalación prod, sin DEV, tres dedos inertes, devpanel=absent: pendientes |
-| 14. Preset recuperado, métricas con preset/build/semilla | I5b/I6b aprobados y regresión existente; evidencia I7a pendiente. P0-calib-1 conservado |
+| 1. Una autoridad, cero atravesamientos, esquinas sin ganancia | Pass: aceptación nativa C1/C3 con cobertura cerrada, cero atravesamientos/ganancia; suites host/regresión 270/136 |
+| 2. Consistencia en mismo binario/dispositivo | Pass: aceptación nativa C5/C8, cobertura cerrada |
+| 3. Predicción bit a bit | Pass: aceptación nativa C6/C7, cobertura cerrada; C17 nativo p95 0,0188 ms≤1 ms |
+| 10. Panel excluido de prod | Exports/dev-prod/instalación y arranque prod verificados: devpanel=absent; sin DEV/tres dedos inertes pendientes de PO |
+| 14. Preset recuperado, métricas con preset/build/semilla | Pass técnico: regresión existente y JSONL I7a con preset/build/semilla; P0-calib-1/Po-1 intactos. Cargar Default eliminó last-active como corresponde |
 
 ## 5. Decisión del PO
 
