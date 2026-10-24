@@ -536,3 +536,17 @@ Autorización específica para actualizar plan r2/T6.3 y su prueba, comprobando 
 
 
 Verificación de la precisión: RED válido 6/8 Pass, dos fallos por literal insuficiente; GREEN 8/8, suites completas **269/269 EditMode y 132/132 PlayMode**, XML frescos/sin CS. L2 sin modificar pasa: máximo frontis→primer bote **0,35000011797003433 m**, lateral 100 %. Fuente `ddf73c8`; [informe](2026-10-24-first-ball-l2-height-criterion.md). Se entrega [PR #12 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/12), abierta y sin fusionar; Etapa 7 sin iniciar.
+
+
+## Cierre de corrección L2 y autorización I7a — 2026-10-24
+
+El PO comunica aprobación de Claude de **PR #12, head fcb5bc2d94e0a6f52606f4e8645bcfe81e12801b**, y autoriza cierre. PR ya lista y fusionada con **merge commit 7d7fd3a421255ae02558840d5ff9f2a669fce0d0**; main sincronizada, worktree eliminado y artefactos preservados en Logs/archive-l2-20261024. Corrección L2 cerrada: máximo frontis→primer bote 0,35000011797003433 m, lateral 100 %, RED 6/8→GREEN 8/8 y suites 269/269 EditMode, 132/132 PlayMode. Defaults **0d39e6016bd8**, P2 por defecto y spec intactos. Aprobación comunicada por PO; no se atribuye una GitHub Review adicional.
+
+**I7a = T7.1 + T7.2 autorizado**, rama `firstball/i7a-validation`, PR para revisión de Claude:
+
+- Batería completa y después campaña física P2. Antes, cargar **Default**, no P0-calib-1. Contrastar SimulationKey con el gate y explicar hash completo por claves no físicas. Si un gate antes Pass falla, reportar regresión y detenerse.
+- Ejecutar check-release.sh e instalar prod: sin DEV, tres dedos inertes y devpanel=absent.
+- Sesión dev H17 de **15 min**, térmico nominal al inicio, brillo/bajo consumo anotados, panel cerrado, sin cámara lenta/prueba física/benchmark, L1–L6 con launcher.repeatSeconds y Phase=session. Preparar `docs/validation/first-ball-validation.md` con cinco secciones para el PO.
+- Perfil vence 2026-10-28T14:59:31Z: renovar antes de instalaciones desde el 27 y comprobar siempre vigencia efectiva. Herramientas sin cambios.
+
+No modificar spec, criterios, umbrales ni defaults. **T7.3 y gameplay no autorizados.** Detenerse al entregar informe; PR no se fusiona por cuenta propia. Esta autorización sustituye el bloqueo histórico de Etapa 7; no promueve P0-calib-1 a defaults.
