@@ -423,3 +423,11 @@ Observaciones de Claude registradas, **sin cambiar código ahora**:
 4. Retención de logs antes de T8 y renovación del perfil antes de instalar desde el **27 de octubre**, comprobando siempre vigencia efectiva.
 
 **I6a / T6.1–T6.2 autorizado** en `firstball/i6a-legibility`: seguimiento amortiguado de cámara y ayudas de legibilidad, incluido tamaño visual de pelota. TDD, verificación en iPhone si hay instalación, PR para Claude e informe; detenerse sin fusionar. No adelantar T6.3/L1–L6 ni gameplay. Spec, escenarios, criterios y umbrales intactos. La autorización permite I6a mientras el PO prepara su calibración; no declara cumplido ese punto de control.
+
+## I6a implementado, comprobación nativa pendiente — 2026-10-24
+
+En `firstball/i6a-legibility`, PR #10 borrador, fuente **7507266**: T6.1–T6.2 implementadas con RED válidos antes de comportamiento, regresión **262/262 EditMode y 120/120 PlayMode**, cero fallos/omitidos y XML frescos. Defaults **0d39e6016bd8**, 41 claves (nueve adiciones del plan, 32 valores anteriores idénticos), P2 por defecto. Seguimiento lateral, sombra, estela, máximo seis marcas de pared desvanecidas en 1,5 s, predicción opcional y escala visual 1–2,5; radio físico 20 mm, estado/predictor/motores intactos.
+
+Exports limpios dev/prod RELEASE-CHECK: OK. Dev **0.1.0+7507266** limpia Release ARM64 firmada, metadata/preset exactos y 115 hashes cotejados; perfil efectivo vigente hasta 2026-10-28T14:59:31Z comprobado el 24, herramientas sin cambios. Respaldo e instalación fallan por **CoreDeviceError 4016** (conectividad/servicios del iPhone no disponibles); Duplicación sin ventana accesible (cgWindowNotFound). No se declara instalada ni verificada nativamente. Se solicitó conexión por cable y desbloqueo; repetir comprobación de vigencia/renovar si la instalación cae desde el 27.
+
+PR sigue **borrador**, entrega final pendiente de la comprobación corta en iPhone; no fusión ni revisión de Claude inferida. Sin campaña física ni evaluación de rendimiento; H1 y T6.3/L1–L6 posteriores. Calibración del PO pendiente; Po-1 funcional. [Informe](2026-10-24-first-ball-i6a-legibility.md), [pruebas](../validation/evidence/2026-10-24-i6a-tests.json), [build](../validation/evidence/2026-10-24-i6a-native-build.json).
