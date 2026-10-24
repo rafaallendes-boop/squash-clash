@@ -1,0 +1,61 @@
+{
+  "profile": "prod",
+  "buildMetadata": {
+    "version": "0.1.0",
+    "gitHash": "e0f9071",
+    "profile": "prod",
+    "builtAtUtc": "2026-10-24T22:47:02.8525530Z",
+    "unityVersion": "6000.3.27f1",
+    "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+    "gitDirty": false
+  },
+  "export": {
+    "profile": "prod",
+    "metadata": {
+      "version": "0.1.0",
+      "gitHash": "e0f9071",
+      "profile": "prod",
+      "builtAtUtc": "2026-10-24T22:47:02.8525530Z",
+      "unityVersion": "6000.3.27f1",
+      "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+      "gitDirty": false
+    },
+    "freshExport": true,
+    "productIl2CppModules": [
+      "g_SquashClash_Core_CodeGenModule",
+      "g_SquashClash_Runtime_CodeGenModule"
+    ],
+    "nativeThermalBridge": false,
+    "runtimeThermalBridge": true
+  },
+  "freshExport": true,
+  "playerDevelopment": false,
+  "il2cpp": "Release",
+  "xcode": "Xcode 27.1; Build version 27A9275",
+  "xcodeConfiguration": "Release",
+  "xcodeDestination": "generic/platform=iOS",
+  "architectures": [
+    "arm64"
+  ],
+  "codesignStrictVerified": true,
+  "embeddedMetadataVerified": true,
+  "embeddedDefaultPresetVerified": true,
+  "defaultEffectiveHash": "0d39e6016bd8",
+  "simulationKey": "166a96e319c7",
+  "runtimeThermalBridgeSymbolVerified": true,
+  "spikeThermalSymbolPresent": false,
+  "frameworkSha256": "97364b09aa584c2e7c1a027c777db7df980d2ae2643797f9991e4d1f075499ce",
+  "resourcesSha256": "f8d078f650982ae2bc9d30a45aa7c73366a9ecf75832fcbd0178745e8ffdb46f",
+  "profileCheckedAtUtc": "2026-10-24T22:51:39.255679+00:00",
+  "profileCheckedLocalDate": "2026-10-24",
+  "profileExpiresAtUtc": "2026-10-28T14:59:31+00:00",
+  "embeddedProfileValid": true,
+  "profileMatchesDeviceAndBundle": true,
+  "renewalRequiredForThisInstall": false,
+  "renewalPolicySatisfied": true,
+  "installationPolicy": "Renovar antes de cualquier instalación desde 2026-10-27 y comprobar siempre vigencia. Herramientas sin cambios.",
+  "testedSourceCommit": "e0f9071e9a2ff8baca3377ed389beefc52e8cbb3",
+  "builtSourceMatchesTestedHashes": true,
+  "installed": false,
+  "nativeCampaignRun": false
+}
