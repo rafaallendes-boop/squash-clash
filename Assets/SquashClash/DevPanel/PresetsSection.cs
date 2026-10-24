@@ -13,20 +13,25 @@ namespace SquashClash.DevPanel
     {
         private readonly AppBootstrap app;
         private readonly Action changed;
-        private readonly TextField nameField=new TextField("Guardar como…") {name="preset-name"};
+        private readonly TextField nameField=new TextField("Nombre del preset") {name="preset-name"};
         private readonly DropdownField list=new DropdownField("Cargar preset") {name="preset-list"};
+        private bool revealStatus;
         private readonly Label status=new Label {name="preset-status"};
         public VisualElement Root {get;}=new VisualElement {name="presets"};
         public string Status=>status.text;
         public PresetsSection(AppBootstrap app,Action changed)
         {
-            this.app=app;this.changed=changed;nameField.style.minHeight=44;list.style.minHeight=44;
-            Root.Add(nameField);Add("preset-save","Guardar",()=>SaveAs(nameField.value));Root.Add(list);
+            this.app=app;this.changed=changed;Root.style.flexShrink=0;Root.style.minWidth=0;
+            foreach(var field in new VisualElement[]{nameField,list}){field.style.flexDirection=FlexDirection.Column;field.style.flexShrink=0;field.style.minWidth=0;field.style.minHeight=70;}
+            foreach(var label in new[]{nameField.labelElement,list.labelElement}){label.style.minWidth=0;label.style.width=Length.Percent(100);label.style.whiteSpace=WhiteSpace.Normal;}
+            Root.Add(new Label("Presets locales"));status.style.whiteSpace=WhiteSpace.Normal;status.style.flexShrink=0;Root.Add(status);
+            status.RegisterCallback<GeometryChangedEvent>(_=>{if(revealStatus){revealStatus=false;Root.GetFirstAncestorOfType<ScrollView>()?.ScrollTo(status);}});
+            Root.Add(nameField);Add("preset-save","Guardar como…",()=>SaveAs(nameField.value));Root.Add(list);
             Add("preset-load","Cargar",()=>Load(list.value));Add("preset-export","Exportar",()=>{GUIUtility.systemCopyBuffer=Export();Notice("JSON visible copiado al portapapeles.");});
-            Add("preset-import","Importar del portapapeles",()=>Import(GUIUtility.systemCopyBuffer));status.style.whiteSpace=WhiteSpace.Normal;Root.Add(status);Refresh();
+            Add("preset-import","Importar del portapapeles",()=>Import(GUIUtility.systemCopyBuffer));Refresh();
         }
-        private void Add(string name,string text,Action action){var b=new Button(action){name=name,text=text};b.style.minHeight=44;Root.Add(b);}
-        private bool Notice(string message,bool success=true){status.text=message;changed?.Invoke();return success;}
+        private void Add(string name,string text,Action action){var b=new Button(action){name=name,text=text};b.style.minHeight=44;b.style.flexShrink=0;b.style.whiteSpace=WhiteSpace.Normal;Root.Add(b);}
+        private bool Notice(string message,bool success=true){revealStatus=true;status.text=message;Root.GetFirstAncestorOfType<ScrollView>()?.ScrollTo(status);changed?.Invoke();return success;}
         public void Refresh()
         {
             var choices=new List<string>{"Default"};choices.AddRange(app.Presets.List());list.choices=choices;

@@ -63,6 +63,40 @@ namespace SquashClash.Runtime.Tests
             f.values.Add(new PresetEntry{key="future.key",value=5});Assert.That(section.Import(PresetCodec.ToJson(f)),Is.True);Assert.That(section.Status,Does.Contain("future.key"));
             Assert.That(section.Load("Default"),Is.True);app.LaunchCurrent();Assert.That(app.Config.Hash,Is.EqualTo(app.Tuning.Defaults.Hash));Assert.That(app.Presets.LastActiveName,Is.Null);yield return null;
         }
+        [UnityTest] public IEnumerator ExpandedGroupsStayBelowTabsAndPresetsCanScrollToSave() { yield return CheckResponsivePanel(390,304); }
+        [UnityTest] public IEnumerator CompactPanelKeepsTabsAndSaveAccessible() { yield return CheckResponsivePanel(320,200); }
+        private IEnumerator CheckResponsivePanel(float width,float height)
+        {
+            var app=AppBootstrap.Instance;var root=app.GetComponent<UIDocument>().rootVisualElement;
+            var view=Object.FindFirstObjectByType<DevPanelView>();view.Toggle();
+            // Allocate a phone-width lower panel independently of the batch Game view dimensions.
+            root.style.width=width;root.style.height=844;yield return null;yield return null;
+            var panel=root.Q("dev-panel");panel.style.top=844-120-height;panel.style.bottom=120;panel.style.left=6;panel.style.right=6;
+            foreach(var fold in panel.Query<Foldout>().ToList())fold.value=true;
+            yield return null;yield return null;
+            var tabs=panel.Query<Button>().ToList().Where(b=>b.text=="Parámetros"||b.text=="Presets"||b.text=="Diagnóstico").ToArray();
+            var scroll=panel.Q<ScrollView>("parameters-scroll");
+            TestContext.WriteLine($"LAYOUT tabsBottom={tabs.Max(t=>t.worldBound.yMax)} viewportTop={scroll.contentViewport.worldBound.yMin} viewportBottom={scroll.contentViewport.worldBound.yMax} panelBottom={panel.worldBound.yMax}");
+            Assert.That(scroll.contentViewport.worldBound.height,Is.GreaterThan(40),"Expanded parameters need a bounded, usable viewport");
+            Assert.That(scroll.contentViewport.worldBound.yMax,Is.LessThanOrEqualTo(panel.worldBound.yMax+1),"Content cannot paint over the fixed bar");
+            Assert.That(scroll.contentViewport.worldBound.yMin,Is.GreaterThanOrEqualTo(tabs.Max(t=>t.worldBound.yMax)-1),"Scroll content must start below tabs, without stealing their input");
+            var presetsTab=tabs.Single(b=>b.text=="Presets");
+            var picked=root.panel.Pick(presetsTab.worldBound.center);
+            Assert.That(picked==presetsTab||picked.GetFirstAncestorOfType<Button>()==presetsTab,Is.True,"Presets tab must receive pointer input");
+            presetsTab.Focus();
+            using(var e=NavigationSubmitEvent.GetPooled())presetsTab.SendEvent(e);
+            yield return null;yield return null;
+            var name=panel.Q<TextField>("preset-name");var save=panel.Q<Button>("preset-save");
+            Assert.That(name.visible&&name.resolvedStyle.display!=DisplayStyle.None,Is.True);
+            var presetScroll=name.GetFirstAncestorOfType<ScrollView>();Assert.That(presetScroll.resolvedStyle.display,Is.EqualTo(DisplayStyle.Flex));presetScroll.ScrollTo(name);yield return null;yield return null;
+            Assert.That(name.worldBound.xMin,Is.GreaterThanOrEqualTo(panel.worldBound.xMin));Assert.That(name.worldBound.xMax,Is.LessThanOrEqualTo(panel.worldBound.xMax));
+            Assert.That(name.worldBound.yMin,Is.GreaterThanOrEqualTo(presetScroll.contentViewport.worldBound.yMin-1));
+            Assert.That(name.worldBound.yMax,Is.LessThanOrEqualTo(presetScroll.contentViewport.worldBound.yMax+1),"Save name must be reachable");
+            presetScroll.ScrollTo(save);yield return null;yield return null;
+            Assert.That(save.worldBound.yMax,Is.LessThanOrEqualTo(presetScroll.contentViewport.worldBound.yMax+1),"Save button must be reachable");
+            name.value=presetName;save.Focus();using(var e=NavigationSubmitEvent.GetPooled())save.SendEvent(e);yield return null;
+            Assert.That(app.Presets.List(),Does.Contain(presetName),"The visible save button must execute its action");
+        }
         [UnityTest] public IEnumerator ThreeFingerHoldFiresOnceAfterOneSecondAndResetsOnReplacementOrFocus()
         {
             var go=new GameObject("gesture test");var gesture=go.AddComponent<ThreeFingerHold>();gesture.enabled=false;

@@ -18,14 +18,14 @@ namespace SquashClash.DevPanel
         public VisualElement Root {get;}=new VisualElement {name="parameters"};
         public ParamSection(AppBootstrap app,Action changed)
         {
-            this.app=app;this.changed=changed;
+            this.app=app;this.changed=changed;Root.style.flexShrink=0;Root.style.minWidth=0;
             errorLabel.style.whiteSpace=WhiteSpace.Normal;Root.Add(errorLabel);
             foreach(var group in ParamCatalog.All.GroupBy(d=>d.Group))
             {
-                var fold=new Foldout {text=GroupLabel(group.Key),value=false};Root.Add(fold);
+                var fold=new Foldout {text=GroupLabel(group.Key),value=false};fold.style.flexShrink=0;Root.Add(fold);
                 foreach(var def in group)
                 {
-                    var row=new VisualElement();row.style.marginBottom=8;fold.Add(row);
+                    var row=new VisualElement();row.style.flexShrink=0;row.style.minWidth=0;row.style.marginBottom=8;fold.Add(row);
                     var caption=new Label();caption.style.whiteSpace=WhiteSpace.Normal;row.Add(caption);captions.Add(def.Key,caption);
                     VisualElement control;
                     if(def.Kind==ParamKind.Choice)
@@ -46,7 +46,7 @@ namespace SquashClash.DevPanel
                         var slider=new Slider((float)def.Min,(float)def.Max) {showInputField=true};
                         slider.RegisterValueChangedCallback(e=>Edit(def.Key,Quantize(e.newValue,def)));control=slider;
                     }
-                    control.name=def.Key;control.style.minHeight=40;row.Add(control);controls.Add(def.Key,control);
+                    control.name=def.Key;control.style.minHeight=44;control.style.flexShrink=0;control.style.minWidth=0;row.Add(control);controls.Add(def.Key,control);
                 }
             }
             Refresh();
