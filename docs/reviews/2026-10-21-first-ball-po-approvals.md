@@ -455,3 +455,16 @@ El PO indica «Listo hice la prueba funcional, a si que revisala». Sin cambiar 
 Después se observa guardado/selección **P0-calib-1**, 41 claves, SHA-256 2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd, hash efectivo **8de3f2ecb217**. Solo cambia `launcher.repeatSeconds=3` frente a defaults; last-active y dos lanzamientos coinciden con archivo/hash. Se registra como evidencia de guardado/uso, sin afirmar reinicio posterior de ese preset ni aprobación de calibración por su nombre. No se promueve a defaults ni se declara cumplido el punto de control de calibración propia sin indicación expresa del PO.
 
 [Informe I6a](2026-10-24-first-ball-i6a-legibility.md) y [auditoría ampliada](../validation/evidence/2026-10-24-i6a-native-functional.json) actualizados. Recorrido visual atribuido al PO; registros no certifican por sí solos ayudas ni H1/rendimiento. PR #10 sigue lista para Claude, abierta y sin fusionar; I6a sin cerrar, sin T6.3/gameplay ni campaña física.
+
+
+## Cierre I6a, punto de control Etapa 5 y autorización I6b — 2026-10-24
+
+El PO comunica aprobación de Claude de **PR #10 / I6a (T6.1–T6.2), head 25fedc1d26d3037414834c16ec89c465192d49d3**, y autoriza cierre/fusión. PR ya lista, fusionada con **merge commit 66bac1dc541528e74dfaa2faae1a4c657e74ee42**; main sincronizada y worktree I6a eliminado (artefactos locales preservados en Logs/archive-i6a-20261024, ignorado). **I6a cerrado**. Suites 262/262 EditMode, 120/120 PlayMode; defaults **0d39e6016bd8**, P2 por defecto/P1 respaldo. Recorrido funcional nativo confirmado por PO y archivos/arranque corroborados. Aprobación comunicada por PO, sin atribuir una GitHub Review adicional ni H1.
+
+**Etapa 5 cerrada por declaración expresa del PO:** «declaro que la física por defecto me parece correcta y que P0-calib-1 es mi preset del punto de control». Preset recuperado: 41 claves, hash efectivo **8de3f2ecb217**, SHA-256 **2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd**, única diferencia frente a defaults `launcher.repeatSeconds=3`. Sustituye la calibración pendiente documentada anteriormente. No implica promoción a DefaultPreset ni cambios de valores físicos. Po-1 continúa como prueba funcional. La Etapa 5 termina en T5.3; no existe T5.4 en r2.
+
+Observaciones de Claude:
+1. Marcas de impacto y estela envejecen durante pausa y se pierden al inspeccionar paso a paso. **Corregir en I6b con TDD:** no deben envejecer mientras el reloj está pausado.
+2. Sombra no escala con aids.ballVisualScale: mantener experimental para juicio del PO en H1, **sin cambios ahora**.
+
+**I6b / T6.3 autorizado** en `firstball/i6b-legibility-launches`: L1–L6 con condiciones numéricas y selector en barra, más corrección de pausa anterior. TDD, PR para Claude e informe; detenerse sin fusionar por cuenta propia. No adelantar H1, Etapa 7 ni gameplay, sin modificar spec/criterios/umbrales. Renovar perfil antes de instalaciones desde el 27 de octubre y comprobar siempre vigencia efectiva; herramientas intactas.
