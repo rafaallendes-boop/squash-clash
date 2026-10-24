@@ -1,0 +1,65 @@
+{
+  "scope": "Verificación funcional I5b, sin campaña ni evaluación de rendimiento",
+  "buildLabel": "0.1.0+11e505f dev",
+  "retrievedMetricFiles": [
+    {
+      "sha256": "2fc4b244c0c7746adbce8fd3c83f667a2fff01d8bc5e172b84f2c26a7808008b",
+      "records": 8,
+      "firstTsUtc": "2026-10-24T00:44:07.2258450Z",
+      "lastTsUtc": "2026-10-24T00:44:39.1956600Z"
+    },
+    {
+      "sha256": "43900287fdc31f59a2aa79a4286cf35663cfca09e9ad93ccb1667b09bba5cf73",
+      "records": 7,
+      "firstTsUtc": "2026-10-24T00:44:45.9146750Z",
+      "lastTsUtc": "2026-10-24T00:45:46.4710030Z"
+    }
+  ],
+  "records": 15,
+  "launches": 4,
+  "effectiveHashes": [
+    "164b0c21e88b"
+  ],
+  "presetNames": [
+    "Default"
+  ],
+  "sensorAvailability": {
+    "cpuSamples": 5000,
+    "gpuSamples": 5000,
+    "thermalCurrentStates": [
+      "nominal"
+    ],
+    "thermalWorstStates": [
+      "nominal"
+    ]
+  },
+  "invalidSegments": [
+    {
+      "tsUtc": "2026-10-24T00:44:17.2242400Z",
+      "droppedSteps": 195,
+      "metricsValid": false
+    },
+    {
+      "tsUtc": "2026-10-24T00:44:48.6635120Z",
+      "droppedSteps": 185,
+      "metricsValid": false
+    }
+  ],
+  "poReply": "Lo hice y ha funcionado bien. Pero igual lo dejé en duplicar iphone abierto para que tu lo puedas ver. tienes permiso de usar el iphone",
+  "reportedManualChecks": [
+    "tres dedos/DEV",
+    "pendiente/aplicar",
+    "presets/reinicio/portapapeles",
+    "pausa al volver",
+    "diagnóstico"
+  ],
+  "independentVisualInspection": {
+    "completed": false,
+    "reason": "Sky Computer Use native pipe startup failed; dos intentos, incluido reset. Sin capturas ni observación visual atribuida al agente."
+  },
+  "presetPersistence": {
+    "verified": false,
+    "reason": "Documents listado correctamente sin presets; copia Documents/presets falló con CoreDeviceError 7000. Todos los registros recuperados dicen Default/hash de defaults. Se pidió aclarar y realizar únicamente guardado po-1 con mensaje exacto."
+  },
+  "note": "La confirmación general del PO se conserva, pero no sustituye la evidencia contradictoria de persistencia. No se declara el recorrido completo ni se marca PR lista hasta resolverlo."
+}

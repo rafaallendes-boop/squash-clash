@@ -85,5 +85,5 @@
     "underlyingReason": "Locked",
     "meaning": "SpringBoard rechazó abrir la app porque el teléfono estaba bloqueado; no prueba un fallo de la app."
   },
-  "manualFunctionalCheck": "Pendiente de confirmación del PO"
+  "manualFunctionalCheck": "PO reporta recorrido correcto; sensores corroborados con datos nativos. Guardado/persistencia po-1 pendiente por discrepancia con archivos recuperados; PR sigue borrador."
 }

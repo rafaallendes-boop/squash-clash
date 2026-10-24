@@ -1,6 +1,6 @@
 # I5b / T5.3 — panel autogenerado
 
-Estado al preparar la build, 2026-10-23: implementación y regresión completas; comprobación funcional en iPhone pendiente. Rama `firstball/i5b-dev-panel`, [PR #9 en borrador](https://github.com/rafaallendes-boop/squash-clash/pull/9). I5b abierto; la entrega se detiene para Claude y PO, sin fusionar ni adelantar T5.4, calibración o gameplay.
+Estado, 2026-10-23: implementación y regresión completas; PO reporta recorrido funcional correcto, sensores corroborados. Persistencia de po-1 pendiente de aclarar por discrepancia con los archivos recuperados. Rama `firstball/i5b-dev-panel`, [PR #9 en borrador](https://github.com/rafaallendes-boop/squash-clash/pull/9). I5b abierto; la entrega se detiene para Claude y PO, sin fusionar ni adelantar T5.4, calibración o gameplay.
 
 ## Autorización y cierre previo
 
@@ -38,15 +38,19 @@ El primer intento del caso de presets acabó con una aserción NUnit inválida s
 
 Build dev **0.1.0+11e505f**, gitDirty=false, Player no Development, SQUASH_DEV temporal, IL2CPP/Xcode Release, ARM64 y firma estricta comprobados. Exports limpios dev/prod **RELEASE-CHECK: OK**; prod sin módulo DevPanel ni puente Spike, puente térmico runtime presente en ambos. BuildInfo y DefaultPreset embebidos exactos y fuentes cotejadas con los hashes de las pruebas. Xcode 27.1 (27A9275), Unity 6000.3.27f1; herramientas sin cambios. Xcode compiló con generic/platform=iOS. Prod exportado, sin compilación Xcode ni instalación en este incremento.
 
-Perfil embebido vigente comprobado antes de instalar, compatible con dispositivo/bundle, vence **2026-10-28T14:59:31Z**. Instalación el **2026-10-23 local**, antes de la fecha de renovación obligatoria del 27. **Instalación exitosa**. Lanzamiento automático rechazado con CoreDeviceError 10002 y causa subyacente **Locked**; no se atribuye un error de la app a ese rechazo. Se solicitó al PO abrir manualmente la build instalada y completar el recorrido; confirmación pendiente. [Evidencia de build saneada](../validation/evidence/2026-10-23-i5b-native-build.json).
+Perfil embebido vigente comprobado antes de instalar, compatible con dispositivo/bundle, vence **2026-10-28T14:59:31Z**. Instalación el **2026-10-23 local**, antes de la fecha de renovación obligatoria del 27. **Instalación exitosa**. Lanzamiento automático rechazado con CoreDeviceError 10002 y causa subyacente **Locked**; no se atribuye un error de la app a ese rechazo. PO abrió manualmente y respondió al recorrido solicitado: **«Lo hice y ha funcionado bien. Pero igual lo dejé en duplicar iphone abierto para que tu lo puedas ver. tienes permiso de usar el iphone»**. Es confirmación del recorrido, sin atribuir revisión de Claude ni permiso de merge. [Evidencia de build saneada](../validation/evidence/2026-10-23-i5b-native-build.json).
 
-No se ejecuta campaña física ni sesión de rendimiento. La compilación y las regresiones no demuestran los sensores, la pausa ni el recorrido físico: esa comprobación queda pendiente hasta la respuesta del PO y la recuperación posterior de los datos.
+Recuperación posterior autorizada: **dos archivos de métricas de la build 0.1.0+11e505f dev**, 15 registros/4 lanzamientos. **5.000 muestras CPU y 5.000 GPU**, térmico actual/peor nominal en los segmentos recuperados; comprueba disponibilidad real de sensores. Dos segmentos iniciales con descartes (195 y 185) quedaron metricsValid=false, conservados sin atribución causal ni evaluación de rendimiento. No campaña física ni sesión de rendimiento; no se evalúan umbrales con estos datos.
+
+**Discrepancia pendiente:** todos los registros recuperados dicen Default/config 164b0c21e88b; el listado correcto de Documents contiene metrics y spike, sin presets. Copiar Documents/presets falla con CoreDeviceError 7000 (nodo inexistente). Esto impide corroborar el guardado y la recuperación de po-1 pese a la confirmación general del PO. Se le pidió únicamente cambiar/aplicar floor restitution=0,60 y guardar po-1, informando el mensaje exacto, sin repetir otros pasos ni campaña. No se declara cumplido el recorrido completo hasta resolverlo.
+
+El acceso visual del agente a Duplicación falla **Sky Computer Use native pipe startup failed**, en dos intentos incluido reset. No se obtuvo captura ni se atribuye observación directa de pantalla al agente. Pausa/gesto/portapapeles se conservan como reportados por el PO; persistencia queda pendiente por evidencia contradictoria. [Auditoría funcional saneada](../validation/evidence/2026-10-23-i5b-native-functional.json). PR #9 sigue en borrador.
 
 ## Observaciones de Claude y próximos gates
 
 - TuningState.Set: cubierto aquí por controles válidos y captura visible de errores.
 - Nombre Default: reservado aquí; comprobación de persistencia en arranque incluida.
-- Pausa manual y sensores: comprobación física pendiente de este incremento; la regresión de editor no sustituye al iPhone.
+- Pausa manual: reportada correcta por PO en el recorrido; sensores CPU/GPU/térmico corroborados con archivos nativos de la build. Falta resolver la persistencia, como se detalla arriba.
 - Logs de métricas también en prod y sin retención: **definir política antes de T8**, sin cambio en I5b.
 - Percentiles de segmento por borde superior de cubeta, sesgo ≤0,1 ms; ventana exacta y sesión por histograma. No se convierten en medidas exactas ni se cambian umbrales.
 - Renovar perfil antes de cualquier instalación desde **2026-10-27**, comprobar siempre vigencia; sin cambiar herramientas.
