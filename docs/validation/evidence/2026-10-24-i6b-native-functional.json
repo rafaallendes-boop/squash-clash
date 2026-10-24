@@ -1,0 +1,31 @@
+{
+  "scope": "Comprobación funcional I6b, sin H1/campaña/rendimiento",
+  "localDate": "2026-10-24",
+  "buildLabel": "0.1.0+2109af8 dev",
+  "installed": true,
+  "processLaunchSucceeded": true,
+  "managedStartupVerified": false,
+  "backgroundBeforeManagedReady": true,
+  "startupExceptionsObserved": [],
+  "consoleSnapshotSha256": "0164fc730f2511fc9d1ad3344e3018e71408eab59652423f11fb7ff97a2c149d",
+  "nativeCampaignRun": false,
+  "poReplyPending": true,
+  "h1Approved": false,
+  "presetBackup": {
+    "lastActive": "P0-calib-1",
+    "fileHashes": {
+      "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+      "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+    },
+    "noPresetWritesByAgent": true
+  },
+  "remainingChecks": [
+    "abrir y corroborar arranque/label",
+    "L1–L6 con fija y seguimiento",
+    "pausa y Paso conservan marca/estela; continuar reanuda edades",
+    "restaurar P0-calib-1 sin guardar pruebas"
+  ],
+  "controlLimitation": "Duplicación bloqueada por autenticación de macOS; pedido recorrido físico directamente al PO, sin solicitar otra autenticación.",
+  "delivery": "PR #11 borrador, sin fusionar; completar comprobación antes de entregar lista a Claude."
+}

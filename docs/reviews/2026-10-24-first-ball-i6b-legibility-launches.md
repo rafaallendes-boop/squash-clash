@@ -1,6 +1,6 @@
 # I6b / T6.3 — lanzamientos y pausa de ayudas
 
-Estado 2026-10-24: implementación y regresión completas; build/comprobación nativa en curso. Rama `firstball/i6b-legibility-launches`. Sin fusionar ni cerrar I6b antes de revisión de Claude y decisión del PO.
+Estado 2026-10-24: implementación y regresión completas; build instalada, comprobación funcional nativa pendiente del PO. [PR #11 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/11). Rama `firstball/i6b-legibility-launches`. Sin fusionar ni cerrar I6b antes de revisión de Claude y decisión del PO.
 
 ## Autorización y cierres previos
 
@@ -57,7 +57,11 @@ Defaults **0d39e6016bd8**, 41 claves sin cambios, P2 por defecto/P1 configurable
 
 ## Build y comprobación nativa
 
-En curso. T6.3 requiere recorrer L1–L6 con fija y seguimiento; solo comprobación funcional, sin valorar H1. No campaña física ni rendimiento. Renovar perfil antes de instalación desde el 27 y verificar vigencia efectiva siempre; herramientas sin cambios.
+Exports limpios dev/prod **RELEASE-CHECK: OK**, metadata limpia 2109af8; prod excluye DevPanel y puente Spike, puente térmico runtime en ambos. Dev **0.1.0+2109af8**, Release ARM64 firmada y firma estricta, metadata/preset embebidos exactos, 119 hashes de fuentes cotejados. Unity 6000.3.27f1 y Xcode 27.1 (27A9275) intactos. Perfil vigente hasta **2026-10-28T14:59:31Z**, compatible con dispositivo/bundle y comprobado antes de instalar el 24. [Build saneada](../validation/evidence/2026-10-24-i6b-native-build.json).
+
+Respaldo de presets e instalación exitosos, sin escribir presets. Proceso lanzado automáticamente; Unity inicializa y pasa a segundo plano antes del ready gestionado, sin excepción observada en esa instantánea. **No se declara todavía verificado el arranque funcional**. Duplicación pide autenticación macOS; se pidió al PO abrir directamente en el teléfono y recorrer L1–L6 con fija/seguimiento, pausa y varios Paso conservando marca/estela, Continuar reanudando edades y restaurar P0-calib-1 sin guardar. Repetición temporal 0 para permitir terminar cada vuelo; no campaña ni valoración H1. [Auditoría pendiente](../validation/evidence/2026-10-24-i6b-native-functional.json).
+
+**PR #11 sigue borrador** hasta la respuesta/comprobación. No campaña física ni rendimiento. Renovar perfil antes de instalación desde el 27 y verificar vigencia efectiva siempre; herramientas sin cambios.
 
 ## Entrega y límites
 

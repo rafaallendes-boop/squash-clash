@@ -475,3 +475,10 @@ Observaciones de Claude:
 Dentro de la autorización anterior: fuente **2109af8**, L1–L6 con Ballistics/condiciones del plan y selector en barra, corrección de edades de estela/marcas mientras Clock.Paused. Cuatro grupos RED válidos→GREEN, regresión **269/269 EditMode y 130/130 PlayMode**, cero fallos/omitidos, XML frescos y sin CS. Defaults **0d39e6016bd8**, 41 claves intactas y P2 por defecto; P1 configurable, selector probado con ambos. No cambios en host, reloj, motores, spec, criterios/umbrales, escenarios del spike ni settings. Sombra experimental sin cambio de escala, H1 posterior.
 
 Exports limpios dev/prod RELEASE-CHECK: OK y metadata limpia; build dev Release ARM64 firmada en preparación. Recorrido corto L1–L6 con ambas cámaras todavía pendiente; no se declara instalación/aceptación nativa antes de completar. Sin campaña física/rendimiento ni H1/Etapa 7/gameplay. [Informe](2026-10-24-first-ball-i6b-legibility-launches.md), [pruebas](../validation/evidence/2026-10-24-i6b-tests.json). PR para Claude, sin fusión/cierre de I6b por cuenta propia. Perfil: renovación antes de instalación desde el 27 y comprobación de vigencia siempre.
+
+
+## I6b instalado, recorrido funcional pendiente — 2026-10-24
+
+Dev **0.1.0+2109af8** instalada tras respaldo de presets y revalidación de perfil/firma/metadata/preset/fuentes. Exports limpios dev/prod OK, Release ARM64, 119 hashes coincidentes, perfil compatible vigente hasta 2026-10-28T14:59:31Z; Unity/Xcode sin cambios. Proceso lanzado automáticamente: Unity inicia y queda en segundo plano antes del ready gestionado; sin declarar arranque funcional aprobado antes de corroborarlo.
+
+Duplicación pide autenticación macOS. Se solicita al PO abrir directamente en teléfono y comprobar L1–L6 con fija/seguimiento, pausa/Paso conservando ayudas y Continuar reanudando edades; repetición temporal 0 y restaurar P0-calib-1 sin guardar. **Respuesta pendiente; PR #11 borrador**, sin campaña física, H1 ni rendimiento. [Build](../validation/evidence/2026-10-24-i6b-native-build.json), [auditoría pendiente](../validation/evidence/2026-10-24-i6b-native-functional.json). No fusión/cierre de I6b, Etapa 7 ni gameplay.
