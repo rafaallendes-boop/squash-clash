@@ -1,6 +1,6 @@
 # I5b / T5.3 — panel autogenerado
 
-Estado, 2026-10-24: implementación y regresión completas; PO reporta recorrido funcional correcto salvo que no encontró Guardar como…, sensores corroborados en la primera build. Correcciones de layout y edición numérica completas. En la build final se verificaron pestañas accesibles y floor restitution=0,60 mediante slider, aplicado con cero pendientes. Falta terminar guardado/reinicio/portapapeles: Duplicación perdió la conexión antes de guardar y macOS volvió a exigir autenticación del PO. Rama `firstball/i5b-dev-panel`, [PR #9 en borrador](https://github.com/rafaallendes-boop/squash-clash/pull/9). I5b abierto; la entrega se detiene para Claude y PO, sin fusionar ni adelantar T5.4, calibración o gameplay.
+Estado, 2026-10-24: implementación y regresión completas, pero **verificación nativa de persistencia/portapapeles no aprobada**. PO reporta que el preset no apareció tras reiniciar y que importar falló con «Invalid preset JSON: Unexpected JSON token at offset 0». Se recuperaron Po-1.json y last-active.txt, ambos coherentes, con los 32 valores por defecto (floor restitution=0,45). Falta recuperar registros de arranque y confirmar mensajes exactos de Guardar/Exportar para aislar la causa. Rama `firstball/i5b-dev-panel`, [PR #9 en borrador](https://github.com/rafaallendes-boop/squash-clash/pull/9). I5b abierto, sin fusionar ni adelantar T5.4, calibración o gameplay.
 
 ## Autorización y cierre previo
 
@@ -55,6 +55,14 @@ Evidencia histórica de 11e505f: el PO abrió manualmente y reportó el recorrid
 **Comprobación parcial en 1318753, 2026-10-24:** pestañas accesibles, apertura de Presets y campo de nombre visibles; floor restitution=0,60 ajustado con el slider y aplicado, encabezado con cero pendientes. La inyección de teclado de Duplicación no permitió certificar la escritura decimal; la regresión de teclado UI Toolkit sí está en GREEN, pero no se presenta como validación de teclado nativo. Se escribió el nombre para el preset; la conexión se perdió antes de pulsar Guardar como…. El dispositivo continúa conectado según CoreDevice, pero al reintentar Duplicación macOS exige Touch ID o contraseña de la Mac; solo el PO puede completar esa autenticación. Guardado, reinicio y export/import siguen pendientes, sin declararlos aprobados. No se pidió repetir el recorrido completo ni la campaña física. PR #9 sigue en borrador.
 
 Pausa manual y gesto se conservan como reportados por el PO en el recorrido inicial; no se atribuyen a observación directa del agente. No campaña física ni sesión de rendimiento: no se evalúan criterios ni umbrales con estos datos.
+
+## Resultado de la comprobación del PO — 2026-10-24
+
+El PO prefirió ejecutar la comprobación directamente en el teléfono. Reportó que los pasos 2 y 3 fallaron: el encabezado no mostraba «Po-01» (primera letra mayúscula) y apareció **«No se importo: Invalid preset JSON: Unexpected JSON token at offset 0»**. No se da por aprobado reinicio ni export/import. Se solicitaron los mensajes exactos de Guardar como… y Exportar, sin pedir repetir la prueba.
+
+La copia de Documents/presets tuvo éxito: existe **Po-1.json**, selección **Po-1** en last-active.txt, build 0.1.0+1318753 dev, schema 1 y 32 parámetros. El archivo es JSON sintácticamente válido para un parser independiente; sus valores coinciden con Default, incluido floor restitution=0,45, hash efectivo 164b0c21e88b. Esto corrobora un guardado físico de Po-1; no prueba que sea el nombre Po-01 informado ni que el arranque lo cargara. No se reemplaza evidencia del PO con una inferencia a partir del archivo.
+
+La recuperación de métricas falló con CoreDeviceError -1 y el listado posterior con 4016, sin conectividad/servicios necesarios. Se pidió conexión por cable y desbloqueo para recuperar registros sin Duplicación. El error de importación indica que el parser rechazó el texto en el inicio; no identifica por sí solo la causa ni demuestra un fallo de la API del portapapeles. Sin cambios de código mientras se aísla el problema. [Diagnóstico saneado](../validation/evidence/2026-10-24-i5b-native-diagnostic.json). El bloqueo de autenticación anterior queda como histórico; el próximo paso es recuperar los registros y confirmar los mensajes.
 
 ## Observaciones de Claude y próximos gates
 
