@@ -14,7 +14,10 @@ namespace SquashClash.Runtime.Ball
         private MeshRenderer shadow;
         private Material shadowMaterial;
         private Material strokeMaterial, impactMaterial;
-        private TrailRenderer trail;
+        private LineRenderer trail;
+        private struct TrailPoint { public Vector3 Position; public float Age; }
+        private readonly List<TrailPoint> trailPoints = new List<TrailPoint>();
+        private float trailSeconds;
         private LineRenderer prediction;
         private struct WallMark { public MeshRenderer Renderer; public float Age; }
         private readonly List<WallMark> marks = new List<WallMark>(6);
@@ -31,9 +34,9 @@ namespace SquashClash.Runtime.Ball
             strokeMaterial = NewMaterial("Ball trajectory", Color.white);
             impactMaterial = NewMaterial("Wall impact", Color.white);
             var trailObject = new GameObject("Ball trail"); trailObject.transform.SetParent(transform, false);
-            trail = trailObject.AddComponent<TrailRenderer>(); trail.sharedMaterial = strokeMaterial;
-            trail.autodestruct = false; trail.minVertexDistance = .015f; trail.numCapVertices = 2;
-            trail.startColor = new Color(.05f, .08f, .09f, .55f); trail.endColor = new Color(.05f, .08f, .09f, 0);
+            trail = trailObject.AddComponent<LineRenderer>(); trail.sharedMaterial = strokeMaterial;
+            trail.useWorldSpace = true; trail.numCapVertices = 2;
+            trail.startColor = new Color(.05f, .08f, .09f, 0); trail.endColor = new Color(.05f, .08f, .09f, .55f);
             trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; trail.receiveShadows = false;
             var lineObject = new GameObject("Ball prediction"); lineObject.transform.SetParent(transform, false);
             prediction = lineObject.AddComponent<LineRenderer>(); prediction.sharedMaterial = strokeMaterial;
@@ -46,7 +49,7 @@ namespace SquashClash.Runtime.Ball
         }
         private void OnLaunched(EffectiveConfig config)
         {
-            trail.transform.position = host.RenderPosition; trail.Clear(); ClearMarks();
+            ClearTrail(); ClearMarks();
             Apply(); Tick(host.RenderPosition, 0);
         }
         private void OnChanged(string key) { if (key.StartsWith("aids.", System.StringComparison.Ordinal)) Apply(); }
@@ -54,11 +57,11 @@ namespace SquashClash.Runtime.Ball
         {
             shadow.gameObject.SetActive(tuning.Applied.GetBool("aids.shadow"));
             view.ApplyVisualScale((float)tuning.Applied.Get("aids.ballVisualScale"));
-            trail.time = (float)tuning.Applied.Get("aids.trailSeconds");
-            bool showTrail = tuning.Applied.GetBool("aids.trail") && trail.time > 0;
-            if (!showTrail || !trail.enabled) trail.Clear();
-            trail.enabled = trail.emitting = showTrail;
-            trail.startWidth = view.transform.lossyScale.x * .5f; trail.endWidth = 0;
+            trailSeconds = (float)tuning.Applied.Get("aids.trailSeconds");
+            bool showTrail = tuning.Applied.GetBool("aids.trail") && trailSeconds > 0;
+            if (!showTrail) ClearTrail();
+            trail.enabled = showTrail;
+            trail.startWidth = 0; trail.endWidth = view.transform.lossyScale.x * .5f;
             if (!tuning.Applied.GetBool("aids.impactMarks")) ClearMarks();
             prediction.enabled = tuning.Applied.GetBool("aids.prediction");
             prediction.positionCount = prediction.enabled ? host.Prediction.States.Count : 0;
@@ -72,14 +75,26 @@ namespace SquashClash.Runtime.Ball
             float proximity = 1 / (1 + height * .4f);
             shadow.transform.localScale = Vector3.one * (.07f + .07f * proximity);
             block.SetColor("_BaseColor", new Color(0, 0, 0, .14f + .28f * proximity)); shadow.SetPropertyBlock(block);
-            trail.transform.position = ballRenderPosition;
+            // Own the trail's ages: Unity's automatic TrailRenderer clock cannot pause with SimClock.
+            float ageSeconds = host.Clock.Paused ? 0 : Mathf.Max(0, realSeconds);
+            for (int i = trailPoints.Count - 1; i >= 0; i--)
+            {
+                var point = trailPoints[i]; point.Age += ageSeconds;
+                if (point.Age >= trailSeconds) trailPoints.RemoveAt(i); else trailPoints[i] = point;
+            }
+            if (trail.enabled && realSeconds > 0 && (trailPoints.Count == 0 ||
+                Vector3.Distance(trailPoints[trailPoints.Count - 1].Position, ballRenderPosition) >= .015f))
+                trailPoints.Add(new TrailPoint { Position = ballRenderPosition });
+            trail.positionCount = trailPoints.Count;
+            for (int i = 0; i < trailPoints.Count; i++) trail.SetPosition(i, trailPoints[i].Position);
             for (int i = marks.Count - 1; i >= 0; i--)
             {
-                var mark = marks[i]; mark.Age += Mathf.Max(0, realSeconds);
+                var mark = marks[i]; mark.Age += ageSeconds;
                 if (mark.Age >= 1.5f) { RemoveMark(i); continue; }
                 PaintMark(mark.Renderer, mark.Age); marks[i] = mark;
             }
         }
+        private void ClearTrail() { trailPoints.Clear(); trail.positionCount = 0; }
         public void RecordContact(ContactEvent contact)
         {
             if (!tuning.Applied.GetBool("aids.impactMarks") || contact.Persistent) return;

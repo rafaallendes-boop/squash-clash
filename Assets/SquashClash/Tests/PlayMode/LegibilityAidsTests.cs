@@ -66,15 +66,19 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator Trail_UsesRealDurationAndImmediateToggleAndLength()
         {
-            var trail = aids.GetComponentInChildren<TrailRenderer>(); Assert.That(trail, Is.Not.Null);
-            Assert.That(trail.time, Is.EqualTo(.15f)); Assert.That(trail.autodestruct, Is.False);
+            var trail = aids.transform.Find("Ball trail").GetComponent<LineRenderer>(); Assert.That(trail, Is.Not.Null);
             host.Clock.DebugSlowMotion = .1;
-            tuning.Set("aids.trailSeconds", .3); Assert.That(trail.time, Is.EqualTo(.3f));
-            trail.AddPosition(Vector3.zero); trail.AddPosition(Vector3.one);
+            aids.Tick(Vector3.zero, .01f); aids.Tick(Vector3.one, .01f);
+            Assert.That(trail.positionCount, Is.EqualTo(2));
+            aids.Tick(Vector3.one, .14f); Assert.That(trail.positionCount, Is.EqualTo(1));
+            tuning.Set("aids.trailSeconds", .3); tuning.Set("aids.trail", 0); tuning.Set("aids.trail", 1);
+            aids.Tick(Vector3.zero, .01f); aids.Tick(Vector3.one, .01f);
+            aids.Tick(Vector3.one, .2f); Assert.That(trail.positionCount, Is.EqualTo(2));
             tuning.Set("aids.trail", 0); Assert.That(trail.enabled, Is.False); Assert.That(trail.positionCount, Is.Zero);
-            tuning.Set("aids.trail", 1); Assert.That(trail.enabled, Is.True); Assert.That(trail.emitting, Is.True);
+            tuning.Set("aids.trail", 1); Assert.That(trail.enabled, Is.True);
             tuning.Set("aids.trailSeconds", 0); Assert.That(trail.enabled, Is.False); yield return null;
         }
+
         private MeshRenderer[] Marks() => aids.GetComponentsInChildren<MeshRenderer>().Where(r => r.name == "Wall impact").ToArray();
         private static ContactEvent Contact(SurfaceId surface, bool persistent = false) => new ContactEvent(surface,
             new Vector3(2, 1, 0), Vector2.one, Vector3.forward, 1, .001f, ContactTiming.Exact, Vector3.back, persistent);
@@ -98,14 +102,48 @@ namespace SquashClash.Runtime.Tests
         {
             aids.RecordContact(Contact(SurfaceId.FrontWall)); Assert.That(Marks().Length, Is.EqualTo(1));
             var mark = Marks()[0]; var block = new MaterialPropertyBlock(); mark.GetPropertyBlock(block); float alpha = block.GetColor("_BaseColor").a;
-            host.Clock.Paused = true; host.Clock.DebugSlowMotion = .1;
+            host.Clock.DebugSlowMotion = .1;
             aids.Tick(host.RenderPosition, .75f); mark.GetPropertyBlock(block);
             Assert.That(block.GetColor("_BaseColor").a, Is.EqualTo(alpha / 2).Within(.00001));
             aids.Tick(host.RenderPosition, .76f); Assert.That(Marks(), Is.Empty); yield return null;
         }
+        [UnityTest] public IEnumerator PausedMarks_DoNotFadeDuringWaitOrSingleSteps_ThenResumeAging()
+        {
+            aids.RecordContact(Contact(SurfaceId.FrontWall)); var mark = Marks()[0];
+            var block = new MaterialPropertyBlock(); mark.GetPropertyBlock(block); float alpha = block.GetColor("_BaseColor").a;
+            host.Clock.Paused = true;
+            for (int i = 0; i < 3; i++)
+            {
+                host.Clock.RequestSingleStep(); host.Advance(1); aids.Tick(host.RenderPosition, 2);
+            }
+            Assert.That(Marks().Length, Is.EqualTo(1), "Paused inspection must retain the mark");
+            mark.GetPropertyBlock(block); Assert.That(block.GetColor("_BaseColor").a, Is.EqualTo(alpha));
+            host.Clock.Paused = false; aids.Tick(host.RenderPosition, .75f); mark.GetPropertyBlock(block);
+            Assert.That(block.GetColor("_BaseColor").a, Is.EqualTo(alpha / 2).Within(.00001));
+            aids.Tick(host.RenderPosition, .76f); Assert.That(Marks(), Is.Empty); yield return null;
+        }
+        private Vector3[] TrailPositions()
+        {
+            var go = aids.transform.Find("Ball trail");
+            var automatic = go.GetComponent<TrailRenderer>();
+            if (automatic != null) { var points = new Vector3[automatic.positionCount]; automatic.GetPositions(points); return points; }
+            var line = go.GetComponent<LineRenderer>(); var positions = new Vector3[line.positionCount]; line.GetPositions(positions); return positions;
+        }
+        [UnityTest] public IEnumerator PausedTrail_RetainsHistoryDuringRealWaitAndSingleStep_ThenExpires()
+        {
+            for (int i = 0; i < 5; i++) { aids.Tick(new Vector3(2 + i * .1f, 2, 5), .01f); yield return null; }
+            var before = TrailPositions(); Assert.That(before.Length, Is.GreaterThanOrEqualTo(2));
+            host.Clock.Paused = true;
+            yield return new WaitForSecondsRealtime(.3f); aids.Tick(new Vector3(2.4f, 2, 5), .3f);
+            Assert.That(TrailPositions(), Is.EqualTo(before), "Real time while paused must not erase the trail");
+            host.Clock.RequestSingleStep(); host.Advance(1); aids.Tick(host.RenderPosition, 2);
+            Assert.That(TrailPositions().Take(before.Length), Is.EqualTo(before), "Single-step inspection retains old points");
+            host.Clock.Paused = false; aids.Tick(host.RenderPosition, .4f);
+            Assert.That(TrailPositions().Length, Is.LessThanOrEqualTo(1));
+        }
         [UnityTest] public IEnumerator Prediction_ToggleDrawsTheIsolatedHostTrajectoryWithoutChangingIt()
         {
-            var line = aids.GetComponentInChildren<LineRenderer>(); Assert.That(line, Is.Not.Null);
+            var line = aids.transform.Find("Ball prediction").GetComponent<LineRenderer>(); Assert.That(line, Is.Not.Null);
             Assert.That(line.enabled, Is.False); var prediction = host.Prediction;
             tuning.Set("aids.prediction", 1); Assert.That(line.enabled, Is.True);
             Assert.That(line.useWorldSpace, Is.True); Assert.That(line.positionCount, Is.EqualTo(prediction.States.Count));
@@ -123,10 +161,10 @@ namespace SquashClash.Runtime.Tests
         {
             tuning.Set("aids.prediction", 1);
             aids.RecordContact(Contact(SurfaceId.FrontWall));
-            var trail = aids.GetComponentInChildren<TrailRenderer>(); trail.AddPosition(Vector3.zero); trail.AddPosition(Vector3.one);
+            var trail = aids.transform.Find("Ball trail").GetComponent<LineRenderer>(); aids.Tick(Vector3.zero, .01f); aids.Tick(Vector3.one, .01f);
             host.Launch(config, new BallState { Position = new Vector3(1, 2, 4), Velocity = Vector3.back }, 30, StopCondition.MaxSteps);
             Assert.That(new[] { Marks().Length, trail.positionCount,
-                aids.GetComponentInChildren<LineRenderer>().positionCount - host.Prediction.States.Count }, Is.EqualTo(new[] { 0, 0, 0 }));
+                aids.transform.Find("Ball prediction").GetComponent<LineRenderer>().positionCount - host.Prediction.States.Count }, Is.EqualTo(new[] { 0, 0, 0 }));
             yield return null;
         }
         [UnityTest] public IEnumerator DestroyingAids_ReleasesOwnedDrawingAndEventSubscriptions()
