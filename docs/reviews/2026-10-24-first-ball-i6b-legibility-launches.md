@@ -1,6 +1,6 @@
 # I6b / T6.3 — lanzamientos y pausa de ayudas
 
-Estado 2026-10-24: implementación y regresión completas; build instalada, comprobación funcional nativa pendiente del PO. [PR #11 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/11). Rama `firstball/i6b-legibility-launches`. Sin fusionar ni cerrar I6b antes de revisión de Claude y decisión del PO.
+Estado 2026-10-24: implementación, regresión, instalación y comprobación funcional nativa completas. [PR #11 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/11), abierta y sin fusionar. Rama `firstball/i6b-legibility-launches`. Entrega para revisión de Claude y decisión del PO; I6b sin cerrar.
 
 ## Autorización y cierres previos
 
@@ -59,9 +59,19 @@ Defaults **0d39e6016bd8**, 41 claves sin cambios, P2 por defecto/P1 configurable
 
 Exports limpios dev/prod **RELEASE-CHECK: OK**, metadata limpia 2109af8; prod excluye DevPanel y puente Spike, puente térmico runtime en ambos. Dev **0.1.0+2109af8**, Release ARM64 firmada y firma estricta, metadata/preset embebidos exactos, 119 hashes de fuentes cotejados. Unity 6000.3.27f1 y Xcode 27.1 (27A9275) intactos. Perfil vigente hasta **2026-10-28T14:59:31Z**, compatible con dispositivo/bundle y comprobado antes de instalar el 24. [Build saneada](../validation/evidence/2026-10-24-i6b-native-build.json).
 
-Respaldo de presets e instalación exitosos, sin escribir presets. Proceso lanzado automáticamente; Unity inicializa y pasa a segundo plano antes del ready gestionado, sin excepción observada en esa instantánea. **No se declara todavía verificado el arranque funcional**. Duplicación pide autenticación macOS; se pidió al PO abrir directamente en el teléfono y recorrer L1–L6 con fija/seguimiento, pausa y varios Paso conservando marca/estela, Continuar reanudando edades y restaurar P0-calib-1 sin guardar. Repetición temporal 0 para permitir terminar cada vuelo; no campaña ni valoración H1. [Auditoría pendiente](../validation/evidence/2026-10-24-i6b-native-functional.json).
+Respaldo de presets e instalación exitosos. Proceso inicial de Unity pasó a segundo plano antes del ready gestionado capturado; no se lo aceptó como verificación funcional. El PO dejó después Duplicación operativa y pidió: «Duplicar está encendido. Realiza tu lo pasos. Y lo que no puedas yo lo realizaré». El agente completó el recorrido con **cua_repl**, sin autenticación adicional ni reinstalación. App y label 2109af8, header P0-calib-1/P2-Analytic observados; arranque corroborado además por el primer registro de esa build con hash **8de3f2ecb217**. No excepciones observadas en la instantánea inicial de consola; la verificación posterior se sustenta en UI/métricas, sin atribuir logs gestionados que no se capturaron.
 
-**PR #11 sigue borrador** hasta la respuesta/comprobación. No campaña física ni rendimiento. Renovar perfil antes de instalación desde el 27 y verificar vigencia efectiva siempre; herramientas sin cambios.
+**Comprobación nativa realizada por el agente:**
+
+- Repetición temporal 0 en el panel, sin guardar, para que cada vuelo termine. Selector Manual→L1–L6 con cámara fija; luego Mode=seguimiento y los seis de nuevo. Doce etiquetas/lanzamientos observados, figuras de L5/L6 colocadas y cámara siguiendo lateralmente. No juicio de altura/profundidad, oclusión perceptual ni H1.
+- L1 en seguimiento: pausa después de un impacto, botón Continuar y marca/estela visibles. Observaciones sucesivas tras espera prolongada conservaron las ayudas; tres pulsaciones de Paso actualizaron pelota/historia manteniendo la marca. Continuar reanudó movimiento y envejecimiento; observación posterior sin marca/estela antiguas. No se aplicó escala adicional ni se cambió la duración configurada.
+- Presets→P0-calib-1→Cargar: mensaje «Cargado: P0-calib-1.», cuatro cambios pendientes; Aplicar y relanzar→cero pendientes, Manual y cámara fija. Cerrado DEV y app dejada con el preset aceptado. No Guardar como, exportación ni importación.
+
+**Auditoría recuperada:** una instantánea JSONL de 2109af8 con **119 registros (47 launch y 72 frames)**, cero líneas JSON inválidas. Incluye doce lanzamientos distintos, en el orden del recorrido de UI, cero pendientes, hashes por L/cámara en la [auditoría funcional](../validation/evidence/2026-10-24-i6b-native-functional.json). La repetición inicial/final de P0-calib-1 se conserva en el recuento. Un replay automático entre Cargar y Aplicar registra cuatro pendientes; se preserva y después se constata la restauración con hash **8de3f2ecb217** y cero pendientes, sin atribuir al vuelo anterior los valores pendientes.
+
+Presets y last-active copiados después: **idénticos byte a byte al respaldo**. P0-calib-1 SHA-256 2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd; Po-1 SHA-256 9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767; selección P0-calib-1 intacta. Cargar restaura/escribe la selección por la UI; ningún JSON de preset guardado o sobrescrito. Los registros trazan acciones/configuraciones, no sustituyen la inspección visual ni prueban por sí solos invariantes numéricos o rendimiento.
+
+No se pulsó Prueba física P2 ni se realizó campaña física, medición de rendimiento o H1. Renovar perfil antes de otra instalación desde el 27 y verificar siempre vigencia; herramientas sin cambios. **PR #11 lista para Claude**, sin fusionar ni cerrar I6b.
 
 ## Entrega y límites
 

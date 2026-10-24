@@ -4,12 +4,12 @@
   "buildLabel": "0.1.0+2109af8 dev",
   "installed": true,
   "processLaunchSucceeded": true,
-  "managedStartupVerified": false,
+  "managedStartupVerified": true,
   "backgroundBeforeManagedReady": true,
   "startupExceptionsObserved": [],
   "consoleSnapshotSha256": "0164fc730f2511fc9d1ad3344e3018e71408eab59652423f11fb7ff97a2c149d",
   "nativeCampaignRun": false,
-  "poReplyPending": true,
+  "poReplyPending": false,
   "h1Approved": false,
   "presetBackup": {
     "lastActive": "P0-calib-1",
@@ -18,14 +18,504 @@
       "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
       "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
     },
-    "noPresetWritesByAgent": true
+    "noPresetJsonSavedOrOverwrittenByAgent": true,
+    "lastActiveRestoredViaUI": true
   },
-  "remainingChecks": [
-    "abrir y corroborar arranque/label",
-    "L1–L6 con fija y seguimiento",
-    "pausa y Paso conservan marca/estela; continuar reanuda edades",
-    "restaurar P0-calib-1 sin guardar pruebas"
-  ],
-  "controlLimitation": "Duplicación bloqueada por autenticación de macOS; pedido recorrido físico directamente al PO, sin solicitar otra autenticación.",
-  "delivery": "PR #11 borrador, sin fusionar; completar comprobación antes de entregar lista a Claude."
+  "remainingChecks": [],
+  "controlLimitation": "Bloqueo de autenticación anterior superado: PO dejó Duplicación operativa y autorizó que el agente realizara el recorrido. Clics y barra de scroll respondieron.",
+  "delivery": "PR #11 preparada para revisión de Claude/PO, I6b abierto y sin fusionar. No H1/Etapa 7/gameplay.",
+  "managedStartupEvidence": "Label 2109af8/app/barra/header P0-calib-1 · P2-Analytic observados en Duplicación; primer registro de la build P0-calib-1/8de3f2ecb217.",
+  "completedBy": "agent via cua_repl; UI nativa de Duplicación del iPhone",
+  "poReply": "Duplicar está encendido. Realiza tu lo pasos. Y lo que no puedas yo lo realizaré",
+  "visualChecks": {
+    "buildLabelSeen": "0.1.0+2109af8 dev",
+    "appOpens": true,
+    "backendHeaderSeen": "P2-Analytic",
+    "repeatTemporarilyZeroSeen": true,
+    "bothCameraModesSeen": true,
+    "l1ThroughL6Matrix": [
+      {
+        "id": "L1",
+        "camera": "fija",
+        "launchUtc": "2026-10-24T21:59:38.9041620Z",
+        "effectiveHash": "943ff1ebe8c5",
+        "pending": 0,
+        "selectedLabelAndLaunchObserved": true
+      },
+      {
+        "id": "L2",
+        "camera": "fija",
+        "launchUtc": "2026-10-24T21:59:54.7868870Z",
+        "effectiveHash": "cb5cb6f019c5",
+        "pending": 0,
+        "selectedLabelAndLaunchObserved": true
+      },
+      {
+        "id": "L3",
+        "camera": "fija",
+        "launchUtc": "2026-10-24T21:59:58.0877870Z",
+        "effectiveHash": "676a51b8695d",
+        "pending": 0,
+        "selectedLabelAndLaunchObserved": true
+      },
+      {
+        "id": "L4",
+        "camera": "fija",
+        "launchUtc": "2026-10-24T22:00:01.1705380Z",
+        "effectiveHash": "40a4552871b7",
+        "pending": 0,
+        "selectedLabelAndLaunchObserved": true
+      },
+      {
+        "id": "L5",
+        "camera": "fija",
+        "launchUtc": "2026-10-24T22:00:06.2555370Z",
+        "effectiveHash": "6bb48ed0c535",
+        "pending": 0,
+        "selectedLabelAndLaunchObserved": true
+      },
+      {
+        "id": "L6",
+        "camera": "fija",
+        "launchUtc": "2026-10-24T22:00:09.5587480Z",
+        "effectiveHash": "1d693c4309b3",
+        "pending": 0,
+        "selectedLabelAndLaunchObserved": true
+      },
+      {
+        "id": "L1",
+        "camera": "seguimiento",
+        "launchUtc": "2026-10-24T22:01:12.5133960Z",
+        "effectiveHash": "f669d1d5561f",
+        "pending": 0,
+        "selectedLabelAndLaunchObserved": true
+      },
+      {
+        "id": "L2",
+        "camera": "seguimiento",
+        "launchUtc": "2026-10-24T22:01:15.9138240Z",
+        "effectiveHash": "aa45e4f96da9",
+        "pending": 0,
+        "selectedLabelAndLaunchObserved": true
+      },
+      {
+        "id": "L3",
+        "camera": "seguimiento",
+        "launchUtc": "2026-10-24T22:01:21.0833370Z",
+        "effectiveHash": "903c918d4822",
+        "pending": 0,
+        "selectedLabelAndLaunchObserved": true
+      },
+      {
+        "id": "L4",
+        "camera": "seguimiento",
+        "launchUtc": "2026-10-24T22:01:24.2809110Z",
+        "effectiveHash": "e727e031e046",
+        "pending": 0,
+        "selectedLabelAndLaunchObserved": true
+      },
+      {
+        "id": "L5",
+        "camera": "seguimiento",
+        "launchUtc": "2026-10-24T22:01:27.7156810Z",
+        "effectiveHash": "d41a31f2487f",
+        "pending": 0,
+        "selectedLabelAndLaunchObserved": true
+      },
+      {
+        "id": "L6",
+        "camera": "seguimiento",
+        "launchUtc": "2026-10-24T22:01:32.7347370Z",
+        "effectiveHash": "c9e857e382a6",
+        "pending": 0,
+        "selectedLabelAndLaunchObserved": true
+      }
+    ],
+    "followMotionObserved": true,
+    "pause": {
+      "case": "L1",
+      "camera": "seguimiento",
+      "pauseButtonSeen": "Continuar",
+      "markAndTrailRetainedAcrossSuccessivePausedObservations": true,
+      "singleStepPresses": 3,
+      "retainedAfterSingleSteps": true,
+      "resumeButtonSeen": "Pausa",
+      "aidsExpiredAfterContinue": true,
+      "scope": "Inspección funcional visual; sin medir legibilidad H1 ni rendimiento."
+    },
+    "restoration": {
+      "loadedMessageSeen": "Cargado: P0-calib-1.",
+      "pendingBeforeApply": 4,
+      "pendingAfterApply": 0,
+      "selectorAfterRestore": "Manual",
+      "fixedCameraAfterRestoreSeen": true,
+      "effectiveHash": "8de3f2ecb217"
+    }
+  },
+  "recoveredData": {
+    "presetCopySucceeded": true,
+    "metricsCopySucceeded": true,
+    "presetFileHashesAfter": {
+      "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+      "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+    },
+    "allPresetAndSelectionBytesUnchanged": true,
+    "files": [
+      {
+        "fileSha256": "7d3674c20bd229e4fa75919e0ecaf424198f32f2c4937039c4207316030ec2dc",
+        "records": 119,
+        "invalidJsonLines": 0,
+        "firstUtc": "2026-10-24T21:57:22.7293810Z",
+        "lastUtc": "2026-10-24T22:04:03.8222410Z",
+        "kinds": {
+          "launch": 47,
+          "frames": 72
+        },
+        "launches": [
+          {
+            "ts": "2026-10-24T21:57:22.7293810Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:57:25.7281840Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:57:28.7284750Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:13.7752630Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:16.7757920Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:19.7756970Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:22.7764160Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:25.7769120Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:28.7771420Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:31.7777970Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:34.7774760Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:37.7775810Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:40.7776740Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:43.7799210Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:46.7788540Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:49.7832390Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:52.7797590Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:55.7774250Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:58:58.7804280Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:59:01.7826530Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:59:04.7808120Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:59:07.7812810Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:59:38.9041620Z",
+            "effectiveHash": "943ff1ebe8c5",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:59:54.7868870Z",
+            "effectiveHash": "cb5cb6f019c5",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T21:59:58.0877870Z",
+            "effectiveHash": "676a51b8695d",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:00:01.1705380Z",
+            "effectiveHash": "40a4552871b7",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:00:06.2555370Z",
+            "effectiveHash": "6bb48ed0c535",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:00:09.5587480Z",
+            "effectiveHash": "1d693c4309b3",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:01:12.5133960Z",
+            "effectiveHash": "f669d1d5561f",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:01:15.9138240Z",
+            "effectiveHash": "aa45e4f96da9",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:01:21.0833370Z",
+            "effectiveHash": "903c918d4822",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:01:24.2809110Z",
+            "effectiveHash": "e727e031e046",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:01:27.7156810Z",
+            "effectiveHash": "d41a31f2487f",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:01:32.7347370Z",
+            "effectiveHash": "c9e857e382a6",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:01:53.6078990Z",
+            "effectiveHash": "f669d1d5561f",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:03:31.6504010Z",
+            "effectiveHash": "1a614eaa15fe",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 4
+          },
+          {
+            "ts": "2026-10-24T22:03:33.8147250Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:03:36.8173450Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:03:39.8176600Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:03:42.8184860Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:03:45.8185000Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:03:48.8191840Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:03:51.8221140Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:03:54.8198520Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:03:57.8198400Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:04:00.8205700Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T22:04:03.8222410Z",
+            "effectiveHash": "8de3f2ecb217",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "pending": 0
+          }
+        ],
+        "invalidMetricsRecords": 1
+      }
+    ],
+    "recordCount": 119,
+    "launchCount": 47,
+    "invalidJsonLines": 0,
+    "intermediatePendingLaunchPreserved": {
+      "ts": "2026-10-24T22:03:31.6504010Z",
+      "effectiveHash": "1a614eaa15fe",
+      "presetName": "P0-calib-1",
+      "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "pending": 4
+    },
+    "interpretation": "Matriz asignada por orden de acciones UI observadas y contrastada con lanzamientos/hash. Un replay automático con cuatro pendientes entre Cargar y Aplicar se preserva, seguido de la configuración restaurada con cero pendientes. No evaluación de métricas de rendimiento ni criterios C1–C18."
+  }
 }

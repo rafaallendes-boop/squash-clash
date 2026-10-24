@@ -79,6 +79,6 @@
   "scope": "Exports limpios dev/prod y compilación/firma iOS dev. Prod exportado sin compilar ni instalar. Puente runtime ambos perfiles; DevPanel/puente Spike excluidos de prod. No campaña ni criterio de rendimiento evaluado.",
   "installationOutcome": "success",
   "installationLocalDate": "2026-10-24",
-  "automaticLaunch": "Proceso lanzado; Unity inició y quedó en segundo plano antes del ready gestionado. Arranque funcional pendiente de apertura manual por PO.",
-  "nativeUiVerification": "Pendiente recorrido funcional PO: L1–L6 con fija/seguimiento, conservación de ayudas en pausa/Paso y restaurar P0-calib-1. Duplicación exige autenticación macOS; se ofrece teléfono directo, sin pedir autenticar la Mac."
+  "automaticLaunch": "Proceso inicial pasó a segundo plano; arranque funcional posteriormente corroborado en Duplicación y métricas de la build 2109af8.",
+  "nativeUiVerification": "Completa por agente mediante cua_repl: L1–L6 con fija y seguimiento, pausa/Paso conserva ayudas, Continuar reanuda edades, P0-calib-1 restaurado. Presets/selección byte a byte intactos, hash final 8de3f2ecb217 con cero pendientes; ver auditoría funcional."
 }
