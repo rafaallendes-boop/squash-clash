@@ -60,5 +60,5 @@
   "nativeCampaignRun": false,
   "installationResult": "devicectl install exit=0 after profile/firma/metadata/source verification",
   "startup": "boot confirms prod/devpanel=absent/development=False/squashDev=False; P2 Default hash and display 60 FPS; no managed exception markers; console ended under control before physical gesture check",
-  "physicalVerification": "Pending PO: no DEV button and three-finger hold inert"
+  "physicalVerification": "PO confirms prod build label, no DEV button and three-finger hold inert"
 }

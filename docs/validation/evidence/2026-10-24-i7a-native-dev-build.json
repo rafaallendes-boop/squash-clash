@@ -68,5 +68,12 @@
     "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
   },
   "campaignPreparation": "Manual Default load/Apply/0 pending required before starting P2; mirroring requires Mac authentication, physical-phone handoff used instead",
-  "campaignAudit": "docs/validation/evidence/2026-10-24-i7a-p2-native.json"
+  "campaignAudit": "docs/validation/evidence/2026-10-24-i7a-p2-native.json",
+  "profileRecheckedBeforeH17DevReinstallAtUtc": "2026-10-24T23:38:21.887140+00:00",
+  "devReinstalledForH17": true,
+  "devReinstallResult": "exit=0; non-console process launch exit=0; saved preset JSON files unchanged; no active saved preset selection before PO loads P0 for H17",
+  "presetsBeforeH17Hashes": {
+    "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+  }
 }

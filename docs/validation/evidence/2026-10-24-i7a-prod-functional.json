@@ -12,8 +12,10 @@
   "consoleEndedByAgentAfterObservation": true,
   "devPanelAssemblyExcluded": true,
   "spikeBridgeExcluded": true,
-  "physicalNoDevButton": null,
-  "physicalThreeFingerHoldInert": null,
-  "physicalConfirmationPending": true,
-  "scope": "Prod startup/compiled exclusion verified; physical gesture confirmation pending, no performance claim."
+  "physicalNoDevButton": true,
+  "physicalThreeFingerHoldInert": true,
+  "physicalConfirmationPending": false,
+  "scope": "Prod instalada, arranque y exclusión compilada verificados; PO confirma label prod, ausencia DEV y gesto tres dedos inerte. Sin afirmación de rendimiento.",
+  "physicalBuildLabelConfirmed": true,
+  "poResponse": "Listo. Funciona bien las 3 cosas"
 }

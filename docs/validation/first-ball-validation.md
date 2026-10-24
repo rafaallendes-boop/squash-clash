@@ -38,8 +38,8 @@ Comentarios conservados: PO ve bien los seis escenarios y las mecánicas; prefer
 | Campo | Resultado |
 |---|---|
 | Build dev / fuente / fecha UTC | Pendiente |
-| Configuración / SimulationKey | Física Default / 166a96e319c7; configuración de cada L registrada al ejecutar |
-| Phase / duración / L1–L6 | session / ≥900 s / 150 s por caso, repetición temporal 3 s, sin guardar preset |
+| Configuración / SimulationKey | P0-calib-1 (solo repeat=3 frente a Default), física Default / 166a96e319c7; cada L tendrá hash efectivo propio |
+| Phase / duración / L1–L6 | session / ≥900 s / 150 s por caso, repetición 3 s de P0-calib-1, sin guardar cambios |
 | Térmico inicial | Nominal requerido; pendiente registro |
 | Brillo inicial y cambios | Pendiente PO + valor nativo Screen.brightness |
 | Bajo consumo | Pendiente PO |
@@ -60,7 +60,7 @@ Percentiles completos provienen de histogramas de toda H17, no del promedio de p
 | 1. Una autoridad, cero atravesamientos, esquinas sin ganancia | Pass: aceptación nativa C1/C3 con cobertura cerrada, cero atravesamientos/ganancia; suites host/regresión 270/136 |
 | 2. Consistencia en mismo binario/dispositivo | Pass: aceptación nativa C5/C8, cobertura cerrada |
 | 3. Predicción bit a bit | Pass: aceptación nativa C6/C7, cobertura cerrada; C17 nativo p95 0,0188 ms≤1 ms |
-| 10. Panel excluido de prod | Exports/dev-prod/instalación y arranque prod verificados: devpanel=absent; sin DEV/tres dedos inertes pendientes de PO |
+| 10. Panel excluido de prod | Pass: exports limpios, prod instalada y arranque devpanel=absent; PO confirma etiqueta prod, sin DEV y tres dedos inertes |
 | 14. Preset recuperado, métricas con preset/build/semilla | Pass técnico: regresión existente y JSONL I7a con preset/build/semilla; P0-calib-1/Po-1 intactos. Cargar Default eliminó last-active como corresponde |
 
 ## 5. Decisión del PO
