@@ -76,3 +76,8 @@ No se pulsó Prueba física P2 ni se realizó campaña física, medición de ren
 ## Entrega y límites
 
 PR/informe para Claude y decisión del PO, sin fusionar ni cerrar I6b. H1, Etapa 7 y gameplay no autorizados. La observación de sombra sin escala sigue experimental; diagnóstico de portapapeles en próxima intervención específica del panel, T7.2 con panel cerrado, retención antes de T8 y perfil desde el 27 permanecen registrados.
+
+
+## Adenda posterior — precisión L2 aprobada el 2026-10-24
+
+La tabla anterior conserva el criterio y la evidencia de la entrega I6b. Posteriormente, el PO aprobó sustituir «y≤1 en el primer bote» por **y≤1 m durante el tramo entre frontis y primer bote**. Plan/prueba se actualizan en una PR específica; lanzamiento/física/defaults intactos. L2 existente pasa con altura máxima **0,35000011797003433 m** y condición lateral 100 %. [Decisión, TDD y verificación](2026-10-24-first-ball-l2-height-criterion.md). Esta precisión no reabre H1/Etapa 6 ni inicia Etapa 7.

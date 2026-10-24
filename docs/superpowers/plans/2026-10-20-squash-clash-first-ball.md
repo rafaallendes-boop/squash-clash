@@ -1363,11 +1363,13 @@ public static class LaunchPresets {
 | Id | §12.3 | Condición numérica sobre la trayectoria simulada (hasta el segundo bote) |
 |---|---|---|
 | L1 | Drive largo que rebota en la pared trasera | hay un contacto con `BackWall` antes del segundo bote |
-| L2 | Pelota baja pegada a la lateral | después del contacto con el frontis, `x ≤ 0,30 m` durante ≥ 50 % de los pasos, y `y ≤ 1,0 m` en el primer bote |
+| L2 | Pelota baja pegada a la lateral | después del contacto con el frontis, `x ≤ 0,30 m` durante ≥ 50 % de los pasos, y `y ≤ 1,0 m` entre el contacto con el frontis y el primer bote |
 | L3 | Drop corto adelante | segundo bote a `z ≤ 2,0 m` del frontis |
 | L4 | Globo alto | altura máxima ≥ 4,0 m y primer bote a `z ≥ 7,0 m` |
 | L5 | Pasa detrás del humano (oclusión) | durante ≥ 12 pasos, la recta cámara fija → pelota pasa a ≤ 0,25 m del eje de la cápsula del humano |
 | L6 | Esquina trasera con el rival cerca | contactos con `BackWall` y una lateral a ≤ 1,0 m de la esquina, y el rival a ≤ 1,0 m de ese contacto |
+
+**Precisión L2 aprobada por el PO el 2026-10-24**, a propuesta de Claude tras I6b: se sustituye «en el primer bote» (siempre cierto porque y=r) por «entre el contacto con el frontis y el primer bote». Se comprueba el máximo de la altura del centro en todo ese tramo, incluidos extremos y máximos entre pasos. El umbral de 1,0 m y la condición lateral permanecen; no se modifica el lanzamiento, la física, el preset ni otros criterios. Esta corrección puntual no autoriza la Etapa 7.
 
 - [ ] **Paso 1: tests que fallan.** EditMode: todos los inicios dentro de la cancha, a más de r de las paredes. PlayMode: un test por fila de la tabla, con el backend elegido.
 - [ ] **Paso 2:** ejecutar, ver que falla e implementar. Si un lanzamiento no cumple su condición, se ajusta **solo su punto objetivo o su velocidad**, nunca la condición. Si una calibración posterior del PO rompe una condición, se reajusta el lanzamiento en un PR que lo diga.
