@@ -1,4 +1,9 @@
 using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
 using SquashClash.Core.Diagnostics;
 using SquashClash.Core.Config;
 using SquashClash.Runtime.Court;
@@ -20,6 +25,85 @@ namespace SquashClash.Runtime.App
         public SquashClash.Runtime.Ball.BallSimulationHost Host => GetComponent<SquashClash.Runtime.Ball.BallSimulationHost>();
         public ParamSet Params { get; private set; }
         public EffectiveConfig Config { get; private set; }
+
+        public TuningState Tuning { get; private set; }
+        public PresetStore Presets { get; private set; }
+        public MetricsLog Metrics { get; private set; }
+        public FrameTimeStats FrameStats { get; private set; }
+        public int MetricsSeed { get; private set; }
+        public string ActivePresetName { get; private set; }
+        public string ActivePresetFileHash { get; private set; }
+        private readonly FrameTimeStats segmentFrames=new FrameTimeStats(),segmentCpu=new FrameTimeStats(),segmentGpu=new FrameTimeStats();
+        private ThermalMonitor thermal;
+        private FrameTimingSampler timing;
+        private EffectiveConfig segmentConfig;
+        private double segmentSeconds;
+        private long droppedAtSegmentStart,segmentDroppedSinceRestart,lastTimingSerial,over250MsFrames;
+        private int gcAtSegmentStart,segmentSeed;
+        private string segmentPhase="free";
+        private bool diagnosticsPaused,diagnosticsFocused=true,discardDiagnosticsResume;
+
+        public void RecordDiagnosticsFrame(double seconds)
+        {
+            if(Metrics==null||segmentConfig==null||diagnosticsPaused||!diagnosticsFocused)return;
+            if(discardDiagnosticsResume){discardDiagnosticsResume=false;return;}
+            if(double.IsNaN(seconds)||double.IsInfinity(seconds)||seconds<0)throw new ArgumentOutOfRangeException(nameof(seconds));
+            if(seconds==0)return;
+            if(segmentPhase!=Metrics.Phase){FlushFrames();timing.RestartCapture();}
+            double ms=seconds*1000;
+            FrameStats.Add(ms);segmentFrames.Add(ms);segmentSeconds+=seconds;if(ms>250)over250MsFrames++;
+            if(timing.SampleSerial!=lastTimingSerial)
+            {
+                lastTimingSerial=timing.SampleSerial;
+                if(!double.IsNaN(timing.CpuMs))segmentCpu.Add(timing.CpuMs);
+                if(!double.IsNaN(timing.GpuMs))segmentGpu.Add(timing.GpuMs);
+            }
+            segmentDroppedSinceRestart=Host.Clock.DroppedSinceRestart;
+            if(segmentSeconds>=10)FlushFrames();
+        }
+        public void SetMetricsPhase(string phase,int seed=0)
+        {
+            if(Metrics==null)return;
+            if(Metrics.Phase==phase&&MetricsSeed==seed)return;
+            FlushFrames();Metrics.Phase=phase;MetricsSeed=seed;ResetSegment();timing.RestartCapture();
+        }
+        private void ResetSegment()
+        {
+            segmentFrames.ResetSession();segmentCpu.ResetSession();segmentGpu.ResetSession();segmentSeconds=0;over250MsFrames=0;
+            droppedAtSegmentStart=Host.Clock?.DroppedSteps??0;segmentDroppedSinceRestart=Host.Clock?.DroppedSinceRestart??0;
+            gcAtSegmentStart=GC.CollectionCount(0);lastTimingSerial=timing?.SampleSerial??0;
+            segmentPhase=Metrics?.Phase??"free";segmentSeed=MetricsSeed;
+        }
+        private bool Comparable(long dropped)=>Build.profile!="debug"&&!Host.Clock.MetricsInvalid&&dropped==0;
+        private void FlushFrames()
+        {
+            if(Metrics==null||segmentConfig==null||segmentFrames.SessionFrames==0)return;
+            var cfg=segmentConfig;var phase=segmentPhase;var seed=segmentSeed;var currentPhase=Metrics.Phase;
+            long dropped=Host.Clock.DroppedSteps-droppedAtSegmentStart,sinceRestart=segmentDroppedSinceRestart;
+            bool valid=Comparable(dropped);
+            // Fixed numeric schema; unknown/overflow percentiles are JSON null, never a fabricated zero.
+            var payload=FormattableString.Invariant($@"{{
+                ""frames"":{segmentFrames.SessionFrames},""seconds"":{Number(segmentSeconds)},
+                ""p50Ms"":{Number(segmentFrames.SessionPercentile(50))},""p95Ms"":{Number(segmentFrames.SessionPercentile(95))},""p99Ms"":{Number(segmentFrames.SessionPercentile(99))},
+                ""histogramResolutionMs"":0.1,""over250MsFrames"":{over250MsFrames},
+                ""longFramesPerMinute33Ms"":{Number(segmentFrames.SessionLongFramesPerMinute(33))},
+                ""cpuSamples"":{segmentCpu.SessionFrames},""cpuP95Ms"":{Number(segmentCpu.SessionPercentile(95))},""cpuP95Over250Ms"":{Bool(double.IsInfinity(segmentCpu.SessionPercentile(95)))},
+                ""gpuSamples"":{segmentGpu.SessionFrames},""gpuP95Ms"":{Number(segmentGpu.SessionPercentile(95))},""gpuP95Over250Ms"":{Bool(double.IsInfinity(segmentGpu.SessionPercentile(95)))},
+                ""gcGen0"":{GC.CollectionCount(0)-gcAtSegmentStart},""thermalCurrent"":""{thermal.Current}"",""thermalWorst"":""{thermal.WorstThisSession}"",
+                ""dropped"":{Bool(dropped>0)},""droppedSteps"":{dropped},""sessionFrames"":{FrameStats.SessionFrames},""sessionMinutes"":{Number(FrameStats.SessionMinutes)}
+            }}");
+            ResetSegment(); // Includes any GC caused by writing this record in the next segment.
+            Metrics.Phase=phase;
+            Metrics.Write("frames",cfg,ActivePresetName,ActivePresetFileHash,Tuning.PendingKeys.Count,seed,valid,sinceRestart,payload);
+            Metrics.Phase=currentPhase;
+        }
+        private static string Number(double value)=>double.IsNaN(value)||double.IsInfinity(value)?"null":value.ToString("R",CultureInfo.InvariantCulture);
+        private static string Bool(bool value)=>value?"true":"false";
+        private static string FileHash(string text)
+        {
+            using(var sha=SHA256.Create())return BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(text))).Replace("-","").ToLowerInvariant();
+        }
+        private void LateUpdate()=>RecordDiagnosticsFrame(Time.unscaledDeltaTime);
 
         [SerializeField] private CourtView courtView;
         [SerializeField] private BallView ballView;
@@ -49,8 +133,15 @@ namespace SquashClash.Runtime.App
                 throw new InvalidOperationException("Missing build metadata. Use scripts/build-ios.sh.");
             var defaults = Resources.Load<TextAsset>("DefaultPreset");
             if (defaults == null) throw new InvalidOperationException("Missing DefaultPreset.json.");
-            Params = PresetCodec.LoadDefault(defaults.text);
-            Config = EffectiveConfig.From(Params);
+            var defaultSet=PresetCodec.LoadDefault(defaults.text);
+            Presets=new PresetStore(Path.Combine(Application.persistentDataPath,"presets"));
+            var warnings=new List<string>();
+            Params=Presets.LoadStartup(defaultSet,warnings,out var presetName,out var presetHash);
+            ActivePresetName=presetName;ActivePresetFileHash=presetHash??FileHash(defaults.text);
+            Tuning=new TuningState(defaultSet,Params);Config=EffectiveConfig.From(Params);
+            foreach(var warning in warnings)Debug.LogWarning("[SquashClash] "+warning);
+            Metrics=new MetricsLog(Path.Combine(Application.persistentDataPath,"metrics"),Build);FrameStats=new FrameTimeStats();
+            thermal=gameObject.AddComponent<ThermalMonitor>();timing=gameObject.AddComponent<FrameTimingSampler>();
             var hasPanel = Type.GetType("SquashClash.DevPanel.DevPanelBootstrap, SquashClash.DevPanel") != null;
 #if SQUASH_DEV
             const bool squashDev = true;
@@ -127,15 +218,25 @@ namespace SquashClash.Runtime.App
 
         private void OnLaunched(EffectiveConfig cfg)
         {
-            Config=cfg; Params=cfg.Source;
+            FlushFrames();Config=cfg; Params=cfg.Source;segmentConfig=cfg;ResetSegment();timing.RestartCapture();
+            Metrics.Write("launch",cfg,ActivePresetName,ActivePresetFileHash,Tuning.PendingKeys.Count,MetricsSeed,Comparable(0),Host.Clock.DroppedSinceRestart,"{}");
             var court=cfg.Court;
             if (shownCourt==null || !shownCourt.Equals(court)) { courtView.Build(court); shownCourt=court; }
             placeholderPlayers.Apply(cfg.Source); cameraRig.Apply(cfg.Source,court);
         }
-        private void OnApplicationPause(bool paused) { if (paused) GetComponent<ResumeOverlay>().Suspend(); }
-        private void OnApplicationFocus(bool focused) { if (!focused) GetComponent<ResumeOverlay>().Suspend(); }
+        private void OnApplicationPause(bool paused)
+        {
+            if(paused)FlushFrames();diagnosticsPaused=paused;discardDiagnosticsResume=true;
+            if(paused)GetComponent<ResumeOverlay>().Suspend();
+        }
+        private void OnApplicationFocus(bool focused)
+        {
+            if(!focused)FlushFrames();diagnosticsFocused=focused;discardDiagnosticsResume=true;
+            if(!focused)GetComponent<ResumeOverlay>().Suspend();
+        }
         private void OnDestroy()
         {
+            FlushFrames();
             if (Host != null) Host.Launched -= OnLaunched;
             if (Instance == this) Instance = null;
         }

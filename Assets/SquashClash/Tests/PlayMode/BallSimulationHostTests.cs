@@ -10,27 +10,32 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using Object=UnityEngine.Object;
 namespace SquashClash.Runtime.Tests {
+    [TestFixture(0),TestFixture(1)]
     public sealed class BallSimulationHostTests {
+        private readonly int backend;
+        public BallSimulationHostTests(int backend){this.backend=backend;}
+        private AnalyticBallSimulationFactory analytic;
+        private int LiveInstances=>backend==0?factory.LiveInstances:analytic.LiveInstances;
         private GameObject root; private BallSimulationHost host; private PhysXBallSimulationFactory factory;private Vector3 gravity;
-        private static EffectiveConfig Default()=>EffectiveConfig.From(PresetCodec.LoadDefault(Resources.Load<TextAsset>("DefaultPreset").text).With("physics.backend",0));
+        private EffectiveConfig Default()=>EffectiveConfig.From(PresetCodec.LoadDefault(Resources.Load<TextAsset>("DefaultPreset").text).With("physics.backend",backend));
         [UnitySetUp] public IEnumerator SetUp() {
             yield return PlayModeTestWorld.ClearApp();gravity=UnityEngine.Physics.gravity;
             root=new GameObject("Test host");host=root.AddComponent<BallSimulationHost>();host.enabled=false;
-            factory=new PhysXBallSimulationFactory();host.Initialize(new IBallSimulationFactory[]{factory},new SimClock(120,0.65));
+            factory=new PhysXBallSimulationFactory();analytic=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);host.Initialize(new IBallSimulationFactory[]{factory,analytic},new SimClock(120,0.65));
         }
         [UnityTearDown] public IEnumerator TearDown() {
             Object.Destroy(root);yield return null;
             for(int i=0;i<120&&factory.PendingUnloads!=0;i++)yield return null;
-            Assert.That(factory.LiveInstances,Is.Zero);Assert.That(factory.PendingUnloads,Is.Zero);UnityEngine.Physics.gravity=gravity;
+            Assert.That(LiveInstances,Is.Zero);Assert.That(factory.PendingUnloads,Is.Zero);Assert.That(factory.LiveInstances,Is.Zero);Assert.That(analytic.LiveInstances,Is.Zero);UnityEngine.Physics.gravity=gravity;
         }
         [UnityTest] public IEnumerator Launch_PredictionStartsFromSimulationState() {
             host.Launch(Default());AssertStateBits(host.Current,host.Prediction.States[0]);
-            Assert.That(host.RenderPosition,Is.EqualTo(host.Current.Position));Assert.That(factory.LiveInstances,Is.EqualTo(2));yield return null;
+            Assert.That(host.RenderPosition,Is.EqualTo(host.Current.Position));Assert.That(LiveInstances,Is.EqualTo(2));yield return null;
         }
         [UnityTest] public IEnumerator Launch_SameSimulationKey_KeepsInstances() {
             var cfg=Default();host.Launch(cfg);int generation=host.SimulationGeneration;
             host.Launch(EffectiveConfig.From(cfg.Source.With("camera.fovDeg",70)));
-            Assert.That(host.SimulationGeneration,Is.EqualTo(generation));Assert.That(factory.LiveInstances,Is.EqualTo(2));yield return null;
+            Assert.That(host.SimulationGeneration,Is.EqualTo(generation));Assert.That(LiveInstances,Is.EqualTo(2));yield return null;
         }
         [UnityTest] public IEnumerator Relaunch_ClearsInterpolationAndFraction_AndReplayUsesActiveSnapshot() {
             var cfg=Default();host.Launch(cfg);host.Advance(1.5/120/0.65);
@@ -41,8 +46,8 @@ namespace SquashClash.Runtime.Tests {
         [UnityTest] public IEnumerator Launch_GravityChangeDisposesBothBeforeCreatingReplacements() {
             host.Launch(Default());int generation=host.SimulationGeneration;
             host.Launch(EffectiveConfig.From(Default().Source.With("physics.gravity",12)));
-            Assert.That(host.SimulationGeneration,Is.EqualTo(generation+1));Assert.That(factory.LiveInstances,Is.EqualTo(2));
-            Assert.That(UnityEngine.Physics.gravity.y,Is.EqualTo(-12));yield return null;
+            Assert.That(host.SimulationGeneration,Is.EqualTo(generation+1));Assert.That(LiveInstances,Is.EqualTo(2));
+            Assert.That(UnityEngine.Physics.gravity,Is.EqualTo(backend==0?Vector3.down*12:gravity));yield return null;
         }
         [UnityTest] public IEnumerator Paused_SingleStepAdvancesAndRendersCurrentState_WithoutCatchup() {
             host.Launch(Default());host.Clock.Paused=true;var initial=host.Current;host.Advance(30);AssertStateBits(host.Current,initial);
@@ -90,8 +95,22 @@ namespace SquashClash.Runtime.Tests {
         }
         [UnityTest] public IEnumerator ReleaseForExperiment_DisposesBothAndReplayCreatesNewPair() {
             host.Launch(Default());var initial=host.Current;host.ReleaseForExperiment();
-            Assert.That(factory.LiveInstances,Is.Zero);Assert.That(host.Clock.Paused,Is.True);Assert.That(host.IsRunning,Is.False);
-            host.Advance(1);AssertStateBits(host.Current,initial);host.Replay();Assert.That(factory.LiveInstances,Is.EqualTo(2));yield return null;
+            Assert.That(LiveInstances,Is.Zero);Assert.That(host.Clock.Paused,Is.True);Assert.That(host.IsRunning,Is.False);
+            host.Advance(1);AssertStateBits(host.Current,initial);host.Replay();Assert.That(LiveInstances,Is.EqualTo(2));yield return null;
+        }
+        [UnityTest] public IEnumerator Launch_BoundaryCentersAndOverTopRemainValid()
+        {
+            var cfg=Default();float r=cfg.Physics.BallRadius;
+            foreach(var position in new[]{new Vector3(r,r,r),new Vector3(cfg.Court.Width-r,r,cfg.Court.Length-r),new Vector3(3.2f,cfg.Court.WallHeight+1,5)})
+            {
+                TestContext.WriteLine("Valid boundary center: "+position.ToString("R"));
+                host.Launch(cfg,new BallState{Position=position,Velocity=Vector3.zero},1,StopCondition.MaxSteps);
+                Assert.That(host.Current.Position,Is.EqualTo(position));Assert.That(host.Prediction.States,Is.Not.Empty);
+            }
+            var maximum=new Vector3(cfg.Court.Width-r,0,cfg.Court.Length-r);
+            float nextOutside=BitConverter.Int32BitsToSingle(BitConverter.SingleToInt32Bits(maximum.x)+1);
+            Assert.Throws<ArgumentOutOfRangeException>(()=>host.Launch(cfg,new BallState{Position=new Vector3(nextOutside,1,5)},1,StopCondition.MaxSteps));
+            yield return null;
         }
         private static void AssertStateBits(BallState a,BallState b) {
             foreach(var pair in new[]{(a.Position.x,b.Position.x),(a.Position.y,b.Position.y),(a.Position.z,b.Position.z),

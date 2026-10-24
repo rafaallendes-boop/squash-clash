@@ -35,7 +35,8 @@ namespace SquashClash.DevPanel
         private int focusInterruptionCount;
         private readonly List<string> focusEvents = new List<string>();
         private string focusLossContext, thermalBenchmarkStart;
-        private string started, thermalStart, reportDirectory;
+        private string started, thermalStart, reportDirectory, previousMetricsPhase;
+        private int previousMetricsSeed;
         public bool IsRunning { get; private set; }
         public string LastReport { get; private set; }
         public string LastReportPath { get; private set; }
@@ -66,6 +67,7 @@ namespace SquashClash.DevPanel
             scenarios.Insert(7, PhysicsScenarios.Random(cfg.Court, cfg.Physics, 1, 20261020).Single());
             var scenario = scenarios[scenarioIndex++ % scenarios.Count];
             SelectedScenario = scenario.Id;
+            app.SetMetricsPhase("free",scenario.Id.StartsWith("S8-",StringComparison.Ordinal)?20261020:0);
             app.Host.Launch(cfg, scenario.Start, scenario.MaxSteps, scenario.Stop);
             app.Host.Clock.Paused = false;
         }
@@ -86,6 +88,7 @@ namespace SquashClash.DevPanel
             focusLossContext = thermalBenchmarkStart = null;
             config = EffectiveConfig.From(app.Params); savedGravity = UnityEngine.Physics.gravity;
             previousSleepTimeout = Screen.sleepTimeout; Screen.sleepTimeout = SleepTimeout.NeverSleep;
+            previousMetricsPhase=app.Metrics.Phase;previousMetricsSeed=app.MetricsSeed;app.SetMetricsPhase("spike",20261020);
             app.Host.ReleaseForExperiment(); IsRunning = true; waiting = true; progressMark = -1;
             run = null; benchmark = null; result = null; LastReport = null; LastReportPath = null;
             status.text = "Preparando prueba P2…";
@@ -119,6 +122,7 @@ namespace SquashClash.DevPanel
                     int mark = (int)(run.Progress * 20);
                     if (mark != progressMark) { progressMark = mark; Debug.Log("[SquashClash] spike " + status.text); }
                     if (!done) return;
+                    app.SetMetricsPhase("benchmark",20261020);
                     thermalBenchmarkStart = ThermalState(); // Informational snapshot before scene creation/warmup.
                     benchmark = new PredictionBenchmarkRun(factory, config.Physics, config.Court);
                     return; // Separate frames; do not spend two budgets in one frame.
@@ -161,6 +165,7 @@ namespace SquashClash.DevPanel
             {
                 UnityEngine.Physics.gravity = savedGravity; Screen.sleepTimeout = previousSleepTimeout;
                 restoreHost = true;
+                app.SetMetricsPhase(previousMetricsPhase,previousMetricsSeed);
             }
             result.Profile = app.Build.profile; result.OS = SystemInfo.operatingSystem;
             result.StartedAtUtc = started; result.EndedAtUtc = DateTime.UtcNow.ToString("O");
