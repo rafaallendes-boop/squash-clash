@@ -364,7 +364,7 @@ Observaciones de Claude registradas sin modificar código en este cierre:
 4. Reservar el nombre **"Default"** para presets en T5.3.
 5. Pausa manual y sensores aún sin verificar en iPhone: incluir esa verificación en I5b. Renovar el perfil antes de instalar si es el 2026-10-27 o después, y comprobar siempre vigencia.
 
-**I5b / T5.3 autorizado** en `firstball/i5b-dev-panel`, panel autogenerado según plan, PR para revisión de Claude. Entregar informe y detenerse; no fusionar por cuenta propia. No adelantar T5.4, calibración ni gameplay. Mantener backend P2 por defecto/P1 configurable, spec, criterios, escenarios y umbrales. Solo añadir los defaults previstos expresamente para T5.3.
+**I5b / T5.3 autorizado** en `firstball/i5b-dev-panel`, panel autogenerado según plan, PR para revisión de Claude. Entregar informe y detenerse; no fusionar por cuenta propia. No adelantar Etapa 6, calibración ni gameplay. Mantener backend P2 por defecto/P1 configurable, spec, criterios, escenarios y umbrales. Solo añadir los defaults previstos expresamente para T5.3.
 
 
 ## I5b implementado; comprobación física pendiente — 2026-10-23
@@ -373,7 +373,7 @@ Dentro de la autorización anterior, rama firstball/i5b-dev-panel y [PR #9 borra
 
 Dev **0.1.0+11e505f** limpia, Release ARM64 firmada, metadata/preset exactos y perfil embebido válido comprobados antes de la instalación exitosa del 2026-10-23. Exports limpios dev/prod RELEASE-CHECK: OK, prod sin DevPanel/puente Spike y con puente térmico runtime de I5a. Lanzamiento automático rechazado por **Locked**, no un fallo comprobado de la app. Se solicitó al PO apertura manual y recorrido: tres dedos/DEV, restitución pendiente y aplicar, guardar po-1/cierre completo/recuperación, exportar/importar, pausa manual al volver y sensores. **Respuesta pendiente: no se registra esa verificación como cumplida ni la entrega como completa**. Sin herramientas sobre el iPhone durante la comprobación solicitada; recuperar después los datos para completar informe y dejar PR lista para Claude, sin fusionar.
 
-[Informe con estado y evidencia](2026-10-23-first-ball-i5b-dev-panel.md). Sin campaña física, calibración, T5.4 ni gameplay. Política de logs/retención antes de T8 sigue pendiente. Perfil: renovar antes de instalar desde el 27 de octubre, comprobar siempre vigencia; herramientas intactas.
+[Informe con estado y evidencia](2026-10-23-first-ball-i5b-dev-panel.md). Sin campaña física, calibración, Etapa 6 ni gameplay. Política de logs/retención antes de T8 sigue pendiente. Perfil: renovar antes de instalar desde el 27 de octubre, comprobar siempre vigencia; herramientas intactas.
 
 
 ## Respuesta PO y recuperación parcial de I5b — 2026-10-23
@@ -389,11 +389,11 @@ Respuesta a la comprobación de guardado: **«Presets guardar como no lo encontr
 
 El agente observó y reprodujo contenido sobre pestañas, con toques a Presets capturados por un Foldout. Corrección con RED geométrico→GREEN, pruebas adjuntas de 390/320 puntos, campo Nombre del preset y botón explícito Guardar como…; mensajes visibles. En la build 5b9d564 se observó la corrección nativa y se detectó entrada numérica confirmada por carácter; RED real de teclado→GREEN, edición diferida y texto enfocado conservado. Fuente final **1318753**, siete grupos de comportamiento, **253/253 EditMode y 105/105 PlayMode**, sin fallos/omitidos y XML frescos. Defaults/hash 164b0c21e88b, motores/spec/settings/criterios/umbrales intactos.
 
-Dev **0.1.0+1318753** limpia Release ARM64 firmada, metadata/preset exactos, perfil vigente comprobado antes de instalar el 2026-10-23. Exports dev/prod nuevos OK, herramientas sin cambios. Instalación exitosa; apertura automática rechazada por Locked. Duplicación se pausó durante la compilación y al reanudar pidió autenticación de macOS de nuevo. **Se pidió al PO autenticar esa ventana; falta terminar la prueba de guardado/reinicio/portapapeles**, que realizará el agente con su permiso vigente. No se pide repetir el recorrido completo. **PR #9 sigue borrador** hasta verificarlo. Sin campaña, rendimiento, T5.4, calibración ni gameplay.
+Dev **0.1.0+1318753** limpia Release ARM64 firmada, metadata/preset exactos, perfil vigente comprobado antes de instalar el 2026-10-23. Exports dev/prod nuevos OK, herramientas sin cambios. Instalación exitosa; apertura automática rechazada por Locked. Duplicación se pausó durante la compilación y al reanudar pidió autenticación de macOS de nuevo. **Se pidió al PO autenticar esa ventana; falta terminar la prueba de guardado/reinicio/portapapeles**, que realizará el agente con su permiso vigente. No se pide repetir el recorrido completo. **PR #9 sigue borrador** hasta verificarlo. Sin campaña, rendimiento, Etapa 6, calibración ni gameplay.
 
 ## Seguimiento de verificación I5b — 2026-10-24
 
-El PO avisó que autenticó Duplicación y mantiene vigente el permiso para operar la app. En 0.1.0+1318753 dev el agente comprobó pestañas accesibles, apertura de Presets y floor restitution=0,60 mediante slider, aplicado con cero pendientes. Se escribió el nombre del preset, pero se perdió la conexión antes de guardar. CoreDevice confirma conexión; al reintentar Duplicación macOS vuelve a pedir Touch ID/contraseña. Se solicitó al PO completar esa autenticación sin compartir credenciales. Guardado/reinicio/export-import pendientes, PR #9 todavía borrador. No hay aprobación de Claude ni cierre de I5b inferidos. La escritura decimal está cubierta por la regresión de teclado UI Toolkit, sin certificarla mediante inyección de teclado nativo. Suites finales 253/253 EditMode y 105/105 PlayMode; no se repite campaña física ni se avanza a T5.4.
+El PO avisó que autenticó Duplicación y mantiene vigente el permiso para operar la app. En 0.1.0+1318753 dev el agente comprobó pestañas accesibles, apertura de Presets y floor restitution=0,60 mediante slider, aplicado con cero pendientes. Se escribió el nombre del preset, pero se perdió la conexión antes de guardar. CoreDevice confirma conexión; al reintentar Duplicación macOS vuelve a pedir Touch ID/contraseña. Se solicitó al PO completar esa autenticación sin compartir credenciales. Guardado/reinicio/export-import pendientes, PR #9 todavía borrador. No hay aprobación de Claude ni cierre de I5b inferidos. La escritura decimal está cubierta por la regresión de teclado UI Toolkit, sin certificarla mediante inyección de teclado nativo. Suites finales 253/253 EditMode y 105/105 PlayMode; no se repite campaña física ni se avanza a Etapa 6.
 
 ## Comprobación manual del PO no aprobada — I5b, 2026-10-24
 
@@ -407,4 +407,19 @@ Pausa manual tras Inicio/Toca para continuar corroborada: sigue Continuar hasta 
 
 Los registros recuperados muestran arranques Po-1 previos al aviso del PO y nuevo arranque con 0,60; el nombre del archivo real es Po-1, frente al Po-01 informado. El error previo «Unexpected JSON token at offset 0» no se reprodujo en dos ciclos Exportar→Importar; causa sin aislar y sin atribuir al PO/API/motor. Se conserva en el informe para revisión, no se afirma corregido por código. Los bloqueos de conexión/autenticación anteriores quedaron superados; snapshots previos se conservan como históricos.
 
-**Entrega preparada: PR #9 lista para Claude, abierta y sin fusionar. No es aprobación de Claude ni cierre de I5b.** Regresión final 253/253 EditMode y 105/105 PlayMode, siete grupos RED→GREEN, 109 hashes de fuentes coincidentes. Sin campaña física, T5.4, calibración ni gameplay. [Informe](2026-10-23-first-ball-i5b-dev-panel.md), [auditoría final](../validation/evidence/2026-10-24-i5b-responsive-native-smoke.json). Detenerse para revisión y decisión del PO; renovar perfil antes de instalar desde el 27 de octubre y comprobar siempre vigencia.
+**Entrega preparada: PR #9 lista para Claude, abierta y sin fusionar. No es aprobación de Claude ni cierre de I5b.** Regresión final 253/253 EditMode y 105/105 PlayMode, siete grupos RED→GREEN, 109 hashes de fuentes coincidentes. Sin campaña física, Etapa 6, calibración ni gameplay. [Informe](2026-10-23-first-ball-i5b-dev-panel.md), [auditoría final](../validation/evidence/2026-10-24-i5b-responsive-native-smoke.json). Detenerse para revisión y decisión del PO; renovar perfil antes de instalar desde el 27 de octubre y comprobar siempre vigencia.
+
+## Cierre de I5b y autorización I6a — 2026-10-24
+
+Claude aprobó PR #9 (I5b/T5.3), head **1496874dd8f581343fd959c6c9f86bf9590867d3**, según comunicación del PO, quien autoriza cierre y fusión. PR ya lista, fusionada con **merge commit f8920e8a99f3ebf555f53d7ead1da8677cedcce1**; main sincronizada y worktree I5b eliminado, artefactos locales preservados. Defaults **164b0c21e88b**, P2 por defecto/P1 configurable, 253/253 EditMode y 105/105 PlayMode y recorrido nativo documentado.
+
+Corrección de referencia: **T5.4 no existe en r2**, la Etapa 5 termina en T5.3 y después viene Etapa 6. Se corrigen las referencias erróneas de la documentación de I5; las menciones a T5.4 en revisión/correspondencia de r1 siguen siendo históricas. Punto de control de Etapa 5: el PO calibrará un preset propio con el panel y avisará para registrarlo. **Po-1 sigue como prueba funcional, no calibración**; no se promueve a defaults.
+
+Observaciones de Claude registradas, **sin cambiar código ahora**:
+
+1. Offset 0 indica portapapeles sin JSON. Próxima intervención del panel: mostrar longitud y primeros caracteres de lo pegado en el error.
+2. Panel abierto refresca y ordena cada 0,5 s: **T7.2 con panel cerrado**.
+3. Prueba física P2 usa configuración aplicada; campaña con preset no default queda fuera de configuración del gate.
+4. Retención de logs antes de T8 y renovación del perfil antes de instalar desde el **27 de octubre**, comprobando siempre vigencia efectiva.
+
+**I6a / T6.1–T6.2 autorizado** en `firstball/i6a-legibility`: seguimiento amortiguado de cámara y ayudas de legibilidad, incluido tamaño visual de pelota. TDD, verificación en iPhone si hay instalación, PR para Claude e informe; detenerse sin fusionar. No adelantar T6.3/L1–L6 ni gameplay. Spec, escenarios, criterios y umbrales intactos. La autorización permite I6a mientras el PO prepara su calibración; no declara cumplido ese punto de control.

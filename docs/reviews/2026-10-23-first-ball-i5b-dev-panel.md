@@ -1,6 +1,6 @@
 # I5b / T5.3 — panel autogenerado
 
-Estado, 2026-10-24: **entrega I5b preparada para revisión de Claude y PO**. Implementación, regresión y comprobación funcional nativa completas en la build 0.1.0+1318753 dev. Guardado, recuperación tras reinicio, export/import, pausa manual y sensores corroborados. El error anterior de importación informado por el PO no se reprodujo y queda registrado sin atribuir ni dar por corregida una causa desconocida. Rama `firstball/i5b-dev-panel`, [PR #9](https://github.com/rafaallendes-boop/squash-clash/pull/9), lista para revisión, abierta y sin fusionar. I5b sigue abierto hasta decisión del PO; no se inicia T5.4, calibración ni gameplay.
+Estado, 2026-10-24: **I5b cerrado** por aprobación de Claude y autorización del PO sobre head `1496874`. [PR #9](https://github.com/rafaallendes-boop/squash-clash/pull/9) fusionada con merge commit **f8920e8a99f3ebf555f53d7ead1da8677cedcce1**, main sincronizada y worktree I5b eliminado. Regresión 253/253 EditMode, 105/105 PlayMode y recorrido nativo documentados abajo. Defaults 164b0c21e88b, P2 por defecto. Po-1 es prueba funcional; calibración propia del PO pendiente. La Etapa 5 termina en T5.3; siguiente Etapa 6 (I6a autorizado por separado).
 
 ## Autorización y cierre previo
 
@@ -88,4 +88,4 @@ Los fallos de conexión y autenticación de Duplicación/CoreDevice fueron super
 - Percentiles de segmento por borde superior de cubeta, sesgo ≤0,1 ms; ventana exacta y sesión por histograma. No se convierten en medidas exactas ni se cambian umbrales.
 - Renovar perfil antes de cualquier instalación desde **2026-10-27**, comprobar siempre vigencia; sin cambiar herramientas.
 
-Spec, escenarios, criterios, umbrales, motores P1/P2, ProjectSettings y plan intactos. No se repite el experimento ni se declara rendimiento nativo a partir de regresiones/compilación. No se congela un preset de calibración. I5b queda abierto para revisión; T5.4 y posteriores no iniciados.
+Spec, escenarios, criterios, umbrales, motores P1/P2, ProjectSettings y plan intactos. No se repite el experimento ni se declara rendimiento nativo a partir de regresiones/compilación. No se congela un preset de calibración. I5b cerrado según autorización de cierre; I6a/T6.1–T6.2 autorizado por separado, sin T6.3 ni gameplay.

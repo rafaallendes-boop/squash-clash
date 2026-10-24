@@ -1,6 +1,6 @@
 # Validación I5b / T5.3
 
-Entrega preparada para Claude y PO el **2026-10-24**, PR #9 lista para revisión, sin fusionar; I5b sigue abierto. No T5.4, calibración ni gameplay.
+I5b cerrado el **2026-10-24**: Claude aprobó head 1496874 y PO autorizó cierre; PR #9 fusionada con merge commit **f8920e8a99f3ebf555f53d7ead1da8677cedcce1**, main sincronizada y worktree eliminado. Calibración propia del PO pendiente; Po-1 prueba funcional. Etapa 5 termina en T5.3; I6a autorizado por separado.
 
 Regresión final de la fuente **1318753**: **253/253 EditMode, 105/105 PlayMode**, sin fallos/omitidos. Siete grupos RED válidos→GREEN, XML frescos y sin errores de compilación. [Informe](../reviews/2026-10-23-first-ball-i5b-dev-panel.md), [manifiesto](evidence/2026-10-23-i5b-responsive-tests.json). Los 109 hashes de fuentes del manifiesto vuelven a coincidir tras la comprobación nativa; no hubo cambios de código en ella.
 
