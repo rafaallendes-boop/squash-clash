@@ -533,3 +533,6 @@ El PO responde **«Apruebo correguir L2»**, aceptando la propuesta de Claude re
 Autorización específica para actualizar plan r2/T6.3 y su prueba, comprobando el máximo de altura del centro durante el intervalo, con extremos y máximos entre pasos. **1,0 m y la condición lateral se conservan**. El lanzamiento L2, DefaultPreset **0d39e6016bd8**, P2 por defecto y la física se mantienen. Sin modificación de spec ni otros criterios, sin nueva instalación/campaña ni repetición de H1. Rama `firstball/l2-height-criterion`, PR para Claude antes de fusión, conforme al flujo vigente.
 
 **Etapa 7 y gameplay no autorizados.** H1/Etapa 6 conservan su cierre. Los registros anteriores de L2 pendiente son históricos; esta aprobación los sustituye.
+
+
+Verificación de la precisión: RED válido 6/8 Pass, dos fallos por literal insuficiente; GREEN 8/8, suites completas **269/269 EditMode y 132/132 PlayMode**, XML frescos/sin CS. L2 sin modificar pasa: máximo frontis→primer bote **0,35000011797003433 m**, lateral 100 %. Fuente `ddf73c8`; [informe](2026-10-24-first-ball-l2-height-criterion.md). Se entrega PR a Claude, sin fusionar ni iniciar Etapa 7.
