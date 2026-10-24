@@ -143,7 +143,7 @@ namespace SquashClash.DevPanel
                 "; bounceThreshold="+UnityEngine.Physics.bounceThreshold.ToString("R",CultureInfo.InvariantCulture)+"; Unity="+Application.unityVersion;
 #endif
             return (description??"ProjectPhysics no disponible")+"; fastMotionThreshold relevante solo para P1; bounceThreshold efectivo P2="+
-                UnityEngine.Physics.bounceThreshold.ToString("R",CultureInfo.InvariantCulture);
+                UnityEngine.Physics.bounceThreshold.ToString("R",CultureInfo.InvariantCulture)+"; SimulationKey="+config.SimulationKey;
         }
         public void CancelRun(string reason) => CancelRun(reason, null);
         private void CancelRun(string reason, string lifecycleContext)

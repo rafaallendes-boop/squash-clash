@@ -14,6 +14,8 @@ namespace SquashClash.DevPanel
         private VisualElement bar, root;
         private Button pause, scenario;
         private SpikeSection spike;
+        private PerformanceSession session;
+        private Button sessionButton,spikeButton;
         private DropdownField legibility;
         private ParamSet selectedLaunch;
         private static readonly string[] LaunchKeys = { "launcher.x","launcher.y","launcher.z","launcher.yawDeg","launcher.pitchDeg","launcher.speed",
@@ -25,6 +27,7 @@ namespace SquashClash.DevPanel
             app = AppBootstrap.Instance;
             root = app.GetComponent<UIDocument>().rootVisualElement;
             spike = gameObject.AddComponent<SpikeSection>(); spike.Initialize(app, root);
+            session=gameObject.AddComponent<PerformanceSession>();session.Initialize(app,root,index=>{legibility.SetValueWithoutNotify(legibility.choices[index]);SelectLaunch(index);});
             bar = new VisualElement { name="dev-bar" };
             bar.style.position=Position.Absolute; bar.style.flexDirection=FlexDirection.Column;
             actions = new VisualElement(); actions.style.flexDirection=FlexDirection.Row; bar.Add(actions);
@@ -45,6 +48,9 @@ namespace SquashClash.DevPanel
             scenario.style.flexGrow=1;scenario.style.height=44;tests.Add(scenario);
             var test=new Button(()=>spike.Begin()) {text="Prueba física P2",name="physics-spike"};
             test.style.flexGrow=1;test.style.height=44;tests.Add(test);
+            spikeButton=test;
+            sessionButton=new Button(()=>{if(session.IsRunning)session.Cancel();else session.Begin();}) {name="performance-session",text="Sesión H17"};
+            sessionButton.style.flexGrow=1;sessionButton.style.height=44;sessionButton.style.whiteSpace=WhiteSpace.Normal;tests.Add(sessionButton);
             // Insert below the runtime resume overlay so it blocks all controls.
             root.Insert(0,bar);gameObject.AddComponent<DevPanelView>().Initialize(app,root);root.RegisterCallback<GeometryChangedEvent>(_=>PlaceInSafeArea());PlaceInSafeArea();
         }
@@ -82,6 +88,9 @@ namespace SquashClash.DevPanel
         {
             if(app==null) {if(bar!=null)Destroy(gameObject);return;}
             bar?.SetEnabled(!spike.IsRunning);
+            actions?.SetEnabled(!session.IsRunning);legibility?.SetEnabled(!session.IsRunning);
+            scenario?.SetEnabled(!session.IsRunning);spikeButton?.SetEnabled(!session.IsRunning);
+            if(sessionButton!=null){sessionButton.text=session.IsRunning?"Cancelar H17": "Sesión H17";sessionButton.tooltip=session.Status;}
             if(selectedLaunch!=null&&LaunchKeys.Any(k=>app.Tuning.Visible.Get(k)!=selectedLaunch.Get(k)))
             {selectedLaunch=null;legibility.SetValueWithoutNotify("Manual");}
             if(scenario!=null)scenario.text="Escenario "+spike.SelectedScenario;
