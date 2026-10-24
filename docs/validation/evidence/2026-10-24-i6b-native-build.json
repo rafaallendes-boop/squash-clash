@@ -1,0 +1,84 @@
+{
+  "buildMetadata": {
+    "version": "0.1.0",
+    "gitHash": "2109af8",
+    "profile": "dev",
+    "builtAtUtc": "2026-10-24T20:47:05.3026260Z",
+    "unityVersion": "6000.3.27f1",
+    "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+    "gitDirty": false
+  },
+  "exports": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "2109af8",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-24T20:47:05.3026260Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "2109af8",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-24T20:47:30.5402040Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "freshExports": true,
+  "playerDevelopment": false,
+  "il2cpp": "Release",
+  "xcode": "Xcode 27.1; Build version 27A9275",
+  "xcodeConfiguration": "Release",
+  "xcodeDestination": "generic/platform=iOS",
+  "architectures": [
+    "arm64"
+  ],
+  "codesignStrictVerified": true,
+  "embeddedMetadataVerified": true,
+  "embeddedDefaultPresetVerified": true,
+  "defaultEffectiveHash": "0d39e6016bd8",
+  "runtimeThermalBridgeSymbolVerified": true,
+  "frameworkSha256": "5bcd19ec5d6e7f65e2b2d7018fb627b2da920d1c73cb77145bd2b61786e19065",
+  "resourcesSha256": "bdd7cd87a58d5d4212cf3e2086cf3f32ce168b695952d403cba08b246c5012d0",
+  "profileCheckedAtUtc": "2026-10-24T20:51:42.876758+00:00",
+  "profileCheckedLocalDate": "2026-10-24",
+  "profileExpiresAtUtc": "2026-10-28T14:59:31+00:00",
+  "embeddedProfileValid": true,
+  "profileMatchesDeviceAndBundle": true,
+  "renewalRequiredForThisInstall": false,
+  "installationPolicy": "Renovar antes de cualquier instalación desde 2026-10-27 y comprobar siempre vigencia. Herramientas sin cambios.",
+  "testedSourceCommit": "2109af8a3abb45b915210a7a7da736c45825b406",
+  "builtSourceMatchesTestedHashes": true,
+  "installed": true,
+  "nativeCampaignRun": false,
+  "scope": "Exports limpios dev/prod y compilación/firma iOS dev. Prod exportado sin compilar ni instalar. Puente runtime ambos perfiles; DevPanel/puente Spike excluidos de prod. No campaña ni criterio de rendimiento evaluado.",
+  "installationOutcome": "success",
+  "installationLocalDate": "2026-10-24",
+  "automaticLaunch": "Proceso inicial pasó a segundo plano; arranque funcional posteriormente corroborado en Duplicación y métricas de la build 2109af8.",
+  "nativeUiVerification": "Completa por agente mediante cua_repl: L1–L6 con fija y seguimiento, pausa/Paso conserva ayudas, Continuar reanuda edades, P0-calib-1 restaurado. Presets/selección byte a byte intactos, hash final 8de3f2ecb217 con cero pendientes; ver auditoría funcional."
+}

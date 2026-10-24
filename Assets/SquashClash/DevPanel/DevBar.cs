@@ -1,4 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using SquashClash.Core.Simulation;
 using SquashClash.Core.Config;
 using SquashClash.Runtime.App;
 using UnityEngine;
@@ -11,6 +14,10 @@ namespace SquashClash.DevPanel
         private VisualElement bar, root;
         private Button pause, scenario;
         private SpikeSection spike;
+        private DropdownField legibility;
+        private ParamSet selectedLaunch;
+        private static readonly string[] LaunchKeys = { "launcher.x","launcher.y","launcher.z","launcher.yawDeg","launcher.pitchDeg","launcher.speed",
+            "human.x","human.z","rival.x","rival.z" };
         private VisualElement actions;
         private IEnumerator Start()
         {
@@ -26,6 +33,13 @@ namespace SquashClash.DevPanel
             pause=Add("pause","Pausa",()=>app.Host.Clock.Paused=!app.Host.Clock.Paused);
             Add("step","Paso",()=>{app.Host.Clock.Paused=true;app.Host.Clock.RequestSingleStep();});
             Add("replay","Repetir",()=>app.ReplayCurrent());
+            var options = new List<string> { "Manual" };
+            options.AddRange(LaunchPresets.All(app.Config.Court,app.Config.Physics.Gravity).Select(e=>e.Id+" · "+e.Label));
+            legibility = new DropdownField("Legibilidad",options,0) { name="legibility-launch" };
+            legibility.style.height=44;legibility.style.fontSize=15;
+            legibility.labelElement.style.minWidth=80;legibility.labelElement.style.width=90;
+            legibility.RegisterValueChangedCallback(e=>SelectLaunch(options.IndexOf(e.newValue)));
+            bar.Add(legibility);
             var tests = new VisualElement(); tests.style.flexDirection=FlexDirection.Row; bar.Add(tests);
             scenario=new Button(()=>spike.LaunchNextScenario()) {text="Escenario",name="scenario"};
             scenario.style.flexGrow=1;scenario.style.height=44;tests.Add(scenario);
@@ -33,6 +47,21 @@ namespace SquashClash.DevPanel
             test.style.flexGrow=1;test.style.height=44;tests.Add(test);
             // Insert below the runtime resume overlay so it blocks all controls.
             root.Insert(0,bar);gameObject.AddComponent<DevPanelView>().Initialize(app,root);root.RegisterCallback<GeometryChangedEvent>(_=>PlaceInSafeArea());PlaceInSafeArea();
+        }
+        private void SelectLaunch(int index)
+        {
+            if(index<=0) { selectedLaunch=null;return; }
+            var cfg=EffectiveConfig.From(app.Tuning.Visible);
+            var entry=LaunchPresets.All(cfg.Court,cfg.Physics.Gravity)[index-1];var launch=entry.Launch;
+            var direction=launch.Direction.normalized;
+            app.Tuning.Set("launcher.x",launch.Position.x);app.Tuning.Set("launcher.y",launch.Position.y);app.Tuning.Set("launcher.z",launch.Position.z);
+            app.Tuning.Set("launcher.yawDeg",System.Math.Atan2(-direction.x,-direction.z)*180/System.Math.PI);
+            app.Tuning.Set("launcher.pitchDeg",System.Math.Asin(direction.y)*180/System.Math.PI);
+            app.Tuning.Set("launcher.speed",launch.SpeedRealMps);
+            app.Tuning.Set("human.x",entry.HumanXZ.x);app.Tuning.Set("human.z",entry.HumanXZ.y);
+            app.Tuning.Set("rival.x",entry.RivalXZ.x);app.Tuning.Set("rival.z",entry.RivalXZ.y);
+            selectedLaunch=app.Tuning.Visible;
+            app.LaunchCurrent();
         }
         private Button Add(string name,string text,System.Action action)
         {
@@ -53,6 +82,8 @@ namespace SquashClash.DevPanel
         {
             if(app==null) {if(bar!=null)Destroy(gameObject);return;}
             bar?.SetEnabled(!spike.IsRunning);
+            if(selectedLaunch!=null&&LaunchKeys.Any(k=>app.Tuning.Visible.Get(k)!=selectedLaunch.Get(k)))
+            {selectedLaunch=null;legibility.SetValueWithoutNotify("Manual");}
             if(scenario!=null)scenario.text="Escenario "+spike.SelectedScenario;
             if(pause!=null)pause.text=app.Host.Clock.Paused?"Continuar":"Pausa";
         }

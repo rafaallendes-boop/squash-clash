@@ -468,3 +468,26 @@ Observaciones de Claude:
 2. Sombra no escala con aids.ballVisualScale: mantener experimental para juicio del PO en H1, **sin cambios ahora**.
 
 **I6b / T6.3 autorizado** en `firstball/i6b-legibility-launches`: L1–L6 con condiciones numéricas y selector en barra, más corrección de pausa anterior. TDD, PR para Claude e informe; detenerse sin fusionar por cuenta propia. No adelantar H1, Etapa 7 ni gameplay, sin modificar spec/criterios/umbrales. Renovar perfil antes de instalaciones desde el 27 de octubre y comprobar siempre vigencia efectiva; herramientas intactas.
+
+
+## I6b implementado, comprobación nativa en preparación — 2026-10-24
+
+Dentro de la autorización anterior: fuente **2109af8**, L1–L6 con Ballistics/condiciones del plan y selector en barra, corrección de edades de estela/marcas mientras Clock.Paused. Cuatro grupos RED válidos→GREEN, regresión **269/269 EditMode y 130/130 PlayMode**, cero fallos/omitidos, XML frescos y sin CS. Defaults **0d39e6016bd8**, 41 claves intactas y P2 por defecto; P1 configurable, selector probado con ambos. No cambios en host, reloj, motores, spec, criterios/umbrales, escenarios del spike ni settings. Sombra experimental sin cambio de escala, H1 posterior.
+
+Exports limpios dev/prod RELEASE-CHECK: OK y metadata limpia; build dev Release ARM64 firmada en preparación. Recorrido corto L1–L6 con ambas cámaras todavía pendiente; no se declara instalación/aceptación nativa antes de completar. Sin campaña física/rendimiento ni H1/Etapa 7/gameplay. [Informe](2026-10-24-first-ball-i6b-legibility-launches.md), [pruebas](../validation/evidence/2026-10-24-i6b-tests.json). PR para Claude, sin fusión/cierre de I6b por cuenta propia. Perfil: renovación antes de instalación desde el 27 y comprobación de vigencia siempre.
+
+
+## I6b instalado, recorrido funcional pendiente — 2026-10-24
+
+Dev **0.1.0+2109af8** instalada tras respaldo de presets y revalidación de perfil/firma/metadata/preset/fuentes. Exports limpios dev/prod OK, Release ARM64, 119 hashes coincidentes, perfil compatible vigente hasta 2026-10-28T14:59:31Z; Unity/Xcode sin cambios. Proceso lanzado automáticamente: Unity inicia y queda en segundo plano antes del ready gestionado; sin declarar arranque funcional aprobado antes de corroborarlo.
+
+Duplicación pide autenticación macOS. Se solicita al PO abrir directamente en teléfono y comprobar L1–L6 con fija/seguimiento, pausa/Paso conservando ayudas y Continuar reanudando edades; repetición temporal 0 y restaurar P0-calib-1 sin guardar. **Respuesta pendiente; PR #11 borrador**, sin campaña física, H1 ni rendimiento. [Build](../validation/evidence/2026-10-24-i6b-native-build.json), [auditoría pendiente](../validation/evidence/2026-10-24-i6b-native-functional.json). No fusión/cierre de I6b, Etapa 7 ni gameplay.
+
+
+## Entrega I6b preparada para revisión — 2026-10-24
+
+El PO dejó Duplicación operativa y autorizó al agente realizar el recorrido («Realiza tu lo pasos. Y lo que no puedas yo lo realizaré»). Sin cambiar código ni reinstalar, el agente completó mediante **cua_repl** en **0.1.0+2109af8 dev**: arranque/label/P2, repetición temporal 0, **L1–L6 con fija y seguimiento**, pausa de L1 conservando marca/estela en espera y tras tres Paso; Continuar reanuda movimiento y edades. P0-calib-1 Cargar→cuatro pendientes→Aplicar y relanzar→cero, Manual/cámara fija, DEV cerrado. No se pidió un recorrido adicional al PO.
+
+Recuperados presets y una instantánea JSONL de la build: **119 registros (47 launch/72 frames)**, cero líneas JSON inválidas. Los doce lanzamientos de la matriz se contrastan con UI/orden/hash y cero pendientes; se conserva un replay automático con cuatro pendientes entre Cargar/Aplicar, seguido del preset restaurado **8de3f2ecb217**, cero pendientes. JSON de P0-calib-1/Po-1 y last-active idénticos byte a byte al respaldo. No Guardar como ni modificación de JSON del preset; Cargar restablece la selección por UI. No se interpretan métricas como resultados de rendimiento ni prueba visual de H1.
+
+**Entrega I6b lista para Claude en PR #11, abierta y sin fusionar. I6b sin cerrar.** Regresión 269/269 EditMode y 130/130 PlayMode; fuentes tests/build 2109af8/119 hashes, defaults **0d39e6016bd8** intactos, P2 por defecto. [Informe](2026-10-24-first-ball-i6b-legibility-launches.md), [auditoría funcional](../validation/evidence/2026-10-24-i6b-native-functional.json). Se detiene para revisión/decisión del PO, sin H1, Etapa 7, gameplay, campaña física ni evaluación de rendimiento. Perfil: renovar antes de instalar desde el 27, verificar siempre vigencia; herramientas intactas.
