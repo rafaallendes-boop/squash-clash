@@ -550,3 +550,12 @@ El PO comunica aprobación de Claude de **PR #12, head fcb5bc2d94e0a6f52606f4e86
 - Perfil vence 2026-10-28T14:59:31Z: renovar antes de instalaciones desde el 27 y comprobar siempre vigencia efectiva. Herramientas sin cambios.
 
 No modificar spec, criterios, umbrales ni defaults. **T7.3 y gameplay no autorizados.** Detenerse al entregar informe; PR no se fusiona por cuenta propia. Esta autorización sustituye el bloqueo histórico de Etapa 7; no promueve P0-calib-1 a defaults.
+
+
+## Avance I7a — 2026-10-24
+
+[PR #13 en borrador](https://github.com/rafaallendes-boop/squash-clash/pull/13), fuente e0f9071: control H17 dev delimitado a 900 s, L1–L6, panel cerrado, Phase=session, agregados de sesión completa y cancelaciones incompletas. Dos grupos RED→GREEN; batería final **270/270 EditMode y 136/136 PlayMode**, fresca, cero fallos/omitidos y sin CS. P2 editor EditMode/PlayMode completos, diez criterios de gate aplicables Pass y 200 muestras C17 informativas por informe. Física idéntica a la fuente de esos experimentos. Exports limpios dev/prod **RELEASE-CHECK: OK**.
+
+Default **0d39e6016bd8**, SimulationKey P2 **166a96e319c7**; gate I4d inyectaba P2 aunque backend=0 en su preset (key cruda 04372f672e9e); normalizando la selección efectiva P2, misma key/valores físicos. Representación del backend cambiada por I4e; once claves posteriores no físicas explican el resto del hash completo. No se reescribe la evidencia histórica ni se afirma igualdad de keys crudas.
+
+[Informe en curso](2026-10-24-first-ball-i7a-validation.md), [plantilla de cinco secciones para PO](../validation/first-ball-validation.md). **Pendientes: campaña física nativa con Default, instalación/verificación prod y sesión H17 en iPhone**. Compilaciones Release en preparación; sin aceptación nativa ni rendimiento inferidos. CoreDeviceError 4016 bloqueó recuperar respaldo de presets; PO avisado para conectar/desbloquear por cable. I7a no cerrado, PR no lista para revisión final ni fusionada. T7.3/gameplay no autorizados; spec/criterios/umbrales/defaults intactos. Perfil: comprobar siempre, renovar antes de instalar desde el 27.
