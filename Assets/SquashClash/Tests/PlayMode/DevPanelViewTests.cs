@@ -97,6 +97,30 @@ namespace SquashClash.Runtime.Tests
             name.value=presetName;save.Focus();using(var e=NavigationSubmitEvent.GetPooled())save.SendEvent(e);yield return null;
             Assert.That(app.Presets.List(),Does.Contain(presetName),"The visible save button must execute its action");
         }
+        [UnityTest] public IEnumerator NumericInputIsNotOverwrittenDuringEditing()
+        {
+            var app=AppBootstrap.Instance;var root=app.GetComponent<UIDocument>().rootVisualElement;
+            var section=new ParamSection(app,()=>{});root.Add(section.Root);
+            foreach(var fold in section.Root.Query<Foldout>().ToList())fold.value=true;
+            yield return null;
+            var slider=section.Root.Q<Slider>("physics.floor.restitution");var field=slider.Q<TextField>();field.Focus();yield return null;
+            field.SelectAll();
+            foreach(char c in "0.")
+            {
+                using(var e=KeyDownEvent.GetPooled(new Event {type=EventType.KeyDown,character=c,keyCode=KeyCode.None}))field.Q("unity-text-input").SendEvent(e);
+            }
+            section.Refresh();
+            TestContext.WriteLine("EDIT text="+field.text+" value="+field.value+" applied="+app.Tuning.Visible.Get("physics.floor.restitution"));
+            Assert.That(app.Tuning.Visible.Get("physics.floor.restitution"),Is.EqualTo(.45),"Typing an unfinished decimal must not alter tuning");
+            Assert.That(field.text,Is.EqualTo("0."),"Refresh must preserve unfinished text");
+            foreach(char c in "60")
+            {
+                using(var e=KeyDownEvent.GetPooled(new Event {type=EventType.KeyDown,character=c,keyCode=KeyCode.None}))field.Q("unity-text-input").SendEvent(e);
+            }
+            using(var e=KeyDownEvent.GetPooled(new Event {type=EventType.KeyDown,keyCode=KeyCode.Return,character='\n'}))field.Q("unity-text-input").SendEvent(e);
+            field.Blur();yield return null;section.Refresh();
+            Assert.That(app.Tuning.Visible.Get("physics.floor.restitution"),Is.EqualTo(.6));
+        }
         [UnityTest] public IEnumerator ThreeFingerHoldFiresOnceAfterOneSecondAndResetsOnReplacementOrFocus()
         {
             var go=new GameObject("gesture test");var gesture=go.AddComponent<ThreeFingerHold>();gesture.enabled=false;
