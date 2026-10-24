@@ -71,7 +71,8 @@ namespace SquashClash.Runtime.Ball
             floorBounces = 0; PredictionMatchesBitwise = true; IsRunning = true;
             ActiveConfig = cfg; Launched?.Invoke(cfg);
         }
-        public void Replay() { if (ActiveConfig != null) Launch(ActiveConfig, launchState, launchMaxSteps, stopCondition); }
+        public void Replay() { if (ActiveConfig != null) Replay(ActiveConfig); }
+        public void Replay(EffectiveConfig cfg) { if(ActiveConfig!=null)Launch(cfg,launchState,launchMaxSteps,stopCondition); }
         public void ReleaseForExperiment() { Clock.Paused = true; DisposeSimulations(); }
         public void ResumeAfterSystemPause()
         {

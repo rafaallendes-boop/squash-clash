@@ -122,6 +122,14 @@
     {
       "key": "launcher.speed",
       "value": 15
+    },
+    {
+      "key": "launcher.repeatSeconds",
+      "value": 0
+    },
+    {
+      "key": "debug.slowMotion",
+      "value": 1
     }
   ]
 }

@@ -1,0 +1,91 @@
+{
+  "buildMetadata": {
+    "version": "0.1.0",
+    "gitHash": "11e505f",
+    "profile": "dev",
+    "builtAtUtc": "2026-10-24T00:34:48.9115180Z",
+    "unityVersion": "6000.3.27f1",
+    "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+    "gitDirty": false
+  },
+  "exports": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "11e505f",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-24T00:34:48.9115180Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "11e505f",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-24T00:35:18.1231600Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "freshExports": true,
+  "playerDevelopment": false,
+  "il2cpp": "Release",
+  "xcode": "Xcode 27.1; Build version 27A9275",
+  "xcodeConfiguration": "Release",
+  "xcodeDestination": "generic/platform=iOS",
+  "architectures": [
+    "arm64"
+  ],
+  "codesignStrictVerified": true,
+  "embeddedMetadataVerified": true,
+  "embeddedDefaultPresetVerified": true,
+  "defaultEffectiveHash": "164b0c21e88b",
+  "runtimeThermalBridgeSymbolVerified": true,
+  "frameworkSha256": "8d741b59295be913079118c993f3c816ddcc6f0397030a52f2f047b5e38139d0",
+  "resourcesSha256": "63811577c016e21cf334538d724bde576a765e5a6b9536b0f832fef816e1fcc8",
+  "profileCheckedAtUtc": "2026-10-24T00:39:12.493193+00:00",
+  "profileCheckedLocalDate": "2026-10-23",
+  "profileExpiresAtUtc": "2026-10-28T14:59:31+00:00",
+  "embeddedProfileValid": true,
+  "profileMatchesDeviceAndBundle": true,
+  "renewalRequiredForThisInstall": false,
+  "installationPolicy": "Renovar antes de cualquier instalación desde 2026-10-27 y comprobar siempre vigencia. Herramientas sin cambios.",
+  "testedSourceCommit": "11e505f5a387cf82bbd0ba49e06ad5a24acbc94f",
+  "builtSourceMatchesTestedHashes": true,
+  "installed": true,
+  "nativeCampaignRun": false,
+  "scope": "Exports limpios dev/prod y compilación/firma iOS dev. Prod exportado sin compilar ni instalar. Puente runtime ambos perfiles; DevPanel/puente Spike excluidos de prod. No campaña ni criterio de rendimiento evaluado.",
+  "installationOutcome": "success",
+  "automaticLaunch": {
+    "outcome": "failed",
+    "domain": "com.apple.dt.CoreDeviceError",
+    "code": 10002,
+    "underlyingReason": "Locked",
+    "meaning": "SpringBoard rechazó abrir la app porque el teléfono estaba bloqueado; no prueba un fallo de la app."
+  },
+  "manualFunctionalCheck": "PO reporta recorrido correcto; sensores corroborados con datos nativos. Guardado/persistencia po-1 pendiente por discrepancia con archivos recuperados; PR sigue borrador.",
+  "historicalSnapshot": true,
+  "supersededForCurrentStatusBy": "2026-10-24-i5b-responsive-native-smoke.json"
+}

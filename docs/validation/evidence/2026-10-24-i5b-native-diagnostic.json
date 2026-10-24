@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-24",
+  "scope": "Diagnóstico funcional parcial I5b; sin campaña física ni evaluación de rendimiento",
+  "buildLabel": "0.1.0+1318753 dev",
+  "poReport": {
+    "restartHeaderDidNotShowPreset": true,
+    "reportedName": "Po-01",
+    "importError": "No se importo: Invalid preset JSON: Unexpected JSON token at offset 0",
+    "saveSuccessMessageConfirmed": false,
+    "exportSuccessMessageConfirmed": false
+  },
+  "recoveredPreset": {
+    "name": "Po-1",
+    "lastActive": "Po-1",
+    "sha256": "3e9e5750649012741e09ce601f2ccfa074ea06ac32e544c57dc6e9341bd8510c",
+    "keyCount": 32,
+    "floorRestitution": 0.45,
+    "sameAsDefaults": true,
+    "defaultEffectiveHash": "164b0c21e88b",
+    "parseCheck": "JSON sintáctico válido por parser independiente; lectura nativa al arranque aún sin verificar"
+  },
+  "recovery": {
+    "presetsCopy": "success",
+    "metricsCopy": "failed: CoreDeviceError -1",
+    "metricsList": "failed: CoreDeviceError 4016, conectividad/servicios no disponibles",
+    "deviceIdentifiersOmitted": true
+  },
+  "conclusion": "Guardado físico corroborado para Po-1; nombre informado por PO distinto. Recuperación al arranque y export/import no aprobados. Causa aún no aislada, sin cambio de código. Solicitada conexión por cable y mensajes exactos.",
+  "historicalSnapshot": true,
+  "supersededForCurrentStatusBy": "2026-10-24-i5b-responsive-native-smoke.json"
+}

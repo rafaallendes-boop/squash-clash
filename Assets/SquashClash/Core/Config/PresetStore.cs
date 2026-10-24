@@ -36,6 +36,10 @@ namespace SquashClash.Core.Config
             try { AtomicWrite(ActivePath,name);error=null;return true; }
             catch(Exception e){error=e.Message;return false;}
         }
+        public bool TryClearLastActive(out string error)
+        {
+            try{File.Delete(ActivePath);error=null;return true;}catch(Exception e){error=e.Message;return false;}
+        }
         public ParamSet LoadStartup(ParamSet defaults,List<string> warnings,out string name,out string fileHash)
         {
             if(defaults==null||warnings==null)throw new ArgumentNullException(defaults==null?nameof(defaults):nameof(warnings));
@@ -73,7 +77,7 @@ namespace SquashClash.Core.Config
             // Same directory/volume. Existing destination remains intact until the complete temp file is renamed.
             if(File.Exists(path))File.Replace(temporary,path,null);else File.Move(temporary,path);
         }
-        private static bool ValidName(string name) => !string.IsNullOrWhiteSpace(name)&&name==name.Trim()&&name!="."&&name!=".."&&
+        private static bool ValidName(string name) => !string.IsNullOrWhiteSpace(name)&&!string.Equals(name,"Default",StringComparison.OrdinalIgnoreCase)&&name==name.Trim()&&name!="."&&name!=".."&&
             !name.Any(c=>c<32||"/\\:*?\"<>|".IndexOf(c)>=0||Path.GetInvalidFileNameChars().Contains(c));
     }
 }

@@ -33,6 +33,42 @@ namespace SquashClash.Runtime.App
         public int MetricsSeed { get; private set; }
         public string ActivePresetName { get; private set; }
         public string ActivePresetFileHash { get; private set; }
+        public BallSimulationHost Ball => Host;
+        public SimClock Clock => Host.Clock;
+        public void LaunchCurrent() => Host.Launch(EffectiveConfig.From(Tuning.ApplyPending()));
+        public void ReplayCurrent()
+        {
+            if(Host.ActiveConfig==null)return;
+            var source=Host.ActiveConfig.Source;
+            foreach(var def in ParamCatalog.All)
+                if(def.Apply==ApplyClass.Immediate)source=source.With(def.Key,Tuning.Applied.Get(def.Key));
+            Host.Replay(EffectiveConfig.From(source));
+        }
+        public void SetPresetIdentity(string name,string fileHash)
+        {
+            FlushFrames();ActivePresetName=name;ActivePresetFileHash=fileHash;
+        }
+        private double repeatElapsed;
+        private bool discardRepeatResume;
+        public void TickRepeat(double seconds)
+        {
+            if(double.IsNaN(seconds)||double.IsInfinity(seconds)||seconds<0)throw new ArgumentOutOfRangeException(nameof(seconds));
+            if(discardRepeatResume){discardRepeatResume=false;repeatElapsed=0;return;}
+            var interval=Tuning.Applied.Get("launcher.repeatSeconds");
+            if(interval<=0||Clock==null||Clock.Paused||diagnosticsPaused||!diagnosticsFocused){repeatElapsed=0;return;}
+            repeatElapsed+=seconds;
+            if(repeatElapsed>=interval){repeatElapsed=0;ReplayCurrent();}
+        }
+        private void OnTuningChanged(string key)
+        {
+            // Physical edits stay pending. Immediate consumers use the applied set without touching the flight.
+            if(!ParamCatalog.TryGet(key,out var def)||def.Apply!=ApplyClass.Immediate||Clock==null)return;
+            FlushFrames();Params=Tuning.Applied;
+            if(key.StartsWith("camera.",StringComparison.Ordinal))cameraRig.Apply(Params,Config.Court);
+            if(key=="placeholders.visible"||key.StartsWith("human.",StringComparison.Ordinal)||key.StartsWith("rival.",StringComparison.Ordinal))placeholderPlayers.Apply(Params);
+            if(key=="debug.slowMotion")Clock.DebugSlowMotion=Params.Get(key);
+            if(key=="launcher.repeatSeconds")repeatElapsed=0;
+        }
         private readonly FrameTimeStats segmentFrames=new FrameTimeStats(),segmentCpu=new FrameTimeStats(),segmentGpu=new FrameTimeStats();
         private ThermalMonitor thermal;
         private FrameTimingSampler timing;
@@ -193,6 +229,7 @@ namespace SquashClash.Runtime.App
             Host.Initialize(new IBallSimulationFactory[] { physX, new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold) },
                 new SimClock(Config.Physics.StepHz, Config.Tempo));
             Host.Launched += OnLaunched;
+            Tuning.Changed += OnTuningChanged;
             GetComponent<ResumeOverlay>().Initialize(Host.Clock);
             ballView.Initialize(Host, Config.Physics.BallRadius);
             Host.Launch(Config);
@@ -201,6 +238,7 @@ namespace SquashClash.Runtime.App
 
         private void Update()
         {
+            TickRepeat(Time.unscaledDeltaTime);
             if (fpsLabel == null) return;
             elapsed += Time.unscaledDeltaTime;
             frames++;
@@ -218,7 +256,7 @@ namespace SquashClash.Runtime.App
 
         private void OnLaunched(EffectiveConfig cfg)
         {
-            FlushFrames();Config=cfg; Params=cfg.Source;segmentConfig=cfg;ResetSegment();timing.RestartCapture();
+            FlushFrames();repeatElapsed=0;Clock.DebugSlowMotion=cfg.Source.Get("debug.slowMotion");Config=cfg; Params=cfg.Source;segmentConfig=cfg;ResetSegment();timing.RestartCapture();
             Metrics.Write("launch",cfg,ActivePresetName,ActivePresetFileHash,Tuning.PendingKeys.Count,MetricsSeed,Comparable(0),Host.Clock.DroppedSinceRestart,"{}");
             var court=cfg.Court;
             if (shownCourt==null || !shownCourt.Equals(court)) { courtView.Build(court); shownCourt=court; }
@@ -226,11 +264,13 @@ namespace SquashClash.Runtime.App
         }
         private void OnApplicationPause(bool paused)
         {
+            repeatElapsed=0;discardRepeatResume=true;
             if(paused)FlushFrames();diagnosticsPaused=paused;discardDiagnosticsResume=true;
             if(paused)GetComponent<ResumeOverlay>().Suspend();
         }
         private void OnApplicationFocus(bool focused)
         {
+            repeatElapsed=0;discardRepeatResume=true;
             if(!focused)FlushFrames();diagnosticsFocused=focused;discardDiagnosticsResume=true;
             if(!focused)GetComponent<ResumeOverlay>().Suspend();
         }
@@ -238,6 +278,7 @@ namespace SquashClash.Runtime.App
         {
             FlushFrames();
             if (Host != null) Host.Launched -= OnLaunched;
+            if(Tuning!=null)Tuning.Changed-=OnTuningChanged;
             if (Instance == this) Instance = null;
         }
     }
