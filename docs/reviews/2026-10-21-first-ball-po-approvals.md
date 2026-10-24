@@ -365,3 +365,12 @@ Observaciones de Claude registradas sin modificar código en este cierre:
 5. Pausa manual y sensores aún sin verificar en iPhone: incluir esa verificación en I5b. Renovar el perfil antes de instalar si es el 2026-10-27 o después, y comprobar siempre vigencia.
 
 **I5b / T5.3 autorizado** en `firstball/i5b-dev-panel`, panel autogenerado según plan, PR para revisión de Claude. Entregar informe y detenerse; no fusionar por cuenta propia. No adelantar T5.4, calibración ni gameplay. Mantener backend P2 por defecto/P1 configurable, spec, criterios, escenarios y umbrales. Solo añadir los defaults previstos expresamente para T5.3.
+
+
+## I5b implementado; comprobación física pendiente — 2026-10-23
+
+Dentro de la autorización anterior, rama firstball/i5b-dev-panel y [PR #9 borrador](https://github.com/rafaallendes-boop/squash-clash/pull/9). Cinco grupos RED válidos→GREEN; suites **253/253 EditMode, 102/102 PlayMode**, XML frescos, cero fallos/omitidos. Panel autogenerado, LaunchCurrent, presets/portapapeles, diagnóstico y repetición; Default reservado y errores de TuningState capturados. Defaults solo añade las dos claves de T5.3 (repeatSeconds=0 y slowMotion=1), hash **164b0c21e88b**; valores físicos existentes idénticos, P2/P1 conservados. Sin cambios en motores, spec, escenarios, criterios, umbrales, plan o ProjectSettings.
+
+Dev **0.1.0+11e505f** limpia, Release ARM64 firmada, metadata/preset exactos y perfil embebido válido comprobados antes de la instalación exitosa del 2026-10-23. Exports limpios dev/prod RELEASE-CHECK: OK, prod sin DevPanel/puente Spike y con puente térmico runtime de I5a. Lanzamiento automático rechazado por **Locked**, no un fallo comprobado de la app. Se solicitó al PO apertura manual y recorrido: tres dedos/DEV, restitución pendiente y aplicar, guardar po-1/cierre completo/recuperación, exportar/importar, pausa manual al volver y sensores. **Respuesta pendiente: no se registra esa verificación como cumplida ni la entrega como completa**. Sin herramientas sobre el iPhone durante la comprobación solicitada; recuperar después los datos para completar informe y dejar PR lista para Claude, sin fusionar.
+
+[Informe con estado y evidencia](2026-10-23-first-ball-i5b-dev-panel.md). Sin campaña física, calibración, T5.4 ni gameplay. Política de logs/retención antes de T8 sigue pendiente. Perfil: renovar antes de instalar desde el 27 de octubre, comprobar siempre vigencia; herramientas intactas.

@@ -1,6 +1,6 @@
 # I5b / T5.3 — panel autogenerado
 
-Estado al preparar la build, 2026-10-23: implementación y regresión completas; comprobación funcional en iPhone pendiente. Rama `firstball/i5b-dev-panel`. I5b abierto; la entrega se detiene para Claude y PO, sin fusionar ni adelantar T5.4, calibración o gameplay.
+Estado al preparar la build, 2026-10-23: implementación y regresión completas; comprobación funcional en iPhone pendiente. Rama `firstball/i5b-dev-panel`, [PR #9 en borrador](https://github.com/rafaallendes-boop/squash-clash/pull/9). I5b abierto; la entrega se detiene para Claude y PO, sin fusionar ni adelantar T5.4, calibración o gameplay.
 
 ## Autorización y cierre previo
 
