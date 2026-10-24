@@ -7,9 +7,11 @@ namespace SquashClash.Runtime.Ball
         private BallSimulationHost host;
         private Mesh mesh;
         private Material material;
+        private float radius;
         public void Initialize(BallSimulationHost host, float radius)
         {
             this.host = host;
+            this.radius = radius;
             if (mesh == null)
             {
                 const int rings = 8, segments = 16;
@@ -35,6 +37,7 @@ namespace SquashClash.Runtime.Ball
             transform.localScale = Vector3.one * (radius * 2);
             transform.position = host.RenderPosition;
         }
+        public void ApplyVisualScale(float scale) => transform.localScale = Vector3.one * (radius * 2 * scale);
         private void LateUpdate() { if (host != null && host.ActiveConfig != null) transform.position = host.RenderPosition; }
         private void OnDestroy() { if (mesh != null) Destroy(mesh); if (material != null) Destroy(material); }
     }

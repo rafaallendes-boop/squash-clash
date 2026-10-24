@@ -139,7 +139,11 @@ namespace SquashClash.Runtime.App
         {
             using(var sha=SHA256.Create())return BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(text))).Replace("-","").ToLowerInvariant();
         }
-        private void LateUpdate()=>RecordDiagnosticsFrame(Time.unscaledDeltaTime);
+        private void LateUpdate()
+        {
+            if (Host.ActiveConfig != null && !Clock.Paused) cameraRig.Tick(Host.RenderPosition, Time.unscaledDeltaTime);
+            RecordDiagnosticsFrame(Time.unscaledDeltaTime);
+        }
 
         [SerializeField] private CourtView courtView;
         [SerializeField] private BallView ballView;
@@ -233,6 +237,7 @@ namespace SquashClash.Runtime.App
             GetComponent<ResumeOverlay>().Initialize(Host.Clock);
             ballView.Initialize(Host, Config.Physics.BallRadius);
             Host.Launch(Config);
+            gameObject.AddComponent<LegibilityAids>().Initialize(Host, Tuning, ballView);
             Debug.Log($"[SquashClash] ball ready backend={Config.Backend} visualColliders=0 localPhysicsScenes={physX.LiveInstances} config={Config.Hash} predictedSteps={Host.Prediction.States.Count-1}");
         }
 

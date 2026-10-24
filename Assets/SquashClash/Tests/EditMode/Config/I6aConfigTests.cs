@@ -19,6 +19,7 @@ namespace SquashClash.Core.Tests.Config
             Assert.That(ParamCatalog.TryGet(key, out var def), Is.True, key);
             Assert.That(def.Apply, Is.EqualTo(ApplyClass.Immediate));
             var defaults = ConfigFixtures.Default();
+            TestContext.WriteLine("I6A_DEFAULT_HASH=" + defaults.Hash);
             Assert.That(defaults.Get(key), Is.EqualTo(expected));
             Assert.That(defaults.Get("physics.backend"), Is.EqualTo(1));
         }
