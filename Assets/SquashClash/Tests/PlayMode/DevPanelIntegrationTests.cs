@@ -8,6 +8,7 @@ using SquashClash.Runtime.App;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Tests
 {
     public sealed class DevPanelIntegrationTests
@@ -37,6 +38,26 @@ namespace SquashClash.Runtime.Tests
             var row=File.ReadAllLines(app.Metrics.CurrentFilePath).Select(JsonUtility.FromJson<Row>).Last();Assert.That(row.metricsValid,Is.False);
             app.Tuning.Set("debug.slowMotion",1);app.LaunchCurrent();Assert.That(app.Clock.MetricsInvalid,Is.True);Assert.That(app.Host.SimulationGeneration,Is.EqualTo(generation));
             yield return null;
+        }
+        [UnityTest] public IEnumerator RepeatKeepsImmediateEditsAndPendingHeaderUsesSingular()
+        {
+            var app=AppBootstrap.Instance;app.enabled=false;app.Host.enabled=false;
+            app.Tuning.Set("camera.fovDeg",70);app.Tuning.Set("debug.slowMotion",.5);app.Tuning.Set("launcher.repeatSeconds",2);app.Tuning.Set("physics.floor.restitution",.6);
+            app.TickRepeat(2);
+            Assert.That(app.Clock.DebugSlowMotion,Is.EqualTo(.5));Assert.That(UnityEngine.Camera.main.fieldOfView,Is.EqualTo(70));
+            Assert.That(app.Config.Source.Get("physics.floor.restitution"),Is.EqualTo(app.Tuning.Defaults.Get("physics.floor.restitution")));
+            var view=UnityEngine.Object.FindFirstObjectByType<SquashClash.DevPanel.DevPanelView>();view.Toggle();
+            Assert.That(app.GetComponent<UnityEngine.UIElements.UIDocument>().rootVisualElement.Q<UnityEngine.UIElements.Label>("pending-changes").text,Does.Contain("1 cambio pendiente"));
+            yield return null;
+        }
+        [UnityTest] public IEnumerator RepeatDiscardsBackgroundAndFirstResumeDelta()
+        {
+            var app=AppBootstrap.Instance;app.enabled=false;app.Host.enabled=false;int launches=0;app.Host.Launched+=_=>launches++;
+            app.Tuning.Set("launcher.repeatSeconds",2);app.TickRepeat(1);
+            app.SendMessage("OnApplicationFocus",false);app.TickRepeat(60);Assert.That(launches,Is.Zero);
+            app.SendMessage("OnApplicationFocus",true);app.GetComponent<ResumeOverlay>().Continue();app.TickRepeat(60);
+            Assert.That(launches,Is.Zero,"First resume delta must not trigger an automatic launch");
+            app.TickRepeat(1);Assert.That(launches,Is.Zero);app.TickRepeat(1);Assert.That(launches,Is.EqualTo(1));yield return null;
         }
         [UnityTest] public IEnumerator RepeatUsesRealTimeSkipsPauseAndDoesNotApplyPending()
         {

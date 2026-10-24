@@ -25,14 +25,14 @@ namespace SquashClash.DevPanel
             Add("launch","Lanzar",()=>app.LaunchCurrent());
             pause=Add("pause","Pausa",()=>app.Host.Clock.Paused=!app.Host.Clock.Paused);
             Add("step","Paso",()=>{app.Host.Clock.Paused=true;app.Host.Clock.RequestSingleStep();});
-            Add("replay","Repetir",()=>app.Host.Replay());
+            Add("replay","Repetir",()=>app.ReplayCurrent());
             var tests = new VisualElement(); tests.style.flexDirection=FlexDirection.Row; bar.Add(tests);
             scenario=new Button(()=>spike.LaunchNextScenario()) {text="Escenario",name="scenario"};
             scenario.style.flexGrow=1;scenario.style.height=44;tests.Add(scenario);
             var test=new Button(()=>spike.Begin()) {text="Prueba física P2",name="physics-spike"};
             test.style.flexGrow=1;test.style.height=44;tests.Add(test);
             // Insert below the runtime resume overlay so it blocks all controls.
-            root.Insert(0,bar);root.RegisterCallback<GeometryChangedEvent>(_=>PlaceInSafeArea());PlaceInSafeArea();
+            root.Insert(0,bar);gameObject.AddComponent<DevPanelView>().Initialize(app,root);root.RegisterCallback<GeometryChangedEvent>(_=>PlaceInSafeArea());PlaceInSafeArea();
         }
         private Button Add(string name,string text,System.Action action)
         {

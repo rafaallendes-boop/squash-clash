@@ -36,6 +36,10 @@ namespace SquashClash.Core.Config
             try { AtomicWrite(ActivePath,name);error=null;return true; }
             catch(Exception e){error=e.Message;return false;}
         }
+        public bool TryClearLastActive(out string error)
+        {
+            try{File.Delete(ActivePath);error=null;return true;}catch(Exception e){error=e.Message;return false;}
+        }
         public ParamSet LoadStartup(ParamSet defaults,List<string> warnings,out string name,out string fileHash)
         {
             if(defaults==null||warnings==null)throw new ArgumentNullException(defaults==null?nameof(defaults):nameof(warnings));

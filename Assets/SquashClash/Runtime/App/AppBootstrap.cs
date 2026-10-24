@@ -36,14 +36,28 @@ namespace SquashClash.Runtime.App
         public BallSimulationHost Ball => Host;
         public SimClock Clock => Host.Clock;
         public void LaunchCurrent() => Host.Launch(EffectiveConfig.From(Tuning.ApplyPending()));
+        public void ReplayCurrent()
+        {
+            if(Host.ActiveConfig==null)return;
+            var source=Host.ActiveConfig.Source;
+            foreach(var def in ParamCatalog.All)
+                if(def.Apply==ApplyClass.Immediate)source=source.With(def.Key,Tuning.Applied.Get(def.Key));
+            Host.Replay(EffectiveConfig.From(source));
+        }
+        public void SetPresetIdentity(string name,string fileHash)
+        {
+            FlushFrames();ActivePresetName=name;ActivePresetFileHash=fileHash;
+        }
         private double repeatElapsed;
+        private bool discardRepeatResume;
         public void TickRepeat(double seconds)
         {
             if(double.IsNaN(seconds)||double.IsInfinity(seconds)||seconds<0)throw new ArgumentOutOfRangeException(nameof(seconds));
+            if(discardRepeatResume){discardRepeatResume=false;repeatElapsed=0;return;}
             var interval=Tuning.Applied.Get("launcher.repeatSeconds");
             if(interval<=0||Clock==null||Clock.Paused||diagnosticsPaused||!diagnosticsFocused){repeatElapsed=0;return;}
             repeatElapsed+=seconds;
-            if(repeatElapsed>=interval){repeatElapsed=0;Host.Replay();}
+            if(repeatElapsed>=interval){repeatElapsed=0;ReplayCurrent();}
         }
         private void OnTuningChanged(string key)
         {
@@ -250,11 +264,13 @@ namespace SquashClash.Runtime.App
         }
         private void OnApplicationPause(bool paused)
         {
+            repeatElapsed=0;discardRepeatResume=true;
             if(paused)FlushFrames();diagnosticsPaused=paused;discardDiagnosticsResume=true;
             if(paused)GetComponent<ResumeOverlay>().Suspend();
         }
         private void OnApplicationFocus(bool focused)
         {
+            repeatElapsed=0;discardRepeatResume=true;
             if(!focused)FlushFrames();diagnosticsFocused=focused;discardDiagnosticsResume=true;
             if(!focused)GetComponent<ResumeOverlay>().Suspend();
         }
