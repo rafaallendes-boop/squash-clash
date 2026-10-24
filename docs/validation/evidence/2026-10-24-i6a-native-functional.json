@@ -1,0 +1,637 @@
+{
+  "scope": "I6a/T6.1–T6.2: arranque observado y recorrido funcional confirmado por PO, sin campaña física ni evaluación de rendimiento",
+  "buildLabel": "0.1.0+7507266 dev",
+  "localDate": "2026-10-24",
+  "installed": true,
+  "automaticLaunchSucceeded": true,
+  "defaultEffectiveHash": "0d39e6016bd8",
+  "startupBackend": "P2-Analytic",
+  "startupEffectiveHash": "fed535c0b990",
+  "startupVisualColliders": 0,
+  "startupLocalPhysicsScenes": 0,
+  "startupExceptionsObserved": [],
+  "consoleSnapshotSha256": "1ae2a1d7f1a962745518cf6d4a7ac90edfb8259c0b025e5f4a557210731ab12b",
+  "presetBackup": {
+    "success": true,
+    "lastActive": "Po-1",
+    "fileHashes": {
+      "last-active.txt": "25b4612d18a7081cc6196b8ce8d715c89b1be12ddbf573721fe7b9d8ffe044fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+    },
+    "noPresetWritesByAgent": true
+  },
+  "visualChecks": {
+    "buildLabelSeen": true,
+    "appOpens": true,
+    "devPanelOpenedViaKeyboard": true,
+    "activePresetSeen": "Po-1",
+    "pendingChangesSeen": 0
+  },
+  "remainingChecks": [],
+  "controlLimitation": "windowNotFoundAtPosition en clic/scroll de Duplicación, persistente tras traer al frente, centrar, renovar binding y reset de cua. Teclado permite DEV; no permitió completar el recorrido. Solicitado al PO en teléfono físico.",
+  "poFunctionalReplyPending": false,
+  "h1Approved": false,
+  "noNativeCampaignRun": true,
+  "poFunctionalReply": "HIce los cambios, funcionó, pero cuando cerré la app y volví a abrir. Partio con las configuraciones iniciales. Si era lo esperado, sigue avanzando",
+  "poReportedRequestedRoundTripSucceeded": true,
+  "poReportedChecks": [
+    "escala 2 y pelota mayor/sombra/estela/marcas",
+    "predicción on/off",
+    "seguimiento lateral y retorno a fija",
+    "cargar Po-1 y aplicar sin guardar cambios temporales"
+  ],
+  "visualEvidenceAttribution": "Arranque/label/DEV y Po-1 por agente; recorrido de ayudas/cámara por confirmación general del PO en teléfono físico.",
+  "postRestart": {
+    "poReportedInitialSettings": true,
+    "expectedBehavior": "Descartar ajustes no guardados; cargar Po-1 guardado y completar nuevas claves desde defaults: fija/escala 1/predicción off.",
+    "previouslyBackedUpFloorRestitution": 0.6,
+    "lastRestartHeaderOrHashReported": false,
+    "independentlyVerifiedLatestRestart": true,
+    "postRunPresetFilesCompared": true,
+    "recoveryAttempts": [
+      {
+        "kind": "presets",
+        "outcome": "timeout",
+        "code": 2
+      },
+      {
+        "kind": "metrics",
+        "outcome": "failed",
+        "code": 4016
+      },
+      {
+        "kind": "presets",
+        "outcome": "success"
+      },
+      {
+        "kind": "metrics",
+        "outcome": "success"
+      }
+    ],
+    "limitation": "Recuperación posterior exitosa: arranque recuperado de 2026-10-24T20:28:18.6556670Z carga Po-1/fed535c0b990. P0-calib-1 guardado después; no se ejecutó un nuevo reinicio para probar su recuperación."
+  },
+  "delivery": "Preparada para revisión de Claude/PO, I6a abierto, sin fusionar ni avanzar a T6.3.",
+  "followUpReview": {
+    "poRequest": "Listo hice la prueba funcional, a si que revisala",
+    "localDate": "2026-10-24",
+    "presetCopySucceeded": true,
+    "metricsCopySucceeded": true,
+    "agentWroteDeviceFiles": false,
+    "agentRestartedOrInstalledApp": false,
+    "buildFilter": "0.1.0+7507266 dev",
+    "files": 5,
+    "records": 318,
+    "launchRecords": 57,
+    "invalidJsonLines": 0,
+    "fileSummaries": [
+      {
+        "sha256": "53db1b4f7e9139bf04852afc9c0ac9ca09885488c2359d98ba6ad1dd80bed105",
+        "rows": 116,
+        "invalidJsonLines": 0,
+        "first": {
+          "ts": "2026-10-24T16:10:41.4246270Z",
+          "kind": "launch",
+          "presetName": "Po-1",
+          "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+          "effectiveHash": "fed535c0b990",
+          "pending": 0
+        },
+        "lastUtc": "2026-10-24T16:47:32.7359620Z",
+        "kinds": {
+          "launch": 1,
+          "frames": 115
+        },
+        "hashes": {
+          "fed535c0b990": 116
+        },
+        "launches": [
+          {
+            "ts": "2026-10-24T16:10:41.4246270Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "fed535c0b990",
+            "pending": 0
+          }
+        ]
+      },
+      {
+        "sha256": "b60ad3c1e0fb5bbf1700f6b9c9a5b39ee9b2e8f35c6ace94903abbed04bb69cc",
+        "rows": 25,
+        "invalidJsonLines": 0,
+        "first": {
+          "ts": "2026-10-24T16:47:37.0707500Z",
+          "kind": "launch",
+          "presetName": "Po-1",
+          "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+          "effectiveHash": "fed535c0b990",
+          "pending": 0
+        },
+        "lastUtc": "2026-10-24T16:48:24.5147080Z",
+        "kinds": {
+          "launch": 2,
+          "frames": 23
+        },
+        "hashes": {
+          "fed535c0b990": 15,
+          "55412163a465": 10
+        },
+        "launches": [
+          {
+            "ts": "2026-10-24T16:47:37.0707500Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "fed535c0b990",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:48:00.2603630Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55412163a465",
+            "pending": 0
+          }
+        ]
+      },
+      {
+        "sha256": "fdb28fda221db50cee774a56713e392ac23ad260f742ffdc6c95277432b39e4f",
+        "rows": 41,
+        "invalidJsonLines": 0,
+        "first": {
+          "ts": "2026-10-24T16:48:28.7909880Z",
+          "kind": "launch",
+          "presetName": "Po-1",
+          "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+          "effectiveHash": "fed535c0b990",
+          "pending": 0
+        },
+        "lastUtc": "2026-10-24T16:50:14.6866920Z",
+        "kinds": {
+          "launch": 13,
+          "frames": 28
+        },
+        "hashes": {
+          "fed535c0b990": 13,
+          "55412163a465": 5,
+          "9aeb1c24e690": 12,
+          "50a499b04b09": 3,
+          "3ae8c6500f80": 8
+        },
+        "launches": [
+          {
+            "ts": "2026-10-24T16:48:28.7909880Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "fed535c0b990",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:48:33.5215150Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "fed535c0b990",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:48:46.1900890Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55412163a465",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:49:16.3956790Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "9aeb1c24e690",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:49:20.0628670Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "9aeb1c24e690",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:49:22.6321520Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "9aeb1c24e690",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:49:24.8301270Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "9aeb1c24e690",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:49:26.6137930Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "9aeb1c24e690",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:49:50.9675270Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "50a499b04b09",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:50:07.3871850Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "3ae8c6500f80",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:50:11.2541140Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "3ae8c6500f80",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:50:12.3038010Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "3ae8c6500f80",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:50:13.1713280Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "3ae8c6500f80",
+            "pending": 0
+          }
+        ]
+      },
+      {
+        "sha256": "83329fb29dcdfb6b4010503e8e37d23a1c72c2a4b4cd5bf239b6cca939535eb6",
+        "rows": 64,
+        "invalidJsonLines": 0,
+        "first": {
+          "ts": "2026-10-24T16:50:18.5904520Z",
+          "kind": "launch",
+          "presetName": "Po-1",
+          "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+          "effectiveHash": "fed535c0b990",
+          "pending": 0
+        },
+        "lastUtc": "2026-10-24T16:53:49.0413940Z",
+        "kinds": {
+          "launch": 22,
+          "frames": 42
+        },
+        "hashes": {
+          "fed535c0b990": 22,
+          "55bd7f646e0a": 42
+        },
+        "launches": [
+          {
+            "ts": "2026-10-24T16:50:18.5904520Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "fed535c0b990",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:50:22.2242060Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "fed535c0b990",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:50:24.9883350Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "fed535c0b990",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:51:27.0574640Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:51:31.7082140Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:51:36.9429820Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:51:39.6104650Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:51:41.8771780Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:51:43.2607850Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:51:44.3602170Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:51:46.3277690Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:51:48.1618700Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:51:49.7120920Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:53:34.6668170Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:53:38.3333830Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:53:40.1504400Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:53:41.3008920Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:53:42.3013800Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:53:43.0846870Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:53:43.8846010Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:53:44.7344290Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T16:53:45.3847010Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "55bd7f646e0a",
+            "pending": 0
+          }
+        ]
+      },
+      {
+        "sha256": "97d5b6394ef37d075be3c2f6c2bf7640bd149f91f8bd5f51f09effecf5475095",
+        "rows": 72,
+        "invalidJsonLines": 0,
+        "first": {
+          "ts": "2026-10-24T20:28:18.6556670Z",
+          "kind": "launch",
+          "presetName": "Po-1",
+          "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+          "effectiveHash": "fed535c0b990",
+          "pending": 0
+        },
+        "lastUtc": "2026-10-24T20:29:56.7869530Z",
+        "kinds": {
+          "launch": 19,
+          "frames": 53
+        },
+        "hashes": {
+          "fed535c0b990": 4,
+          "0d39e6016bd8": 33,
+          "8de3f2ecb217": 35
+        },
+        "launches": [
+          {
+            "ts": "2026-10-24T20:28:18.6556670Z",
+            "presetName": "Po-1",
+            "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+            "effectiveHash": "fed535c0b990",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:28:43.7116370Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "0d39e6016bd8",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:06.1331740Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:09.1494310Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:12.1646690Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:15.1696150Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:18.1834850Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:21.1860790Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:24.1858070Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:27.1862130Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:30.1874220Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:33.1884660Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:36.1864810Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:39.2004270Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:42.2083300Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:45.2203310Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:48.2218220Z",
+            "presetName": "Default",
+            "presetFileHash": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:51.2252370Z",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          },
+          {
+            "ts": "2026-10-24T20:29:54.2214840Z",
+            "presetName": "P0-calib-1",
+            "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+            "effectiveHash": "8de3f2ecb217",
+            "pending": 0
+          }
+        ]
+      }
+    ],
+    "po1Unchanged": true,
+    "recoveredStartup": {
+      "ts": "2026-10-24T20:28:18.6556670Z",
+      "kind": "launch",
+      "presetName": "Po-1",
+      "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "effectiveHash": "fed535c0b990",
+      "pending": 0
+    },
+    "currentSavedPreset": {
+      "name": "P0-calib-1",
+      "keys": 41,
+      "fileSha256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "lastActiveSha256": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+      "effectiveHash": "8de3f2ecb217",
+      "differencesFromDefault": {
+        "launcher.repeatSeconds": {
+          "saved": 3,
+          "default": 0
+        }
+      },
+      "launchWithSavedFileHashObserved": true,
+      "coldRestartWithThisPresetVerified": false,
+      "calibrationApproved": false
+    },
+    "scope": "Auditoría de trazabilidad, guardado y recuperación; no certifica visuales a partir de métricas ni evalúa rendimiento/H1 o campaña."
+  }
+}

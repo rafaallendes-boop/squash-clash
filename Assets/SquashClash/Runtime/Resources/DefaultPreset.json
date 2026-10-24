@@ -130,6 +130,42 @@
     {
       "key": "debug.slowMotion",
       "value": 1
+    },
+    {
+      "key": "camera.mode",
+      "value": 0
+    },
+    {
+      "key": "camera.followDamping",
+      "value": 0.3
+    },
+    {
+      "key": "camera.followMaxOffset",
+      "value": 1.5
+    },
+    {
+      "key": "aids.shadow",
+      "value": 1
+    },
+    {
+      "key": "aids.trail",
+      "value": 1
+    },
+    {
+      "key": "aids.impactMarks",
+      "value": 1
+    },
+    {
+      "key": "aids.prediction",
+      "value": 0
+    },
+    {
+      "key": "aids.trailSeconds",
+      "value": 0.15
+    },
+    {
+      "key": "aids.ballVisualScale",
+      "value": 1
     }
   ]
 }

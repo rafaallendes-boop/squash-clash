@@ -423,3 +423,35 @@ Observaciones de Claude registradas, **sin cambiar código ahora**:
 4. Retención de logs antes de T8 y renovación del perfil antes de instalar desde el **27 de octubre**, comprobando siempre vigencia efectiva.
 
 **I6a / T6.1–T6.2 autorizado** en `firstball/i6a-legibility`: seguimiento amortiguado de cámara y ayudas de legibilidad, incluido tamaño visual de pelota. TDD, verificación en iPhone si hay instalación, PR para Claude e informe; detenerse sin fusionar. No adelantar T6.3/L1–L6 ni gameplay. Spec, escenarios, criterios y umbrales intactos. La autorización permite I6a mientras el PO prepara su calibración; no declara cumplido ese punto de control.
+
+## I6a implementado, comprobación nativa pendiente — 2026-10-24
+
+En `firstball/i6a-legibility`, PR #10 borrador, fuente **7507266**: T6.1–T6.2 implementadas con RED válidos antes de comportamiento, regresión **262/262 EditMode y 120/120 PlayMode**, cero fallos/omitidos y XML frescos. Defaults **0d39e6016bd8**, 41 claves (nueve adiciones del plan, 32 valores anteriores idénticos), P2 por defecto. Seguimiento lateral, sombra, estela, máximo seis marcas de pared desvanecidas en 1,5 s, predicción opcional y escala visual 1–2,5; radio físico 20 mm, estado/predictor/motores intactos.
+
+Exports limpios dev/prod RELEASE-CHECK: OK. Dev **0.1.0+7507266** limpia Release ARM64 firmada, metadata/preset exactos y 115 hashes cotejados; perfil efectivo vigente hasta 2026-10-28T14:59:31Z comprobado el 24, herramientas sin cambios. Respaldo e instalación fallan por **CoreDeviceError 4016** (conectividad/servicios del iPhone no disponibles); Duplicación sin ventana accesible (cgWindowNotFound). No se declara instalada ni verificada nativamente. Se solicitó conexión por cable y desbloqueo; repetir comprobación de vigencia/renovar si la instalación cae desde el 27.
+
+PR sigue **borrador**, entrega final pendiente de la comprobación corta en iPhone; no fusión ni revisión de Claude inferida. Sin campaña física ni evaluación de rendimiento; H1 y T6.3/L1–L6 posteriores. Calibración del PO pendiente; Po-1 funcional. [Informe](2026-10-24-first-ball-i6a-legibility.md), [pruebas](../validation/evidence/2026-10-24-i6a-tests.json), [build](../validation/evidence/2026-10-24-i6a-native-build.json).
+
+## Instalación I6a y recorrido parcial — 2026-10-24
+
+El PO dejó el iPhone conectado y Duplicación abierta para instalar. Se revalidaron perfil/firma/metadata/fuentes; respaldo de presets e instalación **0.1.0+7507266 dev** exitosos. Apertura automática --console exitosa, backend P2, configuración Po-1 **fed535c0b990**, cero colliders visuales y escenas PhysX locales, sin excepciones observadas. App/label y DEV por teclado corroborados, ningún preset escrito por el agente.
+
+Duplicación rechaza clics y scroll con **windowNotFoundAtPosition**, pese a traer al frente, centrar, renovar referencia y reset. Teclado permitió abrir DEV; ayudas/seguimiento aún sin comprobar nativamente. Se pidió al PO recorrido corto físico: escala 2 y ayudas, predicción on/off, seguimiento lateral/fija y restaurar Po-1 sin guardar. **Respuesta pendiente, PR #10 borrador**, sin aceptación nativa inferida ni fusión. [Auditoría parcial](../validation/evidence/2026-10-24-i6a-native-functional.json). No campaña física, rendimiento, H1, T6.3 ni gameplay.
+
+
+## Entrega I6a y respuesta funcional del PO — 2026-10-24
+
+El PO responde al recorrido físico de la build **0.1.0+7507266 dev**: «HIce los cambios, funcionó, pero cuando cerré la app y volví a abrir. Partio con las configuraciones iniciales. Si era lo esperado, sigue avanzando». Se registra confirmación general del recorrido solicitado de escala/ayudas, predicción, seguimiento/fija y restauración de Po-1 sin guardar; no es revisión de Claude ni autorización de fusionar/avanzar a T6.3.
+
+Los ajustes temporales no guardados se descartan al salir; al abrir corresponde recuperar Po-1 guardado, con las nuevas claves completadas desde defaults (fija/escala 1/predicción off). Respaldo previo de 32 claves con floor restitution=0,60 y arranque Po-1/config **fed535c0b990** corroborados antes de la prueba. No se interpreta «configuraciones iniciales» como prueba de retorno a Default ni como certificación del último reinicio: PO no informa encabezado/hash y las copias posteriores fallan timeout (2) y CoreDeviceError 4016. Limitación registrada sin declarar datos recuperados ni cambiar código/reinstalar.
+
+**I6a/T6.1–T6.2 entregado con PR #10 lista para Claude, abierta y sin fusionar.** Regresión **262/262 EditMode y 120/120 PlayMode**, defaults **0d39e6016bd8**, fuentes de tests/build coincidentes; exports dev/prod verificados y arranque nativo sin excepciones observadas. [Informe](2026-10-24-first-ball-i6a-legibility.md), [auditoría funcional](../validation/evidence/2026-10-24-i6a-native-functional.json). Se detiene para Claude y el PO, sin cerrar I6a ni adelantar T6.3/L1–L6, H1, calibración o gameplay. No campaña física/rendimiento; perfil a renovar antes de instalaciones desde el 27, vigencia siempre comprobada.
+
+
+## Revisión de la prueba funcional I6a y recuperación exitosa — 2026-10-24
+
+El PO indica «Listo hice la prueba funcional, a si que revisala». Sin cambiar código ni instalar/reiniciar/escribir en el teléfono, se recuperan presets y métricas: cinco archivos de 7507266, 318 registros (57 lanzamientos y 261 frames), cero líneas JSON inválidas. Arranque **20:28:18Z Po-1/fed535c0b990**, cero pendientes, hash de archivo igual al respaldo. Queda superada la limitación de recuperación timeout/4016 documentada antes; la recuperación del preset al abrir queda corroborada.
+
+Después se observa guardado/selección **P0-calib-1**, 41 claves, SHA-256 2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd, hash efectivo **8de3f2ecb217**. Solo cambia `launcher.repeatSeconds=3` frente a defaults; last-active y dos lanzamientos coinciden con archivo/hash. Se registra como evidencia de guardado/uso, sin afirmar reinicio posterior de ese preset ni aprobación de calibración por su nombre. No se promueve a defaults ni se declara cumplido el punto de control de calibración propia sin indicación expresa del PO.
+
+[Informe I6a](2026-10-24-first-ball-i6a-legibility.md) y [auditoría ampliada](../validation/evidence/2026-10-24-i6a-native-functional.json) actualizados. Recorrido visual atribuido al PO; registros no certifican por sí solos ayudas ni H1/rendimiento. PR #10 sigue lista para Claude, abierta y sin fusionar; I6a sin cerrar, sin T6.3/gameplay ni campaña física.
