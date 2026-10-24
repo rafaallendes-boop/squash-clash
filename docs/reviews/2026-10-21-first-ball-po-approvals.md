@@ -535,4 +535,4 @@ Autorización específica para actualizar plan r2/T6.3 y su prueba, comprobando 
 **Etapa 7 y gameplay no autorizados.** H1/Etapa 6 conservan su cierre. Los registros anteriores de L2 pendiente son históricos; esta aprobación los sustituye.
 
 
-Verificación de la precisión: RED válido 6/8 Pass, dos fallos por literal insuficiente; GREEN 8/8, suites completas **269/269 EditMode y 132/132 PlayMode**, XML frescos/sin CS. L2 sin modificar pasa: máximo frontis→primer bote **0,35000011797003433 m**, lateral 100 %. Fuente `ddf73c8`; [informe](2026-10-24-first-ball-l2-height-criterion.md). Se entrega PR a Claude, sin fusionar ni iniciar Etapa 7.
+Verificación de la precisión: RED válido 6/8 Pass, dos fallos por literal insuficiente; GREEN 8/8, suites completas **269/269 EditMode y 132/132 PlayMode**, XML frescos/sin CS. L2 sin modificar pasa: máximo frontis→primer bote **0,35000011797003433 m**, lateral 100 %. Fuente `ddf73c8`; [informe](2026-10-24-first-ball-l2-height-criterion.md). Se entrega [PR #12 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/12), abierta y sin fusionar; Etapa 7 sin iniciar.

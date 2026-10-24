@@ -1,6 +1,6 @@
 # Precisión del criterio de altura de L2
 
-Estado 2026-10-24: corrección implementada y verificada en `firstball/l2-height-criterion`, para revisión de Claude antes de fusionar. No inicia Etapa 7. H1/Etapa 6 conservan su cierre.
+Estado 2026-10-24: corrección implementada y verificada en `firstball/l2-height-criterion`, [PR #12 lista para revisión de Claude](https://github.com/rafaallendes-boop/squash-clash/pull/12), abierta y sin fusionar. No inicia Etapa 7. H1/Etapa 6 conservan su cierre.
 
 ## Decisión aprobada
 
