@@ -62,6 +62,12 @@ namespace SquashClash.Core.Tests.Config
             }
             finally{Mode("755");}
         }
+        [TestCase("Default")][TestCase("default")][TestCase("DEFAULT")]
+        public void BuiltinDefaultNameCannotBeSavedOrSelected(string name)
+        {
+            Assert.That(store.TrySave(PresetCodec.FromSet(ConfigFixtures.Default(),name,"test"),out var error),Is.False);
+            Assert.That(error,Is.Not.Empty);Assert.That(store.TrySetLastActive(name,out _),Is.False);Assert.That(store.List(),Is.Empty);
+        }
         [Test] public void Boot_NoActiveSelection_UsesDefaultsWithNoticeAndNoPending()
         {
             var d=ConfigFixtures.Default();var warnings=new List<string>();

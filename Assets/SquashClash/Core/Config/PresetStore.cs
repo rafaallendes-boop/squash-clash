@@ -73,7 +73,7 @@ namespace SquashClash.Core.Config
             // Same directory/volume. Existing destination remains intact until the complete temp file is renamed.
             if(File.Exists(path))File.Replace(temporary,path,null);else File.Move(temporary,path);
         }
-        private static bool ValidName(string name) => !string.IsNullOrWhiteSpace(name)&&name==name.Trim()&&name!="."&&name!=".."&&
+        private static bool ValidName(string name) => !string.IsNullOrWhiteSpace(name)&&!string.Equals(name,"Default",StringComparison.OrdinalIgnoreCase)&&name==name.Trim()&&name!="."&&name!=".."&&
             !name.Any(c=>c<32||"/\\:*?\"<>|".IndexOf(c)>=0||Path.GetInvalidFileNameChars().Contains(c));
     }
 }

@@ -22,7 +22,7 @@ namespace SquashClash.DevPanel
             bar.style.position=Position.Absolute; bar.style.flexDirection=FlexDirection.Column;
             actions = new VisualElement(); actions.style.flexDirection=FlexDirection.Row; bar.Add(actions);
             bar.style.paddingTop=6; bar.style.paddingBottom=6; bar.style.backgroundColor=new Color(0.02f,0.06f,0.08f,0.95f);
-            Add("launch","Lanzar",()=>app.Host.Launch(EffectiveConfig.From(app.Params)));
+            Add("launch","Lanzar",()=>app.LaunchCurrent());
             pause=Add("pause","Pausa",()=>app.Host.Clock.Paused=!app.Host.Clock.Paused);
             Add("step","Paso",()=>{app.Host.Clock.Paused=true;app.Host.Clock.RequestSingleStep();});
             Add("replay","Repetir",()=>app.Host.Replay());
