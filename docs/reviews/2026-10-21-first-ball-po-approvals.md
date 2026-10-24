@@ -500,3 +500,10 @@ El PO comunica aprobación de Claude de **PR #11 / I6b (T6.3), head f81b6a134573
 Observación de Claude registrada **sin cambiar código ni plan**: la condición de L2 «y ≤ 1,0 m en el primer bote» es siempre cierta, pues y=r en el bote. Intención probable «y ≤ 1,0 m entre el contacto con el frontis y el primer bote». **Pendiente de decisión del PO antes de Etapa 7**; el criterio literal aprobado sigue vigente y no se sustituye por la interpretación probable.
 
 **H1 de Etapa 6 autorizado** en el iPhone con la build instalada; el PO enviará su juicio para registrarlo. Preparación y registro separado de [H1](../validation/2026-10-24-first-ball-h1-stage6.md), L1–L6 con fija/seguimiento y panel cerrado durante observación. Sin resultado de H1 inferido de tests, métricas, recorrido funcional previo o esta autorización. No inicio de Etapa 7 ni gameplay; no cambios de spec/criterios/umbrales. Perfil vence **2026-10-28T14:59:31Z**: renovar antes de cualquier instalación desde el 27 y comprobar siempre vigencia. No nueva instalación prevista.
+
+
+## H1 preparado para juicio del PO — 2026-10-24
+
+Con la build **2109af8 ya instalada**, sin build/instalación ni cambios de código: agente corroboró P0-calib-1/P2/cero pendientes, Mode fija y ayudas/escala del preset aceptado; desactivó repetición temporalmente sin guardar, cerró DEV y dejó **L1** seleccionado. Último lanzamiento **22:11:50Z**, hash temporal **943ff1ebe8c5**, cero pendientes; JSON de presets/selección conservan hashes del respaldo. [Preparación saneada](../validation/evidence/2026-10-24-h1-stage6-setup.json).
+
+Solicitado al PO observar directamente en iPhone L1–L6 con fija y seguimiento, ambas manos según §12.3 y panel cerrado durante vuelos; comunicar altura/profundidad, si una ayuda tapa al rival, valoración/comentarios por caso/cámara. **Resultado pendiente**: sin H1 aprobado ni cierre de Etapa 6, Etapa 7 no autorizada. El registro es específico del punto de control de Etapa 6 y no inicia T7.2. Tras respuesta, recuperar datos/restaurar P0-calib-1; no operar el teléfono durante el juicio del PO.

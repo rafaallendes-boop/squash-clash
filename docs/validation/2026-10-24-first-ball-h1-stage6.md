@@ -7,7 +7,8 @@ Estado **pendiente del juicio del PO**, autorizado el 2026-10-24 tras aprobació
 - iPhone físico, vertical; build instalada **0.1.0+2109af8 dev**, fuente de I6b aprobada. Sin nueva instalación.
 - P2-Analytic por defecto, DefaultPreset **0d39e6016bd8**, 41 claves intactas. Preset aceptado de Etapa 5 **P0-calib-1**, hash **8de3f2ecb217**, difiere solo en repetición=3 s.
 - Para ver cada vuelo completo, repetición temporal 0 sin guardar; selector L1–L6 configura lanzamiento/figuras. Fija y seguimiento, con ayudas/escala del preset aceptado (escala visual 1, sombra/estela/marcas activas, predicción apagada). No ajustar ayudas mientras se puntúa un caso; si se cambia algo, declararlo para registrar la configuración.
-- La UI y el preset base fueron corroborados al preparar la sesión. Preparación del caso inicial/entrega al PO todavía en curso; resultados sin completar.
+- Preparación completada por el agente mediante Duplicación/cua_repl: label 2109af8, header P0-calib-1/P2 y cero pendientes; Mode=0 fija, repetición temporal 0, DEV cerrado y L1 seleccionado. Registro de lanzamiento **2026-10-24T22:11:50.5457970Z**, hash efectivo temporal **943ff1ebe8c5**, cero pendientes. Los JSON de P0-calib-1/Po-1 y last-active coinciden con el respaldo anterior, sin guardar ajustes. [Evidencia de preparación](evidence/2026-10-24-h1-stage6-setup.json).
+- Recorrido y formato solicitados al PO para observar directamente en el teléfono. Resultado perceptual todavía sin completar; Codex recuperará los datos y restaurará el preset después de su respuesta, sin operar durante su observación.
 
 ## Recorrido y resultado solicitado
 

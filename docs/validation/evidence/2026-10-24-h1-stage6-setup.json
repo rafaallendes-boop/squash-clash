@@ -1,0 +1,40 @@
+{
+  "scope": "Preparación de H1 de Etapa 6; sin resultado perceptual todavía, sin T7.2 ni rendimiento",
+  "localDate": "2026-10-24",
+  "buildLabel": "0.1.0+2109af8 dev",
+  "newBuildOrInstallation": false,
+  "defaultEffectiveHash": "0d39e6016bd8",
+  "basePreset": "P0-calib-1",
+  "baseEffectiveHash": "8de3f2ecb217",
+  "presetAndSelectionFileHashes": {
+    "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+    "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+  },
+  "presetJsonFilesOverwritten": false,
+  "phoneUiObserved": {
+    "buildLabel": true,
+    "basePresetHeader": true,
+    "backend": "P2-Analytic",
+    "basePendingCount": 0,
+    "cameraMode": 0,
+    "repeatTemporarilyZero": true,
+    "panelClosedForObservation": true,
+    "selectedCase": "L1"
+  },
+  "lastLaunch": {
+    "ts": "2026-10-24T22:11:50.5457970Z",
+    "build": "0.1.0+2109af8 dev",
+    "presetName": "P0-calib-1",
+    "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "effectiveHash": "943ff1ebe8c5",
+    "pending": 0
+  },
+  "metricsSnapshotSha256": "da9a7a2fe94082a25500615cde235f8ca413c26d4d897a4d75f0f075e58a34c7",
+  "perceptualResult": null,
+  "poResponsePending": true,
+  "stage6Closed": false,
+  "stage7Authorized": false,
+  "l2ClarificationPendingPoDecision": true,
+  "profilePolicy": "Vence 2026-10-28T14:59:31Z. Renovar antes de instalación desde 2026-10-27 y comprobar siempre vigencia; no instalación en esta preparación."
+}
