@@ -54,11 +54,11 @@ Duplicación mostró «iPhone en uso». Tras recuperar datos y comprobar el pres
 
 ## Comentarios para futuro
 
-El PO plantea para futuro golpear contra la pared e implementar lets/strokes del squash; queda como intención futura sin autorización de gameplay ni decisiones deportivas nuevas. La preferencia de un drive inicial que no alcance pared trasera queda para calibración/gameplay posterior. **L1 conserva el rebote trasero intencionado de su condición aprobada**, sin cambiar objetivo/velocidad, criterio o plan. La decisión sobre el literal de L2 sigue pendiente del PO antes de Etapa 7.
+El PO plantea para futuro golpear contra la pared e implementar lets/strokes del squash; queda como intención futura sin autorización de gameplay ni decisiones deportivas nuevas. La preferencia de un drive inicial que no alcance pared trasera queda para calibración/gameplay posterior. **L1 conserva el rebote trasero intencionado de su condición aprobada**, sin cambiar objetivo/velocidad, criterio o plan. La decisión posterior sobre L2 fue aprobada por el PO el 2026-10-24; se registra abajo.
 
-## Observación L2 pendiente
+## Decisión posterior sobre L2 — 2026-10-24
 
-Claude observó que el literal «y ≤ 1,0 m en el primer bote» siempre se cumple porque y=r; intención probable: altura ≤1 m desde el contacto con el frontis hasta el primer bote. PO decidirá antes de Etapa 7. Se conserva el literal aprobado, sin cambiar código ni plan, y H1 no resuelve esa decisión por sí solo.
+Claude observó que «y ≤ 1,0 m en el primer bote» siempre se cumple porque y=r. Después del resultado H1, el PO respondió **«Apruebo correguir L2»**, aprobando la propuesta: **y ≤ 1,0 m entre el contacto con el frontis y el primer bote**. Se actualizan plan/prueba en `firstball/l2-height-criterion`, conservando umbral/condición lateral y lanzamiento. La evidencia JSON de H1 conserva el estado histórico pendiente de ese momento; esta decisión posterior lo sustituye. H1/Etapa 6 siguen cerrados; Etapa 7 no autorizada.
 
 ## Referencias
 

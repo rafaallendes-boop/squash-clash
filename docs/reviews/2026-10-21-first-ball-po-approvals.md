@@ -524,3 +524,12 @@ Duplicación mostró «iPhone en uso». Tras recuperar datos y comprobar el pres
 El PO plantea para futuro golpear contra la pared e implementar lets/strokes del squash; queda como intención futura sin autorización de gameplay ni decisiones deportivas nuevas. La preferencia de un drive inicial que no alcance pared trasera queda para calibración/gameplay posterior. **L1 conserva el rebote trasero intencionado de su condición aprobada**, sin cambiar objetivo/velocidad, criterio o plan. La decisión sobre el literal de L2 sigue pendiente del PO antes de Etapa 7.
 
 Se detiene tras registrar. Defaults **0d39e6016bd8**, P2 por defecto; plan/spec/criterios/umbrales intactos. Perfil vence 2026-10-28T14:59:31Z: renovar antes de instalaciones desde el 27 y comprobar siempre vigencia.
+
+
+## Aprobación de la precisión L2 — 2026-10-24
+
+El PO responde **«Apruebo correguir L2»**, aceptando la propuesta de Claude registrada tras PR #11: sustituir **«y ≤ 1,0 m en el primer bote»** por **«y ≤ 1,0 m entre el contacto con el frontis y el primer bote»**. Se resuelve la decisión pendiente antes de Etapa 7. El literal anterior era siempre cierto porque y=r en el bote.
+
+Autorización específica para actualizar plan r2/T6.3 y su prueba, comprobando el máximo de altura del centro durante el intervalo, con extremos y máximos entre pasos. **1,0 m y la condición lateral se conservan**. El lanzamiento L2, DefaultPreset **0d39e6016bd8**, P2 por defecto y la física se mantienen. Sin modificación de spec ni otros criterios, sin nueva instalación/campaña ni repetición de H1. Rama `firstball/l2-height-criterion`, PR para Claude antes de fusión, conforme al flujo vigente.
+
+**Etapa 7 y gameplay no autorizados.** H1/Etapa 6 conservan su cierre. Los registros anteriores de L2 pendiente son históricos; esta aprobación los sustituye.
