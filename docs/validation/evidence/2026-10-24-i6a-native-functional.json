@@ -1,5 +1,5 @@
 {
-  "scope": "I6a/T6.1–T6.2, comprobación funcional nativa parcial, sin campaña física ni evaluación de rendimiento",
+  "scope": "I6a/T6.1–T6.2: arranque observado y recorrido funcional confirmado por PO, sin campaña física ni evaluación de rendimiento",
   "buildLabel": "0.1.0+7507266 dev",
   "localDate": "2026-10-24",
   "installed": true,
@@ -27,14 +27,40 @@
     "activePresetSeen": "Po-1",
     "pendingChangesSeen": 0
   },
-  "remainingChecks": [
-    "escala visual en vivo y sombra/estela/marcas",
-    "toggle de predicción",
-    "seguimiento lateral y retorno a fija",
-    "restaurar Po-1 sin guardar cambios de prueba"
-  ],
+  "remainingChecks": [],
   "controlLimitation": "windowNotFoundAtPosition en clic/scroll de Duplicación, persistente tras traer al frente, centrar, renovar binding y reset de cua. Teclado permite DEV; no permitió completar el recorrido. Solicitado al PO en teléfono físico.",
-  "poFunctionalReplyPending": true,
+  "poFunctionalReplyPending": false,
   "h1Approved": false,
-  "noNativeCampaignRun": true
+  "noNativeCampaignRun": true,
+  "poFunctionalReply": "HIce los cambios, funcionó, pero cuando cerré la app y volví a abrir. Partio con las configuraciones iniciales. Si era lo esperado, sigue avanzando",
+  "poReportedRequestedRoundTripSucceeded": true,
+  "poReportedChecks": [
+    "escala 2 y pelota mayor/sombra/estela/marcas",
+    "predicción on/off",
+    "seguimiento lateral y retorno a fija",
+    "cargar Po-1 y aplicar sin guardar cambios temporales"
+  ],
+  "visualEvidenceAttribution": "Arranque/label/DEV y Po-1 por agente; recorrido de ayudas/cámara por confirmación general del PO en teléfono físico.",
+  "postRestart": {
+    "poReportedInitialSettings": true,
+    "expectedBehavior": "Descartar ajustes no guardados; cargar Po-1 guardado y completar nuevas claves desde defaults: fija/escala 1/predicción off.",
+    "previouslyBackedUpFloorRestitution": 0.6,
+    "lastRestartHeaderOrHashReported": false,
+    "independentlyVerifiedLatestRestart": false,
+    "postRunPresetFilesCompared": false,
+    "recoveryAttempts": [
+      {
+        "kind": "presets",
+        "outcome": "timeout",
+        "code": 2
+      },
+      {
+        "kind": "metrics",
+        "outcome": "failed",
+        "code": 4016
+      }
+    ],
+    "limitation": "Sin datos nuevos del último reinicio ni comparación posterior de archivos; respaldo/arranque anteriores conservados."
+  },
+  "delivery": "Preparada para revisión de Claude/PO, I6a abierto, sin fusionar ni avanzar a T6.3."
 }

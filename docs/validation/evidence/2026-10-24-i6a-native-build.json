@@ -80,7 +80,7 @@
   "installationOutcome": "success",
   "installationLocalDate": "2026-10-24",
   "automaticLaunch": "success: --console",
-  "nativeUiVerification": "Parcial: arranque/label/DEV y Po-1 observados; clics/scroll de Duplicación rechazados, solicitado recorrido físico al PO.",
+  "nativeUiVerification": "Arranque/label/DEV y Po-1 observados por agente; recorrido de ayudas/predicción/seguimiento/fija confirmado por PO. Último reinicio sin verificación independiente por recuperación timeout/4016; ver auditoría funcional.",
   "installationAttempts": [
     {
       "localDate": "2026-10-24",
