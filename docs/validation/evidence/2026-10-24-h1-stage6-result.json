@@ -1,0 +1,317 @@
+{
+  "scope": "H1 Etapa 6, juicio del PO; sin Etapa 7/rendimiento",
+  "localDate": "2026-10-24",
+  "buildLabel": "0.1.0+2109af8 dev",
+  "newBuildOrInstallation": false,
+  "defaultEffectiveHash": "0d39e6016bd8",
+  "basePreset": "P0-calib-1",
+  "baseEffectiveHash": "8de3f2ecb217",
+  "poOriginalReply": "Los 6 escenarios los veo bien, después la idea es poder ir pegando la pelota a la muralla, implementar los lets y strokes del squash. Pero las mecanicas las vi bien. los golpes iban saliendo, el drive eso si ideal si en un inicio no toca la muralla de atrás, pero se irá configurando a medida del juego después. Pero veo bien los resultados.",
+  "clarificationQuestion": "¿Confirmas que distinguiste altura y profundidad en los seis escenarios, con DEV cerrado? Indica con qué cámara(s).",
+  "poClarificationReply": "Sí, con fija y seguimiento",
+  "matrix": [
+    {
+      "case": "L1",
+      "camera": "fija",
+      "heightDistinguished": true,
+      "depthDistinguished": true,
+      "aidObscuresRival": null,
+      "score": null,
+      "handSpecificDifferences": null,
+      "source": "Confirmación global expresa del PO, sin puntuaciones individuales."
+    },
+    {
+      "case": "L2",
+      "camera": "fija",
+      "heightDistinguished": true,
+      "depthDistinguished": true,
+      "aidObscuresRival": null,
+      "score": null,
+      "handSpecificDifferences": null,
+      "source": "Confirmación global expresa del PO, sin puntuaciones individuales."
+    },
+    {
+      "case": "L3",
+      "camera": "fija",
+      "heightDistinguished": true,
+      "depthDistinguished": true,
+      "aidObscuresRival": null,
+      "score": null,
+      "handSpecificDifferences": null,
+      "source": "Confirmación global expresa del PO, sin puntuaciones individuales."
+    },
+    {
+      "case": "L4",
+      "camera": "fija",
+      "heightDistinguished": true,
+      "depthDistinguished": true,
+      "aidObscuresRival": null,
+      "score": null,
+      "handSpecificDifferences": null,
+      "source": "Confirmación global expresa del PO, sin puntuaciones individuales."
+    },
+    {
+      "case": "L5",
+      "camera": "fija",
+      "heightDistinguished": true,
+      "depthDistinguished": true,
+      "aidObscuresRival": null,
+      "score": null,
+      "handSpecificDifferences": null,
+      "source": "Confirmación global expresa del PO, sin puntuaciones individuales."
+    },
+    {
+      "case": "L6",
+      "camera": "fija",
+      "heightDistinguished": true,
+      "depthDistinguished": true,
+      "aidObscuresRival": null,
+      "score": null,
+      "handSpecificDifferences": null,
+      "source": "Confirmación global expresa del PO, sin puntuaciones individuales."
+    },
+    {
+      "case": "L1",
+      "camera": "seguimiento",
+      "heightDistinguished": true,
+      "depthDistinguished": true,
+      "aidObscuresRival": null,
+      "score": null,
+      "handSpecificDifferences": null,
+      "source": "Confirmación global expresa del PO, sin puntuaciones individuales."
+    },
+    {
+      "case": "L2",
+      "camera": "seguimiento",
+      "heightDistinguished": true,
+      "depthDistinguished": true,
+      "aidObscuresRival": null,
+      "score": null,
+      "handSpecificDifferences": null,
+      "source": "Confirmación global expresa del PO, sin puntuaciones individuales."
+    },
+    {
+      "case": "L3",
+      "camera": "seguimiento",
+      "heightDistinguished": true,
+      "depthDistinguished": true,
+      "aidObscuresRival": null,
+      "score": null,
+      "handSpecificDifferences": null,
+      "source": "Confirmación global expresa del PO, sin puntuaciones individuales."
+    },
+    {
+      "case": "L4",
+      "camera": "seguimiento",
+      "heightDistinguished": true,
+      "depthDistinguished": true,
+      "aidObscuresRival": null,
+      "score": null,
+      "handSpecificDifferences": null,
+      "source": "Confirmación global expresa del PO, sin puntuaciones individuales."
+    },
+    {
+      "case": "L5",
+      "camera": "seguimiento",
+      "heightDistinguished": true,
+      "depthDistinguished": true,
+      "aidObscuresRival": null,
+      "score": null,
+      "handSpecificDifferences": null,
+      "source": "Confirmación global expresa del PO, sin puntuaciones individuales."
+    },
+    {
+      "case": "L6",
+      "camera": "seguimiento",
+      "heightDistinguished": true,
+      "depthDistinguished": true,
+      "aidObscuresRival": null,
+      "score": null,
+      "handSpecificDifferences": null,
+      "source": "Confirmación global expresa del PO, sin puntuaciones individuales."
+    }
+  ],
+  "h1Result": "Pass por juicio del PO: altura/profundidad en L1–L6, ambas cámaras y DEV cerrado.",
+  "stage6Closed": true,
+  "stage7Authorized": false,
+  "evidenceAttribution": "Resultado perceptual por respuestas del PO. Instantánea previa identifica L1–L6/fija y no reconstruye independientemente seguimiento. Métricas solo trazabilidad.",
+  "recoveredPreRestoreData": {
+    "files": [
+      {
+        "sha256": "6b04594c0d9e0346779152d39e68acc457f73bc45694be35c79ac450cd85c9d3",
+        "records": 471,
+        "invalidJsonLines": 0
+      }
+    ],
+    "recordsSinceSetup": 47,
+    "launchesSinceSetup": [
+      {
+        "ts": "2026-10-24T22:11:50.5457970Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "943ff1ebe8c5",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L1",
+          "fija"
+        ]
+      },
+      {
+        "ts": "2026-10-24T22:14:49.9751590Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "943ff1ebe8c5",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L1",
+          "fija"
+        ]
+      },
+      {
+        "ts": "2026-10-24T22:15:01.1946090Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "943ff1ebe8c5",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L1",
+          "fija"
+        ]
+      },
+      {
+        "ts": "2026-10-24T22:15:02.6767240Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "cb5cb6f019c5",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L2",
+          "fija"
+        ]
+      },
+      {
+        "ts": "2026-10-24T22:15:04.7929600Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "676a51b8695d",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L3",
+          "fija"
+        ]
+      },
+      {
+        "ts": "2026-10-24T22:15:07.1955880Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "40a4552871b7",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L4",
+          "fija"
+        ]
+      },
+      {
+        "ts": "2026-10-24T22:15:09.3451530Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "6bb48ed0c535",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L5",
+          "fija"
+        ]
+      },
+      {
+        "ts": "2026-10-24T22:15:11.3949340Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "1d693c4309b3",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L6",
+          "fija"
+        ]
+      },
+      {
+        "ts": "2026-10-24T22:15:36.3817780Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "1d693c4309b3",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L6",
+          "fija"
+        ]
+      },
+      {
+        "ts": "2026-10-24T22:15:39.1814740Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "943ff1ebe8c5",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L1",
+          "fija"
+        ]
+      },
+      {
+        "ts": "2026-10-24T22:15:40.4848970Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "943ff1ebe8c5",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L1",
+          "fija"
+        ]
+      },
+      {
+        "ts": "2026-10-24T22:15:42.0152560Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "943ff1ebe8c5",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L1",
+          "fija"
+        ]
+      },
+      {
+        "ts": "2026-10-24T22:15:44.4166860Z",
+        "kind": "launch",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "943ff1ebe8c5",
+        "pending": 0,
+        "knownCaseAndCamera": [
+          "L1",
+          "fija"
+        ]
+      }
+    ]
+  },
+  "restoration": {
+    "method": "Reinicio controlado de app instalada, tras recuperar datos, para cargar último preset activo. Duplicación mostraba iPhone en uso.",
+    "startup": {
+      "ts": "2026-10-24T22:18:41.6999670Z",
+      "build": "0.1.0+2109af8 dev",
+      "presetName": "P0-calib-1",
+      "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "effectiveHash": "8de3f2ecb217",
+      "pending": 0
+    },
+    "metricsFileSha256": "b1fa3989b1f3d8a1ca78112ed431ea5c2aef411e4983c7aa34f92f0f2a85c743",
+    "presetAndSelectionFileHashes": {
+      "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+      "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+    },
+    "allPresetAndSelectionBytesMatchSetup": true
+  },
+  "futureFeedback": [
+    "Golpear contra pared y lets/strokes: intención futura, sin autorización de implementación.",
+    "Drive inicial sin pared trasera: preferencia futura; L1 mantiene BackWall aprobado."
+  ],
+  "l2DecisionPending": true,
+  "codePlanSpecThresholdChanges": false
+}

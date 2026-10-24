@@ -507,3 +507,20 @@ Observación de Claude registrada **sin cambiar código ni plan**: la condición
 Con la build **2109af8 ya instalada**, sin build/instalación ni cambios de código: agente corroboró P0-calib-1/P2/cero pendientes, Mode fija y ayudas/escala del preset aceptado; desactivó repetición temporalmente sin guardar, cerró DEV y dejó **L1** seleccionado. Último lanzamiento **22:11:50Z**, hash temporal **943ff1ebe8c5**, cero pendientes; JSON de presets/selección conservan hashes del respaldo. [Preparación saneada](../validation/evidence/2026-10-24-h1-stage6-setup.json).
 
 Solicitado al PO observar directamente en iPhone L1–L6 con fija y seguimiento, ambas manos según §12.3 y panel cerrado durante vuelos; comunicar altura/profundidad, si una ayuda tapa al rival, valoración/comentarios por caso/cámara. **Resultado pendiente**: sin H1 aprobado ni cierre de Etapa 6, Etapa 7 no autorizada. El registro es específico del punto de control de Etapa 6 y no inicia T7.2. Tras respuesta, recuperar datos/restaurar P0-calib-1; no operar el teléfono durante el juicio del PO.
+
+
+## Resultado H1 y cierre de Etapa 6 — 2026-10-24
+
+Respuesta inicial del PO: «Los 6 escenarios los veo bien, después la idea es poder ir pegando la pelota a la muralla, implementar los lets y strokes del squash. Pero las mecanicas las vi bien. los golpes iban saliendo, el drive eso si ideal si en un inicio no toca la muralla de atrás, pero se irá configurando a medida del juego después. Pero veo bien los resultados.». Se aclaró altura/profundidad, seis escenarios, DEV cerrado y cámara(s): **«Sí, con fija y seguimiento»**.
+
+**H1 aprobado por juicio del PO y Etapa 6 cerrada el 2026-10-24. Etapa 7 no autorizada.** El PO confirmó distinguir altura y profundidad en los seis escenarios con DEV cerrado: **«Sí, con fija y seguimiento»**. La confirmación es global para L1–L6/ambas cámaras; no se inventan puntuaciones 1–5, datos de ayudas tapando al rival o diferencias por mano.
+
+[Registro H1](../validation/2026-10-24-first-ball-h1-stage6.md), [evidencia](../validation/evidence/2026-10-24-h1-stage6-result.json). I6a/I6b ya aprobados y fusionados; cierre del punto de control sin iniciar T7.2 ni otra tarea de Etapa 7.
+
+Se recuperó una instantánea previa a restaurar con **47 registros y 13 lanzamientos desde la preparación**, incluido el inicial del agente; hashes identifican L1–L6 con fija. Esa trazabilidad no reconstruye independientemente la pasada con seguimiento ni sustituye el juicio perceptual del PO. No se evalúa rendimiento.
+
+Duplicación mostró «iPhone en uso». Tras recuperar datos y comprobar el preset guardado intacto, se reinició de forma controlada la app ya instalada para cargar el último preset activo. Arranque **2026-10-24T22:18:41.6999670Z**, **P0-calib-1 / 8de3f2ecb217**, cero pendientes, archivo SHA-256 **2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd**. JSON de P0-calib-1/Po-1 y last-active recuperados después: idénticos byte a byte a la preparación. Ajustes temporales descartados y ningún preset sobrescrito. Build 2109af8 conservada, sin nueva instalación ni código.
+
+El PO plantea para futuro golpear contra la pared e implementar lets/strokes del squash; queda como intención futura sin autorización de gameplay ni decisiones deportivas nuevas. La preferencia de un drive inicial que no alcance pared trasera queda para calibración/gameplay posterior. **L1 conserva el rebote trasero intencionado de su condición aprobada**, sin cambiar objetivo/velocidad, criterio o plan. La decisión sobre el literal de L2 sigue pendiente del PO antes de Etapa 7.
+
+Se detiene tras registrar. Defaults **0d39e6016bd8**, P2 por defecto; plan/spec/criterios/umbrales intactos. Perfil vence 2026-10-28T14:59:31Z: renovar antes de instalaciones desde el 27 y comprobar siempre vigencia.
