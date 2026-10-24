@@ -85,5 +85,7 @@
     "underlyingReason": "Locked",
     "meaning": "SpringBoard rechazó abrir la app porque el teléfono estaba bloqueado; no prueba un fallo de la app."
   },
-  "manualFunctionalCheck": "PO reporta recorrido correcto; sensores corroborados con datos nativos. Guardado/persistencia po-1 pendiente por discrepancia con archivos recuperados; PR sigue borrador."
+  "manualFunctionalCheck": "PO reporta recorrido correcto; sensores corroborados con datos nativos. Guardado/persistencia po-1 pendiente por discrepancia con archivos recuperados; PR sigue borrador.",
+  "historicalSnapshot": true,
+  "supersededForCurrentStatusBy": "2026-10-24-i5b-responsive-native-smoke.json"
 }

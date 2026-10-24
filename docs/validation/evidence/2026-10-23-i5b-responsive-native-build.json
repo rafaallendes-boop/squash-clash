@@ -83,5 +83,14 @@
     "code": 10002,
     "reason": "Locked"
   },
-  "nativeUiVerification": "Pendiente de reautenticación de Duplicación; layout observado en 5b9d564, edición numérica nueva en 1318753."
+  "nativeUiVerification": {
+    "verifiedLocalDate": "2026-10-24",
+    "evidence": "2026-10-24-i5b-responsive-native-smoke.json",
+    "presetSaveRestartExportImport": true,
+    "manualPauseAndSensors": true,
+    "threeFingerGesture": "PO reportó correcto; no inyección multitáctil por agente",
+    "numericTyping": "GREEN en teclado UI Toolkit; no certificado mediante teclado nativo",
+    "previousImportError": "No reproducido; conservado en evidencia funcional",
+    "noNewInstallForThisVerification": true
+  }
 }

@@ -61,5 +61,7 @@
     "verified": false,
     "reason": "Documents listado correctamente sin presets; copia Documents/presets falló con CoreDeviceError 7000. Todos los registros recuperados dicen Default/hash de defaults. Se pidió aclarar y realizar únicamente guardado po-1 con mensaje exacto."
   },
-  "note": "La confirmación general del PO se conserva, pero no sustituye la evidencia contradictoria de persistencia. No se declara el recorrido completo ni se marca PR lista hasta resolverlo."
+  "note": "La confirmación general del PO se conserva, pero no sustituye la evidencia contradictoria de persistencia. No se declara el recorrido completo ni se marca PR lista hasta resolverlo.",
+  "historicalSnapshot": true,
+  "supersededForCurrentStatusBy": "2026-10-24-i5b-responsive-native-smoke.json"
 }

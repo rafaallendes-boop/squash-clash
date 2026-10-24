@@ -1,0 +1,204 @@
+{
+  "scope": "I5b / T5.3: verificación funcional, sin campaña física ni evaluación de rendimiento",
+  "buildLabel": "0.1.0+1318753 dev",
+  "sourceCommit": "13187531f707047798961887d10c4c4d36326052",
+  "defaultEffectiveHash": "164b0c21e88b",
+  "testPreset": {
+    "name": "Po-1",
+    "createdBuild": "0.1.0+1318753 dev",
+    "sha256": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+    "lastActive": "Po-1",
+    "keyCount": 32,
+    "differencesFromDefaults": {
+      "physics.floor.restitution": 0.6
+    },
+    "effectiveHash": "6dca97fda50d",
+    "notPromotedToDefaults": true
+  },
+  "metricFiles": [
+    {
+      "sha256": "ac696372fad4048bef4cab8c680bddeb873fcba6070734aa11d92fd16d002151",
+      "records": 3,
+      "firstTsUtc": "2026-10-24T05:18:11.0364910Z",
+      "lastTsUtc": "2026-10-24T05:18:29.0354480Z",
+      "startupPreset": "Default",
+      "startupConfig": "164b0c21e88b"
+    },
+    {
+      "sha256": "68f0a218e65a3bb5d843ee41635afd7818295e515260785247096a07ab8d621c",
+      "records": 40,
+      "firstTsUtc": "2026-10-24T05:18:34.8454360Z",
+      "lastTsUtc": "2026-10-24T11:37:25.5275010Z",
+      "startupPreset": "Default",
+      "startupConfig": "164b0c21e88b"
+    },
+    {
+      "sha256": "bda5ec775a8a4e12486ee5888ebcbda31b42e03e59982d7c18e66137fdd8f9b5",
+      "records": 4,
+      "firstTsUtc": "2026-10-24T12:50:29.1502810Z",
+      "lastTsUtc": "2026-10-24T12:50:57.6986900Z",
+      "startupPreset": "Default",
+      "startupConfig": "164b0c21e88b"
+    },
+    {
+      "sha256": "997e2bf4007b49f84de6085687ff193a8ff204715b15460eaf0782eb28a0c6e6",
+      "records": 4,
+      "firstTsUtc": "2026-10-24T12:51:03.0105940Z",
+      "lastTsUtc": "2026-10-24T12:51:23.2608600Z",
+      "startupPreset": "Po-1",
+      "startupConfig": "164b0c21e88b"
+    },
+    {
+      "sha256": "60ff2a24ee5b49add7a2e2862f19a3110e69237901d083bfd365a8bf11bbcff4",
+      "records": 11,
+      "firstTsUtc": "2026-10-24T12:51:27.9111790Z",
+      "lastTsUtc": "2026-10-24T12:52:36.1754840Z",
+      "startupPreset": "Po-1",
+      "startupConfig": "164b0c21e88b"
+    },
+    {
+      "sha256": "d345d46dd9bcc017a24e92d3b6a12fe3a46b85d76771304288550d5ffbff015e",
+      "records": 25,
+      "firstTsUtc": "2026-10-24T13:53:58.0348140Z",
+      "lastTsUtc": "2026-10-24T13:56:59.4525950Z",
+      "startupPreset": "Po-1",
+      "startupConfig": "164b0c21e88b"
+    },
+    {
+      "sha256": "a3a15f5c988caacd34120c300f28269644127d926c30e83e620a0a345037a558",
+      "records": 19,
+      "firstTsUtc": "2026-10-24T13:57:08.1204690Z",
+      "lastTsUtc": "2026-10-24T13:59:15.3671000Z",
+      "startupPreset": "Po-1",
+      "startupConfig": "6dca97fda50d"
+    }
+  ],
+  "records": 106,
+  "launches": 15,
+  "sensorAvailability": {
+    "cpuSamples": 47976,
+    "gpuSamples": 47976,
+    "thermalCurrent": [
+      "nominal"
+    ],
+    "thermalWorst": [
+      "nominal"
+    ]
+  },
+  "incomparableSegments": [
+    {
+      "tsUtc": "2026-10-24T05:18:21.0368510Z",
+      "droppedSteps": 177,
+      "metricsValid": false
+    },
+    {
+      "tsUtc": "2026-10-24T05:18:39.8785730Z",
+      "droppedSteps": 174,
+      "metricsValid": false
+    },
+    {
+      "tsUtc": "2026-10-24T12:50:39.1496330Z",
+      "droppedSteps": 179,
+      "metricsValid": false
+    },
+    {
+      "tsUtc": "2026-10-24T12:51:13.0211160Z",
+      "droppedSteps": 168,
+      "metricsValid": false
+    },
+    {
+      "tsUtc": "2026-10-24T12:51:30.5600810Z",
+      "droppedSteps": 160,
+      "metricsValid": false
+    },
+    {
+      "tsUtc": "2026-10-24T13:54:08.0448680Z",
+      "droppedSteps": 427,
+      "metricsValid": false
+    },
+    {
+      "tsUtc": "2026-10-24T13:57:18.1214560Z",
+      "droppedSteps": 171,
+      "metricsValid": false
+    }
+  ],
+  "startupAfterRestartVerified": true,
+  "fileHashMatchesLaunchEnvelope": true,
+  "importedIdentityObservedInMetrics": true,
+  "noNativeCampaignRun": true,
+  "visualChecks": {
+    "devButtonOpensAndClosesPanel": true,
+    "presetsTabReceivesTouchWithoutOverlap": true,
+    "floorRestitutionViaSlider": {
+      "value": 0.6,
+      "pendingBeforeApply": 1,
+      "pendingAfterApply": 0
+    },
+    "saveMessage": "Guardado: Po-1. Incluye valores pendientes.",
+    "restart": "devicectl --terminate-existing, éxito; encabezado Po-1 con cero pendientes",
+    "exportMessage": "JSON visible copiado al portapapeles.",
+    "importMessage": "Importado sin guardar. Usa Guardar como… para persistirlo.",
+    "importedHeader": "Importado: Po-1 · P2-Analytic",
+    "loadSavedPresetMessage": "Cargado: Po-1.",
+    "manualPauseSurvivesHomeAndResumeOverlay": true,
+    "continueButtonRequiredAfterResumeOverlay": true,
+    "diagnostics": [
+      "CPU disponible",
+      "GPU disponible",
+      "térmico nominal/peor nominal",
+      "últimos contactos Floor/FrontWall con UV y Exact, huella 0,010 m"
+    ],
+    "threeFingerGesture": "Confirmado por PO en recorrido inicial; agente no inyectó gesto multitáctil",
+    "numericTyping": "Prueba de teclado UI Toolkit GREEN; teclado decimal nativo no certificado, valor nativo ajustado mediante slider"
+  },
+  "poClarification": "Presets guardar como no lo encontre, el resto funcionó, lo que si habría que mejorar la responsividad, ya que se sobreescribe todo",
+  "limits": "Recorrido funcional con Duplicación/herramientas; no sesión de rendimiento, no criterios C1–C18 reevaluados. Preset Po-1 de prueba local, sin calibración ni promoción. Error previo de importación conservado como observación no reproducida; no se declara corregida una causa no aislada.",
+  "verifiedLocalDate": "2026-10-24",
+  "priorReportedFailures": {
+    "poConfirmedSaveMessage": true,
+    "poReportedName": "Po-01",
+    "recoveredActualName": "Po-1",
+    "restartReport": "PO no vio el preset; los registros recuperados muestran arranques Po-1 anteriores y nuevo arranque Po-1 con .6 verificado por agente",
+    "importError": "No se importo: Invalid preset JSON: Unexpected JSON token at offset 0",
+    "reproduction": "No reproducido en dos ciclos Exportar→Importar de la misma build, antes y después del reinicio",
+    "rootCause": "No aislada; no atribuida a usuario, motor, API ni permisos. Sin cambio de código por suposición."
+  },
+  "matchingLaunches": [
+    {
+      "ts": "2026-10-24T13:56:59.4525950Z",
+      "presetName": "Po-1",
+      "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "effectiveHash": "6dca97fda50d",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-24T13:57:08.1204690Z",
+      "presetName": "Po-1",
+      "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "effectiveHash": "6dca97fda50d",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-24T13:57:20.2081920Z",
+      "presetName": "Po-1",
+      "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "effectiveHash": "6dca97fda50d",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-24T13:57:56.5476150Z",
+      "presetName": "Importado: Po-1",
+      "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "effectiveHash": "6dca97fda50d",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-24T13:58:16.4948820Z",
+      "presetName": "Po-1",
+      "presetFileHash": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "effectiveHash": "6dca97fda50d",
+      "pending": 0
+    }
+  ],
+  "leftOnDevice": "Po-1 activo y persistido, floor restitution=0,60; preset local de prueba, defaults del proyecto intactos"
+}

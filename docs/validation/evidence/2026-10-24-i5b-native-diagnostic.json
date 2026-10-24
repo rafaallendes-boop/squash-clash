@@ -25,5 +25,7 @@
     "metricsList": "failed: CoreDeviceError 4016, conectividad/servicios no disponibles",
     "deviceIdentifiersOmitted": true
   },
-  "conclusion": "Guardado físico corroborado para Po-1; nombre informado por PO distinto. Recuperación al arranque y export/import no aprobados. Causa aún no aislada, sin cambio de código. Solicitada conexión por cable y mensajes exactos."
+  "conclusion": "Guardado físico corroborado para Po-1; nombre informado por PO distinto. Recuperación al arranque y export/import no aprobados. Causa aún no aislada, sin cambio de código. Solicitada conexión por cable y mensajes exactos.",
+  "historicalSnapshot": true,
+  "supersededForCurrentStatusBy": "2026-10-24-i5b-responsive-native-smoke.json"
 }
