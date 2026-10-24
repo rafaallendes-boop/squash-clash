@@ -65,7 +65,7 @@
   "runtimeThermalBridgeSymbolVerified": true,
   "frameworkSha256": "91f16203dd91264909f8c020ae383a4fa18906aca397dfa3292cf45ad17fe5bc",
   "resourcesSha256": "169b7956c9a704ce417fb5748ccb3b9ef1881850270dd1fd8259110d56c7a488",
-  "profileCheckedAtUtc": "2026-10-24T14:36:15.188638+00:00",
+  "profileCheckedAtUtc": "2026-10-24T16:10:06.552201+00:00",
   "profileCheckedLocalDate": "2026-10-24",
   "profileExpiresAtUtc": "2026-10-28T14:59:31+00:00",
   "embeddedProfileValid": true,
@@ -74,17 +74,23 @@
   "installationPolicy": "Renovar antes de cualquier instalación desde 2026-10-27 y comprobar siempre vigencia. Herramientas sin cambios.",
   "testedSourceCommit": "75072666956d6529ab120d640c3df6f40391b93d",
   "builtSourceMatchesTestedHashes": true,
-  "installed": false,
+  "installed": true,
   "nativeCampaignRun": false,
   "scope": "Exports limpios dev/prod y compilación/firma iOS dev. Prod exportado sin compilar ni instalar. Puente runtime ambos perfiles; DevPanel/puente Spike excluidos de prod. No campaña ni criterio de rendimiento evaluado.",
-  "installationOutcome": "No instalada: intento CoreDeviceError 4016, conectividad/servicios del dispositivo no disponibles.",
-  "nativeUiVerification": "Pendiente de conexión por cable/desbloqueo. Sin cambio de código, sin campaña.",
+  "installationOutcome": "success",
+  "installationLocalDate": "2026-10-24",
+  "automaticLaunch": "success: --console",
+  "nativeUiVerification": "Parcial: arranque/label/DEV y Po-1 observados; clics/scroll de Duplicación rechazados, solicitado recorrido físico al PO.",
   "installationAttempts": [
     {
       "localDate": "2026-10-24",
       "outcome": "failed",
-      "errorCode": 4016,
-      "deviceIdentifiersOmitted": true
+      "errorCode": 4016
+    },
+    {
+      "localDate": "2026-10-24",
+      "outcome": "success",
+      "profileRecheckedBeforeInstall": true
     }
   ]
 }

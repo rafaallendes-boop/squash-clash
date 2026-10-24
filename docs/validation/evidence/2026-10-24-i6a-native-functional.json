@@ -1,0 +1,40 @@
+{
+  "scope": "I6a/T6.1–T6.2, comprobación funcional nativa parcial, sin campaña física ni evaluación de rendimiento",
+  "buildLabel": "0.1.0+7507266 dev",
+  "localDate": "2026-10-24",
+  "installed": true,
+  "automaticLaunchSucceeded": true,
+  "defaultEffectiveHash": "0d39e6016bd8",
+  "startupBackend": "P2-Analytic",
+  "startupEffectiveHash": "fed535c0b990",
+  "startupVisualColliders": 0,
+  "startupLocalPhysicsScenes": 0,
+  "startupExceptionsObserved": [],
+  "consoleSnapshotSha256": "1ae2a1d7f1a962745518cf6d4a7ac90edfb8259c0b025e5f4a557210731ab12b",
+  "presetBackup": {
+    "success": true,
+    "lastActive": "Po-1",
+    "fileHashes": {
+      "last-active.txt": "25b4612d18a7081cc6196b8ce8d715c89b1be12ddbf573721fe7b9d8ffe044fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+    },
+    "noPresetWritesByAgent": true
+  },
+  "visualChecks": {
+    "buildLabelSeen": true,
+    "appOpens": true,
+    "devPanelOpenedViaKeyboard": true,
+    "activePresetSeen": "Po-1",
+    "pendingChangesSeen": 0
+  },
+  "remainingChecks": [
+    "escala visual en vivo y sombra/estela/marcas",
+    "toggle de predicción",
+    "seguimiento lateral y retorno a fija",
+    "restaurar Po-1 sin guardar cambios de prueba"
+  ],
+  "controlLimitation": "windowNotFoundAtPosition en clic/scroll de Duplicación, persistente tras traer al frente, centrar, renovar binding y reset de cua. Teclado permite DEV; no permitió completar el recorrido. Solicitado al PO en teléfono físico.",
+  "poFunctionalReplyPending": true,
+  "h1Approved": false,
+  "noNativeCampaignRun": true
+}
