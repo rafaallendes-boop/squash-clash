@@ -47,7 +47,7 @@
   "spikeThermalSymbolPresent": true,
   "frameworkSha256": "59e48d8901bb106a9ae8a0f9cdd9b8fade04091e14497acc52fa88e7ff544242",
   "resourcesSha256": "004a9fd8933889c2846a6247aa53c6e3765e249d859a5bc2811a49d17e9b581b",
-  "profileCheckedAtUtc": "2026-10-24T22:50:41.554048+00:00",
+  "profileCheckedAtUtc": "2026-10-24T23:25:46.656618+00:00",
   "profileCheckedLocalDate": "2026-10-24",
   "profileExpiresAtUtc": "2026-10-28T14:59:31+00:00",
   "embeddedProfileValid": true,
@@ -57,6 +57,15 @@
   "installationPolicy": "Renovar antes de cualquier instalación desde 2026-10-27 y comprobar siempre vigencia. Herramientas sin cambios.",
   "testedSourceCommit": "e0f9071e9a2ff8baca3377ed389beefc52e8cbb3",
   "builtSourceMatchesTestedHashes": true,
-  "installed": false,
-  "nativeCampaignRun": false
+  "installed": true,
+  "nativeCampaignRun": false,
+  "installationResult": "devicectl install exit=0; recovered preset files unchanged byte for byte",
+  "startup": "Automatic launch denied because iPhone locked; manual startup pending",
+  "projectPhysicsPreCampaignCheck": "Embedded build metadata verified before install: fastMotionThreshold=0.01; bounceThreshold=0.1; fastMotionThreshold relevant only to P1",
+  "presetBackupAndPostInstallHashes": {
+    "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+    "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+  },
+  "campaignPreparation": "Manual Default load/Apply/0 pending required before starting P2; mirroring requires Mac authentication, physical-phone handoff used instead"
 }
