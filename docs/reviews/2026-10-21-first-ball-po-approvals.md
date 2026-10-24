@@ -351,3 +351,17 @@ La corrección de pausa manual expresamente incluida está implementada: «Toca 
 **Nueve ciclos RED válidos→GREEN; regresión final 250/250 EditMode y 92/92 PlayMode**, cero fallos/omitidos, XML frescos y sin CS. Cero tests de un filtro incorrecto rechazado; primera regresión 90/92 detectó la frontera float y no se declaró aprobada. Exports limpios dev/prod y build dev **0.1.0+7ce86f6** Release ARM64 firmada, Player no Development, metadata/preset exactos y árbol limpio verificados. Destino físico no disponible: compilación con generic/platform=iOS, sin cambiar herramientas. Puente térmico runtime de T5.2 incluido en ambos perfiles; puente Spike/DevPanel excluido de prod. **Sin instalación, campaña ni mediciones de rendimiento/estado del dispositivo en I5a.** Desde el 27 de octubre toda instalación requiere renovación previa del perfil y siempre comprobar vigencia.
 
 [Informe I5a](2026-10-23-first-ball-i5a-tuning-core.md), [validación](../validation/i5a-tuning-core.md), [TDD y fuentes](../validation/evidence/2026-10-23-i5a-tuning-core-tests.json), [build saneada](../validation/evidence/2026-10-23-i5a-native-build.json). **Se entrega con [PR #8 lista para revisión de Claude](https://github.com/rafaallendes-boop/squash-clash/pull/8) y se detiene. I5a abierto y sin fusionar; I5b/T5.3 y posteriores no autorizados.** No se atribuye una aprobación del PO/Claude a esta ejecución técnica. Spec/aceptación integral siguen para T7.3/T7.1 con sus autorizaciones.
+
+
+## Cierre de I5a y autorización I5b — 2026-10-23
+
+El PO comunica aprobación de Claude de **PR #8 / I5a (T5.1–T5.2), head 98b8139d779e63c25ae7b3b1bfe63e5a1b8e4977**, y autoriza el cierre. PR ya lista para revisión, fusionada con **merge commit a13ae527d88736af0380e5dc95480043eaa3ad68**, main sincronizada y worktree I5a eliminado; artefactos locales preservados en Logs/archive-i5a-20261023 (ignorado). **I5a cerrado**. Regresión 250/250 EditMode y 92/92 PlayMode; build dev 7ce86f6 Release ARM64 firmada, sin instalación ni ejecución en iPhone. Aprobación comunicada por PO, sin atribuir una GitHub Review adicional.
+
+Observaciones de Claude registradas sin modificar código en este cierre:
+1. TuningState.Set lanza con valores inválidos: el panel T5.3 debe ofrecer solo valores válidos o capturar el error.
+2. Los logs de métricas se escriben también en prod y no tienen retención: definir una política antes de T8.
+3. Los percentiles de segmento usan el borde superior de la cubeta (sesgo ≤0,1 ms, documentado).
+4. Reservar el nombre **"Default"** para presets en T5.3.
+5. Pausa manual y sensores aún sin verificar en iPhone: incluir esa verificación en I5b. Renovar el perfil antes de instalar si es el 2026-10-27 o después, y comprobar siempre vigencia.
+
+**I5b / T5.3 autorizado** en `firstball/i5b-dev-panel`, panel autogenerado según plan, PR para revisión de Claude. Entregar informe y detenerse; no fusionar por cuenta propia. No adelantar T5.4, calibración ni gameplay. Mantener backend P2 por defecto/P1 configurable, spec, criterios, escenarios y umbrales. Solo añadir los defaults previstos expresamente para T5.3.

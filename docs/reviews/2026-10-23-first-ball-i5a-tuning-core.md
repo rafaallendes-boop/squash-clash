@@ -69,3 +69,10 @@ Xcode no encontró el destino físico conectado; se compiló con **generic/platf
 ## Entrega y límites
 
 **Se entrega I5a con PR e informe y se detiene para revisión de Claude.** I5a sigue abierto, sin fusionar. No se adelanta el panel T5.3, activación de edición mediante panel, calibración, ayudas ni gameplay posterior. La comprobación física/aceptación que corresponda a I5b/T7.1 sigue pendiente de su autorización. Spec intacta y entrada de backend preparada para T7.3, escrita solo con autorización PO.
+
+
+## Revisión de Claude y cierre autorizado — 2026-10-23
+
+Claude aprobó PR #8, head 98b8139, según comunicación del PO. PR ya lista, fusionada con merge commit **a13ae527d88736af0380e5dc95480043eaa3ad68**; main sincronizada y worktree eliminado. **I5a cerrado**. Este registro sustituye el estado pendiente histórico de la entrega, sin cambios de código.
+
+Observaciones para los incrementos correspondientes: TuningState.Set lanza con valores inválidos (T5.3 debe ofrecer valores válidos o capturar el error); reservar **"Default"** para presets en T5.3; comprobar pausa manual y sensores físicamente en I5b. Los logs también se escriben en prod y no tienen retención: definir política antes de T8. Los percentiles de segmento usan el borde superior de cubeta, con sesgo ≤0,1 ms. Renovar perfil antes de cualquier instalación desde el 27 de octubre y verificar siempre vigencia. I5b autorizado por separado, sin T5.4/calibración/gameplay.
