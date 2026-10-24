@@ -1,0 +1,87 @@
+{
+  "buildMetadata": {
+    "version": "0.1.0",
+    "gitHash": "1318753",
+    "profile": "dev",
+    "builtAtUtc": "2026-10-24T01:11:54.6164340Z",
+    "unityVersion": "6000.3.27f1",
+    "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+    "gitDirty": false
+  },
+  "exports": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "1318753",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-24T01:11:54.6164340Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "1318753",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-24T01:12:18.3461700Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "freshExports": true,
+  "playerDevelopment": false,
+  "il2cpp": "Release",
+  "xcode": "Xcode 27.1; Build version 27A9275",
+  "xcodeConfiguration": "Release",
+  "xcodeDestination": "generic/platform=iOS",
+  "architectures": [
+    "arm64"
+  ],
+  "codesignStrictVerified": true,
+  "embeddedMetadataVerified": true,
+  "embeddedDefaultPresetVerified": true,
+  "defaultEffectiveHash": "164b0c21e88b",
+  "runtimeThermalBridgeSymbolVerified": true,
+  "frameworkSha256": "50d18b1d5b8f3c4d17b48dd462ba43153c02dc2122678d7d68e0815e9a57a34c",
+  "resourcesSha256": "e33492ebdaff72355f545213816c264b15b9219db72c76bbdfca6a5648f7c520",
+  "profileCheckedAtUtc": "2026-10-24T01:13:13.367398+00:00",
+  "profileCheckedLocalDate": "2026-10-23",
+  "profileExpiresAtUtc": "2026-10-28T14:59:31+00:00",
+  "embeddedProfileValid": true,
+  "profileMatchesDeviceAndBundle": true,
+  "renewalRequiredForThisInstall": false,
+  "installationPolicy": "Renovar antes de cualquier instalación desde 2026-10-27 y comprobar siempre vigencia. Herramientas sin cambios.",
+  "testedSourceCommit": "13187531f707047798961887d10c4c4d36326052",
+  "builtSourceMatchesTestedHashes": true,
+  "installed": true,
+  "nativeCampaignRun": false,
+  "scope": "Exports limpios dev/prod y compilación/firma iOS dev. Prod exportado sin compilar ni instalar. Puente runtime ambos perfiles; DevPanel/puente Spike excluidos de prod. No campaña ni criterio de rendimiento evaluado.",
+  "installationOutcome": "success",
+  "automaticLaunch": {
+    "outcome": "failed",
+    "code": 10002,
+    "reason": "Locked"
+  },
+  "nativeUiVerification": "Pendiente de reautenticación de Duplicación; layout observado en 5b9d564, edición numérica nueva en 1318753."
+}

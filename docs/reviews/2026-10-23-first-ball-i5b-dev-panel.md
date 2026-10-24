@@ -1,6 +1,6 @@
 # I5b / T5.3 — panel autogenerado
 
-Estado, 2026-10-23: implementación y regresión completas; PO reporta recorrido funcional correcto, sensores corroborados. Persistencia de po-1 pendiente de aclarar por discrepancia con los archivos recuperados. Rama `firstball/i5b-dev-panel`, [PR #9 en borrador](https://github.com/rafaallendes-boop/squash-clash/pull/9). I5b abierto; la entrega se detiene para Claude y PO, sin fusionar ni adelantar T5.4, calibración o gameplay.
+Estado, 2026-10-23: implementación y regresión completas; PO reporta recorrido funcional correcto, sensores corroborados. El PO aclaró que no encontró Guardar como…; correcciones de layout y edición numérica completas. Falta terminar guardado/reinicio en la build final. Rama `firstball/i5b-dev-panel`, [PR #9 en borrador](https://github.com/rafaallendes-boop/squash-clash/pull/9). I5b abierto; la entrega se detiene para Claude y PO, sin fusionar ni adelantar T5.4, calibración o gameplay.
 
 ## Autorización y cierre previo
 
@@ -30,9 +30,19 @@ Diagnóstico actualizado cada 0,5 s: FPS, p50/p95/p99 ventana/sesión, >33 ms/mi
 | Defaults/catálogo y nombre reservado | 4/10 fallos | 10/10 |
 | Panel, controles, gesto, diagnóstico, presets | cuatro aserciones del grupo + preset enfocado 1/1 | 5/5 |
 | Immediate al repetir | 1/1 fallo (slowMotion volvía a 1) | 9/9 integración/panel |
-| Repetición tras reanudación | 1/1 fallo (lanzamiento por delta de vuelta) | 5/5 integración; suites finales completas |
+| Repetición tras reanudación | 1/1 fallo (lanzamiento por delta de vuelta) | 5/5 integración |
+| Responsive y entrada en pestañas | 1/1 fallo, viewport comienza 42,54 puntos antes del final de pestañas | dos asignaciones 390/320 puntos; 7/7 panel |
+| Escritura numérica sin sobrescritura | 1/1 fallo con teclado UI Toolkit: escribir 0. modificaba tuning a 0 | edición parcial preserva 0,45; confirmar 0,60 aplica 0,6; suite final 105/105 |
 
 El primer intento del caso de presets acabó con una aserción NUnit inválida sobre null: **ese caso se rechazó como RED**, y se volvió a ejecutar con un stub que produjo Expected True/False real antes de implementar. El primer intento GREEN del panel fue 4/5 porque el test modificaba un control sin adjuntarlo a un panel; se corrigió el montaje para usar la UI real y pasó 5/5. No se contó ninguno de esos intentos como éxito ni se aceptaron cero tests/XML anteriores.
+
+## Corrección solicitada por el PO
+
+El PO precisó **«Presets guardar como no lo encontre, el resto funcionó, lo que si habría que mejorar la responsividad, ya que se sobreescribe todo»**. El agente pudo conectar con Duplicación tras autenticación manual de la Mac por el PO. En 11e505f observó contenido de parámetros sobre las pestañas; pulsar Presets accionaba un Foldout por encima. La fila encogía al competir con la altura intrínseca del ScrollView. La regresión mide tabsBottom=570,20 y viewportTop=527,66: invasión de 42,54 puntos.
+
+Cabecera compacta y pestañas con altura conservada; viewport flexible con tamaño base cero, mínimo cero y recorte en el panel, conservando la altura del contenido. Las pestañas indican cuál está activa y reciben la entrada; campo **Nombre del preset**, botón explícito **Guardar como…**, controles en columna y mensajes que se revelan al operar. [FlexShrink de UI Toolkit](https://docs.unity3d.com/cn/6000.0/ScriptReference/UIElements.IResolvedStyle-flexShrink.html). En la prueba corregida tabsBottom=534,00, viewportTop=537,62; hay separación y Pick alcanza el botón real. Dos asignaciones de UI adjunta, ancho 390/alto panel 304 y ancho 320/alto 200; no se presentan como capturas del iPhone. El primer GREEN responsive aún invadía 1,81 puntos por márgenes y **no se aceptó**; corregido antes del GREEN final.
+
+La inspección nativa de 5b9d564 confirmó pestañas separadas y accesibles. Al escribir 0.60 se detectó además la confirmación por cada carácter. Nuevo RED por teclado real de UI Toolkit; edición numérica diferida hasta Enter/perder foco y refresco que conserva el campo enfocado. La prueba inicial de propiedad isDelayed se sustituyó por la prueba de comportamiento (no se cuenta como grupo RED adicional). Fuente final **1318753**, defaults intactos y sin cambios de motor.
 
 ## Validación nativa y límites
 
@@ -56,3 +66,8 @@ El acceso visual del agente a Duplicación falla **Sky Computer Use native pipe 
 - Renovar perfil antes de cualquier instalación desde **2026-10-27**, comprobar siempre vigencia; sin cambiar herramientas.
 
 Spec, escenarios, criterios, umbrales, motores P1/P2, ProjectSettings y plan intactos. No se repite el experimento ni se declara rendimiento nativo a partir de regresiones/compilación. No se congela un preset de calibración. I5b queda abierto para revisión; T5.4 y posteriores no iniciados.
+
+
+## Build final de la corrección
+
+Dev **0.1.0+1318753**, metadata limpia, Release ARM64 firmada y fuentes cotejadas con las suites finales 253/105. Exports dev/prod nuevos RELEASE-CHECK: OK, exclusión de DevPanel/puente Spike y puente runtime en ambos. Perfil efectivo vigente hasta 2026-10-28T14:59:31Z, comprobado antes de instalar el 2026-10-23 local, herramientas intactas. Instalación exitosa; apertura automática rechazada por Locked. Duplicación solicitó de nuevo autenticación de la Mac al reanudar su sesión; el PO debe realizarla, sin entregar credenciales al agente. Guardado y recuperación de po-1 todavía pendientes en esta build. [Build final](../validation/evidence/2026-10-23-i5b-responsive-native-build.json).

@@ -1,0 +1,594 @@
+{
+  "scope": "I5b / T5.3, corrección responsive; datos de regresión, sin campaña física ni rendimiento de dispositivo",
+  "testedSourceCommit": "13187531f707047798961887d10c4c4d36326052",
+  "defaultEffectiveHash": "164b0c21e88b",
+  "runs": [
+    {
+      "stage": "01-integration-red",
+      "total": 3,
+      "passed": 0,
+      "failed": 3,
+      "skipped": 0,
+      "xmlSha256": "7fc10b30cf95d163740a180cc9e628537c79d1d0bca6b835b175b5c6a450ba1f",
+      "logSha256": "2cb702280ab0d0c663eb7b179238511e0a9e8d1d4e1e472537f075e2cffe2360",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "test": "ImmediateCameraAndSlowMotionApplyWithoutRelaunchAndInvalidateNextLog",
+          "message": "  Expected: 70\n  But was:  90.0f\n"
+        },
+        {
+          "test": "LaunchCurrent_AppliesPendingAndKeepsBothBackendsAvailable",
+          "message": "  Expected: <empty>\n  But was:  < \"physics.backend\", \"physics.floor.restitution\" >\n"
+        },
+        {
+          "test": "RepeatUsesRealTimeSkipsPauseAndDoesNotApplyPending",
+          "message": "System.Collections.Generic.KeyNotFoundException : The given key 'launcher.repeatSeconds' was not present in the dictionary."
+        }
+      ]
+    },
+    {
+      "stage": "02-defaults-reserved-red",
+      "total": 10,
+      "passed": 6,
+      "failed": 4,
+      "skipped": 0,
+      "xmlSha256": "a66d05e493961ee0d1b269cebc1603d639a0636a8ba62a7b013ae895974fcb73",
+      "logSha256": "c8e86d2f0b572d47f32eaef325af4d10c72901e28e8d61801c3143126087e0a6",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "test": "DefaultPreset_IsCompleteAndValid",
+          "message": "  Expected: 32\n  But was:  30\n"
+        },
+        {
+          "test": "BuiltinDefaultNameCannotBeSavedOrSelected(\"Default\")",
+          "message": "  Expected: False\n  But was:  True\n"
+        },
+        {
+          "test": "BuiltinDefaultNameCannotBeSavedOrSelected(\"default\")",
+          "message": "  Expected: False\n  But was:  True\n"
+        },
+        {
+          "test": "BuiltinDefaultNameCannotBeSavedOrSelected(\"DEFAULT\")",
+          "message": "  Expected: False\n  But was:  True\n"
+        }
+      ]
+    },
+    {
+      "stage": "03-integration-green",
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "bdba38bb8cf5ba7de249a79ff40cd1ef663927104a34685d1984575a23c7ef3b",
+      "logSha256": "8bfa0da7ba38392bbe7775b4572cf998246619594522b9f865f50fd45e2c067e",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "04-defaults-reserved-green",
+      "total": 10,
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "4722df65bb87ac877069ca77559a5f0f4f60e564b2ede79ab33a8765bb9bcc75",
+      "logSha256": "e76f76916db482ff312dd64140b650fa9db19aa7df36992841540cc9d28a50ff",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "05-panel-red",
+      "total": 5,
+      "passed": 0,
+      "failed": 5,
+      "skipped": 0,
+      "xmlSha256": "cb9f8c09d686565498d52e49a26518a09321ea2d02fa4239d82672c1646c694d",
+      "logSha256": "368dcb9b06a8eb50eb2647ee2da70b012b21045eda56eb63a3d1d6d286894e89",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "test": "DiagnosticsKeepsLastEightContactsAndShowsGeometryTimingAndInvalidMetrics",
+          "message": "  Expected: 8\n  But was:  1\n"
+        },
+        {
+          "test": "GeneratedControlsEditPendingAndImmediateAndFlagP1ImpactCap",
+          "message": "  Expected: not null\n  But was:  null\n"
+        },
+        {
+          "test": "PanelToggleKeepsBarAndResumeOverlayAboveControls",
+          "message": "  Expected: not null\n  But was:  null\n"
+        },
+        {
+          "test": "PresetsSaveVisibleRecoverOnBootExportImportAndRejectReservedName",
+          "message": "System.ArgumentException : The actual value must be a string or a non-null IEnumerable or DirectoryInfo\nParameter name: actual"
+        },
+        {
+          "test": "ThreeFingerHoldFiresOnceAfterOneSecondAndResetsOnReplacementOrFocus",
+          "message": "  Expected: True\n  But was:  False\n"
+        }
+      ]
+    },
+    {
+      "stage": "05b-presets-valid-red",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "xmlSha256": "306a5643efc1beedb8aca6bb9211abfa7e8966203f2d20c50c617fe268169450",
+      "logSha256": "3b089d68fa7a85690eaf6e4c9622ad09bb3c85510ecbc1d9bd2840a5dba6a36f",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "test": "PresetsSaveVisibleRecoverOnBootExportImportAndRejectReservedName",
+          "message": "  Not implemented\n  Expected: True\n  But was:  False\n"
+        }
+      ]
+    },
+    {
+      "stage": "06-panel-green",
+      "total": 5,
+      "passed": 4,
+      "failed": 1,
+      "skipped": 0,
+      "xmlSha256": "db36b5404c243bb1472c6b67070291c5df283708d73fa95598cac34afdc1ee97",
+      "logSha256": "49ff2907a5003a5676e4655a375f4e8ade5185048062b55390907f7c60c87002",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "test": "GeneratedControlsEditPendingAndImmediateAndFlagP1ImpactCap",
+          "message": "  Expected: collection containing \"physics.floor.restitution\"\n  But was:  <empty>\n"
+        }
+      ]
+    },
+    {
+      "stage": "07-panel-green",
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "499d77f244b9f41474177c17c01014780704345c9e87e8e0b0d472864f4a9fbc",
+      "logSha256": "f2edd8f022a5ad779ab5c400091a526625b45ba278b306a0e1165b4eba08272f",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "08-repeat-immediate-red",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "xmlSha256": "4cebf17d815b1d4d62a4ceb325f22ae70dffe94cd75d6e2d3e7211bb98041286",
+      "logSha256": "aa44ec62406f919d618e22d98fe7a1ad2ce2b460fd6c3fbebc44750d5719c4bc",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "test": "RepeatKeepsImmediateEditsAndPendingHeaderUsesSingular",
+          "message": "  Expected: 0.5d\n  But was:  1.0d\n"
+        }
+      ]
+    },
+    {
+      "stage": "09-repeat-immediate-green",
+      "total": 9,
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "773b21c58ca3108216bfae7715c7752b6817c8f6dc005da7732ca8d25f76ec42",
+      "logSha256": "c03658ce9574c6790d54e39dd3499f768fcfafb9557e52f0149fb8fe6e35c715",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "10-full-edit-green",
+      "total": 253,
+      "passed": 253,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "ce7ffd83a69f1a17a0ecf13081de9104f39196f6d81719c48412e7b1d80a954b",
+      "logSha256": "972c3209e07e85e97ae4de4d1d4f93f94dcc3aaf65324e11c4203a76c2631fc7",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "11-full-play-green",
+      "total": 101,
+      "passed": 101,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "efee8034c812a0fe5fbe8944b550115de244015f7a9a01ed920ca3e9b43c2ba6",
+      "logSha256": "f7434d644cf5e16b8fb75b29e6bc1dca34ce52918fe2911c47663766c3c93880",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "12-repeat-resume-red",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "xmlSha256": "6b5f13d971e557ae2821f2f0cbbc352743918b93306c874731dd1885e5d8bd88",
+      "logSha256": "dc57e5fe0d6850a782fdda83dd3f9ee6201e2b815c12ab5e4c0f8a44829f272b",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "test": "RepeatDiscardsBackgroundAndFirstResumeDelta",
+          "message": "  First resume delta must not trigger an automatic launch\n  Expected: 0\n  But was:  1\n"
+        }
+      ]
+    },
+    {
+      "stage": "13-repeat-resume-green",
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "d34552bd1f97077c4ed51be31c62dd1cb4af752506127c25221b4d1b84a5a89a",
+      "logSha256": "95b3169f3a60f7eebf043e07eab32fb99dee0a83861fe29dc7c7659522798c1e",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "14-final-edit-green",
+      "total": 253,
+      "passed": 253,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "69277c74a5d756fadbff08d5af8987c635031b639d6cdc189d87214062434e81",
+      "logSha256": "aa4f57e9f679f76ea229b6f89c2d0a3f2593b6e90ed37c3e8a6e9911a6a011c3",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "15-final-play-green",
+      "total": 102,
+      "passed": 102,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "a4437822ff107c9832af99280d3c55b239596c4b3dcede2ae6d665159e469c1f",
+      "logSha256": "525fbcff609f8784d8f35e25af18f28983c8ebce19b38b773c84d382c170185c",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "16-responsive-layout-red",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "xmlSha256": "460113c2aa142650fc8a557c9c995035cb53a28a6c14b159f2ae40bd07537fce",
+      "logSha256": "aee6e6df98c8f55e80ece2a7b333d5e56b34189d8020552c916563ac3a119053",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "test": "ExpandedGroupsStayBelowTabsAndPresetsCanScrollToSave",
+          "message": "  The visible save button must execute its action\n  Expected: collection containing \"i5b-test-610255c5b3fc477180be705cf7a3a53f\"\n  But was:  <empty>\n"
+        }
+      ]
+    },
+    {
+      "stage": "17-tabs-occlusion-red",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "xmlSha256": "898441ba708096f84f36bd3b043391cdca3e751443606b5a1c45e80821cba1b9",
+      "logSha256": "f30d55f8e4fbb64c20c7a5b7ebba13cd52b35640093d1bd1e423863e9581b7ce",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "test": "ExpandedGroupsStayBelowTabsAndPresetsCanScrollToSave",
+          "message": "  Scroll content must start below tabs, without stealing their input\n  Expected: greater than or equal to 569.201233f\n  But was:  527.662415f\n"
+        }
+      ]
+    },
+    {
+      "stage": "18-responsive-layout-green",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "xmlSha256": "5a90a5ae9ecf371f56548ac819fe01a2589dae2b8044b6d55a85e65c08b4b5aa",
+      "logSha256": "8bc6b01943270a82a31ece26822e3a168bedf74bfcdfd00358c083faadf3dd99",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "test": "ExpandedGroupsStayBelowTabsAndPresetsCanScrollToSave",
+          "message": "  Scroll content must start below tabs, without stealing their input\n  Expected: greater than or equal to 534.808167f\n  But was:  533.997986f\n"
+        }
+      ]
+    },
+    {
+      "stage": "19-responsive-layout-green",
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "2b06cda0c1f9d67ba8d7d9a2093f0c8aa4f36651940f2b159d9ce80d9e20f2ae",
+      "logSha256": "842f660c0a1fab24d09050aa50febb12ce7d8403486a901c9cea5b7173896293",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "20-responsive-both-green",
+      "total": 7,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "327ac39e8584adb8a125af11c9ca3b4652a0acb168f491d1071050f05da319a2",
+      "logSha256": "c0e854cb7b6f4ce1623df0966a808608b78f974e8e15c2ef08e7288dc77f63c2",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "21-layout-final-edit-green",
+      "total": 253,
+      "passed": 253,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "2f3dd352c36ac898f597b3873cd2714b63b806e82b56b2131711836d5db054f2",
+      "logSha256": "5dc23af1eb71278275ffac3fa51fa53bbaff2e12cb4a4e4631459bbcb18a7952",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "22-layout-final-play-green",
+      "total": 104,
+      "passed": 104,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "5e2d6040ed504398a732826e9d85630556cbd8ddfdecf04d703e8e62d8e9c285",
+      "logSha256": "50c6e45c0dd3e3c74b27a034010d71faff3a13bd188a7dcc052c3b6b39977fd3",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "23-numeric-edit-red",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "xmlSha256": "dc5517b12ff5d3de7527944a1ce1fd1894b6f1e7056750ef67cd020ce65b11ff",
+      "logSha256": "fefa5b2ca64c9a1f1983bbad373ebe218ac773fd6607bd3bd9f758b0f3f583da",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "test": "NumericInputIsNotOverwrittenDuringEditing",
+          "message": "  Only a complete numeric edit should be committed\n  Expected: True\n  But was:  False\n"
+        }
+      ]
+    },
+    {
+      "stage": "24-numeric-typing-red",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "xmlSha256": "d5bcea615121bd1b92c0224b561922af778636d8b9710e6c22f9c33e1a96132c",
+      "logSha256": "46a6ad855056426d7b1c63d8b7ec52e55704c09d213f72df321dda6b10019d83",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": [
+        {
+          "test": "NumericInputIsNotOverwrittenDuringEditing",
+          "message": "  Typing an unfinished decimal must not alter tuning\n  Expected: 0.45000000000000001d\n  But was:  0.0d\n"
+        }
+      ]
+    },
+    {
+      "stage": "25-numeric-typing-green",
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "b742f861736b5199a479305bf1d85d14be6bdb591f8291ba807e4b8c10d11dc2",
+      "logSha256": "8594a74bf4224b863b2dc3b8e8a5ada12068cd5e840ade33d8e20b31ad6536cb",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "26-final-ui-edit-green",
+      "total": 253,
+      "passed": 253,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "bea723e84258124f8f5214b10353dbb0950b71a4699b91f619b1d66a0f85f8e4",
+      "logSha256": "982cb57ba8cdd924555b2d750bb3d4fac791753848e3b1ee9fae8167f61ae74f",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    },
+    {
+      "stage": "27-final-ui-play-green",
+      "total": 105,
+      "passed": 105,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "83e4c1f5206da7d384006715d940bfa7849021fe99213b0aae81a3848fd319cb",
+      "logSha256": "bc0846174f60a3cca2668ba544d1467d8f1c8822d94ff055c7bc07007231c5e1",
+      "freshPositiveXml": true,
+      "noCompilerErrors": true,
+      "failures": []
+    }
+  ],
+  "rejectedRuns": {
+    "05-panel-red": "Presets terminó inicialmente con error de aserción NUnit sobre null; no se cuenta ese caso como RED válido. Sustituido por 05b con Expected True/False real. Los otros cuatro casos sí tenían aserciones válidas.",
+    "06-panel-green": "4/5; no fue GREEN. El control generado se ejercitó sin adjuntar a un panel y no despachó el evento. Test ajustado para adjuntar la UI real antes de editar; 07 pasó.",
+    "18-responsive-layout-green": "No fue GREEN: márgenes de botones dejaban 1,81 puntos de invasión. Corregidos antes de 19 y suites finales.",
+    "23-numeric-edit-red": "Verificación inicial de propiedad isDelayed; sustituida como evidencia de comportamiento por 24, con teclas reales de UI Toolkit y comprobación de TuningState antes de confirmar."
+  },
+  "sourceHashes": {
+    "Assets/SquashClash/Core/Config/ApplyClass.cs": "959578504371b48be07ec468d3662a3eb5728bd23eec73007317e75d1a8863ad",
+    "Assets/SquashClash/Core/Config/EffectiveConfig.cs": "746f97550b2ef6f6a73e24f5d7d578b3e03d1320d7db945e65b7bd672bb4a98c",
+    "Assets/SquashClash/Core/Config/ParamCatalog.cs": "b42f84e8e94487afccf42fd44a9070457451533b42726c573fa3345867c203f8",
+    "Assets/SquashClash/Core/Config/ParamDef.cs": "fca589361b177022a193fc4caa772e119c7d8933999b6bd56dac53c26a914f05",
+    "Assets/SquashClash/Core/Config/ParamKind.cs": "001629f4b5a733bf6576135a6d9d504ae45c44d2737fd1c91ed691bb17e2142e",
+    "Assets/SquashClash/Core/Config/ParamSet.cs": "86105715dbd4e8a83d39e582143f67fd055e9136c38e384b0429c85f5773c51d",
+    "Assets/SquashClash/Core/Config/PresetCodec.cs": "8ce9515b349357b3032e984783cae796b643723ce7f7846d282642d779bae597",
+    "Assets/SquashClash/Core/Config/PresetFile.cs": "7fe026820782d2c3179301ef98b14a283fb6422661d812265d8de9aa34fdc292",
+    "Assets/SquashClash/Core/Config/PresetJsonShape.cs": "ba76600f7373665aac1ef571a04c7a05ac3e2b05181ed9bea2ebdbe7fe76ecaa",
+    "Assets/SquashClash/Core/Config/PresetStore.cs": "bf9b982b96fde1ad71c0b9400baf611a35a75139882666aecf8aa7b7fd469593",
+    "Assets/SquashClash/Core/Config/TuningState.cs": "47080091b8d05b9f9787edbded2687b7c15c3efec7e8cf2ec03912856ae2d47c",
+    "Assets/SquashClash/Core/Court/CourtDimensions.cs": "fd7b4c9d4574421b32374fec81da954726af664148d1cf3c460a314091a41546",
+    "Assets/SquashClash/Core/Court/CourtLines.cs": "e843855be96aadd1c0d43a7a2757547508f8e0bdd83806ffc31a5f68e4e25a81",
+    "Assets/SquashClash/Core/Court/LineBand.cs": "4601b2097e0eabbd906f487619540e0e69ae9c16296c1d26434b5a7d619f16dc",
+    "Assets/SquashClash/Core/Court/LineContactClassifier.cs": "7ce1d61e117878033016c0462af32aa65481d7532f57458b59d95c6bc00e4981",
+    "Assets/SquashClash/Core/Court/LineId.cs": "e635dc294046472314d5ba86a30132719632c787b3b5df81621e5ab36d08fe68",
+    "Assets/SquashClash/Core/Court/SurfaceId.cs": "74a3a572072cb748b5fe58221da77c0cb8cdae97009264b3d7c3d0aa03dfbe99",
+    "Assets/SquashClash/Core/Diagnostics/BuildInfo.cs": "2cb7b9f5fe509b7cc4195b1333b5fe088ed937b887eb71554680893ced44139f",
+    "Assets/SquashClash/Core/Diagnostics/FrameTimeStats.cs": "130e0f6d99088475667b6fa04f598b6ff41bc2b73857caf2bfed47a46400ad28",
+    "Assets/SquashClash/Core/Diagnostics/MetricsLog.cs": "6ee21396bf16c7024cfaee362462549f307781c638bb316c1d8f9909e1a634f8",
+    "Assets/SquashClash/Core/Simulation/AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+    "Assets/SquashClash/Core/Simulation/AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+    "Assets/SquashClash/Core/Simulation/BallState.cs": "bf2613ffb614750e5e53998d91783007e1a3adf5aeb09ce0a8342af2d7909825",
+    "Assets/SquashClash/Core/Simulation/Ballistics.cs": "caaab79469ce107223a881ec552fed696c9e058d0e55e6484137a23310d8cd06",
+    "Assets/SquashClash/Core/Simulation/ContactEvent.cs": "126813c787684da37bcedab50d963dd0334cad654f663a79665c5948c88b4e86",
+    "Assets/SquashClash/Core/Simulation/IBallSimulation.cs": "3c29d80dd3537df8a1358f8623b3de35d151bdee6772a9135d9f55a3df66733d",
+    "Assets/SquashClash/Core/Simulation/LaunchSpec.cs": "310afba0a53e56b4b8a1274906c31b5057402b4ac3b880d9bd860e6e0e0dd04f",
+    "Assets/SquashClash/Core/Simulation/Launcher.cs": "a3189a763b4c7d4a75415b93953f49c021cef3caa0eff89b64cb24d17b613b88",
+    "Assets/SquashClash/Core/Simulation/PhysicsParams.cs": "fd5c83d8ba49ce6b498ded522e35bd4aa429f10187a8921c587de5b2c6b8a740",
+    "Assets/SquashClash/Core/Simulation/SimClock.cs": "63e62e0fe0bc9bbb7717b894602cc125c3b9f3980845797f91c058236ac367d3",
+    "Assets/SquashClash/Core/Simulation/SurfaceMaterial.cs": "7e4fb3175f2ad0259026761a1648bbc55ab9b54b8a15d25c36cff67d658c52a2",
+    "Assets/SquashClash/Core/Simulation/Trajectory.cs": "e7c92da28261a9f3ff12ee501bc8560ce8e8d4264c82e7c3bbba10560bfc723c",
+    "Assets/SquashClash/Core/Simulation/TrajectoryRunner.cs": "d995f28452b2b53ffec2acd357a68b43a34b56706752377326079bf93f09c89c",
+    "Assets/SquashClash/Core/Spike/EnergyGainSample.cs": "57c1b42c1e683bfe448881e1462e395bedb94fda63d3be104f2667245b015df2",
+    "Assets/SquashClash/Core/Spike/PhysicsMeasures.cs": "8363906afada9629f77540d064fd39bbb08510c3c7ba0e5de3477144df37b740",
+    "Assets/SquashClash/Core/Spike/PhysicsScenario.cs": "c88cd28611f4b097939055d0a8fa89ff1202c37263bd973e50ef924fec276964",
+    "Assets/SquashClash/Core/Spike/PhysicsScenarios.cs": "1d652c13c822236294592cebe0edc230e39550cf5d150787ccf671dced42b668",
+    "Assets/SquashClash/Core/Spike/PredictionBenchmarkRun.cs": "7338b1770447bcf069ae6a50b69b53e641fadc4159c2aa8b5cf917cc471f0189",
+    "Assets/SquashClash/Core/Spike/SpikeCriteria.cs": "4bd7d738808e81e90c428238838ba3796e381392e5571c89c0517c9fe043e36e",
+    "Assets/SquashClash/Core/Spike/SpikeReportWriter.cs": "c21c055dcc5e17ced0867a6b871234f643b21f09f7fa57623709e518235c79cb",
+    "Assets/SquashClash/Core/Spike/SpikeResult.cs": "c7d0b09dd7f2b1c75a3f70b8ce81452c7ab01c1eeafc54b9ff7286a506d79ef6",
+    "Assets/SquashClash/Core/Spike/SpikeRun.cs": "66c6fdffa2ef71e0e6dce96cedb912a06aaa0fd6614eca30a8ecc41906b75a80",
+    "Assets/SquashClash/DevPanel/DevBar.cs": "4267baa9cccbed4721a5951a88ece101ec243cadeebfe8206d46944a4ec0fdfe",
+    "Assets/SquashClash/DevPanel/DevPanelBootstrap.cs": "2f9941b4fa7ac1fe0c318efd14e4756404ad9450b6b1da5fe550a8a7966ebae3",
+    "Assets/SquashClash/DevPanel/DevPanelView.cs": "1ab74ed0c8975d44248ab7cfb69081c1b9508e9e7b42c207b4f520db503b3ef4",
+    "Assets/SquashClash/DevPanel/DiagnosticsSection.cs": "ce3d5d9cb62c935dcdf3988c9e8166c2f50fd94c12d6a24c9763d67111676f7d",
+    "Assets/SquashClash/DevPanel/ParamSection.cs": "2352f19a6728f69576e000117c886d18014cc0d21e4e7c85eae195df777c7d8f",
+    "Assets/SquashClash/DevPanel/PresetsSection.cs": "c49ba8d30d578c1aece3b89ebf1ce669349ccb260c6ec5a00ed423d9bfc32bbc",
+    "Assets/SquashClash/DevPanel/SpikeSection.cs": "59d4ce978199e15d727b8c51bbcd2c77d59232cacb2498af7a2416c0e3cad125",
+    "Assets/SquashClash/DevPanel/ThreeFingerHold.cs": "0fd1997a9d09c2fc10888e2217d62820729cf3dc9f6999fc8d70a8eca00e52db",
+    "Assets/SquashClash/Editor/BuildScript.cs": "7d26764eba96b5d9bbf94e00c73ee3927988c138bcb63391ed312e2a67d48c6a",
+    "Assets/SquashClash/Editor/ProjectSetup.cs": "183715abb6740cb97bbaefc3c7f61dfa15efed27d1df3c8a905f52b9dd0fd472",
+    "Assets/SquashClash/Runtime/App/AppBootstrap.cs": "7e54cf6206c1f7bc7411ce9805d923efa8ba9e59ccfc11fb5b74e17a2073042e",
+    "Assets/SquashClash/Runtime/App/FrameTimingSampler.cs": "d6c79d4a719836f8ad6ba764aabba5b2b09e33efcdb3c1d564ebdc3a55fc4114",
+    "Assets/SquashClash/Runtime/App/PlaceholderPlayers.cs": "f044b6900ec4ecdf26793a0482e6284902b86371b446a93e9a42e1dc06ec0b3b",
+    "Assets/SquashClash/Runtime/App/ResumeOverlay.cs": "6c3c094ce6639d85439b5a34e6f61407aaaf5fb9e8f7f52198c0465dc2a1031f",
+    "Assets/SquashClash/Runtime/App/ThermalMonitor.cs": "ef01958d79a96b4c3f3d07491e19fa5195e9bd0c5038bfa562f09e8b61c24e71",
+    "Assets/SquashClash/Runtime/Ball/BallSimulationHost.cs": "179078d973df1b859d4e89824afcfd08f599470f4996815b4ec165156c88822b",
+    "Assets/SquashClash/Runtime/Ball/BallView.cs": "926e984096e3fe7e164a163ff8d2f01a39272240f68d5f36964c992703f578bc",
+    "Assets/SquashClash/Runtime/Camera/CourtCameraRig.cs": "67fbea1ab3d6df0fe408a6569c4023ac4aec7546e92770aa08d0895b0032c5fb",
+    "Assets/SquashClash/Runtime/Court/CourtView.cs": "ac8c658a44b56185b8e18d19c3b9c77729f2dbb57c6b5b86408b568fd9981c55",
+    "Assets/SquashClash/Runtime/Physics/PhysXBallSimulation.cs": "17b01f3ff6727ef125731bece48a6689dfe5c0815bb87c8b86623327ab81b0a3",
+    "Assets/SquashClash/Runtime/Physics/PhysXBallSimulationFactory.cs": "2a04a1e0f035820e174e67672c14cb64d5960986d93f7037be708d9669ae508c",
+    "Assets/SquashClash/Runtime/Physics/PhysXContactCollector.cs": "838bdb484e0910db853f9f730d092fee2ed9b3e991ca0f59533f0fe6cfe8797d",
+    "Assets/SquashClash/Runtime/Physics/PhysXContactOrder.cs": "cd455068bfac9a8e7f4ba7f7b4caf29225dd397df313440fbe9b50e564447f3b",
+    "Assets/SquashClash/Runtime/Physics/PhysXVariant.cs": "670ecd24ad8da64d5fa3bafb57f2bbb1fce1d122b76355c00991cebb295a96b1",
+    "Assets/SquashClash/Runtime/Physics/SurfaceTag.cs": "e9b39407d59ff36cbc9923c1a5d155ea6b944d7d0df1a33b2af88eb372b1ccb9",
+    "Assets/SquashClash/Runtime/Resources/DefaultPreset.json": "a715930576c5e64406eb7981c61232934b5a67fda4a647fddf6d47a856d9c412",
+    "Assets/SquashClash/Tests/EditMode/BootstrapSmokeTests.cs": "67e0d757eb4240928c86385f97f13689813001b2f0f61de627b6ecbcb157cf9a",
+    "Assets/SquashClash/Tests/EditMode/Config/ConfigFixtures.cs": "d76d000cc09b7d160bd6514a8846e1f40474809243208af6522290d0197b33bd",
+    "Assets/SquashClash/Tests/EditMode/Config/EffectiveConfigTests.cs": "2b7c8da8dd3ad8a8bf43fb9cc83f12b9f4298276162e278b3c8f2d28d2cb46c8",
+    "Assets/SquashClash/Tests/EditMode/Config/ParamCatalogTests.cs": "d03c305f32bb74205238ac70708c6fe5980c4a7f4e1807734f4e222c0f0f1b74",
+    "Assets/SquashClash/Tests/EditMode/Config/PresetCodecTests.cs": "871cd1d93fbc60ba7ef193f79df261f99494fd4b359895b9b803b1031d360999",
+    "Assets/SquashClash/Tests/EditMode/Config/PresetStoreTests.cs": "32a3747b784b8374d68a2c93419f39d86e479165a76c3a89d5b74c0e60c197a3",
+    "Assets/SquashClash/Tests/EditMode/Config/TuningStateTests.cs": "1f39893fbcbda5ac2b2b108b548bfaf965f9f61cc109246abf38fc0079f37239",
+    "Assets/SquashClash/Tests/EditMode/Court/CourtGeometryTests.cs": "fc0d8547228288e615dd843434b4cb9625aeacebbef211cb3212e62d79896877",
+    "Assets/SquashClash/Tests/EditMode/Court/LineContactClassifierTests.cs": "662fd4c243e5ce956e3af0765030295651b9b5529c67377776ca3746ba97a9c1",
+    "Assets/SquashClash/Tests/EditMode/Diagnostics/BuildInfoTests.cs": "065883eeedb95045f78babc376914bd4b0eb9939806a2b44e21a63b4c9e0615a",
+    "Assets/SquashClash/Tests/EditMode/Diagnostics/FrameTimeStatsTests.cs": "8a31cccd82202219dc5814865a1579c4134b2c17eebe6cf0e88d63f5e0e60628",
+    "Assets/SquashClash/Tests/EditMode/Diagnostics/MetricsLogTests.cs": "725fd83c87bfe6224ad89394d075761178d55faa808528e8a7c08a8d479e8697",
+    "Assets/SquashClash/Tests/EditMode/Simulation/AnalyticBallSimulationTests.cs": "baca4478c87582a4d903b2d4ffe50c7bf5b7cfad5051b2237b7b0aa7dbf68faa",
+    "Assets/SquashClash/Tests/EditMode/Simulation/BallisticsTests.cs": "275f71fa1e4169b8df4064c6ea8e57729f9d04f01ddb4aea984b40e2a8b8d170",
+    "Assets/SquashClash/Tests/EditMode/Simulation/SimClockTests.cs": "1a903f33f1f2a483c418c10a7acb97f9d192fcf94476d0cd9afa3340ad58c31b",
+    "Assets/SquashClash/Tests/EditMode/Simulation/TrajectoryRunnerTests.cs": "1b0633483e31259ca07ab0fb6b9aca6d8410b4f604a90c466188adab878da912",
+    "Assets/SquashClash/Tests/EditMode/Spike/AnalyticReportingTests.cs": "a9ef7739f0346d2e603bb1e9c842fc6d89e6249d30cc658673afeceee850a076",
+    "Assets/SquashClash/Tests/EditMode/Spike/PhysicsMeasuresTests.cs": "65f4d670e7b942faf2b66db84687c949b924423047f7c3fde4c68f12ce4d6256",
+    "Assets/SquashClash/Tests/EditMode/Spike/PhysicsScenariosTests.cs": "159039c75ac843377ffe21cbeec60ea95272f286743efe0cfb7aae02b16687da",
+    "Assets/SquashClash/Tests/EditMode/Spike/SpikeReportWriterTests.cs": "166c39ed748fbb8c5ea247a87297f530af7f6dbf3af98fef431ec8084a236431",
+    "Assets/SquashClash/Tests/EditMode/Spike/SpikeRunTests.cs": "1315389bdaa78a28bcceef1bd1147bca3a4da5aa1bb0e6252dce701f7615f57a",
+    "Assets/SquashClash/Tests/Experiments/AnalyticSpikeExperiment.cs": "f2d73fb10f1a98a0045be9fc0917f85bf8d75f2ccc7832fd070eab4943502ff4",
+    "Assets/SquashClash/Tests/Experiments/BootstrapSmokeTests.cs": "2430bf99629e3faf3e1753a89bfdc63efcf00a222bb7b69dac043cd6985f0d64",
+    "Assets/SquashClash/Tests/Experiments/EditMode/AnalyticEditModeSpikeExperiment.cs": "b395ecfb4bb651c9ec48139114cb49fedd9aefa282907ec022b28a00d549410b",
+    "Assets/SquashClash/Tests/Experiments/PhysXResetExperiment.cs": "f9db7e0460ce7a6c8aab899b25183ed253b7eb150818ba5c2bd93d7f0250c7a8",
+    "Assets/SquashClash/Tests/Experiments/PhysXSpikeExperiment.cs": "08eee10093eed3c553e89c083bd788678baba931a6be3c510b86d2f17da8bb0c",
+    "Assets/SquashClash/Tests/PlayMode/AppBootstrapTests.cs": "bae3a2d2a6573dc0c18e6097d1d87791ed361a140c15ff0c7d3a4ebe6fb7fe31",
+    "Assets/SquashClash/Tests/PlayMode/BallSimulationHostTests.cs": "5b106b157bd4a10bad4747945955c52508987ff220205b88d23b95a8868b251b",
+    "Assets/SquashClash/Tests/PlayMode/BootScreenTests.cs": "e3ef9f597a66ee6796b3192c315a181fd452aca52e2ad37f8aba25a364e55024",
+    "Assets/SquashClash/Tests/PlayMode/BootstrapSmokeTests.cs": "d25d24c95074a29ea9e32acbafedc4507a4a436034ecc0dcf741cdca771555af",
+    "Assets/SquashClash/Tests/PlayMode/CcdDiagnosticsTests.cs": "3a861f2b9593236bc7faabbf1edf7d45685c5ae887db3db31b88bdebf9293293",
+    "Assets/SquashClash/Tests/PlayMode/CourtCameraRigTests.cs": "ea9c25b66dc41e9339eee2822fbee29f6531e3c95e104db6f758c10a574be041",
+    "Assets/SquashClash/Tests/PlayMode/CourtViewTests.cs": "ba6292eeefc921a35ffe152ad42341e8fe939e09dd044c1daf49a2d3d6d30024",
+    "Assets/SquashClash/Tests/PlayMode/DevPanelIntegrationTests.cs": "2a6b3ca197bf658bcfc8ea72e6663d6fd0f9b08d75a402e19ad9dd88c6a9eca3",
+    "Assets/SquashClash/Tests/PlayMode/DevPanelViewTests.cs": "ec306d07a23d975d4e4d71889a2efabb39760d180d7f321d15f7a6ef81fefd81",
+    "Assets/SquashClash/Tests/PlayMode/PhysXContactOrderTests.cs": "bb68519d7d30f5dbd590bff9dfdf3734fee5d2a2b963ce1f63d3edfdb71b8b62",
+    "Assets/SquashClash/Tests/PlayMode/PhysXLifecycleTests.cs": "0eb97edba2210d2bebf98bb584442067b3dbbebfa5689d31ba34cf71464243f7",
+    "Assets/SquashClash/Tests/PlayMode/PlayModeTestWorld.cs": "02eaa6930349fb750f1a23d8602c8a5382d4bb675594d5b8584de0ddbb8139b7",
+    "Assets/SquashClash/Tests/PlayMode/RuntimeDiagnosticsTests.cs": "1d9e4606e4a9b04691bf40ed2bd4e823db262f1fe169635b1e17bdeb1fce085a",
+    "Assets/SquashClash/Tests/PlayMode/SpikeSectionTests.cs": "1d2e28957a850b8c37a255e4b27e1ad0176e6acd7853474fc42ac4cf8cd2bd55",
+    "Assets/SquashClash/Tests/PlayMode/TuningDiagnosticsIntegrationTests.cs": "44770a47b815e450b01b64cccdad4394a967dacc335afdd39cc11cd46320c3d8"
+  },
+  "defaultHashEvidence": [
+    {
+      "test": "Main_DefaultHostUsesP2ForGameAndPredictionAndBounces",
+      "hash": "164b0c21e88b"
+    }
+  ],
+  "responsiveRegression": {
+    "viewportAllocations": [
+      {
+        "width": 390,
+        "panelHeight": 304
+      },
+      {
+        "width": 320,
+        "panelHeight": 200
+      }
+    ],
+    "inAttachedRuntimePanel": true,
+    "notNativeScreenshots": true,
+    "before": {
+      "tabsBottom": 570.2012,
+      "viewportTop": 527.6624
+    },
+    "after": {
+      "tabsBottom": 533.998,
+      "viewportTop": 537.6183
+    },
+    "checks": [
+      "viewport below tabs and inside panel",
+      "actual Pick hits Presets tab",
+      "name/save reachable by scrolling",
+      "save button performs action"
+    ],
+    "numericTyping": {
+      "red": "Typing 0. changed tuning to 0 before completion",
+      "green": "Typing 0. preserves tuning 0.45; completing 0.60 and Enter applies 0.6; refresh preserves unfinished text"
+    }
+  }
+}
