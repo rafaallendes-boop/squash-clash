@@ -134,3 +134,61 @@ Se incorporan tres capturas suministradas con DEV cerrado: [círculo cian](../va
 **Comprobación breve de visibilidad/color completada**, sin inferir aceptación de S1, juicio de precisión/potencia/saltos ni respuestas a las cinco preguntas de control. No se ejecutan los bloques de revalidación ni cobertura 20/30 ms. La recuperación posterior confirma P0-calib-1 **9977d9ffd7e5/cero pendientes**, último registro de lanzamiento **21:29:25.8202720Z**; P0-calib-1/Po-1/last-active continúan byte a byte iguales al respaldo.
 
 Entrega en [PR #19 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/19), **sin fusionar**. Implementación 2850a56 y build probada/instalada 5e218ea; cierre posterior solo documental/evidencia, sin repetir suites, build o instalación. Se conservan 343/343 EditMode, 169/169 PlayMode y check-release dev/prod OK de la fuente probada. Spec/plan/defaults/criterios y parámetros intactos. **S1 sin aceptar; H3/H4, revalidación y experimento de cobertura pendientes. Detenerse; S2–S4/T8 no autorizados.** Comprobar siempre perfil antes de instalar y renovar primero desde el 27.
+
+## Cierre de PR #19 y segunda revalidación autorizados por el PO — 2026-10-25
+
+El PO comunica aprobación de Claude en **9d961743e6598b951dd9892f2aa21d2ed1417ee0** y autoriza fusión con merge commit condicionada a head exacto y ausencia de conflictos. Head local/remoto exacto, PR abierta/no borrador/fusionable y árboles limpios comprobados. **Merge f7005be63218a573dd765c66b8b1e78c4d9f0213**, padres a8240fe8277896015c37a66805d0d0c21c8a6b70 y head aprobado; árbol idéntico al aprobado. Main sincronizada por fast-forward y limpia. Worktree de visibilidad retirado sin `--force`; siete paths ignorados trasladados a **Logs/archive-s1-reticle-visibility-20261025** del checkout principal, incluidos Logs/evidence, XML, builds/exports y caché. Inventario antes/después idéntico (inodos/modos/tamaños/mtime/enlaces): **31.292 archivos / 8.218.064.359 bytes**, **260 hashes** de Logs/XML coincidentes. Ramas remotas y visibilidad conservadas.
+
+Observaciones de Claude para **S2**, registradas sin cambio de código ni ampliación de esta autorización:
+
+1. La mira visual de **0,84 m** es más grande que la zona que clasifica tin/out.
+2. La línea compacta puede tapar la pelota en la zona trasera.
+3. La prueba visual usa piezas internas del editor (**GameViewSizes**) y es frágil ante actualizaciones de Unity.
+
+El PO autoriza `firstshot/s1-revalidation-2`, **solo documental**, desde main tras el merge. **Sin build ni instalación nuevas:** usar la app instalada **5e218ea dev**. Antes de preparar la sesión se comprobaron **399 archivos versionados de Assets/ProjectSettings/Packages**: diff Git vacío entre 5e218ead0636d4eab23f4913b8f4911c4c117dd5 y main f7005be, y SHA-256 locales idénticos al manifiesto de fuentes probadas de la build instalada. La identidad es de fuentes versionadas; los metadatos generados BuildInfo se conservan en los artefactos originales, sin regenerarlos. Manifiesto privado `Logs/evidence/s1-revalidation-2/product-source-equivalence.json`. No se repiten suites ni exports en esta sesión física documental.
+
+Decisiones del PO que siguen vigentes: experimento **30→20 ms en la misma sesión**, posible sesgo de aprendizaje/fatiga declarado, volver a 30 y no promover default; bloque principal **120 s con izquierda dominante**, desviación declarada del plan (derecha opcional); si saltos inaceptables, propuesta para PR pequeña aparte antes de S2 sin implementarla; el PO decide después con el informe.
+
+Preparación autorizada: respaldo de P0-calib-1/Po-1/last-active; arranque P0-calib-1 **9977d9ffd7e5/cero pendientes**; `launcher.repeatSeconds=0` desde panel, aplicar/relanzar sin guardar y verificar, DEV cerrado. Registrar cada lanzamiento/hash; si cambia configuración controlada, gestos afectados **no comparables**. Recordatorio antes de bloques:
+
+> La pelota no se golpea en S1. Arrastra despacio para mover la mira; para fijarla, haz un gesto rápido y corto, como un golpe. Abajo verás el estado (Apuntando, Fijada o Inválida) y P, la potencia.
+
+Orden: 120 s izquierda, regla física 50 mm, diez suaves/diez fuertes a 30 ms, diez suaves/diez fuertes a 20 ms aplicado sin guardar y comprobado antes. Botones dentro de DEV, que se cierra automáticamente al armarlos. Registrar todos los intentos, incluidos toques y cancelaciones. Informe por serie con potencia mínima/mediana/máxima, conservadores por motivo, separación y porcentaje Frozen; saltos al fijarse p50/p95/máximo; H3/H4 descriptivos (pico de velocidad frente a 250 mm/s, proporción en tope y=5 m o fuera), **sin ajustes**. Cinco preguntas del PO separadas/literales, sin inferencias.
+
+Cierre: recuperar evidencia nueva separada de 311cb11 (histéresis defectuosa), c5a7d1e (mira tapada) y la comprobación breve de visibilidad anterior; restaurar P0-calib-1 **9977d9ffd7e5/cero pendientes** y tres archivos byte a byte al respaldo. Si aparece defecto, registrar y detenerse. Informe/JSON nuevos, AGENTS actualizado, PR documental lista para Claude **sin fusionar**. Sin código/defaults/spec/plan/criterios; **S1 sigue sin aceptar y S2–S4/T8 no autorizados. Detenerse al entregar.** Comprobar perfil antes de futuras instalaciones y renovar primero desde el 27; no hay instalación en esta autorización.
+
+
+### Resultado final de segunda revalidación — 2026-10-25
+
+Sesión sobre **5e218ea dev instalada**, sin build/instalación/suites/exports nuevos. Una adquisición **complete=true / 120,014203167 s / 2449 muestras**, 50,611337 Hz entregados dentro de toques (no frecuencia hardware); otra **incompleta / 12,549327917 s / system-cancel**, separada sin atribuir causa. Se conservan **138 gestos / 4683 muestras**, incluidos un Tap y 137 Swing: 92 en adquisiciones, 6 de distancia y 40 de las cuatro series. **Los mm físicos quedan NotEvaluated: el PO declara que no tiene regla.** No se cambia DpiSource a PhysicallyVerified ni se interpreta la etiqueta automática50 como recorrido real.
+
+Cuatro series de10, sin descartar conservadores/P=0. Mediana de fuertes **1,977 % a30 / 7,123 % a20**, máximos20,523/18,778 %, suaves todosP=0; Frozen **5/10 a30 y9/10 a20**. Saltos de los54 Frozen de toda la sesión: p50 **1,570968 m**, p95 **2,166354 m**, máximo **2,667281 m**, cifras originales sin suavizado/replay. H3/H4 por gesto/grupo en informe/JSON, sin ajustes. Ninguno de los138 gestos queda excluido por configuración: hashes **00a501ad7066 (30 ms)** y **a49c48e3d019 (20 ms)**, cero pendientes. Cada lanzamiento conservado. La entrada remota dejó transitoriamente10 durante preparación, corregido antes de relanzar; ningún lanzamiento10 ni nuevos gestos en ese intervalo. Se declara, sin diagnosticar defecto del producto a partir del control remoto.
+
+El PO responde **por separado y literalmente**:
+
+| Pregunta | Respuesta literal |
+|---|---|
+| ¿Apuntas donde quieres? | si |
+| ¿Entiendes siempre dónde apuntas? | si, pero para por ejemplo un drop tuve que intuir que era hacia abajo, pero igual es parte de la mecnaica |
+| ¿El número responde a suave/fuerte? | si |
+| ¿Los saltos de la mira al fijarse son aceptables? | si |
+| ¿Notaste diferencia entre 30 y 20 ms? | si |
+
+Mano de las series, literal:
+
+> mano izquierda y derecha, ambas 2, me imagine juando y use ambas manos
+
+Se registra uso de **ambas manos, sin desglose por condición/intento**. El bloque120 s fue solicitado con izquierda dominante (desviación autorizada del plan), con respuesta «listo»; no se presume una campaña diestra adicional. Orden30→20, aprendizaje/fatiga, manos mezcladas y gestos distintos limitan la comparación; no se atribuye causalidad a cobertura ni a ella el cambio de Frozen. La respuesta sobre diferencia no expresa preferencia ni decisión de default: **permanece30 ms**. Respuesta sobre saltos «si»: **no se activa la propuesta condicional de ajuste** de lookback/umbral/ganancia. La observación del drop queda como comprensión de la mecánica; S1 no golpea la pelota.
+
+**Restauración final comprobada:** reinicio de la misma app para recargar P0 persistido (coverage30/repeat3 juntos, sin lanzamiento intermedio30/repeat0 ni guardar). Primer intento rechazado por iPhone bloqueado/CoreDevice10002; tras autenticación local completada por PO, reinicio correcto. Nuevo arranque **2026-10-25T23:24:50.6920160Z / 5e218ea dev / P0-calib-1 / 9977d9ffd7e5 / cero pendientes**, último registro **2026-10-25T23:25:43.7507310Z**. Comparación directa de bytes: **P0-calib-1, Po-1 y last-active idénticos al respaldo**. No se añadieron gestos durante el cierre.
+
+[Informe nuevo](2026-10-25-first-shot-s1-revalidation-2.md) y [evidencia nueva](../validation/evidence/2026-10-25-s1-revalidation-2.json), separados de311cb11/histéresis defectuosa, c5a7d1e/mira tapada y visibilidad previa. Diff solo cuatro documentos, producto/spec/planes/criterios intactos. Defaults **00a501ad7066**, 41 valores/proyección **0d39e6016bd8** y SimulationKey **166a96e319c7** intactos. Las tres observaciones Claude para S2 del cierre de PR #19 siguen registradas, sin código.
+
+Entrega en [PR #20 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/20), **sin fusionar**, fuente documental de cierre **e9fcb39fd893da38725d3c83bb50d650fe834c33** (el commit posterior solo enlaza la PR). **No equivale a aceptación de S1; el PO decide con el informe. S2–S4/T8 siguen sin autorizar. Detenerse.** Comprobar siempre perfil antes de instalar y renovar primero desde el27; no hubo instalación en esta sesión.
+
+
+## Corrección de PR #20 y propuesta de calibración autorizadas — 2026-10-25
+
+El PO comunica aprobación de Claude de PR #20 en **16be7977c258b8ee0ff3f5d2a1a3c3e9dfbfd33e**, con corrección documental autorizada antes de fusionar. Los40 gestos de serie tienen ventana80 ms completa y **cero short-coverage**; las salidas conservadoras son13 few-samples/minSamples4 y7 sample-gap/maxGap34, parámetros estables. **Experimento20/30 NotInformative para cobertura**; la diferencia percibida se atribuye a fuertes más rápidos en la tanda20, conservando limitaciones de orden/manos y las cinco respuestas literales. Permanece30 ms. Corrección solo en informe, JSON, este registro y AGENTS; verificar ese delta desde el head aprobado antes del merge commit.
+
+Tras fusionar, sincronizar main y retirar worktree sin force, preservando los artefactos ignorados en **Logs/archive-s1-revalidation-2-20261025**. A continuación se autoriza rama **firstshot/s1-power-calibration-proposal**, solo propuesta documental: candidatos de full/deadZone/minSamples/maxGap y flick si procede, justificados con los40 gestos existentes; P contrafactual por gesto, etiquetada como cálculo offline, sin nueva medición. Protocolo corto de futuro preset de prueba (sin promover default), repeat0 sin guardar, diez suaves/diez fuertes con una sola mano declarada, juicios literales y restauración/cotejo habitual. No crear ni cargar preset real, código, defaults, build o sesión. PR documental lista para Claude sin fusionar; **S1 sin aceptar, S2–S4/T8 sin autorizar**. Perfil: verificar antes de cualquier futura instalación y renovar primero desde el27. Detenerse al entregar.
