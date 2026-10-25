@@ -375,12 +375,12 @@
   },
   "nativeDevBuild": {
     "schema": 1,
-    "checkedAtUtc": "2026-10-25T04:51:18.637553+00:00",
+    "checkedAtUtc": "2026-10-25T14:30:45.323610+00:00",
     "metadata": {
       "version": "0.1.0",
-      "gitHash": "311cb11",
+      "gitHash": "c6c68c1",
       "profile": "dev",
-      "builtAtUtc": "2026-10-25T04:50:25.5520550Z",
+      "builtAtUtc": "2026-10-25T14:28:25.4662800Z",
       "unityVersion": "6000.3.27f1",
       "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
       "gitDirty": false
@@ -391,10 +391,67 @@
     "profileCompatibleWithDeviceAndBundle": true,
     "renewalRequiredForThisInstallation": false,
     "embeddedMetadataAndPresetMatch": true,
-    "sourceFilesCompared": 199,
-    "sourceFilesMatchTests": true
+    "sourceFilesCompared": 200,
+    "sourceFilesMatchTests": true,
+    "functionalSourceHead": "340ca2cd30ed7310487f2ccd723daab99a9e9088",
+    "installationSucceeded": true,
+    "launchObserved": false,
+    "launchBlocker": "iPhone locked; CoreDeviceError 10002 / FBSOpenApplicationErrorDomain 7",
+    "presetFilesAndSelectionByteIdenticalAfterInstallation": true
   },
   "releaseChecks": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "c6c68c1",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-25T14:27:21.0380870Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "c6c68c1",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-25T14:27:44.6609660Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "startup": {
+    "build": "0.1.0+311cb11 dev",
+    "observedAtUtc": "2026-10-25T04:51:39.2415910Z",
+    "preset": "P0-calib-1",
+    "pending": 0,
+    "effectiveHash": "9977d9ffd7e5",
+    "legacyProjectionHash": "8de3f2ecb217",
+    "presetFileSha256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "presetsAndSelectionByteIdenticalBeforeAfter": true
+  },
+  "finalSourceHead": "340ca2cd30ed7310487f2ccd723daab99a9e9088",
+  "releaseChecksBeforeBoundaryFix": {
     "dev": {
       "profile": "dev",
       "metadata": {
@@ -435,15 +492,26 @@
       "runtimeThermalBridge": true
     }
   },
-  "startup": {
-    "build": "0.1.0+311cb11 dev",
-    "observedAtUtc": "2026-10-25T04:51:39.2415910Z",
-    "preset": "P0-calib-1",
-    "pending": 0,
-    "effectiveHash": "9977d9ffd7e5",
-    "legacyProjectionHash": "8de3f2ecb217",
-    "presetFileSha256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
-    "presetsAndSelectionByteIdenticalBeforeAfter": true
+  "nativeAcquisitionBuild": {
+    "schema": 1,
+    "checkedAtUtc": "2026-10-25T04:51:18.637553+00:00",
+    "metadata": {
+      "version": "0.1.0",
+      "gitHash": "311cb11",
+      "profile": "dev",
+      "builtAtUtc": "2026-10-25T04:50:25.5520550Z",
+      "unityVersion": "6000.3.27f1",
+      "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+      "gitDirty": false
+    },
+    "arm64": true,
+    "signatureVerified": true,
+    "profileExpiresUtc": "2026-10-28T14:59:31+00:00",
+    "profileCompatibleWithDeviceAndBundle": true,
+    "renewalRequiredForThisInstallation": false,
+    "embeddedMetadataAndPresetMatch": true,
+    "sourceFilesCompared": 199,
+    "sourceFilesMatchTests": true
   },
-  "finalSourceHead": "340ca2cd30ed7310487f2ccd723daab99a9e9088"
+  "sourceFilesComparedFinal": 200
 }

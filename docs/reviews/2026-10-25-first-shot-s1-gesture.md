@@ -122,3 +122,11 @@ Tareas 1.0–1.3 implementadas y verificadas; Tarea 1.4 tiene evidencia nativa y
 - [InputSettings.disableRedundantEventsMerging](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.20/api/UnityEngine.InputSystem.InputSettings.html#UnityEngine_InputSystem_InputSettings_disableRedundantEventsMerging); contraste con el código local de 1.20.1 citado arriba.
 - [Unity 6000.3 — Screen.dpi](https://docs.unity3d.com/6000.3/Documentation/ScriptReference/Screen-dpi.html): puede ser desconocido; no sustituye la comprobación física.
 - [Device.deferSystemGesturesMode](https://docs.unity3d.com/6000.3/Documentation/ScriptReference/iOS.Device-deferSystemGesturesMode.html): cambio runtime, sin editar PlayerSettings.
+
+## Build final y preparación de revisión
+
+Tras la corrección 340ca2c: **336/336 EditMode y 161/161 PlayMode**, check-release **dev/prod OK** repetido con exports frescos. Módulos y exclusión del framework de pruebas conservados. Build dev **c6c68c1** limpia, Release ARM64 no Development, metadata y DefaultPreset embebidos cotejados, firma estricta verificada. **200 archivos** coinciden con las fuentes probadas. Perfil compatible y vigente hasta **2026-10-28T14:59:31Z**, comprobado de nuevo el **2026-10-25T14:30:45Z** antes de instalar; sin renovación requerida hoy.
+
+La actualización **se instaló correctamente**, pero el lanzamiento fue rechazado por iPhone bloqueado (CoreDeviceError 10002 / FBSOpenApplicationErrorDomain 7). No se afirma arranque observado ni nueva campaña física en esta build. Los archivos P0-calib-1, Po-1 y last-active recuperados después de actualizar conservan los bytes del respaldo previo. La comprobación de P0-calib-1 al comienzo de S1 sí está satisfecha en 311cb11; distinguirla del arranque todavía no observado de la build corregida. No se requiere repetir la sesión física para conservar sus datos ni para la reproducción automatizada de las tres trazas.
+
+[PR #17](https://github.com/rafaallendes-boop/squash-clash/pull/17) se entrega para revisión de Claude, **sin fusionar y sin declarar S1 aceptado por el PO**. Spec v0.3, propuestas, planes y ProjectSettings están byte a byte iguales a main; los 41 valores heredados y SimulationKey física siguen intactos. S2–S4/T8 no autorizados. Renovar el perfil antes de cualquier instalación desde el 27 y comprobar vigencia efectiva siempre.
