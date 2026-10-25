@@ -53,6 +53,8 @@ namespace SquashClash.DevPanel
             if(app==null)return;
             elapsed+=Time.unscaledDeltaTime;if(elapsed<.1f)return;elapsed=0;Refresh();
         }
+        // Compilable layout entry point; RED keeps the existing placement unchanged.
+        public void PlaceInSafeArea(Rect safeArea,Vector2 screenSize)=>Place();
         private void OnGeometry(GeometryChangedEvent e)=>Place();
         private void Place()
         {
