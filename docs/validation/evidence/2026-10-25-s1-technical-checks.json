@@ -450,7 +450,7 @@
     "presetFileSha256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
     "presetsAndSelectionByteIdenticalBeforeAfter": true
   },
-  "finalSourceHead": "340ca2cd30ed7310487f2ccd723daab99a9e9088",
+  "finalSourceHead": "b5dd6ec2452716f07f86aa5aed70417a73aac7ef",
   "releaseChecksBeforeBoundaryFix": {
     "dev": {
       "profile": "dev",
@@ -552,5 +552,21 @@
     },
     "legacyProjectionHash": "8de3f2ecb217",
     "newGestureCampaignClaimed": false
+  },
+  "finalSourceHeadBeforeClaudeReview": "340ca2cd30ed7310487f2ccd723daab99a9e9088",
+  "claudeReviewCorrections": {
+    "evidence": "2026-10-25-s1-claude-review-fixes.json",
+    "codeHeads": {
+      "df65fc8": "df65fc81299b493f03f3a0c446a7e44ce05829cb",
+      "e08fc7c": "e08fc7c02503c6ec44d28e577846460cd149285a"
+    },
+    "fixtureHead": "b5dd6ec2452716f07f86aa5aed70417a73aac7ef",
+    "editModePassed": 343,
+    "playModePassed": 164,
+    "checkReleaseDevProd": "OK",
+    "newNativeBuild": false,
+    "newInstallation": false,
+    "newPhysicalSession": false,
+    "aimAcquisitionUsesDefectiveHysteresis": true
   }
 }
