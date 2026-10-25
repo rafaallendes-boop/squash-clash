@@ -1,6 +1,6 @@
 # Validación integral de First Ball — I7a (T7.1–T7.2)
 
-Registro iniciado el 2026-10-24. **First Ball aceptado por el PO con desviación H17 p95 registrada; Claude aprueba con ajustes solo documentales.** Fusión/cierre sujetos a comprobar el diff documental desde el head revisado 51014a0. T7.3/gameplay no autorizados. Spec, criterios, umbrales y DefaultPreset intactos. Los campos perceptuales pendientes se conservan sin inventar datos; la aceptación global expresa consta en la sección 5.
+Registro iniciado el 2026-10-24. **First Ball aceptado por el PO con desviación H17 p95 registrada; Claude aprueba con ajustes solo documentales.** **I7a y Etapa 7 cerrados**: PR #13 fusionada con merge `7b1f6f36ff070e44d776668ef1d61881ba26e6b0`, head `9b047c9b5d67b4f0d673b2a6b8c8f40c8998575f`, tras verificar el diff solo documental desde 51014a0. T7.3/gameplay no autorizados. Spec, criterios, umbrales y DefaultPreset intactos. Los campos perceptuales pendientes se conservan sin inventar datos; la aceptación global expresa consta en la sección 5.
 
 ## 1. Legibilidad (H1)
 
@@ -89,3 +89,6 @@ Claude aprueba condicionado a los ajustes documentales recogidos en [informe I7a
 **Seguimiento en próxima apertura:** comprobar P0-calib-1 activo, hash 8de3f2ecb217/cero pendientes; la restauración previa no fue observada. La selección guardada intacta y la etiqueta de preset de L6 no prueban esa restauración.
 
 Fusión/cierre de I7a y Etapa 7 autorizados por PO solo si el diff entre head revisado y nuevo toca exclusivamente docs/** y AGENTS.md, sin spec/plan/criterios/umbrales/defaults; cierre con merge/head en AGENTS.md y aprobaciones. Después, detenerse. **T7.3 y gameplay no autorizados.** Retención de logs pendiente antes de T8; renovar el perfil antes de cualquier instalación desde el 27.
+
+
+**Cierre registrado el 2026-10-24:** condición documental satisfecha, PR #13 fusionada con merge commit **7b1f6f36ff070e44d776668ef1d61881ba26e6b0**, head **9b047c9b5d67b4f0d673b2a6b8c8f40c8998575f**; main sincronizada y worktree eliminado con artefactos ignorados preservados. First Ball aceptado por PO, manteniendo **Fail H17 p95**. T7.3 no ejecutado ni autorizado; gameplay no autorizado. Próxima apertura P0-calib-1 sigue como seguimiento pendiente, sin nueva instalación.

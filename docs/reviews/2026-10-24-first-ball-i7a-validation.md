@@ -1,6 +1,6 @@
 # I7a — aceptación y validación integral de First Ball (T7.1–T7.2)
 
-**Claude aprobó con ajustes solo documentales y el PO acepta First Ball con desviación H17 registrada.** [PR #13](https://github.com/rafaallendes-boop/squash-clash/pull/13), rama `firstball/i7a-validation`, sin fusionar. **T7.1 Pass; H17 p95 Fail en ambas sesiones.** PO autorizó T7.1–T7.2 el 2026-10-24 tras aprobar/cerrar PR #12 (merge 7d7fd3a421255ae02558840d5ff9f2a669fce0d0); main sincronizada, worktree L2 eliminado. **T7.3/gameplay no autorizados.** Fusión/cierre autorizados por el PO si el diff desde el head revisado `51014a08fb49db46b2d1440fb3305b85a5f523ce` solo toca docs/** y AGENTS.md, excluyendo spec/plan/criterios/umbrales/defaults. Esta precisión no cambia datos ni resultados medidos; el cierre con merge/head se registra en AGENTS.md y aprobaciones.
+**Claude aprobó con ajustes solo documentales y el PO acepta First Ball con desviación H17 registrada.** [PR #13](https://github.com/rafaallendes-boop/squash-clash/pull/13), rama `firstball/i7a-validation`, **fusionada y cerrada**. **T7.1 Pass; H17 p95 Fail en ambas sesiones.** PO autorizó T7.1–T7.2 el 2026-10-24 tras aprobar/cerrar PR #12 (merge 7d7fd3a421255ae02558840d5ff9f2a669fce0d0); main sincronizada, worktree L2 eliminado. **T7.3/gameplay no autorizados.** Condición de fusión/cierre autorizada por el PO y satisfecha: el diff desde el head revisado `51014a08fb49db46b2d1440fb3305b85a5f523ce` solo toca docs/** y AGENTS.md, excluyendo spec/plan/criterios/umbrales/defaults. Esta precisión no cambia datos ni resultados medidos; el cierre con merge/head se registra en AGENTS.md y aprobaciones.
 
 ## Alcance y pruebas
 
@@ -95,3 +95,10 @@ Retención de logs sigue pendiente antes de T8. No se interviene el panel de imp
 **Próxima apertura:** comprobar que P0-calib-1 queda activo, hash efectivo **8de3f2ecb217**, cero pendientes y estado inicial del preset; la restauración anterior no se observó. Se intentó abrir nuevamente la build ya instalada durante este ajuste documental, pero el iPhone sigue bloqueado y el lanzamiento fue rechazado. Queda como seguimiento, sin afirmar que la etiqueta P0-calib-1 durante L6 demuestra restauración. No requiere build ni instalación.
 
 La aprobación de Claude se satisface con estos ajustes documentales, comunicados por el PO. Fusión autorizada únicamente si el diff desde el head revisado hasta el nuevo respeta el perímetro documental; cualquier otro archivo obliga a detenerse sin fusionar. No se ejecutan código nuevo, build, instalación ni medición de rendimiento.
+
+
+## Cierre registrado — 2026-10-24
+
+**PR #13 fusionada**, merge commit **7b1f6f36ff070e44d776668ef1d61881ba26e6b0**, head **9b047c9b5d67b4f0d673b2a6b8c8f40c8998575f** (head de revisión original 51014a08fb49db46b2d1440fb3305b85a5f523ce). Condición cumplida: cuatro archivos documentales, sin cambios en código/build/settings/scripts/spec/plan/evidencias/criterios/umbrales/defaults. Main sincronizada; worktree I7a eliminado, artefactos en **Logs/archive-i7a-20261024** ignorado. Cierre de **I7a y Etapa 7**, First Ball aceptado por PO con desviación H17 p95 **Fail conservada**. [Registro de cierre](2026-10-21-first-ball-po-approvals.md#cierre-i7a-y-etapa-7--2026-10-24).
+
+Sin código, build, instalación ni medición nuevos en estos ajustes. Comprobación de P0-calib-1 en próxima apertura pendiente por bloqueo; no se afirma restauración activa. Trabajo detenido; **T7.3 y gameplay no autorizados**.
