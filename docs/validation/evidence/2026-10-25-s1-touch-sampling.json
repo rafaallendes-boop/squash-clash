@@ -20926,5 +20926,22 @@
       }
     ],
     "testXmlSha256": "6503ca73d7f1191b44515578917e58ceadf749f3b1b779cae4c3edf0df043a31"
+  },
+  "aimHysteresisAcquisitionWarning": {
+    "observedBuild": "311cb11",
+    "alsoPresentInInstalledBuild": "c6c68c1",
+    "defect": "Any interval at or below FlickMmPerS interrupted confirmation and caused the next high interval to redate the crossing, even inside the hysteresis band. aim.flickHysteresisMmPerS had no effective influence on crossing retention.",
+    "affectedObservations": [
+      "aimState",
+      "aimX",
+      "aimY",
+      "freezeTimeReal",
+      "freezeJumpMeters",
+      "freezeUsedFirstValidPoint"
+    ],
+    "rawObservationsPreserved": true,
+    "rawAimMeasurementsRecomputed": false,
+    "offlineAimReplayPerformed": false,
+    "correctionNotInstalledInThisReview": true
   }
 }

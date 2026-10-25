@@ -1,0 +1,141 @@
+{
+  "schema": 1,
+  "date": "2026-10-25",
+  "baselineHead": "157d905ee925852b427d9e6567201289e1ed0879",
+  "codeHeads": {
+    "df65fc8": "df65fc81299b493f03f3a0c446a7e44ce05829cb",
+    "e08fc7c": "e08fc7c02503c6ec44d28e577846460cd149285a"
+  },
+  "status": "suites-passed-release-check-pending",
+  "stages": [
+    {
+      "stage": "01-aim-red",
+      "total": 16,
+      "passed": 13,
+      "failed": 3,
+      "skipped": 0,
+      "xmlSha256": "b58eda62870dd7330e13bdba6135b9771d3f643a8a3a692ce574bb7630d9085c",
+      "localXml": "Logs/evidence/s1-claude-fixes/01-aim-red.xml"
+    },
+    {
+      "stage": "01-aim-green",
+      "total": 16,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "9a7f21184de7dceb7c1aa1f8af81c01e9d86993cde774afca7779c525ad6bb9d",
+      "localXml": "Logs/evidence/s1-claude-fixes/01-aim-green.xml"
+    },
+    {
+      "stage": "02-presets-red",
+      "total": 3,
+      "passed": 0,
+      "failed": 3,
+      "skipped": 0,
+      "xmlSha256": "835dd285e311fdc2dee21bc5167d314bf0b48d1698a4276fc93696b16858c200",
+      "localXml": "Logs/evidence/s1-claude-fixes/02-presets-red.xml"
+    },
+    {
+      "stage": "02-presets-green",
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "68a9f2a76c708cc99fea677a4f0c461d289e46ecc099f85af1e36edd4a80d33c",
+      "localXml": "Logs/evidence/s1-claude-fixes/02-presets-green.xml"
+    },
+    {
+      "stage": "03-regression-editmode",
+      "total": 343,
+      "passed": 343,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "4197442a2880901bf069a8db00067af13a8415aca94ce8be5ac287c6759078d8",
+      "localXml": "Logs/evidence/s1-claude-fixes/03-regression-editmode.xml"
+    },
+    {
+      "stage": "03-regression-playmode-first",
+      "total": 164,
+      "passed": 163,
+      "failed": 1,
+      "skipped": 0,
+      "xmlSha256": "cc9024c0ff368f270d7c5181c95f3405ea46bfd4d3103c232ab7c178826b462d",
+      "localXml": "Logs/evidence/s1-claude-fixes/03-regression-playmode-first.xml",
+      "behaviorRed": false
+    },
+    {
+      "stage": "03-regression-playmode",
+      "total": 164,
+      "passed": 164,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "c7e7ff6bd1cdd985803090cfd4af7618d1f789cc04ebf32c99c3f1e6702f6bfa",
+      "localXml": "Logs/evidence/s1-claude-fixes/03-regression-playmode.xml"
+    },
+    {
+      "stage": "04-final-editmode",
+      "total": 343,
+      "passed": 343,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "58a09e2f780fcf30e6f5879568b82940593a6795a31bd574545309c1d19fc539",
+      "localXml": "Logs/evidence/s1-claude-fixes/04-final-editmode.xml"
+    }
+  ],
+  "protectedFiles": {
+    "Assets/SquashClash/Core/Config/EffectiveConfig.cs": "746f97550b2ef6f6a73e24f5d7d578b3e03d1320d7db945e65b7bd672bb4a98c",
+    "Assets/SquashClash/Runtime/Resources/DefaultPreset.json": "9993cf20bf1affc1cf22453d84b1ede13edc1b8f3ab669bc47edb2821a5af0dc",
+    "ProjectSettings/AudioManager.asset": "9543c41dbfc7d3951217c4dd9481ed026eb8e529b85ecf4463969a0fea747729",
+    "ProjectSettings/ClusterInputManager.asset": "40e65dd214bf254955d2c8829ca8ce2130fd3510485560ce012e9a1ddd93e623",
+    "ProjectSettings/DynamicsManager.asset": "056979610bab2b1ddf56f692ad5cb565a181660cc4f1a28d7e6d004cb8820fb1",
+    "ProjectSettings/EditorBuildSettings.asset": "063ff0a74a273ca94393823b52a1acbf58936890d0152e67de742b315270d3c2",
+    "ProjectSettings/EditorSettings.asset": "06753c21648950aee0013b70f79a9035ac52aec6204d44cc2ac55a84034ad9ca",
+    "ProjectSettings/GraphicsSettings.asset": "b5d1da463ee310899c8692a7b941ed171a5b2df1e94b65b548a22399c99e48a3",
+    "ProjectSettings/InputManager.asset": "60c83ae48e29a782141f99032eb38e803d18475124ff5224fbd1fd81b233f051",
+    "ProjectSettings/MemorySettings.asset": "2c9e2339b4fa50f4782840d37dde021508d411b99278614cba335d206edb1738",
+    "ProjectSettings/MultiplayerManager.asset": "ce4075d7a7dd8ac7ffe55de2427692c63f90dae398208bd80cec0f27cbe09f4b",
+    "ProjectSettings/NavMeshAreas.asset": "7ebbf8f53b8033104e1878b95ca07a28d0954092d81c220f14196a42f651e658",
+    "ProjectSettings/Physics2DSettings.asset": "1cfc0c8fbceec604fd7cd2a06c04ff05dddee6335b75c92b0f5715ad80ba9490",
+    "ProjectSettings/PresetManager.asset": "29c125923fe6e29f90190d4fce1c82d660e7051546e2c9d02908d18c9cf2436c",
+    "ProjectSettings/ProjectSettings.asset": "0eb810ca98bb560c266e514d4d4308e88815a936d44634ef94146a1e91c9bbe9",
+    "ProjectSettings/ProjectVersion.txt": "56aead51018c992af406752e47c49e8d9458c70f00b983f4bb603b1b3afc223e",
+    "ProjectSettings/QualitySettings.asset": "b12ea3ba9c83f6517c52eb7810d46dd6a74bcb498fd3a9a773887e2fa0f7f989",
+    "ProjectSettings/SceneTemplateSettings.json": "bb9098b3bfcde78d93e264b96f7b77b5430e64e8c57a7aad7f5a5d9c3945e16a",
+    "ProjectSettings/ShaderGraphSettings.asset": "6fead5a816c4eed70f224d5472340ecf1ea0b4de4f87d5926bb17fa10ffb3dc9",
+    "ProjectSettings/TagManager.asset": "da4b5eefc927f8b91bcf9e56a186d2b852f49d9cbe91d466638d26c79d6a83ce",
+    "ProjectSettings/TimeManager.asset": "3396f52fdc16d445024e01d7a2d99db6f0a37569d1d73c0302e9ffb857d90287",
+    "ProjectSettings/UnityConnectSettings.asset": "11251dae0356b6f43dd2c67bb511f6b7ecda4e5de425186bba3297e6f3dc1c6f",
+    "ProjectSettings/VFXManager.asset": "2973a6af930e142f62cde00076beda8a3cc3a66d9bfcde7a58ba7d4be2251c26",
+    "ProjectSettings/VersionControlSettings.asset": "e199cdfa6a8f2bf33cfd47e549198f13e3eb2a5099e908fdb4e0f14d939ccc6b",
+    "docs/superpowers/plans/2026-10-20-squash-clash-first-ball.md": "6ab140a510029506cab8a80beffb00864a0fc0150cd316caba7a222fe44f276c",
+    "docs/superpowers/plans/2026-10-20-squash-clash-first-ball.r1.md": "eef24cc2402f4b1be1158e0bfe40e2f5ecf873cef3117aab0997b9ecc9680b75",
+    "docs/superpowers/plans/2026-10-25-squash-clash-first-shot.md": "57bcddbab4f423389f91faaff38b50b2ad359faa14453a1af3f61e0094101c8b",
+    "docs/superpowers/specs/2026-10-19-squash-clash-design-v0.2.md": "8ee38aa9b8884903c03dca3ea4a6d93b8d569a4c3ce20cc9ff7a4e3b89f81ed6",
+    "docs/superpowers/specs/2026-10-19-squash-clash-design.md": "c5ea6adb82ee7a29564132f18a29e09f75e537e5699a05c321b8e4d34d1a8ae9",
+    "docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md": "bc0c50b5a60357bc3431d16c3d74dc733a0fbb108148cdaf1d049b145490ae6a",
+    "docs/superpowers/specs/2026-10-24-first-shot-design.md": "ff940ed04c7780ca29864022b4c4941ac25258bf5e82f841b868500f545b1675"
+  },
+  "protectedFilesByteIdentical": true,
+  "defaultsHash": "00a501ad7066",
+  "inheritedDefaultCount": 41,
+  "simulationKey": "166a96e319c7",
+  "nativeRecordSemanticSha256": "c97d3780cff0069e9e88bb433a8770221c82371b2eb6cf3056f4d7eb4b20d0b8",
+  "nativeRecordsUnchanged": true,
+  "aimJumpMeasurementsUseDefectiveHysteresis": true,
+  "acquisitionBuild": "311cb11",
+  "installedBuildWithoutNewCorrections": "c6c68c1",
+  "offlineAimReplayPerformed": false,
+  "newNativeBuild": false,
+  "newInstallation": false,
+  "newPhysicalSession": false,
+  "verificationFixtureAdjustment": {
+    "file": "Assets/SquashClash/Tests/PlayMode/GesturePreviewTests.cs",
+    "scope": "Setup only",
+    "description": "Use an integral fake realtime origin so (start + 120) - start is exactly 120. A fractional double origin can round the boundary below 120.",
+    "assertionsChanged": false,
+    "runtimeChanged": false,
+    "durationCriterionChanged": false,
+    "head": "b5dd6ec2452716f07f86aa5aed70417a73aac7ef"
+  },
+  "testedHead": "b5dd6ec2452716f07f86aa5aed70417a73aac7ef"
+}
