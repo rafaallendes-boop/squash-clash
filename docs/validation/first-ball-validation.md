@@ -1,6 +1,6 @@
 # Validación integral de First Ball — I7a (T7.1–T7.2)
 
-Registro iniciado el 2026-10-24. **Pendiente de completar por el PO y de revisión de Claude.** I7a no cerrado; PR sin fusionar. T7.3/gameplay no autorizados. Spec, criterios, umbrales y DefaultPreset intactos. Los campos pendientes no cuentan como aceptación.
+Registro iniciado el 2026-10-24. **First Ball aceptado por el PO con desviación H17 p95 registrada; Claude aprueba con ajustes solo documentales.** Fusión/cierre sujetos a comprobar el diff documental desde el head revisado 51014a0. T7.3/gameplay no autorizados. Spec, criterios, umbrales y DefaultPreset intactos. Los campos perceptuales pendientes se conservan sin inventar datos; la aceptación global expresa consta en la sección 5.
 
 ## 1. Legibilidad (H1)
 
@@ -62,7 +62,9 @@ Condiciones restantes confirmadas globalmente por PO: teléfono físico, sin cap
 
 Percentiles de histogramas de **cada sesión completa** (borde superior de cubeta, sesgo ≤0,1 ms ya documentado), nunca promedio de percentiles de segmentos. No se resta el sesgo ni se relaja el objetivo para aprobar 16,8 ms. JSONL conserva un frame inicial adicional de segmentos frente al resumen H17 que excluye ese delta; CPU/GPU y frames largos contrastados. Dos flushes en transiciones automáticas L4→L5/L5→L6 muestran pendientes transitorios (4/6), seguidos de launch con cero; explicación y filas conservadas en auditoría. Los agregados por segmento no permiten recalcular independientemente los percentiles del histograma completo.
 
-**Rendimiento H17: Fail por p95.** Sin nueva medición, ajuste de umbrales/defaults ni interpretación causal. Los JSON de P0-calib-1/Po-1 y selección guardada permanecen intactos.
+**Rendimiento H17: Fail por p95; desviación aceptada por el PO.** Precisión de Claude: con resolución de 0,1 ms y borde superior de cubeta, **16,8 ms no se distingue de ≤16,7 ms**; se mantiene el **Fail tal como se midió**, sin restar el sesgo ni cambiar el umbral. Sin nueva medición ni ajuste de defaults.
+
+CPU p95 procede de **FrameTiming.cpuFrameTime**, que incluye espera de presentación/vsync y otros tiempos de espera entre frames. Coincide aquí con p95 de frame (17,2/16,8 ms) y **no mide la carga real de CPU**. [Definición oficial Unity 6.3](https://docs.unity3d.com/6000.3/Documentation/ScriptReference/FrameTiming-cpuFrameTime.html), [referencia de contadores](https://docs.unity3d.com/6000.3/Documentation/Manual/frame-timing-manager-counter-reference.html). Los JSON de P0-calib-1/Po-1 y selección guardada permanecen intactos.
 
 ## 4. Invariantes de First Ball (§17.A)
 
@@ -72,13 +74,18 @@ Percentiles de histogramas de **cada sesión completa** (borde superior de cubet
 | 2. Consistencia en mismo binario/dispositivo | Pass: aceptación nativa C5/C8, cobertura cerrada |
 | 3. Predicción bit a bit | Pass: aceptación nativa C6/C7, cobertura cerrada; C17 nativo p95 0,0188 ms≤1 ms |
 | 10. Panel excluido de prod | Pass: exports limpios, prod instalada y arranque devpanel=absent; PO confirma etiqueta prod, sin DEV y tres dedos inertes |
-| 14. Preset recuperado, métricas con preset/build/semilla | Pass técnico: regresión existente y JSONL I7a con preset/build/semilla; P0-calib-1/Po-1 intactos. Cargar Default eliminó last-active como corresponde |
+| 14. Preset recuperado, métricas con preset/build/semilla | Preset persistido y campos JSONL comprobados; observación Claude de trazabilidad: al terminar H17 sigue P0-calib-1 como etiqueta con L6 aplicado, sin restaurar launcher/human/rival. Presets intactos; falta observar P0 activo en próxima apertura |
 
 ## 5. Decisión del PO
 
-**Pendiente PO, con incumplimiento H17 p95 explícito.** T7.1 físico/release pasa y las dos sesiones H17 completas superan p95≤16,7 ms. Elegir y comentar: continuar a First Shot / ajustar First Ball / volver. Aprobación de H1 y autorización de I7a no equivalen a esta decisión. No cerrar Etapa 7, modificar spec/defaults, ejecutar T7.3 ni iniciar gameplay sin autorización expresa.
+**Decisión del PO — 2026-10-24:**
 
-- Decisión: pendiente.
-- Observaciones/ajustes: pendiente.
-- Fecha y declaración del PO: pendiente.
-- Revisión de Claude de I7a: pendiente.
+Se acepta First Ball con desviación registrada en H17 p95 (H17-1 17,2 ms y H17-2 16,8 ms frente a ≤16,7 ms). El resultado se conserva como Fail; no se cambia el umbral, no se resta el sesgo de cubeta ni se repite la sesión.
+
+Fundamento: p99, frames >33 ms/min, térmico y DroppedSteps cumplen; distribución estrecha en torno a 16,7 ms (oscilación de cadencia, sin frames perdidos); el umbral está marcado [EXPERIMENTO hasta conocer el iPhone] en §17.C/§17.D del spec v0.3. No se solicita otra medición. Spec, criterios, umbrales y defaults intactos.
+
+Claude aprueba condicionado a los ajustes documentales recogidos en [informe I7a](../reviews/2026-10-24-first-ball-i7a-validation.md#revisión-de-claude-y-decisión-del-po--2026-10-24): granularidad de 0,1 ms, semántica CPU y observaciones DevPanel solo dev (Finish no restaura launcher/human/rival; flushes con pendientes; cacheado por frame; bloqueo Begin/MetricsInvalid; acumuladores/fase duplicados). Sin cambios de código. Medir cpuMainThreadFrameTime/cpuMainThreadPresentWaitTime queda **opcional y no autorizado**, para una posible revisión futura de spec.
+
+**Seguimiento en próxima apertura:** comprobar P0-calib-1 activo, hash 8de3f2ecb217/cero pendientes; la restauración previa no fue observada. La selección guardada intacta y la etiqueta de preset de L6 no prueban esa restauración.
+
+Fusión/cierre de I7a y Etapa 7 autorizados por PO solo si el diff entre head revisado y nuevo toca exclusivamente docs/** y AGENTS.md, sin spec/plan/criterios/umbrales/defaults; cierre con merge/head en AGENTS.md y aprobaciones. Después, detenerse. **T7.3 y gameplay no autorizados.** Retención de logs pendiente antes de T8; renovar el perfil antes de cualquier instalación desde el 27.
