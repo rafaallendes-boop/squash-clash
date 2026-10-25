@@ -134,4 +134,4 @@ Este protocolo produce una observación exploratoria de un preset conjunto, no u
 
 Las trazas originales y sus respuestas literales no cambian. P0 quedó restaurado en la revalidación 2 (arranque 23:24:50.6920160Z, 9977d9ffd7e5/cero pendientes); **no se presenta esa verificación anterior como comprobación nueva**. Cálculo local derivado en `Logs/evidence/s1-power-calibration-proposal/`, ignorado; la selección de fuente, fórmula, filtros y tabla completa permiten revisar el cálculo desde la evidencia versionada. No se versionan calculadoras, credenciales, logs originales ni builds.
 
-Entrega: propuesta documental lista para Claude **sin fusionar**. **S1 sigue sin aceptar, S2–S4/T8 sin autorizar. Detenerse.** Comprobar siempre el perfil antes de una instalación futura y renovarlo primero desde el 27.
+Entrega: [PR #21 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/21) **sin fusionar**, fuente documental/numérica 480598400866ee36599818084b198f831dd04a70. **S1 sigue sin aceptar, S2–S4/T8 sin autorizar. Detenerse.** Comprobar siempre el perfil antes de una instalación futura y renovarlo primero desde el 27.
