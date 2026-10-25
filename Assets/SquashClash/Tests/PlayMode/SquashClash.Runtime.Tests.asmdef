@@ -4,7 +4,9 @@
   "references": [
     "SquashClash.Core",
     "SquashClash.Runtime",
-    "SquashClash.DevPanel"
+    "SquashClash.DevPanel",
+    "Unity.InputSystem",
+    "Unity.InputSystem.TestFramework"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"
