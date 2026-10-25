@@ -1,0 +1,55 @@
+{
+  "sourceCommit": "b8713827a2b065e6ae70724bc8924f2890e90967",
+  "checkRelease": "OK",
+  "exports": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "b871382",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-25T01:12:02.2032440Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "b871382",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-25T01:12:29.4057030Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "testedSourceHashesMatch": true,
+  "retentionErrorNativeCodeExportedInDevAndProd": true,
+  "permittedCodeDelta": [
+    "Assets/SquashClash/Core/Diagnostics/MetricsLog.cs",
+    "Assets/SquashClash/DevPanel/DiagnosticsSection.cs",
+    "Assets/SquashClash/Tests/EditMode/Diagnostics/LogRetentionTests.cs"
+  ],
+  "defaultEffectiveHash": "0d39e6016bd8",
+  "defaultPresetSha256": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+  "nativeInstallRun": false
+}

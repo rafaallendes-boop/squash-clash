@@ -1,6 +1,6 @@
 # R1 — retención de logs de First Ball
 
-[PR #14 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/14); **R1 sin cerrar y PR sin fusionar**. Autorización PO del 2026-10-24, rama `firstball/r1-log-retention`. [Aprobación y secuencia](2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). T7.3 documental autorizado **solo después del cierre R1**, en su rama/PR separadas; no se inicia en esta entrega. Gameplay/T8 siguen sin autorizar.
+[PR #14](https://github.com/rafaallendes-boop/squash-clash/pull/14): **Claude aprobó b9a5c24 con corrección menor; PO autorizó fusión condicionada**. Corrección y verificaciones completadas; pendiente ejecutar la fusión. La entrega inicial y su evidencia se conservan abajo como histórico. Autorización PO del 2026-10-24, rama `firstball/r1-log-retention`. [Aprobación y secuencia](2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). T7.3 documental autorizado **solo después del cierre R1**, en su rama/PR separadas; no se inicia en esta entrega. Gameplay/T8 siguen sin autorizar.
 
 ## Política aplicada
 
@@ -43,3 +43,19 @@ Spec/plan, escenarios, criterios, umbrales, defaults **0d39e6016bd8**, parámetr
 Sin PR de limpieza, se verificaron worktrees antiguos **i4c-physics-decision** e **i4d-p2-analytic** limpios y ancestros fusionados de main. Antes de retirarlos se preservaron los artefactos ignorados en **Logs/archive-i4c-physics-decision** (sin artefactos previos, manifest) y **Logs/archive-i4d-p2-analytic** (siete paths de metadata/builds/caché/logs/settings/entorno ignorado). Worktrees eliminados mediante git worktree remove, **ramas remotas intactas**; manifest local no versionado. Caché R1 clonada desde el archivo ignorado I7a sin alterar ese respaldo.
 
 Entrega del informe y PR **lista para Claude, sin fusionar ni cerrar R1**. La política de retención decidida por PO queda implementada para revisión; no se declara cerrada la observación previa a T8 hasta aprobación/cierre. **Detenerse aquí. T7.3 queda pendiente del cierre R1 y de su incremento separado.**
+
+## Corrección tras revisión de Claude — 2026-10-24
+
+Fuente corregida **b8713827a2b065e6ae70724bc8924f2890e90967**, sobre head revisado **b9a5c24dfa0949bf4c1b831caf940d208615f9f1**. `MetricsLog.RetentionError` conserva de forma independiente el error de retención del constructor durante toda la instancia; Write no lo modifica. Se mantiene LastError inicial por compatibilidad y una escritura correcta lo limpia. El constructor emite `Debug.LogWarning("[SquashClash] Retención métricas: …")` si existe RetentionError; Diagnóstico muestra el error de retención junto al de log, incluso después de recuperarse la escritura.
+
+TDD temporal: el destino empieza bloqueado por un archivo, se construye MetricsLog con error, se reemplaza por una carpeta y se escribe un registro correctamente. **RED válido 16/17**: falla la aserción por falta de RetentionError, sin errores CS (reflexión para que la API ausente no sea un RED de compilación). **GREEN 17/17**: warning esperado, registro persistido, LastError null y RetentionError igual al error original. No cambia la política de poda.
+
+**Suites completas frescas: 287/287 EditMode y 136/136 PlayMode**, cero fallos/omitidos y sin errores CS. **check-release.sh dev/prod OK** sobre b871382 limpio: metadata gitDirty=false, exports frescos Release/Player no Development, Core/Runtime ambos y DevPanel/puente spike excluidos de prod. RetentionError exportado en ambos; 123 hashes de fuentes probadas coinciden con los exports. [Evidencia de revisión TDD/suites](../validation/evidence/2026-10-24-r1-retention-review-tests.json), [evidencia de revisión release](../validation/evidence/2026-10-24-r1-retention-review-release.json). Sin instalación, Xcode build ni campaña.
+
+**Condición PO:** comprobar el diff b9a5c24→head final antes de fusionar. Solo se permiten MetricsLog.cs, DiagnosticsSection.cs, LogRetentionTests.cs (o test nuevo de Diagnostics), docs/** y AGENTS.md. La corrección toca exactamente los tres archivos de código indicados, más documentación; no hay test nuevo ni metadatos adicionales. Spec/plan/escenarios/criterios/umbrales/defaults/física intactos, defaults **0d39e6016bd8**. Si cambia otro archivo, no fusionar y detenerse. Cumplidos RED, suites y release, PO autoriza marcar lista y **merge commit**, sincronizar main y eliminar worktree preservando ignorados; registrar merge/head. Solo tras cerrar R1 se inicia T7.3 documental separado y sin fusionar.
+
+### Observaciones de Claude, sin cambio de código
+
+- Si un archivo reciente supera el presupuesto de bytes restante, se borran él y los anteriores: prefijo más nuevo, sin huecos. Cubierto por `ByteLimit_KeepsNewestPrefixAndDoesNotFillHolesWithOlderSmallFiles`; irrelevante con los tamaños actuales, cientos de KB por sesión.
+- **30 archivos equivalen aproximadamente a 30 aperturas que escriben métricas. Exportar los logs antes de cualquier campaña de análisis (First Fun).**
+- El test dev/prod del constructor solo cambia la etiqueta del perfil. La exclusión real de prod se verifica con check-release, no con esa etiqueta.
