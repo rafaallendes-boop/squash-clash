@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "date": "2026-10-25",
-  "status": "AllSeriesRecoveredAwaitingPOJudgmentsAndRestoration",
+  "status": "FinalEvidenceReadyForClaude",
   "branch": "firstshot/s1-revalidation-2",
   "merge": "f7005be63218a573dd765c66b8b1e78c4d9f0213",
   "approvedHead": "9d961743e6598b951dd9892f2aa21d2ed1417ee0",
@@ -13,7 +13,21 @@
     "trackedProductFilesCompared": 399,
     "gitDiffEmpty": true,
     "workingTreeHashesMatchInstalledTestedSource": true,
-    "noNewBuildOrInstall": true
+    "noNewBuildOrInstall": true,
+    "gitTreeObjects": {
+      "Assets": {
+        "5e218ead0636d4eab23f4913b8f4911c4c117dd5": "5a9a5c8615f51c4544b79d88c40ee7ca068ddd65",
+        "f7005be63218a573dd765c66b8b1e78c4d9f0213": "5a9a5c8615f51c4544b79d88c40ee7ca068ddd65"
+      },
+      "ProjectSettings": {
+        "5e218ead0636d4eab23f4913b8f4911c4c117dd5": "0f863119582f9af08275a06a9feebb6b8eee7a5f",
+        "f7005be63218a573dd765c66b8b1e78c4d9f0213": "0f863119582f9af08275a06a9feebb6b8eee7a5f"
+      },
+      "Packages": {
+        "5e218ead0636d4eab23f4913b8f4911c4c117dd5": "7d90bbce4d20e3d06df1be0864277b9f222f9582",
+        "f7005be63218a573dd765c66b8b1e78c4d9f0213": "7d90bbce4d20e3d06df1be0864277b9f222f9582"
+      }
+    }
   },
   "productManifestSha256": "3a94eec5348a2d3e874497f2e611b4275a05906fe8f78dc66521c9446fa22a79",
   "presetBackupSha256": {
@@ -250,13 +264,62 @@
     }
   },
   "poControlAnswers": {
-    "¿Apuntas donde quieres?": null,
-    "¿Entiendes siempre dónde apuntas?": null,
-    "¿El número responde a suave/fuerte?": null,
-    "¿Los saltos de la mira al fijarse son aceptables?": null,
-    "¿Notaste diferencia entre 30 y 20 ms?": null
+    "¿Apuntas donde quieres?": "si",
+    "¿Entiendes siempre dónde apuntas?": "si, pero para por ejemplo un drop tuve que intuir que era hacia abajo, pero igual es parte de la mecnaica",
+    "¿El número responde a suave/fuerte?": "si",
+    "¿Los saltos de la mira al fijarse son aceptables?": "si",
+    "¿Notaste diferencia entre 30 y 20 ms?": "si"
   },
-  "finalRestoration": "PendingEndOfSession",
+  "finalRestoration": {
+    "firstRestoredLaunch": {
+      "ts": "2026-10-25T23:24:50.6920160Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+5e218ea dev",
+      "presetName": "P0-calib-1",
+      "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "effectiveHash": "9977d9ffd7e5",
+      "payload": {},
+      "pending": 0,
+      "seed": 0,
+      "metricsValid": true,
+      "droppedSinceRestart": 0
+    },
+    "lastRestoredLaunch": {
+      "ts": "2026-10-25T23:25:43.7507310Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+5e218ea dev",
+      "presetName": "P0-calib-1",
+      "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "effectiveHash": "9977d9ffd7e5",
+      "payload": {},
+      "pending": 0,
+      "seed": 0,
+      "metricsValid": true,
+      "droppedSinceRestart": 0
+    },
+    "launchesAfterRestoration": 6,
+    "presetFiles": {
+      "P0-calib-1.json": {
+        "byteForByteEqual": true,
+        "sha256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd"
+      },
+      "Po-1.json": {
+        "byteForByteEqual": true,
+        "sha256": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+      },
+      "last-active.txt": {
+        "byteForByteEqual": true,
+        "sha256": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
+      }
+    },
+    "allGestureRecordsUnchangedDuringClosure": true,
+    "noNewBuildOrInstallation": true,
+    "status": "Verified",
+    "repeatSeconds": 3,
+    "minCoverageMs": 30
+  },
   "priorDataExcluded": [
     "311cb11: histéresis defectuosa",
     "c5a7d1e: mira tapada",
@@ -266,8 +329,62 @@
   "S2S3S4T8Authorized": false,
   "lastRecoveredPresetFilesIdenticalToBackup": true,
   "poRuleAnd30msSeriesReplyLiteral": "Listo. Realicé las 3 pruebas. No tengo regla en la casa, pero veo bien la distancia. Por otro lado, los 10 suaves salieron bien. 10 fuertes, para mover ese rombo tengo que apuntar con el dedo y luego acelerar rapido, eso a veces hacia que el golpe salga debil porque levantaba el dedo. Pero reo que salió bien. Realiza la revisión",
-  "measurementsSoFar": {
-    "capture": "after-20ms-series",
+  "controlled20Launch": {
+    "ts": "2026-10-25T23:11:36.7177380Z",
+    "kind": "launch",
+    "build": "0.1.0+5e218ea dev",
+    "presetName": "P0-calib-1",
+    "effectiveHash": "a49c48e3d019",
+    "pending": 0,
+    "payload": {}
+  },
+  "devClosedBefore20msHandoff": true,
+  "preparationIncidents": [
+    {
+      "kind": "UI entry corrected before measurement",
+      "description": "Al intentar introducir 20 por teclado el panel mostró 10; se corrigió con el deslizador y se verificó 20 antes de relanzar. No se diagnostica defecto de producto a partir de la entrada remota.",
+      "temporaryValueMs": 10,
+      "finalValueMs": 20,
+      "gestureRecordCountBefore": 118,
+      "gestureRecordCountAfter": 118,
+      "launchAtTemporaryValueRecorded": false,
+      "controlled20HashVerified": "a49c48e3d019"
+    }
+  ],
+  "po20msSeriesReplyLiteral": "Listo!",
+  "comparability": {
+    "allGestureCount": 138,
+    "controlledConfigComparableCount": 138,
+    "excludedForChangedConfig": 0,
+    "sameGesturesReplayed": false,
+    "causalEffectOfMinCoverageIsolated": false,
+    "limitations": [
+      "Fixed 30→20 order permits learning/fatigue",
+      "Different gestures; median strong peak speed differs across conditions",
+      "Both hands used in series without per-condition/per-trial mapping",
+      "No physical ruler reference"
+    ],
+    "noNewDefaultProposed": true
+  },
+  "restorationAttempt": {
+    "status": "HistoricalFailedAttemptResolvedAfterPOAuthentication",
+    "method": "Restart existing app to reload persisted P0-calib-1; coverage returns to30 and repeat to3 together",
+    "restartExitCode": 1,
+    "coreDeviceErrorCode": 10002,
+    "deviceLockedReported": true,
+    "mirroringRequiresLocalMacPassword": true,
+    "resolvedBy": "Successful restart of same installed app and verified fresh P0 launch",
+    "failedAttemptNotCountedAsRestoration": true
+  },
+  "handUsage": {
+    "seriesReplyLiteral": "mano izquierda y derecha, ambas 2, me imagine juando y use ambas manos",
+    "bothHandsUsedInSeries": true,
+    "perConditionOrTrialHandMappingAvailable": false,
+    "samplingInstructions": "120 s izquierda dominante, desviación autorizada; PO responde listo",
+    "rulerHandExplicitlyConfirmed": false
+  },
+  "measurements": {
+    "capture": "final-restored-p0",
     "sessionBoundary": {
       "preparedAtUtc": "2026-10-25T21:52:57.954525+00:00",
       "merge": "f7005be63218a573dd765c66b8b1e78c4d9f0213",
@@ -298,11 +415,19 @@
       {
         "sha256": "8d5ae9dc5eec7f1cf720e3353e37b638ee1a510c389f1eceed18c152ec3d0ac1",
         "bytes": 1082192
+      },
+      {
+        "sha256": "3744fdd1aaffbb5829eb2c56f8891eddbb15fd8bb52b9b25df09d8f9ff051d5a",
+        "bytes": 4124
+      },
+      {
+        "sha256": "ae5a6554df9c8a8e6790306a1037081702733a754570002d9f5b95b2300ebd01",
+        "bytes": 5386
       }
     ],
     "kindCounts": {
-      "frames": 153,
-      "launch": 41,
+      "frames": 161,
+      "launch": 47,
       "s1-gesture": 138,
       "s1-sampling": 2
     },
@@ -875,6 +1000,90 @@
         "presetName": "P0-calib-1",
         "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
         "effectiveHash": "a49c48e3d019",
+        "payload": {},
+        "pending": 0,
+        "seed": 0,
+        "metricsValid": true,
+        "droppedSinceRestart": 0
+      },
+      {
+        "ts": "2026-10-25T23:24:50.6920160Z",
+        "kind": "launch",
+        "phase": "free",
+        "build": "0.1.0+5e218ea dev",
+        "presetName": "P0-calib-1",
+        "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+        "effectiveHash": "9977d9ffd7e5",
+        "payload": {},
+        "pending": 0,
+        "seed": 0,
+        "metricsValid": true,
+        "droppedSinceRestart": 0
+      },
+      {
+        "ts": "2026-10-25T23:25:31.7461770Z",
+        "kind": "launch",
+        "phase": "free",
+        "build": "0.1.0+5e218ea dev",
+        "presetName": "P0-calib-1",
+        "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+        "effectiveHash": "9977d9ffd7e5",
+        "payload": {},
+        "pending": 0,
+        "seed": 0,
+        "metricsValid": true,
+        "droppedSinceRestart": 0
+      },
+      {
+        "ts": "2026-10-25T23:25:34.7512810Z",
+        "kind": "launch",
+        "phase": "free",
+        "build": "0.1.0+5e218ea dev",
+        "presetName": "P0-calib-1",
+        "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+        "effectiveHash": "9977d9ffd7e5",
+        "payload": {},
+        "pending": 0,
+        "seed": 0,
+        "metricsValid": true,
+        "droppedSinceRestart": 0
+      },
+      {
+        "ts": "2026-10-25T23:25:37.7528320Z",
+        "kind": "launch",
+        "phase": "free",
+        "build": "0.1.0+5e218ea dev",
+        "presetName": "P0-calib-1",
+        "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+        "effectiveHash": "9977d9ffd7e5",
+        "payload": {},
+        "pending": 0,
+        "seed": 0,
+        "metricsValid": true,
+        "droppedSinceRestart": 0
+      },
+      {
+        "ts": "2026-10-25T23:25:40.7543130Z",
+        "kind": "launch",
+        "phase": "free",
+        "build": "0.1.0+5e218ea dev",
+        "presetName": "P0-calib-1",
+        "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+        "effectiveHash": "9977d9ffd7e5",
+        "payload": {},
+        "pending": 0,
+        "seed": 0,
+        "metricsValid": true,
+        "droppedSinceRestart": 0
+      },
+      {
+        "ts": "2026-10-25T23:25:43.7507310Z",
+        "kind": "launch",
+        "phase": "free",
+        "build": "0.1.0+5e218ea dev",
+        "presetName": "P0-calib-1",
+        "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+        "effectiveHash": "9977d9ffd7e5",
         "payload": {},
         "pending": 0,
         "seed": 0,
@@ -55065,50 +55274,41 @@
     "percentileMethod": "Nearest rank ceil(n*p/100); power median is arithmetic midpoint for even n",
     "H4Definition": "Final center y=5 exactly, or center y<=tinTop / >=4.57. No estimate from visual reticle diameter; not a replay of LineContactClassifier."
   },
-  "controlled20Launch": {
-    "ts": "2026-10-25T23:11:36.7177380Z",
-    "kind": "launch",
-    "build": "0.1.0+5e218ea dev",
-    "presetName": "P0-calib-1",
-    "effectiveHash": "a49c48e3d019",
-    "pending": 0,
-    "payload": {}
+  "conditionalAimAdjustment": {
+    "poAcceptsFreezeJumps": true,
+    "poReplyLiteral": "si",
+    "triggerForSeparateAdjustmentProposal": false,
+    "noAdjustmentProposedOrImplemented": true
   },
-  "devClosedBefore20msHandoff": true,
-  "preparationIncidents": [
-    {
-      "kind": "UI entry corrected before measurement",
-      "description": "Al intentar introducir 20 por teclado el panel mostró 10; se corrigió con el deslizador y se verificó 20 antes de relanzar. No se diagnostica defecto de producto a partir de la entrada remota.",
-      "temporaryValueMs": 10,
-      "finalValueMs": 20,
-      "gestureRecordCountBefore": 118,
-      "gestureRecordCountAfter": 118,
-      "launchAtTemporaryValueRecorded": false,
-      "controlled20HashVerified": "a49c48e3d019"
-    }
-  ],
-  "po20msSeriesReplyLiteral": "Listo!",
-  "comparability": {
-    "allGestureCount": 138,
-    "controlledConfigComparableCount": 138,
-    "excludedForChangedConfig": 0,
-    "sameGesturesReplayed": false,
-    "causalEffectOfMinCoverageIsolated": false,
-    "limitations": [
-      "Fixed 30→20 order permits learning/fatigue",
-      "Different gestures; median strong peak speed differs across conditions",
-      "Hand not yet explicitly confirmed",
-      "No physical ruler reference"
+  "decisionBoundary": {
+    "s1Accepted": false,
+    "noNewDefaultChosen": true,
+    "minCoverageDefaultRemainsMs": 30,
+    "poNotedDifferenceWithoutExpressingPreference": true,
+    "physicalMmValidation": "NotEvaluated",
+    "S2S3S4T8Authorized": false
+  },
+  "configurationTimeline": {
+    "allLaunchRecords": "measurements.launches",
+    "uniqueObservedLaunchHashes": [
+      "00a501ad7066",
+      "9977d9ffd7e5",
+      "a49c48e3d019"
     ],
-    "noNewDefaultProposed": true
+    "measured30Hash": "00a501ad7066",
+    "measured20Hash": "a49c48e3d019",
+    "restoredP0Hash": "9977d9ffd7e5",
+    "unexpectedGestureConfigurationCount": 0,
+    "temporary10MsEntryRecordedSeparately": "preparationIncidents; no launch or new gesture at that value"
   },
-  "restorationAttempt": {
-    "status": "PendingMacAuthenticationAndVerifiedStartup",
-    "method": "Restart existing app to reload persisted P0-calib-1; coverage returns to30 and repeat to3 together",
-    "restartExitCode": 1,
-    "coreDeviceErrorCode": 10002,
-    "deviceLockedReported": true,
-    "mirroringRequiresLocalMacPassword": true,
-    "noRestorationSuccessInferred": true
+  "finalReviewScope": {
+    "onlyDocumentaryFiles": [
+      "AGENTS.md",
+      "docs/reviews/2026-10-25-first-shot-po-approvals.md",
+      "docs/reviews/2026-10-25-first-shot-s1-revalidation-2.md",
+      "docs/validation/evidence/2026-10-25-s1-revalidation-2.json"
+    ],
+    "newCodeTestsDefaultsSpecPlanCriteria": false,
+    "newBuildInstallOrSuites": false
   }
 }

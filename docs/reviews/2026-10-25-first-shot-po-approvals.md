@@ -156,3 +156,32 @@ Preparación autorizada: respaldo de P0-calib-1/Po-1/last-active; arranque P0-ca
 Orden: 120 s izquierda, regla física 50 mm, diez suaves/diez fuertes a 30 ms, diez suaves/diez fuertes a 20 ms aplicado sin guardar y comprobado antes. Botones dentro de DEV, que se cierra automáticamente al armarlos. Registrar todos los intentos, incluidos toques y cancelaciones. Informe por serie con potencia mínima/mediana/máxima, conservadores por motivo, separación y porcentaje Frozen; saltos al fijarse p50/p95/máximo; H3/H4 descriptivos (pico de velocidad frente a 250 mm/s, proporción en tope y=5 m o fuera), **sin ajustes**. Cinco preguntas del PO separadas/literales, sin inferencias.
 
 Cierre: recuperar evidencia nueva separada de 311cb11 (histéresis defectuosa), c5a7d1e (mira tapada) y la comprobación breve de visibilidad anterior; restaurar P0-calib-1 **9977d9ffd7e5/cero pendientes** y tres archivos byte a byte al respaldo. Si aparece defecto, registrar y detenerse. Informe/JSON nuevos, AGENTS actualizado, PR documental lista para Claude **sin fusionar**. Sin código/defaults/spec/plan/criterios; **S1 sigue sin aceptar y S2–S4/T8 no autorizados. Detenerse al entregar.** Comprobar perfil antes de futuras instalaciones y renovar primero desde el 27; no hay instalación en esta autorización.
+
+
+### Resultado final de segunda revalidación — 2026-10-25
+
+Sesión sobre **5e218ea dev instalada**, sin build/instalación/suites/exports nuevos. Una adquisición **complete=true / 120,014203167 s / 2449 muestras**, 50,611337 Hz entregados dentro de toques (no frecuencia hardware); otra **incompleta / 12,549327917 s / system-cancel**, separada sin atribuir causa. Se conservan **138 gestos / 4683 muestras**, incluidos un Tap y 137 Swing: 92 en adquisiciones, 6 de distancia y 40 de las cuatro series. **Los mm físicos quedan NotEvaluated: el PO declara que no tiene regla.** No se cambia DpiSource a PhysicallyVerified ni se interpreta la etiqueta automática50 como recorrido real.
+
+Cuatro series de10, sin descartar conservadores/P=0. Mediana de fuertes **1,977 % a30 / 7,123 % a20**, máximos20,523/18,778 %, suaves todosP=0; Frozen **5/10 a30 y9/10 a20**. Saltos de los54 Frozen de toda la sesión: p50 **1,570968 m**, p95 **2,166354 m**, máximo **2,667281 m**, cifras originales sin suavizado/replay. H3/H4 por gesto/grupo en informe/JSON, sin ajustes. Ninguno de los138 gestos queda excluido por configuración: hashes **00a501ad7066 (30 ms)** y **a49c48e3d019 (20 ms)**, cero pendientes. Cada lanzamiento conservado. La entrada remota dejó transitoriamente10 durante preparación, corregido antes de relanzar; ningún lanzamiento10 ni nuevos gestos en ese intervalo. Se declara, sin diagnosticar defecto del producto a partir del control remoto.
+
+El PO responde **por separado y literalmente**:
+
+| Pregunta | Respuesta literal |
+|---|---|
+| ¿Apuntas donde quieres? | si |
+| ¿Entiendes siempre dónde apuntas? | si, pero para por ejemplo un drop tuve que intuir que era hacia abajo, pero igual es parte de la mecnaica |
+| ¿El número responde a suave/fuerte? | si |
+| ¿Los saltos de la mira al fijarse son aceptables? | si |
+| ¿Notaste diferencia entre 30 y 20 ms? | si |
+
+Mano de las series, literal:
+
+> mano izquierda y derecha, ambas 2, me imagine juando y use ambas manos
+
+Se registra uso de **ambas manos, sin desglose por condición/intento**. El bloque120 s fue solicitado con izquierda dominante (desviación autorizada del plan), con respuesta «listo»; no se presume una campaña diestra adicional. Orden30→20, aprendizaje/fatiga, manos mezcladas y gestos distintos limitan la comparación; no se atribuye causalidad a cobertura ni a ella el cambio de Frozen. La respuesta sobre diferencia no expresa preferencia ni decisión de default: **permanece30 ms**. Respuesta sobre saltos «si»: **no se activa la propuesta condicional de ajuste** de lookback/umbral/ganancia. La observación del drop queda como comprensión de la mecánica; S1 no golpea la pelota.
+
+**Restauración final comprobada:** reinicio de la misma app para recargar P0 persistido (coverage30/repeat3 juntos, sin lanzamiento intermedio30/repeat0 ni guardar). Primer intento rechazado por iPhone bloqueado/CoreDevice10002; tras autenticación local completada por PO, reinicio correcto. Nuevo arranque **2026-10-25T23:24:50.6920160Z / 5e218ea dev / P0-calib-1 / 9977d9ffd7e5 / cero pendientes**, último registro **2026-10-25T23:25:43.7507310Z**. Comparación directa de bytes: **P0-calib-1, Po-1 y last-active idénticos al respaldo**. No se añadieron gestos durante el cierre.
+
+[Informe nuevo](2026-10-25-first-shot-s1-revalidation-2.md) y [evidencia nueva](../validation/evidence/2026-10-25-s1-revalidation-2.json), separados de311cb11/histéresis defectuosa, c5a7d1e/mira tapada y visibilidad previa. Diff solo cuatro documentos, producto/spec/planes/criterios intactos. Defaults **00a501ad7066**, 41 valores/proyección **0d39e6016bd8** y SimulationKey **166a96e319c7** intactos. Las tres observaciones Claude para S2 del cierre de PR #19 siguen registradas, sin código.
+
+Entrega documental lista para Claude **sin fusionar**. **No equivale a aceptación de S1; el PO decide con el informe. S2–S4/T8 siguen sin autorizar. Detenerse.** Comprobar siempre perfil antes de instalar y renovar primero desde el27; no hubo instalación en esta sesión.
