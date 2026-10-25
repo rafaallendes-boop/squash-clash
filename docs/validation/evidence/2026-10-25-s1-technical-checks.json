@@ -139,6 +139,33 @@
       "skipped": 0,
       "xmlSha256": "b86d5d4c8d4c64ff1424763e09e4668d65739f89eac20b4d50693a7445b69676",
       "localXml": "Logs/evidence/s1-tdd/13-regression-playmode.xml"
+    },
+    {
+      "stage": "14-boundary-red",
+      "total": 6,
+      "passed": 1,
+      "failed": 5,
+      "skipped": 0,
+      "xmlSha256": "235419440bc6e093770cb08c922910e1c9a0ef885363585407eb6b81aae77dc4",
+      "localXml": "Logs/evidence/s1-tdd/14-boundary-red.xml"
+    },
+    {
+      "stage": "14-regression-editmode",
+      "total": 336,
+      "passed": 336,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "6503ca73d7f1191b44515578917e58ceadf749f3b1b779cae4c3edf0df043a31",
+      "localXml": "Logs/evidence/s1-tdd/14-regression-editmode.xml"
+    },
+    {
+      "stage": "14-regression-playmode",
+      "total": 161,
+      "passed": 161,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "4820aa02675bb49855a858d97c403c21926690056be32c7759f7ee7e20d1566f",
+      "localXml": "Logs/evidence/s1-tdd/14-regression-playmode.xml"
     }
   ],
   "defaults": {
@@ -331,13 +358,20 @@
     "oldHash": "0d39e6016bd8"
   },
   "physicalValidation": {
-    "status": "pending",
-    "hardwareTouchRateHz": null,
-    "rulerMeasuredMm": null,
-    "softFlicks": [],
-    "strongFlicks": [],
+    "status": "device-evidence-collected-with-limitations",
     "evidence": "2026-10-25-s1-touch-sampling.json",
-    "partialStrongTaggedRecords": 6
+    "poFeedbackRecorded": true,
+    "hand": "left-dominant",
+    "hardwareTouchRateHz": null,
+    "dpiCalibrated": false,
+    "acquisitionWindows": 3,
+    "complete120SecondAcquisitions": 1,
+    "softTenOrdinalSeries": 1,
+    "strongTenOrdinalSeries": 2,
+    "rawGestureRecords": 102,
+    "acceptanceInferred": false,
+    "knownBoundaryBugFixedWithoutChangingParameters": true,
+    "offlineReplayCases": 3
   },
   "nativeDevBuild": {
     "schema": 1,
@@ -410,5 +444,6 @@
     "legacyProjectionHash": "8de3f2ecb217",
     "presetFileSha256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
     "presetsAndSelectionByteIdenticalBeforeAfter": true
-  }
+  },
+  "finalSourceHead": "340ca2cd30ed7310487f2ccd723daab99a9e9088"
 }
