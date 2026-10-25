@@ -43,7 +43,7 @@ namespace SquashClash.Core.Shot
             {
                 if(!Finite(sample.TimeReal)||!Finite(mmPerPx)||mmPerPx<=0)throw new ArgumentOutOfRangeException(nameof(mmPerPx));
                 origin=previousPosition=sample.PositionPx;previousTime=sample.TimeReal;scale=mmPerPx;
-                Aim=initial;State=AimState.Aiming;consecutive=0;started=true;history.Clear();history.Add((sample.TimeReal,Aim));
+                Aim=initial;State=AimState.Aiming;consecutive=0;crossingTime=double.NaN;started=true;history.Clear();history.Add((sample.TimeReal,Aim));
                 FreezeTimeReal=0;FreezeUsedFirstValidPoint=false;FreezeJumpMeters=0;return;
             }
             if(!started||State==AimState.Frozen||sample.TimeReal<=previousTime||!Finite(sample.TimeReal))return;
@@ -54,7 +54,7 @@ namespace SquashClash.Core.Shot
             double speed=Vector2.Distance(sample.PositionPx,previousPosition)*scale/(sample.TimeReal-previousTime);
             if(speed>settings.FlickMmPerS)
             {
-                if(consecutive==0)crossingTime=sample.TimeReal;
+                if(double.IsNaN(crossingTime))crossingTime=sample.TimeReal;
                 consecutive++;
                 if(consecutive>=settings.FlickConfirmSamples)
                 {
@@ -73,7 +73,7 @@ namespace SquashClash.Core.Shot
             {
                 // Confirmation requires consecutive intervals above the high threshold.
                 consecutive=0;
-                if(speed<settings.FlickMmPerS-settings.FlickHysteresisMmPerS)crossingTime=0;
+                if(speed<settings.FlickMmPerS-settings.FlickHysteresisMmPerS)crossingTime=double.NaN;
             }
             previousPosition=sample.PositionPx;previousTime=sample.TimeReal;
         }

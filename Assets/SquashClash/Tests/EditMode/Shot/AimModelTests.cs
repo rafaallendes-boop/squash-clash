@@ -25,7 +25,7 @@ namespace SquashClash.Core.Tests.Shot
         {var m=Frozen();Assert.That(m.State,Is.EqualTo(AimState.Frozen));Assert.That(m.FreezeTimeReal,Is.EqualTo(1.08));Assert.That(m.Aim.x,Is.EqualTo(3.02f).Within(1e-5));}
         [Test] public void Flick_WithoutHistory_UsesFirstValidPointAndFlagsIt()
         {var m=Model();m.Update(S(1.01,10),1);m.Update(S(1.02,20),1);Assert.That(m.State,Is.EqualTo(AimState.Frozen));Assert.That(m.FreezeUsedFirstValidPoint,Is.True);Assert.That(m.Aim,Is.EqualTo(new Vector2(3.2f,2.2f)));}
-        [Test] public void Freeze_HappensOncePerGesture_WithHysteresis()
+        [Test] public void Freeze_RemainsLatchedUntilNextGesture()
         {var m=Frozen();double at=m.FreezeTimeReal;m.Update(S(1.2,0),1);m.Update(S(1.21,100),1);Assert.That(m.State,Is.EqualTo(AimState.Frozen));Assert.That(m.FreezeTimeReal,Is.EqualTo(at));}
         [Test] public void AfterFreeze_FurtherMovementDoesNotMoveAim()
         {var m=Frozen();var at=m.Aim;m.Update(S(1.3,99,99),1);Assert.That(m.Aim,Is.EqualTo(at));}
@@ -33,5 +33,36 @@ namespace SquashClash.Core.Tests.Shot
         {var m=Model();m.Update(S(1.0001,.1f),1);m.Update(S(1.02,.11f),1);Assert.That(m.State,Is.EqualTo(AimState.Aiming));}
         [Test] public void CameraAndLaterScaleChanges_DoNotMoveOrRescaleStoredAim()
         {var m=Model(1000);m.Update(S(1.1,5),1);m.Update(S(1.2,10),9);Assert.That(m.Aim.x,Is.EqualTo(2).Within(1e-6));}
+        [TestCase(230,40,1)]
+        [TestCase(230,0,3)]
+        [TestCase(210,40,1)]
+        [TestCase(250,40,1)]
+        [TestCase(200,40,3)]
+        public void Flick_BandInterruptsConfirmation_OnlyBelowLowThresholdRearmsCrossing(float bandSpeed,float hysteresis,double crossing)
+        {
+            var m=new AimModel(new AimSettings(.12f,2.2f,250,hysteresis,50,2),CourtDimensions.Standard(),3.2f);
+            m.Update(S(0,0,0,TouchPhaseKind.Began),1);
+            // One-second intervals make the requested speeds exact, including both band boundaries.
+            m.Update(S(1,300),1);Assert.That(m.State,Is.EqualTo(AimState.Aiming));
+            m.Update(S(2,300+bandSpeed),1);Assert.That(m.State,Is.EqualTo(AimState.Aiming));
+            m.Update(S(3,600+bandSpeed),1);
+            Assert.That(m.State,Is.EqualTo(AimState.Aiming),"A retained crossing must not bypass two consecutive high intervals.");
+            m.Update(S(4,900+bandSpeed),1);
+            Assert.That(m.State,Is.EqualTo(AimState.Frozen));
+            Assert.That(m.FreezeTimeReal,Is.EqualTo(crossing),"The hysteresis band preserves the first crossing; only a fall below it rearms.");
+        }
+        [TestCase(false)]
+        [TestCase(true)]
+        public void NewGesture_DoesNotInheritPendingOrConfirmedCrossing(bool freezeFirst)
+        {
+            var m=new AimModel(Settings(),CourtDimensions.Standard(),3.2f);
+            m.Update(S(0,0,0,TouchPhaseKind.Began),1);m.Update(S(1,300),1);
+            if(freezeFirst)m.Update(S(2,600),1);
+            m.Update(S(10,0,0,TouchPhaseKind.Began),1);
+            Assert.That(m.State,Is.EqualTo(AimState.Aiming));Assert.That(m.FreezeTimeReal,Is.Zero);
+            m.Update(S(11,300),1);Assert.That(m.State,Is.EqualTo(AimState.Aiming));
+            m.Update(S(12,600),1);Assert.That(m.State,Is.EqualTo(AimState.Frozen));
+            Assert.That(m.FreezeTimeReal,Is.EqualTo(11));
+        }
     }
 }
