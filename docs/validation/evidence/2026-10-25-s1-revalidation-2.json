@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "date": "2026-10-25",
-  "status": "FinalEvidenceReadyForClaude",
+  "status": "DeliveredForClaudeReview",
   "branch": "firstshot/s1-revalidation-2",
   "merge": "f7005be63218a573dd765c66b8b1e78c4d9f0213",
   "approvedHead": "9d961743e6598b951dd9892f2aa21d2ed1417ee0",
@@ -55310,5 +55310,20 @@
     ],
     "newCodeTestsDefaultsSpecPlanCriteria": false,
     "newBuildInstallOrSuites": false
+  },
+  "delivery": {
+    "pr": "https://github.com/rafaallendes-boop/squash-clash/pull/20",
+    "draft": false,
+    "merged": false,
+    "documentaryClosureCommitBeforePRLink": "e9fcb39fd893da38725d3c83bb50d650fe834c33",
+    "followupCommitOnlyAddsPRLinkAndAuditSummary": true,
+    "stop": true
+  },
+  "documentaryVerification": {
+    "changedFilesExactlyFourDocuments": true,
+    "unchangedBaseFilesComparedByteForByte": 628,
+    "productHashesCompared": 399,
+    "localLinksVerified": true,
+    "noNewSuitesBuildExportOrInstall": true
   }
 }

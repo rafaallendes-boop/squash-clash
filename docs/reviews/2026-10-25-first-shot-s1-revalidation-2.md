@@ -2,7 +2,7 @@
 
 Fecha: 2026-10-25 (horas de registros en UTC). Rama `firstshot/s1-revalidation-2`, **solo documentación**. App instalada **5e218ea dev**, sin build ni instalación nuevas. Base **f7005be63218a573dd765c66b8b1e78c4d9f0213**.
 
-Se recuperaron una adquisición completa de 120 s, seis intentos de distancia y las cuatro series de diez gestos a 30/20 ms. El PO respondió por separado a las cinco preguntas, acepta los saltos y declara ambas manos en las series sin desglose. **La distancia en mm queda NotEvaluated por falta de regla física.** P0-calib-1 restaurado y cotejado. Entrega documental para Claude **sin fusionar**; **S1 sigue sin aceptar y S2–S4/T8 sin autorizar**.
+Se recuperaron una adquisición completa de 120 s, seis intentos de distancia y las cuatro series de diez gestos a 30/20 ms. El PO respondió por separado a las cinco preguntas, acepta los saltos y declara ambas manos en las series sin desglose. **La distancia en mm queda NotEvaluated por falta de regla física.** P0-calib-1 restaurado y cotejado. [PR #20 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/20), **sin fusionar**; **S1 sigue sin aceptar y S2–S4/T8 sin autorizar**.
 
 [Evidencia nueva, trazas y cálculos](../validation/evidence/2026-10-25-s1-revalidation-2.json) · [Autorización y observaciones Claude para S2](2026-10-25-first-shot-po-approvals.md#cierre-de-pr-19-y-segunda-revalidación-autorizados-por-el-po--2026-10-25).
 
@@ -131,4 +131,4 @@ Las tres observaciones de Claude para S2 quedan en aprobaciones: mira visual 0,8
 
 Diff de la rama limitado a **AGENTS.md, aprobaciones, este informe y JSON nuevo**. Assets, ProjectSettings, Packages, scripts, spec, planes y criterios intactos. Defaults **00a501ad7066**, 41 valores heredados/proyección **0d39e6016bd8** y **SimulationKey 166a96e319c7** intactos. Evidencia y helpers privados en `Logs/evidence/s1-revalidation-2/`; no se versionan logs originales, identificadores personales, credenciales ni builds.
 
-Entrega: **PR documental lista para Claude, sin fusionar**. **S1 sigue sin aceptar; S2–S4/T8 sin autorizar. Detenerse.** Comprobar siempre vigencia de perfil antes de instalar y renovarlo primero desde el 27; vence 2026-10-28T14:59:31Z. No hubo instalación en esta sesión.
+Entrega: [PR #20 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/20), **sin fusionar**. **S1 sigue sin aceptar; S2–S4/T8 sin autorizar. Detenerse.** Comprobar siempre vigencia de perfil antes de instalar y renovarlo primero desde el 27; vence 2026-10-28T14:59:31Z. No hubo instalación en esta sesión.
