@@ -101,6 +101,12 @@ H4 usa posición final del **centro**: tope y=5 m exacto, o fuera de los límite
 | Fuertes 20 | 0/10 | 0/10 | 0 % |
 | Total sesión | 16/138 (11,594 %) | 29/138 (21,014 %) | 21,014 % |
 
+## Corrección de revisión Claude: cobertura NotInformative
+
+Los **40 gestos de serie cubrieron los80 ms completos** de la ventana: CoveredMs bruto79,99999999992724 ms en los40 (redondeo de tiempo en doble precisión), sin ninguna salida **short-coverage**. Por tanto **power.minCoverageMs=20 o30 nunca fue la restricción efectiva** en estos gestos y el experimento queda **NotInformative para la cobertura**.
+
+Las **20 salidas conservadoras** de las series se debieron a **minSamples=4** (13 few-samples) o **maxGapMs=34** (7 sample-gap), parámetros que **no cambiaron**. No se atribuyen a cobertura insuficiente. La diferencia percibida por el PO se atribuye, en la lectura de esta revisión, a **gestos fuertes más rápidos en la tanda20** (mediana del pico290,545→457,736 mm/s), no a bajar la cobertura mínima. Se mantienen declarados el orden fijo30→20 y las manos mezcladas; no es una estimación causal aislada entre gestos idénticos. **Se mantiene30 ms**, sin cambiar ninguna respuesta literal del PO.
+
 ## Juicio del PO, literal y separado
 
 | Pregunta | Respuesta literal |

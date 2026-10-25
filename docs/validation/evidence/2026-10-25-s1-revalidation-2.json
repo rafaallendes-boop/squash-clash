@@ -55325,5 +55325,27 @@
     "productHashesCompared": 399,
     "localLinksVerified": true,
     "noNewSuitesBuildExportOrInstall": true
+  },
+  "coverageExperimentReview": {
+    "status": "NotInformative",
+    "meaning": "Not informative about power.minCoverageMs, not a rejection of the literal PO answers",
+    "seriesGestures": 40,
+    "fullWindowMs": 80,
+    "fullWindowCoveredCount": 40,
+    "coveredMsMinRaw": 79.99999999992724,
+    "coveredMsMaxRaw": 79.99999999992724,
+    "shortCoverageCount": 0,
+    "effectiveConservativeRestrictions": {
+      "power.minSamples": 4,
+      "power.maxGapMs": 34
+    },
+    "conservativeReasons": {
+      "few-samples": 13,
+      "sample-gap": 7
+    },
+    "unchangedRestrictionsAcrossConditions": true,
+    "perceivedDifferenceInterpretation": "Se atribuye a gestos fuertes más rápidos en la tanda20, no a cobertura: mediana del pico290.545→457.736 mm/s. Orden fijo y manos mezcladas siguen limitando la comparación.",
+    "defaultMinCoverageMsRetained": 30,
+    "literalPOAnswersUnchanged": true
   }
 }
