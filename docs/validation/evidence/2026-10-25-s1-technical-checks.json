@@ -395,9 +395,9 @@
     "sourceFilesMatchTests": true,
     "functionalSourceHead": "340ca2cd30ed7310487f2ccd723daab99a9e9088",
     "installationSucceeded": true,
-    "launchObserved": false,
-    "launchBlocker": "iPhone locked; CoreDeviceError 10002 / FBSOpenApplicationErrorDomain 7",
-    "presetFilesAndSelectionByteIdenticalAfterInstallation": true
+    "launchObserved": true,
+    "presetFilesAndSelectionByteIdenticalAfterInstallation": true,
+    "initialLaunchBlockedByDeviceLock": true
   },
   "releaseChecks": {
     "dev": {
@@ -513,5 +513,44 @@
     "sourceFilesCompared": 199,
     "sourceFilesMatchTests": true
   },
-  "sourceFilesComparedFinal": 200
+  "sourceFilesComparedFinal": 200,
+  "correctedBuildStartup": {
+    "schema": 1,
+    "build": "0.1.0+c6c68c1 dev",
+    "launchObserved": true,
+    "firstLaunch": {
+      "ts": "2026-10-25T14:37:43.8924920Z",
+      "kind": "launch",
+      "build": "0.1.0+c6c68c1 dev",
+      "presetName": "P0-calib-1",
+      "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "effectiveHash": "9977d9ffd7e5",
+      "pending": 0
+    },
+    "latestLaunch": {
+      "ts": "2026-10-25T14:38:04.9137810Z",
+      "kind": "launch",
+      "build": "0.1.0+c6c68c1 dev",
+      "presetName": "P0-calib-1",
+      "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "effectiveHash": "9977d9ffd7e5",
+      "pending": 0
+    },
+    "presetFilesAndSelection": {
+      "last-active.txt": {
+        "sha256": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+        "byteIdenticalToBeforeS1": true
+      },
+      "P0-calib-1.json": {
+        "sha256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+        "byteIdenticalToBeforeS1": true
+      },
+      "Po-1.json": {
+        "sha256": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+        "byteIdenticalToBeforeS1": true
+      }
+    },
+    "legacyProjectionHash": "8de3f2ecb217",
+    "newGestureCampaignClaimed": false
+  }
 }
