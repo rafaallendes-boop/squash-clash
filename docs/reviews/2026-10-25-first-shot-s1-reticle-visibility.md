@@ -61,7 +61,7 @@ Se respaldaron P0-calib-1, Po-1 y last-active antes de instalar y se comprobaron
 
 ## Comprobación visual del PO
 
-Pendiente de incorporar la captura y respuesta literal de esta comprobación breve. No se ejecutan 2 minutos, regla, series de flicks ni experimento 20→30/30→20 ms. Esta comprobación no sustituye las cinco preguntas de control ni acepta S1.
+Pendiente de incorporar la captura y respuesta literal de esta comprobación breve. [PR #19](https://github.com/rafaallendes-boop/squash-clash/pull/19) permanece en borrador hasta cerrar esa evidencia; no se presenta todavía como lista para Claude. No se ejecutan 2 minutos, regla, series de flicks ni experimento 20→30/30→20 ms. Esta comprobación no sustituye las cinco preguntas de control ni acepta S1.
 
 ## Invariantes y entrega
 
