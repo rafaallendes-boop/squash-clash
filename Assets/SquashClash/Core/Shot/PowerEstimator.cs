@@ -45,7 +45,10 @@ namespace SquashClash.Core.Shot
                         if(sample.Phase==TouchPhaseKind.Stationary&&sample.PositionPx==before.PositionPx)continue;
                         return Soft("repeated-time");
                     }
-                    if(before.TimeReal<=releaseTimeReal&&sample.TimeReal>=start)gap=Math.Max(gap,dt*1000);
+                    // Only an interval overlapping the window interior can limit interpolation.
+                    // Exact endpoints are real samples: a preceding hold or a later event is outside W'.
+                    // Use the same timestamp tolerance as At/count below (0.1 ns), not a new physical threshold.
+                    if(before.TimeReal<releaseTimeReal-1e-10&&sample.TimeReal>start+1e-10)gap=Math.Max(gap,dt*1000);
                 }
                 if(sample.TimeReal>=start-1e-10&&sample.TimeReal<=releaseTimeReal+1e-10)count++;
                 previous=i;
