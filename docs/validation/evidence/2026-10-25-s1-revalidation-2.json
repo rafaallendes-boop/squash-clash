@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "date": "2026-10-25",
+  "status": "PreparedAwaitingPhysicalBlocks",
+  "branch": "firstshot/s1-revalidation-2",
+  "merge": "f7005be63218a573dd765c66b8b1e78c4d9f0213",
+  "approvedHead": "9d961743e6598b951dd9892f2aa21d2ed1417ee0",
+  "installedBuild": "5e218ea dev",
+  "newBuildOrInstallation": false,
+  "productEquivalence": {
+    "installedSourceHead": "5e218ead0636d4eab23f4913b8f4911c4c117dd5",
+    "mainAfterMerge": "f7005be63218a573dd765c66b8b1e78c4d9f0213",
+    "trackedProductFilesCompared": 399,
+    "gitDiffEmpty": true,
+    "workingTreeHashesMatchInstalledTestedSource": true,
+    "noNewBuildOrInstall": true
+  },
+  "productManifestSha256": "3a94eec5348a2d3e874497f2e611b4275a05906fe8f78dc66521c9446fa22a79",
+  "presetBackupSha256": {
+    "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+    "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
+  },
+  "startupVerifiedRecord": {
+    "ts": "2026-10-25T22:05:17.3866830Z",
+    "kind": "launch",
+    "build": "0.1.0+5e218ea dev",
+    "presetName": "P0-calib-1",
+    "effectiveHash": "9977d9ffd7e5",
+    "pending": 0,
+    "payload": {}
+  },
+  "controlled30Launch": {
+    "ts": "2026-10-25T22:06:38.0264320Z",
+    "kind": "launch",
+    "build": "0.1.0+5e218ea dev",
+    "presetName": "P0-calib-1",
+    "effectiveHash": "00a501ad7066",
+    "pending": 0,
+    "payload": {}
+  },
+  "preparedParameters": {
+    "launcher.repeatSeconds": 0,
+    "power.minCoverageMs": 30
+  },
+  "presetsUnchangedAfterPreparation": true,
+  "devClosedBeforeHandoff": true,
+  "reminderShownLiteral": "La pelota no se golpea en S1. Arrastra despacio para mover la mira; para fijarla, haz un gesto rápido y corto, como un golpe. Abajo verás el estado (Apuntando, Fijada o Inválida) y P, la potencia.",
+  "dominantHand": "left",
+  "planDeviation": "Bloque principal con izquierda dominante, autorizado por PO; plan pedía derecha",
+  "experimentOrder": "30→20",
+  "possibleOrderBias": "Aprendizaje o fatiga",
+  "physicalBlocks": {
+    "sampling120SecondsLeft": "AwaitingPO",
+    "ruler50mm": "NotStarted",
+    "soft30": "NotStarted",
+    "strong30": "NotStarted",
+    "soft20": "NotStarted",
+    "strong20": "NotStarted"
+  },
+  "poControlAnswers": {
+    "¿Apuntas donde quieres?": null,
+    "¿Entiendes siempre dónde apuntas?": null,
+    "¿El número responde a suave/fuerte?": null,
+    "¿Los saltos de la mira al fijarse son aceptables?": null,
+    "¿Notaste diferencia entre 30 y 20 ms?": null
+  },
+  "finalRestoration": "PendingEndOfSession",
+  "priorDataExcluded": [
+    "311cb11: histéresis defectuosa",
+    "c5a7d1e: mira tapada",
+    "5e218ea: comprobación previa solo de visibilidad"
+  ],
+  "s1Accepted": false,
+  "S2S3S4T8Authorized": false
+}
