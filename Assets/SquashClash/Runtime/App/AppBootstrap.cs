@@ -238,6 +238,10 @@ namespace SquashClash.Runtime.App
             ballView.Initialize(Host, Config.Physics.BallRadius);
             Host.Launch(Config);
             gameObject.AddComponent<LegibilityAids>().Initialize(Host, Tuning, ballView);
+            var input=gameObject.AddComponent<SquashClash.Runtime.Input.TouchInputAdapter>();
+            var reticle=new GameObject("First Shot aim").AddComponent<SquashClash.Runtime.Shot.AimReticleView>();
+            reticle.transform.SetParent(transform,false);
+            gameObject.AddComponent<SquashClash.Runtime.Shot.GesturePreview>().Initialize(this,input,reticle);
             Debug.Log($"[SquashClash] ball ready backend={Config.Backend} visualColliders=0 localPhysicsScenes={physX.LiveInstances} config={Config.Hash} predictedSteps={Host.Prediction.States.Count-1}");
         }
 
