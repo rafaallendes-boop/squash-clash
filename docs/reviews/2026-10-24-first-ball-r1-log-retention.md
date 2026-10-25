@@ -1,6 +1,6 @@
 # R1 — retención de logs de First Ball
 
-Entrega para Claude; **R1 sin cerrar y PR sin fusionar**. Autorización PO del 2026-10-24, rama `firstball/r1-log-retention`. [Aprobación y secuencia](2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). T7.3 documental autorizado **solo después del cierre R1**, en su rama/PR separadas; no se inicia en esta entrega. Gameplay/T8 siguen sin autorizar.
+[PR #14 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/14); **R1 sin cerrar y PR sin fusionar**. Autorización PO del 2026-10-24, rama `firstball/r1-log-retention`. [Aprobación y secuencia](2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). T7.3 documental autorizado **solo después del cierre R1**, en su rama/PR separadas; no se inicia en esta entrega. Gameplay/T8 siguen sin autorizar.
 
 ## Política aplicada
 
