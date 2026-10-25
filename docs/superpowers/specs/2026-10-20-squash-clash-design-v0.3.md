@@ -80,6 +80,19 @@ Fuentes:
 
 **Nota de trazabilidad:** la v0.1 etiquetaba como [APROBADO] valores que el PO había aceptado como punto de partida (60–70 %) y detalles del gesto que solo se vieron en un boceto (la potencia con flick). Desde la v0.2 pasan a [EXPERIMENTO]. En la v0.3, los **valores numéricos** que acompañan a D19–D29 (±40 ms, ~10 mm, etc.) siguen siendo [EXPERIMENTO]: el PO aprobó el mecanismo y el valor de partida, no un valor definitivo.
 
+#### Registro First Ball autorizado en T7.3 — 2026-10-24
+
+Registro de decisiones posteriores a R3, con [autorización documental del PO para T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24), ejecutada tras el [cierre de R1](../../reviews/2026-10-21-first-ball-po-approvals.md#cierre-r1--2026-10-24). D15/D27 conservan el proceso de selección original; D30 registra su resultado para First Ball.
+
+| ID | Decisión | Fuente | Evidencia |
+|---|---|---|---|
+| D30 | **P2-Analytic es el backend de First Ball**, por la regla de §8.2.3: alternativa más simple que cumple todos los invariantes y umbrales medidos. **P1 falla C3/C10/C11/C17** y queda como respaldo configurable, sin usarse por defecto. | PO, 2026-10-23; registro T7.3 autorizado el 2026-10-24. | [Decisión del gate y comparación de los 18 criterios](../../reviews/2026-10-23-first-ball-physics-backend-decision.md). |
+| D31 | Aclaración **D-4**: §8.3.1–8.3.3 y §8.3.7 se miden en **C12–C15**, sin umbral numérico nuevo. `physics.maxImpactsPerStep` no es operativo con P1; **sí es operativo con P2**. | [D-4 de la respuesta a Claude](../../reviews/2026-10-20-first-ball-plan-review-response-claude.md#41-decisiones-del-po-antes-de-autorizar-la-implementación); [autorización PO T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). | [P2: tope configurable, pruebas con topes 1/2 y C14 con tope 4, cero alcanzados](../../reviews/2026-10-23-first-ball-physics-spike-P2.md#autorización-y-contrato). |
+| D32 | Aclaración **D-5**: **DefaultPreset.json es la única fuente de defaults**; validación de esquema, tipos y rangos. Sustituye la propuesta de ScriptableObjects de §13.4 y anexo A. | [D-5](../../reviews/2026-10-20-first-ball-plan-review-response-claude.md#41-decisiones-del-po-antes-de-autorizar-la-implementación); [autorización PO T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). | Directriz 11 del plan r2, aplicada en la configuración y presets existentes. |
+| D33 | Aclaración **D-6**: la diagonal lateral mide **50 mm perpendiculares a la diagonal**, con el **borde inferior** como referencia (§8.7.2). | [D-6](../../reviews/2026-10-20-first-ball-plan-review-response-claude.md#41-decisiones-del-po-antes-de-autorizar-la-implementación); [autorización PO T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). | Precisión de la interpretación geométrica; no cambia la geometría implementada ni los criterios. |
+| D34 | **First Ball aceptado por el PO con desviación H17 p95**: H17-1 **17,2 ms**, H17-2 **16,8 ms**, frente a **≤16,7 ms**. Ambos resultados se conservan como **Fail**, sin cambiar umbral, restar sesgo de cubeta ni repetir. El umbral sigue **[EXPERIMENTO hasta conocer el iPhone]**. | [Decisión PO tras revisión I7a](../../reviews/2026-10-21-first-ball-po-approvals.md#revisión-final-claude-y-aceptación-po-de-first-ball--2026-10-24); [registro solo en §0.3 autorizado para T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). | P99, frames >33 ms/min, térmico y DroppedSteps cumplen; distribución estrecha en torno a 16,7 ms; frames >33 ms: 1 en H17-1 (0,067/min) y 0 en H17-2, ambos dentro de ≤1/min. Interpretación de Claude, no demostrada: oscilación de la cadencia de presentación más que carga; CPU p95 = cpuFrameTime incluye la espera de presentación. [Precisión factual aprobada tras revisión T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#revisión-claude-de-t73-y-fusión-condicionada-por-el-po). **§17.C/§17.D permanecen intactos.** |
+| D35 | **No promover P0-calib-1 a DefaultPreset.json**. Solo difiere en `launcher.repeatSeconds=3`, que no es física. Defaults efectivos **0d39e6016bd8** intactos, con P2 por defecto. | [Decisión PO, paso 2 de T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). | [Punto de control de Etapa 5 y diferencia de preset](../../reviews/2026-10-21-first-ball-po-approvals.md#cierre-i6a-punto-de-control-etapa-5-y-autorización-i6b--2026-10-24). |
+
 ### 0.4 Cambios principales respecto de la v0.2 (resumen ejecutivo)
 
 1. **Timing con habilidad real (§7.1).** El "imán" de 250 ms de la v0.2 se reemplaza por T3: un perdón de ±40 ms y, fuera de él, un contacto en el instante en que se suelta, con consecuencia física. El golpe al aire existe como **fallo de timing**. Hay un solo intento por recepción, tres niveles de ayuda visual y una variante suave como control. Se agrega una prueba de que anticiparse no es una estrategia dominante [D19–D22].
@@ -526,7 +539,7 @@ Los casos se expresan relativos al cuerpo (contacto adelantado o atrasado respec
 
 ### 8.2 Elección de la simulación de la pelota (F09, FR5) — Prioridad 5
 
-**Estado:** no decidida [APROBADO·D15, D27]. Se decide después de una prueba técnica en First Ball, autorizada por el PO.
+**Estado para First Ball:** **P2-Analytic elegido por el PO el 2026-10-23** [APROBADO·D30], según §8.2.3. P1 falla C3, C10, C11 y C17 y se conserva como respaldo configurable, sin usarse por defecto. [Decisión del gate](../../reviews/2026-10-23-first-ball-physics-backend-decision.md); [autorización de este registro T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). D15/D27 describen el proceso previo a esta decisión.
 
 **Principio invariante:** **una sola autoridad sobre el estado de la pelota.** Nunca hay dos sistemas que corrijan alternadamente la misma pelota.
 
@@ -588,6 +601,8 @@ Con P2, la igualdad es **alcanzable y verificable a bajo costo** si se cumplen l
 5. **Las líneas se evalúan por la huella de contacto de la esfera, no por su centro:** la huella es configurable, con ~10 mm de radio [EXPERIMENTO; la v0.2 usaba ~20 mm]. Su consecuencia depende de la línea y de la fase (§8.7) [D28].
 6. Paso fijo [EXPERIMENTO: 120 Hz para la pelota], independiente del render.
 7. Cada contacto con una superficie emite un **evento** con la superficie, el punto de impacto, la huella y el instante. Las reglas (§8.5, §8.7) consumen esos eventos y nunca consultan la física directamente.
+
+**Aclaración D-4 [APROBADO·D31]:** §8.3.1–8.3.3 y §8.3.7 se miden e informan mediante C12–C15, **sin umbral numérico nuevo**. Con P1, el tope de impactos es una propiedad medida, no configurable: `physics.maxImpactsPerStep` no es operativo. Con **P2 sí es operativo**: al alcanzarlo se descarta el tiempo restante, se conserva el último impacto con velocidad reflejada y el reloj avanza un paso; nunca se integra sin detección. Los simultáneos forman un instante atómico y el contador de topes alcanzados se informa en C14. [Decisión D-4](../../reviews/2026-10-20-first-ball-plan-review-response-claude.md#41-decisiones-del-po-antes-de-autorizar-la-implementación), [adenda r2 aprobada](../../reviews/2026-10-23-first-ball-physics-decision.md), [evidencia P2](../../reviews/2026-10-23-first-ball-physics-spike-P2.md) y [autorización T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24).
 
 ### 8.4 Relojes, ritmo y velocidad (F11) [PROPUESTA]
 - **Un solo reloj de simulación** gobierna la pelota, los personajes, la energía y las ventanas de contacto.
@@ -654,7 +669,7 @@ Para cada línea se guardan:
 - **Out del frontis:** franja entre 4,570 y 4,620 m. Tocarla o pegar por encima es out.
 - **Línea de saque:** franja entre 1,780 y 1,830 m. El saque tiene que pegar por encima de 1,830 m.
 - **Out trasero:** franja entre 2,130 y 2,180 m.
-- **Laterales:** una diagonal que une los extremos de la línea del frontis y la de la pared trasera. *[Interpretación de Claude: la franja crece 50 mm hacia arriba desde el borde inferior.]*
+- **Laterales:** una diagonal que une los extremos de la línea del frontis y la de la pared trasera. La franja tiene **50 mm de ancho perpendicular a la diagonal**, con el **borde inferior** como referencia [APROBADO·D33]. [Decisión D-6](../../reviews/2026-10-20-first-ball-plan-review-response-claude.md#41-decisiones-del-po-antes-de-autorizar-la-implementación) y [autorización PO T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24).
 - **Tin:** "from the floor up to and including the lowest horizontal line". El tin abarca desde el suelo hasta 0,48 m, y sus 50 mm superiores (0,43–0,48 m) son la franja visible.
 - **Suelo:** la short line ocupa entre 5,440 y 5,490 m del frontis. Los cuadros de saque son de 1,600 m de lado interior. *[Interpretación de Claude: la línea media está centrada en x = 3,20 m y las líneas de los cuadros quedan por fuera del lado interior.]*
 
@@ -956,11 +971,11 @@ Reiniciar el rally, cámara lenta, trayectorias, posiciones y métricas (del bri
 **Persistencia:**
 - Los presets se guardan como **JSON local versionado** en el almacenamiento de la app, con nombre, versión de esquema, unidades y rangos.
 - Al arrancar se carga el último preset activo. Hay que verificar que se recupera tras reiniciar la app.
-- Los ScriptableObjects contienen los **valores por defecto de autoría**. En tiempo de ejecución se trabaja con una copia. El estado de la partida (energía, marcador) **nunca** se guarda en la configuración.
+- **DefaultPreset.json es la única fuente de valores por defecto**, con validación de esquema, tipos y rangos [APROBADO·D32]. El catálogo define tipos, rangos, opciones y clases de aplicación, sin defaults duplicados. En tiempo de ejecución se trabaja con una copia. El estado de la partida (energía, marcador) **nunca** se guarda en la configuración. [Decisión D-5](../../reviews/2026-10-20-first-ball-plan-review-response-claude.md#41-decisiones-del-po-antes-de-autorizar-la-implementación) y [autorización PO T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24).
 
 **Trazabilidad:** cada registro de métricas guarda el preset (nombre y hash), la versión del build y la semilla.
 
-**Exportación:** el preset (y opcionalmente las métricas) se exporta como texto mediante el menú de compartir de iOS o el portapapeles. Así el PO se lo pasa a Codex y los valores se vuelven los nuevos valores por defecto.
+**Exportación:** el preset (y opcionalmente las métricas) se exporta como texto mediante el menú de compartir de iOS o el portapapeles. Así el PO se lo pasa a Codex; la promoción a defaults requiere su autorización. **P0-calib-1 no se promueve** [APROBADO·D35]; defaults **0d39e6016bd8** intactos. [Decisión PO, paso 2 de T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24).
 
 **Sin backend** [APROBADO·D17].
 
@@ -1193,7 +1208,7 @@ Solo estos puntos impiden avanzar. **Ninguna decisión de gameplay pendiente blo
   - Corrección de la v0.1: **el C# puro no es un requisito para Android** (Unity ya es multiplataforma) y **el modo online no justifica ninguna abstracción hoy**. La frontera existe solo porque abarata las pruebas.
   - **No se usan:** ECS/DOTS, contenedores de inyección, buses globales de eventos, frameworks genéricos de habilidades, motores de red, aritmética determinista ni motores físicos de propósito general.
 - [PROPUESTA] El panel se excluye de las builds de producción con un flag de compilación (§13.1).
-- [PROPUESTA] ScriptableObjects para la autoría de valores por defecto, con copia en tiempo de ejecución, y presets JSON (§13.4).
+- [APROBADO·D32] **DefaultPreset.json como única fuente de defaults**, con validación de esquema, tipos y rangos; copia en tiempo de ejecución y presets JSON (§13.4). [Decisión D-5](../../reviews/2026-10-20-first-ball-plan-review-response-claude.md#41-decisiones-del-po-antes-de-autorizar-la-implementación) y [autorización PO T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24).
 - [PROPUESTA] Git y GitHub con PRs revisados por Claude. Estructura `docs/superpowers/specs`, `docs/superpowers/plans` y `docs/reviews`. Agregar `.superpowers/` al `.gitignore`.
 - [APROBADO·D18] Codex trabaja en el Mac del PO. [PROPUESTA] Compila con Unity en modo batch, genera el proyecto Xcode y lo instala en el iPhone conectado con `xcodebuild` / `devicectl`. TestFlight llega con la progresión.
 - [SUPUESTO] El PO tiene Xcode 27.1 con la licencia aceptada (verificado), cuenta de Apple Developer de pago (declarada) y un Mac con chip M5 (verificado).
