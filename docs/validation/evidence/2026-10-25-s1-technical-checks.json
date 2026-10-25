@@ -1,0 +1,340 @@
+{
+  "schema": 1,
+  "date": "2026-10-25",
+  "sourceHead": "b37078f2b04ace7142df9b2163bffd9ec8657a5a",
+  "unity": "6000.3.27f1",
+  "inputSystem": "1.20.1",
+  "stages": [
+    {
+      "stage": "00-fixture-playmode",
+      "total": 137,
+      "passed": 137,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "b7f35143bd519d6e2984a35e1f726be2766754a78367ddf6136164074aa9468d",
+      "localXml": "Logs/evidence/s1-tdd/00-fixture-playmode.xml"
+    },
+    {
+      "stage": "11-red",
+      "total": 13,
+      "passed": 0,
+      "failed": 13,
+      "skipped": 0,
+      "xmlSha256": "3a7b5b69daf2c8ee365e7b2a972cf01d8cfe933b031ba2689033433a4aadf84d",
+      "localXml": "Logs/evidence/s1-tdd/11-red.xml"
+    },
+    {
+      "stage": "11-green",
+      "total": 300,
+      "passed": 300,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "fc728dce33d324711762e070322eb816f66b0767f047544599b64a1fcedd7f6e",
+      "localXml": "Logs/evidence/s1-tdd/11-green.xml"
+    },
+    {
+      "stage": "12-red",
+      "total": 30,
+      "passed": 7,
+      "failed": 23,
+      "skipped": 0,
+      "xmlSha256": "c7b75bbe5e2096246e0d8525457127e9d235d554abdad70b6b885a822a33f553",
+      "localXml": "Logs/evidence/s1-tdd/12-red.xml"
+    },
+    {
+      "stage": "12-baseline-adaptation",
+      "total": 330,
+      "passed": 328,
+      "failed": 2,
+      "skipped": 0,
+      "xmlSha256": "4a3b143f5f3eda98368853e414550ed18d0941937a0280cdcbe91a5250d68be8",
+      "localXml": "Logs/evidence/s1-tdd/12-baseline-adaptation.xml"
+    },
+    {
+      "stage": "12-green",
+      "total": 330,
+      "passed": 330,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "8dae347d9cb36e143ae12dee55f86502311f59b898c2e9715a95b6928cde5792",
+      "localXml": "Logs/evidence/s1-tdd/12-green.xml"
+    },
+    {
+      "stage": "13-adapter-red",
+      "total": 13,
+      "passed": 1,
+      "failed": 12,
+      "skipped": 0,
+      "xmlSha256": "58f95cb6fe5562f50d73ae8afc7b08eeb5e33e5690bf70f21a7ce98c63236e91",
+      "localXml": "Logs/evidence/s1-tdd/13-adapter-red.xml"
+    },
+    {
+      "stage": "13-adapter-green",
+      "total": 13,
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "b85908799fa959d68d0b1b95f21b007b1aa420fb12f157f891b018cbab0783e3",
+      "localXml": "Logs/evidence/s1-tdd/13-adapter-green.xml"
+    },
+    {
+      "stage": "13-preview-red",
+      "total": 9,
+      "passed": 0,
+      "failed": 9,
+      "skipped": 0,
+      "xmlSha256": "fd2ab871f7137d6efe91171e9fcbb6ffacdc30fbba495da5ebdf217b86000adf",
+      "localXml": "Logs/evidence/s1-tdd/13-preview-red.xml"
+    },
+    {
+      "stage": "13-preview-green",
+      "total": 9,
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "0c91a9d4cea46240488876726ee1480e374c13085d4ab5dac905270d4f22788c",
+      "localXml": "Logs/evidence/s1-tdd/13-preview-green.xml"
+    },
+    {
+      "stage": "13-window-red",
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "skipped": 0,
+      "xmlSha256": "17ec36a36a72bfe2ab57f5140e3dddb783ea8a5bee130baa03b51d8e75a017dd",
+      "localXml": "Logs/evidence/s1-tdd/13-window-red.xml"
+    },
+    {
+      "stage": "13-all-green",
+      "total": 24,
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "9596c17503cd966557476dcf6c7c3185e879ddb29baf7a9daf11c1b898f19ac9",
+      "localXml": "Logs/evidence/s1-tdd/13-all-green.xml"
+    },
+    {
+      "stage": "13-regression-first",
+      "total": 161,
+      "passed": 160,
+      "failed": 1,
+      "skipped": 0,
+      "xmlSha256": "3d0bf092b7982ee132fe392d09de7f840cd8344c85c20c9f25d89e690578e0ee",
+      "localXml": "Logs/evidence/s1-tdd/13-regression-first.xml"
+    },
+    {
+      "stage": "13-regression-editmode",
+      "total": 330,
+      "passed": 330,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "3619492296cd56a1d6c3dcf63ab493bcdd76a5eeb14f64d10bd90b6e46dc2ddc",
+      "localXml": "Logs/evidence/s1-tdd/13-regression-editmode.xml"
+    },
+    {
+      "stage": "13-regression-playmode",
+      "total": 161,
+      "passed": 161,
+      "failed": 0,
+      "skipped": 0,
+      "xmlSha256": "b86d5d4c8d4c64ff1424763e09e4668d65739f89eac20b4d50693a7445b69676",
+      "localXml": "Logs/evidence/s1-tdd/13-regression-playmode.xml"
+    }
+  ],
+  "defaults": {
+    "inherited": [
+      {
+        "key": "court.tinTop",
+        "value": 0.48
+      },
+      {
+        "key": "camera.height",
+        "value": 8
+      },
+      {
+        "key": "camera.backOffset",
+        "value": 5
+      },
+      {
+        "key": "camera.lookAtHeight",
+        "value": 0.4
+      },
+      {
+        "key": "camera.fovDeg",
+        "value": 90
+      },
+      {
+        "key": "placeholders.visible",
+        "value": 1
+      },
+      {
+        "key": "human.x",
+        "value": 3.2
+      },
+      {
+        "key": "human.z",
+        "value": 5.5
+      },
+      {
+        "key": "rival.x",
+        "value": 4.5
+      },
+      {
+        "key": "rival.z",
+        "value": 6.5
+      },
+      {
+        "key": "pace.tempo",
+        "value": 0.65
+      },
+      {
+        "key": "pace.launchScale",
+        "value": 1
+      },
+      {
+        "key": "physics.gravity",
+        "value": 9.81
+      },
+      {
+        "key": "physics.stepHz",
+        "value": 120
+      },
+      {
+        "key": "physics.maxImpactsPerStep",
+        "value": 4
+      },
+      {
+        "key": "physics.floor.restitution",
+        "value": 0.45
+      },
+      {
+        "key": "physics.floor.friction",
+        "value": 0.3
+      },
+      {
+        "key": "physics.front.restitution",
+        "value": 0.55
+      },
+      {
+        "key": "physics.front.friction",
+        "value": 0.2
+      },
+      {
+        "key": "physics.side.restitution",
+        "value": 0.55
+      },
+      {
+        "key": "physics.side.friction",
+        "value": 0.2
+      },
+      {
+        "key": "physics.back.restitution",
+        "value": 0.55
+      },
+      {
+        "key": "physics.back.friction",
+        "value": 0.2
+      },
+      {
+        "key": "physics.backend",
+        "value": 1
+      },
+      {
+        "key": "launcher.x",
+        "value": 3.2
+      },
+      {
+        "key": "launcher.y",
+        "value": 1
+      },
+      {
+        "key": "launcher.z",
+        "value": 7
+      },
+      {
+        "key": "launcher.yawDeg",
+        "value": 0
+      },
+      {
+        "key": "launcher.pitchDeg",
+        "value": 10
+      },
+      {
+        "key": "launcher.speed",
+        "value": 15
+      },
+      {
+        "key": "launcher.repeatSeconds",
+        "value": 0
+      },
+      {
+        "key": "debug.slowMotion",
+        "value": 1
+      },
+      {
+        "key": "camera.mode",
+        "value": 0
+      },
+      {
+        "key": "camera.followDamping",
+        "value": 0.3
+      },
+      {
+        "key": "camera.followMaxOffset",
+        "value": 1.5
+      },
+      {
+        "key": "aids.shadow",
+        "value": 1
+      },
+      {
+        "key": "aids.trail",
+        "value": 1
+      },
+      {
+        "key": "aids.impactMarks",
+        "value": 1
+      },
+      {
+        "key": "aids.prediction",
+        "value": 0
+      },
+      {
+        "key": "aids.trailSeconds",
+        "value": 0.15
+      },
+      {
+        "key": "aids.ballVisualScale",
+        "value": 1
+      }
+    ],
+    "newKeys": [
+      "aim.gainMPerMm",
+      "aim.startHeight",
+      "aim.flickMmPerS",
+      "aim.flickHysteresisMmPerS",
+      "aim.freezeLookbackMs",
+      "aim.flickConfirmSamples",
+      "power.windowMs",
+      "power.minCoverageMs",
+      "power.minSamples",
+      "power.maxGapMs",
+      "power.deadZoneMmPerS",
+      "power.fullMmPerS",
+      "power.curveExponent",
+      "gesture.tapMaxMm",
+      "gesture.tapMaxMs",
+      "gesture.cancelRadiusMm",
+      "input.fallbackDpi"
+    ],
+    "newHash": "00a501ad7066",
+    "oldHash": "0d39e6016bd8"
+  },
+  "physicalValidation": {
+    "status": "pending",
+    "hardwareTouchRateHz": null,
+    "rulerMeasuredMm": null,
+    "softFlicks": [],
+    "strongFlicks": []
+  }
+}
