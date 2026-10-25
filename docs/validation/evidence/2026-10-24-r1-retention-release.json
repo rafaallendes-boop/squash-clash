@@ -1,0 +1,55 @@
+{
+  "sourceCommit": "f3921bd5c78615f6075d053873161cfb6f3efbb3",
+  "checkRelease": "OK",
+  "exports": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "f3921bd",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-25T00:56:39.4644160Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "f3921bd",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-25T00:57:06.3627180Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "retentionNativeCodeExportedInDevAndProd": true,
+  "testedSourceHashesMatch": true,
+  "protectedPathsUnchanged": true,
+  "defaultEffectiveHash": "0d39e6016bd8",
+  "defaultPresetSha256": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f",
+  "xcodeBuildRun": false,
+  "nativeInstallRun": false,
+  "profileRenewalRun": false,
+  "physicalCampaignRun": false,
+  "scope": "Fresh clean Unity exports dev/prod, IL2CPP Release/non-Development. No Xcode build/sign/install; R1 stops for Claude."
+}

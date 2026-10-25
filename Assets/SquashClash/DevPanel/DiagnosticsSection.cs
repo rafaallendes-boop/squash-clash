@@ -39,7 +39,8 @@ namespace SquashClash.DevPanel
                 $">33 ms/min: {Number(stats.SessionLongFramesPerMinute(33))}\nCPU {Number(timing.CpuMs)} ms · GPU {Number(timing.GpuMs)} ms (N/D = sin muestra)\n"+
                 $"Térmico {thermal.Current} · peor {thermal.WorstThisSession}\nPredictionMatchesBitwise: {app.Host.PredictionMatchesBitwise}\nDroppedSteps: {app.Clock.DroppedSteps}\n"+
                 (app.Clock.MetricsInvalid?"MÉTRICAS NO VÁLIDAS · cámara lenta usada":"")+
-                (app.Metrics.LastError==null?"":"\nError de log: "+app.Metrics.LastError);
+                (app.Metrics.LastError==null?"":"\nError de log: "+app.Metrics.LastError)+
+                (app.Metrics.RetentionError==null?"":"\nError de retención: "+app.Metrics.RetentionError);
         }
         private static string Number(double v)=>double.IsNaN(v)?"N/D":double.IsPositiveInfinity(v)?">250":v.ToString("0.##",CultureInfo.InvariantCulture);
         public void Dispose(){if(app!=null)app.Host.ContactRaised-=Record;}
