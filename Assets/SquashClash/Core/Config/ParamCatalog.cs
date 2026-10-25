@@ -8,6 +8,23 @@ namespace SquashClash.Core.Config
     {
         private static readonly IReadOnlyList<ParamDef> definitions = Array.AsReadOnly(new[]
         {
+            new ParamDef("aim.gainMPerMm", "Gain", "m/mm", "First Shot / aim", ParamKind.Float, 0.03, 0.3, 0.01, ApplyClass.Immediate),
+            new ParamDef("aim.startHeight", "Start height", "m", "First Shot / aim", ParamKind.Float, 0.5, 4.5, 0.1, ApplyClass.Immediate),
+            new ParamDef("aim.flickMmPerS", "Flick threshold", "mm/s", "First Shot / aim", ParamKind.Float, 50, 1000, 10, ApplyClass.Immediate),
+            new ParamDef("aim.flickHysteresisMmPerS", "Flick hysteresis", "mm/s", "First Shot / aim", ParamKind.Float, 0, 200, 5, ApplyClass.Immediate),
+            new ParamDef("aim.freezeLookbackMs", "Freeze lookback", "ms", "First Shot / aim", ParamKind.Float, 0, 100, 5, ApplyClass.Immediate),
+            new ParamDef("aim.flickConfirmSamples", "Flick confirmation", "samples", "First Shot / aim", ParamKind.Int, 1, 4, 1, ApplyClass.Immediate),
+            new ParamDef("power.windowMs", "Power window", "ms", "First Shot / power", ParamKind.Float, 60, 100, 5, ApplyClass.Immediate),
+            new ParamDef("power.minCoverageMs", "Minimum coverage", "ms", "First Shot / power", ParamKind.Float, 10, 60, 5, ApplyClass.Immediate),
+            new ParamDef("power.minSamples", "Minimum samples", "", "First Shot / power", ParamKind.Int, 2, 8, 1, ApplyClass.Immediate),
+            new ParamDef("power.maxGapMs", "Maximum sample gap", "ms", "First Shot / power", ParamKind.Float, 10, 60, 1, ApplyClass.Immediate),
+            new ParamDef("power.deadZoneMmPerS", "Soft threshold", "mm/s", "First Shot / power", ParamKind.Float, 0, 400, 10, ApplyClass.Immediate),
+            new ParamDef("power.fullMmPerS", "Full power", "mm/s", "First Shot / power", ParamKind.Float, 300, 4000, 50, ApplyClass.Immediate),
+            new ParamDef("power.curveExponent", "Power curve", "", "First Shot / power", ParamKind.Float, 0.5, 3, 0.1, ApplyClass.Immediate),
+            new ParamDef("gesture.tapMaxMm", "Tap distance", "mm", "First Shot / gesture", ParamKind.Float, 1, 6, 0.1, ApplyClass.Immediate),
+            new ParamDef("gesture.tapMaxMs", "Tap duration", "ms", "First Shot / gesture", ParamKind.Float, 100, 400, 10, ApplyClass.Immediate),
+            new ParamDef("gesture.cancelRadiusMm", "Cancel radius", "mm", "First Shot / gesture", ParamKind.Float, 3, 12, 0.5, ApplyClass.Immediate),
+            new ParamDef("input.fallbackDpi", "Nominal fallback DPI", "dpi", "First Shot / input", ParamKind.Float, 100, 600, 1, ApplyClass.Immediate),
             new ParamDef("pace.tempo", "Tempo", "", "Pace", ParamKind.Float, 0.3, 1, 0.01, ApplyClass.NextLaunch),
             new ParamDef("pace.launchScale", "Launch scale", "", "Pace", ParamKind.Float, 0.5, 1.5, 0.01, ApplyClass.NextLaunch),
             new ParamDef("physics.gravity", "Gravity", "m/s²", "Physics", ParamKind.Float, 5, 15, 0.01, ApplyClass.NextLaunch),

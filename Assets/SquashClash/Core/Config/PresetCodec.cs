@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using SquashClash.Core.Shot;
 
 namespace SquashClash.Core.Config
 {
@@ -57,7 +58,9 @@ namespace SquashClash.Core.Config
             foreach (var def in ParamCatalog.All)
                 if (!values.ContainsKey(def.Key)) errors.Add("Missing key: " + def.Key);
             if (errors.Count != 0) throw new InvalidDataException(string.Join("\n", errors));
-            return new ParamSet(values);
+            var result=new ParamSet(values);
+            if(!ShotConfigValidator.TryValidate(result,out error))throw new InvalidDataException(error);
+            return result;
         }
 
         public static ParamSet Overlay(ParamSet baseSet, PresetFile file, List<string> warnings)
@@ -74,7 +77,9 @@ namespace SquashClash.Core.Config
                 if (value != entry.value) warnings.Add(entry.key + ": clamped to range.");
                 values[entry.key] = value;
             }
-            return new ParamSet(values);
+            var result=new ParamSet(values);
+            if(!ShotConfigValidator.TryValidate(result,out var validationError))throw new InvalidDataException(validationError);
+            return result;
         }
 
         public static PresetFile FromSet(ParamSet set, string name, string build) => new PresetFile

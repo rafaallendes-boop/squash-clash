@@ -166,6 +166,74 @@
     {
       "key": "aids.ballVisualScale",
       "value": 1
+    },
+    {
+      "key": "aim.gainMPerMm",
+      "value": 0.12
+    },
+    {
+      "key": "aim.startHeight",
+      "value": 2.2
+    },
+    {
+      "key": "aim.flickMmPerS",
+      "value": 250
+    },
+    {
+      "key": "aim.flickHysteresisMmPerS",
+      "value": 40
+    },
+    {
+      "key": "aim.freezeLookbackMs",
+      "value": 50
+    },
+    {
+      "key": "aim.flickConfirmSamples",
+      "value": 2
+    },
+    {
+      "key": "power.windowMs",
+      "value": 80
+    },
+    {
+      "key": "power.minCoverageMs",
+      "value": 30
+    },
+    {
+      "key": "power.minSamples",
+      "value": 4
+    },
+    {
+      "key": "power.maxGapMs",
+      "value": 34
+    },
+    {
+      "key": "power.deadZoneMmPerS",
+      "value": 100
+    },
+    {
+      "key": "power.fullMmPerS",
+      "value": 1500
+    },
+    {
+      "key": "power.curveExponent",
+      "value": 1
+    },
+    {
+      "key": "gesture.tapMaxMm",
+      "value": 3
+    },
+    {
+      "key": "gesture.tapMaxMs",
+      "value": 250
+    },
+    {
+      "key": "gesture.cancelRadiusMm",
+      "value": 6
+    },
+    {
+      "key": "input.fallbackDpi",
+      "value": 460
     }
   ]
 }
