@@ -1,6 +1,6 @@
 # R1 — retención de logs de First Ball
 
-[PR #14](https://github.com/rafaallendes-boop/squash-clash/pull/14): **Claude aprobó b9a5c24 con corrección menor; PO autorizó fusión condicionada**. Corrección y verificaciones completadas; pendiente ejecutar la fusión. La entrega inicial y su evidencia se conservan abajo como histórico. Autorización PO del 2026-10-24, rama `firstball/r1-log-retention`. [Aprobación y secuencia](2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). T7.3 documental autorizado **solo después del cierre R1**, en su rama/PR separadas; no se inicia en esta entrega. Gameplay/T8 siguen sin autorizar.
+[PR #14](https://github.com/rafaallendes-boop/squash-clash/pull/14): **Claude aprobó b9a5c24 con corrección menor; PO autorizó fusión condicionada**. **R1 cerrado**: PR fusionada con merge commit `bb0f939947991d801afb45b0c0c32005c677b9ea`, head `3ccae954d291c287b98ac68a25133c819777e320`. Main sincronizada y worktree eliminado; ver cierre al final. La entrega inicial y su evidencia se conservan abajo como histórico. Autorización PO del 2026-10-24, rama `firstball/r1-log-retention`. [Aprobación y secuencia](2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). T7.3 documental autorizado **solo después del cierre R1**, en su rama/PR separadas; no se inicia en esta entrega. Gameplay/T8 siguen sin autorizar.
 
 ## Política aplicada
 
@@ -59,3 +59,9 @@ TDD temporal: el destino empieza bloqueado por un archivo, se construye MetricsL
 - Si un archivo reciente supera el presupuesto de bytes restante, se borran él y los anteriores: prefijo más nuevo, sin huecos. Cubierto por `ByteLimit_KeepsNewestPrefixAndDoesNotFillHolesWithOlderSmallFiles`; irrelevante con los tamaños actuales, cientos de KB por sesión.
 - **30 archivos equivalen aproximadamente a 30 aperturas que escriben métricas. Exportar los logs antes de cualquier campaña de análisis (First Fun).**
 - El test dev/prod del constructor solo cambia la etiqueta del perfil. La exclusión real de prod se verifica con check-release, no con esa etiqueta.
+
+## Cierre R1 autorizado por el PO
+
+PR #14 lista y fusionada con **merge commit bb0f939947991d801afb45b0c0c32005c677b9ea**, head **3ccae954d291c287b98ac68a25133c819777e320**. Delta final desde b9a5c24 auditado: tres archivos de código autorizados, AGENTS.md y cuatro docs, ningún otro archivo. SHA-256 diff **189403f97dc2915632aafda436e82723b8866d4555dc4e35e2a9ba8b275cad67**; 123 hashes de fuentes coincidentes con suites/exports. Se cumplen RED, GREEN y release-check requeridos.
+
+Main sincronizada; worktree R1 eliminado sin force, artefactos ignorados (siete paths) preservados en **Logs/archive-r1-20261024**, ramas remotas intactas. Cierre registrado en AGENTS y aprobaciones PO. La entrega inicial pendiente de revisión descrita arriba queda como histórico. **R1 cerrado**, retención previa a T8 satisfecha; T7.3 comienza por separado según autorización y se detendrá con PR lista sin fusionar. Gameplay/T8 sin autorizar.
