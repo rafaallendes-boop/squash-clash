@@ -1,0 +1,21 @@
+{
+  "build": "0.1.0+e0f9071 prod",
+  "installed": true,
+  "startupObserved": true,
+  "bootAndReadyLines": [
+    "[SquashClash] boot 0.1.0+e0f9071 prod devpanel=absent development=False squashDev=False unity=6000.3.27f1",
+    "[SquashClash] ball ready backend=P2-Analytic visualColliders=0 localPhysicsScenes=0 config=0d39e6016bd8 predictedSteps=166",
+    "[SquashClash] display profile=prod fps=60,0 orientation=Portrait resolution=1206x2622"
+  ],
+  "consoleSha256": "b89034cee0e3ab32e95180719491ea148fa574a452ca397aa1d71de0bdadd0bf",
+  "managedExceptionMarkers": 0,
+  "consoleEndedByAgentAfterObservation": true,
+  "devPanelAssemblyExcluded": true,
+  "spikeBridgeExcluded": true,
+  "physicalNoDevButton": true,
+  "physicalThreeFingerHoldInert": true,
+  "physicalConfirmationPending": false,
+  "scope": "Prod instalada, arranque y exclusión compilada verificados; PO confirma label prod, ausencia DEV y gesto tres dedos inerte. Sin afirmación de rendimiento.",
+  "physicalBuildLabelConfirmed": true,
+  "poResponse": "Listo. Funciona bien las 3 cosas"
+}

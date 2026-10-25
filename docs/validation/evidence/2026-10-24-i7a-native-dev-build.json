@@ -1,0 +1,79 @@
+{
+  "profile": "dev",
+  "buildMetadata": {
+    "version": "0.1.0",
+    "gitHash": "e0f9071",
+    "profile": "dev",
+    "builtAtUtc": "2026-10-24T22:46:33.9989860Z",
+    "unityVersion": "6000.3.27f1",
+    "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+    "gitDirty": false
+  },
+  "export": {
+    "profile": "dev",
+    "metadata": {
+      "version": "0.1.0",
+      "gitHash": "e0f9071",
+      "profile": "dev",
+      "builtAtUtc": "2026-10-24T22:46:33.9989860Z",
+      "unityVersion": "6000.3.27f1",
+      "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+      "gitDirty": false
+    },
+    "freshExport": true,
+    "productIl2CppModules": [
+      "g_SquashClash_Core_CodeGenModule",
+      "g_SquashClash_DevPanel_CodeGenModule",
+      "g_SquashClash_Runtime_CodeGenModule"
+    ],
+    "nativeThermalBridge": true,
+    "runtimeThermalBridge": true
+  },
+  "freshExport": true,
+  "playerDevelopment": false,
+  "il2cpp": "Release",
+  "xcode": "Xcode 27.1; Build version 27A9275",
+  "xcodeConfiguration": "Release",
+  "xcodeDestination": "generic/platform=iOS",
+  "architectures": [
+    "arm64"
+  ],
+  "codesignStrictVerified": true,
+  "embeddedMetadataVerified": true,
+  "embeddedDefaultPresetVerified": true,
+  "defaultEffectiveHash": "0d39e6016bd8",
+  "simulationKey": "166a96e319c7",
+  "runtimeThermalBridgeSymbolVerified": true,
+  "spikeThermalSymbolPresent": true,
+  "frameworkSha256": "59e48d8901bb106a9ae8a0f9cdd9b8fade04091e14497acc52fa88e7ff544242",
+  "resourcesSha256": "004a9fd8933889c2846a6247aa53c6e3765e249d859a5bc2811a49d17e9b581b",
+  "profileCheckedAtUtc": "2026-10-24T23:25:46.656618+00:00",
+  "profileCheckedLocalDate": "2026-10-24",
+  "profileExpiresAtUtc": "2026-10-28T14:59:31+00:00",
+  "embeddedProfileValid": true,
+  "profileMatchesDeviceAndBundle": true,
+  "renewalRequiredForThisInstall": false,
+  "renewalPolicySatisfied": true,
+  "installationPolicy": "Renovar antes de cualquier instalación desde 2026-10-27 y comprobar siempre vigencia. Herramientas sin cambios.",
+  "testedSourceCommit": "e0f9071e9a2ff8baca3377ed389beefc52e8cbb3",
+  "builtSourceMatchesTestedHashes": true,
+  "installed": true,
+  "nativeCampaignRun": true,
+  "installationResult": "devicectl install exit=0; recovered preset files unchanged byte for byte",
+  "startup": "Manual launch by PO confirmed through e0f9071 native campaign and launch metrics",
+  "projectPhysicsPreCampaignCheck": "Embedded build metadata verified before install: fastMotionThreshold=0.01; bounceThreshold=0.1; fastMotionThreshold relevant only to P1",
+  "presetBackupAndPostInstallHashes": {
+    "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+    "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+  },
+  "campaignPreparation": "Manual Default load/Apply/0 pending required before starting P2; mirroring requires Mac authentication, physical-phone handoff used instead",
+  "campaignAudit": "docs/validation/evidence/2026-10-24-i7a-p2-native.json",
+  "profileRecheckedBeforeH17DevReinstallAtUtc": "2026-10-24T23:38:21.887140+00:00",
+  "devReinstalledForH17": true,
+  "devReinstallResult": "exit=0; non-console process launch exit=0; saved preset JSON files unchanged; no active saved preset selection before PO loads P0 for H17",
+  "presetsBeforeH17Hashes": {
+    "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+  }
+}

@@ -5,6 +5,18 @@ namespace SquashClash.Core.Tests.Config
 {
     public sealed class EffectiveConfigTests
     {
+        [Test] public void FirstBallAcceptance_DefaultRetainsApprovedPhysicalGateAndNonPhysicalDefaults()
+        {
+            var current=EffectiveConfig.From(ConfigFixtures.Default());
+            Assert.That(current.Hash,Is.EqualTo("0d39e6016bd8"));
+            Assert.That(current.SimulationKey,Is.EqualTo("166a96e319c7"));
+            // I4d injected the P2 factory while its source preset still said backend=0.
+            // This raw key is historical; the actual P2 gate uses the explicit factory selection.
+            Assert.That(EffectiveConfig.From(current.Source.With("physics.backend",0)).SimulationKey,Is.EqualTo("04372f672e9e"));
+            Assert.That(EffectiveConfig.From(current.Source.With("launcher.repeatSeconds",3).With("camera.mode",1).With("aids.ballVisualScale",2)).SimulationKey,
+                Is.EqualTo(current.SimulationKey));
+            UnityEngine.Debug.Log("[SquashClash] acceptance Default="+current.Hash+" SimulationKey="+current.SimulationKey+" gateRaw=04372f672e9e gateEffectiveP2=166a96e319c7");
+        }
         [Test]
         public void EffectiveConfig_SimulationKeyIgnoresCameraButNotCourt()
         {

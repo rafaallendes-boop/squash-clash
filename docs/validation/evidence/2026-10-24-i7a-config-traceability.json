@@ -1,0 +1,46 @@
+{
+  "gateSourceCommit": "557d3ff",
+  "gateReportConfigHash": "c86243b15a97",
+  "gateRawSimulationKey": "04372f672e9e",
+  "gateActualBackend": "P2-Analytic (factory explicitly injected)",
+  "gateEffectiveP2SimulationKey": "166a96e319c7",
+  "currentDefaultHash": "0d39e6016bd8",
+  "currentSimulationKey": "166a96e319c7",
+  "physicalParameters": {
+    "court.tinTop": 0.48,
+    "physics.gravity": 9.81,
+    "physics.stepHz": 120,
+    "physics.maxImpactsPerStep": 4,
+    "physics.floor.restitution": 0.45,
+    "physics.floor.friction": 0.3,
+    "physics.front.restitution": 0.55,
+    "physics.front.friction": 0.2,
+    "physics.side.restitution": 0.55,
+    "physics.side.friction": 0.2,
+    "physics.back.restitution": 0.55,
+    "physics.back.friction": 0.2,
+    "physics.backend": 1
+  },
+  "nonPhysicalKeysAdded": {
+    "aids.shadow": 1,
+    "aids.trailSeconds": 0.15,
+    "aids.trail": 1,
+    "aids.impactMarks": 1,
+    "camera.followMaxOffset": 1.5,
+    "camera.followDamping": 0.3,
+    "debug.slowMotion": 1,
+    "camera.mode": 0,
+    "aids.ballVisualScale": 1,
+    "launcher.repeatSeconds": 0,
+    "aids.prediction": 0
+  },
+  "rawBackendChange": {
+    "before": 0,
+    "after": 1,
+    "authorization": "I4e / PR #7; explicit P2 injected at historical gate, now default host backend"
+  },
+  "unchangedSharedNonBackendValues": true,
+  "bounceThreshold": 0.1,
+  "fastMotionThreshold": 0.01,
+  "defaultPresetSha256": "40fae0dc80c77753e0980da5fdf5396ac9f7f5c5bee2d098ffa1169a4810f12f"
+}
