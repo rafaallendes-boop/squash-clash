@@ -34,4 +34,4 @@ Comprobación del diff contra main: solo AGENTS.md y docs/**; cero cambios en As
 
 ## Entrega
 
-T7.3 documental preparado para Claude en su propia PR, **sin fusionar**. No se cambian escenarios, criterios, umbrales ni defaults. **Gameplay y T8 siguen sin autorizar. Detenerse al entregar este informe y la PR lista.**
+T7.3 documental preparado en [PR #15 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/15), abierta y **sin fusionar**. Fuente documental 5507c8e; este agregado solo enlaza la entrega. No se cambian escenarios, criterios, umbrales ni defaults. **Gameplay y T8 siguen sin autorizar. Detenerse al entregar este informe y la PR lista.**
