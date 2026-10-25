@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
@@ -46,27 +47,42 @@ namespace SquashClash.DevPanel
         }
         public bool Load(string name)
         {
-            if(name=="Default")
+            try
             {
-                if(!app.Presets.TryClearLastActive(out var error))return Notice(error,false);
-                var defaults=Resources.Load<TextAsset>("DefaultPreset");PresetCodec.TryParse(defaults.text,out var file,out _);
-                app.Tuning.LoadPreset(file,new List<string>());app.SetPresetIdentity("Default",Hash(defaults.text));return Notice("Default cargado; aplica los cambios pendientes para relanzar.");
+                if(name=="Default")
+                {
+                    var defaults=Resources.Load<TextAsset>("DefaultPreset");
+                    if(!PresetCodec.TryParse(defaults.text,out var file,out var error))return Notice("No se cargó: "+error,false);
+                    // Default follows the same rule: validate before changing the persisted selection.
+                    PresetCodec.Overlay(app.Tuning.Defaults,file,new List<string>());
+                    if(!app.Presets.TryClearLastActive(out error))return Notice(error,false);
+                    app.Tuning.LoadPreset(file,new List<string>());app.SetPresetIdentity("Default",Hash(defaults.text));return Notice("Default cargado; aplica los cambios pendientes para relanzar.");
+                }
+                if(!app.Presets.TryLoad(name,out var f,out var loadError))return Notice("No se cargó: "+loadError,false);
+                // Validate overlay before changing selection or the live editing state.
+                var warnings=new List<string>();PresetCodec.Overlay(app.Tuning.Defaults,f,warnings);
+                if(!app.Presets.TrySetLastActive(name,out loadError))return Notice(loadError,false);
+                app.Tuning.LoadPreset(f,new List<string>());
+                app.Presets.LoadStartup(app.Tuning.Defaults,new List<string>(),out _,out var fileHash);app.SetPresetIdentity(name,fileHash);
+                return Notice("Cargado: "+name+". "+string.Join("\n",warnings));
             }
-            if(!app.Presets.TryLoad(name,out var f,out var loadError))return Notice("No se cargó: "+loadError,false);
-            // Validate overlay before changing selection or the live editing state.
-            var warnings=new List<string>();PresetCodec.Overlay(app.Tuning.Defaults,f,warnings);
-            if(!app.Presets.TrySetLastActive(name,out loadError))return Notice(loadError,false);
-            app.Tuning.LoadPreset(f,new List<string>());
-            app.Presets.LoadStartup(app.Tuning.Defaults,new List<string>(),out _,out var fileHash);app.SetPresetIdentity(name,fileHash);
-            return Notice("Cargado: "+name+". "+string.Join("\n",warnings));
+            catch(InvalidDataException exception){return Notice("No se cargó: "+exception.Message,false);}
         }
         public string Export()=>PresetCodec.ToJson(PresetCodec.FromSet(app.Tuning.Visible,app.ActivePresetName,app.Build.Label));
         public bool Import(string json)
         {
-            if(!PresetCodec.TryParse(json,out var f,out var error))return Notice("No se importó: "+error,false);
-            var warnings=new List<string>();app.Tuning.LoadPreset(f,warnings);
+            if(!PresetCodec.TryParse(json,out var f,out var error))return Notice(ImportError(json,error),false);
+            var warnings=new List<string>();
+            try {app.Tuning.LoadPreset(f,warnings);}
+            catch(InvalidDataException exception){return Notice(ImportError(json,exception.Message),false);}
             app.SetPresetIdentity("Importado: "+(f.name??"sin nombre"),Hash(json));
             return Notice("Importado sin guardar. Usa Guardar como… para persistirlo. "+string.Join("\n",warnings));
+        }
+        private static string ImportError(string text,string error)
+        {
+            text=text??string.Empty;
+            string prefix=text.Substring(0,Math.Min(80,text.Length)).Replace("\r","\\r").Replace("\n","\\n").Replace("\t","\\t");
+            return $"No se importó (longitud: {text.Length}, inicio: «{prefix}»): {error}";
         }
         private static string Hash(string text){using(var sha=SHA256.Create())return BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(text))).Replace("-","").ToLowerInvariant();}
     }

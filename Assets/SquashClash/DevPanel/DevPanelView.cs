@@ -57,7 +57,14 @@ namespace SquashClash.DevPanel
             Place();Refresh();
         }
         private bool CanToggle()=>app!=null&&!app.GetComponent<ResumeOverlay>().IsVisible&&!(GetComponent<SpikeSection>()?.IsRunning??false)&&!(GetComponent<PerformanceSession>()?.IsRunning??false);
-        public void Toggle(){if(!CanToggle())return;panel.style.display=IsOpen?DisplayStyle.None:DisplayStyle.Flex;Refresh();Place();}
+        public void Toggle()
+        {
+            if(!CanToggle())return;
+            panel.style.display=IsOpen?DisplayStyle.None:DisplayStyle.Flex;
+            var input=app.GetComponent<SquashClash.Runtime.Input.TouchInputAdapter>();
+            if(input!=null)input.BlockedByUi=IsOpen;
+            Refresh();Place();
+        }
         private void Refresh()
         {
             if(app==null||heading==null)return;

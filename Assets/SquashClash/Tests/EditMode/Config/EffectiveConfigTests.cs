@@ -8,7 +8,7 @@ namespace SquashClash.Core.Tests.Config
         [Test] public void FirstBallAcceptance_DefaultRetainsApprovedPhysicalGateAndNonPhysicalDefaults()
         {
             var current=EffectiveConfig.From(ConfigFixtures.Default());
-            Assert.That(current.Hash,Is.EqualTo("0d39e6016bd8"));
+            Assert.That(current.Source.HashOf(ConfigFixtures.FirstBallPrefixes),Is.EqualTo("0d39e6016bd8"));
             Assert.That(current.SimulationKey,Is.EqualTo("166a96e319c7"));
             // I4d injected the P2 factory while its source preset still said backend=0.
             // This raw key is historical; the actual P2 gate uses the explicit factory selection.

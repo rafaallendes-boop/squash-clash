@@ -25,6 +25,8 @@ if re.search(r'error CS\d+|Scripts have compiler errors',log):raise SystemExit('
 for p in [output,registration,metadata]:
     if not p.exists() or p.stat().st_mtime_ns <= started:raise SystemExit('STALE OR MISSING '+profile+': '+str(p))
 modules=sorted(set(re.findall(r'g_SquashClash_\w+_CodeGenModule',registration.read_text())))
+if 'g_Unity_InputSystem_TestFramework_CodeGenModule' in registration.read_text():
+    raise SystemExit('Input System test framework leaked into '+profile)
 # A reflection string in Runtime does NOT prove that DevPanel is compiled.
 expected=['g_SquashClash_Core_CodeGenModule','g_SquashClash_Runtime_CodeGenModule']
 if profile=='dev':expected.append('g_SquashClash_DevPanel_CodeGenModule')

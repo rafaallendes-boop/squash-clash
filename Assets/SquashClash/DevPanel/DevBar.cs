@@ -53,6 +53,7 @@ namespace SquashClash.DevPanel
             sessionButton.style.flexGrow=1;sessionButton.style.height=44;sessionButton.style.whiteSpace=WhiteSpace.Normal;tests.Add(sessionButton);
             // Insert below the runtime resume overlay so it blocks all controls.
             root.Insert(0,bar);gameObject.AddComponent<DevPanelView>().Initialize(app,root);root.RegisterCallback<GeometryChangedEvent>(_=>PlaceInSafeArea());PlaceInSafeArea();
+            gameObject.AddComponent<ShotOverlay>().Initialize(app,root);
         }
         private void SelectLaunch(int index)
         {
