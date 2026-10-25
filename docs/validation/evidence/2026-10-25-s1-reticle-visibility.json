@@ -221,9 +221,82 @@
     "recentGestures": []
   },
   "poVisibility": {
-    "status": "Pending",
-    "responseLiteral": null,
-    "screenshot": null
+    "status": "ConfirmedByPO",
+    "responseLiteral": "si, si voy lento, toma el circulo azul y después el rojo si voy fuera de la cancha, y si voy rapido el rombo amarillo. LAs capturas están en el repo, las dejé desordenadas por lo que puedes ordenarals después",
+    "screenshots": [
+      {
+        "state": "aiming-cyan",
+        "path": "docs/validation/evidence/2026-10-25-po-iphone-reticle-aiming-cyan.jpg",
+        "dimensions": {
+          "width": 1193,
+          "height": 2378
+        },
+        "sha256": "885999f8831ad7f2318f718cfe2db3605ec7810573903a0bd4e460adf33b9a19",
+        "originalSha256": "7886552c34dac4ccfb2bf2a22f889c389ccc2dc597bed603ec4bae120ba6c39f",
+        "removedMetadataMarkers": [
+          "0xe1",
+          "0xed"
+        ],
+        "originalExifOrientation": 1,
+        "imageDataAndICCUnchanged": true,
+        "nativeResolutionMeasurement": false
+      },
+      {
+        "state": "invalid-red",
+        "path": "docs/validation/evidence/2026-10-25-po-iphone-reticle-invalid-red.jpg",
+        "dimensions": {
+          "width": 1206,
+          "height": 2332
+        },
+        "sha256": "1990e288a782bce9769605f4e020864e2fb3408e7be398e89f986db6fd1edcb0",
+        "originalSha256": "edbd7263028b6929173551d29e7559caee47482ff5478e42d21a41e721de109a",
+        "removedMetadataMarkers": [
+          "0xe1",
+          "0xed"
+        ],
+        "originalExifOrientation": 1,
+        "imageDataAndICCUnchanged": true,
+        "nativeResolutionMeasurement": false
+      },
+      {
+        "state": "frozen-yellow",
+        "path": "docs/validation/evidence/2026-10-25-po-iphone-reticle-frozen-yellow.jpg",
+        "dimensions": {
+          "width": 1206,
+          "height": 1924
+        },
+        "sha256": "e74bd3af16b0d566ef0463605fef1e925ced80ddfb5b72a0024745c6868ea7ef",
+        "originalSha256": "26f60bccd015bdccea10bd4db7eb4af27e641ba2e351dd9708088509c11db32a",
+        "removedMetadataMarkers": [
+          "0xe1",
+          "0xed"
+        ],
+        "originalExifOrientation": 1,
+        "imageDataAndICCUnchanged": true,
+        "nativeResolutionMeasurement": false
+      }
+    ],
+    "interpretation": "PO identifica mira y cambio de color/forma; no aceptación de S1 ni juicio sobre precisión, potencia o saltos",
+    "fullRevalidationPerformed": false,
+    "nativePixelMeasurementsFromPOScreenshots": false,
+    "fiveControlQuestionsAnsweredSeparately": false,
+    "finalPresetFilesIdenticalToBackup": true,
+    "finalPresetHashes": {
+      "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
+    },
+    "lastPersistedLaunchRecord": {
+      "ts": "2026-10-25T21:29:25.8202720Z",
+      "kind": "launch",
+      "build": "0.1.0+5e218ea dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "9977d9ffd7e5",
+      "pending": 0,
+      "payload": {}
+    },
+    "originalsPreservedInMainIgnoredDirectory": "Logs/evidence/s1-reticle-visibility/2026-10-25-po-original-*.jpg",
+    "metadataTreatment": "Removed APP1/APP13 only; original EXIF orientation=1; JPEG image segments, entropy-coded scan and ICC preserved without recompression"
   },
   "originalOcclusionImage": {
     "path": "docs/validation/evidence/2026-10-25-po-iphone-overlay-occlusion.png",
@@ -303,5 +376,11 @@
   "stop": {
     "noMerge": true,
     "noS2S3S4T8": true
+  },
+  "delivery": {
+    "pr": "https://github.com/rafaallendes-boop/squash-clash/pull/19",
+    "readyForClaude": true,
+    "merged": false,
+    "postInstalledHeadChanges": "Documentation and evidence only"
   }
 }

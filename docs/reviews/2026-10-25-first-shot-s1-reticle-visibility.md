@@ -51,7 +51,7 @@ Las imágenes son evidencia del editor, no capturas del iPhone. Las aserciones d
 
 Build dev limpia de **5e218ea**, Unity 6000.3.27f1, IL2CPP/Xcode **Release ARM64**, Player **no Development**. Auditoría de 2026-10-25T21:18:56Z: firma verificada, ejecutable/UnityFramework arm64, perfil efectivo compatible con dispositivo y bundle, caducidad **2026-10-28T14:59:31Z**. La instalación fue el 25 y no requería renovación. Antes de cualquier futura instalación comprobar siempre vigencia y renovar primero si es el 27 o después. Se cotejaron **625 archivos** con las fuentes probadas; BuildInfo limpio y DefaultPreset embebido coinciden. No se publica identificación del dispositivo, perfil, firma ni logs privados.
 
-Se respaldaron P0-calib-1, Po-1 y last-active antes de instalar y se comprobaron idénticos después de instalar y después de abrir la nueva app. El primer lanzamiento automatizado fue rechazado por iPhone bloqueado; el PO la abrió y confirmó literalmente: «app abierta y muestra lo solicitado». En el arranque observado de **5e218ea dev**, registro **2026-10-25T21:21:59.8644060Z**, P0-calib-1 está activo con **9977d9ffd7e5 y cero pendientes**. No se aplican ni guardan cambios de parámetros para esta comprobación.
+Se respaldaron P0-calib-1, Po-1 y last-active antes de instalar y se comprobaron idénticos después de instalar, después de abrir la nueva app y al recuperar evidencia tras la confirmación visual del PO. El primer lanzamiento automatizado fue rechazado por iPhone bloqueado; el PO la abrió y confirmó literalmente: «app abierta y muestra lo solicitado». En el arranque observado de **5e218ea dev**, registro **2026-10-25T21:21:59.8644060Z**, P0-calib-1 está activo con **9977d9ffd7e5 y cero pendientes**. La recuperación final conserva ese estado; último registro de lanzamiento **21:29:25.8202720Z**. No se aplican ni guardan cambios de parámetros para esta comprobación.
 
 | Archivo persistido | SHA-256 antes y después |
 |---|---|
@@ -61,7 +61,21 @@ Se respaldaron P0-calib-1, Po-1 y last-active antes de instalar y se comprobaron
 
 ## Comprobación visual del PO
 
-Pendiente de incorporar la captura y respuesta literal de esta comprobación breve. [PR #19](https://github.com/rafaallendes-boop/squash-clash/pull/19) permanece en borrador hasta cerrar esa evidencia; no se presenta todavía como lista para Claude. No se ejecutan 2 minutos, regla, series de flicks ni experimento 20→30/30→20 ms. Esta comprobación no sustituye las cinco preguntas de control ni acepta S1.
+Respuesta literal del PO, tras abrir **5e218ea dev** y recibir la instrucción de una comprobación breve con DEV cerrado:
+
+> si, si voy lento, toma el circulo azul y después el rojo si voy fuera de la cancha, y si voy rapido el rombo amarillo. LAs capturas están en el repo, las dejé desordenadas por lo que puedes ordenarals después
+
+El PO identifica ahora la mira y su cambio de color/forma. Las tres imágenes suministradas se inspeccionaron y se ordenaron por estado:
+
+| Captura del iPhone, DEV cerrado | Dimensiones suministradas | Observación visible |
+|---|---|---|
+| [Apuntando / cian](../validation/evidence/2026-10-25-po-iphone-reticle-aiming-cyan.jpg) | 1193×2378 | Círculo cian visible, frontis despejado, «Apuntando · P 0%» y 5e218ea dev |
+| [Inválida / rojo](../validation/evidence/2026-10-25-po-iphone-reticle-invalid-red.jpg) | 1206×2332 | Círculo rojo sobre out, «Inválida · P 0%» y 5e218ea dev |
+| [Fijada / amarillo](../validation/evidence/2026-10-25-po-iphone-reticle-frozen-yellow.jpg) | 1206×1924 | Rombo amarillo visible y «Fijada · P 35%»; recorte sin cabecera/build |
+
+Son capturas con recortes/dimensiones distintos, no evidencia de un viewport completo 1206×2622; **no se extraen medidas nativas en píxeles de ellas**. Se quitaron únicamente los segmentos de metadatos APP1/APP13 (EXIF/orientación original 1), conservando sin recomprimir todos los datos de imagen, tablas y perfil ICC. Los hashes de originales y copias publicadas están en el JSON. Los originales quedan ordenados en `Logs/evidence/s1-reticle-visibility/2026-10-25-po-original-*.jpg` del checkout principal, ignorados; también se retiró de `scripts/` la captura suelta proporcionada, sin modificar archivos versionados de scripts.
+
+Con esta respuesta y las capturas se completa **solo la comprobación de visibilidad y cambio de color** autorizada para esta corrección. No se ejecutan bloques de 2 minutos, regla, series de flicks ni experimento 20→30/30→20 ms. El 35% visible es un estado de la captura, no una medición de separación suave/fuerte. No se evalúan H3/H4, saltos aceptables ni precisión/calibración. Esta respuesta no sustituye las cinco preguntas de control ni acepta S1.
 
 ## Invariantes y entrega
 
@@ -69,7 +83,7 @@ Defaults **00a501ad7066**, los **41 valores heredados / proyección 0d39e6016bd8
 
 Evidencia privada local: `Logs/evidence/reticle-visibility/` (XML, logs, comparaciones de fuentes, backup y capturas del contenedor); no versionada. PR #18 quedó fusionada con merge **a8240fe**, segundo padre **4601342ffbdfe1614bb4c14182577602b86d77a4**, main sincronizada y worktree de revalidación retirado sin force; sus artefactos se conservan en `Logs/archive-s1-revalidation-20261025` del checkout principal. Inventario antes/después coincidente, 31.296 archivos / 8.214.783.234 bytes, 275 hashes de Logs/XML. Ramas remotas y visibilidad privada conservadas.
 
-Al entregar: PR lista para Claude sin fusionar y detenerse. La futura revalidación, las respuestas del PO, H3/H4 y el experimento de cobertura siguen pendientes; no se promueve ningún default. **S1 sin aceptar; S2–S4/T8 sin autorizar.**
+[PR #19 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/19), sin fusionar. Los cambios posteriores a 5e218ea son documentación/evidencia; no hay nuevas suites, build ni instalación en este cierre documental. La futura revalidación, las cinco respuestas separadas del PO, H3/H4 y el experimento de cobertura siguen pendientes; no se promueve ningún default. **S1 sin aceptar; S2–S4/T8 sin autorizar. Detenerse.**
 
 ## Referencias de implementación
 
