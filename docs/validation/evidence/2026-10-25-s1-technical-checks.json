@@ -335,7 +335,9 @@
     "hardwareTouchRateHz": null,
     "rulerMeasuredMm": null,
     "softFlicks": [],
-    "strongFlicks": []
+    "strongFlicks": [],
+    "evidence": "2026-10-25-s1-touch-sampling.json",
+    "partialStrongTaggedRecords": 6
   },
   "nativeDevBuild": {
     "schema": 1,
