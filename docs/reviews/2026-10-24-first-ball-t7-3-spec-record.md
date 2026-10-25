@@ -1,6 +1,6 @@
 # T7.3 — registro autorizado en la spec v0.3
 
-Rama **firstball/t7-3-spec-record**, entrega documental para revisión de Claude, **sin fusionar**. [Autorización PO del 2026-10-24](2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24), habilitada tras [cerrar R1](2026-10-21-first-ball-po-approvals.md#cierre-r1--2026-10-24): PR #14 fusionada con merge commit **bb0f939947991d801afb45b0c0c32005c677b9ea**, head **3ccae954d291c287b98ac68a25133c819777e320**. Main de partida **20ed51b** incorpora cierre, preservación de artefactos ignorados y eliminación del worktree R1.
+**T7.3 cerrado** tras aprobación de Claude y condición PO cumplida: PR #15 fusionada con merge commit **e192b36e4d60029f7ebb71507485a266d69bfd25**, head **b124cdfaa1147ba2e54c4b67f72e17807b99fa41**. Main sincronizada; worktree eliminado y artefactos ignorados preservados en Logs/archive-t7-3-20261024. La entrega inicial descrita abajo se conserva como histórico. [Autorización PO del 2026-10-24](2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24), habilitada tras [cerrar R1](2026-10-21-first-ball-po-approvals.md#cierre-r1--2026-10-24): PR #14 fusionada con merge commit **bb0f939947991d801afb45b0c0c32005c677b9ea**, head **3ccae954d291c287b98ac68a25133c819777e320**. Main de partida **20ed51b** incorpora cierre, preservación de artefactos ignorados y eliminación del worktree R1.
 
 ## Registro y decisiones de origen
 
@@ -32,10 +32,16 @@ El paso 2 queda resuelto por decisión explícita del PO: **no se promueve P0-ca
 
 Comprobación del diff contra main: solo AGENTS.md y docs/**; cero cambios en Assets/**, ProjectSettings/**, scripts/** ni plan r2. §8.2.1/§8.2.2/§8.2.3, los siete requisitos numerados de §8.3 y toda §17 se conservan exactamente. Verificación documental completada: **26 enlaces locales nuevos** (archivos y anclas) válidos; secciones protegidas comparadas byte a byte y git diff --check limpio. Auditoría local en Logs/t7-3-document-audit.json, no versionada. **Sin ejecutar tests, builds, instalación o mediciones nuevas:** no hay comportamiento de producto modificado; la regresión/exports frescos corresponden al cierre R1. No se actualizan herramientas ni el perfil; antes de una instalación desde el 27 debe renovarse y siempre comprobarse vigencia.
 
-## Entrega
+## Entrega inicial (histórico)
 
 T7.3 documental preparado en [PR #15 lista para Claude](https://github.com/rafaallendes-boop/squash-clash/pull/15), abierta y **sin fusionar**. Fuente documental 5507c8e; este agregado solo enlaza la entrega. No se cambian escenarios, criterios, umbrales ni defaults. **Gameplay y T8 siguen sin autorizar. Detenerse al entregar este informe y la PR lista.**
 
 ## Corrección factual tras revisión de Claude
 
 Claude aprobó head **6bc5084b0a9140aba381ee4f8dae46fbde2da476** con la precisión factual H17 indicada arriba; error de origen en el mensaje de Claude, no de Codex. [Corrección y autorización condicionada del PO](2026-10-21-first-ball-po-approvals.md#revisión-claude-de-t73-y-fusión-condicionada-por-el-po). La spec cambia únicamente D34; las tablas históricas §18.2 B5/resumen v0.3 quedan fuera de alcance y sin cambios. Se revisan todos los documentos de esta PR para conservar los datos de frames largos de H17-1/H17-2 y distinguirlos de la interpretación no demostrada de Claude. Sin código, tests, build, instalación ni mediciones nuevas; Fail/umbrales/defaults conservados. Condiciones del PO verificadas: cuatro archivos documentales, en spec únicamente D34, §17 byte a byte intacta; ningún cambio en plan ni producto. Auditoría local Logs/t7-3-final-review-audit.json. Fusión autorizada con merge commit; tras cierre detenerse sin iniciar gameplay/T8.
+
+## Cierre autorizado por el PO
+
+**PR #15 ya lista y fusionada**, merge commit **e192b36e4d60029f7ebb71507485a266d69bfd25**, head **b124cdfaa1147ba2e54c4b67f72e17807b99fa41**. Auditoría desde 6bc5084: cuatro archivos documentales, spec únicamente D34, §17 intacta y sin plan/producto; diff SHA-256 **54cb9e595d703e4bcb626abc140c2180e30882c31b779a17ef659eb84c62bf34**. Main sincronizada y cierre registrado en AGENTS/aprobaciones. Worktree eliminado sin force, Logs/ preservado en **Logs/archive-t7-3-20261024**; ramas remotas intactas. Sin tests/build/instalación/medición nuevos.
+
+**T7.3 cerrado; detenerse. Gameplay/T8 siguen sin autorizar.** Pendientes: comprobar P0-calib-1 en próxima apertura y renovar perfil antes de cualquier instalación desde el 27, verificando vigencia. No se actúa sobre el iPhone en este cierre.
