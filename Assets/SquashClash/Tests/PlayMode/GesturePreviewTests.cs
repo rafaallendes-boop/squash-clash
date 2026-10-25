@@ -25,7 +25,9 @@ namespace SquashClash.Runtime.Tests
             yield return PlayModeTestWorld.ClearApp();yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
             app=AppBootstrap.Instance;app.Host.enabled=false;app.GetComponent<ResumeOverlay>().Continue();app.Clock.Paused=false;
             app.Tuning.Set("launcher.repeatSeconds",0);input=app.GetComponent<TouchInputAdapter>();preview=app.GetComponent<GesturePreview>();
-            if(input!=null){input.InputAreaOverride=new Rect(0,0,10000,10000);input.UiBlocker=_=>false;now=Time.realtimeSinceStartupAsDouble+1;input.ReadRealTime=()=>now;}
+            // An integral origin makes (start + 120) - start exactly 120 in the fake clock.
+            // A fractional realtime origin can round that duration just below the tested boundary.
+            if(input!=null){input.InputAreaOverride=new Rect(0,0,10000,10000);input.UiBlocker=_=>false;now=Math.Ceiling(Time.realtimeSinceStartupAsDouble)+1;input.ReadRealTime=()=>now;}
             start=now;screen=InputSystem.AddDevice<Touchscreen>();
         }
         [UnityTearDown] public IEnumerator Cleanup()
