@@ -1,6 +1,6 @@
 # I7a — aceptación y validación integral de First Ball (T7.1–T7.2)
 
-**En curso, entrega todavía incompleta.** Rama `firstball/i7a-validation`, PR en borrador para trazabilidad. PO autorizó T7.1–T7.2 el 2026-10-24 tras aprobar/cerrar PR #12 (merge 7d7fd3a421255ae02558840d5ff9f2a669fce0d0); main sincronizada, worktree L2 eliminado. **T7.3/gameplay no autorizados.** No se cierra I7a ni se fusiona su PR.
+**Entrega técnica I7a lista para revisión de Claude y decisión del PO.** [PR #13](https://github.com/rafaallendes-boop/squash-clash/pull/13), rama `firstball/i7a-validation`, sin fusionar. **T7.1 Pass; H17 p95 Fail en ambas sesiones.** PO autorizó T7.1–T7.2 el 2026-10-24 tras aprobar/cerrar PR #12 (merge 7d7fd3a421255ae02558840d5ff9f2a669fce0d0); main sincronizada, worktree L2 eliminado. **T7.3/gameplay no autorizados.** No se cierra I7a ni la Etapa 7 ni se fusiona su PR. La plantilla conserva los campos de juicio/decisión pendientes del PO.
 
 ## Alcance y pruebas
 
@@ -38,8 +38,38 @@ PO conectó/desbloqueó por cable y se resolvió 4016. Dev instalada; lanzamient
 
 ## T7.2 — H17 y plantilla
 
-Dev e0f9071 reinstalada tras revalidar perfil/firma/metadata/fuentes, lanzamiento no-console exit=0. Presets JSON originales intactos y selección vacía tras Default; el PO cargará P0-calib-1 solo para repetición H17. **Sesión de rendimiento nativa pendiente**; pruebas sintéticas de 900 s no constituyen la medición en iPhone. Build dev, estado térmico nominal al inicio, brillo/bajo consumo anotados, panel cerrado, sin cámara lenta/spike/benchmark; L1–L6, repetición 3 s y Phase=session. Para evitar editar un valor en el panel, se cargará **P0-calib-1**, preset ya aceptado por PO e idéntico a Default salvo launcher.repeatSeconds=3. Es solo para H17; la campaña física anterior sí usó Default. Los lanzamientos del recorrido cambian solo sus claves de lanzamiento/referencias; SimulationKey permanece 166a96e319c7. No se guarda ni modifica el JSON del preset. Tras 15 min recuperar JSONL y resumen para confrontar §17.C: p95≤16,7 ms, p99≤25 ms, >33 ms≤1/min, sin serious/critical, DroppedSteps explícitos. Un resultado insuficiente se informa sin ajustar umbrales/defaults.
+Dev e0f9071 reinstalada tras revalidar perfil/firma/metadata/fuentes, lanzamiento sin consola exit=0. El PO cargó **P0-calib-1**, aceptado en Etapa 5, igual a Default salvo repetición=3. Se conservaron los JSON guardados; L1–L6 solo cambian sus claves de lanzamiento/referencias, con SimulationKey **166a96e319c7**. La campaña física de T7.1 se realizó antes con **Default**, tal como se exigió.
+
+PO: «Listo H17 completa. Informe guardado. El brillo lo tenía al 60% y el resto de las condiciones si estaban como solicitabas. Creo que fueron 2 informes porque pensé que me equivoque y lo ejecuté de nuevo». Recuperados **dos inicios y dos resúmenes completos**, sin intentos incompletos en la instantánea. Se conservan **ambas sesiones en orden**, sin elegir la mejor, combinarlas ni solicitar otra ejecución. Sin herramientas del agente entre solicitud y respuesta.
+
+| Medición de sesión completa | H17-1 | H17-2 | Objetivo / resultado |
+|---|---:|---:|---|
+| Hora local America/Santiago, 24 de octubre | 20:41:23→20:56:23 | 20:58:05→21:13:05 | 15 min cada una |
+| Duración medida | 900,000054 s | 900,002363 s | ≥900 s: ambas completas |
+| Frames / FPS medio calculado | 53.985 / 59,9833 | 53.991 / 59,9898 | 60 FPS, meta |
+| Frame p50 | 16,7 ms | 16,7 ms | Informativo |
+| **Frame p95** | **17,2 ms** | **16,8 ms** | **≤16,7 ms: Fail ambas** |
+| Frame p99 | 17,3 ms | 17,1 ms | ≤25 ms: Pass ambas |
+| Frames >33 ms / minuto | 1 / 0,066667 | 0 / 0 | ≤1/min: Pass ambas |
+| CPU p95 / muestras | 17,2 ms / 52.491 | 16,8 ms / 52.497 | Registrado, sin umbral nuevo |
+| GPU p95 / muestras | 2,5 ms / 52.491 | 2,5 ms / 52.497 | Registrado, sin umbral nuevo |
+| Térmico inicial / peor | nominal / nominal | nominal / nominal | Sin serious/critical: Pass |
+| Segundos nominal | 900,000054 | 900,002363 | Toda la sesión |
+| Segundos unknown / fair / serious / critical | 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 | Sin cobertura térmica desconocida |
+| DroppedSteps | 0 | 0 | Registrado, comparable |
+| Lanzamientos / L1–L6 | 300 / 50 por caso | 300 / 50 por caso | ≈150 s por caso, repeat=3 |
+| Phase / métricas comparables | session / true | session / true | Ambas completas |
+
+**Objetivos de rendimiento H17: Fail en ambas sesiones por p95.** Se conserva el borde superior de cubeta de 0,1 ms (sesgo ≤0,1 ms ya documentado), sin restar ese sesgo para declarar Pass, sin redondear 16,8 a 16,7 ni modificar el objetivo. No se atribuye una causa ni se optimiza durante esta entrega. La prueba de física P2/C17 mantiene su resultado propio; no se mezclan con los frames H17.
+
+Condiciones: teléfono físico, térmico nominal inicial en ambos registros, panel cerrado, sin cámara lenta/spike/benchmark/capturas/Duplicación/herramientas durante ejecución; confirmación global del PO y control H17. **Bajo consumo apagado**, por esa confirmación. Brillo **≈60 % declarado por PO** y **Screen.brightness=0,5500000119 (≈55 %) nativo inicial en ambas**: se registran los dos valores, sin inferir la causa de la diferencia. El PO confirmó el resto de condiciones solicitadas, incluida no modificación durante medición. No cancelación de foco registrada; el control habría persistido incompleto al perder foco.
+
+[Evidencia/auditoría H17](../validation/evidence/2026-10-24-i7a-h17.json), extractos JSONL de datos de validación [H17-1](../validation/evidence/h17/h17-e0f9071-session-1.jsonl) y [H17-2](../validation/evidence/h17/h17-e0f9071-session-2.jsonl): **602 registros cada uno**, 300 launch/300 frames/start/summary, líneas originales Phase=session separadas por intervalo. La instantánea de origen completa (1.275 registros) queda en Logs ignorado; SHA-256 y selección documentados. No se versionan logs de herramientas ni identificadores personales del dispositivo.
+
+Límites de auditoría: los percentiles completos provienen del histograma acumulado nativo probado con TDD; los segmentos no permiten recalcular independientemente ese histograma y no se promedian sus percentiles. Los segmentos tienen **un frame inicial adicional** frente al resumen H17, que descarta explícitamente el delta anterior al inicio; CPU/GPU coinciden exactamente en conteos, los frames largos reconstruyen 1/0 y todos los DroppedSteps son cero. En cada sesión dos flushes al cambiar automáticamente L4→L5/L5→L6 capturan 4/6 claves de lanzador pendientes, seguidos inmediatamente por launch con cero; se preservan esas filas y su explicación por el código, sin atribuir ediciones manuales ni ocultarlas.
+
+Tras recuperar datos: P0-calib-1, Po-1 y last-active **idénticos byte a byte** al respaldo original; selección guardada P0-calib-1. Intento de reinicio controlado para volver a ese preset rechazado por iPhone bloqueado: no se afirma una restauración observada. Sin nueva instalación ni cambios en archivos de presets; la siguiente apertura normal usa la selección guardada. No se solicita repetir nada.
 
 [Plantilla de cinco secciones para completar por PO](../validation/first-ball-validation.md): H1 ya confirmado globalmente, datos no comunicados permanecen pendientes; física, rendimiento, invariantes §17.A.1/2/3/10/14 y decisión del PO. No declara First Ball validado ni cierra Etapa 7.
 
-Retención de logs sigue pendiente antes de T8. No se interviene el panel de importación ni la sombra experimental. No T7.3, calibración nueva ni gameplay. Entrega/revisión final **pendientes de completar las comprobaciones nativas**.
+Retención de logs sigue pendiente antes de T8. No se interviene el panel de importación ni la sombra experimental. No T7.3, calibración nueva ni gameplay. **Entrega completada y detenida para Claude/PO**, PR #13 lista y sin fusionar. Decisión global de First Ball y cierre I7a/Etapa 7 pendientes del PO, con el incumplimiento p95 explícito.

@@ -29,29 +29,40 @@ Comentarios conservados: PO ve bien los seis escenarios y las mecánicas; prefer
 - Aceptación de física T7.1: **Pass**, [campaña nativa auditada](evidence/2026-10-24-i7a-p2-native.json), 18 filas y **11 criterios de gate Pass**, C17 p95 **0,0188 ms**/200 muestras, térmico nominal inicial/benchmark/final y foco 0. Default aplicado antes de iniciar confirmado en JSONL. Editor EditMode/PlayMode completos, diez criterios aplicables de gate Pass; C17 informativo en editor. No confundir con regresión de tests.
 - Configuración de campaña: cargar **Default**, hash **0d39e6016bd8**. SimulationKey efectivo P2 **166a96e319c7**. Gate histórico c86243b15a97 tenía backend=0 en el archivo y fábrica P2 inyectada; key cruda **04372f672e9e**. Con selección efectiva P2, key **166a96e319c7**: mismos valores físicos/cancha, bounceThreshold 0,1 y variante. No se afirma igualdad entre las keys crudas. El cambio de selección fue aprobado en I4e; las once claves posteriores añadidas son no físicas (repetición/cámara/depuración/ayudas), explican el resto del hash completo.
 - Preset del punto de control de Etapa 5: **P0-calib-1 / 8de3f2ecb217**; solo difiere de Default en launcher.repeatSeconds=3. **No se usa para la campaña del gate ni se promueve a defaults.** Po-1 sigue prueba funcional.
-- Batería final **270/270 EditMode y 136/136 PlayMode**, [evidencia](evidence/2026-10-24-i7a-tests.json), [informe I7a en curso](../reviews/2026-10-24-first-ball-i7a-validation.md). Cualquier gate antes Pass que falle: regresión, detenerse.
+- Batería final **270/270 EditMode y 136/136 PlayMode**, [evidencia](evidence/2026-10-24-i7a-tests.json), [informe I7a](../reviews/2026-10-24-first-ball-i7a-validation.md). Cualquier gate antes Pass que falle: regresión, detenerse.
 
 ## 3. Rendimiento (H17)
 
-**Pendiente sesión nativa dev de 15 min.** No inferir resultado de tests, editor, C17 o sesión funcional anterior.
+**Dos sesiones nativas completas; objetivo p95 Fail en ambas.** El PO repitió manualmente porque pensó haberse equivocado. Se conservan ambas, sin seleccionar la mejor ni mezclar distribuciones. [Auditoría y hashes](evidence/2026-10-24-i7a-h17.json), datos de validación JSONL [H17-1](evidence/h17/h17-e0f9071-session-1.jsonl) / [H17-2](evidence/h17/h17-e0f9071-session-2.jsonl).
 
-| Campo | Resultado |
-|---|---|
-| Build dev / fuente / fecha UTC | Pendiente |
-| Configuración / SimulationKey | P0-calib-1 (solo repeat=3 frente a Default), física Default / 166a96e319c7; cada L tendrá hash efectivo propio |
-| Phase / duración / L1–L6 | session / ≥900 s / 150 s por caso, repetición 3 s de P0-calib-1, sin guardar cambios |
-| Térmico inicial | Nominal requerido; pendiente registro |
-| Brillo inicial y cambios | Pendiente PO + valor nativo Screen.brightness |
-| Bajo consumo | Pendiente PO |
-| Panel / cámara lenta / spike / benchmark | Panel cerrado / ninguno durante la sesión; pendiente ejecución |
-| Frame p50 / p95 / p99 | Pendiente; p95≤16,7 ms, p99≤25 ms |
-| Frames >33 ms por minuto | Pendiente; ≤1/min |
-| CPU/GPU p95 y cantidad de muestras | Pendiente; N/D si no hay muestras, nunca cero inventado |
-| Peor térmico / segundos en cada estado | Pendiente; sin serious/critical durante 15 min |
-| DroppedSteps / foco / cancelación | Pendiente |
-| JSONL y resumen de sesión completa | Pendiente |
+| Campo | H17-1 | H17-2 |
+|---|---|---|
+| Build / fuente | 0.1.0+e0f9071 dev | Misma build |
+| Hora local America/Santiago (24 octubre) | 20:41:23→20:56:23 | 20:58:05→21:13:05 |
+| Configuración | P0-calib-1; solo repeat=3 frente a Default | Misma configuración base |
+| SimulationKey / Phase | 166a96e319c7 / session | Igual |
+| Duración / L1–L6 | 900,000054 s / 50 lanzamientos por caso | 900,002363 s / 50 por caso |
+| Frames / FPS medio | 53.985 / 59,9833 | 53.991 / 59,9898 |
+| Frame p50 / p95 / p99 | 16,7 / **17,2** / 17,3 ms | 16,7 / **16,8** / 17,1 ms |
+| p95≤16,7 ms | **Fail** | **Fail** |
+| p99≤25 ms | Pass | Pass |
+| Frames >33 ms / minuto (≤1/min) | 1 / 0,066667: Pass | 0 / 0: Pass |
+| CPU p95 / muestras | 17,2 ms / 52.491 | 16,8 ms / 52.497 |
+| GPU p95 / muestras | 2,5 ms / 52.491 | 2,5 ms / 52.497 |
+| Térmico inicial / peor | nominal / nominal | nominal / nominal |
+| Segundos nominal | 900,000054 | 900,002363 |
+| Segundos unknown/fair/serious/critical | 0/0/0/0 | 0/0/0/0 |
+| DroppedSteps | 0 | 0 |
+| Brillo | PO ≈60 %; nativo inicial ≈55 % | Iguales valores registrados |
+| Bajo consumo | Apagado, confirmación PO | Igual |
+| Panel / cámara lenta / spike / benchmark | Cerrado / ninguno | Igual |
+| Foco / cancelación | Sin cancelación registrada; completa | Igual |
 
-Percentiles completos provienen de histogramas de toda H17, no del promedio de percentiles de segmentos. Borde superior de cubeta, sesgo ≤0,1 ms, ya documentado por Claude; null con muestras señala overflow >250 ms, null sin muestras señala ausencia. Segmentos JSONL de 10 s se mantienen para trazabilidad. Térmico de la sesión se acumula por estado en cada frame; no se mezcla con el peor estado anterior a H17.
+Condiciones restantes confirmadas globalmente por PO: teléfono físico, sin capturas/Duplicación/herramientas y sin cambios de brillo/modo durante la sesión. Sin herramientas del agente entre solicitud y aviso de término. Se conservan estimación del PO y valor nativo de brillo sin inferir la diferencia.
+
+Percentiles de histogramas de **cada sesión completa** (borde superior de cubeta, sesgo ≤0,1 ms ya documentado), nunca promedio de percentiles de segmentos. No se resta el sesgo ni se relaja el objetivo para aprobar 16,8 ms. JSONL conserva un frame inicial adicional de segmentos frente al resumen H17 que excluye ese delta; CPU/GPU y frames largos contrastados. Dos flushes en transiciones automáticas L4→L5/L5→L6 muestran pendientes transitorios (4/6), seguidos de launch con cero; explicación y filas conservadas en auditoría. Los agregados por segmento no permiten recalcular independientemente los percentiles del histograma completo.
+
+**Rendimiento H17: Fail por p95.** Sin nueva medición, ajuste de umbrales/defaults ni interpretación causal. Los JSON de P0-calib-1/Po-1 y selección guardada permanecen intactos.
 
 ## 4. Invariantes de First Ball (§17.A)
 
@@ -65,7 +76,7 @@ Percentiles completos provienen de histogramas de toda H17, no del promedio de p
 
 ## 5. Decisión del PO
 
-**Pendiente PO.** Elegir y comentar: continuar a First Shot / ajustar First Ball / volver. Aprobación de H1 y autorización de I7a no equivalen a esta decisión. No cerrar Etapa 7, modificar spec/defaults, ejecutar T7.3 ni iniciar gameplay sin autorización expresa.
+**Pendiente PO, con incumplimiento H17 p95 explícito.** T7.1 físico/release pasa y las dos sesiones H17 completas superan p95≤16,7 ms. Elegir y comentar: continuar a First Shot / ajustar First Ball / volver. Aprobación de H1 y autorización de I7a no equivalen a esta decisión. No cerrar Etapa 7, modificar spec/defaults, ejecutar T7.3 ni iniciar gameplay sin autorización expresa.
 
 - Decisión: pendiente.
 - Observaciones/ajustes: pendiente.

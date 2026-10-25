@@ -1,0 +1,284 @@
+{
+  "source": "Documents/metrics; snapshot recovered only after PO completion response",
+  "sourceFileSha256": "245e0e969078ada895534401560dc7d1d25a703abed95d2d9926e690e6cc6164",
+  "sourceRecords": 1275,
+  "invalidJsonLines": 0,
+  "sessionStarts": 2,
+  "sessionSummaries": 2,
+  "completedSessions": 2,
+  "incompleteSessions": 0,
+  "sessions": [
+    {
+      "id": "H17-1",
+      "dataFile": "docs/validation/evidence/h17/h17-e0f9071-session-1.jsonl",
+      "dataSha256": "8f0c6291e87965071c6afc6df0b408537c2a990b2ce1e916c4e298c2cb622133",
+      "recordCount": 602,
+      "complete": true,
+      "comparableMetrics": true,
+      "summary": {
+        "complete": true,
+        "reason": "15 minutos completos",
+        "startedAtUtc": "2026-10-24T23:41:23.3855720Z",
+        "endedAtUtc": "2026-10-24T23:56:23.3976900Z",
+        "seconds": 900.0000544972718,
+        "simulationKey": "166a96e319c7",
+        "frames": 53985,
+        "p50Ms": 16.7,
+        "p95Ms": 17.2,
+        "p99Ms": 17.3,
+        "histogramResolutionMs": 0.1,
+        "longFramesPerMinute33Ms": 0.06666666262983197,
+        "cpuSamples": 52491,
+        "cpuP95Ms": 17.2,
+        "gpuSamples": 52491,
+        "gpuP95Ms": 2.5,
+        "thermalStart": "nominal",
+        "thermalWorst": "nominal",
+        "unknownSeconds": 0,
+        "nominalSeconds": 900.0000544972718,
+        "fairSeconds": 0,
+        "seriousSeconds": 0,
+        "criticalSeconds": 0,
+        "droppedSteps": 0,
+        "repeatSeconds": 3,
+        "brightnessStart": 0.550000011920929,
+        "casesVisited": 6,
+        "caseSeconds": [
+          150.00811387225986,
+          149.99230566620827,
+          150.0081228138879,
+          149.99196282867342,
+          150.0076290257275,
+          149.99192029051483
+        ]
+      },
+      "startedLocal": "2026-10-24T20:41:23.385572-03:00",
+      "endedLocal": "2026-10-24T20:56:23.397690-03:00",
+      "averageFps": 59.98332970119131,
+      "longFramesOver33Ms": 1,
+      "launchGroups": [
+        {
+          "case": "L1",
+          "effectiveHash": "b336c07d9231",
+          "launches": 50,
+          "firstLaunchUtc": "2026-10-24T23:41:23.3896600Z",
+          "lastLaunchUtc": "2026-10-24T23:43:50.4618310Z"
+        },
+        {
+          "case": "L2",
+          "effectiveHash": "c762cb2f3918",
+          "launches": 50,
+          "firstLaunchUtc": "2026-10-24T23:43:53.3958630Z",
+          "lastLaunchUtc": "2026-10-24T23:46:20.4206480Z"
+        },
+        {
+          "case": "L3",
+          "effectiveHash": "86fa74c27a92",
+          "launches": 50,
+          "firstLaunchUtc": "2026-10-24T23:46:23.3860650Z",
+          "lastLaunchUtc": "2026-10-24T23:48:50.4616220Z"
+        },
+        {
+          "case": "L4",
+          "effectiveHash": "f321114778f9",
+          "launches": 50,
+          "firstLaunchUtc": "2026-10-24T23:48:53.3932420Z",
+          "lastLaunchUtc": "2026-10-24T23:51:20.5050140Z"
+        },
+        {
+          "case": "L5",
+          "effectiveHash": "88d4c473a70a",
+          "launches": 50,
+          "firstLaunchUtc": "2026-10-24T23:51:23.3857920Z",
+          "lastLaunchUtc": "2026-10-24T23:53:50.4243400Z"
+        },
+        {
+          "case": "L6",
+          "effectiveHash": "17ba309ee04e",
+          "launches": 50,
+          "firstLaunchUtc": "2026-10-24T23:53:53.3934640Z",
+          "lastLaunchUtc": "2026-10-24T23:56:20.4155360Z"
+        }
+      ],
+      "sampleCountCrossCheck": {
+        "segmentFrames": 53986,
+        "summaryFrames": 53985,
+        "startBoundaryFrameExcluded": 1,
+        "segmentSeconds": 900.0166975818574,
+        "cpuSamplesFromSegments": 52491,
+        "gpuSamplesFromSegments": 52491
+      },
+      "pendingSnapshotsAtAutomaticTransitions": [
+        {
+          "ts": "2026-10-24T23:51:23.3833990Z",
+          "effectiveHash": "f321114778f9",
+          "pending": 4
+        },
+        {
+          "ts": "2026-10-24T23:53:53.3897720Z",
+          "effectiveHash": "88d4c473a70a",
+          "pending": 6
+        }
+      ],
+      "objectiveVerdicts": {
+        "frameP95AtMost16_7Ms": "Fail",
+        "frameP99AtMost25Ms": "Pass",
+        "longFramesAtMost1PerMinute": "Pass",
+        "fifteenMinutesWithoutSeriousThermal": "Pass",
+        "droppedSteps": 0
+      },
+      "h17PerformanceObjectives": "Fail (p95 > 16.7 ms)"
+    },
+    {
+      "id": "H17-2",
+      "dataFile": "docs/validation/evidence/h17/h17-e0f9071-session-2.jsonl",
+      "dataSha256": "d809d5a2d7e0a7f70e6c0ba1144dacef5f80392e06ce4c8ca43a0a5056faadcf",
+      "recordCount": 602,
+      "complete": true,
+      "comparableMetrics": true,
+      "summary": {
+        "complete": true,
+        "reason": "15 minutos completos",
+        "startedAtUtc": "2026-10-24T23:58:05.3150950Z",
+        "endedAtUtc": "2026-10-25T00:13:05.3152660Z",
+        "seconds": 900.0023631872609,
+        "simulationKey": "166a96e319c7",
+        "frames": 53991,
+        "p50Ms": 16.7,
+        "p95Ms": 16.8,
+        "p99Ms": 17.1,
+        "histogramResolutionMs": 0.1,
+        "longFramesPerMinute33Ms": 0,
+        "cpuSamples": 52497,
+        "cpuP95Ms": 16.8,
+        "gpuSamples": 52497,
+        "gpuP95Ms": 2.5,
+        "thermalStart": "nominal",
+        "thermalWorst": "nominal",
+        "unknownSeconds": 0,
+        "nominalSeconds": 900.0023631872609,
+        "fairSeconds": 0,
+        "seriousSeconds": 0,
+        "criticalSeconds": 0,
+        "droppedSteps": 0,
+        "repeatSeconds": 3,
+        "brightnessStart": 0.550000011920929,
+        "casesVisited": 6,
+        "caseSeconds": [
+          150.00814172904938,
+          149.99189295619726,
+          150.00859955046326,
+          149.99192352127284,
+          150.0095332171768,
+          149.9922722131014
+        ]
+      },
+      "startedLocal": "2026-10-24T20:58:05.315095-03:00",
+      "endedLocal": "2026-10-24T21:13:05.315266-03:00",
+      "averageFps": 59.98984248085385,
+      "longFramesOver33Ms": 0,
+      "launchGroups": [
+        {
+          "case": "L1",
+          "effectiveHash": "b336c07d9231",
+          "launches": 50,
+          "firstLaunchUtc": "2026-10-24T23:58:05.3231310Z",
+          "lastLaunchUtc": "2026-10-25T00:00:32.3422600Z"
+        },
+        {
+          "case": "L2",
+          "effectiveHash": "c762cb2f3918",
+          "launches": 50,
+          "firstLaunchUtc": "2026-10-25T00:00:35.3233960Z",
+          "lastLaunchUtc": "2026-10-25T00:03:02.3479330Z"
+        },
+        {
+          "case": "L3",
+          "effectiveHash": "86fa74c27a92",
+          "launches": 50,
+          "firstLaunchUtc": "2026-10-25T00:03:05.3169160Z",
+          "lastLaunchUtc": "2026-10-25T00:05:32.3407640Z"
+        },
+        {
+          "case": "L4",
+          "effectiveHash": "f321114778f9",
+          "launches": 50,
+          "firstLaunchUtc": "2026-10-25T00:05:35.3256040Z",
+          "lastLaunchUtc": "2026-10-25T00:08:02.3496920Z"
+        },
+        {
+          "case": "L5",
+          "effectiveHash": "88d4c473a70a",
+          "launches": 50,
+          "firstLaunchUtc": "2026-10-25T00:08:05.3123580Z",
+          "lastLaunchUtc": "2026-10-25T00:10:32.3409320Z"
+        },
+        {
+          "case": "L6",
+          "effectiveHash": "17ba309ee04e",
+          "launches": 50,
+          "firstLaunchUtc": "2026-10-25T00:10:35.3233850Z",
+          "lastLaunchUtc": "2026-10-25T00:13:02.3511100Z"
+        }
+      ],
+      "sampleCountCrossCheck": {
+        "segmentFrames": 53992,
+        "summaryFrames": 53991,
+        "startBoundaryFrameExcluded": 1,
+        "segmentSeconds": 900.0195066044107,
+        "cpuSamplesFromSegments": 52497,
+        "gpuSamplesFromSegments": 52497
+      },
+      "pendingSnapshotsAtAutomaticTransitions": [
+        {
+          "ts": "2026-10-25T00:08:05.3110450Z",
+          "effectiveHash": "f321114778f9",
+          "pending": 4
+        },
+        {
+          "ts": "2026-10-25T00:10:35.3207140Z",
+          "effectiveHash": "88d4c473a70a",
+          "pending": 6
+        }
+      ],
+      "objectiveVerdicts": {
+        "frameP95AtMost16_7Ms": "Fail",
+        "frameP99AtMost25Ms": "Pass",
+        "longFramesAtMost1PerMinute": "Pass",
+        "fifteenMinutesWithoutSeriousThermal": "Pass",
+        "droppedSteps": 0
+      },
+      "h17PerformanceObjectives": "Fail (p95 > 16.7 ms)"
+    }
+  ],
+  "selectionPolicy": "Both completed sessions retained in execution order. No choice of best run, no pooling and no further session requested.",
+  "poResponse": "Listo H17 completa. Informe guardado. El brillo lo tenía al 60% y el resto de las condiciones si estaban como solicitabas. Creo que fueron 2 informes porque pensé que me equivoque y lo ejecuté de nuevo",
+  "conditions": {
+    "physicalPhone": true,
+    "poBrightnessEstimatePercent": 60,
+    "nativeInitialBrightnessEachSession": 0.550000011920929,
+    "brightnessEvidence": "PO approximate 60%; native Screen.brightness about 55% in both starts; both values retained without inferred cause.",
+    "lowPowerMode": "off, global PO confirmation of requested conditions",
+    "panelClosed": true,
+    "noSlowMotionSpikeBenchmarkCapturesMirroringOrToolsDuringSessions": true,
+    "focusInterruptions": "No recorded cancellations; both sessions complete. PO confirms requested conditions.",
+    "nativeThermalNominalAtEachStart": true,
+    "nativeThermalNominalThroughout": true,
+    "protocolEvidence": "PO confirmation plus controlled H17 code/phase/session summaries; no tool use from request until PO completion response."
+  },
+  "auditLimits": [
+    "Whole-session percentiles are native accumulated histogram summaries tested by TDD. Segment percentile records do not allow independent recomputation of the full histogram; no mean of segment percentiles used.",
+    "Histograms use upper bucket edges, bias <=0.1 ms; recorded 17.2 and 16.8 ms exceed approved 16.7 ms. No rounding adjustment to declare Pass.",
+    "Segment sampling includes one extra start-boundary frame per session; H17 summary explicitly excludes it. CPU/GPU counts match exactly.",
+    "Two segment flushes at automatic L4→L5 and L5→L6 changes capture temporary pending launcher keys (4/6), followed immediately by launch records with zero pending. These are source-defined automatic transitions; saved preset and physics unchanged."
+  ],
+  "savedPresetsAndSelectionUnchanged": true,
+  "presetHashesAfterH17": {
+    "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+    "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767"
+  },
+  "restoreAttempt": "Controlled restart to return to saved P0 was denied because iPhone locked. No restored startup claimed; saved selection remains P0-calib-1 and JSON unchanged.",
+  "overallH17PerformanceObjectives": "Fail in both sessions because frame p95 >16.7 ms. Technical session complete/comparable; PO decision pending.",
+  "physicsGateStatus": "T7.1 native P2 11/11 gate Pass, C17 p95 0.0188 ms; independent recorded experiment."
+}
