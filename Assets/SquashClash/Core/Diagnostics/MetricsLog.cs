@@ -26,6 +26,7 @@ namespace SquashClash.Core.Diagnostics
             this.directory=Path.GetFullPath(directory??throw new ArgumentNullException(nameof(directory)));
             buildLabel=(build??throw new ArgumentNullException(nameof(build))).Label;
             CurrentFilePath=Path.Combine(this.directory,"metrics-"+DateTime.UtcNow.ToString("yyyyMMddTHHmmssfff")+"-"+Guid.NewGuid().ToString("N")+".jsonl");
+            LastError=LogRetention.Prune(this.directory,LogFileKind.Metrics,CurrentFilePath);
         }
         public void Write(string kind,EffectiveConfig cfg,string presetName,string presetFileHash,int pendingCount,int seed,bool metricsValid,long droppedSinceRestart,string jsonPayload)
         {

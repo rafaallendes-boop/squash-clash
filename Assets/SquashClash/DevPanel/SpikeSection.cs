@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using SquashClash.Core.Config;
+using SquashClash.Core.Diagnostics;
 using SquashClash.Core.Spike;
 using SquashClash.Core.Simulation;
 using System.Globalization;
@@ -40,11 +41,14 @@ namespace SquashClash.DevPanel
         public bool IsRunning { get; private set; }
         public string LastReport { get; private set; }
         public string LastReportPath { get; private set; }
+        public string LastError { get; private set; }
         public string SelectedScenario { get; private set; }
         public void Initialize(AppBootstrap app, VisualElement root, string reportDirectory = null)
         {
             this.app = app;
             this.reportDirectory = reportDirectory ?? Path.Combine(Application.persistentDataPath, "spike");
+            LastError=LogRetention.Prune(this.reportDirectory,LogFileKind.Spike,LastReportPath);
+            if(LastError!=null)Debug.LogWarning("[SquashClash] Retención spike: "+LastError);
             layer?.RemoveFromHierarchy();
             layer = new VisualElement { name = "spike-section" };
             layer.style.position = Position.Absolute; layer.style.left = Length.Percent(3); layer.style.right = Length.Percent(3);
@@ -183,9 +187,9 @@ namespace SquashClash.DevPanel
             {
                 Directory.CreateDirectory(reportDirectory);
                 var path = Path.Combine(reportDirectory, (result.Backend == ExperimentBackend ? "P2-" : "P1-") + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff") + ".md");
-                File.WriteAllText(path, LastReport); LastReportPath = path; outputs.Add("Informe guardado.");
+                File.WriteAllText(path, LastReport); LastReportPath = path; LastError=null; outputs.Add("Informe guardado.");
             }
-            catch (Exception e) { outputs.Add("No se pudo guardar: " + e.GetType().Name); Debug.LogWarning("[SquashClash] " + outputs[outputs.Count - 1]); }
+            catch (Exception e) { LastError=e.Message; outputs.Add("No se pudo guardar: " + e.GetType().Name); Debug.LogWarning("[SquashClash] " + outputs[outputs.Count - 1]); }
             status.text = message + "\n" + string.Join("\n", outputs);
             Debug.Log("[SquashClash] spike output complete=" + result.Complete + " thermal=" + result.ThermalStart + "→" + result.ThermalEnd + " saved=" + (LastReportPath != null));
         }
