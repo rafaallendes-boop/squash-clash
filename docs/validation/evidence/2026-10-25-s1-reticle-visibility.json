@@ -1,0 +1,386 @@
+{
+  "schema": 1,
+  "date": "2026-10-25",
+  "scope": "Corrección visual de S1; comprobación física de visibilidad únicamente, sin revalidación ni aceptación de S1",
+  "technical": {
+    "base": "a8240fe8277896015c37a66805d0d0c21c8a6b70",
+    "sourceHead": "5e218ea",
+    "functionalCommit": "2850a56",
+    "initialREDCommit": "1bf5f8b",
+    "sourceBaseline": "5e218ead0636d4eab23f4913b8f4911c4c117dd5",
+    "suites": {
+      "editmode": {
+        "total": 343,
+        "passed": 343,
+        "failed": 0,
+        "sha256": "93d98893c3fe17026fe7b82181975754556c45fdb0325d80a3ca91e79c565520",
+        "startTime": "2026-10-25 21:13:19Z",
+        "endTime": "2026-10-25 21:13:26Z"
+      },
+      "playmode": {
+        "total": 169,
+        "passed": 169,
+        "failed": 0,
+        "sha256": "10e19112acbb9e97225aa6ec2a4ecd9e7199a18036e5e42c89382477db7fc568",
+        "startTime": "2026-10-25 21:13:34Z",
+        "endTime": "2026-10-25 21:14:09Z"
+      }
+    },
+    "tdd": {
+      "initial-red": {
+        "total": 5,
+        "passed": 1,
+        "failed": 4,
+        "sha256": "753e570506488b25e48218c8fd5e9158391f07992c08e04f7fbcf8bccf554624"
+      },
+      "native-red-replay": {
+        "total": 5,
+        "passed": 1,
+        "failed": 4,
+        "sha256": "c89974de764c58dfc21f843e4c723aa04478f2516c8f318ac7b68771471bbfd3"
+      },
+      "green": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0,
+        "sha256": "59ebf87f4f0d673beb1861bd667fac54378e35c335d3b6a8ae5b231bcb4f6df2"
+      }
+    },
+    "editorImages": {
+      "aiming": {
+        "path": "docs/validation/evidence/2026-10-25-reticle-editor-aiming.png",
+        "width": 1206,
+        "height": 2622,
+        "sha256": "6e35fc52c82df788d16ec526d7d0f37e91a9b3c08310181c19b98c2a08eff684"
+      },
+      "frozen": {
+        "path": "docs/validation/evidence/2026-10-25-reticle-editor-frozen.png",
+        "width": 1206,
+        "height": 2622,
+        "sha256": "1952f63019895d1e18da53f29129f8937263bc97131140531225ad113d6183b6"
+      },
+      "invalid": {
+        "path": "docs/validation/evidence/2026-10-25-reticle-editor-invalid.png",
+        "width": 1206,
+        "height": 2622,
+        "sha256": "feef5da0ccf625f120950d06cc46e464a2165681dedb31cea3d72387978f72ba"
+      }
+    },
+    "releaseChecks": {
+      "dev": {
+        "profile": "dev",
+        "metadata": {
+          "version": "0.1.0",
+          "gitHash": "5e218ea",
+          "profile": "dev",
+          "builtAtUtc": "2026-10-25T21:14:14.3648290Z",
+          "unityVersion": "6000.3.27f1",
+          "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+          "gitDirty": false
+        },
+        "freshExport": true,
+        "productIl2CppModules": [
+          "g_SquashClash_Core_CodeGenModule",
+          "g_SquashClash_DevPanel_CodeGenModule",
+          "g_SquashClash_Runtime_CodeGenModule"
+        ],
+        "nativeThermalBridge": true,
+        "runtimeThermalBridge": true
+      },
+      "prod": {
+        "profile": "prod",
+        "metadata": {
+          "version": "0.1.0",
+          "gitHash": "5e218ea",
+          "profile": "prod",
+          "builtAtUtc": "2026-10-25T21:14:40.9887180Z",
+          "unityVersion": "6000.3.27f1",
+          "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+          "gitDirty": false
+        },
+        "freshExport": true,
+        "productIl2CppModules": [
+          "g_SquashClash_Core_CodeGenModule",
+          "g_SquashClash_Runtime_CodeGenModule"
+        ],
+        "nativeThermalBridge": false,
+        "runtimeThermalBridge": true
+      }
+    },
+    "dimensionsNativePx": {
+      "before": {
+        "minorDiameter": 28.04248,
+        "stroke": 2.0826416
+      },
+      "after": {
+        "diameterX": 69.9765,
+        "diameterY": 65.4406738,
+        "minorDiameter": 65.4406738,
+        "stroke": 6.66442871
+      },
+      "required": {
+        "minorDiameter": 60,
+        "stroke": 6
+      },
+      "safeAreaFixtureBottomLeftPixels": {
+        "x": 0,
+        "y": 102,
+        "width": 1206,
+        "height": 2334
+      },
+      "runtimeSafeArea": "Screen.safeArea",
+      "camera": "Main defaults: (3.2,8,14.75), FOV 90"
+    }
+  },
+  "nativeBuild": {
+    "schema": 1,
+    "checkedAtUtc": "2026-10-25T21:18:56.668402+00:00",
+    "base": "5e218ead0636d4eab23f4913b8f4911c4c117dd5",
+    "metadata": {
+      "version": "0.1.0",
+      "gitHash": "5e218ea",
+      "profile": "dev",
+      "builtAtUtc": "2026-10-25T21:15:22.6552860Z",
+      "unityVersion": "6000.3.27f1",
+      "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+      "gitDirty": false
+    },
+    "configuration": "Release",
+    "development": false,
+    "architecture": "arm64",
+    "unityFrameworkArchitecture": "arm64",
+    "signatureVerified": true,
+    "profileCompatibleWithDeviceAndBundle": true,
+    "profileExpiresUtc": "2026-10-28T14:59:31+00:00",
+    "renewalRequiredForThisInstallation": false,
+    "embeddedMetadataAndPresetMatch": true,
+    "trackedFileHashesCompared": 625,
+    "trackedFilesUnchanged": true,
+    "presetFileSha256": "9993cf20bf1affc1cf22453d84b1ede13edc1b8f3ab669bc47edb2821a5af0dc"
+  },
+  "startup": {
+    "capture": "verified-new-startup",
+    "presetFilesIdenticalToBackup": true,
+    "presetHashes": {
+      "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
+    },
+    "currentBuildRecordCount": 28,
+    "kinds": {
+      "frames": 14,
+      "launch": 14
+    },
+    "recentStateRecords": [
+      {
+        "ts": "2026-10-25T21:21:59.8644060Z",
+        "kind": "launch",
+        "build": "0.1.0+5e218ea dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "9977d9ffd7e5",
+        "pending": 0,
+        "payload": {}
+      },
+      {
+        "ts": "2026-10-25T21:22:02.8671750Z",
+        "kind": "launch",
+        "build": "0.1.0+5e218ea dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "9977d9ffd7e5",
+        "pending": 0,
+        "payload": {}
+      },
+      {
+        "ts": "2026-10-25T21:22:05.8636870Z",
+        "kind": "launch",
+        "build": "0.1.0+5e218ea dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "9977d9ffd7e5",
+        "pending": 0,
+        "payload": {}
+      },
+      {
+        "ts": "2026-10-25T21:22:08.8665950Z",
+        "kind": "launch",
+        "build": "0.1.0+5e218ea dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "9977d9ffd7e5",
+        "pending": 0,
+        "payload": {}
+      },
+      {
+        "ts": "2026-10-25T21:22:11.8655050Z",
+        "kind": "launch",
+        "build": "0.1.0+5e218ea dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "9977d9ffd7e5",
+        "pending": 0,
+        "payload": {}
+      }
+    ],
+    "recentGestures": []
+  },
+  "poVisibility": {
+    "status": "ConfirmedByPO",
+    "responseLiteral": "si, si voy lento, toma el circulo azul y después el rojo si voy fuera de la cancha, y si voy rapido el rombo amarillo. LAs capturas están en el repo, las dejé desordenadas por lo que puedes ordenarals después",
+    "screenshots": [
+      {
+        "state": "aiming-cyan",
+        "path": "docs/validation/evidence/2026-10-25-po-iphone-reticle-aiming-cyan.jpg",
+        "dimensions": {
+          "width": 1193,
+          "height": 2378
+        },
+        "sha256": "885999f8831ad7f2318f718cfe2db3605ec7810573903a0bd4e460adf33b9a19",
+        "originalSha256": "7886552c34dac4ccfb2bf2a22f889c389ccc2dc597bed603ec4bae120ba6c39f",
+        "removedMetadataMarkers": [
+          "0xe1",
+          "0xed"
+        ],
+        "originalExifOrientation": 1,
+        "imageDataAndICCUnchanged": true,
+        "nativeResolutionMeasurement": false
+      },
+      {
+        "state": "invalid-red",
+        "path": "docs/validation/evidence/2026-10-25-po-iphone-reticle-invalid-red.jpg",
+        "dimensions": {
+          "width": 1206,
+          "height": 2332
+        },
+        "sha256": "1990e288a782bce9769605f4e020864e2fb3408e7be398e89f986db6fd1edcb0",
+        "originalSha256": "edbd7263028b6929173551d29e7559caee47482ff5478e42d21a41e721de109a",
+        "removedMetadataMarkers": [
+          "0xe1",
+          "0xed"
+        ],
+        "originalExifOrientation": 1,
+        "imageDataAndICCUnchanged": true,
+        "nativeResolutionMeasurement": false
+      },
+      {
+        "state": "frozen-yellow",
+        "path": "docs/validation/evidence/2026-10-25-po-iphone-reticle-frozen-yellow.jpg",
+        "dimensions": {
+          "width": 1206,
+          "height": 1924
+        },
+        "sha256": "e74bd3af16b0d566ef0463605fef1e925ced80ddfb5b72a0024745c6868ea7ef",
+        "originalSha256": "26f60bccd015bdccea10bd4db7eb4af27e641ba2e351dd9708088509c11db32a",
+        "removedMetadataMarkers": [
+          "0xe1",
+          "0xed"
+        ],
+        "originalExifOrientation": 1,
+        "imageDataAndICCUnchanged": true,
+        "nativeResolutionMeasurement": false
+      }
+    ],
+    "interpretation": "PO identifica mira y cambio de color/forma; no aceptación de S1 ni juicio sobre precisión, potencia o saltos",
+    "fullRevalidationPerformed": false,
+    "nativePixelMeasurementsFromPOScreenshots": false,
+    "fiveControlQuestionsAnsweredSeparately": false,
+    "finalPresetFilesIdenticalToBackup": true,
+    "finalPresetHashes": {
+      "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
+    },
+    "lastPersistedLaunchRecord": {
+      "ts": "2026-10-25T21:29:25.8202720Z",
+      "kind": "launch",
+      "build": "0.1.0+5e218ea dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "9977d9ffd7e5",
+      "pending": 0,
+      "payload": {}
+    },
+    "originalsPreservedInMainIgnoredDirectory": "Logs/evidence/s1-reticle-visibility/2026-10-25-po-original-*.jpg",
+    "metadataTreatment": "Removed APP1/APP13 only; original EXIF orientation=1; JPEG image segments, entropy-coded scan and ICC preserved without recompression"
+  },
+  "originalOcclusionImage": {
+    "path": "docs/validation/evidence/2026-10-25-po-iphone-overlay-occlusion.png",
+    "sha256": "8e2ee2e5b1d134978f5acd548251a2eee9d4b21f72a977bad3f57fb54a7d9f85",
+    "width": 990,
+    "height": 2000,
+    "copiedByteForByte": true,
+    "metadata": "IHDR/iCCP/IDAT/IEND; no personal text, EXIF or timestamp chunks"
+  },
+  "invariants": {
+    "defaults": "00a501ad7066",
+    "legacyProjection": "0d39e6016bd8",
+    "legacyValueCount": 41,
+    "simulationKey": "166a96e319c7",
+    "baselineTrackedFilesCompared": 619,
+    "unchangedFiles": 615,
+    "modifiedExistingFiles": [
+      "AGENTS.md",
+      "Assets/SquashClash/DevPanel/ShotOverlay.cs",
+      "Assets/SquashClash/Runtime/Shot/AimReticleView.cs",
+      "docs/reviews/2026-10-25-first-shot-po-approvals.md"
+    ],
+    "protectedFileSha256": {
+      "Assets/SquashClash/Core/Config/EffectiveConfig.cs": "746f97550b2ef6f6a73e24f5d7d578b3e03d1320d7db945e65b7bd672bb4a98c",
+      "Assets/SquashClash/Runtime/Resources/DefaultPreset.json": "9993cf20bf1affc1cf22453d84b1ede13edc1b8f3ab669bc47edb2821a5af0dc",
+      "Packages/manifest.json": "b133329641892c743248bc29a3389b46d505dec768c6f01c6ae7a614eafa61dc",
+      "Packages/packages-lock.json": "ee1183834c7ba59bf088b5fd9d4d112dfb95fee7b3db92187862253fb0b836b0",
+      "ProjectSettings/AudioManager.asset": "9543c41dbfc7d3951217c4dd9481ed026eb8e529b85ecf4463969a0fea747729",
+      "ProjectSettings/ClusterInputManager.asset": "40e65dd214bf254955d2c8829ca8ce2130fd3510485560ce012e9a1ddd93e623",
+      "ProjectSettings/DynamicsManager.asset": "056979610bab2b1ddf56f692ad5cb565a181660cc4f1a28d7e6d004cb8820fb1",
+      "ProjectSettings/EditorBuildSettings.asset": "063ff0a74a273ca94393823b52a1acbf58936890d0152e67de742b315270d3c2",
+      "ProjectSettings/EditorSettings.asset": "06753c21648950aee0013b70f79a9035ac52aec6204d44cc2ac55a84034ad9ca",
+      "ProjectSettings/GraphicsSettings.asset": "b5d1da463ee310899c8692a7b941ed171a5b2df1e94b65b548a22399c99e48a3",
+      "ProjectSettings/InputManager.asset": "60c83ae48e29a782141f99032eb38e803d18475124ff5224fbd1fd81b233f051",
+      "ProjectSettings/MemorySettings.asset": "2c9e2339b4fa50f4782840d37dde021508d411b99278614cba335d206edb1738",
+      "ProjectSettings/MultiplayerManager.asset": "ce4075d7a7dd8ac7ffe55de2427692c63f90dae398208bd80cec0f27cbe09f4b",
+      "ProjectSettings/NavMeshAreas.asset": "7ebbf8f53b8033104e1878b95ca07a28d0954092d81c220f14196a42f651e658",
+      "ProjectSettings/Physics2DSettings.asset": "1cfc0c8fbceec604fd7cd2a06c04ff05dddee6335b75c92b0f5715ad80ba9490",
+      "ProjectSettings/PresetManager.asset": "29c125923fe6e29f90190d4fce1c82d660e7051546e2c9d02908d18c9cf2436c",
+      "ProjectSettings/ProjectSettings.asset": "0eb810ca98bb560c266e514d4d4308e88815a936d44634ef94146a1e91c9bbe9",
+      "ProjectSettings/ProjectVersion.txt": "56aead51018c992af406752e47c49e8d9458c70f00b983f4bb603b1b3afc223e",
+      "ProjectSettings/QualitySettings.asset": "b12ea3ba9c83f6517c52eb7810d46dd6a74bcb498fd3a9a773887e2fa0f7f989",
+      "ProjectSettings/SceneTemplateSettings.json": "bb9098b3bfcde78d93e264b96f7b77b5430e64e8c57a7aad7f5a5d9c3945e16a",
+      "ProjectSettings/ShaderGraphSettings.asset": "6fead5a816c4eed70f224d5472340ecf1ea0b4de4f87d5926bb17fa10ffb3dc9",
+      "ProjectSettings/TagManager.asset": "da4b5eefc927f8b91bcf9e56a186d2b852f49d9cbe91d466638d26c79d6a83ce",
+      "ProjectSettings/TimeManager.asset": "3396f52fdc16d445024e01d7a2d99db6f0a37569d1d73c0302e9ffb857d90287",
+      "ProjectSettings/UnityConnectSettings.asset": "11251dae0356b6f43dd2c67bb511f6b7ecda4e5de425186bba3297e6f3dc1c6f",
+      "ProjectSettings/VFXManager.asset": "2973a6af930e142f62cde00076beda8a3cc3a66d9bfcde7a58ba7d4be2251c26",
+      "ProjectSettings/VersionControlSettings.asset": "e199cdfa6a8f2bf33cfd47e549198f13e3eb2a5099e908fdb4e0f14d939ccc6b",
+      "docs/superpowers/plans/2026-10-20-squash-clash-first-ball.md": "6ab140a510029506cab8a80beffb00864a0fc0150cd316caba7a222fe44f276c",
+      "docs/superpowers/plans/2026-10-20-squash-clash-first-ball.r1.md": "eef24cc2402f4b1be1158e0bfe40e2f5ecf873cef3117aab0997b9ecc9680b75",
+      "docs/superpowers/plans/2026-10-25-squash-clash-first-shot.md": "57bcddbab4f423389f91faaff38b50b2ad359faa14453a1af3f61e0094101c8b",
+      "docs/superpowers/specs/2026-10-19-squash-clash-design-v0.2.md": "8ee38aa9b8884903c03dca3ea4a6d93b8d569a4c3ce20cc9ff7a4e3b89f81ed6",
+      "docs/superpowers/specs/2026-10-19-squash-clash-design.md": "c5ea6adb82ee7a29564132f18a29e09f75e537e5699a05c321b8e4d34d1a8ae9",
+      "docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md": "bc0c50b5a60357bc3431d16c3d74dc733a0fbb108148cdaf1d049b145490ae6a",
+      "docs/superpowers/specs/2026-10-24-first-shot-design.md": "ff940ed04c7780ca29864022b4c4941ac25258bf5e82f841b868500f545b1675",
+      "scripts/build-ios.sh": "53baf107309d3da6832fd74930d5fffc8e3d641a1a6fc43e702251b0bc2bc932",
+      "scripts/check-release.sh": "05d7ccfd674acdcb16ff1f86acf8687b1605905e36fa58622cd7c95f7587a85a",
+      "scripts/device.env.example": "4e7553238ca25ee0afb7df39da8603bca61149513444a18ca094ce5d5d3d38bf",
+      "scripts/install-ios.sh": "b70fc6c27013879e91c67484aeefbae59608231d81a9c6fc7b16c0050b7c38a5",
+      "scripts/spike-p2.sh": "96f6b9b61d9c3498656a164ebe78181feae4cbd4d378258f03efd220b647f9c7",
+      "scripts/spike.sh": "20262b9277a35032bc0b6c9d1f10c2e9d30315d2eee733bccbf053364c62ecec",
+      "scripts/test.sh": "4b2cc7b65346391e03ac33e5f1a149956657f245b7dc6784c1e831c1bb58ff68",
+      "scripts/unity-env.sh": "7ed58706cd7e0181b3615826da8e14e8d76b4b18abe968c9e81002277fcf6987"
+    }
+  },
+  "priorSession": {
+    "build": "311cb11",
+    "warning": "Histéresis defectuosa; sin recalcular saltos, replay o combinación de datos"
+  },
+  "deferred": [
+    "Aceptación S1 y respuestas separadas a preguntas de control",
+    "Revalidación física completa y experimento 30→20 ms",
+    "H3: picos previos por debajo de flick 250 mm/s",
+    "H4: 3/4 gestos previos terminan y=5 m"
+  ],
+  "stop": {
+    "noMerge": true,
+    "noS2S3S4T8": true
+  },
+  "delivery": {
+    "pr": "https://github.com/rafaallendes-boop/squash-clash/pull/19",
+    "readyForClaude": true,
+    "merged": false,
+    "postInstalledHeadChanges": "Documentation and evidence only"
+  }
+}
