@@ -109,6 +109,20 @@ namespace SquashClash.Core.Tests
             var blocked=Make(root,"blocked");MetricsLog log=null;
             Assert.DoesNotThrow(()=>log=new MetricsLog(blocked,new BuildInfo{profile="prod"}));Assert.That(log.LastError,Is.Not.Null.And.Not.Empty);
         }
+        [Test] public void RetentionError_SurvivesSuccessfulWriteAfterConstructorIoFailure()
+        {
+            var blocked=Make(root,"recoverable");
+            UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Warning,new System.Text.RegularExpressions.Regex(@"^\[SquashClash\] Retención métricas: .+"));
+            var log=new MetricsLog(blocked,new BuildInfo{profile="prod"});var error=log.LastError;
+            Assert.That(error,Is.Not.Null.And.Not.Empty);
+            File.Delete(blocked);Directory.CreateDirectory(blocked);
+            log.Write("frames",EffectiveConfig.From(ConfigFixtures.Default()),"Default","hash",0,0,true,0,"{}");
+            Assert.That(log.LastError,Is.Null);Assert.That(File.ReadAllLines(log.CurrentFilePath),Has.Length.EqualTo(1));
+            // Reflection lets the missing contract produce an assertion RED, never a compiler error.
+            var property=typeof(MetricsLog).GetProperty("RetentionError");
+            Assert.That(property,Is.Not.Null,"RetentionError must retain the startup error independently of Write");
+            Assert.That(property.GetValue(log),Is.EqualTo(error));
+        }
         [Test] public void Write_DoesNotPruneOrRotateDuringSession_EvenPastBudgets()
         {
             var log=new MetricsLog(metrics,new BuildInfo{profile="dev"});
