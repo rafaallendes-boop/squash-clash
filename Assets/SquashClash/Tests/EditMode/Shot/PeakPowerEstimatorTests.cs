@@ -42,5 +42,16 @@ namespace SquashClash.Core.Tests.Shot
             var e=Estimator();e.Push(S(0,0),1);e.Push(S(.02,16),1);e.Push(S(.01,20),1);
             var r=e.Push(S(.04,32),1);Assert.That(r.Conservative,Is.True);Assert.That(r.Reason,Is.EqualTo("out-of-order"));
         }
+        [Test] public void NewBegan_DoesNotInheritPeakOrSupport()
+        {
+            var e=Estimator();e.Push(S(0,0,TouchPhaseKind.Began),1);e.Push(S(.02,16),1);e.Push(S(.04,32),1);
+            var r=e.Push(S(1,0,TouchPhaseKind.Began),1);Assert.That(r.P,Is.Zero);Assert.That(r.Conservative,Is.True);Assert.That(r.Reason,Is.EqualTo("no-supported-run"));
+        }
+        [Test] public void NonFiniteInput_IsConservative_StationaryDuplicateDoesNotAddSupport()
+        {
+            var e=Estimator();e.Push(S(0,0),1);e.Push(S(.02,16),1);
+            var r=e.Push(S(.02,16,TouchPhaseKind.Stationary),1);Assert.That(r.Conservative,Is.True);
+            r=e.Push(S(double.NaN,32),1);Assert.That(r.Conservative,Is.True);Assert.That(r.P,Is.Zero);Assert.That(r.Reason,Is.EqualTo("invalid-input"));
+        }
     }
 }
