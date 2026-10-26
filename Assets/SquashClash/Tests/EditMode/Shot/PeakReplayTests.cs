@@ -17,14 +17,18 @@ namespace SquashClash.Core.Tests.Shot
         [Serializable] private sealed class Selected {public Row[] rows;}
         [Serializable] private sealed class Row {public string timestamp,reason;public float power;}
         [Test] public void SelectedB_ReplaysAll40RecordedGesturesWithinFloatTolerance()
+            =>Replay("2026-10-25-s1-gesture-calibration-offline.json",400,120);
+        [Test] public void RiskGated300_0_60_ReplaysTheSame40RecordedGestures()
+            =>Replay("2026-10-26-s1-gc-resolution.json",300,60);
+        private static void Replay(string evidence,float full,double decay)
         {
             string root=Path.GetDirectoryName(Application.dataPath);
             var source=JsonUtility.FromJson<Root>(File.ReadAllText(Path.Combine(root,"docs/validation/evidence/2026-10-25-s1-revalidation-2.json")));
-            var expected=JsonUtility.FromJson<Root>(File.ReadAllText(Path.Combine(root,"docs/validation/evidence/2026-10-25-s1-gesture-calibration-offline.json"))).selectedB.rows;
+            var expected=JsonUtility.FromJson<Root>(File.ReadAllText(Path.Combine(root,"docs/validation/evidence",evidence))).selectedB.rows;
             int checkedRows=0;
             foreach(var gesture in source.measurements.gestures.Where(g=>g.protocol=="soft"||g.protocol=="strong"))
             {
-                var estimator=new PeakPowerEstimator(new PowerSettings(80,30,3,51,0,400,1),20,120);PowerResult actual=default;
+                var estimator=new PeakPowerEstimator(new PowerSettings(80,30,3,51,0,full,1),20,decay);PowerResult actual=default;
                 foreach(var x in gesture.originalRecord.payload.rawSamples)
                     actual=estimator.Push(new TouchSample(x.id,(TouchPhaseKind)Enum.Parse(typeof(TouchPhaseKind),x.phase),new Vector2(x.xPx,x.yPx),x.timeReal,x.sequence),gesture.originalRecord.payload.mmPerPx);
                 var row=expected.Single(r=>r.timestamp==gesture.ts);

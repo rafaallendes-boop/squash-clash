@@ -6,7 +6,7 @@ namespace SquashClash.Core.Tests.Shot
 {
     public sealed class PeakPowerEstimatorTests
     {
-        private static PeakPowerEstimator Estimator()=>new PeakPowerEstimator(new PowerSettings(80,30,3,51,0,400,1),20,120);
+        private static PeakPowerEstimator Estimator()=>new PeakPowerEstimator(new PowerSettings(80,30,3,51,0,300,1),20,60);
         private static TouchSample S(double t,float x,TouchPhaseKind phase=TouchPhaseKind.Moved)=>new TouchSample(1,phase,new Vector2(x,0),t,(long)(t*100000));
         [Test] public void FlickStoppedFor50ms_PreservesHighPower()
         {

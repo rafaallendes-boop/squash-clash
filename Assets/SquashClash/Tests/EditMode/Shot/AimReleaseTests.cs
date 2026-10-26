@@ -34,5 +34,12 @@ namespace SquashClash.Core.Tests.Shot
             m.Update(S(1,0,0,TouchPhaseKind.Began),1);m.Update(S(1.5,5,0,TouchPhaseKind.Ended),1);
             m.Update(S(2,0,0,TouchPhaseKind.Began),1);Assert.That(m.FreezeCause,Is.EqualTo(AimFreezeCause.None));
         }
+        [Test] public void EndedAtPreviousTimestamp_FreezesByReleaseWithoutInventingVelocity()
+        {
+            var m=Model();m.Update(S(.5,5,0),1);var aim=m.Aim;
+            m.Update(S(.5,5,0,TouchPhaseKind.Ended),1);
+            Assert.That(m.State,Is.EqualTo(AimState.Frozen));Assert.That(m.FreezeCause,Is.EqualTo(AimFreezeCause.Release));
+            Assert.That(m.Aim,Is.EqualTo(aim));Assert.That(m.FreezeTimeReal,Is.EqualTo(.5));Assert.That(m.FreezeJumpMeters,Is.Zero);
+        }
     }
 }

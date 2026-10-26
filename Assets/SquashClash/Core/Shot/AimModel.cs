@@ -49,7 +49,13 @@ namespace SquashClash.Core.Shot
                 Aim=initial;State=AimState.Aiming;FreezeCause=AimFreezeCause.None;consecutive=0;crossingTime=double.NaN;started=true;history.Clear();history.Add((sample.TimeReal,Aim));
                 FreezeTimeReal=0;FreezeUsedFirstValidPoint=false;FreezeJumpMeters=0;return;
             }
-            if(!started||State==AimState.Frozen||sample.TimeReal<=previousTime||!Finite(sample.TimeReal))return;
+            if(!started||State==AimState.Frozen||sample.TimeReal<previousTime||!Finite(sample.TimeReal))return;
+            if(sample.TimeReal==previousTime)
+            {
+                // A terminal event can share the last position/time; release is not a velocity sample.
+                if(sample.Phase==TouchPhaseKind.Ended&&settings.FreezeOnRelease)FreezeAtRelease(sample.TimeReal);
+                return;
+            }
             var delta=(sample.PositionPx-origin)*scale*settings.GainMPerMm;
             // AX-1: the rear camera projects -X towards screen right. Camera motion is not input.
             Aim=new Vector2(Mathf.Clamp(initial.x-delta.x,0,width),Mathf.Clamp(initial.y+delta.y,0,5));
@@ -79,9 +85,11 @@ namespace SquashClash.Core.Shot
                 if(speed<settings.FlickMmPerS-settings.FlickHysteresisMmPerS)crossingTime=double.NaN;
             }
             if(sample.Phase==TouchPhaseKind.Ended&&settings.FreezeOnRelease&&State==AimState.Aiming)
-            {State=AimState.Frozen;FreezeCause=AimFreezeCause.Release;FreezeTimeReal=sample.TimeReal;FreezeJumpMeters=0;FreezeUsedFirstValidPoint=false;}
+            FreezeAtRelease(sample.TimeReal);
             previousPosition=sample.PositionPx;previousTime=sample.TimeReal;
         }
+        private void FreezeAtRelease(double timeReal)
+        {State=AimState.Frozen;FreezeCause=AimFreezeCause.Release;FreezeTimeReal=timeReal;FreezeJumpMeters=0;FreezeUsedFirstValidPoint=false;}
         private static bool Finite(double x)=>!double.IsNaN(x)&&!double.IsInfinity(x);
     }
 }

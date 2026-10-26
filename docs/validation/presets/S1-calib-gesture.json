@@ -17,7 +17,7 @@
     },
     {
       "key": "power.fullMmPerS",
-      "value": 400
+      "value": 300
     },
     {
       "key": "power.maxGapMs",
@@ -33,7 +33,7 @@
     },
     {
       "key": "power.peakDecayMs",
-      "value": 120
+      "value": 60
     },
     {
       "key": "power.peakSmoothingMs",
