@@ -693,5 +693,25 @@
   "defaultsUnchangedFromReviewedHead": "6095c0b38614",
   "P0ExtendedHash": "fdd997f2b85a",
   "experimentalPresetHash": "08b6fe90889b",
-  "physicalSession": "Pending"
+  "physicalSession": "Pending",
+  "completeRegression": {
+    "editmode": {
+      "total": "371",
+      "passed": "371",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-10-26 23:16:04Z",
+      "end-time": "2026-10-26 23:16:11Z"
+    },
+    "playmode": {
+      "total": "172",
+      "passed": "172",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-10-26 23:18:24Z",
+      "end-time": "2026-10-26 23:18:59Z"
+    }
+  },
+  "original10CasesInputsAndAssertionsUnchanged": true,
+  "transientSettingsRestoredBeforeExport": true
 }

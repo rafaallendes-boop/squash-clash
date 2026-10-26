@@ -1,6 +1,6 @@
 # Calibración experimental del gesto S1
 
-**DETENIDO — GC-S1-01: el B elegido produce potencia fuerte al apuntar rápido y soltar sin movimiento. No apto para instalar ni para aceptar S1.** La elección provisional de fase A queda bloqueada por la reproducción posterior; ver el cierre y la evidencia sintética.
+**Histórico del 25, sustituido por la resolución autorizada del 26 al final — DETENIDO — GC-S1-01: el B elegido produce potencia fuerte al apuntar rápido y soltar sin movimiento. No apto para instalar ni para aceptar S1.** La elección provisional de fase A queda bloqueada por la reproducción posterior; ver el cierre y la evidencia sintética.
 
 Autorización PO del 2026-10-25. Rama `firstshot/s1-gesture-calibration`, base main e11cc3aaa9dad7112d886e43d990732e0e198b43. S1 no aceptado; S2–S4/T8 no autorizados. Este registro se escribe y se commitea **antes de calcular B**. Las bandas siguientes son instrumentos experimentales de esta comparación; no modifican criterios de la spec ni del plan.
 
@@ -101,3 +101,26 @@ El PO declaró para la prueba prevista **«Izquierda, mi dominante»** y teléfo
 También falló el acceso de la herramienta a Duplicación del iPhone (native pipe), sin manipulación de UI; no es el bloqueo que detiene la entrega ni motivo para cambiar código. No se llegó a verificar un perfil nuevo para instalar. Para cualquier instalación futura comprobar vigencia y renovar primero desde el 27; fecha de vencimiento previamente registrada 2026-10-28T14:59:31Z, no revalidada aquí.
 
 Entrega en [PR #22 para revisar el bloqueo](https://github.com/rafaallendes-boop/squash-clash/pull/22), abierta/no borrador y sin fusionar, fuente de cierre 1eee39ef7d0de63c2745fe2cc06dd185bc02cfe1. Los dos RED son explícitos; no está lista para aprobar ni instalar. **S1 sigue sin aceptar; S2–S4/T8 no autorizados. Detenerse.**
+
+
+## Resolución autorizada el 2026-10-26 (prevalece sobre el bloqueo anterior)
+
+El PO comunica revisión independiente de Claude sobre head 41e9abf y autoriza hacer del riesgo una condición **eliminatoria**, sin alterar sus tres perfiles, la pausa inmóvil de 150 ms ni P<0,60. El historial de rechazo de B 400/0/120 permanece arriba. Se ensayan en C# solo los cuatro supervivientes del grid anterior; [evidencia nueva](../validation/evidence/2026-10-26-s1-gc-resolution.json).
+
+| full / dead / decaimiento | Riesgo 400 × 200 ms (%) | Riesgo 850 × 100 ms (%) | Riesgo 1000 × 60 ms (%) | Supera los tres |
+|---|---:|---:|---:|---|
+| **300 / 0 / 60 ms** | **10,944** | **23,101** | **25,999** | **Sí, elegido** |
+| 400 / 0 / 120 ms | 28,649 | 60,472 | 68,060 | No |
+| 400 / 0 / 180 ms | 43,458 | 91,730 | 100,000 | No |
+| 400 / 10 / 180 ms | 42,008 | 91,518 | 100,000 | No |
+
+Por quedar un único superviviente, menor saturación y menor memoria no requieren desempate; no se escoge un candidato eliminado para saturar menos. No se prueban valores fuera de estos cuatro. **GC-S1-01 se resuelve para el candidato 300/0/60 según esta decisión**, no se afirma inmunidad universal a gestos accidentales. Algoritmo B, tau 20, soporte 3 muestras/30 ms/51 ms, bandas, casos y pausa intactos. [Preset](../validation/presets/S1-calib-gesture.json) hash **08b6fe90889b**; defaults6095c0b38614/P0fdd997f2b85a sin cambios desde el head revisado.
+
+El costo aceptado por el PO se reproduce con flick sintético de 500 mm/s durante 100 ms y pausa posterior de 100 ms: P **53,959 %** con 400/0/120 frente a **31,267 %** con 300/0/60. No es medición nueva. Claude comunica 18/20 fuertes soltando a ≤54 ms del pico y gestos preview de apuntado esperando ≥333 ms; se registra esa declaración y la aceptación del PO, sin convertirla en frecuencia táctil ni una medición nueva. Se volverá a observar el compromiso con contacto real en S2 cuando se autorice; S2 no está autorizado aquí.
+
+Nueva prueba del flick de 500 mm/s detenido 25 y 50 ms: **100 % y 71,945 %**, ambas en banda fuerte, GREEN directo con el candidato elegido. No se declara RED inexistente. Los diez casos focales originales mantienen inputs, pausa y aserciones; solo su factory usa la configuración del candidato elegido. Nueva prueba Ended al mismo timestamp produjo **RED 11/12**, fallo por Aiming frente a Frozen/Release; se corrigió el caso terminal sin inventar velocidad de dt cero ni una segunda fijación tras flick. Focal conjunto **23/23 GREEN**, sin CS; regresión y exportación limpia pendientes a continuación.
+
+La fase C mantiene la mano literal **«Izquierda, mi dominante»** y cuatro series de diez. Antes de la cuarta se mostrará literalmente: «Si apuntas muy rápido, la mira se fijará en ese momento (rombo amarillo); es el comportamiento actual. Lo que evaluamos es la potencia al soltar.» No se cambian escala ni umbrales durante la sesión. Ante otro defecto se detiene. Cinco preguntas por separado; restauración P0 con hash fdd997f2b85a/cero pendientes y tres archivos idénticos. S1 sigue sin aceptar, S2–S4/T8 no autorizados.
+
+
+Verificación posterior a la resolución, producto **8c0a682**: **371/371 EditMode y 172/172 PlayMode** completos, XML frescos/sin CS. Incluye replay de los mismos 40 con el nuevo candidato, comprobación de preset/hash y los diez focales sin cambio de entradas/aserciones (verificación textual frente a 41e9abf, salvo factory 300/0/60). Defaults siguen 6095c0b38614, P0 fdd997f2b85a. Antes de exportar se archivaron los cambios transitorios que PlayMode dejó en GraphicsSettings/QualitySettings y se restauraron byte a byte a HEAD. Sigue exportación limpia dev/prod y build nativa; la recuperación inicial del contenedor falló por conexión CoreDevice invalidada, por lo que no se instalará sin conseguir antes el respaldo nuevo.
