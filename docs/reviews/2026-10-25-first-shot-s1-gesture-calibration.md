@@ -1,5 +1,7 @@
 # Calibración experimental del gesto S1
 
+**DETENIDO — GC-S1-01: el B elegido produce potencia fuerte al apuntar rápido y soltar sin movimiento. No apto para instalar ni para aceptar S1.** La elección provisional de fase A queda bloqueada por la reproducción posterior; ver el cierre y la evidencia sintética.
+
 Autorización PO del 2026-10-25. Rama `firstshot/s1-gesture-calibration`, base main e11cc3aaa9dad7112d886e43d990732e0e198b43. S1 no aceptado; S2–S4/T8 no autorizados. Este registro se escribe y se commitea **antes de calcular B**. Las bandas siguientes son instrumentos experimentales de esta comparación; no modifican criterios de la spec ni del plan.
 
 ## Criterio previo a los resultados de B
@@ -67,4 +69,35 @@ Claves agregadas a defaults: **power.method=0, power.peakSmoothingMs=20, power.p
 
 Registros s1-gesture pasan a **schema 2**: freezeCause (None/Flick/Release), aimInvalid, powerMethod, powerSpeedMmPerS/powerSpeedBasis y edad del soporte. En B, netSpeedMmPerS se emite null porque el pico decaído no es velocidad neta. CoveredMs/n/gap describen el tramo que sostiene ese pico, que puede preceder los últimos 80 ms; no se reinterpretan como una ventana A válida. Posición, salto y timestamps brutos conservados. Protocolos medium y aim-soft añadidos solo dentro de DEV, con cierre automático; Tap/Canceled/SystemCanceled se conservan como intentos.
 
-Respaldo previo a instalación recuperado de la app 5e218ea: P0-calib-1/Po-1/last-active, P0 seleccionado, archivo P0 SHA-256 2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd. Pendientes check-release dev/prod, build, vigencia del perfil, instalación, arranque con hash extendido y cuatro series. No se inicia la medición hasta verificar preparación y mano declarada. Sin cambios en ProjectSettings, Packages, scripts, spec ni planes.
+Respaldo previo a instalación recuperado de la app 5e218ea: P0-calib-1/Po-1/last-active, P0 seleccionado, archivo P0 SHA-256 2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd. Estado histórico antes del caso de riesgo ampliado: pendientes check-release dev/prod, build, vigencia del perfil, instalación, arranque con hash extendido y cuatro series. Sustituido por la detención GC-S1-01 al final. Sin cambios en ProjectSettings, Packages, scripts, spec ni planes.
+
+
+## GC-S1-01: bloqueo encontrado antes de instalar
+
+El caso inicial solo probaba arrastre a 400 mm/s durante 200 ms y pausa de 150 ms, que B resolvía sin fuerte. Al ampliar **el mismo requisito obligatorio**, manteniendo la banda fuerte predeclarada en 60 %, aparecen dos fallos. [Evidencia nueva](../validation/evidence/2026-10-25-s1-gesture-calibration-risk.json); perfiles **sintéticos**, no gestos nuevos del PO ni medición del iPhone:
+
+| Arrastre vertical | Recorrido | Suelta tras pausa sin movimiento | P B | Resultado exigido |
+|---|---:|---:|---:|---|
+| 400 mm/s durante 200 ms | 80 mm | 150 ms | 28,649 % | No fuerte: Pass |
+| 850 mm/s durante 100 ms | 85 mm | 150 ms | **60,472 %** | **No fuerte: Fail** |
+| 1000 mm/s durante 60 ms | 60 mm | 150 ms | **68,060 %** | **No fuerte: Fail** |
+
+Los tres recorridos caben en la altura reportada de pantalla (2622 px × 0,055217 mm/px ≈ 144,78 mm; no regla física). Los picos antiguos alcanzaban 851,869 mm/s en fuertes y 2109,687 en preview: no se usó una velocidad fuera de todo el rango registrado. Esto no demuestra que el PO hiciera estos perfiles ni que fueran accidentales en la sesión antigua. **Son contrapruebas del comportamiento requerido**, con velocidad neta cero durante los últimos 80 ms y soporte real sintético anterior. No se asume una tasa real del sensor por usar pasos sintéticos de 20 ms.
+
+Con este B, la cola exponencial puede conservar suficiente pico para superar 240 mm/s (60 % de full 400) aun después de 150 ms sin movimiento. El algoritmo no recibe la intención de apuntar frente a golpear. La prueba de flick detenido y la prueba de apuntado rápido no se pueden declarar satisfechas en general solo eligiendo una pausa conveniente. La cobertura original de pruebas fue insuficiente: el caso de 400 pasaba, los dos ampliados fallan.
+
+Reproducción final fresca: **10 casos focales, 8 Pass / 2 Fail**, por aserción de P<0,60, sin errores CS y XML de 2026-10-26T00:29:30Z (25 local). Se conservan los fallos, sin tocar producto, bandas ni constantes después. **La rama final no está verde**. Las suites completas previas 359/359 y 172/172 anteceden a esta ampliación; no se presentan como regresión completa verde del head final.
+
+Por la instrucción del PO **«ante un defecto, detenerse»**, se detienen implementación adicional, build nativa, instalación y fase C. No se prueba otro decaimiento ni otra escala para conseguir un resultado favorable. **La elección B queda bloqueada, sin promover A ni aceptar el preset**. Propuesta para revisión de Claude/PO: decidir si la intención debe distinguirse con una regla cinemática adicional explícita y validable, o si se revisa el candidato temporal A en una autorización aparte; preservar los tres controles y el caso de riesgo. Este informe no autoriza ese rediseño, un selector del jugador, un nuevo criterio ni S2.
+
+## Exportación y preservación al detenerse
+
+check-release dev/prod terminó sus comprobaciones de módulos sin CS: dev incluye Core/Runtime/DevPanel, prod Core/Runtime y sin DevPanel. **Primera exportación no elegible como build limpia:** PlayMode dejó cambios transitorios de color temperature/antialiasing y archivos de Performance Test; metadata gitDirty=true. Se archivaron diferencias/evidencia privada y se restauraron GraphicsSettings/QualitySettings byte a byte a HEAD; los archivos temporales de Performance Test ya habían sido limpiados por el proceso. No se repitió la exportación después del defecto. No se ejecutó xcodebuild ni se generó/instaló una app nativa nueva. No se presenta este check como validación de una build lista para instalar.
+
+La captura posterior al paro coteja directamente los bytes y los hashes de **P0-calib-1, Po-1 y last-active**, idénticos al respaldo. P0 sigue seleccionado; último lanzamiento recuperado **2026-10-26T00:26:52.7946760Z / 5e218ea dev / 9977d9ffd7e5 / cero pendientes**. No se cargó S1-calib-gesture, no se cambió repetición ni se requirió restaurar configuración. El nuevo hash P0 fdd997f2b85a es calculado, **no observado en el dispositivo**, porque no se instaló la app nueva. Defaults nuevos solo en esta rama, no promovidos a main.
+
+El PO declaró para la prueba prevista **«Izquierda, mi dominante»** y teléfono conectado/desbloqueado. No se pidieron ni ejecutaron series. Las cinco preguntas permanecen **sin respuesta, no formuladas**: «¿Consigues las tres intensidades de forma voluntaria?»; «¿Apareció algún golpe fuerte que no buscabas?»; «¿Apareció algún golpe fuerte al apuntar rápido y soltar suave?»; «¿La mira queda donde quieres apuntar?»; «¿Se siente consistente entre intentos?». No inferir esas respuestas de validaciones anteriores. Las cuatro series, estadísticas físicas, intensidad media y aceptación son **NotEvaluated**.
+
+También falló el acceso de la herramienta a Duplicación del iPhone (native pipe), sin manipulación de UI; no es el bloqueo que detiene la entrega ni motivo para cambiar código. No se llegó a verificar un perfil nuevo para instalar. Para cualquier instalación futura comprobar vigencia y renovar primero desde el 27; fecha de vencimiento previamente registrada 2026-10-28T14:59:31Z, no revalidada aquí.
+
+Entrega para revisión de Claude del bloqueo, PR abierta y sin fusionar. **S1 sigue sin aceptar; S2–S4/T8 no autorizados. Detenerse.**
