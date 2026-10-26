@@ -19,10 +19,16 @@ namespace SquashClash.Core.Tests.Shot
             var e=Estimator();PowerResult r=default;for(int i=0;i<=50;i++)r=e.Push(S(i*.02,i*.4f),1);
             Assert.That(r.Conservative,Is.False);Assert.That(r.P,Is.GreaterThan(0).And.LessThan(.25f));
         }
-        [Test] public void FastAim400mmPerS_Then150msSoftRelease_IsNotStrong()
+        [TestCase(400,.20)]
+        [TestCase(850,.10)]
+        [TestCase(1000,.06)]
+        public void FastAim_Then150msSoftRelease_IsNotStrong(float speed,double duration)
         {
-            var e=Estimator();for(int i=0;i<=10;i++)e.Push(S(i*.02,i*8),1);
-            var r=e.Push(S(.35,80,TouchPhaseKind.Ended),1);
+            // Vertical strokes of 80, 85 and 60 mm fit within the reported iPhone screen height.
+            // Synthetic timing/positions, not a new device measurement or a claim about intent.
+            var e=Estimator();int intervals=(int)Math.Round(duration/.02);
+            for(int i=0;i<=intervals;i++)e.Push(new TouchSample(1,TouchPhaseKind.Moved,new Vector2(0,(float)(i*.02)*speed),i*.02,i),1);
+            var r=e.Push(new TouchSample(1,TouchPhaseKind.Ended,new Vector2(0,(float)duration*speed),duration+.15,intervals+1),1);
             Assert.That(r.Conservative,Is.False);Assert.That(r.P,Is.LessThan(.6f));
         }
         [Test] public void GapCannotInventSupport_ThreeReliableSamplesAreRequired()
