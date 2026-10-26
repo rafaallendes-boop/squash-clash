@@ -100,4 +100,4 @@ El PO declaró para la prueba prevista **«Izquierda, mi dominante»** y teléfo
 
 También falló el acceso de la herramienta a Duplicación del iPhone (native pipe), sin manipulación de UI; no es el bloqueo que detiene la entrega ni motivo para cambiar código. No se llegó a verificar un perfil nuevo para instalar. Para cualquier instalación futura comprobar vigencia y renovar primero desde el 27; fecha de vencimiento previamente registrada 2026-10-28T14:59:31Z, no revalidada aquí.
 
-Entrega para revisión de Claude del bloqueo, PR abierta y sin fusionar. **S1 sigue sin aceptar; S2–S4/T8 no autorizados. Detenerse.**
+Entrega en [PR #22 para revisar el bloqueo](https://github.com/rafaallendes-boop/squash-clash/pull/22), abierta/no borrador y sin fusionar, fuente de cierre 1eee39ef7d0de63c2745fe2cc06dd185bc02cfe1. Los dos RED son explícitos; no está lista para aprobar ni instalar. **S1 sigue sin aceptar; S2–S4/T8 no autorizados. Detenerse.**
