@@ -1,0 +1,2666 @@
+{
+  "sourceSha256": "ab43e560f23fa9522fa4d00c0fa4ed842f26922b180d8f7a21f8aaac2aaf4b69",
+  "criterionCommit": "23f63e7",
+  "notNewMeasurement": true,
+  "AFromApprovedTable": [
+    {
+      "coverageMs": 30,
+      "protocol": "soft",
+      "trial": 1,
+      "power": 0.0,
+      "reason": "sample-gap"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "soft",
+      "trial": 2,
+      "power": 0.0,
+      "reason": "few-samples"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "soft",
+      "trial": 3,
+      "power": 0.0,
+      "reason": "sample-gap"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "soft",
+      "trial": 4,
+      "power": 0.0,
+      "reason": "sample-gap"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "soft",
+      "trial": 5,
+      "power": 0.0,
+      "reason": "sample-gap"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "soft",
+      "trial": 6,
+      "power": 0.0,
+      "reason": "sample-gap"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "soft",
+      "trial": 7,
+      "power": 0.0,
+      "reason": "sample-gap"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "soft",
+      "trial": 8,
+      "power": 0.028769999999999997,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "soft",
+      "trial": 9,
+      "power": 0.041299999999999996,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "soft",
+      "trial": 10,
+      "power": 0.05082,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "strong",
+      "trial": 1,
+      "power": 0.34110999999999997,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "strong",
+      "trial": 2,
+      "power": 0.66608,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "strong",
+      "trial": 3,
+      "power": 0.41359999999999997,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "strong",
+      "trial": 4,
+      "power": 0.0,
+      "reason": "sample-gap"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "strong",
+      "trial": 5,
+      "power": 0.9136299999999999,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "strong",
+      "trial": 6,
+      "power": 0.7746299999999999,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "strong",
+      "trial": 7,
+      "power": 0.24989,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "strong",
+      "trial": 8,
+      "power": 0.0,
+      "reason": "sample-gap"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "strong",
+      "trial": 9,
+      "power": 0.26079,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 30,
+      "protocol": "strong",
+      "trial": 10,
+      "power": 0.1516,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "soft",
+      "trial": 1,
+      "power": 0.0,
+      "reason": "few-samples"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "soft",
+      "trial": 2,
+      "power": 0.0,
+      "reason": "few-samples"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "soft",
+      "trial": 3,
+      "power": 0.0,
+      "reason": "sample-gap"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "soft",
+      "trial": 4,
+      "power": 0.0,
+      "reason": "few-samples"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "soft",
+      "trial": 5,
+      "power": 0.0,
+      "reason": "few-samples"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "soft",
+      "trial": 6,
+      "power": 0.01972,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "soft",
+      "trial": 7,
+      "power": 0.0,
+      "reason": "few-samples"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "soft",
+      "trial": 8,
+      "power": 0.01748,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "soft",
+      "trial": 9,
+      "power": 0.00754,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "soft",
+      "trial": 10,
+      "power": 0.0,
+      "reason": "few-samples"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "strong",
+      "trial": 1,
+      "power": 0.0,
+      "reason": "sample-gap"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "strong",
+      "trial": 2,
+      "power": 0.26525,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "strong",
+      "trial": 3,
+      "power": 0.44585,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "strong",
+      "trial": 4,
+      "power": 0.72577,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "strong",
+      "trial": 5,
+      "power": 0.34917000000000004,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "strong",
+      "trial": 6,
+      "power": 0.35305,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "strong",
+      "trial": 7,
+      "power": 0.32006999999999997,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "strong",
+      "trial": 8,
+      "power": 0.58552,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "strong",
+      "trial": 9,
+      "power": 0.5932,
+      "reason": "measured"
+    },
+    {
+      "coverageMs": 20,
+      "protocol": "strong",
+      "trial": 10,
+      "power": 0.62749,
+      "reason": "measured"
+    }
+  ],
+  "ASummary": {
+    "soft": {
+      "n": 20,
+      "min": 0.0,
+      "median": 0.0,
+      "max": 0.05082,
+      "p25": 0.0,
+      "p75": 0.010025,
+      "conservative": 14,
+      "positive": 6,
+      "saturated": 0,
+      "reasons": {
+        "sample-gap": 7,
+        "few-samples": 7,
+        "measured": 6
+      }
+    },
+    "strong": {
+      "n": 20,
+      "min": 0.0,
+      "median": 0.35111000000000003,
+      "max": 0.9136299999999999,
+      "p25": 0.258065,
+      "p75": 0.6017724999999999,
+      "conservative": 3,
+      "positive": 17,
+      "saturated": 0,
+      "reasons": {
+        "measured": 17,
+        "sample-gap": 3
+      }
+    },
+    "criteria": {
+      "monotone": true,
+      "separation": true,
+      "usefulRange": false,
+      "conservative": false
+    },
+    "passesAvailableCriteria": false
+  },
+  "B": {
+    "full": 400,
+    "dead": 10,
+    "tauMs": 20,
+    "decayMs": 120,
+    "minSamples": 3,
+    "minCoverageMs": 30,
+    "maxGapMs": 51,
+    "rows": [
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 1,
+        "timestamp": "2026-10-25T23:04:10.4144870Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 3.2867870107240558,
+        "peakTimeReal": 3546.671406208255,
+        "releaseTimeReal": 3546.929785249685,
+        "maxSpeedMmPerS": 88.90059517995519
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 2,
+        "timestamp": "2026-10-25T23:04:12.7987640Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 6.952110997208153,
+        "peakTimeReal": 3549.1718172079723,
+        "releaseTimeReal": 3549.321907292079,
+        "maxSpeedMmPerS": 105.27441379368057
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 3,
+        "timestamp": "2026-10-25T23:04:15.3660570Z",
+        "power": 0.038361362544483406,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 24.960931392348527,
+        "peakTimeReal": 3551.880607458226,
+        "releaseTimeReal": 3551.880607458226,
+        "maxSpeedMmPerS": 106.66779217427447
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 4,
+        "timestamp": "2026-10-25T23:04:17.0655910Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 6.265446675868208,
+        "peakTimeReal": 3553.355860250242,
+        "releaseTimeReal": 3553.5809054166016,
+        "maxSpeedMmPerS": 136.2046199909557
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 5,
+        "timestamp": "2026-10-25T23:04:18.6981350Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 3.744783215284595,
+        "peakTimeReal": 3554.8061692078636,
+        "releaseTimeReal": 3555.214571333406,
+        "maxSpeedMmPerS": 160.33297257773836
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 6,
+        "timestamp": "2026-10-25T23:04:20.1157840Z",
+        "power": 0.003388172140264031,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 11.321387134702972,
+        "peakTimeReal": 3556.473053208534,
+        "releaseTimeReal": 3556.6397464167617,
+        "maxSpeedMmPerS": 273.0469551522987
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 7,
+        "timestamp": "2026-10-25T23:04:21.5662300Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 2.4751608184811014,
+        "peakTimeReal": 3557.873289625097,
+        "releaseTimeReal": 3558.0899974160666,
+        "maxSpeedMmPerS": 100.24977760855467
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 8,
+        "timestamp": "2026-10-25T23:04:23.0331760Z",
+        "power": 0.04436134789476613,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 27.30092567895879,
+        "peakTimeReal": 3559.556900542038,
+        "releaseTimeReal": 3559.556900542038,
+        "maxSpeedMmPerS": 121.75014673705628
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 9,
+        "timestamp": "2026-10-25T23:04:24.4836160Z",
+        "power": 0.05639045492960173,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 31.992277422544674,
+        "peakTimeReal": 3561.007144416292,
+        "releaseTimeReal": 3561.007144416292,
+        "maxSpeedMmPerS": 103.49457878230014
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 10,
+        "timestamp": "2026-10-25T23:04:34.1177040Z",
+        "power": 0.08002004840305296,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 41.207818877190654,
+        "peakTimeReal": 3570.6421052498567,
+        "releaseTimeReal": 3570.6421052498567,
+        "maxSpeedMmPerS": 130.92244571344293
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 1,
+        "timestamp": "2026-10-25T23:04:37.6351770Z",
+        "power": 0.510596619969337,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 209.13268178804145,
+        "peakTimeReal": 3574.1551913328303,
+        "releaseTimeReal": 3574.1593643332444,
+        "maxSpeedMmPerS": 249.04301498877265
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 2,
+        "timestamp": "2026-10-25T23:04:38.8680010Z",
+        "power": 0.8630102225873919,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 346.57398680908284,
+        "peakTimeReal": 3575.3596264587313,
+        "releaseTimeReal": 3575.3846242085556,
+        "maxSpeedMmPerS": 478.1560394271972
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 3,
+        "timestamp": "2026-10-25T23:04:40.3523030Z",
+        "power": 0.5542745125487439,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 226.16705989401012,
+        "peakTimeReal": 3576.859813708414,
+        "releaseTimeReal": 3576.8681492502155,
+        "maxSpeedMmPerS": 278.336990921341
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 4,
+        "timestamp": "2026-10-25T23:04:42.1864920Z",
+        "power": 0.006617944784089931,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 12.580998465795073,
+        "peakTimeReal": 3578.560110791126,
+        "releaseTimeReal": 3578.701796250141,
+        "maxSpeedMmPerS": 263.10511973018157
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 5,
+        "timestamp": "2026-10-25T23:04:43.3692600Z",
+        "power": 1,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 656.3261421783903,
+        "peakTimeReal": 3579.8811552500274,
+        "releaseTimeReal": 3579.885322208499,
+        "maxSpeedMmPerS": 851.8689245189441
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 6,
+        "timestamp": "2026-10-25T23:04:44.8365270Z",
+        "power": 1,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 474.17513439999993,
+        "peakTimeReal": 3581.3439401667792,
+        "releaseTimeReal": 3581.3605943745074,
+        "maxSpeedMmPerS": 717.2003212309556
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 7,
+        "timestamp": "2026-10-25T23:04:46.3873930Z",
+        "power": 0.4661136372274852,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 191.78431851871923,
+        "peakTimeReal": 3582.9066653329787,
+        "releaseTimeReal": 3582.9108324992058,
+        "maxSpeedMmPerS": 248.67314838904946
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 8,
+        "timestamp": "2026-10-25T23:04:48.0374600Z",
+        "power": 0.7551010589004663,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 304.4894129711819,
+        "peakTimeReal": 3584.5570134165523,
+        "releaseTimeReal": 3584.5611744166927,
+        "maxSpeedMmPerS": 351.52659070434794
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 9,
+        "timestamp": "2026-10-25T23:04:49.9224250Z",
+        "power": 0.35026613454829975,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 146.6037924738369,
+        "peakTimeReal": 3586.394810291441,
+        "releaseTimeReal": 3586.444761332667,
+        "maxSpeedMmPerS": 302.75359847059883
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 10,
+        "timestamp": "2026-10-25T23:04:52.5223470Z",
+        "power": 0.21227051456140134,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 92.78550067894652,
+        "peakTimeReal": 3589.036864207879,
+        "releaseTimeReal": 3589.036864207879,
+        "maxSpeedMmPerS": 172.9202376060525
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 1,
+        "timestamp": "2026-10-25T23:14:19.9786990Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 2.7678743300942448,
+        "peakTimeReal": 4156.212870249923,
+        "releaseTimeReal": 4156.48373720895,
+        "maxSpeedMmPerS": 103.49551932850613
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 2,
+        "timestamp": "2026-10-25T23:14:21.6632300Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 3.355673417781274,
+        "peakTimeReal": 4157.979835332513,
+        "releaseTimeReal": 4158.16735337469,
+        "maxSpeedMmPerS": 112.46248451375413
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 3,
+        "timestamp": "2026-10-25T23:14:23.2129070Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 6.209489165810917,
+        "peakTimeReal": 4159.56342374985,
+        "releaseTimeReal": 4159.7176152080965,
+        "maxSpeedMmPerS": 92.97314682387751
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 4,
+        "timestamp": "2026-10-25T23:14:24.8463740Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 6.447875363759705,
+        "peakTimeReal": 4161.247098291912,
+        "releaseTimeReal": 4161.35962316625,
+        "maxSpeedMmPerS": 74.38590873973294
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 5,
+        "timestamp": "2026-10-25T23:14:26.5297590Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 7.001279902872875,
+        "peakTimeReal": 4162.780631416589,
+        "releaseTimeReal": 4163.043174666853,
+        "maxSpeedMmPerS": 117.40660156755182
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 6,
+        "timestamp": "2026-10-25T23:14:27.8804520Z",
+        "power": 0.03250221309474552,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 22.675863106950754,
+        "peakTimeReal": 4164.393402291189,
+        "releaseTimeReal": 4164.393402291189,
+        "maxSpeedMmPerS": 135.81609629886813
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 7,
+        "timestamp": "2026-10-25T23:14:29.8490410Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 4.021176073209293,
+        "peakTimeReal": 4166.147865582834,
+        "releaseTimeReal": 4166.352066499933,
+        "maxSpeedMmPerS": 71.35364787428384
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 8,
+        "timestamp": "2026-10-25T23:14:31.4329580Z",
+        "power": 0.0392967416300021,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 25.32572923570082,
+        "peakTimeReal": 4167.94400037545,
+        "releaseTimeReal": 4167.94400037545,
+        "maxSpeedMmPerS": 88.87693641621183
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 9,
+        "timestamp": "2026-10-25T23:14:34.0981460Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 9.101113408189283,
+        "peakTimeReal": 4170.602787791448,
+        "releaseTimeReal": 4170.602787791448,
+        "maxSpeedMmPerS": 129.02329833814335
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 10,
+        "timestamp": "2026-10-25T23:14:40.3334870Z",
+        "power": 0,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 2.3236954452275627,
+        "peakTimeReal": 4176.695476333578,
+        "releaseTimeReal": 4176.845499208279,
+        "maxSpeedMmPerS": 68.2459606271476
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 1,
+        "timestamp": "2026-10-25T23:14:48.1835360Z",
+        "power": 0.8709579647689515,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 349.6736062598911,
+        "peakTimeReal": 4184.684321250171,
+        "releaseTimeReal": 4184.688487249537,
+        "maxSpeedMmPerS": 536.765773972508
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 2,
+        "timestamp": "2026-10-25T23:14:49.4838990Z",
+        "power": 0.32188904464150725,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 135.53672741018784,
+        "peakTimeReal": 4185.984597207999,
+        "releaseTimeReal": 4185.988763166503,
+        "maxSpeedMmPerS": 270.14431644433904
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 3,
+        "timestamp": "2026-10-25T23:14:50.5850000Z",
+        "power": 0.5690282647110921,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 231.92102323732593,
+        "peakTimeReal": 4187.034716208381,
+        "releaseTimeReal": 4187.088890457906,
+        "maxSpeedMmPerS": 428.1441003686081
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 4,
+        "timestamp": "2026-10-25T23:14:51.2172370Z",
+        "power": 0.8538475522432716,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 343.0005453748759,
+        "peakTimeReal": 4187.684837207895,
+        "releaseTimeReal": 4187.722342207472,
+        "maxSpeedMmPerS": 595.2296174508548
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 5,
+        "timestamp": "2026-10-25T23:14:53.4356440Z",
+        "power": 0.7187080751189162,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 290.29614929637734,
+        "peakTimeReal": 4189.943537666686,
+        "releaseTimeReal": 4189.947711250475,
+        "maxSpeedMmPerS": 455.98842558270036
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 6,
+        "timestamp": "2026-10-25T23:14:55.0693860Z",
+        "power": 0.5725750173869032,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 233.30425678089225,
+        "peakTimeReal": 4191.535520207919,
+        "releaseTimeReal": 4191.581360208505,
+        "maxSpeedMmPerS": 459.4831064928509
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 7,
+        "timestamp": "2026-10-25T23:15:15.8391260Z",
+        "power": 0.5810484202803429,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 236.6088839093337,
+        "peakTimeReal": 4212.347368583167,
+        "releaseTimeReal": 4212.351542250433,
+        "maxSpeedMmPerS": 318.7873448379085
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 8,
+        "timestamp": "2026-10-25T23:15:16.9060940Z",
+        "power": 0.7222673964480552,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 291.6842846147415,
+        "peakTimeReal": 4213.389165291026,
+        "releaseTimeReal": 4213.418330499879,
+        "maxSpeedMmPerS": 443.0491760046251
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 9,
+        "timestamp": "2026-10-25T23:15:18.0061030Z",
+        "power": 0.9153449362022266,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 366.98452511886836,
+        "peakTimeReal": 4214.50600816677,
+        "releaseTimeReal": 4214.510180208633,
+        "maxSpeedMmPerS": 487.6777064347401
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 10,
+        "timestamp": "2026-10-25T23:15:19.3897560Z",
+        "power": 0.6796898082253061,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 275.0790252078694,
+        "peakTimeReal": 4215.872905375159,
+        "releaseTimeReal": 4215.902088291043,
+        "maxSpeedMmPerS": 532.3849901045265
+      }
+    ],
+    "summary": {
+      "soft": {
+        "n": 20,
+        "min": 0,
+        "median": 0.0,
+        "max": 0.08002004840305296,
+        "p25": 0.0,
+        "p75": 0.03396700045717999,
+        "conservative": 0,
+        "positive": 7,
+        "saturated": 0,
+        "reasons": {
+          "measured": 20
+        }
+      },
+      "strong": {
+        "n": 20,
+        "min": 0.006617944784089931,
+        "median": 0.6303691142528245,
+        "max": 1,
+        "p25": 0.4994758742838741,
+        "p75": 0.8561382198293017,
+        "conservative": 0,
+        "positive": 20,
+        "saturated": 2,
+        "reasons": {
+          "measured": 20
+        }
+      },
+      "criteria": {
+        "monotone": true,
+        "separation": true,
+        "usefulRange": false,
+        "conservative": true
+      },
+      "passesAvailableCriteria": false
+    }
+  },
+  "sensitivity": [
+    {
+      "full": 300,
+      "dead": 0,
+      "decayMs": 60,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0.0005845285457227446,
+          "median": 0.006768747941885159,
+          "max": 0.13735939625730217,
+          "p25": 0.002977967827849243,
+          "p75": 0.07749043392766733,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.014342235581812282,
+          "median": 0.7926530000853285,
+          "max": 1,
+          "p25": 0.5440427227150829,
+          "p75": 0.9485967303497088,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 4,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": true,
+          "conservative": true
+        },
+        "passesAvailableCriteria": true
+      }
+    },
+    {
+      "full": 300,
+      "dead": 0,
+      "decayMs": 120,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0.007745651484091875,
+          "median": 0.022333310601613095,
+          "max": 0.13735939625730217,
+          "p25": 0.012158352553029215,
+          "p75": 0.07749043392766733,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.041936661552650245,
+          "median": 0.8528131818620052,
+          "max": 1,
+          "p25": 0.6826519699023696,
+          "p75": 1.0,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 7,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 300,
+      "dead": 0,
+      "decayMs": 180,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0.012441912548773344,
+          "median": 0.03713006804148732,
+          "max": 0.13735939625730217,
+          "p25": 0.023584316584455797,
+          "p75": 0.07749043392766733,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.09393963330415603,
+          "median": 0.9441927616052348,
+          "max": 1,
+          "p25": 0.6906084651276655,
+          "p75": 1.0,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 9,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 300,
+      "dead": 10,
+      "decayMs": 60,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.10761316854203674,
+          "p25": 0.0,
+          "p75": 0.04567975923551792,
+          "conservative": 0,
+          "positive": 6,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0,
+          "median": 0.7855031035365467,
+          "max": 1,
+          "p25": 0.5283200579811203,
+          "p75": 0.9468242038100436,
+          "conservative": 0,
+          "positive": 19,
+          "saturated": 4,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 300,
+      "dead": 10,
+      "decayMs": 120,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.10761316854203674,
+          "p25": 0.0,
+          "p75": 0.04567975923551792,
+          "conservative": 0,
+          "positive": 7,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.008899994709638183,
+          "median": 0.8477377743400054,
+          "max": 1,
+          "p25": 0.6717089343817617,
+          "p75": 1.0,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 7,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 300,
+      "dead": 10,
+      "decayMs": 180,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.00392765659464206,
+          "max": 0.10761316854203674,
+          "p25": 0.0,
+          "p75": 0.04567975923551792,
+          "conservative": 0,
+          "positive": 11,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.06269617238360968,
+          "median": 0.9422683740743809,
+          "max": 1,
+          "p25": 0.6799397915113781,
+          "p75": 1.0,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 9,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 300,
+      "dead": 20,
+      "decayMs": 60,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.07574221027568091,
+          "p25": 0.0,
+          "p75": 0.011596893493929275,
+          "conservative": 0,
+          "positive": 6,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0,
+          "median": 0.7778425000914234,
+          "max": 1,
+          "p25": 0.5114743457661602,
+          "p75": 0.9449250682318309,
+          "conservative": 0,
+          "positive": 19,
+          "saturated": 4,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 300,
+      "dead": 20,
+      "decayMs": 120,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.07574221027568091,
+          "p25": 0.0,
+          "p75": 0.011596893493929275,
+          "conservative": 0,
+          "positive": 6,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0,
+          "median": 0.8422998377092913,
+          "max": 1,
+          "p25": 0.6599842534668247,
+          "p75": 1.0,
+          "conservative": 0,
+          "positive": 19,
+          "saturated": 7,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 300,
+      "dead": 20,
+      "decayMs": 180,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.07574221027568091,
+          "p25": 0.0,
+          "p75": 0.011596893493929275,
+          "conservative": 0,
+          "positive": 6,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.029221035683024317,
+          "median": 0.940206530291323,
+          "max": 1,
+          "p25": 0.6685090697796416,
+          "p75": 1.0,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 9,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 400,
+      "dead": 0,
+      "decayMs": 60,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0.0004383964092920585,
+          "median": 0.005076560956413869,
+          "max": 0.10301954719297664,
+          "p25": 0.0022334758708869324,
+          "p75": 0.05811782544575049,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.010756676686359212,
+          "median": 0.5944897500639964,
+          "max": 1,
+          "p25": 0.40803204203631216,
+          "p75": 0.7114475477622816,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 2,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 400,
+      "dead": 0,
+      "decayMs": 120,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0.005809238613068907,
+          "median": 0.016749982951209823,
+          "max": 0.10301954719297664,
+          "p25": 0.009118764414771913,
+          "p75": 0.05811782544575049,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.031452496164487684,
+          "median": 0.6396098863965038,
+          "max": 1,
+          "p25": 0.5119889774267772,
+          "p75": 0.8597347643335691,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 2,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": true,
+          "conservative": true
+        },
+        "passesAvailableCriteria": true
+      }
+    },
+    {
+      "full": 400,
+      "dead": 0,
+      "decayMs": 180,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0.00933143441158001,
+          "median": 0.027847551031115494,
+          "max": 0.10301954719297664,
+          "p25": 0.017688237438341848,
+          "p75": 0.05811782544575049,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.07045472497811703,
+          "median": 0.708144571203926,
+          "max": 1,
+          "p25": 0.517956348845749,
+          "p75": 0.9019195746862771,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 2,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": true,
+          "conservative": true
+        },
+        "passesAvailableCriteria": true
+      }
+    },
+    {
+      "full": 400,
+      "dead": 10,
+      "decayMs": 60,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.08002004840305296,
+          "p25": 0.0,
+          "p75": 0.03396700045717999,
+          "conservative": 0,
+          "positive": 6,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0,
+          "median": 0.5840920513476886,
+          "max": 1,
+          "p25": 0.3928533764474996,
+          "p75": 0.7040487669356734,
+          "conservative": 0,
+          "positive": 19,
+          "saturated": 2,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 400,
+      "dead": 10,
+      "decayMs": 120,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.08002004840305296,
+          "p25": 0.0,
+          "p75": 0.03396700045717999,
+          "conservative": 0,
+          "positive": 7,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.006617944784089931,
+          "median": 0.6303691142528245,
+          "max": 1,
+          "p25": 0.4994758742838741,
+          "p75": 0.8561382198293017,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 2,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 400,
+      "dead": 10,
+      "decayMs": 180,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.002920565160118455,
+          "max": 0.08002004840305296,
+          "p25": 0.0,
+          "p75": 0.03396700045717999,
+          "conservative": 0,
+          "positive": 11,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.04662023074678669,
+          "median": 0.7006610986706935,
+          "max": 1,
+          "p25": 0.5055962552264094,
+          "p75": 0.8994046919859253,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 2,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": true,
+          "conservative": true
+        },
+        "passesAvailableCriteria": true
+      }
+    },
+    {
+      "full": 400,
+      "dead": 20,
+      "decayMs": 60,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.05581004967681751,
+          "p25": 0.0,
+          "p75": 0.008545079416579466,
+          "conservative": 0,
+          "positive": 6,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0,
+          "median": 0.5731471053305225,
+          "max": 1,
+          "p25": 0.3768758337224339,
+          "p75": 0.6962605765918753,
+          "conservative": 0,
+          "positive": 19,
+          "saturated": 2,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 400,
+      "dead": 20,
+      "decayMs": 120,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.05581004967681751,
+          "p25": 0.0,
+          "p75": 0.008545079416579466,
+          "conservative": 0,
+          "positive": 6,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0,
+          "median": 0.6206419856805304,
+          "max": 1,
+          "p25": 0.4863041867650287,
+          "p75": 0.8523523835090201,
+          "conservative": 0,
+          "positive": 19,
+          "saturated": 2,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 400,
+      "dead": 20,
+      "decayMs": 180,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.05581004967681751,
+          "p25": 0.0,
+          "p75": 0.008545079416579466,
+          "conservative": 0,
+          "positive": 6,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.0215312894506495,
+          "median": 0.6927837591620274,
+          "max": 1,
+          "p25": 0.4925856303639465,
+          "p75": 0.8967574470381865,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 2,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 500,
+      "dead": 0,
+      "decayMs": 60,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0.0003507171274336468,
+          "median": 0.004061248765131096,
+          "max": 0.08241563775438131,
+          "p25": 0.0017867806967095457,
+          "p75": 0.0464942603566004,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.008605341349087369,
+          "median": 0.4755918000511971,
+          "max": 1,
+          "p25": 0.32642563362904975,
+          "p75": 0.5691580382098252,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 1,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 500,
+      "dead": 0,
+      "decayMs": 120,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0.004647390890455125,
+          "median": 0.013399986360967859,
+          "max": 0.08241563775438131,
+          "p25": 0.00729501153181753,
+          "p75": 0.0464942603566004,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.025161996931590144,
+          "median": 0.5116879091172031,
+          "max": 1,
+          "p25": 0.4095911819414218,
+          "p75": 0.6877878114668553,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 1,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 500,
+      "dead": 0,
+      "decayMs": 180,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0.007465147529264007,
+          "median": 0.022278040824892396,
+          "max": 0.08241563775438131,
+          "p25": 0.014150589950673479,
+          "p75": 0.0464942603566004,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.05636377998249362,
+          "median": 0.5665156569631409,
+          "max": 1,
+          "p25": 0.4143650790765993,
+          "p75": 0.7215356597490217,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 1,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 500,
+      "dead": 10,
+      "decayMs": 60,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.06368942627998092,
+          "p25": 0.0,
+          "p75": 0.027034959547551425,
+          "conservative": 0,
+          "positive": 6,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0,
+          "median": 0.46488959188897666,
+          "max": 1,
+          "p25": 0.31267921798882625,
+          "p75": 0.5603653451120666,
+          "conservative": 0,
+          "positive": 19,
+          "saturated": 1,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 500,
+      "dead": 10,
+      "decayMs": 120,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.06368942627998092,
+          "p25": 0.0,
+          "p75": 0.027034959547551425,
+          "conservative": 0,
+          "positive": 7,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.005267343807745047,
+          "median": 0.501722356242044,
+          "max": 1,
+          "p25": 0.3975420223892059,
+          "p75": 0.6814161341498524,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 1,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 500,
+      "dead": 10,
+      "decayMs": 180,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.002324531453971832,
+          "max": 0.06368942627998092,
+          "p25": 0.0,
+          "p75": 0.027034959547551425,
+          "conservative": 0,
+          "positive": 11,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.03710589794132002,
+          "median": 0.5576690377174907,
+          "max": 1,
+          "p25": 0.4024133459965299,
+          "p75": 0.715852714029614,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 1,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 500,
+      "dead": 20,
+      "decayMs": 60,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.0441829559941472,
+          "p25": 0.0,
+          "p75": 0.006764854538125411,
+          "conservative": 0,
+          "positive": 6,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0,
+          "median": 0.4537414583866637,
+          "max": 1,
+          "p25": 0.29836003503026015,
+          "p75": 0.5512062898019013,
+          "conservative": 0,
+          "positive": 19,
+          "saturated": 1,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 500,
+      "dead": 20,
+      "decayMs": 120,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.0441829559941472,
+          "p25": 0.0,
+          "p75": 0.006764854538125411,
+          "conservative": 0,
+          "positive": 6,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0,
+          "median": 0.4913415719970866,
+          "max": 1,
+          "p25": 0.3849908145223144,
+          "p75": 0.6747789702779743,
+          "conservative": 0,
+          "positive": 19,
+          "saturated": 1,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    },
+    {
+      "full": 500,
+      "dead": 20,
+      "decayMs": 180,
+      "summary": {
+        "soft": {
+          "n": 20,
+          "min": 0,
+          "median": 0.0,
+          "max": 0.0441829559941472,
+          "p25": 0.0,
+          "p75": 0.006764854538125411,
+          "conservative": 0,
+          "positive": 6,
+          "saturated": 0,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "strong": {
+          "n": 20,
+          "min": 0.017045604148430853,
+          "median": 0.5484538093366051,
+          "max": 1,
+          "p25": 0.38996362403812423,
+          "p75": 0.709932978905231,
+          "conservative": 0,
+          "positive": 20,
+          "saturated": 1,
+          "reasons": {
+            "measured": 20
+          }
+        },
+        "criteria": {
+          "monotone": true,
+          "separation": true,
+          "usefulRange": false,
+          "conservative": true
+        },
+        "passesAvailableCriteria": false
+      }
+    }
+  ],
+  "riskSearch": {
+    "totalGestures": 138,
+    "proxy": "two consecutive instantaneous intervals >250 mm/s and terminal net 80ms <100 mm/s; not intent labels",
+    "intentLabeledRepresentativeCases": 0,
+    "surrogates": [
+      {
+        "timestamp": "2026-10-25T22:12:05.3576010Z",
+        "protocol": "preview",
+        "trial": 1,
+        "outcome": "Swing",
+        "nativeFrozen": true,
+        "terminalNet80Ms": 6.713255600330971,
+        "powerB": 0.00873397069127374,
+        "bandB": "soft",
+        "peakSpeed": 270.2628891601049,
+        "intentKnown": false,
+        "selectedBPower": 0.0335156214239919
+      },
+      {
+        "timestamp": "2026-10-25T22:13:14.3292080Z",
+        "protocol": "preview",
+        "trial": 1,
+        "outcome": "Swing",
+        "nativeFrozen": true,
+        "terminalNet80Ms": 6.870549088532784,
+        "powerB": 0.02640444274138804,
+        "bandB": "soft",
+        "peakSpeed": 305.4866600971852,
+        "intentKnown": false,
+        "selectedBPower": 0.05074433167285334
+      },
+      {
+        "timestamp": "2026-10-25T22:13:28.5822820Z",
+        "protocol": "preview",
+        "trial": 1,
+        "outcome": "Swing",
+        "nativeFrozen": true,
+        "terminalNet80Ms": 16.519317720319034,
+        "powerB": 0.03526490710592573,
+        "bandB": "soft",
+        "peakSpeed": 426.7438752360164,
+        "intentKnown": false,
+        "selectedBPower": 0.05938328442827759
+      },
+      {
+        "timestamp": "2026-10-25T22:13:29.8648680Z",
+        "protocol": "preview",
+        "trial": 1,
+        "outcome": "Swing",
+        "nativeFrozen": true,
+        "terminalNet80Ms": 1.5175851314881807,
+        "powerB": 0.022436906566040905,
+        "bandB": "soft",
+        "peakSpeed": 320.69537724802404,
+        "intentKnown": false,
+        "selectedBPower": 0.04687598390188988
+      }
+    ],
+    "status": "NotEvaluated for actual intent"
+  },
+  "selectedB": {
+    "fullMmPerS": 400,
+    "deadZoneMmPerS": 0,
+    "smoothingMs": 20,
+    "decayMs": 120,
+    "minSamples": 3,
+    "minCoverageMs": 30,
+    "maxGapMs": 51,
+    "rows": [
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 1,
+        "timestamp": "2026-10-25T23:04:10.4144870Z",
+        "power": 0.00821696752681014,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 3.2867870107240558,
+        "peakTimeReal": 3546.671406208255,
+        "releaseTimeReal": 3546.929785249685,
+        "maxSpeedMmPerS": 88.90059517995519
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 2,
+        "timestamp": "2026-10-25T23:04:12.7987640Z",
+        "power": 0.01738027749302038,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 6.952110997208153,
+        "peakTimeReal": 3549.1718172079723,
+        "releaseTimeReal": 3549.321907292079,
+        "maxSpeedMmPerS": 105.27441379368057
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 3,
+        "timestamp": "2026-10-25T23:04:15.3660570Z",
+        "power": 0.06240232848087132,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 24.960931392348527,
+        "peakTimeReal": 3551.880607458226,
+        "releaseTimeReal": 3551.880607458226,
+        "maxSpeedMmPerS": 106.66779217427447
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 4,
+        "timestamp": "2026-10-25T23:04:17.0655910Z",
+        "power": 0.01566361668967052,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 6.265446675868208,
+        "peakTimeReal": 3553.355860250242,
+        "releaseTimeReal": 3553.5809054166016,
+        "maxSpeedMmPerS": 136.2046199909557
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 5,
+        "timestamp": "2026-10-25T23:04:18.6981350Z",
+        "power": 0.009361958038211488,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 3.744783215284595,
+        "peakTimeReal": 3554.8061692078636,
+        "releaseTimeReal": 3555.214571333406,
+        "maxSpeedMmPerS": 160.33297257773836
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 6,
+        "timestamp": "2026-10-25T23:04:20.1157840Z",
+        "power": 0.02830346783675743,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 11.321387134702972,
+        "peakTimeReal": 3556.473053208534,
+        "releaseTimeReal": 3556.6397464167617,
+        "maxSpeedMmPerS": 273.0469551522987
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 7,
+        "timestamp": "2026-10-25T23:04:21.5662300Z",
+        "power": 0.006187902046202754,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 2.4751608184811014,
+        "peakTimeReal": 3557.873289625097,
+        "releaseTimeReal": 3558.0899974160666,
+        "maxSpeedMmPerS": 100.24977760855467
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 8,
+        "timestamp": "2026-10-25T23:04:23.0331760Z",
+        "power": 0.06825231419739698,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 27.30092567895879,
+        "peakTimeReal": 3559.556900542038,
+        "releaseTimeReal": 3559.556900542038,
+        "maxSpeedMmPerS": 121.75014673705628
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 9,
+        "timestamp": "2026-10-25T23:04:24.4836160Z",
+        "power": 0.07998069355636168,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 31.992277422544674,
+        "peakTimeReal": 3561.007144416292,
+        "releaseTimeReal": 3561.007144416292,
+        "maxSpeedMmPerS": 103.49457878230014
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "soft",
+        "trial": 10,
+        "timestamp": "2026-10-25T23:04:34.1177040Z",
+        "power": 0.10301954719297664,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 41.207818877190654,
+        "peakTimeReal": 3570.6421052498567,
+        "releaseTimeReal": 3570.6421052498567,
+        "maxSpeedMmPerS": 130.92244571344293
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 1,
+        "timestamp": "2026-10-25T23:04:37.6351770Z",
+        "power": 0.5228317044701036,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 209.13268178804145,
+        "peakTimeReal": 3574.1551913328303,
+        "releaseTimeReal": 3574.1593643332444,
+        "maxSpeedMmPerS": 249.04301498877265
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 2,
+        "timestamp": "2026-10-25T23:04:38.8680010Z",
+        "power": 0.8664349670227071,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 346.57398680908284,
+        "peakTimeReal": 3575.3596264587313,
+        "releaseTimeReal": 3575.3846242085556,
+        "maxSpeedMmPerS": 478.1560394271972
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 3,
+        "timestamp": "2026-10-25T23:04:40.3523030Z",
+        "power": 0.5654176497350253,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 226.16705989401012,
+        "peakTimeReal": 3576.859813708414,
+        "releaseTimeReal": 3576.8681492502155,
+        "maxSpeedMmPerS": 278.336990921341
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 4,
+        "timestamp": "2026-10-25T23:04:42.1864920Z",
+        "power": 0.031452496164487684,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 12.580998465795073,
+        "peakTimeReal": 3578.560110791126,
+        "releaseTimeReal": 3578.701796250141,
+        "maxSpeedMmPerS": 263.10511973018157
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 5,
+        "timestamp": "2026-10-25T23:04:43.3692600Z",
+        "power": 1,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 656.3261421783903,
+        "peakTimeReal": 3579.8811552500274,
+        "releaseTimeReal": 3579.885322208499,
+        "maxSpeedMmPerS": 851.8689245189441
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 6,
+        "timestamp": "2026-10-25T23:04:44.8365270Z",
+        "power": 1,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 474.17513439999993,
+        "peakTimeReal": 3581.3439401667792,
+        "releaseTimeReal": 3581.3605943745074,
+        "maxSpeedMmPerS": 717.2003212309556
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 7,
+        "timestamp": "2026-10-25T23:04:46.3873930Z",
+        "power": 0.47946079629679805,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 191.78431851871923,
+        "peakTimeReal": 3582.9066653329787,
+        "releaseTimeReal": 3582.9108324992058,
+        "maxSpeedMmPerS": 248.67314838904946
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 8,
+        "timestamp": "2026-10-25T23:04:48.0374600Z",
+        "power": 0.7612235324279547,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 304.4894129711819,
+        "peakTimeReal": 3584.5570134165523,
+        "releaseTimeReal": 3584.5611744166927,
+        "maxSpeedMmPerS": 351.52659070434794
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 9,
+        "timestamp": "2026-10-25T23:04:49.9224250Z",
+        "power": 0.36650948118459226,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 146.6037924738369,
+        "peakTimeReal": 3586.394810291441,
+        "releaseTimeReal": 3586.444761332667,
+        "maxSpeedMmPerS": 302.75359847059883
+      },
+      {
+        "coverageMs": 30,
+        "protocol": "strong",
+        "trial": 10,
+        "timestamp": "2026-10-25T23:04:52.5223470Z",
+        "power": 0.2319637516973663,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 92.78550067894652,
+        "peakTimeReal": 3589.036864207879,
+        "releaseTimeReal": 3589.036864207879,
+        "maxSpeedMmPerS": 172.9202376060525
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 1,
+        "timestamp": "2026-10-25T23:14:19.9786990Z",
+        "power": 0.006919685825235612,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 2.7678743300942448,
+        "peakTimeReal": 4156.212870249923,
+        "releaseTimeReal": 4156.48373720895,
+        "maxSpeedMmPerS": 103.49551932850613
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 2,
+        "timestamp": "2026-10-25T23:14:21.6632300Z",
+        "power": 0.008389183544453185,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 3.355673417781274,
+        "peakTimeReal": 4157.979835332513,
+        "releaseTimeReal": 4158.16735337469,
+        "maxSpeedMmPerS": 112.46248451375413
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 3,
+        "timestamp": "2026-10-25T23:14:23.2129070Z",
+        "power": 0.015523722914527291,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 6.209489165810917,
+        "peakTimeReal": 4159.56342374985,
+        "releaseTimeReal": 4159.7176152080965,
+        "maxSpeedMmPerS": 92.97314682387751
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 4,
+        "timestamp": "2026-10-25T23:14:24.8463740Z",
+        "power": 0.01611968840939926,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 6.447875363759705,
+        "peakTimeReal": 4161.247098291912,
+        "releaseTimeReal": 4161.35962316625,
+        "maxSpeedMmPerS": 74.38590873973294
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 5,
+        "timestamp": "2026-10-25T23:14:26.5297590Z",
+        "power": 0.01750319975718219,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 7.001279902872875,
+        "peakTimeReal": 4162.780631416589,
+        "releaseTimeReal": 4163.043174666853,
+        "maxSpeedMmPerS": 117.40660156755182
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 6,
+        "timestamp": "2026-10-25T23:14:27.8804520Z",
+        "power": 0.05668965776737688,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 22.675863106950754,
+        "peakTimeReal": 4164.393402291189,
+        "releaseTimeReal": 4164.393402291189,
+        "maxSpeedMmPerS": 135.81609629886813
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 7,
+        "timestamp": "2026-10-25T23:14:29.8490410Z",
+        "power": 0.010052940183023234,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 4.021176073209293,
+        "peakTimeReal": 4166.147865582834,
+        "releaseTimeReal": 4166.352066499933,
+        "maxSpeedMmPerS": 71.35364787428384
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 8,
+        "timestamp": "2026-10-25T23:14:31.4329580Z",
+        "power": 0.06331432308925206,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 25.32572923570082,
+        "peakTimeReal": 4167.94400037545,
+        "releaseTimeReal": 4167.94400037545,
+        "maxSpeedMmPerS": 88.87693641621183
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 9,
+        "timestamp": "2026-10-25T23:14:34.0981460Z",
+        "power": 0.02275278352047321,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 9.101113408189283,
+        "peakTimeReal": 4170.602787791448,
+        "releaseTimeReal": 4170.602787791448,
+        "maxSpeedMmPerS": 129.02329833814335
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "soft",
+        "trial": 10,
+        "timestamp": "2026-10-25T23:14:40.3334870Z",
+        "power": 0.005809238613068907,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 2.3236954452275627,
+        "peakTimeReal": 4176.695476333578,
+        "releaseTimeReal": 4176.845499208279,
+        "maxSpeedMmPerS": 68.2459606271476
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 1,
+        "timestamp": "2026-10-25T23:14:48.1835360Z",
+        "power": 0.8741840156497277,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 349.6736062598911,
+        "peakTimeReal": 4184.684321250171,
+        "releaseTimeReal": 4184.688487249537,
+        "maxSpeedMmPerS": 536.765773972508
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 2,
+        "timestamp": "2026-10-25T23:14:49.4838990Z",
+        "power": 0.3388418185254696,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 135.53672741018784,
+        "peakTimeReal": 4185.984597207999,
+        "releaseTimeReal": 4185.988763166503,
+        "maxSpeedMmPerS": 270.14431644433904
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 3,
+        "timestamp": "2026-10-25T23:14:50.5850000Z",
+        "power": 0.5798025580933148,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 231.92102323732593,
+        "peakTimeReal": 4187.034716208381,
+        "releaseTimeReal": 4187.088890457906,
+        "maxSpeedMmPerS": 428.1441003686081
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 4,
+        "timestamp": "2026-10-25T23:14:51.2172370Z",
+        "power": 0.8575013634371897,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 343.0005453748759,
+        "peakTimeReal": 4187.684837207895,
+        "releaseTimeReal": 4187.722342207472,
+        "maxSpeedMmPerS": 595.2296174508548
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 5,
+        "timestamp": "2026-10-25T23:14:53.4356440Z",
+        "power": 0.7257403732409433,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 290.29614929637734,
+        "peakTimeReal": 4189.943537666686,
+        "releaseTimeReal": 4189.947711250475,
+        "maxSpeedMmPerS": 455.98842558270036
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 6,
+        "timestamp": "2026-10-25T23:14:55.0693860Z",
+        "power": 0.5832606419522306,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 233.30425678089225,
+        "peakTimeReal": 4191.535520207919,
+        "releaseTimeReal": 4191.581360208505,
+        "maxSpeedMmPerS": 459.4831064928509
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 7,
+        "timestamp": "2026-10-25T23:15:15.8391260Z",
+        "power": 0.5915222097733343,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 236.6088839093337,
+        "peakTimeReal": 4212.347368583167,
+        "releaseTimeReal": 4212.351542250433,
+        "maxSpeedMmPerS": 318.7873448379085
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 8,
+        "timestamp": "2026-10-25T23:15:16.9060940Z",
+        "power": 0.7292107115368538,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 291.6842846147415,
+        "peakTimeReal": 4213.389165291026,
+        "releaseTimeReal": 4213.418330499879,
+        "maxSpeedMmPerS": 443.0491760046251
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 9,
+        "timestamp": "2026-10-25T23:15:18.0061030Z",
+        "power": 0.9174613127971709,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 366.98452511886836,
+        "peakTimeReal": 4214.50600816677,
+        "releaseTimeReal": 4214.510180208633,
+        "maxSpeedMmPerS": 487.6777064347401
+      },
+      {
+        "coverageMs": 20,
+        "protocol": "strong",
+        "trial": 10,
+        "timestamp": "2026-10-25T23:15:19.3897560Z",
+        "power": 0.6876975630196734,
+        "reason": "measured",
+        "conservative": false,
+        "decayedPeakMmPerS": 275.0790252078694,
+        "peakTimeReal": 4215.872905375159,
+        "releaseTimeReal": 4215.902088291043,
+        "maxSpeedMmPerS": 532.3849901045265
+      }
+    ],
+    "summary": {
+      "soft": {
+        "n": 20,
+        "min": 0.005809238613068907,
+        "median": 0.016749982951209823,
+        "max": 0.10301954719297664,
+        "p25": 0.009118764414771913,
+        "p75": 0.05811782544575049,
+        "conservative": 0,
+        "positive": 20,
+        "saturated": 0,
+        "reasons": {
+          "measured": 20
+        }
+      },
+      "strong": {
+        "n": 20,
+        "min": 0.031452496164487684,
+        "median": 0.6396098863965038,
+        "max": 1,
+        "p25": 0.5119889774267772,
+        "p75": 0.8597347643335691,
+        "conservative": 0,
+        "positive": 20,
+        "saturated": 2,
+        "reasons": {
+          "measured": 20
+        }
+      },
+      "criteria": {
+        "monotone": true,
+        "separation": true,
+        "usefulRange": true,
+        "conservative": true
+      },
+      "passesAvailableCriteria": true
+    }
+  },
+  "decision": {
+    "method": "B",
+    "provisional": true,
+    "safetyForActualIntent": "NotEvaluated",
+    "middleGestures": "NotEvaluated",
+    "why": "A fails useful range and conservative rate; B 400/0/120 passes observable criteria, shorter memory than 180 and fewer saturated strong gestures than 300/0/60. Physical risk series required; no safety Pass inferred."
+  }
+}

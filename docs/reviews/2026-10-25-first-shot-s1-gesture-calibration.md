@@ -27,4 +27,20 @@ Se calculará el candidato fijo y una sensibilidad **predeclarada**, sin selecci
 
 ## Estado
 
-Pendiente calcular B, buscar el caso de riesgo y decidir antes de implementar. Sin datos nuevos ni contacto con el iPhone.
+Criterio fijado en commit **23f63e7**, antes de calcular B. [Evidencia del reprocesamiento](../validation/evidence/2026-10-25-s1-gesture-calibration-offline.json), fuente original SHA-256 ab43e560f23fa9522fa4d00c0fa4ed842f26922b180d8f7a21f8aaac2aaf4b69. A se importa de las 40 filas de PR #21, con su precisión publicada de tres decimales porcentuales; no se vuelve a estimar. B se reprocesa en tiempo real de timestamps con aritmética double offline; no es medición nueva ni afirmación de identidad bit a bit con Unity.
+
+| Método | Suaves P mín/med/máx (%) | Fuertes P mín/med/máx (%) | Conservadores suave/fuerte | Fuertes saturados |
+|---|---|---|---|---|
+| A 500/0/3/51 | 0 / 0 / 5,082 | 0 / 35,111 / 91,363 | 14/20 y 3/20 | 0/20 |
+| B primario 400/10/120 ms | 0 / 0 / 8,002 | 0,662 / 63,037 / 100 | 0/20 y 0/20 | 2/20 |
+| **B elegido provisional 400/0/120 ms** | **0,581 / 1,675 / 10,302** | **3,145 / 63,961 / 100** | **0/20 y 0/20** | **2/20** |
+
+A supera orden/separación y falla rango/rechazos. La escala no recupera las 14 salidas conservadoras suaves: con los mismos filtros seguirían siendo cero. Incluso llevar full de 500 al mínimo vigente 300, con deadZone ya 0 y exponente 1, dejaría la mediana fuerte en aproximadamente 58,5 %, bajo la banda alta; no se propone ampliar rangos ni manipular criterios. Esto descarta **el candidato A evaluado y su recalibración de escala dentro del rango vigente**, no afirma que sea imposible cualquier otro filtro temporal aún no estudiado.
+
+El B primario falla mediana suave positiva. De las **27 combinaciones predeclaradas**, cuatro cumplen los requisitos observables: full/dead/decay **300/0/60, 400/0/120, 400/0/180 y 400/10/180**. Se publican las 27, incluidos fallos. Se elige **400/0/120**, con menos saturación que 300/0/60 (2 frente a 4 fuertes) y memoria más corta que 180 ms. Mantiene tau 20, soporte 3 muestras/30 ms, hueco máximo 51. Cuartil 25 fuerte 51,199 % > cuartil 75 suave 5,812 %; separación de medianas 62,286 puntos. **No se declaran aprobados control medio ni ausencia de fuertes accidentales**: falta evidencia con intención conocida y fase física.
+
+B reduce rechazos porque puede usar un tramo anterior fiable y decaer hasta la liberación, en vez de exigir soporte dentro de los últimos 80 ms; no mejora mágicamente el muestreo ni convierte un intervalo largo en información. Zona muerta 0 expone deriva/temblor; dos fuertes saturados y un fuerte de 3,145 % revelan variación amplia. Una mediana suave de 1,675 % apenas usa el extremo inferior: falta comprobar si el PO consigue tres intensidades naturales. Escala fija, sin normalización por jugador.
+
+Búsqueda de riesgo en **los 138 gestos**: dos intervalos consecutivos >250 mm/s y velocidad neta final de 80 ms <100 identifican cuatro sustitutos cinemáticos, todos preview; no son casos con intención etiquetada. Timestamps y valores en JSON: con B elegido dan P **3,352 / 5,074 / 5,938 / 4,688 %**, ninguno fuerte. **No hay casos representativos con intención confirmada** de apuntar rápido y soltar suave; requisito de seguridad NotEvaluated. El mismo perfil de movimiento podría expresar un flick detenido o apuntado: el estimador no conoce esa intención. Las pruebas sintéticas deben declarar velocidades y pausas, sin venderlas como garantía para todas las intenciones. La cuarta serie física decidirá si esta memoria breve produce fuertes no deseados. No se cambia la escala tras observarla; si falla se informa y detiene.
+
+**Decisión previa a implementación:** B provisional 400/0, tau 20 ms/decaimiento 120 ms, soporte 3/30/51; flick 250 sin cambio. Implementar solo este B nuevo; A existente se conserva para compatibilidad de defaults. Selector solo en panel dev; sin modificar interfaz del jugador. Claves nuevas compatibles y fijación en liberación opt-in, pendiente de TDD. Ningún contacto con el iPhone ni dato nuevo hasta aquí.
