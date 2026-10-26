@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "name": "S1-calib-gesture",
+  "createdBuild": "S1 gesture calibration experiment",
+  "values": [
+    {
+      "key": "aim.freezeOnRelease",
+      "value": 1
+    },
+    {
+      "key": "launcher.repeatSeconds",
+      "value": 0
+    },
+    {
+      "key": "power.deadZoneMmPerS",
+      "value": 0
+    },
+    {
+      "key": "power.fullMmPerS",
+      "value": 400
+    },
+    {
+      "key": "power.maxGapMs",
+      "value": 51
+    },
+    {
+      "key": "power.method",
+      "value": 1
+    },
+    {
+      "key": "power.minSamples",
+      "value": 3
+    },
+    {
+      "key": "power.peakDecayMs",
+      "value": 120
+    },
+    {
+      "key": "power.peakSmoothingMs",
+      "value": 20
+    }
+  ]
+}

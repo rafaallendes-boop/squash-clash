@@ -14,7 +14,7 @@ namespace SquashClash.Core.Shot
         public readonly bool FreezeOnRelease;
         public AimSettings(float gain,float height,float flick,float hysteresis,float lookback,int confirm,bool freezeOnRelease=false)
         {GainMPerMm=gain;StartHeight=height;FlickMmPerS=flick;FlickHysteresisMmPerS=hysteresis;FreezeLookbackMs=lookback;FlickConfirmSamples=confirm;FreezeOnRelease=freezeOnRelease;}
-        public static AimSettings From(ParamSet p)=>new AimSettings((float)p.Get("aim.gainMPerMm"),(float)p.Get("aim.startHeight"),(float)p.Get("aim.flickMmPerS"),(float)p.Get("aim.flickHysteresisMmPerS"),(float)p.Get("aim.freezeLookbackMs"),p.GetInt("aim.flickConfirmSamples"));
+        public static AimSettings From(ParamSet p)=>new AimSettings((float)p.Get("aim.gainMPerMm"),(float)p.Get("aim.startHeight"),(float)p.Get("aim.flickMmPerS"),(float)p.Get("aim.flickHysteresisMmPerS"),(float)p.Get("aim.freezeLookbackMs"),p.GetInt("aim.flickConfirmSamples"),p.GetBool("aim.freezeOnRelease"));
     }
     public sealed class AimModel
     {
