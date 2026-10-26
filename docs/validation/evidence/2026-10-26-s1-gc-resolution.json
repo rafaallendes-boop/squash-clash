@@ -713,5 +713,42 @@
     }
   },
   "original10CasesInputsAndAssertionsUnchanged": true,
-  "transientSettingsRestoredBeforeExport": true
+  "transientSettingsRestoredBeforeExport": true,
+  "cleanExports": {
+    "dev": {
+      "gitHash": "8476dd8",
+      "gitDirty": false,
+      "moduleCheck": "Pass"
+    },
+    "prod": {
+      "gitHash": "8476dd8",
+      "gitDirty": false,
+      "moduleCheck": "Pass"
+    }
+  },
+  "nativeInstallation": {
+    "checkedAtUtc": "2026-10-26T23:24:57.169784+00:00",
+    "localDate": "2026-10-26",
+    "profileValid": true,
+    "profileExpiresUtc": "2026-10-28T14:59:31+00:00",
+    "teamAndDeviceMatch": true,
+    "architecture": "arm64",
+    "configuration": "Release",
+    "development": false,
+    "buildMetadata": {
+      "version": "0.1.0",
+      "gitHash": "8476dd8",
+      "profile": "dev",
+      "builtAtUtc": "2026-10-26T23:21:19.4398300Z",
+      "unityVersion": "6000.3.27f1",
+      "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+      "gitDirty": false
+    },
+    "installed": true,
+    "presetsByteIdenticalAfterInstall": true,
+    "newStartupVerified": false,
+    "runtimePresetLoaded": false,
+    "preparationPending": "Local mirroring authentication; initial launch rejected because device locked.",
+    "sourceFilesHashed": 411
+  }
 }
