@@ -44,3 +44,27 @@ B reduce rechazos porque puede usar un tramo anterior fiable y decaer hasta la l
 Búsqueda de riesgo en **los 138 gestos**: dos intervalos consecutivos >250 mm/s y velocidad neta final de 80 ms <100 identifican cuatro sustitutos cinemáticos, todos preview; no son casos con intención etiquetada. Timestamps y valores en JSON: con B elegido dan P **3,352 / 5,074 / 5,938 / 4,688 %**, ninguno fuerte. **No hay casos representativos con intención confirmada** de apuntar rápido y soltar suave; requisito de seguridad NotEvaluated. El mismo perfil de movimiento podría expresar un flick detenido o apuntado: el estimador no conoce esa intención. Las pruebas sintéticas deben declarar velocidades y pausas, sin venderlas como garantía para todas las intenciones. La cuarta serie física decidirá si esta memoria breve produce fuertes no deseados. No se cambia la escala tras observarla; si falla se informa y detiene.
 
 **Decisión previa a implementación:** B provisional 400/0, tau 20 ms/decaimiento 120 ms, soporte 3/30/51; flick 250 sin cambio. Implementar solo este B nuevo; A existente se conserva para compatibilidad de defaults. Selector solo en panel dev; sin modificar interfaz del jugador. Claves nuevas compatibles y fijación en liberación opt-in, pendiente de TDD. Ningún contacto con el iPhone ni dato nuevo hasta aquí.
+
+
+## Implementación y regresión antes de la build
+
+Fuentes de producto **20271ff**. B nuevo es incremental: una actualización por muestra, coste y memoria constantes, sin recorrido del historial en cada frame. A existente conserva su fórmula; el selector vive en parámetros del panel dev, sin controles nuevos en la interfaz del jugador. No se mide H17 ni se afirma ausencia de coste por las exponenciales añadidas. La autoridad de pelota, reloj y predicción no se modifican.
+
+TDD observado, con XML/log frescos y sin errores CS:
+
+| Cambio | RED compilable por aserción | GREEN focal |
+|---|---|---|
+| Pico causal | 0/6, seis aserciones fallidas con esqueleto | 6/6; después dos casos de reinicio/entrada inválida |
+| Fijación en liberación | 2/5, tres aserciones fallidas | 5/5 |
+| Claves compatibles | 0/2, dos aserciones de catálogo ausente | 2/2 |
+| Runtime, etiquetas y controles | 11/14, tres aserciones fallidas | 14/14 |
+
+Regresión completa sobre producto 20271ff: **359/359 EditMode y 172/172 PlayMode**, XML posteriores al inicio, cero tests omitidos y sin errores CS. Incluye replay de los 40 registros originales contra B offline, tolerancia absoluta 1e-5 en P; no es medición física ni promesa bit a bit entre plataformas.
+
+Claves agregadas a defaults: **power.method=0, power.peakSmoothingMs=20, power.peakDecayMs=120, aim.freezeOnRelease=0**. Ninguno de los 58 valores anteriores cambia (proyección hash 00a501ad7066 comprobada por prueba). Nuevo hash defaults **6095c0b38614**, 62 claves. P0-calib-1 extendido **fdd997f2b85a**, manteniendo su archivo de 41 claves intacto; proyección heredada 0d39e6016bd8 y SimulationKey 166a96e319c7 intactas. Tests comparan PowerEstimator y AimModel con configuración anterior y defaults nuevos; la opción de liberación apagada conserva Aiming sin flick.
+
+[Preset experimental S1-calib-gesture](../validation/presets/S1-calib-gesture.json): solo nueve sobrescrituras, **hash efectivo calculado 6071903f8128**, B 400/0, tau 20/decaimiento 120, soporte 3/30/51, fijación al soltar activa y repetición 0. No sobrescribe P0/Po-1 ni promueve valores a defaults. Se cargará por importación temporal, sin cambiar last-active; no guardar ni seleccionar persistentemente.
+
+Registros s1-gesture pasan a **schema 2**: freezeCause (None/Flick/Release), aimInvalid, powerMethod, powerSpeedMmPerS/powerSpeedBasis y edad del soporte. En B, netSpeedMmPerS se emite null porque el pico decaído no es velocidad neta. CoveredMs/n/gap describen el tramo que sostiene ese pico, que puede preceder los últimos 80 ms; no se reinterpretan como una ventana A válida. Posición, salto y timestamps brutos conservados. Protocolos medium y aim-soft añadidos solo dentro de DEV, con cierre automático; Tap/Canceled/SystemCanceled se conservan como intentos.
+
+Respaldo previo a instalación recuperado de la app 5e218ea: P0-calib-1/Po-1/last-active, P0 seleccionado, archivo P0 SHA-256 2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd. Pendientes check-release dev/prod, build, vigencia del perfil, instalación, arranque con hash extendido y cuatro series. No se inicia la medición hasta verificar preparación y mano declarada. Sin cambios en ProjectSettings, Packages, scripts, spec ni planes.
