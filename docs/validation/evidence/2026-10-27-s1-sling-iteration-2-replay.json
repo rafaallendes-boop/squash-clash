@@ -1,0 +1,1539 @@
+{
+  "schema": 1,
+  "kind": "OFFLINE_DIAGNOSTIC_NOT_NEW_MEASUREMENT",
+  "predeclarationCommit": "58d037d",
+  "sourceSha256": "52e5df5502f739de308b329974aa8931b3fe47aa4e8cfd57c5c1ee0ef0d50bf1",
+  "sourceBuild": "db72a00",
+  "scope": "33 original gestures; no new physical trials; min3 actual samples per quiet candidate; no gap reset; ideal timer and synthetic60Hz grid phased at Began; event processed first on ties; no queue-latency reproduction",
+  "aimComparisonAssumptions": "Original S1-sling preset hash7d1a61c39766, launcher x3.2, width6.4/start2.2, original gain/clamps. Free endpoint difference and subsequent pull are ambiguity indicators, not intention labels.",
+  "summary": {
+    "originalFixations": 17,
+    "idealFixations": 23,
+    "newFixationOrdinals": [
+      8,
+      11,
+      16,
+      22,
+      25,
+      26
+    ],
+    "earlierFixationOrdinals": [
+      5,
+      6,
+      7,
+      9,
+      10,
+      14,
+      15,
+      17,
+      18,
+      20,
+      21,
+      23,
+      24,
+      27,
+      30,
+      32,
+      33
+    ],
+    "idealBeganToLockMedianMs": 654.2209578876736,
+    "synthetic60HzFixations": 23,
+    "speedOver15AllGestureSteps": 1548,
+    "speedOver15StepsAtMost2px": 3,
+    "speedOver15BeforeOriginalFixOrEnd": 1079
+  },
+  "perAttempt": [
+    {
+      "ordinal": 1,
+      "attemptId": "d04e3fcba43e43a285daba41f073b579",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "unchanged",
+      "silences": [],
+      "idealTimerReplay": null,
+      "synthetic60HzReplay": null,
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 2,
+      "attemptId": "33ceab65c5484709a7aa972ff45caf84",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "unchanged",
+      "silences": [],
+      "idealTimerReplay": null,
+      "synthetic60HzReplay": null,
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 3,
+      "attemptId": "0e061f7ed144451c8759d095a036775e",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "unchanged",
+      "silences": [],
+      "idealTimerReplay": null,
+      "synthetic60HzReplay": null,
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 4,
+      "attemptId": "6012e12638a0474b84fc48e2d2549043",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "unchanged",
+      "silences": [],
+      "idealTimerReplay": null,
+      "synthetic60HzReplay": null,
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 5,
+      "attemptId": "74d601e1536d483caec3a47530960071",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 553.4104885002166,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 13,
+          "durationMs": 400.0612498030023,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 33,
+          "durationMs": 1154.3630417089616,
+          "endpointDisplacementMm": 0.2276671272893279,
+          "endpointDisplacementPx": 4.123105625617661,
+          "nextPhase": "Ended"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 553.1146035415197,
+        "theoreticalTimeReal": 553.1146035415197,
+        "source": "sample",
+        "beganToLockMs": 654.2209578876736,
+        "lockPositionPx": [
+          871.9999389648438,
+          1077.9998779296875
+        ],
+        "freeAimAtEndDifferenceMeters": 0.8508783962415722,
+        "maximumSubsequentDownMm": 2.3743409873418386,
+        "nextEventAfterLockMs": 16.672958303502128
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 553.1146035415197,
+        "theoreticalTimeReal": 553.1146035415197,
+        "source": "sample",
+        "beganToLockMs": 654.2209578876736,
+        "lockPositionPx": [
+          871.9999389648438,
+          1077.9998779296875
+        ],
+        "freeAimAtEndDifferenceMeters": 0.8508783962415722,
+        "maximumSubsequentDownMm": 2.3743409873418386,
+        "nextEventAfterLockMs": 16.672958303502128
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 6,
+      "attemptId": "e3ff31f6726f4be088e7cbdde109a198",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 558.2696825419922,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 0,
+          "durationMs": 154.18295856284203,
+          "endpointDisplacementMm": 1.031551006358627,
+          "endpointDisplacementPx": 18.681633172380202,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 40,
+          "durationMs": 558.4152501993458,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 44,
+          "durationMs": 200.05700018339212,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 45,
+          "durationMs": 412.5519587372537,
+          "endpointDisplacementMm": 0.11043477803468704,
+          "endpointDisplacementPx": 2.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 74,
+          "durationMs": 433.3937075945187,
+          "endpointDisplacementMm": 0.0552241294212763,
+          "endpointDisplacementPx": 1.0001220703125,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 155,
+          "durationMs": 120.85295899294124,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 556.5310028756121,
+        "theoreticalTimeReal": 556.5310028756121,
+        "source": "timer",
+        "beganToLockMs": 836.7902924251212,
+        "lockPositionPx": [
+          358.0000305175781,
+          1096
+        ],
+        "freeAimAtEndDifferenceMeters": 2.8417256897428045,
+        "maximumSubsequentDownMm": 23.577821740203717,
+        "nextEventAfterLockMs": 38.35874889432489
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 556.544212583187,
+        "theoreticalTimeReal": 556.5310028756121,
+        "source": "timer",
+        "beganToLockMs": 850.0000000000227,
+        "lockPositionPx": [
+          358.0000305175781,
+          1096
+        ],
+        "freeAimAtEndDifferenceMeters": 2.8417256897428045,
+        "maximumSubsequentDownMm": 23.577821740203717,
+        "nextEventAfterLockMs": 25.149041319423304
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 7,
+      "attemptId": "30485542b11f410f8cf7847ce26842d2",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 563.666443708444,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 0,
+          "durationMs": 129.18308366010933,
+          "endpointDisplacementMm": 1.7153034139598031,
+          "endpointDisplacementPx": 31.064551303232292,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 46,
+          "durationMs": 245.87512473476636,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 56,
+          "durationMs": 133.35637462262184,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 81,
+          "durationMs": 412.5802094414439,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 562.7029206248229,
+        "theoreticalTimeReal": 562.7029206248229,
+        "source": "timer",
+        "beganToLockMs": 632.5751249197538,
+        "lockPositionPx": [
+          915,
+          1193
+        ],
+        "freeAimAtEndDifferenceMeters": 3.3495302505133737,
+        "maximumSubsequentDownMm": 27.829557324337202,
+        "nextEventAfterLockMs": 25.811875515955762
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 562.7036788332365,
+        "theoreticalTimeReal": 562.7029206248229,
+        "source": "timer",
+        "beganToLockMs": 633.3333333333258,
+        "lockPositionPx": [
+          915,
+          1193
+        ],
+        "freeAimAtEndDifferenceMeters": 3.3495302505133737,
+        "maximumSubsequentDownMm": 27.829557324337202,
+        "nextEventAfterLockMs": 25.05366710238377
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 8,
+      "attemptId": "9e9cca078c0b4993bdad5ef9c7119215",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "newFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 0,
+          "durationMs": 137.5339166223739,
+          "endpointDisplacementMm": 1.8684322730724134,
+          "endpointDisplacementPx": 33.837751228794026,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 55,
+          "durationMs": 408.4034577321063,
+          "endpointDisplacementMm": 0.055219074118326716,
+          "endpointDisplacementPx": 1.000030517578125,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 58,
+          "durationMs": 350.0591247242255,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 59,
+          "durationMs": 808.4694169268687,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 61,
+          "durationMs": 504.2449582941799,
+          "endpointDisplacementMm": 0.11044488864058621,
+          "endpointDisplacementPx": 2.00018310546875,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 70,
+          "durationMs": 270.87262520842614,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 567.6995375007187,
+        "theoreticalTimeReal": 567.6995375007187,
+        "source": "timer",
+        "beganToLockMs": 1086.8289173394032,
+        "lockPositionPx": [
+          394,
+          1025
+        ],
+        "freeAimAtEndDifferenceMeters": 0.0901245225946524,
+        "maximumSubsequentDownMm": 1.2147825583815575,
+        "nextEventAfterLockMs": 363.41545761774796
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 567.7127085833794,
+        "theoreticalTimeReal": 567.6995375007187,
+        "source": "timer",
+        "beganToLockMs": 1100.0000000000227,
+        "lockPositionPx": [
+          394,
+          1025
+        ],
+        "freeAimAtEndDifferenceMeters": 0.0901245225946524,
+        "maximumSubsequentDownMm": 1.2147825583815575,
+        "nextEventAfterLockMs": 350.24437495712846
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 9,
+      "attemptId": "28a7a75f28954dccb6d41a98359e2d8a",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 574.5224445004985,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 18,
+          "durationMs": 370.9016252355468,
+          "endpointDisplacementMm": 0.05521064861341074,
+          "endpointDisplacementPx": 0.9998779296875,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 19,
+          "durationMs": 125.00924978189687,
+          "endpointDisplacementMm": 0.05521064861341074,
+          "endpointDisplacementPx": 0.9998779296875,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 20,
+          "durationMs": 191.70999957475487,
+          "endpointDisplacementMm": 0.055230869825209084,
+          "endpointDisplacementPx": 1.000244140625,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 21,
+          "durationMs": 191.64095889163946,
+          "endpointDisplacementMm": 0.05521064861341074,
+          "endpointDisplacementPx": 0.9998779296875,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 22,
+          "durationMs": 604.2622080353794,
+          "endpointDisplacementMm": 0.12346682112974364,
+          "endpointDisplacementPx": 2.2360133886620988,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 31,
+          "durationMs": 1204.380583302168,
+          "endpointDisplacementMm": 0.2973572434670866,
+          "endpointDisplacementPx": 5.385210144103121,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 70,
+          "durationMs": 212.54795867218945,
+          "endpointDisplacementMm": 0.22087629647330687,
+          "endpointDisplacementPx": 4.0001220703125,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 82,
+          "durationMs": 179.19629102789258,
+          "endpointDisplacementMm": 0.2208661858674077,
+          "endpointDisplacementPx": 3.99993896484375,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 571.4210554589777,
+        "theoreticalTimeReal": 571.4210554589777,
+        "source": "timer",
+        "beganToLockMs": 407.606000048645,
+        "lockPositionPx": [
+          744,
+          1074.9998779296875
+        ],
+        "freeAimAtEndDifferenceMeters": 3.705816418747424,
+        "maximumSubsequentDownMm": 43.01433424880372,
+        "nextEventAfterLockMs": 350.924791500006
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 571.4301161255956,
+        "theoreticalTimeReal": 571.4210554589777,
+        "source": "timer",
+        "beganToLockMs": 416.66666666662877,
+        "lockPositionPx": [
+          744,
+          1074.9998779296875
+        ],
+        "freeAimAtEndDifferenceMeters": 3.705816418747424,
+        "maximumSubsequentDownMm": 43.01433424880372,
+        "nextEventAfterLockMs": 341.8641248820222
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 10,
+      "attemptId": "b27e1ce9be5f4725b25d35154879b499",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 578.9022826667092,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 0,
+          "durationMs": 137.47833329136938,
+          "endpointDisplacementMm": 0.5631097491388388,
+          "endpointDisplacementPx": 10.198050997340145,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 73,
+          "durationMs": 500.08404079790125,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 78,
+          "durationMs": 133.4136248357254,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 79,
+          "durationMs": 175.04091766738838,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 81,
+          "durationMs": 254.1969576138854,
+          "endpointDisplacementMm": 0.11043477803468704,
+          "endpointDisplacementPx": 2.0,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 578.9014355001096,
+        "theoreticalTimeReal": 578.9014355001096,
+        "source": "timer",
+        "beganToLockMs": 953.4397502792444,
+        "lockPositionPx": [
+          498,
+          966.9999389648438
+        ],
+        "freeAimAtEndDifferenceMeters": 0.34557461900487046,
+        "maximumSubsequentDownMm": 0,
+        "nextEventAfterLockMs": 0.8471665995557487
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 578.9022826667092,
+        "theoreticalTimeReal": 578.9022826667092,
+        "source": "sample",
+        "beganToLockMs": 954.2869168788002,
+        "lockPositionPx": [
+          494.9999694824219,
+          968.9999389648438
+        ],
+        "freeAimAtEndDifferenceMeters": 0.3216895595739028,
+        "maximumSubsequentDownMm": 0,
+        "nextEventAfterLockMs": 16.66387491172827
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 11,
+      "attemptId": "53b3411fa7d241628fb93afd5f94bde5",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "newFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 12,
+          "durationMs": 175.04095781544038,
+          "endpointDisplacementMm": 0.1561783608543168,
+          "endpointDisplacementPx": 2.8284271247461903,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 582.0561555417348,
+        "theoreticalTimeReal": 582.0561555417348,
+        "source": "timer",
+        "beganToLockMs": 349.1070417130686,
+        "lockPositionPx": [
+          717,
+          1090
+        ],
+        "freeAimAtEndDifferenceMeters": 1.1424569058065206,
+        "maximumSubsequentDownMm": 12.313477750867605,
+        "nextEventAfterLockMs": 92.51295834758366
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 582.0570485000218,
+        "theoreticalTimeReal": 582.0561555417348,
+        "source": "timer",
+        "beganToLockMs": 350.00000000002274,
+        "lockPositionPx": [
+          717,
+          1090
+        ],
+        "freeAimAtEndDifferenceMeters": 1.1424569058065206,
+        "maximumSubsequentDownMm": 12.313477750867605,
+        "nextEventAfterLockMs": 91.62000006062954
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 12,
+      "attemptId": "1afab46ca5634c78b5950bb597856a5c",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "unchanged",
+      "silences": [],
+      "idealTimerReplay": null,
+      "synthetic60HzReplay": null,
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 13,
+      "attemptId": "ca398c4034994e37b6107b0bf13ec4ab",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "unchanged",
+      "silences": [],
+      "idealTimerReplay": null,
+      "synthetic60HzReplay": null,
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 14,
+      "attemptId": "0910cac0df6e4e5985ce160f7460f5c1",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 585.8367834998904,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 41,
+          "durationMs": 150.01404157442266,
+          "endpointDisplacementMm": 0.055230869825209084,
+          "endpointDisplacementPx": 1.000244140625,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 42,
+          "durationMs": 170.86200045525857,
+          "endpointDisplacementMm": 0.05521064861341074,
+          "endpointDisplacementPx": 0.9998779296875,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 48,
+          "durationMs": 229.15304192849817,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 585.7192475838085,
+        "theoreticalTimeReal": 585.7192475838085,
+        "source": "timer",
+        "beganToLockMs": 403.3899999373034,
+        "lockPositionPx": [
+          299,
+          1213.9998779296875
+        ],
+        "freeAimAtEndDifferenceMeters": 2.899357380692651,
+        "maximumSubsequentDownMm": 24.185202908788597,
+        "nextEventAfterLockMs": 21.693041272897062
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 585.7325242505378,
+        "theoreticalTimeReal": 585.7192475838085,
+        "source": "timer",
+        "beganToLockMs": 416.66666666662877,
+        "lockPositionPx": [
+          299,
+          1213.9998779296875
+        ],
+        "freeAimAtEndDifferenceMeters": 2.899357380692651,
+        "maximumSubsequentDownMm": 24.185202908788597,
+        "nextEventAfterLockMs": 8.416374543571692
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 15,
+      "attemptId": "40552672e6ed49358b4d3187dee14922",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 592.5587437917037,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 0,
+          "durationMs": 120.78508280922051,
+          "endpointDisplacementMm": 0.431259437134168,
+          "endpointDisplacementPx": 7.810210602292539,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 114,
+          "durationMs": 1529.3667926357557,
+          "endpointDisplacementMm": 0.05521064861341074,
+          "endpointDisplacementPx": 0.9998779296875,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 115,
+          "durationMs": 591.7779156420693,
+          "endpointDisplacementMm": 0.05521064861341074,
+          "endpointDisplacementPx": 0.9998779296875,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 117,
+          "durationMs": 900.2049583582448,
+          "endpointDisplacementMm": 0.05521064861341074,
+          "endpointDisplacementPx": 0.9998779296875,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 592.2911845005242,
+        "theoreticalTimeReal": 592.2911845005242,
+        "source": "timer",
+        "beganToLockMs": 374.1409585426254,
+        "lockPositionPx": [
+          631,
+          968.9999389648438
+        ],
+        "freeAimAtEndDifferenceMeters": 0.8746679736976567,
+        "maximumSubsequentDownMm": 1.5460801520816858,
+        "nextEventAfterLockMs": 13.350040696991528
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 592.3003768753149,
+        "theoreticalTimeReal": 592.2911845005242,
+        "source": "timer",
+        "beganToLockMs": 383.33333333332575,
+        "lockPositionPx": [
+          631,
+          968.9999389648438
+        ],
+        "freeAimAtEndDifferenceMeters": 0.8746679736976567,
+        "maximumSubsequentDownMm": 1.5460801520816858,
+        "nextEventAfterLockMs": 4.157665906291186
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 16,
+      "attemptId": "9ee975e2f276408ba858a7d23ef352fd",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "newFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 14,
+          "durationMs": 129.20599982442127,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 599.8558235413288,
+        "theoreticalTimeReal": 599.8558235413288,
+        "source": "sample",
+        "beganToLockMs": 420.9219155943629,
+        "lockPositionPx": [
+          554,
+          971.9999389648438
+        ],
+        "freeAimAtEndDifferenceMeters": 0.047781166242807746,
+        "maximumSubsequentDownMm": 0.2208661858674077,
+        "nextEventAfterLockMs": 8.333167247542406
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 599.8558235413288,
+        "theoreticalTimeReal": 599.8558235413288,
+        "source": "sample",
+        "beganToLockMs": 420.9219155943629,
+        "lockPositionPx": [
+          554,
+          971.9999389648438
+        ],
+        "freeAimAtEndDifferenceMeters": 0.047781166242807746,
+        "maximumSubsequentDownMm": 0.2208661858674077,
+        "nextEventAfterLockMs": 8.333167247542406
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 17,
+      "attemptId": "87434e8862894398b6483b66d566d28b",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 601.1893696255621,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 66,
+          "durationMs": 270.8660010458743,
+          "endpointDisplacementMm": 0.05521064861341074,
+          "endpointDisplacementPx": 0.9998779296875,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 600.6425845838627,
+        "theoreticalTimeReal": 600.6425845838627,
+        "source": "timer",
+        "beganToLockMs": 557.5730010594953,
+        "lockPositionPx": [
+          234,
+          1165.0001220703125
+        ],
+        "freeAimAtEndDifferenceMeters": 3.7051239301950942,
+        "maximumSubsequentDownMm": 35.17348691465372,
+        "nextEventAfterLockMs": 13.355916584828265
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 600.6516782494699,
+        "theoreticalTimeReal": 600.6425845838627,
+        "source": "timer",
+        "beganToLockMs": 566.6666666667197,
+        "lockPositionPx": [
+          234,
+          1165.0001220703125
+        ],
+        "freeAimAtEndDifferenceMeters": 3.7051239301950942,
+        "maximumSubsequentDownMm": 35.17348691465372,
+        "nextEventAfterLockMs": 4.262250977603799
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 18,
+      "attemptId": "552f0801fd7d4f40af58bd785be5e464",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 603.6940225418433,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 77,
+          "durationMs": 300.0560003837336,
+          "endpointDisplacementMm": 0.11042466742878787,
+          "endpointDisplacementPx": 1.99981689453125,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 603.3263755839955,
+        "theoreticalTimeReal": 603.3263755839955,
+        "source": "timer",
+        "beganToLockMs": 715.9275419136293,
+        "lockPositionPx": [
+          827,
+          731.9999389648438
+        ],
+        "freeAimAtEndDifferenceMeters": 0.9266106957980059,
+        "maximumSubsequentDownMm": 7.6199963141914395,
+        "nextEventAfterLockMs": 13.35008284934247
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 603.3271147087486,
+        "theoreticalTimeReal": 603.3263755839955,
+        "source": "timer",
+        "beganToLockMs": 716.666666666697,
+        "lockPositionPx": [
+          827,
+          731.9999389648438
+        ],
+        "freeAimAtEndDifferenceMeters": 0.9266106957980059,
+        "maximumSubsequentDownMm": 7.6199963141914395,
+        "nextEventAfterLockMs": 12.610958096274771
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 19,
+      "attemptId": "393740713d2243e8a2dfca88e715c024",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "unchanged",
+      "silences": [
+        {
+          "afterSampleIndex": 59,
+          "durationMs": 2054.519083055311,
+          "endpointDisplacementMm": 0.11043477803468704,
+          "endpointDisplacementPx": 2.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 66,
+          "durationMs": 262.47999958729906,
+          "endpointDisplacementMm": 0.055230869825209084,
+          "endpointDisplacementPx": 1.000244140625,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 77,
+          "durationMs": 141.68995794045713,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 78,
+          "durationMs": 508.41975033597464,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 80,
+          "durationMs": 162.52116694863616,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 81,
+          "durationMs": 120.85983260806188,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": null,
+      "synthetic60HzReplay": null,
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 20,
+      "attemptId": "2cc4edabaa9d4b0ab4adf525c9d38b61",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 612.520496458513,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 58,
+          "durationMs": 308.39683355384295,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 59,
+          "durationMs": 379.2179578573496,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 158,
+          "durationMs": 404.234499508334,
+          "endpointDisplacementMm": 0.05521696774209772,
+          "endpointDisplacementPx": 0.9999923706054688,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 612.1778605831855,
+        "theoreticalTimeReal": 612.1778605831855,
+        "source": "timer",
+        "beganToLockMs": 724.2560824148541,
+        "lockPositionPx": [
+          763,
+          707.0000610351562
+        ],
+        "freeAimAtEndDifferenceMeters": 4.372605230988482,
+        "maximumSubsequentDownMm": 20.982611196792504,
+        "nextEventAfterLockMs": 13.362417048824682
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 612.186937834104,
+        "theoreticalTimeReal": 612.1778605831855,
+        "source": "timer",
+        "beganToLockMs": 733.3333333333485,
+        "lockPositionPx": [
+          763,
+          707.0000610351562
+        ],
+        "freeAimAtEndDifferenceMeters": 4.372605230988482,
+        "maximumSubsequentDownMm": 20.982611196792504,
+        "nextEventAfterLockMs": 4.2851661303302535
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 21,
+      "attemptId": "d92e26b8638346af845f9b3ced3ad416",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 627.6729905001589,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 43,
+          "durationMs": 4596.670041580978,
+          "endpointDisplacementMm": 0.22766794470684576,
+          "endpointDisplacementPx": 4.123120429242613,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 132,
+          "durationMs": 383.3510420786297,
+          "endpointDisplacementMm": 0.05521064861341074,
+          "endpointDisplacementPx": 0.9998779296875,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 140,
+          "durationMs": 141.76095787308896,
+          "endpointDisplacementMm": 0.05521064861341074,
+          "endpointDisplacementPx": 0.9998779296875,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 141,
+          "durationMs": 233.30304111698297,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 621.1293676248517,
+        "theoreticalTimeReal": 621.1293676248517,
+        "source": "timer",
+        "beganToLockMs": 782.6109998861739,
+        "lockPositionPx": [
+          231,
+          728
+        ],
+        "freeAimAtEndDifferenceMeters": 3.1148648743310656,
+        "maximumSubsequentDownMm": 17.669567855751893,
+        "nextEventAfterLockMs": 4564.185042170948
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 621.1300899582989,
+        "theoreticalTimeReal": 621.1293676248517,
+        "source": "timer",
+        "beganToLockMs": 783.333333333303,
+        "lockPositionPx": [
+          231,
+          728
+        ],
+        "freeAimAtEndDifferenceMeters": 3.1148648743310656,
+        "maximumSubsequentDownMm": 17.669567855751893,
+        "nextEventAfterLockMs": 4563.462708723819
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 22,
+      "attemptId": "68cb168b99e4422fa5da7310dffe6644",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "newFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 88,
+          "durationMs": 1750.229917422189,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 89,
+          "durationMs": 887.6560412841172,
+          "endpointDisplacementMm": 0.0780844143872909,
+          "endpointDisplacementPx": 1.4141272482616836,
+          "nextPhase": "Ended"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 658.0197664589435,
+        "theoreticalTimeReal": 658.0197664589435,
+        "source": "sample",
+        "beganToLockMs": 3258.8819166754774,
+        "lockPositionPx": [
+          146,
+          1008.9998779296875
+        ],
+        "freeAimAtEndDifferenceMeters": 0.009370129726474531,
+        "maximumSubsequentDownMm": 0.05521064861341074,
+        "nextEventAfterLockMs": 887.6560412841172
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 658.0197664589435,
+        "theoreticalTimeReal": 658.0197664589435,
+        "source": "sample",
+        "beganToLockMs": 3258.8819166754774,
+        "lockPositionPx": [
+          146,
+          1008.9998779296875
+        ],
+        "freeAimAtEndDifferenceMeters": 0.009370129726474531,
+        "maximumSubsequentDownMm": 0.05521064861341074,
+        "nextEventAfterLockMs": 887.6560412841172
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 23,
+      "attemptId": "6121ef49b0c240ee922bd312edd0576d",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 665.0709655005091,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 48,
+          "durationMs": 2108.7000822490154,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 49,
+          "durationMs": 137.51195891836687,
+          "endpointDisplacementMm": 0.11042803763075426,
+          "endpointDisplacementPx": 1.9998779296875,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 76,
+          "durationMs": 233.3789584031365,
+          "endpointDisplacementMm": 0.16565216705203056,
+          "endpointDisplacementPx": 3.0,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 662.6530325008106,
+        "theoreticalTimeReal": 662.6530325008106,
+        "source": "timer",
+        "beganToLockMs": 865.9639169472939,
+        "lockPositionPx": [
+          139,
+          1146.0001220703125
+        ],
+        "freeAimAtEndDifferenceMeters": 3.2009788439265225,
+        "maximumSubsequentDownMm": 41.52348665164823,
+        "nextEventAfterLockMs": 2059.5390819925115
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 662.65373525053,
+        "theoreticalTimeReal": 662.6530325008106,
+        "source": "timer",
+        "beganToLockMs": 866.6666666666742,
+        "lockPositionPx": [
+          139,
+          1146.0001220703125
+        ],
+        "freeAimAtEndDifferenceMeters": 3.2009788439265225,
+        "maximumSubsequentDownMm": 41.52348665164823,
+        "nextEventAfterLockMs": 2058.836332273131
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 24,
+      "attemptId": "5eb748de8a784449b66bbdf297c3a1c3",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 667.771420541769,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 31,
+          "durationMs": 120.85999882458509,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 42,
+          "durationMs": 545.9309583405911,
+          "endpointDisplacementMm": 0.2208628156654413,
+          "endpointDisplacementPx": 3.9998779296875,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 667.5205195004123,
+        "theoreticalTimeReal": 667.5205195004123,
+        "source": "timer",
+        "beganToLockMs": 574.1890004823063,
+        "lockPositionPx": [
+          720,
+          956.0001220703125
+        ],
+        "freeAimAtEndDifferenceMeters": 4.24627546492414,
+        "maximumSubsequentDownMm": 25.068708094681824,
+        "nextEventAfterLockMs": 9.18200017770232
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 667.5296638332634,
+        "theoreticalTimeReal": 667.5205195004123,
+        "source": "timer",
+        "beganToLockMs": 583.3333333333712,
+        "lockPositionPx": [
+          720,
+          956.0001220703125
+        ],
+        "freeAimAtEndDifferenceMeters": 4.24627546492414,
+        "maximumSubsequentDownMm": 25.068708094681824,
+        "nextEventAfterLockMs": 0.03766732663734729
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 25,
+      "attemptId": "c2cbb961f69041a3a6e600e08f270e9a",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "newFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 32,
+          "durationMs": 533.4109999366774,
+          "endpointDisplacementMm": 0.0552241294212763,
+          "endpointDisplacementPx": 1.0001220703125,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 33,
+          "durationMs": 266.7460834895792,
+          "endpointDisplacementMm": 0.05521064861341074,
+          "endpointDisplacementPx": 0.9998779296875,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 34,
+          "durationMs": 341.70195824003713,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 35,
+          "durationMs": 687.6099992229001,
+          "endpointDisplacementMm": 0.3358741264221783,
+          "endpointDisplacementPx": 6.082760021787372,
+          "nextPhase": "Ended"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 670.0542815839675,
+        "theoreticalTimeReal": 670.0542815839675,
+        "source": "timer",
+        "beganToLockMs": 724.201458372363,
+        "lockPositionPx": [
+          196.00001525878906,
+          1101
+        ],
+        "freeAimAtEndDifferenceMeters": 0.06000175569971667,
+        "maximumSubsequentDownMm": 0.4969565011560917,
+        "nextEventAfterLockMs": 517.5989162645465
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 670.0634134589285,
+        "theoreticalTimeReal": 670.0542815839675,
+        "source": "timer",
+        "beganToLockMs": 733.3333333333485,
+        "lockPositionPx": [
+          196.00001525878906,
+          1101
+        ],
+        "freeAimAtEndDifferenceMeters": 0.06000175569971667,
+        "maximumSubsequentDownMm": 0.4969565011560917,
+        "nextEventAfterLockMs": 508.467041303561
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 26,
+      "attemptId": "f67719a1b34b4bb1899bd2ae1ec4f5f8",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "newFixation",
+      "silences": [],
+      "idealTimerReplay": {
+        "lockTimeReal": 673.1381835831133,
+        "theoreticalTimeReal": 673.1381835831133,
+        "source": "timer",
+        "beganToLockMs": 707.5864163651886,
+        "lockPositionPx": [
+          915,
+          1092
+        ],
+        "freeAimAtEndDifferenceMeters": 0.06251037673812603,
+        "maximumSubsequentDownMm": 0.2760869450867176,
+        "nextEventAfterLockMs": 17.523916883874335
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 673.1472638334149,
+        "theoreticalTimeReal": 673.1381835831133,
+        "source": "timer",
+        "beganToLockMs": 716.666666666697,
+        "lockPositionPx": [
+          915,
+          1092
+        ],
+        "freeAimAtEndDifferenceMeters": 0.06251037673812603,
+        "maximumSubsequentDownMm": 0.2760869450867176,
+        "nextEventAfterLockMs": 8.44366658236595
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 27,
+      "attemptId": "1fdd773633c44fb58bfb43ba7cf14e14",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 681.4070965005646,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 28,
+          "durationMs": 229.198958667439,
+          "endpointDisplacementMm": 0.0780915635561848,
+          "endpointDisplacementPx": 1.4142567214044945,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 29,
+          "durationMs": 533.4169582237109,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 30,
+          "durationMs": 1533.5980000658083,
+          "endpointDisplacementMm": 0.0552241294212763,
+          "endpointDisplacementPx": 1.0001220703125,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 40,
+          "durationMs": 3042.1909999197396,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 41,
+          "durationMs": 754.3519992589154,
+          "endpointDisplacementMm": 0.17461271574237225,
+          "endpointDisplacementPx": 3.1622776601683795,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 91,
+          "durationMs": 550.0339582035849,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 674.2716494584564,
+        "theoreticalTimeReal": 674.2716494584564,
+        "source": "timer",
+        "beganToLockMs": 432.55154117321126,
+        "lockPositionPx": [
+          649,
+          1153.9998779296875
+        ],
+        "freeAimAtEndDifferenceMeters": 4.326359924197915,
+        "maximumSubsequentDownMm": 50.96564585025561,
+        "nextEventAfterLockMs": 67.54399976364311
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 674.2724312506165,
+        "theoreticalTimeReal": 674.2716494584564,
+        "source": "timer",
+        "beganToLockMs": 433.3333333332803,
+        "lockPositionPx": [
+          649,
+          1153.9998779296875
+        ],
+        "freeAimAtEndDifferenceMeters": 4.326359924197915,
+        "maximumSubsequentDownMm": 50.96564585025561,
+        "nextEventAfterLockMs": 66.7622076035741
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 28,
+      "attemptId": "656845d460f742ac997e4684c0ba2049",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "unchanged",
+      "silences": [
+        {
+          "afterSampleIndex": 40,
+          "durationMs": 1008.4917914424523,
+          "endpointDisplacementMm": 0.05521654646685192,
+          "endpointDisplacementPx": 0.9999847412109375,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 122,
+          "durationMs": 279.1790013861828,
+          "endpointDisplacementMm": 0.2208687135188825,
+          "endpointDisplacementPx": 3.9999847412109375,
+          "nextPhase": "Ended"
+        }
+      ],
+      "idealTimerReplay": null,
+      "synthetic60HzReplay": null,
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 29,
+      "attemptId": "79500431e2b74b86b5b3c4fcf243976b",
+      "originalOutcome": "Tap",
+      "originalLockTimeReal": null,
+      "change": "unchanged",
+      "silences": [],
+      "idealTimerReplay": null,
+      "synthetic60HzReplay": null,
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 30,
+      "attemptId": "f44f246ce17c4d9f9717ac8e221d9772",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 688.6040894999256,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 0,
+          "durationMs": 495.9102918342069,
+          "endpointDisplacementMm": 0.05522075921930991,
+          "endpointDisplacementPx": 1.00006103515625,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 688.5907437087903,
+        "theoreticalTimeReal": 688.5907437087903,
+        "source": "timer",
+        "beganToLockMs": 849.2932083509004,
+        "lockPositionPx": [
+          149,
+          927.9999389648438
+        ],
+        "freeAimAtEndDifferenceMeters": 0.6460344973338745,
+        "maximumSubsequentDownMm": 1.932598505001124,
+        "nextEventAfterLockMs": 13.345791135293439
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 688.5914505004395,
+        "theoreticalTimeReal": 688.5907437087903,
+        "source": "timer",
+        "beganToLockMs": 850.0000000000227,
+        "lockPositionPx": [
+          149,
+          927.9999389648438
+        ],
+        "freeAimAtEndDifferenceMeters": 0.6460344973338745,
+        "maximumSubsequentDownMm": 1.932598505001124,
+        "nextEventAfterLockMs": 12.638999486171087
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 31,
+      "attemptId": "acb181f02e6f4efc813e3438407910ba",
+      "originalOutcome": "AbandonedBeforeFix",
+      "originalLockTimeReal": null,
+      "change": "unchanged",
+      "silences": [],
+      "idealTimerReplay": null,
+      "synthetic60HzReplay": null,
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 32,
+      "attemptId": "b44bea15805f4d60a47c64a0f467e949",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 691.6879364587968,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 27,
+          "durationMs": 683.3780002708636,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 30,
+          "durationMs": 133.36699952969866,
+          "endpointDisplacementMm": 0.05521738901734352,
+          "endpointDisplacementPx": 1.0,
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSampleIndex": 56,
+          "durationMs": 195.7999993909425,
+          "endpointDisplacementMm": 0.05521064861341074,
+          "endpointDisplacementPx": 0.9998779296875,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 690.67447649982,
+        "theoreticalTimeReal": 690.67447649982,
+        "source": "timer",
+        "beganToLockMs": 607.5878750599486,
+        "lockPositionPx": [
+          610,
+          1055
+        ],
+        "freeAimAtEndDifferenceMeters": 3.2605840233782084,
+        "maximumSubsequentDownMm": 29.48608573526144,
+        "nextEventAfterLockMs": 617.5600005802835
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 690.6835552914267,
+        "theoreticalTimeReal": 690.67447649982,
+        "source": "timer",
+        "beganToLockMs": 616.6666666666742,
+        "lockPositionPx": [
+          610,
+          1055
+        ],
+        "freeAimAtEndDifferenceMeters": 3.2605840233782084,
+        "maximumSubsequentDownMm": 29.48608573526144,
+        "nextEventAfterLockMs": 608.4812089735578
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    },
+    {
+      "ordinal": 33,
+      "attemptId": "13634200a81349bf9b55a8a6f9dc1619",
+      "originalOutcome": "Swing",
+      "originalLockTimeReal": 693.7674535001523,
+      "change": "earlierFixation",
+      "silences": [
+        {
+          "afterSampleIndex": 41,
+          "durationMs": 654.2707924896831,
+          "endpointDisplacementMm": 0.4969565011560917,
+          "endpointDisplacementPx": 9.0,
+          "nextPhase": "Moved"
+        }
+      ],
+      "idealTimerReplay": {
+        "lockTimeReal": 693.608304500171,
+        "theoreticalTimeReal": 693.608304500171,
+        "source": "timer",
+        "beganToLockMs": 590.9774162761323,
+        "lockPositionPx": [
+          310.9999694824219,
+          932
+        ],
+        "freeAimAtEndDifferenceMeters": 2.3094514399712107,
+        "maximumSubsequentDownMm": 28.271303176879883,
+        "nextEventAfterLockMs": 25.80520821140908
+      },
+      "synthetic60HzReplay": {
+        "lockTimeReal": 693.6173270838949,
+        "theoreticalTimeReal": 693.608304500171,
+        "source": "timer",
+        "beganToLockMs": 600.0000000000227,
+        "lockPositionPx": [
+          310.9999694824219,
+          932
+        ],
+        "freeAimAtEndDifferenceMeters": 2.3094514399712107,
+        "maximumSubsequentDownMm": 28.271303176879883,
+        "nextEventAfterLockMs": 16.78262448751866
+      },
+      "involuntaryFixationJudgment": "NotEvaluated_NoIntentLabels"
+    }
+  ]
+}
