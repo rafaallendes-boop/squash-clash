@@ -166,6 +166,26 @@ namespace SquashClash.Runtime.Tests
             Assert.That(t1.y,Is.GreaterThan(app.Config.Court.TinTop));Assert.That(t1.y,Is.LessThan(app.Config.Court.FrontOutLower));
             yield return Capture("sling-feedback");
         }
+        [UnityTest] public IEnumerator LocalCancelLimitAndState_AreVisibleAndNeverCoverFrontis()
+        {
+            var preview=app.GetComponent<GesturePreview>();app.Tuning.Set("gesture.control",1);app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
+            Assert.That(preview.ArmSlingBlock("B0"),Is.True);yield return new WaitForSecondsRealtime(.25f);yield return null;
+            foreach(var name in new[]{"sling-protocol-timer","sling-protocol-guide"})
+            {var e=root.Q(name);Assert.That(Shown(e),Is.True,name);Assert.That(e.worldBound.Overlaps(FrontisRect()),Is.False,name);}
+            Assert.That(root.Q("sling-protocol-guide").worldBound.yMax,Is.LessThanOrEqualTo(root.Q("shot-overlay").worldBound.yMax),"Guide must fit its visible background");
+            root.Q<Label>("build-label").text="Editor · D2 sintético";
+            float mm=SquashClash.Runtime.Input.ScreenMetrics.MmPerPx(Screen.dpi,460,out _);
+            float y=camera.WorldToScreenPoint(new Vector3(3.2f,2.2f,0)).y-12/mm;
+            var model=new SquashClash.Core.Shot.SlingModel(SquashClash.Core.Shot.SlingSettings.From(app.Tuning.Applied),app.Config.Court,3.2f,SafeArea,mm);
+            System.Action<double,float,SquashClash.Core.Shot.TouchPhaseKind> send=(t,py,phase)=>model.Push(new SquashClash.Core.Shot.TouchSample(1,phase,new Vector2(Width/2,py),t,0));
+            send(0,y-3/mm,SquashClash.Core.Shot.TouchPhaseKind.Began);send(.02,y,SquashClash.Core.Shot.TouchPhaseKind.Moved);send(.04,y,SquashClash.Core.Shot.TouchPhaseKind.Stationary);send(.06,y,SquashClash.Core.Shot.TouchPhaseKind.Stationary);model.Tick(.15);Assert.That(model.Locked,Is.True);
+            var indicator=new SquashClash.Runtime.Shot.SlingCancelIndicator(root);indicator.Show(model,app.Tuning.Applied,app.Config.Court,SafeArea,mm);yield return null;yield return null;
+            var label=root.Q<Label>("sling-cancel-local");Assert.That(label,Is.Not.Null);Assert.That(Shown(label),Is.True);Assert.That(label.text,Does.Contain("Límite").And.Contain("FUERA"));
+            var front=FrontisRect();var visible=root.Query<VisualElement>().ToList().Where(e=>e.name.StartsWith("sling-cancel-")&&Shown(e)).ToArray();
+            Assert.That(visible.Length,Is.GreaterThanOrEqualTo(2),"Local card plus a real limit segment");foreach(var e in visible)Assert.That(e.worldBound.Overlaps(front),Is.False,e.name);
+            send(.2,y+13/mm,SquashClash.Core.Shot.TouchPhaseKind.Moved);indicator.Show(model,app.Tuning.Applied,app.Config.Court,SafeArea,mm);Assert.That(label.text,Does.Contain("DENTRO").And.Contain("suelta"));
+            yield return Capture("sling-local-cancel");indicator.Dispose();
+        }
         [UnityTest] public IEnumerator DevOpen_ProtocolActionsRemainUsable_AndCloseDevBeforeArming()
         {
             var preview=app.GetComponent<GesturePreview>();

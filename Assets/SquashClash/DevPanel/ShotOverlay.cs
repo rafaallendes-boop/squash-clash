@@ -15,7 +15,7 @@ namespace SquashClash.DevPanel
         private TouchInputAdapter input;
         private VisualElement root,layer,details,bar,feedback;
         private LineRenderer targetLine;private Material targetMaterial;
-        private Label compact,state,power,sampling,status;
+        private Label compact,state,power,sampling,status,timer,guide;
         private DevPanelView panel;
         private AimReticleView reticle;
         private float elapsed;
@@ -27,6 +27,11 @@ namespace SquashClash.DevPanel
             layer.style.position=Position.Absolute;layer.style.height=24;
             layer.style.backgroundColor=new Color(.02f,.06f,.08f,.86f);layer.style.color=Color.white;layer.style.paddingLeft=8;layer.style.paddingRight=8;
             compact=new Label {name="shot-compact",pickingMode=PickingMode.Ignore};compact.style.fontSize=14;compact.style.whiteSpace=WhiteSpace.NoWrap;layer.Add(compact);
+            timer=new Label {name="sling-protocol-timer",pickingMode=PickingMode.Ignore};timer.style.fontSize=14;timer.style.whiteSpace=WhiteSpace.Normal;layer.Add(timer);
+            guide=new Label {name="sling-protocol-guide",pickingMode=PickingMode.Ignore};guide.style.fontSize=12;guide.style.whiteSpace=WhiteSpace.Normal;guide.style.height=48;layer.Add(guide);
+            foreach(var label in new[]{compact,timer,guide})
+            {label.style.flexShrink=0;label.style.marginTop=label.style.marginBottom=0;label.style.paddingTop=label.style.paddingBottom=0;}
+            compact.style.height=timer.style.height=24;
             feedback=new VisualElement {name="sling-feedback",pickingMode=PickingMode.Ignore};feedback.style.flexDirection=FlexDirection.Row;
             var ok=new Button(()=>preview.RespondSling(false)) {name="sling-ok",text="OK"};
             var premature=new Button(()=>preview.RespondSling(true)) {name="sling-premature",text="Se fijó antes de tiempo"};
@@ -76,14 +81,16 @@ namespace SquashClash.DevPanel
             string aimState=reticle.IsInvalid?"Inválida":reticle.State==SquashClash.Core.Shot.AimState.Frozen?"Fijada":"Apuntando";
             bool sling=preview.Active?preview.Sling!=null:app.Tuning.Applied.GetInt("gesture.control")==1;
             var trials=preview.SlingTrials;
-            bool showProtocol=trials.AwaitingFeedback||sling&&trials.Running;
+            bool showProtocol=trials.AwaitingFeedback||sling&&(trials.Running||preview.HasSlingProtocolStatus);
             feedback.style.display=showProtocol&&trials.AwaitingFeedback?DisplayStyle.Flex:DisplayStyle.None;
             layer.style.display=!sling||showProtocol?DisplayStyle.Flex:DisplayStyle.None;
-            layer.style.height=showProtocol&&trials.AwaitingFeedback?72:24;
+            timer.style.display=showProtocol?DisplayStyle.Flex:DisplayStyle.None;timer.text=preview.ProtocolTimingText;
+            guide.style.display=showProtocol&&preview.SlingGuidanceText.Length>0?DisplayStyle.Flex:DisplayStyle.None;guide.text=preview.SlingGuidanceText;
+            layer.style.height=ProtocolHeight(showProtocol);
             if(showProtocol)
             {
                 string requested=trials.RequestedPower=="soft"?"suave":trials.RequestedPower=="medium"?"media":trials.RequestedPower=="strong"?"fuerte":trials.RequestedPower=="cancel"?"cancelar":"práctica";
-                compact.text=trials.AwaitingFeedback?$"{trials.Block} · intento {trials.PendingTrial}: responde":$"{trials.Block} · {trials.Completed+1} · T{trials.TargetId} · {requested}";
+                compact.text=trials.Block=="B0"?"B0 · práctica guiada":trials.AwaitingFeedback?$"{trials.Block} · intento {trials.PendingTrial}: responde":$"{trials.Block} · {trials.Completed+1} · T{trials.TargetId} · {requested}";
             }
             else compact.text=$"{aimState} · P {p.P*100:F0}%";
             bool targetShown=showProtocol&&trials.TargetId>0;
@@ -111,9 +118,10 @@ namespace SquashClash.DevPanel
             layer.style.left=safeArea.xMin/screenSize.x*width+8;
             layer.style.right=(screenSize.x-safeArea.xMax)/screenSize.x*width+8;
             bool sling=app.Tuning.Applied.GetInt("gesture.control")==1||preview.SlingTrials.AwaitingFeedback;
-            float lineHeight=preview.SlingTrials.AwaitingFeedback?72:24;
+            float lineHeight=ProtocolHeight(sling&&(preview.HasSlingProtocolStatus||preview.SlingTrials.Running)||preview.SlingTrials.AwaitingFeedback);
             layer.style.top=Mathf.Max(safeTop,Mathf.Min(safeBottom,barTop)-(sling?30+lineHeight:24)-6);
         }
+        private float ProtocolHeight(bool shown)=>!shown?24:24+24+(preview.SlingGuidanceText.Length>0?48:0)+(preview.SlingTrials.AwaitingFeedback?48:0);
         private void OnGeometry(GeometryChangedEvent e)=>Place();
         private void Place()
         {

@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "baseReviewedHead": "508f625982c7998f13f315cc8f7ea993f40c5c13",
+  "predeclarationCommit": "58d037d",
+  "diagnosticBeforeImplementationCommit": "88213d4",
+  "newPhysicalSession": "NotStarted",
+  "newInstallation": "NotDone",
+  "profileRenewal": "CacheBackedUp_NewEmbeddedProfileNotYetVerified",
+  "defaultHashUnchanged": "45c4e9af5c8f",
+  "presetHashUnchanged": "7d1a61c39766",
+  "simulationKeyUnchanged": "166a96e319c7",
+  "oldDesignTextPreservedAsPrefix": true,
+  "runs": [
+    {
+      "name": "core-red",
+      "total": "27",
+      "passed": "24",
+      "failed": "3",
+      "start-time": "2026-10-27 18:01:07Z",
+      "end-time": "2026-10-27 18:01:07Z",
+      "xmlSha256": "4020c4cd3fa388857bbcd4a5ebeee68cfec92ee3cc217c12642e8ff64ace6920"
+    },
+    {
+      "name": "core-green",
+      "total": "27",
+      "passed": "27",
+      "failed": "0",
+      "start-time": "2026-10-27 18:02:54Z",
+      "end-time": "2026-10-27 18:02:54Z",
+      "xmlSha256": "b4c31d24c10c40467024d2d26484ddb2e5552153daf196e8b8329488ac7b53b9"
+    },
+    {
+      "name": "runtime-red",
+      "total": "3",
+      "passed": "0",
+      "failed": "3",
+      "start-time": "2026-10-27 18:05:12Z",
+      "end-time": "2026-10-27 18:05:14Z",
+      "xmlSha256": "33a6a8f849a9feb1dff097d7ae390dc7e61078c3137567f9c607651f405ddb91"
+    },
+    {
+      "name": "runtime-green",
+      "total": "3",
+      "passed": "3",
+      "failed": "0",
+      "start-time": "2026-10-27 18:09:51Z",
+      "end-time": "2026-10-27 18:09:53Z",
+      "xmlSha256": "4ef995a1b0cf0d1e7089649b54c6f83313da903a924b459df925c72522abaf3d"
+    },
+    {
+      "name": "guide-overflow-red",
+      "total": "1",
+      "passed": "0",
+      "failed": "1",
+      "start-time": "2026-10-27 18:17:22Z",
+      "end-time": "2026-10-27 18:17:23Z",
+      "xmlSha256": "452dc2715ec6171dabc8ec3742c22d5fd9126a23ee5addd9d9829c765023500a"
+    },
+    {
+      "name": "editmode-final",
+      "total": "411",
+      "passed": "411",
+      "failed": "0",
+      "start-time": "2026-10-27 18:22:31Z",
+      "end-time": "2026-10-27 18:22:38Z",
+      "xmlSha256": "5634074679c61536f6aa36241d666e453f9132848ef5ac0863a5c9736b07696d"
+    },
+    {
+      "name": "playmode-final",
+      "total": "184",
+      "passed": "184",
+      "failed": "0",
+      "start-time": "2026-10-27 18:23:57Z",
+      "end-time": "2026-10-27 18:24:36Z",
+      "xmlSha256": "4c67b1a89a2319e5cdc087d5adc503eba695c6cc78c7290182208a541e519a1d"
+    }
+  ]
+}

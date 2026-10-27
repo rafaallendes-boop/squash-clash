@@ -171,3 +171,13 @@ Pasos posteriores condicionados: implementar sobre arquitectura actual, regresi�
 ## 7. Resultado de esta primera parada
 
 Se entrega una interacción concreta para revisión de Claude, con riesgos de cancelación/reducción/espacio/oclusiones/manos y el protocolo breve. Las dimensiones de región y presentación son propuesta de Codex sometida a esa revisión; no hay implementación ni validación física. El registro literal y las adendas D1 están en esta misma PR. **Interacción aprobada; tras el commit documental obligatorio continuar paso2. PR sin fusionar hasta aprobación PO.** S1 sigue sin aceptar; no iniciar S2–S4/T8.
+
+## Adenda D2 del PO — S1-sling iteración2, 2026-10-27
+
+Esta adenda modifica exclusivamente el prototipo S1-sling por decisión expresa delPO tras SL-S1-03; el texto aprobado anterior se conserva íntegro como histórico. Sustituye el veto a fijar por silencio y el reinicio por hueco51ms en Q2/V1/D1 y en el caso previsto NoSamples_DoNotAccumulateQuiet. La cobertura del plan1.2b/tablaQuietud se interpreta para esta iteración con D2; no se reescribe ese plan ni specv0.3.
+
+Con el toque primario aún activo, sin Ended/Canceled y sin nueva muestra, el reloj real cuenta como quietud desde el candidato válido. Tick porframe puede fijar con la última posición válida, guardando origen sample/timer, elegibilidad teórica, instante observado y timestamp de la muestra usada. No se agregan TouchSample porframe. Se mantienen120ms/1mm/15mm/s/arrastre≥3mm/área útil y mínimo3 muestras reales por candidato. Sin ese mínimo Tick no lo inventa. Nueva muestra fuera de radio/velocidad reinicia antes de fijar; foco/pausa/DEV invalidan. El hueco51ms no reinicia un contacto vivo; la clave se conserva por compatibilidad y se etiqueta D1. A′ y los parámetros/defaults no cambian.
+
+Zona de cancelación con límite local real, dirección y estado dentro/fuera, sin intersectar el rectángulo del frontis ni controles. Dimensiones12/20/8 intactas; la presentación se recorta fuera del frontis, sin mover la detección. Guía visible de cancelación enB0. Temporizador en los bloques, cuenta atrás120s enB0 y mensajes persistentes de completado/interrumpido. [Diseño operativo, predeclaración y replay diagnóstico](2026-10-27-first-shot-s1-sling-iteration-2.md).
+
+Instalación solo con perfil renovado porPO y comprobación del incorporado; elPO pidió ayuda posterior para efectuar la renovación con Xcode. Respaldo/cotejo3archivos y sesión nueva separada delB0db72a00. B0completo/identificación/cancelación guiada precedenB1–B5/16preguntas; si no se entiende, detener y restaurarP0. Sin aceptaciónS1 ni autorizaciónS2–S4/T8, PRsin fusionar.

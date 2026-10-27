@@ -78,6 +78,32 @@ namespace SquashClash.Runtime.Tests
             foreach(string block in new[]{"B0","B1","B2-soft","B2-medium","B2-strong","B3","B4","B5"})Assert.That(root.Q<Button>("sling-"+block),Is.Not.Null,block);
             Assert.That(root.Q<Button>("sling-ok"),Is.Not.Null);Assert.That(root.Q<Button>("sling-premature"),Is.Not.Null);yield return null;
         }
+        [Serializable] private class TimerRecord {public string lockOrigin;public double lockTheoreticalTimeReal,lockObservedTimeReal;public TimerSample[] rawSamples;}
+        [Serializable] private class TimerSample {public double timeReal;}
+        [UnityTest] public IEnumerator LiveQuietContactFixesInTick_WithoutAddingTouchSamples()
+        {
+            Send(Phase.Began,0);Send(Phase.Moved,.02,dy:5);Send(Phase.Stationary,.06,dy:5);Send(Phase.Stationary,.10,dy:5);
+            now=start+.151;preview.Tick(now);Assert.That(preview.Sling.Locked,Is.True);Assert.That(preview.Sling.LockOrigin,Is.EqualTo("timer"));
+            Send(Phase.Ended,.20,dy:-30);preview.FlushRecords();var data=JsonUtility.FromJson<TimerRecord>(preview.LastRecordJson);
+            Assert.That(data.lockOrigin,Is.EqualTo("timer"));Assert.That(data.rawSamples.Length,Is.EqualTo(5));
+            Assert.That(data.lockTheoreticalTimeReal,Is.EqualTo(start+.14).Within(1e-6));Assert.That(data.lockObservedTimeReal,Is.EqualTo(start+.151).Within(1e-6));yield return null;
+        }
+        [UnityTest] public IEnumerator B0CountdownAndInterruptionStayVisible_AndGuidedCancellationIsRecorded()
+        {
+            Assert.That(preview.ArmSlingBlock("B0"),Is.True);Assert.That(preview.ProtocolTimingText,Does.Contain("02:00"));
+            now=start+30;preview.Tick(now);Assert.That(preview.ProtocolTimingText,Does.Contain("01:30"));Assert.That(preview.SlingGuidanceText,Does.Contain("fija"));
+            app.Clock.Paused=true;preview.Tick(now);Assert.That(preview.ProtocolTimingText,Does.Contain("Interrumpido"));
+            app.Clock.Paused=false;Assert.That(preview.ArmSlingBlock("B0"),Is.True);start+=31;Lock();Send(Phase.Ended,.18,dy:18);
+            Assert.That(preview.Outcome,Is.EqualTo(GestureOutcome.ZoneCanceled));Assert.That(preview.PracticeCancellationDone,Is.True);
+            now=start+120;preview.Tick(now);Assert.That(preview.ProtocolTimingText,Does.Contain("Completado"));yield return null;
+        }
+        [UnityTest] public IEnumerator PauseAndDevInvalidateBeforeAnOtherwiseEligibleTimerFrame()
+        {
+            Send(Phase.Began,0);Send(Phase.Moved,.02,dy:5);Send(Phase.Stationary,.06,dy:5);Send(Phase.Stationary,.10,dy:5);
+            now=start+.151;app.Clock.Paused=true;preview.Tick(now);Assert.That(preview.Sling.Locked,Is.False);Assert.That(preview.Outcome,Is.EqualTo(GestureOutcome.SystemCanceled));
+            app.Clock.Paused=false;start+=1;Send(Phase.Began,0,id:3);Send(Phase.Moved,.02,dy:5,id:3);Send(Phase.Stationary,.06,dy:5,id:3);Send(Phase.Stationary,.10,dy:5,id:3);
+            UnityEngine.Object.FindFirstObjectByType<DevPanelView>().Toggle();now=start+.151;preview.Tick(now);Assert.That(preview.Sling.Locked,Is.False);Assert.That(preview.Outcome,Is.EqualTo(GestureOutcome.SystemCanceled));yield return null;
+        }
         [UnityTest] public IEnumerator LockFlashIsTemporary_AndKeepsTheMinimumStroke()
         {
             var v=app.GetComponentInChildren<AimReticleView>(true);v.gameObject.SetActive(true);v.SetAim(new Vector2(3.2f,2.2f),AimState.Frozen,app.Config.Court);

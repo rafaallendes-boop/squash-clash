@@ -118,6 +118,8 @@ namespace SquashClash.Runtime.Shot
         private void OnSystemCancel()
         {
             if(Active){Sling?.Cancel(input.ReadRealTime());tracker.CancelBySystem();FinishGesture();}
+            cancelIndicator?.Hide();
+            if(!Sampling)EndSlingBlockTimer(input.ReadRealTime(),false,"system-cancel");
             if(view!=null)view.gameObject.SetActive(false);
             if(Sampling)FinishSampling(input.ReadRealTime(),false,"system-cancel");
         }
@@ -136,6 +138,7 @@ namespace SquashClash.Runtime.Shot
         {
             if(!initialized)return;
             if(ContextChanged()){if(Active||Sampling)input.CancelSystem();return;}
+            TickSling(now);
             if(Sampling&&now-samplingStart>=120)FinishSampling(now,true,"elapsed");
         }
         private void Update(){Tick(input?.ReadRealTime()??0);RefreshSlingStatus();}
@@ -217,7 +220,7 @@ namespace SquashClash.Runtime.Shot
         }
         private void FinishSampling(double now,bool complete,string reason)
         {
-            Sampling=false;SlingTrials.EndPractice();var s=input.Stats;
+            Sampling=false;EndSlingBlockTimer(now,complete,reason);SlingTrials.EndPractice();var s=input.Stats;
             SamplingRecordJson="{\"schema\":1,\"complete\":"+B(complete)+",\"reason\":"+Q(reason)+",\"elapsedRealSeconds\":"+N(now-samplingStart)+
                 ",\"samples\":"+s.Samples+",\"distinctTimes\":"+s.DistinctTimes+",\"duplicates\":"+s.DuplicateTimes+",\"outOfOrder\":"+s.OutOfOrder+
                 ",\"deliveredHz\":"+N(s.DeliveredHz)+",\"intervalP50Ms\":"+N(s.IntervalP50Ms)+",\"intervalP95Ms\":"+N(s.IntervalP95Ms)+",\"maxGapMs\":"+N(s.MaxGapMs)+
@@ -237,7 +240,7 @@ namespace SquashClash.Runtime.Shot
             if(!initialized)return;
             input.SampleReceived-=OnSample;input.SystemCanceled-=OnSystemCancel;
             app.Host.Launched-=OnLaunched;app.Tuning.Changed-=OnTuningChanged;
-            OnSystemCancel();FlushRecords();slingStatus?.RemoveFromHierarchy();
+            OnSystemCancel();FlushRecords();cancelIndicator?.Dispose();slingStatus?.RemoveFromHierarchy();
         }
         private static string N(double value)=>double.IsNaN(value)||double.IsInfinity(value)?"null":value.ToString("R",CultureInfo.InvariantCulture);
         private static string B(bool value)=>value?"true":"false";
