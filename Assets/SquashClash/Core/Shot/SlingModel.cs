@@ -37,7 +37,7 @@ namespace SquashClash.Core.Shot
         private readonly float scale,width,initialX;
         private readonly List<SlingTransition> transitions=new List<SlingTransition>(16);
         private Vector2 origin,previous,quietAnchor;
-        private double previousTime,quietAt;
+        private double previousTime,quietAt,quietSupportAt,areaEligibleAt;
         private int finger,quietSamples,pullSamples,sampleCount;
         private float maxDisplacement;
         private bool pulled,invalid;
@@ -49,6 +49,18 @@ namespace SquashClash.Core.Shot
                 throw new ArgumentOutOfRangeException(nameof(settings));
             this.settings=settings;this.area=area;scale=mmPerPx;width=court.Width;this.initialX=initialX;
             Aim=new Vector2(initialX,settings.StartHeight);
+        }
+        public string LockOrigin {get;private set;}="none";
+        public double LockTheoreticalAt {get;private set;}=double.NaN;
+        public double LockObservedAt {get;private set;}=double.NaN;
+        public double LockSampleAt {get;private set;}=double.NaN;
+        public double LastSampleAt=>previousTime;
+        public Vector2 LastPositionPx=>previous;
+        // A live contact remains down between events. Tick never manufactures touch support.
+        public void Tick(double now)
+        {
+            if(!Active||Locked||invalid||!Finite(now)||now<previousTime)return;
+            TryLock(previous,now,now,"timer");
         }
         public bool Active {get;private set;}
         public bool Locked {get;private set;}
@@ -71,7 +83,7 @@ namespace SquashClash.Core.Shot
         public GestureOutcome Outcome {get;private set;}
         private static bool Finite(double x)=>!double.IsNaN(x)&&!double.IsInfinity(x);
         private void Event(string kind,double t)=>transitions.Add(new SlingTransition(kind,t));
-        public void Push(in TouchSample s)
+        public void Push(in TouchSample s,double? observedReal=null)
         {
             if(s.Phase==TouchPhaseKind.Began)
             {
@@ -79,7 +91,8 @@ namespace SquashClash.Core.Shot
                 Active=true;Locked=LockBlocked=pulled=invalid=false;Outcome=GestureOutcome.None;Region=SlingCancelRegion.None;
                 Phase=SlingPhase.Aiming;finger=s.FingerId;origin=previous=quietAnchor=s.PositionPx;
                 BeganAt=previousTime=quietAt=s.TimeReal;LockAt=LastOutsideAt=ReleaseAt=double.NaN;
-                quietSamples=1;pullSamples=sampleCount=0;maxDisplacement=P=DistanceMm=MaxDistanceMm=LateralMm=0;
+                quietSamples=1;quietSupportAt=double.NaN;areaEligibleAt=area.Contains(s.PositionPx)?s.TimeReal:double.NaN;
+                LockOrigin="none";LockTheoreticalAt=LockObservedAt=LockSampleAt=double.NaN;pullSamples=sampleCount=0;maxDisplacement=P=DistanceMm=MaxDistanceMm=LateralMm=0;
                 Aim=new Vector2(Mathf.Clamp(initialX,0,width),Mathf.Clamp(settings.StartHeight,0,5));
                 Reason="aiming";transitions.Clear();Event("Began",s.TimeReal);
                 if(!Valid(s)){invalid=true;Reason="invalid-input";}
@@ -102,6 +115,8 @@ namespace SquashClash.Core.Shot
                 if(s.Phase==TouchPhaseKind.Ended)Finish(s);
                 return; // No new velocity, support, duration or position.
             }
+            if(!area.Contains(s.PositionPx))areaEligibleAt=double.NaN;
+            else if(double.IsNaN(areaEligibleAt))areaEligibleAt=s.TimeReal;
             maxDisplacement=Mathf.Max(maxDisplacement,Vector2.Distance(origin,s.PositionPx)*scale);
             if(!Locked)
             {
@@ -110,16 +125,14 @@ namespace SquashClash.Core.Shot
                 double speed=Vector2.Distance(previous,s.PositionPx)*scale/dt;
                 bool outside=speed>settings.MaxSpeed+1e-6||Vector2.Distance(quietAnchor,s.PositionPx)*scale>settings.Radius+1e-6;
                 if(outside)LastOutsideAt=s.TimeReal;
-                if(outside||dt*1000>settings.MaxGapMs+1e-6||maxDisplacement<settings.TapMm)
-                {quietAt=s.TimeReal;quietAnchor=s.PositionPx;quietSamples=1;}
-                else quietSamples++;
-                if(s.Phase!=TouchPhaseKind.Ended&&maxDisplacement>=settings.TapMm&&quietSamples>=settings.MinSamples&&
-                    (s.TimeReal-quietAt)*1000+1e-6>=settings.HoldMs)
+                if(outside||maxDisplacement<settings.TapMm)
+                {quietAt=s.TimeReal;quietAnchor=s.PositionPx;quietSamples=1;quietSupportAt=double.NaN;}
+                else
                 {
-                    Region=ChooseRegion(s.PositionPx);LockBlocked=Region==SlingCancelRegion.None;
-                    if(!LockBlocked)
-                    {Locked=true;LockAt=s.TimeReal;LockPositionPx=s.PositionPx;pullSamples=1;Phase=SlingPhase.Locked;Reason="distance";Event("Locked",s.TimeReal);}
+                    quietSamples++;
+                    if(quietSamples==settings.MinSamples)quietSupportAt=s.TimeReal;
                 }
+                if(s.Phase!=TouchPhaseKind.Ended)TryLock(s.PositionPx,s.TimeReal,observedReal??s.TimeReal,"sample");
             }
             else
             {
@@ -136,6 +149,17 @@ namespace SquashClash.Core.Shot
             }
             previous=s.PositionPx;previousTime=s.TimeReal;
             if(s.Phase==TouchPhaseKind.Ended)Finish(s);
+        }
+        private void TryLock(Vector2 point,double evaluatedAt,double observedAt,string originKind)
+        {
+            if(Locked||maxDisplacement<settings.TapMm||quietSamples<settings.MinSamples||
+                (evaluatedAt-quietAt)*1000+1e-6<settings.HoldMs)return;
+            Region=ChooseRegion(point);LockBlocked=Region==SlingCancelRegion.None;
+            if(LockBlocked)return;
+            Locked=true;LockAt=evaluatedAt;LockPositionPx=point;pullSamples=1;
+            LockOrigin=originKind;LockObservedAt=observedAt;LockSampleAt=originKind=="sample"?evaluatedAt:previousTime;
+            LockTheoreticalAt=Math.Max(Math.Max(quietAt+settings.HoldMs/1000d,quietSupportAt),areaEligibleAt);
+            Phase=SlingPhase.Locked;Reason="distance";Event("Locked",evaluatedAt);
         }
         private bool Valid(in TouchSample s)=>Finite(s.TimeReal)&&Finite(s.PositionPx.x)&&Finite(s.PositionPx.y);
         private SlingCancelRegion ChooseRegion(Vector2 p)

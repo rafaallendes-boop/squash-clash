@@ -15,7 +15,7 @@ namespace SquashClash.Core.Tests.Shot
         {Begin(m);m.Push(T(.02,100,y));foreach(var t in new[]{.04,.08,.12,.14})m.Push(T(t,100,y,TouchPhaseKind.Stationary));}
         [Test] public void QuietRequiresRealDuration_AndFreezesOnce()
         {var m=New();Begin(m);m.Push(T(.02,100,103));m.Push(T(.06,100,103));m.Push(T(.10,100,103));Assert.That(m.Locked,Is.False);m.Push(T(.14,100,103));Assert.That(m.Locked,Is.True);var a=m.Aim;m.Push(T(.16,130,40));Assert.That(m.Aim,Is.EqualTo(a));Assert.That(m.Transitions.Count(x=>x.Kind=="Locked"),Is.EqualTo(1));}
-        [Test] public void SilenceDoesNotCountAsQuiet_AndReleaseDoesNotCreateLock()
+        [Test] public void ReleaseAloneDoesNotCreateLock_WithoutPriorTick()
         {var m=New();Begin(m);m.Push(T(.02,100,103));m.Push(T(.30,100,103,TouchPhaseKind.Ended));Assert.That(m.Locked,Is.False);Assert.That(m.Outcome.ToString(),Is.EqualTo("AbandonedBeforeFix"));}
         [Test] public void TapAndLongHoldWithoutDrag_DoNotLock()
         {var m=New();Begin(m);m.Push(T(.13,100,100,TouchPhaseKind.Ended));Assert.That(m.Outcome,Is.EqualTo(GestureOutcome.Tap));m=New();Begin(m);for(int i=1;i<=10;i++)m.Push(T(i*.04,100,100));Assert.That(m.Locked,Is.False);}
@@ -46,6 +46,39 @@ namespace SquashClash.Core.Tests.Shot
         {var m=New();Lock(m);m.Push(T(.16,100,68));m.Push(T(.31,100,68,TouchPhaseKind.Ended));Assert.That(m.P,Is.EqualTo(1));m=New();Lock(m,90);m.Push(T(.16,100,60));Assert.That(m.P,Is.GreaterThan(.6),"RB6 is recorded, not hidden by an artificial zero");}
         [Test] public void LockOutsideUsefulAreaIsBlocked_EvenIfSpaceExistsAbove()
         {var m=New(area:new Rect(0,120,200,200));Lock(m);Assert.That(m.Locked,Is.False);Assert.That(m.LockBlocked,Is.True);}
+        [Test] public void TimerFixesSupportedStationaryContact_WithoutAnotherSample()
+        {
+            var m=New();Begin(m);m.Push(T(.02,100,103));m.Push(T(.04,100,103));m.Push(T(.06,100,103));
+            m.Tick(.139);Assert.That(m.Locked,Is.False);m.Tick(.151);
+            Assert.That(m.Locked,Is.True);Assert.That(m.LockOrigin,Is.EqualTo("timer"));
+            Assert.That(m.LockTheoreticalAt,Is.EqualTo(.14).Within(1e-9));Assert.That(m.LockObservedAt,Is.EqualTo(.151));
+            Assert.That(m.LastSampleAt,Is.EqualTo(.06));Assert.That(m.LockPositionPx,Is.EqualTo(new Vector2(100,103)));
+            var aim=m.Aim;m.Tick(2);Assert.That(m.Transitions.Count(t=>t.Kind=="Locked"),Is.EqualTo(1));Assert.That(m.Aim,Is.EqualTo(aim));
+        }
+        [Test] public void TimerDoesNotInventMinimumSamples_AndLongGapDoesNotResetSupport()
+        {
+            var m=New();Begin(m);m.Push(T(.02,100,103));m.Push(T(.04,100,103));m.Tick(.5);
+            Assert.That(m.Locked,Is.False,"Only two actual samples in the candidate");
+            m.Push(T(.6,100,103));Assert.That(m.Locked,Is.True);Assert.That(m.LockOrigin,Is.EqualTo("sample"));
+            Assert.That(m.LockTheoreticalAt,Is.EqualTo(.6));
+        }
+        [TestCase(TouchPhaseKind.Ended)] [TestCase(TouchPhaseKind.Canceled)]
+        public void TerminalBeforeFramePreventsTimerFixation(TouchPhaseKind phase)
+        {
+            var m=New();Begin(m);m.Push(T(.02,100,103));m.Push(T(.04,100,103));m.Push(T(.06,100,103));m.Push(T(.13,100,103,phase));m.Tick(1);
+            Assert.That(m.Locked,Is.False);Assert.That(m.Active,Is.False);
+        }
+        [Test] public void MovementBeforeDeadlineResetsTimer_AndCannotFixOutsideUsefulArea()
+        {
+            var m=New();Begin(m);m.Push(T(.02,100,103));m.Push(T(.04,100,103));m.Push(T(.06,100,103));
+            m.Push(T(.13,100,105));m.Push(T(.15,100,105));m.Push(T(.17,100,105));m.Tick(.249);Assert.That(m.Locked,Is.False);m.Tick(.251);Assert.That(m.Locked,Is.True);
+            m=New(area:new Rect(0,120,200,200));Begin(m);m.Push(T(.02,100,103));m.Push(T(.04,100,103));m.Push(T(.06,100,103));m.Tick(1);Assert.That(m.Locked,Is.False);Assert.That(m.LockBlocked,Is.True);
+        }
+        [Test] public void SystemCancellationAndNoPriorDragCannotBeCompletedByClock()
+        {
+            var m=New();Begin(m);m.Push(T(.02,100,103));m.Push(T(.04,100,103));m.Push(T(.06,100,103));m.Cancel(.1);m.Tick(1);Assert.That(m.Locked,Is.False);
+            m=New();Begin(m);m.Push(T(.04,100,100));m.Push(T(.08,100,100));m.Tick(1);Assert.That(m.Locked,Is.False);
+        }
         [Test] public void BothFixationTimesUseRealEventTimes()
         {var m=New();Lock(m);Assert.That(m.LockAt,Is.EqualTo(.14).Within(1e-9));Assert.That(m.LastOutsideAt,Is.EqualTo(.02).Within(1e-9));Assert.That(m.BeganAt,Is.Zero);}
     }

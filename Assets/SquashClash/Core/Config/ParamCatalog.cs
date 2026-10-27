@@ -12,7 +12,7 @@ namespace SquashClash.Core.Config
             new ParamDef("aim.holdMs", "Quiet duration", "ms", "First Shot / sling", ParamKind.Float, 120, 150, 1, ApplyClass.Immediate),
             new ParamDef("aim.holdMaxSpeedMmPerS", "Quiet speed", "mm/s", "First Shot / sling", ParamKind.Float, 0, 100, 1, ApplyClass.Immediate),
             new ParamDef("aim.holdRadiusMm", "Quiet radius", "mm", "First Shot / sling", ParamKind.Float, 0, 5, 0.1, ApplyClass.Immediate),
-            new ParamDef("aim.holdMaxGapMs", "Quiet maximum gap", "ms", "First Shot / sling", ParamKind.Float, 10, 100, 1, ApplyClass.Immediate),
+            new ParamDef("aim.holdMaxGapMs", "Quiet gap (legacy D1)", "ms", "First Shot / sling", ParamKind.Float, 10, 100, 1, ApplyClass.Immediate),
             new ParamDef("aim.holdMinSamples", "Quiet samples", "", "First Shot / sling", ParamKind.Int, 3, 12, 1, ApplyClass.Immediate),
             new ParamDef("power.pullDeadZoneMm", "Pull dead zone", "mm", "First Shot / sling", ParamKind.Float, 0, 10, 0.1, ApplyClass.Immediate),
             new ParamDef("power.pullFullMm", "Full pull", "mm", "First Shot / sling", ParamKind.Float, 30, 40, 1, ApplyClass.Immediate),
