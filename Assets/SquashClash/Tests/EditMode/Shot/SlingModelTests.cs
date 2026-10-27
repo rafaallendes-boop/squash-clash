@@ -44,6 +44,8 @@ namespace SquashClash.Core.Tests.Shot
         {var m=New();Lock(m);m.Push(T(.16,100,68,TouchPhaseKind.Ended,2));Assert.That(m.Active,Is.True);m.Cancel(.17);Assert.That(m.Outcome,Is.EqualTo(GestureOutcome.SystemCanceled));Assert.That(double.IsNaN(m.ReleaseAt),Is.True);m.Push(T(.18,100,68,TouchPhaseKind.Ended));Assert.That(m.Outcome,Is.EqualTo(GestureOutcome.SystemCanceled));}
         [Test] public void RB4_HeldTensionDoesNotDecay_WhileRB6RemainsObservable()
         {var m=New();Lock(m);m.Push(T(.16,100,68));m.Push(T(.31,100,68,TouchPhaseKind.Ended));Assert.That(m.P,Is.EqualTo(1));m=New();Lock(m,90);m.Push(T(.16,100,60));Assert.That(m.P,Is.GreaterThan(.6),"RB6 is recorded, not hidden by an artificial zero");}
+        [Test] public void LockOutsideUsefulAreaIsBlocked_EvenIfSpaceExistsAbove()
+        {var m=New(area:new Rect(0,120,200,200));Lock(m);Assert.That(m.Locked,Is.False);Assert.That(m.LockBlocked,Is.True);}
         [Test] public void BothFixationTimesUseRealEventTimes()
         {var m=New();Lock(m);Assert.That(m.LockAt,Is.EqualTo(.14).Within(1e-9));Assert.That(m.LastOutsideAt,Is.EqualTo(.02).Within(1e-9));Assert.That(m.BeganAt,Is.Zero);}
     }

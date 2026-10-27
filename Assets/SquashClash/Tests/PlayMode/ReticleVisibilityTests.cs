@@ -148,6 +148,24 @@ namespace SquashClash.Runtime.Tests
             Assert.That(safeUi.Contains(layer.worldBound.min)&&safeUi.Contains(layer.worldBound.max-Vector2.one*.01f),Is.True);
             yield return null;
         }
+        [UnityTest] public IEnumerator SlingFeedbackAndStatus_StayOutsideFrontis_AndTargetMatchesScreenSide()
+        {
+            var preview=app.GetComponent<GesturePreview>();
+            app.Tuning.Set("gesture.control",1);app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
+            Assert.That(preview.ArmSlingBlock("B1"),Is.True);preview.SlingTrials.CompleteAttempt();
+            yield return new WaitForSecondsRealtime(.25f);yield return null;
+            var front=FrontisRect();
+            foreach(var name in new[]{"sling-status","shot-overlay","sling-ok","sling-premature"})
+            {
+                var e=root.Q(name);Assert.That(e,Is.Not.Null,name);Assert.That(Shown(e),Is.True,name);
+                Assert.That(e.worldBound.Overlaps(front),Is.False,name+" must clear the whole frontis");
+                Assert.That(e.worldBound.yMax,Is.LessThanOrEqualTo(bar.worldBound.yMin));
+            }
+            var t1=preview.TargetPosition(1,app.Tuning.Applied);var t2=preview.TargetPosition(2,app.Tuning.Applied);
+            Assert.That(camera.WorldToScreenPoint(new Vector3(t1.x,t1.y,0)).x,Is.LessThan(camera.WorldToScreenPoint(new Vector3(t2.x,t2.y,0)).x));
+            Assert.That(t1.y,Is.GreaterThan(app.Config.Court.TinTop));Assert.That(t1.y,Is.LessThan(app.Config.Court.FrontOutLower));
+            yield return Capture("sling-feedback");
+        }
         [UnityTest] public IEnumerator DevOpen_ProtocolActionsRemainUsable_AndCloseDevBeforeArming()
         {
             var preview=app.GetComponent<GesturePreview>();

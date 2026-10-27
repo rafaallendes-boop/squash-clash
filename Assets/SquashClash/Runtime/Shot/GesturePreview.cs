@@ -12,7 +12,7 @@ using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Shot
 {
     // S1 preview only: never writes ball state, prediction or the simulation clock.
-    public sealed class GesturePreview : MonoBehaviour
+    public sealed partial class GesturePreview : MonoBehaviour
     {
         private AppBootstrap app;
         private TouchInputAdapter input;
@@ -36,11 +36,11 @@ namespace SquashClash.Runtime.Shot
         private long dropped;
         private bool initialized,captureGesture;
 
-        public bool Active=>tracker?.Active??false;
+        public bool Active=>Sling?.Active??tracker?.Active??false;
         public ParamSet GestureConfig {get;private set;}
         public AimModel Model {get;private set;}
         public PowerResult Power {get;private set;}
-        public GestureOutcome Outcome=>tracker?.Outcome??GestureOutcome.None;
+        public GestureOutcome Outcome=>Sling?.Outcome??tracker?.Outcome??GestureOutcome.None;
         public string LastRecordJson {get;private set;}
         public string SamplingRecordJson {get;private set;}
         public string Status {get;private set;}="S1: apunta; la pelota sigue sin golpe.";
@@ -56,11 +56,11 @@ namespace SquashClash.Runtime.Shot
             root=app.GetComponent<UIDocument>().rootVisualElement;
             input.UiBlocker=OverUi;input.SampleReceived+=OnSample;input.SystemCanceled+=OnSystemCancel;
             app.Host.Launched+=OnLaunched;app.Tuning.Changed+=OnTuningChanged;
-            view.gameObject.SetActive(false);initialized=true;
+            view.gameObject.SetActive(false);InitializeSlingStatus();initialized=true;
         }
         private bool OverUi(Vector2 point)
         {
-            if(resume.IsVisible||app.Clock.Paused)return true;
+            if(resume.IsVisible||app.Clock.Paused||SlingTrials.AwaitingFeedback)return true;
             if(root.panel==null)return false;
             var panelPoint=RuntimePanelUtils.ScreenToPanel(root.panel,new Vector2(point.x,Screen.height-point.y));
             for(var picked=root.panel.Pick(panelPoint);picked!=null;picked=picked.parent)
@@ -83,6 +83,8 @@ namespace SquashClash.Runtime.Shot
                 reportedDpi=Screen.dpi;screenWidth=Screen.width;screenHeight=Screen.height;
                 scale=ScreenMetrics.MmPerPx(reportedDpi,(float)source.Get("input.fallbackDpi"),out dpiSource);
                 tracker=new GestureTracker((float)source.Get("gesture.tapMaxMm"),(float)source.Get("gesture.tapMaxMs"),(float)source.Get("gesture.cancelRadiusMm"),scale);
+                Sling=source.GetInt("gesture.control")==1?new SlingModel(SlingSettings.From(source),app.Host.ActiveConfig.Court,app.Host.Current.Position.x,SlingInputArea(),scale):null;
+                BeginSlingRecord();
                 Model=new AimModel(AimSettings.From(source),app.Host.ActiveConfig.Court,app.Host.Current.Position.x);
                 powerSettings=PowerSettings.From(source);
                 peakEstimator=source.GetInt("power.method")==1?new PeakPowerEstimator(powerSettings,source.Get("power.peakSmoothingMs"),source.Get("power.peakDecayMs")):null;
@@ -92,6 +94,7 @@ namespace SquashClash.Runtime.Shot
             }
             if((!Active&&sample.Phase!=TouchPhaseKind.Began)||sample.FingerId!=primary)return;
             tracker.Push(sample);receipts.Add(input.ReadRealTime());
+            if(Sling!=null){OnSlingSample(sample);return;}
             Model.Update(sample,scale);
             bool stationaryDuplicate=false;
             if(powerWindow.Count>0)
@@ -114,7 +117,7 @@ namespace SquashClash.Runtime.Shot
         private static bool IsGestureKey(string key)=>key.StartsWith("aim.",StringComparison.Ordinal)||key.StartsWith("power.",StringComparison.Ordinal)||key.StartsWith("gesture.",StringComparison.Ordinal)||key.StartsWith("input.",StringComparison.Ordinal);
         private void OnSystemCancel()
         {
-            if(Active){tracker.CancelBySystem();FinishGesture();}
+            if(Active){Sling?.Cancel(input.ReadRealTime());tracker.CancelBySystem();FinishGesture();}
             if(view!=null)view.gameObject.SetActive(false);
             if(Sampling)FinishSampling(input.ReadRealTime(),false,"system-cancel");
         }
@@ -122,7 +125,7 @@ namespace SquashClash.Runtime.Shot
         {
             launchSerial++;
             // A repeat invalidates this gesture, not the two-minute sampling window.
-            if(Active){tracker.CancelBySystem();FinishGesture();}
+            if(Active){Sling?.Cancel(input.ReadRealTime());tracker.CancelBySystem();FinishGesture();}
             view.gameObject.SetActive(false);
         }
         private void OnTuningChanged(string key)
@@ -135,7 +138,7 @@ namespace SquashClash.Runtime.Shot
             if(ContextChanged()){if(Active||Sampling)input.CancelSystem();return;}
             if(Sampling&&now-samplingStart>=120)FinishSampling(now,true,"elapsed");
         }
-        private void Update()=>Tick(input?.ReadRealTime()??0);
+        private void Update(){Tick(input?.ReadRealTime()??0);RefreshSlingStatus();}
 
         public void BeginSamplingWindow()
         {
@@ -166,6 +169,7 @@ namespace SquashClash.Runtime.Shot
         }
         private void FinishGesture()
         {
+            if(Sling!=null){FinishSlingGesture();return;}
             // Serialization and file I/O run after input dispatch. Completed trackers are never reused.
             var finished=tracker;var savedReceipts=receipts.ToArray();var config=EffectiveConfig.From(GestureConfig);
             var aim=Model.Aim;var state=Model.State;var power=Power;var jump=Model.FreezeJumpMeters;
@@ -213,7 +217,7 @@ namespace SquashClash.Runtime.Shot
         }
         private void FinishSampling(double now,bool complete,string reason)
         {
-            Sampling=false;var s=input.Stats;
+            Sampling=false;SlingTrials.EndPractice();var s=input.Stats;
             SamplingRecordJson="{\"schema\":1,\"complete\":"+B(complete)+",\"reason\":"+Q(reason)+",\"elapsedRealSeconds\":"+N(now-samplingStart)+
                 ",\"samples\":"+s.Samples+",\"distinctTimes\":"+s.DistinctTimes+",\"duplicates\":"+s.DuplicateTimes+",\"outOfOrder\":"+s.OutOfOrder+
                 ",\"deliveredHz\":"+N(s.DeliveredHz)+",\"intervalP50Ms\":"+N(s.IntervalP50Ms)+",\"intervalP95Ms\":"+N(s.IntervalP95Ms)+",\"maxGapMs\":"+N(s.MaxGapMs)+
@@ -233,7 +237,7 @@ namespace SquashClash.Runtime.Shot
             if(!initialized)return;
             input.SampleReceived-=OnSample;input.SystemCanceled-=OnSystemCancel;
             app.Host.Launched-=OnLaunched;app.Tuning.Changed-=OnTuningChanged;
-            OnSystemCancel();FlushRecords();
+            OnSystemCancel();FlushRecords();slingStatus?.RemoveFromHierarchy();
         }
         private static string N(double value)=>double.IsNaN(value)||double.IsInfinity(value)?"null":value.ToString("R",CultureInfo.InvariantCulture);
         private static string B(bool value)=>value?"true":"false";

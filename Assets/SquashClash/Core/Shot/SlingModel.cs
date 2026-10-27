@@ -140,6 +140,7 @@ namespace SquashClash.Core.Shot
         private bool Valid(in TouchSample s)=>Finite(s.TimeReal)&&Finite(s.PositionPx.x)&&Finite(s.PositionPx.y);
         private SlingCancelRegion ChooseRegion(Vector2 p)
         {
+            if(!area.Contains(p))return SlingCancelRegion.None;
             float depth=settings.MinDepthMm/scale;
             if(area.yMax-p.y-settings.AboveMm/scale+1e-5>=depth)return SlingCancelRegion.Above;
             bool left=p.x-area.xMin-settings.LateralMm/scale+1e-5>=depth;
