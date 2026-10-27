@@ -316,8 +316,9 @@ Registrar control/transiciones, objetivo/fijación, distancias/P/outcome, borde 
 - **Audio (M03):** clips cortos precargados; Default frente a Best Latency se compara con datos y H17 antes de elegir. Se registran el buffer DSP y la ruta (altavoz, sin Bluetooth en la calibración). «En el frame del contacto» significa envío lógico más latencia registrada.
 - **Configuración (M06):** las claves de golpe, cuerpo, ventanas y calibración se capturan por recepción; la mira y la potencia se congelan al soltar; el rollback nunca lee valores cambiados del panel. El consumo runtime no depende de tipos del DevPanel.
 
-**Adenda D1 a M06:** en S1-sling, selector/configuración se capturan al apoyar; la mira se fija antes de soltar por quietud confirmada y no vuelve a seguir el dedo. En Ended se capturan mira y potencia finales inmutables para el intento; no se mueve de nuevo la mira ni se consulta el panel para reinterpretar el gesto. Una cancelación no inventa liberación ni contacto. A′ conserva su captura/comportamiento, incluida la fijación por Flick. No hay integración con contacto/rollback de S2 en este prototipo.
 
 - **Audio con procedencia (B01):** autor, fuente y licencia de cada clip, o el método de generación (no se etiqueta como CC0 un sonido generado). Las referencias a clips son configurables; sustituir assets exige una build nueva.
+
+**Adenda D1 a M06:** en S1-sling, selector/configuración se capturan al apoyar; la mira se fija antes de soltar por quietud confirmada y no vuelve a seguir el dedo. En Ended se capturan mira y potencia finales inmutables para el intento; no se mueve de nuevo la mira ni se consulta el panel para reinterpretar el gesto. Una cancelación no inventa liberación ni contacto. A′ conserva su captura/comportamiento, incluida la fijación por Flick. No hay integración con contacto/rollback de S2 en este prototipo.
 
 Pendientes heredados que siguen abiertos: comprobar P0-calib-1 en la próxima apertura, renovar el perfil antes de instalar desde el 27, la nota de corrección «sin frames perdidos» en dos documentos de I7a y las observaciones de Claude sobre el DevPanel.

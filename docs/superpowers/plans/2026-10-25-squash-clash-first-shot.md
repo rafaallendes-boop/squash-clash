@@ -4,9 +4,10 @@
 >
 > **En este proyecto:** Codex implementa en el Mac del PO, Claude revisa cada PR y el PO prueba cada incremento en el iPhone y aprueba antes de fusionar. **Este plan no autoriza implementación:** el PO lo revisa y autoriza S1 de forma explícita. Cada incremento siguiente requiere su propia autorización.
 
-**Adenda D1 — PO 2026-10-27, tarea 1.2b en S1:** S1-sling del control §6.2 B se desarrolla bajo la secuencia del [registro literal](../../reviews/2026-10-25-first-shot-po-approvals.md). **Primera parada: un commit solo Markdown y PR en borrador de interacción; detenerse. No código antes de aprobación de Claude.** El [diseño de interacción y protocolo B0–B5](../../reviews/2026-10-27-first-shot-s1-sling-prototype-interaction.md) concreta esta parada. Las tareas históricas de A′ siguen intactas; S2–S4/T8 no autorizados.
 >
 > **Revisión r2 (2026-10-25):** incorpora la [revisión del plan de Codex](../../reviews/2026-10-25-first-shot-r2-plan-review-codex.md) (F01–F10) y las decisiones R2-4 y R2-5 del PO (propuesta §11.1).
+
+**Adenda D1 — PO 2026-10-27, tarea 1.2b en S1:** S1-sling del control §6.2 B se desarrolla bajo la secuencia del [registro literal](../../reviews/2026-10-25-first-shot-po-approvals.md). **Primera parada: un commit solo Markdown y PR en borrador de interacción; detenerse. No código antes de aprobación de Claude.** El [diseño de interacción y protocolo B0–B5](../../reviews/2026-10-27-first-shot-s1-sling-prototype-interaction.md) concreta esta parada. Las tareas históricas de A′ siguen intactas; S2–S4/T8 no autorizados.
 
 **Goal:** que el PO pueda, en su iPhone 16 Pro y con una mano, apuntar al frontis, pegarle a una pelota del lanzador con la fuerza y el momento que elija, y sentir con claridad la diferencia entre un golpe perfecto, uno válido y uno fallido.
 

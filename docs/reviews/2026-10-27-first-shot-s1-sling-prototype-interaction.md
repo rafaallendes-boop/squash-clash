@@ -2,7 +2,7 @@
 
 Fecha 2026-10-27. Rama firstshot/s1-sling-prototype, base main **956cfafbbfea6fef418fa24e6a3b0911663746be**, tras fusionar PR #24 aprobada en 25c180d8f3aa3093209855f892969dcc40b1cbed.
 
-**Esta entrega es un único commit solo Markdown y una PR en borrador para revisión de Claude. Detenerse después: ningún código del prototipo antes de esa aprobación.** Los pasos 2/3 de la decisión del PO están condicionados; no se ejecutan en esta parada. [Registro literal del PO](2026-10-25-first-shot-po-approvals.md), [diseño anterior](2026-10-27-first-shot-s1-control-b-design.md), [propuesta First Shot r2](../superpowers/specs/2026-10-24-first-shot-design.md) y [plan r2](../superpowers/plans/2026-10-25-squash-clash-first-shot.md). Spec v0.3 intacta. A′ sigue por defecto y conserva Flick, N1 por regreso al origen y la regla original 150 ms/P<0,60 del método de potencia por velocidad.
+**Interacción aprobada por Claude en d114e26; revisión del PO2026-10-27:** aplicar primero un commit solo Markdown con los ajustes obligatorios y después continuar el paso2 autorizado, sin otra parada de interacción. El alcance autorizado continúa con TDD/regresión/check-release/build y, con perfil vigente y respaldo, instalación y sesión con PO; nunca S2 ni fusión automática. [Registro literal del PO](2026-10-25-first-shot-po-approvals.md), [diseño anterior](2026-10-27-first-shot-s1-control-b-design.md), [propuesta First Shot r2](../superpowers/specs/2026-10-24-first-shot-design.md) y [plan r2](../superpowers/plans/2026-10-25-squash-clash-first-shot.md). Spec v0.3 intacta. A′ sigue por defecto y conserva Flick, N1 por regreso al origen y la regla original 150 ms/P<0,60 del método de potencia por velocidad.
 
 ## 1. Qué decide el PO y qué propone esta interacción
 
@@ -99,15 +99,19 @@ Propuesta de marcas mínimas configurables solo en DEV/protocolo, sin afectar pr
 | Bloque | Intentos e instrucciones | Registro/métricas |
 |---|---|---|
 | B0 Familiarización | 2 min, práctica identificada por separado. Identificar mira/fijación/tensado/zona y realizar cancelación guiada antes de medir B1. | Todos los intentos registrados como práctica, nunca sustituyen intentos formales. Señalar si entiende el estado y la región. |
-| B1 Apuntar y fijar | 10 intentos: T1,T2,T3,T4,T5 y repetir esa secuencia. Apuntar, dejar fijar y soltar suave, sin buscar tirón fuerte. | Error de mira al fijar, tiempo hasta fijar y señalamiento del PO de “lejos”/fijación involuntaria por intento. Error continuo, **sin umbral numérico de lejos**. |
+| B1 Apuntar y fijar | 10 intentos: T1,T2,T3,T4,T5 y repetir esa secuencia. Apuntar, dejar fijar y soltar suave, sin buscar tirón fuerte. | Error de mira al fijar, tiempo hasta fijar y respuesta por intento mediante OK/Se fijó antes de tiempo; registrar también tirón posterior a fijación aunque se pide soltar suave. Error continuo, **sin umbral numérico de lejos**. |
 | B2 Potencia | ObjetivoT3:10 suaves, luego10 medios y 10 fuertes. | Banda conseguida, P y d mínima/mediana/máxima y dispersión, saturación>20 %, margen al borde. |
-| B3 Apuntar bajo y tirar | 10 medios: T1/T2 alternados. | RB6: continuación del descenso tras fijación prematura, potencia no buscada declarada por PO; error de mira y distancia al borde inferior. No confundir todo tirón posterior con intención confirmada. |
+| B3 Apuntar bajo y tirar | 10 medios: T1/T2 alternados. | RB6: continuación del descenso tras fijación prematura, potencia no buscada declarada por PO; respuesta OK/Se fijó antes de tiempo por intento, error de mira y distancia al borde inferior. No confundir todo tirón posterior con intención confirmada. |
 | B4 Cancelación | 5 cancelaciones voluntarias tras fijar, con zona indicada según geometría. | Outcomes y si canceló cuando quería. Cancelaciones accidentales contadas **en todos** los bloques; no completar la serie repitiendo para reemplazarlas. |
 | B5 Ritmo | 10 sucesivos “lo más rápido que sea cómodo”: objetivos T1,T2,T3,T4,T5,T1,T2,T3,T4,T5; potencias suave/media/fuerte/suave/media/fuerte/suave/media/fuerte/suave. | Duración Began→Ended mediana/p90, errores y abandonos, sin objetivo temporal de aprobado. No simular rally ni contacto. |
 
 Se conservan los 65 intentos formales y todos los de práctica, incluidos Tap/SystemCanceled/abandono/cancelación, parciales y cualquier intento adicional, siempre separado y sin sustitución. Si el PO interrumpe, se registra lo hecho; no se inventa una serie completa. La secuencia de B5 y los objetivos deben quedar visibles antes del intento correspondiente, sin navegar por DEV durante el gesto.
 
 ### Registro y lectura
+
+**B1/B3, tras cada intento:** dos botones exclusivos del protocoloDEV, fuera del frontis: **OK** y **Se fijó antes de tiempo**. Se vinculan al identificador del intento terminado, no al siguiente; no cuentan como TouchSample/gesto ni se confunden con las marcas objetivo. No avanzar hasta registrar respuesta; intentos sin respuesta se conservan como pendientes, nunca comoOK inferido. Mantener señalamiento separado de las métricas.
+
+**Indicadores objetivos descriptivos, sin umbral:** enB1 registrar d posterior a fijación (incluida máxima) donde se pidió soltar suave y error de mira al fijar respecto del objetivo en el frontis. No llamar a toda d>0 fijación involuntaria sin respuesta PO. Registrar **Began→fijación** y **último movimiento fuera de tolerancia→fijación**; conservar timestamp/ausencia de ese movimiento, sin sustituirlo por un frame o inventarlo. Estos indicadores permiten describir el desacople entre fijación y objetivo, no aceptan el control.
 
 Por gesto: control, transiciones con timestamp (Began, fijación, inicio de tensado, entrada/salida de zona, Ended), objetivo solicitado y posición de fijación/error en el frontis, ancla/eje/zona elegida, d actual/máxima/lateral, P y banda, outcome y motivo, duración total/tiempo hasta fijar, distancia mínima al borde inferior/área segura durante el tirón, hash/preset/escenario/bloque/intento. Identificadores de dedo/lanzamiento internos sin datos personales del dispositivo. La app actual no produce todavía todo esto: son requisitos del paso 2 condicionado, no evidencia ya existente.
 
@@ -117,7 +121,7 @@ RestaurarP0-calib-1 al terminar o abortar; comprobar en **nuevo arranque** hash 
 
 ### Preguntas finales, cada una por separado y respuesta literal
 
-Se incorporan literalmente las preguntas del punto 6 aclarado por el PO, más la formulación incluida en el adjunto original. No reemplazar respuestas por un sí/no inferido de los números:
+Se incorporan literalmente las preguntas del punto 6 aclarado por el PO, sin la paráfrasis de Claude del adjunto técnico anterior. No reemplazar respuestas por un sí/no inferido de los números:
 
 1. ¿Puedo colocar la mira donde quiero?
 2. ¿Puedo apuntar bajo sin activar accidentalmente la potencia?
@@ -135,7 +139,6 @@ Se incorporan literalmente las preguntas del punto 6 aclarado por el PO, más la
 14. ¿Cuánto demora el gesto completo, desde apoyar el dedo hasta soltar?
 15. ¿Se siente natural o demasiado mecánico?
 16. ¿Podría utilizarlo repetidamente durante un rally rápido?
-17. ¿lo usarías en un rally rápido?
 
 Preguntas sobre cantidades/tiempos se conservan también como juicio literal del PO, separadas de la métrica calculada. El potencial para un juego dinámico se evalúa como juicio; no se abre un rally ni se acepta S1 por una respuesta favorable.
 
@@ -167,4 +170,4 @@ Pasos posteriores condicionados: implementar sobre arquitectura actual, regresi�
 
 ## 7. Resultado de esta primera parada
 
-Se entrega una interacción concreta para revisión de Claude, con riesgos de cancelación/reducción/espacio/oclusiones/manos y el protocolo breve. Las dimensiones de región y presentación son propuesta de Codex sometida a esa revisión; no hay implementación ni validación física. El registro literal y las adendas D1 están en esta misma PR. **Un solo commit Markdown, PR en borrador, detenerse.** S1 sigue sin aceptar; no iniciar el paso 2 por cuenta propia ni S2–S4/T8.
+Se entrega una interacción concreta para revisión de Claude, con riesgos de cancelación/reducción/espacio/oclusiones/manos y el protocolo breve. Las dimensiones de región y presentación son propuesta de Codex sometida a esa revisión; no hay implementación ni validación física. El registro literal y las adendas D1 están en esta misma PR. **Interacción aprobada; tras el commit documental obligatorio continuar paso2. PR sin fusionar hasta aprobación PO.** S1 sigue sin aceptar; no iniciar S2–S4/T8.

@@ -355,11 +355,11 @@ Claude aprueba **25c180d8f3aa3093209855f892969dcc40b1cbed**, sin correcciones pe
 
 Se crea firstshot/s1-sling-prototype desde ese main, en .worktrees/firstshot-s1-sling-prototype. **Parada vigente: paso 1 de interacción, un único commit solo Markdown y PR en borrador, detenerse. Código solo después de aprobación de Claude de esta interacción.** Los pasos 2/3 se conservan con sus condiciones literales, no se ejecutan en esta entrega.
 
-El texto completo del adjunto se copia abajo literalmente, sin sustituirlo por un resumen. Se conserva además la aclaración del punto 6 recibida después; sus preguntas se incorporan por separado al protocolo. El título de aceptación de esa aclaración no convierte métricas/hipótesis en umbrales definitivos ni acepta S1.
+El adjunto anterior se conserva completo como **encargo técnico**, no como texto literal de las decisiones personales del PO; la decisión literal de puntos1–7 se registra en la revisión posterior. Se conserva además la aclaración del punto 6 recibida después; sus preguntas se incorporan por separado al protocolo. El título de aceptación de esa aclaración no convierte métricas/hipótesis en umbrales definitivos ni acepta S1.
 
 
 <details>
-<summary>Decisión completa del PO, 2026-10-27 — registro literal del adjunto</summary>
+<summary>Encargo técnico del PO, 2026-10-27 — conservado como encargo, no decisión literal</summary>
 
 ```text
 Decisión del PO (2026-10-27), formalizada tras revisar el diseño de PR #24 con Claude. Copiar literalmente en el registro de aprobaciones el texto completo de mis decisiones adjunto.
@@ -453,3 +453,125 @@ Propón un protocolo breve con escenarios y métricas, sin convertir las hipóte
 [Interacción y protocolo](2026-10-27-first-shot-s1-sling-prototype-interaction.md): tabla de cambios frente a PR #24; zona superior desde 12 mm con cualquier lateral y cancelación solo al Ended dentro; franja neutra P0. Fallback lateral 20 mm, profundidad mínima de diana8 mm y presentación fuera del frontis son **propuesta de Codex para revisión**, no decisiones adicionales atribuidas al PO. No se comprime una región para caber ni se mueve durante el gesto; si no cabe zona no se confirma fijación. Se explican retorno arriba, margen superior/inferior, oclusión/manos y RB6 no resuelto. Los rangos de preparación de la zona y las posiciones de cinco objetivos son propuestas de interacción pendientes de esa revisión, no parámetros ya implementados o ajustados en sesión.
 
 Adendas D1 en First Shot r2 (§4.2/C5/§11.4/M06) y plan (1.2b en S1/cobertura C5), aplicando el registro: A′ permanece por defecto y conserva sus reglas; S1-sling tiene zona explícita, pausa120–150 inicial 120, tolerancia configurable, recorrido 30–40 inicial 35, G1/registro de fijaciones involuntarias y sesión B0–B5 exploratoria. Spec v0.3 intacta. No se toca código/tests/defaults/presets/criterios/bandas ni datos/JSON existentes, ni se ejecutan suites/check-release/builds/instalaciones/sesiones/replay/acceso al iPhone. Solo cinco Markdown en el primer commit; PR en borrador para Claude, no fusionar. Detenerse; S1 sigue sin aceptar y S2–S4/T8 sin autorizar. Perfil: no se instala aquí; comprobar vigencia efectiva y renovación a cargo del PO según decisión antes de cualquier instalación futura.
+
+## PR #25: interacción aprobada y ajustes obligatorios previos al código — 2026-10-27
+
+Claude aprueba la interacción del head **d114e26538edf766a6314e02c2b8164f3eba4272**: superior12 mm/lateral20 mm/profundidad8 mm, indicador fuera del frontis, no fijar sin zona, objetivosT1–T5 y protocoloB0–B5. El PO ordena un commit **solo Markdown** con correcciones antes de código y, después, continuar el paso2 (TDD/regresión/check-release/build), sin otra parada de interacción. La sesión posterior se realiza con el PO y la PR no se fusiona hasta su aprobación; S1 sin aceptar y S2–S4/T8 no autorizados.
+
+Se distingue el encargo técnico conservado arriba de la **decisión literal del PO (puntos1–7)**, copiada completa entre las marcas recibidas, sin ampliar su alcance:
+
+```text
+Claude, revisé las alternativas para el nuevo control tipo honda de Squash Clash y, como Product Owner, quiero formalizar mis decisiones para continuar con S1.
+Apruebo desarrollar un prototipo experimental del control tipo honda en el iPhone. No estoy aprobando todavía el control como definitivo ni autorizando S2.
+El objetivo sigue siendo que el jugador pueda apuntar con precisión, controlar voluntariamente la potencia y ejecutar el gesto de manera intuitiva, sin que las distintas acciones interfieran entre sí.
+1. Fijación de la mira: pausa + tolerancia de movimiento
+Apruebo fijar la mira cuando el dedo permanezca relativamente estable durante un período breve.
+
+* Probar inicialmente una pausa de 120–150 ms.
+* Incorporar una tolerancia configurable de movimiento para evitar que pequeñas variaciones del dedo reinicien constantemente el contador.
+* La mira debe permanecer libre mientras el jugador está apuntando.
+* Al fijarse, debe existir una señal visual clara, por ejemplo un destello y cambio de estado.
+* Una vez fijada, no debe desplazarse durante la fase de potencia.
+
+Estos valores son experimentales. Quiero medir cuántas fijaciones involuntarias ocurren, especialmente cuando hago una pausa natural mientras todavía busco dónde apuntar.
+2. Separar completamente apuntado y potencia
+Apruebo que la potencia solo pueda comenzar después de una fijación confirmada.
+El gesto será:
+
+1. Arrastrar para apuntar al frontis.
+2. Mantener el dedo relativamente quieto hasta confirmar la fijación.
+3. Tirar hacia abajo para determinar la potencia.
+4. Soltar para ejecutar el intento.
+
+Al confirmar la fijación debe establecerse un nuevo origen de desplazamiento para calcular la potencia.
+Quiero probar especialmente el caso de apuntar hacia abajo para ejecutar un drop. Ese movimiento no debe interpretarse como potencia antes de la fijación.
+Si detectamos activaciones involuntarias, debemos registrarlas y analizar la causa, no modificar silenciosamente las reglas para conseguir una prueba favorable.
+3. Cancelación mediante zona explícita
+No quiero mantener la cancelación por regreso al punto inicial del toque, porque el nuevo gesto podría activar cancelaciones accidentales.
+Apruebo experimentar con una zona de cancelación explícita, visualmente reconocible y distinguible del recorrido normal de potencia.
+Condiciones:
+
+* Debe ser fácil cancelar voluntariamente.
+* No debe activarse accidentalmente durante un tirón válido.
+* Cancelar no consume el intento.
+* La zona no debe obstaculizar la mira ni los movimientos habituales del dedo.
+
+Propón su ubicación, tamaño y mecanismo de activación para el prototipo. Prefiero que Codex y tú revisen la interacción antes de implementarla, especialmente para evitar conflictos con el gesto hacia abajo.
+4. Recorrido de potencia: 30–40 mm
+Apruebo experimentar con un recorrido físico de 30–40 mm para alcanzar la potencia máxima.
+
+* La potencia debe crecer de forma predecible con la distancia del tirón.
+* El valor máximo debe alcanzarse sin necesidad de movimientos exagerados.
+* Al llegar al máximo, la potencia se satura.
+* Los parámetros deben poder ajustarse desde el panel dev.
+* No incorporar calibración individual por jugador todavía.
+
+Quiero comprobar que puedo ejecutar intencionalmente golpes suaves, medios y fuertes.
+También debemos observar qué ocurre cuando apunto bajo y el dedo queda cerca del borde inferior del iPhone. Si el espacio resulta insuficiente, necesito evidencia antes de decidir un ajuste.
+5. Prototipo experimental en iPhone
+No quiero seguir refinando indefinidamente el control en papel.
+Autorizo un prototipo acotado dentro de S1, utilizando nuestra arquitectura y herramientas actuales, sin crear un sistema paralelo desechable ni sobrediseñar la solución.
+Mantengamos nuestra metodología de desarrollo:
+
+* TDD para la lógica del gesto y sus transiciones.
+* Pruebas de regresión para no afectar First Ball.
+* Parámetros experimentales en un preset separado.
+* Implementación de Codex y revisión técnica de Claude.
+* Instalación y validación real en el iPhone.
+* PR sin fusionar hasta mi aprobación.
+
+El prototipo debe permitir apuntar, fijar la mira, determinar potencia, cancelar y visualizar los estados del control. Todavía no debe incorporar el contacto real con la pelota.
+6. Criterios de aceptación del experimento
+Quiero una prueba breve, repetible y con métricas que permitan comparar resultados.
+Evaluaremos:
+Precisión del apuntado
+
+* ¿Puedo colocar la mira donde quiero?
+* ¿Puedo apuntar bajo sin activar accidentalmente la potencia?
+* ¿La mira permanece estable después de fijarse?
+
+Fijación
+
+* ¿Cuántas fijaciones involuntarias ocurren?
+* ¿Cuánto tiempo necesito para fijar la mira?
+* ¿Entiendo claramente cuándo quedó fijada?
+
+Potencia
+
+* ¿Puedo conseguir golpes suaves, medios y fuertes voluntariamente?
+* ¿La potencia responde de forma consistente a la distancia?
+* ¿Puedo alcanzar la potencia máxima cómodamente?
+* ¿Existen limitaciones por el borde inferior de la pantalla?
+
+Cancelación
+
+* ¿Puedo cancelar cuando realmente quiero?
+* ¿Ocurren cancelaciones accidentales?
+* ¿La zona interfiere con los movimientos normales?
+
+Fluidez
+
+* ¿Cuánto demora el gesto completo, desde apoyar el dedo hasta soltar?
+* ¿Se siente natural o demasiado mecánico?
+* ¿Podría utilizarlo repetidamente durante un rally rápido?
+
+Este último punto es importante: el control no solo debe funcionar en modo práctica, también debe tener potencial para un juego de squash dinámico.
+Propón un protocolo breve con escenarios y métricas, sin convertir las hipótesis en umbrales definitivos antes de validarlas.
+7. Alcance y decisiones posteriores
+Mantengamos intactas las decisiones pendientes de First Shot:
+
+* Timing Perfecto ±40 ms.
+* Ventana válida experimental y comparación con T3 puro.
+* Sonido, háptica y calidad del contacto.
+* S2–S4 sin autorización.
+
+No quiero incorporar ahora jugadores, IA, rallies, marcador ni nuevas mecánicas.
+Próximo paso: prepara el encargo técnico acotado para Codex, identificando los cambios respecto del diseño y plan vigentes, los riesgos y los criterios verificables del prototipo.
+Si no hay contradicciones técnicas bloqueantes, podemos ejecutar este experimento en S1.
+Después revisaré los resultados en mi iPhone y decidiré si aprobamos el control, hacemos otra iteración o reconsideramos la alternativa.
+Mi prioridad es avanzar con evidencia, sin acelerar artificialmente el desarrollo y sin buscar perfección en papel antes de probar el gesto real.
+```
+
+Ajustes previos al código: literales solo en este registro, resumen/enlace en AGENTS; retirada pregunta17 por paráfrasis de Claude (la literal es16); B1/B3 con respuesta por intento OK/Se fijó antes de tiempo soloDEV/protocolo fuera del frontis, no gesto; indicadores descriptivos de tirón enB1 y error de mira, sin umbral; tiempos Began→fijación y último movimiento fuera de tolerancia→fijación. D1 del plan fuera de cita y D1/M06 fuera de lista conservan su contenido. Sin implementación antes de ese commit documental.
+
+Antes de instalar: comprobar perfil efectivo, vence2026-10-28T14:59:31Z; renovación a cargo del PO y detenerse antes de instalar si no está vigente. Respaldar/cotejarP0-calib-1,Po-1,last-active. Esta aprobación no acepta el control definitivo ni habilitaS2.
