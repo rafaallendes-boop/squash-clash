@@ -47,3 +47,17 @@ No se añaden claves ni se cambian valores/rangos:85 defaults45c4e9af5c8f, prese
 El PO pidió asistencia: «Ayudame a hacer esa renovacion. iphone en duplicar telefono ok». Se respaldó y apartó **solo la caché del perfil de esta app**, verificando sus bytes; certificados, claves y app instalada sin cambios. Según [Apple, solicitud de perfil nuevo con firma automática](https://developer.apple.com/help/account/provisioning-profiles/edit-download-or-delete-profiles/), la próxima firma de Xcode solicita un perfil al no encontrar uno local elegible. **Esto todavía no acredita renovación**: se comprobarán fechas, correspondencia y firma del perfil incorporado. No se exportan claves ni se versionan perfiles/identificadores personales.
 
 Respaldo nuevo de P0/Po-1/last-active recuperado, hashes iguales a los previos y selecciónP0. Los transitorios de PlayMode se preservan en patch ignorado y se restauran antes de exportar. Pendientes check-release limpio/dev-prod y builddevReleaseARM64/noDevelopment. Instalación detenida hasta perfil renovado/comprobado; luego cotejo3archivos y campaña nueva separada. No hay sesión físicaD2 todavía. PR#25sin fusionar; S1sin aceptar, S2–S4/T8sin autorizar.
+
+## Build y renovación verificadas antes de instalar
+
+Producto **42265ca**, fuente limpia y440 archivos cotejados. check-release dev/prod fresco/gitDirty=false/módulos correctos. Build dev **ReleaseARM64/noDevelopment**, firma válida. Sin cambios de producto después.
+
+Renovación asistida con Xcode completada, no solo descarga del perfil anterior: nuevo perfil incorporado **creado2026-10-27T18:29:44Z**, vence **2026-11-03T18:29:44Z** (3noviembre15:29Chile). Verificación previa a instalar **2026-10-27T18:30:43.882752Z**: identificador del perfil diferente, creación y caducidad posteriores, misma lista de dispositivos, mismos certificados y entitlements, equipo/bundle/dispositivo correctos, certificado vigente y firma válida. No cambios de claves ni permisos. El perfil anterior queda respaldado fuera de la caché; no se revocó. Esta fecha reemplaza como perfil actual el vencimiento28octubre de los registros históricos. Comprobar siempre vigencia efectiva antes de instalar.
+
+Instalación realizada **después** de esa comprobación. Los tres archivos cotejados directamente byte a byte antes/después de instalar y preparar. La solicitud inicial de arranque desdeCLI no completó; Duplicación pidió autenticación local y el PO la completó. Se abrió la app desde su icono por duplicación: **42265ca dev**, arranqueP0-calib-1/e458bfd5ce9e/cero pendientes observado. Sin gestos del protocolo durante preparación.
+
+S1-sling existente coincide byte a byte con el preset separado de la rama. Se cargó sin guardar; last-active originalP0 se repuso antes de aplicar/relanzar. Lanzamiento preparado **2026-10-27T18:36:39.3090590Z**, S1-sling/**7d1a61c39766**,repeat0/cero pendientes,DEVcerrado, tres archivos iguales y cero registrosD2 de gesto antes del traspaso. El hash de parámetros se mantiene; build42265ca y schema2/quietPolicyD2 distinguen esta sesión delB0db72a00.
+
+## B0 D2 solicitado — todavía sin resultados
+
+Se pidió soloB0/izquierda tras explicar límite/FUERA-DENTRO/suelta y temporizador. Esperar mensajeCompletado sin abrirDEV/salir, y confirmar comprensión de fijación/zona y cancelación voluntaria antes deB1. Si no identifica el límite, detenerse. B1–B5/16preguntas y restauraciónP0 siguen pendientes; no se infieren datos ni aceptación. PR#25en borrador mientras continúa la campaña, sin fusionar.
