@@ -1,5 +1,7 @@
 # Calibración experimental del gesto S1
 
+**Estado vigente al27 de octubre:** GC-S1-01 resuelto en los casos sintéticos autorizados; fase C **incompleta** por cambio de configuración en el cuarto bloque. El PO no consigue las tres intensidades voluntariamente. P0 restaurado/verificado. PR #22 para Claude sin fusionar; S1 sin aceptar. Ver cierre físico al final.
+
 **Histórico del 25, sustituido por la resolución autorizada del 26 al final — DETENIDO — GC-S1-01: el B elegido produce potencia fuerte al apuntar rápido y soltar sin movimiento. No apto para instalar ni para aceptar S1.** La elección provisional de fase A queda bloqueada por la reproducción posterior; ver el cierre y la evidencia sintética.
 
 Autorización PO del 2026-10-25. Rama `firstshot/s1-gesture-calibration`, base main e11cc3aaa9dad7112d886e43d990732e0e198b43. S1 no aceptado; S2–S4/T8 no autorizados. Este registro se escribe y se commitea **antes de calcular B**. Las bandas siguientes son instrumentos experimentales de esta comparación; no modifican criterios de la spec ni del plan.
@@ -130,3 +132,60 @@ Build e instalación de resolución: **8476dd8 dev**, exports dev/prod con módu
 
 
 Preparación completada tras autenticación local del PO: arranque de8476dd8 con P0 **fdd997f2b85a/cero pendientes**, observado en registros y etiqueta UI. S1-calib-gesture cargado desde su archivo separado mediante DEV; se restauró **last-active** desde el respaldo antes de aplicar/relanzar, dejando la selección persistente P0 y la configuración S1 solo en memoria. Lanzamiento de sesión **2026-10-27T00:50:35.4162550Z (26 local) /08b6fe90889b/cero pendientes**; archivo experimental igual al versionado y los tres archivos originales cotejados directamente byte a byte idénticos. No se guardó ni sobrescribió P0/Po-1. DEV cerrado, filas de protocolo dejadas accesibles. Cero gestos registrados antes de empezar. Se mostró el recordatorio literal autorizado y se pidió únicamente la serie de **10 suaves con izquierda**, sin sustituir intentos ni adelantar los otros bloques. Estado en espera de datos, no inferir resultados ni las cinco respuestas.
+
+
+Avance físico del26 local: el PO completó tres series tras pedírsele únicamente suaves; desviación declarada, sin sustituir intentos. El registro confirma diez suaves, diez medios y diez fuertes, todos con08b6fe90889b/cero pendientes. Suaves P mín/med/máx **0,106/2,099/9,791 %** (10/10 banda suave); medios **30,485/66,857/90,074 %** (3/10 banda media, siete en fuerte); fuertes **24,394/81,536/100 %** (8/10 banda fuerte). Sin salidas conservadoras. Estas clasificaciones no sustituyen el juicio pendiente sobre fuertes no buscados. El PO declara literalmente: «Realicé la tanda de 10/10/10 los fuertes eso me cuesta porque si voy fuerte se queda al medio el rombo, tengo que apuntar y luego hacer fuerte». Se registra sin ajuste; el aviso literal de fijación temprana se mostró **antes de solicitar la cuarta serie**, todavía pendiente junto con los cinco juicios y la restauración final.
+
+## Cierre físico del 26–27 de octubre: validación incompleta
+
+**GC-S1-01 está resuelto para los casos sintéticos exigidos, pero la fase C no acredita aún el candidato.** El PO responde que no consigue las tres intensidades voluntariamente. Además, el cuarto bloque se hizo con P0, no con B. Se detiene sin repetir series, recalibrar, aceptar S1 ni iniciar S2–S4/T8. [Evidencia física nueva y separada](../validation/evidence/2026-10-27-s1-gesture-calibration-physical.json): 49 intentos con muestras, parámetros por gesto, resultados, cada lanzamiento/hash y cotejo final. No se mezcla con el replay offline de los 40 antiguos ni con sesiones anteriores.
+
+### Configuración y desviaciones
+
+Los 30 primeros intentos fueron el26 local (UTC27, 00:55:19–00:56:18), con **8476dd8 dev / S1-calib-gesture /08b6fe90889b /cero pendientes**. La mano declarada es «Izquierda, mi dominante»; se pidió esa mano en todos los bloques, sin verificación independiente por intento. El PO hizo suaves, medios y fuertes después del pedido de solo suaves; se conservan diez de cada uno, sin sustituir ni excluir intentos.
+
+Antes del cuarto bloque se mostró literalmente: «Si apuntas muy rápido, la mira se fijará en ese momento (rombo amarillo); es el comportamiento actual. Lo que evaluamos es la potencia al soltar.» El PO lo completó el27 local y declaró: «Listo, hice 2 series porque justo se me salió el telefono, pero si te fijas al apuntar rápido, se me queda mayormente el rombo amarillo al medio». Hay **nueve intentos en la primera secuencia y diez en la segunda**, no dos series completas registradas. Se conservan también las siete cancelaciones.
+
+El primer lanzamiento recuperado de esa mañana fue **2026-10-27T11:53:22.6593060Z / P0-calib-1 /fdd997f2b85a /cero pendientes**. Los 19 gestos posteriores llevan ese hash tanto en la raíz como en gestureConfigHash; todos son **no comparables** con el candidato. P0 usa método A, full1500/dead100/minSamples4/maxGap34, freezeOnRelease0 y repetición3, frente al B temporal full300/dead0/3/51, freezeOnRelease1/repetición0. La selección persistente se había restaurado expresamente a P0 antes de la primera tanda, dejando S1 solo en memoria. No se conoce la causa exacta del nuevo arranque; no se atribuye a un defecto de AimModel ni a una acción concreta del PO. La ruptura de configuración invalida el cuarto bloque como validación de riesgo de B; **NotEvaluated, nunca Pass**. No se calcula un replay de esos 19 como sustituto de otra medición física.
+
+### Resultados comparables de B
+
+Bandas y umbrales conservados: suave [0,25 %), media [25,60 %), fuerte [60,100 %]. Todos los intentos de esta tabla terminaron Swing, sin salida conservadora.
+
+| Serie | n | P mínima / mediana / máxima (%) | En banda pedida | Desviación estándar / IQR (puntos) | Fijación Flick / Release |
+|---|---:|---:|---:|---:|---:|
+| Suaves | 10 | 0,106 / 2,099 / 9,791 | 10/10 | 3,245 / 5,017 | 0 / 10 |
+| Medios | 10 | 30,485 / 66,857 / 90,074 | 3/10 | 17,481 / 18,964 | 7 / 3 |
+| Fuertes | 10 | 24,394 / 81,536 / 100,000 | 8/10 | 24,747 / 34,714 | 10 / 0 |
+
+Separación suave/fuerte: medianas a79,436 puntos; Q25 fuerte64,602 % > Q75 suave5,334 %. La mediana suave es positiva y la fuerte supera60 %. Eso no acredita tres intensidades controladas: **siete medios caen en banda fuerte**. Se informan como clasificación numérica, sin convertirlos automáticamente en golpes accidentales según intención del PO.
+
+**Tres de diez fuertes saturan al100 % (30 %).** Supera la advertencia predeclarada de20 %: indica escala demasiado corta bajo esa regla. No se oculta por haber sido300/0/60 el único superviviente del riesgo sintético; no se cambia full, decaimiento, banda ni regla para hacerlo pasar. No se propone aplicar otro candidato eliminado. La fase física queda para revisión y decisión del PO, sin ajuste autorizado aquí.
+
+### Cuarto bloque: descripción separada, no evaluación del candidato
+
+Con P0: primera secuencia9 intentos (6 SystemCanceled/3 Swing), P mín/med/máx0/0/0 %; segunda10 (1 SystemCanceled/9 Swing), P0/7,908/23,290 %. Total19: **12 Swing y7 SystemCanceled**, cero valores en banda fuerte, siete salidas conservadoras (few-samples4, sample-gap2, short-coverage1), fijación Flick8/None11. Los ceros de cancelación se conservan como resultados del intento, no como medidas de potencia. Estos datos no demuestran seguridad de B, ni responden por el PO si hubo un fuerte no buscado. El parámetro repeat=3 y los relanzamientos también impiden compararlos con las tandas preparadas con repeat=0.
+
+La fijación temprana que el PO describe ya se advertía antes de esta tanda; se registra sin cambiar ganancia, lookback, umbral, cámara ni vista. Su observación de la tanda fuerte anterior se conserva literal: «Realicé la tanda de 10/10/10 los fuertes eso me cuesta porque si voy fuerte se queda al medio el rombo, tengo que apuntar y luego hacer fuerte».
+
+### Cinco respuestas literales del PO
+
+| Pregunta | Respuesta literal |
+|---|---|
+| ¿Consigues las tres intensidades de forma voluntaria? | «No, la de golpear rápido me cuesta lograrlo ya que debo apuntar lento y acelerar» |
+| ¿Apareció algún golpe fuerte que no buscabas? | «cuando lo logro, sale bien» |
+| ¿Apareció algún golpe fuerte al apuntar rápido y soltar suave? | «cuando lo hacía el rombo amarillo uedaba al medio» |
+| ¿La mira queda donde quieres apuntar? | «si» |
+| ¿Se siente consistente entre intentos? | «habría que mejorar como hacer el golpe rapido» |
+
+No convertir las respuestas segunda y tercera en sí/no: no responden directamente por potencia accidental. La tercera describe la mira durante una tanda con otra configuración. La quinta pide mejorar la mecánica, sin afirmar consistencia. La primera es un no explícito. No se infiere aceptación de S1 de la cuarta.
+
+### Restauración y entrega
+
+Reinicio de la app ya instalada, sin otra build ni instalación; fue necesario continuar la pausa de foco mediante Duplicación. Estado nuevo observado **2026-10-27T11:59:47.4715270Z (08:59:47 local) /8476dd8 dev /P0-calib-1 /fdd997f2b85a /cero pendientes**, repetido en registros hasta12:00:48.4018820Z. UI confirma P0 y cero pendientes; DEV cerrado. Cotejo directo de bytes de **P0-calib-1.json, Po-1.json y last-active.txt** contra el respaldo previo a instalar: **3/3 idénticos**, hashes en JSON. Sin intentos físicos añadidos durante el cierre:49 conservados.
+
+Límites: DPI460 reportado, sin regla física en esta sesión; mm/s no son calibración física verificada. Orden fijo y aprendizaje/fatiga posibles. Diferencia de fecha y de configuración antes de la cuarta, primera secuencia incompleta e interrupción declarada. No se completó una campaña controlada de cuatro series. **No hay aceptación de S1 ni nueva autorización implícita de sesión o ajuste.**
+
+Producto sigue8c0a682 y app8476dd8, sin cambios de código tras las suites frescas371/371 EditMode y172/172 PlayMode, ni tras check-release dev/prod limpio. Spec, planes, criterios, bandas, ProjectSettings, Packages y scripts intactos; defaults6095c0b38614 sin cambio desde41e9abf,58 valores anteriores/proyección00a501ad7066,41 heredados/proyección0d39e6016bd8 y SimulationKey166a96e319c7 intactos. La instalación fue el26 con perfil vigente; no hubo instalación el27. Para cualquiera futura, comprobar vigencia efectiva y renovarlo primero desde el27; vence2026-10-28T14:59:31Z.
+
+**PR #22 lista para revisión de Claude, abierta/sin fusionar.** Entregar evidencia parcial y juicio del PO, sin promover preset ni defaults. Detenerse; S1 sin aceptar y S2–S4/T8 sin autorizar.

@@ -693,7 +693,7 @@
   "defaultsUnchangedFromReviewedHead": "6095c0b38614",
   "P0ExtendedHash": "fdd997f2b85a",
   "experimentalPresetHash": "08b6fe90889b",
-  "physicalSession": "Awaiting first series: ten soft, left hand",
+  "physicalSession": "Incomplete validation: 30 controlled candidate gestures; all 19 fourth-block attempts used P0 and are non-comparable. Stop without repeating or tuning.",
   "completeRegression": {
     "editmode": {
       "total": "371",
@@ -771,5 +771,157 @@
     "devClosed": true,
     "incidentalGesturesBeforeStart": 0
   },
-  "mandatoryWarningBeforeFourthDelivered": false
+  "mandatoryWarningBeforeFourthDelivered": true,
+  "firstThreeSeriesSummary": {
+    "soft": {
+      "n": 10,
+      "trialNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "configComparable": true,
+      "powerMinMedianMax": [
+        0.10566464625298977,
+        2.0991567987948656,
+        9.79061871767044
+      ],
+      "powerStdPopulationPp": 3.244956703920608,
+      "powerIqrPp": 5.0169972877483815,
+      "inIntendedBand": 10,
+      "inIntendedBandPct": 100.0,
+      "strongOutsideStrongSeries": 0,
+      "conservativeReasons": {},
+      "outcomes": {
+        "Swing": 10
+      },
+      "freezeCauses": {
+        "Release": 10
+      }
+    },
+    "medium": {
+      "n": 10,
+      "trialNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "configComparable": true,
+      "powerMinMedianMax": [
+        30.484628677368164,
+        66.85656309127808,
+        90.0740385055542
+      ],
+      "powerStdPopulationPp": 17.480708228240257,
+      "powerIqrPp": 18.96362602710724,
+      "inIntendedBand": 3,
+      "inIntendedBandPct": 30.0,
+      "strongOutsideStrongSeries": 7,
+      "conservativeReasons": {},
+      "outcomes": {
+        "Swing": 10
+      },
+      "freezeCauses": {
+        "Flick": 7,
+        "Release": 3
+      }
+    },
+    "strong": {
+      "n": 10,
+      "trialNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "configComparable": true,
+      "powerMinMedianMax": [
+        24.393710494041443,
+        81.5355509519577,
+        100
+      ],
+      "powerStdPopulationPp": 24.74674599021151,
+      "powerIqrPp": 34.714099764823914,
+      "inIntendedBand": 8,
+      "inIntendedBandPct": 80.0,
+      "strongOutsideStrongSeries": null,
+      "conservativeReasons": {},
+      "outcomes": {
+        "Swing": 10
+      },
+      "freezeCauses": {
+        "Flick": 10
+      }
+    },
+    "aim-soft": {
+      "n": 0,
+      "trialNumbers": [],
+      "configComparable": true,
+      "powerMinMedianMax": null,
+      "powerStdPopulationPp": null,
+      "powerIqrPp": null,
+      "inIntendedBand": 0,
+      "inIntendedBandPct": null,
+      "strongOutsideStrongSeries": 0,
+      "conservativeReasons": {},
+      "outcomes": {},
+      "freezeCauses": {}
+    }
+  },
+  "firstThreeSeriesObservationLiteral": "Realicé la tanda de 10/10/10 los fuertes eso me cuesta porque si voy fuerte se queda al medio el rombo, tengo que apuntar y luego hacer fuerte",
+  "physicalEvidence": "2026-10-27-s1-gesture-calibration-physical.json",
+  "measurementScope": "Risk selection and replay sections are synthetic/offline, not new physical measurement. Separate physicalEvidence contains the new session.",
+  "finalP0Restoration": {
+    "status": "Verified after restart and focus continuation",
+    "firstFreshFinalLaunch": {
+      "ts": "2026-10-27T11:59:47.4715270Z",
+      "kind": "launch",
+      "build": "0.1.0+8476dd8 dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "fdd997f2b85a",
+      "pending": 0
+    },
+    "latestVerifiedLaunch": {
+      "ts": "2026-10-27T12:00:48.4018820Z",
+      "kind": "launch",
+      "build": "0.1.0+8476dd8 dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "fdd997f2b85a",
+      "pending": 0
+    },
+    "persistentSelection": "P0-calib-1",
+    "directByteComparisons": {
+      "P0-calib-1.json": true,
+      "Po-1.json": true,
+      "last-active.txt": true
+    },
+    "sha256": {
+      "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
+    },
+    "DEVClosed": true,
+    "noAdditionalPhysicalAttempts": true,
+    "baseline": "before-install-retry"
+  }
 }

@@ -249,3 +249,27 @@ Regresión de resolución, producto8c0a682: **371/371 EditMode, 172/172 PlayMode
 Build8476dd8 dev instalada el26: Release ARM64/no Development, firma y perfil efectivo comprobados válidos hasta2026-10-28T14:59:31Z; exports dev/prod gitDirty=false. Tres archivos idénticos byte a byte tras instalar. App nueva aún no arrancada por bloqueo del teléfono; autenticación local de Duplicación solicitada al PO. Preset separado copiado, todavía sin cargar; selección P0 intacta. FaseC pendiente, no inferir datos ni juicios.
 
 Preparación física verificada tras autenticación: arranque8476dd8/P0fdd997f2b85a/cero pendientes. Sesión temporal08b6fe90889b/cero pendientes, lanzamiento2026-10-27T00:50:35.4162550Z (26 local); last-active devuelto a P0 antes de medir y tres archivos idénticos byte a byte. S1 solo en memoria, sin guardar sobre P0/Po-1, DEV cerrado. Recordatorio literal mostrado y solicitado solo10 suaves izquierda. No hay resultados físicos nuevos todavía; los demás bloques y aviso previo a cuarta siguen pendientes.
+
+## Entrega de resolución y fase C incompleta — 2026-10-27
+
+Se ejecutó la decisión del26: candidato único300/0/60, preset08b6fe90889b; producto **8c0a682**, pruebas nuevas con RED/GREEN descritos en informe, regresión fresca **371/371 EditMode y172/172 PlayMode**, exports dev/prod limpios y build instalada **8476dd8 dev**. No se atribuye a Claude aprobación de estos cambios: su revisión comunicada fue del bloqueo en41e9abf; la entrega actual queda **pendiente de revisión de Claude en PR #22**, abierta/no borrador y sin fusionar.
+
+Fase física26–27 con mano declarada «Izquierda, mi dominante»:30 intentos comparables con B (10 suaves/10 medios/10 fuertes), y19 del cuarto bloque **no comparables** con B: todosP0fdd997f2b85a. Se declara que el PO adelantó medios/fuertes tras solicitar solo suaves. Aviso literal mostrado antes de cuarta; PO repitió por interrupción al salirse el teléfono, sin excluir la primera secuencia de9 ni sus cancelaciones. No dos series completas por inferencia. El nuevo lanzamientoP0 se observó11:53:22Z del27; causa exacta no determinada. La configuración temporal se había perdido respecto a la noche anterior. **No repetir ni ajustar sin otra decisión del PO.**
+
+Resultados B:10/10 suaves,3/10 medios y8/10 fuertes en sus bandas; tres fuertes saturados de10 (30 %, por encima de advertencia20 %). Siete medios numéricamente fuertes no equivalen por inferencia a siete accidentes. Riesgo físico de apuntar rápido/soltar suave para B **NotEvaluated**; los19 del cuarto bloque son12 Swing/7 SystemCanceled conP0, no validación del candidato. [Informe](2026-10-25-first-shot-s1-gesture-calibration.md) y [evidencia física separada](../validation/evidence/2026-10-27-s1-gesture-calibration-physical.json), conservando historia y evidencia de GC-S1-01.
+
+Cinco preguntas y respuestas literales del PO:
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿Consigues las tres intensidades de forma voluntaria? | «No, la de golpear rápido me cuesta lograrlo ya que debo apuntar lento y acelerar» |
+| ¿Apareció algún golpe fuerte que no buscabas? | «cuando lo logro, sale bien» |
+| ¿Apareció algún golpe fuerte al apuntar rápido y soltar suave? | «cuando lo hacía el rombo amarillo uedaba al medio» |
+| ¿La mira queda donde quieres apuntar? | «si» |
+| ¿Se siente consistente entre intentos? | «habría que mejorar como hacer el golpe rapido» |
+
+No convertir las respuestas segunda/tercera en una afirmación o negación de potencia accidental; la tercera describe posición de la mira y el cuarto bloque usóP0. No inferir consistencia ni aceptación. La dificultad de apuntar primero y acelerar queda registrada sin cambio de mecánica. El PO decide después del informe y la revisión; **S1 sigue sin aceptar**.
+
+Restauración final mediante reinicio de app existente y continuación de foco, sin build ni instalación el27: **2026-10-27T11:59:47.4715270Z /8476dd8 dev /P0-calib-1 /fdd997f2b85a /cero pendientes**, corroborado en lanzamientos posteriores yUI. **P0-calib-1.json, Po-1.json y last-active.txt directamente byte a byte idénticos al respaldo previo a instalar**; DEV cerrado,49 intentos intactos y ninguna serie adicional. Defaults6095c0b38614 sin cambio desde41e9abf;58 anteriores/proyección00a501ad7066,41 heredados/proyección0d39e6016bd8, SimulationKey166a96e319c7, spec/planes/criterios/bandas/umbrales intactos. No código después de las pruebas/build indicadas. Perfil comprobado vigente antes de instalar el26, vence2026-10-28T14:59:31Z; comprobar vigencia efectiva siempre y renovar antes de cualquier instalación desde el27.
+
+**Entregar PR #22 lista para Claude sin fusionar y detenerse.** No promover preset/defaults, no aceptarS1 ni iniciarS2–S4/T8. La fase física queda incompleta y no se autoriza desde este registro una repetición ni un ajuste.
