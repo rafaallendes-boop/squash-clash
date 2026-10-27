@@ -621,3 +621,14 @@ D2 implementada tras replay predeclarado58d037d/calculado88213d4 anterior al có
 La asistencia solicitada porPO permitió a Xcode generar un perfil nuevo al firmar: creado**2026-10-27T18:29:44Z**,vence**2026-11-03T18:29:44Z**. Verificación incorporada antes de instalar18:30:43Z: distinto del anterior, mismas autorizaciones/dispositivos/certificados, vigencia y firma correctas. Perfil previo respaldado, sin revocación ni exportación de claves. La restricción previa de renovación quedó satisfecha **antes** de instalar42265ca dev ReleaseARM64/noDevelopment. Nuevo vencimiento sustituye al28octubre como perfil actual; comprobar vigencia efectiva siempre.
 
 411/411 EditMode,184/184 PlayMode,check-release limpio dev/prod y440 fuentes cotejadas. Tres archivos directamente iguales tras instalar/preparar. ArranqueP0e458bfd5ce9e/cero pendientes;S1-sling temporal7d1a61c39766/repeat0/cero pendientes, last-activeP0 repuesto antes de aplicar. Se pidió soloB0/izquierda con temporizador/cancelación guiada; **aún sin resultados ni juicios de aceptación**. ContinuaciónB1–B5 exige identificación porPO yB0completo; después16preguntas/restauraciónP0. PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar. [Registro completo](2026-10-27-first-shot-s1-sling-iteration-2.md).
+
+
+### D2 detenida antes de armar B0 — SL-S1-04, 2026-10-27
+
+Respuesta literal del PO al pedido exclusivo de B0:
+
+> Abrí la app, y se ejecuto un informe. Luego, presione el bo . 2 min practica, no se apuntaba ni aparecía nada, por lo que cerré la app y la volví a abrir. Apareció p0. Luego se ejcuto el mismo informe de S8. y la volví a cerrar
+
+No se autoriza una corrección nueva por inferencia de esta respuesta. Se detiene la práctica: no hay inicioB0 ni gestos/muestreoD2 registrados; B0NotEvaluated, B1–B5 y16preguntas no iniciados. Dos P2 incidentales completos, primero con S1-sling7d1a61c39766/cero pendientes, después de reiniciar con P0e458bfd5ce9e/cero pendientes. No se registran como campaña autorizada ni como medición de gesto. El código restaura host pausado tras P2 y rechaza medir en pausa; el toque activador y el rechazo concreto de B0 no constan. No afirmar autoarranque ni culpa del PO.
+
+[Informe D2 y propuesta de investigación sin implementar](2026-10-27-first-shot-s1-sling-iteration-2.md), [evidencia nueva separada](../validation/evidence/2026-10-27-s1-sling-iteration-2-startup-incident.json). Presets/selección directamente byte a byte iguales al respaldo; P0 observado en reinicio delPO20:12:34Z, pero el P2 posterior puede dejar el reloj pausado. Arranque final nuevo pendiente por bloqueo/autenticación local; no declarar restauración final confirmada todavía.440 fuentes intactas, ninguna suite/build/instalación ni intento físico nuevo para cerrar. Perfil renovado vence2026-11-03T18:29:44Z; comprobar vigencia efectiva antes de cualquier instalación. PR#25 sin fusionar, S1 sin aceptar yS2–S4/T8 sin autorizar; detenerse para decisiónPO/Claude.

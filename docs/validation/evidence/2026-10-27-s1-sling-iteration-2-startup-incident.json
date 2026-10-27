@@ -1,0 +1,408 @@
+{
+  "schema": 1,
+  "incident": "SL-S1-04",
+  "status": "StoppedBeforeB0_TriggerNotEstablished",
+  "build": "0.1.0+42265ca dev",
+  "physicalOutcome": "NotEvaluated",
+  "poLiteral": "Abrí la app, y se ejecuto un informe. Luego, presione el bo . 2 min practica, no se apuntaba ni aparecía nada, por lo que cerré la app y la volví a abrir. Apareció p0. Luego se ejcuto el mismo informe de S8. y la volví a cerrar",
+  "capture": "Logs/evidence/s1-sling-iteration-2/after-PO-D2-B0-failed-start",
+  "captureCountsForInstalledBuild": {
+    "launch": 31,
+    "frames": 88
+  },
+  "D2BlockStarts": 0,
+  "D2Gestures": 0,
+  "D2SamplingRecords": 0,
+  "B0Complete": false,
+  "B1ThroughB5Started": false,
+  "final16QuestionsAsked": false,
+  "timeline": [
+    {
+      "ts": "2026-10-27T18:34:19.7098760Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:22.7403030Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:25.7439220Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:28.7606650Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:31.7782790Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:34.7950470Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:37.7944480Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:40.8104960Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:43.8282820Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:46.8443310Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:49.8451140Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:52.8604520Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:55.8717840Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:34:58.8821330Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:35:01.8932290Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:35:04.8968240Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:35:07.8965700Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:35:10.9128790Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:35:13.9132000Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:35:16.9290220Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:35:19.9251550Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:35:22.9420120Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:35:25.9439980Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T18:36:39.3090590Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "S1-sling",
+      "effectiveHash": "7d1a61c39766",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:11:27.7807130Z",
+      "kind": "frames",
+      "phase": "spike",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "S1-sling",
+      "effectiveHash": "7d1a61c39766",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:11:30.7258490Z",
+      "kind": "frames",
+      "phase": "spike",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "S1-sling",
+      "effectiveHash": "7d1a61c39766",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:11:30.7438340Z",
+      "kind": "frames",
+      "phase": "benchmark",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "S1-sling",
+      "effectiveHash": "7d1a61c39766",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:11:30.7894060Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "S1-sling",
+      "effectiveHash": "7d1a61c39766",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:12:34.0528790Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:12:37.0687240Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:12:40.0668200Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:12:43.0673470Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:12:46.0657030Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:12:56.3112680Z",
+      "kind": "frames",
+      "phase": "spike",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:12:59.2571040Z",
+      "kind": "frames",
+      "phase": "spike",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:12:59.2762070Z",
+      "kind": "frames",
+      "phase": "benchmark",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    },
+    {
+      "ts": "2026-10-27T20:12:59.3199950Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+42265ca dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0
+    }
+  ],
+  "incidentalReports": [
+    {
+      "file": "P2-20261027-201130-751.md",
+      "sha256": "343e1d9e6a65ac0b350097ce2666a32dc048b03308d4d084a7a65c4d7f9ae34b",
+      "startUtc": "2026-10-27T20:11:17.8049740Z",
+      "endUtc": "2026-10-27T20:11:30.7446920Z",
+      "effectiveHash": "7d1a61c39766",
+      "complete": true,
+      "use": "Incidental only; not an authorized gate campaign or S1 measurement"
+    },
+    {
+      "file": "P2-20261027-201259-281.md",
+      "sha256": "179f7ddf84c76b232ffc28739ec14f8e6c32c9e29f4dcf5c11c790ec4a5dbedc",
+      "startUtc": "2026-10-27T20:12:46.3215100Z",
+      "endUtc": "2026-10-27T20:12:59.2766320Z",
+      "effectiveHash": "e458bfd5ce9e",
+      "complete": true,
+      "use": "Incidental only; not an authorized gate campaign or S1 measurement"
+    }
+  ],
+  "inferences": {
+    "confirmed": "P2 run completed twice; first S1-sling/7d1a61c39766 then P0/e458bfd5ce9e. No B0 arm or gesture records.",
+    "codePath": "SpikeSection.Update restores host paused; GesturePreview.CanMeasure rejects paused.",
+    "notEstablished": "Exact input that activated P2, whether B0 callback ran, and actual rejection reason are not logged. No claim of auto-start, input propagation, user error or failed D2 quietness."
+  },
+  "presetsAtIncidentCapture": {
+    "P0-calib-1.json": {
+      "sha256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "byteIdenticalToBeforeInstall": true
+    },
+    "Po-1.json": {
+      "sha256": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "byteIdenticalToBeforeInstall": true
+    },
+    "last-active.txt": {
+      "sha256": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+      "byteIdenticalToBeforeInstall": true
+    }
+  },
+  "sourceIntegrity": {
+    "filesChecked": 440,
+    "allUnchanged": true
+  },
+  "restoration": {
+    "status": "FinalFreshLaunchPending_MirroringAuthentication",
+    "observedP0LaunchUtc": "2026-10-27T20:12:34.0528790Z",
+    "hash": "e458bfd5ce9e",
+    "pending": 0,
+    "postIncidentUserLaunchObserved": true,
+    "clockMayBePausedAfterIncidentalP2": true
+  },
+  "newTestsBuildsInstallsOrPhysicalAttemptsForIncidentClosure": false,
+  "S1Accepted": false,
+  "S2ThroughS4AndT8Authorized": false
+}

@@ -42,7 +42,7 @@ El límite de cancelación se dibuja en su coordenada real relativa al dedo al f
 
 No se añaden claves ni se cambian valores/rangos:85 defaults45c4e9af5c8f, preset7d1a61c39766,41 heredados/SimulationKey intactos. aim.holdMaxGapMs conserva51 en catálogo/presets con título D1 para compatibilidad; ya no veta D2. A′/estimadores anteriores/specv0.3/plan intactos; propuesta e interacción solo reciben D2aditiva y conservan íntegro el texto anterior.
 
-## Perfil y preparación pendiente
+## Histórico — perfil y preparación antes de la build
 
 El PO pidió asistencia: «Ayudame a hacer esa renovacion. iphone en duplicar telefono ok». Se respaldó y apartó **solo la caché del perfil de esta app**, verificando sus bytes; certificados, claves y app instalada sin cambios. Según [Apple, solicitud de perfil nuevo con firma automática](https://developer.apple.com/help/account/provisioning-profiles/edit-download-or-delete-profiles/), la próxima firma de Xcode solicita un perfil al no encontrar uno local elegible. **Esto todavía no acredita renovación**: se comprobarán fechas, correspondencia y firma del perfil incorporado. No se exportan claves ni se versionan perfiles/identificadores personales.
 
@@ -58,6 +58,38 @@ Instalación realizada **después** de esa comprobación. Los tres archivos cote
 
 S1-sling existente coincide byte a byte con el preset separado de la rama. Se cargó sin guardar; last-active originalP0 se repuso antes de aplicar/relanzar. Lanzamiento preparado **2026-10-27T18:36:39.3090590Z**, S1-sling/**7d1a61c39766**,repeat0/cero pendientes,DEVcerrado, tres archivos iguales y cero registrosD2 de gesto antes del traspaso. El hash de parámetros se mantiene; build42265ca y schema2/quietPolicyD2 distinguen esta sesión delB0db72a00.
 
-## B0 D2 solicitado — todavía sin resultados
+## Histórico — B0 D2 solicitado antes de la devolución del PO
 
 Se pidió soloB0/izquierda tras explicar límite/FUERA-DENTRO/suelta y temporizador. Esperar mensajeCompletado sin abrirDEV/salir, y confirmar comprensión de fijación/zona y cancelación voluntaria antes deB1. Si no identifica el límite, detenerse. B1–B5/16preguntas y restauraciónP0 siguen pendientes; no se infieren datos ni aceptación. PR#25en borrador mientras continúa la campaña, sin fusionar.
+
+
+## SL-S1-04 — sesión detenida antes de armar B0
+
+Devolución literal del PO:
+
+> Abrí la app, y se ejecuto un informe. Luego, presione el bo . 2 min practica, no se apuntaba ni aparecía nada, por lo que cerré la app y la volví a abrir. Apareció p0. Luego se ejcuto el mismo informe de S8. y la volví a cerrar
+
+Se aplica la parada antes de B1: **B0 no llegó a armarse; no hay una sesión de gestos D2 evaluable**. No es un Fail medido de la quietud, la potencia ni la cancelación. La [evidencia nueva del incidente](../validation/evidence/2026-10-27-s1-sling-iteration-2-startup-incident.json) se mantiene separada del B0 db72a00 y del replay. La captura de contenedor de 42265ca contiene31 registros launch y88 frames; **cero s1-sling-block, cero gestos y cero registros de muestreo D2**. No se pidieron B1–B5 ni las16 preguntas finales, ni se infieren respuestas a partir de esta devolución.
+
+Los dos informes guardados son ejecuciones reales de **Prueba física P2**, que incluye S8, no el protocolo B0:
+
+| Inicio → fin UTC | Configuración registrada | Lectura |
+|---|---|---|
+| 20:11:17.8049740 → 20:11:30.7446920 | S1-sling / 7d1a61c39766 / cero pendientes | La primera activación ocurrió con el candidato correcto, después de la preparación18:36:39Z; no atribuirla a un arranque inicial con P0. |
+| 20:12:46.3215100 → 20:12:59.2766320 | P0-calib-1 / e458bfd5ce9e / cero pendientes | Tras el reinicio del PO; primer lanzamiento P0 a20:12:34.0528790Z. |
+
+Los archivos originales y sus hashes se preservan localmente, sin publicar identificadores personales. Sus resultados no se incorporan como nueva campaña autorizada de física/rendimiento ni como validación de S1. La vuelta a P0 después de reiniciar es la restauración prevista: S1-sling era temporal y last-active permaneció en P0. No prueba pérdida de datos.
+
+### Evidencia de código y límite del diagnóstico
+
+[DevBar, botón physics-spike](../../Assets/SquashClash/DevPanel/DevBar.cs) conecta «Prueba física P2» a SpikeSection.Begin; su inicialización no llama Begin. [SpikeSection.Update](../../Assets/SquashClash/DevPanel/SpikeSection.cs) restaura el host mediante Replay y **Clock.Paused=true** al terminar. [GesturePreview.CanMeasure](../../Assets/SquashClash/Runtime/Shot/GesturePreview.cs) rechaza medir en pausa, y [ArmSlingBlock](../../Assets/SquashClash/Runtime/Shot/GesturePreview.Sling.cs) no escribe el inicio de bloque si esa precondición falla. Este camino explica cómo una ejecución incidental de P2 puede impedir B0 y el apuntado.
+
+**El registro no identifica el toque que activó P2, si se ejecutó el callback de B0 ni el motivo concreto de rechazo.** No se confirma autoarranque, propagación de un toque de reanudación ni pulsación equivocada del PO. Se solicitó aclaración sobre «Toca para continuar», sin pedir que lo repita. [ResumeOverlay](../../Assets/SquashClash/Runtime/App/ResumeOverlay.cs) oculta la capa en PointerDown y detiene propagación; esto, por sí solo, no demuestra un paso de entrada al botón subyacente.
+
+Propuesta para la siguiente decisión PO/Claude, **sin implementar**: investigar la activación con trazabilidad del control invocado y comprobar si interviene la reanudación; hacer inequívoca la imposibilidad de armar B0 en pausa y exigir inicio de bloque/hash/cuenta atrás visibles antes de entregar el teléfono. Una corrección de controles o de entrada requeriría un encargo aparte con TDD. No se cambia la mecánica D2 ni sus parámetros a partir de este incidente.
+
+### Restauración y estado de entrega
+
+En la captura posterior al incidente, P0-calib-1, Po-1 y last-active son directamente iguales byte a byte al respaldo previo a instalar. P0/e458bfd5ce9e/cero pendientes está observado en el reinicio del PO; la ejecución P2 posterior puede dejar el reloj pausado. El intento de arranque final por CLI fue rechazado por dispositivo bloqueado; Duplicación requiere autenticación local, solicitada al PO. **La comprobación final de un proceso nuevo todavía está pendiente**; no se declara realizada a partir del intento fallido.
+
+440 archivos de producto/configuración/scripts cotejados sin cambios desde la fuente de build42265ca. No se ejecutaron suites/check-release/build/instalación ni gestos adicionales para investigar este incidente. Los resultados411/411 y184/184 y los checks limpios anteriores se conservan como verificación de esa fuente, sin repetirlos ni presentarlos como una ejecución posterior. Perfil renovado vigente hasta2026-11-03T18:29:44Z; comprobar vigencia efectiva antes de toda instalación futura. S1 sigue sin aceptar, S2–S4/T8 sin autorizar. PR#25 sin fusionar; la prueba física queda detenida.

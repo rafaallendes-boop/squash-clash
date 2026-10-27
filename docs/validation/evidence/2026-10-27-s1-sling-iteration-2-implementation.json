@@ -3,7 +3,7 @@
   "baseReviewedHead": "508f625982c7998f13f315cc8f7ea993f40c5c13",
   "predeclarationCommit": "58d037d",
   "diagnosticBeforeImplementationCommit": "88213d4",
-  "newPhysicalSession": "B0Requested_NoResultsYet",
+  "newPhysicalSession": "StoppedBeforeB0_SL-S1-04_NotEvaluated",
   "newInstallation": "Succeeded_AfterRenewalAndEmbeddedValidation",
   "profileRenewal": {
     "checkedUtc": "2026-10-27T18:30:43.882752+00:00",
@@ -169,5 +169,6 @@
     "threeFilesByteIdentical": true,
     "DEVClosed": true,
     "zeroD2GesturesBeforeHandoff": true
-  }
+  },
+  "physicalIncidentEvidence": "2026-10-27-s1-sling-iteration-2-startup-incident.json"
 }
