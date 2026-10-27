@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SquashClash.Core.Shot
 {
-    public enum GestureOutcome { None, Tap, Canceled, SystemCanceled, Swing }
+    public enum GestureOutcome { None, Tap, Canceled, SystemCanceled, Swing, ZoneCanceled, AbandonedBeforeFix }
     public sealed class GestureTracker
     {
         private readonly float tapMaxMm, tapMaxMs, cancelRadiusMm, mmPerPx;

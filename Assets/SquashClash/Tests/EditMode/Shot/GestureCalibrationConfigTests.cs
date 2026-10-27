@@ -18,7 +18,7 @@ namespace SquashClash.Core.Tests.Shot
             foreach(var key in Added)Assert.That(ParamCatalog.TryGet(key,out _),Is.True,key);
             var p=ConfigFixtures.Default();Assert.That(p.Get("power.method"),Is.Zero);Assert.That(p.Get("aim.freezeOnRelease"),Is.Zero);
             Assert.That(p.Get("power.peakSmoothingMs"),Is.EqualTo(20));Assert.That(p.Get("power.peakDecayMs"),Is.EqualTo(120));
-            var entries=p.Ordered.Where(x=>!Added.Contains(x.Key)).ToArray();Assert.That(entries.Length,Is.EqualTo(58));
+            var entries=ConfigFixtures.PreSlingEntries(p).Where(x=>!Added.Contains(x.Key)).ToArray();Assert.That(entries.Length,Is.EqualTo(58));
             var canonical=string.Concat(entries.Select(x=>x.Key+"="+x.Value.ToString("R",System.Globalization.CultureInfo.InvariantCulture)+"\n"));
             using(var sha=SHA256.Create())Assert.That(BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(canonical)),0,6).Replace("-","").ToLowerInvariant(),Is.EqualTo("00a501ad7066"));
             Assert.That(p.HashOf(ConfigFixtures.FirstBallPrefixes),Is.EqualTo("0d39e6016bd8"));Assert.That(EffectiveConfig.From(p).SimulationKey,Is.EqualTo("166a96e319c7"));

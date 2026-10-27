@@ -51,6 +51,6 @@ namespace SquashClash.Core.Tests.Shot
             Assert.That(p.Get("aids.ballVisualScale"),Is.EqualTo(1d),"aids.ballVisualScale");
         }
         [Test] public void SimulationKey_IsUnchanged()=>Assert.That(EffectiveConfig.From(ConfigFixtures.Default()).SimulationKey,Is.EqualTo("166a96e319c7"));
-        [Test] public void NewHash_IsRecorded() {var p=ConfigFixtures.Default();Assert.That(p.Hash,Is.EqualTo("6095c0b38614"));Assert.That(p.Ordered.Count,Is.EqualTo(62));}
+        [Test] public void NewHash_IsRecorded() {var p=ConfigFixtures.Default();Assert.That(p.Hash,Is.EqualTo("45c4e9af5c8f"));Assert.That(p.Ordered.Count,Is.EqualTo(85));}
     }
 }

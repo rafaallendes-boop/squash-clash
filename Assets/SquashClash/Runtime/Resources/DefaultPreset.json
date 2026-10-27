@@ -250,6 +250,98 @@
     {
       "key": "aim.freezeOnRelease",
       "value": 0
+    },
+    {
+      "key": "gesture.control",
+      "value": 0
+    },
+    {
+      "key": "aim.holdMs",
+      "value": 120
+    },
+    {
+      "key": "aim.holdMaxSpeedMmPerS",
+      "value": 15
+    },
+    {
+      "key": "aim.holdRadiusMm",
+      "value": 1
+    },
+    {
+      "key": "aim.holdMaxGapMs",
+      "value": 51
+    },
+    {
+      "key": "aim.holdMinSamples",
+      "value": 3
+    },
+    {
+      "key": "power.pullDeadZoneMm",
+      "value": 2
+    },
+    {
+      "key": "power.pullFullMm",
+      "value": 35
+    },
+    {
+      "key": "gesture.slingCancelAboveMm",
+      "value": 12
+    },
+    {
+      "key": "gesture.slingCancelLateralMm",
+      "value": 20
+    },
+    {
+      "key": "gesture.slingCancelMinDepthMm",
+      "value": 8
+    },
+    {
+      "key": "gesture.slingPreferLeft",
+      "value": 1
+    },
+    {
+      "key": "aim.lockFlashMs",
+      "value": 120
+    },
+    {
+      "key": "gesture.slingTarget1X",
+      "value": 0.25
+    },
+    {
+      "key": "gesture.slingTarget1Y",
+      "value": 0.15
+    },
+    {
+      "key": "gesture.slingTarget2X",
+      "value": 0.75
+    },
+    {
+      "key": "gesture.slingTarget2Y",
+      "value": 0.15
+    },
+    {
+      "key": "gesture.slingTarget3X",
+      "value": 0.5
+    },
+    {
+      "key": "gesture.slingTarget3Y",
+      "value": 0.5
+    },
+    {
+      "key": "gesture.slingTarget4X",
+      "value": 0.25
+    },
+    {
+      "key": "gesture.slingTarget4Y",
+      "value": 0.8
+    },
+    {
+      "key": "gesture.slingTarget5X",
+      "value": 0.75
+    },
+    {
+      "key": "gesture.slingTarget5Y",
+      "value": 0.8
     }
   ]
 }
