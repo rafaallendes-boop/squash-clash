@@ -33,6 +33,9 @@ namespace SquashClash.DevPanel
             AddButton(row,"s1-ruler","Regla 50 mm",()=>preview.ArmRuler());
             AddButton(row,"s1-soft","10 suaves",()=>preview.ArmFlicks(false));
             AddButton(row,"s1-strong","10 fuertes",()=>preview.ArmFlicks(true));
+            var calibrationRow=new VisualElement {pickingMode=PickingMode.Ignore};calibrationRow.style.flexDirection=FlexDirection.Row;details.Add(calibrationRow);
+            AddButton(calibrationRow,"s1-medium","10 medios",()=>preview.ArmSeries("medium"));
+            AddButton(calibrationRow,"s1-aim-soft","10 apuntar rápido y soltar suave",()=>preview.ArmSeries("aim-soft"));
             root.Q<ScrollView>("parameters-scroll").contentContainer.Insert(0,details);
             root.Insert(0,layer);root.RegisterCallback<GeometryChangedEvent>(OnGeometry);bar.RegisterCallback<GeometryChangedEvent>(OnGeometry);Place();Refresh();
         }
@@ -53,7 +56,7 @@ namespace SquashClash.DevPanel
             compact.text=$"{aimState} · P {p.P*100:F0}%";
             if(!panel.IsOpen)return;
             state.text=model==null?"S1 · mira esperando gesto":$"Mira ({model.Aim.x:F2}, {model.Aim.y:F2}) m · {model.State} · {preview.Outcome} · salto {model.FreezeJumpMeters:F3} m";
-            power.text=$"P {p.P*100:F0}% · {p.NetSpeedMmPerS:F0} mm/s · cobertura {p.CoveredMs:F1} ms · n {p.DistinctSamples} · hueco {p.MaxGapMs:F1} ms · {(p.Conservative?"conservadora ":"")}{p.Reason}\nDPI {Screen.dpi:F0} · {preview.DensitySource} · {preview.MmPerPx:F5} mm/px · sin verificar con regla";
+            power.text=$"P {p.P*100:F0}% · {p.PowerSpeedMmPerS:F0} mm/s ({p.SpeedBasis}) · soporte {p.CoveredMs:F1} ms · n {p.DistinctSamples} · hueco {p.MaxGapMs:F1} ms · {(p.Conservative?"conservadora ":"")}{p.Reason}\nDPI {Screen.dpi:F0} · {preview.DensitySource} · {preview.MmPerPx:F5} mm/px · sin verificar con regla";
             sampling.text=$"Eventos {s.Samples} · {F(s.DeliveredHz)} Hz entregados · Δ p50/p95 {F(s.IntervalP50Ms)}/{F(s.IntervalP95Ms)} ms · máx {F(s.MaxGapMs)} ms\nEdad p50/p95/máx {F(s.AgeP50Ms)}/{F(s.AgeP95Ms)}/{F(s.MaxAgeMs)} ms · edad<0 {s.NegativeAges} · dup {s.DuplicateTimes} · desorden {s.OutOfOrder} · máx/frame {s.MaxSamplesPerFrame}";
             status.text=preview.Status+" · serie "+preview.TrialCount+"/10";
         }

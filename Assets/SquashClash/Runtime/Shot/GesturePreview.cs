@@ -21,6 +21,7 @@ namespace SquashClash.Runtime.Shot
         private VisualElement root;
         private GestureTracker tracker;
         private PowerSettings powerSettings;
+        private PeakPowerEstimator peakEstimator;
         private readonly List<double> receipts=new List<double>(256);
         private readonly List<TouchSample> powerWindow=new List<TouchSample>(128);
         private TouchSample previousSample;
@@ -83,8 +84,10 @@ namespace SquashClash.Runtime.Shot
                 scale=ScreenMetrics.MmPerPx(reportedDpi,(float)source.Get("input.fallbackDpi"),out dpiSource);
                 tracker=new GestureTracker((float)source.Get("gesture.tapMaxMm"),(float)source.Get("gesture.tapMaxMs"),(float)source.Get("gesture.cancelRadiusMm"),scale);
                 Model=new AimModel(AimSettings.From(source),app.Host.ActiveConfig.Court,app.Host.Current.Position.x);
-                powerSettings=PowerSettings.From(source);receipts.Clear();powerWindow.Clear();invalidPowerTime=null;captureGesture=Sampling||protocol!="preview";
-                gestureProtocol=protocol;gestureTrial=protocol=="soft"||protocol=="strong"?TrialCount+1:1;
+                powerSettings=PowerSettings.From(source);
+                peakEstimator=source.GetInt("power.method")==1?new PeakPowerEstimator(powerSettings,source.Get("power.peakSmoothingMs"),source.Get("power.peakDecayMs")):null;
+                receipts.Clear();powerWindow.Clear();invalidPowerTime=null;captureGesture=Sampling||protocol!="preview";
+                gestureProtocol=protocol;gestureTrial=IsSeries(protocol)?TrialCount+1:1;
                 preset=app.ActivePresetName;fileHash=app.ActivePresetFileHash;seed=app.MetricsSeed;pending=app.Tuning.PendingKeys.Count;dropped=app.Clock.DroppedSinceRestart;
             }
             if((!Active&&sample.Phase!=TouchPhaseKind.Began)||sample.FingerId!=primary)return;
@@ -101,8 +104,9 @@ namespace SquashClash.Runtime.Shot
             double windowStart=sample.TimeReal-powerSettings.WindowMs/1000d;
             int remove=0;while(remove+1<powerWindow.Count&&powerWindow[remove+1].TimeReal<windowStart)remove++;
             if(remove>0)powerWindow.RemoveRange(0,remove);
-            Power=invalidPowerTime==null?PowerEstimator.Estimate(powerWindow,sample.TimeReal,scale,powerSettings,tracker.DragStartedAtReal)
-                :new PowerResult(0,0,0,0,0,true,invalidPowerTime);
+            Power=invalidPowerTime==null
+                ?(peakEstimator!=null?peakEstimator.Push(sample,scale):PowerEstimator.Estimate(powerWindow,sample.TimeReal,scale,powerSettings,tracker.DragStartedAtReal))
+                :new PowerResult(0,0,0,0,0,true,invalidPowerTime,peakEstimator!=null?"decayed-peak":"net-window");
             view.gameObject.SetActive(Active||Outcome==GestureOutcome.Swing);view.SetAim(Model.Aim,Model.State,app.Host.ActiveConfig.Court);
             if(!tracker.Active)FinishGesture();
             if(sample.Phase==TouchPhaseKind.Canceled&&Sampling)FinishSampling(input.ReadRealTime(),false,"touch-canceled");
@@ -145,11 +149,16 @@ namespace SquashClash.Runtime.Shot
             if(!CanMeasure())return;
             protocol="ruler-50mm";TrialCount=0;Status="Siguiente gesto: recorre 50 mm con regla, sin volver al origen.";
         }
-        public void ArmFlicks(bool strong)
+        public void ArmSeries(string name)
         {
+            if(!IsSeries(name))throw new ArgumentOutOfRangeException(nameof(name));
             if(!CanMeasure())return;
-            protocol=strong?"strong":"soft";TrialCount=0;Status="Siguientes 10 gestos: "+(strong?"fuertes":"suaves")+". Se registran también toques y cancelaciones.";
+            protocol=name;TrialCount=0;Status="Siguientes 10 gestos: "+SeriesLabel(name)+". Se registran también toques y cancelaciones.";
         }
+        private static bool IsSeries(string name)=>name=="soft"||name=="medium"||name=="strong"||name=="aim-soft";
+        private static string SeriesLabel(string name)=>name=="soft"?"suaves":name=="medium"?"medios":name=="strong"?"fuertes":"apuntar rápido y soltar suave";
+        public void ArmFlicks(bool strong)
+        {ArmSeries(strong?"strong":"soft");}
         private bool CanMeasure()
         {
             if(!initialized||app.Clock.Paused||resume.IsVisible||input.BlockedByUi){Status="Cierra DEV y reanuda antes de medir.";return false;}
@@ -161,20 +170,24 @@ namespace SquashClash.Runtime.Shot
             var finished=tracker;var savedReceipts=receipts.ToArray();var config=EffectiveConfig.From(GestureConfig);
             var aim=Model.Aim;var state=Model.State;var power=Power;var jump=Model.FreezeJumpMeters;
             var usedFirst=Model.FreezeUsedFirstValidPoint;var freezeTime=Model.FreezeTimeReal;
+            var freezeCause=Model.FreezeCause;var aimInvalid=view.IsInvalid;var method=GestureConfig.GetInt("power.method");
             var tag=gestureProtocol;var trial=gestureTrial;var serial=gestureLaunch;var capture=captureGesture;
             var density=reportedDpi;var densitySource=dpiSource;var mm=scale;var width=screenWidth;var height=screenHeight;
             var presetAtBegin=preset;var fileAtBegin=fileHash;var pendingAtBegin=pending;var seedAtBegin=seed;var droppedAtBegin=dropped;
             deferred.Enqueue(()=>
             {
                 var b=new StringBuilder(2048);
-                b.Append("{\"schema\":1,\"s1PreviewOnly\":true,\"protocol\":").Append(Q(tag)).Append(",\"trial\":").Append(trial)
+                b.Append("{\"schema\":2,\"s1PreviewOnly\":true,\"protocol\":").Append(Q(tag)).Append(",\"trial\":").Append(trial)
                     .Append(",\"launchSerial\":").Append(serial).Append(",\"outcome\":").Append(Q(finished.Outcome.ToString()))
                     .Append(",\"dpiSource\":").Append(Q(densitySource.ToString())).Append(",\"reportedDpi\":").Append(N(density))
                     .Append(",\"mmPerPx\":").Append(N(mm)).Append(",\"physicallyVerified\":false,\"widthPx\":").Append(width).Append(",\"heightPx\":").Append(height)
                     .Append(",\"physicalDistanceDeclaredMm\":").Append(tag=="ruler-50mm"?"50":"null").Append(",\"maxDisplacementMm\":").Append(N(finished.MaxDisplacementMm))
                     .Append(",\"aimState\":").Append(Q(state.ToString())).Append(",\"aimX\":").Append(N(aim.x)).Append(",\"aimY\":").Append(N(aim.y))
                     .Append(",\"freezeJumpMeters\":").Append(N(jump)).Append(",\"freezeUsedFirstValidPoint\":").Append(B(usedFirst)).Append(",\"freezeTimeReal\":").Append(N(freezeTime))
-                    .Append(",\"power\":").Append(N(power.P)).Append(",\"netSpeedMmPerS\":").Append(N(power.NetSpeedMmPerS)).Append(",\"coveredMs\":").Append(N(power.CoveredMs))
+                    .Append(",\"freezeCause\":").Append(Q(freezeCause.ToString())).Append(",\"aimInvalid\":").Append(B(aimInvalid))
+                    .Append(",\"powerMethod\":").Append(method).Append(",\"power\":").Append(N(power.P))
+                    .Append(",\"powerSpeedMmPerS\":").Append(N(power.PowerSpeedMmPerS)).Append(",\"powerSpeedBasis\":").Append(Q(power.SpeedBasis)).Append(",\"powerSupportAgeMs\":").Append(N(power.SupportAgeMs))
+                    .Append(",\"netSpeedMmPerS\":").Append(power.SpeedBasis=="net-window"?N(power.NetSpeedMmPerS):"null").Append(",\"coveredMs\":").Append(N(power.CoveredMs))
                     .Append(",\"distinctSamples\":").Append(power.DistinctSamples).Append(",\"maxGapMs\":").Append(N(power.MaxGapMs)).Append(",\"conservative\":").Append(B(power.Conservative)).Append(",\"reason\":").Append(Q(power.Reason))
                     .Append(",\"gestureConfigHash\":").Append(Q(config.Hash)).Append(",\"gestureParameters\":{");
                 bool first=true;foreach(var p in config.Source.Ordered)if(IsGestureKey(p.Key)){if(!first)b.Append(',');first=false;b.Append(Q(p.Key)).Append(':').Append(N(p.Value));}
@@ -192,10 +205,10 @@ namespace SquashClash.Runtime.Shot
             {
                 protocol="preview";Status=$"Regla: {finished.MaxDisplacementMm:F2} mm calculados / 50 mm declarados · {densitySource}. Pendiente de confirmar el recorrido físico del PO.";
             }
-            if(tag==protocol&&(tag=="soft"||tag=="strong"))
+            if(tag==protocol&&IsSeries(tag))
             {
                 TrialCount++;
-                if(TrialCount>=10){protocol="preview";Status="Serie de 10 "+(tag=="soft"?"suaves":"fuertes")+" registrada. Revisa los resultados medidos.";}
+                if(TrialCount>=10){protocol="preview";Status="Serie de 10 "+SeriesLabel(tag)+" registrada. Revisa los resultados medidos.";}
             }
         }
         private void FinishSampling(double now,bool complete,string reason)

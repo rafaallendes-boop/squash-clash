@@ -18,9 +18,11 @@ namespace SquashClash.Core.Shot
         public readonly double CoveredMs,MaxGapMs;
         public readonly int DistinctSamples;
         public readonly bool Conservative;
-        public readonly string Reason;
-        public PowerResult(float p,float speed,double covered,int count,double gap,bool conservative,string reason)
-        {P=p;NetSpeedMmPerS=speed;CoveredMs=covered;DistinctSamples=count;MaxGapMs=gap;Conservative=conservative;Reason=reason;}
+        public readonly string Reason,SpeedBasis;
+        public readonly float PowerSpeedMmPerS;
+        public readonly double SupportAgeMs;
+        public PowerResult(float p,float speed,double covered,int count,double gap,bool conservative,string reason,string speedBasis="net-window",double supportAgeMs=0)
+        {P=p;NetSpeedMmPerS=speedBasis=="net-window"?speed:0;PowerSpeedMmPerS=speed;SpeedBasis=speedBasis;SupportAgeMs=supportAgeMs;CoveredMs=covered;DistinctSamples=count;MaxGapMs=gap;Conservative=conservative;Reason=reason;}
     }
     public static class PowerEstimator
     {

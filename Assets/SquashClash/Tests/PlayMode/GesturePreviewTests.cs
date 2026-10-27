@@ -33,8 +33,8 @@ namespace SquashClash.Runtime.Tests
         [UnityTearDown] public IEnumerator Cleanup()
         {if(screen!=null)InputSystem.RemoveDevice(screen);yield return PlayModeTestWorld.ClearApp();}
         private void RequirePreview(){Assert.That(input,Is.Not.Null,"Main creates the raw input adapter");Assert.That(preview,Is.Not.Null,"Main wires the S1 preview");}
-        private void Send(Phase phase,double dt,float x=200,int id=1)
-        {now=start+dt;InputSystem.QueueStateEvent(screen,new TouchState{touchId=id,phase=phase,position=new Vector2(x,300)},now);InputSystem.Update();}
+        private void Send(Phase phase,double dt,float x=200,int id=1,float y=300)
+        {now=start+dt;InputSystem.QueueStateEvent(screen,new TouchState{touchId=id,phase=phase,position=new Vector2(x,y)},now);InputSystem.Update();}
         [UnityTest] public IEnumerator Main_WiresAimAndPowerWithoutChangingBallAuthority()
         {
             RequirePreview();var before=app.Host.Current;var prediction=app.Host.Prediction;Send(Phase.Began,0);Send(Phase.Moved,.02,240);
@@ -108,6 +108,39 @@ namespace SquashClash.Runtime.Tests
             RequirePreview();Send(Phase.Began,0);Send(Phase.Moved,.02,230);Send(Phase.Moved,.01,260);
             for(int i=3;i<=20;i++)Send(Phase.Moved,i*.01,260+i*30);
             Assert.That(preview.Power.Conservative,Is.True);Assert.That(preview.Power.Reason,Is.EqualTo("out-of-order"));yield return null;
+        }
+        private void Experimental()
+        {
+            app.Tuning.Set("power.method",1);app.Tuning.Set("power.fullMmPerS",400);app.Tuning.Set("power.deadZoneMmPerS",0);
+            app.Tuning.Set("power.minSamples",3);app.Tuning.Set("power.maxGapMs",51);app.Tuning.Set("aim.freezeOnRelease",1);
+        }
+        [UnityTest] public IEnumerator PeakRuntime_KeepsEarlierIntentAndLogsSpeedBasisWithoutChangingBall()
+        {
+            RequirePreview();Experimental();preview.ArmSeries("medium");var before=app.Host.Current;var prediction=app.Host.Prediction;
+            Send(Phase.Began,0);Send(Phase.Moved,.02,490);Send(Phase.Moved,.04,780);Send(Phase.Ended,.20,780);preview.FlushRecords();
+            Assert.That(preview.Power.Conservative,Is.False);Assert.That(preview.Power.P,Is.GreaterThan(.4f));Assert.That(preview.Power.SpeedBasis,Is.EqualTo("decayed-peak"));
+            Assert.That(preview.LastRecordJson,Does.Contain("\"protocol\":\"medium\"").And.Contain("\"freezeCause\":\"Flick\"").And.Contain("\"netSpeedMmPerS\":null").And.Contain("\"powerSpeedMmPerS\":"));
+            Assert.That(app.Host.Current.Position,Is.EqualTo(before.Position));Assert.That(app.Host.Current.Step,Is.EqualTo(before.Step));Assert.That(app.Host.Prediction,Is.SameAs(prediction));yield return null;
+        }
+        [UnityTest] public IEnumerator ExperimentalRelease_ValidIsYellow_InvalidRemainsRed()
+        {
+            RequirePreview();Experimental();Send(Phase.Began,0);Send(Phase.Moved,.5,300);Send(Phase.Ended,.6,320);preview.FlushRecords();
+            Assert.That(preview.Model.FreezeCause,Is.EqualTo(AimFreezeCause.Release));Assert.That(app.GetComponentInChildren<AimReticleView>(true).Tint,Is.EqualTo(Color.yellow));
+            app.Tuning.Set("aim.startHeight",.5);Send(Phase.Began,1,200);Send(Phase.Moved,1.5,200,y:50);Send(Phase.Ended,1.6,200,y:50);preview.FlushRecords();
+            var reticle=app.GetComponentInChildren<AimReticleView>(true);Assert.That(preview.Model.State,Is.EqualTo(AimState.Frozen));Assert.That(reticle.IsInvalid,Is.True);Assert.That(reticle.Tint,Is.EqualTo(Color.red));
+            Assert.That(preview.LastRecordJson,Does.Contain("\"freezeCause\":\"Release\"").And.Contain("\"aimInvalid\":true"));yield return null;
+        }
+        [UnityTest] public IEnumerator FourSeriesControlsAndTags_KeepAllTenAttempts()
+        {
+            RequirePreview();var root=app.GetComponent<UIDocument>().rootVisualElement;
+            foreach(var tag in new[]{"medium","aim-soft"})
+            {
+                Assert.That(root.Q<Button>("s1-"+tag),Is.Not.Null);preview.ArmSeries(tag);
+                for(int i=0;i<10;i++){Send(Phase.Began,1+i,200,10+i);Send(Phase.Ended,1.01+i,200,10+i);}
+                preview.FlushRecords();Assert.That(preview.TrialCount,Is.EqualTo(10));Assert.That(preview.LastRecordJson,Does.Contain("\"protocol\":\""+tag+"\"").And.Contain("\"trial\":10").And.Contain("\"outcome\":\"Tap\""));
+                start+=20;
+            }
+            yield return null;
         }
     }
 }

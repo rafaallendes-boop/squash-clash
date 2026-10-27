@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "dateLocal": "2026-10-25",
+  "defect": "GC-S1-01",
+  "status": "StoppedBeforeNativeBuildInstallAndPhysicalSession",
+  "notNewPhysicalMeasurement": true,
+  "criterionCommit": "23f63e7",
+  "provisionalSelectionCommit": "04c718a",
+  "productSource": "20271ff",
+  "method": "B",
+  "configuration": {
+    "fullMmPerS": 400,
+    "deadZoneMmPerS": 0,
+    "smoothingMs": 20,
+    "decayMs": 120,
+    "minSamples": 3,
+    "minCoverageMs": 30,
+    "maxGapMs": 51
+  },
+  "experimentalStrongBandMin": 0.6,
+  "cases": [
+    {
+      "synthetic": true,
+      "speedMmPerS": 400,
+      "fastDurationMs": 200.0,
+      "strokeMm": 80.0,
+      "stationaryBeforeReleaseMs": 150,
+      "terminalNet80MsMmPerS": 0,
+      "power": 0.28649179,
+      "band": "medium",
+      "expectedNotStrong": true,
+      "result": "Pass",
+      "sensorFrequencyAssumed": false
+    },
+    {
+      "synthetic": true,
+      "speedMmPerS": 850,
+      "fastDurationMs": 100.0,
+      "strokeMm": 85.0,
+      "stationaryBeforeReleaseMs": 150,
+      "terminalNet80MsMmPerS": 0,
+      "power": 0.604720473,
+      "band": "strong",
+      "expectedNotStrong": true,
+      "result": "Fail",
+      "sensorFrequencyAssumed": false
+    },
+    {
+      "synthetic": true,
+      "speedMmPerS": 1000,
+      "fastDurationMs": 60.0,
+      "strokeMm": 60.0,
+      "stationaryBeforeReleaseMs": 150,
+      "terminalNet80MsMmPerS": 0,
+      "power": 0.680601418,
+      "band": "strong",
+      "expectedNotStrong": true,
+      "result": "Fail",
+      "sensorFrequencyAssumed": false
+    }
+  ],
+  "freshFocusedXml": {
+    "total": "10",
+    "passed": "8",
+    "failed": "2",
+    "skipped": "0",
+    "start-time": "2026-10-26 00:29:30Z",
+    "end-time": "2026-10-26 00:29:30Z"
+  },
+  "compilerErrors": false,
+  "previousCompleteRegression": {
+    "EditMode": {
+      "passed": 359,
+      "total": 359
+    },
+    "PlayMode": {
+      "passed": 172,
+      "total": 172
+    },
+    "qualifier": "Before broadening the mandatory risk case; not a claim that the final branch is green."
+  },
+  "releaseCheck": {
+    "devModulesCorrect": true,
+    "prodModulesCorrect": true,
+    "qualifier": "First exports used transient test-generated settings and gitDirty=true; not a clean/native build or install candidate. Settings restored; no repeated export after defect."
+  },
+  "nativeBuild": false,
+  "installed": false,
+  "experimentalPresetLoaded": false,
+  "physicalSeriesCompleted": 0,
+  "poHandLiteral": "Izquierda, mi dominante",
+  "poControlAnswers": null,
+  "devicePreservation": {
+    "filesByteIdentical": true,
+    "hashes": {
+      "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
+    },
+    "persistentSelection": "P0-calib-1",
+    "installedBuildUnchanged": "5e218ea dev",
+    "lastRecoveredState": {
+      "ts": "2026-10-26T00:26:52.7946760Z",
+      "kind": "launch",
+      "build": "0.1.0+5e218ea dev",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "9977d9ffd7e5",
+      "pending": 0
+    }
+  },
+  "futureDefaultsHashNotInstalled": "6095c0b38614",
+  "futureP0ExtendedHashNotObservedOnDevice": "fdd997f2b85a",
+  "experimentalPresetHashNotApplied": "6071903f8128",
+  "firstBallProjection": "0d39e6016bd8",
+  "simulationKey": "166a96e319c7",
+  "noParameterAdjustmentAfterDefect": true
+}

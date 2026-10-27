@@ -8,6 +8,11 @@ namespace SquashClash.Core.Config
     {
         private static readonly IReadOnlyList<ParamDef> definitions = Array.AsReadOnly(new[]
         {
+            new ParamDef("aim.freezeOnRelease", "Freeze on release", "", "First Shot / aim", ParamKind.Bool, 0, 1, 1, ApplyClass.Immediate),
+            new ParamDef("power.method", "Power method (experimental)", "", "First Shot / power", ParamKind.Choice, 0, 1, 1, ApplyClass.Immediate,
+                new ChoiceOption(0, "A: temporal window"), new ChoiceOption(1, "B: decaying peak")),
+            new ParamDef("power.peakSmoothingMs", "Peak smoothing", "ms", "First Shot / power", ParamKind.Float, 5, 80, 1, ApplyClass.Immediate),
+            new ParamDef("power.peakDecayMs", "Peak decay", "ms", "First Shot / power", ParamKind.Float, 20, 300, 1, ApplyClass.Immediate),
             new ParamDef("aim.gainMPerMm", "Gain", "m/mm", "First Shot / aim", ParamKind.Float, 0.03, 0.3, 0.01, ApplyClass.Immediate),
             new ParamDef("aim.startHeight", "Start height", "m", "First Shot / aim", ParamKind.Float, 0.5, 4.5, 0.1, ApplyClass.Immediate),
             new ParamDef("aim.flickMmPerS", "Flick threshold", "mm/s", "First Shot / aim", ParamKind.Float, 50, 1000, 10, ApplyClass.Immediate),

@@ -234,6 +234,22 @@
     {
       "key": "input.fallbackDpi",
       "value": 460
+    },
+    {
+      "key": "power.method",
+      "value": 0
+    },
+    {
+      "key": "power.peakSmoothingMs",
+      "value": 20
+    },
+    {
+      "key": "power.peakDecayMs",
+      "value": 120
+    },
+    {
+      "key": "aim.freezeOnRelease",
+      "value": 0
     }
   ]
 }

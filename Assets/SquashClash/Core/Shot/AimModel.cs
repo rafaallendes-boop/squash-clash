@@ -6,13 +6,15 @@ using UnityEngine;
 namespace SquashClash.Core.Shot
 {
     public enum AimState { Aiming, Frozen }
+    public enum AimFreezeCause { None, Flick, Release }
     public readonly struct AimSettings
     {
         public readonly float GainMPerMm, StartHeight, FlickMmPerS, FlickHysteresisMmPerS, FreezeLookbackMs;
         public readonly int FlickConfirmSamples;
-        public AimSettings(float gain,float height,float flick,float hysteresis,float lookback,int confirm)
-        {GainMPerMm=gain;StartHeight=height;FlickMmPerS=flick;FlickHysteresisMmPerS=hysteresis;FreezeLookbackMs=lookback;FlickConfirmSamples=confirm;}
-        public static AimSettings From(ParamSet p)=>new AimSettings((float)p.Get("aim.gainMPerMm"),(float)p.Get("aim.startHeight"),(float)p.Get("aim.flickMmPerS"),(float)p.Get("aim.flickHysteresisMmPerS"),(float)p.Get("aim.freezeLookbackMs"),p.GetInt("aim.flickConfirmSamples"));
+        public readonly bool FreezeOnRelease;
+        public AimSettings(float gain,float height,float flick,float hysteresis,float lookback,int confirm,bool freezeOnRelease=false)
+        {GainMPerMm=gain;StartHeight=height;FlickMmPerS=flick;FlickHysteresisMmPerS=hysteresis;FreezeLookbackMs=lookback;FlickConfirmSamples=confirm;FreezeOnRelease=freezeOnRelease;}
+        public static AimSettings From(ParamSet p)=>new AimSettings((float)p.Get("aim.gainMPerMm"),(float)p.Get("aim.startHeight"),(float)p.Get("aim.flickMmPerS"),(float)p.Get("aim.flickHysteresisMmPerS"),(float)p.Get("aim.freezeLookbackMs"),p.GetInt("aim.flickConfirmSamples"),p.GetBool("aim.freezeOnRelease"));
     }
     public sealed class AimModel
     {
@@ -34,6 +36,7 @@ namespace SquashClash.Core.Shot
         }
         public Vector2 Aim {get;private set;}
         public AimState State {get;private set;}
+        public AimFreezeCause FreezeCause {get;private set;}
         public double FreezeTimeReal {get;private set;}
         public bool FreezeUsedFirstValidPoint {get;private set;}
         public float FreezeJumpMeters {get;private set;}
@@ -43,10 +46,16 @@ namespace SquashClash.Core.Shot
             {
                 if(!Finite(sample.TimeReal)||!Finite(mmPerPx)||mmPerPx<=0)throw new ArgumentOutOfRangeException(nameof(mmPerPx));
                 origin=previousPosition=sample.PositionPx;previousTime=sample.TimeReal;scale=mmPerPx;
-                Aim=initial;State=AimState.Aiming;consecutive=0;crossingTime=double.NaN;started=true;history.Clear();history.Add((sample.TimeReal,Aim));
+                Aim=initial;State=AimState.Aiming;FreezeCause=AimFreezeCause.None;consecutive=0;crossingTime=double.NaN;started=true;history.Clear();history.Add((sample.TimeReal,Aim));
                 FreezeTimeReal=0;FreezeUsedFirstValidPoint=false;FreezeJumpMeters=0;return;
             }
-            if(!started||State==AimState.Frozen||sample.TimeReal<=previousTime||!Finite(sample.TimeReal))return;
+            if(!started||State==AimState.Frozen||sample.TimeReal<previousTime||!Finite(sample.TimeReal))return;
+            if(sample.TimeReal==previousTime)
+            {
+                // A terminal event can share the last position/time; release is not a velocity sample.
+                if(sample.Phase==TouchPhaseKind.Ended&&settings.FreezeOnRelease)FreezeAtRelease(sample.TimeReal);
+                return;
+            }
             var delta=(sample.PositionPx-origin)*scale*settings.GainMPerMm;
             // AX-1: the rear camera projects -X towards screen right. Camera motion is not input.
             Aim=new Vector2(Mathf.Clamp(initial.x-delta.x,0,width),Mathf.Clamp(initial.y+delta.y,0,5));
@@ -66,7 +75,7 @@ namespace SquashClash.Core.Shot
                         if(wanted>=a.time&&wanted<=b.time)
                         {held=Vector2.Lerp(a.aim,b.aim,(float)((wanted-a.time)/(b.time-a.time)));break;}
                     }
-                    FreezeJumpMeters=Vector2.Distance(Aim,held);Aim=held;State=AimState.Frozen;FreezeTimeReal=crossingTime;
+                    FreezeJumpMeters=Vector2.Distance(Aim,held);Aim=held;State=AimState.Frozen;FreezeCause=AimFreezeCause.Flick;FreezeTimeReal=crossingTime;
                 }
             }
             else
@@ -75,8 +84,12 @@ namespace SquashClash.Core.Shot
                 consecutive=0;
                 if(speed<settings.FlickMmPerS-settings.FlickHysteresisMmPerS)crossingTime=double.NaN;
             }
+            if(sample.Phase==TouchPhaseKind.Ended&&settings.FreezeOnRelease&&State==AimState.Aiming)
+            FreezeAtRelease(sample.TimeReal);
             previousPosition=sample.PositionPx;previousTime=sample.TimeReal;
         }
+        private void FreezeAtRelease(double timeReal)
+        {State=AimState.Frozen;FreezeCause=AimFreezeCause.Release;FreezeTimeReal=timeReal;FreezeJumpMeters=0;FreezeUsedFirstValidPoint=false;}
         private static bool Finite(double x)=>!double.IsNaN(x)&&!double.IsInfinity(x);
     }
 }
