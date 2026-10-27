@@ -587,3 +587,19 @@ Sigue pendiente export/check-release limpio dev/prod, build Release ARM64/no Dev
 Producto **db72a00**: suites404/404 EditMode y180/180 PlayMode; check-release dev/prod gitDirty=false y build dev ReleaseARM64/noDevelopment correctos. Perfil incorporado comprobado antes de instalar17:04:06Z, vigente hasta2026-10-28T14:59:31Z/certificado y firma correctos; sin renovación porCodex.436 fuentes coincidentes. Respaldo/cotejo directo de los tres archivos antes/después de instalación/preparación. ArranqueP0 e458bfd5ce9e/cero pendientes. S1-sling separado cargado sin guardar; selección persistida original repuesta antes de aplicar/relanzar. Lanzamiento17:09:36.004367Z, **7d1a61c39766**,repeat0/cero pendientes,DEVcerrado y cero gestos nuevos antes de entregar.
 
 Se pidió soloB0/izquierda tras explicar la mecánica, con identificación de estados/cancelación previa aB1. **No es aprobación física ni aceptación deS1.** Restan protocolo/16respuestas/restauraciónP0 en nuevo arranque y cotejo de tres archivos. [Informe](2026-10-27-first-shot-s1-sling-prototype.md). PR#25 sin fusionar; S2–S4/T8 sin autorizar.
+
+### B0 S1-sling detenido antes de B1 — observaciones del PO, 2026-10-27
+
+No es aceptación deS1 ni validación de calibración. Literal delPO tras práctica:
+
+> Revisa lo que he hecho. pero a veces podía apuntar y se apuntaba bien, luego tensaba, otras veces se mantenía apuntando.
+
+A la aclaración de cancelación: **«No llegué a ver esa zona»**. Sobre las interrupciones/tiempo:
+
+> En ninguna parte de la pantalla me aparecía el tiempo, entonces en la 1ra pensé que ya habían pasado los 2 minutos, quizás es un punto de mejora de poner un timer en estas pruebas
+
+Se conserva como observación/propuesta delPO, **sin ampliar la autorización a modificar interfaz o parámetros**. No dice qué acción exacta causó cada system-cancel.33 intentos registrados,32B0+1preview,17 fijaciones/15abandonos/1Tap,ninguna entrada o cancelación de zona. Dos adquisiciones incompletas85,918/35,442s, no120s continuos. Todos7d1a61c39766/cero pendientes. Auditoría descriptiva de la regla instalada, sin parámetros alternativos ni medición nueva:13 abandonos sin ventana apoyada120ms,2 con quietud solo fuera del área útil. No es prueba de un fallo geométrico de cancelación, que quedaNotEvaluated.
+
+Se aplica la parada de la interacción aprobada§3 al no identificarse cancelación; **B1–B5 no iniciados**,16 preguntas finales no solicitadas tras esa parada, sin inferir respuestas. Propuestas de claridad de cancelación/temporizador/diagnóstico de quietud en el [informe](2026-10-27-first-shot-s1-sling-prototype.md), **pendientes de decisión y sin implementar**. Ningún ajuste120→150 ni tolerancias/escala/zona/criterios/bandas/defaults/spec/plan.
+
+P0-calib-1 restaurado en nuevo proceso: primer lanzamiento **2026-10-27T17:21:51.8776630Z**, builddb72a00 dev, **e458bfd5ce9e**,cero pendientes. P0/Po-1/last-active directamente byte a byte iguales al respaldo;436 fuentes de producto coincidentes. Sin nuevas suites/check-release/builds/instalaciones o intentos físicos para cerrar. PR#25 lista para revisiónClaude **sin fusionar**, entrega técnica experimental con bloqueo de práctica explícito; **S1 sin aceptar**, S2–S4/T8 sin autorizar. Detenerse al entregar; perfil requiere comprobación efectiva antes de instalar y renovación porPO,vence2026-10-28T14:59:31Z.

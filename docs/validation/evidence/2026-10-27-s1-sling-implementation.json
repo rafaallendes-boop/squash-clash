@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "editorAutomatedOnly": true,
-  "physicalSession": "NotStarted",
+  "physicalSession": "StoppedBeforeB1_CancellationNotIdentified",
   "baseMain": "956cfafbbfea6fef418fa24e6a3b0911663746be",
   "requiredDocsCommit": "f7f049c09a8577ae7a886385f82056ed2c217577",
   "defaultsHash": "45c4e9af5c8f",
@@ -210,5 +210,18 @@
     "persistedSelection": "P0-calib-1",
     "DEVClosed": true,
     "noSlingGesturesBeforeHandoff": true
+  },
+  "B0Evidence": "2026-10-27-s1-sling-B0.json",
+  "restoration": {
+    "newProcessLaunchRequestedSuccessfully": true,
+    "firstP0LaunchUtc": "2026-10-27T17:21:51.8776630Z",
+    "build": "0.1.0+db72a00 dev",
+    "presetName": "P0-calib-1",
+    "effectiveHash": "e458bfd5ce9e",
+    "pending": 0,
+    "threeFilesByteIdentical": true,
+    "selection": "P0-calib-1",
+    "productSourcesUnchangedAfterBuild": true,
+    "verifiedFiles": 436
   }
 }
