@@ -32,6 +32,18 @@ Suites completas frescas **404/404 EditMode y 180/180 PlayMode**, sin errores CS
 
 242 fuentes protegidas cotejadas contra main: spec v0.3, documentación anterior salvo adendas/registro autorizados, scripts/Packages, EffectiveConfig, AimModel y los estimadores anteriores intactos. Los dos transitorios de PlayMode (GraphicsSettings/QualitySettings) se preservan en un patch ignorado y se restauran antes de exportar; ProjectSettings final idéntico a main. No cambian criterios/bandas/umbrales ni se recalculan trazas antiguas.
 
-## Pendiente
+## Build, perfil y preparación física
 
-Integración, regresión fresca completa, check-release dev/prod, build dev Release ARM64/no Development, respaldo/perfil efectivo antes de instalar y sesión B0–B5 con PO. No hay instalación ni medición física nueva todavía. La sesión exige verificar el hash antes de cada bloque y restaurar los tres archivos al cerrar. El perfil debe estar vigente; renovación a cargo del PO. No se infiere ninguna aceptación ni dato físico.
+Producto **db72a00f7f4ffebc79d3708cb8d8c8e29a7f27a8**. check-release dev/prod OK con exportaciones frescas, gitDirty=false y módulos correctos: DevPanel solo dev, ningún framework de tests en Players, puente térmico runtime presente. Build dev nativa **Release ARM64/no Development** correcta, sin errores Xcode.436 archivos de fuente cotejados con el árbol probado. Sin cambios de producto posteriores.
+
+Perfil **incorporado en la app** comprobado antes de instalar, 2026-10-27T17:04:06.849264Z: válido hasta **2026-10-28T14:59:31Z**, certificado vigente, dispositivo incluido, equipo/bundle coincidentes y firma válida. No renovación realizada por Codex; la renovación corresponde al PO según el último encargo. No instalar si falta vigencia efectiva; la condición del encargo técnico exige renovación previa al día28.
+
+Respaldo nuevo antes de instalar; P0-calib-1, Po-1 y last-active cotejados directamente byte a byte después de instalar y después de preparar. SHA-256 en evidencia resumida. Arranque de **db72a00 dev** observado con P0-calib-1/**e458bfd5ce9e** extendido y cero pendientes. P0 conserva su JSON original41 claves, sin reescribirlo.
+
+S1-sling copiado como archivo separado, cargado desde DEV **sin guardar**. La operación Cargar cambia la selección persistida: se repuso last-active original mientras el candidato seguía en memoria, antes de aplicar/relanzar. Lanzamiento **2026-10-27T17:09:36.0043670Z**, nombreS1-sling/hash **7d1a61c39766**, repetición0 y cero pendientes; los tres archivos originales iguales al respaldo. DEV cerrado, fila B0 accesible, **cero gestos sling antes de entregar el teléfono**.
+
+## Sesión física — en curso, sin resultados inferidos
+
+Se recordó antes del primer bloque que S1 no golpea la pelota y que el nuevo control fija por quietud, sin acelerar; tensado descendente desde fijación, regreso reduceP, cancelar siguiendo✕ y soltar. Se pidió **solo B0** con izquierda, comprobar S1-sling/cero pendientes al abrir DEV, no iniciar B1 ni otros protocolos. El PO debe identificar estados y cancelación voluntaria antes de B1. No hay respuestas ni resultados de B0 registrados todavía.
+
+Pendientes: B0–B5 bajo protocolo aprobado, hash antes de cada bloque, respuestas vinculadas en B1/B3,16 preguntas literales separadas y restauración P0 en nuevo arranque/hash **e458bfd5ce9e**/cero pendientes/tres archivos iguales. No se mezclan datos con campañas A′ anteriores ni análisis offline. Ante un defecto, registrar y detenerse. No aceptarS1 ni iniciarS2–S4/T8. PR #25 abierta en borrador mientras la validación sigue pendiente, **sin fusionar**.

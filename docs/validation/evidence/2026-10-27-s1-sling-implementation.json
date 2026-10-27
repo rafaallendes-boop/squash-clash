@@ -120,5 +120,95 @@
       "xmlSha256": "36410875e3f59fba7fdc095dd72e67575d5edc307b82b5cf560172f05c0c65ff",
       "noCompilerErrors": true
     }
-  ]
+  ],
+  "testedProductHead": "db72a00f7f4ffebc79d3708cb8d8c8e29a7f27a8",
+  "releaseChecks": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "db72a00",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-27T16:54:10.0058050Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "db72a00",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-27T16:54:38.1373680Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "nativePreinstall": {
+    "checkedUtc": "2026-10-27T17:04:06.849264+00:00",
+    "expiresUtc": "2026-10-28T14:59:31+00:00",
+    "checks": {
+      "profileTimeValid": true,
+      "certificateTimeValid": true,
+      "deviceIncluded": true,
+      "teamMatches": true,
+      "bundleMatches": true,
+      "signatureValid": true,
+      "arm64Only": true,
+      "releaseNoDevelopment": true,
+      "gitClean": true,
+      "sourcesMatchTestedTree": true,
+      "cleanMetadata": true
+    },
+    "architectures": "arm64",
+    "buildMetadata": {
+      "version": "0.1.0",
+      "gitHash": "db72a00",
+      "profile": "dev",
+      "builtAtUtc": "2026-10-27T16:55:56.5851750Z",
+      "unityVersion": "6000.3.27f1",
+      "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+      "gitDirty": false
+    },
+    "renewalByPO": true,
+    "sourceFilesVerified": 436
+  },
+  "installation": {
+    "build": "0.1.0+db72a00 dev",
+    "successful": true,
+    "presetsByteIdenticalBeforeAfterAndPrepared": true,
+    "originalFilesSha256": {
+      "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
+    },
+    "startupP0ExtendedHash": "e458bfd5ce9e",
+    "preparedPreset": "S1-sling",
+    "preparedHash": "7d1a61c39766",
+    "preparedLaunchUtc": "2026-10-27T17:09:36.0043670Z",
+    "pending": 0,
+    "repeatSeconds": 0,
+    "persistedSelection": "P0-calib-1",
+    "DEVClosed": true,
+    "noSlingGesturesBeforeHandoff": true
+  }
 }
