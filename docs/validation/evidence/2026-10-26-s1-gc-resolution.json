@@ -693,7 +693,7 @@
   "defaultsUnchangedFromReviewedHead": "6095c0b38614",
   "P0ExtendedHash": "fdd997f2b85a",
   "experimentalPresetHash": "08b6fe90889b",
-  "physicalSession": "Pending",
+  "physicalSession": "Awaiting first series: ten soft, left hand",
   "completeRegression": {
     "editmode": {
       "total": "371",
@@ -746,9 +746,30 @@
     },
     "installed": true,
     "presetsByteIdenticalAfterInstall": true,
-    "newStartupVerified": false,
-    "runtimePresetLoaded": false,
-    "preparationPending": "Local mirroring authentication; initial launch rejected because device locked.",
+    "newStartupVerified": true,
+    "runtimePresetLoaded": true,
+    "preparationPending": null,
     "sourceFilesHashed": 411
-  }
+  },
+  "P0StartupVerified": {
+    "ts": "2026-10-27T00:50:11.2099740Z",
+    "build": "0.1.0+8476dd8 dev",
+    "presetName": "P0-calib-1",
+    "effectiveHash": "fdd997f2b85a",
+    "pending": 0
+  },
+  "temporarySession": {
+    "ts": "2026-10-27T00:50:35.4162550Z",
+    "build": "0.1.0+8476dd8 dev",
+    "presetName": "S1-calib-gesture",
+    "effectiveHash": "08b6fe90889b",
+    "pending": 0,
+    "persistentSelection": "P0-calib-1",
+    "threeFilesByteIdenticalBeforeGestures": true,
+    "presetFileMatchesVersionedCandidate": true,
+    "preparationMethod": "Load separate preset through DEV; restore backed-up last-active before Apply/relaunch. No existing preset saved or overwritten.",
+    "devClosed": true,
+    "incidentalGesturesBeforeStart": 0
+  },
+  "mandatoryWarningBeforeFourthDelivered": false
 }
