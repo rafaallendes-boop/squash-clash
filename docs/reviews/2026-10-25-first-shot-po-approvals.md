@@ -816,3 +816,55 @@ Correcciones aplicadas únicamente a texto:
 POautoriza fusión **condicionada**: delta desde f2068ac limitado a propuesta/aprobaciones/AGENTS, head corregido local/remoto exacto,PRabierta/no borrador/sin conflictos yárboleslimpios. Mergecommit con segundo padre=headcorregido; sincronizarmain;retirarworktree sin `--force`,preservandoignorados. **El cierre efectivo se registrará en la siguiente entrega documental, sin commit aparte enmain**; esta entrada no afirma que elmerge ya haya ocurrido. Después detenerse, sin iniciar otra entrega.
 
 **Diseño/TDD deM2-4 no autorizados.** ElPOdecidirá dominio, ayuda de oclusión, cancelaciónC-A/C-B, política de regióninválida, desviación§6.4 y riesgo por fases. S1sin aceptar;S2–S4/T8sin autorizar. Solo texto,sin producto/cálculos nuevos/suites/check-release/build/instalación/sesión/accesoaliPhone. Perfilvigentehasta2026-11-03T18:29:44Z;ninguna instalación autorizada.
+
+
+## Cierre de PR #26 verificado por Claude/PO — registro en la nueva entrega, 2026-10-28
+
+Claude confirmó el cierre: **merge bf607cdc235ac381799d5bbbb1a1633ca394dfe9**, segundo padre exactamente **e452cc26ced5d404542fca7d96274b16cb2c91e1**, árbol idéntico. Delta desde f2068ac limitado a propuesta/aprobaciones/AGENTS con las tres correcciones aplicadas. Main sincronizada y limpia; no quedaba worktree extra al iniciar esta nueva entrega. Se registran esos hechos aquí, dentro de la nueva PR documental, **sin commit aparte en main**.
+
+Retiro anterior sin `--force`, ramas remotas conservadas. Ignorados:0paths/0archivos/0bytes, inventarios vacíos cotejados en `Logs/archive-s1-mechanics-proposal-2-20261028` del checkout principal; SHA-256 ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356. El archivador de la app rechazó el checkout por considerarlo principal del chat; Git confirmó un worktree adicional limpio y se retiró con comando normal desde main. No se disimula esa diferencia ni se afirma que la app lo archivara.
+
+## Decisiones del PO para el diseño documental M2-4 — 2026-10-28
+
+Elegidas una por una sobre la propuesta§10; se conserva el texto comunicado:
+
+1. **Spec v0.3 §6.4:** se acepta la desviación (objetivo absoluto al apoyar, en lugar de arrastre relativo) **solo para el experimento M2-4**. La spec queda intacta y A′ sigue siendo el control por defecto.
+2. **Cancelación: C-A.** Toda suelta dentro de la zona muerta cancela o abandona según N2 y la fase. Nunca hay un golpe accidental al corregir. Para corregir: volver, soltar y volver a apoyar con un Began nuevo. Las cadenas cancelar→reapoyar se registran vinculadas, sin reemplazar el primer fallo. Se acepta como costo conocido que no exista un golpe intencional con P≈0 sin tirón.
+3. **Apoyo fuera de la zona válida (tin/out):** mira roja y cierre como inválido sin Swing. No se recorta al vecino legal ni la línea pasa a ser objetivo válido.
+4. **Oclusión:** la primera prueba va **sin ayuda adicional** (iii) y sirve de referencia, midiendo el error del Began. Halo y lupa solo en una prueba posterior, si los datos lo justifican y con orden predeclarado.
+5. **Riesgo 150 ms: por fases.**
+   - Antes de un tirón deliberado fuera de la zona muerta (apoyo, duda, pausa de 150 ms, tap, temblor), P=0 y nunca hay Swing; con C-A, soltar cancela.
+   - Un tirón deliberado que se aguanta y se suelta conserva P por distancia, aunque sea ≥0,60. Se acepta explícitamente como intencional, igual que RB4 de S1-sling.
+   - La regla original de 150 ms/P<0,60 y sus casos siguen intactos para el método B de A′.
+   - No se añade decaimiento ni límite de tiempo al aguantar.
+   - Riesgo nuevo que debe cubrirse con casos negativos: un apoyo accidental que después resbala hacia abajo y carga potencia.
+
+Además, dominio **A(frontis directo) referencia principal y B respaldo**. Ubicación final después de una prueba física autorizada. Las decisiones no autorizan ahora esa prueba ni halo/lupa, código o TDD.
+
+### Alcance autorizado y contenido de esta entrega
+
+Rama/worktree nuevo desde main **bf607cd**: `firstshot/s1-m2-4-design`. El gestor de worktrees no resolvió el ref local; Git lo verificó y creó el worktree desde ese commit exacto. [Diseño documental M2-4](2026-10-28-first-shot-s1-m2-4-design.md): mapeo absoluto/proyección capturada, zona muerta/N2/Tap/prioridad de cierres, dedo/r, feedback, trazabilidad/O2/cadenas, negativos predeclarados, Tarea prevista1.2c sin renumerar y B1–B5 adaptados a C-A.
+
+Las precisiones operativas de Codex (zona muerta descendente coherente conP0, precedencia sistema→inválido→N2→C-A→Swing, semántica de tres respuestas y enlace de reapoyos) se marcan para aprobación del diseño, **sin atribuirlas como nuevas elecciones ya hechas por el PO**. «No fijó / falló» es propuesta de interfaz/protocolo, no implementada. La fase observada fuera de zona muerta no demuestra voluntad; resbalón accidental queda como caso negativo/riesgo visible, no seguridad ficticia ni P0 forzado.
+
+**Adendas nuevas D3 aditivas** a propuestaFirstShotr2 yplan, para revisión; todo el texto anterior se conserva íntegro. Valores de referencia heredados de potencia marcados [EXPERIMENTO], sin cambiar umbrales/criterios/bandas ni elegir nuevos parámetros o selector/preset. B1 deja de exigir golpe al «soltar suave»: apoyo y retirada sin carga, Tap/C-A esperados, errorBegan/fijación independientes del cierre sinSwing.
+
+Solo documentación: AGENTS/aprobaciones/diseño nuevo/propuesta r2/plan con añadidos. Sin código/tests/presets/defaults/specv0.3, suites/check-release/build/instalación/sesión/acceso al iPhone ni replay/cálculos nuevos sobre111trazas. A′ por defecto/defaults45c4e9af5c8f/S1-sling7d1a61c39766/41heredados/SimulationKey intactos.
+
+Entregar **PR lista para Claude, sin fusionar y detenerse**. S1 sigue sin aceptar; S2–S4/T8 siguen sin autorizar. Perfil válido hasta **2026-11-03T18:29:44Z**; ninguna instalación autorizada.
+
+
+## PR #27 — aprobación de Claude con cuatro correcciones y fusión condicionada, PO2026-10-28
+
+Head revisado **e415bcb92f3ab8fe1050621d164a06953cd6b6ba**. Claude verificó cincoMarkdown/basebf607cd, D3 estrictamente aditivas, specv0.3/Assets/ProjectSettings/Packages/scripts intactos y cinco decisiones literales delPO. Confirmó los valores existentes2/35mm, comparacionesTapestrictas«<», dosrespuestas de`SlingProtocol.Respond(bool)`, ausencia de cierres nuevos en`GestureOutcome` y documentación correcta de voluntad no observable(N04). Sin nueva medición/replay/cálculo.
+
+Correcciones aplicadas solo al diseño, D3, aprobaciones yAGENTS:
+
+1. **Texto visible propuesto: «Apoyo sin querer»**, significado de apoyo no querido, correspondencia interna con la respuesta anterior «Se fijó antes de tiempo» (`premature=true`). **El PO aprobará el texto al autorizar implementación**, no se cambia UI ahora. Registrar uso mixto anterior en B1/B3 de S1-sling; no reetiquetar los flags ni convertirlos en tasa de intención.
+2. **C-A en lenguaje llano:** para cancelar, volver a la altura donde se apoyó o por encima y soltar (d≤zona muerta descendente). Incluido en feedback propuesto§6, explicación previa§10 yB0; no círculo ni salida superior/lateral.
+3. **N04b:** deslizamiento mayormente lateral, componente descendente apenas mayor que zona muerta y máximo desplazamiento≥3mm puede terminar en Swing con P positivo muy pequeño(P≈0) no buscado. Riesgo explícito sin umbral/filtro/valor nuevo; no es unP=0sin tirón ni se atribuye voluntad por distancia.
+4. **§1, propuesta deCodex explícita:** rechazo con motivo de Began fuera del muro frontal(paredeslaterales/suelo/rayoinválido), distinto de mira roja/cierre inválido tin/out decidido por elPO.
+
+**Fusión autorizada solo bajo condiciones:** delta desdee415bcb exactamente esos cincoMarkdown; headcorregido local/remoto coincidente, PRabierta/no borrador/sinconflictos yárboleslimpios. Mergecommit con segundo padre=headcorregido; sincronizarmain yretirarworktree sin `--force`, preservandoignorados. Elcierre efectivo se registrará **en la siguiente entrega documental, sin commit aparte enmain**; no se afirma que elmerge haya ocurrido enestaentrada ni se inicia esa entregaahora.
+
+Después detenerse. Implementación/TDD1.2c necesitan autorización separada, igual que build/instalación/sesión. S1sigue sinaceptar;S2–S4/T8sin autorizar. Sin producto/tests/presets/defaults/specv0.3/suites/check-release/build/instalación/sesión/accesoaliPhone ni análisisnuevo de111trazas para estas correcciones.

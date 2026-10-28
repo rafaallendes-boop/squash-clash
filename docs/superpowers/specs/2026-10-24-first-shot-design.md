@@ -328,3 +328,31 @@ Pendientes heredados que siguen abiertos: comprobar P0-calib-1 en la próxima ap
 Se conserva íntegramente el texto aprobado anterior. Solo para S1-sling iteración2, esta decisión sustituye la exigencia D1 de muestras nuevas durante toda la quietud: con contacto activo y sin Ended/Canceled, Tick usa reloj real para fijar al cumplir120ms sobre la última posición válida, conservando radio1mm/velocidad15mm/s/arrastre≥3mm/área útil/mínimo3 muestras reales por candidato. El hueco51ms deja de reiniciar; no se fabrican muestras. Registrar origen sample/timer, instante teórico, frame observado y muestra real usada. Antes de fijar, movimiento fuera de tolerancia reinicia; foco/pausa/DEV invalidan. A′ permanece intacto.
 
 La misma autorización añade límite local de cancelación visible/dirección/estado fuera del frontis, con12/20/8mm intactos; cancelación guiada enB0; temporizador visible y fin/interrupción explícitos. [D2, replay diagnóstico previo y entrega](../../reviews/2026-10-27-first-shot-s1-sling-iteration-2.md). Sin cambio de specv0.3, bandas/criterios/defaults, ni contacto de pelota. Instalación requiere renovar perfil y verificar el incorporado. Nueva sesión separada, B0 completo con identificación antes de B1–B5; S1 sin aceptar y S2–S4/T8 sin autorizar.
+
+
+## Nueva adenda D3 — M2-4 «apuntar al apoyar», PO 2026-10-28 (solo diseño documental para revisión)
+
+**Aditiva: el texto previo y D1/D2 se conservan íntegros.** Solo para el experimento M2-4 se acepta la desviación de spec v0.3 §6.4: intención absoluta al Began, en lugar de arrastre relativo/posición neutra. Spec intacta y A′ por defecto; S1-sling/D2 conservado. A sobre frontis es referencia principal, B respaldo; ubicación final tras prueba física autorizada, sin elegirla definitivamente aquí.
+
+El [diseño M2-4](../../reviews/2026-10-28-first-shot-s1-m2-4-design.md) concreta las [decisiones del PO](../../reviews/2026-10-25-first-shot-po-approvals.md), distinguiéndolas de propuestas operativas de Codex para revisión:
+
+- Began primario aceptado captura proyección/viewport/court/configuración y fija objetivo absoluto del frontis/ancla táctil. Sin quietud, arrastre previo ni inferencia de forma/velocidad. El objetivo no cambia con movimientos posteriores ni relectura del panel.
+- Distancia descendente actual desde Began da P; retorno reduce, sin pico retenido/decaimiento ni límite de tiempo. Ended del mismo contacto es r para Swing; solo preview/registro en S1, sin contacto real ni S2.
+- **C-A aprobada:** toda suelta en zona muerta termina sin Swing. N2 y fase distinguen Tap/abandono/cancelación. Corregir exige volver, soltar y Began nuevo, con enlace y primer error conservados. Costo aceptado: no existe golpe intencional P≈0 sin tirón.
+- **Propuesta operativa del diseño, para aprobación:** prioridad sistema→inválido→N2→C-A→Swing válido. Zona muerta coherente con P0 descendente, no círculo N1 ni región superior/lateral de D1. Fronteras/N2 vigentes intactos; un suave corto/rápido puede ser Tap, no se baja el umbral para mejorar bandas.
+- Tin/out: mira roja y cierre inválido sin Swing; sin recorte legal. Primera referencia sin ayuda adicional (iii), midiendo error del Began; halo/lupa solo si los datos justifican prueba posterior autorizada con orden predeclarado. Mínimos actuales de mira intactos, sin cámara/zoom nuevo.
+- Feedback propuesto «No fijó / falló» con semántica diferenciada necesita aprobación de diseño; no reinterpretar flags antiguos.
+
+**Riesgo por fases aprobado:** antes de tirar fuera de zona muerta, apoyo/duda/pausa150ms/tap/temblor no cargan ni producen Swing; con C-A la suelta termina. Tirón deliberado retenido conserva P por distancia incluso≥0,60 (RB4), sin decaimiento/tiempo límite. Regla150ms/P<0,60 original y casos del método B de A′ intactos. El control no puede demostrar voluntad solo por distancia: apoyo accidental+resbalón descendente es caso negativo obligatorio y riesgo visible, sin P0 fabricado ni declaración de seguridad.
+
+Trazabilidad: instantánea de proyección observada al procesar Began frente al tiempo original, muestras crudas reales, r original, error Began, contexto/hash por bloque, cierres y cadena cancelar→reapoyar. O2 cuenta muestras anteriores al instante observado recibidas después, con desplazamiento. Sin otra autoridad/input/reloj ni replay de111trazas.
+
+Tarea prevista **1.2c**, sin renumerar: B1 pasa a apoyo dirigido y retirada sin carga (C-A/Tap esperados), con error/fijación separados del outcome de golpe; B2–B5 conservan fallos/cancelaciones y adaptación explícita. **Esta adenda no autoriza código, tests, ejecución, build, instalación ni sesión.** Valores heredados de potencia son [EXPERIMENTO], sin cambios ni nuevos parámetros. Spec/criterios/bandas/umbrales/defaults/presets intactos. S1 sin aceptar; S2–S4/T8 sin autorizar. PR documental para Claude, sin fusionar y detenerse.
+
+
+**Precisiones documentales de revisión de Claude sobre e415bcb (sin implementación):**
+
+- Texto visible propuesto **«Apoyo sin querer»**, con correspondencia interna a la respuesta histórica «Se fijó antes de tiempo» (`premature=true`). El PO lo aprobará al autorizar implementación. Los flags B1/B3 de S1-sling tuvieron significado mixto y no se reetiquetan; «No fijó / falló» conserva su discriminador propio propuesto.
+- C-A en lenguaje llano: **«Para cancelar, vuelve a la altura donde apoyaste, o más arriba, y suelta»**. Es la zona descendente d≤zona muerta, no un círculo ni una salida superior/lateral; también incluye un descenso que no exceda la zona muerta. Feedback y explicación B0 llevan esa indicación.
+- Variante negativa **N04b:** desplazamiento mayormente lateral con componente descendente apenas fuera de zona muerta y máximo desplazamiento≥3mm puede terminar en Swing con P positivo muy pequeño, no buscado. Se registra como riesgo sin umbral, filtro ni valor nuevo; no se fuerza P0 ni se confunde con intención.
+- Rechazo con motivo de Began fuera del muro frontal (pared lateral/suelo/rayo inválido) es **propuesta de Codex para revisión**, distinta de la mira roja/cierre inválido de tin/out decidido por el PO.

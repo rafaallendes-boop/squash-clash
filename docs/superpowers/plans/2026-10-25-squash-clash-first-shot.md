@@ -752,3 +752,50 @@ Fuera de esta tarea: contacto real, S2–S4, timing ±40 ms, V/T3, sonido/hápti
 | Invariantes de configuración (F08) | 1.2 y Global Constraints |
 | Montaje de pruebas del Input System (F06) | 1.0 |
 | Prod jugable sin panel (§17.A.10, M06) | 2.6, 2.7, 3.2, 3.4 |
+
+
+## Nueva adenda D3 — diseño M2-4 del PO, 2026-10-28 (solo documentación)
+
+**Aditiva: se conserva byte a byte todo el texto previo. No renumera ni ejecuta tareas existentes.** El [diseño M2-4](../../reviews/2026-10-28-first-shot-s1-m2-4-design.md) y la [nueva adenda D3 de propuesta](../specs/2026-10-24-first-shot-design.md) documentan la desviación §6.4 aceptada por el PO solo para M2-4; spec v0.3 intacta. A′ por defecto; S1-sling/D2 conservado. Dominio A referencia principal/B respaldo; diseño a revisión, ubicación final después de prueba física autorizada.
+
+### Tarea 1.2c: diseño previsto de «apuntar al apoyar» [D3, implementación no autorizada]
+
+**Estado de esta entrega:** documento de diseño, cinco decisiones del PO y cierre de PR #26, adendas para revisión. Sin código/tests/defaults/presets ni suites/check-release/build/instalación/sesión/acceso al iPhone. Sin replay/cálculos sobre111trazas. Que1.2c figure aquí no ejecuta ni autoriza su TDD.
+
+Contratos candidatos: Began primario captura proyección/objetivo absoluto/ancla; distancia actual descendente produce P; Ended del mismo contacto es r. C-A sin Swing en zona muerta, N2 vigente y prioridad de terminales explícita; tin/out rojo inválido sin recorte; ayuda (iii), sin halo/lupa nuevo. Riesgo150ms por fases y resbalón accidental expuesto, sin detector de voluntad. Mano activa/contexto/snapshot fijos, UI/P2/H17 protegidos durante preparación/protocolo; sin otra autoridad/input/reloj.
+
+**Subtareas y RED/GREEN futuros, solo tras autorización separada:**
+
+| Paso | Contrato verificable previsto; sin escribir ni ejecutar tests ahora |
+|---|---|
+| 1.2c-0 Preparación declarada | Fixtures compilables/snapshots/configuración; preparación no es RED. Selector/hash/preset experimental solo si se autorizan, sin valor numérico o JSON creado ahora. |
+| 1.2c-1 Mapeo | Began absoluto con proyección capturada/AX-1; Moved no cambia objetivo; tin/out rojo inválido; rechazo fuera de dominio; sin mover cámara/zoom. |
+| 1.2c-2 Potencia/cancelación | N01–N06 del diseño: apoyo/pausa150ms/noSwing, fronteras N2, C-A retorno, salir de nuevo antes de soltar, distancia mantenida con P≥0,60 permitida; no confundir resbalón con voluntad. |
+| 1.2c-3 Tiempo/contexto | N07/N10/N11/N12: Ended idéntico cierra una vez, datos contradictorios conservadores, contexto invalida, sin dedo promovido ni Ended ficticio. |
+| 1.2c-4 Evidencia | N09/N13: O2 tiempos/desplazamiento/matriz realmente usada, cadena de reapoyos sin sustitución y error continuo del primer Began conservado. |
+| 1.2c-5 Vista/protocolo | Mira actual/rojo/motivos/frontis despejado; tercera respuesta «No fijó / falló» a aprobar; temporizador/fin/rechazo visible y protección SL-S1-04 para el modo futuro. |
+
+Cada comportamiento futuro requiere esqueleto compilable y RED observado por aserción antes de GREEN; no errores CS ni suite antigua como éxito. Una implementación autorizada requiere regresión fresca/check-release adecuados bajo su propio alcance; build/instalación/sesión requieren autorización propia. Defaults45c4e9af5c8f/S1-sling7d1a61c39766/41heredados/SimulationKey intactos ahora; R2-3 rige cualquier clave futura, con hash real registrado y sin promover preset.
+
+**B0–B5 futuros, adaptación para revisar:**
+
+- B0: cuenta atrás/comprensión/cancelación antes de medir.
+- **B1: diez apoyos T1–T5 dos veces y retirada sin carga. «Soltar suave» ya no exige Swing; Tap/abandono C-A esperados**, error del Began y feedback por separado.
+- B2: diez suaves/medios/fuertes al T3 realmente buscado; Tap/C-A se clasifican y conservan.
+- B3: diez medios a T1/T2 bajos; errores de apoyo/resbalón/C-A separados.
+- B4: cinco cancelaciones por retorno; reapoyo con id nuevo y enlace, sin sustitución.
+- B5: ritmo cómodo incluyendo el costo de corregir. Secuencias/objetivos/bandas previos conservados; no repetir para sustituir fallos.
+
+Cada Began tiene id propio. Reapoyos extra/cadenas registrados sin borrar el primero; cierres neutros planeados de B1 no son cancelación accidental. Tercera respuesta y semántica del diseño necesitan aprobación; respuestas antiguas mixtas intactas.
+
+Antes de cada bloque futuro: control/preset/hash/pendientes0/Jugando/mano/condición sin ayuda declarados, repeat0 temporal sin guardar; sin cambios durante gesto. Restauración P0 con arranque nuevo/hash extendido de la build autorizada y tres archivos byte a byte al respaldo. Perfil incorporado efectivamente válido antes de instalar; ninguna instalación autorizada ahora.16preguntas originales literales/por separado, métricas descriptivas sin nuevos umbrales; no inferir aceptación S1. **Entregar PR documental lista para Claude, sin fusionar y detenerse. S2–S4/T8 no autorizados.**
+
+
+**Precisiones documentales de revisión de Claude sobre e415bcb (sin ejecutar1.2c):**
+
+- En1.2c-5, proponer texto visible **«Apoyo sin querer»**, conservando la correspondencia interna con «Se fijó antes de tiempo» (`premature=true`); texto pendiente del PO al autorizar implementación. B1/B3 de S1-sling mezclaron esa respuesta con fallos/no fijación: no reetiquetar ni atribuir intención medida.
+- En feedback/B0 y explicación previa: **«Para cancelar, vuelve a la altura donde apoyaste, o más arriba, y suelta»**; d≤zona muerta descendente. No exigir círculo ni región superior/lateral.
+- En1.2c-2, incluir variante **N04b**: resbalón mayormente lateral, componente descendente apenas fuera de zona muerta, desplazamiento máximo≥3mm y Swing con P≈0 positivo no buscado. Sin valor/umbral/filtro nuevo ni aserción ficticia de voluntad.
+- En1.2c-1, política de rechazo con motivo fuera del muro frontal (laterales/suelo/rayo inválido) marcada **propuesta de Codex**, distinta del tin/out rojo aprobado por el PO.
+
+Implementación/TDD requieren autorización separada; también build, instalación y sesión. S1 no aceptado; S2–S4/T8 no autorizados.
