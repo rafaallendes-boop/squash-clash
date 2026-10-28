@@ -35,3 +35,11 @@ RED7/11→GREEN11/11: foco sin contacto rompe vínculo, viewport invalida tambi�
 ## Comparabilidad del contacto invalidado
 
 RED0/1→GREEN1/1: un cambio de configuración durante un intento armado conserva el registro y marca comparableToArmedBlock=false; no reinterpreta con parámetros nuevos ni sustituye el intento. Los cierres por sistema se conservan sin Swing.
+
+## Regresión y preparación para release
+
+Fuente **ae1b423**: regresión fresca **441/441 EditMode**, **207/207 PlayMode**, sin errores CS ni tests omitidos. [Resumen de ejecuciones y hashes de XML](../validation/evidence/2026-10-28-m24-tdd.json); XML/log originales ignorados en Logs/evidence/m24-tdd. Los dos cambios transitorios de PlayMode (temperatura de luz y antialiasing) se restauraron byte a byte antes de exportar. Spec, propuesta r2, plan, EffectiveConfig.cs, SlingModel.cs y defaults se cotejaron contra403d213; 183 archivos de evidencia histórica intactos.
+
+85 claves/defaults **45c4e9af5c8f**, sin claves nuevas; selector experimental2. Preset separado **S1-M2-4 / 1c8e598b099b**; P0 extendido esperado **e458bfd5ce9e**, pendiente observar arranque de la build. 41 heredados/proyección0d39e6016bd8 y SimulationKey166a96e319c7 pasan sus pruebas originales. Parámetros2/35mm y N2 3mm/250ms inalterados; A′=0 sigue por defecto, S1-sling sin promover. N04/N04b no se declaran resueltos.
+
+Respaldo nuevo antes de instalación: P0 SHA2562f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd; Po-1 9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767; last-active5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087. Archivos coinciden con el registro anterior, selección P0; copia local ignorada en Logs/evidence/m24-session/backup-before-install. Instalación y sesión pendientes, no hay mediciones nuevas aún.
