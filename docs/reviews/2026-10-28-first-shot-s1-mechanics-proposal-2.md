@@ -2,7 +2,7 @@
 
 Fecha: 2026-10-28. Rama `firstshot/s1-mechanics-proposal-2`, desde main tras el merge de PR #25. **Propuesta de Codex para decisión del PO, no diseño aprobado ni autorización de implementación.** Se conserva la potencia por distancia; se estudia reemplazar la fijación por quietud y separar el apuntado bajo del recorrido de potencia.
 
-Solo este documento, AGENTS.md y el registro de aprobaciones. Sin código, tests, presets, defaults, spec, propuesta First Shot r2, planes, criterios, bandas ni umbrales modificados; sin suites, check-release, builds, instalaciones, sesiones ni acceso al iPhone. **No se hace análisis offline nuevo ni replay**: las cifras se citan del informe aprobado y sus evidencias, sin recalcularlas. No se crea JSON derivado. Un análisis posterior requeriría predeclaración commiteada antes de calcular, JSON de salida declarado y originales intactos.
+Solo este documento, AGENTS.md y el registro de aprobaciones. Sin código, tests, presets, defaults, spec, propuesta First Shot r2, planes, criterios, bandas ni umbrales modificados; sin suites, check-release, builds, instalaciones, sesiones ni acceso al iPhone. La versión revisada en05a3f77 no hizo análisis nuevo. La actualización autorizada deM2-4 predeclara abajo un cálculo geométrico estático, antes de calcularlo; su JSON derivado quedará **embebido en este mismo Markdown**, para conservar el delta de tres documentos. No se analizan ni reproducen las111trazas para inferir intención o resultados deM2-4. Originales intactos; sin archivoJSON/SVG adicional.
 
 ## 1. Cierre de PR #25 y fuentes
 
@@ -137,3 +137,46 @@ La comunicación literal del PO/Claude queda en el [registro de aprobaciones](20
 - **C6:** [AcceptedB0ShowsCountdownAndAuditsExactPresetHashTimeAndPause](../../Assets/SquashClash/Tests/PlayMode/SlingControlSafetyTests.cs), expresión And/Or de la cuenta atrás con precedencia ambigua según Claude, sin efecto en el resultado revisado. No se modifica ni ejecuta el test. No se reinterpreta la regresión411/411 y194/194 ya aprobada.
 
 SL-S1-04 y los111 registros/restauraciónP0 fueron aprobados técnicamente; la causa de las activaciones originales P2/H17/Escenario sigue sin confirmar y no se atribuye al PO ni a autoarranque. Perfil vigente registrado hasta **2026-11-03T18:29:44Z**; no hay instalación autorizada ni acceso al iPhone. **Entregar PR documental lista para Claude, sin fusionar, y detenerse. S1 y S1-sling no aceptados; S2–S4/T8 no autorizados.**
+
+
+## 10. Adenda M2-4 — decisión del PO y predeclaración geométrica, 2026-10-28
+
+**Predeclaración: todavía sin resultados calculados en este commit.** Claude revisó PR #26/head05a3f778225922b9526e613fd501358e246a8fb9 como documento correcto y honesto, tresMarkdown/sin cálculos/producto; cierrePR25 verificado. Señaló la omisión del literal de manos de revalidación2; se corrige con la cita y enlace en esta adenda, sin cambiar datos históricos.
+
+### Literales, decisión y alcance
+
+Omisión corregida, [revalidación2](2026-10-25-first-shot-s1-revalidation-2.md): **«mano izquierda y derecha, ambas 2, me imagine juando y use ambas manos»**. Es uso declarado en aquella sesión, no prueba de comodidad con dos pulgares simultáneos ni medición de alcance paraM2-2.
+
+Respuestas delPO, cada pregunta por separado:
+
+- Agarre en un rally real: **«Las 2 manos sostienen pero 1 juega, o puede ser 1 y 1 pero es mas incomodo»**.
+- Qué pulgar apunta y cuál da potencia si usa dos: **«Que se pueda elegir»**.
+- Qué sacrificaría: **«Fluidez de rally»**. Según la aclaración recibida, **prefiere fluidez antes que precisión**; no interpretar esa frase aislada como prioridad inversa.
+- Preferencia inicial sobre dominio: **«tocaría el frontis pero habría que probar. Si es que no quizás ver en un panel mas abajo. Pero tendría que mirarlo primero»**. No es elección final de ubicación.
+
+**Decisión delPO: investigarM2-4, «apuntar al apoyar», como mecánica principal**, propuesta porClaude. M2-1queda como contraste;M2-2/M2-3se conservan documentadas y descartadas por ahora. Sustituye la recomendación inicial de§7 como prioridad vigente; no es diseño aprobado ni autorización deTDD/código.
+
+Actualización posterior delPO en la misma revisión: comprobación informal con la app instalada/P0, sin bloque/datos/medición, sujetando con dos manos y jugando con un pulgar. Literal: **«Si, llego comodo con el pulgar , llego a las 2 esquinas y a veces tapa el dedo otras veces no»**. Se registra como sensación delPO; no validar cobertura de extremos legales/recorrido ni extrapolar al otro pulgar. **A, apoyo directo sobre frontis, pasa a ser referencia principal;B, panel inferior, queda de respaldo y con menos profundidad.** Esta instrucción posterior sustituye la petición inicial de igual profundidad. La ubicación final y cualquier ayuda visual siguen pendientes de prueba autorizada; no se repite la comprobación ni se accede al iPhone.
+
+Observación deClaude: al tirar hacia abajo el dedo se aparta y destapa la mira; la oclusión afecta sobre todo a la precisión del apoyo inicial. Se compararán(i)halo,(ii)lupa desplazada sobre el dedo y(iii)destape sin ayuda, sin elegir por elPO ni fijar tamaños nuevos.
+
+### Predeclaración del único cálculo offline de esta actualización
+
+**Objeto:** geometría nominal estática en1206×2622, no simulación del control ni replay. Salida declarada: bloqueJSON `M2-4-geometry-v1` y dos representaciones estáticas Markdown dentro de§10 de este mismo archivo. No otros archivos. Se commitea esta predeclaración antes de calcular; el commit de resultados citará elSHA de esta predeclaración.
+
+**Entradas existentes, sin ajustarlas:**
+
+1. [CourtCameraRig](../../Assets/SquashClash/Runtime/Camera/CourtCameraRig.cs), [DefaultPreset](../../Assets/SquashClash/Runtime/Resources/DefaultPreset.json), [CourtDimensions](../../Assets/SquashClash/Core/Court/CourtDimensions.cs): cámara fija (3,2;8;14,75), mira a(3,2;0,4;0), FOVvertical90°, frontis z=0/ancho6,40/tin0,48/out4,57. Proyección pinhole analítica con ejeX de pantalla acordeAX-1; no ejecutarUnity ni cambiar cámara.
+2. [Fixture existente](../../Assets/SquashClash/Tests/PlayMode/ReticleVisibilityTests.cs):1206×2622 y área segura de referencia(0,102,1206,2334), origen inferior izquierdo. Es fixture, no nueva medición física de insets. [Informe de visibilidad](2026-10-25-first-shot-s1-reticle-visibility.md) como respaldo de procedencia.
+3. Área útil registrada de4cec622 en [B2](../validation/evidence/2026-10-28-s1-sl04-B2.json): x0–1206,y690,9841918945312–2436; se cita el valor existente, **sin recorrer gestos ni recalcular estadísticas**. Delimitar franja inferior reservada que contieneDevBar/margen; no inventar su borde visual exacto. [SlingInputArea](../../Assets/SquashClash/Runtime/Shot/GesturePreview.Sling.cs) explica esa reserva. Los esquemas distinguirán área segura, límite de entrada yDevBar contenida debajo.
+4. Conversión existenteDPI460reportado: s=25,4/460mm/px, sin regla física ni precisión del dedo medida. Recorrido completo de referencia35mm de [S1-sling](../validation/presets/S1-sling.json), sin cambiarlo ni promoverlo; ganancia relativa existente0,12m/mm. ObjetivosT1–T5 con las coordenadas publicadas en el informe aprobado.
+
+**Cálculos fijados antes de ver resultados:**
+
+- Proyectar las esquinas del frontis suelo→out y la envolvente tin→out, además deT1–T5; origen superior izquierdo en tablas/figuras. Bordes de tin/out no son puntos válidos por el clasificador existente; representar su límite sin escoger unepsilon que altere criterios.
+- Obtener longitud enpx de35mm y, paraA, extremo inferior después del tirón desde el apoyo legal más bajo. Comparar con límite útil conocido y con el área segura; declarar cualquier falta de espacio, sin bajar el recorrido ni moverDevBar/cámara para hacerlo caber.
+- ParaB, calcular solamente altura máxima disponible para un panel estrictamente bajo el frontis, dejando por debajo del apoyo más bajo el mismo recorrido completo hasta el límite útil. No elegir dimensiones nuevas: si la cota es≤0, documentar inviabilidad bajo esas restricciones; si es>0, es techo geométrico, no tamaño aprobado.
+- Derivar sensibilidad localA enmm de pantalla por metro del frontis enT1–T5 y comparación con1/0,12 del control relativo. ParaB usar fórmula por ancho/alto del panel y su cota si existe; no inventar panel ni error del pulgar. Ninguna sensibilidad geométrica se denomina exactitud medida o tasa de acierto.
+- Dibujar esquemas estáticos con coordenadas/fuente/límites, pulgar activo de ejemplo y dos manos sosteniendo. **Silueta/oclusión cualitativas, sin diámetro ni área de contacto asumidos**, no mapa de alcance antropométrico. ParaA la mira está en el objetivo del frontis: al apoyar directamente puede coincidir con el dedo; no prometer que ya sea visible fuera de él. Comparar las tres ayudas y sus riesgos de ocultar objetivos.
+
+**Exclusiones:** no intención deM2-4 en las111trazas; sin resultados sintéticos de potencia/acierto/latencia, sin nuevos parámetros/umbrales, sin nuevas capturas ni análisis de píxeles de fotos reducidas. Todos los originales, spec, planes y producto intactos. La geometría nominal no acredita comodidad, precisión ni cobertura táctil real. Los apartados(a)–(g), opciones/riesgos/recomendaciones y evaluación se completarán tras este commit, antes de cualquierTDD futuro no autorizado.

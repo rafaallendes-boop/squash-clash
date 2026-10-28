@@ -770,3 +770,23 @@ Rama **firstshot/s1-mechanics-proposal-2**, desde main tras la fusión. [Documen
 Solo documento/AGENTS/aprobaciones. No código/tests/presets/defaults/spec/propuesta r2/planes/criterios/bandas/umbrales ni suites/check-release/builds/instalaciones/sesiones/acceso al iPhone. Las alternativas descritas son hipótesis; reabrir dos contactos antes descartados o cambiar política de dedos/r requiere decisión expresa futura, no se infiere aquí. No se autoriza ninguna evaluación física propuesta.
 
 Entregar PR lista paraClaude **sin fusionar** y detenerse. **S1sin aceptar;S2–S4/T8no autorizados**. Perfil vigente hasta **2026-11-03T18:29:44Z**; no hay instalación autorizada.
+
+
+## Revisión de PR #26 y decisión M2-4 — PO2026-10-28
+
+Claude revisa head **05a3f778225922b9526e613fd501358e246a8fb9**: documento correcto y honesto, delta tresMarkdown/sin cálculos/producto; cierrePR25 verificado con merge16b8a00/segundo padrefe78564/árbol idéntico. Omisión recibida y corregida: literal de revalidación2 **«mano izquierda y derecha, ambas 2, me imagine juando y use ambas manos»**, relevante paraM2-2; no constituye prueba de dos pulgares simultáneos.
+
+Preguntas respondidas por separado y literalesPO:
+
+- Agarre en rally real: **«Las 2 manos sostienen pero 1 juega, o puede ser 1 y 1 pero es mas incomodo»**.
+- Qué pulgar apunta y cuál da potencia si usa dos: **«Que se pueda elegir»**.
+- Qué sacrificaría: **«Fluidez de rally»**; la aclaración recibida dice que prefiere fluidez antes que precisión. No invertirla por la formulación aislada de la pregunta.
+- Dominio de apuntado inicial: **«tocaría el frontis pero habría que probar. Si es que no quizás ver en un panel mas abajo. Pero tendría que mirarlo primero»**; preferencia inicial, no decisión final.
+
+**Decisión: investigar como mecánica principalM2-4 «apuntar al apoyar», propuesta porClaude**. Un contacto/Began absoluto define objetivo y fija sin quietud/levantar/reconocer velocidad o forma; distancia descendente actual desde ancla daP, retorno reduce/sin pico;Ended del mismo contacto esr. Cancelación candidata al volver a zona muerta ysoltar, relación conSwingP≈0 pendiente. M2-1contraste;M2-2/M2-3conservadas/documentadas/descartadas por ahora. No diseño aprobado ni código autorizado.
+
+Desarrollar(a)dominio directo/panel ygeometría1206×2622,(b)sensibilidadmm/m frenteagananciarelativa,(c)cancelar-retocar yfluidez,(d)desviaciónspec§6.4sin editarla,(e)riesgo150ms/RB6/negativos,(f)dosmanossostienen-unpulgarjuega/manofuturaconfigurable,(g)B1–B5/tercerarespuesta«No fijó / falló»conautorizaciónpropia. Solo propuesta/aprobaciones/AGENTS en la misma rama/PR26. Cualquier cálculo offline predeclarado ycommiteadoantesdecalcular,JSONderivado declarado/originalesintactos;111trazasno contienenintenciónM2-4,no simular susresultados.
+
+**Steering posterior delPO en la misma actualización:** comprobación informal conappinstalada/P0,sin bloque/datos/medición, sosteniendo con dos manos yjugando con unpulgar. Literal **«Si, llego comodo con el pulgar , llego a las 2 esquinas y a veces tapa el dedo otras veces no»**. Es sensación,no medición. A sobrefrontis referencia principal;Bpanelrespaldo documentado conmenosprofundidad, reemplazando la peticióninicial deigualprofundidad. Ubicación/ayuda finalsin elegirporPO. ObservaciónClaude: tirónalejadedo/destapamira,oclusiónsobre tododelapoyoinicial;compararhalo/lupasobreeldedo/sinayudaconventajasriesgosyB1,errorinicialyposibleoclusiónT1–T5,sintamañosnuevos.
+
+[Predeclaración geométrica§10](2026-10-28-first-shot-s1-mechanics-proposal-2.md): salidaJSON **embebida** M2-4-geometry-v1 y dosfigurasMarkdown enel documento, sin archivoextra yantesdecalcular. No replay ni análisisdeintención de111trazas,ni nuevos datos físicos. Producto/spec/planes/criterios/bandas/umbrales intactos;sin código/tests/presets/defaults/suites/check-release/build/instalación/sesión/accesoaliPhone. EntregarPR26lista paraClaude sinfusionar ydetenerse. S1sinaceptar/S2–S4/T8sin autorizar;perfilhasta2026-11-03T18:29:44Z,ninguna instalaciónautorizada.
