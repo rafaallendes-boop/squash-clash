@@ -159,8 +159,8 @@ namespace SquashClash.Runtime.Shot
             if(app.Tuning.Applied.GetInt("gesture.control")<1)return RejectSlingArm(block,"wrong-control","Carga el preset experimental autorizado, aplica y relanza antes del bloque.");
             if(app.Tuning.PendingKeys.Count!=0)return RejectSlingArm(block,"pending-changes","Aplica y relanza los cambios pendientes; verifica preset y hash.");
             if(app.Tuning.Applied.Get("launcher.repeatSeconds")!=0)return RejectSlingArm(block,"repeat-not-zero","Pon repetición en 0, aplica y relanza sin guardar.");
+            if(!SlingTrials.Arm(block))return RejectSlingArm(block,"pending-feedback","Responde el intento anterior con una de las opciones visibles.");
             SlingTrials.AbsoluteSupport=app.Tuning.Applied.GetInt("gesture.control")==2;
-            if(!SlingTrials.Arm(block))return RejectSlingArm(block,"pending-feedback","Responde el intento anterior con OK o Se fijó antes de tiempo.");
             SlingArmRejection=string.Empty;
             var config=EffectiveConfig.From(CurrentGestureSource());slingBlockHash=config.Hash;
             ProtocolTarget=TargetPosition(SlingTrials.TargetId,config.Source);

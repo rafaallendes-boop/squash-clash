@@ -52,7 +52,7 @@ namespace SquashClash.Runtime.Tests
             Send(Phase.Began,0,age:.02);Assert.That(preview.M24,Is.Not.Null);Assert.That(preview.M24.HasAim,Is.True);var aim=preview.M24.Aim;
             Send(Phase.Moved,.01,5,age:.04);var data=End();
             Assert.That(preview.M24.Aim,Is.EqualTo(aim));Assert.That(data.control,Is.EqualTo("M2-4"));Assert.That(data.lockOrigin,Is.EqualTo("Began"));
-            Assert.That(data.beganTimeReal,Is.EqualTo(start));Assert.That(data.lockObservedAt,Is.EqualTo(start+.02));Assert.That(data.o2Count,Is.EqualTo(1));
+            Assert.That(data.beganTimeReal,Is.EqualTo(start).Within(1e-9));Assert.That(data.lockObservedAt,Is.EqualTo(start+.02).Within(1e-9));Assert.That(data.o2Count,Is.EqualTo(1));
             Assert.That(data.rawSamples.Length,Is.EqualTo(3));Assert.That(data.rawSamples[1].o2,Is.True);Assert.That(data.projection.Length,Is.EqualTo(16));Assert.That(data.cameraToWorld.Length,Is.EqualTo(16));
             Assert.That(app.Host.Current,Is.EqualTo(state));Assert.That(app.Host.Prediction,Is.SameAs(pred));yield return null;
         }
@@ -119,6 +119,24 @@ namespace SquashClash.Runtime.Tests
             anchor=UnityEngine.Camera.main.WorldToScreenPoint(new Vector3(3.2f,.48f,0));Send(Phase.Began,0);Assert.That(reticle.Tint,Is.EqualTo(Color.red));
             Assert.That(reticle.GetComponent<LineRenderer>().startColor,Is.EqualTo(Color.red));End(.3,0);
             Assert.That(preview.Outcome,Is.EqualTo(GestureOutcome.InvalidAim));Assert.That(reticle.gameObject.activeSelf,Is.True);yield return null;
+        }
+        [UnityTest] public IEnumerator ReapplyChainBreaksOnFocusEvenWithoutAnActiveGesture()
+        {
+            Send(Phase.Began,0);Send(Phase.Moved,.1,18);End(.3,0);
+            app.gameObject.SendMessage("OnApplicationFocus",false,SendMessageOptions.DontRequireReceiver);app.gameObject.SendMessage("OnApplicationFocus",true,SendMessageOptions.DontRequireReceiver);app.GetComponent<ResumeOverlay>().Continue();
+            start+=1;Send(Phase.Began,0);var next=End();Assert.That(next.predecessorCanceledAttemptId,Is.Null.Or.Empty);yield return null;
+        }
+        [UnityTest] public IEnumerator ViewportChangeInvalidatesInInputDispatchBeforeFrameTick()
+        {
+            Send(Phase.Began,0);UnityEngine.Camera.main.rect=new Rect(.05f,0,.95f,1);Send(Phase.Ended,.3,35);
+            Assert.That(preview.Outcome,Is.EqualTo(GestureOutcome.SystemCanceled));Assert.That(double.IsNaN(preview.M24.ReleaseAt),Is.True);yield return null;
+        }
+        [UnityTest] public IEnumerator FilteredUiAndSecondarySamplesAreAuditedWithoutCreatingOrReplacingAttempt()
+        {
+            input.UiBlocker=_=>true;Send(Phase.Began,0,id:8);Send(Phase.Ended,.05,id:8);preview.FlushRecords();
+            var text=System.IO.File.ReadAllText(app.Metrics.CurrentFilePath);Assert.That(text,Does.Contain("m24-input-filtered"));Assert.That(preview.M24,Is.Null);
+            input.UiBlocker=_=>false;start+=1;Send(Phase.Began,0);Send(Phase.Began,.01,id:2);Send(Phase.Ended,.03,35,id:2);End();
+            text=System.IO.File.ReadAllText(app.Metrics.CurrentFilePath);Assert.That(text,Does.Contain("m24-input-ignored"));yield return null;
         }
     }
 }

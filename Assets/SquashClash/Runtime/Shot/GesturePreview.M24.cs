@@ -23,7 +23,7 @@ namespace SquashClash.Runtime.Shot
         private int priorTarget,m24Target,m24Trial,m24Session;
         private string m24Block,m24Requested,m24Hash;
         private bool m24Comparable,m24SameTarget,m24Finished;
-        private Rect m24SafeArea;
+        private Rect m24SafeArea;private double m24LockObservedAt;
         private readonly List<M24Transition> m24Transitions=new List<M24Transition>();
         private string M24Context=>gestureLaunch+":"+GestureConfig.Hash;
         private M24Model CreateM24(ParamSet source)
@@ -40,6 +40,7 @@ namespace SquashClash.Runtime.Shot
         private void BeginM24Record()
         {
             if(M24==null)return;
+            m24LockObservedAt=0;
             m24Id=Guid.NewGuid().ToString("N");m24Finished=false;m24Transitions.Clear();
             bool formal=SlingTrials.Running;
             m24Block=formal?SlingTrials.Block:"preview";m24Session=SlingTrials.Session;m24Trial=formal?SlingTrials.Completed+1:0;
@@ -52,6 +53,7 @@ namespace SquashClash.Runtime.Shot
         private void OnM24Sample(in TouchSample sample)
         {
             string before=M24.Phase;M24.Push(sample);
+            if(sample.Phase==TouchPhaseKind.Began&&M24.HasAim)m24LockObservedAt=input.ReadRealTime();
             if(sample.Phase==TouchPhaseKind.Began||before!=M24.Phase)
                 m24Transitions.Add(new M24Transition{kind=M24.Phase,timeReal=sample.TimeReal,observedReal=input.ReadRealTime()});
             Power=new PowerResult(M24.P,0,0,0,0,M24.Conservative,M24.Reason,"pull-distance");
@@ -86,6 +88,8 @@ namespace SquashClash.Runtime.Shot
         private void FinishM24Gesture()
         {
             if(m24Finished)return;m24Finished=true;
+            if(m24Transitions.Count==0||m24Transitions[m24Transitions.Count-1].kind!=M24.Phase)
+                m24Transitions.Add(new M24Transition{kind=M24.Phase,timeReal=M24.TerminalAt,observedReal=input.ReadRealTime()});
             var model=M24;var cfg=EffectiveConfig.From(GestureConfig);var snapshot=model.Projection;
             var requestedTarget=TargetPosition(m24Target,GestureConfig);
             var data=new M24Record{
@@ -99,7 +103,7 @@ namespace SquashClash.Runtime.Shot
                 lockOrigin=model.HasAim?"Began":"none",outcome=model.Outcome.ToString(),phase=model.Phase,reason=model.Reason,conservative=model.Conservative,
                 tapCandidate=model.TapCandidate,everOutsideDeadZone=model.EverOutsideDeadZone,
                 power=model.P,distanceMm=model.DistanceMm,maxDistanceMm=model.MaxDistanceMm,maxDisplacementMm=model.MaxDisplacementMm,lateralMm=model.LateralMm,
-                beganTimeReal=model.BeganAt,lockObservedAt=snapshot.ObservedAt,projectionObservedAt=snapshot.ObservedAt,projectionFrame=snapshot.Frame,
+                beganTimeReal=model.BeganAt,lockObservedAt=m24LockObservedAt,projectionObservedAt=snapshot.ObservedAt,projectionFrame=snapshot.Frame,
                 hasRelease=!double.IsNaN(model.ReleaseAt),releaseTimeReal=double.IsNaN(model.ReleaseAt)?0:model.ReleaseAt,
                 terminalTimeReal=model.TerminalAt,durationMs=(model.TerminalAt-model.BeganAt)*1000,
                 preset=preset,gestureConfigHash=m24Hash,pending=pending,comparableToArmedBlock=m24Comparable,
@@ -110,7 +114,7 @@ namespace SquashClash.Runtime.Shot
             };
             for(int i=0;i<tracker.Samples.Count;i++)
             {
-                var sample=tracker.Samples[i];bool late=i>0&&sample.TimeReal<snapshot.ObservedAt&&receipts[i]>snapshot.ObservedAt;
+                var sample=tracker.Samples[i];bool late=model.HasAim&&sample.TimeReal<m24LockObservedAt&&receipts[i]>m24LockObservedAt;
                 if(late)data.o2Count++;
                 data.rawSamples[i]=new M24Raw{sequence=sample.Sequence,id=sample.FingerId,phase=sample.Phase.ToString(),timeReal=sample.TimeReal,receivedReal=receipts[i],
                     xPx=sample.PositionPx.x,yPx=sample.PositionPx.y,o2=late,displacementFromAnchorMm=Vector2.Distance(model.Anchor,sample.PositionPx)*scale,
@@ -130,7 +134,17 @@ namespace SquashClash.Runtime.Shot
                 LastRecordJson=b.Append("}}").ToString();Write(cfg,savedPreset,savedFile,savedPending,savedSeed,savedDropped,"m24-gesture",LastRecordJson);
             });
         }
-        // Filled by the protocol/view stage, after its separate RED.
+        private void OnM24Filtered(TouchSample sample,string reason)=>AuditM24Input(sample,reason,"m24-input-filtered");
+        private void AuditM24Input(TouchSample sample,string reason,string kind)
+        {
+            if(app==null||app.Tuning.Applied.GetInt("gesture.control")!=2&&M24?.Active!=true)return;
+            var cfg=EffectiveConfig.From(CurrentGestureSource());var name=app.ActivePresetName;var file=app.ActivePresetFileHash;
+            int count=app.Tuning.PendingKeys.Count,seedValue=app.MetricsSeed;long steps=app.Clock.DroppedSinceRestart;
+            string json="{\"control\":\"M2-4\",\"attemptId\":"+Q(M24?.Active==true?m24Id:null)+",\"reason\":"+Q(reason)+",\"phase\":"+Q(sample.Phase.ToString())+
+                ",\"sequence\":"+sample.Sequence+",\"id\":"+sample.FingerId+",\"timeReal\":"+N(sample.TimeReal)+",\"receivedReal\":"+N(input.ReadRealTime())+
+                ",\"xPx\":"+N(sample.PositionPx.x)+",\"yPx\":"+N(sample.PositionPx.y)+"}";
+            deferred.Enqueue(()=>Write(cfg,name,file,count,seedValue,steps,kind,json));
+        }
         private void RecordM24ProtocolCompletion(M24Record data,EffectiveConfig cfg)
         {
             if(data.block=="preview")return;

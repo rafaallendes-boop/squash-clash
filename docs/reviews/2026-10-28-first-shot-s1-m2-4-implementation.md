@@ -27,3 +27,7 @@ RED PlayMode0/5→GREEN5/5. Snapshot al Began/instante observado/matrices crudas
 ## 1.2c-5 — vista/protocolo
 
 RED6/8 más geometría0/1→GREEN9/9. B0/reloj/guía C-A, B1 sin carga con Tap/abandono esperados, tres respuestas con discriminador y premature=null en fallo, terminal visible, tin/out rojo sin flash, protección SL04 para control2. Geometría nativa1206×2622 confirma botones/guía/status fuera del frontis; vista previa sin ayuda adicional. S1-sling conserva texto/instrumento bool históricos.
+
+## Fronteras adicionales de 1.2c-3/4
+
+RED7/11→GREEN11/11: foco sin contacto rompe vínculo, viewport invalida también durante despacho (antes de Tick), eventos UI filtrados y secundarios auditados sin crear intentos. Se conserva un único input. Timestamp recibido capturado al entrar; proyección y fijación tienen sus instantes observados separados, O2 usa ambos tiempos de cada muestra real. La comparación del timestamp sintético del fixture usa tolerancia1e-9 por representación binaria del Input System; ningún umbral temporal de producto cambia. Se conserva el XML RED, que también mostraba ese redondeo.

@@ -54,7 +54,7 @@ namespace SquashClash.Runtime.Shot
         {
             this.app=app;this.input=input;this.view=view;resume=app.GetComponent<ResumeOverlay>();
             root=app.GetComponent<UIDocument>().rootVisualElement;
-            input.UiBlocker=OverUi;input.SampleReceived+=OnSample;input.SystemCanceled+=OnSystemCancel;
+            input.UiBlocker=OverUi;input.SampleReceived+=OnSample;input.SystemCanceled+=OnSystemCancel;input.SampleFiltered+=OnM24Filtered;
             app.Host.Launched+=OnLaunched;app.Tuning.Changed+=OnTuningChanged;
             view.gameObject.SetActive(false);InitializeSlingStatus();initialized=true;
         }
@@ -71,10 +71,11 @@ namespace SquashClash.Runtime.Shot
             (Active&&(gestureLaunch!=launchSerial||beganTempo!=app.Clock.Tempo||beganSlowMotion!=app.Clock.DebugSlowMotion||screenWidth!=Screen.width||screenHeight!=Screen.height));
         private void OnSample(TouchSample sample)
         {
-            if(ContextChanged()){input.CancelSystem();return;}
+            double receivedAt=input.ReadRealTime();
+            if(ContextChanged()||M24ViewportChanged()){input.CancelSystem();return;}
             if(sample.Phase==TouchPhaseKind.Began)
             {
-                if(Active)return;
+                if(Active){AuditM24Input(sample,"duplicate-or-secondary-began","m24-input-ignored");return;}
                 var source=app.Host.ActiveConfig.Source;
                 foreach(var def in ParamCatalog.All)
                     if(IsGestureKey(def.Key))source=source.With(def.Key,app.Tuning.Applied.Get(def.Key));
@@ -94,8 +95,8 @@ namespace SquashClash.Runtime.Shot
                 preset=app.ActivePresetName;fileHash=app.ActivePresetFileHash;seed=app.MetricsSeed;pending=app.Tuning.PendingKeys.Count;dropped=app.Clock.DroppedSinceRestart;
                 BeginM24Record();
             }
-            if((!Active&&sample.Phase!=TouchPhaseKind.Began)||sample.FingerId!=primary)return;
-            tracker.Push(sample);receipts.Add(input.ReadRealTime());
+            if((!Active&&sample.Phase!=TouchPhaseKind.Began)||sample.FingerId!=primary){AuditM24Input(sample,"secondary-or-terminal","m24-input-ignored");return;}
+            tracker.Push(sample);receipts.Add(receivedAt);
             if(M24!=null){OnM24Sample(sample);return;}
             if(Sling!=null){OnSlingSample(sample);return;}
             Model.Update(sample,scale);
@@ -120,6 +121,7 @@ namespace SquashClash.Runtime.Shot
         private static bool IsGestureKey(string key)=>key.StartsWith("aim.",StringComparison.Ordinal)||key.StartsWith("power.",StringComparison.Ordinal)||key.StartsWith("gesture.",StringComparison.Ordinal)||key.StartsWith("input.",StringComparison.Ordinal);
         private void OnSystemCancel()
         {
+            ResetM24Chain();
             if(Active){M24?.Cancel(input.ReadRealTime(),M24CancelReason());Sling?.Cancel(input.ReadRealTime());tracker.CancelBySystem();FinishGesture();}
             cancelIndicator?.Hide();
             if(!Sampling)EndSlingBlockTimer(input.ReadRealTime(),false,"system-cancel");
@@ -243,7 +245,7 @@ namespace SquashClash.Runtime.Shot
         private void OnDestroy()
         {
             if(!initialized)return;
-            input.SampleReceived-=OnSample;input.SystemCanceled-=OnSystemCancel;
+            input.SampleReceived-=OnSample;input.SystemCanceled-=OnSystemCancel;input.SampleFiltered-=OnM24Filtered;
             app.Host.Launched-=OnLaunched;app.Tuning.Changed-=OnTuningChanged;
             OnSystemCancel();FlushRecords();cancelIndicator?.Dispose();slingStatus?.RemoveFromHierarchy();
         }

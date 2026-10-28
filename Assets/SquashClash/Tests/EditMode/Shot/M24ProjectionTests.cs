@@ -39,5 +39,16 @@ namespace SquashClash.Core.Tests.Shot
         }
         [Test] public void Selector_DefaultIsUnchanged_AndExperimentalM24IsAvailable()
         {Assert.That(ConfigFixtures.Default().GetInt("gesture.control"),Is.Zero);Assert.That(ConfigFixtures.Default().With("gesture.control",2).GetInt("gesture.control"),Is.EqualTo(2));}
+        [Test] public void ExperimentalPresetAndStartupProjectionKeepDefaultsAndSimulationKey()
+        {
+            var defaults=ConfigFixtures.Default();var file=System.IO.Path.GetFullPath(System.IO.Path.Combine(Application.dataPath,"..","docs/validation/presets/S1-M2-4.json"));
+            Assert.That(SquashClash.Core.Config.PresetCodec.TryParse(System.IO.File.ReadAllText(file),out var preset,out var error),Is.True,error);
+            var p=SquashClash.Core.Config.PresetCodec.Overlay(defaults,preset,new System.Collections.Generic.List<string>());
+            Assert.That(p.GetInt("gesture.control"),Is.EqualTo(2));Assert.That(p.Get("power.pullDeadZoneMm"),Is.EqualTo(2));Assert.That(p.Get("power.pullFullMm"),Is.EqualTo(35));
+            Assert.That(p.Get("gesture.tapMaxMm"),Is.EqualTo(3));Assert.That(p.Get("gesture.tapMaxMs"),Is.EqualTo(250));
+            Assert.That(defaults.Hash,Is.EqualTo("45c4e9af5c8f"));Assert.That(defaults.Ordered.Count,Is.EqualTo(85));
+            Assert.That(SquashClash.Core.Config.EffectiveConfig.From(p).SimulationKey,Is.EqualTo("166a96e319c7"));
+            TestContext.WriteLine("M24_PRESET_HASH="+p.Hash+" P0_EXTENDED_HASH="+defaults.With("launcher.repeatSeconds",3).Hash);
+        }
     }
 }
