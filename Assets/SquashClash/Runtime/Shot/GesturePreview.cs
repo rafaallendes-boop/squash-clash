@@ -122,7 +122,7 @@ namespace SquashClash.Runtime.Shot
         private void OnSystemCancel()
         {
             ResetM24Chain();
-            if(Active){M24?.Cancel(input.ReadRealTime(),M24CancelReason());Sling?.Cancel(input.ReadRealTime());tracker.CancelBySystem();FinishGesture();}
+            if(Active){if(M24!=null)m24Comparable=false;M24?.Cancel(input.ReadRealTime(),M24CancelReason());Sling?.Cancel(input.ReadRealTime());tracker.CancelBySystem();FinishGesture();}
             cancelIndicator?.Hide();
             if(!Sampling)EndSlingBlockTimer(input.ReadRealTime(),false,"system-cancel");
             if(view!=null)view.gameObject.SetActive(false);
@@ -132,7 +132,7 @@ namespace SquashClash.Runtime.Shot
         {
             launchSerial++;ResetM24Chain();
             // A repeat invalidates this gesture, not the two-minute sampling window.
-            if(Active){M24?.Cancel(input.ReadRealTime(),M24CancelReason());Sling?.Cancel(input.ReadRealTime());tracker.CancelBySystem();FinishGesture();}
+            if(Active){if(M24!=null)m24Comparable=false;M24?.Cancel(input.ReadRealTime(),M24CancelReason());Sling?.Cancel(input.ReadRealTime());tracker.CancelBySystem();FinishGesture();}
             view.gameObject.SetActive(false);
         }
         private void OnTuningChanged(string key)

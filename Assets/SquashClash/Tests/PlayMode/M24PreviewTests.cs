@@ -138,5 +138,11 @@ namespace SquashClash.Runtime.Tests
             input.UiBlocker=_=>false;start+=1;Send(Phase.Began,0);Send(Phase.Began,.01,id:2);Send(Phase.Ended,.03,35,id:2);End();
             text=System.IO.File.ReadAllText(app.Metrics.CurrentFilePath);Assert.That(text,Does.Contain("m24-input-ignored"));yield return null;
         }
+        [UnityTest] public IEnumerator ConfigurationChangeMarksAffectedArmedAttemptNonComparable()
+        {
+            Assert.That(preview.ArmSlingBlock("B2-medium"),Is.True);Send(Phase.Began,0);Send(Phase.Moved,.1,18);
+            app.Tuning.Set("power.pullFullMm",40);preview.FlushRecords();
+            Assert.That(preview.LastRecordJson,Does.Contain("\"comparableToArmedBlock\":false"));yield return null;
+        }
     }
 }

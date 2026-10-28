@@ -31,3 +31,7 @@ RED6/8 más geometría0/1→GREEN9/9. B0/reloj/guía C-A, B1 sin carga con Tap/a
 ## Fronteras adicionales de 1.2c-3/4
 
 RED7/11→GREEN11/11: foco sin contacto rompe vínculo, viewport invalida también durante despacho (antes de Tick), eventos UI filtrados y secundarios auditados sin crear intentos. Se conserva un único input. Timestamp recibido capturado al entrar; proyección y fijación tienen sus instantes observados separados, O2 usa ambos tiempos de cada muestra real. La comparación del timestamp sintético del fixture usa tolerancia1e-9 por representación binaria del Input System; ningún umbral temporal de producto cambia. Se conserva el XML RED, que también mostraba ese redondeo.
+
+## Comparabilidad del contacto invalidado
+
+RED0/1→GREEN1/1: un cambio de configuración durante un intento armado conserva el registro y marca comparableToArmedBlock=false; no reinterpreta con parámetros nuevos ni sustituye el intento. Los cierres por sistema se conservan sin Swing.
