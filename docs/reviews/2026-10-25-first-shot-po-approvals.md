@@ -674,3 +674,12 @@ Pedido alPO: verificarbuild/preset/hash, pulsarB0 yconfirmar cuenta atrás desde
 ### Repreparación tras salida/reinicio del PO — 2026-10-28
 
 Literal: «tuve que salir por lo que se reinició. Dejé duplicar abierto para que hagas toda la configuración nuevamente y haga la prueba .». El registroconfirmaP0 yningúnB0/bloque/gesto4cec622 previo. Repreparación solicitada sin instalación nueva: S1-sling cargado/selecciónP0 original repuesta antes de aplicar/relanzar11:53:11.374404Z, **7d1a61c39766/cero pendientes/repeat0/sin pausa**, DEVcerrado/Listo/experimentos protegidos yB0accesible sin pulsar.3archivos directamente iguales al respaldo/444fuentes intactas. [Evidencia con historial conservado](../validation/evidence/2026-10-28-s1-sl04-preparation.json). Confirmación de cuenta atrás porPO antes de primer gesto/B0completo/guía/comprensión/cancelación siguen pendientes. Sin código/suites/build/instalación nuevos; PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.
+
+
+### Devolución del primer B0 D2 completo — 2026-10-28
+
+LiteralPO:
+
+> Listo, hice la prueba. Pero apuntar debajo de la línea como para hacer un drop me costaba apuntar o que se ponga el rombo amarillo. El resto lo entendí bien
+
+Registros:120,001808s/31intentos B0,27fijaciones/4cancelaciones de zona/4abandonos, todos7d1a61c39766/cero pendientes/comparables. Cancelación guiada marcada porapp; no interpretar eso como declaración de voluntariedad. No se recibió confirmación separada de cuenta atrás antes delprimer gesto; se preguntó retrospectivamente si la vio y Completado. También se preguntó por comprensión/cancelación y qué línea corresponde aldrop. [Informe nuevo/evidencia/O1-O2](2026-10-28-first-shot-s1-sl04-B0.md). Respuestas pendientes/B1–B5no iniciados/16preguntas finales sin responder; no aceptaciónS1.3archivos iguales al respaldo,configS1temporal activa/restauraciónP0pendiente al cerrar; sin código/suites/build/instalación nuevos. PRsin fusionar/S2–S4/T8sin autorizar.

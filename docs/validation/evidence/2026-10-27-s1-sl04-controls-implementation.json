@@ -107,7 +107,7 @@
   "experimentalPresetHash": "7d1a61c39766",
   "P0Hash": "e458bfd5ce9e",
   "simulationKey": "166a96e319c7",
-  "newPhysicalSession": "B0Requested_POCountdownConfirmationAndCompletionPending",
+  "newPhysicalSession": "B0RecordedComplete_POClarificationsPending_NoB1",
   "installation": "Succeeded_AfterEmbeddedProfileAndSourceValidation",
   "observationsForNewSession": [
     "O1 quiet candidates with <3 real samples",
@@ -198,5 +198,14 @@
     "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
   },
   "preparation": "VerifiedS1Temporary_7d1a61c39766_Pending0_Unpaused_ProtectedExperiments",
-  "preparationEvidence": "2026-10-28-s1-sl04-preparation.json"
+  "preparationEvidence": "2026-10-28-s1-sl04-preparation.json",
+  "physicalEvidence": "2026-10-28-s1-sl04-B0.json",
+  "physicalGate": {
+    "recordedB0Complete": true,
+    "guidedCancellationRecorded": true,
+    "POUnderstandingAndVoluntariness": "AwaitingClarification",
+    "countdownConfirmationBeforeGestureCommunicated": false,
+    "B1ThroughB5Started": false,
+    "finalP0Restoration": "PendingSessionContinuationOrStop"
+  }
 }
