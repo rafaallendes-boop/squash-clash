@@ -49,3 +49,14 @@ Tras nueva autenticación, se reanudó la app en el punto anterior; se navegó e
 Estado observado antes de entregar: **«S1-sling · 7d1a61c39766 · Listo»**, botónPausa, DEVcerrado yEscenario/BenchmarkP2/H17 deshabilitados. FilaB0 dejada visible enParámetros para su próxima apertura, **sin pulsarla**. Cero bloques, muestreo y gestos4cec622 hasta la captura prepared-S1-ready. La vista deDuplicación se amplió solo para lectura, sin cambiar cámara/parámetros ni medir píxeles desde esa vista. [Evidencia de preparación actualizada](../validation/evidence/2026-10-28-s1-sl04-preparation.json).
 
 Se pidió alPO desbloquear/continuar si aparece aviso, comprobarbuild/preset/hash, abrirDEV→B0 y **confirmar aquí desde el Mac la cuenta atrás antes del primer gesto**, para no salir de la app del iPhone. Tras enviar esa confirmación puede practicar con la izquierda sin esperar otra respuesta: apuntar/pausar/fijar/tensar/reducirP/cancelar siguiendoDENTRO ysoltar, hastaCompletado sinDEV/salir. Si no ve o no entiende el límite, detener; noB1. Confirmación/120s/identificación/cancelación guiada todavía pendientes, no aceptación inferida. No interactuar con el teléfono mientras elPO practica; el estado privado conserva esa frontera.
+
+
+## Repreparación solicitada por el PO tras salir — 28 de octubre
+
+Literal delPO:
+
+> tuve que salir por lo que se reinició. Dejé duplicar abierto para que hagas toda la configuración nuevamente y haga la prueba .
+
+Captura previa: P0/e458bfd5ce9e/cero pendientes desde11:50:21.106494Z; **no se había armadoB0 ni hay bloques/gestos/muestreo4cec622**, por lo que no existe una práctica completada ni un bloque interrumpido que evaluar. Se conserva el registro previo, sin sustituir intentos. No es defecto por volver al preset persistido al reiniciar.
+
+Nueva carga deS1-sling desdeDEV, last-activeP0 original repuesto **antes** de aplicar/relanzar. Lanzamiento **2026-10-28T11:53:11.3744040Z**,4cec622 dev/S1-sling/**7d1a61c39766/cero pendientes/repeat0**. Pausafalse en auditoría, DEVcerrado/líneaListo/botónPausa/3experimentos deshabilitados/B0accesible, sin activarlo desdeCodex. Tres archivos directamente byte a byte iguales al respaldo y444fuentes sin cambios. Captura re-prepared-S1-ready e historial añadido a la [evidencia de preparación](../validation/evidence/2026-10-28-s1-sl04-preparation.json). Sin código/suite/build/instalación nuevos. Se mantiene la confirmaciónPO de cuenta atrás antes delprimer gesto, guía/cancelación/B0completo antes deB1; S1sin aceptar, PRsin fusionar/S2–S4/T8sin autorizar.
