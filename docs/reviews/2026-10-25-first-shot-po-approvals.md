@@ -892,3 +892,8 @@ Build0f8002d dev Release ARM64/no Development; checks dev/prod limpios, perfil i
 ### Devolución B0 M2-4 y preferencia del PO (sin nueva decisión de mecánica)
 
 Literal completo en informe/evidencia B0; PO declara apuntar/cargar/cancelar durante2min y preferencia inicial de tensado arriba/adelante, después acostumbrado a bajar. Sensación, no cambio de autorización ni aceptación. Se mantiene el tensado descendente,2/35/N2/bandas/umbrales. Log B0 completo120,01248675s/104intentos/5retornosC-A y guiada registrada/hash1c8e598b099b/cero pendientes; ninguna tanda posterior. Se conserva desviación de no recibir confirmación previa de cuenta atrás porchat; se pregunta retrospectivamente y sobre comprensión/voluntariedad C-A, sin repetir ni inferir. Falta triada antes de B1, un bloque cada vez.3archivos byte iguales, M2-4 temporal activo/selección persistidaP0/restauración final pendiente.
+
+
+### Gate B0 y aclaraciones literales, sin nueva decisión de parámetros
+
+Cuenta atrás antes del primer gesto/Completado: PO **«Si, lo vi, preferí empezar de una después de leer el mensaje»**. Cancelación voluntaria y retorno comprendido: **«fueron todas voluntarias»**. Se conserva la desviación de no confirmar previamente porchat, sin repetir B0 ni recalificar raw. Gate de B0 confirmado; faltan respuestas a ejemplos de la triada antes de B1. Preferencia de dirección arriba/adelante no modifica el experimento descendente. Ningún bloque nuevo solicitado aún; código/configuración intactos. M2-4 temporal activo/restauración final pendiente.

@@ -450,9 +450,9 @@
   ],
   "poLiteral": "listo, apuntaba, cargaba y también cancelaba. Por 2 minutos, me pareció bien, pero para cargar había que ir con el pulgar hacia abajo o atras, me gusta mas que sea hacia arriba o adelante, ese fue mi primer movimiento natural, luego me acostumbre y fui con el pulgar hacia abajo. Pero se ve bien",
   "poCountdownConfirmationBeforeFirstGestureReceived": false,
-  "procedureDeviation": "No separate chat confirmation was received before the first gesture; retrospective clarification pending, no repeat/substitution.",
+  "procedureDeviation": "PO reports seeing countdown before touching and completion at the end, but deliberately began immediately after reading instead of confirming in chat first. Retrospective statement preserved; no repeat/substitution.",
   "directionPreference": "Up/forward is PO preference, not a change authorized during this session. Downward pull unchanged.",
-  "cancellationUnderstandingClarification": "Pending PO reply; guided return cancellation present in raw data, intent not inferred from outcome alone.",
+  "cancellationUnderstandingClarification": "PO: fueron todas voluntarias. Gate understood from explanation, completed guided cancellation and explicit voluntary report; no relabeling of individual raw attempts.",
   "records": [
     {
       "ts": "2026-10-28T23:27:40.3432480Z",
@@ -68213,5 +68213,16 @@
       }
     }
   ],
-  "acceptanceS1": false
+  "acceptanceS1": false,
+  "poClarifications": [
+    {
+      "question": "Sin repetir B0: ¿viste la cuenta atrás antes del primer gesto y «Completado» al final? No recibí la confirmación previa por el chat; lo registraré como desviación del procedimiento, sin repetir ni sustituir la práctica.",
+      "answer": "Si, lo vi, preferí empezar de una después de leer el mensaje"
+    },
+    {
+      "question": "¿Las cancelaciones fueron voluntarias y entendiste que se hacen cargando, volviendo a la altura del apoyo o más arriba y soltando? Mantendremos el tirón hacia abajo en esta sesión; tu preferencia por arriba/adelante queda registrada para una decisión posterior.",
+      "answer": "fueron todas voluntarias"
+    }
+  ],
+  "poRetrospectiveCountdownAndCompletionSeen": true
 }
