@@ -184,11 +184,19 @@
     },
     "sourceFiles": 444
   },
-  "startup": "NotVerified_DeviceLocked_MirroringAuthenticationPending",
+  "startup": {
+    "verified": true,
+    "ts": "2026-10-28T09:57:01.3934910Z",
+    "presetName": "P0-calib-1",
+    "effectiveHash": "e458bfd5ce9e",
+    "pending": 0
+  },
   "threeFilesAfterInstallByteIdentical": true,
   "presetFileHashes": {
     "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
     "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
     "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
-  }
+  },
+  "preparation": "NotComplete_ConnectionLostBeforePresetLoad_AuthenticationRequestedAgain",
+  "preparationEvidence": "2026-10-28-s1-sl04-preparation.json"
 }

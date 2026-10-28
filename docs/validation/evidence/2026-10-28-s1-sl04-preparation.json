@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "build": "0.1.0+4cec622 dev",
+  "startup": {
+    "ts": "2026-10-28T09:57:01.3934910Z",
+    "presetName": "P0-calib-1",
+    "effectiveHash": "e458bfd5ce9e",
+    "pending": 0
+  },
+  "normalScreenAndRunningPauseButtonObserved": true,
+  "files": {
+    "P0-calib-1.json": {
+      "sha256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "byteIdenticalToBackup": true
+    },
+    "Po-1.json": {
+      "sha256": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "byteIdenticalToBackup": true
+    },
+    "last-active.txt": {
+      "sha256": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+      "byteIdenticalToBackup": true
+    }
+  },
+  "nativeControls": [
+    {
+      "ts": "2026-10-28T09:58:20.8702780Z",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0,
+      "payload": {
+        "control": "dev-toggle",
+        "stage": "activation",
+        "reason": "invoked",
+        "activeLaunchHash": "e458bfd5ce9e",
+        "timeReal": 25.689316750233562,
+        "accepted": true,
+        "paused": false,
+        "focused": true,
+        "devOpen": false
+      }
+    },
+    {
+      "ts": "2026-10-28T09:58:20.8791010Z",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0,
+      "payload": {
+        "control": "dev-toggle",
+        "stage": "result",
+        "reason": "completed",
+        "activeLaunchHash": "e458bfd5ce9e",
+        "timeReal": 25.69547066723356,
+        "accepted": true,
+        "paused": false,
+        "focused": true,
+        "devOpen": true
+      }
+    },
+    {
+      "ts": "2026-10-28T09:58:28.1034390Z",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0,
+      "payload": {
+        "control": "dev-tab-presets-scroll",
+        "stage": "activation",
+        "reason": "invoked",
+        "activeLaunchHash": "e458bfd5ce9e",
+        "timeReal": 32.922671542233566,
+        "accepted": true,
+        "paused": false,
+        "focused": true,
+        "devOpen": true
+      }
+    },
+    {
+      "ts": "2026-10-28T09:58:28.1078490Z",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0,
+      "payload": {
+        "control": "dev-tab-presets-scroll",
+        "stage": "result",
+        "reason": "completed",
+        "activeLaunchHash": "e458bfd5ce9e",
+        "timeReal": 32.92713683323357,
+        "accepted": true,
+        "paused": false,
+        "focused": true,
+        "devOpen": true
+      }
+    }
+  ],
+  "logicalControlActivations": 2,
+  "S1TemporaryPresetLoaded": false,
+  "B0Attempts": 0,
+  "protocolBlocks": 0,
+  "gestures": 0,
+  "P2H17ScenarioActivations": 0,
+  "allRecordedPhasesFree": true,
+  "preparationStatus": "AwaitingRepeatedLocalMirroringAuthentication_AfterToolConnectionLoss",
+  "causeOfHistoricalP2Activations": "StillNotEstablished",
+  "newPhysicalSession": "NotStarted",
+  "sourceFilesUnchanged": 444
+}
