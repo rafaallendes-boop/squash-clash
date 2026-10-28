@@ -107,7 +107,7 @@
   "experimentalPresetHash": "7d1a61c39766",
   "P0Hash": "e458bfd5ce9e",
   "simulationKey": "166a96e319c7",
-  "newPhysicalSession": "B0Complete_POUnderstandingConfirmed_B1Pending",
+  "newPhysicalSession": "B0AndB1Recorded_B2Pending",
   "installation": "Succeeded_AfterEmbeddedProfileAndSourceValidation",
   "observationsForNewSession": [
     "O1 quiet candidates with <3 real samples",
@@ -207,5 +207,8 @@
     "countdownConfirmationBeforeGestureCommunicated": false,
     "B1ThroughB5Started": false,
     "finalP0Restoration": "PendingSessionContinuationOrStop"
-  }
+  },
+  "formalSessionEvidence": [
+    "2026-10-28-s1-sl04-B1.json"
+  ]
 }

@@ -65,3 +65,8 @@ Nueva carga deS1-sling desdeDEV, last-activeP0 original repuesto **antes** de ap
 ## Primer B0 nativo completado — 28 de octubre
 
 [Informe nuevo de B0 y auditoría O1/O2](2026-10-28-first-shot-s1-sl04-B0.md):120,001808s/31intentos, todos7d1a61c39766/cero pendientes/comparables;27fijaciones (23timer/4sample),4cancelaciones de zona y4abandonos. Ninguna activaciónP2/H17/Escenario duranteB0. PO reporta dificultad de apuntado/fijación baja para drop y«El resto lo entendí bien»; literal íntegro/evidencia nuevos en informe, sin inferir respuestas finales. Se solicitaron aclaraciones de cuenta atrás/Completado, comprensión/cancelación voluntaria y qué línea. B1–B5 todavía no iniciados; configuraciónS1temporal permanece mientras se resuelve el gate. Tres archivos iguales al respaldo/444fuentes intactas; no código/suites/build/instalación nuevos.
+
+
+## B1 conservado con desviaciones de protocolo — 28 de octubre
+
+[Informe de sesión formal](2026-10-28-first-shot-s1-sl04-session.md)/[evidenciaB1](../validation/evidence/2026-10-28-s1-sl04-B1.json): dos tandas10+10 y20respuestas, todas7d1a61c39766/cero pendientes/configcomparables. Primera es original;segunda adicional, sin sustituir. PO siguió objetivo desdegesto5 deprimera ydurante todalasegunda. Respuesta«Se fijó antes de tiempo» también fueusada parafallos;6pulsaciones conservadas, no tasa de6fijacionesprematuras. PróximoB2T3/10suaves→10medios→10fuertes, izquierda/hash antesdecadatanda/sin cambios;noB3todavía. Sin código/suites/build/instalación nuevos;restauraciónP0alcierrependiente/S1sin aceptar/PRsin fusionar.

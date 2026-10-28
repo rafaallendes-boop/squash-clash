@@ -690,3 +690,10 @@ Registros:120,001808s/31intentos B0,27fijaciones/4cancelaciones de zona/4abandon
 Pregunta de cuenta atrás antes delprimer gesto yCompletado alfinal: **«si»**. Pregunta de reconocer fijación/zonaDENTRO ycancelar voluntariamente soltando dentro: **«así es»**. Qué línea para drop: **«si, la linea horizontal del medio del frontis»**. Literales conservados; no respuestas a las16preguntas finales ni aceptaciónS1. Confirmación de cuenta atrás retrospectiva, sin mensaje previo alprimer gesto: desviación conservada. Con B0completo/cancelación guiada ycomprensión confirmada, continuar según autorización previa aB1; no es autorización de ajuste.
 
 Próximo bloque soloB1/10intentos/feedback individual;verificaciónPO de preset/hash/cero pendientes/Jugando antesdearmar yregistro nativo delresultado. SiP0/otrohash/pausa,detener yavisar. ConfigS1temporal activa,3archivos iguales alrespaldo;restauraciónP0pendientealcierre. Sin código/suites/build/instalación nuevos;PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.
+
+
+### B1 original y repetición adicional — 2026-10-28
+
+PO literal: **«Listo. Hice 2 intentos porque en el 2do intento si intente de apuntar al cuadrado»**. Registro: dos tandas10+10/20respuestas;sesión2original,sesión3adicional,no sustitución. Aclaraciónliteralobjetivos: **«Desde la 2da tanda, en la primera fue desde el gesto 5»**. Aclaraciónsobre uso de«Se fijó antes de tiempo»: **«También intentos fallidos»**. Se conservan las6pulsacionesraw sin convertirlas en tasa de6fijacionesprematuras; intenciónNotEvaluated/significadomixto. No inventarjuicios ni aceptarS1por resultados. [Informe/evidencia](2026-10-28-first-shot-s1-sl04-session.md).
+
+Continuación yaautorizada: B2T3/10suaves→10medios→10fuertes,mismaizquierda/hash7d1a61c39766/0pendientes/Jugando comprobadosporPOantesdecadatanda;sin cambiarparámetros ni sustituirfallos. NoB3antesderevisarB2;aclararfeedbackantesdeB3. ConfigS1temporalactiva/3archivosigualesalrespaldo/restauraciónP0alcierrependiente. Sin código/suites/build/instalación nuevos;PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.
