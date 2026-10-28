@@ -348,3 +348,11 @@ El [diseño M2-4](../../reviews/2026-10-28-first-shot-s1-m2-4-design.md) concret
 Trazabilidad: instantánea de proyección observada al procesar Began frente al tiempo original, muestras crudas reales, r original, error Began, contexto/hash por bloque, cierres y cadena cancelar→reapoyar. O2 cuenta muestras anteriores al instante observado recibidas después, con desplazamiento. Sin otra autoridad/input/reloj ni replay de111trazas.
 
 Tarea prevista **1.2c**, sin renumerar: B1 pasa a apoyo dirigido y retirada sin carga (C-A/Tap esperados), con error/fijación separados del outcome de golpe; B2–B5 conservan fallos/cancelaciones y adaptación explícita. **Esta adenda no autoriza código, tests, ejecución, build, instalación ni sesión.** Valores heredados de potencia son [EXPERIMENTO], sin cambios ni nuevos parámetros. Spec/criterios/bandas/umbrales/defaults/presets intactos. S1 sin aceptar; S2–S4/T8 sin autorizar. PR documental para Claude, sin fusionar y detenerse.
+
+
+**Precisiones documentales de revisión de Claude sobre e415bcb (sin implementación):**
+
+- Texto visible propuesto **«Apoyo sin querer»**, con correspondencia interna a la respuesta histórica «Se fijó antes de tiempo» (`premature=true`). El PO lo aprobará al autorizar implementación. Los flags B1/B3 de S1-sling tuvieron significado mixto y no se reetiquetan; «No fijó / falló» conserva su discriminador propio propuesto.
+- C-A en lenguaje llano: **«Para cancelar, vuelve a la altura donde apoyaste, o más arriba, y suelta»**. Es la zona descendente d≤zona muerta, no un círculo ni una salida superior/lateral; también incluye un descenso que no exceda la zona muerta. Feedback y explicación B0 llevan esa indicación.
+- Variante negativa **N04b:** desplazamiento mayormente lateral con componente descendente apenas fuera de zona muerta y máximo desplazamiento≥3mm puede terminar en Swing con P positivo muy pequeño, no buscado. Se registra como riesgo sin umbral, filtro ni valor nuevo; no se fuerza P0 ni se confunde con intención.
+- Rechazo con motivo de Began fuera del muro frontal (pared lateral/suelo/rayo inválido) es **propuesta de Codex para revisión**, distinta de la mira roja/cierre inválido de tin/out decidido por el PO.

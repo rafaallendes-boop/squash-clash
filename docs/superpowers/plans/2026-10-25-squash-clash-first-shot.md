@@ -789,3 +789,13 @@ Cada comportamiento futuro requiere esqueleto compilable y RED observado por ase
 Cada Began tiene id propio. Reapoyos extra/cadenas registrados sin borrar el primero; cierres neutros planeados de B1 no son cancelación accidental. Tercera respuesta y semántica del diseño necesitan aprobación; respuestas antiguas mixtas intactas.
 
 Antes de cada bloque futuro: control/preset/hash/pendientes0/Jugando/mano/condición sin ayuda declarados, repeat0 temporal sin guardar; sin cambios durante gesto. Restauración P0 con arranque nuevo/hash extendido de la build autorizada y tres archivos byte a byte al respaldo. Perfil incorporado efectivamente válido antes de instalar; ninguna instalación autorizada ahora.16preguntas originales literales/por separado, métricas descriptivas sin nuevos umbrales; no inferir aceptación S1. **Entregar PR documental lista para Claude, sin fusionar y detenerse. S2–S4/T8 no autorizados.**
+
+
+**Precisiones documentales de revisión de Claude sobre e415bcb (sin ejecutar1.2c):**
+
+- En1.2c-5, proponer texto visible **«Apoyo sin querer»**, conservando la correspondencia interna con «Se fijó antes de tiempo» (`premature=true`); texto pendiente del PO al autorizar implementación. B1/B3 de S1-sling mezclaron esa respuesta con fallos/no fijación: no reetiquetar ni atribuir intención medida.
+- En feedback/B0 y explicación previa: **«Para cancelar, vuelve a la altura donde apoyaste, o más arriba, y suelta»**; d≤zona muerta descendente. No exigir círculo ni región superior/lateral.
+- En1.2c-2, incluir variante **N04b**: resbalón mayormente lateral, componente descendente apenas fuera de zona muerta, desplazamiento máximo≥3mm y Swing con P≈0 positivo no buscado. Sin valor/umbral/filtro nuevo ni aserción ficticia de voluntad.
+- En1.2c-1, política de rechazo con motivo fuera del muro frontal (laterales/suelo/rayo inválido) marcada **propuesta de Codex**, distinta del tin/out rojo aprobado por el PO.
+
+Implementación/TDD requieren autorización separada; también build, instalación y sesión. S1 no aceptado; S2–S4/T8 no autorizados.

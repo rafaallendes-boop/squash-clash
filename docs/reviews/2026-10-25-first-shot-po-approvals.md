@@ -852,3 +852,19 @@ Las precisiones operativas de Codex (zona muerta descendente coherente conP0, pr
 Solo documentación: AGENTS/aprobaciones/diseño nuevo/propuesta r2/plan con añadidos. Sin código/tests/presets/defaults/specv0.3, suites/check-release/build/instalación/sesión/acceso al iPhone ni replay/cálculos nuevos sobre111trazas. A′ por defecto/defaults45c4e9af5c8f/S1-sling7d1a61c39766/41heredados/SimulationKey intactos.
 
 Entregar **PR lista para Claude, sin fusionar y detenerse**. S1 sigue sin aceptar; S2–S4/T8 siguen sin autorizar. Perfil válido hasta **2026-11-03T18:29:44Z**; ninguna instalación autorizada.
+
+
+## PR #27 — aprobación de Claude con cuatro correcciones y fusión condicionada, PO2026-10-28
+
+Head revisado **e415bcb92f3ab8fe1050621d164a06953cd6b6ba**. Claude verificó cincoMarkdown/basebf607cd, D3 estrictamente aditivas, specv0.3/Assets/ProjectSettings/Packages/scripts intactos y cinco decisiones literales delPO. Confirmó los valores existentes2/35mm, comparacionesTapestrictas«<», dosrespuestas de`SlingProtocol.Respond(bool)`, ausencia de cierres nuevos en`GestureOutcome` y documentación correcta de voluntad no observable(N04). Sin nueva medición/replay/cálculo.
+
+Correcciones aplicadas solo al diseño, D3, aprobaciones yAGENTS:
+
+1. **Texto visible propuesto: «Apoyo sin querer»**, significado de apoyo no querido, correspondencia interna con la respuesta anterior «Se fijó antes de tiempo» (`premature=true`). **El PO aprobará el texto al autorizar implementación**, no se cambia UI ahora. Registrar uso mixto anterior en B1/B3 de S1-sling; no reetiquetar los flags ni convertirlos en tasa de intención.
+2. **C-A en lenguaje llano:** para cancelar, volver a la altura donde se apoyó o por encima y soltar (d≤zona muerta descendente). Incluido en feedback propuesto§6, explicación previa§10 yB0; no círculo ni salida superior/lateral.
+3. **N04b:** deslizamiento mayormente lateral, componente descendente apenas mayor que zona muerta y máximo desplazamiento≥3mm puede terminar en Swing con P positivo muy pequeño(P≈0) no buscado. Riesgo explícito sin umbral/filtro/valor nuevo; no es unP=0sin tirón ni se atribuye voluntad por distancia.
+4. **§1, propuesta deCodex explícita:** rechazo con motivo de Began fuera del muro frontal(paredeslaterales/suelo/rayoinválido), distinto de mira roja/cierre inválido tin/out decidido por elPO.
+
+**Fusión autorizada solo bajo condiciones:** delta desdee415bcb exactamente esos cincoMarkdown; headcorregido local/remoto coincidente, PRabierta/no borrador/sinconflictos yárboleslimpios. Mergecommit con segundo padre=headcorregido; sincronizarmain yretirarworktree sin `--force`, preservandoignorados. Elcierre efectivo se registrará **en la siguiente entrega documental, sin commit aparte enmain**; no se afirma que elmerge haya ocurrido enestaentrada ni se inicia esa entregaahora.
+
+Después detenerse. Implementación/TDD1.2c necesitan autorización separada, igual que build/instalación/sesión. S1sigue sinaceptar;S2–S4/T8sin autorizar. Sin producto/tests/presets/defaults/specv0.3/suites/check-release/build/instalación/sesión/accesoaliPhone ni análisisnuevo de111trazas para estas correcciones.
