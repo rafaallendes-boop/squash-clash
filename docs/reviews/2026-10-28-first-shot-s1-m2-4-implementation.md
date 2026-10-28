@@ -23,3 +23,7 @@ RED16/21→GREEN21/21: Ended idéntico conserva P/r y cierra una vez; tiempo con
 ## 1.2c-4 — integración, cadenas y O2
 
 RED PlayMode0/5→GREEN5/5. Snapshot al Began/instante observado/matrices crudas/O2, resultado y error separados, nuevo id por reapoyo/contexto rompe cadena; pausa/foco/DEV/relanzamiento/config invalidan sin r. Host.Current y Prediction idénticos en el test de integración. Compilación inicial del fixture necesitó calificar UnityEngine.Camera por choque con namespace Runtime.Camera: no cuenta como RED. Muestras originales y recepción conservadas, sin muestras fabricadas. No se reproduce evidencia histórica.
+
+## 1.2c-5 — vista/protocolo
+
+RED6/8 más geometría0/1→GREEN9/9. B0/reloj/guía C-A, B1 sin carga con Tap/abandono esperados, tres respuestas con discriminador y premature=null en fallo, terminal visible, tin/out rojo sin flash, protección SL04 para control2. Geometría nativa1206×2622 confirma botones/guía/status fuera del frontis; vista previa sin ayuda adicional. S1-sling conserva texto/instrumento bool históricos.

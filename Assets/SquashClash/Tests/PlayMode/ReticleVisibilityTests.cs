@@ -213,5 +213,19 @@ namespace SquashClash.Runtime.Tests
                 else Assert.That(preview.Status,Does.Contain(name=="s1-ruler"?"50 mm":name=="s1-soft"?"suaves":"fuertes"));
             }
         }
+        [UnityTest] public IEnumerator M24FeedbackAndPlainCancelGuide_ClearProjectedFrontisAtNativeViewport()
+        {
+            var preview=app.GetComponent<GesturePreview>();app.Tuning.Set("gesture.control",2);app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
+            Assert.That(preview.ArmSlingBlock("B0"),Is.True);yield return new WaitForSecondsRealtime(.25f);
+            Assert.That(root.Q<Label>("sling-protocol-guide").text,Does.Contain("apoyo"));
+            Assert.That(preview.ArmSlingBlock("B1"),Is.True);preview.SlingTrials.CompleteAttempt();yield return new WaitForSecondsRealtime(.25f);yield return null;
+            foreach(string name in new[]{"shot-overlay","sling-status","sling-ok","sling-premature","sling-failed"})
+            {
+                var e=root.Q(name);Assert.That(Shown(e),Is.True,name);Assert.That(e.worldBound.Overlaps(FrontisRect()),Is.False,name);
+                Assert.That(e.worldBound.yMax,Is.LessThanOrEqualTo(bar.worldBound.yMin),name);
+            }
+            Assert.That(root.Q<Button>("sling-premature").text,Is.EqualTo("Apoyo sin querer"));
+            yield return Capture("m24-three-responses");
+        }
     }
 }

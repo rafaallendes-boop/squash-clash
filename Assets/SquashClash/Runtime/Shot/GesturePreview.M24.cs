@@ -8,6 +8,16 @@ namespace SquashClash.Runtime.Shot
     public sealed partial class GesturePreview
     {
         public M24Model M24 {get;private set;}
+        private Action<ProtocolResponse> m24PendingFeedback;
+        public bool M24FeedbackPending=>m24PendingFeedback!=null;
+        public bool RespondM24(ProtocolResponse response)
+        {
+            if(m24PendingFeedback==null||!SlingTrials.Respond(response))return false;
+            var save=m24PendingFeedback;m24PendingFeedback=null;save(response);
+            if(SlingTrials.Running)ProtocolTarget=TargetPosition(SlingTrials.TargetId,CurrentGestureSource());
+            else EndSlingBlockTimer(input.ReadRealTime(),true,"attempt-count");
+            RefreshSlingStatus();return true;
+        }
         private string m24CancelReason,m24Id,m24Chain,m24Predecessor;
         private string priorCanceledId,priorChain,priorContext;
         private int priorTarget,m24Target,m24Trial,m24Session;
@@ -86,7 +96,7 @@ namespace SquashClash.Runtime.Shot
                 targetId=m24Target,targetX=requestedTarget.x,targetY=requestedTarget.y,
                 targetErrorMeters=m24Target>0&&model.HasAim?Vector2.Distance(model.Aim,requestedTarget):-1,
                 hasAim=model.HasAim,aimInvalid=model.Invalid,aimX=model.Aim.x,aimY=model.Aim.y,beganXPx=model.Anchor.x,beganYPx=model.Anchor.y,
-                outcome=model.Outcome.ToString(),phase=model.Phase,reason=model.Reason,conservative=model.Conservative,
+                lockOrigin=model.HasAim?"Began":"none",outcome=model.Outcome.ToString(),phase=model.Phase,reason=model.Reason,conservative=model.Conservative,
                 tapCandidate=model.TapCandidate,everOutsideDeadZone=model.EverOutsideDeadZone,
                 power=model.P,distanceMm=model.DistanceMm,maxDistanceMm=model.MaxDistanceMm,maxDisplacementMm=model.MaxDisplacementMm,lateralMm=model.LateralMm,
                 beganTimeReal=model.BeganAt,lockObservedAt=snapshot.ObservedAt,projectionObservedAt=snapshot.ObservedAt,projectionFrame=snapshot.Frame,
@@ -121,6 +131,24 @@ namespace SquashClash.Runtime.Shot
             });
         }
         // Filled by the protocol/view stage, after its separate RED.
-        private void RecordM24ProtocolCompletion(M24Record data,EffectiveConfig cfg) { }
+        private void RecordM24ProtocolCompletion(M24Record data,EffectiveConfig cfg)
+        {
+            if(data.block=="preview")return;
+            if(data.block=="B0"&&data.outcome==GestureOutcome.CanceledReturnToDeadZone.ToString())PracticeCancellationDone=true;
+            SlingTrials.CompleteAttempt();
+            var savedPreset=preset;var savedFile=fileHash;int savedPending=pending,savedSeed=seed;long savedDropped=dropped;
+            if(SlingTrials.AwaitingFeedback)
+            {
+                m24PendingFeedback=response=>
+                {
+                    string label=response==ProtocolResponse.Ok?"OK":response==ProtocolResponse.Premature?"Apoyo sin querer":"No fijó / falló";
+                    string json="{\"schema\":1,\"control\":\"M2-4\",\"attemptId\":"+Q(data.attemptId)+",\"block\":"+Q(data.block)+",\"session\":"+data.session+
+                        ",\"trial\":"+data.trial+",\"response\":"+Q(label)+",\"responseKind\":"+Q(response.ToString())+",\"premature\":"+(response==ProtocolResponse.Failed?"null":B(response==ProtocolResponse.Premature))+"}";
+                    LastFeedbackJson=json;deferred.Enqueue(()=>Write(cfg,savedPreset,savedFile,savedPending,savedSeed,savedDropped,"m24-feedback",json));
+                };
+            }
+            else if(!SlingTrials.Running)EndSlingBlockTimer(input.ReadRealTime(),true,"attempt-count");
+            else ProtocolTarget=TargetPosition(SlingTrials.TargetId,cfg.Source);
+        }
     }
 }

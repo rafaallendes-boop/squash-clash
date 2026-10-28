@@ -38,6 +38,7 @@ namespace SquashClash.Runtime.Shot
                 if(blockState=="interrupted")return "Práctica interrumpida. No cuenta como 120 s completos.";
                 if(PracticeCancellationDone)return "Cancelación guiada registrada. "+(blockState=="complete"?"Espera las instrucciones del PO.":"Sigue practicando hasta terminar el tiempo.");
                 if(blockState=="complete")return "Falta identificar y completar la cancelación guiada. No avances a B1.";
+                if(SlingTrials.AbsoluteSupport)return "El apoyo ya apunta; bajar solo da potencia. Para cancelar, vuelve a la altura del apoyo o más arriba y suelta.";
                 if(Sling?.Active!=true||!Sling.Locked)return "Guía: arrastra y pausa hasta fijar; después cancela siguiendo el límite ✕.";
                 if(Sling.Phase==SlingPhase.CancelZone)return "Guía: DENTRO de cancelación. Suelta ahora para cancelar.";
                 string direction=Sling.Region==SlingCancelRegion.Above?"sube":Sling.Region==SlingCancelRegion.Left?"ve a la izquierda":"ve a la derecha";
@@ -134,8 +135,8 @@ namespace SquashClash.Runtime.Shot
             if(!Sling.Active)FinishGesture();
             if(sample.Phase==TouchPhaseKind.Canceled&&Sampling)FinishSampling(input.ReadRealTime(),false,"touch-canceled");
         }
-        public bool ProtectSlingProtocol=>app!=null&&(app.Tuning.Applied.GetInt("gesture.control")==1||
-            app.Tuning.Visible.GetInt("gesture.control")==1||SlingTrials.Running||SlingTrials.AwaitingFeedback||blockState=="active");
+        public bool ProtectSlingProtocol=>app!=null&&(app.Tuning.Applied.GetInt("gesture.control")>=1||
+            app.Tuning.Visible.GetInt("gesture.control")>=1||SlingTrials.Running||SlingTrials.AwaitingFeedback||blockState=="active");
         public string SlingArmRejection {get;private set;}=string.Empty;
         public string SlingReadinessText=>app.ActivePresetName+" · "+EffectiveConfig.From(CurrentGestureSource()).Hash+" · "+
             (!app.DevHasInputFocus?"Sin foco":app.Clock.Paused?"Pausa":app.Tuning.PendingKeys.Count>0?"Pendientes":app.Tuning.Applied.Get("launcher.repeatSeconds")!=0?"Repetición activa":"Listo");
@@ -155,15 +156,16 @@ namespace SquashClash.Runtime.Shot
             if(resume.IsVisible)return RejectSlingArm(block,"resume-overlay","Toca para continuar y vuelve a pulsar el bloque.");
             if(input.BlockedByUi)return RejectSlingArm(block,"dev-open","Cierra DEV antes de iniciar el bloque.");
             if(Active)return RejectSlingArm(block,"active-gesture","Levanta el dedo y vuelve a pulsar el bloque.");
-            if(app.Tuning.Applied.GetInt("gesture.control")!=1)return RejectSlingArm(block,"wrong-control","Carga S1-sling, aplica y relanza antes del bloque.");
+            if(app.Tuning.Applied.GetInt("gesture.control")<1)return RejectSlingArm(block,"wrong-control","Carga el preset experimental autorizado, aplica y relanza antes del bloque.");
             if(app.Tuning.PendingKeys.Count!=0)return RejectSlingArm(block,"pending-changes","Aplica y relanza los cambios pendientes; verifica preset y hash.");
             if(app.Tuning.Applied.Get("launcher.repeatSeconds")!=0)return RejectSlingArm(block,"repeat-not-zero","Pon repetición en 0, aplica y relanza sin guardar.");
+            SlingTrials.AbsoluteSupport=app.Tuning.Applied.GetInt("gesture.control")==2;
             if(!SlingTrials.Arm(block))return RejectSlingArm(block,"pending-feedback","Responde el intento anterior con OK o Se fijó antes de tiempo.");
             SlingArmRejection=string.Empty;
             var config=EffectiveConfig.From(CurrentGestureSource());slingBlockHash=config.Hash;
             ProtocolTarget=TargetPosition(SlingTrials.TargetId,config.Source);
             string json="{\"schema\":1,\"block\":"+Q(block)+",\"session\":"+SlingTrials.Session+
-                ",\"control\":\"S1-sling\",\"expectedGestureHash\":"+Q(config.Hash)+",\"pending\":0,\"repeatSeconds\":0}";
+                ",\"control\":"+Q(SlingTrials.AbsoluteSupport?"M2-4":"S1-sling")+",\"expectedGestureHash\":"+Q(config.Hash)+",\"pending\":0,\"repeatSeconds\":0}";
             Write(config,app.ActivePresetName,app.ActivePresetFileHash,0,app.MetricsSeed,app.Clock.DroppedSinceRestart,"s1-sling-block",json);
             Status=block+" preparado · hash "+config.Hash+" · cero pendientes · repetición 0";
             StartSlingBlockTimer(block,input.ReadRealTime());
@@ -257,10 +259,11 @@ namespace SquashClash.Runtime.Shot
         private void RefreshSlingStatus()
         {
             if(slingStatus==null)return;
-            bool enabled=Active?Sling!=null:app.Tuning.Applied.GetInt("gesture.control")==1;
+            bool enabled=Active?Sling!=null||M24!=null:app.Tuning.Applied.GetInt("gesture.control")>=1;
             slingStatus.style.display=enabled?DisplayStyle.Flex:DisplayStyle.None;
             if(!enabled){cancelIndicator?.Hide();return;}
-            if(Sling?.Active==true&&Sling.Locked)
+            if(M24!=null)cancelIndicator?.Hide();
+            if(M24==null&&Sling?.Active==true&&Sling.Locked)
             {
                 if(Time.unscaledTime>=cancelRefreshAt)
                 {cancelRefreshAt=Time.unscaledTime+.05f;if(cancelIndicator==null)cancelIndicator=new SlingCancelIndicator(root);cancelIndicator.Show(Sling,GestureConfig,app.Host.ActiveConfig.Court,slingArea,scale);}
@@ -269,7 +272,7 @@ namespace SquashClash.Runtime.Shot
             string phase=Sling==null?"Apuntando":Sling.Phase==SlingPhase.Aiming?"Apuntando":Sling.Phase==SlingPhase.Locked?"Fijada":Sling.Phase==SlingPhase.Pulling?"Tensando":"Zona de cancelación";
             bool invalid=Sling!=null&&(Sling.LockBlocked||Sling.Conservative||view.IsInvalid);
             string cancel=Sling?.Locked==true?Sling.Region==SlingCancelRegion.Above?$"✕ ↑{GestureConfig.Get("gesture.slingCancelAboveMm"):F0} mm":Sling.Region==SlingCancelRegion.Left?$"✕ ←{GestureConfig.Get("gesture.slingCancelLateralMm"):F0} mm":$"✕ →{GestureConfig.Get("gesture.slingCancelLateralMm"):F0} mm":"";
-            slingStatus.text=$"{(invalid?"Inválida · ":"")}{phase} · P {Power.P*100:F0}% {cancel}";
+            slingStatus.text=M24!=null?$"M2-4 · {M24.Phase} · P {Power.P*100:F0}% · {(M24.Active?M24.DistanceMm<=GestureConfig.Get("power.pullDeadZoneMm")?"Suelta sin golpe":"Vuelve al apoyo para cancelar":M24.Reason)}":$"{(invalid?"Inválida · ":"")}{phase} · P {Power.P*100:F0}% {cancel}";
             float w=root.layout.width,h=root.layout.height;if(w<=0||h<=0)return;
             var safe=Screen.safeArea;var bar=root.Q("dev-bar");
             float bottom=bar!=null&&!float.IsNaN(bar.worldBound.yMin)?bar.worldBound.yMin-root.worldBound.yMin:(Screen.height-safe.yMin)/Screen.height*h;

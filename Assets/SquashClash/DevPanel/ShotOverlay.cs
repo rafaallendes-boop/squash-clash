@@ -1,5 +1,6 @@
 using System;
 using SquashClash.Runtime.App;
+using SquashClash.Core.Shot;
 using SquashClash.Runtime.Input;
 using SquashClash.Runtime.Shot;
 using UnityEngine;
@@ -33,9 +34,10 @@ namespace SquashClash.DevPanel
             {label.style.flexShrink=0;label.style.marginTop=label.style.marginBottom=0;label.style.paddingTop=label.style.paddingBottom=0;}
             compact.style.height=timer.style.height=24;
             feedback=new VisualElement {name="sling-feedback",pickingMode=PickingMode.Ignore};feedback.style.flexDirection=FlexDirection.Row;
-            var ok=new Button(()=>DevControlLog.Try(app,"sling-ok",()=>preview.RespondSling(false))) {name="sling-ok",text="OK"};
-            var premature=new Button(()=>DevControlLog.Try(app,"sling-premature",()=>preview.RespondSling(true))) {name="sling-premature",text="Se fijó antes de tiempo"};
-            foreach(var button in new[]{ok,premature}){button.style.height=44;button.style.fontSize=13;button.style.flexGrow=1;feedback.Add(button);}
+            var ok=new Button(()=>DevControlLog.Try(app,"sling-ok",()=>preview.M24FeedbackPending?preview.RespondM24(ProtocolResponse.Ok):preview.RespondSling(false))) {name="sling-ok",text="OK"};
+            var premature=new Button(()=>DevControlLog.Try(app,"sling-premature",()=>preview.M24FeedbackPending?preview.RespondM24(ProtocolResponse.Premature):preview.RespondSling(true))) {name="sling-premature",text="Se fijó antes de tiempo"};
+            var failed=new Button(()=>DevControlLog.Try(app,"sling-failed",()=>preview.RespondM24(ProtocolResponse.Failed))) {name="sling-failed",text="No fijó / falló"};
+            foreach(var button in new[]{ok,premature,failed}){button.style.height=44;button.style.fontSize=13;button.style.flexGrow=1;button.style.flexBasis=0;button.style.minWidth=0;button.style.whiteSpace=WhiteSpace.Normal;feedback.Add(button);}
             feedback.style.display=DisplayStyle.None;layer.Add(feedback);
             details=new VisualElement {name="shot-protocol"};details.style.flexShrink=0;
             state=AddLabel("shot-preview-state");power=AddLabel("shot-preview-power");sampling=AddLabel("shot-preview-sampling");status=AddLabel("shot-preview-status");
@@ -79,7 +81,12 @@ namespace SquashClash.DevPanel
         {
             var model=preview.Model;var p=preview.Power;var s=input.Stats;
             string aimState=reticle.IsInvalid?"Inválida":reticle.State==SquashClash.Core.Shot.AimState.Frozen?"Fijada":"Apuntando";
-            bool sling=preview.Active?preview.Sling!=null:app.Tuning.Applied.GetInt("gesture.control")==1;
+            bool sling=preview.Active?preview.Sling!=null||preview.M24!=null:app.Tuning.Applied.GetInt("gesture.control")>=1;
+            bool absolute=preview.M24FeedbackPending||app.Tuning.Applied.GetInt("gesture.control")==2;
+            root.Q<Button>("sling-premature").text=absolute?"Apoyo sin querer":"Se fijó antes de tiempo";
+            root.Q<Button>("sling-failed").style.display=absolute?DisplayStyle.Flex:DisplayStyle.None;
+            root.Q<Button>("sling-B1").text=absolute?"B1 · 10 apoyos y retirar sin carga":"B1 · 10 apuntar y soltar suave";
+            root.Q<Label>("sling-heading").text=absolute?"M2-4 · protocolo experimental (mano izquierda)":"S1-sling · protocolo experimental (mano izquierda)";
             var trials=preview.SlingTrials;
             bool showProtocol=trials.AwaitingFeedback||sling&&(trials.Running||preview.HasSlingProtocolStatus);
             bool notice=preview.SlingArmRejection.Length>0;
@@ -91,7 +98,7 @@ namespace SquashClash.DevPanel
             if(notice)compact.text="No se inició el bloque";
             else if(showProtocol)
             {
-                string requested=trials.RequestedPower=="soft"?"suave":trials.RequestedPower=="medium"?"media":trials.RequestedPower=="strong"?"fuerte":trials.RequestedPower=="cancel"?"cancelar":"práctica";
+                string requested=trials.RequestedPower=="soft"?"suave":trials.RequestedPower=="medium"?"media":trials.RequestedPower=="strong"?"fuerte":trials.RequestedPower=="cancel"?"cancelar":trials.RequestedPower=="none"?"sin carga":"práctica";
                 compact.text=trials.Block=="B0"?"B0 · práctica guiada":trials.AwaitingFeedback?$"{trials.Block} · intento {trials.PendingTrial}: responde":$"{trials.Block} · {trials.Completed+1} · T{trials.TargetId} · {requested}";
             }
             else compact.text=sling?preview.SlingReadinessText:$"{aimState} · P {p.P*100:F0}%";
@@ -100,7 +107,7 @@ namespace SquashClash.DevPanel
             if(targetShown){var point=preview.ProtocolTarget;targetLine.transform.position=new Vector3(point.x,point.y,.045f);}
             Place();
             if(!panel.IsOpen)return;
-            state.text=preview.Sling!=null?$"S1-sling · {preview.Sling.Phase} · {preview.Outcome} · d {preview.Sling.DistanceMm:F1} mm · max {preview.Sling.MaxDistanceMm:F1} mm · {preview.Sling.Region}":model==null?"S1 · mira esperando gesto":$"Mira ({model.Aim.x:F2}, {model.Aim.y:F2}) m · {model.State} · {preview.Outcome} · salto {model.FreezeJumpMeters:F3} m";
+            state.text=preview.M24!=null?$"M2-4 · {preview.M24.Phase} · {preview.Outcome} · d {preview.M24.DistanceMm:F1} mm · {preview.M24.Reason}":preview.Sling!=null?$"S1-sling · {preview.Sling.Phase} · {preview.Outcome} · d {preview.Sling.DistanceMm:F1} mm · max {preview.Sling.MaxDistanceMm:F1} mm · {preview.Sling.Region}":model==null?"S1 · mira esperando gesto":$"Mira ({model.Aim.x:F2}, {model.Aim.y:F2}) m · {model.State} · {preview.Outcome} · salto {model.FreezeJumpMeters:F3} m";
             power.text=$"P {p.P*100:F0}% · {p.PowerSpeedMmPerS:F0} mm/s ({p.SpeedBasis}) · soporte {p.CoveredMs:F1} ms · n {p.DistinctSamples} · hueco {p.MaxGapMs:F1} ms · {(p.Conservative?"conservadora ":"")}{p.Reason}\nDPI {Screen.dpi:F0} · {preview.DensitySource} · {preview.MmPerPx:F5} mm/px · sin verificar con regla";
             sampling.text=$"Eventos {s.Samples} · {F(s.DeliveredHz)} Hz entregados · Δ p50/p95 {F(s.IntervalP50Ms)}/{F(s.IntervalP95Ms)} ms · máx {F(s.MaxGapMs)} ms\nEdad p50/p95/máx {F(s.AgeP50Ms)}/{F(s.AgeP95Ms)}/{F(s.MaxAgeMs)} ms · edad<0 {s.NegativeAges} · dup {s.DuplicateTimes} · desorden {s.OutOfOrder} · máx/frame {s.MaxSamplesPerFrame}";
             status.text=preview.Status+" · serie "+preview.TrialCount+"/10";
@@ -119,7 +126,7 @@ namespace SquashClash.DevPanel
             float barTop=bar.worldBound.yMin-root.worldBound.yMin;
             layer.style.left=safeArea.xMin/screenSize.x*width+8;
             layer.style.right=(screenSize.x-safeArea.xMax)/screenSize.x*width+8;
-            bool sling=app.Tuning.Applied.GetInt("gesture.control")==1||preview.SlingTrials.AwaitingFeedback;
+            bool sling=app.Tuning.Applied.GetInt("gesture.control")>=1||preview.SlingTrials.AwaitingFeedback;
             float lineHeight=ProtocolHeight(sling&&(preview.HasSlingProtocolStatus||preview.SlingTrials.Running)||preview.SlingTrials.AwaitingFeedback);
             layer.style.top=Mathf.Max(safeTop,Mathf.Min(safeBottom,barTop)-(sling?30+lineHeight:24)-6);
         }

@@ -88,5 +88,37 @@ namespace SquashClash.Runtime.Tests
             Assert.That(preview.M24,Is.Not.Null);Assert.That(preview.M24.HasAim,Is.False);Assert.That(preview.Outcome,Is.EqualTo(GestureOutcome.Rejected));
             Assert.That(preview.LastRecordJson,Does.Contain("outside-front-wall"));yield return null;
         }
+        [UnityTest] public IEnumerator PreparedM24ProtectsExperiments_AndB0HasCountdownAndPlainCancelGuide()
+        {
+            var root=app.GetComponent<UIDocument>().rootVisualElement;yield return new WaitForSecondsRealtime(.2f);
+            foreach(string name in new[]{"scenario","physics-spike","performance-session"})Assert.That(root.Q<Button>(name).enabledInHierarchy,Is.False,name);
+            Assert.That(UnityEngine.Object.FindFirstObjectByType<DevBar>().ActivateExperiment("physics-spike"),Is.False);
+            Assert.That(preview.ArmSlingBlock("B0"),Is.True);Assert.That(preview.ProtocolTimingText,Does.Contain("02:00"));
+            Assert.That(preview.SlingGuidanceText,Does.Contain("apoyo").And.Contain("suelta"));Send(Phase.Began,0);Send(Phase.Moved,.1,18);End(.3,0);
+            Assert.That(preview.PracticeCancellationDone,Is.True);now=start+120;preview.Tick(now);Assert.That(preview.ProtocolTimingText,Does.Contain("Completado"));yield return null;
+        }
+        [UnityTest] public IEnumerator B1_NoPullIsExpected_AndAllThreeResponsesAreDistinct()
+        {
+            Assert.That(preview.ArmSlingBlock("B1"),Is.True);Assert.That(preview.SlingTrials.RequestedPower,Is.EqualTo("none"));
+            foreach(var response in new[]{ProtocolResponse.Ok,ProtocolResponse.Premature,ProtocolResponse.Failed})
+            {
+                Send(Phase.Began,0);var data=End(.3,0);Assert.That(data.taskKind,Is.EqualTo("aim-began-no-pull"));Assert.That(data.correctionCandidate,Is.False);
+                Assert.That(preview.Outcome,Is.EqualTo(GestureOutcome.AbandonedNoPull));Assert.That(preview.SlingTrials.AwaitingFeedback,Is.True);
+                Assert.That(app.GetComponentInChildren<AimReticleView>(true).gameObject.activeSelf,Is.True,"Terminal result must stay visible until the answer");
+                Assert.That(preview.RespondM24(response),Is.True);preview.FlushRecords();
+                Assert.That(preview.LastFeedbackJson,Does.Contain(response==ProtocolResponse.Failed?"No fijó / falló":response==ProtocolResponse.Premature?"Apoyo sin querer":"OK"));
+                Assert.That(preview.LastFeedbackJson,Does.Contain(response==ProtocolResponse.Premature?"\"premature\":true":response==ProtocolResponse.Failed?"\"premature\":null":"\"premature\":false"));
+                start+=1;
+            }
+            yield return new WaitForSecondsRealtime(.2f);var root=app.GetComponent<UIDocument>().rootVisualElement;
+            Assert.That(root.Q<Button>("sling-failed"),Is.Not.Null);Assert.That(root.Q<Button>("sling-premature").text,Is.EqualTo("Apoyo sin querer"));
+        }
+        [UnityTest] public IEnumerator InvalidRedIsNeverHiddenBySuccessFlash_AndNoNeutralAimBeforeBegan()
+        {
+            var reticle=app.GetComponentInChildren<AimReticleView>(true);Assert.That(reticle.gameObject.activeSelf,Is.False);
+            anchor=UnityEngine.Camera.main.WorldToScreenPoint(new Vector3(3.2f,.48f,0));Send(Phase.Began,0);Assert.That(reticle.Tint,Is.EqualTo(Color.red));
+            Assert.That(reticle.GetComponent<LineRenderer>().startColor,Is.EqualTo(Color.red));End(.3,0);
+            Assert.That(preview.Outcome,Is.EqualTo(GestureOutcome.InvalidAim));Assert.That(reticle.gameObject.activeSelf,Is.True);yield return null;
+        }
     }
 }
