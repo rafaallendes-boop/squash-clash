@@ -12,12 +12,14 @@
     "recordedComplete": true,
     "guidedCancellationRecorded": true,
     "countdownConfirmationCommunicatedBeforeGesture": false,
-    "retrospectiveCountdownAndCompletionAnswer": null,
-    "fixationZoneAndVoluntaryCancellationAnswer": null,
-    "whichFrontWallLineAnswer": null,
+    "retrospectiveCountdownAndCompletionAnswer": "si",
+    "fixationZoneAndVoluntaryCancellationAnswer": "así es",
+    "whichFrontWallLineAnswer": "si, la linea horizontal del medio del frontis",
     "B1ThroughB5Started": false,
     "final16QuestionsAsked": false,
-    "S1Accepted": false
+    "S1Accepted": false,
+    "understandingGateForContinuation": "ConfirmedByPO_B0CompleteAndGuidedCancellationRecorded",
+    "timingOfPOConfirmation": "Retrospective; no separate message received before first gesture. Deviation retained."
   },
   "summary": {
     "elapsedRealSeconds": 120.00180799999998,

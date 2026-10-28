@@ -683,3 +683,10 @@ LiteralPO:
 > Listo, hice la prueba. Pero apuntar debajo de la línea como para hacer un drop me costaba apuntar o que se ponga el rombo amarillo. El resto lo entendí bien
 
 Registros:120,001808s/31intentos B0,27fijaciones/4cancelaciones de zona/4abandonos, todos7d1a61c39766/cero pendientes/comparables. Cancelación guiada marcada porapp; no interpretar eso como declaración de voluntariedad. No se recibió confirmación separada de cuenta atrás antes delprimer gesto; se preguntó retrospectivamente si la vio y Completado. También se preguntó por comprensión/cancelación y qué línea corresponde aldrop. [Informe nuevo/evidencia/O1-O2](2026-10-28-first-shot-s1-sl04-B0.md). Respuestas pendientes/B1–B5no iniciados/16preguntas finales sin responder; no aceptaciónS1.3archivos iguales al respaldo,configS1temporal activa/restauraciónP0pendiente al cerrar; sin código/suites/build/instalación nuevos. PRsin fusionar/S2–S4/T8sin autorizar.
+
+
+### Respuestas de comprensión B0 y línea del drop — 2026-10-28
+
+Pregunta de cuenta atrás antes delprimer gesto yCompletado alfinal: **«si»**. Pregunta de reconocer fijación/zonaDENTRO ycancelar voluntariamente soltando dentro: **«así es»**. Qué línea para drop: **«si, la linea horizontal del medio del frontis»**. Literales conservados; no respuestas a las16preguntas finales ni aceptaciónS1. Confirmación de cuenta atrás retrospectiva, sin mensaje previo alprimer gesto: desviación conservada. Con B0completo/cancelación guiada ycomprensión confirmada, continuar según autorización previa aB1; no es autorización de ajuste.
+
+Próximo bloque soloB1/10intentos/feedback individual;verificaciónPO de preset/hash/cero pendientes/Jugando antesdearmar yregistro nativo delresultado. SiP0/otrohash/pausa,detener yavisar. ConfigS1temporal activa,3archivos iguales alrespaldo;restauraciónP0pendientealcierre. Sin código/suites/build/instalación nuevos;PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.

@@ -54,3 +54,14 @@ Esto acredita la llegada posterior de muestras anteriores al instante observado;
 B0 completo registrado y cancelaciones por zona observadas. Aún faltan las aclaraciones del PO para el gate de comprensión/voluntariedad y la línea del drop. **B1–B5 y las16 preguntas finales no iniciados.** O1/O2 registrados sin cambios de código. No nuevas suites/check-release/builds/instalaciones: la verificación previa411/411 y194/194 corresponde a la misma fuente4cec622.
 
 Al continuar, comprobar hash antes del siguiente bloque; si no se entiende fijación/zona o aparece un defecto, detener y restaurarP0 en nuevo arranque con cotejo de tres archivos. Sin aceptación deS1, PR sin fusionar y S2–S4/T8 sin autorizar. Perfil vigente hasta2026-11-03T18:29:44Z, sujeto a comprobación efectiva antes de toda instalación futura.
+
+
+## Aclaraciones literales y continuación autorizada
+
+- Cuenta atrás antes delprimer gesto yCompletado alfinal: **«si»**.
+- Reconocer fijación/zonaDENTRO ycancelar voluntariamente al soltar dentro: **«así es»**.
+- Línea señalada para eldrop: **«si, la linea horizontal del medio del frontis»**.
+
+Estas respuestas confirman comprensión para continuar según el gate autorizado, junto con B0completo ycancelación guiada registrada. La confirmación de cuenta atrás llegó retrospectivamente: **se mantiene la ausencia de mensaje previo alprimer gesto**, no se reescribe la cronología ni se declara aceptación deS1. La dificultad corresponde a apuntar por debajo de la línea media; no a la roja inferior. No se modifica parámetro alguno.
+
+Captura de control before-B1-gate-confirmed: ningún lanzamiento/control/gesto nuevo después deB0, último hash7d1a61c39766/cero pendientes y3archivos iguales al respaldo. No se infiere por eso el estado de foco/pausa actual: antes deB1 elPO debe comprobar enDEV presetS1-sling/hash7d1a61c39766/cero pendientes/Jugando; si veP0, otrohash o pausa, no iniciar y avisar. El armado deja trazabilidad de sus precondiciones reales. Siguiente bloque según protocolo: **soloB1,10intentos T1–T5 dos veces**, apuntar/fijar/soltar suave, respuesta por intentoOK/Se fijó antes de tiempo sin sustituir intentos. B2–B5 y16preguntas finales todavía no realizados. No hay código/suites/build/instalación nuevos.
