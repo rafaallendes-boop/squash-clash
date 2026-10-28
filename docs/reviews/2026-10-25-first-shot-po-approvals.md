@@ -735,3 +735,84 @@ Las16preguntas se presentaron cada una por separado. Se registran sin ampliació
 «30 - 40%» y«1 segundo creo maximo» son estimaciones subjetivas, no métricas/umbrales. PO no aceptaS1 por estas respuestas. Registros de potencia/cancelación conservados junto a apuntado bajo intermitente,zona que interfiere ygesto mecánico/rally pausado; no cambiar el diseño a partir de inferencias. No se solicita repetir ni continuar una sesión.
 
 Restauración verificada: proceso nuevo2026-10-28T15:16:26.232098Z/4cec622 dev/P0-calib-1/e458bfd5ce9e/0pendientes;cinco lanzamientosP0/normal/DEVcerrado/Pausa y3archivos directamente iguales al respaldo. Primer intento coniPhonebloqueado rechazado,no éxito.444fuentes/35protegidos intactos,sin nuevos suites/check/build/instalación/código/defaults/presets/spec/planes/criterios/bandas/umbrales. Perfil renovado hasta2026-11-03T18:29:44Z;vigencia efectiva antes de cualquier futura instalación,ninguna autorizada ahora. PR#25lista paraClaude,sin fusionar;detenerse. **S1sin aceptar;S2–S4/T8sin autorizar.**
+
+
+## Revisión final de Claude y autorización del PO — PR #25, 2026-10-28
+
+Comunicación recibida del PO, conservada como revisión técnica experimental, **no aceptación de S1 ni S1-sling**:
+
+> Revisión de Claude sobre PR #25, head fe78564372ef9f38fbaea5cbc17d1fa5253bdea5: APROBADA como entrega técnica experimental.
+> - Corrección SL-S1-04 (4cec622) acotada y correcta: auditoría dev-control activation/result sin datos pegados, protección de Escenario/P2/H17 en botón y callback, rechazo visible de B0–B5 con motivo y remedio, línea preset/hash/Listo, rótulo «Benchmark P2 (dev)». D2 intacto. RED→GREEN, 411/411 y 194/194.
+> - En la sesión no hubo ninguna activación de P2/H17/Escenario y todos los armados fueron sin pausa y con foco. La causa de las activaciones originales sigue sin confirmar: no atribuirla.
+> - Registro de los 111 gestos, separaciones, desviaciones declaradas, O1/O2 y 16 respuestas literales: correcto. Restauración P0 e458bfd5ce9e con tres archivos byte a byte: verificada.
+
+### Observaciones de Claude, solo registro, sin cambio de código
+
+- **C1.** Potencia por distancia: por primera vez en S1 las tres bandas se separan (medios 9/10, fuertes 9/10, saturación 10 %) y el PO responde «si» a intensidades voluntarias, consistencia y máximo. Es la pieza a conservar.
+- **C2.** La fijación por quietud se dispara unos 130 ms después del último movimiento (mediana en todos los bloques). Cualquier duda al apuntar fija. Eso es coherente con el 30–40 % estimado por el PO y con «mecánico/pausado». Ajustar holdMs no resuelve ambas cosas a la vez.
+- **C3.** Apuntado bajo: los abandonos de B0/B3/B5 terminan con el dedo bajo yMin del área útil. Apuntar bajo y tensar comparten el eje vertical, un conflicto de forma ya anticipado como riesgo de recorrido en PR #24. No es un defecto nuevo de D2.
+- **C4.** El feedback de dos botones se usó de forma mixta incluso tras la aclaración. Una sesión futura necesitaría una tercera respuesta (por ejemplo «No fijó / falló»).
+- **C5.** ParamSection.TrySet audita cada cambio de deslizador: posible volumen alto de registros durante un arrastre.
+- **C6.** El test AcceptedB0ShowsCountdown... combina And/Or con precedencia ambigua; sin efecto en el resultado.
+
+No se convierten C1/C2 en aceptación ni los juicios del PO en tasas medidas. No se toca D2, la auditoría ni el test para incorporar estas observaciones. No se recalcula ni repite la sesión aprobada.
+
+### Autorización y ejecución del cierre
+
+PO autorizó merge commit solo con head local/remoto fe78564 exactos, PR abierta/no borrador/sin conflictos, árboles limpios y sin añadir commits a la rama. Condiciones verificadas; **merge16b8a0060f6edd86fab92b0ae6d517d11cdd3205**, segundo padre **fe78564372ef9f38fbaea5cbc17d1fa5253bdea5**, primero956cfafbbfea6fef418fa24e6a3b0911663746be. Main sincronizada conorigin/main y limpia. Worktree retirado sin `--force` después de preservar siete paths ignorados en **Logs/archive-s1-sling-20261028** del checkout principal. Inventarios cotejados antes/después:32.480archivos/8.536.696.847bytes/35.372entradas incluidas carpetas/sin symlinks; ambos SHA-256 **37e1cdfc32b8bd3c831e4d83050c9d4685809ffbdeb42690d96b44732a99c4c5**. Artefactos/inventarios siguen ignorados; ramas remotas intactas.
+
+A′ por defecto (`gesture.control=0`), preset S1-sling **7d1a61c39766 sin promover**, defaults **45c4e9af5c8f**,41heredados/proyección0d39e6016bd8 ySimulationKey166a96e319c7 intactos. Cierre no aceptaS1 niS1-sling. Sin suites/check-release/build/instalación/sesión/acceso al iPhone para cerrar.
+
+### Siguiente entrega autorizada: propuesta documental de mecánica
+
+Rama **firstshot/s1-mechanics-proposal-2**, desde main tras la fusión. [Documento](2026-10-28-first-shot-s1-mechanics-proposal-2.md): conservar potencia por distanciaC1, reemplazar fijación por quietudC2 y resolver conflicto de apuntado bajoC3; por alternativa, ventajas/riesgos/interacción150ms-P<0,60/RB6/evaluación. Recomendación de Codex marcada como tal, **sin elegir por el PO**. Usar111gestos4cec622 como evidencia, sin mezclar práctica/repeticiones ni inferir intención del feedback mixto. Si se hiciera análisis offline, predeclaración commiteada antes de calcular yJSON derivado declarado con originales intactos. **Esta entrega no hace análisis nuevo ni replay y no crea JSON derivado**; solo cita resultados aprobados.
+
+Solo documento/AGENTS/aprobaciones. No código/tests/presets/defaults/spec/propuesta r2/planes/criterios/bandas/umbrales ni suites/check-release/builds/instalaciones/sesiones/acceso al iPhone. Las alternativas descritas son hipótesis; reabrir dos contactos antes descartados o cambiar política de dedos/r requiere decisión expresa futura, no se infiere aquí. No se autoriza ninguna evaluación física propuesta.
+
+Entregar PR lista paraClaude **sin fusionar** y detenerse. **S1sin aceptar;S2–S4/T8no autorizados**. Perfil vigente hasta **2026-11-03T18:29:44Z**; no hay instalación autorizada.
+
+
+## Revisión de PR #26 y decisión M2-4 — PO2026-10-28
+
+Claude revisa head **05a3f778225922b9526e613fd501358e246a8fb9**: documento correcto y honesto, delta tresMarkdown/sin cálculos/producto; cierrePR25 verificado con merge16b8a00/segundo padrefe78564/árbol idéntico. Omisión recibida y corregida: literal de revalidación2 **«mano izquierda y derecha, ambas 2, me imagine juando y use ambas manos»**, relevante paraM2-2; no constituye prueba de dos pulgares simultáneos.
+
+Preguntas respondidas por separado y literalesPO:
+
+- Agarre en rally real: **«Las 2 manos sostienen pero 1 juega, o puede ser 1 y 1 pero es mas incomodo»**.
+- Qué pulgar apunta y cuál da potencia si usa dos: **«Que se pueda elegir»**.
+- Qué sacrificaría: **«Fluidez de rally»**; la aclaración recibida dice que prefiere fluidez antes que precisión. No invertirla por la formulación aislada de la pregunta.
+- Dominio de apuntado inicial: **«tocaría el frontis pero habría que probar. Si es que no quizás ver en un panel mas abajo. Pero tendría que mirarlo primero»**; preferencia inicial, no decisión final.
+
+**Decisión: investigar como mecánica principalM2-4 «apuntar al apoyar», propuesta porClaude**. Un contacto/Began absoluto define objetivo y fija sin quietud/levantar/reconocer velocidad o forma; distancia descendente actual desde ancla daP, retorno reduce/sin pico;Ended del mismo contacto esr. Cancelación candidata al volver a zona muerta ysoltar, relación conSwingP≈0 pendiente. M2-1contraste;M2-2/M2-3conservadas/documentadas/descartadas por ahora. No diseño aprobado ni código autorizado.
+
+Desarrollar(a)dominio directo/panel ygeometría1206×2622,(b)sensibilidadmm/m frenteagananciarelativa,(c)cancelar-retocar yfluidez,(d)desviaciónspec§6.4sin editarla,(e)riesgo150ms/RB6/negativos,(f)dosmanossostienen-unpulgarjuega/manofuturaconfigurable,(g)B1–B5/tercerarespuesta«No fijó / falló»conautorizaciónpropia. Solo propuesta/aprobaciones/AGENTS en la misma rama/PR26. Cualquier cálculo offline predeclarado ycommiteadoantesdecalcular,JSONderivado declarado/originalesintactos;111trazasno contienenintenciónM2-4,no simular susresultados.
+
+**Steering posterior delPO en la misma actualización:** comprobación informal conappinstalada/P0,sin bloque/datos/medición, sosteniendo con dos manos yjugando con unpulgar. Literal **«Si, llego comodo con el pulgar , llego a las 2 esquinas y a veces tapa el dedo otras veces no»**. Es sensación,no medición. A sobrefrontis referencia principal;Bpanelrespaldo documentado conmenosprofundidad, reemplazando la peticióninicial deigualprofundidad. Ubicación/ayuda finalsin elegirporPO. ObservaciónClaude: tirónalejadedo/destapamira,oclusiónsobre tododelapoyoinicial;compararhalo/lupasobreeldedo/sinayudaconventajasriesgosyB1,errorinicialyposibleoclusiónT1–T5,sintamañosnuevos.
+
+[Predeclaración geométrica§10](2026-10-28-first-shot-s1-mechanics-proposal-2.md): salidaJSON **embebida** M2-4-geometry-v1 y dosfigurasMarkdown enel documento, sin archivoextra yantesdecalcular. No replay ni análisisdeintención de111trazas,ni nuevos datos físicos. Producto/spec/planes/criterios/bandas/umbrales intactos;sin código/tests/presets/defaults/suites/check-release/build/instalación/sesión/accesoaliPhone. EntregarPR26lista paraClaude sinfusionar ydetenerse. S1sinaceptar/S2–S4/T8sin autorizar;perfilhasta2026-11-03T18:29:44Z,ninguna instalaciónautorizada.
+
+Ampliación de predeclaración antes del cálculo refinado: rootUI389,10×845,95 del fixturePlayMode aprobado/fórmulaSlingInputArea para inferir borde nominalDevBar, separado de límite útil/margen. Publicar ambas cotas y su carácter conservador/optimista, sin mover límites ni suponer medidas físicas. MismoJSON embebido y tresMarkdown, sin archivoextra ni replay.
+
+
+### Entrega documental M2-4 y resultados geométricos predeclarados
+
+Predeclaración **60c5c288f8cc7888db89b27455f066bbe38b49be** anterior al cálculo pinhole/sensibilidad/recorrido; ampliación **9d2a005** anterior a inferir borde nominalDevBar desde rootdel fixture histórico. Resultados y JSON **M2-4-geometry-v1 embebidos** en [§10 de la propuesta](2026-10-28-first-shot-s1-mechanics-proposal-2.md), con figuras estáticasA/B; no se añadió archivoSVG/JSON ni se ejecutó Unity. El refinamiento distingue reserva de entrada de bordeDevBar, sin mover límites ni usar el resultado para modificar35mm. ArchivoXML de referencia cotejado con hashpublicado; originales intactos.
+
+A es referencia principal por steeringdelPO, no elección final de diseño. Su punto de tirón completo nominal cae dentro de reserva pero antes deDevBar; no acredita yema/alcance físico. B queda de respaldo: altura máxima optimista muy limitada, no dimensión seleccionada ni viabilidad confirmada. Mapeo/sensibilidad comparados sin alterar ganancia; no se predice precisión del pulgar ni resultados deM2-4. Oclusión inicial/destape, halo/lupa/sin ayuda y costos de cancelar/retocar expuestos con recomendaciones deCodex etiquetadas, **sin elección de ayuda por elPO**. PolíticaSwingP≈0/cancelación/N2 y desviación de spec§6.4 siguen pendientes antes de cualquier TDD; sin editar spec. B1–B5 y tercerarespuesta«No fijó / falló» solo propuestas y necesitan autorización propia.
+
+Las111trazas no se recorren para simularM2-4; solo se citan resultados/entrada geométrica ya existentes. Comprobación informal delPO conservada como sensación, sin datos/medición ni intervención deCodex en el teléfono. Misma rama/PR26 y delta desde05a3f77 exactamente propuesta/aprobaciones/AGENTS. Sin producto/tests/presets/defaults/spec/planes/criterios/bandas/umbrales,suites/check-release/build/instalación/sesión/acceso al iPhone. Entregar lista paraClaude,sin fusionar ydetenerse. S1sin aceptar/S2–S4/T8sin autorizar;perfilhasta2026-11-03T18:29:44Z,sin instalación autorizada.
+
+
+## Aprobación de Claude y fusión condicionada de PR #26 — PO2026-10-28
+
+Claude aprobó head **f2068ac1e6948c5746005c5aa7ec71ee97dcd7cf** con tres correcciones documentales menores. Verificó delta de tresMarkdown sin producto, predeclaraciones60c5c28/9d2a005 anteriores a resultados y proyección recalculada independientemente coincidente enT1–T5, polígono/tiny1305,37,35mm=633,86px,holgurasA−8,21/+84,77px,cotasB−41,63/+51,35px y sensibilidades4,45–4,80mm/m. **No se recalcula ni se ejecuta ningún análisis para esta corrección.**
+
+Correcciones aplicadas únicamente a texto:
+
+1. Predeclaración marcada como histórica de60c5c28; resultados publicados calculados después de9d2a005.
+2. FigurasA/B con contorno cualitativo más ancho enout(x≈317–889) que en suelo(x≈353–853), sin cambiar coordenadas/JSON.
+3. **Conversión de unidades señalada por Claude de cifras ya publicadas, no análisis nuevo**, con s=25,4/460mm/px: ancho suelo≈27,6mm/out≈31,6mm;tin→out≈18,0mm;T1–T3≈9,1mm,T1–T4≈11,2mm,T1–T2≈14,0mm;mira mínima60px≈3,3mm. Consecuencia deClaude: pocos centímetros de frontis y mira actual menor que una yema; no medición de la yema delPO. Riesgo principalAes precisión del apoyo inicial, no solo oclusión; sin proponer cámara/zoom ni cambiar tamaños/umbrales.
+
+POautoriza fusión **condicionada**: delta desde f2068ac limitado a propuesta/aprobaciones/AGENTS, head corregido local/remoto exacto,PRabierta/no borrador/sin conflictos yárboleslimpios. Mergecommit con segundo padre=headcorregido; sincronizarmain;retirarworktree sin `--force`,preservandoignorados. **El cierre efectivo se registrará en la siguiente entrega documental, sin commit aparte enmain**; esta entrada no afirma que elmerge ya haya ocurrido. Después detenerse, sin iniciar otra entrega.
+
+**Diseño/TDD deM2-4 no autorizados.** ElPOdecidirá dominio, ayuda de oclusión, cancelaciónC-A/C-B, política de regióninválida, desviación§6.4 y riesgo por fases. S1sin aceptar;S2–S4/T8sin autorizar. Solo texto,sin producto/cálculos nuevos/suites/check-release/build/instalación/sesión/accesoaliPhone. Perfilvigentehasta2026-11-03T18:29:44Z;ninguna instalación autorizada.
