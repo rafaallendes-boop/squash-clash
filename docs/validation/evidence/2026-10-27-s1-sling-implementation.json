@@ -1,0 +1,227 @@
+{
+  "schema": 1,
+  "editorAutomatedOnly": true,
+  "physicalSession": "StoppedBeforeB1_CancellationNotIdentified",
+  "baseMain": "956cfafbbfea6fef418fa24e6a3b0911663746be",
+  "requiredDocsCommit": "f7f049c09a8577ae7a886385f82056ed2c217577",
+  "defaultsHash": "45c4e9af5c8f",
+  "experimentalPresetHash": "7d1a61c39766",
+  "inherited62Unchanged": true,
+  "inherited41Projection": "0d39e6016bd8",
+  "simulationKey": "166a96e319c7",
+  "runs": [
+    {
+      "name": "core-red",
+      "total": "20",
+      "passed": "0",
+      "failed": "20",
+      "start-time": "2026-10-27 16:31:38Z",
+      "end-time": "2026-10-27 16:31:38Z",
+      "xmlSha256": "73844d0e65d1f2d050676442bd80491979decfa47a6c20b00ff83ec64c81c800",
+      "noCompilerErrors": true
+    },
+    {
+      "name": "core-green",
+      "total": "20",
+      "passed": "20",
+      "failed": "0",
+      "start-time": "2026-10-27 16:33:14Z",
+      "end-time": "2026-10-27 16:33:14Z",
+      "xmlSha256": "b5fef5d35773520b55024dd7d9119684f2517a7299a76739edc54a5f7831a81b",
+      "noCompilerErrors": true
+    },
+    {
+      "name": "protocol-config-red",
+      "total": "12",
+      "passed": "0",
+      "failed": "12",
+      "start-time": "2026-10-27 16:38:01Z",
+      "end-time": "2026-10-27 16:38:01Z",
+      "xmlSha256": "cbda870c19d56efe7333ccd7641b739a55c3dd30cac0772104afae0a698d1b8e",
+      "noCompilerErrors": true
+    },
+    {
+      "name": "protocol-config-green",
+      "total": "25",
+      "passed": "25",
+      "failed": "0",
+      "start-time": "2026-10-27 16:39:15Z",
+      "end-time": "2026-10-27 16:39:15Z",
+      "xmlSha256": "2e0bae3fc22a6d3e06de7213f8f0b39117a803e299d16bcc734315720ae6972e",
+      "noCompilerErrors": true
+    },
+    {
+      "name": "runtime-red",
+      "total": "7",
+      "passed": "1",
+      "failed": "6",
+      "start-time": "2026-10-27 16:40:53Z",
+      "end-time": "2026-10-27 16:40:56Z",
+      "xmlSha256": "3917d51e0883f850749fab2d56d156febdf0f2c4fafa580ff89182c45608adea",
+      "noCompilerErrors": true
+    },
+    {
+      "name": "geometry-red",
+      "total": "1",
+      "passed": "0",
+      "failed": "1",
+      "start-time": "2026-10-27 16:44:03Z",
+      "end-time": "2026-10-27 16:44:07Z",
+      "xmlSha256": "6adca142838bc46a84b70ca63ebb5154a72eabf30e03738b7e5c3476b5b69f8f",
+      "noCompilerErrors": true
+    },
+    {
+      "name": "runtime-geometry-green",
+      "total": "8",
+      "passed": "8",
+      "failed": "0",
+      "start-time": "2026-10-27 16:44:55Z",
+      "end-time": "2026-10-27 16:44:58Z",
+      "xmlSha256": "9899b2ea40499299a1221b0f7af1deba318a8951b3f938274de582988848ec92",
+      "noCompilerErrors": true
+    },
+    {
+      "name": "useful-area-red",
+      "total": "1",
+      "passed": "0",
+      "failed": "1",
+      "start-time": "2026-10-27 16:47:59Z",
+      "end-time": "2026-10-27 16:47:59Z",
+      "xmlSha256": "5fef61968a3fb17e27589fc2b81f8891855cbdfb51ce630fd8e7bf4635833593",
+      "noCompilerErrors": true
+    },
+    {
+      "name": "pending-response-red",
+      "total": "1",
+      "passed": "0",
+      "failed": "1",
+      "start-time": "2026-10-27 16:51:11Z",
+      "end-time": "2026-10-27 16:51:12Z",
+      "xmlSha256": "3bb747fae42933c2a3d0ce8e36c4ed5ddad06a016b125aa1695d7e9f96585d32",
+      "noCompilerErrors": true
+    },
+    {
+      "name": "editmode-final",
+      "total": "404",
+      "passed": "404",
+      "failed": "0",
+      "start-time": "2026-10-27 16:48:29Z",
+      "end-time": "2026-10-27 16:48:36Z",
+      "xmlSha256": "6645af71ce5ae3a7eb4fbc6a333afb5368fba823cb6c5335590a8a7e35174b96",
+      "noCompilerErrors": true
+    },
+    {
+      "name": "playmode-final",
+      "total": "180",
+      "passed": "180",
+      "failed": "0",
+      "start-time": "2026-10-27 16:51:47Z",
+      "end-time": "2026-10-27 16:52:24Z",
+      "xmlSha256": "36410875e3f59fba7fdc095dd72e67575d5edc307b82b5cf560172f05c0c65ff",
+      "noCompilerErrors": true
+    }
+  ],
+  "testedProductHead": "db72a00f7f4ffebc79d3708cb8d8c8e29a7f27a8",
+  "releaseChecks": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "db72a00",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-27T16:54:10.0058050Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "db72a00",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-27T16:54:38.1373680Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "nativePreinstall": {
+    "checkedUtc": "2026-10-27T17:04:06.849264+00:00",
+    "expiresUtc": "2026-10-28T14:59:31+00:00",
+    "checks": {
+      "profileTimeValid": true,
+      "certificateTimeValid": true,
+      "deviceIncluded": true,
+      "teamMatches": true,
+      "bundleMatches": true,
+      "signatureValid": true,
+      "arm64Only": true,
+      "releaseNoDevelopment": true,
+      "gitClean": true,
+      "sourcesMatchTestedTree": true,
+      "cleanMetadata": true
+    },
+    "architectures": "arm64",
+    "buildMetadata": {
+      "version": "0.1.0",
+      "gitHash": "db72a00",
+      "profile": "dev",
+      "builtAtUtc": "2026-10-27T16:55:56.5851750Z",
+      "unityVersion": "6000.3.27f1",
+      "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+      "gitDirty": false
+    },
+    "renewalByPO": true,
+    "sourceFilesVerified": 436
+  },
+  "installation": {
+    "build": "0.1.0+db72a00 dev",
+    "successful": true,
+    "presetsByteIdenticalBeforeAfterAndPrepared": true,
+    "originalFilesSha256": {
+      "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
+    },
+    "startupP0ExtendedHash": "e458bfd5ce9e",
+    "preparedPreset": "S1-sling",
+    "preparedHash": "7d1a61c39766",
+    "preparedLaunchUtc": "2026-10-27T17:09:36.0043670Z",
+    "pending": 0,
+    "repeatSeconds": 0,
+    "persistedSelection": "P0-calib-1",
+    "DEVClosed": true,
+    "noSlingGesturesBeforeHandoff": true
+  },
+  "B0Evidence": "2026-10-27-s1-sling-B0.json",
+  "restoration": {
+    "newProcessLaunchRequestedSuccessfully": true,
+    "firstP0LaunchUtc": "2026-10-27T17:21:51.8776630Z",
+    "build": "0.1.0+db72a00 dev",
+    "presetName": "P0-calib-1",
+    "effectiveHash": "e458bfd5ce9e",
+    "pending": 0,
+    "threeFilesByteIdentical": true,
+    "selection": "P0-calib-1",
+    "productSourcesUnchangedAfterBuild": true,
+    "verifiedFiles": 436
+  }
+}

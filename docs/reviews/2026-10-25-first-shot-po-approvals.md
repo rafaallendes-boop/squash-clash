@@ -348,3 +348,390 @@ Claude solicita cambios sobre **9e71f438c5c33d70a2575ac4e8f3fe7419bbf3c4**; el P
 4. **Lectura del análisis:** 17–25 % de pausas compatibles A′ en ámbitos observables es señal relevante para decidir 120 ms y para los riesgos N1/RB6, no validación del control ni tasa de errores. Se conserva su carácter indicativo, sin ajustar parámetros por resultados.
 
 Delta desde 9e71f43 **solo tres Markdown**: documento de diseño, AGENTS.md y este registro. **El JSON derivado y las fuentes no cambian**. Spec/propuesta r2/planes/código/tests/presets/defaults/criterios/bandas/umbrales intactos. Sin cálculos nuevos, suites/check-release/builds/instalaciones/sesiones/acceso al iPhone; verificación documental de alcance/enlaces. Se citan adaptador existente y documentación oficial de Unity para el borde, sin ejecución ni cambio runtime. PR #24 lista para Claude sin fusionar y detenerse. **S1 sin aceptar; S2–S4/T8 no autorizados.** Perfil vence 2026-10-28T14:59:31Z; cualquier instalación futura exige renovarlo antes/comprobar vigencia efectiva.
+
+## PR #24 cerrada y primera parada S1-sling — PO, 2026-10-27
+
+Claude aprueba **25c180d8f3aa3093209855f892969dcc40b1cbed**, sin correcciones pendientes. El PO autoriza merge condicionado; comprobados heads local/remoto exactos, PR abierta/no borrador/sin conflictos y árboles limpios. Merge **956cfafbbfea6fef418fa24e6a3b0911663746be**, segundo padre exactamente el head aprobado; main sincronizada/limpia. Worktree retirado sin --force; **sin paths ignorados (0 archivos/0 bytes)**, inventarios vacíos cotejados y resumen en Logs/archive-s1-control-b-design-20261027. Ramas remotas conservadas. Cierre registrado dentro de esta PR, sin commit aparte en main; no suites/check-release/builds/instalaciones/sesiones/acceso al iPhone.
+
+Se crea firstshot/s1-sling-prototype desde ese main, en .worktrees/firstshot-s1-sling-prototype. **Parada vigente: paso 1 de interacción, un único commit solo Markdown y PR en borrador, detenerse. Código solo después de aprobación de Claude de esta interacción.** Los pasos 2/3 se conservan con sus condiciones literales, no se ejecutan en esta entrega.
+
+El adjunto anterior se conserva completo como **encargo técnico**, no como texto literal de las decisiones personales del PO; la decisión literal de puntos1–7 se registra en la revisión posterior. Se conserva además la aclaración del punto 6 recibida después; sus preguntas se incorporan por separado al protocolo. El título de aceptación de esa aclaración no convierte métricas/hipótesis en umbrales definitivos ni acepta S1.
+
+
+<details>
+<summary>Encargo técnico del PO, 2026-10-27 — conservado como encargo, no decisión literal</summary>
+
+```text
+Decisión del PO (2026-10-27), formalizada tras revisar el diseño de PR #24 con Claude. Copiar literalmente en el registro de aprobaciones el texto completo de mis decisiones adjunto.
+
+PASO 0 — Fusión de PR #24
+Claude aprobó PR #24 en head 25c180d8f3aa3093209855f892969dcc40b1cbed. Autorizo la fusión con las condiciones habituales: verificar head remoto/local exacto, PR abierta/no borrador/sin conflictos y árboles limpios; merge commit con segundo padre exacto; sincronizar main; retirar el worktree sin --force preservando ignorados en Logs/archive-s1-control-b-design-20261027; conservar ramas remotas. Registrar el cierre en la PR del paso 1.
+
+PASO 1 — PR del prototipo, primera parada: diseño de interacción (solo documentación)
+Rama/worktree firstshot/s1-sling-prototype desde main tras la fusión. Primer commit solo Markdown:
+a) Registro literal de mis decisiones en aprobaciones y AGENTS.md.
+b) Adendas D1 en la propuesta First Shot r2 (§4.2, C5, §11.4, M06) y en el plan (tarea 1.2b en S1, cobertura C5), aplicando mis decisiones. Spec v0.3 intacta. A′ y sus reglas (N1 por regreso al origen, Flick, 150 ms/P<0,60) intactos para A′.
+c) Tabla de cambios respecto al diseño de PR #24: zona de cancelación explícita en lugar de NB0/NB1/NB2; pausa 120–150 ms con tolerancia configurable; recorrido 30–40 mm; G1 y medición de fijaciones involuntarias en lugar de decidir ahora G2/G3; sesión exploratoria con protocolo breve.
+d) Diseño de la zona de cancelación. Punto de partida propuesto por Claude: zona por encima del punto de fijación, activa desde 12 mm [EXPERIMENTO] sobre él con cualquier desplazamiento lateral; cancela solo al soltar dentro; visible desde la fijación (✕ semitransparente, resaltado al estar dentro); franja neutra entre fijación y zona = P=0; antes de fijar, soltar = abandono sin consumo. Analizar críticamente: conflicto con el tirón hacia abajo y con reducir potencia volviendo arriba, falta de espacio si se fija cerca del borde superior (alternativa: salida lateral ~20 mm), oclusión de la mira o del frontis, mano izquierda/derecha. Proponer ubicación, tamaño y mecanismo finales con riesgos.
+e) Protocolo breve definitivo (ver abajo) y lista de criterios verificables.
+DETENERSE tras este commit y dejar la PR en borrador para revisión de Claude de la interacción. No escribir código hasta la aprobación.
+
+PASO 2 — Implementación (solo tras la aprobación de Claude del paso 1)
+Alcance: tarea 1.2b dentro de S1, sobre la arquitectura actual (TouchSample/GesturePreview/Core Shot/ShotOverlay/DevPanel). Sin sistema paralelo ni abstracciones generales.
+- Selector gesture.control capturado al apoyar; A′ por defecto. Claves nuevas K2 con unidades explícitas, ajustables en DEV, compatibles R2-3. Valores iniciales [EXPERIMENTO]: pausa 120 ms (rango permitido para probar 120–150), tolerancia de quietud configurable (velocidad 15 mm/s, radio 1 mm iniciales del diseño), huecos ≤51 ms, mínimo 3 muestras, guardia de arrastre previo ≥3 mm; zona muerta 2 mm; tope de potencia 35 mm (rango 30–40), curva lineal con saturación; zona de cancelación según el paso 1; destello 120 ms.
+- Mira libre mientras se apunta; fijación con destello y cambio de estado; mira inmóvil tras fijar; nuevo origen de potencia en el punto de fijación; potencia solo después de una fijación confirmada (proyección hacia abajo, distancia actual, lateral sin potencia, volver arriba reduce).
+- Estados visibles: Apuntando / Fijada / Tensando / Zona de cancelación / Inválida, con forma y texto además de color, sin tapar el frontis (mínimos de PR #19).
+- El cierre con Ended idéntico (dt=0) no debe anular la potencia del control nuevo; datos contradictorios o no monótonos siguen siendo conservadores. Sin cambiar A′.
+- Objetivos de protocolo: marcas mínimas en el frontis solo en DEV/protocolo, configurables, sin afectar prod.
+- Registro por gesto: control, transiciones con timestamp (Began, fijación, inicio de tensado, entrada/salida de zona de cancelación, Ended), posición de fijación frente al objetivo pedido, d actual/máxima/lateral, P y banda, outcome (Swing, Cancelado por zona, Abandonado antes de fijar, SystemCanceled, Tap), duración total y tiempo hasta fijar, distancia mínima al borde inferior/área segura durante el tirón, hash/preset/escenario/intento.
+- TDD con esqueletos compilables y RED por aserciones antes de implementar: quietud y tolerancia, sin acumular quietud por silencio, una sola fijación, guardia de arrastre, potencia cero antes de fijar (incluido apuntar hacia abajo), mapeo/zona muerta/tope/saturación, lateral y regreso, zona de cancelación (soltar dentro cancela, pasar por ella no; un tirón válido no cancela; cancelar no consume), abandono antes de fijar, r = Ended original, dt=0 terminal, primer dedo, lanzamiento/pausa/foco/DEV invalidan. Casos RB1–RB6 con las expectativas de esta decisión; RB6 se registra y se mide, no se oculta.
+- Preset experimental separado S1-sling; defaults sin cambio de comportamiento (A′ por defecto); nuevo hash solo por claves autorizadas; 41 valores heredados y SimulationKey intactos byte a byte.
+- Regresión completa fresca EditMode/PlayMode, sin errores CS; check-release dev/prod; build dev Release ARM64/no Development.
+- Antes de instalar: comprobar vigencia efectiva del perfil (vence 2026-10-28T14:59:31Z; si ya venció o es día 28, renovarlo primero; la renovación la hace el PO). Respaldar y cotejar P0-calib-1, Po-1 y last-active.
+
+PASO 3 — Sesión exploratoria en iPhone (protocolo breve, ~15 min, mano izquierda declarada)
+Preparación habitual: preset S1-sling aplicado sin guardar, repeat=0, hash/preset/cero pendientes comprobados antes de CADA bloque, DEV cerrado.
+- B0 Familiarización (2 min, registrada aparte como práctica).
+- B1 Apuntar y fijar: 10 intentos a 5 objetivos (2 bajos tipo drop), soltar suave. Métricas: error de mira al fijar, tiempo hasta fijar, fijaciones lejos del objetivo, declaración del PO de fijación involuntaria.
+- B2 Potencia: 10 suaves, 10 medios, 10 fuertes a objetivo central. Métricas: banda conseguida, dispersión de P y de d, saturación (advertencia >20 %), cercanía al borde.
+- B3 Apuntar bajo y tirar: 10 a objetivo bajo con potencia media. Métricas: RB6 (potencia no buscada tras fijación prematura), error de mira, distancia al borde inferior.
+- B4 Cancelación: 5 cancelaciones voluntarias tras fijar; cancelaciones accidentales contadas en todos los bloques.
+- B5 Ritmo: 10 gestos seguidos lo más rápido que sea cómodo, objetivos y potencias alternados. Métrica: duración Began→Ended (mediana/p90), errores y abandonos.
+Conservar todos los intentos; sin ajustes de parámetros durante la sesión (cambiar 120→150 ms requiere decisión del PO posterior, con evidencia). Las métricas se informan como descripción, sin umbrales de aceptación. Al final, preguntas separadas con respuesta literal: las de mi punto 6 (precisión, fijación, potencia, cancelación y fluidez, incluida «¿lo usarías en un rally rápido?»). Restaurar P0-calib-1 y comprobar en arranque nuevo hash/cero pendientes/tres archivos byte a byte.
+
+Fuera de alcance: contacto real con la pelota, S2–S4, timing ±40 ms, ventana válida/T3, sonido/háptica/calidad del contacto, jugadores, IA, rallies, marcador. Ante un defecto: registrar y detenerse. PR lista para Claude sin fusionar hasta aprobación del PO. S1 sigue sin aceptar.
+```
+
+</details>
+
+<details>
+<summary>Aclaración posterior del PO — punto 6 completo, registro literal</summary>
+
+```text
+6. Criterios de aceptación del experimento
+Quiero una prueba breve, repetible y con métricas que permitan comparar resultados.
+Evaluaremos:
+Precisión del apuntado
+
+* ¿Puedo colocar la mira donde quiero?
+* ¿Puedo apuntar bajo sin activar accidentalmente la potencia?
+* ¿La mira permanece estable después de fijarse?
+
+Fijación
+
+* ¿Cuántas fijaciones involuntarias ocurren?
+* ¿Cuánto tiempo necesito para fijar la mira?
+* ¿Entiendo claramente cuándo quedó fijada?
+
+Potencia
+
+* ¿Puedo conseguir golpes suaves, medios y fuertes voluntariamente?
+* ¿La potencia responde de forma consistente a la distancia?
+* ¿Puedo alcanzar la potencia máxima cómodamente?
+* ¿Existen limitaciones por el borde inferior de la pantalla?
+
+Cancelación
+
+* ¿Puedo cancelar cuando realmente quiero?
+* ¿Ocurren cancelaciones accidentales?
+* ¿La zona interfiere con los movimientos normales?
+
+Fluidez
+
+* ¿Cuánto demora el gesto completo, desde apoyar el dedo hasta soltar?
+* ¿Se siente natural o demasiado mecánico?
+* ¿Podría utilizarlo repetidamente durante un rally rápido?
+
+Este último punto es importante: el control no solo debe funcionar en modo práctica, también debe tener potencial para un juego de squash dinámico.
+Propón un protocolo breve con escenarios y métricas, sin convertir las hipótesis en umbrales definitivos antes de validarlas.
+```
+
+</details>
+
+### Diseño documental sometido a Claude en esta primera parada
+
+[Interacción y protocolo](2026-10-27-first-shot-s1-sling-prototype-interaction.md): tabla de cambios frente a PR #24; zona superior desde 12 mm con cualquier lateral y cancelación solo al Ended dentro; franja neutra P0. Fallback lateral 20 mm, profundidad mínima de diana8 mm y presentación fuera del frontis son **propuesta de Codex para revisión**, no decisiones adicionales atribuidas al PO. No se comprime una región para caber ni se mueve durante el gesto; si no cabe zona no se confirma fijación. Se explican retorno arriba, margen superior/inferior, oclusión/manos y RB6 no resuelto. Los rangos de preparación de la zona y las posiciones de cinco objetivos son propuestas de interacción pendientes de esa revisión, no parámetros ya implementados o ajustados en sesión.
+
+Adendas D1 en First Shot r2 (§4.2/C5/§11.4/M06) y plan (1.2b en S1/cobertura C5), aplicando el registro: A′ permanece por defecto y conserva sus reglas; S1-sling tiene zona explícita, pausa120–150 inicial 120, tolerancia configurable, recorrido 30–40 inicial 35, G1/registro de fijaciones involuntarias y sesión B0–B5 exploratoria. Spec v0.3 intacta. No se toca código/tests/defaults/presets/criterios/bandas ni datos/JSON existentes, ni se ejecutan suites/check-release/builds/instalaciones/sesiones/replay/acceso al iPhone. Solo cinco Markdown en el primer commit; PR en borrador para Claude, no fusionar. Detenerse; S1 sigue sin aceptar y S2–S4/T8 sin autorizar. Perfil: no se instala aquí; comprobar vigencia efectiva y renovación a cargo del PO según decisión antes de cualquier instalación futura.
+
+## PR #25: interacción aprobada y ajustes obligatorios previos al código — 2026-10-27
+
+Claude aprueba la interacción del head **d114e26538edf766a6314e02c2b8164f3eba4272**: superior12 mm/lateral20 mm/profundidad8 mm, indicador fuera del frontis, no fijar sin zona, objetivosT1–T5 y protocoloB0–B5. El PO ordena un commit **solo Markdown** con correcciones antes de código y, después, continuar el paso2 (TDD/regresión/check-release/build), sin otra parada de interacción. La sesión posterior se realiza con el PO y la PR no se fusiona hasta su aprobación; S1 sin aceptar y S2–S4/T8 no autorizados.
+
+Se distingue el encargo técnico conservado arriba de la **decisión literal del PO (puntos1–7)**, copiada completa entre las marcas recibidas, sin ampliar su alcance:
+
+```text
+Claude, revisé las alternativas para el nuevo control tipo honda de Squash Clash y, como Product Owner, quiero formalizar mis decisiones para continuar con S1.
+Apruebo desarrollar un prototipo experimental del control tipo honda en el iPhone. No estoy aprobando todavía el control como definitivo ni autorizando S2.
+El objetivo sigue siendo que el jugador pueda apuntar con precisión, controlar voluntariamente la potencia y ejecutar el gesto de manera intuitiva, sin que las distintas acciones interfieran entre sí.
+1. Fijación de la mira: pausa + tolerancia de movimiento
+Apruebo fijar la mira cuando el dedo permanezca relativamente estable durante un período breve.
+
+* Probar inicialmente una pausa de 120–150 ms.
+* Incorporar una tolerancia configurable de movimiento para evitar que pequeñas variaciones del dedo reinicien constantemente el contador.
+* La mira debe permanecer libre mientras el jugador está apuntando.
+* Al fijarse, debe existir una señal visual clara, por ejemplo un destello y cambio de estado.
+* Una vez fijada, no debe desplazarse durante la fase de potencia.
+
+Estos valores son experimentales. Quiero medir cuántas fijaciones involuntarias ocurren, especialmente cuando hago una pausa natural mientras todavía busco dónde apuntar.
+2. Separar completamente apuntado y potencia
+Apruebo que la potencia solo pueda comenzar después de una fijación confirmada.
+El gesto será:
+
+1. Arrastrar para apuntar al frontis.
+2. Mantener el dedo relativamente quieto hasta confirmar la fijación.
+3. Tirar hacia abajo para determinar la potencia.
+4. Soltar para ejecutar el intento.
+
+Al confirmar la fijación debe establecerse un nuevo origen de desplazamiento para calcular la potencia.
+Quiero probar especialmente el caso de apuntar hacia abajo para ejecutar un drop. Ese movimiento no debe interpretarse como potencia antes de la fijación.
+Si detectamos activaciones involuntarias, debemos registrarlas y analizar la causa, no modificar silenciosamente las reglas para conseguir una prueba favorable.
+3. Cancelación mediante zona explícita
+No quiero mantener la cancelación por regreso al punto inicial del toque, porque el nuevo gesto podría activar cancelaciones accidentales.
+Apruebo experimentar con una zona de cancelación explícita, visualmente reconocible y distinguible del recorrido normal de potencia.
+Condiciones:
+
+* Debe ser fácil cancelar voluntariamente.
+* No debe activarse accidentalmente durante un tirón válido.
+* Cancelar no consume el intento.
+* La zona no debe obstaculizar la mira ni los movimientos habituales del dedo.
+
+Propón su ubicación, tamaño y mecanismo de activación para el prototipo. Prefiero que Codex y tú revisen la interacción antes de implementarla, especialmente para evitar conflictos con el gesto hacia abajo.
+4. Recorrido de potencia: 30–40 mm
+Apruebo experimentar con un recorrido físico de 30–40 mm para alcanzar la potencia máxima.
+
+* La potencia debe crecer de forma predecible con la distancia del tirón.
+* El valor máximo debe alcanzarse sin necesidad de movimientos exagerados.
+* Al llegar al máximo, la potencia se satura.
+* Los parámetros deben poder ajustarse desde el panel dev.
+* No incorporar calibración individual por jugador todavía.
+
+Quiero comprobar que puedo ejecutar intencionalmente golpes suaves, medios y fuertes.
+También debemos observar qué ocurre cuando apunto bajo y el dedo queda cerca del borde inferior del iPhone. Si el espacio resulta insuficiente, necesito evidencia antes de decidir un ajuste.
+5. Prototipo experimental en iPhone
+No quiero seguir refinando indefinidamente el control en papel.
+Autorizo un prototipo acotado dentro de S1, utilizando nuestra arquitectura y herramientas actuales, sin crear un sistema paralelo desechable ni sobrediseñar la solución.
+Mantengamos nuestra metodología de desarrollo:
+
+* TDD para la lógica del gesto y sus transiciones.
+* Pruebas de regresión para no afectar First Ball.
+* Parámetros experimentales en un preset separado.
+* Implementación de Codex y revisión técnica de Claude.
+* Instalación y validación real en el iPhone.
+* PR sin fusionar hasta mi aprobación.
+
+El prototipo debe permitir apuntar, fijar la mira, determinar potencia, cancelar y visualizar los estados del control. Todavía no debe incorporar el contacto real con la pelota.
+6. Criterios de aceptación del experimento
+Quiero una prueba breve, repetible y con métricas que permitan comparar resultados.
+Evaluaremos:
+Precisión del apuntado
+
+* ¿Puedo colocar la mira donde quiero?
+* ¿Puedo apuntar bajo sin activar accidentalmente la potencia?
+* ¿La mira permanece estable después de fijarse?
+
+Fijación
+
+* ¿Cuántas fijaciones involuntarias ocurren?
+* ¿Cuánto tiempo necesito para fijar la mira?
+* ¿Entiendo claramente cuándo quedó fijada?
+
+Potencia
+
+* ¿Puedo conseguir golpes suaves, medios y fuertes voluntariamente?
+* ¿La potencia responde de forma consistente a la distancia?
+* ¿Puedo alcanzar la potencia máxima cómodamente?
+* ¿Existen limitaciones por el borde inferior de la pantalla?
+
+Cancelación
+
+* ¿Puedo cancelar cuando realmente quiero?
+* ¿Ocurren cancelaciones accidentales?
+* ¿La zona interfiere con los movimientos normales?
+
+Fluidez
+
+* ¿Cuánto demora el gesto completo, desde apoyar el dedo hasta soltar?
+* ¿Se siente natural o demasiado mecánico?
+* ¿Podría utilizarlo repetidamente durante un rally rápido?
+
+Este último punto es importante: el control no solo debe funcionar en modo práctica, también debe tener potencial para un juego de squash dinámico.
+Propón un protocolo breve con escenarios y métricas, sin convertir las hipótesis en umbrales definitivos antes de validarlas.
+7. Alcance y decisiones posteriores
+Mantengamos intactas las decisiones pendientes de First Shot:
+
+* Timing Perfecto ±40 ms.
+* Ventana válida experimental y comparación con T3 puro.
+* Sonido, háptica y calidad del contacto.
+* S2–S4 sin autorización.
+
+No quiero incorporar ahora jugadores, IA, rallies, marcador ni nuevas mecánicas.
+Próximo paso: prepara el encargo técnico acotado para Codex, identificando los cambios respecto del diseño y plan vigentes, los riesgos y los criterios verificables del prototipo.
+Si no hay contradicciones técnicas bloqueantes, podemos ejecutar este experimento en S1.
+Después revisaré los resultados en mi iPhone y decidiré si aprobamos el control, hacemos otra iteración o reconsideramos la alternativa.
+Mi prioridad es avanzar con evidencia, sin acelerar artificialmente el desarrollo y sin buscar perfección en papel antes de probar el gesto real.
+```
+
+Ajustes previos al código: literales solo en este registro, resumen/enlace en AGENTS; retirada pregunta17 por paráfrasis de Claude (la literal es16); B1/B3 con respuesta por intento OK/Se fijó antes de tiempo soloDEV/protocolo fuera del frontis, no gesto; indicadores descriptivos de tirón enB1 y error de mira, sin umbral; tiempos Began→fijación y último movimiento fuera de tolerancia→fijación. D1 del plan fuera de cita y D1/M06 fuera de lista conservan su contenido. Sin implementación antes de ese commit documental.
+
+Antes de instalar: comprobar perfil efectivo, vence2026-10-28T14:59:31Z; renovación a cargo del PO y detenerse antes de instalar si no está vigente. Respaldar/cotejarP0-calib-1,Po-1,last-active. Esta aprobación no acepta el control definitivo ni habilitaS2.
+
+### Continuación técnica S1-sling — 2026-10-27, sin aprobación física inferida
+
+Ajustes obligatorios solo Markdown **f7f049c**, anteriores al primer código **7e43177**. Continúa la autorización del paso2 tras la aprobación de interacción d114e26. Modelo/control y protocolo sobre arquitectura existente; A′ por defecto, sin contacto de pelota. TDD compilable por aserciones, regresión fresca **404/404 EditMode y180/180 PlayMode**, sin CS. Defaults **45c4e9af5c8f** (85 claves, solo23 añadidas), preset experimental separado **7d1a61c39766** sin promoción;62 valores previos,41 heredados/proyección0d39e6016bd8 ySimulationKey166a96e319c7 intactos. Los casos de riesgo históricos no cambian; 150 ms/P<0,60 no se presenta como criterio del control por distancia.
+
+Sigue pendiente export/check-release limpio dev/prod, build Release ARM64/no Development, respaldo/perfil vigente antes de instalar y sesión exploratoria B0–B5 con PO. No hay datos físicos nuevos ni aceptación de S1. Las16 preguntas literales y todos los intentos/respuestas por B1/B3 se conservan; sin ajuste120→150 ni otros parámetros durante campaña. Restaurar P0 y cotejar tres archivos en nuevo arranque. [Informe y evidencia](2026-10-27-first-shot-s1-sling-prototype.md). PR #25 sin fusionar hasta aprobación PO, S2–S4/T8 sin autorizar.
+
+### Preparación física S1-sling — 2026-10-27
+
+Producto **db72a00**: suites404/404 EditMode y180/180 PlayMode; check-release dev/prod gitDirty=false y build dev ReleaseARM64/noDevelopment correctos. Perfil incorporado comprobado antes de instalar17:04:06Z, vigente hasta2026-10-28T14:59:31Z/certificado y firma correctos; sin renovación porCodex.436 fuentes coincidentes. Respaldo/cotejo directo de los tres archivos antes/después de instalación/preparación. ArranqueP0 e458bfd5ce9e/cero pendientes. S1-sling separado cargado sin guardar; selección persistida original repuesta antes de aplicar/relanzar. Lanzamiento17:09:36.004367Z, **7d1a61c39766**,repeat0/cero pendientes,DEVcerrado y cero gestos nuevos antes de entregar.
+
+Se pidió soloB0/izquierda tras explicar la mecánica, con identificación de estados/cancelación previa aB1. **No es aprobación física ni aceptación deS1.** Restan protocolo/16respuestas/restauraciónP0 en nuevo arranque y cotejo de tres archivos. [Informe](2026-10-27-first-shot-s1-sling-prototype.md). PR#25 sin fusionar; S2–S4/T8 sin autorizar.
+
+### B0 S1-sling detenido antes de B1 — observaciones del PO, 2026-10-27
+
+No es aceptación deS1 ni validación de calibración. Literal delPO tras práctica:
+
+> Revisa lo que he hecho. pero a veces podía apuntar y se apuntaba bien, luego tensaba, otras veces se mantenía apuntando.
+
+A la aclaración de cancelación: **«No llegué a ver esa zona»**. Sobre las interrupciones/tiempo:
+
+> En ninguna parte de la pantalla me aparecía el tiempo, entonces en la 1ra pensé que ya habían pasado los 2 minutos, quizás es un punto de mejora de poner un timer en estas pruebas
+
+Se conserva como observación/propuesta delPO, **sin ampliar la autorización a modificar interfaz o parámetros**. No dice qué acción exacta causó cada system-cancel.33 intentos registrados,32B0+1preview,17 fijaciones/15abandonos/1Tap,ninguna entrada o cancelación de zona. Dos adquisiciones incompletas85,918/35,442s, no120s continuos. Todos7d1a61c39766/cero pendientes. Auditoría descriptiva de la regla instalada, sin parámetros alternativos ni medición nueva:13 abandonos sin ventana apoyada120ms,2 con quietud solo fuera del área útil. No es prueba de un fallo geométrico de cancelación, que quedaNotEvaluated.
+
+Se aplica la parada de la interacción aprobada§3 al no identificarse cancelación; **B1–B5 no iniciados**,16 preguntas finales no solicitadas tras esa parada, sin inferir respuestas. Propuestas de claridad de cancelación/temporizador/diagnóstico de quietud en el [informe](2026-10-27-first-shot-s1-sling-prototype.md), **pendientes de decisión y sin implementar**. Ningún ajuste120→150 ni tolerancias/escala/zona/criterios/bandas/defaults/spec/plan.
+
+P0-calib-1 restaurado en nuevo proceso: primer lanzamiento **2026-10-27T17:21:51.8776630Z**, builddb72a00 dev, **e458bfd5ce9e**,cero pendientes. P0/Po-1/last-active directamente byte a byte iguales al respaldo;436 fuentes de producto coincidentes. Sin nuevas suites/check-release/builds/instalaciones o intentos físicos para cerrar. PR#25 lista para revisiónClaude **sin fusionar**, entrega técnica experimental con bloqueo de práctica explícito; **S1 sin aceptar**, S2–S4/T8 sin autorizar. Detenerse al entregar; perfil requiere comprobación efectiva antes de instalar y renovación porPO,vence2026-10-28T14:59:31Z.
+
+### Autorización PO de iteración2 — 2026-10-27, PR#25
+
+Claude valida head508f625: entrega técnica/paradaSL-S1-01/restauraciónP0 correctas;SL-S1-02 registrada. Reconoce responsabilidad de diseñoSL-S1-03 (silencio con contacto activo ignorado). El PO autoriza en la misma rama la corrección porTick/reloj real, sin inventar muestras, conservando120ms/1mm/15mm/s/arrastre3mm/mínimo de muestras/área; hueco51 no reinicia. Registrar sample/timer, elegibilidad teórica y frame. Zona visible respecto al dedo fuera del frontis,12/20/8 intactos, guía B0 y temporizador con fin/interrupción claros. AdendaD2, sin reescribir aprobación histórica.
+
+Replay diagnóstico **anterior a implementación**, predeclarado58d037d, sin medición nueva:23 vs17 fijaciones,6 nuevas/17 anticipadas, mediana654,221ms; posibles involuntarias solo como indicadores, nunca intención inferida. Regresión/check-release dev-prod/build dev ReleaseARM64/noDevelopment autorizados conTDD. **Toda instalación desde27 exige renovación previa porPO y comprobar perfil incorporado efectivo**; perfil anterior vence2026-10-28T14:59:31Z y no habilita instalar esta iteración. Respaldar/cotejar3archivos. Sesión nueva separada: B0 completo120s y cancelación guiada; solo identificación PO de fijación/zona permiteB1–B5/16preguntas; si no, detener y restaurarP0/cotejar. PR sin fusionar, S1 sin aceptar, S2–S4/T8 sin autorizar. [Diseño D2 y diagnóstico](2026-10-27-first-shot-s1-sling-iteration-2.md).
+
+### Asistencia para renovar y estado técnico D2 — 2026-10-27
+
+PO literal: **«Ayudame a hacer esa renovacion. iphone en duplicar telefono ok»**. Autoriza asistencia con Xcode para la renovación requerida; no suprime el requisito de renovación previa ni la comprobación del incorporado. Se apartó con respaldo la caché de un perfil de esta app, sin tocar certificados/claves ni instalar. Renovación todavía pendiente de comprobar al firmar.
+
+D2 implementada tras replay predeclarado58d037d/calculado88213d4 anterior al código. TDD por aserciones y regresión fresca **411/411 EditMode,184/184 PlayMode**, sin erroresCS; modeloC# reproduce23 fijaciones del diagnóstico, no medición. Defaults45c4e9af5c8f/preset7d1a61c39766,85 valores/rangos/41heredados/SimulationKey intactos; adendasD2 sin reescribir texto aprobado ni plan/specv0.3. Guía/temporizador/indicación local probados fuera del frontis. Respaldos nuevos de3archivos iguales; sin sesión nueva ni instalación. [InformeD2](2026-10-27-first-shot-s1-sling-iteration-2.md). Seguir build/check/perfil renovado antes de instalar; S1sin aceptar, sinS2–S4/T8 ni fusión.
+
+### Renovación asistida completada e instalación D2 — 2026-10-27
+
+La asistencia solicitada porPO permitió a Xcode generar un perfil nuevo al firmar: creado**2026-10-27T18:29:44Z**,vence**2026-11-03T18:29:44Z**. Verificación incorporada antes de instalar18:30:43Z: distinto del anterior, mismas autorizaciones/dispositivos/certificados, vigencia y firma correctas. Perfil previo respaldado, sin revocación ni exportación de claves. La restricción previa de renovación quedó satisfecha **antes** de instalar42265ca dev ReleaseARM64/noDevelopment. Nuevo vencimiento sustituye al28octubre como perfil actual; comprobar vigencia efectiva siempre.
+
+411/411 EditMode,184/184 PlayMode,check-release limpio dev/prod y440 fuentes cotejadas. Tres archivos directamente iguales tras instalar/preparar. ArranqueP0e458bfd5ce9e/cero pendientes;S1-sling temporal7d1a61c39766/repeat0/cero pendientes, last-activeP0 repuesto antes de aplicar. Se pidió soloB0/izquierda con temporizador/cancelación guiada; **aún sin resultados ni juicios de aceptación**. ContinuaciónB1–B5 exige identificación porPO yB0completo; después16preguntas/restauraciónP0. PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar. [Registro completo](2026-10-27-first-shot-s1-sling-iteration-2.md).
+
+
+### D2 detenida antes de armar B0 — SL-S1-04, 2026-10-27
+
+Respuesta literal del PO al pedido exclusivo de B0:
+
+> Abrí la app, y se ejecuto un informe. Luego, presione el bo . 2 min practica, no se apuntaba ni aparecía nada, por lo que cerré la app y la volví a abrir. Apareció p0. Luego se ejcuto el mismo informe de S8. y la volví a cerrar
+
+No se autoriza una corrección nueva por inferencia de esta respuesta. Se detiene la práctica: no hay inicioB0 ni gestos/muestreoD2 registrados; B0NotEvaluated, B1–B5 y16preguntas no iniciados. Dos P2 incidentales completos, primero con S1-sling7d1a61c39766/cero pendientes, después de reiniciar con P0e458bfd5ce9e/cero pendientes. No se registran como campaña autorizada ni como medición de gesto. El código restaura host pausado tras P2 y rechaza medir en pausa; el toque activador y el rechazo concreto de B0 no constan. No afirmar autoarranque ni culpa del PO.
+
+[Informe D2 y propuesta de investigación sin implementar](2026-10-27-first-shot-s1-sling-iteration-2.md), [evidencia nueva separada](../validation/evidence/2026-10-27-s1-sling-iteration-2-startup-incident.json). Presets/selección directamente byte a byte iguales al respaldo; P0 observado en reinicio delPO20:12:34Z, pero el P2 posterior puede dejar el reloj pausado. Arranque final nuevo pendiente por bloqueo/autenticación local; no declarar restauración final confirmada todavía.440 fuentes intactas, ninguna suite/build/instalación ni intento físico nuevo para cerrar. Perfil renovado vence2026-11-03T18:29:44Z; comprobar vigencia efectiva antes de cualquier instalación. PR#25 sin fusionar, S1 sin aceptar yS2–S4/T8 sin autorizar; detenerse para decisiónPO/Claude.
+
+
+### Cierre documental D2 tras arranque final — 2026-10-27 local
+
+Aclaración literal del PO sobre el incidente: **«no, no vi toca para continuar, solo se abría el informe»**. Se conserva como relato; no confirma la causa alternativa ni autoriza cambios de código. Su «Listo» habilita únicamente la comprobación final de P0, sin repetir B0.
+
+Nuevo proceso verificado **2026-10-28T01:07:52.1670880Z (27octubre22:07:52 Chile)**:42265ca dev, **P0-calib-1/e458bfd5ce9e/cero pendientes**, DEV cerrado, pantalla normal/botónPausa y sin informe visible. Cinco lanzamientos capturadosP0/free; sin nuevoP2/bloque/gesto/muestreo. La primera solicitudCLI durante reconexión falló y no cuenta como arranque; reintento tras conexión sí completó. Los tres archivos directamente byte a byte iguales al respaldo anterior a instalar, selecciónP0/repeat3 restaurados,440 fuentes intactas. [Informe y hashes](2026-10-27-first-shot-s1-sling-iteration-2.md), [evidencia sin identificadores personales](../validation/evidence/2026-10-27-s1-sling-iteration-2-startup-incident.json).
+
+**PR#25 lista para Claude, sin fusionar. SL-S1-04 abierto; B0 D2 NotEvaluated y B1–B5 no iniciados.** Sin respuestas de aceptación inferidas, correcciones adicionales, suites/check-release/builds/instalaciones ni sesión física nueva para cerrar. Detenerse para decisiónPO/revisiónClaude; S1 sin aceptar yS2–S4/T8 sin autorizar. Perfil renovado vigente hasta2026-11-03T18:29:44Z; comprobar vigencia efectiva antes de cualquier instalación futura.
+
+
+### Aprobación técnica D2 y corrección acotada SL-S1-04 — PO tras revisión cecd74c
+
+Claude aprueba técnicamente la iteración2, sus datos/TDD/regresión411/411 y184/184 y la parada/restauración. No aceptaS1 ni resuelveSL-S1-04. PO autoriza en la misma rama/PR25: auditoría de activaciones DevBar/DEV (control/tiempo real/preset/hash/pausa), intentosB0–B5 aceptados/rechazados con motivo; protecciónEscenario/P2/H17 mientrasS1-sling esté preparado o bloque activo, rechazo visible/remedio, etiquetaP2 opcional solo texto. TDD, regresión/check-release/builddevReleaseARM64/noDevelopment; vigencia efectiva del perfil incorporado y respaldo/cotejo3archivos antes de instalar. Sin modificarD2/modelo/parámetros/zona ni atribuir causa alPO/autoarranque.
+
+ObservacionesClaude **solo registro, sin corrección del detector**: O1 mínimo3 reales por candidato puede impedir fijación tras parada en seco; contar en sesiónD2 abandonos quietos≥120ms con<3 muestras. O2 edad13–28ms (p50/máximo citados porClaude), posible movimiento en tránsito tras fijacióntimer; contar muestras timeReal<lockObservedAt recibidas después de fijar y su desplazamiento. No son nuevas mediciones ni ajustes. Preservar resultado23frente17 y diferencia con estimaciónClaude.
+
+Antes de entregar teléfono: preset/hash temporalS1-sling y juego sin pausa visibles; PO pulsaB0 y **confirma ver cuenta atrás antes de gestos**. B0completo120s/guía/identificación fijación-zona/cancelaciónguiada; solo comprensión permiteB1–B5 y16preguntas literales. Datos nuevos separados; al detener/terminar restaurarP0/cotejar3archivos. PRsin fusionar hastaPO, S1sin aceptar/S2–S4/T8sin autorizar. Perfil renovado hasta2026-11-03T18:29:44Z, comprobar incorporado efectivo antes de instalar.
+
+
+### Avance técnico autorizado de SL-S1-04 — sin aceptación física
+
+Fuente4cec622,9RED por aserción→9GREEN/contención adicionalRED→10/10,411/411EditMode y194/194PlayMode frescos sinCS. Exports/check-release dev-prod gitDirty=false y builddevReleaseARM64/noDevelopment;444 fuentes coincidentes. No cambiosD2/parámetros/zona/defaults/preset/41heredados/SimulationKey/spec/planes/criterios. Perfil incorporado renovado y vigente hasta2026-11-03T18:29:44Z, comprobadoantesdeinstalar2026-10-28T01:40:49Z; firma/equipo/bundle/dispositivo/certificado correctos. Instalación completada y3archivos directamente iguales al respaldo, selecciónP0; **arranque4cec622 aún no verificado**, rechazado por bloqueo y pendiente autenticación local deDuplicación. No confundir registros42265ca anteriores con esta instalación.
+
+[Informe y evidencia](2026-10-27-first-shot-s1-sl04-controls.md). No sesión nueva ni cuenta atrás confirmada; O1/O2 pendientes de datos. Preparación/hash/juego sin pausa antes del traspaso y confirmaciónPO de cuenta atrás antes de gesto siguen obligatorias. No inferir aprobación de este head ni aceptaciónS1. PR#25en borrador/sin fusionar; S2–S4/T8sin autorizar.
+
+
+### Continuación de preparación SL-S1-04 — 2026-10-28
+
+RespuestaPO a autenticación «listo!». Arranque4cec622 confirmado09:57:01.393491Z/P0e458bfd5ce9e/cero pendientes;3archivos directamente iguales al respaldo. Dos activaciones deDEV/Presets auditadas nativamente, sinP2/H17/Escenario/bloques/gestos. S1-sling aún no cargado. Herramienta pierde procesoDuplicación durante desplazamiento; reabrir muestra otra solicitud local de contraseña, pedida alPO sin compartirla. No se identifica causa ni se amplía autorización. [Evidencia de preparación](../validation/evidence/2026-10-28-s1-sl04-preparation.json). Preparación/cuenta atrás/B0/sesión/restauración final siguen pendientes; no confundir esta preparación con prueba física. Sin código/suites/build/instalación nuevos; PR25borrador/sin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.
+
+
+### Traspaso S1-sling tras preparación verificada — 2026-10-28
+
+Nueva respuestaPO de acceso «listo». Se cargóS1-sling yrestauró selección persistidaP0 original **antes** de aplicar/relanzar. Arranque/lanzamiento10:06:22.005822Z/4cec622 dev/S1-sling7d1a61c39766/cero pendientes/repeat0/sin pausa;3archivos directamente iguales al respaldo y presetS1igual a rama. DEVcerrado/líneaListo/3experimentos deshabilitados/B0accesible, sin bloques/gestos/muestreo nuevos. [Evidencia](../validation/evidence/2026-10-28-s1-sl04-preparation.json).
+
+Pedido alPO: verificarbuild/preset/hash, pulsarB0 yconfirmar cuenta atrás desdeMac antes delprimer gesto;tras confirmar practicar izquierda hastaCompletado sin esperarotrarespuesta, con guíaDENTRO/suelta, sinDEV/salir. Si no ve o no entiende límite detener/noB1. Se recordó que no hay golpe de pelota. La confirmaciónyB0completo/comprensión/cancelación guiada todavía pendientes; no inferir aceptaciónS1. PR25borrador/sin fusionar/S2–S4/T8sin autorizar; no manipular teléfono durante práctica.
+
+
+### Repreparación tras salida/reinicio del PO — 2026-10-28
+
+Literal: «tuve que salir por lo que se reinició. Dejé duplicar abierto para que hagas toda la configuración nuevamente y haga la prueba .». El registroconfirmaP0 yningúnB0/bloque/gesto4cec622 previo. Repreparación solicitada sin instalación nueva: S1-sling cargado/selecciónP0 original repuesta antes de aplicar/relanzar11:53:11.374404Z, **7d1a61c39766/cero pendientes/repeat0/sin pausa**, DEVcerrado/Listo/experimentos protegidos yB0accesible sin pulsar.3archivos directamente iguales al respaldo/444fuentes intactas. [Evidencia con historial conservado](../validation/evidence/2026-10-28-s1-sl04-preparation.json). Confirmación de cuenta atrás porPO antes de primer gesto/B0completo/guía/comprensión/cancelación siguen pendientes. Sin código/suites/build/instalación nuevos; PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.
+
+
+### Devolución del primer B0 D2 completo — 2026-10-28
+
+LiteralPO:
+
+> Listo, hice la prueba. Pero apuntar debajo de la línea como para hacer un drop me costaba apuntar o que se ponga el rombo amarillo. El resto lo entendí bien
+
+Registros:120,001808s/31intentos B0,27fijaciones/4cancelaciones de zona/4abandonos, todos7d1a61c39766/cero pendientes/comparables. Cancelación guiada marcada porapp; no interpretar eso como declaración de voluntariedad. No se recibió confirmación separada de cuenta atrás antes delprimer gesto; se preguntó retrospectivamente si la vio y Completado. También se preguntó por comprensión/cancelación y qué línea corresponde aldrop. [Informe nuevo/evidencia/O1-O2](2026-10-28-first-shot-s1-sl04-B0.md). Respuestas pendientes/B1–B5no iniciados/16preguntas finales sin responder; no aceptaciónS1.3archivos iguales al respaldo,configS1temporal activa/restauraciónP0pendiente al cerrar; sin código/suites/build/instalación nuevos. PRsin fusionar/S2–S4/T8sin autorizar.
+
+
+### Respuestas de comprensión B0 y línea del drop — 2026-10-28
+
+Pregunta de cuenta atrás antes delprimer gesto yCompletado alfinal: **«si»**. Pregunta de reconocer fijación/zonaDENTRO ycancelar voluntariamente soltando dentro: **«así es»**. Qué línea para drop: **«si, la linea horizontal del medio del frontis»**. Literales conservados; no respuestas a las16preguntas finales ni aceptaciónS1. Confirmación de cuenta atrás retrospectiva, sin mensaje previo alprimer gesto: desviación conservada. Con B0completo/cancelación guiada ycomprensión confirmada, continuar según autorización previa aB1; no es autorización de ajuste.
+
+Próximo bloque soloB1/10intentos/feedback individual;verificaciónPO de preset/hash/cero pendientes/Jugando antesdearmar yregistro nativo delresultado. SiP0/otrohash/pausa,detener yavisar. ConfigS1temporal activa,3archivos iguales alrespaldo;restauraciónP0pendientealcierre. Sin código/suites/build/instalación nuevos;PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.
+
+
+### B1 original y repetición adicional — 2026-10-28
+
+PO literal: **«Listo. Hice 2 intentos porque en el 2do intento si intente de apuntar al cuadrado»**. Registro: dos tandas10+10/20respuestas;sesión2original,sesión3adicional,no sustitución. Aclaraciónliteralobjetivos: **«Desde la 2da tanda, en la primera fue desde el gesto 5»**. Aclaraciónsobre uso de«Se fijó antes de tiempo»: **«También intentos fallidos»**. Se conservan las6pulsacionesraw sin convertirlas en tasa de6fijacionesprematuras; intenciónNotEvaluated/significadomixto. No inventarjuicios ni aceptarS1por resultados. [Informe/evidencia](2026-10-28-first-shot-s1-sl04-session.md).
+
+Continuación yaautorizada: B2T3/10suaves→10medios→10fuertes,mismaizquierda/hash7d1a61c39766/0pendientes/Jugando comprobadosporPOantesdecadatanda;sin cambiarparámetros ni sustituirfallos. NoB3antesderevisarB2;aclararfeedbackantesdeB3. ConfigS1temporalactiva/3archivosigualesalrespaldo/restauraciónP0alcierrependiente. Sin código/suites/build/instalación nuevos;PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.
+
+
+### B2 completo, sin decisión de aceptación — 2026-10-28
+
+POliteral: **«Listo, hice las 3 tandas»**. Se conservan30intentos deB2 suave/medio/fuerte, sesiones4/5/6, todos7d1a61c39766/cero pendientes/configcomparables, sin cambios. Bandas solicitadasconSwing5/10,9/10,9/10; saturación0/0/10%. Abandono medios8 y fuerte3P0 por d0,607mm bajo zona muerta conservados, no sustituidos. [Informe/evidencia](2026-10-28-first-shot-s1-sl04-session.md); sin interpretación de aceptación ni nueva decisiónPO. Aclaración sobre seguirT3 pendiente. SiguienteB3según autorizaciónprevia,10mediosT1/T2alternados/izquierda,verificarhash/pendientes/Jugando yaclararfeedbackantes;noB4todavía. ConfigS1temporalactiva/3archivosiguales/restauraciónP0alcierrependiente;sin nuevos cambios deproducto/suites/build/instalación. S1sin aceptar/PRsin fusionar/S2–S4/T8sin autorizar.
+
+
+### Aclaración de tarea B2 e instrucción B3 — 2026-10-28
+
+Respuesta literalPO: **«no, no intente aputnar al cuadrado cenral, apuntabaa simulando golpes»**. B2no buscóT3 en sus tres tandas: potencias ydistancias conservadas/sin sustitución; distancia alcuadrado no se interpreta como precisiónintentandoacertarlo. Adhesión de tarea separada de comparabilidad deconfig. No nueva decisión de aceptación ni ajuste. B3solicitado según autorizaciónprevia: diezmedios buscandoT1/T2bajos,izquierda/precheckhash7d1/0pendientes/Jugando; antes se aclaró que feedback«Se fijó antes de tiempo» soloesanticipaciónobservada,OKparalosdemásresultadossinconvertirlos enacierto. Pendiente devolucióndelbloque,noB4todavía. [Informe/evidencia](2026-10-28-first-shot-s1-sl04-session.md);restauraciónP0alcierrependiente/PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.
+
+
+### Cierre de sesión SL-S1-04, sin aceptación ni autorización adicional — 2026-10-28
+
+[Informe deB3–B5,111registros separados,16preguntas/respuestas literales y restauración](2026-10-28-first-shot-s1-sl04-session.md). PO completóB3/B4/B5 antes de nueva instrucción separada paraB4/B5; se conserva la cronología. Literal de devolución íntegro en informe/evidencia; «Se fijó antes de tiempo» volvió a incluir ausencia de rombo, sin tasa de fijaciones prematuras. B4literal «Sin problemas»;cincoZoneCanceled. B3tresabandonos/una cancelación/B5dosabandonos, sin sustituir. Ninguna nueva decisión de aceptación, ajuste, código o práctica inferida.
+
+Las16preguntas se presentaron cada una por separado. Se registran sin ampliación:
+
+- ¿Puedo colocar la mira donde quiero? → **«A veces si, otras veces no»**.
+- ¿Puedo apuntar bajo sin activar accidentalmente la potencia? → **«A veces si otras veces no»**.
+- ¿La mira permanece estable después de fijarse? → **«si»**.
+- ¿Cuántas fijaciones involuntarias ocurren? → **«yo creo que un 30 - 40%»**.
+- ¿Cuánto tiempo necesito para fijar la mira? → **«poco tiempo»**.
+- ¿Entiendo claramente cuándo quedó fijada? → **«si»**.
+- ¿Puedo conseguir golpes suaves, medios y fuertes voluntariamente? → **«si»**.
+- ¿La potencia responde de forma consistente a la distancia? → **«si»**.
+- ¿Puedo alcanzar la potencia máxima cómodamente? → **«si»**.
+- ¿Existen limitaciones por el borde inferior de la pantalla? → **«no»**.
+- ¿Puedo cancelar cuando realmente quiero? → **«si»**.
+- ¿Ocurren cancelaciones accidentales? → **«no»**.
+- ¿La zona interfiere con los movimientos normales? → **«si»**.
+- ¿Cuánto demora el gesto completo, desde apoyar el dedo hasta soltar? → **«1 segundo creo maximo»**.
+- ¿Se siente natural o demasiado mecánico? → **«igual es mecanico, me gustaría algo que fuera natural»**.
+- ¿Podría utilizarlo repetidamente durante un rally rápido? → **«si, pero se vería como pausado»**.
+
+«30 - 40%» y«1 segundo creo maximo» son estimaciones subjetivas, no métricas/umbrales. PO no aceptaS1 por estas respuestas. Registros de potencia/cancelación conservados junto a apuntado bajo intermitente,zona que interfiere ygesto mecánico/rally pausado; no cambiar el diseño a partir de inferencias. No se solicita repetir ni continuar una sesión.
+
+Restauración verificada: proceso nuevo2026-10-28T15:16:26.232098Z/4cec622 dev/P0-calib-1/e458bfd5ce9e/0pendientes;cinco lanzamientosP0/normal/DEVcerrado/Pausa y3archivos directamente iguales al respaldo. Primer intento coniPhonebloqueado rechazado,no éxito.444fuentes/35protegidos intactos,sin nuevos suites/check/build/instalación/código/defaults/presets/spec/planes/criterios/bandas/umbrales. Perfil renovado hasta2026-11-03T18:29:44Z;vigencia efectiva antes de cualquier futura instalación,ninguna autorizada ahora. PR#25lista paraClaude,sin fusionar;detenerse. **S1sin aceptar;S2–S4/T8sin autorizar.**

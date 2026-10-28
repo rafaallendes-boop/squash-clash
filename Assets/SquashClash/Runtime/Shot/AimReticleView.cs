@@ -38,6 +38,16 @@ namespace SquashClash.Runtime.Shot
                 line.SetPosition(i,new Vector3(Mathf.Cos(angle)*RadiusMeters,Mathf.Sin(angle)*RadiusMeters,0));
             }
         }
+        private double flashUntil=double.NegativeInfinity;
+        public void FlashLock(double now,double seconds){flashUntil=now+seconds;TickFlash(now);}
+        public void TickFlash(double now)
+        {
+            if(line==null)return;
+            bool flash=now<flashUntil;
+            line.widthMultiplier=flash?StrokeMeters*1.5f:StrokeMeters;
+            line.startColor=line.endColor=flash?Color.white:Tint;
+        }
+        private void Update()=>TickFlash(Time.realtimeSinceStartupAsDouble);
         private void OnDestroy(){if(material!=null)Destroy(material);}
     }
 }

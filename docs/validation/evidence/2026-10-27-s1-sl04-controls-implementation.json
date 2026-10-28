@@ -1,0 +1,220 @@
+{
+  "schema": 1,
+  "baseApprovedHead": "cecd74c7ea24756528bd815065d2ab58a4cde067",
+  "scope": "SL-S1-04 controls only; D2 detector and cancellation unchanged",
+  "runs": [
+    {
+      "name": "red",
+      "counts": {
+        "total": "9",
+        "passed": "0",
+        "failed": "9",
+        "skipped": "0",
+        "start-time": "2026-10-28 01:23:40Z",
+        "end-time": "2026-10-28 01:23:43Z"
+      },
+      "xmlSha256": "24a47ab734a889cdb4ca58f2dd1722576d96e5c4dd7d9935508e9d9df3770bd0"
+    },
+    {
+      "name": "notice-geometry-red",
+      "counts": {
+        "total": "10",
+        "passed": "9",
+        "failed": "1",
+        "skipped": "0",
+        "start-time": "2026-10-28 01:26:49Z",
+        "end-time": "2026-10-28 01:26:53Z"
+      },
+      "xmlSha256": "c36e03d70e2bcde52cee4f4b955dc1044c79a8769c76aac4e8ca782a15ec1008"
+    },
+    {
+      "name": "focal-green",
+      "counts": {
+        "total": "10",
+        "passed": "10",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-10-28 01:27:45Z",
+        "end-time": "2026-10-28 01:27:49Z"
+      },
+      "xmlSha256": "abf76ab8f39e2295121178e27e29e5db64225bb0bedba1b8b722d51ff5844594"
+    },
+    {
+      "name": "editmode",
+      "counts": {
+        "total": "411",
+        "passed": "411",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-10-28 01:28:27Z",
+        "end-time": "2026-10-28 01:28:34Z"
+      },
+      "xmlSha256": "acc727377a2e3c03e873a7ec02a9b57ae0963a43eeaf6d746e1b3c3cbd71d65a"
+    },
+    {
+      "name": "playmode",
+      "counts": {
+        "total": "194",
+        "passed": "194",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-10-28 01:28:58Z",
+        "end-time": "2026-10-28 01:29:43Z"
+      },
+      "xmlSha256": "fb5e869a0fdaa78633f31637e88fc3d2ef9839cdc26eaa029896d0e61ea4beaf"
+    }
+  ],
+  "testPreparationCorrection": "After first implementation, two tests referenced SpikeSection on AppBootstrap instead of DevBar; corrected fixture lookup, no assertions changed. Initial 9 RED failures were assertions. All 9 subsequently green; independent overlay overflow RED then 10/10 green.",
+  "protectedFiles": {
+    "Assets/SquashClash/Core/Shot/SlingModel.cs": "96df02a4e257388b70ed80a797dad24fcacc5777aec016eb539801c2c5e20745",
+    "Assets/SquashClash/Runtime/Resources/DefaultPreset.json": "f35af0cd1d90a62d879aa23a05ddfc0dad9a08db3b9f61707f8e683244926093",
+    "Assets/SquashClash/Runtime/Shot/SlingCancelIndicator.cs": "0a58c9fee4993ba52576a6753a80cf96bd42f2a54253c2a3a4eb4210701b9a27",
+    "Packages/manifest.json": "b133329641892c743248bc29a3389b46d505dec768c6f01c6ae7a614eafa61dc",
+    "Packages/packages-lock.json": "ee1183834c7ba59bf088b5fd9d4d112dfb95fee7b3db92187862253fb0b836b0",
+    "ProjectSettings/AudioManager.asset": "9543c41dbfc7d3951217c4dd9481ed026eb8e529b85ecf4463969a0fea747729",
+    "ProjectSettings/ClusterInputManager.asset": "40e65dd214bf254955d2c8829ca8ce2130fd3510485560ce012e9a1ddd93e623",
+    "ProjectSettings/DynamicsManager.asset": "056979610bab2b1ddf56f692ad5cb565a181660cc4f1a28d7e6d004cb8820fb1",
+    "ProjectSettings/EditorBuildSettings.asset": "063ff0a74a273ca94393823b52a1acbf58936890d0152e67de742b315270d3c2",
+    "ProjectSettings/EditorSettings.asset": "06753c21648950aee0013b70f79a9035ac52aec6204d44cc2ac55a84034ad9ca",
+    "ProjectSettings/GraphicsSettings.asset": "b5d1da463ee310899c8692a7b941ed171a5b2df1e94b65b548a22399c99e48a3",
+    "ProjectSettings/InputManager.asset": "60c83ae48e29a782141f99032eb38e803d18475124ff5224fbd1fd81b233f051",
+    "ProjectSettings/MemorySettings.asset": "2c9e2339b4fa50f4782840d37dde021508d411b99278614cba335d206edb1738",
+    "ProjectSettings/MultiplayerManager.asset": "ce4075d7a7dd8ac7ffe55de2427692c63f90dae398208bd80cec0f27cbe09f4b",
+    "ProjectSettings/NavMeshAreas.asset": "7ebbf8f53b8033104e1878b95ca07a28d0954092d81c220f14196a42f651e658",
+    "ProjectSettings/Physics2DSettings.asset": "1cfc0c8fbceec604fd7cd2a06c04ff05dddee6335b75c92b0f5715ad80ba9490",
+    "ProjectSettings/PresetManager.asset": "29c125923fe6e29f90190d4fce1c82d660e7051546e2c9d02908d18c9cf2436c",
+    "ProjectSettings/ProjectSettings.asset": "0eb810ca98bb560c266e514d4d4308e88815a936d44634ef94146a1e91c9bbe9",
+    "ProjectSettings/ProjectVersion.txt": "56aead51018c992af406752e47c49e8d9458c70f00b983f4bb603b1b3afc223e",
+    "ProjectSettings/QualitySettings.asset": "b12ea3ba9c83f6517c52eb7810d46dd6a74bcb498fd3a9a773887e2fa0f7f989",
+    "ProjectSettings/SceneTemplateSettings.json": "bb9098b3bfcde78d93e264b96f7b77b5430e64e8c57a7aad7f5a5d9c3945e16a",
+    "ProjectSettings/ShaderGraphSettings.asset": "6fead5a816c4eed70f224d5472340ecf1ea0b4de4f87d5926bb17fa10ffb3dc9",
+    "ProjectSettings/TagManager.asset": "da4b5eefc927f8b91bcf9e56a186d2b852f49d9cbe91d466638d26c79d6a83ce",
+    "ProjectSettings/TimeManager.asset": "3396f52fdc16d445024e01d7a2d99db6f0a37569d1d73c0302e9ffb857d90287",
+    "ProjectSettings/UnityConnectSettings.asset": "11251dae0356b6f43dd2c67bb511f6b7ecda4e5de425186bba3297e6f3dc1c6f",
+    "ProjectSettings/VFXManager.asset": "2973a6af930e142f62cde00076beda8a3cc3a66d9bfcde7a58ba7d4be2251c26",
+    "ProjectSettings/VersionControlSettings.asset": "e199cdfa6a8f2bf33cfd47e549198f13e3eb2a5099e908fdb4e0f14d939ccc6b",
+    "docs/superpowers/plans/2026-10-20-squash-clash-first-ball.md": "6ab140a510029506cab8a80beffb00864a0fc0150cd316caba7a222fe44f276c",
+    "docs/superpowers/plans/2026-10-20-squash-clash-first-ball.r1.md": "eef24cc2402f4b1be1158e0bfe40e2f5ecf873cef3117aab0997b9ecc9680b75",
+    "docs/superpowers/plans/2026-10-25-squash-clash-first-shot.md": "4a1cc034c8d6ed69a32ec83398d381d8b15446f1a72a824f0a5117f4d098555c",
+    "docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md": "bc0c50b5a60357bc3431d16c3d74dc733a0fbb108148cdaf1d049b145490ae6a",
+    "docs/validation/presets/S1-sling.json": "cd008ad646a4f7c206cce6eea3cb36331667cf94be21aba37284edfcc8efb298",
+    "docs/superpowers/specs/2026-10-19-squash-clash-design-v0.2.md": "8ee38aa9b8884903c03dca3ea4a6d93b8d569a4c3ce20cc9ff7a4e3b89f81ed6",
+    "docs/superpowers/specs/2026-10-19-squash-clash-design.md": "c5ea6adb82ee7a29564132f18a29e09f75e537e5699a05c321b8e4d34d1a8ae9",
+    "docs/superpowers/specs/2026-10-24-first-shot-design.md": "b9011fc09120b56ac62273059c99bc21b07c2c9f926d923540f5a0e8c79b8404"
+  },
+  "protectedFilesUnchanged": true,
+  "defaultsHash": "45c4e9af5c8f",
+  "experimentalPresetHash": "7d1a61c39766",
+  "P0Hash": "e458bfd5ce9e",
+  "simulationKey": "166a96e319c7",
+  "newPhysicalSession": "CompletedWithProtocolDeviations_All16AnswersRecorded_P0Restored",
+  "installation": "Succeeded_AfterEmbeddedProfileAndSourceValidation",
+  "observationsForNewSession": [
+    "O1 quiet candidates with <3 real samples",
+    "O2 late-delivered samples preceding lockObservedAt; displacement from locked sample"
+  ],
+  "productHead": "4cec622b76811643c5cb6ce7a0299b3fa61e678a",
+  "releaseChecks": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "4cec622",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-28T01:30:51.0061760Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "4cec622",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-28T01:32:43.2920660Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "preinstallCheck": {
+    "checkedUtc": "2026-10-28T01:40:49.771614+00:00",
+    "createdUtc": "2026-10-27T18:29:44+00:00",
+    "expiresUtc": "2026-11-03T18:29:44+00:00",
+    "buildMetadata": {
+      "version": "0.1.0",
+      "gitHash": "4cec622",
+      "profile": "dev",
+      "builtAtUtc": "2026-10-28T01:35:50.8613680Z",
+      "unityVersion": "6000.3.27f1",
+      "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+      "gitDirty": false
+    },
+    "checks": {
+      "profileTimeValid": true,
+      "renewedBeforeInstallFrom27": true,
+      "teamMatches": true,
+      "bundleMatches": true,
+      "deviceIncluded": true,
+      "signatureValid": true,
+      "arm64Only": true,
+      "certificateTimeValid": true,
+      "sourceFilesUnchanged": true,
+      "gitClean": true,
+      "cleanDevMetadata": true,
+      "releaseNoDevelopment": true
+    },
+    "sourceFiles": 444
+  },
+  "startup": {
+    "verified": true,
+    "ts": "2026-10-28T09:57:01.3934910Z",
+    "presetName": "P0-calib-1",
+    "effectiveHash": "e458bfd5ce9e",
+    "pending": 0
+  },
+  "threeFilesAfterInstallByteIdentical": true,
+  "presetFileHashes": {
+    "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+    "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
+  },
+  "preparation": "VerifiedS1Temporary_7d1a61c39766_Pending0_Unpaused_ProtectedExperiments",
+  "preparationEvidence": "2026-10-28-s1-sl04-preparation.json",
+  "physicalEvidence": "2026-10-28-s1-sl04-B0.json",
+  "physicalGate": {
+    "recordedB0Complete": true,
+    "guidedCancellationRecorded": true,
+    "POUnderstandingAndVoluntariness": "ConfirmedByDirectLiteralAnswers",
+    "countdownConfirmationBeforeGestureCommunicated": false,
+    "B1ThroughB5Started": true,
+    "finalP0Restoration": "VerifiedNewStartup_2026-10-28T15:16:26.232098Z_e458bfd5ce9e_Pending0_ThreeFilesByteIdentical"
+  },
+  "formalSessionEvidence": [
+    "2026-10-28-s1-sl04-B1.json",
+    "2026-10-28-s1-sl04-B2.json",
+    "2026-10-28-s1-sl04-B3-B4-B5.json",
+    "2026-10-28-s1-sl04-po-final-answers.json",
+    "2026-10-28-s1-sl04-session-closure.json"
+  ],
+  "sessionAcceptedByPO": false,
+  "finalLiteralAnswersRecorded": 16
+}

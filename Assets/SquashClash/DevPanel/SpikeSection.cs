@@ -59,8 +59,8 @@ namespace SquashClash.DevPanel
             status.style.color = Color.white; layer.Add(status);
             scroll = new ScrollView(); scroll.style.flexGrow = 1; layer.Add(scroll);
             reportLabel = new Label { name = "spike-report" }; reportLabel.style.fontSize = 12; reportLabel.style.whiteSpace = WhiteSpace.Normal; reportLabel.style.color = Color.white; scroll.Add(reportLabel);
-            cancel = new Button(() => CancelRun("Cancelado por usuario")) { text = "Cancelar", name = "spike-cancel" }; cancel.style.height = 44; layer.Add(cancel);
-            close = new Button(() => layer.style.display = DisplayStyle.None) { text = "Cerrar informe", name = "spike-close" }; close.style.height = 44; layer.Add(close);
+            cancel = new Button(() => DevControlLog.Run(app,"spike-cancel",()=>CancelRun("Cancelado por usuario"))) { text = "Cancelar", name = "spike-cancel" }; cancel.style.height = 44; layer.Add(cancel);
+            close = new Button(() => DevControlLog.Run(app,"spike-close",()=>layer.style.display = DisplayStyle.None)) { text = "Cerrar informe", name = "spike-close" }; close.style.height = 44; layer.Add(close);
             root.Insert(Math.Max(0, root.childCount - 1), layer); layer.style.display = DisplayStyle.None;
         }
         public void LaunchNextScenario()

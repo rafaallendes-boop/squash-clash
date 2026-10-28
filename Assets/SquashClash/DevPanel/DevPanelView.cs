@@ -25,7 +25,7 @@ namespace SquashClash.DevPanel
             var header=new VisualElement {name="panel-header"};header.style.flexDirection=FlexDirection.Row;header.style.flexShrink=0;header.style.minHeight=52;panel.Add(header);
             heading=new Label {name="pending-changes"};heading.style.whiteSpace=WhiteSpace.Normal;heading.style.flexGrow=1;heading.style.flexBasis=0;heading.style.minWidth=0;
             heading.style.maxHeight=60;heading.style.overflow=Overflow.Hidden;header.Add(heading);
-            var apply=new Button(()=>{app.LaunchCurrent();Refresh();}){text="Aplicar y relanzar",name="apply-relaunch"};apply.style.minHeight=48;apply.style.width=128;apply.style.flexShrink=0;apply.style.whiteSpace=WhiteSpace.Normal;header.Add(apply);
+            var apply=new Button(()=>DevControlLog.Run(app,"apply-relaunch",()=>{app.LaunchCurrent();Refresh();})){text="Aplicar y relanzar",name="apply-relaunch"};apply.style.minHeight=48;apply.style.width=128;apply.style.flexShrink=0;apply.style.whiteSpace=WhiteSpace.Normal;header.Add(apply);
             var tabs=new VisualElement {name="panel-tabs"};tabs.style.flexDirection=FlexDirection.Row;tabs.style.flexShrink=0;tabs.style.height=44;panel.Add(tabs);
             var paramsScroll=new ScrollView {name="parameters-scroll"};var presetsScroll=new ScrollView {name="presets-scroll"};var diagnosticsScroll=new ScrollView {name="diagnostics-scroll"};
             foreach(var scroll in new[]{paramsScroll,presetsScroll,diagnosticsScroll})
@@ -44,7 +44,7 @@ namespace SquashClash.DevPanel
             }
             void Tab(string text,ScrollView scroll)
             {
-                var b=new Button(()=>{Show(scroll);Refresh();}){text=text,userData=scroll};b.style.flexGrow=1;b.style.flexBasis=0;b.style.minWidth=0;b.style.height=44;b.style.flexShrink=0;
+                var b=new Button(()=>DevControlLog.Run(app,"dev-tab-"+scroll.name,()=>{Show(scroll);Refresh();})){name="dev-tab-"+scroll.name,text=text,userData=scroll};b.style.flexGrow=1;b.style.flexBasis=0;b.style.minWidth=0;b.style.height=44;b.style.flexShrink=0;
                 b.style.marginTop=0;b.style.marginBottom=0;b.style.fontSize=14;b.style.whiteSpace=WhiteSpace.Normal;b.style.color=Color.white;b.style.overflow=Overflow.Hidden;tabs.Add(b);
             }
             Tab("Parámetros",paramsScroll);Tab("Presets",presetsScroll);Tab("Diagnóstico",diagnosticsScroll);Show(paramsScroll);
@@ -59,16 +59,17 @@ namespace SquashClash.DevPanel
         private bool CanToggle()=>app!=null&&!app.GetComponent<ResumeOverlay>().IsVisible&&!(GetComponent<SpikeSection>()?.IsRunning??false)&&!(GetComponent<PerformanceSession>()?.IsRunning??false);
         public void Toggle()
         {
-            if(!CanToggle())return;
+            app.RecordDevControl("dev-toggle",true,"invoked","activation");
+            if(!CanToggle()){app.RecordDevControl("dev-toggle",false,"dev-unavailable");return;}
             panel.style.display=IsOpen?DisplayStyle.None:DisplayStyle.Flex;
             var input=app.GetComponent<SquashClash.Runtime.Input.TouchInputAdapter>();
             if(input!=null)input.BlockedByUi=IsOpen;
-            Refresh();Place();
+            Refresh();Place();app.RecordDevControl("dev-toggle",true,"completed");
         }
         private void Refresh()
         {
             if(app==null||heading==null)return;
-            heading.text=app.ActivePresetName+" · "+app.Config.Backend+"\n"+app.Tuning.PendingKeys.Count+(app.Tuning.PendingKeys.Count==1?" cambio pendiente":" cambios pendientes");
+            heading.text=app.ActivePresetName+" · "+app.Config.Backend+"\n"+app.Tuning.Applied.Hash+" · "+(app.Clock.Paused?"Pausa":"Jugando")+"\n"+app.Tuning.PendingKeys.Count+(app.Tuning.PendingKeys.Count==1?" cambio pendiente":" cambios pendientes");
             parameters?.Refresh();presets?.Refresh();diagnostics?.Refresh();
         }
         private void OnGeometry(GeometryChangedEvent evt)=>Place();

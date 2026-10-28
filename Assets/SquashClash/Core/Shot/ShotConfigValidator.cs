@@ -9,7 +9,7 @@ namespace SquashClash.Core.Shot
         public static bool TryValidate(IReadOnlyDictionary<string,double> candidate,out string error)
         {
             error=null;
-            foreach(var pair in new[]{("power.deadZoneMmPerS","power.fullMmPerS"),("body.preferredMinHeight","body.preferredMaxHeight"),("legal.minHeight","legal.maxHeight")})
+            foreach(var pair in new[]{("power.pullDeadZoneMm","power.pullFullMm"),("power.deadZoneMmPerS","power.fullMmPerS"),("body.preferredMinHeight","body.preferredMaxHeight"),("legal.minHeight","legal.maxHeight")})
                 if(candidate.TryGetValue(pair.Item1,out var a)&&candidate.TryGetValue(pair.Item2,out var b)&&a>=b)
                 {error=pair.Item1+" must be below "+pair.Item2;return false;}
             foreach(var pair in new[]{("shot.vMin","shot.vMax"),("shot.vMax","shot.vCap"),("power.minCoverageMs","power.windowMs")})

@@ -3,8 +3,11 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 >
 > **En este proyecto:** Codex implementa en el Mac del PO, Claude revisa cada PR y el PO prueba cada incremento en el iPhone y aprueba antes de fusionar. **Este plan no autoriza implementación:** el PO lo revisa y autoriza S1 de forma explícita. Cada incremento siguiente requiere su propia autorización.
+
 >
 > **Revisión r2 (2026-10-25):** incorpora la [revisión del plan de Codex](../../reviews/2026-10-25-first-shot-r2-plan-review-codex.md) (F01–F10) y las decisiones R2-4 y R2-5 del PO (propuesta §11.1).
+
+**Adenda D1 — PO 2026-10-27, tarea 1.2b en S1:** S1-sling del control §6.2 B se desarrolla bajo la secuencia del [registro literal](../../reviews/2026-10-25-first-shot-po-approvals.md). **Primera parada: un commit solo Markdown y PR en borrador de interacción; detenerse. No código antes de aprobación de Claude.** El [diseño de interacción y protocolo B0–B5](../../reviews/2026-10-27-first-shot-s1-sling-prototype-interaction.md) concreta esta parada. Las tareas históricas de A′ siguen intactas; S2–S4/T8 no autorizados.
 
 **Goal:** que el PO pueda, en su iPhone 16 Pro y con una mano, apuntar al frontis, pegarle a una pelota del lanzador con la fuerza y el momento que elija, y sentir con claridad la diferencia entre un golpe perfecto, uno válido y uno fallido.
 
@@ -50,7 +53,7 @@
 
 | Incremento | Tareas | Rama | Qué prueba el PO en el iPhone |
 |---|---|---|---|
-| **S1** Gesto y mira | 1.0–1.4 | `firstshot/s1-gesture` | Apuntar, entender la mira, potencia suave/fuerte en la superposición; medición del muestreo táctil y de los mm |
+| **S1** Gesto y mira | 1.0–1.4, incluida adenda1.2b | `firstshot/s1-gesture` | Apuntar, entender la mira, potencia suave/fuerte en la superposición; medición del muestreo táctil y de los mm |
 | **S2** Golpe funcional | 2.1–2.7 | `firstshot/s2-contact` | **Primer golpe jugable**: la pelota va donde apunta, el timing es justo, salto visual medido |
 | **S3** Sensación | 3.1–3.4 | `firstshot/s3-feel` | Perfecto frente a normal, sonido, vibración, swing visible, entender el fallo |
 | **S4** Calibración y validación | 4.1–4.5 | `firstshot/s4-validation` | Protocolo completo y decisión: continuar a First Rally, ajustar o volver |
@@ -262,6 +265,36 @@ Reglas, iguales a First Ball:
 - [ ] **Step 4: Run** las mismas pruebas y la suite completa `scripts/test.sh editmode`. Expected: PASS; ninguna prueba previa cambia.
 
 - [ ] **Step 5: Commit** `feat: add front-wall aim model and windowed net-displacement power`
+
+### Tarea 1.2b: Prototipo S1-sling del control §6.2 B [D1, C5, PO 2026-10-27]
+
+**No renumera1.2 ni1.3.** A′, sus pruebas/reglas y comportamiento por defecto permanecen. El método de potencia B por velocidad no es este control. No promover08b6fe90889b ni aceptar S1 por esta adenda.
+
+**Paso1 — parada vigente, solo documentación:** registro literal de las decisiones en aprobaciones/AGENTS, adendas D1, tabla de cambios respecto a PR #24, diseño crítico/final propuesto de cancelación y protocolo B0–B5 con criterios verificables. Un único commit Markdown, PR en borrador y detenerse para revisión de Claude; no pruebas, builds, instalaciones o sesiones.
+
+**Paso2 — solo después de aprobación de Claude de la interacción:** implementación en la arquitectura TouchSample/GesturePreview/Core Shot/ShotOverlay/DevPanel, sin duplicar el sistema táctil ni abstracciones generales. Selector gesture.control capturado al apoyar, A′ por defecto; claves K2 en unidades explícitas y preset experimental separado S1-sling. Iniciales [EXPERIMENTO]: pausa120 ms (120–150 permitidos), velocidad15 mm/s/radio1 mm, huecos≤51 ms/mínimo 3 muestras, guardia previa≥3 mm, zona muerta2 mm/tope35 mm (30–40), curva lineal saturada, destello120 ms y zona según interacción revisada del paso 1. Ajustables en DEV pero estables durante gesto y sesión. Cambio120→150 requiere decisión posterior del PO con evidencia, no ajuste en campaña.
+
+**Files futuros (ninguno editado en paso 1):** Core/Shot para el estado específico mínimo si hace falta; integrar el selector en GesturePreview y vistas/ShotOverlay/DevPanel existentes; catálogo/DefaultPreset solo claves nuevas autorizadas y tests EditMode/PlayMode del control. No otra fuente de TouchSample, scheduler, reloj, pelota o predicción. A′ conserva N1 por regreso al origen/Flick/150 ms-P<0,60 y la ruta temporal existente.
+
+**TDD previsto:** esqueletos compilables, RED por aserciones observadas y GREEN tras implementar; preparación se declara sin fingir RED. Casos futuros:
+
+| Grupo | Expectativa de la decisión del PO |
+|---|---|
+| Quietud | Muestras reales/duración/tolerancia/huecos/guardia; silencio no fija; fijación única con destello/cambio visible. |
+| Potencia | Cero antes de fijar incluso apuntando abajo; origen en fijación; proyección descendente actual, lateral sin potencia, regreso reduce, zona muerta/tope/saturación lineal. |
+| Cancelación | Ended dentro cancela sin consumo; pasar y salir no; tirón válido no se cancela por volver a Began. Región superior/fallback y falta de margen según interacción revisada, sin latch N1 de A′. |
+| Fases/contexto | Tap N2, abandono antes de fijar, r=Ended original, primer dedo/lanzamiento/control/configuración capturados; pausa/foco/DEV/lanzamiento invalidan sin swing al volver. |
+| Terminal dt=0 | Ended idéntico no anula potencia fiable del nuevo control, sin dt artificial; contradictorios/no monótonos conservadores; **sin modificar A′**. |
+| Vista/registros | Estados Apuntando/Fijada/Tensando/Zona de cancelación/Inválida con forma/texto, mínimos PR #19/frontis despejado; marcas objetivo solo DEV/protocolo, no prod. Todas las transiciones/outcomes/hash/bordes registradas. |
+| RB1–RB6 | Expectativas del diseño de interacción: separación antes de fijar, distancia actual y zona; mantener tirón deliberado no hereda decaimiento temporal. **RB6 se registra/mide, no se oculta ni se fuerza a P=0 después de fijar para prometer riesgo resuelto.** |
+
+Registro por gesto: control; Began/fijación/inicio de tensado/entrada-salida de zona/Ended con timestamp; objetivo pedido/posición de fijación; d actual/máxima/lateral/P/banda; Swing/Cancelado por zona/Abandonado antes de fijar/SystemCanceled/Tap; duración total/tiempo hasta fijar; distancia mínima al borde inferior/área segura; hash/preset/escenario/intento. Describir fijación involuntaria según señalamiento literal del PO y error continuo, sin umbral nuevo.
+
+Compatibilidad R2-3: nuevo hash global solo por claves autorizadas; registrar el nuevo y conservar41 valores heredados y SimulationKey byte a byte. Default A′ sin cambio de comportamiento. Regresión completa **fresca** EditMode/PlayMode sin CS, check-release dev/prod, build dev Release ARM64/no Development. Perfil efectivo y renovación a cargo del PO según su decisión, respaldo/cotejo deP0-calib-1/Po-1/last-active antes de instalar. No ejecutar nada de esto en la primera parada.
+
+**Paso3 — sesión exploratoria posterior condicionada, mano izquierda declarada:** protocolo breve B0 práctica 2 min aparte; B1 diez a cinco objetivos (dos bajos), soltar suave; B2 diez suaves/diez medios/diez fuertes al centro; B3 diez medios a objetivo bajo/RB6; B4 cinco cancelaciones voluntarias; B5 diez de ritmo cómodo con objetivos/potencias alternados. Antes de CADA bloque hash/preset/cero pendientes/repeat=0 preparados sin guardar, DEV cerrado. Conservar todo; ningún parámetro se cambia durante la sesión. Métricas descriptivas sin umbrales de aceptación; preguntas del punto 6 literal aclarado del PO y la pregunta de rally del adjunto. RestaurarP0 y comprobar en arranque nuevo hash/cero pendientes/los tres archivos byte a byte.
+
+Fuera de esta tarea: contacto real, S2–S4, timing ±40 ms, V/T3, sonido/háptica/calidad, jugadores/IA/rallies/marcador. Defecto: registrar y detenerse. La primera entrega de esta tarea es **borrador de interacción**, no PR de código lista para fusionar. S1 sigue sin aceptar.
 
 ### Tarea 1.3: Adaptador táctil, mm físicos, vista de la mira y superposición [A05, M07]
 
@@ -698,6 +731,7 @@ Reglas, iguales a First Ball:
 | Requisito | Tarea |
 |---|---|
 | Gesto A′, N1/N2 estrictos y prioridad (C5, R2-2, A08, F10) | 1.1 |
+| D1/C5: prototipo control §6.2 B/S1-sling, zona explícita y protocolo exploratorio; A′ conservado | 1.2b, con parada documental y aprobación de interacción previas; no ejecuta H2/S4 |
 | Mira, congelamiento visible, dos marcas (C4, §11.4) | 1.2, 1.3, 2.6 |
 | Potencia filtrada y flick corto (A06) | 1.2, 1.4 |
 | Timestamps, muestreo y mm medidos (A05, M07) | 1.3, 1.4 |

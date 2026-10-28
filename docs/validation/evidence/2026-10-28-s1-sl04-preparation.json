@@ -1,0 +1,686 @@
+{
+  "schema": 1,
+  "build": "0.1.0+4cec622 dev",
+  "startup": {
+    "ts": "2026-10-28T09:57:01.3934910Z",
+    "presetName": "P0-calib-1",
+    "effectiveHash": "e458bfd5ce9e",
+    "pending": 0
+  },
+  "normalScreenAndRunningPauseButtonObserved": true,
+  "files": {
+    "P0-calib-1.json": {
+      "sha256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "byteIdenticalToBackup": true
+    },
+    "Po-1.json": {
+      "sha256": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "byteIdenticalToBackup": true
+    },
+    "last-active.txt": {
+      "sha256": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+      "byteIdenticalToBackup": true
+    }
+  },
+  "nativeControls": [
+    {
+      "ts": "2026-10-28T09:58:20.8702780Z",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0,
+      "payload": {
+        "control": "dev-toggle",
+        "stage": "activation",
+        "reason": "invoked",
+        "activeLaunchHash": "e458bfd5ce9e",
+        "timeReal": 25.689316750233562,
+        "accepted": true,
+        "paused": false,
+        "focused": true,
+        "devOpen": false
+      }
+    },
+    {
+      "ts": "2026-10-28T09:58:20.8791010Z",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0,
+      "payload": {
+        "control": "dev-toggle",
+        "stage": "result",
+        "reason": "completed",
+        "activeLaunchHash": "e458bfd5ce9e",
+        "timeReal": 25.69547066723356,
+        "accepted": true,
+        "paused": false,
+        "focused": true,
+        "devOpen": true
+      }
+    },
+    {
+      "ts": "2026-10-28T09:58:28.1034390Z",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0,
+      "payload": {
+        "control": "dev-tab-presets-scroll",
+        "stage": "activation",
+        "reason": "invoked",
+        "activeLaunchHash": "e458bfd5ce9e",
+        "timeReal": 32.922671542233566,
+        "accepted": true,
+        "paused": false,
+        "focused": true,
+        "devOpen": true
+      }
+    },
+    {
+      "ts": "2026-10-28T09:58:28.1078490Z",
+      "presetName": "P0-calib-1",
+      "effectiveHash": "e458bfd5ce9e",
+      "pending": 0,
+      "payload": {
+        "control": "dev-tab-presets-scroll",
+        "stage": "result",
+        "reason": "completed",
+        "activeLaunchHash": "e458bfd5ce9e",
+        "timeReal": 32.92713683323357,
+        "accepted": true,
+        "paused": false,
+        "focused": true,
+        "devOpen": true
+      }
+    }
+  ],
+  "logicalControlActivations": 2,
+  "S1TemporaryPresetLoaded": true,
+  "B0Attempts": 0,
+  "protocolBlocks": 0,
+  "gestures": 0,
+  "P2H17ScenarioActivations": 0,
+  "allRecordedPhasesFree": true,
+  "preparationStatus": "Reprepared_Ready_AwaitingPOCountdownConfirmationBeforeFirstGesture",
+  "causeOfHistoricalP2Activations": "StillNotEstablished",
+  "newPhysicalSession": "NotStarted",
+  "sourceFilesUnchanged": 444,
+  "prepared": {
+    "launch": {
+      "ts": "2026-10-28T10:06:22.0058220Z",
+      "build": "0.1.0+4cec622 dev",
+      "presetName": "S1-sling",
+      "effectiveHash": "7d1a61c39766",
+      "pending": 0
+    },
+    "repeatSeconds": 0,
+    "paused": false,
+    "DEVClosed": true,
+    "readinessText": "S1-sling · 7d1a61c39766 · Listo",
+    "pauseButtonText": "Pausa",
+    "scenarioP2H17VisuallyDisabled": true,
+    "B0ButtonLeftAccessibleWithoutActivation": true,
+    "persistedSelectionRestoredBeforeApply": "P0-calib-1",
+    "S1PresetByteIdenticalToRepository": true,
+    "files": {
+      "P0-calib-1.json": {
+        "sha256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+        "byteIdenticalToBackup": true
+      },
+      "Po-1.json": {
+        "sha256": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+        "byteIdenticalToBackup": true
+      },
+      "last-active.txt": {
+        "sha256": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+        "byteIdenticalToBackup": true
+      }
+    },
+    "nativeControlAudit": [
+      {
+        "ts": "2026-10-28T09:58:20.8702780Z",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0,
+        "payload": {
+          "control": "dev-toggle",
+          "stage": "activation",
+          "reason": "invoked",
+          "activeLaunchHash": "e458bfd5ce9e",
+          "timeReal": 25.689316750233562,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": false
+        }
+      },
+      {
+        "ts": "2026-10-28T09:58:20.8791010Z",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0,
+        "payload": {
+          "control": "dev-toggle",
+          "stage": "result",
+          "reason": "completed",
+          "activeLaunchHash": "e458bfd5ce9e",
+          "timeReal": 25.69547066723356,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": true
+        }
+      },
+      {
+        "ts": "2026-10-28T09:58:28.1034390Z",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0,
+        "payload": {
+          "control": "dev-tab-presets-scroll",
+          "stage": "activation",
+          "reason": "invoked",
+          "activeLaunchHash": "e458bfd5ce9e",
+          "timeReal": 32.922671542233566,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": true
+        }
+      },
+      {
+        "ts": "2026-10-28T09:58:28.1078490Z",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0,
+        "payload": {
+          "control": "dev-tab-presets-scroll",
+          "stage": "result",
+          "reason": "completed",
+          "activeLaunchHash": "e458bfd5ce9e",
+          "timeReal": 32.92713683323357,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": true
+        }
+      },
+      {
+        "ts": "2026-10-28T10:05:29.7605980Z",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0,
+        "payload": {
+          "control": "preset-list",
+          "stage": "result",
+          "reason": "selected",
+          "activeLaunchHash": "e458bfd5ce9e",
+          "timeReal": 454.5835403752336,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": true
+        }
+      },
+      {
+        "ts": "2026-10-28T10:05:35.6917620Z",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0,
+        "payload": {
+          "control": "preset-load",
+          "stage": "activation",
+          "reason": "invoked",
+          "activeLaunchHash": "e458bfd5ce9e",
+          "timeReal": 460.5146943752336,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": true
+        }
+      },
+      {
+        "ts": "2026-10-28T10:05:35.7238110Z",
+        "presetName": "S1-sling",
+        "effectiveHash": "7d1a61c39766",
+        "pending": 0,
+        "payload": {
+          "control": "preset-load",
+          "stage": "result",
+          "reason": "completed",
+          "activeLaunchHash": "e458bfd5ce9e",
+          "timeReal": 460.5469617082336,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": true
+        }
+      },
+      {
+        "ts": "2026-10-28T10:06:22.0016120Z",
+        "presetName": "S1-sling",
+        "effectiveHash": "7d1a61c39766",
+        "pending": 0,
+        "payload": {
+          "control": "apply-relaunch",
+          "stage": "activation",
+          "reason": "invoked",
+          "activeLaunchHash": "e458bfd5ce9e",
+          "timeReal": 506.8246704172336,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": true
+        }
+      },
+      {
+        "ts": "2026-10-28T10:06:22.0098160Z",
+        "presetName": "S1-sling",
+        "effectiveHash": "7d1a61c39766",
+        "pending": 0,
+        "payload": {
+          "control": "apply-relaunch",
+          "stage": "result",
+          "reason": "completed",
+          "activeLaunchHash": "7d1a61c39766",
+          "timeReal": 506.8332945422336,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": true
+        }
+      },
+      {
+        "ts": "2026-10-28T10:07:44.1783870Z",
+        "presetName": "S1-sling",
+        "effectiveHash": "7d1a61c39766",
+        "pending": 0,
+        "payload": {
+          "control": "dev-tab-parameters-scroll",
+          "stage": "activation",
+          "reason": "invoked",
+          "activeLaunchHash": "7d1a61c39766",
+          "timeReal": 589.0025361252336,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": true
+        }
+      },
+      {
+        "ts": "2026-10-28T10:07:44.1821790Z",
+        "presetName": "S1-sling",
+        "effectiveHash": "7d1a61c39766",
+        "pending": 0,
+        "payload": {
+          "control": "dev-tab-parameters-scroll",
+          "stage": "result",
+          "reason": "completed",
+          "activeLaunchHash": "7d1a61c39766",
+          "timeReal": 589.0063898752336,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": true
+        }
+      },
+      {
+        "ts": "2026-10-28T10:08:36.1528750Z",
+        "presetName": "S1-sling",
+        "effectiveHash": "7d1a61c39766",
+        "pending": 0,
+        "payload": {
+          "control": "dev-toggle",
+          "stage": "activation",
+          "reason": "invoked",
+          "activeLaunchHash": "7d1a61c39766",
+          "timeReal": 640.9775103332336,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": true
+        }
+      },
+      {
+        "ts": "2026-10-28T10:08:36.1579280Z",
+        "presetName": "S1-sling",
+        "effectiveHash": "7d1a61c39766",
+        "pending": 0,
+        "payload": {
+          "control": "dev-toggle",
+          "stage": "result",
+          "reason": "completed",
+          "activeLaunchHash": "7d1a61c39766",
+          "timeReal": 640.9826150422336,
+          "accepted": true,
+          "paused": false,
+          "focused": true,
+          "devOpen": false
+        }
+      }
+    ],
+    "gestureSamplingOrBlockRecordsBeforeHandoff": 0,
+    "capture": "Logs/evidence/s1-sl04-controls/prepared-S1-ready"
+  },
+  "POInstruction": "PO opens DEV/B0; confirms countdown from Mac before first gesture, then practices without waiting for another reply; stop on missing/unclear boundary and do not start B1.",
+  "repreparations": [
+    {
+      "poLiteral": "tuve que salir por lo que se reinició. Dejé duplicar abierto para que hagas toda la configuración nuevamente y haga la prueba .",
+      "beforeCapture": "Logs/evidence/s1-sl04-controls/after-PO-restart-before-reprepare",
+      "beforeState": {
+        "launchUtc": "2026-10-28T11:50:21.1064940Z",
+        "preset": "P0-calib-1",
+        "hash": "e458bfd5ce9e",
+        "pending": 0,
+        "blocksOrGesturesRecorded": 0
+      },
+      "preparedLaunch": {
+        "ts": "2026-10-28T11:53:11.3744040Z",
+        "build": "0.1.0+4cec622 dev",
+        "presetName": "S1-sling",
+        "effectiveHash": "7d1a61c39766",
+        "pending": 0
+      },
+      "repeatSeconds": 0,
+      "paused": false,
+      "DEVClosed": true,
+      "readinessText": "S1-sling · 7d1a61c39766 · Listo",
+      "scenarioP2H17VisuallyDisabled": true,
+      "persistedSelectionRestoredBeforeApply": "P0-calib-1",
+      "threeFilesDirectlyByteIdentical": true,
+      "sourceFilesUnchanged": 444,
+      "B0ActivatedByCodex": false,
+      "allBlocksAndGesturesBeforeHandoff": 0,
+      "capture": "Logs/evidence/s1-sl04-controls/re-prepared-S1-ready",
+      "nativeControlAudit": [
+        {
+          "ts": "2026-10-28T11:50:25.8374950Z",
+          "presetName": "P0-calib-1",
+          "effectiveHash": "e458bfd5ce9e",
+          "pending": 0,
+          "payload": {
+            "control": "dev-toggle",
+            "stage": "activation",
+            "reason": "invoked",
+            "activeLaunchHash": "e458bfd5ce9e",
+            "timeReal": 6.902905212634922,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": false
+          }
+        },
+        {
+          "ts": "2026-10-28T11:50:25.8428240Z",
+          "presetName": "P0-calib-1",
+          "effectiveHash": "e458bfd5ce9e",
+          "pending": 0,
+          "payload": {
+            "control": "dev-toggle",
+            "stage": "result",
+            "reason": "completed",
+            "activeLaunchHash": "e458bfd5ce9e",
+            "timeReal": 6.908488129634922,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:50:27.5356680Z",
+          "presetName": "P0-calib-1",
+          "effectiveHash": "e458bfd5ce9e",
+          "pending": 0,
+          "payload": {
+            "control": "dev-toggle",
+            "stage": "activation",
+            "reason": "invoked",
+            "activeLaunchHash": "e458bfd5ce9e",
+            "timeReal": 8.60116704563492,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:50:27.5439460Z",
+          "presetName": "P0-calib-1",
+          "effectiveHash": "e458bfd5ce9e",
+          "pending": 0,
+          "payload": {
+            "control": "dev-toggle",
+            "stage": "result",
+            "reason": "completed",
+            "activeLaunchHash": "e458bfd5ce9e",
+            "timeReal": 8.60961533763492,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": false
+          }
+        },
+        {
+          "ts": "2026-10-28T11:51:59.9158060Z",
+          "presetName": "P0-calib-1",
+          "effectiveHash": "e458bfd5ce9e",
+          "pending": 0,
+          "payload": {
+            "control": "dev-toggle",
+            "stage": "activation",
+            "reason": "invoked",
+            "activeLaunchHash": "e458bfd5ce9e",
+            "timeReal": 100.98204983763492,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": false
+          }
+        },
+        {
+          "ts": "2026-10-28T11:51:59.9266780Z",
+          "presetName": "P0-calib-1",
+          "effectiveHash": "e458bfd5ce9e",
+          "pending": 0,
+          "payload": {
+            "control": "dev-toggle",
+            "stage": "result",
+            "reason": "completed",
+            "activeLaunchHash": "e458bfd5ce9e",
+            "timeReal": 100.99303450463492,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:52:06.0906880Z",
+          "presetName": "P0-calib-1",
+          "effectiveHash": "e458bfd5ce9e",
+          "pending": 0,
+          "payload": {
+            "control": "dev-tab-presets-scroll",
+            "stage": "activation",
+            "reason": "invoked",
+            "activeLaunchHash": "e458bfd5ce9e",
+            "timeReal": 107.15700283763492,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:52:06.0975440Z",
+          "presetName": "P0-calib-1",
+          "effectiveHash": "e458bfd5ce9e",
+          "pending": 0,
+          "payload": {
+            "control": "dev-tab-presets-scroll",
+            "stage": "result",
+            "reason": "completed",
+            "activeLaunchHash": "e458bfd5ce9e",
+            "timeReal": 107.16404675463492,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:52:27.6445690Z",
+          "presetName": "P0-calib-1",
+          "effectiveHash": "e458bfd5ce9e",
+          "pending": 0,
+          "payload": {
+            "control": "preset-list",
+            "stage": "result",
+            "reason": "selected",
+            "activeLaunchHash": "e458bfd5ce9e",
+            "timeReal": 128.71111325463494,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:52:33.7402240Z",
+          "presetName": "P0-calib-1",
+          "effectiveHash": "e458bfd5ce9e",
+          "pending": 0,
+          "payload": {
+            "control": "preset-load",
+            "stage": "activation",
+            "reason": "invoked",
+            "activeLaunchHash": "e458bfd5ce9e",
+            "timeReal": 134.80679921263493,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:52:33.7706820Z",
+          "presetName": "S1-sling",
+          "effectiveHash": "7d1a61c39766",
+          "pending": 0,
+          "payload": {
+            "control": "preset-load",
+            "stage": "result",
+            "reason": "completed",
+            "activeLaunchHash": "e458bfd5ce9e",
+            "timeReal": 134.83748583763494,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:53:11.3705640Z",
+          "presetName": "S1-sling",
+          "effectiveHash": "7d1a61c39766",
+          "pending": 0,
+          "payload": {
+            "control": "apply-relaunch",
+            "stage": "activation",
+            "reason": "invoked",
+            "activeLaunchHash": "e458bfd5ce9e",
+            "timeReal": 172.43763471263495,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:53:11.3813480Z",
+          "presetName": "S1-sling",
+          "effectiveHash": "7d1a61c39766",
+          "pending": 0,
+          "payload": {
+            "control": "apply-relaunch",
+            "stage": "result",
+            "reason": "completed",
+            "activeLaunchHash": "7d1a61c39766",
+            "timeReal": 172.44838342063494,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:53:16.8780480Z",
+          "presetName": "S1-sling",
+          "effectiveHash": "7d1a61c39766",
+          "pending": 0,
+          "payload": {
+            "control": "dev-tab-parameters-scroll",
+            "stage": "activation",
+            "reason": "invoked",
+            "activeLaunchHash": "7d1a61c39766",
+            "timeReal": 177.94502596263496,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:53:16.8832370Z",
+          "presetName": "S1-sling",
+          "effectiveHash": "7d1a61c39766",
+          "pending": 0,
+          "payload": {
+            "control": "dev-tab-parameters-scroll",
+            "stage": "result",
+            "reason": "completed",
+            "activeLaunchHash": "7d1a61c39766",
+            "timeReal": 177.95032600463495,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:53:53.8400260Z",
+          "presetName": "S1-sling",
+          "effectiveHash": "7d1a61c39766",
+          "pending": 0,
+          "payload": {
+            "control": "dev-toggle",
+            "stage": "activation",
+            "reason": "invoked",
+            "activeLaunchHash": "7d1a61c39766",
+            "timeReal": 214.90732204563494,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": true
+          }
+        },
+        {
+          "ts": "2026-10-28T11:53:53.8482760Z",
+          "presetName": "S1-sling",
+          "effectiveHash": "7d1a61c39766",
+          "pending": 0,
+          "payload": {
+            "control": "dev-toggle",
+            "stage": "result",
+            "reason": "completed",
+            "activeLaunchHash": "7d1a61c39766",
+            "timeReal": 214.91564592063494,
+            "accepted": true,
+            "paused": false,
+            "focused": true,
+            "devOpen": false
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 # First Shot — propuesta de diseño
 
 **Estado:** **r2 (2026-10-25).** Dirección general aprobada por el PO el 2026-10-24, con las decisiones de la §9 resueltas y dos condiciones (§9.1). Incorpora la [revisión técnica de Codex](../../reviews/2026-10-24-first-shot-design-review-codex.md) (PR #16) y cinco decisiones del PO del 2026-10-25 (§11), además de la [revisión del plan](../../reviews/2026-10-25-first-shot-r2-plan-review-codex.md). **Donde la §11 difiere de las secciones anteriores, prevalece la §11.** **No autoriza implementación:** el PO revisa el plan final antes de autorizar S1.
+
+**Adenda D1 — PO, 2026-10-27:** prototipo experimental S1-sling del control §6.2 B, con primera parada de interacción **solo documental**. D1 en §4.2/C5/§11.4/M06 precisa ese control sin modificar A′ ni spec v0.3. Código únicamente después de aprobación de Claude de la interacción; esta entrega se detiene tras un commit Markdown y PR en borrador. [Decisión literal](../../reviews/2026-10-25-first-shot-po-approvals.md) y [diseño de interacción/protocolo](../../reviews/2026-10-27-first-shot-s1-sling-prototype-interaction.md).
 **Fuentes:** spec v0.3 (`2026-10-20-squash-clash-design-v0.3.md`, incluidas D30–D35), decisiones del PO del 2026-10-24 sobre First Shot y la base de código cerrada en First Ball (main `a8da9c4`).
 **Regla de lectura:** donde esta propuesta difiere de la spec, se indica en la §8 y **no rige hasta que el PO lo apruebe**. Nada de lo anterior se modifica en silencio.
 
@@ -73,6 +75,16 @@ Hipótesis inicial aprobada por el PO: **arrastrar para apuntar y potencia por v
 - Objetivo de control: poder ejecutar a voluntad un drop suave y un drive fuerte. Se valida con la métrica de potencia involuntaria de §6.3.
 
 **Máquina de estados** (spec §6.5, reglas 1–8): un solo dedo; toque frente a arrastre (< 3 mm en < 250 ms); un intento por pelota; cancelación volviendo a un círculo de ~6 mm del origen; pérdida de foco cancela sin consumir el intento; bordes del sistema diferidos. Las reglas pendientes N1 y N2 se piden al PO en la §9.
+
+#### Adenda D1: control §6.2 B / S1-sling (2026-10-27)
+
+A′ permanece por defecto y conserva sus reglas anteriores (Flick, N1 por regreso al origen y potencia por velocidad, incluida su regla de riesgo150 ms/P<0,60). El prototipo permite otro control seleccionado por gesture.control capturado al apoyar, **sin sustituir A′**.
+
+S1-sling apunta libremente, fija una vez al acreditar quietud inicial 120 ms (rango permitido 120–150, tolerancias iniciales15 mm/s/radio1 mm, huecos≤51 ms y mínimo 3 muestras reales; guardia de arrastre previo≥3 mm), confirma visualmente con destello120 ms y mantiene la mira inmóvil. La potencia se calcula solo tras fijar desde el nuevo origen, por proyección descendente y distancia actual: zona muerta2 mm, tope inicial 35 mm (rango 30–40), curva lineal saturada; lateral no carga y volver arriba reduce. Todos estos valores son [EXPERIMENTO]. No completar quietud por silencio ni posiciones repetidas por frame.
+
+La cancelación del prototipo es **por zona explícita al soltar**, no NB0/NB1/NB2 ni el círculo N1 de A′. Antes de fijar, Ended de un arrastre abandona sin consumo; Tap sigue N2. Tras fijar, Ended dentro de la zona cancela sin consumir y fuera registra Swing/P candidata; pasar por ella y salir no cancela. Franja neutra sobre fijación=P0. La propuesta superior12 mm/lateral 20 mm con tamaño mínimo 8 mm y su visualización están **sometidas a revisión de Claude en la primera parada**, no decisiones previas adicionales del PO. No se implementa una geometría antes de esa revisión.
+
+G1 visual y medición de fijaciones involuntarias sustituyen decidir ahora G2/G3: una pausa al apuntar bajo puede fijar antes de tiempo y el descenso posterior cargar potencia. RB6 se registra y mide; no se esconde ni se promete resuelto. No hay háptica, sonido ni contacto real con la pelota en el prototipo.
 
 ### 4.3 Timing y contrato de contacto
 
@@ -191,7 +203,7 @@ Del PO, sin convertirlos en umbrales definitivos hasta validarlos:
 | **C2** | Desde First Shot, solo efectos **no direccionales** (§7.6.3); el timing actúa solo por la geometría (D26, §17.A.12). | El resultado Válido penaliza **altura, velocidad y soltura**, no la dirección lateral. «Precisión» se interpreta como precisión de altura y profundidad. | El PO pidió «penalización progresiva de precisión y calidad». El desvío lateral exige validar las filas E1/E2. |
 | **C3** | `v_min(intención)` (§7.4.1): la velocidad mínima depende de la intención pedida. | Con A′ no se elige la intención antes de soltar: un único `v_min/v_max`, y la intención se **etiqueta después** a partir de la mira y la potencia. | Con A′ la intención surge del gesto; no hay selector. |
 | **C4** | «El ajuste se ve **antes** de soltar» (§7.4.5). | Con A′ la potencia solo se conoce al soltar: el ajuste del solver se muestra **justo después** de soltar (la mira se desplaza al punto factible) y se registra. | Imposible mostrarlo antes con potencia por flick. |
-| **C5** | Experimento de controles con A′, B y C en bloques alternados (§6.3); H2 compara las tres. | Solo A′; B y C se añaden únicamente si A′ falla. H2 se evalúa sobre A′. | Decisión del PO del 2026-10-24. |
+| **C5** | Experimento de controles con A′, B y C en bloques alternados (§6.3); H2 compara las tres. | Decisión inicial 24: solo A′. **D1 del 27:** el PO juzga que A′ falla en su forma actual y autoriza un prototipo S1-sling del control §6.2 B, con A′ conservado por defecto/referencia. Primera parada documental de interacción; código condicionado a aprobación de Claude. Sesión exploratoria B0–B5, sin ejecutar H2 ni iniciar S2–S4. | Juicio del PO y autorización experimental; no Fail medido de calibración ni aceptación de S1. |
 | **C6** | H3 mide la mejora **entre sesiones**. | Se añade la observación **dentro de la sesión** (10–15 intentos), sin umbral. | Criterio del PO. |
 
 ## 9. Decisiones del PO (2026-10-24)
@@ -208,6 +220,8 @@ Del PO, sin convertirlos en umbrales definitivos hasta validarlos:
 | C5 | A′ confirmado como único control inicial; B y C, alternativas si la experiencia no funciona. |
 | C6 | Confirmada la evaluación del aprendizaje durante los primeros 10–15 intentos. |
 | §7 | Aceptadas todas las decisiones de Claude, incluidos el cuerpo fijo por lanzamiento, los sonidos provisionales, los seis lanzamientos de práctica y las reglas completas de línea diferidas a First Rally. |
+
+**Adenda D1 a C5, PO 2026-10-27 (no sustituye el registro histórico del 24):** «Vamos con la opción 1» se concreta en el control §6.2 B/S1-sling. A′ sigue como referencia y por defecto; M1/M2/M3 y control C continúan descartados por ahora. El PO formaliza quietud120–150 ms con tolerancia, recorrido 30–40 mm inicial 35, cancelación por zona explícita y G1 con medición de fijaciones involuntarias/RB6, en lugar de resolver G2/G3. Protocolo B0–B5 exploratorio con métricas descriptivas, sin umbrales de aceptación. Interacción se entrega primero en un solo commit Markdown/PR borrador y se detiene para Claude; los pasos siguientes están condicionados como dice el registro literal. S1 sin aceptar.
 
 ### 9.1 Condiciones del PO
 
@@ -269,6 +283,8 @@ Claude evaluó los 17 hallazgos de la [revisión](../../reviews/2026-10-24-first
 
 ### 11.4 Gesto, muestras y potencia (A05, A06, A08, M07)
 
+**Ámbito D1 (2026-10-27):** fuente única de muestras y escala congelada son comunes. Las reglas de velocidad/Flick y cancelación por salir/volver de las viñetas históricas siguientes siguen aplicando a **A′**. El control §6.2 B del prototipo usa la adenda específica al final de esta subsección; no hereda esas reglas como una segunda condición de cancelación.
+
 - **Fuente única de muestras** táctiles inmutables (dedo, fase, posición, timestamp, secuencia) del flujo de eventos del Input System. No se mezclan Touchscreen, acciones y EnhancedTouch, ni se repite la última posición por frame como si fuera una muestra nueva.
 - **S1 mide en el iPhone** la frecuencia táctil efectiva, los huecos, las muestras por frame y la antigüedad al procesar. No se asume 120 Hz. Si faltan muestras, se evalúa después un puente de coalescencia, no de forma preventiva.
 - **mm físicos:** `mm = Δpx · 25,4 / DPI`, solo tras verificar que posición y DPI usan la misma escala. S1 coteja con un desplazamiento físico conocido (regla). Si DPI = 0 o es inválido, se usa una calibración declarada y se marca. El factor se congela durante el gesto.
@@ -277,6 +293,12 @@ Claude evaluó los 17 hallazgos de la [revisión](../../reviews/2026-10-24-first
 - **Congelamiento:** un único congelamiento por gesto, con histéresis sobre `v_flick`, usando la historia anterior al cruce (r_cruce − 50 ms). Sin historia suficiente, se usa el primer punto válido y se registra.
 - **Máquina de gesto:** candidato a toque → arrastre reconocido → cancelación armada (salió del círculo) → regreso, además de la cancelación por el sistema. Prioridad: UI, pausa, foco o Cancelled del SO → intento ya consumido → propósito fijado al apoyar → N2 → N1 → swing. Primer dedo y lanzamiento fijados al apoyar; un segundo dedo no se promueve. Abrir el panel o un toque que empezó sobre UI cancela sin Ended ficticio. Exclusión de bordes con `Screen.safeArea` y `deferSystemGesturesMode` en tiempo de ejecución.
 - **Dos marcas tras soltar (aclaración de C4):** la mira de **intención** queda fija donde se soltó y, si el solver ajusta el objetivo, aparece una marca de **objetivo factible** unida a ella, con la indicación clara aprobada por el PO.
+
+**Adenda D1 de §11.4 para S1-sling:** se mantiene la fuente TouchSample y una sola captura. Solo muestras reales acreditan quietud y fijación, con guardia previa de arrastre; potencia cero antes de fijar, incluido apuntado descendente. La mira confirmada queda fija y el nuevo origen de distancia no es el Began. Después se usa distancia descendente actual, lateral sin potencia, retorno arriba que reduce y zona explícita de cancelación revisada en el paso 1. No se exige salir/volver a un círculo para cancelar este control.
+
+Prioridad en S1-sling: sistema/UI/pausa/foco/Cancelled → intento ya consumido → primer dedo/lanzamiento/control/configuración capturados → N2/Tap → abandono si aún no fijó → Cancelado por zona si Ended dentro → Swing. Entrada/salida de zona por sí solas no consumen ni ejecutan nada. Antes de fijar no se inventa r de swing; tras fijar, r es Ended original, no la fijación ni el frame. Pausa/foco/DEV/lanzamiento invalidan todo sin Ended ficticio. Ended idéntico dt=0 cierra una vez sin anular potencia fiable del **nuevo control**; contradictorios/no monótonos siguen conservadores. No cambiar la ruta A′ para resolverlo.
+
+Registrar control/transiciones, objetivo/fijación, distancias/P/outcome, borde y hash por gesto/bloque. G1 no demuestra intención: RB6 y fijaciones involuntarias se describen con datos y juicio literal del PO. Objetivos mínimos/configurables del protocolo solo en DEV, sin afectar prod; criterios de trazabilidad/funcionamiento del prototipo no son nuevos umbrales de aceptación física.
 
 ### 11.5 Solver de velocidad total (A07)
 
@@ -293,6 +315,16 @@ Claude evaluó los 17 hallazgos de la [revisión](../../reviews/2026-10-24-first
 - **Háptica (M02):** puente mínimo en `Plugins/iOS` con `UIImpactFeedbackGenerator.impactOccurred(intensity:)` y `prepare()` al armarse el gesto, en el hilo principal; no-op en editor. Presente en prod. **Interruptor de háptica en runtime**, como recomienda Apple, conservando la alternativa visual. Core Haptics solo si se demuestra necesario.
 - **Audio (M03):** clips cortos precargados; Default frente a Best Latency se compara con datos y H17 antes de elegir. Se registran el buffer DSP y la ruta (altavoz, sin Bluetooth en la calibración). «En el frame del contacto» significa envío lógico más latencia registrada.
 - **Configuración (M06):** las claves de golpe, cuerpo, ventanas y calibración se capturan por recepción; la mira y la potencia se congelan al soltar; el rollback nunca lee valores cambiados del panel. El consumo runtime no depende de tipos del DevPanel.
+
+
 - **Audio con procedencia (B01):** autor, fuente y licencia de cada clip, o el método de generación (no se etiqueta como CC0 un sonido generado). Las referencias a clips son configurables; sustituir assets exige una build nueva.
 
+**Adenda D1 a M06:** en S1-sling, selector/configuración se capturan al apoyar; la mira se fija antes de soltar por quietud confirmada y no vuelve a seguir el dedo. En Ended se capturan mira y potencia finales inmutables para el intento; no se mueve de nuevo la mira ni se consulta el panel para reinterpretar el gesto. Una cancelación no inventa liberación ni contacto. A′ conserva su captura/comportamiento, incluida la fijación por Flick. No hay integración con contacto/rollback de S2 en este prototipo.
+
 Pendientes heredados que siguen abiertos: comprobar P0-calib-1 en la próxima apertura, renovar el perfil antes de instalar desde el 27, la nota de corrección «sin frames perdidos» en dos documentos de I7a y las observaciones de Claude sobre el DevPanel.
+
+## Adenda D2 del PO — experimento S1-sling, 2026-10-27
+
+Se conserva íntegramente el texto aprobado anterior. Solo para S1-sling iteración2, esta decisión sustituye la exigencia D1 de muestras nuevas durante toda la quietud: con contacto activo y sin Ended/Canceled, Tick usa reloj real para fijar al cumplir120ms sobre la última posición válida, conservando radio1mm/velocidad15mm/s/arrastre≥3mm/área útil/mínimo3 muestras reales por candidato. El hueco51ms deja de reiniciar; no se fabrican muestras. Registrar origen sample/timer, instante teórico, frame observado y muestra real usada. Antes de fijar, movimiento fuera de tolerancia reinicia; foco/pausa/DEV invalidan. A′ permanece intacto.
+
+La misma autorización añade límite local de cancelación visible/dirección/estado fuera del frontis, con12/20/8mm intactos; cancelación guiada enB0; temporizador visible y fin/interrupción explícitos. [D2, replay diagnóstico previo y entrega](../../reviews/2026-10-27-first-shot-s1-sling-iteration-2.md). Sin cambio de specv0.3, bandas/criterios/defaults, ni contacto de pelota. Instalación requiere renovar perfil y verificar el incorporado. Nueva sesión separada, B0 completo con identificación antes de B1–B5; S1 sin aceptar y S2–S4/T8 sin autorizar.

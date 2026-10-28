@@ -22,7 +22,7 @@ namespace SquashClash.DevPanel
             errorLabel.style.whiteSpace=WhiteSpace.Normal;Root.Add(errorLabel);
             foreach(var group in ParamCatalog.All.GroupBy(d=>d.Group))
             {
-                var fold=new Foldout {text=GroupLabel(group.Key),value=false};fold.style.flexShrink=0;Root.Add(fold);
+                var fold=new Foldout {name="params-"+group.Key,text=GroupLabel(group.Key),value=false};fold.RegisterValueChangedCallback(e=>{if(e.target==fold)app.RecordDevControl(fold.name,true,e.newValue?"expanded":"collapsed");});fold.style.flexShrink=0;Root.Add(fold);
                 foreach(var def in group)
                 {
                     var row=new VisualElement();row.style.flexShrink=0;row.style.minWidth=0;row.style.marginBottom=8;fold.Add(row);
@@ -62,8 +62,9 @@ namespace SquashClash.DevPanel
         private void Edit(string key,double value){TrySet(key,value,out _);Refresh();changed?.Invoke();}
         public bool TrySet(string key,double value,out string error)
         {
-            try {app.Tuning.Set(key,value);error=null;errorLabel.text="";return true;}
-            catch(ArgumentException e){error=e.Message;errorLabel.text="Valor inválido: "+error;return false;}
+            app.RecordDevControl(key,true,"invoked","activation");
+            try {app.Tuning.Set(key,value);error=null;errorLabel.text="";app.RecordDevControl(key,true,"completed");return true;}
+            catch(ArgumentException e){error=e.Message;errorLabel.text="Valor inválido: "+error;app.RecordDevControl(key,false,"invalid-value");return false;}
         }
         public void Refresh()
         {

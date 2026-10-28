@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "kind": "DIRECT_LITERAL_PO_FINAL_ANSWERS_NOT_MEASUREMENTS",
+  "dateLocal": "2026-10-28",
+  "build": "0.1.0+4cec622 dev",
+  "presetHashDuringBlocks": "7d1a61c39766",
+  "answers": [
+    {
+      "number": 1,
+      "question": "¿Puedo colocar la mira donde quiero?",
+      "answer": "A veces si, otras veces no"
+    },
+    {
+      "number": 2,
+      "question": "¿Puedo apuntar bajo sin activar accidentalmente la potencia?",
+      "answer": "A veces si otras veces no"
+    },
+    {
+      "number": 3,
+      "question": "¿La mira permanece estable después de fijarse?",
+      "answer": "si"
+    },
+    {
+      "number": 4,
+      "question": "¿Cuántas fijaciones involuntarias ocurren?",
+      "answer": "yo creo que un 30 - 40%"
+    },
+    {
+      "number": 5,
+      "question": "¿Cuánto tiempo necesito para fijar la mira?",
+      "answer": "poco tiempo"
+    },
+    {
+      "number": 6,
+      "question": "¿Entiendo claramente cuándo quedó fijada?",
+      "answer": "si"
+    },
+    {
+      "number": 7,
+      "question": "¿Puedo conseguir golpes suaves, medios y fuertes voluntariamente?",
+      "answer": "si"
+    },
+    {
+      "number": 8,
+      "question": "¿La potencia responde de forma consistente a la distancia?",
+      "answer": "si"
+    },
+    {
+      "number": 9,
+      "question": "¿Puedo alcanzar la potencia máxima cómodamente?",
+      "answer": "si"
+    },
+    {
+      "number": 10,
+      "question": "¿Existen limitaciones por el borde inferior de la pantalla?",
+      "answer": "no"
+    },
+    {
+      "number": 11,
+      "question": "¿Puedo cancelar cuando realmente quiero?",
+      "answer": "si"
+    },
+    {
+      "number": 12,
+      "question": "¿Ocurren cancelaciones accidentales?",
+      "answer": "no"
+    },
+    {
+      "number": 13,
+      "question": "¿La zona interfiere con los movimientos normales?",
+      "answer": "si"
+    },
+    {
+      "number": 14,
+      "question": "¿Cuánto demora el gesto completo, desde apoyar el dedo hasta soltar?",
+      "answer": "1 segundo creo maximo"
+    },
+    {
+      "number": 15,
+      "question": "¿Se siente natural o demasiado mecánico?",
+      "answer": "igual es mecanico, me gustaría algo que fuera natural"
+    },
+    {
+      "number": 16,
+      "question": "¿Podría utilizarlo repetidamente durante un rally rápido?",
+      "answer": "si, pero se vería como pausado"
+    }
+  ],
+  "interpretation": "All16 literal answers retained separately. 30-40% and ~1second are subjective estimates, not measured rates or revised thresholds. Do not infer S1 acceptance, causal attribution, or reclassify raw per-attempt feedback.",
+  "S1Accepted": false,
+  "PRMerged": false
+}

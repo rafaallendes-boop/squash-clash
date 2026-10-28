@@ -59,7 +59,7 @@ namespace SquashClash.Core.Tests.Shot
             Assert.That(candidate.Get("power.fullMmPerS"),Is.EqualTo(300));Assert.That(candidate.Get("power.peakDecayMs"),Is.EqualTo(60));
             Assert.That(candidate.Get("power.peakSmoothingMs"),Is.EqualTo(20));Assert.That(candidate.Get("power.method"),Is.EqualTo(1));
             Assert.That(candidate.Get("aim.freezeOnRelease"),Is.EqualTo(1));Assert.That(candidate.Get("launcher.repeatSeconds"),Is.Zero);
-            Assert.That(candidate.Hash,Is.EqualTo("08b6fe90889b"));Assert.That(defaults.Hash,Is.EqualTo("6095c0b38614"));
+            Assert.That(ConfigFixtures.PreSlingHash(candidate),Is.EqualTo("08b6fe90889b"));Assert.That(ConfigFixtures.PreSlingHash(defaults),Is.EqualTo("6095c0b38614"));
         }
     }
 }
