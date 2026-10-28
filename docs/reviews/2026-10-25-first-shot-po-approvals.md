@@ -882,3 +882,8 @@ Autoriza sesión izquierda/un pulgar/sin ayuda, un bloque B0→B5 cada vez y pre
 ### Avance técnico M2-4 para revisión, no aceptación
 
 Fuenteae1b423, TDD por etapas en informe, regresión fresca441/441EditMode y207/207PlayMode sinCS. Selector2, presetS1-M2-4/hash1c8e598b099b separado, defaults45c4e9af5c8f/85claves inalterados, heredados41/SimulationKey intactos. Respaldo nuevo3archivos cotejado. Release/build/perfil efectivo/instalación/sesión/restauración aún pendientes; no hay resultado físico ni aceptaciónS1. N04/N04b siguen riesgos abiertos.
+
+
+### Instalación y preparación ejecutadas, B0 pendiente del PO
+
+Build0f8002d dev Release ARM64/no Development; checks dev/prod limpios, perfil incorporado hasta2026-11-03T18:29:44Z/firma verificados antes de instalar.3archivos cotejados tras instalación. ArranqueP0/e458bfd5ce9e/cero pendientes observado; S1-M2-4/1c8e598b099b cargado temporal, last-active repuesto/leídoP0 antes de aplicar y relanzar23:31:48.353735Z;repeat0/cero pendientes/Jugando/DEVcerrado/Listo/protección experimentos y cotejo3archivos verificados. Instrucción soloB0 con confirmación de cuenta atrás antes de primer gesto, izquierda/unpulgar120s y cancelación guiada C-A, noB1; resultado/comprensión pendientes, no inferidos. Restauración final pendiente al cerrar. Sin nuevos cambios de producto, parámetros ni umbrales. No aceptaciónS1.

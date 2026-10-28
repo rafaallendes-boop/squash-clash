@@ -59,7 +59,36 @@
     "Po-1.json": true,
     "last-active.txt": true
   },
-  "startupVerified": false,
-  "startupPendingReason": "initial launch refused while device locked; awaiting mirror reauthentication",
-  "newPhysicalSessionStarted": false
+  "startupVerified": true,
+  "startupPendingReason": null,
+  "newPhysicalSessionStarted": false,
+  "initialLaunchRejectedWhileLocked": true,
+  "p0Startup": {
+    "ts": "2026-10-28T23:26:11.4593130Z",
+    "kind": "launch",
+    "phase": "free",
+    "build": "0.1.0+0f8002d dev",
+    "presetName": "P0-calib-1",
+    "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "effectiveHash": "e458bfd5ce9e",
+    "payload": "{}",
+    "pending": 0,
+    "seed": 0,
+    "metricsValid": true,
+    "droppedSinceRestart": 0
+  },
+  "preparation": {
+    "presetName": "S1-M2-4",
+    "effectiveHash": "1c8e598b099b",
+    "launchUtc": "2026-10-28T23:31:48.3537350Z",
+    "pending": 0,
+    "paused": false,
+    "repeatSeconds": 0,
+    "devClosed": true,
+    "scenarioP2H17VisiblyDisabled": true,
+    "lastActiveRestoredAndReadBackBeforeApply": true,
+    "threeFilesByteIdentical": true,
+    "noM24GestureOrProtocolBlocksBeforeHandoff": true,
+    "B0PressedByPO": false
+  }
 }
