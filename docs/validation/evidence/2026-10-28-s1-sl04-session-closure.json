@@ -1,0 +1,5761 @@
+{
+  "schema": 1,
+  "kind": "SESSION_INVENTORY_AND_VERIFIED_FINAL_RESTORATION",
+  "build": "0.1.0+4cec622 dev",
+  "sourceCaptureSha256": "b9e278f4bfac4ca89534f2fed5a3804601035cc6e9e1e60b65775b234eef215b",
+  "summary": {
+    "totalNativeAttempts": 111,
+    "rawSamples": 10754,
+    "B0Practice": 31,
+    "originalFormalAttempts": 65,
+    "additionalB1RepeatAttempts": 10,
+    "outsideBlockPreviewAttempts": 5,
+    "formalIncludingAdditionalRepeat": 75,
+    "outcomesAll111": {
+      "Swing": 88,
+      "ZoneCanceled": 11,
+      "AbandonedBeforeFix": 12
+    },
+    "outcomesFormal75": {
+      "Swing": 62,
+      "AbandonedBeforeFix": 7,
+      "ZoneCanceled": 6
+    },
+    "previewRawSamples": 409,
+    "O1AffectedAttempts": [
+      [
+        "B0",
+        1,
+        22
+      ],
+      [
+        "B0",
+        1,
+        23
+      ],
+      [
+        "B1",
+        3,
+        6
+      ],
+      [
+        "B2-medium",
+        5,
+        8
+      ],
+      [
+        "B5",
+        9,
+        7
+      ]
+    ],
+    "O1SupportedEligibleGeometryAttempts": [],
+    "O2Samples": 11,
+    "O2TimerSamples": 8,
+    "O2SampleOriginSamples": 3,
+    "O2MaxDisplacementMm": 0.17460525548555278
+  },
+  "interpretation": "No new gesture measurements or alternative replay after completed blocks. Preview attempts preserved separately; never substitute formal attempts. All111 gestures have original raw evidence across linked files and previewRecords. All audits use original real samples/settings.",
+  "rawEvidenceFiles": [
+    "2026-10-28-s1-sl04-B0.json",
+    "2026-10-28-s1-sl04-B1.json",
+    "2026-10-28-s1-sl04-B2.json",
+    "2026-10-28-s1-sl04-B3-B4-B5.json"
+  ],
+  "previewRecords": [
+    {
+      "ts": "2026-10-28T14:22:55.6278010Z",
+      "kind": "s1-sling-gesture",
+      "phase": "free",
+      "build": "0.1.0+4cec622 dev",
+      "presetName": "S1-sling",
+      "presetFileHash": "cd008ad646a4f7c206cce6eea3cb36331667cf94be21aba37284edfcc8efb298",
+      "effectiveHash": "7d1a61c39766",
+      "payload": {
+        "schema": 2,
+        "quietPolicy": "active-contact-timer-D2",
+        "s1PreviewOnly": true,
+        "control": "S1-sling",
+        "attemptId": "2efa8192213f4ccd9260550a0ed37ad2",
+        "block": "preview",
+        "session": 6,
+        "trial": 0,
+        "launchSerial": 16,
+        "comparableToArmedBlock": false,
+        "requestedPower": "unspecified",
+        "targetId": 0,
+        "targetX": null,
+        "targetY": null,
+        "targetErrorMeters": null,
+        "outcome": "AbandonedBeforeFix",
+        "phase": "Aiming",
+        "reason": "aiming",
+        "conservative": false,
+        "aimX": 1.1194088459014893,
+        "aimY": 2.1138601303100586,
+        "aimInvalid": false,
+        "beganTimeReal": 9156.436525165593,
+        "lockTimeReal": null,
+        "lockOrigin": "none",
+        "lockTheoreticalTimeReal": null,
+        "lockObservedTimeReal": null,
+        "lockSampleTimeReal": null,
+        "lastOutsideTimeReal": 9156.999160123913,
+        "releaseTimeReal": 9156.999160123913,
+        "beganToLockMs": null,
+        "lastOutsideToLockMs": null,
+        "durationMs": 562.6349583199044,
+        "lockXPx": null,
+        "lockYPx": null,
+        "cancelRegion": "None",
+        "lockBlocked": true,
+        "distanceMm": 0,
+        "maxDistanceMm": 0,
+        "lateralMm": 0,
+        "minimumBottomMarginMm": null,
+        "power": 0,
+        "band": "soft",
+        "reportedDpi": 460,
+        "dpiSource": "Reported",
+        "mmPerPx": 0.05521738901734352,
+        "physicallyVerified": false,
+        "widthPx": 1206,
+        "heightPx": 2622,
+        "areaPx": [
+          0,
+          690.9841918945312,
+          1206,
+          2436
+        ],
+        "gestureConfigHash": "7d1a61c39766",
+        "gestureParameters": {
+          "aim.flickConfirmSamples": 2,
+          "aim.flickHysteresisMmPerS": 40,
+          "aim.flickMmPerS": 250,
+          "aim.freezeLookbackMs": 50,
+          "aim.freezeOnRelease": 0,
+          "aim.gainMPerMm": 0.12,
+          "aim.holdMaxGapMs": 51,
+          "aim.holdMaxSpeedMmPerS": 15,
+          "aim.holdMinSamples": 3,
+          "aim.holdMs": 120,
+          "aim.holdRadiusMm": 1,
+          "aim.lockFlashMs": 120,
+          "aim.startHeight": 2.2,
+          "gesture.cancelRadiusMm": 6,
+          "gesture.control": 1,
+          "gesture.slingCancelAboveMm": 12,
+          "gesture.slingCancelLateralMm": 20,
+          "gesture.slingCancelMinDepthMm": 8,
+          "gesture.slingPreferLeft": 1,
+          "gesture.slingTarget1X": 0.25,
+          "gesture.slingTarget1Y": 0.15,
+          "gesture.slingTarget2X": 0.75,
+          "gesture.slingTarget2Y": 0.15,
+          "gesture.slingTarget3X": 0.5,
+          "gesture.slingTarget3Y": 0.5,
+          "gesture.slingTarget4X": 0.25,
+          "gesture.slingTarget4Y": 0.8,
+          "gesture.slingTarget5X": 0.75,
+          "gesture.slingTarget5Y": 0.8,
+          "gesture.tapMaxMm": 3,
+          "gesture.tapMaxMs": 250,
+          "input.fallbackDpi": 460,
+          "power.curveExponent": 1,
+          "power.deadZoneMmPerS": 100,
+          "power.fullMmPerS": 1500,
+          "power.maxGapMs": 34,
+          "power.method": 0,
+          "power.minCoverageMs": 30,
+          "power.minSamples": 4,
+          "power.peakDecayMs": 120,
+          "power.peakSmoothingMs": 20,
+          "power.pullDeadZoneMm": 2,
+          "power.pullFullMm": 35,
+          "power.windowMs": 80
+        },
+        "transitions": [
+          {
+            "kind": "Began",
+            "timeReal": 9156.436525165593
+          },
+          {
+            "kind": "Ended",
+            "timeReal": 9156.999160123913
+          }
+        ],
+        "rawSamples": [
+          {
+            "sequence": 9763,
+            "id": 274,
+            "phase": "Began",
+            "timeReal": 9156.436525165593,
+            "receivedReal": 9156.470653712635,
+            "xPx": 354,
+            "yPx": 641
+          },
+          {
+            "sequence": 9764,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.478213124416,
+            "receivedReal": 9156.491324379636,
+            "xPx": 396,
+            "yPx": 627
+          },
+          {
+            "sequence": 9765,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.482379082823,
+            "receivedReal": 9156.508437545635,
+            "xPx": 404.0000305175781,
+            "yPx": 627
+          },
+          {
+            "sequence": 9766,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.494869207252,
+            "receivedReal": 9156.509481587636,
+            "xPx": 429,
+            "yPx": 627
+          },
+          {
+            "sequence": 9767,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.511539166433,
+            "receivedReal": 9156.524707462635,
+            "xPx": 463,
+            "yPx": 627
+          },
+          {
+            "sequence": 9768,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.528220041155,
+            "receivedReal": 9156.541683962636,
+            "xPx": 508,
+            "yPx": 627
+          },
+          {
+            "sequence": 9769,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.544878166347,
+            "receivedReal": 9156.558245337636,
+            "xPx": 558,
+            "yPx": 627
+          },
+          {
+            "sequence": 9770,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.561548040478,
+            "receivedReal": 9156.574648170636,
+            "xPx": 600,
+            "yPx": 627
+          },
+          {
+            "sequence": 9771,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.578229124418,
+            "receivedReal": 9156.591477295635,
+            "xPx": 631,
+            "yPx": 627
+          },
+          {
+            "sequence": 9772,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.594899624455,
+            "receivedReal": 9156.608107712636,
+            "xPx": 650.0000610351562,
+            "yPx": 630.9999389648438
+          },
+          {
+            "sequence": 9773,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.61155758261,
+            "receivedReal": 9156.624622754636,
+            "xPx": 660.9999389648438,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 9774,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.628226166302,
+            "receivedReal": 9156.641266379636,
+            "xPx": 666,
+            "yPx": 636.0000610351562
+          },
+          {
+            "sequence": 9775,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.644907124208,
+            "receivedReal": 9156.658130879636,
+            "xPx": 669,
+            "yPx": 636.0000610351562
+          },
+          {
+            "sequence": 9776,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.661576249564,
+            "receivedReal": 9156.674867587635,
+            "xPx": 673,
+            "yPx": 636.0000610351562
+          },
+          {
+            "sequence": 9777,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.678246416663,
+            "receivedReal": 9156.691181545635,
+            "xPx": 675,
+            "yPx": 636.0000610351562
+          },
+          {
+            "sequence": 9778,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.828271124881,
+            "receivedReal": 9156.841732379635,
+            "xPx": 675,
+            "yPx": 635
+          },
+          {
+            "sequence": 9779,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.844941291156,
+            "receivedReal": 9156.858122962636,
+            "xPx": 675,
+            "yPx": 633.0000610351562
+          },
+          {
+            "sequence": 9780,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.878268623823,
+            "receivedReal": 9156.891325837636,
+            "xPx": 675,
+            "yPx": 632.0001220703125
+          },
+          {
+            "sequence": 9781,
+            "id": 274,
+            "phase": "Moved",
+            "timeReal": 9156.990831040566,
+            "receivedReal": 9157.008241462636,
+            "xPx": 674.0000610351562,
+            "yPx": 632.0001220703125
+          },
+          {
+            "sequence": 9782,
+            "id": 274,
+            "phase": "Ended",
+            "timeReal": 9156.999160123913,
+            "receivedReal": 9157.024889129636,
+            "xPx": 668,
+            "yPx": 627.9998779296875
+          }
+        ]
+      },
+      "pending": 0,
+      "seed": 0,
+      "metricsValid": false,
+      "droppedSinceRestart": 0
+    },
+    {
+      "ts": "2026-10-28T15:11:57.9949360Z",
+      "kind": "s1-sling-gesture",
+      "phase": "free",
+      "build": "0.1.0+4cec622 dev",
+      "presetName": "S1-sling",
+      "presetFileHash": "cd008ad646a4f7c206cce6eea3cb36331667cf94be21aba37284edfcc8efb298",
+      "effectiveHash": "7d1a61c39766",
+      "payload": {
+        "schema": 2,
+        "quietPolicy": "active-contact-timer-D2",
+        "s1PreviewOnly": true,
+        "control": "S1-sling",
+        "attemptId": "bd9398fee4bb40b7b8556f96c4e6eac2",
+        "block": "preview",
+        "session": 9,
+        "trial": 0,
+        "launchSerial": 16,
+        "comparableToArmedBlock": false,
+        "requestedPower": "unspecified",
+        "targetId": 0,
+        "targetX": null,
+        "targetY": null,
+        "targetErrorMeters": null,
+        "outcome": "Swing",
+        "phase": "Pulling",
+        "reason": "distance",
+        "conservative": false,
+        "aimX": 1.37782621383667,
+        "aimY": 3.6444883346557617,
+        "aimInvalid": false,
+        "beganTimeReal": 12096.94844404087,
+        "lockTimeReal": 12098.182338212635,
+        "lockOrigin": "timer",
+        "lockTheoreticalTimeReal": 12098.172775083061,
+        "lockObservedTimeReal": 12098.182338212635,
+        "lockSampleTimeReal": 12098.131949124167,
+        "lastOutsideTimeReal": 12098.05277508306,
+        "releaseTimeReal": 12099.319597124824,
+        "beganToLockMs": 1233.8941717644047,
+        "lastOutsideToLockMs": 129.56312957430782,
+        "durationMs": 2371.1530839536863,
+        "lockXPx": 861,
+        "lockYPx": 863.0001220703125,
+        "cancelRegion": "Above",
+        "lockBlocked": false,
+        "distanceMm": 19.546955108642578,
+        "maxDistanceMm": 19.767839431762695,
+        "lateralMm": -5.135217189788818,
+        "minimumBottomMarginMm": -10.26956844329834,
+        "power": 0.5317258834838867,
+        "band": "medium",
+        "reportedDpi": 460,
+        "dpiSource": "Reported",
+        "mmPerPx": 0.05521738901734352,
+        "physicallyVerified": false,
+        "widthPx": 1206,
+        "heightPx": 2622,
+        "areaPx": [
+          0,
+          690.9841918945312,
+          1206,
+          2436
+        ],
+        "gestureConfigHash": "7d1a61c39766",
+        "gestureParameters": {
+          "aim.flickConfirmSamples": 2,
+          "aim.flickHysteresisMmPerS": 40,
+          "aim.flickMmPerS": 250,
+          "aim.freezeLookbackMs": 50,
+          "aim.freezeOnRelease": 0,
+          "aim.gainMPerMm": 0.12,
+          "aim.holdMaxGapMs": 51,
+          "aim.holdMaxSpeedMmPerS": 15,
+          "aim.holdMinSamples": 3,
+          "aim.holdMs": 120,
+          "aim.holdRadiusMm": 1,
+          "aim.lockFlashMs": 120,
+          "aim.startHeight": 2.2,
+          "gesture.cancelRadiusMm": 6,
+          "gesture.control": 1,
+          "gesture.slingCancelAboveMm": 12,
+          "gesture.slingCancelLateralMm": 20,
+          "gesture.slingCancelMinDepthMm": 8,
+          "gesture.slingPreferLeft": 1,
+          "gesture.slingTarget1X": 0.25,
+          "gesture.slingTarget1Y": 0.15,
+          "gesture.slingTarget2X": 0.75,
+          "gesture.slingTarget2Y": 0.15,
+          "gesture.slingTarget3X": 0.5,
+          "gesture.slingTarget3Y": 0.5,
+          "gesture.slingTarget4X": 0.25,
+          "gesture.slingTarget4Y": 0.8,
+          "gesture.slingTarget5X": 0.75,
+          "gesture.slingTarget5Y": 0.8,
+          "gesture.tapMaxMm": 3,
+          "gesture.tapMaxMs": 250,
+          "input.fallbackDpi": 460,
+          "power.curveExponent": 1,
+          "power.deadZoneMmPerS": 100,
+          "power.fullMmPerS": 1500,
+          "power.maxGapMs": 34,
+          "power.method": 0,
+          "power.minCoverageMs": 30,
+          "power.minSamples": 4,
+          "power.peakDecayMs": 120,
+          "power.peakSmoothingMs": 20,
+          "power.pullDeadZoneMm": 2,
+          "power.pullFullMm": 35,
+          "power.windowMs": 80
+        },
+        "transitions": [
+          {
+            "kind": "Began",
+            "timeReal": 12096.94844404087
+          },
+          {
+            "kind": "Locked",
+            "timeReal": 12098.182338212635,
+            "origin": "timer",
+            "theoreticalTimeReal": 12098.172775083061,
+            "observedTimeReal": 12098.182338212635
+          },
+          {
+            "kind": "PullStarted",
+            "timeReal": 12098.636200040894
+          },
+          {
+            "kind": "Ended",
+            "timeReal": 12099.319597124824
+          }
+        ],
+        "rawSamples": [
+          {
+            "sequence": 12591,
+            "id": 328,
+            "phase": "Began",
+            "timeReal": 12096.94844404087,
+            "receivedReal": 12096.979357087635,
+            "xPx": 586,
+            "yPx": 644.9999389648438
+          },
+          {
+            "sequence": 12592,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.019210165981,
+            "receivedReal": 12097.032576545636,
+            "xPx": 568,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12593,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.03587304144,
+            "receivedReal": 12097.048964504636,
+            "xPx": 562,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12594,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.040041207589,
+            "receivedReal": 12097.066174212636,
+            "xPx": 560,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12595,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.052548124539,
+            "receivedReal": 12097.066972420636,
+            "xPx": 555,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12596,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.069212124623,
+            "receivedReal": 12097.082486379635,
+            "xPx": 548,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12597,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.085881082776,
+            "receivedReal": 12097.099024670635,
+            "xPx": 541,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12598,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.102563041304,
+            "receivedReal": 12097.115638879635,
+            "xPx": 530,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12599,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.119225041508,
+            "receivedReal": 12097.132299254636,
+            "xPx": 514,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12600,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.135890041505,
+            "receivedReal": 12097.148995129635,
+            "xPx": 494.9999694824219,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12601,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.1525651657,
+            "receivedReal": 12097.165694004636,
+            "xPx": 478,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12602,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.16923404138,
+            "receivedReal": 12097.182342545635,
+            "xPx": 467,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12603,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.185898041147,
+            "receivedReal": 12097.199017462635,
+            "xPx": 459.9999694824219,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12604,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.202579041093,
+            "receivedReal": 12097.215716504636,
+            "xPx": 455,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12605,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.21507016572,
+            "receivedReal": 12097.232271504636,
+            "xPx": 453,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12606,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.23173916608,
+            "receivedReal": 12097.248908545636,
+            "xPx": 452.0000305175781,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12607,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.348426040893,
+            "receivedReal": 12097.365845754635,
+            "xPx": 452.0000305175781,
+            "yPx": 633.0000610351562
+          },
+          {
+            "sequence": 12608,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.369268082382,
+            "receivedReal": 12097.382580545636,
+            "xPx": 455,
+            "yPx": 629.0001220703125
+          },
+          {
+            "sequence": 12609,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.385938165828,
+            "receivedReal": 12097.399281045637,
+            "xPx": 461.0000305175781,
+            "yPx": 624.9998779296875
+          },
+          {
+            "sequence": 12610,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.402608083361,
+            "receivedReal": 12097.415893295636,
+            "xPx": 473.0000305175781,
+            "yPx": 621.9998779296875
+          },
+          {
+            "sequence": 12611,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.419282207238,
+            "receivedReal": 12097.432519962636,
+            "xPx": 487,
+            "yPx": 620.0000610351562
+          },
+          {
+            "sequence": 12612,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.435946083506,
+            "receivedReal": 12097.449268254635,
+            "xPx": 504,
+            "yPx": 620.0000610351562
+          },
+          {
+            "sequence": 12613,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.452615207518,
+            "receivedReal": 12097.465931795636,
+            "xPx": 523,
+            "yPx": 621.9998779296875
+          },
+          {
+            "sequence": 12614,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.46927924967,
+            "receivedReal": 12097.482714420636,
+            "xPx": 544,
+            "yPx": 633.9999389648438
+          },
+          {
+            "sequence": 12615,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.48595504086,
+            "receivedReal": 12097.499104879636,
+            "xPx": 564,
+            "yPx": 647.9999389648438
+          },
+          {
+            "sequence": 12616,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.502618082068,
+            "receivedReal": 12097.515737629636,
+            "xPx": 586,
+            "yPx": 666.9999389648438
+          },
+          {
+            "sequence": 12617,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.519287999325,
+            "receivedReal": 12097.532414545636,
+            "xPx": 610,
+            "yPx": 690
+          },
+          {
+            "sequence": 12618,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.53595716646,
+            "receivedReal": 12097.549041545635,
+            "xPx": 630,
+            "yPx": 711
+          },
+          {
+            "sequence": 12619,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.552626124358,
+            "receivedReal": 12097.565763379636,
+            "xPx": 645.9999389648438,
+            "yPx": 730
+          },
+          {
+            "sequence": 12620,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.569296124966,
+            "receivedReal": 12097.582491129635,
+            "xPx": 658,
+            "yPx": 741.9998779296875
+          },
+          {
+            "sequence": 12621,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.585965124967,
+            "receivedReal": 12097.599184045635,
+            "xPx": 667,
+            "yPx": 750.9999389648438
+          },
+          {
+            "sequence": 12622,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.602635166908,
+            "receivedReal": 12097.615887420636,
+            "xPx": 677,
+            "yPx": 753.9999389648438
+          },
+          {
+            "sequence": 12623,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.619305207654,
+            "receivedReal": 12097.632474379636,
+            "xPx": 687,
+            "yPx": 758
+          },
+          {
+            "sequence": 12624,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.635974124618,
+            "receivedReal": 12097.649144712635,
+            "xPx": 697,
+            "yPx": 761.9999389648438
+          },
+          {
+            "sequence": 12625,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.6526430825,
+            "receivedReal": 12097.665886754636,
+            "xPx": 706,
+            "yPx": 767.0000610351562
+          },
+          {
+            "sequence": 12626,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.669313166227,
+            "receivedReal": 12097.682541837636,
+            "xPx": 711,
+            "yPx": 774
+          },
+          {
+            "sequence": 12627,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.685982083225,
+            "receivedReal": 12097.699254962636,
+            "xPx": 717,
+            "yPx": 780.9999389648438
+          },
+          {
+            "sequence": 12628,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.70265212519,
+            "receivedReal": 12097.716146045635,
+            "xPx": 721,
+            "yPx": 790
+          },
+          {
+            "sequence": 12629,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.719321124412,
+            "receivedReal": 12097.732560045635,
+            "xPx": 725,
+            "yPx": 800.0000610351562
+          },
+          {
+            "sequence": 12630,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.735991249374,
+            "receivedReal": 12097.749220837635,
+            "xPx": 728.9999389648438,
+            "yPx": 807
+          },
+          {
+            "sequence": 12631,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.752661165661,
+            "receivedReal": 12097.765849920635,
+            "xPx": 731.0000610351562,
+            "yPx": 813.9999389648438
+          },
+          {
+            "sequence": 12632,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.769330207237,
+            "receivedReal": 12097.782517170635,
+            "xPx": 735.9999389648438,
+            "yPx": 819.0000610351562
+          },
+          {
+            "sequence": 12633,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.786005207716,
+            "receivedReal": 12097.799107045636,
+            "xPx": 741,
+            "yPx": 821.9999389648438
+          },
+          {
+            "sequence": 12634,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.802680124265,
+            "receivedReal": 12097.815781879635,
+            "xPx": 747,
+            "yPx": 824.0000610351562
+          },
+          {
+            "sequence": 12635,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.81933816563,
+            "receivedReal": 12097.832489795635,
+            "xPx": 755.0000610351562,
+            "yPx": 826
+          },
+          {
+            "sequence": 12636,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.836009082403,
+            "receivedReal": 12097.849199962635,
+            "xPx": 766,
+            "yPx": 826
+          },
+          {
+            "sequence": 12637,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.85268320779,
+            "receivedReal": 12097.865795462636,
+            "xPx": 777,
+            "yPx": 828.9998779296875
+          },
+          {
+            "sequence": 12638,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.869411166308,
+            "receivedReal": 12097.882488087636,
+            "xPx": 790.0000610351562,
+            "yPx": 834
+          },
+          {
+            "sequence": 12639,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.886081166578,
+            "receivedReal": 12097.899153212637,
+            "xPx": 803,
+            "yPx": 840
+          },
+          {
+            "sequence": 12640,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.90275108282,
+            "receivedReal": 12097.915834337635,
+            "xPx": 814.9999389648438,
+            "yPx": 846.0000610351562
+          },
+          {
+            "sequence": 12641,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.919419374639,
+            "receivedReal": 12097.932507629635,
+            "xPx": 823.9999389648438,
+            "yPx": 853
+          },
+          {
+            "sequence": 12642,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.936084124443,
+            "receivedReal": 12097.949178587636,
+            "xPx": 829.9999389648438,
+            "yPx": 857.0000610351562
+          },
+          {
+            "sequence": 12643,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.94859708216,
+            "receivedReal": 12097.965806587636,
+            "xPx": 832.9999389648438,
+            "yPx": 860.0000610351562
+          },
+          {
+            "sequence": 12644,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.965266166322,
+            "receivedReal": 12097.982555545635,
+            "xPx": 835,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12645,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.98192420801,
+            "receivedReal": 12097.999120629636,
+            "xPx": 837,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12646,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12097.998596083256,
+            "receivedReal": 12098.015858212635,
+            "xPx": 838.9999389648438,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12647,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.019436415421,
+            "receivedReal": 12098.032507837635,
+            "xPx": 842.9999389648438,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12648,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.036099249706,
+            "receivedReal": 12098.049287254637,
+            "xPx": 846,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12649,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.05277508306,
+            "receivedReal": 12098.065953795636,
+            "xPx": 851,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12650,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.06528324898,
+            "receivedReal": 12098.082747420636,
+            "xPx": 853.9999389648438,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12651,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.086108040632,
+            "receivedReal": 12098.099406879635,
+            "xPx": 856.9999389648438,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12652,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.09862220797,
+            "receivedReal": 12098.115980295635,
+            "xPx": 859,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12653,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.115292208246,
+            "receivedReal": 12098.132572712635,
+            "xPx": 860,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12654,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.131949124167,
+            "receivedReal": 12098.149253212636,
+            "xPx": 861,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12655,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.215297374201,
+            "receivedReal": 12098.232635920636,
+            "xPx": 859,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12656,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.23613433267,
+            "receivedReal": 12098.249256795636,
+            "xPx": 856.0000610351562,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12657,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.25280345798,
+            "receivedReal": 12098.265965754636,
+            "xPx": 853.9999389648438,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12658,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.269472082791,
+            "receivedReal": 12098.282596670635,
+            "xPx": 852.0000610351562,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12659,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.286142082428,
+            "receivedReal": 12098.299365254636,
+            "xPx": 850,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12660,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.306991708176,
+            "receivedReal": 12098.315967129636,
+            "xPx": 849,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12661,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.319490041526,
+            "receivedReal": 12098.332705587636,
+            "xPx": 847.0000610351562,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12662,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.34031804124,
+            "receivedReal": 12098.349431212635,
+            "xPx": 846,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12663,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.373669332732,
+            "receivedReal": 12098.382662129636,
+            "xPx": 845,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12664,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.390326249779,
+            "receivedReal": 12098.399282587636,
+            "xPx": 844,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12665,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.402837083442,
+            "receivedReal": 12098.416071170635,
+            "xPx": 842.9999389648438,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12666,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.440335248873,
+            "receivedReal": 12098.449356504636,
+            "xPx": 842,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12667,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.490342999254,
+            "receivedReal": 12098.499314045635,
+            "xPx": 841.0000610351562,
+            "yPx": 863.0001220703125
+          },
+          {
+            "sequence": 12668,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.519514040958,
+            "receivedReal": 12098.532686504635,
+            "xPx": 840,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12669,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.536183166318,
+            "receivedReal": 12098.549308420635,
+            "xPx": 840,
+            "yPx": 861
+          },
+          {
+            "sequence": 12670,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.552853666524,
+            "receivedReal": 12098.566006879635,
+            "xPx": 840,
+            "yPx": 860.0000610351562
+          },
+          {
+            "sequence": 12671,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.569523249018,
+            "receivedReal": 12098.582711212635,
+            "xPx": 838.0000610351562,
+            "yPx": 857.9999389648438
+          },
+          {
+            "sequence": 12672,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.586192082328,
+            "receivedReal": 12098.599357254636,
+            "xPx": 838.0000610351562,
+            "yPx": 856
+          },
+          {
+            "sequence": 12673,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.60286216601,
+            "receivedReal": 12098.616032420636,
+            "xPx": 836,
+            "yPx": 850
+          },
+          {
+            "sequence": 12674,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.619532041437,
+            "receivedReal": 12098.632794045636,
+            "xPx": 835,
+            "yPx": 840
+          },
+          {
+            "sequence": 12675,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.636200040894,
+            "receivedReal": 12098.649440045636,
+            "xPx": 834,
+            "yPx": 823
+          },
+          {
+            "sequence": 12676,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.652870083093,
+            "receivedReal": 12098.666133087636,
+            "xPx": 835,
+            "yPx": 803.0001220703125
+          },
+          {
+            "sequence": 12677,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.669539041564,
+            "receivedReal": 12098.682803795637,
+            "xPx": 832.9999389648438,
+            "yPx": 782
+          },
+          {
+            "sequence": 12678,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.68620916644,
+            "receivedReal": 12098.699361129637,
+            "xPx": 832.0000610351562,
+            "yPx": 761.0000610351562
+          },
+          {
+            "sequence": 12679,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.702879208131,
+            "receivedReal": 12098.716107212636,
+            "xPx": 829.9999389648438,
+            "yPx": 741
+          },
+          {
+            "sequence": 12680,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.719548499052,
+            "receivedReal": 12098.732875337635,
+            "xPx": 826,
+            "yPx": 717.9999389648438
+          },
+          {
+            "sequence": 12681,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.736218291027,
+            "receivedReal": 12098.749454045636,
+            "xPx": 822,
+            "yPx": 696.0000610351562
+          },
+          {
+            "sequence": 12682,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.752887207816,
+            "receivedReal": 12098.766112337637,
+            "xPx": 816,
+            "yPx": 676
+          },
+          {
+            "sequence": 12683,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.769562124744,
+            "receivedReal": 12098.782751587636,
+            "xPx": 811,
+            "yPx": 659.0001220703125
+          },
+          {
+            "sequence": 12684,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.786231165974,
+            "receivedReal": 12098.799640045636,
+            "xPx": 805.9999389648438,
+            "yPx": 644.9999389648438
+          },
+          {
+            "sequence": 12685,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.802901041043,
+            "receivedReal": 12098.815900295636,
+            "xPx": 803,
+            "yPx": 635
+          },
+          {
+            "sequence": 12686,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.81957758323,
+            "receivedReal": 12098.832710795636,
+            "xPx": 799.9999389648438,
+            "yPx": 624.9998779296875
+          },
+          {
+            "sequence": 12687,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.836240041197,
+            "receivedReal": 12098.849292462635,
+            "xPx": 796.9999389648438,
+            "yPx": 614.9999389648438
+          },
+          {
+            "sequence": 12688,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.852904083207,
+            "receivedReal": 12098.865946337635,
+            "xPx": 793,
+            "yPx": 606.9999389648438
+          },
+          {
+            "sequence": 12689,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.869526040806,
+            "receivedReal": 12098.882641670636,
+            "xPx": 790.9999389648438,
+            "yPx": 602.0001220703125
+          },
+          {
+            "sequence": 12690,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.89035204078,
+            "receivedReal": 12098.899338754636,
+            "xPx": 789,
+            "yPx": 600.9999389648438
+          },
+          {
+            "sequence": 12691,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.902860041553,
+            "receivedReal": 12098.915940504636,
+            "xPx": 789,
+            "yPx": 600
+          },
+          {
+            "sequence": 12692,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.91952899938,
+            "receivedReal": 12098.932715795636,
+            "xPx": 788,
+            "yPx": 596.0001220703125
+          },
+          {
+            "sequence": 12693,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.936199040943,
+            "receivedReal": 12098.949373462636,
+            "xPx": 787,
+            "yPx": 591
+          },
+          {
+            "sequence": 12694,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.952863041557,
+            "receivedReal": 12098.966259670635,
+            "xPx": 785,
+            "yPx": 583
+          },
+          {
+            "sequence": 12695,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.969538207664,
+            "receivedReal": 12098.983458420636,
+            "xPx": 784.0000610351562,
+            "yPx": 575
+          },
+          {
+            "sequence": 12696,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12098.986207041527,
+            "receivedReal": 12098.999782337636,
+            "xPx": 783,
+            "yPx": 569.0001220703125
+          },
+          {
+            "sequence": 12697,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.002871041537,
+            "receivedReal": 12099.016694545635,
+            "xPx": 781.9999389648438,
+            "yPx": 564.9998779296875
+          },
+          {
+            "sequence": 12698,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.019552333313,
+            "receivedReal": 12099.032603962636,
+            "xPx": 781.9999389648438,
+            "yPx": 561.9998779296875
+          },
+          {
+            "sequence": 12699,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.036212166071,
+            "receivedReal": 12099.048957254636,
+            "xPx": 781.0000610351562,
+            "yPx": 559
+          },
+          {
+            "sequence": 12700,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.052879041,
+            "receivedReal": 12099.066264254636,
+            "xPx": 780,
+            "yPx": 553
+          },
+          {
+            "sequence": 12701,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.069561041235,
+            "receivedReal": 12099.082833879636,
+            "xPx": 779,
+            "yPx": 546.9999389648438
+          },
+          {
+            "sequence": 12702,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.086224124283,
+            "receivedReal": 12099.099370920636,
+            "xPx": 778,
+            "yPx": 540
+          },
+          {
+            "sequence": 12703,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.102888207832,
+            "receivedReal": 12099.116107045636,
+            "xPx": 777,
+            "yPx": 534
+          },
+          {
+            "sequence": 12704,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.11956712454,
+            "receivedReal": 12099.132364629635,
+            "xPx": 775.9999389648438,
+            "yPx": 527.9999389648438
+          },
+          {
+            "sequence": 12705,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.132070999927,
+            "receivedReal": 12099.149105212635,
+            "xPx": 775.9999389648438,
+            "yPx": 524.9999389648438
+          },
+          {
+            "sequence": 12706,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.148729124438,
+            "receivedReal": 12099.166107629635,
+            "xPx": 775.9999389648438,
+            "yPx": 521.9999389648438
+          },
+          {
+            "sequence": 12707,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.169577083245,
+            "receivedReal": 12099.182721504636,
+            "xPx": 775.9999389648438,
+            "yPx": 519.0000610351562
+          },
+          {
+            "sequence": 12708,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.186240999208,
+            "receivedReal": 12099.199380212636,
+            "xPx": 775.9999389648438,
+            "yPx": 515
+          },
+          {
+            "sequence": 12709,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.202905249496,
+            "receivedReal": 12099.215962295635,
+            "xPx": 775.0000610351562,
+            "yPx": 510.9999084472656
+          },
+          {
+            "sequence": 12710,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.219580083216,
+            "receivedReal": 12099.232798879635,
+            "xPx": 775.0000610351562,
+            "yPx": 507
+          },
+          {
+            "sequence": 12711,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.236243124358,
+            "receivedReal": 12099.249340004635,
+            "xPx": 775.0000610351562,
+            "yPx": 504.9998779296875
+          },
+          {
+            "sequence": 12712,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.298765999656,
+            "receivedReal": 12099.316242379637,
+            "xPx": 775.0000610351562,
+            "yPx": 506.0000915527344
+          },
+          {
+            "sequence": 12713,
+            "id": 328,
+            "phase": "Moved",
+            "timeReal": 12099.315424040591,
+            "receivedReal": 12099.333071545636,
+            "xPx": 774,
+            "yPx": 507
+          },
+          {
+            "sequence": 12714,
+            "id": 328,
+            "phase": "Ended",
+            "timeReal": 12099.319597124824,
+            "receivedReal": 12099.334053295635,
+            "xPx": 768,
+            "yPx": 509.0001220703125
+          }
+        ]
+      },
+      "pending": 0,
+      "seed": 0,
+      "metricsValid": false,
+      "droppedSinceRestart": 0
+    },
+    {
+      "ts": "2026-10-28T15:12:01.8291830Z",
+      "kind": "s1-sling-gesture",
+      "phase": "free",
+      "build": "0.1.0+4cec622 dev",
+      "presetName": "S1-sling",
+      "presetFileHash": "cd008ad646a4f7c206cce6eea3cb36331667cf94be21aba37284edfcc8efb298",
+      "effectiveHash": "7d1a61c39766",
+      "payload": {
+        "schema": 2,
+        "quietPolicy": "active-contact-timer-D2",
+        "s1PreviewOnly": true,
+        "control": "S1-sling",
+        "attemptId": "5537a39c2a0444e1b80e20af9cc26e03",
+        "block": "preview",
+        "session": 9,
+        "trial": 0,
+        "launchSerial": 16,
+        "comparableToArmedBlock": false,
+        "requestedPower": "unspecified",
+        "targetId": 0,
+        "targetX": null,
+        "targetY": null,
+        "targetErrorMeters": null,
+        "outcome": "Swing",
+        "phase": "Locked",
+        "reason": "distance",
+        "conservative": false,
+        "aimX": 3.783095598220825,
+        "aimY": 2.3457727432250977,
+        "aimInvalid": false,
+        "beganTimeReal": 12102.157642041855,
+        "lockTimeReal": 12102.551784295636,
+        "lockOrigin": "timer",
+        "lockTheoreticalTimeReal": 12102.540119416275,
+        "lockObservedTimeReal": 12102.551784295636,
+        "lockSampleTimeReal": 12102.536805041462,
+        "lastOutsideTimeReal": 12102.420119416274,
+        "releaseTimeReal": 12103.145235249765,
+        "beganToLockMs": 394.1422537809558,
+        "lastOutsideToLockMs": 131.66487936177873,
+        "durationMs": 987.5932079103222,
+        "lockXPx": 521,
+        "lockYPx": 707.9999389648438,
+        "cancelRegion": "Above",
+        "lockBlocked": false,
+        "distanceMm": 0,
+        "maxDistanceMm": 0,
+        "lateralMm": 13.196952819824219,
+        "minimumBottomMarginMm": 0.939565122127533,
+        "power": 0,
+        "band": "soft",
+        "reportedDpi": 460,
+        "dpiSource": "Reported",
+        "mmPerPx": 0.05521738901734352,
+        "physicallyVerified": false,
+        "widthPx": 1206,
+        "heightPx": 2622,
+        "areaPx": [
+          0,
+          690.9841918945312,
+          1206,
+          2436
+        ],
+        "gestureConfigHash": "7d1a61c39766",
+        "gestureParameters": {
+          "aim.flickConfirmSamples": 2,
+          "aim.flickHysteresisMmPerS": 40,
+          "aim.flickMmPerS": 250,
+          "aim.freezeLookbackMs": 50,
+          "aim.freezeOnRelease": 0,
+          "aim.gainMPerMm": 0.12,
+          "aim.holdMaxGapMs": 51,
+          "aim.holdMaxSpeedMmPerS": 15,
+          "aim.holdMinSamples": 3,
+          "aim.holdMs": 120,
+          "aim.holdRadiusMm": 1,
+          "aim.lockFlashMs": 120,
+          "aim.startHeight": 2.2,
+          "gesture.cancelRadiusMm": 6,
+          "gesture.control": 1,
+          "gesture.slingCancelAboveMm": 12,
+          "gesture.slingCancelLateralMm": 20,
+          "gesture.slingCancelMinDepthMm": 8,
+          "gesture.slingPreferLeft": 1,
+          "gesture.slingTarget1X": 0.25,
+          "gesture.slingTarget1Y": 0.15,
+          "gesture.slingTarget2X": 0.75,
+          "gesture.slingTarget2Y": 0.15,
+          "gesture.slingTarget3X": 0.5,
+          "gesture.slingTarget3Y": 0.5,
+          "gesture.slingTarget4X": 0.25,
+          "gesture.slingTarget4Y": 0.8,
+          "gesture.slingTarget5X": 0.75,
+          "gesture.slingTarget5Y": 0.8,
+          "gesture.tapMaxMm": 3,
+          "gesture.tapMaxMs": 250,
+          "input.fallbackDpi": 460,
+          "power.curveExponent": 1,
+          "power.deadZoneMmPerS": 100,
+          "power.fullMmPerS": 1500,
+          "power.maxGapMs": 34,
+          "power.method": 0,
+          "power.minCoverageMs": 30,
+          "power.minSamples": 4,
+          "power.peakDecayMs": 120,
+          "power.peakSmoothingMs": 20,
+          "power.pullDeadZoneMm": 2,
+          "power.pullFullMm": 35,
+          "power.windowMs": 80
+        },
+        "transitions": [
+          {
+            "kind": "Began",
+            "timeReal": 12102.157642041855
+          },
+          {
+            "kind": "Locked",
+            "timeReal": 12102.551784295636,
+            "origin": "timer",
+            "theoreticalTimeReal": 12102.540119416275,
+            "observedTimeReal": 12102.551784295636
+          },
+          {
+            "kind": "Ended",
+            "timeReal": 12103.145235249765
+          }
+        ],
+        "rawSamples": [
+          {
+            "sequence": 12715,
+            "id": 329,
+            "phase": "Began",
+            "timeReal": 12102.157642041855,
+            "receivedReal": 12102.203091504636,
+            "xPx": 609,
+            "yPx": 686.0001220703125
+          },
+          {
+            "sequence": 12716,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.30343829117,
+            "receivedReal": 12102.325183004636,
+            "xPx": 588,
+            "yPx": 700
+          },
+          {
+            "sequence": 12717,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.320102040876,
+            "receivedReal": 12102.341994420636,
+            "xPx": 580,
+            "yPx": 699.0000610351562
+          },
+          {
+            "sequence": 12718,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.336777333408,
+            "receivedReal": 12102.359141087636,
+            "xPx": 569,
+            "yPx": 701.9999389648438
+          },
+          {
+            "sequence": 12719,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.353441040668,
+            "receivedReal": 12102.375346420637,
+            "xPx": 560,
+            "yPx": 704.9999389648438
+          },
+          {
+            "sequence": 12720,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.370110249492,
+            "receivedReal": 12102.392753462636,
+            "xPx": 550,
+            "yPx": 707.0000610351562
+          },
+          {
+            "sequence": 12721,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.403449082847,
+            "receivedReal": 12102.417306420635,
+            "xPx": 532,
+            "yPx": 707.9999389648438
+          },
+          {
+            "sequence": 12722,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.420119416274,
+            "receivedReal": 12102.433934962635,
+            "xPx": 524,
+            "yPx": 707.9999389648438
+          },
+          {
+            "sequence": 12723,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.436788124705,
+            "receivedReal": 12102.451094837636,
+            "xPx": 521,
+            "yPx": 707.9999389648438
+          },
+          {
+            "sequence": 12724,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.457620082856,
+            "receivedReal": 12102.467008045636,
+            "xPx": 519,
+            "yPx": 707.9999389648438
+          },
+          {
+            "sequence": 12725,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.536805041462,
+            "receivedReal": 12102.550316004636,
+            "xPx": 521,
+            "yPx": 707.9999389648438
+          },
+          {
+            "sequence": 12726,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.553469041375,
+            "receivedReal": 12102.567040170636,
+            "xPx": 529,
+            "yPx": 707.9999389648438
+          },
+          {
+            "sequence": 12727,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.57019804061,
+            "receivedReal": 12102.583719379636,
+            "xPx": 541,
+            "yPx": 707.9999389648438
+          },
+          {
+            "sequence": 12728,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.586867082351,
+            "receivedReal": 12102.600467920636,
+            "xPx": 557,
+            "yPx": 707.9999389648438
+          },
+          {
+            "sequence": 12729,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.603536124177,
+            "receivedReal": 12102.617132795636,
+            "xPx": 574,
+            "yPx": 707.9999389648438
+          },
+          {
+            "sequence": 12730,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.62020608329,
+            "receivedReal": 12102.634188837636,
+            "xPx": 593,
+            "yPx": 707.9999389648438
+          },
+          {
+            "sequence": 12731,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.636875124288,
+            "receivedReal": 12102.650767212635,
+            "xPx": 614,
+            "yPx": 717.9999389648438
+          },
+          {
+            "sequence": 12732,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.653545207504,
+            "receivedReal": 12102.667230045636,
+            "xPx": 636.9999389648438,
+            "yPx": 734.0000610351562
+          },
+          {
+            "sequence": 12733,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.670215082911,
+            "receivedReal": 12102.684053837636,
+            "xPx": 663,
+            "yPx": 753.9999389648438
+          },
+          {
+            "sequence": 12734,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.6868840832,
+            "receivedReal": 12102.700532712635,
+            "xPx": 688,
+            "yPx": 774.9998779296875
+          },
+          {
+            "sequence": 12735,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.70355304082,
+            "receivedReal": 12102.717207504636,
+            "xPx": 708,
+            "yPx": 791.9999389648438
+          },
+          {
+            "sequence": 12736,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.720222124173,
+            "receivedReal": 12102.734184879635,
+            "xPx": 724,
+            "yPx": 806.0001220703125
+          },
+          {
+            "sequence": 12737,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.736833124953,
+            "receivedReal": 12102.750937712635,
+            "xPx": 733,
+            "yPx": 819.0000610351562
+          },
+          {
+            "sequence": 12738,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.753502083327,
+            "receivedReal": 12102.767408295636,
+            "xPx": 740.0000610351562,
+            "yPx": 827.0000610351562
+          },
+          {
+            "sequence": 12739,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.770172124514,
+            "receivedReal": 12102.784090254636,
+            "xPx": 744,
+            "yPx": 834.9998779296875
+          },
+          {
+            "sequence": 12740,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.78684104111,
+            "receivedReal": 12102.800678879636,
+            "xPx": 746,
+            "yPx": 842
+          },
+          {
+            "sequence": 12741,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.803511166809,
+            "receivedReal": 12102.817248712636,
+            "xPx": 748,
+            "yPx": 845
+          },
+          {
+            "sequence": 12742,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.820181041041,
+            "receivedReal": 12102.833815462636,
+            "xPx": 750.9999389648438,
+            "yPx": 846.0000610351562
+          },
+          {
+            "sequence": 12743,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.836849083105,
+            "receivedReal": 12102.850525045636,
+            "xPx": 754,
+            "yPx": 846.0000610351562
+          },
+          {
+            "sequence": 12744,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.853519124825,
+            "receivedReal": 12102.867059587636,
+            "xPx": 759,
+            "yPx": 846.0000610351562
+          },
+          {
+            "sequence": 12745,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.870189040897,
+            "receivedReal": 12102.883902004636,
+            "xPx": 763,
+            "yPx": 846.0000610351562
+          },
+          {
+            "sequence": 12746,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.886858249245,
+            "receivedReal": 12102.900686004636,
+            "xPx": 767,
+            "yPx": 846.0000610351562
+          },
+          {
+            "sequence": 12747,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.899361248978,
+            "receivedReal": 12102.917356879636,
+            "xPx": 769,
+            "yPx": 846.0000610351562
+          },
+          {
+            "sequence": 12748,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.920197040796,
+            "receivedReal": 12102.933869170636,
+            "xPx": 772,
+            "yPx": 846.0000610351562
+          },
+          {
+            "sequence": 12749,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.936867332945,
+            "receivedReal": 12102.950806170636,
+            "xPx": 774,
+            "yPx": 846.0000610351562
+          },
+          {
+            "sequence": 12750,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.953536040919,
+            "receivedReal": 12102.967325337635,
+            "xPx": 775.9999389648438,
+            "yPx": 846.0000610351562
+          },
+          {
+            "sequence": 12751,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12102.97020508322,
+            "receivedReal": 12102.984045004636,
+            "xPx": 777,
+            "yPx": 846.0000610351562
+          },
+          {
+            "sequence": 12752,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12103.09939412431,
+            "receivedReal": 12103.117464629635,
+            "xPx": 777,
+            "yPx": 845
+          },
+          {
+            "sequence": 12753,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12103.120230207325,
+            "receivedReal": 12103.134483504637,
+            "xPx": 775.9999389648438,
+            "yPx": 843.9999389648438
+          },
+          {
+            "sequence": 12754,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12103.136900124682,
+            "receivedReal": 12103.150673962637,
+            "xPx": 768,
+            "yPx": 843.9999389648438
+          },
+          {
+            "sequence": 12755,
+            "id": 329,
+            "phase": "Moved",
+            "timeReal": 12103.141068083089,
+            "receivedReal": 12103.167656462636,
+            "xPx": 766,
+            "yPx": 843.9999389648438
+          },
+          {
+            "sequence": 12756,
+            "id": 329,
+            "phase": "Ended",
+            "timeReal": 12103.145235249765,
+            "receivedReal": 12103.168560629636,
+            "xPx": 759.9999389648438,
+            "yPx": 840
+          }
+        ]
+      },
+      "pending": 0,
+      "seed": 0,
+      "metricsValid": false,
+      "droppedSinceRestart": 0
+    },
+    {
+      "ts": "2026-10-28T15:12:05.4310290Z",
+      "kind": "s1-sling-gesture",
+      "phase": "free",
+      "build": "0.1.0+4cec622 dev",
+      "presetName": "S1-sling",
+      "presetFileHash": "cd008ad646a4f7c206cce6eea3cb36331667cf94be21aba37284edfcc8efb298",
+      "effectiveHash": "7d1a61c39766",
+      "payload": {
+        "schema": 2,
+        "quietPolicy": "active-contact-timer-D2",
+        "s1PreviewOnly": true,
+        "control": "S1-sling",
+        "attemptId": "6aa04605848d48afb3c9f808a8f637de",
+        "block": "preview",
+        "session": 9,
+        "trial": 0,
+        "launchSerial": 16,
+        "comparableToArmedBlock": false,
+        "requestedPower": "unspecified",
+        "targetId": 0,
+        "targetX": null,
+        "targetY": null,
+        "targetErrorMeters": null,
+        "outcome": "Swing",
+        "phase": "Pulling",
+        "reason": "distance",
+        "conservative": false,
+        "aimX": 1.7422610521316528,
+        "aimY": 3.4788336753845215,
+        "aimInvalid": false,
+        "beganTimeReal": 12105.24981649881,
+        "lockTimeReal": 12105.750765129636,
+        "lockOrigin": "timer",
+        "lockTheoreticalTimeReal": 12105.740653125034,
+        "lockObservedTimeReal": 12105.750765129636,
+        "lockSampleTimeReal": 12105.674828291572,
+        "lastOutsideTimeReal": 12105.620653125034,
+        "releaseTimeReal": 12106.745841166387,
+        "beganToLockMs": 500.9486308263149,
+        "lastOutsideToLockMs": 130.11200460277905,
+        "durationMs": 1496.024667576421,
+        "lockXPx": 583,
+        "lockYPx": 938.9999389648438,
+        "cancelRegion": "Above",
+        "lockBlocked": false,
+        "distanceMm": 23.356948852539062,
+        "maxDistanceMm": 23.356948852539062,
+        "lateralMm": -1.1595652103424072,
+        "minimumBottomMarginMm": -9.662166595458984,
+        "power": 0.6471802592277527,
+        "band": "strong",
+        "reportedDpi": 460,
+        "dpiSource": "Reported",
+        "mmPerPx": 0.05521738901734352,
+        "physicallyVerified": false,
+        "widthPx": 1206,
+        "heightPx": 2622,
+        "areaPx": [
+          0,
+          690.9841918945312,
+          1206,
+          2436
+        ],
+        "gestureConfigHash": "7d1a61c39766",
+        "gestureParameters": {
+          "aim.flickConfirmSamples": 2,
+          "aim.flickHysteresisMmPerS": 40,
+          "aim.flickMmPerS": 250,
+          "aim.freezeLookbackMs": 50,
+          "aim.freezeOnRelease": 0,
+          "aim.gainMPerMm": 0.12,
+          "aim.holdMaxGapMs": 51,
+          "aim.holdMaxSpeedMmPerS": 15,
+          "aim.holdMinSamples": 3,
+          "aim.holdMs": 120,
+          "aim.holdRadiusMm": 1,
+          "aim.lockFlashMs": 120,
+          "aim.startHeight": 2.2,
+          "gesture.cancelRadiusMm": 6,
+          "gesture.control": 1,
+          "gesture.slingCancelAboveMm": 12,
+          "gesture.slingCancelLateralMm": 20,
+          "gesture.slingCancelMinDepthMm": 8,
+          "gesture.slingPreferLeft": 1,
+          "gesture.slingTarget1X": 0.25,
+          "gesture.slingTarget1Y": 0.15,
+          "gesture.slingTarget2X": 0.75,
+          "gesture.slingTarget2Y": 0.15,
+          "gesture.slingTarget3X": 0.5,
+          "gesture.slingTarget3Y": 0.5,
+          "gesture.slingTarget4X": 0.25,
+          "gesture.slingTarget4Y": 0.8,
+          "gesture.slingTarget5X": 0.75,
+          "gesture.slingTarget5Y": 0.8,
+          "gesture.tapMaxMm": 3,
+          "gesture.tapMaxMs": 250,
+          "input.fallbackDpi": 460,
+          "power.curveExponent": 1,
+          "power.deadZoneMmPerS": 100,
+          "power.fullMmPerS": 1500,
+          "power.maxGapMs": 34,
+          "power.method": 0,
+          "power.minCoverageMs": 30,
+          "power.minSamples": 4,
+          "power.peakDecayMs": 120,
+          "power.peakSmoothingMs": 20,
+          "power.pullDeadZoneMm": 2,
+          "power.pullFullMm": 35,
+          "power.windowMs": 80
+        },
+        "transitions": [
+          {
+            "kind": "Began",
+            "timeReal": 12105.24981649881
+          },
+          {
+            "kind": "Locked",
+            "timeReal": 12105.750765129636,
+            "origin": "timer",
+            "theoreticalTimeReal": 12105.740653125034,
+            "observedTimeReal": 12105.750765129636
+          },
+          {
+            "kind": "PullStarted",
+            "timeReal": 12106.170746290865
+          },
+          {
+            "kind": "Ended",
+            "timeReal": 12106.745841166387
+          }
+        ],
+        "rawSamples": [
+          {
+            "sequence": 12787,
+            "id": 331,
+            "phase": "Began",
+            "timeReal": 12105.24981649881,
+            "receivedReal": 12105.279490879635,
+            "xPx": 363,
+            "yPx": 746.0001220703125
+          },
+          {
+            "sequence": 12788,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.28733104089,
+            "receivedReal": 12105.301079462635,
+            "xPx": 404.0000305175781,
+            "yPx": 758
+          },
+          {
+            "sequence": 12789,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.2915010832,
+            "receivedReal": 12105.317696837636,
+            "xPx": 406,
+            "yPx": 756.0000610351562
+          },
+          {
+            "sequence": 12790,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.303991124274,
+            "receivedReal": 12105.318587087635,
+            "xPx": 418,
+            "yPx": 761.0000610351562
+          },
+          {
+            "sequence": 12791,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.320666166035,
+            "receivedReal": 12105.333973712635,
+            "xPx": 434,
+            "yPx": 774.9998779296875
+          },
+          {
+            "sequence": 12792,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.337281082482,
+            "receivedReal": 12105.351257379636,
+            "xPx": 452.0000305175781,
+            "yPx": 791.0000610351562
+          },
+          {
+            "sequence": 12793,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.353940041276,
+            "receivedReal": 12105.367601504635,
+            "xPx": 468,
+            "yPx": 810.9999389648438
+          },
+          {
+            "sequence": 12794,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.370622041466,
+            "receivedReal": 12105.384396754636,
+            "xPx": 483.9999694824219,
+            "yPx": 831.9998779296875
+          },
+          {
+            "sequence": 12795,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.38728512464,
+            "receivedReal": 12105.401789087635,
+            "xPx": 499,
+            "yPx": 851.0000610351562
+          },
+          {
+            "sequence": 12796,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.403948083203,
+            "receivedReal": 12105.417665379635,
+            "xPx": 513,
+            "yPx": 867
+          },
+          {
+            "sequence": 12797,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.42061804138,
+            "receivedReal": 12105.434335420636,
+            "xPx": 525,
+            "yPx": 881.9999389648438
+          },
+          {
+            "sequence": 12798,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.437293082532,
+            "receivedReal": 12105.451052545635,
+            "xPx": 536,
+            "yPx": 899.0001220703125
+          },
+          {
+            "sequence": 12799,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.453957208183,
+            "receivedReal": 12105.467712212636,
+            "xPx": 546.9999389648438,
+            "yPx": 918
+          },
+          {
+            "sequence": 12800,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.470635165679,
+            "receivedReal": 12105.484282504636,
+            "xPx": 556,
+            "yPx": 936.0000610351562
+          },
+          {
+            "sequence": 12801,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.487308041796,
+            "receivedReal": 12105.501816920636,
+            "xPx": 562,
+            "yPx": 947.0000610351562
+          },
+          {
+            "sequence": 12802,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.499799041258,
+            "receivedReal": 12105.517271504636,
+            "xPx": 564,
+            "yPx": 951
+          },
+          {
+            "sequence": 12803,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.516468082908,
+            "receivedReal": 12105.533991795635,
+            "xPx": 565,
+            "yPx": 951
+          },
+          {
+            "sequence": 12804,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.570646040816,
+            "receivedReal": 12105.584014337635,
+            "xPx": 565,
+            "yPx": 948.9998779296875
+          },
+          {
+            "sequence": 12805,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.587313041293,
+            "receivedReal": 12105.600931254636,
+            "xPx": 567,
+            "yPx": 947.0000610351562
+          },
+          {
+            "sequence": 12806,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.603983249093,
+            "receivedReal": 12105.617788920636,
+            "xPx": 570,
+            "yPx": 944.9999389648438
+          },
+          {
+            "sequence": 12807,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.620653125034,
+            "receivedReal": 12105.634338879636,
+            "xPx": 575,
+            "yPx": 943
+          },
+          {
+            "sequence": 12808,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.637321083022,
+            "receivedReal": 12105.650819420636,
+            "xPx": 578,
+            "yPx": 941.0000610351562
+          },
+          {
+            "sequence": 12809,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.653991041429,
+            "receivedReal": 12105.667915545635,
+            "xPx": 581,
+            "yPx": 940
+          },
+          {
+            "sequence": 12810,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.674828291572,
+            "receivedReal": 12105.684555545637,
+            "xPx": 583,
+            "yPx": 938.9999389648438
+          },
+          {
+            "sequence": 12811,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.804022082457,
+            "receivedReal": 12105.817774837637,
+            "xPx": 583,
+            "yPx": 936.9999389648438
+          },
+          {
+            "sequence": 12812,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.820691040957,
+            "receivedReal": 12105.834440462635,
+            "xPx": 583,
+            "yPx": 935
+          },
+          {
+            "sequence": 12813,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.837367083102,
+            "receivedReal": 12105.851353587635,
+            "xPx": 587,
+            "yPx": 930.9999389648438
+          },
+          {
+            "sequence": 12814,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.854025041086,
+            "receivedReal": 12105.867627337635,
+            "xPx": 592,
+            "yPx": 926.0001220703125
+          },
+          {
+            "sequence": 12815,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.870700083216,
+            "receivedReal": 12105.884666004637,
+            "xPx": 599,
+            "yPx": 921.9998779296875
+          },
+          {
+            "sequence": 12816,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.887375124212,
+            "receivedReal": 12105.901066545635,
+            "xPx": 603.9999389648438,
+            "yPx": 920.0000610351562
+          },
+          {
+            "sequence": 12817,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.899866124508,
+            "receivedReal": 12105.918082170636,
+            "xPx": 606,
+            "yPx": 920.0000610351562
+          },
+          {
+            "sequence": 12818,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.91653524986,
+            "receivedReal": 12105.934336295635,
+            "xPx": 608,
+            "yPx": 920.0000610351562
+          },
+          {
+            "sequence": 12819,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.933217249256,
+            "receivedReal": 12105.951125795636,
+            "xPx": 609,
+            "yPx": 920.0000610351562
+          },
+          {
+            "sequence": 12820,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.970717082871,
+            "receivedReal": 12105.984812462635,
+            "xPx": 609,
+            "yPx": 924.9998779296875
+          },
+          {
+            "sequence": 12821,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.987386291212,
+            "receivedReal": 12106.001247504635,
+            "xPx": 609,
+            "yPx": 927.9999389648438
+          },
+          {
+            "sequence": 12822,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12105.99988308309,
+            "receivedReal": 12106.017968670636,
+            "xPx": 609,
+            "yPx": 930.0000610351562
+          },
+          {
+            "sequence": 12823,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.016552082887,
+            "receivedReal": 12106.034442545635,
+            "xPx": 609,
+            "yPx": 932
+          },
+          {
+            "sequence": 12824,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.03322604119,
+            "receivedReal": 12106.050850420635,
+            "xPx": 609,
+            "yPx": 933.9999389648438
+          },
+          {
+            "sequence": 12825,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.05822604144,
+            "receivedReal": 12106.067639587636,
+            "xPx": 608,
+            "yPx": 935
+          },
+          {
+            "sequence": 12826,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.087403083588,
+            "receivedReal": 12106.101315337635,
+            "xPx": 607,
+            "yPx": 935
+          },
+          {
+            "sequence": 12827,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.120736374307,
+            "receivedReal": 12106.134677337635,
+            "xPx": 607,
+            "yPx": 932
+          },
+          {
+            "sequence": 12828,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.137417041184,
+            "receivedReal": 12106.150995545635,
+            "xPx": 607,
+            "yPx": 920.0000610351562
+          },
+          {
+            "sequence": 12829,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.154075040497,
+            "receivedReal": 12106.167614170636,
+            "xPx": 606,
+            "yPx": 906.0000610351562
+          },
+          {
+            "sequence": 12830,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.170746290865,
+            "receivedReal": 12106.184500004636,
+            "xPx": 606,
+            "yPx": 887.0000610351562
+          },
+          {
+            "sequence": 12831,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.187420249777,
+            "receivedReal": 12106.201200920636,
+            "xPx": 605,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12832,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.204089082727,
+            "receivedReal": 12106.217951629636,
+            "xPx": 603.9999389648438,
+            "yPx": 821.9999389648438
+          },
+          {
+            "sequence": 12833,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.220753040861,
+            "receivedReal": 12106.234647587637,
+            "xPx": 602.0000610351562,
+            "yPx": 771.9998779296875
+          },
+          {
+            "sequence": 12834,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.237428041104,
+            "receivedReal": 12106.251067837637,
+            "xPx": 599,
+            "yPx": 729.0000610351562
+          },
+          {
+            "sequence": 12835,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.254092040548,
+            "receivedReal": 12106.267926962635,
+            "xPx": 595,
+            "yPx": 693.9999389648438
+          },
+          {
+            "sequence": 12836,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.270761541298,
+            "receivedReal": 12106.284524837636,
+            "xPx": 591,
+            "yPx": 670
+          },
+          {
+            "sequence": 12837,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.287437041197,
+            "receivedReal": 12106.301146420636,
+            "xPx": 587,
+            "yPx": 651
+          },
+          {
+            "sequence": 12838,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.304107040765,
+            "receivedReal": 12106.317523420636,
+            "xPx": 583,
+            "yPx": 635
+          },
+          {
+            "sequence": 12839,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.320770082553,
+            "receivedReal": 12106.334589379636,
+            "xPx": 579,
+            "yPx": 620.0000610351562
+          },
+          {
+            "sequence": 12840,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.337504249199,
+            "receivedReal": 12106.351239712636,
+            "xPx": 577,
+            "yPx": 610
+          },
+          {
+            "sequence": 12841,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.354173041229,
+            "receivedReal": 12106.367857629635,
+            "xPx": 575,
+            "yPx": 603.0000610351562
+          },
+          {
+            "sequence": 12842,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.370842082742,
+            "receivedReal": 12106.384534795636,
+            "xPx": 573,
+            "yPx": 597
+          },
+          {
+            "sequence": 12843,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.38751804099,
+            "receivedReal": 12106.401108879636,
+            "xPx": 572,
+            "yPx": 591
+          },
+          {
+            "sequence": 12844,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.404181041698,
+            "receivedReal": 12106.417835795635,
+            "xPx": 571,
+            "yPx": 584.9999389648438
+          },
+          {
+            "sequence": 12845,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.420845124545,
+            "receivedReal": 12106.434566920636,
+            "xPx": 570,
+            "yPx": 578
+          },
+          {
+            "sequence": 12846,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.437468208169,
+            "receivedReal": 12106.451175795635,
+            "xPx": 569,
+            "yPx": 570.9999389648438
+          },
+          {
+            "sequence": 12847,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.454132208099,
+            "receivedReal": 12106.467802212635,
+            "xPx": 569,
+            "yPx": 564.9998779296875
+          },
+          {
+            "sequence": 12848,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.470801082223,
+            "receivedReal": 12106.484473920636,
+            "xPx": 568,
+            "yPx": 557.0000610351562
+          },
+          {
+            "sequence": 12849,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.487476165967,
+            "receivedReal": 12106.501168045635,
+            "xPx": 568,
+            "yPx": 549.0000610351562
+          },
+          {
+            "sequence": 12850,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.504134125009,
+            "receivedReal": 12106.517826587637,
+            "xPx": 567,
+            "yPx": 543.0000610351562
+          },
+          {
+            "sequence": 12851,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.520803165971,
+            "receivedReal": 12106.534713462635,
+            "xPx": 567,
+            "yPx": 536.0001220703125
+          },
+          {
+            "sequence": 12852,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.537479166382,
+            "receivedReal": 12106.551294462635,
+            "xPx": 566,
+            "yPx": 531.9998779296875
+          },
+          {
+            "sequence": 12853,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.554143165982,
+            "receivedReal": 12106.567730712635,
+            "xPx": 566,
+            "yPx": 530.0000610351562
+          },
+          {
+            "sequence": 12854,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.587482041266,
+            "receivedReal": 12106.600914962635,
+            "xPx": 566,
+            "yPx": 529
+          },
+          {
+            "sequence": 12855,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.604151124857,
+            "receivedReal": 12106.617699629636,
+            "xPx": 566,
+            "yPx": 527.0000610351562
+          },
+          {
+            "sequence": 12856,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.620820082946,
+            "receivedReal": 12106.634729920635,
+            "xPx": 566,
+            "yPx": 523
+          },
+          {
+            "sequence": 12857,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.637490082743,
+            "receivedReal": 12106.651386045636,
+            "xPx": 566,
+            "yPx": 521
+          },
+          {
+            "sequence": 12858,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.649992124761,
+            "receivedReal": 12106.668011087635,
+            "xPx": 566,
+            "yPx": 519.0000610351562
+          },
+          {
+            "sequence": 12859,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.674997207576,
+            "receivedReal": 12106.684588504635,
+            "xPx": 566,
+            "yPx": 516.9999389648438
+          },
+          {
+            "sequence": 12860,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.69166624931,
+            "receivedReal": 12106.701321712635,
+            "xPx": 566,
+            "yPx": 516.0000610351562
+          },
+          {
+            "sequence": 12861,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.737507582913,
+            "receivedReal": 12106.751367212635,
+            "xPx": 565,
+            "yPx": 516.0000610351562
+          },
+          {
+            "sequence": 12862,
+            "id": 331,
+            "phase": "Moved",
+            "timeReal": 12106.741674082066,
+            "receivedReal": 12106.768337129635,
+            "xPx": 564,
+            "yPx": 516.0000610351562
+          },
+          {
+            "sequence": 12863,
+            "id": 331,
+            "phase": "Ended",
+            "timeReal": 12106.745841166387,
+            "receivedReal": 12106.769683670636,
+            "xPx": 562,
+            "yPx": 516.0000610351562
+          }
+        ]
+      },
+      "pending": 0,
+      "seed": 0,
+      "metricsValid": false,
+      "droppedSinceRestart": 0
+    },
+    {
+      "ts": "2026-10-28T15:13:02.3051600Z",
+      "kind": "s1-sling-gesture",
+      "phase": "free",
+      "build": "0.1.0+4cec622 dev",
+      "presetName": "S1-sling",
+      "presetFileHash": "cd008ad646a4f7c206cce6eea3cb36331667cf94be21aba37284edfcc8efb298",
+      "effectiveHash": "7d1a61c39766",
+      "payload": {
+        "schema": 2,
+        "quietPolicy": "active-contact-timer-D2",
+        "s1PreviewOnly": true,
+        "control": "S1-sling",
+        "attemptId": "4a204bccf51046b59abc734d46b0e0b8",
+        "block": "preview",
+        "session": 9,
+        "trial": 0,
+        "launchSerial": 16,
+        "comparableToArmedBlock": false,
+        "requestedPower": "unspecified",
+        "targetId": 0,
+        "targetX": null,
+        "targetY": null,
+        "targetErrorMeters": null,
+        "outcome": "ZoneCanceled",
+        "phase": "CancelZone",
+        "reason": "distance",
+        "conservative": false,
+        "aimX": 1.3844521045684814,
+        "aimY": 3.7107467651367188,
+        "aimInvalid": false,
+        "beganTimeReal": 12160.254852249198,
+        "lockTimeReal": 12160.995554087636,
+        "lockOrigin": "timer",
+        "lockTheoreticalTimeReal": 12160.983360083268,
+        "lockObservedTimeReal": 12160.995554087636,
+        "lockSampleTimeReal": 12160.980035249884,
+        "lastOutsideTimeReal": 12160.863360083267,
+        "releaseTimeReal": 12163.617918999467,
+        "beganToLockMs": 740.7018384383264,
+        "lastOutsideToLockMs": 132.19400436901196,
+        "durationMs": 3363.066750269354,
+        "lockXPx": 576,
+        "lockYPx": 1077.9998779296875,
+        "cancelRegion": "Above",
+        "lockBlocked": false,
+        "distanceMm": 0,
+        "maxDistanceMm": 26.393905639648438,
+        "lateralMm": -19.326086044311523,
+        "minimumBottomMarginMm": -5.023909568786621,
+        "power": 0,
+        "band": "soft",
+        "reportedDpi": 460,
+        "dpiSource": "Reported",
+        "mmPerPx": 0.05521738901734352,
+        "physicallyVerified": false,
+        "widthPx": 1206,
+        "heightPx": 2622,
+        "areaPx": [
+          0,
+          690.9841918945312,
+          1206,
+          2436
+        ],
+        "gestureConfigHash": "7d1a61c39766",
+        "gestureParameters": {
+          "aim.flickConfirmSamples": 2,
+          "aim.flickHysteresisMmPerS": 40,
+          "aim.flickMmPerS": 250,
+          "aim.freezeLookbackMs": 50,
+          "aim.freezeOnRelease": 0,
+          "aim.gainMPerMm": 0.12,
+          "aim.holdMaxGapMs": 51,
+          "aim.holdMaxSpeedMmPerS": 15,
+          "aim.holdMinSamples": 3,
+          "aim.holdMs": 120,
+          "aim.holdRadiusMm": 1,
+          "aim.lockFlashMs": 120,
+          "aim.startHeight": 2.2,
+          "gesture.cancelRadiusMm": 6,
+          "gesture.control": 1,
+          "gesture.slingCancelAboveMm": 12,
+          "gesture.slingCancelLateralMm": 20,
+          "gesture.slingCancelMinDepthMm": 8,
+          "gesture.slingPreferLeft": 1,
+          "gesture.slingTarget1X": 0.25,
+          "gesture.slingTarget1Y": 0.15,
+          "gesture.slingTarget2X": 0.75,
+          "gesture.slingTarget2Y": 0.15,
+          "gesture.slingTarget3X": 0.5,
+          "gesture.slingTarget3Y": 0.5,
+          "gesture.slingTarget4X": 0.25,
+          "gesture.slingTarget4Y": 0.8,
+          "gesture.slingTarget5X": 0.75,
+          "gesture.slingTarget5Y": 0.8,
+          "gesture.tapMaxMm": 3,
+          "gesture.tapMaxMs": 250,
+          "input.fallbackDpi": 460,
+          "power.curveExponent": 1,
+          "power.deadZoneMmPerS": 100,
+          "power.fullMmPerS": 1500,
+          "power.maxGapMs": 34,
+          "power.method": 0,
+          "power.minCoverageMs": 30,
+          "power.minSamples": 4,
+          "power.peakDecayMs": 120,
+          "power.peakSmoothingMs": 20,
+          "power.pullDeadZoneMm": 2,
+          "power.pullFullMm": 35,
+          "power.windowMs": 80
+        },
+        "transitions": [
+          {
+            "kind": "Began",
+            "timeReal": 12160.254852249198
+          },
+          {
+            "kind": "Locked",
+            "timeReal": 12160.995554087636,
+            "origin": "timer",
+            "theoreticalTimeReal": 12160.983360083268,
+            "observedTimeReal": 12160.995554087636
+          },
+          {
+            "kind": "PullStarted",
+            "timeReal": 12161.730102290976
+          },
+          {
+            "kind": "CancelEntered",
+            "timeReal": 12162.896965999338
+          },
+          {
+            "kind": "Ended",
+            "timeReal": 12163.617918999467
+          }
+        ],
+        "rawSamples": [
+          {
+            "sequence": 12866,
+            "id": 333,
+            "phase": "Began",
+            "timeReal": 12160.254852249198,
+            "receivedReal": 12160.290454629636,
+            "xPx": 301.9999694824219,
+            "yPx": 850
+          },
+          {
+            "sequence": 12867,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.313254041192,
+            "receivedReal": 12160.327196879636,
+            "xPx": 322.9999694824219,
+            "yPx": 860.0000610351562
+          },
+          {
+            "sequence": 12868,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.329925123926,
+            "receivedReal": 12160.344664629636,
+            "xPx": 335.9999694824219,
+            "yPx": 861.9998779296875
+          },
+          {
+            "sequence": 12869,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.346594082723,
+            "receivedReal": 12160.360765587635,
+            "xPx": 352,
+            "yPx": 872
+          },
+          {
+            "sequence": 12870,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.363270373875,
+            "receivedReal": 12160.377251170636,
+            "xPx": 369.0000305175781,
+            "yPx": 887.0000610351562
+          },
+          {
+            "sequence": 12871,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.379933166163,
+            "receivedReal": 12160.394148087636,
+            "xPx": 386,
+            "yPx": 908
+          },
+          {
+            "sequence": 12872,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.396602291223,
+            "receivedReal": 12160.410756837635,
+            "xPx": 401,
+            "yPx": 927
+          },
+          {
+            "sequence": 12873,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.413284665865,
+            "receivedReal": 12160.427470795636,
+            "xPx": 411,
+            "yPx": 941.9999389648438
+          },
+          {
+            "sequence": 12874,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.429941207845,
+            "receivedReal": 12160.443951087636,
+            "xPx": 419.0000305175781,
+            "yPx": 954.9998779296875
+          },
+          {
+            "sequence": 12875,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.446611249368,
+            "receivedReal": 12160.460719420636,
+            "xPx": 425,
+            "yPx": 962
+          },
+          {
+            "sequence": 12876,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.463292083192,
+            "receivedReal": 12160.477785254636,
+            "xPx": 430,
+            "yPx": 966.9999389648438
+          },
+          {
+            "sequence": 12877,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.47995020774,
+            "receivedReal": 12160.493901837635,
+            "xPx": 434,
+            "yPx": 971.0000610351562
+          },
+          {
+            "sequence": 12878,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.496620040954,
+            "receivedReal": 12160.510107837636,
+            "xPx": 435.9999694824219,
+            "yPx": 974.0000610351562
+          },
+          {
+            "sequence": 12879,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.51330104119,
+            "receivedReal": 12160.527089087636,
+            "xPx": 438.0000305175781,
+            "yPx": 976
+          },
+          {
+            "sequence": 12880,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.52995808283,
+            "receivedReal": 12160.543405629636,
+            "xPx": 440.0000305175781,
+            "yPx": 978
+          },
+          {
+            "sequence": 12881,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.546628041486,
+            "receivedReal": 12160.560063920635,
+            "xPx": 444.9999694824219,
+            "yPx": 980.0000610351562
+          },
+          {
+            "sequence": 12882,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.5633090415,
+            "receivedReal": 12160.577575920635,
+            "xPx": 452.0000305175781,
+            "yPx": 981.9998779296875
+          },
+          {
+            "sequence": 12883,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.579967249041,
+            "receivedReal": 12160.594344045636,
+            "xPx": 461.0000305175781,
+            "yPx": 984.9998779296875
+          },
+          {
+            "sequence": 12884,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.596636373864,
+            "receivedReal": 12160.610627920636,
+            "xPx": 470,
+            "yPx": 989.0001220703125
+          },
+          {
+            "sequence": 12885,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.613306166519,
+            "receivedReal": 12160.627568379636,
+            "xPx": 477,
+            "yPx": 993.9999389648438
+          },
+          {
+            "sequence": 12886,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.62997666567,
+            "receivedReal": 12160.644057920636,
+            "xPx": 483.9999694824219,
+            "yPx": 1000
+          },
+          {
+            "sequence": 12887,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.646645208046,
+            "receivedReal": 12160.660609754636,
+            "xPx": 492.9999694824219,
+            "yPx": 1004.0000610351562
+          },
+          {
+            "sequence": 12888,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.663326082822,
+            "receivedReal": 12160.677541629635,
+            "xPx": 504.9999694824219,
+            "yPx": 1008
+          },
+          {
+            "sequence": 12889,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.679984332555,
+            "receivedReal": 12160.693987629636,
+            "xPx": 518,
+            "yPx": 1011.9998779296875
+          },
+          {
+            "sequence": 12890,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.696653165764,
+            "receivedReal": 12160.710663420636,
+            "xPx": 530,
+            "yPx": 1014.9998779296875
+          },
+          {
+            "sequence": 12891,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.713323083126,
+            "receivedReal": 12160.727494754636,
+            "xPx": 541,
+            "yPx": 1020.0000610351562
+          },
+          {
+            "sequence": 12892,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.729992083037,
+            "receivedReal": 12160.744151420637,
+            "xPx": 551,
+            "yPx": 1023.9999389648438
+          },
+          {
+            "sequence": 12893,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.746662124298,
+            "receivedReal": 12160.760270087636,
+            "xPx": 561,
+            "yPx": 1028
+          },
+          {
+            "sequence": 12894,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.763331374435,
+            "receivedReal": 12160.777429712636,
+            "xPx": 569,
+            "yPx": 1031
+          },
+          {
+            "sequence": 12895,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.780000165778,
+            "receivedReal": 12160.794241629636,
+            "xPx": 577,
+            "yPx": 1035
+          },
+          {
+            "sequence": 12896,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.796670290565,
+            "receivedReal": 12160.810748754635,
+            "xPx": 581,
+            "yPx": 1040.0001220703125
+          },
+          {
+            "sequence": 12897,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.813340166227,
+            "receivedReal": 12160.827355462636,
+            "xPx": 582,
+            "yPx": 1047.9998779296875
+          },
+          {
+            "sequence": 12898,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.830009624966,
+            "receivedReal": 12160.844086837636,
+            "xPx": 582,
+            "yPx": 1057
+          },
+          {
+            "sequence": 12899,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.846679582424,
+            "receivedReal": 12160.861042337636,
+            "xPx": 582,
+            "yPx": 1065
+          },
+          {
+            "sequence": 12900,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.863360083267,
+            "receivedReal": 12160.877583337635,
+            "xPx": 582,
+            "yPx": 1071
+          },
+          {
+            "sequence": 12901,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.880017291018,
+            "receivedReal": 12160.894096087635,
+            "xPx": 582,
+            "yPx": 1074.9998779296875
+          },
+          {
+            "sequence": 12902,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.896687082422,
+            "receivedReal": 12160.910269212636,
+            "xPx": 582,
+            "yPx": 1077
+          },
+          {
+            "sequence": 12903,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.980035249884,
+            "receivedReal": 12160.994466462636,
+            "xPx": 576,
+            "yPx": 1077.9998779296875
+          },
+          {
+            "sequence": 12904,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12160.996704123945,
+            "receivedReal": 12161.010301754635,
+            "xPx": 571,
+            "yPx": 1082
+          },
+          {
+            "sequence": 12905,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.013373208185,
+            "receivedReal": 12161.027417920635,
+            "xPx": 568,
+            "yPx": 1084
+          },
+          {
+            "sequence": 12906,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.025880124114,
+            "receivedReal": 12161.044269087635,
+            "xPx": 565,
+            "yPx": 1085
+          },
+          {
+            "sequence": 12907,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.046724207526,
+            "receivedReal": 12161.060843087636,
+            "xPx": 562,
+            "yPx": 1085
+          },
+          {
+            "sequence": 12908,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.0633932075,
+            "receivedReal": 12161.077388129635,
+            "xPx": 558,
+            "yPx": 1085
+          },
+          {
+            "sequence": 12909,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.080051082507,
+            "receivedReal": 12161.093953962636,
+            "xPx": 554,
+            "yPx": 1085
+          },
+          {
+            "sequence": 12910,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.096721082728,
+            "receivedReal": 12161.110665587636,
+            "xPx": 551,
+            "yPx": 1085
+          },
+          {
+            "sequence": 12911,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.113402207491,
+            "receivedReal": 12161.127713837635,
+            "xPx": 549,
+            "yPx": 1085
+          },
+          {
+            "sequence": 12912,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.146729208152,
+            "receivedReal": 12161.160415462637,
+            "xPx": 549,
+            "yPx": 1084
+          },
+          {
+            "sequence": 12913,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.163410332472,
+            "receivedReal": 12161.177323379636,
+            "xPx": 549,
+            "yPx": 1080
+          },
+          {
+            "sequence": 12914,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.180068082956,
+            "receivedReal": 12161.194148754636,
+            "xPx": 549,
+            "yPx": 1077.9998779296875
+          },
+          {
+            "sequence": 12915,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.192569874504,
+            "receivedReal": 12161.210408754636,
+            "xPx": 549,
+            "yPx": 1076.0001220703125
+          },
+          {
+            "sequence": 12916,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.209240249289,
+            "receivedReal": 12161.227263587636,
+            "xPx": 549,
+            "yPx": 1074
+          },
+          {
+            "sequence": 12917,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.225908125154,
+            "receivedReal": 12161.244032754636,
+            "xPx": 549,
+            "yPx": 1071.9998779296875
+          },
+          {
+            "sequence": 12918,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.246746374558,
+            "receivedReal": 12161.261172170636,
+            "xPx": 549,
+            "yPx": 1071
+          },
+          {
+            "sequence": 12919,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.263415124195,
+            "receivedReal": 12161.277503962636,
+            "xPx": 549,
+            "yPx": 1070.0001220703125
+          },
+          {
+            "sequence": 12920,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.280027040995,
+            "receivedReal": 12161.294113004637,
+            "xPx": 549,
+            "yPx": 1068.9998779296875
+          },
+          {
+            "sequence": 12921,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.330035041296,
+            "receivedReal": 12161.343830712636,
+            "xPx": 549,
+            "yPx": 1068
+          },
+          {
+            "sequence": 12922,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.396713041506,
+            "receivedReal": 12161.410049879636,
+            "xPx": 549,
+            "yPx": 1067.0001220703125
+          },
+          {
+            "sequence": 12923,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.430052041078,
+            "receivedReal": 12161.443219337636,
+            "xPx": 549,
+            "yPx": 1065.9998779296875
+          },
+          {
+            "sequence": 12924,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.446733083178,
+            "receivedReal": 12161.459626587635,
+            "xPx": 549,
+            "yPx": 1065
+          },
+          {
+            "sequence": 12925,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.463391040892,
+            "receivedReal": 12161.476308129635,
+            "xPx": 549,
+            "yPx": 1064
+          },
+          {
+            "sequence": 12926,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.492567040996,
+            "receivedReal": 12161.509889170637,
+            "xPx": 549,
+            "yPx": 1062
+          },
+          {
+            "sequence": 12927,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.513399041369,
+            "receivedReal": 12161.526465462635,
+            "xPx": 549,
+            "yPx": 1061
+          },
+          {
+            "sequence": 12928,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.530068040705,
+            "receivedReal": 12161.543582087636,
+            "xPx": 549,
+            "yPx": 1060
+          },
+          {
+            "sequence": 12929,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.546738291223,
+            "receivedReal": 12161.560081545636,
+            "xPx": 549,
+            "yPx": 1058.9998779296875
+          },
+          {
+            "sequence": 12930,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.563408583035,
+            "receivedReal": 12161.576484504636,
+            "xPx": 549,
+            "yPx": 1058
+          },
+          {
+            "sequence": 12931,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.580077624201,
+            "receivedReal": 12161.593186170636,
+            "xPx": 549,
+            "yPx": 1057
+          },
+          {
+            "sequence": 12932,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.596747124617,
+            "receivedReal": 12161.609902712637,
+            "xPx": 549,
+            "yPx": 1056.0001220703125
+          },
+          {
+            "sequence": 12933,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.609247166089,
+            "receivedReal": 12161.626529254636,
+            "xPx": 549,
+            "yPx": 1055
+          },
+          {
+            "sequence": 12934,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.630085165853,
+            "receivedReal": 12161.643119337636,
+            "xPx": 549,
+            "yPx": 1054
+          },
+          {
+            "sequence": 12935,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.646766208214,
+            "receivedReal": 12161.659790545636,
+            "xPx": 549,
+            "yPx": 1053
+          },
+          {
+            "sequence": 12936,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.659262207906,
+            "receivedReal": 12161.676578170636,
+            "xPx": 549,
+            "yPx": 1050.9998779296875
+          },
+          {
+            "sequence": 12937,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.675931040922,
+            "receivedReal": 12161.693281670636,
+            "xPx": 549,
+            "yPx": 1049.0001220703125
+          },
+          {
+            "sequence": 12938,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.696764166456,
+            "receivedReal": 12161.710162462636,
+            "xPx": 549,
+            "yPx": 1046.0001220703125
+          },
+          {
+            "sequence": 12939,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.713433291015,
+            "receivedReal": 12161.726820337635,
+            "xPx": 549,
+            "yPx": 1043.0001220703125
+          },
+          {
+            "sequence": 12940,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.730102290976,
+            "receivedReal": 12161.743280837636,
+            "xPx": 549,
+            "yPx": 1037.0001220703125
+          },
+          {
+            "sequence": 12941,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.746772582475,
+            "receivedReal": 12161.760355587636,
+            "xPx": 549,
+            "yPx": 1031
+          },
+          {
+            "sequence": 12942,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.763441082188,
+            "receivedReal": 12161.777057587637,
+            "xPx": 550,
+            "yPx": 1020.9999389648438
+          },
+          {
+            "sequence": 12943,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.78011120832,
+            "receivedReal": 12161.793478670636,
+            "xPx": 551,
+            "yPx": 1011
+          },
+          {
+            "sequence": 12944,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.796780041173,
+            "receivedReal": 12161.809839212636,
+            "xPx": 552,
+            "yPx": 1001.9999389648438
+          },
+          {
+            "sequence": 12945,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.813450166428,
+            "receivedReal": 12161.826787504635,
+            "xPx": 553,
+            "yPx": 992
+          },
+          {
+            "sequence": 12946,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.830119333123,
+            "receivedReal": 12161.843302962636,
+            "xPx": 554,
+            "yPx": 984
+          },
+          {
+            "sequence": 12947,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.846789291376,
+            "receivedReal": 12161.859872295636,
+            "xPx": 555,
+            "yPx": 976
+          },
+          {
+            "sequence": 12948,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.863458249254,
+            "receivedReal": 12161.876698837636,
+            "xPx": 556,
+            "yPx": 968.9999389648438
+          },
+          {
+            "sequence": 12949,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.880127415725,
+            "receivedReal": 12161.893406879635,
+            "xPx": 556,
+            "yPx": 962
+          },
+          {
+            "sequence": 12950,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.896797249632,
+            "receivedReal": 12161.909944712635,
+            "xPx": 557,
+            "yPx": 956.0001220703125
+          },
+          {
+            "sequence": 12951,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.913467125018,
+            "receivedReal": 12161.926754254635,
+            "xPx": 557,
+            "yPx": 950.0000610351562
+          },
+          {
+            "sequence": 12952,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.930136208337,
+            "receivedReal": 12161.943347129636,
+            "xPx": 558,
+            "yPx": 944.9999389648438
+          },
+          {
+            "sequence": 12953,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.946810207563,
+            "receivedReal": 12161.959896004635,
+            "xPx": 558,
+            "yPx": 938.9999389648438
+          },
+          {
+            "sequence": 12954,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.963475207689,
+            "receivedReal": 12161.976584004637,
+            "xPx": 558.9999389648438,
+            "yPx": 935
+          },
+          {
+            "sequence": 12955,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.980144374604,
+            "receivedReal": 12161.993382587636,
+            "xPx": 558.9999389648438,
+            "yPx": 930.0000610351562
+          },
+          {
+            "sequence": 12956,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12161.996814041473,
+            "receivedReal": 12162.010271504636,
+            "xPx": 558.9999389648438,
+            "yPx": 926.0001220703125
+          },
+          {
+            "sequence": 12957,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.013483208471,
+            "receivedReal": 12162.026906295636,
+            "xPx": 560,
+            "yPx": 921.9998779296875
+          },
+          {
+            "sequence": 12958,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.025984040765,
+            "receivedReal": 12162.043673420636,
+            "xPx": 560,
+            "yPx": 918.9998779296875
+          },
+          {
+            "sequence": 12959,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.042654124662,
+            "receivedReal": 12162.059852379636,
+            "xPx": 560,
+            "yPx": 917.0000610351562
+          },
+          {
+            "sequence": 12960,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.063492083058,
+            "receivedReal": 12162.076469795637,
+            "xPx": 560,
+            "yPx": 916
+          },
+          {
+            "sequence": 12961,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.09266208295,
+            "receivedReal": 12162.110196837635,
+            "xPx": 560,
+            "yPx": 914.9999389648438
+          },
+          {
+            "sequence": 12962,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.346941999856,
+            "receivedReal": 12162.360551212636,
+            "xPx": 560,
+            "yPx": 916
+          },
+          {
+            "sequence": 12963,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.380270999349,
+            "receivedReal": 12162.393117337635,
+            "xPx": 560,
+            "yPx": 917.0000610351562
+          },
+          {
+            "sequence": 12964,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.413622040836,
+            "receivedReal": 12162.426520420635,
+            "xPx": 560,
+            "yPx": 918
+          },
+          {
+            "sequence": 12965,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.496898166488,
+            "receivedReal": 12162.510431087636,
+            "xPx": 560,
+            "yPx": 914.0000610351562
+          },
+          {
+            "sequence": 12966,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.513579124328,
+            "receivedReal": 12162.526673712635,
+            "xPx": 561,
+            "yPx": 870.0000610351562
+          },
+          {
+            "sequence": 12967,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.53023804167,
+            "receivedReal": 12162.543186462635,
+            "xPx": 576,
+            "yPx": 764.9999389648438
+          },
+          {
+            "sequence": 12968,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.546907041497,
+            "receivedReal": 12162.559974004636,
+            "xPx": 583,
+            "yPx": 687
+          },
+          {
+            "sequence": 12969,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.563587999559,
+            "receivedReal": 12162.576599837636,
+            "xPx": 583,
+            "yPx": 651.9998779296875
+          },
+          {
+            "sequence": 12970,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.580245123994,
+            "receivedReal": 12162.593786587635,
+            "xPx": 583,
+            "yPx": 627.9998779296875
+          },
+          {
+            "sequence": 12971,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.596915082631,
+            "receivedReal": 12162.609962170636,
+            "xPx": 583,
+            "yPx": 611
+          },
+          {
+            "sequence": 12972,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.613596041212,
+            "receivedReal": 12162.626548920636,
+            "xPx": 583,
+            "yPx": 602.0001220703125
+          },
+          {
+            "sequence": 12973,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.630253374638,
+            "receivedReal": 12162.643153254636,
+            "xPx": 583,
+            "yPx": 600
+          },
+          {
+            "sequence": 12974,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.663605041344,
+            "receivedReal": 12162.676599962635,
+            "xPx": 583,
+            "yPx": 606.0000610351562
+          },
+          {
+            "sequence": 12975,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.68026304053,
+            "receivedReal": 12162.693579295636,
+            "xPx": 583,
+            "yPx": 614.9999389648438
+          },
+          {
+            "sequence": 12976,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.696932040597,
+            "receivedReal": 12162.709967295636,
+            "xPx": 583,
+            "yPx": 627.9998779296875
+          },
+          {
+            "sequence": 12977,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.713600999827,
+            "receivedReal": 12162.726584504635,
+            "xPx": 583,
+            "yPx": 654
+          },
+          {
+            "sequence": 12978,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.730271041857,
+            "receivedReal": 12162.743217712636,
+            "xPx": 582,
+            "yPx": 698
+          },
+          {
+            "sequence": 12979,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.746940165933,
+            "receivedReal": 12162.759982629635,
+            "xPx": 568,
+            "yPx": 761.9999389648438
+          },
+          {
+            "sequence": 12980,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.763610083293,
+            "receivedReal": 12162.776786212637,
+            "xPx": 550,
+            "yPx": 834.9998779296875
+          },
+          {
+            "sequence": 12981,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.780279082881,
+            "receivedReal": 12162.793161420635,
+            "xPx": 534,
+            "yPx": 910
+          },
+          {
+            "sequence": 12982,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.796949041101,
+            "receivedReal": 12162.810627712635,
+            "xPx": 511,
+            "yPx": 1001.0000610351562
+          },
+          {
+            "sequence": 12983,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.813624041113,
+            "receivedReal": 12162.826663087635,
+            "xPx": 479,
+            "yPx": 1101
+          },
+          {
+            "sequence": 12984,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.830287082725,
+            "receivedReal": 12162.843372712636,
+            "xPx": 452.0000305175781,
+            "yPx": 1177
+          },
+          {
+            "sequence": 12985,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.846969041482,
+            "receivedReal": 12162.859944837635,
+            "xPx": 433,
+            "yPx": 1216.9998779296875
+          },
+          {
+            "sequence": 12986,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.863638123796,
+            "receivedReal": 12162.876533379636,
+            "xPx": 413,
+            "yPx": 1248
+          },
+          {
+            "sequence": 12987,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.880296041314,
+            "receivedReal": 12162.893312920636,
+            "xPx": 386,
+            "yPx": 1288.0001220703125
+          },
+          {
+            "sequence": 12988,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.896965999338,
+            "receivedReal": 12162.910034587636,
+            "xPx": 355.9999694824219,
+            "yPx": 1336.9998779296875
+          },
+          {
+            "sequence": 12989,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.913647041527,
+            "receivedReal": 12162.927236045636,
+            "xPx": 328,
+            "yPx": 1386.0001220703125
+          },
+          {
+            "sequence": 12990,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.930304332218,
+            "receivedReal": 12162.943366170635,
+            "xPx": 307,
+            "yPx": 1428
+          },
+          {
+            "sequence": 12991,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.946985041383,
+            "receivedReal": 12162.959973712635,
+            "xPx": 293,
+            "yPx": 1463
+          },
+          {
+            "sequence": 12992,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.963655082984,
+            "receivedReal": 12162.976536504635,
+            "xPx": 283,
+            "yPx": 1485
+          },
+          {
+            "sequence": 12993,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.980313083319,
+            "receivedReal": 12162.993262545635,
+            "xPx": 275,
+            "yPx": 1497
+          },
+          {
+            "sequence": 12994,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12162.996982207744,
+            "receivedReal": 12163.011162462635,
+            "xPx": 267,
+            "yPx": 1509.0001220703125
+          },
+          {
+            "sequence": 12995,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.013652124426,
+            "receivedReal": 12163.026936337636,
+            "xPx": 260,
+            "yPx": 1522.0001220703125
+          },
+          {
+            "sequence": 12996,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.030321123864,
+            "receivedReal": 12163.043309962635,
+            "xPx": 252,
+            "yPx": 1537.0001220703125
+          },
+          {
+            "sequence": 12997,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.046991041061,
+            "receivedReal": 12163.060227545635,
+            "xPx": 245,
+            "yPx": 1546.9998779296875
+          },
+          {
+            "sequence": 12998,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.063660124439,
+            "receivedReal": 12163.076668337635,
+            "xPx": 240,
+            "yPx": 1556
+          },
+          {
+            "sequence": 12999,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.080330041108,
+            "receivedReal": 12163.093288212636,
+            "xPx": 234,
+            "yPx": 1564
+          },
+          {
+            "sequence": 13000,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.09699904101,
+            "receivedReal": 12163.109985712636,
+            "xPx": 229.99998474121094,
+            "yPx": 1569.0001220703125
+          },
+          {
+            "sequence": 13001,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.113668124675,
+            "receivedReal": 12163.126570379636,
+            "xPx": 228,
+            "yPx": 1572
+          },
+          {
+            "sequence": 13002,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.130338040639,
+            "receivedReal": 12163.143388795635,
+            "xPx": 228,
+            "yPx": 1573
+          },
+          {
+            "sequence": 13003,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.17617808284,
+            "receivedReal": 12163.193293587636,
+            "xPx": 228,
+            "yPx": 1575
+          },
+          {
+            "sequence": 13004,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.19284704132,
+            "receivedReal": 12163.210179087635,
+            "xPx": 228,
+            "yPx": 1578
+          },
+          {
+            "sequence": 13005,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.213685041117,
+            "receivedReal": 12163.227277170636,
+            "xPx": 228,
+            "yPx": 1581
+          },
+          {
+            "sequence": 13006,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.230355041242,
+            "receivedReal": 12163.243558587636,
+            "xPx": 228,
+            "yPx": 1583
+          },
+          {
+            "sequence": 13007,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.247024041193,
+            "receivedReal": 12163.260283795636,
+            "xPx": 228,
+            "yPx": 1584
+          },
+          {
+            "sequence": 13008,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.276196082898,
+            "receivedReal": 12163.293559962636,
+            "xPx": 227,
+            "yPx": 1584
+          },
+          {
+            "sequence": 13009,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.592973041139,
+            "receivedReal": 12163.610133962637,
+            "xPx": 227,
+            "yPx": 1582.0001220703125
+          },
+          {
+            "sequence": 13010,
+            "id": 333,
+            "phase": "Moved",
+            "timeReal": 12163.609585082844,
+            "receivedReal": 12163.626755587637,
+            "xPx": 227,
+            "yPx": 1580
+          },
+          {
+            "sequence": 13011,
+            "id": 333,
+            "phase": "Ended",
+            "timeReal": 12163.617918999467,
+            "receivedReal": 12163.643397587635,
+            "xPx": 226.00001525878906,
+            "yPx": 1573.9998779296875
+          }
+        ]
+      },
+      "pending": 0,
+      "seed": 0,
+      "metricsValid": false,
+      "droppedSinceRestart": 0
+    }
+  ],
+  "auditAllAttempts": [
+    {
+      "attemptId": "b2319d1b6e5e481298a8300934ff7a99",
+      "block": "B0",
+      "session": 1,
+      "trial": 1,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "0549f55aa73d437ca01185bdd6c9852e",
+      "block": "B0",
+      "session": 1,
+      "trial": 2,
+      "outcome": "ZoneCanceled",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "fddf7c2af0e64f70b1a49c3ce61371da",
+      "block": "B0",
+      "session": 1,
+      "trial": 3,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": [
+        {
+          "sequence": 677,
+          "phase": "Moved",
+          "distanceFromLockMm": 0.05521654646685192
+        }
+      ]
+    },
+    {
+      "attemptId": "3b0fad2f1da64f0ba0fce009436306a4",
+      "block": "B0",
+      "session": 1,
+      "trial": 4,
+      "outcome": "ZoneCanceled",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "def026d5c1004559be15904f9a5f3989",
+      "block": "B0",
+      "session": 1,
+      "trial": 5,
+      "outcome": "ZoneCanceled",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "6578c1f89c6e45799e48560c36ca04dc",
+      "block": "B0",
+      "session": 1,
+      "trial": 6,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "5e3b9256163d43e19c007cda8600d028",
+      "block": "B0",
+      "session": 1,
+      "trial": 7,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "1d169745fd754a75b7b8d7557263857c",
+      "block": "B0",
+      "session": 1,
+      "trial": 8,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "675f0e925d9040419c14feb3209e5634",
+      "block": "B0",
+      "session": 1,
+      "trial": 9,
+      "outcome": "ZoneCanceled",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": [
+        {
+          "sequence": 1549,
+          "phase": "Moved",
+          "distanceFromLockMm": 0.11043477803468704
+        }
+      ]
+    },
+    {
+      "attemptId": "bc7d914f0f254582a8452d3a6120cfe4",
+      "block": "B0",
+      "session": 1,
+      "trial": 10,
+      "outcome": "AbandonedBeforeFix",
+      "lockOrigin": "none",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "1a7005a099804553acf312b368d64dfd",
+      "block": "B0",
+      "session": 1,
+      "trial": 11,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "11bc75075e114452bd2740b2e1819963",
+      "block": "B0",
+      "session": 1,
+      "trial": 12,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "9b61c1528e3945c19fb3b87de23d8cfb",
+      "block": "B0",
+      "session": 1,
+      "trial": 13,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "b5b5256652a046c7a76693028c42f2f3",
+      "block": "B0",
+      "session": 1,
+      "trial": 14,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "dbf2376dcca0487199806abe28b0dae4",
+      "block": "B0",
+      "session": 1,
+      "trial": 15,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "f2c0c962d52b4a109cb4633a9c92d2f5",
+      "block": "B0",
+      "session": 1,
+      "trial": 16,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": [
+        {
+          "sequence": 2179,
+          "phase": "Moved",
+          "distanceFromLockMm": 0.11044151843861982
+        }
+      ]
+    },
+    {
+      "attemptId": "79862ada14014dda964ddebf729cc10c",
+      "block": "B0",
+      "session": 1,
+      "trial": 17,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": [
+        {
+          "sequence": 2291,
+          "phase": "Moved",
+          "distanceFromLockMm": 0.05521738901734352
+        }
+      ]
+    },
+    {
+      "attemptId": "e5296497491b4c95a7abe0233d3169cf",
+      "block": "B0",
+      "session": 1,
+      "trial": 18,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "d8815856e6f54db89561e67a771b509c",
+      "block": "B0",
+      "session": 1,
+      "trial": 19,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "c6f1c790fbc54bb192802e7dd6ad9552",
+      "block": "B0",
+      "session": 1,
+      "trial": 20,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "b83f7ee20e2640e6bcdde4fe9922ce06",
+      "block": "B0",
+      "session": 1,
+      "trial": 21,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "38d41f65b9b34976acb17bf8d82808d0",
+      "block": "B0",
+      "session": 1,
+      "trial": 22,
+      "outcome": "AbandonedBeforeFix",
+      "lockOrigin": "none",
+      "O1InsufficientSupportWindows": [
+        {
+          "afterSequence": 2858,
+          "beforeSequence": 2859,
+          "candidateStartTimeReal": 5968.098074124187,
+          "supportedByFollowingSample": true,
+          "candidateRealSamples": 2,
+          "elapsedAtNextReceiptMs": 129.59279644837807,
+          "timeAbove120msWithInsufficientSupportMs": 9.592796448487206,
+          "lastPositionPx": [
+            882,
+            677.0000610351562
+          ],
+          "geometry": "outside-useful-area",
+          "nextPhase": "Moved"
+        }
+      ],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "aebc1782d2b04712a1ec13ca349f2b95",
+      "block": "B0",
+      "session": 1,
+      "trial": 23,
+      "outcome": "AbandonedBeforeFix",
+      "lockOrigin": "none",
+      "O1InsufficientSupportWindows": [
+        {
+          "afterSequence": 2918,
+          "beforeSequence": 2919,
+          "candidateStartTimeReal": 5970.398415040978,
+          "supportedByFollowingSample": true,
+          "candidateRealSamples": 2,
+          "elapsedAtNextReceiptMs": 163.3217136577514,
+          "timeAbove120msWithInsufficientSupportMs": 43.32171365786053,
+          "lastPositionPx": [
+            793,
+            616
+          ],
+          "geometry": "outside-useful-area",
+          "nextPhase": "Moved"
+        }
+      ],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "f853d344e7904c96a9714fb06f4e69a8",
+      "block": "B0",
+      "session": 1,
+      "trial": 24,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "39bbbeb4b2a648ba8f7eb2cb51726bce",
+      "block": "B0",
+      "session": 1,
+      "trial": 25,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "ac924b513cd74f22849349dd08623a42",
+      "block": "B0",
+      "session": 1,
+      "trial": 26,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": [
+        {
+          "sequence": 3253,
+          "phase": "Moved",
+          "distanceFromLockMm": 0.055215703916360326
+        }
+      ]
+    },
+    {
+      "attemptId": "d63dc314d56240c1a28041b1b1e2a196",
+      "block": "B0",
+      "session": 1,
+      "trial": 27,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "560c43cb2edf423eb54bfc28d78cda1b",
+      "block": "B0",
+      "session": 1,
+      "trial": 28,
+      "outcome": "AbandonedBeforeFix",
+      "lockOrigin": "none",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "259f59749b184e5c814ca6146250da1e",
+      "block": "B0",
+      "session": 1,
+      "trial": 29,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "4a26cf2b1c004521a290bf7777da3a1f",
+      "block": "B0",
+      "session": 1,
+      "trial": 30,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "853fd7b00f934c1e84e4830b15e30251",
+      "block": "B0",
+      "session": 1,
+      "trial": 31,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "67decf6f0abb47d4bb928230fff3a59c",
+      "block": "B1",
+      "session": 2,
+      "trial": 1,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": [
+        {
+          "sequence": 4020,
+          "phase": "Moved",
+          "distanceFromLockMm": 0.11043477803468704
+        }
+      ]
+    },
+    {
+      "attemptId": "cd621122a3d949cc92d8c801c63b1b89",
+      "block": "B1",
+      "session": 2,
+      "trial": 2,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "2a6b4f18c8e04ceab94f7ed0915f058b",
+      "block": "B1",
+      "session": 2,
+      "trial": 3,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "ca78c9e92b5740e2bd5c31130f7636bb",
+      "block": "B1",
+      "session": 2,
+      "trial": 4,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "f0a1c68ed50744b8972e46c2d54a0a05",
+      "block": "B1",
+      "session": 2,
+      "trial": 5,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "f70d01f07e2e48adba0c35ac8c90057d",
+      "block": "B1",
+      "session": 2,
+      "trial": 6,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "fa1a69586de64ed987b07dc873ae8ab4",
+      "block": "B1",
+      "session": 2,
+      "trial": 7,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "dbfafed23cd441a7b0f35e9927a182e3",
+      "block": "B1",
+      "session": 2,
+      "trial": 8,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": [
+        {
+          "sequence": 4420,
+          "phase": "Moved",
+          "distanceFromLockMm": 0.11044151843861982
+        }
+      ]
+    },
+    {
+      "attemptId": "7b66a8a616f646f1960186682044c295",
+      "block": "B1",
+      "session": 2,
+      "trial": 9,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "4c6a2ce9001c4c23b95224cb04904bcb",
+      "block": "B1",
+      "session": 2,
+      "trial": 10,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "ae3520180dd84401bb221c1950b2eba9",
+      "block": "B1",
+      "session": 3,
+      "trial": 1,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "e1aac07771984a62b344dc18b721f174",
+      "block": "B1",
+      "session": 3,
+      "trial": 2,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "e6f02bca2bb64536b79e841f8a84dfb4",
+      "block": "B1",
+      "session": 3,
+      "trial": 3,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "1c406099d89241dfbe16f3abd6ba3433",
+      "block": "B1",
+      "session": 3,
+      "trial": 4,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "51d4e172d68a4272b46602fbbaa4fe9a",
+      "block": "B1",
+      "session": 3,
+      "trial": 5,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "1ae6e28ee5c7499b88aca2a263d58bb4",
+      "block": "B1",
+      "session": 3,
+      "trial": 6,
+      "outcome": "AbandonedBeforeFix",
+      "lockOrigin": "none",
+      "O1InsufficientSupportWindows": [
+        {
+          "afterSequence": 4915,
+          "beforeSequence": 4916,
+          "candidateStartTimeReal": 7562.70152320799,
+          "supportedByFollowingSample": true,
+          "candidateRealSamples": 2,
+          "elapsedAtNextReceiptMs": 267.2113796452322,
+          "timeAbove120msWithInsufficientSupportMs": 147.21137964534137,
+          "lastPositionPx": [
+            382.0000305175781,
+            633.9999389648438
+          ],
+          "geometry": "outside-useful-area",
+          "nextPhase": "Moved"
+        }
+      ],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "d31489aff786477bb86d9504d0f00680",
+      "block": "B1",
+      "session": 3,
+      "trial": 7,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "cc0bbd9837d745a88cc325797a6fbf8f",
+      "block": "B1",
+      "session": 3,
+      "trial": 8,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "47ae5aa85fa1405cab3de23344028b7f",
+      "block": "B1",
+      "session": 3,
+      "trial": 9,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "699397edd03043638c0a344f1eb861b3",
+      "block": "B1",
+      "session": 3,
+      "trial": 10,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": [
+        {
+          "sequence": 5133,
+          "phase": "Moved",
+          "distanceFromLockMm": 0.17460525548555278
+        }
+      ]
+    },
+    {
+      "attemptId": "524b1ba463a34c1bbf0735c65b2798e7",
+      "block": "B2-soft",
+      "session": 4,
+      "trial": 1,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "61094a47140a466ca9744d8fa78b9370",
+      "block": "B2-soft",
+      "session": 4,
+      "trial": 2,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "c6d9428ec14142d9ac2b233d03d678b3",
+      "block": "B2-soft",
+      "session": 4,
+      "trial": 3,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "6f1488fdc83c44f5813934b2de56702c",
+      "block": "B2-soft",
+      "session": 4,
+      "trial": 4,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "ff65e5dc364b4b7797fba1e06693a5c8",
+      "block": "B2-soft",
+      "session": 4,
+      "trial": 5,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "476ca2ac651149099aad17b170cbab69",
+      "block": "B2-soft",
+      "session": 4,
+      "trial": 6,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "3b9517f0b1f441f5b8d59aaa96f5e37e",
+      "block": "B2-soft",
+      "session": 4,
+      "trial": 7,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "63ab9c0f454749b88bc951e0515a5b97",
+      "block": "B2-soft",
+      "session": 4,
+      "trial": 8,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "019c41ca84ae4b18bba09e9499630362",
+      "block": "B2-soft",
+      "session": 4,
+      "trial": 9,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "7a94fa2f11724db9a3d77226a6dc6999",
+      "block": "B2-soft",
+      "session": 4,
+      "trial": 10,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "82070a50f7aa4df99c123868102f0f96",
+      "block": "B2-medium",
+      "session": 5,
+      "trial": 1,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "a3a74035f65d4f3c96048dbd31efcb64",
+      "block": "B2-medium",
+      "session": 5,
+      "trial": 2,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "a7a5925cdb9d4c4383072a6fffa98c9d",
+      "block": "B2-medium",
+      "session": 5,
+      "trial": 3,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "0a301149e1bc455fa1c22550fa0807f0",
+      "block": "B2-medium",
+      "session": 5,
+      "trial": 4,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "08f74e11903441e0a5b962d424823e7a",
+      "block": "B2-medium",
+      "session": 5,
+      "trial": 5,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "cd17101553584243a06c4fa46963526b",
+      "block": "B2-medium",
+      "session": 5,
+      "trial": 6,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "549169b85d58419bb6da51c06bdabcfe",
+      "block": "B2-medium",
+      "session": 5,
+      "trial": 7,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "dc8eed72a36c4c249e1dc5714afa3b79",
+      "block": "B2-medium",
+      "session": 5,
+      "trial": 8,
+      "outcome": "AbandonedBeforeFix",
+      "lockOrigin": "none",
+      "O1InsufficientSupportWindows": [
+        {
+          "afterSequence": 7814,
+          "beforeSequence": 7815,
+          "candidateStartTimeReal": 9092.184040166516,
+          "supportedByFollowingSample": true,
+          "candidateRealSamples": 2,
+          "elapsedAtNextReceiptMs": 680.0295881203056,
+          "timeAbove120msWithInsufficientSupportMs": 560.0295881195052,
+          "lastPositionPx": [
+            722,
+            591
+          ],
+          "geometry": "outside-useful-area",
+          "nextPhase": "Moved"
+        }
+      ],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "6eb3d0d31d9847aeb0296fb33cfe52da",
+      "block": "B2-medium",
+      "session": 5,
+      "trial": 9,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "a2848c39d21d49bda385ca0f6189f328",
+      "block": "B2-medium",
+      "session": 5,
+      "trial": 10,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "74fcbc9cc84a4c6e99d9c9a82b08003c",
+      "block": "B2-strong",
+      "session": 6,
+      "trial": 1,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "c70045e6c0924c4a8788440a6a59a721",
+      "block": "B2-strong",
+      "session": 6,
+      "trial": 2,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "31aec65598e34f81aa10d8259f273988",
+      "block": "B2-strong",
+      "session": 6,
+      "trial": 3,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "47bf801c85c846168978550432ecb7aa",
+      "block": "B2-strong",
+      "session": 6,
+      "trial": 4,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "0b75faa6eee24e0a9bd6ba6b6bf59e8e",
+      "block": "B2-strong",
+      "session": 6,
+      "trial": 5,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "be21257e4c5b49cab95f7d09d5cc8650",
+      "block": "B2-strong",
+      "session": 6,
+      "trial": 6,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "4459eb9733cd4ef79a11d91169e96926",
+      "block": "B2-strong",
+      "session": 6,
+      "trial": 7,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "81bfe57e203b4e3e8bf478fcf6a00a94",
+      "block": "B2-strong",
+      "session": 6,
+      "trial": 8,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": [
+        {
+          "sequence": 9380,
+          "phase": "Moved",
+          "distanceFromLockMm": 0.11043477803468704
+        }
+      ]
+    },
+    {
+      "attemptId": "4b5b9f5cc2314cbc978613291dda8c50",
+      "block": "B2-strong",
+      "session": 6,
+      "trial": 9,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "65c3a1a134114792918d76416e6304fb",
+      "block": "B2-strong",
+      "session": 6,
+      "trial": 10,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "2efa8192213f4ccd9260550a0ed37ad2",
+      "block": "preview",
+      "session": 6,
+      "trial": 0,
+      "outcome": "AbandonedBeforeFix",
+      "lockOrigin": "none",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "6f2177c44aec438699f5192745b83c70",
+      "block": "B3",
+      "session": 7,
+      "trial": 1,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "a83b63d168b447eba9e9cdee942ebb99",
+      "block": "B3",
+      "session": 7,
+      "trial": 2,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "35bf4ea52c414e2096600fe47b6cace8",
+      "block": "B3",
+      "session": 7,
+      "trial": 3,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": [
+        {
+          "sequence": 10199,
+          "phase": "Moved",
+          "distanceFromLockMm": 0.05521738901734352
+        }
+      ]
+    },
+    {
+      "attemptId": "48e9006c2df147b8ad4e86364ade6e4c",
+      "block": "B3",
+      "session": 7,
+      "trial": 4,
+      "outcome": "AbandonedBeforeFix",
+      "lockOrigin": "none",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "349a5f5113ae4d468860bdca51261b0c",
+      "block": "B3",
+      "session": 7,
+      "trial": 5,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "8175cc3b89954ef4878081eca6d5228e",
+      "block": "B3",
+      "session": 7,
+      "trial": 6,
+      "outcome": "AbandonedBeforeFix",
+      "lockOrigin": "none",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "166a1603065647f1a40bb09aa21d3556",
+      "block": "B3",
+      "session": 7,
+      "trial": 7,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "09364cadd5804b6bba7ab2a3ae0a5925",
+      "block": "B3",
+      "session": 7,
+      "trial": 8,
+      "outcome": "ZoneCanceled",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "50e7761dc67849a6b6f00bdf678007a7",
+      "block": "B3",
+      "session": 7,
+      "trial": 9,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "a3759c61255a4a728edc41d9bd570698",
+      "block": "B3",
+      "session": 7,
+      "trial": 10,
+      "outcome": "AbandonedBeforeFix",
+      "lockOrigin": "none",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "2a12cbd653dc42919a9d0287d679afac",
+      "block": "B4",
+      "session": 8,
+      "trial": 1,
+      "outcome": "ZoneCanceled",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "b5b9d19cfe754ec88576eac00a78b46b",
+      "block": "B4",
+      "session": 8,
+      "trial": 2,
+      "outcome": "ZoneCanceled",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "6fdcc7d83d194bb1a5fbc673c2e660b3",
+      "block": "B4",
+      "session": 8,
+      "trial": 3,
+      "outcome": "ZoneCanceled",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "2f171051e5a74c71a02ac97ecaf146e0",
+      "block": "B4",
+      "session": 8,
+      "trial": 4,
+      "outcome": "ZoneCanceled",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": [
+        {
+          "sequence": 11192,
+          "phase": "Moved",
+          "distanceFromLockMm": 0.11042466742878787
+        }
+      ]
+    },
+    {
+      "attemptId": "1b4d96721dcb445dba71fbe38ef4a337",
+      "block": "B4",
+      "session": 8,
+      "trial": 5,
+      "outcome": "ZoneCanceled",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "f67f21efb8364e68ae34a0c585649bcf",
+      "block": "B5",
+      "session": 9,
+      "trial": 1,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "7f5b67ff4a664ae788445b306fdb62b0",
+      "block": "B5",
+      "session": 9,
+      "trial": 2,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "158cf67278944bb8a07ed99dddae8431",
+      "block": "B5",
+      "session": 9,
+      "trial": 3,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "dda7734336124117866a4d5e3ec889ae",
+      "block": "B5",
+      "session": 9,
+      "trial": 4,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "7f88c247e68b4810a8974093f7c00089",
+      "block": "B5",
+      "session": 9,
+      "trial": 5,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "6ca51c5fa8554a5c9de10621c0bbd879",
+      "block": "B5",
+      "session": 9,
+      "trial": 6,
+      "outcome": "AbandonedBeforeFix",
+      "lockOrigin": "none",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "a67147b541754fab89ebf150616cc185",
+      "block": "B5",
+      "session": 9,
+      "trial": 7,
+      "outcome": "AbandonedBeforeFix",
+      "lockOrigin": "none",
+      "O1InsufficientSupportWindows": [
+        {
+          "afterSequence": 12327,
+          "beforeSequence": 12328,
+          "candidateStartTimeReal": 12084.412948082549,
+          "supportedByFollowingSample": true,
+          "candidateRealSamples": 1,
+          "elapsedAtNextReceiptMs": 2184.568213087914,
+          "timeAbove120msWithInsufficientSupportMs": 2064.5682130871137,
+          "lastPositionPx": [
+            536,
+            515
+          ],
+          "geometry": "outside-useful-area",
+          "nextPhase": "Moved"
+        },
+        {
+          "afterSequence": 12328,
+          "beforeSequence": 12329,
+          "candidateStartTimeReal": 12084.412948082549,
+          "supportedByFollowingSample": true,
+          "candidateRealSamples": 2,
+          "elapsedAtNextReceiptMs": 2234.5183380875824,
+          "timeAbove120msWithInsufficientSupportMs": 49.95012499966833,
+          "lastPositionPx": [
+            536,
+            516.0000610351562
+          ],
+          "geometry": "outside-useful-area",
+          "nextPhase": "Moved"
+        }
+      ],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "ded791744048447d94a05e75fac96761",
+      "block": "B5",
+      "session": 9,
+      "trial": 8,
+      "outcome": "Swing",
+      "lockOrigin": "sample",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "60f2251a5c864671b98a55c70b8db2bb",
+      "block": "B5",
+      "session": 9,
+      "trial": 9,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "c60d813f86814589af32ed8787c12ee6",
+      "block": "B5",
+      "session": 9,
+      "trial": 10,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "bd9398fee4bb40b7b8556f96c4e6eac2",
+      "block": "preview",
+      "session": 9,
+      "trial": 0,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "5537a39c2a0444e1b80e20af9cc26e03",
+      "block": "preview",
+      "session": 9,
+      "trial": 0,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "6aa04605848d48afb3c9f808a8f637de",
+      "block": "preview",
+      "session": 9,
+      "trial": 0,
+      "outcome": "Swing",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    },
+    {
+      "attemptId": "4a204bccf51046b59abc734d46b0e0b8",
+      "block": "preview",
+      "session": 9,
+      "trial": 0,
+      "outcome": "ZoneCanceled",
+      "lockOrigin": "timer",
+      "O1InsufficientSupportWindows": [],
+      "O2LateSamplesPrecedingObservedLock": []
+    }
+  ],
+  "finalRestoration": {
+    "restartAttempts": [
+      {
+        "attempt": 1,
+        "success": false,
+        "reason": "CoreDevice10002_DeviceLocked_NoStartupClaim"
+      },
+      {
+        "attempt": 2,
+        "success": true,
+        "followedPOLocalMirroringReady": true
+      }
+    ],
+    "firstNewStartup": {
+      "ts": "2026-10-28T15:16:26.2320980Z",
+      "kind": "launch",
+      "phase": "free",
+      "build": "0.1.0+4cec622 dev",
+      "presetName": "P0-calib-1",
+      "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "effectiveHash": "e458bfd5ce9e",
+      "payload": {},
+      "pending": 0,
+      "seed": 0,
+      "metricsValid": true,
+      "droppedSinceRestart": 0
+    },
+    "subsequentLaunchesVerified": 5,
+    "allNewLaunchesP0ExpectedHashPending0": true,
+    "persistedSelection": "P0-calib-1",
+    "threeFilesDirectlyByteIdentical": true,
+    "threeFileSha256": {
+      "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+      "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+      "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
+    },
+    "visualObservation": "4cec622 dev, normal court, DEVclosed, Pausa button, no report/protocol.",
+    "postStartupRecordKinds": {
+      "launch": 5,
+      "frames": 4
+    },
+    "newProtocolOrGestureAfterRestore": false
+  },
+  "sourceFilesVerifiedUnchanged": 444,
+  "profileExpiresUtc": "2026-11-03T18:29:44Z",
+  "newCodeTestsBuildOrInstallation": false,
+  "S1Accepted": false,
+  "S2ThroughS4AndT8Authorized": false,
+  "PRMerged": false,
+  "all111RawRecordsIndividuallyMatchedToFinalCapture": true,
+  "protectedFilesVerifiedUnchanged": 35
+}

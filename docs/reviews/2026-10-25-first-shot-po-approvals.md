@@ -707,3 +707,31 @@ POliteral: **«Listo, hice las 3 tandas»**. Se conservan30intentos deB2 suave/m
 ### Aclaración de tarea B2 e instrucción B3 — 2026-10-28
 
 Respuesta literalPO: **«no, no intente aputnar al cuadrado cenral, apuntabaa simulando golpes»**. B2no buscóT3 en sus tres tandas: potencias ydistancias conservadas/sin sustitución; distancia alcuadrado no se interpreta como precisiónintentandoacertarlo. Adhesión de tarea separada de comparabilidad deconfig. No nueva decisión de aceptación ni ajuste. B3solicitado según autorizaciónprevia: diezmedios buscandoT1/T2bajos,izquierda/precheckhash7d1/0pendientes/Jugando; antes se aclaró que feedback«Se fijó antes de tiempo» soloesanticipaciónobservada,OKparalosdemásresultadossinconvertirlos enacierto. Pendiente devolucióndelbloque,noB4todavía. [Informe/evidencia](2026-10-28-first-shot-s1-sl04-session.md);restauraciónP0alcierrependiente/PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.
+
+
+### Cierre de sesión SL-S1-04, sin aceptación ni autorización adicional — 2026-10-28
+
+[Informe deB3–B5,111registros separados,16preguntas/respuestas literales y restauración](2026-10-28-first-shot-s1-sl04-session.md). PO completóB3/B4/B5 antes de nueva instrucción separada paraB4/B5; se conserva la cronología. Literal de devolución íntegro en informe/evidencia; «Se fijó antes de tiempo» volvió a incluir ausencia de rombo, sin tasa de fijaciones prematuras. B4literal «Sin problemas»;cincoZoneCanceled. B3tresabandonos/una cancelación/B5dosabandonos, sin sustituir. Ninguna nueva decisión de aceptación, ajuste, código o práctica inferida.
+
+Las16preguntas se presentaron cada una por separado. Se registran sin ampliación:
+
+- ¿Puedo colocar la mira donde quiero? → **«A veces si, otras veces no»**.
+- ¿Puedo apuntar bajo sin activar accidentalmente la potencia? → **«A veces si otras veces no»**.
+- ¿La mira permanece estable después de fijarse? → **«si»**.
+- ¿Cuántas fijaciones involuntarias ocurren? → **«yo creo que un 30 - 40%»**.
+- ¿Cuánto tiempo necesito para fijar la mira? → **«poco tiempo»**.
+- ¿Entiendo claramente cuándo quedó fijada? → **«si»**.
+- ¿Puedo conseguir golpes suaves, medios y fuertes voluntariamente? → **«si»**.
+- ¿La potencia responde de forma consistente a la distancia? → **«si»**.
+- ¿Puedo alcanzar la potencia máxima cómodamente? → **«si»**.
+- ¿Existen limitaciones por el borde inferior de la pantalla? → **«no»**.
+- ¿Puedo cancelar cuando realmente quiero? → **«si»**.
+- ¿Ocurren cancelaciones accidentales? → **«no»**.
+- ¿La zona interfiere con los movimientos normales? → **«si»**.
+- ¿Cuánto demora el gesto completo, desde apoyar el dedo hasta soltar? → **«1 segundo creo maximo»**.
+- ¿Se siente natural o demasiado mecánico? → **«igual es mecanico, me gustaría algo que fuera natural»**.
+- ¿Podría utilizarlo repetidamente durante un rally rápido? → **«si, pero se vería como pausado»**.
+
+«30 - 40%» y«1 segundo creo maximo» son estimaciones subjetivas, no métricas/umbrales. PO no aceptaS1 por estas respuestas. Registros de potencia/cancelación conservados junto a apuntado bajo intermitente,zona que interfiere ygesto mecánico/rally pausado; no cambiar el diseño a partir de inferencias. No se solicita repetir ni continuar una sesión.
+
+Restauración verificada: proceso nuevo2026-10-28T15:16:26.232098Z/4cec622 dev/P0-calib-1/e458bfd5ce9e/0pendientes;cinco lanzamientosP0/normal/DEVcerrado/Pausa y3archivos directamente iguales al respaldo. Primer intento coniPhonebloqueado rechazado,no éxito.444fuentes/35protegidos intactos,sin nuevos suites/check/build/instalación/código/defaults/presets/spec/planes/criterios/bandas/umbrales. Perfil renovado hasta2026-11-03T18:29:44Z;vigencia efectiva antes de cualquier futura instalación,ninguna autorizada ahora. PR#25lista paraClaude,sin fusionar;detenerse. **S1sin aceptar;S2–S4/T8sin autorizar.**

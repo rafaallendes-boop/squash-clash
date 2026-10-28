@@ -107,7 +107,7 @@
   "experimentalPresetHash": "7d1a61c39766",
   "P0Hash": "e458bfd5ce9e",
   "simulationKey": "166a96e319c7",
-  "newPhysicalSession": "B0B1B2Recorded_B3Pending",
+  "newPhysicalSession": "CompletedWithProtocolDeviations_All16AnswersRecorded_P0Restored",
   "installation": "Succeeded_AfterEmbeddedProfileAndSourceValidation",
   "observationsForNewSession": [
     "O1 quiet candidates with <3 real samples",
@@ -206,10 +206,15 @@
     "POUnderstandingAndVoluntariness": "ConfirmedByDirectLiteralAnswers",
     "countdownConfirmationBeforeGestureCommunicated": false,
     "B1ThroughB5Started": true,
-    "finalP0Restoration": "PendingSessionContinuationOrStop"
+    "finalP0Restoration": "VerifiedNewStartup_2026-10-28T15:16:26.232098Z_e458bfd5ce9e_Pending0_ThreeFilesByteIdentical"
   },
   "formalSessionEvidence": [
     "2026-10-28-s1-sl04-B1.json",
-    "2026-10-28-s1-sl04-B2.json"
-  ]
+    "2026-10-28-s1-sl04-B2.json",
+    "2026-10-28-s1-sl04-B3-B4-B5.json",
+    "2026-10-28-s1-sl04-po-final-answers.json",
+    "2026-10-28-s1-sl04-session-closure.json"
+  ],
+  "sessionAcceptedByPO": false,
+  "finalLiteralAnswersRecorded": 16
 }

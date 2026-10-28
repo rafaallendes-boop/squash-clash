@@ -75,3 +75,10 @@ Nueva carga deS1-sling desdeDEV, last-activeP0 original repuesto **antes** de ap
 ## B2 nativo completo — 28 de octubre
 
 [Informe formal](2026-10-28-first-shot-s1-sl04-session.md)/[evidenciaB2](../validation/evidence/2026-10-28-s1-sl04-B2.json):30intentos,3777muestras,tres bloques completos/hash7d1a61c39766/0pendientes; bandas solicitadasconSwing5/10suaves,9/10medios,9/10fuertes. Sin sustitución de abandono/P0 ni nueva interpretación de aceptación. Tres armados auditados aceptados/sinpausa/focusedtrue;sin cambios/P2/H17/Escenario.3archivosiguales/444fuentesintactas. ContinuarB3solo tras aclarar uso defeedback, no ajustes;P0restauración finalpendiente. Sin código/suites/build/instalación nuevos;PRsin fusionar/S1sin aceptar.
+
+
+## Cierre de la sesión física y restauración — 28 de octubre
+
+[Informe completo](2026-10-28-first-shot-s1-sl04-session.md)/[B3–B5](../validation/evidence/2026-10-28-s1-sl04-B3-B4-B5.json)/[16respuestas literales](../validation/evidence/2026-10-28-s1-sl04-po-final-answers.json)/[inventario-restauración](../validation/evidence/2026-10-28-s1-sl04-session-closure.json).111gestos/10754muestras:31práctica,65formales originales,10B1extra,5preview;datos separados,sin sustitución. B3tresabandonos/feedbackmixto,B4cincoZoneCanceled,B5dosabandonos;no causa nueva deD2 demostrada ni ajustes. POvalora potencia/cancelación,pero reporta apuntado intermitente/30–40%estimado de fijacionesinvoluntarias/zona que interfiere/gesto mecánico/rally pausado. Juicios literales,no tasas nuevas ni aceptaciónS1. DesviacionesB2sin buscarT3 yB4/B5sin nueva instrucción separada conservadas.
+
+RestauraciónP0confirmada en proceso nuevo15:16:26.232098Z/e458bfd5ce9e/0pendientes,normal/DEVcerrado/Pausa;3archivos directamente iguales alrespaldo.444fuentes/35protegidos intactos,sin suites/check/build/instalación/código nuevos. Regresión técnica411/194 ycheck-release dev/prod de4cec622 conservados,sin repetir. Entrega lista paraClaude,PRsin fusionar ydetenerse;S1sin aceptar/S2–S4/T8sin autorizar. Perfil actualvence2026-11-03T18:29:44Z;comprobar vigencia efectiva antes de instalación futura,ninguna autorizada ahora.
