@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Linq;
 using SquashClash.Core.Config;
 using SquashClash.Core.Shot;
 using UnityEngine;
@@ -133,12 +134,32 @@ namespace SquashClash.Runtime.Shot
             if(!Sling.Active)FinishGesture();
             if(sample.Phase==TouchPhaseKind.Canceled&&Sampling)FinishSampling(input.ReadRealTime(),false,"touch-canceled");
         }
+        public bool ProtectSlingProtocol=>app!=null&&(app.Tuning.Applied.GetInt("gesture.control")==1||
+            app.Tuning.Visible.GetInt("gesture.control")==1||SlingTrials.Running||SlingTrials.AwaitingFeedback||blockState=="active");
+        public string SlingArmRejection {get;private set;}=string.Empty;
+        public string SlingReadinessText=>app.ActivePresetName+" · "+EffectiveConfig.From(CurrentGestureSource()).Hash+" · "+
+            (!app.DevHasInputFocus?"Sin foco":app.Clock.Paused?"Pausa":app.Tuning.PendingKeys.Count>0?"Pendientes":app.Tuning.Applied.Get("launcher.repeatSeconds")!=0?"Repetición activa":"Listo");
+        private bool RejectSlingArm(string block,string reason,string remedy)
+        {
+            SlingArmRejection=block+": "+remedy;Status="No se inició "+SlingArmRejection;
+            app.RecordDevControl("sling-"+block,false,reason);return false;
+        }
         public bool ArmSlingBlock(string block)
         {
-            if(!CanMeasure()||Active||app.Tuning.Applied.GetInt("gesture.control")!=1||
-                app.Tuning.Applied.Get("launcher.repeatSeconds")!=0||app.Tuning.PendingKeys.Count!=0)
-            {Status="No se armó: comprueba control S1-sling, repetición 0, cero pendientes y ningún gesto activo.";return false;}
-            if(!SlingTrials.Arm(block)){Status="Falta la respuesta del intento anterior.";return false;}
+            app.RecordDevControl("sling-"+block,true,"invoked","activation");
+            if(!new[]{"B0","B1","B2-soft","B2-medium","B2-strong","B3","B4","B5"}.Contains(block))
+                return RejectSlingArm(block,"unknown-block","Bloque desconocido. Usa un botón B0–B5 del protocolo.");
+            if(!initialized)return RejectSlingArm(block,"not-ready","Espera a que termine el arranque y vuelve a pulsar el bloque.");
+            if(!app.DevHasInputFocus)return RejectSlingArm(block,"focus","Vuelve a la app, continúa si lo pide y vuelve a pulsar el bloque.");
+            if(app.Clock.Paused)return RejectSlingArm(block,"paused","Juego en pausa. Pulsa Continuar en la barra y vuelve a pulsar el bloque.");
+            if(resume.IsVisible)return RejectSlingArm(block,"resume-overlay","Toca para continuar y vuelve a pulsar el bloque.");
+            if(input.BlockedByUi)return RejectSlingArm(block,"dev-open","Cierra DEV antes de iniciar el bloque.");
+            if(Active)return RejectSlingArm(block,"active-gesture","Levanta el dedo y vuelve a pulsar el bloque.");
+            if(app.Tuning.Applied.GetInt("gesture.control")!=1)return RejectSlingArm(block,"wrong-control","Carga S1-sling, aplica y relanza antes del bloque.");
+            if(app.Tuning.PendingKeys.Count!=0)return RejectSlingArm(block,"pending-changes","Aplica y relanza los cambios pendientes; verifica preset y hash.");
+            if(app.Tuning.Applied.Get("launcher.repeatSeconds")!=0)return RejectSlingArm(block,"repeat-not-zero","Pon repetición en 0, aplica y relanza sin guardar.");
+            if(!SlingTrials.Arm(block))return RejectSlingArm(block,"pending-feedback","Responde el intento anterior con OK o Se fijó antes de tiempo.");
+            SlingArmRejection=string.Empty;
             var config=EffectiveConfig.From(CurrentGestureSource());slingBlockHash=config.Hash;
             ProtocolTarget=TargetPosition(SlingTrials.TargetId,config.Source);
             string json="{\"schema\":1,\"block\":"+Q(block)+",\"session\":"+SlingTrials.Session+
@@ -147,7 +168,7 @@ namespace SquashClash.Runtime.Shot
             Status=block+" preparado · hash "+config.Hash+" · cero pendientes · repetición 0";
             StartSlingBlockTimer(block,input.ReadRealTime());
             if(block=="B0")BeginSamplingWindow();
-            return true;
+            app.RecordDevControl("sling-"+block,true,"armed");return true;
         }
         public bool RespondSling(bool premature)
         {

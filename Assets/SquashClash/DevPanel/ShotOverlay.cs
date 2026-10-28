@@ -33,8 +33,8 @@ namespace SquashClash.DevPanel
             {label.style.flexShrink=0;label.style.marginTop=label.style.marginBottom=0;label.style.paddingTop=label.style.paddingBottom=0;}
             compact.style.height=timer.style.height=24;
             feedback=new VisualElement {name="sling-feedback",pickingMode=PickingMode.Ignore};feedback.style.flexDirection=FlexDirection.Row;
-            var ok=new Button(()=>preview.RespondSling(false)) {name="sling-ok",text="OK"};
-            var premature=new Button(()=>preview.RespondSling(true)) {name="sling-premature",text="Se fijó antes de tiempo"};
+            var ok=new Button(()=>DevControlLog.Try(app,"sling-ok",()=>preview.RespondSling(false))) {name="sling-ok",text="OK"};
+            var premature=new Button(()=>DevControlLog.Try(app,"sling-premature",()=>preview.RespondSling(true))) {name="sling-premature",text="Se fijó antes de tiempo"};
             foreach(var button in new[]{ok,premature}){button.style.height=44;button.style.fontSize=13;button.style.flexGrow=1;feedback.Add(button);}
             feedback.style.display=DisplayStyle.None;layer.Add(feedback);
             details=new VisualElement {name="shot-protocol"};details.style.flexShrink=0;
@@ -71,7 +71,7 @@ namespace SquashClash.DevPanel
         }
         private void AddButton(VisualElement row,string name,string text,Action action)
         {
-            var button=new Button(()=>{if(panel.IsOpen)panel.Toggle();action();}) {name=name,text=text};button.style.flexGrow=1;button.style.flexBasis=0;button.style.minWidth=0;button.style.height=44;
+            var button=new Button(()=>{app.RecordDevControl(name,true,"clicked","ui-activation");if(panel.IsOpen)panel.Toggle();if(name.StartsWith("sling-",StringComparison.Ordinal))action();else DevControlLog.Run(app,name,action);}) {name=name,text=text};button.style.flexGrow=1;button.style.flexBasis=0;button.style.minWidth=0;button.style.height=44;
             button.style.fontSize=12;button.style.whiteSpace=WhiteSpace.Normal;row.Add(button);
         }
         private static string F(double n,string format="F1")=>double.IsNaN(n)||double.IsInfinity(n)?"?":n.ToString(format,System.Globalization.CultureInfo.InvariantCulture);
@@ -82,17 +82,19 @@ namespace SquashClash.DevPanel
             bool sling=preview.Active?preview.Sling!=null:app.Tuning.Applied.GetInt("gesture.control")==1;
             var trials=preview.SlingTrials;
             bool showProtocol=trials.AwaitingFeedback||sling&&(trials.Running||preview.HasSlingProtocolStatus);
+            bool notice=preview.SlingArmRejection.Length>0;
             feedback.style.display=showProtocol&&trials.AwaitingFeedback?DisplayStyle.Flex:DisplayStyle.None;
-            layer.style.display=!sling||showProtocol?DisplayStyle.Flex:DisplayStyle.None;
-            timer.style.display=showProtocol?DisplayStyle.Flex:DisplayStyle.None;timer.text=preview.ProtocolTimingText;
-            guide.style.display=showProtocol&&preview.SlingGuidanceText.Length>0?DisplayStyle.Flex:DisplayStyle.None;guide.text=preview.SlingGuidanceText;
+            layer.style.display=DisplayStyle.Flex;
+            timer.style.display=showProtocol&&!notice?DisplayStyle.Flex:DisplayStyle.None;timer.text=preview.ProtocolTimingText;
+            guide.style.display=notice||showProtocol&&preview.SlingGuidanceText.Length>0?DisplayStyle.Flex:DisplayStyle.None;guide.text=notice?preview.SlingArmRejection:preview.SlingGuidanceText;
             layer.style.height=ProtocolHeight(showProtocol);
-            if(showProtocol)
+            if(notice)compact.text="No se inició el bloque";
+            else if(showProtocol)
             {
                 string requested=trials.RequestedPower=="soft"?"suave":trials.RequestedPower=="medium"?"media":trials.RequestedPower=="strong"?"fuerte":trials.RequestedPower=="cancel"?"cancelar":"práctica";
                 compact.text=trials.Block=="B0"?"B0 · práctica guiada":trials.AwaitingFeedback?$"{trials.Block} · intento {trials.PendingTrial}: responde":$"{trials.Block} · {trials.Completed+1} · T{trials.TargetId} · {requested}";
             }
-            else compact.text=$"{aimState} · P {p.P*100:F0}%";
+            else compact.text=sling?preview.SlingReadinessText:$"{aimState} · P {p.P*100:F0}%";
             bool targetShown=showProtocol&&trials.TargetId>0;
             targetLine.gameObject.SetActive(targetShown);
             if(targetShown){var point=preview.ProtocolTarget;targetLine.transform.position=new Vector3(point.x,point.y,.045f);}
@@ -121,7 +123,7 @@ namespace SquashClash.DevPanel
             float lineHeight=ProtocolHeight(sling&&(preview.HasSlingProtocolStatus||preview.SlingTrials.Running)||preview.SlingTrials.AwaitingFeedback);
             layer.style.top=Mathf.Max(safeTop,Mathf.Min(safeBottom,barTop)-(sling?30+lineHeight:24)-6);
         }
-        private float ProtocolHeight(bool shown)=>!shown?24:24+24+(preview.SlingGuidanceText.Length>0?48:0)+(preview.SlingTrials.AwaitingFeedback?48:0);
+        private float ProtocolHeight(bool shown)=>preview.SlingArmRejection.Length>0?72+(preview.SlingTrials.AwaitingFeedback?48:0):!shown?24:24+24+(preview.SlingGuidanceText.Length>0?48:0)+(preview.SlingTrials.AwaitingFeedback?48:0);
         private void OnGeometry(GeometryChangedEvent e)=>Place();
         private void Place()
         {

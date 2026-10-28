@@ -166,6 +166,16 @@ namespace SquashClash.Runtime.Tests
             Assert.That(t1.y,Is.GreaterThan(app.Config.Court.TinTop));Assert.That(t1.y,Is.LessThan(app.Config.Court.FrontOutLower));
             yield return Capture("sling-feedback");
         }
+        [UnityTest] public IEnumerator RejectedBlockNoticeAfterInterruptedB0_IsContainedAndClearsFrontis()
+        {
+            var preview=app.GetComponent<GesturePreview>();app.Tuning.Set("gesture.control",1);app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
+            Assert.That(preview.ArmSlingBlock("B0"),Is.True);app.Clock.Paused=true;preview.Tick(Time.realtimeSinceStartupAsDouble);
+            Assert.That(preview.ArmSlingBlock("B1"),Is.False);yield return new WaitForSecondsRealtime(.25f);yield return null;
+            overlay.PlaceInSafeArea(SafeArea,new Vector2(Width,Height));yield return null;yield return null;
+            var layer=root.Q("shot-overlay");var guide=root.Q<Label>("sling-protocol-guide");Assert.That(guide.text,Does.Contain("Continuar"));
+            Assert.That(guide.worldBound.yMax,Is.LessThanOrEqualTo(layer.worldBound.yMax+.5f),"Rejection remedy must fit inside its reserved overlay height");
+            foreach(var e in layer.Query<VisualElement>().ToList().Prepend(layer).Where(Shown))Assert.That(e.worldBound.Overlaps(FrontisRect()),Is.False,e.name);
+        }
         [UnityTest] public IEnumerator LocalCancelLimitAndState_AreVisibleAndNeverCoverFrontis()
         {
             var preview=app.GetComponent<GesturePreview>();app.Tuning.Set("gesture.control",1);app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();

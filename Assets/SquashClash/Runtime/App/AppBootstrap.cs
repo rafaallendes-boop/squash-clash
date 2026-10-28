@@ -35,6 +35,23 @@ namespace SquashClash.Runtime.App
         public string ActivePresetFileHash { get; private set; }
         public BallSimulationHost Ball => Host;
         public SimClock Clock => Host.Clock;
+        public bool DevHasInputFocus=>diagnosticsFocused&&!diagnosticsPaused;
+        [Serializable] private sealed class DevControlRecord
+        {
+            public string control,stage,reason,activeLaunchHash;
+            public double timeReal;public bool accepted,paused,focused,devOpen;
+        }
+        // Called only by DEV controls; no gesture samples or ball state are changed.
+        public void RecordDevControl(string control,bool accepted,string reason,string stage="result")
+        {
+            if(Metrics==null||Host.ActiveConfig==null)return;
+            var input=GetComponent<SquashClash.Runtime.Input.TouchInputAdapter>();
+            var record=new DevControlRecord {control=control,stage=stage,reason=reason,accepted=accepted,
+                timeReal=input?.ReadRealTime()??Time.realtimeSinceStartupAsDouble,paused=Clock.Paused,
+                focused=DevHasInputFocus,devOpen=input?.BlockedByUi??false,activeLaunchHash=Host.ActiveConfig.Hash};
+            Metrics.Write("dev-control",EffectiveConfig.From(Tuning.Applied),ActivePresetName,ActivePresetFileHash,
+                Tuning.PendingKeys.Count,MetricsSeed,Comparable(0),Clock.DroppedSinceRestart,JsonUtility.ToJson(record));
+        }
         public void LaunchCurrent() => Host.Launch(EffectiveConfig.From(Tuning.ApplyPending()));
         public void ReplayCurrent()
         {
