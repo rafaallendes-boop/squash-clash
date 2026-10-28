@@ -6,7 +6,7 @@ namespace SquashClash.Core.Shot
     // Preview state only. Receives the existing touch stream and a captured view.
     public sealed class M24Model
     {
-        private readonly SlingSettings settings;private readonly float scale;private int finger;private bool began;
+        private readonly SlingSettings settings;private readonly float scale;private int finger;private bool began;private Vector2 previous;private double previousTime;
         public readonly FrontisProjection Projection;
         public M24Model(SlingSettings settings,FrontisProjection projection,float mmPerPx)
         {
@@ -44,6 +44,12 @@ namespace SquashClash.Core.Shot
                 Aim=aim;HasAim=true;Invalid=Projection.IsInvalid(aim);Reason=Invalid?"invalid-aim":"began-fixed";
             }
             else if(!Active||sample.FingerId!=finger)return;
+            if(!Finite(sample.PositionPx.x)||!Finite(sample.PositionPx.y)||double.IsNaN(sample.TimeReal)||double.IsInfinity(sample.TimeReal))
+            {Cancel(sample.TimeReal,"non-finite-sample");return;}
+            if(sample.Phase==TouchPhaseKind.Canceled){Cancel(sample.TimeReal,"touch-canceled");return;}
+            if(sample.Phase!=TouchPhaseKind.Began&&(sample.TimeReal<previousTime||sample.TimeReal==previousTime&&sample.PositionPx!=previous))
+            {Cancel(sample.TimeReal,sample.TimeReal<previousTime?"out-of-order":"repeated-time-position");return;}
+            previous=sample.PositionPx;previousTime=sample.TimeReal;
             DistanceMm=Mathf.Max(0,(Anchor.y-sample.PositionPx.y)*scale);
             LateralMm=(sample.PositionPx.x-Anchor.x)*scale;
             MaxDistanceMm=Mathf.Max(MaxDistanceMm,DistanceMm);
@@ -59,6 +65,10 @@ namespace SquashClash.Core.Shot
             Reason=Outcome.ToString();
         }
         private static bool Finite(float value)=>!float.IsNaN(value)&&!float.IsInfinity(value);
-        public void Cancel(double now,string reason="context") { }
+        public void Cancel(double now,string reason="context")
+        {
+            if(!Active)return;
+            Active=false;Conservative=true;P=0;Outcome=GestureOutcome.SystemCanceled;Reason=reason;TerminalAt=now;
+        }
     }
 }

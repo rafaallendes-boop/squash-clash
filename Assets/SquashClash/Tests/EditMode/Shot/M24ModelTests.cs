@@ -36,5 +36,16 @@ namespace SquashClash.Core.Tests.Shot
         {var m=Begin(y);Assert.That(m.Invalid,Is.True);m.Push(S(.1,y:y,phase:TouchPhaseKind.Ended));Assert.That(m.TapCandidate,Is.True);Assert.That(m.Outcome,Is.EqualTo(GestureOutcome.InvalidAim));Assert.That(m.P,Is.Zero);}
         [Test] public void N12_OutsideFrontWallRejectsWithoutTarget()
         {var m=Begin(610);Assert.That(m.HasAim,Is.False);Assert.That(m.Outcome,Is.EqualTo(GestureOutcome.Rejected));Assert.That(m.Reason,Is.Not.Empty);}
+        [Test] public void N07_IdenticalEndedClosesOnce_AndKeepsReliablePowerAndOriginalR()
+        {var m=Begin();m.Push(S(.1,y:185));m.Push(S(.1,y:185,phase:TouchPhaseKind.Ended));Assert.That(m.Outcome,Is.EqualTo(GestureOutcome.Swing));Assert.That(m.P,Is.EqualTo(1));Assert.That(m.ReleaseAt,Is.EqualTo(.1));m.Push(S(.2,phase:TouchPhaseKind.Ended));Assert.That(m.ReleaseAt,Is.EqualTo(.1));}
+        [TestCase(.1)] [TestCase(.09)]
+        public void N07_ContradictoryTimeCannotSwing(double end)
+        {var m=Begin();m.Push(S(.1,y:185));m.Push(S(end,y:180,phase:TouchPhaseKind.Ended));Assert.That(m.Outcome,Is.EqualTo(GestureOutcome.SystemCanceled));Assert.That(m.Conservative,Is.True);Assert.That(m.P,Is.Zero);Assert.That(double.IsNaN(m.ReleaseAt),Is.True);}
+        [Test] public void N10_SystemCancelPrecedesInvalidAndCannotReleaseLater()
+        {var m=Begin(48);m.Cancel(.1,"focus");m.Push(S(.2,y:20,phase:TouchPhaseKind.Ended));Assert.That(m.Outcome,Is.EqualTo(GestureOutcome.SystemCanceled));Assert.That(m.Reason,Is.EqualTo("focus"));Assert.That(double.IsNaN(m.ReleaseAt),Is.True);Assert.That(m.Active,Is.False);}
+        [Test] public void N11_SecondaryFingerAndDuplicateBeganNeverReanchorOrComplete()
+        {var m=Begin();m.Push(S(.05,100,100,TouchPhaseKind.Began));Assert.That(m.Anchor,Is.EqualTo(new Vector2(320,220)));m.Push(S(.1,y:185,phase:TouchPhaseKind.Ended,id:2));Assert.That(m.Active,Is.True);m.Cancel(.2,"dev");m.Push(S(.3,y:185,phase:TouchPhaseKind.Ended));Assert.That(m.Outcome,Is.EqualTo(GestureOutcome.SystemCanceled));}
+        [Test] public void N12_NonFiniteDataConservativelyClosesWithoutSwing()
+        {var m=Begin();m.Push(S(.1,float.NaN,180,TouchPhaseKind.Ended));Assert.That(m.Outcome,Is.EqualTo(GestureOutcome.SystemCanceled));Assert.That(m.P,Is.Zero);Assert.That(m.Conservative,Is.True);}
     }
 }

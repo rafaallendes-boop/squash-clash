@@ -15,3 +15,7 @@ RED compilable 1/8→GREEN8/8; mapeo de rayo con matrices capturadas, AX-1, tin/
 ## 1.2c-2 — potencia y terminales
 
 RED0/15 por aserción→GREEN15/15. Dos correcciones del fixture antes del GREEN: invocar explícitamente el constructor opcional de SlingSettings (un struct sin argumentos queda a cero), y matriz ortográfica con eje correcto hacia el frontis. Sin cambios de parámetros de producto. Distancia actual2/35/N2estricto/C-A/invalid prioritario; N04 y N04b conservan posibilidad de Swing no buscado, sin filtro ficticio. No hay impulso de pelota.
+
+## 1.2c-3 — tiempo y contacto
+
+RED16/21→GREEN21/21: Ended idéntico conserva P/r y cierra una vez; tiempo contradictorio/no finito conservador sin Swing, cancelación de contexto anterior a invalidez y sin r inventado, secundarios/duplicados sin reanclar. Integración con contexto real se verificará también en PlayMode de la siguiente etapa.
