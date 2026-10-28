@@ -374,7 +374,7 @@
   "inferences": {
     "confirmed": "P2 run completed twice; first S1-sling/7d1a61c39766 then P0/e458bfd5ce9e. No B0 arm or gesture records.",
     "codePath": "SpikeSection.Update restores host paused; GesturePreview.CanMeasure rejects paused.",
-    "notEstablished": "Exact input that activated P2, whether B0 callback ran, and actual rejection reason are not logged. No claim of auto-start, input propagation, user error or failed D2 quietness."
+    "notEstablished": "Exact input that activated P2, whether B0 callback ran, and actual rejection reason are not logged. PO reports not seeing or touching tap-to-resume. No claim of auto-start, input propagation, user error or failed D2 quietness."
   },
   "presetsAtIncidentCapture": {
     "P0-calib-1.json": {
@@ -395,14 +395,123 @@
     "allUnchanged": true
   },
   "restoration": {
-    "status": "FinalFreshLaunchPending_MirroringAuthentication",
-    "observedP0LaunchUtc": "2026-10-27T20:12:34.0528790Z",
+    "status": "VerifiedInFreshProcess_NoProtocolOrP2Started",
+    "launchUtc": "2026-10-28T01:07:52.1670880Z",
+    "launchLocal": "2026-10-27T22:07:52.167088-03:00",
+    "build": "0.1.0+42265ca dev",
+    "preset": "P0-calib-1",
     "hash": "e458bfd5ce9e",
     "pending": 0,
-    "postIncidentUserLaunchObserved": true,
-    "clockMayBePausedAfterIncidentalP2": true
+    "repeatSeconds": 3,
+    "gestureControl": "A-prime default",
+    "DEVClosed": true,
+    "normalScreenNoReportVisible": true,
+    "runningPauseButtonObserved": true,
+    "capture": "Logs/evidence/s1-sling-iteration-2/final-P0-restoration-verified",
+    "recordsSinceFreshLaunch": [
+      {
+        "ts": "2026-10-28T01:07:52.1670880Z",
+        "kind": "launch",
+        "phase": "free",
+        "build": "0.1.0+42265ca dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0
+      },
+      {
+        "ts": "2026-10-28T01:07:55.1825920Z",
+        "kind": "frames",
+        "phase": "free",
+        "build": "0.1.0+42265ca dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0
+      },
+      {
+        "ts": "2026-10-28T01:07:55.1841360Z",
+        "kind": "launch",
+        "phase": "free",
+        "build": "0.1.0+42265ca dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0
+      },
+      {
+        "ts": "2026-10-28T01:07:58.1796400Z",
+        "kind": "frames",
+        "phase": "free",
+        "build": "0.1.0+42265ca dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0
+      },
+      {
+        "ts": "2026-10-28T01:07:58.1809460Z",
+        "kind": "launch",
+        "phase": "free",
+        "build": "0.1.0+42265ca dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0
+      },
+      {
+        "ts": "2026-10-28T01:08:01.1807670Z",
+        "kind": "frames",
+        "phase": "free",
+        "build": "0.1.0+42265ca dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0
+      },
+      {
+        "ts": "2026-10-28T01:08:01.1817960Z",
+        "kind": "launch",
+        "phase": "free",
+        "build": "0.1.0+42265ca dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0
+      },
+      {
+        "ts": "2026-10-28T01:08:04.1769070Z",
+        "kind": "frames",
+        "phase": "free",
+        "build": "0.1.0+42265ca dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0
+      },
+      {
+        "ts": "2026-10-28T01:08:04.1780150Z",
+        "kind": "launch",
+        "phase": "free",
+        "build": "0.1.0+42265ca dev",
+        "presetName": "P0-calib-1",
+        "effectiveHash": "e458bfd5ce9e",
+        "pending": 0
+      }
+    ],
+    "allRecordedPhasesFree": true,
+    "newP2Reports": 0,
+    "newGestureOrProtocolRecords": 0,
+    "files": {
+      "P0-calib-1.json": {
+        "sha256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+        "byteIdenticalToBeforeInstall": true
+      },
+      "Po-1.json": {
+        "sha256": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+        "byteIdenticalToBeforeInstall": true
+      },
+      "last-active.txt": {
+        "sha256": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087",
+        "byteIdenticalToBeforeInstall": true
+      }
+    },
+    "launchAttempts": "First CLI request failed with CoreDevice connection reset; retry after mirroring connected succeeded. No failed attempt counted as verified startup."
   },
   "newTestsBuildsInstallsOrPhysicalAttemptsForIncidentClosure": false,
   "S1Accepted": false,
-  "S2ThroughS4AndT8Authorized": false
+  "S2ThroughS4AndT8Authorized": false,
+  "poClarificationLiteral": "no, no vi toca para continuar, solo se abría el informe"
 }

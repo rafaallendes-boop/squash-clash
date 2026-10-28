@@ -170,5 +170,13 @@
     "DEVClosed": true,
     "zeroD2GesturesBeforeHandoff": true
   },
-  "physicalIncidentEvidence": "2026-10-27-s1-sling-iteration-2-startup-incident.json"
+  "physicalIncidentEvidence": "2026-10-27-s1-sling-iteration-2-startup-incident.json",
+  "restoration": {
+    "launchUtc": "2026-10-28T01:07:52.1670880Z",
+    "preset": "P0-calib-1",
+    "hash": "e458bfd5ce9e",
+    "pending": 0,
+    "threeFilesByteIdentical": true,
+    "newP2OrProtocolStarted": false
+  }
 }

@@ -84,12 +84,31 @@ Los archivos originales y sus hashes se preservan localmente, sin publicar ident
 
 [DevBar, botón physics-spike](../../Assets/SquashClash/DevPanel/DevBar.cs) conecta «Prueba física P2» a SpikeSection.Begin; su inicialización no llama Begin. [SpikeSection.Update](../../Assets/SquashClash/DevPanel/SpikeSection.cs) restaura el host mediante Replay y **Clock.Paused=true** al terminar. [GesturePreview.CanMeasure](../../Assets/SquashClash/Runtime/Shot/GesturePreview.cs) rechaza medir en pausa, y [ArmSlingBlock](../../Assets/SquashClash/Runtime/Shot/GesturePreview.Sling.cs) no escribe el inicio de bloque si esa precondición falla. Este camino explica cómo una ejecución incidental de P2 puede impedir B0 y el apuntado.
 
-**El registro no identifica el toque que activó P2, si se ejecutó el callback de B0 ni el motivo concreto de rechazo.** No se confirma autoarranque, propagación de un toque de reanudación ni pulsación equivocada del PO. Se solicitó aclaración sobre «Toca para continuar», sin pedir que lo repita. [ResumeOverlay](../../Assets/SquashClash/Runtime/App/ResumeOverlay.cs) oculta la capa en PointerDown y detiene propagación; esto, por sí solo, no demuestra un paso de entrada al botón subyacente.
+**El registro no identifica el toque que activó P2, si se ejecutó el callback de B0 ni el motivo concreto de rechazo.** No se confirma autoarranque, propagación de un toque de reanudación ni pulsación equivocada del PO. Se solicitó aclaración sobre «Toca para continuar», sin pedir que lo repita. El PO respondió literalmente: **«no, no vi toca para continuar, solo se abría el informe»**. Su relato no respalda la hipótesis de un toque de reanudación; no demuestra por sí solo la causa alternativa. [ResumeOverlay](../../Assets/SquashClash/Runtime/App/ResumeOverlay.cs) oculta la capa en PointerDown y detiene propagación; esto, por sí solo, no demuestra un paso de entrada al botón subyacente.
 
 Propuesta para la siguiente decisión PO/Claude, **sin implementar**: investigar la activación con trazabilidad del control invocado y comprobar si interviene la reanudación; hacer inequívoca la imposibilidad de armar B0 en pausa y exigir inicio de bloque/hash/cuenta atrás visibles antes de entregar el teléfono. Una corrección de controles o de entrada requeriría un encargo aparte con TDD. No se cambia la mecánica D2 ni sus parámetros a partir de este incidente.
 
 ### Restauración y estado de entrega
 
-En la captura posterior al incidente, P0-calib-1, Po-1 y last-active son directamente iguales byte a byte al respaldo previo a instalar. P0/e458bfd5ce9e/cero pendientes está observado en el reinicio del PO; la ejecución P2 posterior puede dejar el reloj pausado. El intento de arranque final por CLI fue rechazado por dispositivo bloqueado; Duplicación requiere autenticación local, solicitada al PO. **La comprobación final de un proceso nuevo todavía está pendiente**; no se declara realizada a partir del intento fallido.
+En la captura posterior al incidente, P0-calib-1, Po-1 y last-active son directamente iguales byte a byte al respaldo previo a instalar. P0/e458bfd5ce9e/cero pendientes está observado en el reinicio del PO; la ejecución P2 posterior puede dejar el reloj pausado. El intento inicial de arranque final por CLI fue rechazado por dispositivo bloqueado; se solicitó autenticación local de Duplicación al PO. Ese intento no se contó como comprobación. El cierre verificado posterior se registra a continuación.
 
 440 archivos de producto/configuración/scripts cotejados sin cambios desde la fuente de build42265ca. No se ejecutaron suites/check-release/build/instalación ni gestos adicionales para investigar este incidente. Los resultados411/411 y184/184 y los checks limpios anteriores se conservan como verificación de esa fuente, sin repetirlos ni presentarlos como una ejecución posterior. Perfil renovado vigente hasta2026-11-03T18:29:44Z; comprobar vigencia efectiva antes de toda instalación futura. S1 sigue sin aceptar, S2–S4/T8 sin autorizar. PR#25 sin fusionar; la prueba física queda detenida.
+
+
+## Cierre verificado tras la aclaración del PO — 27 de octubre local
+
+El PO habilitó Duplicación («Listo») y aclaró literalmente: **«no, no vi toca para continuar, solo se abría el informe»**. No se repitió B0 ni se tocó ningún control de prueba. La primera solicitud CLI durante la reconexión falló con CoreDevice/connection reset; no se contó como arranque. Tras reconectar Duplicación, el reintento con terminate-existing sí completó un proceso nuevo.
+
+**Arranque final observado 2026-10-28T01:07:52.1670880Z (27 de octubre,22:07:52 Chile):42265ca dev, P0-calib-1/e458bfd5ce9e, cero pendientes.** Pantalla normal, DEV cerrado, botón «Pausa» y ningún informe visible. Los cinco lanzamientos capturados desde ese arranque conservan P0/hash/cero pendientes, coherentes con repeat3 restaurado; todos los registros son de fase free, sin nuevo informe P2, bloque, gesto ni muestreo de protocolo. Esta comprobación no reproduce el incidente ni prueba su desaparición.
+
+Cotejo directo byte a byte de los tres archivos con el respaldo anterior a instalar:
+
+| Archivo | SHA-256 |
+|---|---|
+| P0-calib-1.json | 2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd |
+| Po-1.json | 9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767 |
+| last-active.txt | 5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087 |
+
+Selección persistida P0;440 fuentes de build intactas. Captura privada en Logs/evidence/s1-sling-iteration-2/final-P0-restoration-verified; resultado sin identificadores personales en la [evidencia del incidente](../validation/evidence/2026-10-27-s1-sling-iteration-2-startup-incident.json). Sin código, suites, exports/check-release, build, instalación ni intento físico nuevo para este cierre.
+
+**PR#25 lista para revisión de Claude, sin fusionar; SL-S1-04 sigue abierto y B0 D2 NotEvaluated.** No continuar la sesión ni corregir controles por inferencia. El PO decide el siguiente encargo tras la revisión. S1 sin aceptar, S2–S4/T8 sin autorizar. Perfil renovado vence2026-11-03T18:29:44Z y exige comprobación efectiva antes de cualquier instalación futura.
