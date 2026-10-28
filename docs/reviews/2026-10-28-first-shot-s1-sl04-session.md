@@ -87,6 +87,15 @@ Medios/intento8 se conserva como AbandonedBeforeFix/P0/lockBlocked=true. O1: can
 
 O2: una muestraMoved en sesión6/intento8 con timeReal anterior a lockObservedAt recibida después, fijacióntimer; desplazamiento0,110435mm desde el punto fijado. Mismo auditor descriptivo deB0/B1, sin eventos inventados ni replay con parámetros alternativos.
 
-Los errores respecto aT3 se conservan sin inferir adhesión a la tarea: se solicitó aclarar al PO si buscaba el cuadrado o se concentraba en potencia. Respuesta pendiente al registrar este corte; ninguna serie se elimina ni sustituye. Los resultados describen separación de las medianas deP, **no acreditan aún apuntado preciso ni aceptación voluntaria de las tres intensidades**. Sin ajuste de escala, umbrales o criterios.
+Aclaración literal del PO sobre el objetivo deB2:
+
+> no, no intente aputnar al cuadrado cenral, apuntabaa simulando golpes
+
+**Desviación declarada en las tres tandas:** el PO simulaba golpes sin buscarT3. Los errores respecto aT3 se conservan como distancias registradas, **no como precisión al intentar acertar el cuadrado**. El campo raw comparableToArmedBlock sigue siendo true por configuración; la adhesión a la tarea se declara false por separado. Ninguna serie se elimina, sustituye ni repite. Las potencias observadas y su separación se conservan, pero no acreditan el cumplimiento conjunto de apuntado aT3 y potencia ni aceptación voluntaria de las tres intensidades. Sin ajuste de escala, umbrales o criterios.
 
 Tres archivosP0/Po-1/last-active directamente byte a byte iguales al respaldo y444fuentes cotejadas sin cambios. Sin código/suites/build/instalación nuevos. S1temporal activo/restauraciónP0pendiente al cerrar. SiguienteB3: diez medios aT1/T2alternados, izquierda, hash/pendientes/Jugando antes dearmar; aclarar antes que«Se fijó antes de tiempo» solo indica fijación anticipada observada, no fallo genérico. NoB4 todavía;PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.
+
+
+## Instrucción B3 tras aclaración de B2
+
+Se solicitó soloB3: izquierda, comprobar antes DEV S1-sling/7d1a61c39766/cero pendientes/Jugando; si no coincide, no iniciar yavisar. Diez medios buscando esta vez el cuadrado bajo T1/T2alternados, apuntar→dejar fijar→tensar. Se aclaró explícitamente antes del bloque: «Se fijó antes de tiempo» exclusivamente si observó fijación antes de llegar donde quería; cualquier otro resultado, también un fallo sin fijación, se respondeOK para avanzar, **sin convertirlo en acierto**. Conservar diez respuestas y todos los intentos, sin sustitución ni repetición; sin parámetros nuevos ni B4todavía. B3pendiente de devolución/captura; no tocar teléfono durante el bloque.

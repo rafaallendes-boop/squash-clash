@@ -97,7 +97,8 @@
       },
       "saturatedAtReleaseCount": 0,
       "saturationPercentAllAttempts": 0.0,
-      "conservativeReasons": {}
+      "conservativeReasons": {},
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 5,
@@ -159,7 +160,8 @@
       },
       "saturatedAtReleaseCount": 0,
       "saturationPercentAllAttempts": 0.0,
-      "conservativeReasons": {}
+      "conservativeReasons": {},
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 6,
@@ -219,7 +221,8 @@
       },
       "saturatedAtReleaseCount": 1,
       "saturationPercentAllAttempts": 10.0,
-      "conservativeReasons": {}
+      "conservativeReasons": {},
+      "targetTaskFollowedByPORetrospectiveReport": false
     }
   ],
   "perAttempt": [
@@ -236,7 +239,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 9.939123153686523,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 4,
@@ -251,7 +255,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 2.2639129161834717,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 4,
@@ -266,7 +271,8 @@
       "requestedBandWithSwing": false,
       "distanceAtReleaseMm": 11.650862693786621,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 4,
@@ -281,7 +287,8 @@
       "requestedBandWithSwing": false,
       "distanceAtReleaseMm": 15.571310043334961,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 4,
@@ -296,7 +303,8 @@
       "requestedBandWithSwing": false,
       "distanceAtReleaseMm": 14.080437660217285,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 4,
@@ -311,7 +319,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 9.221307754516602,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 4,
@@ -326,7 +335,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 8.945219993591309,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 4,
@@ -341,7 +351,8 @@
       "requestedBandWithSwing": false,
       "distanceAtReleaseMm": 13.30738353729248,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 4,
@@ -356,7 +367,8 @@
       "requestedBandWithSwing": false,
       "distanceAtReleaseMm": 10.877819061279297,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 4,
@@ -371,7 +383,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 7.896090030670166,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 5,
@@ -386,7 +399,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 16.013038635253906,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 5,
@@ -401,7 +415,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 19.98870086669922,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 5,
@@ -416,7 +431,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 18.608259201049805,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 5,
@@ -431,7 +447,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 18.55304527282715,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 5,
@@ -446,7 +463,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 20.81694221496582,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 5,
@@ -461,7 +479,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 17.890432357788086,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 5,
@@ -476,7 +495,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 20.54087257385254,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 5,
@@ -507,7 +527,8 @@
           "nextPhase": "Moved"
         }
       ],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 5,
@@ -522,7 +543,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 21.590002059936523,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 5,
@@ -537,7 +559,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 18.05608558654785,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 6,
@@ -552,7 +575,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 37.38217544555664,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 6,
@@ -567,7 +591,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 28.216081619262695,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 6,
@@ -582,7 +607,8 @@
       "requestedBandWithSwing": false,
       "distanceAtReleaseMm": 0.6073811650276184,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 6,
@@ -597,7 +623,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 25.013479232788086,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 6,
@@ -612,7 +639,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 29.375654220581055,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 6,
@@ -627,7 +655,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 33.62739181518555,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 6,
@@ -642,7 +671,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 28.60261344909668,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 6,
@@ -665,7 +695,8 @@
           "receivedReal": 9145.972731337635,
           "distanceFromLockMm": 0.11043477803468704
         }
-      ]
+      ],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 6,
@@ -680,7 +711,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 31.47391128540039,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     },
     {
       "session": 6,
@@ -695,7 +727,8 @@
       "requestedBandWithSwing": true,
       "distanceAtReleaseMm": 32.85435104370117,
       "O1InsufficientSupportWindows": [],
-      "O2LateSamplesPrecedingObservedLock": []
+      "O2LateSamplesPrecedingObservedLock": [],
+      "targetTaskFollowedByPORetrospectiveReport": false
     }
   ],
   "records": [
@@ -39466,5 +39499,8 @@
   "B3Started": false,
   "newCodeTestsBuildOrInstallation": false,
   "S1Accepted": false,
-  "finalP0Restoration": "PendingSessionContinuationOrStop"
+  "finalP0Restoration": "PendingSessionContinuationOrStop",
+  "poTargetClarificationLiteral": "no, no intente aputnar al cuadrado cenral, apuntabaa simulando golpes",
+  "targetTaskAdherence": "NotFollowed_T3_NotSought_PerPOLiteral",
+  "targetErrorInterpretation": "Recorded distance to T3 retained; not precision while trying to hit T3 because PO reports simulated shots without targeting square. Power remains observed across all attempts; no protocol compliance or acceptance inferred."
 }
