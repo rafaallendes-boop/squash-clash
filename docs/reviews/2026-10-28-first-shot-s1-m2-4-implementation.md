@@ -59,3 +59,27 @@ Tras reanudar Duplicación, proceso nuevo0f8002d arrancó con P0/e458bfd5ce9e/ce
 Explicación previa: apoyar directamente en el frontis fija; bajar solo carga y subir reduce P; para cancelar después de cargar, volver a la altura del apoyo o más arriba y soltar; corregir implica cancelar y apoyar de nuevo. Pelota sin golpe. Se solicita **solo B0**, PO pulsa el botón y confirma desde el Mac la cuenta atrás **antes del primer gesto**, izquierda/un pulgar/120s completos sin DEV/salir; cancelar guiado, avisar al terminar, no B1. Si no comprende C-A, detener/restaurar sin ajustar nada. No se infiere la confirmación ni el resultado hasta su respuesta y los registros. Durante el bloque no se controla ni captura el teléfono.
 
 **Estado al enviar la instrucción:** B0 pendiente; comprensión de C-A pendiente; B1–B5 y 16 preguntas pendientes. Configuración temporal M2-4 activa, selección persistida P0. Restauración final en proceso nuevo/cotejo aún pendiente porque la sesión no ha terminado. PR28 en borrador, sin fusionar; no aceptación de S1.
+
+## B0 recuperado — práctica completa, aclaraciones pendientes antes de B1
+
+[Datos nuevos sanitizados, auditoría y literal completo del PO](../validation/evidence/2026-10-28-m24-B0.json). Un solo B0, armado **2026-10-28T23:39:54.6567690Z**, fin **23:41:54.6690640Z**, **120,01248675 s**, complete=true/guidedCancellationRecorded=true. Configuración **1c8e598b099b**, cero pendientes y comparable=true en los104; sin relanzamientos ni cambios de configuración durante el bloque. Ninguna activación Escenario/P2/H17 ni bloques formales posteriores.
+
+| Cierre de práctica | Intentos conservados |
+|---|---:|
+| Swing preview, sin golpear pelota | 69 |
+| Rejected fuera del frontis | 12 |
+| AbandonedNoPull | 10 |
+| CanceledReturnToDeadZone | 5 |
+| InvalidAim tin/out | 5 |
+| Tap | 3 |
+| Total | 104 |
+
+2853 muestras primarias reales en intentos; todos los rechazos/toques se conservan, sin sustitución. En Rejected el cierre es la resolución de admisión del Began, no la duración física completa del dedo; las muestras posteriores filtradas/ignoradas se preservan por separado. B0 no pide un objetivo T: el error del Began frente a objetivo solicitado es **NotEvaluated**, no cero ni precisión demostrada. O2: **3 muestras** anteriores a lockObservedAt entregadas después, desplazamiento máximo respecto al ancla **1,654680 mm reportados**; no se movió el objetivo ni se fabricaron muestras. **15 enlaces** después de cierre C-A; no equivalen a15 correcciones humanas declaradas. Ninguna violación de la prioridad de cierres en el auditor de datos nuevos.
+
+Literal del PO:
+
+> listo, apuntaba, cargaba y también cancelaba. Por 2 minutos, me pareció bien, pero para cargar había que ir con el pulgar hacia abajo o atras, me gusta mas que sea hacia arriba o adelante, ese fue mi primer movimiento natural, luego me acostumbre y fui con el pulgar hacia abajo. Pero se ve bien
+
+Se registra como sensación/preferencia por un tensado hacia arriba/adelante; **no cambia la dirección descendente aprobada ni autoriza ajustar parámetros en esta sesión**, y no acepta S1. No inferir intención de cada intento a partir de P o del cierre. Los cinco retornos C-A y el flag guiado acreditan el comportamiento registrado, no por sí solos la comprensión/voluntariedad del PO. Se pide aclaración explícita sin repetir.
+
+**Desviación de procedimiento:** no llegó una confirmación por chat de cuenta atrás antes del primer gesto. Se pregunta retrospectivamente si la vio antes de tocar y si apareció Completado; la respuesta posterior no se convertirá en una confirmación previa. Práctica completa en log, sin repetir ni sustituir. Pendiente la aclaración y la comprensión explícita de C-A; todavía no se solicita B1 ni se dan por explicadas sus tres respuestas. P0/Po-1/last-active iguales al respaldo;456fuentes de producto intactas. M2-4 temporal sigue activo/last-active persistidoP0; restauración de cierre aún pendiente.

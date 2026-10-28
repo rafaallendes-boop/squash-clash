@@ -887,3 +887,8 @@ Fuenteae1b423, TDD por etapas en informe, regresión fresca441/441EditMode y207/
 ### Instalación y preparación ejecutadas, B0 pendiente del PO
 
 Build0f8002d dev Release ARM64/no Development; checks dev/prod limpios, perfil incorporado hasta2026-11-03T18:29:44Z/firma verificados antes de instalar.3archivos cotejados tras instalación. ArranqueP0/e458bfd5ce9e/cero pendientes observado; S1-M2-4/1c8e598b099b cargado temporal, last-active repuesto/leídoP0 antes de aplicar y relanzar23:31:48.353735Z;repeat0/cero pendientes/Jugando/DEVcerrado/Listo/protección experimentos y cotejo3archivos verificados. Instrucción soloB0 con confirmación de cuenta atrás antes de primer gesto, izquierda/unpulgar120s y cancelación guiada C-A, noB1; resultado/comprensión pendientes, no inferidos. Restauración final pendiente al cerrar. Sin nuevos cambios de producto, parámetros ni umbrales. No aceptaciónS1.
+
+
+### Devolución B0 M2-4 y preferencia del PO (sin nueva decisión de mecánica)
+
+Literal completo en informe/evidencia B0; PO declara apuntar/cargar/cancelar durante2min y preferencia inicial de tensado arriba/adelante, después acostumbrado a bajar. Sensación, no cambio de autorización ni aceptación. Se mantiene el tensado descendente,2/35/N2/bandas/umbrales. Log B0 completo120,01248675s/104intentos/5retornosC-A y guiada registrada/hash1c8e598b099b/cero pendientes; ninguna tanda posterior. Se conserva desviación de no recibir confirmación previa de cuenta atrás porchat; se pregunta retrospectivamente y sobre comprensión/voluntariedad C-A, sin repetir ni inferir. Falta triada antes de B1, un bloque cada vez.3archivos byte iguales, M2-4 temporal activo/selección persistidaP0/restauración final pendiente.
