@@ -735,3 +735,38 @@ Las16preguntas se presentaron cada una por separado. Se registran sin ampliació
 «30 - 40%» y«1 segundo creo maximo» son estimaciones subjetivas, no métricas/umbrales. PO no aceptaS1 por estas respuestas. Registros de potencia/cancelación conservados junto a apuntado bajo intermitente,zona que interfiere ygesto mecánico/rally pausado; no cambiar el diseño a partir de inferencias. No se solicita repetir ni continuar una sesión.
 
 Restauración verificada: proceso nuevo2026-10-28T15:16:26.232098Z/4cec622 dev/P0-calib-1/e458bfd5ce9e/0pendientes;cinco lanzamientosP0/normal/DEVcerrado/Pausa y3archivos directamente iguales al respaldo. Primer intento coniPhonebloqueado rechazado,no éxito.444fuentes/35protegidos intactos,sin nuevos suites/check/build/instalación/código/defaults/presets/spec/planes/criterios/bandas/umbrales. Perfil renovado hasta2026-11-03T18:29:44Z;vigencia efectiva antes de cualquier futura instalación,ninguna autorizada ahora. PR#25lista paraClaude,sin fusionar;detenerse. **S1sin aceptar;S2–S4/T8sin autorizar.**
+
+
+## Revisión final de Claude y autorización del PO — PR #25, 2026-10-28
+
+Comunicación recibida del PO, conservada como revisión técnica experimental, **no aceptación de S1 ni S1-sling**:
+
+> Revisión de Claude sobre PR #25, head fe78564372ef9f38fbaea5cbc17d1fa5253bdea5: APROBADA como entrega técnica experimental.
+> - Corrección SL-S1-04 (4cec622) acotada y correcta: auditoría dev-control activation/result sin datos pegados, protección de Escenario/P2/H17 en botón y callback, rechazo visible de B0–B5 con motivo y remedio, línea preset/hash/Listo, rótulo «Benchmark P2 (dev)». D2 intacto. RED→GREEN, 411/411 y 194/194.
+> - En la sesión no hubo ninguna activación de P2/H17/Escenario y todos los armados fueron sin pausa y con foco. La causa de las activaciones originales sigue sin confirmar: no atribuirla.
+> - Registro de los 111 gestos, separaciones, desviaciones declaradas, O1/O2 y 16 respuestas literales: correcto. Restauración P0 e458bfd5ce9e con tres archivos byte a byte: verificada.
+
+### Observaciones de Claude, solo registro, sin cambio de código
+
+- **C1.** Potencia por distancia: por primera vez en S1 las tres bandas se separan (medios 9/10, fuertes 9/10, saturación 10 %) y el PO responde «si» a intensidades voluntarias, consistencia y máximo. Es la pieza a conservar.
+- **C2.** La fijación por quietud se dispara unos 130 ms después del último movimiento (mediana en todos los bloques). Cualquier duda al apuntar fija. Eso es coherente con el 30–40 % estimado por el PO y con «mecánico/pausado». Ajustar holdMs no resuelve ambas cosas a la vez.
+- **C3.** Apuntado bajo: los abandonos de B0/B3/B5 terminan con el dedo bajo yMin del área útil. Apuntar bajo y tensar comparten el eje vertical, un conflicto de forma ya anticipado como riesgo de recorrido en PR #24. No es un defecto nuevo de D2.
+- **C4.** El feedback de dos botones se usó de forma mixta incluso tras la aclaración. Una sesión futura necesitaría una tercera respuesta (por ejemplo «No fijó / falló»).
+- **C5.** ParamSection.TrySet audita cada cambio de deslizador: posible volumen alto de registros durante un arrastre.
+- **C6.** El test AcceptedB0ShowsCountdown... combina And/Or con precedencia ambigua; sin efecto en el resultado.
+
+No se convierten C1/C2 en aceptación ni los juicios del PO en tasas medidas. No se toca D2, la auditoría ni el test para incorporar estas observaciones. No se recalcula ni repite la sesión aprobada.
+
+### Autorización y ejecución del cierre
+
+PO autorizó merge commit solo con head local/remoto fe78564 exactos, PR abierta/no borrador/sin conflictos, árboles limpios y sin añadir commits a la rama. Condiciones verificadas; **merge16b8a0060f6edd86fab92b0ae6d517d11cdd3205**, segundo padre **fe78564372ef9f38fbaea5cbc17d1fa5253bdea5**, primero956cfafbbfea6fef418fa24e6a3b0911663746be. Main sincronizada conorigin/main y limpia. Worktree retirado sin `--force` después de preservar siete paths ignorados en **Logs/archive-s1-sling-20261028** del checkout principal. Inventarios cotejados antes/después:32.480archivos/8.536.696.847bytes/35.372entradas incluidas carpetas/sin symlinks; ambos SHA-256 **37e1cdfc32b8bd3c831e4d83050c9d4685809ffbdeb42690d96b44732a99c4c5**. Artefactos/inventarios siguen ignorados; ramas remotas intactas.
+
+A′ por defecto (`gesture.control=0`), preset S1-sling **7d1a61c39766 sin promover**, defaults **45c4e9af5c8f**,41heredados/proyección0d39e6016bd8 ySimulationKey166a96e319c7 intactos. Cierre no aceptaS1 niS1-sling. Sin suites/check-release/build/instalación/sesión/acceso al iPhone para cerrar.
+
+### Siguiente entrega autorizada: propuesta documental de mecánica
+
+Rama **firstshot/s1-mechanics-proposal-2**, desde main tras la fusión. [Documento](2026-10-28-first-shot-s1-mechanics-proposal-2.md): conservar potencia por distanciaC1, reemplazar fijación por quietudC2 y resolver conflicto de apuntado bajoC3; por alternativa, ventajas/riesgos/interacción150ms-P<0,60/RB6/evaluación. Recomendación de Codex marcada como tal, **sin elegir por el PO**. Usar111gestos4cec622 como evidencia, sin mezclar práctica/repeticiones ni inferir intención del feedback mixto. Si se hiciera análisis offline, predeclaración commiteada antes de calcular yJSON derivado declarado con originales intactos. **Esta entrega no hace análisis nuevo ni replay y no crea JSON derivado**; solo cita resultados aprobados.
+
+Solo documento/AGENTS/aprobaciones. No código/tests/presets/defaults/spec/propuesta r2/planes/criterios/bandas/umbrales ni suites/check-release/builds/instalaciones/sesiones/acceso al iPhone. Las alternativas descritas son hipótesis; reabrir dos contactos antes descartados o cambiar política de dedos/r requiere decisión expresa futura, no se infiere aquí. No se autoriza ninguna evaluación física propuesta.
+
+Entregar PR lista paraClaude **sin fusionar** y detenerse. **S1sin aceptar;S2–S4/T8no autorizados**. Perfil vigente hasta **2026-11-03T18:29:44Z**; no hay instalación autorizada.
