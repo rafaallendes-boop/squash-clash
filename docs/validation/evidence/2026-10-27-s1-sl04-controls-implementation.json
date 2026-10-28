@@ -107,10 +107,88 @@
   "experimentalPresetHash": "7d1a61c39766",
   "P0Hash": "e458bfd5ce9e",
   "simulationKey": "166a96e319c7",
-  "newPhysicalSession": "NotStarted",
-  "installation": "PendingBuildAndEmbeddedProfileCheck",
+  "newPhysicalSession": "NotStarted_AwaitingTemporaryPresetPreparation",
+  "installation": "Succeeded_AfterEmbeddedProfileAndSourceValidation",
   "observationsForNewSession": [
     "O1 quiet candidates with <3 real samples",
     "O2 late-delivered samples preceding lockObservedAt; displacement from locked sample"
-  ]
+  ],
+  "productHead": "4cec622b76811643c5cb6ce7a0299b3fa61e678a",
+  "releaseChecks": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "4cec622",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-28T01:30:51.0061760Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "4cec622",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-28T01:32:43.2920660Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "preinstallCheck": {
+    "checkedUtc": "2026-10-28T01:40:49.771614+00:00",
+    "createdUtc": "2026-10-27T18:29:44+00:00",
+    "expiresUtc": "2026-11-03T18:29:44+00:00",
+    "buildMetadata": {
+      "version": "0.1.0",
+      "gitHash": "4cec622",
+      "profile": "dev",
+      "builtAtUtc": "2026-10-28T01:35:50.8613680Z",
+      "unityVersion": "6000.3.27f1",
+      "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+      "gitDirty": false
+    },
+    "checks": {
+      "profileTimeValid": true,
+      "renewedBeforeInstallFrom27": true,
+      "teamMatches": true,
+      "bundleMatches": true,
+      "deviceIncluded": true,
+      "signatureValid": true,
+      "arm64Only": true,
+      "certificateTimeValid": true,
+      "sourceFilesUnchanged": true,
+      "gitClean": true,
+      "cleanDevMetadata": true,
+      "releaseNoDevelopment": true
+    },
+    "sourceFiles": 444
+  },
+  "startup": "NotVerified_DeviceLocked_MirroringAuthenticationPending",
+  "threeFilesAfterInstallByteIdentical": true,
+  "presetFileHashes": {
+    "P0-calib-1.json": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
+    "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
+  }
 }
