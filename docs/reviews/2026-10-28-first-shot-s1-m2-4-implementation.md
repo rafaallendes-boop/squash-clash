@@ -11,3 +11,7 @@ Pruebas de proyección usan cámara conocida y matriz capturada al procesar Bega
 ## 1.2c-1 — proyección absoluta
 
 RED compilable 1/8→GREEN8/8; mapeo de rayo con matrices capturadas, AX-1, tin/out mapeable inválido y rechazos con motivo. Primer intento de compilación del fixture faltaba un using: no cuenta como RED, log conservado. El fixture singular usó finalmente un viewport explícito: Camera.pixelRect dependía del tamaño headless; no cambió ningún criterio de producto. Selector2 disponible, A′0/defaults85/hash45c4e9af5c8f sin cambios de valores ni claves.
+
+## 1.2c-2 — potencia y terminales
+
+RED0/15 por aserción→GREEN15/15. Dos correcciones del fixture antes del GREEN: invocar explícitamente el constructor opcional de SlingSettings (un struct sin argumentos queda a cero), y matriz ortográfica con eje correcto hacia el frontis. Sin cambios de parámetros de producto. Distancia actual2/35/N2estricto/C-A/invalid prioritario; N04 y N04b conservan posibilidad de Swing no buscado, sin filtro ficticio. No hay impulso de pelota.
