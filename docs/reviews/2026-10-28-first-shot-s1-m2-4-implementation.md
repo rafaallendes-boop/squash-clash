@@ -19,3 +19,7 @@ RED0/15 por aserción→GREEN15/15. Dos correcciones del fixture antes del GREEN
 ## 1.2c-3 — tiempo y contacto
 
 RED16/21→GREEN21/21: Ended idéntico conserva P/r y cierra una vez; tiempo contradictorio/no finito conservador sin Swing, cancelación de contexto anterior a invalidez y sin r inventado, secundarios/duplicados sin reanclar. Integración con contexto real se verificará también en PlayMode de la siguiente etapa.
+
+## 1.2c-4 — integración, cadenas y O2
+
+RED PlayMode0/5→GREEN5/5. Snapshot al Began/instante observado/matrices crudas/O2, resultado y error separados, nuevo id por reapoyo/contexto rompe cadena; pausa/foco/DEV/relanzamiento/config invalidan sin r. Host.Current y Prediction idénticos en el test de integración. Compilación inicial del fixture necesitó calificar UnityEngine.Camera por choque con namespace Runtime.Camera: no cuenta como RED. Muestras originales y recepción conservadas, sin muestras fabricadas. No se reproduce evidencia histórica.

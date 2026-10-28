@@ -36,11 +36,11 @@ namespace SquashClash.Runtime.Shot
         private long dropped;
         private bool initialized,captureGesture;
 
-        public bool Active=>Sling?.Active??tracker?.Active??false;
+        public bool Active=>M24?.Active??Sling?.Active??tracker?.Active??false;
         public ParamSet GestureConfig {get;private set;}
         public AimModel Model {get;private set;}
         public PowerResult Power {get;private set;}
-        public GestureOutcome Outcome=>Sling?.Outcome??tracker?.Outcome??GestureOutcome.None;
+        public GestureOutcome Outcome=>M24?.Outcome??Sling?.Outcome??tracker?.Outcome??GestureOutcome.None;
         public string LastRecordJson {get;private set;}
         public string SamplingRecordJson {get;private set;}
         public string Status {get;private set;}="S1: apunta; la pelota sigue sin golpe.";
@@ -83,6 +83,7 @@ namespace SquashClash.Runtime.Shot
                 reportedDpi=Screen.dpi;screenWidth=Screen.width;screenHeight=Screen.height;
                 scale=ScreenMetrics.MmPerPx(reportedDpi,(float)source.Get("input.fallbackDpi"),out dpiSource);
                 tracker=new GestureTracker((float)source.Get("gesture.tapMaxMm"),(float)source.Get("gesture.tapMaxMs"),(float)source.Get("gesture.cancelRadiusMm"),scale);
+                M24=source.GetInt("gesture.control")==2?CreateM24(source):null;
                 Sling=source.GetInt("gesture.control")==1?new SlingModel(SlingSettings.From(source),app.Host.ActiveConfig.Court,app.Host.Current.Position.x,SlingInputArea(),scale):null;
                 BeginSlingRecord();
                 Model=new AimModel(AimSettings.From(source),app.Host.ActiveConfig.Court,app.Host.Current.Position.x);
@@ -91,9 +92,11 @@ namespace SquashClash.Runtime.Shot
                 receipts.Clear();powerWindow.Clear();invalidPowerTime=null;captureGesture=Sampling||protocol!="preview";
                 gestureProtocol=protocol;gestureTrial=IsSeries(protocol)?TrialCount+1:1;
                 preset=app.ActivePresetName;fileHash=app.ActivePresetFileHash;seed=app.MetricsSeed;pending=app.Tuning.PendingKeys.Count;dropped=app.Clock.DroppedSinceRestart;
+                BeginM24Record();
             }
             if((!Active&&sample.Phase!=TouchPhaseKind.Began)||sample.FingerId!=primary)return;
             tracker.Push(sample);receipts.Add(input.ReadRealTime());
+            if(M24!=null){OnM24Sample(sample);return;}
             if(Sling!=null){OnSlingSample(sample);return;}
             Model.Update(sample,scale);
             bool stationaryDuplicate=false;
@@ -117,7 +120,7 @@ namespace SquashClash.Runtime.Shot
         private static bool IsGestureKey(string key)=>key.StartsWith("aim.",StringComparison.Ordinal)||key.StartsWith("power.",StringComparison.Ordinal)||key.StartsWith("gesture.",StringComparison.Ordinal)||key.StartsWith("input.",StringComparison.Ordinal);
         private void OnSystemCancel()
         {
-            if(Active){Sling?.Cancel(input.ReadRealTime());tracker.CancelBySystem();FinishGesture();}
+            if(Active){M24?.Cancel(input.ReadRealTime(),M24CancelReason());Sling?.Cancel(input.ReadRealTime());tracker.CancelBySystem();FinishGesture();}
             cancelIndicator?.Hide();
             if(!Sampling)EndSlingBlockTimer(input.ReadRealTime(),false,"system-cancel");
             if(view!=null)view.gameObject.SetActive(false);
@@ -125,19 +128,20 @@ namespace SquashClash.Runtime.Shot
         }
         private void OnLaunched(EffectiveConfig config)
         {
-            launchSerial++;
+            launchSerial++;ResetM24Chain();
             // A repeat invalidates this gesture, not the two-minute sampling window.
-            if(Active){Sling?.Cancel(input.ReadRealTime());tracker.CancelBySystem();FinishGesture();}
+            if(Active){M24?.Cancel(input.ReadRealTime(),M24CancelReason());Sling?.Cancel(input.ReadRealTime());tracker.CancelBySystem();FinishGesture();}
             view.gameObject.SetActive(false);
         }
         private void OnTuningChanged(string key)
         {
-            if(key=="debug.slowMotion"&&Active)input.CancelSystem();
+            if(M24?.Active==true){m24CancelReason="configuration-changed";input.CancelSystem();m24CancelReason=null;}
+            else if(key=="debug.slowMotion"&&Active)input.CancelSystem();
         }
         public void Tick(double now)
         {
             if(!initialized)return;
-            if(ContextChanged()){if(Active||Sampling)input.CancelSystem();return;}
+            if(ContextChanged()||M24ViewportChanged()){if(Active||Sampling)input.CancelSystem();return;}
             TickSling(now);
             if(Sampling&&now-samplingStart>=120)FinishSampling(now,true,"elapsed");
         }
@@ -172,6 +176,7 @@ namespace SquashClash.Runtime.Shot
         }
         private void FinishGesture()
         {
+            if(M24!=null){FinishM24Gesture();return;}
             if(Sling!=null){FinishSlingGesture();return;}
             // Serialization and file I/O run after input dispatch. Completed trackers are never reused.
             var finished=tracker;var savedReceipts=receipts.ToArray();var config=EffectiveConfig.From(GestureConfig);
