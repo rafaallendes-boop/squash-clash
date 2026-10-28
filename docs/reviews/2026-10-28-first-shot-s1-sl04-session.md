@@ -55,3 +55,38 @@ O2: **3 muestrasMoved**, sesiones/intentoss2/1,s2/8,s3/10, todas tras fijaciónt
 Todos los armados/gestos/respuestas de B1 están en7d1a61c39766/cero pendientes. Los dos armados fueron aceptados con pausafalse/focusedtrue yDEVcerrado antes dearmar. No hubo cambio deconfig ni P2/H17/Escenario durante esas tandas; archivosP0/Po-1/last-active directamente iguales al respaldo.444fuentes sin cambios; sin código/suites/build/instalación nuevos.
 
 Siguiente B2 según autorización: **T3,10 suaves→10 medios→10 fuertes**, mano izquierda, sin ajustes ni sustitución. Antes de cada tanda elPO verificaDEV S1-sling/7d1a61c39766/cero pendientes/Jugando; si no coincide, no iniciar yavisar. Los tres botones B2 son series separadas; mantener todos los intentos aunque fallen o cancelen. NoB3 hasta recuperar/verificar los30 y dar su instrucción. Configuración temporalS1activa yrestauraciónP0pendiente al terminar/detener, con nuevo arranque/hash/cero pendientes/cotejo3archivos. PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.
+
+## B2 — tres intensidades, todos los intentos conservados
+
+Respuesta literal del PO:
+
+> Listo, hice las 3 tandas
+
+[Evidencia B2 completa, controles y auditoría](../validation/evidence/2026-10-28-s1-sl04-B2.json). Sesiones4/5/6, diez intentos cada una, T3 registrado en todos. Orden suave→medio→fuerte, sin repetición ni sustitución. Izquierda solicitada y previamente declarada dominante; no observación independiente de la mano. Tres bloques completos,3777 muestras reales,29Swing/1AbandonedBeforeFix. Armados aceptados en7d1a61c39766, repeat0/cero pendientes, pausafalse/focusedtrue/DEVcerrado. Todos los gestos comparables por configuración; no cambios ni P2/H17/Escenario durante las series.
+
+| Dato | Suaves, sesión4 | Medios, sesión5 | Fuertes, sesión6 |
+|---|---|---|---|
+| Inicio / fin UTC | 14:20:35.506481 / 14:21:10.865623 | 14:21:15.967744 / 14:22:03.771534 | 14:22:10.307531 / 14:22:54.160753 |
+| Swing / abandono | 10/0 | 9/1 | 10/0 |
+| Fijaciones timer / sample | 9/1 | 7/2 | 7/3 |
+| Banda solicitada con Swing / todos los intentos | 5/10 | 9/10 | 9/10 |
+| Bandas registradas, sin reinterpretarlas | 5soft/5medium | 1soft/9medium | 1soft/9strong |
+| P al soltar mín./med./máx. | 0,800/25,480/41,125% | 0/50,244/59,364% | 0/82,957/100% |
+| Dispersión P, desviación estándar poblacional | 10,787 puntos porcentuales | 16,272 puntos porcentuales | 27,162 puntos porcentuales |
+| d al soltar mín./med./máx. | 2,264/10,408/15,571mm | 0/18,581/21,590mm | 0,607/29,376/37,382mm |
+| Dispersión d, desviación estándar poblacional | 3,560mm | 5,946mm | 9,579mm |
+| Saturados P=100% al soltar | 0/10 (0%) | 0/10 (0%) | 1/10 (10%) |
+| Margen mínimo registrado respecto a yMin del área útil, mín./med./máx. entre fijados | −11,705/−1,159/4,584mm (n10) | −17,834/−14,411/−7,233mm (n9) | −29,430/−24,102/17,118mm (n10) |
+| Error al objetivo entre fijados, mín./med./máx. | 1,416/2,407/2,743m (n10) | 1,234/2,565/3,189m (n9) | 0,921/2,354/3,289m (n10) |
+
+P y d incluyen los diez intentos de cada serie, también los ceros; los errores y márgenesnull del abandono no se convierten en0. Las bandas son las existentes del registro nativo (soft P<0,25;medium0,25≤P<0,60;strongP≥0,60), citadas desde [GesturePreview.Sling](../../Assets/SquashClash/Runtime/Shot/GesturePreview.Sling.cs); no se cambian. Saturación al soltar se distingue de alcanzar el tope antes: ninguna serie supera la advertencia existente>20%. Los mm usan460dpi reportados, **physicallyVerified=false**: no nueva comprobación con regla ni medida física calibrada.
+
+**El margen es respecto al límite inferior del área útil**, calculado como(y−slingArea.yMin)·mmPerPx, no distancia al borde físico del iPhone ni a su gesto de inicio. Valores negativos indican que, después de fijar, el dedo descendió más allá de ese límite; no prueban por sí mismos un Canceled del sistema. No hubo SystemCanceled enB2. La fijación exige área útil; el tensado posterior puede continuar fuera de ella según el comportamiento existente, sin alterarlo.
+
+Medios/intento8 se conserva como AbandonedBeforeFix/P0/lockBlocked=true. O1: candidato con2muestras,680,030ms hasta siguiente recepción, punto(722,591) ya fuera del área útil; cero casosO1 con geometría elegible. No se atribuye el abandono únicamente al mínimo3. Fuertes/intento3 fijó por timer tras6831,346ms y terminó con d=0,607mm, por debajo de la zona muerta2mm: Swing/P0/reason=distance/conservative=false. No es un fallo de repetición de timestamp ni una salida conservadora; intención del PO no inferida. Ninguna salida conservative=true en las tres series.
+
+O2: una muestraMoved en sesión6/intento8 con timeReal anterior a lockObservedAt recibida después, fijacióntimer; desplazamiento0,110435mm desde el punto fijado. Mismo auditor descriptivo deB0/B1, sin eventos inventados ni replay con parámetros alternativos.
+
+Los errores respecto aT3 se conservan sin inferir adhesión a la tarea: se solicitó aclarar al PO si buscaba el cuadrado o se concentraba en potencia. Respuesta pendiente al registrar este corte; ninguna serie se elimina ni sustituye. Los resultados describen separación de las medianas deP, **no acreditan aún apuntado preciso ni aceptación voluntaria de las tres intensidades**. Sin ajuste de escala, umbrales o criterios.
+
+Tres archivosP0/Po-1/last-active directamente byte a byte iguales al respaldo y444fuentes cotejadas sin cambios. Sin código/suites/build/instalación nuevos. S1temporal activo/restauraciónP0pendiente al cerrar. SiguienteB3: diez medios aT1/T2alternados, izquierda, hash/pendientes/Jugando antes dearmar; aclarar antes que«Se fijó antes de tiempo» solo indica fijación anticipada observada, no fallo genérico. NoB4 todavía;PRsin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.

@@ -70,3 +70,8 @@ Nueva carga deS1-sling desdeDEV, last-activeP0 original repuesto **antes** de ap
 ## B1 conservado con desviaciones de protocolo — 28 de octubre
 
 [Informe de sesión formal](2026-10-28-first-shot-s1-sl04-session.md)/[evidenciaB1](../validation/evidence/2026-10-28-s1-sl04-B1.json): dos tandas10+10 y20respuestas, todas7d1a61c39766/cero pendientes/configcomparables. Primera es original;segunda adicional, sin sustituir. PO siguió objetivo desdegesto5 deprimera ydurante todalasegunda. Respuesta«Se fijó antes de tiempo» también fueusada parafallos;6pulsaciones conservadas, no tasa de6fijacionesprematuras. PróximoB2T3/10suaves→10medios→10fuertes, izquierda/hash antesdecadatanda/sin cambios;noB3todavía. Sin código/suites/build/instalación nuevos;restauraciónP0alcierrependiente/S1sin aceptar/PRsin fusionar.
+
+
+## B2 nativo completo — 28 de octubre
+
+[Informe formal](2026-10-28-first-shot-s1-sl04-session.md)/[evidenciaB2](../validation/evidence/2026-10-28-s1-sl04-B2.json):30intentos,3777muestras,tres bloques completos/hash7d1a61c39766/0pendientes; bandas solicitadasconSwing5/10suaves,9/10medios,9/10fuertes. Sin sustitución de abandono/P0 ni nueva interpretación de aceptación. Tres armados auditados aceptados/sinpausa/focusedtrue;sin cambios/P2/H17/Escenario.3archivosiguales/444fuentesintactas. ContinuarB3solo tras aclarar uso defeedback, no ajustes;P0restauración finalpendiente. Sin código/suites/build/instalación nuevos;PRsin fusionar/S1sin aceptar.
