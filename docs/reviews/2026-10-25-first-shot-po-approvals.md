@@ -801,3 +801,18 @@ Predeclaración **60c5c288f8cc7888db89b27455f066bbe38b49be** anterior al cálcul
 A es referencia principal por steeringdelPO, no elección final de diseño. Su punto de tirón completo nominal cae dentro de reserva pero antes deDevBar; no acredita yema/alcance físico. B queda de respaldo: altura máxima optimista muy limitada, no dimensión seleccionada ni viabilidad confirmada. Mapeo/sensibilidad comparados sin alterar ganancia; no se predice precisión del pulgar ni resultados deM2-4. Oclusión inicial/destape, halo/lupa/sin ayuda y costos de cancelar/retocar expuestos con recomendaciones deCodex etiquetadas, **sin elección de ayuda por elPO**. PolíticaSwingP≈0/cancelación/N2 y desviación de spec§6.4 siguen pendientes antes de cualquier TDD; sin editar spec. B1–B5 y tercerarespuesta«No fijó / falló» solo propuestas y necesitan autorización propia.
 
 Las111trazas no se recorren para simularM2-4; solo se citan resultados/entrada geométrica ya existentes. Comprobación informal delPO conservada como sensación, sin datos/medición ni intervención deCodex en el teléfono. Misma rama/PR26 y delta desde05a3f77 exactamente propuesta/aprobaciones/AGENTS. Sin producto/tests/presets/defaults/spec/planes/criterios/bandas/umbrales,suites/check-release/build/instalación/sesión/acceso al iPhone. Entregar lista paraClaude,sin fusionar ydetenerse. S1sin aceptar/S2–S4/T8sin autorizar;perfilhasta2026-11-03T18:29:44Z,sin instalación autorizada.
+
+
+## Aprobación de Claude y fusión condicionada de PR #26 — PO2026-10-28
+
+Claude aprobó head **f2068ac1e6948c5746005c5aa7ec71ee97dcd7cf** con tres correcciones documentales menores. Verificó delta de tresMarkdown sin producto, predeclaraciones60c5c28/9d2a005 anteriores a resultados y proyección recalculada independientemente coincidente enT1–T5, polígono/tiny1305,37,35mm=633,86px,holgurasA−8,21/+84,77px,cotasB−41,63/+51,35px y sensibilidades4,45–4,80mm/m. **No se recalcula ni se ejecuta ningún análisis para esta corrección.**
+
+Correcciones aplicadas únicamente a texto:
+
+1. Predeclaración marcada como histórica de60c5c28; resultados publicados calculados después de9d2a005.
+2. FigurasA/B con contorno cualitativo más ancho enout(x≈317–889) que en suelo(x≈353–853), sin cambiar coordenadas/JSON.
+3. **Conversión de unidades señalada por Claude de cifras ya publicadas, no análisis nuevo**, con s=25,4/460mm/px: ancho suelo≈27,6mm/out≈31,6mm;tin→out≈18,0mm;T1–T3≈9,1mm,T1–T4≈11,2mm,T1–T2≈14,0mm;mira mínima60px≈3,3mm. Consecuencia deClaude: pocos centímetros de frontis y mira actual menor que una yema; no medición de la yema delPO. Riesgo principalAes precisión del apoyo inicial, no solo oclusión; sin proponer cámara/zoom ni cambiar tamaños/umbrales.
+
+POautoriza fusión **condicionada**: delta desde f2068ac limitado a propuesta/aprobaciones/AGENTS, head corregido local/remoto exacto,PRabierta/no borrador/sin conflictos yárboleslimpios. Mergecommit con segundo padre=headcorregido; sincronizarmain;retirarworktree sin `--force`,preservandoignorados. **El cierre efectivo se registrará en la siguiente entrega documental, sin commit aparte enmain**; esta entrada no afirma que elmerge ya haya ocurrido. Después detenerse, sin iniciar otra entrega.
+
+**Diseño/TDD deM2-4 no autorizados.** ElPOdecidirá dominio, ayuda de oclusión, cancelaciónC-A/C-B, política de regióninválida, desviación§6.4 y riesgo por fases. S1sin aceptar;S2–S4/T8sin autorizar. Solo texto,sin producto/cálculos nuevos/suites/check-release/build/instalación/sesión/accesoaliPhone. Perfilvigentehasta2026-11-03T18:29:44Z;ninguna instalación autorizada.

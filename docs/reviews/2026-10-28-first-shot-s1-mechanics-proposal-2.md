@@ -147,7 +147,7 @@ SL-S1-04 y los111 registros/restauraciónP0 fueron aprobados técnicamente; la c
 
 ## 10. Adenda M2-4 — decisión del PO y predeclaración geométrica, 2026-10-28
 
-**Predeclaración: todavía sin resultados calculados en este commit.** Claude revisó PR #26/head05a3f778225922b9526e613fd501358e246a8fb9 como documento correcto y honesto, tres Markdown/sin cálculos/producto; cierrePR25 verificado. Señaló la omisión del literal de manos de revalidación2; se corrige con la cita y enlace en esta adenda, sin cambiar datos históricos.
+**Histórico de la predeclaración en60c5c28:** en ese commit todavía no había resultados calculados. Los resultados publicados abajo se calcularon después de la ampliación9d2a005; esta frase no describe el estado actual del documento. Claude revisó PR #26/head05a3f778225922b9526e613fd501358e246a8fb9 como documento correcto y honesto, tres Markdown/sin cálculos/producto; cierrePR25 verificado. Señaló la omisión del literal de manos de revalidación2; se corrige con la cita y enlace en esta adenda, sin cambiar datos históricos.
 
 ### Literales, decisión y alcance
 
@@ -195,7 +195,7 @@ Se añadirá una segunda cota de recorrido hasta ese borde estimado, manteniendo
 
 ### Resultados del cálculo geométrico predeclarado (no medición ni replay)
 
-Cálculo inicial después de60c5c28 y refinamiento después de9d2a005. El XMLde referencia coincide con elSHA publicado de la regresión PlayMode ya aprobada; no se ejecutó el editor. Valores redondeados solo para lectura/figuras; JSON conserva las cifras calculadas. **No son valores nuevos de configuración ni tamaños de UI elegidos.**
+Los resultados publicados en este bloque se calcularon después de9d2a005, ampliación de la predeclaración inicial60c5c28. El XMLde referencia coincide con elSHA publicado de la regresión PlayMode ya aprobada; no se ejecutó el editor. Valores redondeados solo para lectura/figuras; JSON conserva las cifras calculadas. **No son valores nuevos de configuración ni tamaños de UI elegidos.**
 
 ```json
 {
@@ -422,7 +422,7 @@ El objetivo queda fijo en el frontis, no sigue el dedo al tensar. Potencia por *
 
 El dominio visible incluye regiones inválidas(tin/out). Opciones: rechazar el Began inválido con motivo visible, o mostrar mira roja y cerrar como inválido sin Swing. **Recomendación de Codex:** conservar el señalamiento rojo de intención inválida y una clasificación conservadora explícita, sin recortar a un vecino legal ni convertir la línea en objetivo válido. La política final necesita decisión del PO; no se alteran criterios de legalidad.
 
-**Representación A, estática y nominal.** Viewport1206×2622; números enpx con origen superior izquierdo. El esquema Markdown no está a escala tipográfica: la tabla/JSON dan las posiciones exactas calculadas. Los símbolos de manos/ω son cualitativos, sin tamaño de yema ni mapa de alcance. Pulgar izquierdo activo solo como ejemplo; el PO no eligió definitivamente un lado.
+**Representación A, estática y nominal.** Viewport1206×2622; números enpx con origen superior izquierdo. El trapecio proyectado es más ancho enout(x≈317–889) que en el suelo(x≈353–853); los trazos siguientes solo indican esa forma cualitativa, no una interpolación de sus bordes. El esquema Markdown no está a escala tipográfica: la tabla/JSON dan las posiciones exactas calculadas. Los símbolos de manos/ω son cualitativos, sin tamaño de yema ni mapa de alcance. Pulgar izquierdo activo solo como ejemplo; el PO no eligió definitivamente un lado.
 
 ```text
              x=0                x=603                 x=1206
@@ -431,14 +431,14 @@ El dominio visible incluye regiones inválidas(tin/out). Opciones: rechazar el B
    y=186     ├──────────────── área segura ────────────────┤
              │             HUD ya existente               │
              │                                            │
-   y=980     │           /──────── out ────────\           │
-             │          /   T4          T5     \          │
+   y=980     │         ┌───────── out ─────────┐          │
+             │          \   T4          T5   /           │
    y=1055    │          |                       |          │
    y=1152    │          |           T3          |          │
    y=1258    │          |   (ω:T1)       T2     |          │
              │          |    ↑ pulgar activo    |          │
    y=1305    │          |·· envolvente tin ···· |          │
-   y=1339    │           \──── suelo frontis ──/           │
+   y=1339    │           └─── suelo frontis ─┘            │
              │               ↓         ↓                  │
              │  mano izq.───╱ ↓         ↓    mano der.     │
              │  sostiene     ↓         ↓    sostiene      │
@@ -481,18 +481,18 @@ Las tres conservan la mira verdadera en el objetivo fijado, no desplazan su cent
 
 **Alternativa, con menor profundidad por instrucción posterior.** Un dominio debajo del frontis mapea posición normalizada a(x,y)en metros; la mira real queda arriba en el frontis y el dedo no tiene que acertar el mismo píxel visual. Al Began se fija y el tirón baja desde ese ancla. No se elige el tamaño/posición del panel ni si mapear solo envolvente legal o el rango completo de mira0–5m: esa elección afectaría errores y acceso a rojo/tin/out y requiere diseño del PO, sin modificar la spec.
 
-**Representación B.** Rectángulo mostrado como **envolvente optimista/cota**, no panel con dimensiones elegidas; misma pantalla/referencia queA. El máximo de51,35px deja cero margen para yema, separación, estado o protocolos. Antes de la reserva de entrada la cota esnegativa; no dibujar ambas restricciones como si se cumplieran a la vez.
+**Representación B.** El frontis también es más ancho enout(x≈317–889) que en el suelo(x≈353–853); contorno cualitativo, no escala tipográfica. Rectángulo mostrado como **envolvente optimista/cota**, no panel con dimensiones elegidas; misma pantalla/referencia queA. El máximo de51,35px deja cero margen para yema, separación, estado o protocolos. Antes de la reserva de entrada la cota esnegativa; no dibujar ambas restricciones como si se cumplieran a la vez.
 
 ```text
            x=0                  x=603                 x=1206
  y=0       ┌────────────────────────────────────────────┐
  y=186     ├──────────────── área segura ────────────────┤
            │                    HUD                     │
- y=980     │           /──────── out ────────\           │
-           │          |    T4          T5    |           │
+ y=980     │         ┌───────── out ─────────┐          │
+           │          \   T4          T5   /           │
  y=1152    │          |          T3          |           │
  y=1258    │          |    T1          T2    |           │
- y=1339    │           \── suelo frontis ──/             │
+ y=1339    │           └─── suelo frontis ─┘            │
            │···· techo: panel estrictamente debajo ·····│
            │  [ω pulgar / apoyo mapeado, solo cota]      │
  y≤1390    │·· apoyo más bajo posible en cota optimista ·│
@@ -512,6 +512,20 @@ Las tres conservan la mira verdadera en el objetivo fijado, no desplazan su cent
 **Recomendación de Codex:** mantenerBde respaldo sujeto a resolver espacio con una propuesta explícita posterior. No recortar35mm, dar100%al llegar al borde ni mover DevBar/cámara para favorecerla. Evaluación futura: cobertura absoluta de T1–T5/extremos, separación de vista/dedo, error Began, comodidad y margen con toda la yema; los mismos criterios de error/fluidez queA, sin inferir validez por ser un panel familiar.
 
 #### b) Sensibilidad y precisión esperada, sin cambiar ganancia
+
+**Conversión de unidades señalada por Claude de cifras ya publicadas, no análisis nuevo.** Con s=25,4/460mm/px (DPI reportado, sin calibración física nueva):
+
+| Referencia en pantalla | Conversión aproximada comunicada por Claude |
+|---|---:|
+| Ancho del frontis en el suelo | 27,6mm |
+| Ancho del frontis enout | 31,6mm |
+| Altura tin→out | 18,0mm |
+| Separación T1–T3 | 9,1mm |
+| Separación T1–T4 | 11,2mm |
+| Separación T1–T2 | 14,0mm |
+| Diámetro mínimo de mira60px | 3,3mm |
+
+**Consecuencia señalada por Claude:** el frontis jugable ocupa pocos centímetros en pantalla y la mira actual es más pequeña que una yema. Es una apreciación cualitativa de la escala, **no una medición de la yema delPO ni un tamaño de contacto supuesto para los esquemas**. Los60px son el mínimo existente de la mira, no una nueva medición de su diámetro actual. El riesgo principal deAes **la precisión del apoyo inicial**, no solo que la mira quede oculta: destaparla al tirar no corrige un punto ya fijado con error. No se proponen cambios de cámara/zoom, que siguen fuera de alcance; tampoco se cambian ganancia, tamaños o criterios para reducir artificialmente ese riesgo.
 
 El control relativo existente usa0,12m/mm, equivalente a **8,333mm por metro**. EnA, por perspectiva, las sensibilidades locales calculadas son:
 
