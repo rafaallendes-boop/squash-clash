@@ -662,3 +662,10 @@ Fuente4cec622,9RED por aserción→9GREEN/contención adicionalRED→10/10,411/4
 ### Continuación de preparación SL-S1-04 — 2026-10-28
 
 RespuestaPO a autenticación «listo!». Arranque4cec622 confirmado09:57:01.393491Z/P0e458bfd5ce9e/cero pendientes;3archivos directamente iguales al respaldo. Dos activaciones deDEV/Presets auditadas nativamente, sinP2/H17/Escenario/bloques/gestos. S1-sling aún no cargado. Herramienta pierde procesoDuplicación durante desplazamiento; reabrir muestra otra solicitud local de contraseña, pedida alPO sin compartirla. No se identifica causa ni se amplía autorización. [Evidencia de preparación](../validation/evidence/2026-10-28-s1-sl04-preparation.json). Preparación/cuenta atrás/B0/sesión/restauración final siguen pendientes; no confundir esta preparación con prueba física. Sin código/suites/build/instalación nuevos; PR25borrador/sin fusionar/S1sin aceptar/S2–S4/T8sin autorizar.
+
+
+### Traspaso S1-sling tras preparación verificada — 2026-10-28
+
+Nueva respuestaPO de acceso «listo». Se cargóS1-sling yrestauró selección persistidaP0 original **antes** de aplicar/relanzar. Arranque/lanzamiento10:06:22.005822Z/4cec622 dev/S1-sling7d1a61c39766/cero pendientes/repeat0/sin pausa;3archivos directamente iguales al respaldo y presetS1igual a rama. DEVcerrado/líneaListo/3experimentos deshabilitados/B0accesible, sin bloques/gestos/muestreo nuevos. [Evidencia](../validation/evidence/2026-10-28-s1-sl04-preparation.json).
+
+Pedido alPO: verificarbuild/preset/hash, pulsarB0 yconfirmar cuenta atrás desdeMac antes delprimer gesto;tras confirmar practicar izquierda hastaCompletado sin esperarotrarespuesta, con guíaDENTRO/suelta, sinDEV/salir. Si no ve o no entiende límite detener/noB1. Se recordó que no hay golpe de pelota. La confirmaciónyB0completo/comprensión/cancelación guiada todavía pendientes; no inferir aceptaciónS1. PR25borrador/sin fusionar/S2–S4/T8sin autorizar; no manipular teléfono durante práctica.

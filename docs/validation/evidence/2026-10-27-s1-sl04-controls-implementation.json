@@ -107,7 +107,7 @@
   "experimentalPresetHash": "7d1a61c39766",
   "P0Hash": "e458bfd5ce9e",
   "simulationKey": "166a96e319c7",
-  "newPhysicalSession": "NotStarted_AwaitingTemporaryPresetPreparation",
+  "newPhysicalSession": "B0Requested_POCountdownConfirmationAndCompletionPending",
   "installation": "Succeeded_AfterEmbeddedProfileAndSourceValidation",
   "observationsForNewSession": [
     "O1 quiet candidates with <3 real samples",
@@ -197,6 +197,6 @@
     "Po-1.json": "9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767",
     "last-active.txt": "5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087"
   },
-  "preparation": "NotComplete_ConnectionLostBeforePresetLoad_AuthenticationRequestedAgain",
+  "preparation": "VerifiedS1Temporary_7d1a61c39766_Pending0_Unpaused_ProtectedExperiments",
   "preparationEvidence": "2026-10-28-s1-sl04-preparation.json"
 }
