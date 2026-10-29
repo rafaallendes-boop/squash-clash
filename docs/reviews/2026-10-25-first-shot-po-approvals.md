@@ -907,3 +907,8 @@ PO, por separado: «OK» al ver rombo querido aunque lejos del objetivo; «Apoyo
 ### B1 completo, desviación de tarea y siguiente solo B2suaves
 
 10intentos/10respuestasOK/597muestras con1c8e598b099b/0pendientes/sinpausa al armar;2abandonos+3Swing+5retornos. PO **«intente acertar, en algunos bajaba el pulgar para cargar, retiraba sin cargar y tambien retiraba para destapar la mira y comprobarla»**: buscóT, pero B1 sin carga no aislado; no repetir/reclasificar ni contarcomoB2suave. Paso posterior pausó;PO **«probablemente fue accidental»**, juicio probabilístico/no causa confirmada. SoloB2-soft solicitado trasContinuar/verificarhash/0pendientes/Jugando, diez suavesbuscandoT3/pulgarizq/todoscierres, sin medios/fuertes/B3 hasta revisión. Sin cambios de producto/dirección/parámetros/criterios;restauración final pendiente, S1sin aceptar.
+
+
+### 2026-10-29 — reconexión pedida por el PO antes de empezar B2
+
+Literal **«Prueba conectarlo de nuevo, para empezar la prueba. Tuve que reiniciar la app»**. Se verificó B2 no armado/sin intentos y conservación de B0/B1; no repetición/sustitución. Reconectada misma0f8002d dev, P0/e458bfd5ce9e/0pendientes previsto tras reinicio. RepreparadoS1-M2-4 temporal1c8e598b099b, last-activeP0 repuesto/leído antes de aplicar/relanzar10:45:43.436823Z;0pendientes/repeat0/Jugando/DEVcerrado/protección/cotejo3archivos. Tramo nuevo/otro día y proceso, sin comparabilidad humana causal ni continuidad ficticia. SoloB2-soft solicitado de nuevo porque no había empezado;sin suites/build/instalación/código/parametrización nueva. Cierre/restauración pendientes, S1sin aceptar.
