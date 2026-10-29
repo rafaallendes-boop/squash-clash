@@ -912,3 +912,8 @@ PO, por separado: «OK» al ver rombo querido aunque lejos del objetivo; «Apoyo
 ### 2026-10-29 — reconexión pedida por el PO antes de empezar B2
 
 Literal **«Prueba conectarlo de nuevo, para empezar la prueba. Tuve que reiniciar la app»**. Se verificó B2 no armado/sin intentos y conservación de B0/B1; no repetición/sustitución. Reconectada misma0f8002d dev, P0/e458bfd5ce9e/0pendientes previsto tras reinicio. RepreparadoS1-M2-4 temporal1c8e598b099b, last-activeP0 repuesto/leído antes de aplicar/relanzar10:45:43.436823Z;0pendientes/repeat0/Jugando/DEVcerrado/protección/cotejo3archivos. Tramo nuevo/otro día y proceso, sin comparabilidad humana causal ni continuidad ficticia. SoloB2-soft solicitado de nuevo porque no había empezado;sin suites/build/instalación/código/parametrización nueva. Cierre/restauración pendientes, S1sin aceptar.
+
+
+### 2026-10-29 — B2 suave/medio conservados, siguiente solo fuerte
+
+10/10Swing en banda suave y10/10media, rangos5,48–23,89% y41,96–58,03%,0saturación/conservadoras; hash1c8e598b099b/0pendientes/armados sinpausa/foco. Error de apoyo separado, sin aceptar precisión/S1 ni cambiar criterios. SuavePO **«Listo! todo bien, aputnaba al cuadrado de al medio»**; medio **«listo»**. Un preview adicional fuera de tanda preservado/sin sustitución. SoloB2-strong solicitado después de revisar medio, diezT3/pulgarizq/tirónmayor,precheck y todoscierres;noB3/B4/B5 aún.3archivos intactos/sin código/configuración/build nuevos;restauración final pendiente.

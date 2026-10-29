@@ -125,3 +125,20 @@ Se reconecta la misma app **0f8002d dev**, sin suites/check-release/build/instal
 **Tramo nuevo 2026-10-29-reconnect-1:** otro día y proceso, no sesión continua con la práctica nocturna. Session/launchSerial nativos pueden reiniciarse; se distinguen por archivo/época/attemptId y segmento derivado, sin modificar crudos ni enlazar correcciones a través de reinicio. No se reemplazan B0/B1 ni se repiten. Configuración igual no acredita iguales condiciones humanas/aprendizaje/fatiga ni comparación causal entre tramos.
 
 Se vuelve a solicitar **solo B2-soft/10suaves**, que aún no había empezado: precheck0f8002d/S1-M2-4/1c8e598b099b/0pendientes/Jugando, pulgarizquierdo, buscarT3 al apoyar/tirónpequeño descendente/suelta, todoscierres/sin sustitución ni repetir. No B0/B1/medios/fuertes/B3. Resultado pendiente, sin acceso al teléfono durante los gestos. M2-4 temporal activo/selecciónP0/restauración final pendiente; no cambios de dirección/parámetros/umbrales ni aceptaciónS1.
+
+## B2 suave y medio — tramos separados, sin ajustes
+
+Continuación29, mismo proceso preparado10:45:43Z/hash1c8e598b099b. [Diez suaves](../validation/evidence/2026-10-29-m24-B2-soft.json): armado10:54:08.213674Z/fin10:54:32.313551Z. [Diez medios](../validation/evidence/2026-10-29-m24-B2-medium.json): tanda posterior solicitada solo después de revisar suaves. Ambas únicas/completas, sin sustituir/repetir, hash correcto/cero pendientes/todos comparables, armados aceptados sin pausa/con foco/DEVcerrado. Todos los resultados son Swing preview, sin contacto real con pelota.
+
+| Serie | Swing en banda pedida / todos | P mín / mediana / máx | Saturación | Error Began→T3 mín / mediana / máx (m) |
+|---|---:|---|---:|---|
+| Suaves | 10/10 | 5,4849% / 10,5046% / 23,8907% | 0/10 | 0,121166 / 0,223099 / 0,380690 |
+| Medios | 10/10 | 41,9618% / 46,8142% / 58,0251% | 0/10 | 0,038999 / 0,219674 / 0,482226 |
+
+242muestras primarias suaves y553medias; ninguna salida conservadora, tap o cancelación en estas tandas; O2=0 y0enlaces en cada una. No violaciones de precedencia en auditoría de datos nuevos. Medianas Began→cierre1416,969ms suave y1662,777ms media; no tiempo de rally ni resultado de precisión aprobado. Potencias se separan en estas20observaciones, sin extrapolar a fuertes aún ni aceptaciónS1. Umbrales/bandas/dirección/defaults no cambian.
+
+PO sobre suaves: **«Listo! todo bien, aputnaba al cuadrado de al medio»**: intención de buscarT3 declarada. Medios: **«listo»**, acuse a la instrucción conT3, sin inferir otra valoración literal. Los errores frente aT se mantienen aparte de las bandas, sin umbral nuevo ni acierto inferido de que haya Swing.
+
+[Un intento preview adicional entre suaves y medios](../validation/evidence/2026-10-29-m24-preview-extra.json) se preserva por separado, sin atribuir intención ni usarlo para sustituir los diez. Ninguna tanda fuerte/B3/B4/B5 armada aún en la recuperación. P0/Po-1/last-active byte iguales al respaldo tras ambas y456fuentes de producto intactas; sin código/tests/build/instalación nuevos.
+
+Solicitado **solo B2-strong/10fuertes** tras verificar medios, con precheck1c8e598b099b/0pendientes/Jugando, pulgarizquierdo, T3 buscado al apoyar y tirón descendente mayor, todoscierres/sin sustituir ni repetir. NoB3/B4/B5 hasta recuperar/revisar fuerte; no acceso al teléfono durante los gestos. M2-4temporal activo/selecciónP0/restauración final pendiente;PR28borrador/S1sin aceptar.
