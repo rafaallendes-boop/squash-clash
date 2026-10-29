@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "scope": "M2-4 B2 three sequential series, all attempts; not acceptance",
+  "segment": "2026-10-29-reconnect-1",
+  "build": "0f8002d dev",
+  "hash": "1c8e598b099b",
+  "series": {
+    "B2-soft": {
+      "block": "B2-soft",
+      "attempts": 10,
+      "realPrimarySamples": 242,
+      "outcomes": {
+        "Swing": 10
+      },
+      "requestedBandSwingCount": 10,
+      "denominatorAllAttempts": 10,
+      "powerAllAttempts": {
+        "min": 0.05484868586063385,
+        "median": 0.10504600405693054,
+        "max": 0.2389066517353058
+      },
+      "saturationCount": 0,
+      "saturationFractionAllAttempts": 0.0,
+      "conservativeReasons": {},
+      "targetErrorMeters": {
+        "n": 10,
+        "min": 0.12116639316082001,
+        "median": 0.22309929877519608,
+        "max": 0.3806898593902588
+      },
+      "durationMs": {
+        "min": 895.9304583240737,
+        "median": 1416.969479415343,
+        "max": 2196.266499979288
+      },
+      "hasAimCount": 10,
+      "hash": "1c8e598b099b",
+      "pending": 0,
+      "allComparable": true,
+      "armAcceptedUnpausedFocused": true,
+      "o2Count": 0,
+      "o2MaxDisplacementFromAnchorMm": 0,
+      "reapplicationLinks": 0,
+      "violations": [],
+      "presetFilesByteIdentical": {
+        "P0-calib-1.json": true,
+        "Po-1.json": true,
+        "last-active.txt": true
+      }
+    },
+    "B2-medium": {
+      "block": "B2-medium",
+      "attempts": 10,
+      "realPrimarySamples": 553,
+      "outcomes": {
+        "Swing": 10
+      },
+      "requestedBandSwingCount": 10,
+      "denominatorAllAttempts": 10,
+      "powerAllAttempts": {
+        "min": 0.4196181297302246,
+        "median": 0.4681422859430313,
+        "max": 0.5802505016326904
+      },
+      "saturationCount": 0,
+      "saturationFractionAllAttempts": 0.0,
+      "conservativeReasons": {},
+      "targetErrorMeters": {
+        "n": 10,
+        "min": 0.038999199867248535,
+        "median": 0.21967443078756332,
+        "max": 0.4822255074977875
+      },
+      "durationMs": {
+        "min": 1304.37420883095,
+        "median": 1662.776707538228,
+        "max": 2704.608833418206
+      },
+      "hasAimCount": 10,
+      "hash": "1c8e598b099b",
+      "pending": 0,
+      "allComparable": true,
+      "armAcceptedUnpausedFocused": true,
+      "o2Count": 0,
+      "o2MaxDisplacementFromAnchorMm": 0,
+      "reapplicationLinks": 0,
+      "violations": [],
+      "presetFilesByteIdentical": {
+        "P0-calib-1.json": true,
+        "Po-1.json": true,
+        "last-active.txt": true
+      }
+    },
+    "B2-strong": {
+      "block": "B2-strong",
+      "attempts": 10,
+      "realPrimarySamples": 369,
+      "outcomes": {
+        "Swing": 10
+      },
+      "requestedBandSwingCount": 10,
+      "denominatorAllAttempts": 10,
+      "powerAllAttempts": {
+        "min": 0.7325164079666138,
+        "median": 0.995098739862442,
+        "max": 1.0
+      },
+      "saturationCount": 5,
+      "saturationFractionAllAttempts": 0.5,
+      "conservativeReasons": {},
+      "targetErrorMeters": {
+        "n": 10,
+        "min": 0.04006808623671532,
+        "median": 0.20374083518981934,
+        "max": 0.5216093063354492
+      },
+      "durationMs": {
+        "min": 779.28466657022,
+        "median": 870.9742705515282,
+        "max": 1054.3437922108296
+      },
+      "hasAimCount": 10,
+      "hash": "1c8e598b099b",
+      "pending": 0,
+      "allComparable": true,
+      "armAcceptedUnpausedFocused": true,
+      "o2Count": 0,
+      "o2MaxDisplacementFromAnchorMm": 0,
+      "reapplicationLinks": 0,
+      "violations": [],
+      "presetFilesByteIdentical": {
+        "P0-calib-1.json": true,
+        "Po-1.json": true,
+        "last-active.txt": true
+      },
+      "saturationWarningThresholdUnchanged": 0.2,
+      "saturationWarningExceeded": true
+    }
+  },
+  "attemptsTotal": 30,
+  "primarySamplesTotal": 1164,
+  "requestedBandSwingTotal": 30,
+  "powerRangesDoNotOverlapInTheseSamples": true,
+  "strongSaturationFraction": 0.5,
+  "saturationWarningThresholdUnchanged": 0.2,
+  "strongSaturationWarningExceeded": true,
+  "noParametersAdjusted": true,
+  "noControlOrS1Acceptance": true,
+  "causalComparabilityToPreviousDay": "NotEstablished"
+}

@@ -142,3 +142,19 @@ PO sobre suaves: **«Listo! todo bien, aputnaba al cuadrado de al medio»**: int
 [Un intento preview adicional entre suaves y medios](../validation/evidence/2026-10-29-m24-preview-extra.json) se preserva por separado, sin atribuir intención ni usarlo para sustituir los diez. Ninguna tanda fuerte/B3/B4/B5 armada aún en la recuperación. P0/Po-1/last-active byte iguales al respaldo tras ambas y456fuentes de producto intactas; sin código/tests/build/instalación nuevos.
 
 Solicitado **solo B2-strong/10fuertes** tras verificar medios, con precheck1c8e598b099b/0pendientes/Jugando, pulgarizquierdo, T3 buscado al apoyar y tirón descendente mayor, todoscierres/sin sustituir ni repetir. NoB3/B4/B5 hasta recuperar/revisar fuerte; no acceso al teléfono durante los gestos. M2-4temporal activo/selecciónP0/restauración final pendiente;PR28borrador/S1sin aceptar.
+
+### B2 fuerte y cierre de las tres series
+
+[Diez fuertes](../validation/evidence/2026-10-29-m24-B2-strong.json), tanda única posterior a revisar medios; PO **«listo»**. Armado 11:15:58.387269Z sin pausa/con foco/DEV cerrado; 10/10 Swing en banda fuerte, hash 1c8e598b099b, cero pendientes/todos comparables. 369 muestras primarias, cero O2/enlaces/conservadoras/cancelaciones; sin violaciones de precedencia ni ajustes.
+
+| Serie | Swing en banda / todos | P mínima / mediana / máxima | Saturación / todos |
+|---|---:|---|---:|
+| Suave | 10/10 | 5,4849% / 10,5046% / 23,8907% | 0/10 |
+| Media | 10/10 | 41,9618% / 46,8142% / 58,0251% | 0/10 |
+| Fuerte | 10/10 | 73,2516% / 99,5099% / 100% | **5/10 (50%)** |
+
+[Resumen B2](../validation/evidence/2026-10-29-m24-B2-summary.json): 30 intentos/1164 muestras primarias, todos conservados; rangos P sin solapamiento en estas observaciones. **La saturación fuerte del 50% excede la advertencia vigente >20%**. No se cambia el umbral ni se repite o se instruye una corrección para reducirla. No se promueve el preset ni se acepta S1 por la separación de bandas. La intención de saturar no se infiere de «listo».
+
+Error Began→T3 fuerte: mínimo 0,040068 m/mediana 0,203741 m/máximo 0,521609 m, separado de P y sin umbral nuevo. Duración Began→cierre: mínimo 779,285 ms/mediana 870,974 ms/máximo 1054,344 ms; no tiempo de rally. Ningún B3/B4/B5 armado en la recuperación; se conserva el preview adicional aparte. Los tres archivos siguen byte a byte iguales al respaldo y las 456 fuentes de producto están intactas.
+
+Se solicita **solo B3**, diez medios a cuadrados bajos T1/T2 alternos, pulgar izquierdo, precheck de hash/pendientes/Jugando, apoyo directo/tirón posterior/suelta y respuesta explícita de la triada por intento. OK significa fijación querida vista aunque no acierte; Apoyo sin querer es apoyo accidental; No fijó / falló es ausencia de fijación esperada/fallo operativo. Todos los cierres cuentan, sin sustituir ni repetir. No B4/B5 hasta recuperar B3; no acceso al teléfono durante los gestos. M2-4 temporal activo/selección P0/restauración final pendiente. PR28 en borrador, S1 sin aceptar; sin cambios de código, parámetros, tests, build ni instalación.

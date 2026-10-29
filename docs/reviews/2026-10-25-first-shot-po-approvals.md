@@ -917,3 +917,7 @@ Literal **«Prueba conectarlo de nuevo, para empezar la prueba. Tuve que reinici
 ### 2026-10-29 — B2 suave/medio conservados, siguiente solo fuerte
 
 10/10Swing en banda suave y10/10media, rangos5,48–23,89% y41,96–58,03%,0saturación/conservadoras; hash1c8e598b099b/0pendientes/armados sinpausa/foco. Error de apoyo separado, sin aceptar precisión/S1 ni cambiar criterios. SuavePO **«Listo! todo bien, aputnaba al cuadrado de al medio»**; medio **«listo»**. Un preview adicional fuera de tanda preservado/sin sustitución. SoloB2-strong solicitado después de revisar medio, diezT3/pulgarizq/tirónmayor,precheck y todoscierres;noB3/B4/B5 aún.3archivos intactos/sin código/configuración/build nuevos;restauración final pendiente.
+
+### 2026-10-29 — B2 fuerte conservado con advertencia de saturación
+
+PO **«listo»**; 10/10 fuertes en banda, P73,25–100%/mediana99,51%. **Saturación5/10=50%, supera advertencia20% intacta**; no ajustes/repetición/promoción/aceptación inferida. B2 total30/30 en banda/1164muestras, misma configuración/cero pendientes/sin pausa/con foco y tres archivos iguales. Error Began separado de P. Tras revisar fuerte se solicita solo B3, diez medios T1/T2/pulgarizquierdo/triada/precheck/todoscierres; no B4/B5 aún. Sin código/parámetros/criterios nuevos, restauración final pendiente, S1 sin aceptar.
