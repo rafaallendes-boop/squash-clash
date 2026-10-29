@@ -68224,5 +68224,21 @@
       "answer": "fueron todas voluntarias"
     }
   ],
-  "poRetrospectiveCountdownAndCompletionSeen": true
+  "poRetrospectiveCountdownAndCompletionSeen": true,
+  "threeResponseExamples": [
+    {
+      "question": "Ejemplo 1: apoyaste para apuntar y viste el rombo, pero quedó lejos del cuadrado objetivo. La fijación funcionó; el error de puntería se registra aparte. ¿Qué respuesta usarías?",
+      "answer": "OK"
+    },
+    {
+      "question": "Ejemplo 2: tocaste el frontis accidentalmente y la mira quedó fijada, aunque no querías elegir ningún punto todavía. ¿Qué respuesta usarías?",
+      "answer": "Apoyo sin querer"
+    },
+    {
+      "question": "Ejemplo 3: querías fijar la mira, pero no apareció o no pudiste identificar el rombo, o hubo un fallo operativo. ¿Qué respuesta usarías?",
+      "answer": "No fijó / falló"
+    }
+  ],
+  "threeResponseExamplesAllMatchDeclaredMeaning": true,
+  "futureActualFeedbackMeaningNotInferred": true
 }

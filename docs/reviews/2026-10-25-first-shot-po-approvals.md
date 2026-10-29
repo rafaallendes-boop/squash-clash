@@ -897,3 +897,8 @@ Literal completo en informe/evidencia B0; PO declara apuntar/cargar/cancelar dur
 ### Gate B0 y aclaraciones literales, sin nueva decisión de parámetros
 
 Cuenta atrás antes del primer gesto/Completado: PO **«Si, lo vi, preferí empezar de una después de leer el mensaje»**. Cancelación voluntaria y retorno comprendido: **«fueron todas voluntarias»**. Se conserva la desviación de no confirmar previamente porchat, sin repetir B0 ni recalificar raw. Gate de B0 confirmado; faltan respuestas a ejemplos de la triada antes de B1. Preferencia de dirección arriba/adelante no modifica el experimento descendente. Ningún bloque nuevo solicitado aún; código/configuración intactos. M2-4 temporal activo/restauración final pendiente.
+
+
+### Ejemplos de tres respuestas comprendidos antes de B1
+
+PO, por separado: «OK» al ver rombo querido aunque lejos del objetivo; «Apoyo sin querer» al apoyo accidental; «No fijó / falló» si no apareció/se identificó rombo o hubo fallo operativo. Coinciden con significados aprobados, sin inferir significado de futuros flags ni cambiar instrumento/criterios. Se solicita soloB1 con precheck1c8e598b099b/0pendientes/Jugando, pulgar izquierdo, diez apoyosT1–T5dosveces/retirada sin carga/respuesta explícita/todoscierres/no sustitución. B1 y su precheck pendientes; noB2 hasta revisión. Sin código ni parámetros nuevos; restauración final pendiente.

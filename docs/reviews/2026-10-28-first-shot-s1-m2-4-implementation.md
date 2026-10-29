@@ -89,3 +89,15 @@ Se registra como sensación/preferencia por un tensado hacia arriba/adelante; **
 A la pregunta sobre cuenta atrás antes del primer gesto y Completado al final respondió literalmente: **«Si, lo vi, preferí empezar de una después de leer el mensaje»**. A la pregunta sobre cancelaciones voluntarias y comprensión del retorno C-A: **«fueron todas voluntarias»**. Se conserva la desviación de no haber confirmado antes por chat; no se convierte esta aclaración en confirmación previa ni se repite B0.
 
 El gate de B0 queda cubierto por práctica completa/guiada registrada y comprensión/voluntariedad declaradas por el PO. No se reetiquetan los cierres individuales ni se interpreta que todos los abandonos fueron correcciones. Sigue intacta la preferencia arriba/adelante como sensación, sin cambio de dirección. **Antes de solicitar B1 se presentan tres ejemplos de respuesta**, pendientes de contestar: fijación vista aunque lejos del objetivo→OK; apoyo accidental no querido→Apoyo sin querer; no identificar/obtener la fijación esperada o fallo operativo→No fijó / falló. No se solicita todavía ningún bloque nuevo, ni se presume comprensión de la triada.
+
+### Triada comprobada y B1 solicitado por separado
+
+Antes de B1, el PO respondió a los tres ejemplos, cada uno por separado:
+
+| Ejemplo presentado | Respuesta literal |
+|---|---|
+| Apoyo querido y rombo visto, aunque lejos del cuadrado; error de puntería separado | «OK» |
+| Apoyo accidental que fijó sin querer elegir punto todavía | «Apoyo sin querer» |
+| No apareció/no se identificó el rombo esperado o hubo fallo operativo | «No fijó / falló» |
+
+Las tres coinciden con los significados predeclarados. Esto comprueba la comprensión del ejemplo, no garantiza el significado de cada respuesta futura ni reinterpreta los datos de S1-sling. Se solicita **solo B1**, con precheck del PO en DEV: S1-M2-4/1c8e598b099b/cero pendientes/Jugando; si difiere, no empezar y avisar. Diez apoyos directos al cuadrado T1–T5 dos veces con un solo pulgar izquierdo, retirar sin cargar ni arrastrar para corregir; una respuesta explícita por intento, todos los cierres conservados, sin repetir/sustituir. No B2 hasta recuperar/verificar B1. Resultado y confirmación del precheck pendientes; sin acceso al teléfono durante los gestos. Dirección descendente/parámetros/código intactos, M2-4 temporal activo/selección P0/restauración final pendiente.
