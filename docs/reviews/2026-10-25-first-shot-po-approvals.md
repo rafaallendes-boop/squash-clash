@@ -902,3 +902,8 @@ Cuenta atrás antes del primer gesto/Completado: PO **«Si, lo vi, preferí empe
 ### Ejemplos de tres respuestas comprendidos antes de B1
 
 PO, por separado: «OK» al ver rombo querido aunque lejos del objetivo; «Apoyo sin querer» al apoyo accidental; «No fijó / falló» si no apareció/se identificó rombo o hubo fallo operativo. Coinciden con significados aprobados, sin inferir significado de futuros flags ni cambiar instrumento/criterios. Se solicita soloB1 con precheck1c8e598b099b/0pendientes/Jugando, pulgar izquierdo, diez apoyosT1–T5dosveces/retirada sin carga/respuesta explícita/todoscierres/no sustitución. B1 y su precheck pendientes; noB2 hasta revisión. Sin código ni parámetros nuevos; restauración final pendiente.
+
+
+### B1 completo, desviación de tarea y siguiente solo B2suaves
+
+10intentos/10respuestasOK/597muestras con1c8e598b099b/0pendientes/sinpausa al armar;2abandonos+3Swing+5retornos. PO **«intente acertar, en algunos bajaba el pulgar para cargar, retiraba sin cargar y tambien retiraba para destapar la mira y comprobarla»**: buscóT, pero B1 sin carga no aislado; no repetir/reclasificar ni contarcomoB2suave. Paso posterior pausó;PO **«probablemente fue accidental»**, juicio probabilístico/no causa confirmada. SoloB2-soft solicitado trasContinuar/verificarhash/0pendientes/Jugando, diez suavesbuscandoT3/pulgarizq/todoscierres, sin medios/fuertes/B3 hasta revisión. Sin cambios de producto/dirección/parámetros/criterios;restauración final pendiente, S1sin aceptar.
