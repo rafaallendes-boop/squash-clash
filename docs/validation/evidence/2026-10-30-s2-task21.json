@@ -1,0 +1,99 @@
+{
+  "task": "2.1",
+  "runs": [
+    {
+      "task": "2.1",
+      "phase": "GREEN",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ClockMapTests"
+      ],
+      "startedUtc": "2026-10-30T19:40:38.344349+00:00",
+      "exitCode": 1,
+      "total": "12",
+      "passed": "11",
+      "failed": "1",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": false,
+      "xmlSha256": "0784049219826a809b9c0b07bbf34508587c2c3b37dd1c8ccdafa47bb18531c7"
+    },
+    {
+      "task": "2.1",
+      "phase": "GREEN-numeric",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ClockMapTests"
+      ],
+      "startedUtc": "2026-10-30T19:41:55.522805+00:00",
+      "exitCode": 0,
+      "total": "12",
+      "passed": "12",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "4c9663e6ffdfde8d645adb155b8cd2b3a4995faf9b2a1fc8adaf33a0bfbb4e7c"
+    },
+    {
+      "task": "2.1",
+      "phase": "RED",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ClockMapTests"
+      ],
+      "startedUtc": "2026-10-30T19:36:53.536210+00:00",
+      "exitCode": 1,
+      "total": "9",
+      "passed": "0",
+      "failed": "9",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "de7e3194185f473557c2bef43f1826fd739b98b78d7035acec5b71aa66f1e30f"
+    },
+    {
+      "task": "2.1",
+      "phase": "RED-observations",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ClockMapTests"
+      ],
+      "startedUtc": "2026-10-30T19:39:16.140221+00:00",
+      "exitCode": 1,
+      "total": "12",
+      "passed": "0",
+      "failed": "12",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "5e3f27d5f364f7de15a3d67fde8be2f0c63a7fb9435f86b9f2d1ebab19b3bc12"
+    },
+    {
+      "task": "2.1",
+      "phase": "suite",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode"
+      ],
+      "startedUtc": "2026-10-30T19:44:27.612071+00:00",
+      "exitCode": 0,
+      "total": "459",
+      "passed": "459",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "b133d57ce021c1cf6757d21adb23b9717263a705464a468b9404a837835f8e71"
+    }
+  ],
+  "clockAuthority": "Existing SimClock; ClockMap only observes",
+  "droppedSteps": "Explicit optional fact supplied by SimClock, no jitter heuristic",
+  "firstGreenPass": "11/12; paused exactstep1ulp below24; assertion preserved",
+  "numericNormalization": "Bound4doubleepsilon*position, no real-time game threshold change",
+  "devicesOrNativeBuild": false
+}
