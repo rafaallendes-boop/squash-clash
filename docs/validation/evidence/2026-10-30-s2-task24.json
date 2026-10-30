@@ -1,0 +1,78 @@
+{
+  "task": "2.4",
+  "defaultsHash": "a768705c406b",
+  "p0ExtendedHash": "79f6091f375e",
+  "keys": 100,
+  "runs": [
+    {
+      "task": "2.4",
+      "phase": "RED-assertions",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ShotSolverTests"
+      ],
+      "startedUtc": "2026-10-30T20:53:27.320876+00:00",
+      "exitCode": 1,
+      "total": "12",
+      "passed": "1",
+      "failed": "11",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "84a00644db7daa8b0d4775a9ae9cb7fdf9b82705761bdc48a341853d9c576de6"
+    },
+    {
+      "task": "2.4",
+      "phase": "GREEN",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ShotSolverTests"
+      ],
+      "startedUtc": "2026-10-30T20:54:04.369776+00:00",
+      "exitCode": 0,
+      "total": "12",
+      "passed": "12",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "3ec07b60444d0abfa979b54040da91f11a4c9c2dbdd6e4354ea855b3549a7143"
+    },
+    {
+      "task": "2.4",
+      "phase": "RED-hash100",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode"
+      ],
+      "startedUtc": "2026-10-30T20:54:18.061092+00:00",
+      "exitCode": 1,
+      "total": "515",
+      "passed": "511",
+      "failed": "4",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "0ba97b11e6af292481f4220055e6c966d3a4efa0b6210441395eebacff7360fe"
+    },
+    {
+      "task": "2.4",
+      "phase": "suite",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode"
+      ],
+      "startedUtc": "2026-10-30T20:56:03.605107+00:00",
+      "exitCode": 0,
+      "total": "515",
+      "passed": "515",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "c458c94e19d004bf1f7df14358e040be72541a7d7541671000bff73e0d193c70"
+    }
+  ]
+}

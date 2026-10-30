@@ -390,6 +390,18 @@
     {
       "key": "timing.latencyCompMs",
       "value": 0
+    },
+    {
+      "key": "shot.vMin",
+      "value": 6
+    },
+    {
+      "key": "shot.vMax",
+      "value": 28
+    },
+    {
+      "key": "shot.vCap",
+      "value": 32
     }
   ]
 }

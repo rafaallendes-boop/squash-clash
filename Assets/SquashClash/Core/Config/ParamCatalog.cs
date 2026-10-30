@@ -8,6 +8,9 @@ namespace SquashClash.Core.Config
     {
         private static readonly IReadOnlyList<ParamDef> definitions = Array.AsReadOnly(new[]
         {
+            new ParamDef("shot.vMin", "Minimum shot speed", "m/s", "First Shot / solver", ParamKind.Float, 2, 15, .1, ApplyClass.Immediate),
+            new ParamDef("shot.vMax", "Maximum requested speed", "m/s", "First Shot / solver", ParamKind.Float, 10, 45, .1, ApplyClass.Immediate),
+            new ParamDef("shot.vCap", "Feasibility speed cap", "m/s", "First Shot / solver", ParamKind.Float, 10, 50, .1, ApplyClass.Immediate),
             new ParamDef("timing.assistMs", "Assisted half-window", "ms", "First Shot / timing", ParamKind.Float, 0, 80, 1, ApplyClass.Immediate),
             new ParamDef("timing.validLimit", "Validity limit", "", "First Shot / timing", ParamKind.Choice, 0, 1, 1, ApplyClass.Immediate, new ChoiceOption(0, "T3 pure"), new ChoiceOption(1, "V")),
             new ParamDef("timing.validMs", "Valid half-window", "ms", "First Shot / timing", ParamKind.Choice, 80, 120, 20, ApplyClass.Immediate, new ChoiceOption(80, "80"), new ChoiceOption(100, "100"), new ChoiceOption(120, "120")),

@@ -46,7 +46,7 @@ namespace SquashClash.Core.Tests.Shot
             var p=SquashClash.Core.Config.PresetCodec.Overlay(defaults,preset,new System.Collections.Generic.List<string>());
             Assert.That(p.GetInt("gesture.control"),Is.EqualTo(2));Assert.That(p.Get("power.pullDeadZoneMm"),Is.EqualTo(2));Assert.That(p.Get("power.pullFullMm"),Is.EqualTo(35));
             Assert.That(p.Get("gesture.tapMaxMm"),Is.EqualTo(3));Assert.That(p.Get("gesture.tapMaxMs"),Is.EqualTo(250));
-            Assert.That(defaults.Hash,Is.EqualTo("f0e57daf7ba3"));Assert.That(defaults.Ordered.Count,Is.EqualTo(97));
+            Assert.That(defaults.Hash,Is.EqualTo("a768705c406b"));Assert.That(defaults.Ordered.Count,Is.EqualTo(100));
             Assert.That(SquashClash.Core.Config.EffectiveConfig.From(p).SimulationKey,Is.EqualTo("166a96e319c7"));
             TestContext.WriteLine("M24_PRESET_HASH="+p.Hash+" P0_EXTENDED_HASH="+defaults.With("launcher.repeatSeconds",3).Hash);
         }
