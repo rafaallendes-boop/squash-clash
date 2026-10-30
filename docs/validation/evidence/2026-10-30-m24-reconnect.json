@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "scope": "Repreparación tras salida del PO; ningún bloque nuevo ni medición física",
+  "segment": "2026-10-30-reconnect-2",
+  "build": "0f8002d dev",
+  "previousCompleted": "B0/B1/B2 preserved, B3 not started",
+  "poRequest": "Tuve que salir, por lo que deja instalado de nuevo para hacer la prueba. pero me está dando error en el duplicar, ya que me dice que tengo que seguir las instrucciones de mi iphone, pero no aparece nada",
+  "poAccessResolved": "Listo. Ya lo arregle, ahora está listo. Pra que lo dejes listo",
+  "installedAgain": false,
+  "newBuild": false,
+  "preparedLaunchUtc": "2026-10-30T10:24:56.8349890Z",
+  "effectiveHash": "1c8e598b099b",
+  "pending": 0,
+  "repeatSeconds": 0,
+  "observedUI": {
+    "devClosed": true,
+    "status": "Listo",
+    "game": "Jugando",
+    "scenarioP2H17Disabled": true,
+    "B3ButtonMadeAccessibleButNotPressed": true
+  },
+  "originalLastActiveRestoredAndReadBackBeforeApply": true,
+  "presetFilesByteIdentical": {
+    "P0-calib-1.json": true,
+    "Po-1.json": true,
+    "last-active.txt": true
+  },
+  "productSourceHashesChecked": 456,
+  "noNewBlocksOrGesturesBeforeHandoff": true,
+  "sources": [
+    {
+      "file": "metrics-20261027T170348332-3ef3eb3544974fcba228d3c22320ca4e.jsonl",
+      "sha256": "87d67f9fbdb570ffa680a468945a8c01ce203d5ce6431331af95af97fc93cb03"
+    },
+    {
+      "file": "metrics-20261025T190411296-cec7aea3c055465bbe7ceb7700b1da73.jsonl",
+      "sha256": "bf43bb08b8c23a1525902f4b7186f9723249975204d654d6021de6e33ae8f847"
+    },
+    {
+      "file": "metrics-20261028T115021091-a3d70b5d50ab4560b475b6fc08dc4939.jsonl",
+      "sha256": "75ef8286bbcbc9ffdd2852c82d271daffd9142ac17306506e2ea6e01e496a224"
+    },
+    {
+      "file": "metrics-20261025T232531726-14ea659b4e4a4ef0b405d1988ed61aaf.jsonl",
+      "sha256": "a276502a519cb455d789d6d6f1fff82b557460f08e1c35eff07cc07791a81e88"
+    },
+    {
+      "file": "metrics-20261027T170512376-bde1660f6c49408782534f165b7941b9.jsonl",
+      "sha256": "20859506c11247f621ee6931a447d6901902d780d56b396f8002bf2c36fa9ac9"
+    },
+    {
+      "file": "metrics-20261028T095757299-fe13a8a5a671435d99072b3c3699ee6d.jsonl",
+      "sha256": "455d1a3173f02291b951274eeb33c85c8a238018eb7f60e6906601cb0ff4d76f"
+    },
+    {
+      "file": "metrics-20261025T220505357-49d3e849e3ea4617829bbbb0a2332df8.jsonl",
+      "sha256": "8d5ae9dc5eec7f1cf720e3353e37b638ee1a510c389f1eceed18c152ec3d0ac1"
+    },
+    {
+      "file": "metrics-20261029T095149147-d8c4869dc2b5486da49e5dd1b9b4ed5c.jsonl",
+      "sha256": "6cc8a4fc2c4abd98f31a2c69812701138f95291e630fb8d11b9ae104575bb7c5"
+    },
+    {
+      "file": "metrics-20261027T115322645-1a4d06b9bf6a4882b042bceada25d54e.jsonl",
+      "sha256": "76c902ef30f720cefdb35878dd10108a9d1b7331bd50229198cde6f040105595"
+    },
+    {
+      "file": "metrics-20261027T201234027-85360cc6d0f84f2ab1ae0ae40ba1723a.jsonl",
+      "sha256": "50e01fd39371e6e1dc80dc7a2ebdf9da24be851c817c3316a78b71773c64ecfb"
+    },
+    {
+      "file": "metrics-20261028T151626216-888176f98b2e4ce288b54d4de9f2a064.jsonl",
+      "sha256": "94071177a076c6178ae6abc3e96d3c0316ba7d677f4349007294b2772104bffb"
+    },
+    {
+      "file": "metrics-20261028T232611445-111035a3fafe42f8962559e411a5c173.jsonl",
+      "sha256": "9d4e358cf238e807db38eba05f7a6d3c54e24be08ae6f4aeece977a7ea2b7a29"
+    },
+    {
+      "file": "metrics-20261028T095701377-b300eaff24d044d48b1995e341e501ae.jsonl",
+      "sha256": "151e67ff4e92d5ac41b6202e8bb311420423470edd001e211836bf843cdffb3c"
+    },
+    {
+      "file": "metrics-20261027T115947448-1c08e71420bf4f10b6f0abc430162468.jsonl",
+      "sha256": "a407f524e87518a3869bdbdc776e466ed89c7092cbdd34f359edd6a385e46c28"
+    },
+    {
+      "file": "metrics-20261028T010638396-6525912d3de348ba91edf7fa5a49bb50.jsonl",
+      "sha256": "f3fd4b4db7f2797269679f8f01d62c60e1d33e70aa15a63634129d74b88927a6"
+    },
+    {
+      "file": "metrics-20261030T101356263-9b0a646d4410420495412302c7e90c06.jsonl",
+      "sha256": "7cd236cd9098066ebee42ff59f799ed334604cfafcb24b1350d4d38298260eb1"
+    },
+    {
+      "file": "metrics-20261025T232450677-c104c9ed1d504981ac13682d6191776f.jsonl",
+      "sha256": "3744fdd1aaffbb5829eb2c56f8891eddbb15fd8bb52b9b25df09d8f9ff051d5a"
+    },
+    {
+      "file": "metrics-20261027T183419694-c96926af75d74e418ace47d70dfeee8b.jsonl",
+      "sha256": "f9284068452db348802e4d370a1c44192e1c2c9ee380c35d1b3e1b2a93fa8259"
+    },
+    {
+      "file": "metrics-20261028T010752148-05af1cef1382415dbf1c0a726c5e2822.jsonl",
+      "sha256": "031d24b698ea75af6b6b0e38df70f92fde337ae88a636de4a430dfc8961f14b1"
+    },
+    {
+      "file": "metrics-20261028T232637026-b36d703b278c4113af3438f0ba6129e9.jsonl",
+      "sha256": "dd4c6339310adb0222e346b1e6860579d01026d508ea631feb1fedde623004f1"
+    },
+    {
+      "file": "metrics-20261027T172151851-d89dbcaa987e477bb7bf33fc8dfcfddc.jsonl",
+      "sha256": "fdc2d1ea3e07d3515101ee4e963cba61bc37921ef765e35dcac5640036fba4e4"
+    },
+    {
+      "file": "metrics-20261025T204106457-b2aaa8ea48bc41f8b90560cd763bbb07.jsonl",
+      "sha256": "963bcdff1a82ae73e3577636cb0ec5943f2c61cae52ee3dc1a88a2f1a6613b1b"
+    },
+    {
+      "file": "metrics-20261028T231216495-453b9f46390f4b52b2ab093f096c2b75.jsonl",
+      "sha256": "cf387e153c943bd3a41d6569eebe36248426ddd3419a2f6cf5b96eea856fe42f"
+    },
+    {
+      "file": "metrics-20261027T004317051-1a263a02d36e47c3adb4872720515628.jsonl",
+      "sha256": "422afed3bcc31f26eed137acd48cbcf49fcb2c043659a2d1e55ff64924aa1b58"
+    },
+    {
+      "file": "metrics-20261025T190644789-db317b38b32d4468b841ee856b432e6d.jsonl",
+      "sha256": "85057139430b00e06318f0cfba3f2fbba2ba219bee919f369b5a5f2117c27922"
+    },
+    {
+      "file": "metrics-20261027T004253534-b322a698fbf34c27b8ae015102ded4c4.jsonl",
+      "sha256": "06af2b38e560f26c46dfa7af2cab21417a5aca7b156d1d3aab2cf24a426abad5"
+    },
+    {
+      "file": "metrics-20261029T104230930-d7c49f0c4efb496e85f9eede35a41658.jsonl",
+      "sha256": "6d4342a36eefb00d8bf2525934acc5f827816e3a53c7e022333c3a361012b701"
+    },
+    {
+      "file": "metrics-20261025T212038296-476a7a33dc4f459ba038a6e6a57ee2a4.jsonl",
+      "sha256": "0c4abef3c5f78913293de090c730e941ee83664fdde76ad161b9779b703b7d96"
+    },
+    {
+      "file": "metrics-20261026T120617492-6b9603df7cc34ca3b44c3fd4a462749a.jsonl",
+      "sha256": "5d866238c054c75d9f1683a6a2999842c9ef52f3274b19a936d6986b31aedcb3"
+    },
+    {
+      "file": "metrics-20261030T102348542-a3340525962249b49ebb5a1e00213524.jsonl",
+      "sha256": "e435d7f98dbd0830e53c38fd96408d356866cf42879c7ceb3825e1795cffa615"
+    },
+    {
+      "file": "metrics-20261026T002416599-2e278bbb68a645cbb4146f161c976a60.jsonl",
+      "sha256": "e40efd353889d22a8850e6e34cdb4c42a0a68f14a7f19ae7c83dd208075d483b"
+    }
+  ],
+  "restorationFinalP0": "Pending after remaining blocks",
+  "humanComparabilityAcrossDays": "NotEstablished"
+}

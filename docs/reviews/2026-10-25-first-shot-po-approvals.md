@@ -868,3 +868,111 @@ Correcciones aplicadas solo al diseño, D3, aprobaciones yAGENTS:
 **Fusión autorizada solo bajo condiciones:** delta desdee415bcb exactamente esos cincoMarkdown; headcorregido local/remoto coincidente, PRabierta/no borrador/sinconflictos yárboleslimpios. Mergecommit con segundo padre=headcorregido; sincronizarmain yretirarworktree sin `--force`, preservandoignorados. Elcierre efectivo se registrará **en la siguiente entrega documental, sin commit aparte enmain**; no se afirma que elmerge haya ocurrido enestaentrada ni se inicia esa entregaahora.
 
 Después detenerse. Implementación/TDD1.2c necesitan autorización separada, igual que build/instalación/sesión. S1sigue sinaceptar;S2–S4/T8sin autorizar. Sin producto/tests/presets/defaults/specv0.3/suites/check-release/build/instalación/sesión/accesoaliPhone ni análisisnuevo de111trazas para estas correcciones.
+
+
+## 2026-10-28 — cierre PR #27 y autorización de implementación M2-4
+
+Claude/PO verificaron merge **403d213a5aecfbee0752870499bb3d7bf408cf78**, segundo padre **70576df8458b39e822abfa9b63e6a7901f03c9f9**, mismo árbol; delta desde e415bcb un commit limitado a cinco Markdown con cuatro correcciones. Main sincronizada/limpia, sin worktree extra; retiro sin `--force`, inventarios vacíos cotejados en Logs/archive-s1-m2-4-design-20261028, ramas remotas conservadas. Registro en esta entrega, sin commit aparte en main.
+
+El PO aprueba diseño/D3 y las propuestas operativas: zona muerta descendente; sistema→inválido→N2→C-A→Swing; rechazo con motivo fuera de muro frontal; vínculo de reapoyos; tres respuestas **OK**, **Apoyo sin querer** (correspondencia histórica `premature=true`), **No fijó / falló**. N04/N04b aceptados como riesgos abiertos, no resueltos. Autoriza tarea1.2c-0…5 con TDD válido, regresión fresca, check-release dev/prod gitDirty=false, build dev Release ARM64/no Development, instalación tras verificar perfil incorporado y respaldo/cotejo de tres archivos; P0/hash extendido observado. Preset M2-4 separado sin promover, A′ por defecto/S1-sling conservado/41heredados/SimulationKey y2/35/N2 intactos.
+
+Autoriza sesión izquierda/un pulgar/sin ayuda, un bloque B0→B5 cada vez y precheck hash/pendientes/Jugando por bloque; cuenta atrás confirmada antes del primer gesto B0; comprensión de cancelación antes de B1 y ejemplos de las tres respuestas. Cierres/O2/error Began/cadenas registrados, sin sustitución de intentos; 16 preguntas literales al final. P0 restaurado en proceso nuevo/cero pendientes/cotejo byte a byte. Ante defecto o falta de comprensión registrar/restaurar/detener, sin ajustar parámetros. Sin spec/criterios/bandas/umbrales/halo/lupa/cámara/zoom/dominioB/contacto real ni S2–S4/T8. PR única para Claude sin fusionar; S1 sin aceptar. Perfil registrado hasta2026-11-03T18:29:44Z, verificar vigencia efectiva antes de instalar.
+
+
+### Avance técnico M2-4 para revisión, no aceptación
+
+Fuenteae1b423, TDD por etapas en informe, regresión fresca441/441EditMode y207/207PlayMode sinCS. Selector2, presetS1-M2-4/hash1c8e598b099b separado, defaults45c4e9af5c8f/85claves inalterados, heredados41/SimulationKey intactos. Respaldo nuevo3archivos cotejado. Release/build/perfil efectivo/instalación/sesión/restauración aún pendientes; no hay resultado físico ni aceptaciónS1. N04/N04b siguen riesgos abiertos.
+
+
+### Instalación y preparación ejecutadas, B0 pendiente del PO
+
+Build0f8002d dev Release ARM64/no Development; checks dev/prod limpios, perfil incorporado hasta2026-11-03T18:29:44Z/firma verificados antes de instalar.3archivos cotejados tras instalación. ArranqueP0/e458bfd5ce9e/cero pendientes observado; S1-M2-4/1c8e598b099b cargado temporal, last-active repuesto/leídoP0 antes de aplicar y relanzar23:31:48.353735Z;repeat0/cero pendientes/Jugando/DEVcerrado/Listo/protección experimentos y cotejo3archivos verificados. Instrucción soloB0 con confirmación de cuenta atrás antes de primer gesto, izquierda/unpulgar120s y cancelación guiada C-A, noB1; resultado/comprensión pendientes, no inferidos. Restauración final pendiente al cerrar. Sin nuevos cambios de producto, parámetros ni umbrales. No aceptaciónS1.
+
+
+### Devolución B0 M2-4 y preferencia del PO (sin nueva decisión de mecánica)
+
+Literal completo en informe/evidencia B0; PO declara apuntar/cargar/cancelar durante2min y preferencia inicial de tensado arriba/adelante, después acostumbrado a bajar. Sensación, no cambio de autorización ni aceptación. Se mantiene el tensado descendente,2/35/N2/bandas/umbrales. Log B0 completo120,01248675s/104intentos/5retornosC-A y guiada registrada/hash1c8e598b099b/cero pendientes; ninguna tanda posterior. Se conserva desviación de no recibir confirmación previa de cuenta atrás porchat; se pregunta retrospectivamente y sobre comprensión/voluntariedad C-A, sin repetir ni inferir. Falta triada antes de B1, un bloque cada vez.3archivos byte iguales, M2-4 temporal activo/selección persistidaP0/restauración final pendiente.
+
+
+### Gate B0 y aclaraciones literales, sin nueva decisión de parámetros
+
+Cuenta atrás antes del primer gesto/Completado: PO **«Si, lo vi, preferí empezar de una después de leer el mensaje»**. Cancelación voluntaria y retorno comprendido: **«fueron todas voluntarias»**. Se conserva la desviación de no confirmar previamente porchat, sin repetir B0 ni recalificar raw. Gate de B0 confirmado; faltan respuestas a ejemplos de la triada antes de B1. Preferencia de dirección arriba/adelante no modifica el experimento descendente. Ningún bloque nuevo solicitado aún; código/configuración intactos. M2-4 temporal activo/restauración final pendiente.
+
+
+### Ejemplos de tres respuestas comprendidos antes de B1
+
+PO, por separado: «OK» al ver rombo querido aunque lejos del objetivo; «Apoyo sin querer» al apoyo accidental; «No fijó / falló» si no apareció/se identificó rombo o hubo fallo operativo. Coinciden con significados aprobados, sin inferir significado de futuros flags ni cambiar instrumento/criterios. Se solicita soloB1 con precheck1c8e598b099b/0pendientes/Jugando, pulgar izquierdo, diez apoyosT1–T5dosveces/retirada sin carga/respuesta explícita/todoscierres/no sustitución. B1 y su precheck pendientes; noB2 hasta revisión. Sin código ni parámetros nuevos; restauración final pendiente.
+
+
+### B1 completo, desviación de tarea y siguiente solo B2suaves
+
+10intentos/10respuestasOK/597muestras con1c8e598b099b/0pendientes/sinpausa al armar;2abandonos+3Swing+5retornos. PO **«intente acertar, en algunos bajaba el pulgar para cargar, retiraba sin cargar y tambien retiraba para destapar la mira y comprobarla»**: buscóT, pero B1 sin carga no aislado; no repetir/reclasificar ni contarcomoB2suave. Paso posterior pausó;PO **«probablemente fue accidental»**, juicio probabilístico/no causa confirmada. SoloB2-soft solicitado trasContinuar/verificarhash/0pendientes/Jugando, diez suavesbuscandoT3/pulgarizq/todoscierres, sin medios/fuertes/B3 hasta revisión. Sin cambios de producto/dirección/parámetros/criterios;restauración final pendiente, S1sin aceptar.
+
+
+### 2026-10-29 — reconexión pedida por el PO antes de empezar B2
+
+Literal **«Prueba conectarlo de nuevo, para empezar la prueba. Tuve que reiniciar la app»**. Se verificó B2 no armado/sin intentos y conservación de B0/B1; no repetición/sustitución. Reconectada misma0f8002d dev, P0/e458bfd5ce9e/0pendientes previsto tras reinicio. RepreparadoS1-M2-4 temporal1c8e598b099b, last-activeP0 repuesto/leído antes de aplicar/relanzar10:45:43.436823Z;0pendientes/repeat0/Jugando/DEVcerrado/protección/cotejo3archivos. Tramo nuevo/otro día y proceso, sin comparabilidad humana causal ni continuidad ficticia. SoloB2-soft solicitado de nuevo porque no había empezado;sin suites/build/instalación/código/parametrización nueva. Cierre/restauración pendientes, S1sin aceptar.
+
+
+### 2026-10-29 — B2 suave/medio conservados, siguiente solo fuerte
+
+10/10Swing en banda suave y10/10media, rangos5,48–23,89% y41,96–58,03%,0saturación/conservadoras; hash1c8e598b099b/0pendientes/armados sinpausa/foco. Error de apoyo separado, sin aceptar precisión/S1 ni cambiar criterios. SuavePO **«Listo! todo bien, aputnaba al cuadrado de al medio»**; medio **«listo»**. Un preview adicional fuera de tanda preservado/sin sustitución. SoloB2-strong solicitado después de revisar medio, diezT3/pulgarizq/tirónmayor,precheck y todoscierres;noB3/B4/B5 aún.3archivos intactos/sin código/configuración/build nuevos;restauración final pendiente.
+
+### 2026-10-29 — B2 fuerte conservado con advertencia de saturación
+
+PO **«listo»**; 10/10 fuertes en banda, P73,25–100%/mediana99,51%. **Saturación5/10=50%, supera advertencia20% intacta**; no ajustes/repetición/promoción/aceptación inferida. B2 total30/30 en banda/1164muestras, misma configuración/cero pendientes/sin pausa/con foco y tres archivos iguales. Error Began separado de P. Tras revisar fuerte se solicita solo B3, diez medios T1/T2/pulgarizquierdo/triada/precheck/todoscierres; no B4/B5 aún. Sin código/parámetros/criterios nuevos, restauración final pendiente, S1 sin aceptar.
+
+### 2026-10-30 — repreparación solicitada por el PO antes de B3
+
+Salida/reinicio y acceso a Duplicación resuelto por PO, literales en el informe. B3 no iniciado; B0/B1/B2 no se repiten. Misma app0f8002d dev sin reinstalar; S1-M2-4 temporal1c8e598b099b/0pendientes/repeat0/Jugando/DEVcerrado/Listo y protección observados; last-activeP0 repuesto antes de aplicar/relanzar,3archivos byte iguales al respaldo/456fuentes intactas. SoloB3 solicitado con triada y pulgarizquierdo; otro día/proceso sin continuidad humana inferida. Advertencia de saturación fuerte50% conservada sin ajustes. Restauración final pendiente, PR28sin fusionar/S1sin aceptar; ninguna autorización nueva de código, instalación o S2–S4/T8.
+
+### 2026-10-30 — B3 conservado, siguiente solo B4
+
+PO «listo». Diez intentosT1/T2/diezOK/diezSwing en media,hash1c8e598b099b/0pendientes/armado sinpausa-foco;443muestras/0O2/enlaces/saturación. Error de apoyo separado sin criterio nuevo ni aceptación inferida. Tres archivos byte iguales/456fuentes intactas. SoloB4/cinco cancelacionesC-A/pulgarizquierdo/precheck/todoscierres/sin repetición solicitado;noB5 todavía. Sin cambios de producto/parámetros ni sesiones extra, restauración final pendiente/S1sin aceptar.
+
+### 2026-10-30 — B4/B5 completados por el PO, cierre pendiente
+
+Literal íntegro en informe/JSON: B4 «Ningun problema, todas las cancelaciones voluntarias»; B5 «Todos los tiros aputando al cuadrado con ritmo comodo». Se conserva B5 adelantado antes de recuperación/revisiónB4 y solicitud separada como desviación, sin repetición/sustitución. B4 cuatro retornos y un abandono sin carga; B5 diezSwing/3enbandapedida, intención de variar potencia pendiente de aclaración. Hash/armados/0pendientes correctos, O2cero,3archivos byte iguales/456fuentes intactas.16preguntas originales separadas solicitadas; restauraciónP0/cotejo final pendientes. No ajustes/producto nuevo ni aceptaciónS1; PR28sin fusionar.
+
+### 2026-10-30 — cierre de M2-4 para revisión Claude, sin aceptación S1
+
+Las16respuestas del PO se conservan literalmente y por separado en informe/JSON. Declara colocar mira/apuntar bajo/estabilidad/intensidades/distancia/máximo/cancelación positivamente; sin recuerdo del número de fijaciones involuntarias, no inferir cero. Dice «mas natural que antes, pero aun sigue mecanico. Lo que si tendría que probar en partido real» y «habría que probar para ver que tan como es» sobre rally: no validación ni autorización de partido/S2. Preferencia inicial de dirección sin cambios. Aclaración B5 precisa: **«No, me concentré en apuntar con ritmo cómodo»**; su secuencia instrumental de intensidadesNotEvaluated como tarea voluntaria, conservando los3/10sin reclasificar. B2y advertencia50%saturación fuerte permanecen separados e intactos.
+
+PO dejó disponible el teléfono tras posible reinicio. Restauración **en proceso nuevo2026-10-30T11:54:09.7179370Z/P0-calib-1/e458bfd5ce9e/cero pendientes/Jugando**, confirmada registro/DEV; DEVcerrado y tres archivos directamente byte a byte iguales al respaldo, sin nuevo bloque/gestoM2-4 ni instalación.169intentos programados más1extra preservados, desviaciones/reinicios registrados; empaquetadoB2 corregido incorporando últimos registros originales emitidos tras fin, resúmenes sin cambios.456fuentes intactas y evidencia histórica separada. Regresión441/441y207/207/check-release limpio/build previos, sin repetición para cierre documental.
+
+Entrega PR#28 lista paraClaude **sin fusionar ni aceptarS1**; candidatoS1-M2-4/1c8e598b099b sin promover/A′0por defecto/defaults45c4e9af5c8f y valores heredados intactos. N04/N04b abiertos. No seguir con producto, sesiones oS2–S4/T8; próxima decisión corresponde alPO trasClaude. Perfilvigente hasta2026-11-03T18:29:44Z/comprobar efectivamente antes de instalación futura. [Informe](2026-10-28-first-shot-s1-m2-4-implementation.md), [respuestas](../validation/evidence/2026-10-30-m24-po-answers.json), [restauración](../validation/evidence/2026-10-30-m24-final-restore.json).
+
+
+### 2026-10-30 — revisión Claude de PR #28 y aceptación explícita de S1 por el PO
+
+Claude aprueba el head **af281e08e206da0d134811411de2f9cb42fd1b77** con una corrección documental enAGENTS.md: la autorización de implementación1.2c pasa aHistórico y solo queda vigente la entrada de entrega cerrada. Verificó código/diseño, casosN01–N13/N04b/fronteras exactas, clasificador tin/out idéntico aAimReticleView/radio0,01, presetS1-M2-4 distinto de defaults solo en gesture.control2 y ausencia de cambios en DefaultPreset/EffectiveConfig/SlingModel/ProjectSettings/Packages/scripts/docs/superpowers desde403d213. Recalculó independientemente los datos crudosM24 y confirmó conteos/cierres/hashes/pendientes/P/saturación/bandas/error mediano. Registro de esa revisión, sin recalcular aquí ni modificar datos o producto.
+
+**Decisión literal del PO:**
+
+> S1 aceptado con M2-4 como control para avanzar hacia S2.
+>
+> Esta aceptación se basa en:
+> - Bandas de B2: 30/30, sin solapamiento.
+> - B3: 10/10.
+> - B4: cancelaciones voluntarias.
+> - Las 16 respuestas literales del PO.
+>
+> Siguen abiertos y se observarán en S2 con golpe real:
+> - La saturación.
+> - N04/N04b.
+> - La sensación «aún mecánica» y el ritmo de rally.
+> - La preferencia de dirección del tirón.
+>
+> La aceptación no autoriza código de S2, promover M2-4 a default ni cambiar `pullFullMm`. Eso irá en una entrega propia con autorización del PO.
+
+Esta decisión explícita sustituye el estado previo de S1 sin aceptar; **no reinterpreta los datos anteriores**, sus desviaciones, el NotEvaluated de intensidadesB5, la advertencia de saturación o las16respuestas literales.
+
+Observaciones de Claude, sin cambios de código:
+
+1. **Saturación fuerte del 50 %**, por encima de la advertencia del 20 %. Con `pullFullMm=35`, la mitad de los golpes fuertes saturan y se pierde la diferencia entre fuerte y máximo. Cualquier ajuste requiere una decisión del PO.
+2. **Error del Began:** una mediana de 0,15–0,30 m equivale a unos 1 mm en pantalla con la sensibilidad de la PR #26, frente a unos 2 m entre objetivos. Es una descripción, sin umbral.
+3. **Volumen de auditoría:** 414 registros filtrados (205 con DEV abierto) y 330 ignorados para 169 gestos. Es aceptable con la retención actual, pero conviene vigilarlo, igual que en C6.
+4. **N04/N04b:** no tienen evaluación física. Que el PO responda «no recuerdo» no equivale a cero fijaciones involuntarias.
+5. **Dirección del tirón:** el PO prefiere tirar hacia arriba o adelante. Queda registrado, sin cambios.
+
+**Autorización de fusión condicionada:** delta desdeaf281e0 soloAGENTS.md y este registro; head corregido idéntico local/remoto, PRabierta/no borrador/sin conflictos y árboles limpios. Mergecommit con segundo padre=head corregido; sincronizar main y retirar worktree sinforce preservando ignorados (Logs/evidence, builds/exports). Ramas remotas conservadas. A′ sigue por defecto yS1-M2-4 no se promueve. Sin suites/check-release/build/instalación/sesión/código nuevos para el cierre. **El cierre efectivo se registrará en la siguiente entrega, sin commit aparte en main. Después detenerse: S2–S4/T8 no autorizados.**

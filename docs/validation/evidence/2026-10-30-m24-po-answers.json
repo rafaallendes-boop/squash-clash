@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "scope": "PO literal questionnaire after M2-4 B0-B5, no measured timing or acceptance inferred",
+  "dateLocal": "2026-10-30",
+  "timezone": "America/Santiago",
+  "questionsAndAnswers": [
+    {
+      "question": "¿Puedo colocar la mira donde quiero?",
+      "answer": "Si"
+    },
+    {
+      "question": "¿Puedo apuntar bajo sin activar accidentalmente la potencia?",
+      "answer": "Si"
+    },
+    {
+      "question": "¿La mira permanece estable después de fijarse?",
+      "answer": "Si"
+    },
+    {
+      "question": "¿Cuántas fijaciones involuntarias ocurren?",
+      "answer": "no recuerdo"
+    },
+    {
+      "question": "¿Cuánto tiempo necesito para fijar la mira?",
+      "answer": "algunos milisegundos"
+    },
+    {
+      "question": "¿Entiendo claramente cuándo quedó fijada?",
+      "answer": "si"
+    },
+    {
+      "question": "¿Puedo conseguir golpes suaves, medios y fuertes voluntariamente?",
+      "answer": "si"
+    },
+    {
+      "question": "¿La potencia responde de forma consistente a la distancia?",
+      "answer": "si"
+    },
+    {
+      "question": "¿Puedo alcanzar la potencia máxima cómodamente?",
+      "answer": "si"
+    },
+    {
+      "question": "¿Existen limitaciones por el borde inferior de la pantalla?",
+      "answer": "no"
+    },
+    {
+      "question": "¿Puedo cancelar cuando realmente quiero?",
+      "answer": "si"
+    },
+    {
+      "question": "¿Ocurren cancelaciones accidentales?",
+      "answer": "no"
+    },
+    {
+      "question": "¿La zona interfiere con los movimientos normales?",
+      "answer": "no"
+    },
+    {
+      "question": "¿Cuánto demora el gesto completo, desde apoyar el dedo hasta soltar?",
+      "answer": "1 segundo aprox"
+    },
+    {
+      "question": "¿Se siente natural o demasiado mecánico?",
+      "answer": "mas natural que antes, pero aun sigue mecanico. Lo que si tendría que probar en partido real"
+    },
+    {
+      "question": "¿Podría utilizarlo repetidamente durante un rally rápido?",
+      "answer": "habría que probar para ver que tan como es"
+    }
+  ],
+  "b5InitialClarification": {
+    "question": "Sin repetir B5: además de buscar cada cuadrado, ¿intentaste seguir la intensidad suave/media/fuerte que indicaba la app en cada intento, o te concentraste solo en apuntar con ritmo cómodo? Guardaré por separado lo que pedía el bloque y lo que buscabas hacer.",
+    "answer": "si",
+    "interpretation": "Resolved by subsequent precise clarification: target seeking at comfortable rhythm, no requested intensity following"
+  },
+  "poFinalAccessReply": "listo, revisa porque tuve que salir y al parecer se reinicio. Luego sigamos avanzando",
+  "interpretiveLimits": [
+    "No recall is not zero involuntary fixations",
+    "Milliseconds and approximately1second are subjective estimates, not measurements",
+    "Rally utility remains untested; no authorization or acceptance inferred",
+    "Up/forward preference from B0 remains preference; downward pull unchanged"
+  ],
+  "acceptanceS1": false,
+  "b5PreciseClarification": {
+    "question": "Para precisar tu «si» de B5, sin repetir nada: ¿intentaste variar la potencia según la indicación suave/media/fuerte de cada intento?",
+    "answer": "No, me concentré en apuntar con ritmo cómodo"
+  }
+}

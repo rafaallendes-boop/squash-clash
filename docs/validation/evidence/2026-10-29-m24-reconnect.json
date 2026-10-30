@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "kind": "M2-4 continuation after PO app restart",
+  "sameInstalledBuild": "0f8002d dev",
+  "newBuildOrInstallation": false,
+  "B2StartedBeforeRestart": false,
+  "existingCompletedBlocksPreserved": [
+    "B0",
+    "B1"
+  ],
+  "previousProcessP0Expected": true,
+  "preparedLaunch": {
+    "ts": "2026-10-29T10:45:43.4368230Z",
+    "build": "0.1.0+0f8002d dev",
+    "presetName": "S1-M2-4",
+    "effectiveHash": "1c8e598b099b",
+    "pending": 0
+  },
+  "repeatSeconds": 0,
+  "paused": false,
+  "devClosed": true,
+  "experimentButtonsDisabledObserved": true,
+  "lastActiveP0RestoredAndReadBackBeforeApply": true,
+  "presetFilesByteIdentical": {
+    "P0-calib-1.json": true,
+    "Po-1.json": true,
+    "last-active.txt": true
+  },
+  "experimentalPresetBytesEqualRepo": true,
+  "newM24AttemptsBeforeHandoff": 0,
+  "newProtocolBlocksBeforeHandoff": 0,
+  "segment": "2026-10-29-reconnect-1",
+  "interpretation": "New process and day. Native session numbers may restart; do not present as uninterrupted practice or replace B0/B1."
+}

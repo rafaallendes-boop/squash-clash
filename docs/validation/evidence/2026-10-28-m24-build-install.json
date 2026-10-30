@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "buildGitHash": "0f8002d",
+  "profile": "dev",
+  "configuration": "Release",
+  "architectures": "arm64",
+  "developmentPlayer": false,
+  "exportGitDirty": false,
+  "signatureVerified": true,
+  "bundleMatches": true,
+  "deviceProvisioned": true,
+  "embeddedProfileExpiresUtc": "2026-11-03T18:29:44Z",
+  "checkedAtUtc": "2026-10-28T23:21:29.537056Z",
+  "embeddedProfileSha256": "e8b98813af786aef76c55788b651694943db7230756c9aea00955b1471be6a82",
+  "releaseChecks": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "0f8002d",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-28T23:16:53.7440000Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "0f8002d",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-28T23:17:24.6876590Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "installed": true,
+  "postInstallPresetFilesByteIdentical": {
+    "P0-calib-1.json": true,
+    "Po-1.json": true,
+    "last-active.txt": true
+  },
+  "startupVerified": true,
+  "startupPendingReason": null,
+  "newPhysicalSessionStarted": false,
+  "initialLaunchRejectedWhileLocked": true,
+  "p0Startup": {
+    "ts": "2026-10-28T23:26:11.4593130Z",
+    "kind": "launch",
+    "phase": "free",
+    "build": "0.1.0+0f8002d dev",
+    "presetName": "P0-calib-1",
+    "presetFileHash": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "effectiveHash": "e458bfd5ce9e",
+    "payload": "{}",
+    "pending": 0,
+    "seed": 0,
+    "metricsValid": true,
+    "droppedSinceRestart": 0
+  },
+  "preparation": {
+    "presetName": "S1-M2-4",
+    "effectiveHash": "1c8e598b099b",
+    "launchUtc": "2026-10-28T23:31:48.3537350Z",
+    "pending": 0,
+    "paused": false,
+    "repeatSeconds": 0,
+    "devClosed": true,
+    "scenarioP2H17VisiblyDisabled": true,
+    "lastActiveRestoredAndReadBackBeforeApply": true,
+    "threeFilesByteIdentical": true,
+    "noM24GestureOrProtocolBlocksBeforeHandoff": true,
+    "B0PressedByPO": false
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "scope": "M2-4 new physical campaign across28-30October, every attempt; no replay of111historical traces",
+  "build": "0f8002d dev",
+  "gestureHash": "1c8e598b099b",
+  "blocks": [
+    {
+      "file": "2026-10-28-m24-B0.json",
+      "block": "B0",
+      "attempts": 104,
+      "primarySamples": 2853,
+      "outcomes": {
+        "Rejected": 12,
+        "Swing": 69,
+        "Tap": 3,
+        "AbandonedNoPull": 10,
+        "InvalidAim": 5,
+        "CanceledReturnToDeadZone": 5
+      }
+    },
+    {
+      "file": "2026-10-28-m24-B1.json",
+      "block": "B1",
+      "attempts": 10,
+      "primarySamples": 597,
+      "outcomes": {
+        "AbandonedNoPull": 2,
+        "Swing": 3,
+        "CanceledReturnToDeadZone": 5
+      }
+    },
+    {
+      "file": "2026-10-29-m24-B2-soft.json",
+      "block": "B2-soft",
+      "attempts": 10,
+      "primarySamples": 242,
+      "outcomes": {
+        "Swing": 10
+      }
+    },
+    {
+      "file": "2026-10-29-m24-B2-medium.json",
+      "block": "B2-medium",
+      "attempts": 10,
+      "primarySamples": 553,
+      "outcomes": {
+        "Swing": 10
+      }
+    },
+    {
+      "file": "2026-10-29-m24-B2-strong.json",
+      "block": "B2-strong",
+      "attempts": 10,
+      "primarySamples": 369,
+      "outcomes": {
+        "Swing": 10
+      }
+    },
+    {
+      "file": "2026-10-30-m24-B3.json",
+      "block": "B3",
+      "attempts": 10,
+      "primarySamples": 443,
+      "outcomes": {
+        "Swing": 10
+      }
+    },
+    {
+      "file": "2026-10-30-m24-B4.json",
+      "block": "B4",
+      "attempts": 5,
+      "primarySamples": 667,
+      "outcomes": {
+        "AbandonedNoPull": 1,
+        "CanceledReturnToDeadZone": 4
+      }
+    },
+    {
+      "file": "2026-10-30-m24-B5.json",
+      "block": "B5",
+      "attempts": 10,
+      "primarySamples": 428,
+      "outcomes": {
+        "Swing": 10
+      }
+    }
+  ],
+  "programmedAttempts": 169,
+  "primarySamplesInProgrammedAttempts": 6152,
+  "outcomesProgrammedAttempts": {
+    "Rejected": 12,
+    "Swing": 122,
+    "Tap": 3,
+    "AbandonedNoPull": 13,
+    "InvalidAim": 5,
+    "CanceledReturnToDeadZone": 14
+  },
+  "extraPreviewAttempts": 1,
+  "allAttemptsIncludingExtra": 170,
+  "o2CountProgrammed": 3,
+  "linkedReapplicationsProgrammed": 25,
+  "b2RequestedBandSwing": 30,
+  "b2Denominator": 30,
+  "b2StrongSaturationFraction": 0.5,
+  "saturationWarningUnchanged": 0.2,
+  "b1NoPullTaskIsolated": false,
+  "b5RequestedIntensityTaskFollowed": false,
+  "b5RequestedIntensityVoluntaryEvaluation": "NotEvaluated",
+  "b5InstrumentRequestedBandSwing": 3,
+  "b5InstrumentDenominator": 10,
+  "deviations": [
+    "B0 countdown confirmation received retrospectively, not before first gesture",
+    "B1 mixed charging/uncovering with no-pull task",
+    "Step afterB1, PO probably accidental, cause not confirmed",
+    "Campaign spans3days and restarts; no uninterrupted-session or causal-comparability claim",
+    "B5 advanced before B4 audit and separate instruction",
+    "B5 did not seek requested intensity sequence"
+  ],
+  "evidencePackagingCorrection": "B2 trial10 in all3series now included from original recoveries after millisecond-later emission; summaries unchanged",
+  "finalP0StartupUtc": "2026-10-30T11:54:09.7179370Z",
+  "finalP0Hash": "e458bfd5ce9e",
+  "finalThreeFilesByteIdentical": {
+    "P0-calib-1.json": true,
+    "Po-1.json": true,
+    "last-active.txt": true
+  },
+  "literalAnswersFile": "2026-10-30-m24-po-answers.json",
+  "acceptanceS1": false,
+  "n04AndN04bRisksRemainOpen": true,
+  "finalDocumentationChecks": {
+    "productSourcesUnchanged": 456,
+    "protectedPathsByteIdenticalToBase": 42,
+    "historicalEvidenceUnchanged": 183,
+    "localMarkdownLinksVerified": 101,
+    "unitySuitesRerunForDocsClosure": false
+  }
+}

@@ -15,6 +15,7 @@ namespace SquashClash.Runtime.Input
 #endif
         private double canceledBefore=double.NegativeInfinity;private long sequence;
         public event Action<TouchSample> SampleReceived;
+        public event Action<TouchSample,string> SampleFiltered;
         public event Action SystemCanceled;
         public TouchSamplingStats Stats {get;}=new TouchSamplingStats();
         public bool BlockedByUi
@@ -74,6 +75,7 @@ namespace SquashClash.Runtime.Input
             bool ignore=suppressed.Contains(raw.touchId)||blocked||!focused||paused||e.time<canceledBefore;
             if(ending){active.Remove(raw.touchId);suppressed.Remove(raw.touchId);}
             if(!ignore)SampleReceived?.Invoke(sample);
+            else SampleFiltered?.Invoke(sample,blocked?"dev":!focused?"focus":paused?"pause":!IsPointAllowed(raw.position)?"outside-safe-area":"suppressed-ui-or-contact");
         }
         public void CancelSystem()
         {

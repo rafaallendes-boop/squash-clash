@@ -8,7 +8,7 @@ namespace SquashClash.Core.Config
     {
         private static readonly IReadOnlyList<ParamDef> definitions = Array.AsReadOnly(new[]
         {
-            new ParamDef("gesture.control", "Gesture control (experimental)", "", "First Shot / sling", ParamKind.Choice, 0, 1, 1, ApplyClass.Immediate, new ChoiceOption(0, "A′: flick"), new ChoiceOption(1, "S1-sling")),
+            new ParamDef("gesture.control", "Gesture control (experimental)", "", "First Shot / sling", ParamKind.Choice, 0, 2, 1, ApplyClass.Immediate, new ChoiceOption(0, "A′: flick"), new ChoiceOption(1, "S1-sling"), new ChoiceOption(2, "M2-4: Began" )),
             new ParamDef("aim.holdMs", "Quiet duration", "ms", "First Shot / sling", ParamKind.Float, 120, 150, 1, ApplyClass.Immediate),
             new ParamDef("aim.holdMaxSpeedMmPerS", "Quiet speed", "mm/s", "First Shot / sling", ParamKind.Float, 0, 100, 1, ApplyClass.Immediate),
             new ParamDef("aim.holdRadiusMm", "Quiet radius", "mm", "First Shot / sling", ParamKind.Float, 0, 5, 0.1, ApplyClass.Immediate),

@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "scope": "M2-4 1.2c only; synthetic TDD, not physical measurement",
+  "sourceAtFullRegression": "ae1b4236e71f9e6ef332c5e8387e115e6049a3f3",
+  "runs": [
+    {
+      "artifact": "Logs/evidence/m24-tdd/01-green.xml",
+      "sha256": "8df9c603e9dd6acc3aef74c273c5ee468ccd9199c481512b532ae11df8c25fbb",
+      "total": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/01-red.xml",
+      "sha256": "65fc3784e85f3dc4a66a0a542c502f6d8f0ad710b29f856809e14522a6703a67",
+      "total": 8,
+      "passed": 1,
+      "failed": 7,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/02-green.xml",
+      "sha256": "e208fe0c5d8f0ca6527607568fed6f4c05d9222cea04a8fb71493de5c97fa0f6",
+      "total": 15,
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/02-red.xml",
+      "sha256": "b12005fb7b491d8c9f84de6cf0b10f8aace42e6b0aeb747db68fa2bbdb0d55f6",
+      "total": 15,
+      "passed": 0,
+      "failed": 15,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/03-green.xml",
+      "sha256": "0082a3c339949b6178bdccf73d5e2f19fc1fddeb75cd0030616591c8655952ce",
+      "total": 21,
+      "passed": 21,
+      "failed": 0,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/03-red.xml",
+      "sha256": "12b1692356d2094b513139081468a5bafec0288fbb21900d555fcb1ba908e01f",
+      "total": 21,
+      "passed": 16,
+      "failed": 5,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/04-green.xml",
+      "sha256": "04bbad5f34cac0317753217901688af26397aaa2c9b821855f0318417f9c097d",
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/04-red.xml",
+      "sha256": "0bdfb95c87605b4379fc8a72445919b001020d39ee97c1e796fcaa8a8e0444d4",
+      "total": 5,
+      "passed": 0,
+      "failed": 5,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/05-geometry-red.xml",
+      "sha256": "f2de2c458d5d16b5af2b4f9392a4eef81409489bfdd87ed81f83639806b7a7ee",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/05-green.xml",
+      "sha256": "e5f1ee6ea625ac69b06c78377cb862dc2520ab5ffc2387803bb822602a32b6c6",
+      "total": 9,
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/05-red.xml",
+      "sha256": "0e296c1ad9b7f55031866ae92c0ef32ca00bdc32696a6808b8be2fbd0b3e6888",
+      "total": 8,
+      "passed": 6,
+      "failed": 2,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/06-boundaries-green.xml",
+      "sha256": "238168988a9d8859684684de5a3ec5dd9aa46f1c51c53b1631b4a2813a8a00d4",
+      "total": 11,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/06-boundaries-red.xml",
+      "sha256": "d832cba9ca5e2097f46d8d2f4b74332abadf6b57b66256fcebe4534b001e90e7",
+      "total": 11,
+      "passed": 7,
+      "failed": 4,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/07-comparability-green.xml",
+      "sha256": "47e37169aeb96dd9b4c9ed1762af7570b1a676f470d3d9e9bd1580abc7927034",
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/07-comparability-red.xml",
+      "sha256": "a0ed717eeee3b2e106ea9816abaf1028d95c98fd543a2358a5dbff7ec9eb0529",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/full-editmode.xml",
+      "sha256": "68871e102172c26dcb13249fd10615bd76411d52b92fd85f2fe3fe0d4c4c02d5",
+      "total": 441,
+      "passed": 441,
+      "failed": 0,
+      "skipped": 0,
+      "freshRun": true
+    },
+    {
+      "artifact": "Logs/evidence/m24-tdd/full-playmode.xml",
+      "sha256": "a063fe94d917db7de54174837c71cb50e0170bd43abb9afdc8a58545cdb6905a",
+      "total": 207,
+      "passed": 207,
+      "failed": 0,
+      "skipped": 0,
+      "freshRun": true
+    }
+  ],
+  "invalidCompilationAttemptsExcluded": [
+    "01-invalid-compilation.log",
+    "04-invalid-compilation.log"
+  ],
+  "defaultsHash": "45c4e9af5c8f",
+  "experimentalPresetHash": "1c8e598b099b",
+  "p0ExtendedHash": "e458bfd5ce9e",
+  "inherited41Hash": "0d39e6016bd8",
+  "simulationKey": "166a96e319c7",
+  "historicalTracesReplayed": false
+}

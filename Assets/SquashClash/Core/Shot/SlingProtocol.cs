@@ -1,10 +1,13 @@
 using System;
 namespace SquashClash.Core.Shot
 {
+    public enum ProtocolResponse { Ok, Premature, Failed }
     // DEV owns its lifetime and persistence. No gameplay attempt is consumed here.
     public sealed class SlingProtocol
     {
         public string Block {get;private set;}="preview";
+        public bool AbsoluteSupport {get;set;}
+        public ProtocolResponse? LastResponse {get;private set;}
         public int Session {get;private set;}
         public int Completed {get;private set;}
         public bool AwaitingFeedback {get;private set;}
@@ -21,7 +24,7 @@ namespace SquashClash.Core.Shot
                 return Block=="B0"||Block=="preview"?0:3;
             }
         }
-        public string RequestedPower=>Block=="B2-soft"||Block=="B1"?"soft":Block=="B2-medium"||Block=="B3"?"medium":
+        public string RequestedPower=>Block=="B1"&&AbsoluteSupport?"none":Block=="B2-soft"||Block=="B1"?"soft":Block=="B2-medium"||Block=="B3"?"medium":
             Block=="B2-strong"?"strong":Block=="B4"?"cancel":Block=="B5"?new[]{"soft","medium","strong"}[(AwaitingFeedback?PendingTrial-1:Completed)%3]:"practice";
         public bool Arm(string block)
         {
@@ -35,10 +38,11 @@ namespace SquashClash.Core.Shot
             if(!Running||AwaitingFeedback)return;
             Completed++;PendingTrial=Completed;AwaitingFeedback=Block=="B1"||Block=="B3";
         }
-        public bool Respond(bool premature)
+        public bool Respond(bool premature)=>Respond(premature?ProtocolResponse.Premature:ProtocolResponse.Ok);
+        public bool Respond(ProtocolResponse response)
         {
-            if(!AwaitingFeedback)return false;
-            AwaitingFeedback=false;return true;
+            if(!AwaitingFeedback||!Enum.IsDefined(typeof(ProtocolResponse),response)||response==ProtocolResponse.Failed&&!AbsoluteSupport)return false;
+            LastResponse=response;AwaitingFeedback=false;return true;
         }
         public void EndPractice(){if(Block=="B0")Block="preview";}
     }
