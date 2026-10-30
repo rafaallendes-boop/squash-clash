@@ -976,3 +976,22 @@ Observaciones de Claude, sin cambios de código:
 5. **Dirección del tirón:** el PO prefiere tirar hacia arriba o adelante. Queda registrado, sin cambios.
 
 **Autorización de fusión condicionada:** delta desdeaf281e0 soloAGENTS.md y este registro; head corregido idéntico local/remoto, PRabierta/no borrador/sin conflictos y árboles limpios. Mergecommit con segundo padre=head corregido; sincronizar main y retirar worktree sinforce preservando ignorados (Logs/evidence, builds/exports). Ramas remotas conservadas. A′ sigue por defecto yS1-M2-4 no se promueve. Sin suites/check-release/build/instalación/sesión/código nuevos para el cierre. **El cierre efectivo se registrará en la siguiente entrega, sin commit aparte en main. Después detenerse: S2–S4/T8 no autorizados.**
+
+
+### 2026-10-30 — cierre efectivo de PR #28, dentro de la entrega D4
+
+Claude comunica verificación de cierre y se contrasta en Git: **merge1b0ba27c09ef61a014cee871dd306894243750d4**, segundo padre **5ef914e816b41928cc3b35be180f00182ac1046b**, árbol idéntico al head corregido. Delta desdeaf281e08e206da0d134811411de2f9cb42fd1b77 exactamenteAGENTS.md y este registro; queda una única entrada vigente. Antes de fusionar se comprobaron head local/remoto, PRabierta/no borrador/sin conflictos y árboles limpios. Main sincronizada/limpia; worktreeS1 retirado sinforce, siete paths ignorados preservados en `Logs/archive-s1-m2-4-20261030` con inventario/hashes iguales:31.636archivos/8.339.573.965bytes. Ramas remotas intactas; sin commit aparte enmain. Auditoría local ignorada `closure-audit.json`. No se ejecutaron suites/builds/instalaciones/sesiones para el cierre. La fusión conservó A′ por defecto yS1-M2-4 sin promover. La aceptación deS1 permanece con sus condiciones literales; no reinterpreta saturación50%, desviaciones,16respuestas o el NotEvaluated deB5.
+
+### 2026-10-30 — decisiones del PO para preparación documental de S2
+
+Decisiones literales:
+
+> 1. M2-4 pasa a ser el control por defecto al preparar S2. A′ y S1-sling siguen en el código como alternativas configurables.
+> 2. Saturación: se observa en S2 con golpe real. `pullFullMm=35` no se toca.
+> 3. Alcance de esta entrega: solo plan/adenda S2, sin código. La implementación de S2 requiere otra autorización.
+
+Se concreta en **D4 aditiva** del [plan](../superpowers/plans/2026-10-25-squash-clash-first-shot.md) y la [propuesta](../superpowers/specs/2026-10-24-first-shot-design.md), rama/worktree nueva desde1b0ba27. No se reescribe texto previo ni specv0.3. La tarea futura2.0 hará la promoción bajo TDD y registrará hashes efectivos reales de defaults/P0, conservando41heredados/SimulationKey; **no se cambia DefaultPreset ni se calcula un hashS2 en esta entrega**. La decisión nueva de default rige la siguiente implementación, no retoca la fusiónS1 ni los presets históricos.
+
+D4 propone el mapeo aShotRequest con intenciónBegan/PdelEnded/roriginal del mismo dedo; tabla de cierres/consumo e identidad; análisis de vuelo frente a duración observada deS1 sin medir ni inventar tiemposSL; seguimiento con objetivo mundo fijo; negativos/TDD previstos y2.7con abiertosS1, un bloque cada vez/hash/triada/respuestas literales/restauraciónP0. La concreción operativa de intento por cada cierre se somete conD4 a revisión, no se atribuye como decisión adicional ya tomada por elPO. La duración del gesto no modificaA/V/K ni la regla de riesgo por fases; N04/N04b y preferencia de tirón se conservan abiertos.
+
+Alcance comprobable: únicamenteAGENTS.md, este registro y las dos adendasMarkdown. Sin código/tests/presets/defaults, specv0.3/criterios/bandas/umbrales, suites/check-release/build/instalación/sesión/acceso al iPhone ni replay/análisis nuevos de trazas. Baselines45c4e9af5c8f/e458bfd5ce9e y41heredados/SimulationKey intactos. **Entregar PR lista paraClaude, sin fusionar y detenerse. S1aceptado; códigoS2–S4/T8 sigue sin autorizar.** Perfilactualvence2026-11-03T18:29:44Z, no hay instalación autorizada.
