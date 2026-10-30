@@ -995,3 +995,20 @@ Se concreta en **D4 aditiva** del [plan](../superpowers/plans/2026-10-25-squash-
 D4 propone el mapeo aShotRequest con intenciónBegan/PdelEnded/roriginal del mismo dedo; tabla de cierres/consumo e identidad; análisis de vuelo frente a duración observada deS1 sin medir ni inventar tiemposSL; seguimiento con objetivo mundo fijo; negativos/TDD previstos y2.7con abiertosS1, un bloque cada vez/hash/triada/respuestas literales/restauraciónP0. La concreción operativa de intento por cada cierre se somete conD4 a revisión, no se atribuye como decisión adicional ya tomada por elPO. La duración del gesto no modificaA/V/K ni la regla de riesgo por fases; N04/N04b y preferencia de tirón se conservan abiertos.
 
 Alcance comprobable: únicamenteAGENTS.md, este registro y las dos adendasMarkdown. Sin código/tests/presets/defaults, specv0.3/criterios/bandas/umbrales, suites/check-release/build/instalación/sesión/acceso al iPhone ni replay/análisis nuevos de trazas. Baselines45c4e9af5c8f/e458bfd5ce9e y41heredados/SimulationKey intactos. **Entregar PR lista paraClaude, sin fusionar y detenerse. S1aceptado; códigoS2–S4/T8 sigue sin autorizar.** Perfilactualvence2026-11-03T18:29:44Z, no hay instalación autorizada.
+
+
+### 2026-10-30 — cierre PR #29 y autorización S2 fase1
+
+Merge**8dd142dff2fcdc5d52871ac3c89733b4aff88fd6**, segundo padre**1bae4615e8bec0e9b12624e73ce240a830638dae**/mismo árbol, verificado porClaude yGit. Heads exactos,PRabierta/no borrador/sinconflictos/árboleslimpios antes de fusionar;main sincronizada/limpia,worktree retirado sinforce/noignorados,inventarios vacíos enLogs/archive-s2-m24-plan-20261030,ramas remotas conservadas. Este registro va dentro de la nueva entrega, sincommitaparte enmain. Retoque N04 b→N04b efectuado enplan/propuesta, sin otro cambio de esa adenda.
+
+**Decisión literal del PO — tabla D4.2 aprobada tal como está en el plan:**
+
+> - InvalidAim (incluido tin/out), Tap, AbandonedNoPull, CanceledReturnToDeadZone, Rejected y SystemCanceled no golpean ni consumen el intento. Se puede volver a apoyar si queda tiempo en la recepción.
+> - Un Swing aceptado consume el intento de forma atómica aunque sea temprano, tardío, quede fuera de V o no alcance la pelota.
+> - Un contacto sin Ended al cerrar la recepción no dispara. Se registra como NoOrder o como el caso que corresponda.
+> - Las órdenes duplicadas, las de otro lanzamiento y las que llegan con el intento ya consumido se descartan con su motivo.
+> - Esto deja de ser propuesta de Codex: pasa a decisión del PO y se registra literalmente.
+
+**Decisión literal del PO — bloques2.7:** «no se deciden ahora. Codex los predeclara por escrito en la autorización de la fase 2 y se aprueban antes de cualquier sesión».
+
+Autoriza tareas2.0–2.6/D4/M2S2-N01–N12 enorden,TDDcompilable/REDporaserción→GREEN.2.0promueveúnicamentecontrol2/fixturas explícitas/overlayP041claves sin reescribirarchivos/hashreales/proyecciones41ySimulationKeyintactas/2-35mm/N2estrictointactos.2.2registra vueloenrelojreal/frontis-bote/K/T*; incompatibilidad detiempo se registra ydetiene,sinreajustarvelocidad,ventanas oSL. Cierreautorizado:regresión completafresca sinCS/restauracióntransitorios/check-release limpio dev-prod gitDirtyfalse/informe nuevo/PRlistaClaude sinfusionar. SinXcodebuild/instalación/accesoiPhone/sesión2.7 ni recorridoprod físico;spec/criterios/bandas/umbrales/dirección/pullFullMm intactos,sinhalo/lupa/cámara-zoom/dominioB/decaimiento/filtrosN04/rival-rally/S3–S4/T8. Ante defecto/incompatibilidadregistrar ydetener,sinajustar. No revisión deperfilahora;vence2026-11-03T18:29:44Z. S1aceptado;fase2posterior requiereotraautorización.
