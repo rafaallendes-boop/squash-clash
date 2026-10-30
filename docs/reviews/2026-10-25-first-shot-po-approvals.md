@@ -921,3 +921,7 @@ Literal **«Prueba conectarlo de nuevo, para empezar la prueba. Tuve que reinici
 ### 2026-10-29 — B2 fuerte conservado con advertencia de saturación
 
 PO **«listo»**; 10/10 fuertes en banda, P73,25–100%/mediana99,51%. **Saturación5/10=50%, supera advertencia20% intacta**; no ajustes/repetición/promoción/aceptación inferida. B2 total30/30 en banda/1164muestras, misma configuración/cero pendientes/sin pausa/con foco y tres archivos iguales. Error Began separado de P. Tras revisar fuerte se solicita solo B3, diez medios T1/T2/pulgarizquierdo/triada/precheck/todoscierres; no B4/B5 aún. Sin código/parámetros/criterios nuevos, restauración final pendiente, S1 sin aceptar.
+
+### 2026-10-30 — repreparación solicitada por el PO antes de B3
+
+Salida/reinicio y acceso a Duplicación resuelto por PO, literales en el informe. B3 no iniciado; B0/B1/B2 no se repiten. Misma app0f8002d dev sin reinstalar; S1-M2-4 temporal1c8e598b099b/0pendientes/repeat0/Jugando/DEVcerrado/Listo y protección observados; last-activeP0 repuesto antes de aplicar/relanzar,3archivos byte iguales al respaldo/456fuentes intactas. SoloB3 solicitado con triada y pulgarizquierdo; otro día/proceso sin continuidad humana inferida. Advertencia de saturación fuerte50% conservada sin ajustes. Restauración final pendiente, PR28sin fusionar/S1sin aceptar; ninguna autorización nueva de código, instalación o S2–S4/T8.
