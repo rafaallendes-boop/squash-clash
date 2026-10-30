@@ -941,3 +941,38 @@ Las16respuestas del PO se conservan literalmente y por separado en informe/JSON.
 PO dejó disponible el teléfono tras posible reinicio. Restauración **en proceso nuevo2026-10-30T11:54:09.7179370Z/P0-calib-1/e458bfd5ce9e/cero pendientes/Jugando**, confirmada registro/DEV; DEVcerrado y tres archivos directamente byte a byte iguales al respaldo, sin nuevo bloque/gestoM2-4 ni instalación.169intentos programados más1extra preservados, desviaciones/reinicios registrados; empaquetadoB2 corregido incorporando últimos registros originales emitidos tras fin, resúmenes sin cambios.456fuentes intactas y evidencia histórica separada. Regresión441/441y207/207/check-release limpio/build previos, sin repetición para cierre documental.
 
 Entrega PR#28 lista paraClaude **sin fusionar ni aceptarS1**; candidatoS1-M2-4/1c8e598b099b sin promover/A′0por defecto/defaults45c4e9af5c8f y valores heredados intactos. N04/N04b abiertos. No seguir con producto, sesiones oS2–S4/T8; próxima decisión corresponde alPO trasClaude. Perfilvigente hasta2026-11-03T18:29:44Z/comprobar efectivamente antes de instalación futura. [Informe](2026-10-28-first-shot-s1-m2-4-implementation.md), [respuestas](../validation/evidence/2026-10-30-m24-po-answers.json), [restauración](../validation/evidence/2026-10-30-m24-final-restore.json).
+
+
+### 2026-10-30 — revisión Claude de PR #28 y aceptación explícita de S1 por el PO
+
+Claude aprueba el head **af281e08e206da0d134811411de2f9cb42fd1b77** con una corrección documental enAGENTS.md: la autorización de implementación1.2c pasa aHistórico y solo queda vigente la entrada de entrega cerrada. Verificó código/diseño, casosN01–N13/N04b/fronteras exactas, clasificador tin/out idéntico aAimReticleView/radio0,01, presetS1-M2-4 distinto de defaults solo en gesture.control2 y ausencia de cambios en DefaultPreset/EffectiveConfig/SlingModel/ProjectSettings/Packages/scripts/docs/superpowers desde403d213. Recalculó independientemente los datos crudosM24 y confirmó conteos/cierres/hashes/pendientes/P/saturación/bandas/error mediano. Registro de esa revisión, sin recalcular aquí ni modificar datos o producto.
+
+**Decisión literal del PO:**
+
+> S1 aceptado con M2-4 como control para avanzar hacia S2.
+>
+> Esta aceptación se basa en:
+> - Bandas de B2: 30/30, sin solapamiento.
+> - B3: 10/10.
+> - B4: cancelaciones voluntarias.
+> - Las 16 respuestas literales del PO.
+>
+> Siguen abiertos y se observarán en S2 con golpe real:
+> - La saturación.
+> - N04/N04b.
+> - La sensación «aún mecánica» y el ritmo de rally.
+> - La preferencia de dirección del tirón.
+>
+> La aceptación no autoriza código de S2, promover M2-4 a default ni cambiar `pullFullMm`. Eso irá en una entrega propia con autorización del PO.
+
+Esta decisión explícita sustituye el estado previo de S1 sin aceptar; **no reinterpreta los datos anteriores**, sus desviaciones, el NotEvaluated de intensidadesB5, la advertencia de saturación o las16respuestas literales.
+
+Observaciones de Claude, sin cambios de código:
+
+1. **Saturación fuerte del 50 %**, por encima de la advertencia del 20 %. Con `pullFullMm=35`, la mitad de los golpes fuertes saturan y se pierde la diferencia entre fuerte y máximo. Cualquier ajuste requiere una decisión del PO.
+2. **Error del Began:** una mediana de 0,15–0,30 m equivale a unos 1 mm en pantalla con la sensibilidad de la PR #26, frente a unos 2 m entre objetivos. Es una descripción, sin umbral.
+3. **Volumen de auditoría:** 414 registros filtrados (205 con DEV abierto) y 330 ignorados para 169 gestos. Es aceptable con la retención actual, pero conviene vigilarlo, igual que en C6.
+4. **N04/N04b:** no tienen evaluación física. Que el PO responda «no recuerdo» no equivale a cero fijaciones involuntarias.
+5. **Dirección del tirón:** el PO prefiere tirar hacia arriba o adelante. Queda registrado, sin cambios.
+
+**Autorización de fusión condicionada:** delta desdeaf281e0 soloAGENTS.md y este registro; head corregido idéntico local/remoto, PRabierta/no borrador/sin conflictos y árboles limpios. Mergecommit con segundo padre=head corregido; sincronizar main y retirar worktree sinforce preservando ignorados (Logs/evidence, builds/exports). Ramas remotas conservadas. A′ sigue por defecto yS1-M2-4 no se promueve. Sin suites/check-release/build/instalación/sesión/código nuevos para el cierre. **El cierre efectivo se registrará en la siguiente entrega, sin commit aparte en main. Después detenerse: S2–S4/T8 no autorizados.**
