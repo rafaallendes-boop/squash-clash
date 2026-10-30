@@ -1,0 +1,202 @@
+{
+  "task": "2.5",
+  "defaultsHash": "7c057e946adb",
+  "p0ExtendedHash": "d45c57c24b08",
+  "keys": 101,
+  "runs": [
+    {
+      "task": "2.5",
+      "phase": "RED",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotRollbackTests"
+      ],
+      "startedUtc": "2026-10-30T20:57:49.608470+00:00",
+      "exitCode": 1,
+      "total": "15",
+      "passed": "1",
+      "failed": "14",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "3079a9e793c28c9905964237549995453d3a2fea41e18e733f331200cde39e63"
+    },
+    {
+      "task": "2.5",
+      "phase": "RED-fractional-present",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotRollbackTests"
+      ],
+      "startedUtc": "2026-10-30T20:59:12.859927+00:00",
+      "exitCode": 1,
+      "total": "16",
+      "passed": "1",
+      "failed": "15",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "b9aadd78d798b099cd8692f5d50202d0846518032d74b89a8ac30a9fbf1dd08c"
+    },
+    {
+      "task": "2.5",
+      "phase": "GREEN",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotRollbackTests"
+      ],
+      "startedUtc": "2026-10-30T21:00:03.778117+00:00",
+      "exitCode": 0,
+      "total": "16",
+      "passed": "16",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "da5fa5dd073c7a0a134ffa057b874ba62055a9644765c91d6f74d31fbf3adabd"
+    },
+    {
+      "task": "2.5",
+      "phase": "RED-scheduled-frame",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotRollbackTests"
+      ],
+      "startedUtc": "2026-10-30T21:00:55.286135+00:00",
+      "exitCode": 1,
+      "total": "19",
+      "passed": "18",
+      "failed": "1",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "e2d8ab2c0768b83a504582a5b5f46500f129e38fc84c495342997feb1b441aa7"
+    },
+    {
+      "task": "2.5",
+      "phase": "GREEN-scheduled-frame",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotRollbackTests"
+      ],
+      "startedUtc": "2026-10-30T21:01:54.787042+00:00",
+      "exitCode": 0,
+      "total": "19",
+      "passed": "19",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "05ed9af97235cf6975cda4fe3c6589a87f28b24be4a9cec7a1c0ab7672d07311"
+    },
+    {
+      "task": "2.5",
+      "phase": "RED-launch-clock",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotRollbackTests"
+      ],
+      "startedUtc": "2026-10-30T21:04:26.941500+00:00",
+      "exitCode": 1,
+      "total": "21",
+      "passed": "20",
+      "failed": "1",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "bc72534c0920ed7a63e18027766c5a684182bcf42f65ad9b047ac434713047db"
+    },
+    {
+      "task": "2.5",
+      "phase": "RED-history-key",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "S2DefaultPromotionTests"
+      ],
+      "startedUtc": "2026-10-30T21:02:21.546942+00:00",
+      "exitCode": 1,
+      "total": "7",
+      "passed": "6",
+      "failed": "1",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "55e03225d67be83c84de1278135b98d3119beccefbc83c10fc51cb4c558a5db0"
+    },
+    {
+      "task": "2.5",
+      "phase": "RED-hash101",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode"
+      ],
+      "startedUtc": "2026-10-30T21:02:42.569930+00:00",
+      "exitCode": 1,
+      "total": "516",
+      "passed": "511",
+      "failed": "5",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "461559748369a9881ef39671cec5f826029a3c91bdb7f3e443e2c2bcfdced291"
+    },
+    {
+      "task": "2.5",
+      "phase": "suite-fixed-expectation",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode"
+      ],
+      "startedUtc": "2026-10-30T21:03:51.902322+00:00",
+      "exitCode": 0,
+      "total": "516",
+      "passed": "516",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "13ed465f2a6e32cd2ef96692fecf6a1447fd2aae74fbdbaef6ecefb7fdf358c3"
+    },
+    {
+      "task": "2.5",
+      "phase": "suite",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode"
+      ],
+      "startedUtc": "2026-10-30T21:07:34.186628+00:00",
+      "exitCode": 1,
+      "total": "229",
+      "passed": "228",
+      "failed": "1",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": false,
+      "xmlSha256": "6d82c944cc35f765adf7a1c4ea4909737a3cf7b15dda53a915cfd458b8a028aa"
+    },
+    {
+      "task": "2.5",
+      "phase": "suite-camera-fixture",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode"
+      ],
+      "startedUtc": "2026-10-30T21:10:05.967729+00:00",
+      "exitCode": 0,
+      "total": "229",
+      "passed": "229",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "e1f782458ce8dc29a4a8779cff2be5c892c8dcc40c1b7cef01dc8de33da2916b"
+    }
+  ]
+}

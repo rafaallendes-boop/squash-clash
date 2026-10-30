@@ -11,6 +11,8 @@ namespace SquashClash.Core.Tests.Shot
     public sealed class S2DefaultPromotionTests
     {
         private ParamSet Defaults=>ConfigFixtures.Default();
+        [Test] public void RollbackHistory_HasApprovedDefaultAndRange()
+        {Assert.That(ParamCatalog.TryGet("rollback.historyMs",out var def),Is.True);Assert.That(Defaults.Get("rollback.historyMs"),Is.EqualTo(250));Assert.That(def.Min,Is.EqualTo(100));Assert.That(def.Max,Is.EqualTo(500));}
         [Test] public void Defaults_SelectM24_Control2()=>Assert.That(Defaults.GetInt("gesture.control"),Is.EqualTo(2));
         [Test] public void DefaultChange_OnlyGestureControl_AmongExistingValues()
         {
@@ -45,7 +47,7 @@ namespace SquashClash.Core.Tests.Shot
                 Assert.That(store.TrySetLastActive("P0-calib-1",out error),Is.True,error);
                 var before=Directory.GetFiles(dir).ToDictionary(p=>p,File.ReadAllBytes);
                 var p0=new PresetStore(dir).LoadStartup(Defaults,new List<string>(),out var name,out _);
-                Assert.That(p0.Hash,Is.EqualTo("79f6091f375e"));Assert.That(name,Is.EqualTo("P0-calib-1"));Assert.That(p0.GetInt("gesture.control"),Is.EqualTo(2));
+                Assert.That(p0.Hash,Is.EqualTo("d45c57c24b08"));Assert.That(name,Is.EqualTo("P0-calib-1"));Assert.That(p0.GetInt("gesture.control"),Is.EqualTo(2));
                 Assert.That(p0.HashOf(ConfigFixtures.FirstBallPrefixes),Is.EqualTo("8de3f2ecb217"));
                 Assert.That(EffectiveConfig.From(p0).SimulationKey,Is.EqualTo("166a96e319c7"));
                 foreach(var pair in before)Assert.That(File.ReadAllBytes(pair.Key),Is.EqualTo(pair.Value),pair.Key);

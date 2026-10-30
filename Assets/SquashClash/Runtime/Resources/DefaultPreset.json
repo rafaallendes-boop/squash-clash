@@ -402,6 +402,10 @@
     {
       "key": "shot.vCap",
       "value": 32
+    },
+    {
+      "key": "rollback.historyMs",
+      "value": 250
     }
   ]
 }
