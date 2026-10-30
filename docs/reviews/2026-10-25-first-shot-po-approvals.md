@@ -925,3 +925,7 @@ PO **«listo»**; 10/10 fuertes en banda, P73,25–100%/mediana99,51%. **Saturac
 ### 2026-10-30 — repreparación solicitada por el PO antes de B3
 
 Salida/reinicio y acceso a Duplicación resuelto por PO, literales en el informe. B3 no iniciado; B0/B1/B2 no se repiten. Misma app0f8002d dev sin reinstalar; S1-M2-4 temporal1c8e598b099b/0pendientes/repeat0/Jugando/DEVcerrado/Listo y protección observados; last-activeP0 repuesto antes de aplicar/relanzar,3archivos byte iguales al respaldo/456fuentes intactas. SoloB3 solicitado con triada y pulgarizquierdo; otro día/proceso sin continuidad humana inferida. Advertencia de saturación fuerte50% conservada sin ajustes. Restauración final pendiente, PR28sin fusionar/S1sin aceptar; ninguna autorización nueva de código, instalación o S2–S4/T8.
+
+### 2026-10-30 — B3 conservado, siguiente solo B4
+
+PO «listo». Diez intentosT1/T2/diezOK/diezSwing en media,hash1c8e598b099b/0pendientes/armado sinpausa-foco;443muestras/0O2/enlaces/saturación. Error de apoyo separado sin criterio nuevo ni aceptación inferida. Tres archivos byte iguales/456fuentes intactas. SoloB4/cinco cancelacionesC-A/pulgarizquierdo/precheck/todoscierres/sin repetición solicitado;noB5 todavía. Sin cambios de producto/parámetros ni sesiones extra, restauración final pendiente/S1sin aceptar.
