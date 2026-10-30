@@ -7788,5 +7788,10 @@
   "poLiteral": "Listo. HIce b4 y b5. \nPara b4: Ningun problema, todas las cancelaciones voluntarias. \nB5: Todos los tiros aputando al cuadrado con ritmo comodo. \n\nPor lo cual puedes seguir avanzando",
   "deviation": "PO advanced to B5 before Codex recovered/audited B4 and requested B5 separately; no repeat or substitution",
   "acceptanceS1": false,
-  "requestedIntensityAdherenceClarification": "Pending: app requested soft/medium/strong; PO reported target seeking at comfortable rhythm"
+  "requestedIntensityAdherenceClarification": {
+    "question": "Para precisar tu «si» de B5, sin repetir nada: ¿intentaste variar la potencia según la indicación suave/media/fuerte de cada intento?",
+    "answer": "No, me concentré en apuntar con ritmo cómodo"
+  },
+  "requestedIntensityTaskFollowed": false,
+  "requestedIntensityVoluntaryEvaluation": "NotEvaluated in B5: PO did not seek requested intensities; preserve instrument3/10 separately"
 }

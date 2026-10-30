@@ -2,6 +2,14 @@
 
 Base403d213, rama firstshot/s1-m2-4, autorización PO2026-10-28. [Diseño aprobado](2026-10-28-first-shot-s1-m2-4-design.md); [cierre PR27 y autorización](2026-10-25-first-shot-po-approvals.md). S1 sin aceptar/S2–S4/T8 no autorizados.
 
+## Estado final de la entrega — 2026-10-30
+
+Implementación experimental terminada y sesión cerrada con **P0-calib-1 restaurado/e458bfd5ce9e/cero pendientes/tres archivos byte a byte iguales**. [PR #28](https://github.com/rafaallendes-boop/squash-clash/pull/28) lista para Claude, sin fusionar. Fuente instalada0f8002d dev; regresión fresca441/441 y207/207/check-release limpio/buildReleaseARM64 previos conservados, sin nuevas ejecuciones para el cierre documental.
+
+B2:30/30 en banda, con advertencia de saturación fuerte50%; B3:10/10medios; B4:cinco cierres sinSwing (cuatro tras carga); B5:apuntado a ritmo cómodo, **no evaluación de la secuencia de intensidades** según aclaración delPO.169intentos programados más1preview extra, todos conservados;16respuestas literales y límites al final. No aceptaciónS1 ni utilidad de rally inferidas.
+
+Lo que sigue es el historial cronológico; sus pendientes quedan reemplazados por este cierre y la sección final, sin borrar las desviaciones ni los estados anteriores.
+
 ## Preparación 1.2c-0
 
 Preparación declarada, no RED. Selector propuesto2 [EXPERIMENTO], sin claves nuevas ni valores de defaults nuevos; A′=0 y sling=1 conservados. Fixtures sintéticos de cámara/proyección y muestras usan parámetros heredados2/35mm y N2 3mm/250ms. Los casos negativos N01–N13/N04b se escribirán antes de cada implementación: mapeo, potencia/cierres, contexto/tiempos, métricas/cadenas/O2, vista/protocolo. Ninguna traza anterior se reproduce ni representa intención M2-4. Riesgo accidental/deslizamiento no se filtra ni se declara resuelto.
@@ -184,3 +192,46 @@ PO, literal: «Listo. HIce b4 y b5. \nPara b4: Ningun problema, todas las cancel
 [B5](../validation/evidence/2026-10-30-m24-B5.json): diez intentos/428muestras, 10Swing, nueve potencias medias y una fuerte; Pmín32,0896%/mediana45,5593%/máx61,7062%, cero saturación. La app pidió suave/media/fuerte de forma cíclica, T1–T5 dos veces: **3/10 en la banda solicitada**, todos los denominadores intactos. El PO declara buscar cuadrados con ritmo cómodo; se pide aclarar, sin repetir, si además buscó la intensidad indicada. No presentar estos resultados como prueba de incapacidad voluntaria ni de cumplimiento de la tarea de intensidades sin esa aclaración. ErrorBegan mín0,027099m/mediana0,217216m/máx0,672894m; duración mín645,989ms/mediana1121,000ms/máx1612,703ms. No es un rally real ni se introduce un umbral de fluidez.
 
 Ambos: cero O2, salidas conservadoras o violaciones de precedencia en auditoría; B5 cero vínculos de reapoyo. El último gesto puede escribirse unos milisegundos después del registro de fin del bloque por orden de emisión: está incluido por su id/bloque/trial, no descartado por el corte horario. Tres archivos byte a byte iguales al respaldo y456fuentes intactas. Sin ajustes de dirección/parámetros ni código/suites/build/instalación nuevos. Advertencia B2 fuerte50% conservada. Solicitadas las16preguntas literales por separado y acceso para restaurarP0 en proceso nuevo; respuestas y cotejo final pendientes. No más bloques ni aceptaciónS1/PRsin fusionar.
+
+## Cierre de la sesión y respuestas del PO — 2026-10-30
+
+Las16preguntas se hicieron por separado. [Respuestas literales y aclaración de B5](../validation/evidence/2026-10-30-m24-po-answers.json):
+
+| Pregunta literal | Respuesta literal del PO |
+|---|---|
+| ¿Puedo colocar la mira donde quiero? | «Si» |
+| ¿Puedo apuntar bajo sin activar accidentalmente la potencia? | «Si» |
+| ¿La mira permanece estable después de fijarse? | «Si» |
+| ¿Cuántas fijaciones involuntarias ocurren? | «no recuerdo» |
+| ¿Cuánto tiempo necesito para fijar la mira? | «algunos milisegundos» |
+| ¿Entiendo claramente cuándo quedó fijada? | «si» |
+| ¿Puedo conseguir golpes suaves, medios y fuertes voluntariamente? | «si» |
+| ¿La potencia responde de forma consistente a la distancia? | «si» |
+| ¿Puedo alcanzar la potencia máxima cómodamente? | «si» |
+| ¿Existen limitaciones por el borde inferior de la pantalla? | «no» |
+| ¿Puedo cancelar cuando realmente quiero? | «si» |
+| ¿Ocurren cancelaciones accidentales? | «no» |
+| ¿La zona interfiere con los movimientos normales? | «no» |
+| ¿Cuánto demora el gesto completo, desde apoyar el dedo hasta soltar? | «1 segundo aprox» |
+| ¿Se siente natural o demasiado mecánico? | «mas natural que antes, pero aun sigue mecanico. Lo que si tendría que probar en partido real» |
+| ¿Podría utilizarlo repetidamente durante un rally rápido? | «habría que probar para ver que tan como es» |
+
+«No recuerdo» no equivale a cero fijaciones involuntarias. Los milisegundos y el segundo aproximado son estimaciones subjetivas, distintas de los tiempos de los registros. Las respuestas de fluidez no acreditan utilidad en partido/rally ni autorizan probarlo. La preferencia inicial por tirar hacia arriba/adelante sigue documentada, sin cambiar la dirección descendente.
+
+**Aclaración precisa de B5:** a «¿intentaste variar la potencia según la indicación suave/media/fuerte de cada intento?» respondió **«No, me concentré en apuntar con ritmo cómodo»**. El «si» anterior a la pregunta con dos alternativas queda conservado y resuelto por esta aclaración. Por tanto, B5 no evalúa elección voluntaria de la secuencia de intensidades: **NotEvaluated para esa tarea**. Se mantienen los3/10 coincidentes con la indicación instrumental, sin convertirlos en Fallo medido de capacidad ni reclasificar los resultados. B2 sigue siendo el bloque dedicado a intensidades, separado de B5 y de su ritmo cómodo. No se repite ninguna tanda.
+
+### Restauración final verificada
+
+PO: **«listo, revisa porque tuve que salir y al parecer se reinicio. Luego sigamos avanzando»**. Se recuperaron métricas/presets antes de la comprobación; ningún bloque extra después de B5. Los tres archivos ya eran idénticos al respaldo. Se abrió la misma0f8002d dev con terminación explícita del proceso anterior, sin instalar ni compilar. **Arranque nuevo2026-10-30T11:54:09.7179370Z (08:54:09 Santiago): P0-calib-1/e458bfd5ce9e/cero pendientes/Jugando**, verificado tanto por registro como por DEV; después se cerró DEV. [Evidencia de restauración](../validation/evidence/2026-10-30-m24-final-restore.json). Selección persistida P0; restauración de su configuración habitual/repeat3 por arranque, no guardado del candidato.
+
+P0-calib-1, Po-1 y last-active **directamente byte a byte iguales al respaldo nuevo preinstalación**, antes y después del proceso final. Hashes SHA-256 conservados: P0 `2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd`; Po-1 `9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767`; last-active `5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087`. Ningún gesto M2-4 ni bloque después de restaurar.456fuentes cotejadas con la fuente probada/construida; specv0.3, propuesta r2, plan, ProjectSettings, EffectiveConfig.cs, SlingModel.cs y DefaultPreset.json byte a byte intactos respecto a403d213. No se vuelven a ejecutar suites/check-release/build para cerrar documentación.
+
+### Balance de evidencia y límites
+
+[Resumen de campaña](../validation/evidence/2026-10-30-m24-session-summary.json): **169 intentos programados/6152 muestras primarias +1preview adicional rechazado**, total170intentos conservados. Programados:122Swing preview/14retornosC-A/13abandonos/12rechazos/5inválidos/3Tap. Práctica B0 separada de los bloques dirigidos; tres días/procesos, sin afirmar continuidad ni comparación humana causal. O2 total3, todos enB0;25vínculos estructurales sin inferir25correcciones voluntarias. Datos nuevos separados de las111trazas de4cec622, sin replay de ellas.
+
+En la auditoría final del empaquetado se incorporó en cada JSON deB2 el trial10 original, emitido1,4–2,3ms después del evento de fin de bloque. El corte anterior había incluido9registros crudos en cada archivo aunque **los resúmenes ya se habían calculado con los10 y permanecen intactos**. Se agregaron los registros desde las recuperaciones originales, sin alterar fuentes, recalcular resultados, inventar muestras ni reemplazar intentos. B4/B5 incluyen también su último gesto emitido después del fin por el mismo orden de registro.
+
+Se conservan explícitas las desviaciones: confirmación de cuenta atrás B0 retrospectiva; B1 sin carga mezclado con cargar/destapar; Paso posterior a B1 con causa «probablemente» accidental declarada, no confirmada; reinicios y días distintos; B5 adelantado y sin seguir intensidades. B2=30/30 en banda con **saturación fuerte50% > advertencia20% intacta**. B3=10/10medios con error de apoyo separado. B4=5sinSwing, de ellos4retornos tras carga; B5 proporciona apuntado/ritmo cómodo y no elección de intensidades. Ningún resultado aprueba globalmente precisión, riesgoN04/N04b, partido o control.
+
+**Entrega para Claude: PR#28 lista, sin fusionar.** No se promueve S1-M2-4, A′ sigue por defecto; defaults45c4e9af5c8f/41heredados/SimulationKey intactos. S1 sigue sin aceptar y S2–S4/T8 sin autorizar. Perfil vigente hasta2026-11-03T18:29:44Z; toda instalación futura exige comprobar la vigencia efectiva. No más sesiones, cambios o trabajo de producto en esta entrega. El siguiente paso es revisiónClaude y decisión delPO. Auditoría documental final:101enlaces locales válidos,183evidencias históricas y42rutas protegidas byte a byte iguales a la base, además de456fuentes cotejadas; no es una nueva ejecución de regresión.
