@@ -2,11 +2,21 @@
 
 Base8dd142dff2fcdc5d52871ac3c89733b4aff88fd6, rama firstshot/s2-m24. AutorizaciónPO2026-10-30 en [registro](2026-10-25-first-shot-po-approvals.md); [plan/D4](../superpowers/plans/2026-10-25-squash-clash-first-shot.md). Trabajo en curso; no se declara completada ninguna tarea sin evidencia.
 
+## Estado vigente — parada S2-CLOCK-01, fase incompleta
+
+**Se detiene por la condición expresa del PO de registrar y parar ante otro defecto distinto de S2-TIME-01.** No se corrige la retención del reloj en esta entrega. S2-TIME-01 sigue resuelto como bloqueo: permanece solo la observación predeclarada para2.7; SL1–SL6 congeladas/sin tuning.
+
+- 2.0–2.5 implementadas con TDD y verificaciones registradas por tarea. La integración posterior descubrió una regresión de retención en el host/mapa del reloj de2.1/2.5; ese GREEN anterior no la cubría.
+- 2.6 en progreso: registros/snapshots2/2, controlador46/46 focales y suiteEditMode completa fresca518/518, sinCS. **No hay suitePlayMode completa del árbol actual ni check-release final dev/prod/gitDirty=false.** No se declara fase completa ni cobertura final de todosD4.6/M2S2-N01–N12.
+- Reproducción nuevaS2-CLOCK-01:2tests descubiertos/2fallos por aserción, sinCS. Vuelo detenido85→205segmentos y pausado32→152 en120frames, pelota idéntica bit a bit. Evidencia sintética de editor; no bytes de memoria medidos, sesióniPhone ni resultadoH17.
+- Defaults106claves/**915ae1e479b9**,P0extendido**dd122831f592** calculados porUnity;41heredados/proyección0d39e6016bd8,SimulationKey166a96e319c7/2-35mm/N2estricto intactos. [Auditoría de archivos/valores](../validation/evidence/2026-10-30-s2-protected-state.json).
+- PR#30 preparada paraClaude/PO sobre el defecto, **sin fusionar**. Pendientes: decisión sobreS2-CLOCK-01, terminar2.6/cobertura/regresiónFirstBall completa, revisión final de rama y check-release limpios. No se ajustan parámetros, ventanas o SL ni se añaden filtros. No Xcodebuild/instalación/iPhone/sesión2.7/prod físico/S3–S4/T8.
+
 ## Histórico — parada en S2-TIME-01
 
 **Fase1 incompleta.** 2.0 y2.1 implementadas/probadas; en2.2 los14focales pasan pero SL5/SL6 dejan margen incompatible con V100 para un gesto de la duración mediana de mediosS1. Se aplica «registrar y detenerse» delPO antes de2.3, sin tuning ni sesión. El detalle y los límites de ese análisis están al final. No se declara regresión/cierre técnico completo después de añadir las siete claves2.2.
 
-## Estado vigente — reanudación por el PO
+## Histórico — reanudación por el PO
 
 PO2026-10-30: **«Seguir sin cambiar SL»**; [registro literal/interpretaciónClaude](2026-10-25-first-shot-po-approvals.md). La parada y sus cálculos se conservan como historia. S2-TIME-01 pasa a observación predeclarada2.7, sin nueva sesión ni modificación de recetas. Se reanudan hashes92claves/2.2 y luego2.3–2.6 con TDD; aún no se declara fase completa. Otro defecto o incompatibilidad requiere nueva parada.
 
@@ -49,9 +59,9 @@ El plan/spec dan las seis categorías SL pero no sus coordenadas numéricas. Se 
 
 Son valores iniciales de experimentación, no criterios de aceptación. Posición/punto de alcance se capturan al lanzar. Interpretación de implementación de M04: alcance euclídeo3D desde el centro del cuerpo de la cápsula existente (y0,9m de PlaceholderPlayers), independiente de la banda de altura preferida. Mano del personaje diestra; con AX-1 drive al lado de x menor que el cuerpo, empate exactamente sobre eje→drive, sin nueva franja de umbral. U suma altura preferida y separación de paredes con pesos iniciales iguales **[EXPERIMENTO]**, desempate por paso menor; no bonifica alcance ni añade estocada. Si estas concreciones o los vuelos revelan una incompatibilidad, registrar/detener y elevar al PO, sin ajustar las recetas congeladas.
 
-## Parada S2-TIME-01 — incompatibilidad experimental antes de 2.3
+## Histórico — parada S2-TIME-01 antes de 2.3
 
-**Estado: fase 1 incompleta y detenida por la condición explícita del PO.** No se inicia 2.3–2.6, no se ajustan las recetas/velocidades/ventanas ni se permite apoyar antes de Recepción para rescatar el resultado. No hay build Xcode, instalación, acceso al iPhone, sesión 2.7 o recorrido funcional prod.
+**Estado histórico de la primera parada, sustituido por la reanudación posterior del PO.** No se inicia 2.3–2.6, no se ajustan las recetas/velocidades/ventanas ni se permite apoyar antes de Recepción para rescatar el resultado. No hay build Xcode, instalación, acceso al iPhone, sesión 2.7 o recorrido funcional prod.
 
 2.2 alcanzó **14/14 focales EditMode sin CS**, después de RED12tests/10fallos y RED14tests/11fallos por aserción con esqueletos compilables. Incluye seis trayectorias P2 alcanzables, cuerpo fijo, lado/altura legal/banda preferida separados y fronteras exactas de eventos. El planificador no cambia P2 ni L1–L6. El cálculo estático usa intervalos balísticos delimitados por contactos y raíces acotadas de altura/esfera de alcance; por frame todavía no se conecta ningún controlador. La referencia corporal 3D y las recetas iniciales están predeclaradas en **0c638da**, antes del primer cálculo. [XML resumidos, entradas, tiempos y comparación](../validation/evidence/2026-10-30-s2-time-01.json).
 
@@ -98,3 +108,28 @@ Anillo preasignado dimensionado por250ms reales/Hz/tempo; guarda BallState compl
 Eventos reconciliados por identidad lógica dentro del lanzamiento (paso/superficie/ordinal); prefijo no reemitido. ObsoleteEffects cuenta contactos públicos no persistentes emitidos que pierden identidad canónica: no afirma borrar audio/vibración. Estela se vacía y marcas se reconstruyen desde contactos canónicos recientes sin callbacks. Salto enmetros/píxeles/diámetros visuales al mismo instante/cámara, sin suavizado; píxeles desconocidos sin cámara. Edad acepta timestamporiginal opcional en Apply/Schedule para que2.6 no la confunda con edad del paso; sin él se informa edad del contacto cuantizado. Se separan costos de reconstrucción/predicción/reconciliación; son costos editor, no aceptaciónH17 nativa.
 
 Clave rollback.historyMs de la tabla2.5:250/rango100–500, RED7/1 antes de añadirla. Defaults**7c057e946adb**,P0extendido**d45c57c24b08**,101claves. REDdehashes/cantidades516/5; suiteEditMode fresca**516/516**. Una sustitución demasiado amplia alteró temporalmente la expectativa del rango en el test a101; se restauró100 antes del resultado definitivo, sin cambiar catálogo/criterio. Primera suitePlayMode228/229 detectó aislamiento de la cámara del test de salto (dosMainCamera después de otras suites); se conservó la aserción y se usa la misma cámara activa. Repetición completa fresca**229/229PlayMode**,sinCS;Graphics/Qualityrestaurados. [Evidencia](../validation/evidence/2026-10-30-s2-task25.json). Sin instalación ni medición física.
+
+## 2.6 — integración parcial antes de la parada
+
+Fuente de la integración parcial: `f1ae28f50b1f4f8e75361f03a742f4eba3fd29a5`; el commit posterior conserva el RED de retención y los registros de la parada, sin corregirlo.
+
+Se conectó una sola entrega inmutable desde GesturePreview al controlador, manteniendo el host/P2 como autoridad. Objetivo delBegan/Pfinal/Ended original y contexto capturados, identidad de intento/dedo/lanzamiento, cierresD4.2 sin consumo frente a reserva atómica delSwing. Registro de O2/proyección observada/cadenas de reapoyo; una omisión previa conserva su versión cuando llega una orden histórica del mismo lanzamiento. V/T3puro y T3/T3-suave registrados por recepción. Cuerpo/timing/solver capturados al lanzar, claves de gesto al apoyar. Configuración próxima separada en el panel. Práctica y feedback residen en Runtime; DevPanel solo presenta ajustes/diagnóstico.
+
+Ciclo de práctica y repetición única, marca factible separada de intención, anillo y notas, contacto/swish provisionales con [procedencia original](../../Assets/SquashClash/Runtime/Resources/Audio/PROVENANCE.md). No háptica/causalidadS3, rival, rally ni contacto humano nativo. Los nuevos recursos de audio y controles todavía no pasaron los exports dev/prod; el check estático focal no sustituye ese gate ni el recorrido físico deprod.
+
+TDD observado: registro/snapshotsRED2/2→GREEN2/2; controladorRED38/35fallos, ampliado44/41→primerGREEN42/44. El test de tempo editaba un valor pendiente, sin cambiar el reloj efectivo; se corrigió su preparación para usar Configure delSimClock existente y Tick depreview, conservando la aserción de cancelación. En Ended idéntico, InputSystem redondeó dos ulps el tiempo al pasar su base interna: la prueba compara ahora **exactamente con TouchSample.TimeReal realmente entregado por el adaptador**, sin tolerancia para r ni cambiar el runtime para igualar el argumento deQueueStateEvent. ElGREEN posterior44/44 se observa dentro delRED45/1 al añadir sección de panel. RED46/2 añadió identidad de preset: demostró lectura incorrecta al procesar tras un cambio posterior aEnded; se capturan ahora preset/archivo/build/seed/pendientes/hash de lanzamiento alBegan. GREENfocal**46/46**. Valores/umbrales no cambiaron por estos fixes. Expectativas dehash106:RED518/5→suiteEditMode fresca**518/518**. [Resultados/huellas deXML](../validation/evidence/2026-10-30-s2-task26-partial.json).
+
+**La suitePlayMode completa de2.6 no se ejecutó antes de la nueva condición de parada.** No se afirma compatibilidad global FirstBall: sigue pendiente comprobar/adaptar únicamente la preparación de fixtures que asuman arranque deFirstBall/S1preview, con practice.enabled=0 si procede, sin tocar aserciones ni escenarios; esa excepción está autorizada por el plan, pero todavía no aplicada en esta integración. No se ejecuta revisión final completa de la skill ni check-release tras parar. Todas las pruebas citadas son nuevas ejecuciones compiladas/con casos descubiertos; no XML viejo ni cero tests.
+
+## S2-CLOCK-01 — retención sin límite por frame en pausa o vuelo detenido
+
+**Severidad Media; bloquea el cierre por la orden de parada del PO.** Regresión introducida en la integración del mapa del reloj: en modoFirstBall (`practice.enabled=0`), sin nuevo lanzamiento, elhost sigue recibiendo frames después del fin del vuelo o mientras está en pausa. [AdvanceCore](../../Assets/SquashClash/Runtime/Ball/BallSimulationHost.cs) observa el reloj antes de retornar por!IsRunning; [ObserveClock](../../Assets/SquashClash/Runtime/Ball/BallSimulationHost.Shot.cs) llamaMark en ambos estados; [ClockMap.Mark](../../Assets/SquashClash/Core/Shot/ClockMap.cs) añade a unaList sin poda/coalescencia cada timestamp distinto. El anillo deBallState sí está preasignado/acotado: el defecto es la lista de segmentos del mapa, no el historial físico.
+
+| Reproducción sintética | Segmentos antes | Frames nuevos | Segmentos después | Estado de pelota |
+|---|---:|---:|---:|---|
+| Vuelo detenido | 85 | 120 | 205 | Idéntico bit a bit |
+| Vuelo pausado | 32 | 120 | 152 | Idéntico bit a bit |
+
+[Reproducción y huella delXML](../validation/evidence/2026-10-30-s2-clock-01.json); testClockMap_StableStoppedOrPausedFlight_DoesNotRetainOneSegmentPerFrame en [ShotRollbackTests](../../Assets/SquashClash/Tests/PlayMode/ShotRollbackTests.cs). Dos fallos por aserción con compilación correcta. El test inspecciona la lista privada como diagnóstico, no añade un parámetro runtime ni un umbral de aceptación de gameplay. El crecimiento continúa aunque el estado y el contexto se mantengan; no se midieron bytes/asignaciones ni percentiles de coste y **no se declara un nuevoFailH17**. La pausa/repetición suspendida puede prolongar un lanzamiento indefinidamente: la retención no queda limitada por250ms de rollback ni por el horizonte de vuelo.
+
+**Propuesta para decisión del PO, no implementada:** coalescer observaciones estables en pausa/vuelo detenido, conservando los cambios exactos de pausa/tempo/cámara lenta/descartes y la conversión de entregas tardías. Antes de modificar, predeclarar pruebas de retención, r original/expiración, paso manual y reanudación/rollback al presente, sin un segundo reloj ni umbrales nuevos. No se elige un límite nuevo ni se aplica ese ajuste ahora. Se conserva elRED y se detiene; el historial deS2-TIME-01 y su resolución no se borran.

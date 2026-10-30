@@ -1,0 +1,60 @@
+{
+  "id": "S2-CLOCK-01",
+  "status": "confirmed-stopped",
+  "severity": "Media, blocks phase closure under explicit PO instruction",
+  "scope": "Synthetic editor reproduction, First Ball mode practice.enabled=0, no iPhone or performance gate measurement",
+  "caseCount": 2,
+  "xmlSha256": "d43ca633126deaf3d4c40bce28233d69bdf1d251139141c3790ebc42231816d3",
+  "run": {
+    "task": "2.6",
+    "phase": "RED-clock-retention",
+    "platform": "playmode",
+    "command": [
+      "scripts/test.sh",
+      "playmode",
+      "ClockMap_StableStoppedOrPausedFlight"
+    ],
+    "startedUtc": "2026-10-30T21:35:32.953361+00:00",
+    "exitCode": 1,
+    "total": "2",
+    "passed": "0",
+    "failed": "2",
+    "validCompilingTestRun": true,
+    "phaseExpectationMet": true,
+    "xmlSha256": "d43ca633126deaf3d4c40bce28233d69bdf1d251139141c3790ebc42231816d3"
+  },
+  "cases": [
+    {
+      "test": "ClockMap_StableStoppedOrPausedFlight_DoesNotRetainOneSegmentPerFrame(False)",
+      "result": "Failed",
+      "paused": false,
+      "frames": 120,
+      "segmentsBefore": 85,
+      "segmentsAfter": 205,
+      "sameBallState": true,
+      "assertion": "  Unchanged stopped/paused state must not retain every frame indefinitely.\n  Expected: less than or equal to 86\n  But was:  205\n"
+    },
+    {
+      "test": "ClockMap_StableStoppedOrPausedFlight_DoesNotRetainOneSegmentPerFrame(True)",
+      "result": "Failed",
+      "paused": true,
+      "frames": 120,
+      "segmentsBefore": 32,
+      "segmentsAfter": 152,
+      "sameBallState": true,
+      "assertion": "  Unchanged stopped/paused state must not retain every frame indefinitely.\n  Expected: less than or equal to 33\n  But was:  152\n"
+    }
+  ],
+  "mechanism": [
+    "BallSimulationHost.AdvanceCore observes the clock before the stopped-flight return",
+    "ObserveClock calls ClockMap.Mark every frame for running/paused and stopped hosts",
+    "ClockMap.Mark appends a Segment to an unbounded List on each distinct real timestamp"
+  ],
+  "policyBoundary": "No retention change implemented. PO required record and stop on any new defect other than S2-TIME-01.",
+  "notInferred": [
+    "No measured memory-byte count",
+    "No native H17 result",
+    "No new thresholds or tuning"
+  ],
+  "suggestionRequiresPO": "Coalesce unchanged paused/stopped observations while preserving exact clock-context transitions, late event mapping and history expiry; predeclare tests before implementation."
+}

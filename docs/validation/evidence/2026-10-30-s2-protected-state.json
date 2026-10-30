@@ -1,0 +1,305 @@
+{
+  "base": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+  "protectedFiles": [
+    {
+      "path": "ProjectSettings/AudioManager.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "9543c41dbfc7d3951217c4dd9481ed026eb8e529b85ecf4463969a0fea747729"
+    },
+    {
+      "path": "ProjectSettings/ClusterInputManager.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "40e65dd214bf254955d2c8829ca8ce2130fd3510485560ce012e9a1ddd93e623"
+    },
+    {
+      "path": "ProjectSettings/DynamicsManager.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "056979610bab2b1ddf56f692ad5cb565a181660cc4f1a28d7e6d004cb8820fb1"
+    },
+    {
+      "path": "ProjectSettings/EditorBuildSettings.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "063ff0a74a273ca94393823b52a1acbf58936890d0152e67de742b315270d3c2"
+    },
+    {
+      "path": "ProjectSettings/EditorSettings.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "06753c21648950aee0013b70f79a9035ac52aec6204d44cc2ac55a84034ad9ca"
+    },
+    {
+      "path": "ProjectSettings/GraphicsSettings.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "b5d1da463ee310899c8692a7b941ed171a5b2df1e94b65b548a22399c99e48a3"
+    },
+    {
+      "path": "ProjectSettings/InputManager.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "60c83ae48e29a782141f99032eb38e803d18475124ff5224fbd1fd81b233f051"
+    },
+    {
+      "path": "ProjectSettings/MemorySettings.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "2c9e2339b4fa50f4782840d37dde021508d411b99278614cba335d206edb1738"
+    },
+    {
+      "path": "ProjectSettings/MultiplayerManager.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "ce4075d7a7dd8ac7ffe55de2427692c63f90dae398208bd80cec0f27cbe09f4b"
+    },
+    {
+      "path": "ProjectSettings/NavMeshAreas.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "7ebbf8f53b8033104e1878b95ca07a28d0954092d81c220f14196a42f651e658"
+    },
+    {
+      "path": "ProjectSettings/Physics2DSettings.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "1cfc0c8fbceec604fd7cd2a06c04ff05dddee6335b75c92b0f5715ad80ba9490"
+    },
+    {
+      "path": "ProjectSettings/PresetManager.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "29c125923fe6e29f90190d4fce1c82d660e7051546e2c9d02908d18c9cf2436c"
+    },
+    {
+      "path": "ProjectSettings/ProjectSettings.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "0eb810ca98bb560c266e514d4d4308e88815a936d44634ef94146a1e91c9bbe9"
+    },
+    {
+      "path": "ProjectSettings/ProjectVersion.txt",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "56aead51018c992af406752e47c49e8d9458c70f00b983f4bb603b1b3afc223e"
+    },
+    {
+      "path": "ProjectSettings/QualitySettings.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "b12ea3ba9c83f6517c52eb7810d46dd6a74bcb498fd3a9a773887e2fa0f7f989"
+    },
+    {
+      "path": "ProjectSettings/SceneTemplateSettings.json",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "bb9098b3bfcde78d93e264b96f7b77b5430e64e8c57a7aad7f5a5d9c3945e16a"
+    },
+    {
+      "path": "ProjectSettings/ShaderGraphSettings.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "6fead5a816c4eed70f224d5472340ecf1ea0b4de4f87d5926bb17fa10ffb3dc9"
+    },
+    {
+      "path": "ProjectSettings/TagManager.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "da4b5eefc927f8b91bcf9e56a186d2b852f49d9cbe91d466638d26c79d6a83ce"
+    },
+    {
+      "path": "ProjectSettings/TimeManager.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "3396f52fdc16d445024e01d7a2d99db6f0a37569d1d73c0302e9ffb857d90287"
+    },
+    {
+      "path": "ProjectSettings/UnityConnectSettings.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "11251dae0356b6f43dd2c67bb511f6b7ecda4e5de425186bba3297e6f3dc1c6f"
+    },
+    {
+      "path": "ProjectSettings/VFXManager.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "2973a6af930e142f62cde00076beda8a3cc3a66d9bfcde7a58ba7d4be2251c26"
+    },
+    {
+      "path": "ProjectSettings/VersionControlSettings.asset",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "e199cdfa6a8f2bf33cfd47e549198f13e3eb2a5099e908fdb4e0f14d939ccc6b"
+    },
+    {
+      "path": "Packages/manifest.json",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "b133329641892c743248bc29a3389b46d505dec768c6f01c6ae7a614eafa61dc"
+    },
+    {
+      "path": "Packages/packages-lock.json",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "ee1183834c7ba59bf088b5fd9d4d112dfb95fee7b3db92187862253fb0b836b0"
+    },
+    {
+      "path": "scripts/build-ios.sh",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "53baf107309d3da6832fd74930d5fffc8e3d641a1a6fc43e702251b0bc2bc932"
+    },
+    {
+      "path": "scripts/check-release.sh",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "05d7ccfd674acdcb16ff1f86acf8687b1605905e36fa58622cd7c95f7587a85a"
+    },
+    {
+      "path": "scripts/device.env.example",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "4e7553238ca25ee0afb7df39da8603bca61149513444a18ca094ce5d5d3d38bf"
+    },
+    {
+      "path": "scripts/install-ios.sh",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "b70fc6c27013879e91c67484aeefbae59608231d81a9c6fc7b16c0050b7c38a5"
+    },
+    {
+      "path": "scripts/spike-p2.sh",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "96f6b9b61d9c3498656a164ebe78181feae4cbd4d378258f03efd220b647f9c7"
+    },
+    {
+      "path": "scripts/spike.sh",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "20262b9277a35032bc0b6c9d1f10c2e9d30315d2eee733bccbf053364c62ecec"
+    },
+    {
+      "path": "scripts/test.sh",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "4b2cc7b65346391e03ac33e5f1a149956657f245b7dc6784c1e831c1bb58ff68"
+    },
+    {
+      "path": "scripts/unity-env.sh",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "7ed58706cd7e0181b3615826da8e14e8d76b4b18abe968c9e81002277fcf6987"
+    },
+    {
+      "path": "Assets/SquashClash/Core/Config/EffectiveConfig.cs",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "746f97550b2ef6f6a73e24f5d7d578b3e03d1320d7db945e65b7bd672bb4a98c"
+    },
+    {
+      "path": "Assets/SquashClash/Core/Shot/SlingModel.cs",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "96df02a4e257388b70ed80a797dad24fcacc5777aec016eb539801c2c5e20745"
+    },
+    {
+      "path": "Assets/SquashClash/Core/Shot/M24Model.cs",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "6b8db955017cfbacb51335fbcd8d1123b8b29b8803dfc1136dca8f519b11fa46"
+    },
+    {
+      "path": "Assets/SquashClash/Core/Simulation/AnalyticBallSimulation.cs",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428"
+    },
+    {
+      "path": "Assets/SquashClash/Core/Simulation/Ballistics.cs",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "caaab79469ce107223a881ec552fed696c9e058d0e55e6484137a23310d8cd06"
+    },
+    {
+      "path": "Assets/SquashClash/Core/Config/LaunchPresets.cs",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "79822dc58fba054fe4cf8595efd9a177d3d244a8cca57120b98698f9220ac48e"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md",
+      "reference": "8dd142dff2fcdc5d52871ac3c89733b4aff88fd6",
+      "sha256": "bc0c50b5a60357bc3431d16c3d74dc733a0fbb108148cdaf1d049b145490ae6a"
+    },
+    {
+      "path": "Assets/SquashClash/Core/Shot/PracticeLaunchDefinitions.cs",
+      "reference": "cdc8e4666f2f5fa54c3b887c7dd1f366acb93ccd",
+      "sha256": "e5992f5402ba4441ec7d0dcc3dd00069d1d0c1b6ab98e8e72c90c4b67283d4c6"
+    }
+  ],
+  "oldKeyCount": 85,
+  "currentKeyCount": 106,
+  "changedExistingValues": [
+    {
+      "key": "gesture.control",
+      "before": 0,
+      "after": 2
+    }
+  ],
+  "newKeys": [
+    {
+      "key": "body.idealLateral",
+      "value": 0.6
+    },
+    {
+      "key": "body.preferredMaxHeight",
+      "value": 1.1
+    },
+    {
+      "key": "body.preferredMinHeight",
+      "value": 0.4
+    },
+    {
+      "key": "body.reach",
+      "value": 1.3
+    },
+    {
+      "key": "body.wallClearance",
+      "value": 0.3
+    },
+    {
+      "key": "legal.maxHeight",
+      "value": 2
+    },
+    {
+      "key": "legal.minHeight",
+      "value": 0.05
+    },
+    {
+      "key": "practice.enabled",
+      "value": 1
+    },
+    {
+      "key": "practice.launch",
+      "value": 0
+    },
+    {
+      "key": "practice.observeMaxSeconds",
+      "value": 4
+    },
+    {
+      "key": "practice.repeatSeconds",
+      "value": 1.5
+    },
+    {
+      "key": "rollback.historyMs",
+      "value": 250
+    },
+    {
+      "key": "shot.vCap",
+      "value": 32
+    },
+    {
+      "key": "shot.vMax",
+      "value": 28
+    },
+    {
+      "key": "shot.vMin",
+      "value": 6
+    },
+    {
+      "key": "timing.assistMs",
+      "value": 40
+    },
+    {
+      "key": "timing.earlyPolicy",
+      "value": 0
+    },
+    {
+      "key": "timing.latencyCompMs",
+      "value": 0
+    },
+    {
+      "key": "timing.showNotes",
+      "value": 1
+    },
+    {
+      "key": "timing.validLimit",
+      "value": 1
+    },
+    {
+      "key": "timing.validMs",
+      "value": 100
+    }
+  ],
+  "defaultsHashUnity": "915ae1e479b9",
+  "p0ExtendedHashUnity": "dd122831f592",
+  "firstBallProjection": "0d39e6016bd8",
+  "simulationKey": "166a96e319c7",
+  "noDeviceAccess": true
+}

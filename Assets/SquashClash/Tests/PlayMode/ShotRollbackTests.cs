@@ -87,6 +87,21 @@ namespace SquashClash.Runtime.Tests
         {var h=Host();To(h,20);Assert.That(h.ScheduleShot(h.LaunchId,25,s=>new Vector3(0,6,-15)),Is.True);Assert.That(h.ScheduleShot(h.LaunchId,26,s=>Vector3.up),Is.False);Assert.That(h.ApplyShot(h.LaunchId,20,Vector3.up).Reason,Is.EqualTo("attempt-consumed"));To(h,25);Assert.That(h.Current.Velocity,Is.EqualTo(new Vector3(0,6,-15)));}
         [Test] public void DuplicateEnded_AndReentrantCallback_ConsumeOnce()
         {var h=Host();To(h,30);int calls=0;h.ShotApplied+=r=>{calls++;Assert.That(h.ApplyShot(h.LaunchId,30,Vector3.up).Reason,Is.EqualTo("attempt-consumed"));};Assert.That(h.ApplyShot(h.LaunchId,28,new Vector3(0,6,-15)).Applied,Is.True);Assert.That(h.ApplyShot(h.LaunchId,28,Vector3.up).Applied,Is.False);Assert.That(calls,Is.EqualTo(1));}
+        [TestCase(false)][TestCase(true)]
+        public void ClockMap_StableStoppedOrPausedFlight_DoesNotRetainOneSegmentPerFrame(bool paused)
+        {
+            config=EffectiveConfig.From(config.Source.With("practice.enabled",0));var h=Host();
+            if(paused){To(h,30);h.Clock.Paused=true;h.Advance(1d/60);}else To(h,h.Prediction.States.Last().Step);
+            // Diagnostic introspection only: no new runtime parameter, time window, or acceptance threshold.
+            var field=typeof(SquashClash.Core.Shot.ClockMap).GetField("segments",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic);
+            Assert.That(field,Is.Not.Null);var segments=(System.Collections.ICollection)field.GetValue(h.ClockMap);
+            int before=segments.Count;var state=h.Current;
+            for(int i=0;i<120;i++)h.Advance(1d/60);
+            int after=segments.Count;
+            TestContext.WriteLine("S2_CLOCK_RETENTION paused="+paused+" frames=120 before="+before+" after="+after+" sameState="+state.Equals(h.Current));
+            Bits(h.Current,state);
+            Assert.That(after,Is.LessThanOrEqualTo(before+1),"Unchanged stopped/paused state must not retain every frame indefinitely.");
+        }
         [Test] public void NoShot_FirstBallBehaviourUnchanged()
         {var h=Host();var prediction=h.Prediction;long last=prediction.States.Last().Step;To(h,last);Bits(h.Current,prediction.States.Last());Assert.That(h.IsRunning,Is.False);Assert.That(h.PredictionMatchesBitwise,Is.True);h.Advance(1);Bits(h.Current,prediction.States.Last());}
     }
