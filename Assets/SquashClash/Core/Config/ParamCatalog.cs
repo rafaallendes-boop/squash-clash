@@ -8,6 +8,11 @@ namespace SquashClash.Core.Config
     {
         private static readonly IReadOnlyList<ParamDef> definitions = Array.AsReadOnly(new[]
         {
+            new ParamDef("timing.assistMs", "Assisted half-window", "ms", "First Shot / timing", ParamKind.Float, 0, 80, 1, ApplyClass.Immediate),
+            new ParamDef("timing.validLimit", "Validity limit", "", "First Shot / timing", ParamKind.Choice, 0, 1, 1, ApplyClass.Immediate, new ChoiceOption(0, "T3 pure"), new ChoiceOption(1, "V")),
+            new ParamDef("timing.validMs", "Valid half-window", "ms", "First Shot / timing", ParamKind.Choice, 80, 120, 20, ApplyClass.Immediate, new ChoiceOption(80, "80"), new ChoiceOption(100, "100"), new ChoiceOption(120, "120")),
+            new ParamDef("timing.earlyPolicy", "Early geometry", "", "First Shot / timing", ParamKind.Choice, 0, 1, 1, ApplyClass.Immediate, new ChoiceOption(0, "T3"), new ChoiceOption(1, "T3 soft")),
+            new ParamDef("timing.latencyCompMs", "Joint perceptual offset", "ms", "First Shot / timing", ParamKind.Float, -100, 100, 1, ApplyClass.Immediate),
             new ParamDef("body.reach", "Body reach", "m", "First Shot / body", ParamKind.Float, .8, 1.8, .01, ApplyClass.Immediate),
             new ParamDef("body.idealLateral", "Ideal lateral", "m", "First Shot / body", ParamKind.Float, .3, 1, .01, ApplyClass.Immediate),
             new ParamDef("body.preferredMinHeight", "Preferred minimum", "m", "First Shot / body", ParamKind.Float, .2, .8, .01, ApplyClass.Immediate),

@@ -370,6 +370,26 @@
     {
       "key": "legal.maxHeight",
       "value": 2
+    },
+    {
+      "key": "timing.assistMs",
+      "value": 40
+    },
+    {
+      "key": "timing.validLimit",
+      "value": 1
+    },
+    {
+      "key": "timing.validMs",
+      "value": 100
+    },
+    {
+      "key": "timing.earlyPolicy",
+      "value": 0
+    },
+    {
+      "key": "timing.latencyCompMs",
+      "value": 0
     }
   ]
 }
