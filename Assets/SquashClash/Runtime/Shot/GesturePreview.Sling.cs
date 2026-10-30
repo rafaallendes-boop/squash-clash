@@ -182,6 +182,7 @@ namespace SquashClash.Runtime.Shot
         }
         private void FinishSlingGesture()
         {
+            EmitShotClosure();var previewOnlyAtBegin=shotPreviewOnly;
             var model=Sling;var finished=tracker;var savedReceipts=receipts.ToArray();
             var config=EffectiveConfig.From(GestureConfig);var id=slingId;var block=slingBlock;
             int trial=slingTrial,session=slingSession,targetId=slingTargetId,serial=gestureLaunch;
@@ -209,7 +210,7 @@ namespace SquashClash.Runtime.Shot
             deferred.Enqueue(()=>
             {
                 var b=new StringBuilder(4096);
-                b.Append("{\"schema\":2,\"quietPolicy\":\"active-contact-timer-D2\",\"s1PreviewOnly\":true,\"control\":\"S1-sling\",\"attemptId\":").Append(Q(id))
+                b.Append("{\"schema\":2,\"quietPolicy\":\"active-contact-timer-D2\",\"s1PreviewOnly\":").Append(B(previewOnlyAtBegin)).Append(",\"control\":\"S1-sling\",\"attemptId\":").Append(Q(id))
                     .Append(",\"block\":").Append(Q(block)).Append(",\"session\":").Append(session).Append(",\"trial\":").Append(trial)
                     .Append(",\"launchSerial\":").Append(serial).Append(",\"comparableToArmedBlock\":").Append(B(comparable))
                     .Append(",\"requestedPower\":").Append(Q(requested)).Append(",\"targetId\":").Append(targetId)

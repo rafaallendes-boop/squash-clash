@@ -11,7 +11,7 @@ using UnityEngine.UIElements;
 
 namespace SquashClash.Runtime.Shot
 {
-    // S1 preview only: never writes ball state, prediction or the simulation clock.
+    // Gesture preview and immutable closure handoff; the host remains the sole ball authority.
     public sealed partial class GesturePreview : MonoBehaviour
     {
         private AppBootstrap app;
@@ -68,7 +68,7 @@ namespace SquashClash.Runtime.Shot
             return false;
         }
         private bool ContextChanged()=>app.Clock.Paused||resume.IsVisible||
-            (Active&&(gestureLaunch!=launchSerial||beganTempo!=app.Clock.Tempo||beganSlowMotion!=app.Clock.DebugSlowMotion||screenWidth!=Screen.width||screenHeight!=Screen.height));
+            (Active&&(app.Clock.DroppedSinceRestart!=dropped||gestureLaunch!=launchSerial||beganTempo!=app.Clock.Tempo||beganSlowMotion!=app.Clock.DebugSlowMotion||screenWidth!=Screen.width||screenHeight!=Screen.height));
         private void OnSample(TouchSample sample)
         {
             double receivedAt=input.ReadRealTime();
@@ -76,6 +76,9 @@ namespace SquashClash.Runtime.Shot
             if(sample.Phase==TouchPhaseKind.Began)
             {
                 if(Active){AuditM24Input(sample,"duplicate-or-secondary-began","m24-input-ignored");return;}
+                if(shotController!=null&&!shotController.CanBegin(sample.TimeReal,out var rejection))
+                {AuditM24Input(sample,rejection,"m24-input-filtered");return;}
+                BeginShotHandoff();
                 var source=app.Host.ActiveConfig.Source;
                 foreach(var def in ParamCatalog.All)
                     if(IsGestureKey(def.Key))source=source.With(def.Key,app.Tuning.Applied.Get(def.Key));
@@ -181,6 +184,8 @@ namespace SquashClash.Runtime.Shot
             if(M24!=null){FinishM24Gesture();return;}
             if(Sling!=null){FinishSlingGesture();return;}
             // Serialization and file I/O run after input dispatch. Completed trackers are never reused.
+            EmitShotClosure();
+            var previewOnlyAtBegin=shotPreviewOnly;
             var finished=tracker;var savedReceipts=receipts.ToArray();var config=EffectiveConfig.From(GestureConfig);
             var aim=Model.Aim;var state=Model.State;var power=Power;var jump=Model.FreezeJumpMeters;
             var usedFirst=Model.FreezeUsedFirstValidPoint;var freezeTime=Model.FreezeTimeReal;
@@ -191,7 +196,7 @@ namespace SquashClash.Runtime.Shot
             deferred.Enqueue(()=>
             {
                 var b=new StringBuilder(2048);
-                b.Append("{\"schema\":2,\"s1PreviewOnly\":true,\"protocol\":").Append(Q(tag)).Append(",\"trial\":").Append(trial)
+                b.Append("{\"schema\":2,\"s1PreviewOnly\":").Append(B(previewOnlyAtBegin)).Append(",\"protocol\":").Append(Q(tag)).Append(",\"trial\":").Append(trial)
                     .Append(",\"launchSerial\":").Append(serial).Append(",\"outcome\":").Append(Q(finished.Outcome.ToString()))
                     .Append(",\"dpiSource\":").Append(Q(densitySource.ToString())).Append(",\"reportedDpi\":").Append(N(density))
                     .Append(",\"mmPerPx\":").Append(N(mm)).Append(",\"physicallyVerified\":false,\"widthPx\":").Append(width).Append(",\"heightPx\":").Append(height)
