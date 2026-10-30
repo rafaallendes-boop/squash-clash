@@ -47,7 +47,7 @@ namespace SquashClash.Core.Tests.Shot
                 Assert.That(store.TrySetLastActive("P0-calib-1",out error),Is.True,error);
                 var before=Directory.GetFiles(dir).ToDictionary(p=>p,File.ReadAllBytes);
                 var p0=new PresetStore(dir).LoadStartup(Defaults,new List<string>(),out var name,out _);
-                Assert.That(p0.Hash,Is.EqualTo("d45c57c24b08"));Assert.That(name,Is.EqualTo("P0-calib-1"));Assert.That(p0.GetInt("gesture.control"),Is.EqualTo(2));
+                Assert.That(p0.Hash,Is.EqualTo("dd122831f592"));Assert.That(name,Is.EqualTo("P0-calib-1"));Assert.That(p0.GetInt("gesture.control"),Is.EqualTo(2));
                 Assert.That(p0.HashOf(ConfigFixtures.FirstBallPrefixes),Is.EqualTo("8de3f2ecb217"));
                 Assert.That(EffectiveConfig.From(p0).SimulationKey,Is.EqualTo("166a96e319c7"));
                 foreach(var pair in before)Assert.That(File.ReadAllBytes(pair.Key),Is.EqualTo(pair.Value),pair.Key);

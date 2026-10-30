@@ -406,6 +406,26 @@
     {
       "key": "rollback.historyMs",
       "value": 250
+    },
+    {
+      "key": "practice.enabled",
+      "value": 1
+    },
+    {
+      "key": "practice.launch",
+      "value": 0
+    },
+    {
+      "key": "practice.repeatSeconds",
+      "value": 1.5
+    },
+    {
+      "key": "practice.observeMaxSeconds",
+      "value": 4
+    },
+    {
+      "key": "timing.showNotes",
+      "value": 1
     }
   ]
 }

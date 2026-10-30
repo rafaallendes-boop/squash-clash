@@ -8,6 +8,12 @@ namespace SquashClash.Core.Config
     {
         private static readonly IReadOnlyList<ParamDef> definitions = Array.AsReadOnly(new[]
         {
+            new ParamDef("practice.enabled", "First Shot practice", "", "First Shot / practice", ParamKind.Bool, 0, 1, 1, ApplyClass.Immediate),
+            new ParamDef("practice.launch", "Practice launch", "", "First Shot / practice", ParamKind.Choice, 0, 5, 1, ApplyClass.Immediate,
+                new ChoiceOption(0,"SL1"),new ChoiceOption(1,"SL2"),new ChoiceOption(2,"SL3"),new ChoiceOption(3,"SL4"),new ChoiceOption(4,"SL5"),new ChoiceOption(5,"SL6")),
+            new ParamDef("practice.repeatSeconds", "Practice wait", "s", "First Shot / practice", ParamKind.Float, .5, 5, .1, ApplyClass.Immediate),
+            new ParamDef("practice.observeMaxSeconds", "Outgoing observation limit", "s", "First Shot / practice", ParamKind.Float, 1, 8, .1, ApplyClass.Immediate),
+            new ParamDef("timing.showNotes", "Shot notes", "", "First Shot / timing", ParamKind.Bool, 0, 1, 1, ApplyClass.Immediate),
             new ParamDef("rollback.historyMs", "Rollback history", "ms", "First Shot / history", ParamKind.Float, 100, 500, 1, ApplyClass.Immediate),
             new ParamDef("shot.vMin", "Minimum shot speed", "m/s", "First Shot / solver", ParamKind.Float, 2, 15, .1, ApplyClass.Immediate),
             new ParamDef("shot.vMax", "Maximum requested speed", "m/s", "First Shot / solver", ParamKind.Float, 10, 45, .1, ApplyClass.Immediate),
