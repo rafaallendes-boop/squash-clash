@@ -8,6 +8,13 @@ namespace SquashClash.Core.Config
     {
         private static readonly IReadOnlyList<ParamDef> definitions = Array.AsReadOnly(new[]
         {
+            new ParamDef("body.reach", "Body reach", "m", "First Shot / body", ParamKind.Float, .8, 1.8, .01, ApplyClass.Immediate),
+            new ParamDef("body.idealLateral", "Ideal lateral", "m", "First Shot / body", ParamKind.Float, .3, 1, .01, ApplyClass.Immediate),
+            new ParamDef("body.preferredMinHeight", "Preferred minimum", "m", "First Shot / body", ParamKind.Float, .2, .8, .01, ApplyClass.Immediate),
+            new ParamDef("body.preferredMaxHeight", "Preferred maximum", "m", "First Shot / body", ParamKind.Float, .8, 1.6, .01, ApplyClass.Immediate),
+            new ParamDef("body.wallClearance", "Wall clearance", "m", "First Shot / body", ParamKind.Float, 0, .6, .01, ApplyClass.Immediate),
+            new ParamDef("legal.minHeight", "Legal minimum height", "m", "First Shot / body", ParamKind.Float, .02, .3, .01, ApplyClass.Immediate),
+            new ParamDef("legal.maxHeight", "Legal maximum height", "m", "First Shot / body", ParamKind.Float, 1.2, 3, .01, ApplyClass.Immediate),
             new ParamDef("gesture.control", "Gesture control (experimental)", "", "First Shot / sling", ParamKind.Choice, 0, 2, 1, ApplyClass.Immediate, new ChoiceOption(0, "A′: flick"), new ChoiceOption(1, "S1-sling"), new ChoiceOption(2, "M2-4: Began" )),
             new ParamDef("aim.holdMs", "Quiet duration", "ms", "First Shot / sling", ParamKind.Float, 120, 150, 1, ApplyClass.Immediate),
             new ParamDef("aim.holdMaxSpeedMmPerS", "Quiet speed", "mm/s", "First Shot / sling", ParamKind.Float, 0, 100, 1, ApplyClass.Immediate),

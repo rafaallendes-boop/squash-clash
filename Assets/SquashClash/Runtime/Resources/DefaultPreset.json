@@ -342,6 +342,34 @@
     {
       "key": "gesture.slingTarget5Y",
       "value": 0.8
+    },
+    {
+      "key": "body.reach",
+      "value": 1.3
+    },
+    {
+      "key": "body.idealLateral",
+      "value": 0.6
+    },
+    {
+      "key": "body.preferredMinHeight",
+      "value": 0.4
+    },
+    {
+      "key": "body.preferredMaxHeight",
+      "value": 1.1
+    },
+    {
+      "key": "body.wallClearance",
+      "value": 0.3
+    },
+    {
+      "key": "legal.minHeight",
+      "value": 0.05
+    },
+    {
+      "key": "legal.maxHeight",
+      "value": 2
     }
   ]
 }

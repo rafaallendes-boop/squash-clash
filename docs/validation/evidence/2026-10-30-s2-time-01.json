@@ -1,0 +1,208 @@
+{
+  "issue": "S2-TIME-01",
+  "status": "Stopped per PO before2.3; phase1not complete",
+  "predeclarationCommit": "0c638da",
+  "experiment": "Editor P2 deterministic evaluation of initialSL recipes; no device session and no replay of S1 inputs",
+  "bodyReachInterpretation": "3D from existing capsule centerY0.9; see predeclaration",
+  "launchRealOrigin": 0,
+  "S1DurationSource": "2026-10-29-m24-B2-medium.json",
+  "S1MediumMedianBeganToEndedSeconds": 1.662776707538228,
+  "assumptions": {
+    "validMs": 100,
+    "latencyCompMs": 0,
+    "earliestPermittedBegan": 0,
+    "source": "approved planned initial timing values and reception begins at launch"
+  },
+  "timingRows": [
+    {
+      "id": "SL1",
+      "launch": 0.0,
+      "front": 0.7158974362298464,
+      "bounce": 1.7415388129078424,
+      "kin": 1.7574972995720657,
+      "star": 2.0256410256410255,
+      "kout": 2.0317270510124272
+    },
+    {
+      "id": "SL2",
+      "launch": 0.0,
+      "front": 0.7158974362298464,
+      "bounce": 1.7415388129078424,
+      "kin": 1.7574972995720657,
+      "star": 2.0256410256410255,
+      "kout": 2.0317270510124272
+    },
+    {
+      "id": "SL3",
+      "launch": 0.0,
+      "front": 0.5965809474388758,
+      "bounce": 1.4416615474873629,
+      "kin": 1.8850717146756757,
+      "star": 1.8974358974358974,
+      "kout": 2.11440463296854
+    },
+    {
+      "id": "SL4",
+      "launch": 0.0,
+      "front": 0.5965809474388758,
+      "bounce": 1.4416615474873629,
+      "kin": 1.8850716691270766,
+      "star": 1.8974358974358974,
+      "kout": 2.1144046773696714
+    },
+    {
+      "id": "SL5",
+      "launch": 0.0,
+      "front": 0.7641030095326595,
+      "bounce": 1.181002987214388,
+      "kin": 1.2091888911186641,
+      "star": 1.4487179487179487,
+      "kout": 1.694601196406611
+    },
+    {
+      "id": "SL6",
+      "launch": 0.0,
+      "front": 0.7641030095326595,
+      "bounce": 1.181002987214388,
+      "kin": 1.2091888911186641,
+      "star": 1.4487179487179487,
+      "kout": 1.694601196406611
+    }
+  ],
+  "comparison": [
+    {
+      "id": "SL1",
+      "releaseIfBeganAtLaunchAndDurationEqualsS1MediumMedian": 1.662776707538228,
+      "deltaMs": -362.8643181027975,
+      "latestBeganForV100AndThatDuration": 0.3689503434741992,
+      "latestBeganForPureT3AndThatDuration": 0.3689503434741992,
+      "needsBeganBeforeLaunchToMeetV100": false
+    },
+    {
+      "id": "SL2",
+      "releaseIfBeganAtLaunchAndDurationEqualsS1MediumMedian": 1.662776707538228,
+      "deltaMs": -362.8643181027975,
+      "latestBeganForV100AndThatDuration": 0.3689503434741992,
+      "latestBeganForPureT3AndThatDuration": 0.3689503434741992,
+      "needsBeganBeforeLaunchToMeetV100": false
+    },
+    {
+      "id": "SL3",
+      "releaseIfBeganAtLaunchAndDurationEqualsS1MediumMedian": 1.662776707538228,
+      "deltaMs": -234.6591898976693,
+      "latestBeganForV100AndThatDuration": 0.3346591898976694,
+      "latestBeganForPureT3AndThatDuration": 0.45162792543031216,
+      "needsBeganBeforeLaunchToMeetV100": false
+    },
+    {
+      "id": "SL4",
+      "releaseIfBeganAtLaunchAndDurationEqualsS1MediumMedian": 1.662776707538228,
+      "deltaMs": -234.6591898976693,
+      "latestBeganForV100AndThatDuration": 0.3346591898976694,
+      "latestBeganForPureT3AndThatDuration": 0.4516279698314434,
+      "needsBeganBeforeLaunchToMeetV100": false
+    },
+    {
+      "id": "SL5",
+      "releaseIfBeganAtLaunchAndDurationEqualsS1MediumMedian": 1.662776707538228,
+      "deltaMs": 214.05875882027937,
+      "latestBeganForV100AndThatDuration": -0.11405875882027927,
+      "latestBeganForPureT3AndThatDuration": 0.03182448886838296,
+      "needsBeganBeforeLaunchToMeetV100": true
+    },
+    {
+      "id": "SL6",
+      "releaseIfBeganAtLaunchAndDurationEqualsS1MediumMedian": 1.662776707538228,
+      "deltaMs": 214.05875882027937,
+      "latestBeganForV100AndThatDuration": -0.11405875882027927,
+      "latestBeganForPureT3AndThatDuration": 0.03182448886838296,
+      "needsBeganBeforeLaunchToMeetV100": true
+    }
+  ],
+  "interpretation": "For this existing median-duration case SL5/6 require support before reception for V100. No universal minimum-duration or new acceptance criterion; shorter recorded gestures may fit. PureT3 leavesabout31.8ms from launch for that duration. Raise toPO, no tuning.",
+  "runs": [
+    {
+      "task": "2.2",
+      "phase": "GREEN",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ContactPlannerTests"
+      ],
+      "startedUtc": "2026-10-30T20:01:52.992041+00:00",
+      "exitCode": 0,
+      "total": "14",
+      "passed": "14",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "bf270972d1990ce7a66f07fc1abf52e60a37fe65e584d9ff01681ae710b7fe6e"
+    },
+    {
+      "task": "2.2",
+      "phase": "RED",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ContactPlannerTests"
+      ],
+      "startedUtc": "2026-10-30T19:54:45.598506+00:00",
+      "exitCode": 1,
+      "total": "12",
+      "passed": "2",
+      "failed": "10",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "587b828db39cb67ae5655972a8f0951141f4efb8152b787844c49f9883eb86da"
+    },
+    {
+      "task": "2.2",
+      "phase": "RED-legality",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ContactPlannerTests"
+      ],
+      "startedUtc": "2026-10-30T19:58:31.984675+00:00",
+      "exitCode": 1,
+      "total": "14",
+      "passed": "3",
+      "failed": "11",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "f8f7a09169f92dab4b307ba0a6d8960cb5dca68d07a7c9f8a1645b993ad15709"
+    }
+  ],
+  "task20HashOnly": {
+    "defaults": "1c8e598b099b",
+    "p0Extended": "944668168805",
+    "computedByUnity": true,
+    "nativeObserved": false
+  },
+  "currentTask22Config": {
+    "keys": 92,
+    "existingValuesChanged": [
+      "gesture.control"
+    ],
+    "newKeys": [
+      "body.idealLateral",
+      "body.preferredMaxHeight",
+      "body.preferredMinHeight",
+      "body.reach",
+      "body.wallClearance",
+      "legal.maxHeight",
+      "legal.minHeight"
+    ],
+    "globalHashes": "Not yet observed by Unity after7newkeys; task2.0hashes historical only. Do not claim updated hashes."
+  },
+  "remaining": [
+    "Task2.2 full regression and final default-hash assertions pending at stop",
+    "Tasks2.3–2.6 not started",
+    "No final phase freshPlayMode or check-release after2.2; deliberate POstop, no technical phase completion claimed"
+  ],
+  "noXcodeBuildInstallPhoneSession": true,
+  "noTuningAfterResults": true
+}
