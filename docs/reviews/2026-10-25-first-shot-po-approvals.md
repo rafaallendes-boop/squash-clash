@@ -929,3 +929,7 @@ Salida/reinicio y acceso a Duplicación resuelto por PO, literales en el informe
 ### 2026-10-30 — B3 conservado, siguiente solo B4
 
 PO «listo». Diez intentosT1/T2/diezOK/diezSwing en media,hash1c8e598b099b/0pendientes/armado sinpausa-foco;443muestras/0O2/enlaces/saturación. Error de apoyo separado sin criterio nuevo ni aceptación inferida. Tres archivos byte iguales/456fuentes intactas. SoloB4/cinco cancelacionesC-A/pulgarizquierdo/precheck/todoscierres/sin repetición solicitado;noB5 todavía. Sin cambios de producto/parámetros ni sesiones extra, restauración final pendiente/S1sin aceptar.
+
+### 2026-10-30 — B4/B5 completados por el PO, cierre pendiente
+
+Literal íntegro en informe/JSON: B4 «Ningun problema, todas las cancelaciones voluntarias»; B5 «Todos los tiros aputando al cuadrado con ritmo comodo». Se conserva B5 adelantado antes de recuperación/revisiónB4 y solicitud separada como desviación, sin repetición/sustitución. B4 cuatro retornos y un abandono sin carga; B5 diezSwing/3enbandapedida, intención de variar potencia pendiente de aclaración. Hash/armados/0pendientes correctos, O2cero,3archivos byte iguales/456fuentes intactas.16preguntas originales separadas solicitadas; restauraciónP0/cotejo final pendientes. No ajustes/producto nuevo ni aceptaciónS1; PR28sin fusionar.
