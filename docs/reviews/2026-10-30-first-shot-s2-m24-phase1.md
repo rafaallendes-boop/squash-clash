@@ -2,9 +2,13 @@
 
 Base8dd142dff2fcdc5d52871ac3c89733b4aff88fd6, rama firstshot/s2-m24. AutorizaciónPO2026-10-30 en [registro](2026-10-25-first-shot-po-approvals.md); [plan/D4](../superpowers/plans/2026-10-25-squash-clash-first-shot.md). Trabajo en curso; no se declara completada ninguna tarea sin evidencia.
 
-## Estado vigente — detenido en S2-TIME-01
+## Histórico — parada en S2-TIME-01
 
 **Fase1 incompleta.** 2.0 y2.1 implementadas/probadas; en2.2 los14focales pasan pero SL5/SL6 dejan margen incompatible con V100 para un gesto de la duración mediana de mediosS1. Se aplica «registrar y detenerse» delPO antes de2.3, sin tuning ni sesión. El detalle y los límites de ese análisis están al final. No se declara regresión/cierre técnico completo después de añadir las siete claves2.2.
+
+## Estado vigente — reanudación por el PO
+
+PO2026-10-30: **«Seguir sin cambiar SL»**; [registro literal/interpretaciónClaude](2026-10-25-first-shot-po-approvals.md). La parada y sus cálculos se conservan como historia. S2-TIME-01 pasa a observación predeclarada2.7, sin nueva sesión ni modificación de recetas. Se reanudan hashes92claves/2.2 y luego2.3–2.6 con TDD; aún no se declara fase completa. Otro defecto o incompatibilidad requiere nueva parada.
 
 ## Alcance y línea base
 
@@ -72,3 +76,7 @@ La mediana **ya medida** Began→Ended de los mediosB2 de S1 es **1,662776708s**
 - **2.3–2.6 no iniciadas.** ShotController/contacto/solver/rollback/práctica/vistas/audio no están implementados, ni hay una entrega jugableS2. TDD y casos M2S2-N01–N12 del resto siguen pendientes. La revisión final completa de la skill se difiere porque el PO ordena parar ante incompatibilidad; no se sustituye por una afirmación de aprobación propia.
 
 Transitorios Graphics/Quality de PlayMode2.0 restaurados byte a byte. Sin cambios en specv0.3, P2, L1–L6, criterios, bandas, umbrales o presets del PO. Se conserva el ledger de trabajo y toda la evidencia ignorada; no se elimina trabajo al detenerse. **PR para Claude/PO sobre el bloqueo, sin fusionar; esperar decisión antes de continuar o ajustar.** S1 permanece aceptado, S3–S4/T8 y fase2física sin autorizar.
+
+## 2.2 — cierre tras reanudación autorizada
+
+Se conserva la parada histórica. PO«Seguir sin cambiar SL» convierteS2-TIME-01 en observación predeclarada2.7, sin tocar recetas0c638da. RED92claves:186tests/2fallos por aserciones dehash/cantidad antiguas, sinCS; GREEN186/186 al actualizar expectativas a los hashes calculados porUnity. Defaults**9af98129d12e**, P0extendido**7bbd2ccb77e8**,92claves;41heredados0d39e6016bd8/SimulationKey166a96e319c7/2-35mm/N2estricto intactos. Suites frescas**473/473EditMode y208/208PlayMode**,sinCS;transitoriosGraphics/Qualityrestaurados. [Evidencia](../validation/evidence/2026-10-30-s2-task22-resume.json). Ninguna nueva medición física ni ajuste deSL. Se continúa2.3–2.6.

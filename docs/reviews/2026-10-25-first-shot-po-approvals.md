@@ -1019,3 +1019,22 @@ Autoriza tareas2.0–2.6/D4/M2S2-N01–N12 enorden,TDDcompilable/REDporaserción
 Se aplica la condición de la autorización de fase1, sin una decisión nueva delPO: **registrar y detenerse, sin ajustar**.2.0completada/2.1Corecompletado;2.2focal14/14 calcula las seis recetas iniciales predeclaradas [EXPERIMENTO] encommit0c638da antes de evaluarlas. SL5/SL6 tienenT*1,448718s/Kout1,694601s reales. Comparar con la mediana existenteB2mediosS1=1,662776708s implica, paraV100ycompensación0,un Began antes de lanzamiento;T3puro deja≈31,8ms para empezar un gesto deesa duración. Es análisis determinista de editor más una duración ya medida citada,no nueva sesión,ni replay de trazasS1,ni imposibilidad general para todoslos gestos. No se inventa una duración mínima/umbral de reacción o Fail delPO.
 
 No se ajustan recetas, velocidades, ventanas, tempo o gesto.2.3–2.6noiniciadas;2.2enprogreso/92claves, hashes actuales/expectativas yregresión/cierrecheck-releasependientes. No se afirma fasecompleta ni suiteglobalverde. Informe/evidencia entregados paraClaude/PO antes de continuar;sinmerge/buildXcode/instalación/acceso al iPhone/sesión2.7/prod físico.2.0hashes1c8e598b099b/944668168805 son los observadosUnityantes de añadir7claves;no se atribuyen alestado92claves.41heredados/SimulationKey/2-35mm/N2/spec/P2/L1-L6 intactos. S1aceptado;otra decisión delPO necesaria para resolver el margen y reanudar sin ajustes unilaterales. [Informe](2026-10-30-first-shot-s2-m24-phase1.md), [evidencia](../validation/evidence/2026-10-30-s2-time-01.json).
+
+
+### 2026-10-30 — S2-TIME-01 resuelto para continuar, misma PR #30
+
+Claude revisó cdc8e4666f2f5fa54c3b887c7dd1f366acb93ccd y confirma parada/cifras/predeclaración0c638da/2.0correcta y7claves2.2con valores/rangos delplan. **Decisión literal del PO: «Seguir sin cambiar SL».**
+
+Interpretación de Claude, **conversión de cifras ya publicadas, no medición nueva**, paraSL5/SL6/V100:
+
+| Serie S1 | Mediana | Último apoyo |
+|---|---:|---:|
+| B2 fuertes | 0,87 s | +0,68 s |
+| B5 «ritmo cómodo» | 1,12 s | +0,43 s |
+| B3 medios | 1,35 s | +0,20 s |
+| B2 suaves | 1,42 s | +0,13 s |
+| B2 medios | 1,66 s | −0,11 s |
+
+La incompatibilidad se observó solo con el gesto más lento deS1, sin pelota/apuntando con calma; no prueba inviabilidad deM2-4enpelotas cortas. Se relaciona con el abierto «aún mecánica/ritmo de rally». No se reescriben los datos/medianas deS1 ni la parada anterior.
+
+Decisiones delPO: recetasSL1–SL6congeladas como0c638da; sin cambiarvuelos/velocidad/tempo/V/A/compensación/N2/dirección ni apoyo dentro deRecepción (§6.5.1). **S2-TIME-01 observación predeclarada de2.7, no bloqueo:** medir con golpe real duraciónBegan→Ended, anticipación respecto a lanzamiento y llegada aV/T3puro enSL5/6, todos los intentos; si elPO no llega vuelve alPO para decidir,sin ajustes. Autoriza reanudar mismafase1/rama/PR: expectativas92claves yhashesreales conTDD, completar2.2y2.3–2.6enorden/REDporaserciones→GREEN/concasosoriginales/D4.6/M2S2-N01–N12. Suites completasfrescas/transitoriosrestaurados/check-release limpio dev-prod gitDirtyfalse/informeactualizado/PR#30listaClaude sinfusionar. SinXcodebuild/instalación/accesoiPhone/sesión2.7, cambiosspec/criterios/bandas/umbrales oS3–S4/T8. **Ante otro defecto/incompatibilidad distinto deS2-TIME-01 registrar/detener.**

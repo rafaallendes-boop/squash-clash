@@ -1,0 +1,81 @@
+{
+  "scope": "PO resume S2-TIME-01, no change to frozen SL recipes",
+  "defaultsHash": "9af98129d12e",
+  "p0ExtendedHash": "7bbd2ccb77e8",
+  "keys": 92,
+  "inherited": "0d39e6016bd8",
+  "simulationKey": "166a96e319c7",
+  "hashOrigin": "Unity tests, not a device observation",
+  "runs": [
+    {
+      "task": "2.2",
+      "phase": "RED-hash92",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "SquashClash.Core.Tests.Shot"
+      ],
+      "startedUtc": "2026-10-30T20:42:29.332487+00:00",
+      "exitCode": 1,
+      "total": "186",
+      "passed": "184",
+      "failed": "2",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "24403812b99e78be88b3d453727bd7d14f8513355159279b2abf2764f1da684e"
+    },
+    {
+      "task": "2.2",
+      "phase": "GREEN-hash92",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "SquashClash.Core.Tests.Shot"
+      ],
+      "startedUtc": "2026-10-30T20:47:37.051912+00:00",
+      "exitCode": 0,
+      "total": "186",
+      "passed": "186",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "be863b9a1418f970a0cd79886d3efbc2365b5c794c966ac2d305a8b83aa81ff9"
+    },
+    {
+      "task": "2.2",
+      "phase": "suite",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode"
+      ],
+      "startedUtc": "2026-10-30T20:47:57.739457+00:00",
+      "exitCode": 0,
+      "total": "473",
+      "passed": "473",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "5e7fcecad0c09c3f95ff5454f2b3c6824cefc2e040d210f2cfac5bb507b89bba"
+    },
+    {
+      "task": "2.2",
+      "phase": "suite",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode"
+      ],
+      "startedUtc": "2026-10-30T20:48:26.117564+00:00",
+      "exitCode": 0,
+      "total": "208",
+      "passed": "208",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "5cdcd42c91b5322134ed1eca7a4bacec610fe4509f5f12ca75bb853b982a9d63"
+    }
+  ]
+}
