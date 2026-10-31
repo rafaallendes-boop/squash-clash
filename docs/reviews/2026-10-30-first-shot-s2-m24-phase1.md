@@ -2,7 +2,7 @@
 
 Base8dd142dff2fcdc5d52871ac3c89733b4aff88fd6, rama firstshot/s2-m24. AutorizaciónPO2026-10-30 en [registro](2026-10-25-first-shot-po-approvals.md); [plan/D4](../superpowers/plans/2026-10-25-squash-clash-first-shot.md). Trabajo en curso; no se declara completada ninguna tarea sin evidencia.
 
-## Estado vigente — S2-CLOCK-01 corregido; regresión final completa
+## Estado vigente — alcance 2.0–2.6 verificado, PR #30 para Claude
 
 PO autorizó el 2026-10-30 la corrección acotada del reloj en la misma PR #30 y completar 2.6. Claude verificó el mecanismo en head `8777f9bcd48cfe0924bf4851ae7606abe312095f`; la parada anterior fue correcta y se conserva como historia. S2-TIME-01 sigue como observación predeclarada para 2.7; SL1–SL6 congeladas, sin tuning.
 
@@ -10,7 +10,7 @@ PO autorizó el 2026-10-30 la corrección acotada del reloj en la misma PR #30 y
 - Fuente de producto final `9131b1c`: 65/65 focales de controlador, **522/522 EditMode y 297/297 PlayMode completos y frescos**, cero omitidos, sin errores CS. Cobertura D4.6 y M2S2-N01–N12 ligada a casos descubiertos/Passed en el [registro final 2.6](../validation/evidence/2026-10-30-s2-task26-final.json).
 - Ocho fixtures First Ball/S1 fijan práctica=0 solo en preparación; aserciones y escenarios anteriores intactos. GraphicsSettings/QualitySettings restaurados; **514 archivos de fuentes** cotejados y **40 archivos protegidos** byte a byte idénticos.
 - Defaults **106 claves / 915ae1e479b9**, P0 extendido **dd122831f592** calculados por Unity; 41 heredados/proyección **0d39e6016bd8**, SimulationKey **166a96e319c7**, 2/35 mm y N2 estricto intactos. Defaults byte a byte iguales a 8777f9b; de los 85 previos solo cambia `gesture.control`, más 21 claves ya aprobadas.
-- **Check-release final dev/prod pendiente** desde árbol limpio. Esta revisión documental registra los resultados ya observados, sin afirmar todavía ese gate.
+- **Check-release dev/prod OK**, exports frescos desde **1bbaa39 limpio / gitDirty=false en ambos**. Framework de pruebas excluido en ambos Players; DevPanel solo dev. Los 514 archivos de producto vuelven a coincidir tras los exports; árbol limpio y transitorios retirados/restaurados. Último ajuste posterior solo documental.
 - PR #30 permanece abierta/lista para revisión, **sin fusionar**. No aceptación de S2 ni autorización de 2.7, Xcode build, instalación, acceso al iPhone, prod físico, S3–S4 o T8.
 
 ## Histórico — parada en S2-TIME-01
@@ -154,4 +154,13 @@ Para completar la guarda de hash predeclarada de D4.6 se añadió un overload `A
 
 Fixtures ajustados únicamente en preparación (`practice.enabled=0` y relanzamiento donde corresponde): DevPanelIntegrationTests, GesturePreviewTests, LegibilitySelectorTests, M24PreviewTests, PerformanceSessionTests, ReticleVisibilityTests, SlingControlSafetyTests y SlingPreviewTests. Se conservan las aserciones previas, incluidos L1–L6; no cambia ninguna receta. Primera suite con fixtures explícitos **278/278**, luego cobertura final y regresión **522/522 EditMode / 297/297 PlayMode**, sin CS/cero omitidos. XML frescos y logs preservados en `Logs/evidence/s2-tdd`; no se usa el verde de 2.5 para acreditar 2.6.
 
-ProjectSettings transitorios restaurados antes del cotejo: 514 archivos de Assets/ProjectSettings/Packages/scripts iguales al manifiesto de la fuente probada; 40 archivos protegidos del registro anterior coinciden en SHA-256. Defaults, 21 claves nuevas y los 85 valores anteriores conservan el estado revisado por Claude; SL1–SL6 siguen iguales a 0c638da. Spec, plan/propuesta, criterios/umbrales, vuelos/velocidades/tempo, V/A, compensación, N2/dirección y `pullFullMm` intactos.
+ProjectSettings transitorios restaurados antes del cotejo: 514 archivos de Assets/ProjectSettings/Packages/scripts iguales al manifiesto de la fuente probada; 40 archivos protegidos del registro anterior coinciden en SHA-256. Defaults, 21 claves nuevas y los 85 valores anteriores conservan el estado revisado por Claude; Las seis filas de recetas de SL1–SL6 permanecen byte a byte iguales a su predeclaración documental en 0c638da; el archivo C# conserva el estado revisado en 8777f9b. Spec, plan/propuesta, criterios/umbrales, vuelos/velocidades/tempo, V/A, compensación, N2/dirección y `pullFullMm` intactos.
+
+
+## Gate final de entrega para revisión
+
+`scripts/check-release.sh` terminó **OK**: exports dev y prod nuevos del head documental **1bbaa39**, ambos con `gitDirty=false`, Release/no Development según BuildScript intacto. Core/Runtime incluidos en ambos, DevPanel únicamente en dev, framework de pruebas de InputSystem excluido en ambos. No se invocó Xcode build ni se instaló. El [registro final](../validation/evidence/2026-10-30-s2-task26-final.json) conserva metadatos, SHA-256 de logs/evidencias y el manifiesto de 514 archivos cotejado después de exportar; no se sustituyen resultados de tests por un export.
+
+Auditoría de preparación: **386 aserciones anteriores** de los ocho fixtures coinciden literalmente con 8777f9b. Las seis filas de recetas congeladas coinciden con 0c638da (origen documental; el C# se añadió después), y ese código no cambia desde el head revisado. Se verificaron 119 enlaces locales de los tres Markdown antes del ajuste final; los enlaces nuevos usan las mismas rutas existentes. Los 40 archivos protegidos conservan sus hashes. Ningún transitorio de tests/export se versiona.
+
+**Entrega técnica de 2.0–2.6 para Claude/PO; PR #30 abierta/lista y sin fusionar.** No equivale a aceptación de S2 ni autorización de fase física. S2-TIME-01 y las observaciones de saturación/N04-N04b/ritmo/preferencia de tirón se conservan para la sesión 2.7 futura; no se ajustó ningún valor para hacer pasar pruebas. Sin Xcode build, instalación, acceso al iPhone, sesión 2.7, métricas nativas nuevas, S3–S4 o T8. Detenerse a la entrega.

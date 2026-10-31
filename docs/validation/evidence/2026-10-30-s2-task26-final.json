@@ -1,6 +1,6 @@
 {
   "task": "2.6",
-  "status": "regresión completa; check-release pendiente",
+  "status": "alcance 2.0–2.6 implementado y verificado; pendiente revisión Claude/PO, sin fusionar",
   "productSourceHead": "9131b1c60e7ffe1d91eb1bc49404151dc257a01d",
   "runs": [
     {
@@ -333,7 +333,51 @@
   "defaultsByteIdenticalToReviewedHead": true,
   "firstBallProjection": "0d39e6016bd8",
   "simulationKey": "166a96e319c7",
-  "releaseChecks": "pendiente desde árbol limpio",
+  "releaseChecks": [
+    {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "1bbaa39",
+        "profile": "dev",
+        "builtAtUtc": "2026-10-31T00:33:09.3050800Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true,
+      "evidenceSha256": "a5ba6a6aceb321c10e023f628e55fe238d25f323e842025b5d442789e3d52c13",
+      "logSha256": "ed052cfc9b0701d57c9fc2ba03118daff9da8933d99fcea7ed7515b16e7ba5c4"
+    },
+    {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "1bbaa39",
+        "profile": "prod",
+        "builtAtUtc": "2026-10-31T00:33:33.3951810Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true,
+      "evidenceSha256": "97eb5264ef2f0a123573d8867233418bf7c3fe517501980f03e642aa3eaea28d",
+      "logSha256": "44a9ff136978e401ddc86e850c253f9a683adb289eed28e1d2f327cb0d8c473e"
+    }
+  ],
   "noXcodeBuild": true,
   "noDeviceAccess": true,
   "noSession27": true,
@@ -385,5 +429,18 @@
       "assertionsSha256": "fb8963a03715f076c2347ff16aba0b19835fc1cf7fb8d30ab9df6a5a292631bc"
     }
   ],
-  "skipped": 0
+  "skipped": 0,
+  "releaseSummarySha256": "c28ed2434dbf45a8b5dfbfdd8a9bc9e9702a4c61723a43dbf10d4370e4066a80",
+  "sourceFilesMatchedAfterExports": 514,
+  "treeCleanAfterExports": true,
+  "documentAudit": {
+    "recipeTableOrigin": "0c638da",
+    "recipeRows": 6,
+    "recipeTableByteEqual": true,
+    "recipeTableSha256": "41ac5c4028f25f5f3ceeed4a9676313bc27302d063714ae23ebfe07c39e098a7",
+    "recipeCodeByteEqualToReviewedHead": true,
+    "validLocalLinks": 119,
+    "note": "En 0c638da las recetas se predeclararon en la tabla documental; el archivo C# se añadió después. Se compara contra su origen correcto."
+  },
+  "noNativePerformanceMeasurement": true
 }
