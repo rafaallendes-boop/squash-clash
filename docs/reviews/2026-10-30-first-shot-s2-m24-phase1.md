@@ -2,7 +2,52 @@
 
 Base8dd142dff2fcdc5d52871ac3c89733b4aff88fd6, rama firstshot/s2-m24. AutorizaciónPO2026-10-30 en [registro](2026-10-25-first-shot-po-approvals.md); [plan/D4](../superpowers/plans/2026-10-25-squash-clash-first-shot.md). Trabajo en curso; no se declara completada ninguna tarea sin evidencia.
 
-## Estado vigente — preparación de tanda 1 autorizada, en curso (2026-10-31)
+## Estado vigente — preparación de tanda 1 completada, sin sesión (2026-10-31)
+
+**Build dev instalada: 0.1.0+2ef4807 dev**, Release/IL2CPP/ARM64, no Development. Producto igual a la fuente probada **9131b1c60e7ffe1d91eb1bc49404151dc257a01d**: diff Git vacío y **506 archivos Assets/ProjectSettings/Packages cotejados por SHA-256 antes y después de export/build/instalación**; sin código, tests, defaults, SL, presets, spec, plan, criterios, bandas o umbrales nuevos. No se ejecutaron suites. Los commits posteriores de entrega son documentales y no sustituyen la build instalada.
+
+### Construcción, firma y renovación delegada
+
+Check-release **dev y prod OK**, exports frescos desde **2ef4807 limpio/gitDirty=false ambos**, framework de pruebas excluido y DevPanel solo dev. Xcode 27.2 instalado, sin cambiar herramientas: build dev Release/ARM64 con extra define SQUASH_DEV y `development=False` comprobado en el log de export. Primer build nativo terminó correctamente con el perfil anterior y no se instaló. El PO, tras conocer que la caché seguía siendo la antigua, **autorizó expresamente al agente a renovar usando su PC**; esa delegación sustituye la ejecución manual por el PO, no el requisito de renovar/verificar antes de instalar.
+
+Se actualizó la lista en Xcode; al seguir devolviendo el perfil antiguo, se preservó ese perfil en ruta local ignorada, se retiró solo su copia elegible de caché de forma recuperable y se reconstruyó con firma automática/`-allowProvisioningUpdates`. Procedimiento respaldado por [Apple: solicitar perfiles nuevos con firma automática](https://developer.apple.com/help/account/provisioning-profiles/edit-download-or-delete-profiles/). Se verificó que se reutilizó el certificado de firma preexistente; no se exportaron claves privadas ni se solicitaron revocaciones. Segunda build nativa firmada con **perfil incorporado renovado**:
+
+| Verificación | Resultado observado |
+|---|---|
+| Inicio efectivo UTC | **2026-10-31T17:58:46Z** (31oct14:58:46 America/Santiago) |
+| Vencimiento UTC | **2026-11-07T17:58:46Z** (7nov14:58:46 America/Santiago) |
+| Firma | `codesign --verify --deep --strict` OK; certificado público de firma autorizado por DeveloperCertificates del incorporado |
+| Equipo | Perfil y TeamIdentifier de firma coinciden con TEAM_ID configurado |
+| Dispositivo | DEVICE_UDID configurado está incluido en ProvisionedDevices |
+| Bundle | Info.plist/entitlements de app y perfil coinciden con BUNDLE_ID configurado |
+| Arquitectura / configuración | arm64; Xcode Release; Player no Development/IL2CPP Release |
+| Ventana prevista confirmada por PO | **1 de noviembre, fin antes de las22:00 America/Santiago, incluida restauración**; la vigencia cubre todo ese día hasta el límite. Es previsión para validar perfil, **no autorización de sesión**. |
+
+Identificadores personales, perfil incorporado y detalles completos de firma permanecen en evidencia local ignorada; en Git solo resultados/fechas, sin ids del iPhone, credenciales ni claves.
+
+### Respaldos, instalación y cotejos
+
+Se exportó Documents antes de instalar: **31 archivos de metrics y 11 de spike, 9.962.251 bytes fuera de presets**, además de los presets. Se repitió el respaldo justo antes de la instalación; los tres archivos seguían iguales a la primera copia. La instalación dev terminó OK, **sin lanzamiento automático**. Antes de abrir, se recuperaron y cotejaron byte a byte los tres archivos. Cotejo repetido después del proceso nuevo y de la verificación visual: **todos idénticos al respaldo final**.
+
+| Archivo | Bytes | SHA-256, idéntico antes / después de instalar / después del arranque |
+|---|---:|---|
+| P0-calib-1.json | 3614 | `2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd` |
+| Po-1.json | 2843 | `9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767` |
+| last-active.txt | 10 | `5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087` |
+
+P0 conserva 41 claves/selección P0; no se guardó ni importó preset, no se aplicó configuración temporal. Los respaldos/logs/manifiestos y datos privados están en `Logs/evidence/s2-preparation-tanda1-20261031/`, ignorado. `before-install` y `before-install-final` preservan ambas copias; `after-install-before-open`, `after-first-start` y `final-verified` los cotejos posteriores. El archivo C++ de SHA26bb31ee… fue archivado **antes** de regenerar exports en la ruta ahora citada por el [anexo](../validation/2026-10-31-first-shot-s2-session27-hashes.md); los 13 literales son los mismos.
+
+### Primer cotejo B en app y estado final
+
+Primer lanzamiento por consola denegado con **Locked**, sin que arrancara la app; fue una condición de acceso del dispositivo, no una ejecución fallida de Unity ni un resultado de bloque. Se resolvió iniciando desde el icono de Squash Clash por Duplicación del iPhone. **Proceso nuevo observado el 2026-10-31T18:05:40.5084170Z (15:05:40.508417 America/Santiago)**, build 0.1.0+2ef4807 dev, preset P0-calib-1, **hash de la propia app dd122831f592 y pending=0**. Los registros de lanzamiento, plan y frames recuperados mantienen ese hash/cero pendientes: primer cotejo autorizado **B=H(1,V,0) Pass**, sin recalcular ni ejecutar scripts/tests temporales de hash. No se cotejaron los otros 12 H; corresponde a sus futuros prechecks con la app.
+
+Verificación visual administrativa abriendo y cerrando DEV, sin editar parámetros: **P0/P2-Analytic/dd122831f592/Jugando/0 cambios pendientes**. Estado final DEV cerrado, sin pausa y con foco, confirmado también por la línea104 del log `metrics-20261031T180540481-65bd95c9d4b24ac2924115fa436e02c3.jsonl`: dev-toggle/result/completed/accepted a **18:07:20.6044640Z**, `paused=false`, `focused=true`, `devOpen=false`. Cotejo de tres archivos posterior OK.
+
+La captura final contiene **0 gestos/órdenes de juego nuevos**, 4 eventos de entrada filtrados por UI (dos pulsaciones administrativas de DEV), 4 eventos dev-control y 32 NoOrder de la práctica automática. Son **todos preparación**, no recepciones FAM/02–13 ni una campaña; ese cierre DEV fue del agente para verificar estado, **no** el cierre por PO listo que podrá abrir un bloque futuro. No se pulsaron Lanzar/Paso/Escenario/Benchmark/H17 ni botones de armado. La nota «Sin golpe» y repetición de P0 no constituyen sesión. Ningún juicio de control/timing/salto ni aprobación S2 se infiere.
+
+**Preparación entregada para Claude; PR #30 abierta/lista y sin fusionar.** La app queda en P0, sin configuración temporal ni gestos nuevos. La sesión de tanda1 (FAM/02–13) exige autorización aparte; tandas2–4/PROD/S3–S4/T8 siguen no autorizados. Detenerse.
+
+## Histórico — autorización y preparación en curso registrada en2ef4807 (2026-10-31)
 
 PO autoriza en la misma rama/PR #30 exclusivamente preparar la tanda 1, sin pedir gestos ni iniciar bloques. Se corrigió el origen del mscorlib en el [anexo de hashes](../validation/2026-10-31-first-shot-s2-session27-hashes.md): copia archivada ignorada con SHA-256 26bb31ee63f0b5b8daa34728d475b2d7029cb19d41cd8f00228568c4a0148eef, verificada antes de regenerar exports. Los 13 literales no cambian.
 

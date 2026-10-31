@@ -1,6 +1,6 @@
 # First Shot S2 — 13 hashes esperados de 2.7 (A3)
 
-Fecha: 2026-10-31. Cálculo documental fuera de Unity y sin ejecutar la app. Revisión de Claude requerida **antes del primer bloque**. No cotejado todavía con Unity/iPhone; no son mediciones de sesión. [Protocolo y condiciones](2026-10-31-first-shot-s2-session27-predeclaration.md).
+Fecha: 2026-10-31. Cálculo documental fuera de Unity y sin ejecutar la app. Revisión de Claude requerida **antes del primer bloque**. Cotejo nativo de preparación posterior: **solo B=H(1,V,0)** observado como `dd122831f592` en `0.1.0+2ef4807 dev`, arranque 2026-10-31T18:05:40.5084170Z; no es sesión ni cotejo de las otras 12 condiciones. Los demás literales quedan para precheck con la propia app cuando se autoricen los bloques, sin scripts/tests temporales. [Protocolo y condiciones](2026-10-31-first-shot-s2-session27-predeclaration.md).
 
 ## Entradas y procedencia
 
@@ -27,7 +27,7 @@ Se reproduce `ParamSet.ComputeHash`: claves ordenadas con comparación ordinal; 
 
 Para estos valores finitos se usa la ruta R del runtime exportado aprobado: decimal general de 15 dígitos significativos si su lectura devuelve el mismo double; si no, general de 17. Se leyó esa rama de `Number.FormatDouble` en el export prod **anterior** citado, sin abrir Unity, regenerar ni compilar. No se usa indiscriminadamente la representación decimal más corta de Python: en los doubles procedentes de float32 puede diferir del formato R de ese runtime. El cálculo externo usa redondeo binario32 explícito para cada operación float y conversión exacta de ese resultado a double.
 
-Comprobaciones documentales: defaults → `915ae1e479b9`; B → **`dd122831f592`**; **H(1,V,0) = `dd122831f592`**. No son nuevas pruebas de producto ni cotejo con la app.
+Comprobaciones documentales: defaults → `915ae1e479b9`; B → **`dd122831f592`**; **H(1,V,0) = `dd122831f592`**. Son comprobaciones documentales, no nuevas pruebas de producto. El cotejo posterior de B en la app se registra arriba y en el informe; los demás H no se han cotejado nativamente.
 
 ## Cuerpo y ancla B→SL1→SL
 
@@ -79,7 +79,7 @@ V: validLimit=1; T: validLimit=0; c=0 fija/c=1 seguimiento. La columna delta con
 
 Los 25 bloques usan estas 13 condiciones según la tabla del protocolo. El SHA-256 de cada manifiesto identifica íntegramente sus 106 valores; H es su prefijo de 12 hex. `presetFileHash` del respaldo, H efectivo y SHA-256 completo del manifiesto son identificadores distintos.
 
-**Cotejo futuro obligatorio:** Claude revisa ahora estos literales/deltas; cuando la preparación esté autorizada, cotejar efectivo/recepción y luego gesto con el literal correspondiente. Si Unity o el dispositivo no coincide —incluida cualquier diferencia de formato R o representación float— registrar las entradas y el observado y **detenerse**. No sustituir el literal por el leído al armar, redondear el cuerpo ni cambiar una clave para lograr igualdad. No se afirma que ese cotejo ya haya ocurrido.
+**Cotejos restantes obligatorios:** B ya se cotejó durante la preparación autorizada del 31 de octubre, sin alterar literales. Claude revisa los demás literales/deltas antes de cada primer bloque aplicable; cuando se autoricen los bloques, cotejar efectivo/recepción y luego gesto con el literal correspondiente desde la propia app, sin scripts/tests temporales. Si Unity o el dispositivo no coincide —incluida cualquier diferencia de formato R o representación float— registrar las entradas y el observado y **detenerse**. No sustituir el literal por el leído al armar, redondear el cuerpo ni cambiar una clave para lograr igualdad. No se afirma cotejo nativo de ninguno de los otros 12 H.
 
 ## Manifiesto canónico B completo
 
