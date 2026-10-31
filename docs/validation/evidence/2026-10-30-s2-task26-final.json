@@ -1,0 +1,389 @@
+{
+  "task": "2.6",
+  "status": "regresión completa; check-release pendiente",
+  "productSourceHead": "9131b1c60e7ffe1d91eb1bc49404151dc257a01d",
+  "runs": [
+    {
+      "task": "2.6",
+      "phase": "compatibility-fixtures",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode"
+      ],
+      "startedUtc": "2026-10-31T00:24:02.488948+00:00",
+      "exitCode": 0,
+      "total": "278",
+      "passed": "278",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "4ed59b411653c0dfa22ca85c877b330b30f340d4774b74994ed2e2467dd7d049"
+    },
+    {
+      "task": "2.6",
+      "phase": "coverage-existing",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "M2S2_N"
+      ],
+      "startedUtc": "2026-10-31T00:25:52.463963+00:00",
+      "exitCode": 0,
+      "total": "14",
+      "passed": "14",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "ea2282f762364abac65ced337aa0a8ea5fae4b91b7b9c5141be9bfb0c935ff20"
+    },
+    {
+      "task": "2.6",
+      "phase": "RED-predeclared-hash",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "WrongPredeclaredHash"
+      ],
+      "startedUtc": "2026-10-31T00:26:46.979547+00:00",
+      "exitCode": 1,
+      "total": "1",
+      "passed": "0",
+      "failed": "1",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "ed784383db1ffeb304e4b8399fa6f3ed57efa97f407ca4e4f6c9632517711aa3"
+    },
+    {
+      "task": "2.6",
+      "phase": "GREEN-predeclared-hash",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotControllerTests"
+      ],
+      "startedUtc": "2026-10-31T00:27:26.525598+00:00",
+      "exitCode": 0,
+      "total": "61",
+      "passed": "61",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "b2a199bf61244681708716b2adc1133afebb3f9f0c10514296ed8478926fe931"
+    },
+    {
+      "task": "2.6",
+      "phase": "coverage-final",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotControllerTests"
+      ],
+      "startedUtc": "2026-10-31T00:28:07.052725+00:00",
+      "exitCode": 0,
+      "total": "65",
+      "passed": "65",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "5020301d0d0ef5550adc075fb280b9e32328d4549de585d6f2e870809443d269"
+    },
+    {
+      "task": "2.6",
+      "phase": "final-suite",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode"
+      ],
+      "startedUtc": "2026-10-31T00:28:50.893368+00:00",
+      "exitCode": 0,
+      "total": "522",
+      "passed": "522",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "4a72ac8b488d2068c8c7b97838615abdc35dfae6b62840f1aeabb644c100f394"
+    },
+    {
+      "task": "2.6",
+      "phase": "final-suite",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode"
+      ],
+      "startedUtc": "2026-10-31T00:29:19.778159+00:00",
+      "exitCode": 0,
+      "total": "297",
+      "passed": "297",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "eb8e164104a7b12d7800ae3a74651178226a02fad6fd3530c4cef8544cd9c12d"
+    }
+  ],
+  "coverage": {
+    "M2S2": {
+      "N01": [
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N01_NoPull150ms_NoSwing(0.15d,Tap)",
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N01_NoPull150ms_NoSwing(0.25d,AbandonedNoPull)",
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N01_NoPull150ms_NoSwing(1,AbandonedNoPull)",
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N03_JitterWithinDeadZoneNeverSwings",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N01_HeldFingerAtReceptionEnd_DoesNotInventEnded",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N01_NoPullOrJitter150ms_NoSwingOrConsumption(0.0f)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N01_NoPullOrJitter150ms_NoSwingOrConsumption(1.5f)"
+      ],
+      "N02": [
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N05_HeldPullKeepsDistancePower_WithoutDecay",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24DistanceAndOpenRisks_AreNotReinterpretedByController(\"accidental-slip\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24DistanceAndOpenRisks_AreNotReinterpretedByController(\"held\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24DistanceAndOpenRisks_AreNotReinterpretedByController(\"lateral-slip\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24DistanceAndOpenRisks_AreNotReinterpretedByController(\"return-reduces\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N02_HeldPullAbovePointSix_KeepsDistanceAtRealEnded"
+      ],
+      "N03": [
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N04_AccidentalSlipRiskIsNotFalselyFiltered",
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N04b_LateralSlipWithSmallDownwardPartCanSwingWithTinyPositivePower",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24DistanceAndOpenRisks_AreNotReinterpretedByController(\"accidental-slip\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24DistanceAndOpenRisks_AreNotReinterpretedByController(\"held\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24DistanceAndOpenRisks_AreNotReinterpretedByController(\"lateral-slip\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24DistanceAndOpenRisks_AreNotReinterpretedByController(\"return-reduces\")"
+      ],
+      "N04": [
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N06_ReturnCancelsWithoutPeak_AndCanPullAgainBeforeRelease",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N04_N08_CancelAndReapply_PreserveBothClosuresAndOpportunity"
+      ],
+      "N05": [
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N08_InvalidPrecedesTapAndCancel(457)",
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N08_InvalidPrecedesTapAndCancel(48)",
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N12_OutsideFrontWallRejectsWithoutTarget",
+        "SquashClash.Runtime.Tests.M24PreviewTests.OutsideFrontWall_IsRecordedAsRejectionWithoutFabricatingAim",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(AbandonedNoPull)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(CanceledReturnToDeadZone)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(InvalidAim)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(Rejected)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(SystemCanceled)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(Tap)"
+      ],
+      "N06": [
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N07_ContradictoryTimeCannotSwing(0.09d)",
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N07_ContradictoryTimeCannotSwing(0.1d)",
+        "SquashClash.Core.Tests.Shot.M24ModelTests.N12_NonFiniteDataConservativelyClosesWithoutSwing",
+        "SquashClash.Runtime.Tests.ShotControllerTests.ContradictoryEnded_NoShot",
+        "SquashClash.Runtime.Tests.ShotControllerTests.SameTimestampIdenticalEnded_OneShotWithReliableP"
+      ],
+      "N07": [
+        "SquashClash.Runtime.Tests.ShotControllerTests.DroppedSteps_DuringGesture_CancelsWithoutSyntheticRelease",
+        "SquashClash.Runtime.Tests.ShotControllerTests.FocusLoss_DuringGesture_NoSwingOnResume",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N07_HeldAcrossContextChange_RequiresNewBegan(\"config\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N07_HeldAcrossContextChange_RequiresNewBegan(\"viewport\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.PauseAfterAcceptedEnded_DoesNotCancelOrDuplicateOrder",
+        "SquashClash.Runtime.Tests.ShotControllerTests.PauseTempoOrSlowMotionChange_DuringGesture_CancelsGesture(\"dev\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.PauseTempoOrSlowMotionChange_DuringGesture_CancelsGesture(\"pause\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.PauseTempoOrSlowMotionChange_DuringGesture_CancelsGesture(\"slow\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.PauseTempoOrSlowMotionChange_DuringGesture_CancelsGesture(\"tempo\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.SecondaryFinger_NoSecondOrder"
+      ],
+      "N08": [
+        "SquashClash.Runtime.Tests.ShotControllerTests.CancelThenNewBegan_CorrelatesWithoutReplacement",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N04_N08_CancelAndReapply_PreserveBothClosuresAndOpportunity",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N08_MultipleClosuresRemainAppendOnly_WithoutExtendingReception"
+      ],
+      "N09": [
+        "SquashClash.Core.Tests.Shot.ContactContractTests.Case13_AtSecondBounce_NoContact",
+        "SquashClash.Core.Tests.Shot.ContactContractTests.DeltaExactlyA_IsPerfect",
+        "SquashClash.Core.Tests.Shot.ContactContractTests.DeltaExactlyV_IsValid_BeyondV_IsFailedOnlyInVMode",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N09_EndedDecidesCategoryAndConsumption_WithoutRescue(\"early\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N09_EndedDecidesCategoryAndConsumption_WithoutRescue(\"late\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N09_EndedDecidesCategoryAndConsumption_WithoutRescue(\"late-began\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N09_EndedDecidesCategoryAndConsumption_WithoutRescue(\"no-plan\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N09_EndedDecidesCategoryAndConsumption_WithoutRescue(\"outside-v\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.T3AndT3Soft_AreSeparateSwitch"
+      ],
+      "N10": [
+        "SquashClash.Runtime.Tests.ShotControllerTests.DelayedEndedAfterSecondBounce_PreservesOriginalR",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N10_ExpiredHistory_IsSystemNotEvaluable_WithoutContactOrSecondAttempt",
+        "SquashClash.Runtime.Tests.ShotControllerTests.OldLaunchEnded_DoesNotTouchNewBall",
+        "SquashClash.Runtime.Tests.ShotRollbackTests.ApplyShot_OlderThanHistory_IsNotEvaluable"
+      ],
+      "N11": [
+        "SquashClash.Core.Tests.Shot.ContactContractTests.PlanChangeBetweenCorrectedAndEventTime_UsesPlanAtEventTime",
+        "SquashClash.Runtime.Tests.ShotControllerTests.FollowCamera_MovesScreenProjectionNotWorldAimOrPower",
+        "SquashClash.Runtime.Tests.ShotControllerTests.InputInTransit_RecordsO2AndBeganProjectionSeparately",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N11_PlanAfterBegan_UsesVisibleAtOriginalEnded_NotProcessingPlan"
+      ],
+      "N12": [
+        "SquashClash.Core.Tests.Shot.S2DefaultPromotionTests.ExplicitAlternativePreset_RemainsSelectable(0)",
+        "SquashClash.Core.Tests.Shot.S2DefaultPromotionTests.ExplicitAlternativePreset_RemainsSelectable(1)",
+        "SquashClash.Core.Tests.Shot.S2DefaultPromotionTests.LegacyP0Overlay_UsesM24_WithoutRewritingPresetsOrSelection",
+        "SquashClash.Runtime.Tests.ShotControllerTests.FuturePerfect_ReservesOnce_NoSecondOrder",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N12_ExplicitAlternativeSnapshot_IsNotReinterpretedAsM24(0)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N12_ExplicitAlternativeSnapshot_IsNotReinterpretedAsM24(1)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.OneAttemptPerReception_SecondReleaseIgnored",
+        "SquashClash.Runtime.Tests.ShotRollbackTests.DuplicateEnded_AndReentrantCallback_ConsumeOnce",
+        "SquashClash.Runtime.Tests.ShotRollbackTests.FuturePerfect_ReservesOnce_NoSecondOrder"
+      ]
+    },
+    "D4.6": {
+      "2.1": [
+        "SquashClash.Core.Tests.Shot.ClockMapTests.LateDelivery_UsesEventTime_NotCurrentFrame",
+        "SquashClash.Core.Tests.Shot.ClockMapTests.M24LongGesture_OriginalEndedMapsAcrossFrames",
+        "SquashClash.Runtime.Tests.ShotControllerTests.DroppedSteps_DuringGesture_CancelsWithoutSyntheticRelease",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N02_HeldPullAbovePointSix_KeepsDistanceAtRealEnded",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N10_ExpiredHistory_IsSystemNotEvaluable_WithoutContactOrSecondAttempt"
+      ],
+      "2.2": [
+        "SquashClash.Core.Tests.Shot.ContactContractTests.Case4_BeforeKIn_IsAir_EvenWithinA",
+        "SquashClash.Core.Tests.Shot.ContactPlannerTests.NoK_BeforeFirstBounce_EvenIfReachable",
+        "SquashClash.Core.Tests.Shot.ContactPlannerTests.NoReachableOpportunity_PlanDoesNotExist",
+        "SquashClash.Core.Tests.Shot.ContactPlannerTests.SixPracticeLaunches_AreReachableFromTheirBodyPositions"
+      ],
+      "2.3": [
+        "SquashClash.Core.Tests.Shot.ContactContractTests.Case13_AtSecondBounce_NoContact",
+        "SquashClash.Core.Tests.Shot.ContactContractTests.Case8_PlanChangedBeforeR_UsesPlanVisibleAtR",
+        "SquashClash.Core.Tests.Shot.ContactContractTests.DeltaExactlyA_IsPerfect",
+        "SquashClash.Core.Tests.Shot.ContactContractTests.DeltaExactlyV_IsValid_BeyondV_IsFailedOnlyInVMode",
+        "SquashClash.Core.Tests.Shot.ContactContractTests.PlanChangeBetweenCorrectedAndEventTime_UsesPlanAtEventTime",
+        "SquashClash.Core.Tests.Shot.ContactContractTests.T3Soft_BeforeKIn_ContactsAtKInWithEarlyGeometry",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N09_EndedDecidesCategoryAndConsumption_WithoutRescue(\"early\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N09_EndedDecidesCategoryAndConsumption_WithoutRescue(\"late\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N09_EndedDecidesCategoryAndConsumption_WithoutRescue(\"late-began\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N09_EndedDecidesCategoryAndConsumption_WithoutRescue(\"no-plan\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N09_EndedDecidesCategoryAndConsumption_WithoutRescue(\"outside-v\")"
+      ],
+      "2.4": [
+        "SquashClash.Runtime.Tests.ShotControllerTests.FeasibleAdjustment_ShowsIntentionAndFeasibleMarks",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24DistanceAndOpenRisks_AreNotReinterpretedByController(\"accidental-slip\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24DistanceAndOpenRisks_AreNotReinterpretedByController(\"held\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24DistanceAndOpenRisks_AreNotReinterpretedByController(\"lateral-slip\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24DistanceAndOpenRisks_AreNotReinterpretedByController(\"return-reduces\")",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M2S2_N02_HeldPullAbovePointSix_KeepsDistanceAtRealEnded",
+        "SquashClash.Runtime.Tests.ShotControllerTests.RequestUsesBeganAimAndEndedP_ContactCenterFromDecidedStep",
+        "SquashClash.Runtime.Tests.ShotControllerTests.SolverUnsolved_IsSystemFaultSwingWithoutContact"
+      ],
+      "2.5": [
+        "SquashClash.Runtime.Tests.ShotControllerTests.DelayedEndedAfterSecondBounce_PreservesOriginalR",
+        "SquashClash.Runtime.Tests.ShotControllerTests.FuturePerfect_ReservesOnce_NoSecondOrder",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(AbandonedNoPull)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(CanceledReturnToDeadZone)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(InvalidAim)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(Rejected)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(SystemCanceled)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(Tap)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.NoOrderWithOnlyCanceledContacts_DoesNotShoot",
+        "SquashClash.Runtime.Tests.ShotControllerTests.OldLaunchEnded_DoesNotTouchNewBall",
+        "SquashClash.Runtime.Tests.ShotControllerTests.SameM24Ended_PunctualAndDelayed_SameBits",
+        "SquashClash.Runtime.Tests.ShotRollbackTests.DuplicateEnded_AndReentrantCallback_ConsumeOnce",
+        "SquashClash.Runtime.Tests.ShotRollbackTests.FuturePerfect_ReservesOnce_NoSecondOrder"
+      ],
+      "2.6": [
+        "SquashClash.Runtime.Tests.ShotControllerTests.BeganOutsideReception_IsNotPromoted",
+        "SquashClash.Runtime.Tests.ShotControllerTests.CancelThenNewBegan_CorrelatesWithoutReplacement",
+        "SquashClash.Runtime.Tests.ShotControllerTests.ContradictoryEnded_NoShot",
+        "SquashClash.Runtime.Tests.ShotControllerTests.ControlProtection_NoAccidentalP2H17Scenario",
+        "SquashClash.Runtime.Tests.ShotControllerTests.FeasibleAdjustment_ShowsIntentionAndFeasibleMarks",
+        "SquashClash.Runtime.Tests.ShotControllerTests.FollowCamera_MovesScreenProjectionNotWorldAimOrPower",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(AbandonedNoPull)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(CanceledReturnToDeadZone)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(InvalidAim)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(Rejected)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(SystemCanceled)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.M24ClosureTable_PreservesAttemptAndReason(Tap)",
+        "SquashClash.Runtime.Tests.ShotControllerTests.NoOrderWithOnlyCanceledContacts_DoesNotShoot",
+        "SquashClash.Runtime.Tests.ShotControllerTests.PendingOrWrongHash_BlockArmRejectedWithRemedy",
+        "SquashClash.Runtime.Tests.ShotControllerTests.SameTimestampIdenticalEnded_OneShotWithReliableP",
+        "SquashClash.Runtime.Tests.ShotControllerTests.SecondaryFinger_NoSecondOrder",
+        "SquashClash.Runtime.Tests.ShotControllerTests.WrongPredeclaredHash_BlockArmRejectedWithVisibleRemedy"
+      ],
+      "2.0": [
+        "SquashClash.Core.Tests.Shot.S2DefaultPromotionTests.DefaultChange_OnlyGestureControl_AmongExistingValues",
+        "SquashClash.Core.Tests.Shot.S2DefaultPromotionTests.Defaults_SelectM24_Control2",
+        "SquashClash.Core.Tests.Shot.S2DefaultPromotionTests.ExplicitAlternativePreset_RemainsSelectable(0)",
+        "SquashClash.Core.Tests.Shot.S2DefaultPromotionTests.ExplicitAlternativePreset_RemainsSelectable(1)",
+        "SquashClash.Core.Tests.Shot.S2DefaultPromotionTests.LegacyP0Overlay_UsesM24_WithoutRewritingPresetsOrSelection",
+        "SquashClash.Runtime.Tests.S2DefaultStartupTests.MainDefault_EntersM24_WithoutExplicitControlOverride"
+      ]
+    }
+  },
+  "coverageBoundary": "Casos automáticos sintéticos; combinan cobertura de Core, entrada real del adaptador en editor y controlador/host. No acreditan juicio humano ni sesión 2.7.",
+  "firstBallFixtures": [
+    "DevPanelIntegrationTests",
+    "GesturePreviewTests",
+    "LegibilitySelectorTests",
+    "M24PreviewTests",
+    "PerformanceSessionTests",
+    "ReticleVisibilityTests",
+    "SlingControlSafetyTests",
+    "SlingPreviewTests"
+  ],
+  "fixtureBoundary": "Solo preparación practice.enabled=0 y relanzamiento donde corresponde; aserciones previas intactas.",
+  "predeclaredHashGuard": "D4.6 pendiente completado con esqueleto compilable/RED 1/1 por aserción y GREEN focal 61/61; overload ArmSlingBlock(block,expectedGestureHash), rechazo wrong-hash con remedio antes de armar. La llamada S1 existente conserva su comportamiento. Ninguna clave/default/umbral nuevo ni bloque 2.7 configurado o ejecutado.",
+  "protectedFileCount": 40,
+  "protectedFilesByteIdentical": true,
+  "sourceFilesMatchedAfterTransientRestore": 514,
+  "sourceManifestSha256": "1c3eb572e55697429a755551ef2fa62a797a4af43d4fa9027ce2aae1d48e3d75",
+  "defaultsHashUnity": "915ae1e479b9",
+  "p0ExtendedHashUnity": "dd122831f592",
+  "keys": 106,
+  "defaultsByteIdenticalToReviewedHead": true,
+  "firstBallProjection": "0d39e6016bd8",
+  "simulationKey": "166a96e319c7",
+  "releaseChecks": "pendiente desde árbol limpio",
+  "noXcodeBuild": true,
+  "noDeviceAccess": true,
+  "noSession27": true,
+  "unapproved": [
+    "aceptación S2",
+    "S3",
+    "S4",
+    "T8"
+  ],
+  "fixtureAssertionAuditAgainstReviewedHead": [
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/DevPanelIntegrationTests.cs",
+      "assertions": 29,
+      "assertionsSha256": "804b4a9516790605b5c355bebb7157d4caa0325b4ffbcee899836acd815ee813"
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/GesturePreviewTests.cs",
+      "assertions": 58,
+      "assertionsSha256": "653573bcb96cb7054d2728e691343214f6b5c8790f462638548cc0f3b9fa9e9e"
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/LegibilitySelectorTests.cs",
+      "assertions": 14,
+      "assertionsSha256": "908af98ebb31061808eefc64f4e7580f97db543151de7cd6e4463421aecc746b"
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/M24PreviewTests.cs",
+      "assertions": 64,
+      "assertionsSha256": "5aa0440706aba6bb05f7c3b18f6338ffb0572ce72bc8bb17532f7a92e19358c0"
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/PerformanceSessionTests.cs",
+      "assertions": 51,
+      "assertionsSha256": "3fc58d419891419b95733cda8e63237563c3f06b01b65086e9e6841a0a1cd18d"
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/ReticleVisibilityTests.cs",
+      "assertions": 56,
+      "assertionsSha256": "c08abfbaf45f81d7cdfc4be831a2cc2fc362cc37f11b184404a92cf13503e4f5"
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/SlingControlSafetyTests.cs",
+      "assertions": 55,
+      "assertionsSha256": "d5ff65e0a05ceac25ae5084f8f08d67576c34e1b46ab76a00e5f6135d0cb1b48"
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/SlingPreviewTests.cs",
+      "assertions": 59,
+      "assertionsSha256": "fb8963a03715f076c2347ff16aba0b19835fc1cf7fb8d30ab9df6a5a292631bc"
+    }
+  ],
+  "skipped": 0
+}

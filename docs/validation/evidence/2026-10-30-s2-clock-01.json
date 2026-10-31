@@ -1,6 +1,6 @@
 {
   "id": "S2-CLOCK-01",
-  "status": "confirmed-stopped",
+  "status": "corrected-awaiting-Claude-review",
   "severity": "Media, blocks phase closure under explicit PO instruction",
   "scope": "Synthetic editor reproduction, First Ball mode practice.enabled=0, no iPhone or performance gate measurement",
   "caseCount": 2,
@@ -50,11 +50,224 @@
     "ObserveClock calls ClockMap.Mark every frame for running/paused and stopped hosts",
     "ClockMap.Mark appends a Segment to an unbounded List on each distinct real timestamp"
   ],
-  "policyBoundary": "No retention change implemented. PO required record and stop on any new defect other than S2-TIME-01.",
+  "policyBoundary": "PO autorizó la corrección acotada el 2026-10-30 en PR #30 y continuar 2.0–2.6. Sin Xcode, dispositivo ni sesión 2.7.",
   "notInferred": [
     "No measured memory-byte count",
     "No native H17 result",
     "No new thresholds or tuning"
   ],
-  "suggestionRequiresPO": "Coalesce unchanged paused/stopped observations while preserving exact clock-context transitions, late event mapping and history expiry; predeclare tests before implementation."
+  "historicalStatus": "confirmed-stopped",
+  "casesOrigin": "RED original anterior a la autorización; observaciones históricas conservadas",
+  "correction": {
+    "sourceHead": "bd84896",
+    "rule": "Mismo tempo/cámara lenta/pausa, sin descartes y posición exactamente igual a la continuación canónica de la última observación. Se reutiliza, sin cambios, la normalización double a entero existente en la conversión.",
+    "endpoint": "Una observación pasiva final de tamaño fijo, consultable exactamente; se materializa antes de un tramo inexacto o cambio de estado/descarte. No avanza otro reloj.",
+    "unchanged": [
+      "ObserveClock y avance con vuelo detenido (F02)",
+      "SimClock y política de expiración del historial físico",
+      "Claves y valores desde 8777f9b revisado",
+      "Cota existente de normalización double a entero; sin tolerancia nueva",
+      "Sin poda por antigüedad, límite temporal ni otro reloj"
+    ],
+    "runs": [
+      {
+        "task": "clock01",
+        "phase": "protection-before",
+        "platform": "editmode",
+        "command": [
+          "scripts/test.sh",
+          "editmode",
+          "ClockMapTests"
+        ],
+        "startedUtc": "2026-10-31T00:19:40.091811+00:00",
+        "exitCode": 0,
+        "total": "13",
+        "passed": "13",
+        "failed": "0",
+        "validCompilingTestRun": true,
+        "phaseExpectationMet": true,
+        "xmlSha256": "a148133754633c7ff1c33b8ebe382be40ac0e4c0e266816628d1f3ec3c948c8a"
+      },
+      {
+        "task": "clock01",
+        "phase": "protection-before",
+        "platform": "playmode",
+        "command": [
+          "scripts/test.sh",
+          "playmode",
+          "ApplyShot_;PauseStep_;AfterStoppedRollback_;LongPause_;DelayedEndedAfterSecondBounce_"
+        ],
+        "startedUtc": "2026-10-31T00:20:08.104921+00:00",
+        "exitCode": 0,
+        "total": "16",
+        "passed": "16",
+        "failed": "0",
+        "validCompilingTestRun": true,
+        "phaseExpectationMet": true,
+        "xmlSha256": "3d23f47f8dbe8724d37eff5b07b812362ed18399fb9d44c0627695cfc7445169"
+      },
+      {
+        "task": "clock01",
+        "phase": "RED-exact",
+        "platform": "editmode",
+        "command": [
+          "scripts/test.sh",
+          "editmode",
+          "ClockMapTests"
+        ],
+        "startedUtc": "2026-10-31T00:20:31.728255+00:00",
+        "exitCode": 1,
+        "total": "16",
+        "passed": "14",
+        "failed": "2",
+        "validCompilingTestRun": true,
+        "phaseExpectationMet": true,
+        "xmlSha256": "55c09e578b00a48cca894f82d4e2739687c888cd4573b9f81a3bbc48afb463e4"
+      },
+      {
+        "task": "clock01",
+        "phase": "RED-retention",
+        "platform": "playmode",
+        "command": [
+          "scripts/test.sh",
+          "playmode",
+          "ClockMap_StableStoppedOrPausedFlight"
+        ],
+        "startedUtc": "2026-10-31T00:20:42.886569+00:00",
+        "exitCode": 1,
+        "total": "2",
+        "passed": "0",
+        "failed": "2",
+        "validCompilingTestRun": true,
+        "phaseExpectationMet": true,
+        "xmlSha256": "4073e450381a5c93b03319ee8e8c08980b0741ff2e1c1468a3e2e9ef8ec1cd3a"
+      },
+      {
+        "task": "clock01",
+        "phase": "GREEN-exact",
+        "platform": "editmode",
+        "command": [
+          "scripts/test.sh",
+          "editmode",
+          "ClockMapTests"
+        ],
+        "startedUtc": "2026-10-31T00:21:02.109453+00:00",
+        "exitCode": 0,
+        "total": "16",
+        "passed": "16",
+        "failed": "0",
+        "validCompilingTestRun": true,
+        "phaseExpectationMet": true,
+        "xmlSha256": "e4549fbe51d467a459d8e51b9d5dfe6486fc9c4ce535594196018902c9c2748a"
+      },
+      {
+        "task": "clock01",
+        "phase": "GREEN-protection",
+        "platform": "playmode",
+        "command": [
+          "scripts/test.sh",
+          "playmode",
+          "ShotRollbackTests;DelayedEndedAfterSecondBounce_"
+        ],
+        "startedUtc": "2026-10-31T00:21:13.000419+00:00",
+        "exitCode": 1,
+        "total": "25",
+        "passed": "24",
+        "failed": "1",
+        "validCompilingTestRun": true,
+        "phaseExpectationMet": false,
+        "xmlSha256": "51ceedce9392f2a3070fd5935482aeaf6ffb0b8f8244f2a59ef3bc24dce006c5"
+      },
+      {
+        "task": "clock01",
+        "phase": "GREEN-normalized",
+        "platform": "editmode",
+        "command": [
+          "scripts/test.sh",
+          "editmode",
+          "ClockMapTests"
+        ],
+        "startedUtc": "2026-10-31T00:21:48.014531+00:00",
+        "exitCode": 0,
+        "total": "16",
+        "passed": "16",
+        "failed": "0",
+        "validCompilingTestRun": true,
+        "phaseExpectationMet": true,
+        "xmlSha256": "64639c67f788e3666294e4f2f8fd1e1ff8307f2a36b78c7d54b16313fab14b86"
+      },
+      {
+        "task": "clock01",
+        "phase": "GREEN-final",
+        "platform": "playmode",
+        "command": [
+          "scripts/test.sh",
+          "playmode",
+          "ShotRollbackTests;DelayedEndedAfterSecondBounce_"
+        ],
+        "startedUtc": "2026-10-31T00:22:09.464766+00:00",
+        "exitCode": 1,
+        "total": "25",
+        "passed": "24",
+        "failed": "1",
+        "validCompilingTestRun": true,
+        "phaseExpectationMet": false,
+        "xmlSha256": "8f1c55cd8b5686761bf6c7c0b4c55689e24ff4e0bc3a3e5a96d1dfd9863c3593"
+      },
+      {
+        "task": "clock01",
+        "phase": "GREEN-endpoint",
+        "platform": "editmode",
+        "command": [
+          "scripts/test.sh",
+          "editmode",
+          "ClockMapTests"
+        ],
+        "startedUtc": "2026-10-31T00:22:57.675579+00:00",
+        "exitCode": 0,
+        "total": "16",
+        "passed": "16",
+        "failed": "0",
+        "validCompilingTestRun": true,
+        "phaseExpectationMet": true,
+        "xmlSha256": "7b7c8f8b4351e608db307aa77fbbb7ecaa6adee14795f964982534812a975a5c"
+      },
+      {
+        "task": "clock01",
+        "phase": "GREEN-endpoint",
+        "platform": "playmode",
+        "command": [
+          "scripts/test.sh",
+          "playmode",
+          "ShotRollbackTests;DelayedEndedAfterSecondBounce_"
+        ],
+        "startedUtc": "2026-10-31T00:23:11.910646+00:00",
+        "exitCode": 0,
+        "total": "25",
+        "passed": "25",
+        "failed": "0",
+        "validCompilingTestRun": true,
+        "phaseExpectationMet": true,
+        "xmlSha256": "e5eac2b363a982847fbb025e786420b1c75cb02f417459fc5f7b0e293ba6c6eb"
+      }
+    ],
+    "retentionCases": [
+      {
+        "test": "ClockMap_StableStoppedOrPausedFlight_DoesNotRetainOneSegmentPerFrame(False)",
+        "result": "Passed",
+        "diagnostic": "S2_CLOCK_RETENTION paused=False frames=120 before=5 after=5 sameState=True"
+      },
+      {
+        "test": "ClockMap_StableStoppedOrPausedFlight_DoesNotRetainOneSegmentPerFrame(True)",
+        "result": "Passed",
+        "diagnostic": "S2_CLOCK_RETENTION paused=True frames=120 before=7 after=7 sameState=True"
+      }
+    ],
+    "intermediateFailures": "Primer candidato: retención detenida falló 1/2. Segundo candidato: F02 resimuló 5 en vez de 6 pasos. Se conservaron las aserciones; al preservar el extremo final consultable pasan 25/25."
+  },
+  "claudeEstimateNotMeasured": {
+    "bytesPerSegmentApprox": 40,
+    "kilobytesPerSecondAt60FpsApprox": 2.4,
+    "note": "Estimación comunicada por PO, no medición; ningún resultado nativo de rendimiento nuevo"
+  }
 }

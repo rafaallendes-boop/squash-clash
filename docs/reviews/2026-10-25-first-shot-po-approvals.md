@@ -1049,3 +1049,24 @@ La decisión literal **«Seguir sin cambiar SL»** se aplicó: recetas0c638da in
 **S2-CLOCK-01, confirmado y sin corregir:** la lista deClockMap crece unsegmento porframe durantepausa o después delvuelo detenido enmodoFirstBall.120frames:85→205detenido,32→152pausado,estado depelotaidéntico. Reproducciónsintética2tests/2fallos poraserción,sinCS;no memoria enbytes niH17 nativo medidos. [Evidencia](../validation/evidence/2026-10-30-s2-clock-01.json). Se aplica la condición delPO **«Ante otro defecto o incompatibilidad que no sea S2-TIME-01, registra y detente»**. No se infiere autorización para corregir/coalescer ni elegir nuevos límites. Propuesta de corrección para decisión, noimplementada,enelinforme.
 
 No hay suitePlayModecompleta con2.6 ni check-release finalgitDirtyfalse/revisión final de rama; no se declara cerrada lafase1 ni todosD4.6/M2S2-N01–N12. RegresiónFirstBall y,eventualmente,su preparación explícitapractice0 sin tocaraserciones,siguenpendientes. Código/evidencia/RED conservados en lamisma rama/PR#30paraClaude/PO,sinfusionar. No nuevaaceptación deS2,niXcodebuild,instalación,iPhone,sesión2.7,prod físico,S3–S4/T8. S1permanece aceptado ylosbloques2.7dependen deautorización futura. Perfilhasta2026-11-03T18:29:44Z,no comprobado por noinstalar. No commit aparte enmain.
+
+
+## S2-CLOCK-01 — revisión Claude y corrección acotada autorizada por PO (2026-10-30)
+
+PO comunica revisión de Claude del head **8777f9bcd48cfe0924bf4851ae7606abe312095f**: parada correcta; mecanismo ObserveClock→Mark verificado; mapa avanzando con pelota detenida intencionado/F02. Los21defaults nuevos coinciden con el plan y entre85anteriores solo cambia gesture.control. Estimación de Claude, no medición: unos40bytes/segmento/2,4KB por segundo a60fps y mayor recorrido lineal de TrySimToReal tras pausas largas.
+
+Autorización del PO para **la misma rama/PR #30**:
+
+> Agrupar observaciones estables. Si una observación no cambia tempo, cámara lenta, pausa ni descartes, y cae exactamente en la continuación del segmento anterior, no crea un segmento nuevo.
+>
+> Mantener exactos los cambios de estado: pausa y reanudación, paso manual, tempo, cámara lenta y descartes.
+>
+> Sin añadir nada nuevo: ni un segundo reloj, ni parámetros, ni límites de tiempo, ni umbrales, ni un recorte por antigüedad.
+
+Antes de implementar exige protecciones verdes para Ended tardío/r original, expiración, paso manual, F02 y golpe/rollback después de pausa larga. RED S2-CLOCK-01 2/2→GREEN; reflexión o contador de lectura sin efecto runtime permitidos. Continuar2.6: fixtures FirstBall con practice.enabled0 solo preparación/aserciones intactas, D4.6/N01–N12 pendientes, suites completas frescas/sinCS, transitorios restaurados, check-release dev-prod limpio/gitDirtyfalse e informe.
+
+> Ante otro defecto, registra y detente. Entrega la PR #30 lista para Claude, sin fusionar, y detente.
+
+SL1–SL6 congeladas; S2-TIME-01 observación para2.7. Sin cambiar vuelos/velocidad/tempo/V-A/compensación/N2/dirección/pullFullMm/spec/criterios/umbrales. NoXcodebuild/instalación/iPhone/2.7/S3–S4/T8.
+
+Aplicación observada: bd84896 corrige reloj tras protecciones13/13 y16/16; RED original2/2 repetido→GREEN2/2, Core16/16/rollback25/25. Candidatos fallidos conservados en evidencia, sin tocar aserciones. Fuente final9131b1c: fixtures explícitos y cobertura adicional; guarda de hash predeclarado pendiente de D4.6 con esqueleto/RED1/1→GREEN; controlador65/65. Suites frescas522/522EditMode y297/297PlayMode, sinCS/cero omitidos; transitorios restaurados/514fuentes/40protegidos cotejados. **Check-release final desde árbol limpio pendiente de ejecutar**; todavía no se afirma ese gate ni cierre de fase. [Informe](2026-10-30-first-shot-s2-m24-phase1.md), [JSON final](../validation/evidence/2026-10-30-s2-task26-final.json). S1aceptado; sin aceptación de S2 inferida.

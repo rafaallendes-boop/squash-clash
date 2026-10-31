@@ -2,15 +2,16 @@
 
 Base8dd142dff2fcdc5d52871ac3c89733b4aff88fd6, rama firstshot/s2-m24. AutorizaciónPO2026-10-30 en [registro](2026-10-25-first-shot-po-approvals.md); [plan/D4](../superpowers/plans/2026-10-25-squash-clash-first-shot.md). Trabajo en curso; no se declara completada ninguna tarea sin evidencia.
 
-## Estado vigente — parada S2-CLOCK-01, fase incompleta
+## Estado vigente — S2-CLOCK-01 corregido; regresión final completa
 
-**Se detiene por la condición expresa del PO de registrar y parar ante otro defecto distinto de S2-TIME-01.** No se corrige la retención del reloj en esta entrega. S2-TIME-01 sigue resuelto como bloqueo: permanece solo la observación predeclarada para2.7; SL1–SL6 congeladas/sin tuning.
+PO autorizó el 2026-10-30 la corrección acotada del reloj en la misma PR #30 y completar 2.6. Claude verificó el mecanismo en head `8777f9bcd48cfe0924bf4851ae7606abe312095f`; la parada anterior fue correcta y se conserva como historia. S2-TIME-01 sigue como observación predeclarada para 2.7; SL1–SL6 congeladas, sin tuning.
 
-- 2.0–2.5 implementadas con TDD y verificaciones registradas por tarea. La integración posterior descubrió una regresión de retención en el host/mapa del reloj de2.1/2.5; ese GREEN anterior no la cubría.
-- 2.6 en progreso: registros/snapshots2/2, controlador46/46 focales y suiteEditMode completa fresca518/518, sinCS. **No hay suitePlayMode completa del árbol actual ni check-release final dev/prod/gitDirty=false.** No se declara fase completa ni cobertura final de todosD4.6/M2S2-N01–N12.
-- Reproducción nuevaS2-CLOCK-01:2tests descubiertos/2fallos por aserción, sinCS. Vuelo detenido85→205segmentos y pausado32→152 en120frames, pelota idéntica bit a bit. Evidencia sintética de editor; no bytes de memoria medidos, sesióniPhone ni resultadoH17.
-- Defaults106claves/**915ae1e479b9**,P0extendido**dd122831f592** calculados porUnity;41heredados/proyección0d39e6016bd8,SimulationKey166a96e319c7/2-35mm/N2estricto intactos. [Auditoría de archivos/valores](../validation/evidence/2026-10-30-s2-protected-state.json).
-- PR#30 preparada paraClaude/PO sobre el defecto, **sin fusionar**. Pendientes: decisión sobreS2-CLOCK-01, terminar2.6/cobertura/regresiónFirstBall completa, revisión final de rama y check-release limpios. No se ajustan parámetros, ventanas o SL ni se añaden filtros. No Xcodebuild/instalación/iPhone/sesión2.7/prod físico/S3–S4/T8.
+- Corrección del reloj `bd84896`: protecciones verdes antes de implementar; RED original 2/2 reproducido → GREEN 2/2. Lista estable en 120 frames: detenido **5→5**, pausado **7→7**, pelota idéntica bit a bit. Una observación final pasiva de tamaño fijo permanece consultable. No se midieron bytes ni coste nativo.
+- Fuente de producto final `9131b1c`: 65/65 focales de controlador, **522/522 EditMode y 297/297 PlayMode completos y frescos**, cero omitidos, sin errores CS. Cobertura D4.6 y M2S2-N01–N12 ligada a casos descubiertos/Passed en el [registro final 2.6](../validation/evidence/2026-10-30-s2-task26-final.json).
+- Ocho fixtures First Ball/S1 fijan práctica=0 solo en preparación; aserciones y escenarios anteriores intactos. GraphicsSettings/QualitySettings restaurados; **514 archivos de fuentes** cotejados y **40 archivos protegidos** byte a byte idénticos.
+- Defaults **106 claves / 915ae1e479b9**, P0 extendido **dd122831f592** calculados por Unity; 41 heredados/proyección **0d39e6016bd8**, SimulationKey **166a96e319c7**, 2/35 mm y N2 estricto intactos. Defaults byte a byte iguales a 8777f9b; de los 85 previos solo cambia `gesture.control`, más 21 claves ya aprobadas.
+- **Check-release final dev/prod pendiente** desde árbol limpio. Esta revisión documental registra los resultados ya observados, sin afirmar todavía ese gate.
+- PR #30 permanece abierta/lista para revisión, **sin fusionar**. No aceptación de S2 ni autorización de 2.7, Xcode build, instalación, acceso al iPhone, prod físico, S3–S4 o T8.
 
 ## Histórico — parada en S2-TIME-01
 
@@ -109,7 +110,7 @@ Eventos reconciliados por identidad lógica dentro del lanzamiento (paso/superfi
 
 Clave rollback.historyMs de la tabla2.5:250/rango100–500, RED7/1 antes de añadirla. Defaults**7c057e946adb**,P0extendido**d45c57c24b08**,101claves. REDdehashes/cantidades516/5; suiteEditMode fresca**516/516**. Una sustitución demasiado amplia alteró temporalmente la expectativa del rango en el test a101; se restauró100 antes del resultado definitivo, sin cambiar catálogo/criterio. Primera suitePlayMode228/229 detectó aislamiento de la cámara del test de salto (dosMainCamera después de otras suites); se conservó la aserción y se usa la misma cámara activa. Repetición completa fresca**229/229PlayMode**,sinCS;Graphics/Qualityrestaurados. [Evidencia](../validation/evidence/2026-10-30-s2-task25.json). Sin instalación ni medición física.
 
-## 2.6 — integración parcial antes de la parada
+## Histórico — 2.6 parcial antes de la parada
 
 Fuente de la integración parcial: `f1ae28f50b1f4f8e75361f03a742f4eba3fd29a5`; el commit posterior conserva el RED de retención y los registros de la parada, sin corregirlo.
 
@@ -121,7 +122,7 @@ TDD observado: registro/snapshotsRED2/2→GREEN2/2; controladorRED38/35fallos, a
 
 **La suitePlayMode completa de2.6 no se ejecutó antes de la nueva condición de parada.** No se afirma compatibilidad global FirstBall: sigue pendiente comprobar/adaptar únicamente la preparación de fixtures que asuman arranque deFirstBall/S1preview, con practice.enabled=0 si procede, sin tocar aserciones ni escenarios; esa excepción está autorizada por el plan, pero todavía no aplicada en esta integración. No se ejecuta revisión final completa de la skill ni check-release tras parar. Todas las pruebas citadas son nuevas ejecuciones compiladas/con casos descubiertos; no XML viejo ni cero tests.
 
-## S2-CLOCK-01 — retención sin límite por frame en pausa o vuelo detenido
+## Histórico — S2-CLOCK-01: retención sin límite por frame en pausa o vuelo detenido
 
 **Severidad Media; bloquea el cierre por la orden de parada del PO.** Regresión introducida en la integración del mapa del reloj: en modoFirstBall (`practice.enabled=0`), sin nuevo lanzamiento, elhost sigue recibiendo frames después del fin del vuelo o mientras está en pausa. [AdvanceCore](../../Assets/SquashClash/Runtime/Ball/BallSimulationHost.cs) observa el reloj antes de retornar por!IsRunning; [ObserveClock](../../Assets/SquashClash/Runtime/Ball/BallSimulationHost.Shot.cs) llamaMark en ambos estados; [ClockMap.Mark](../../Assets/SquashClash/Core/Shot/ClockMap.cs) añade a unaList sin poda/coalescencia cada timestamp distinto. El anillo deBallState sí está preasignado/acotado: el defecto es la lista de segmentos del mapa, no el historial físico.
 
@@ -133,3 +134,24 @@ TDD observado: registro/snapshotsRED2/2→GREEN2/2; controladorRED38/35fallos, a
 [Reproducción y huella delXML](../validation/evidence/2026-10-30-s2-clock-01.json); testClockMap_StableStoppedOrPausedFlight_DoesNotRetainOneSegmentPerFrame en [ShotRollbackTests](../../Assets/SquashClash/Tests/PlayMode/ShotRollbackTests.cs). Dos fallos por aserción con compilación correcta. El test inspecciona la lista privada como diagnóstico, no añade un parámetro runtime ni un umbral de aceptación de gameplay. El crecimiento continúa aunque el estado y el contexto se mantengan; no se midieron bytes/asignaciones ni percentiles de coste y **no se declara un nuevoFailH17**. La pausa/repetición suspendida puede prolongar un lanzamiento indefinidamente: la retención no queda limitada por250ms de rollback ni por el horizonte de vuelo.
 
 **Propuesta para decisión del PO, no implementada:** coalescer observaciones estables en pausa/vuelo detenido, conservando los cambios exactos de pausa/tempo/cámara lenta/descartes y la conversión de entregas tardías. Antes de modificar, predeclarar pruebas de retención, r original/expiración, paso manual y reanudación/rollback al presente, sin un segundo reloj ni umbrales nuevos. No se elige un límite nuevo ni se aplica ese ajuste ahora. Se conserva elRED y se detiene; el historial deS2-TIME-01 y su resolución no se borran.
+
+
+## Corrección autorizada S2-CLOCK-01
+
+Antes de modificar runtime: ClockMap 13/13 y protecciones PlayMode 16/16 verdes. Incluyen conversión de Ended tardío por r original, historial caducado, paso manual pausado, F02 y presente fraccional, además de una pausa sintética de un minuto: expira el historial antiguo, se reanuda y un contacto con historial nuevo permite rollback/predicción/avance del frame siguiente. RED de retención repetido: 2 tests/2 fallos por aserción, compilación correcta. Casos adicionales de coalescencia exacta: RED 16 tests/2 fallos (14 protecciones ya verdes).
+
+`ClockMap.Mark` agrupa solo una continuación canónica exacta con contexto idéntico y sin descartes. Conserva la última observación suministrada en una estructura fija; no la acumula por frame. Las consultas la tratan como extremo final y, antes de una discontinuidad, se conserva el extremo del prefijo conocido. Así no se extiende hacia atrás un hueco descartado ni un intervalo inexacto. Pausa/reanudación, paso manual, tempo, cámara lenta, descartes y validación monótona conservan sus fronteras. El host sigue observando con vuelo detenido: F02 no se congela. No cambia `ObserveClock`, SimClock, el anillo ni su política de expiración.
+
+Se comparte la normalización double a entero que ya existía, sin cambiar su cota ni introducir una tolerancia. Dos candidatos intermedios fallaron las aserciones existentes: primero retención detenida (24/25), después F02 (5 pasos resimulados frente a 6, 24/25). Se conservaron aserciones y datos. La versión con extremo consultable pasa **16/16 ClockMap y 25/25 rollback/Ended tardío**. No hay segundo reloj, parámetros/defaults nuevos de reloj, límite temporal ni poda por edad. La lista retiene cambios y observaciones inexactas; no se afirma un tamaño máximo ante cambios arbitrarios de contexto. [Evidencia completa y XML hashes](../validation/evidence/2026-10-30-s2-clock-01.json).
+
+Estimación de Claude comunicada por PO: unos 40 bytes/segmento y 2,4 KB/s a 60 fps en el defecto anterior, además de recorrido lineal creciente. **No medida**: esta corrección demuestra retención estable en las pruebas sintéticas; no acredita reducción de bytes/costes, H17 ni rendimiento nativo.
+
+## 2.6 — cobertura final y compatibilidad
+
+Los casos añadidos protegen comportamiento ya implementado: Tap/temblor de 150 ms y dedo sostenido sin Ended; carga retenida P≈0,7; C-A/reapoyo/retorno y nueva salida; configuración/viewport y nuevo Began; Began tardío y Ended temprano/tardío/fuera de V/sin plan; historial caducado como NotEvaluable; plan visible en r original frente al posterior; varios cierres append-only; alternativas explícitas y nuevo contacto tras Swing; mismo M2-4 puntual/tardío con estado físico bit a bit igual. Los riesgos N04/N04b siguen pudiendo producir Swing/P positivo; ninguna intención humana se infiere de los datos sintéticos.
+
+Para completar la guarda de hash predeclarada de D4.6 se añadió un overload `ArmSlingBlock(block, expectedGestureHash)`: esqueleto compilable → RED 1/1 por aserción → GREEN. Rechaza `wrong-hash` antes de iniciar bloque/temporizador o tocar la pelota, muestra remedio y registra la causa; el hash coincidente arma. La llamada S1 existente conserva su comportamiento. **No es una clave de configuración ni un nuevo default**; no se ha predeclarado ni armado una campaña 2.7. Fuente `9131b1c`, focal final **65/65**. El [JSON final](../validation/evidence/2026-10-30-s2-task26-final.json) cruza cada negativo N01–N12 y D4.6 con casos Passed de las suites finales; no suma esos cruces como pruebas independientes ni como resultados humanos.
+
+Fixtures ajustados únicamente en preparación (`practice.enabled=0` y relanzamiento donde corresponde): DevPanelIntegrationTests, GesturePreviewTests, LegibilitySelectorTests, M24PreviewTests, PerformanceSessionTests, ReticleVisibilityTests, SlingControlSafetyTests y SlingPreviewTests. Se conservan las aserciones previas, incluidos L1–L6; no cambia ninguna receta. Primera suite con fixtures explícitos **278/278**, luego cobertura final y regresión **522/522 EditMode / 297/297 PlayMode**, sin CS/cero omitidos. XML frescos y logs preservados en `Logs/evidence/s2-tdd`; no se usa el verde de 2.5 para acreditar 2.6.
+
+ProjectSettings transitorios restaurados antes del cotejo: 514 archivos de Assets/ProjectSettings/Packages/scripts iguales al manifiesto de la fuente probada; 40 archivos protegidos del registro anterior coinciden en SHA-256. Defaults, 21 claves nuevas y los 85 valores anteriores conservan el estado revisado por Claude; SL1–SL6 siguen iguales a 0c638da. Spec, plan/propuesta, criterios/umbrales, vuelos/velocidades/tempo, V/A, compensación, N2/dirección y `pullFullMm` intactos.
