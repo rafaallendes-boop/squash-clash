@@ -69,6 +69,49 @@ namespace SquashClash.Core.Tests.Shot
             Assert.That(c.TryRealToSim(.15,out var step,out var fraction),Is.True);Assert.That(step,Is.EqualTo(12));Assert.That(fraction,Is.Zero);
             Assert.That(c.TryRealToSim(.2,out step,out fraction),Is.True);Assert.That(step,Is.EqualTo(13));
         }
+        [Test] public void StableObservations_PreserveOriginalEndedAndExactStateTransitions()
+        {
+            var c=new ClockMap();c.Begin(1,0,0,1,1,120);
+            c.Mark(.5,60,0,1,1,false);c.Mark(1,120,0,1,1,true);
+            c.Mark(30,120,0,1,1,true);c.Mark(60,120,0,1,1,true);
+            Assert.That(c.TryRealToSim(.25,out var step,out var fraction),Is.True);
+            Assert.That(step,Is.EqualTo(30));Assert.That(fraction,Is.Zero);
+            c.Mark(61,121,0,1,1,true); // manual step remains discrete
+            Assert.That(c.TryRealToSim(60.5,out step,out fraction),Is.True);Assert.That(step,Is.EqualTo(120));Assert.That(fraction,Is.Zero);
+            c.Mark(62,121,0,1,1,false);c.Mark(63,241,0,.5,1,false);
+            c.Mark(64,301,0,.5,.5,false);c.Mark(65,331,0,.5,.5,false);
+            Assert.That(c.TryRealToSim(62.5,out step,out fraction),Is.True);Assert.That(step,Is.EqualTo(181));Assert.That(fraction,Is.Zero);
+            Assert.That(c.TryRealToSim(63.5,out step,out fraction),Is.True);Assert.That(step,Is.EqualTo(271));Assert.That(fraction,Is.Zero);
+            Assert.That(c.TrySimToReal(316,0,out var real),Is.True);Assert.That(real,Is.EqualTo(64.5));
+            c.Mark(66,335,0,.5,.5,false,true);
+            Assert.That(c.TryRealToSim(65.5,out _,out _),Is.False);Assert.That(c.InvalidSince(65),Is.True);
+            c.Mark(67,365,0,.5,.5,false);
+            Assert.That(c.TryRealToSim(66.5,out step,out fraction),Is.True);Assert.That(step,Is.EqualTo(350));Assert.That(fraction,Is.Zero);
+        }
+        private static int SegmentCount(ClockMap c)=>( (System.Collections.ICollection)typeof(ClockMap).GetField("segments",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).GetValue(c)).Count;
+        [TestCase(false)][TestCase(true)]
+        public void StableObservations_CoalesceOnlyExactContinuation(bool paused)
+        {
+            var c=new ClockMap();c.Begin(1,0,0,1,1,120);
+            if(paused)c.Mark(0,0,0,1,1,true);
+            for(int i=1;i<=120;i++)c.Mark(i,paused?0:120*i,0,1,1,paused);
+            Assert.That(SegmentCount(c),Is.EqualTo(1));
+            Assert.That(c.TryRealToSim(119.5,out var step,out var fraction),Is.True);
+            Assert.That(step,Is.EqualTo(paused?0:14340));Assert.That(fraction,Is.Zero);
+            Assert.Throws<ArgumentOutOfRangeException>(()=>c.Mark(119,paused?0:14280,0,1,1,paused));
+        }
+        [Test] public void StablePrefix_BeforeDiscardOrInexactObservation_RemainsMappable()
+        {
+            var c=new ClockMap();c.Begin(1,0,0,1,1,120);c.Mark(1,120,0,1,1,false);c.Mark(2,240,0,1,1,false);
+            c.Mark(3,241,0,1,1,false,true);
+            Assert.That(c.TryRealToSim(1.5,out var step,out var fraction),Is.True);Assert.That(step,Is.EqualTo(180));Assert.That(fraction,Is.Zero);
+            Assert.That(c.TryRealToSim(2.5,out _,out _),Is.False);
+            Assert.That(c.TrySimToReal(180,0,out var real),Is.True);Assert.That(real,Is.EqualTo(1.5));
+            c.Begin(2,0,0,1,1,120);c.Mark(1,120,0,1,1,false);c.Mark(2,240,0,1,1,false);
+            c.Mark(3,360,.0000000001,1,1,false);
+            Assert.That(c.TryRealToSim(1.5,out step,out fraction),Is.True);Assert.That(step,Is.EqualTo(180));Assert.That(fraction,Is.Zero);
+            Assert.That(c.TryRealToSim(3,out step,out fraction),Is.True);Assert.That(step,Is.EqualTo(360));Assert.That(fraction,Is.GreaterThan(0));
+        }
         [Test] public void InvalidInputs_DoNotCreateClockSegments()
         {
             var c=new ClockMap();Assert.That(c.TryRealToSim(0,out _,out _),Is.False);

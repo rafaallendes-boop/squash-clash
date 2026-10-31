@@ -102,6 +102,23 @@ namespace SquashClash.Runtime.Tests
             Bits(h.Current,state);
             Assert.That(after,Is.LessThanOrEqualTo(before+1),"Unchanged stopped/paused state must not retain every frame indefinitely.");
         }
+        [Test] public void LongPause_ExpiresOldHistory_ThenResumeAllowsFreshRollback()
+        {
+            var h=Host();To(h,30);h.Clock.Paused=true;h.Advance(0);
+            double pausedAt=h.ObservedRealTime;var before=h.Current;
+            for(int i=0;i<3600;i++)h.Advance(1d/60);
+            Bits(h.Current,before);
+            Assert.That(h.ClockMap.TryRealToSim(pausedAt+30,out var step,out var fraction),Is.True);
+            Assert.That(step,Is.EqualTo(30));Assert.That(fraction,Is.Zero);
+            Assert.That(h.ApplyShot(h.LaunchId,30,Vector3.up).Reason,Is.EqualTo("history-expired"));
+            h.Clock.Paused=false;h.Advance(0);To(h,36);
+            Assert.That(h.ClockMap.TrySimToReal(34,0,out var originalEnded),Is.True);
+            var result=h.ApplyShot(h.LaunchId,34,new Vector3(0,6,-15),originalEnded);
+            Assert.That(result.Applied,Is.True,result.Reason);Assert.That(result.StepsResimulated,Is.EqualTo(2));
+            Assert.That(result.OrderAgeMs,Is.EqualTo(2*StepReal*1000).Within(.0001));
+            Assert.That(h.PredictionMatchesBitwise,Is.True);
+            h.Advance(StepReal);Assert.That(h.Current.Step,Is.EqualTo(37));
+        }
         [Test] public void NoShot_FirstBallBehaviourUnchanged()
         {var h=Host();var prediction=h.Prediction;long last=prediction.States.Last().Step;To(h,last);Bits(h.Current,prediction.States.Last());Assert.That(h.IsRunning,Is.False);Assert.That(h.PredictionMatchesBitwise,Is.True);h.Advance(1);Bits(h.Current,prediction.States.Last());}
     }

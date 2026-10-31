@@ -13,6 +13,9 @@ namespace SquashClash.Core.Shot
             {Real=real;Position=position;Tempo=tempo;Slow=slow;Paused=paused;GapBefore=gap;InvalidAtStart=invalid;}
         }
         private readonly List<Segment> segments=new List<Segment>(512);
+        // Last supplied observation, including a coalesced endpoint. Passive metadata only:
+        // preserves monotonic validation and the known prefix before a discard/discontinuity.
+        private Segment observed;
         private int stepHz;
         public long LaunchId {get;private set;}
         public void Begin(long launchId,double tReal,long step,double tempo,double slowMotion,int stepHz)
@@ -20,7 +23,8 @@ namespace SquashClash.Core.Shot
             Validate(tReal,step,0,tempo,slowMotion);
             if(launchId<0||stepHz<=0)throw new ArgumentOutOfRangeException(nameof(stepHz));
             this.stepHz=stepHz;LaunchId=launchId;segments.Clear();
-            segments.Add(new Segment(tReal,step,tempo,slowMotion,false,false,slowMotion<1));
+            observed=new Segment(tReal,step,tempo,slowMotion,false,false,slowMotion<1);
+            segments.Add(observed);
         }
         // droppedSteps is a fact supplied by SimClock; timestamp jitter is not a discard detector.
         public void Mark(double tReal,long step,double fraction,double tempo,double slowMotion,bool paused,bool droppedSteps=false)
@@ -28,14 +32,22 @@ namespace SquashClash.Core.Shot
             Validate(tReal,step,fraction,tempo,slowMotion);
             if(segments.Count==0)throw new InvalidOperationException("Begin a launch before marking its clock.");
             var last=segments[segments.Count-1];double position=step+fraction;
-            if(tReal<last.Real||position<last.Position)throw new ArgumentOutOfRangeException(nameof(tReal));
-            bool invalid=droppedSteps||last.Tempo!=tempo||last.Slow!=slowMotion||last.Paused!=paused;
-            if(tReal==last.Real)
+            if(tReal<observed.Real||position<observed.Position)throw new ArgumentOutOfRangeException(nameof(tReal));
+            bool invalid=droppedSteps||observed.Tempo!=tempo||observed.Slow!=slowMotion||observed.Paused!=paused;
+            if(tReal==observed.Real)
             {
-                segments[segments.Count-1]=new Segment(tReal,position,tempo,slowMotion,paused,last.GapBefore||droppedSteps,last.InvalidAtStart||invalid);
+                if(observed.Real>last.Real)segments.Add(observed);
+                observed=new Segment(tReal,position,tempo,slowMotion,paused,observed.GapBefore||droppedSteps,observed.InvalidAtStart||invalid);
+                segments[segments.Count-1]=observed;
                 return;
             }
-            segments.Add(new Segment(tReal,position,tempo,slowMotion,paused,droppedSteps,invalid));
+            var next=new Segment(tReal,position,tempo,slowMotion,paused,droppedSteps,invalid);
+            // Exact continuation only. No tolerance, pruning, time cap or second clock.
+            if(!invalid&&position==NormalizePosition(observed.Position+(tReal-observed.Real)*Rate(observed)))
+            {observed=next;return;}
+            // Do not stretch a later gap or an inexact interval over an already known prefix.
+            if(observed.Real>last.Real)segments.Add(observed);
+            segments.Add(next);observed=next;
         }
         public bool TryRealToSim(long launchId,double tReal,out long step,out double fraction)
         {
@@ -45,33 +57,30 @@ namespace SquashClash.Core.Shot
         public bool TryRealToSim(double tReal,out long step,out double fraction)
         {
             step=0;fraction=0;
-            if(!Finite(tReal)||segments.Count==0||tReal<segments[0].Real)return false;
-            int i=Find(tReal);var a=segments[i];double position;
+            if(!Finite(tReal)||SegmentCount==0||tReal<At(0).Real)return false;
+            int i=Find(tReal);var a=At(i);double position;
             if(tReal==a.Real)position=a.Position;
-            else if(i+1<segments.Count)
+            else if(i+1<SegmentCount)
             {
-                var b=segments[i+1];if(b.GapBefore)return false;
+                var b=At(i+1);if(b.GapBefore)return false;
                 // A paused single step is discrete, never a fabricated fractional advance.
                 position=a.Paused?a.Position:a.Position+(b.Position-a.Position)*(tReal-a.Real)/(b.Real-a.Real);
             }
             else position=a.Position+(tReal-a.Real)*Rate(a);
             if(!Finite(position)||position<0||position>=long.MaxValue)return false;
-            // Arithmetic such as (.5-.4)*120 may land a few ulps below an exact step.
-            // Bound this normalization by double representation error, not a game-time tolerance.
-            double nearest=Math.Round(position);
-            if(Math.Abs(position-nearest)<=4*2.2204460492503131e-16*Math.Max(1,Math.Abs(position)))position=nearest;
+            position=NormalizePosition(position);
             step=(long)Math.Floor(position);fraction=position-step;return true;
         }
         public bool TrySimToReal(long step,double fraction,out double tReal)
         {
-            tReal=0;if(step<0||!Finite(fraction)||fraction<0||fraction>=1||segments.Count==0)return false;
+            tReal=0;if(step<0||!Finite(fraction)||fraction<0||fraction>=1||SegmentCount==0)return false;
             double target=step+fraction;
-            for(int i=0;i<segments.Count;i++)
+            for(int i=0;i<SegmentCount;i++)
             {
-                var a=segments[i];if(target==a.Position){tReal=a.Real;return true;}
-                if(i+1<segments.Count)
+                var a=At(i);if(target==a.Position){tReal=a.Real;return true;}
+                if(i+1<SegmentCount)
                 {
-                    var b=segments[i+1];
+                    var b=At(i+1);
                     if(!a.Paused&&!b.GapBefore&&target>a.Position&&target<=b.Position&&b.Position>a.Position)
                     {tReal=a.Real+(target-a.Position)*(b.Real-a.Real)/(b.Position-a.Position);return true;}
                 }
@@ -82,21 +91,32 @@ namespace SquashClash.Core.Shot
         }
         public bool InvalidSince(double tReal)
         {
-            if(!Finite(tReal)||segments.Count==0||tReal<segments[0].Real)return true;
-            for(int i=Find(tReal);i<segments.Count;i++)
+            if(!Finite(tReal)||SegmentCount==0||tReal<At(0).Real)return true;
+            for(int i=Find(tReal);i<SegmentCount;i++)
             {
-                var s=segments[i];double end=i+1<segments.Count?segments[i+1].Real:double.PositiveInfinity;
+                var s=At(i);double end=i+1<SegmentCount?At(i+1).Real:double.PositiveInfinity;
                 if(s.InvalidAtStart&&s.Real>=tReal)return true;
                 if((s.Paused||s.Slow<1)&&end>tReal)return true;
-                if(i+1<segments.Count&&segments[i+1].GapBefore&&end>tReal)return true;
+                if(i+1<SegmentCount&&At(i+1).GapBefore&&end>tReal)return true;
             }
             return false;
+        }
+        // The latest supplied endpoint remains queryable exactly without retaining every frame.
+        private int SegmentCount=>segments.Count+(segments.Count>0&&observed.Real>segments[segments.Count-1].Real?1:0);
+        private Segment At(int index)=>index<segments.Count?segments[index]:observed;
+        private static double NormalizePosition(double position)
+        {
+            // Arithmetic such as (.5-.4)*120 may land a few ulps below an exact step.
+            // Bound this normalization by double representation error, not a game-time tolerance.
+            double nearest=Math.Round(position);
+            if(Math.Abs(position-nearest)<=4*2.2204460492503131e-16*Math.Max(1,Math.Abs(position)))position=nearest;
+            return position;
         }
         private double Rate(Segment s)=>s.Paused?0:s.Tempo*s.Slow*stepHz;
         private int Find(double time)
         {
-            int low=0,high=segments.Count-1;
-            while(low<high){int mid=low+(high-low+1)/2;if(segments[mid].Real<=time)low=mid;else high=mid-1;}
+            int low=0,high=SegmentCount-1;
+            while(low<high){int mid=low+(high-low+1)/2;if(At(mid).Real<=time)low=mid;else high=mid-1;}
             return low;
         }
         private static bool Finite(double x)=>!double.IsNaN(x)&&!double.IsInfinity(x);
