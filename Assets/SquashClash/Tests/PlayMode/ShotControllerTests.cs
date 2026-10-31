@@ -169,6 +169,124 @@ namespace SquashClash.Runtime.Tests
         }
         [Test] public void DevPanel_ShowsCapturedShotSettingsSeparatelyFromNextReception()
         {var root=app.GetComponent<UnityEngine.UIElements.UIDocument>().rootVisualElement;Assert.That(root.Q("first-shot-section"),Is.Not.Null);app.Tuning.Set("timing.validLimit",0);UnityEngine.Object.FindFirstObjectByType<DevPanelView>().SendMessage("Refresh");Assert.That(root.Q<UnityEngine.UIElements.Label>("shot-captured").text,Does.Contain("Actual: V").And.Contain("Próximo: T3 puro"));}
+        [TestCase(0f)][TestCase(1.5f)]
+        public void M2S2_N01_NoPullOrJitter150ms_NoSwingOrConsumption(float down)
+        {
+            double b=app.Host.LaunchRealTime+.1;Send(Phase.Began,b);Send(Phase.Moved,b+.1,down);
+            controller.ProcessPending();Assert.That(controller.LastClosureRecord,Is.Null);Assert.That(controller.AttemptConsumed,Is.False);
+            Send(Phase.Ended,b+.15,down);controller.ProcessPending();
+            Assert.That(controller.LastClosureRecord.GestureOutcome,Is.EqualTo("Tap"));Assert.That(controller.LastClosureRecord.Power,Is.Zero);
+            Assert.That(controller.AttemptConsumed,Is.False);Assert.That(controller.LastRecord,Is.Null);
+        }
+        [Test] public void M2S2_N01_HeldFingerAtReceptionEnd_DoesNotInventEnded()
+        {
+            Send(Phase.Began,app.Host.LaunchRealTime+.1);Send(Phase.Moved,app.Host.LaunchRealTime+.2,18.5f);
+            while(app.Host.IsRunning)app.Host.Advance(StepReal);
+            practice.Tick(.001);controller.ProcessPending();Assert.That(controller.LastRecord.Result,Is.EqualTo("NoOrder"));
+            Assert.That(controller.LastRecord.HasRelease,Is.False);Assert.That(controller.AttemptConsumed,Is.False);Assert.That(controller.LastClosureRecord,Is.Null);
+        }
+        [Test] public void M2S2_N02_HeldPullAbovePointSix_KeepsDistanceAtRealEnded()
+        {
+            double end=Star(),b=end-1;Send(Phase.Began,b);Send(Phase.Moved,b+.1,25.1f);At(end+.02);Send(Phase.Ended,end,25.1f,receivedAge:.02);controller.ProcessPending();
+            Assert.That(controller.LastRecord.Power,Is.EqualTo(.7f).Within(.002));Assert.That(controller.LastRecord.Applied,Is.True);
+        }
+        [Test] public void M2S2_N04_N08_CancelAndReapply_PreserveBothClosuresAndOpportunity()
+        {
+            double end=Star(),b=end-.6;long launch=app.Host.LaunchId;var plan=controller.Plan;
+            Send(Phase.Began,b);Send(Phase.Moved,b+.1,18.5f);Send(Phase.Ended,b+.2);controller.ProcessPending();
+            var first=controller.LastClosureRecord;Assert.That(first.GestureOutcome,Is.EqualTo("CanceledReturnToDeadZone"));Assert.That(controller.AttemptConsumed,Is.False);
+            Send(Phase.Began,b+.3,id:202);Send(Phase.Moved,b+.4,18.5f,id:202);Send(Phase.Moved,b+.45,0,id:202);
+            controller.ProcessPending();Assert.That(controller.AttemptConsumed,Is.False);Assert.That(preview.Active,Is.True);
+            At(end+.02);Send(Phase.Ended,end,18.5f,id:202,receivedAge:.02);controller.ProcessPending();
+            Assert.That(controller.LastRecord.Applied,Is.True);Assert.That(controller.LastRecord.PredecessorId,Is.EqualTo(first.AttemptId));
+            Assert.That(controller.LastRecord.AttemptId,Is.Not.EqualTo(first.AttemptId));Assert.That(first.GestureOutcome,Is.EqualTo("CanceledReturnToDeadZone"));
+            Assert.That(app.Host.LaunchId,Is.EqualTo(launch));Assert.That(controller.Plan.KOut,Is.EqualTo(plan.KOut));
+        }
+        [TestCase("config")][TestCase("viewport")]
+        public void M2S2_N07_HeldAcrossContextChange_RequiresNewBegan(string cause)
+        {
+            double b=app.Host.LaunchRealTime+.1;Send(Phase.Began,b);Send(Phase.Moved,b+.1,18.5f);
+            if(cause=="config")app.Tuning.Set("power.pullFullMm",40);else UnityEngine.Camera.main.rect=new Rect(.05f,0,.95f,1);
+            Send(Phase.Ended,b+.2,35);controller.ProcessPending();
+            Assert.That(controller.LastClosureRecord.GestureOutcome,Is.EqualTo("SystemCanceled"));Assert.That(controller.LastClosureRecord.HasRelease,Is.False);
+            Assert.That(controller.AttemptConsumed,Is.False);Assert.That(controller.LastRecord,Is.Null);
+            Send(Phase.Ended,b+.3,35);controller.ProcessPending();Assert.That(controller.AttemptConsumed,Is.False);
+            Send(Phase.Began,b+.4,id:202);Assert.That(preview.Active,Is.True);
+        }
+        [TestCase("late-began")][TestCase("early")][TestCase("late")][TestCase("outside-v")][TestCase("no-plan")]
+        public void M2S2_N09_EndedDecidesCategoryAndConsumption_WithoutRescue(string kind)
+        {
+            double end=Star();string result="Perfect",fail="None";
+            if(kind=="early"){app.Host.ClockMap.TrySimToReal(controller.Plan.KIn.Step,controller.Plan.KIn.Fraction,out end);end-=.01;result="Failed";fail="Air";}
+            if(kind=="late"){app.Host.ClockMap.TrySimToReal(controller.Plan.KOut.Step,controller.Plan.KOut.Fraction,out end);end+=.01;result="Failed";fail="Late";}
+            if(kind=="outside-v"){end-=.15;result="Failed";fail="Air";}
+            if(kind=="no-plan"){app.Tuning.Set("human.x",0);app.Tuning.Set("human.z",0);app.LaunchCurrent();Assert.That(controller.Plan.Exists,Is.False);end=app.Host.LaunchRealTime+.4;result="Unreachable";}
+            At(end+.02);var order=new ClosedGesture(app.Host.LaunchId,"n09",1,end-.001,end,true,GestureOutcome.Swing,new Vector2(3.2f,2.2f),.5f,app.Tuning.Applied);
+            controller.Enqueue(order);controller.ProcessPending();Assert.That(controller.LastRecord.Result,Is.EqualTo(result));Assert.That(controller.LastRecord.Fail,Is.EqualTo(fail));
+            Assert.That(controller.LastRecord.ReleaseEventAtReal,Is.EqualTo(end));Assert.That(controller.AttemptConsumed,Is.True);
+            Assert.That(controller.LastRecord.Applied,Is.EqualTo(kind=="late-began"));
+        }
+        [Test] public void WrongPredeclaredHash_BlockArmRejectedWithVisibleRemedy()
+        {
+            var before=app.Host.Current;long launch=app.Host.LaunchId;
+            Assert.That(preview.ArmSlingBlock("B1","incorrect-predeclared-hash"),Is.False);
+            Assert.That(preview.SlingTrials.Running,Is.False);Assert.That(preview.SlingArmRejection,Does.Contain("hash").And.Contain("relanza"));
+            Assert.That(app.Host.Current,Is.EqualTo(before));Assert.That(app.Host.LaunchId,Is.EqualTo(launch));Assert.That(controller.AttemptConsumed,Is.False);
+            Assert.That(preview.ArmSlingBlock("B1",app.Host.ActiveConfig.Hash),Is.True);
+        }
+        [Test] public void M2S2_N08_MultipleClosuresRemainAppendOnly_WithoutExtendingReception()
+        {
+            var saved=new List<ShotRecord>();long launch=app.Host.LaunchId;var plan=controller.Plan;
+            foreach(var outcome in new[]{GestureOutcome.InvalidAim,GestureOutcome.Rejected,GestureOutcome.CanceledReturnToDeadZone})
+            {
+                controller.Enqueue(Order(app.Host.LaunchRealTime+.2,outcome,id:"n08-"+outcome,predecessor:saved.LastOrDefault()?.AttemptId));controller.ProcessPending();saved.Add(controller.LastClosureRecord);
+            }
+            controller.CloseReception();Assert.That(controller.LastRecord.Result,Is.EqualTo("NoOrder"));Assert.That(controller.AttemptConsumed,Is.False);
+            Assert.That(app.Host.LaunchId,Is.EqualTo(launch));Assert.That(controller.Plan.KOut,Is.EqualTo(plan.KOut));
+            var log=File.ReadAllText(app.Metrics.CurrentFilePath);
+            foreach(var record in saved){Assert.That(log,Does.Contain(record.AttemptId));Assert.That(record.Result,Is.EqualTo("Closure"));Assert.That(record.HasRelease,Is.True);}
+            Assert.That(saved.Select(r=>r.AttemptId).Distinct().Count(),Is.EqualTo(3));Assert.That(saved[1].PredecessorId,Is.EqualTo(saved[0].AttemptId));
+        }
+        [TestCase(0)][TestCase(1)]
+        public void M2S2_N12_ExplicitAlternativeSnapshot_IsNotReinterpretedAsM24(int control)
+        {
+            app.Tuning.Set("gesture.control",control);app.LaunchCurrent();double end=Star();
+            var record=Submit(end,p:.7f);Assert.That(record.Applied,Is.True);Assert.That(record.Power,Is.EqualTo(.7f));
+            Assert.That(app.Host.ActiveConfig.Source.GetInt("gesture.control"),Is.EqualTo(control));Assert.That(record.GestureHash,Is.EqualTo(app.Tuning.Applied.Hash));
+            Send(Phase.Began,end+.1,id:202);controller.ProcessPending();Assert.That(preview.Active,Is.False);Assert.That(controller.LastRecord,Is.SameAs(record));
+        }
+        [Test] public void SameM24Ended_PunctualAndDelayed_SameBits()
+        {
+            BallState Capture(bool delayed)
+            {
+                double end=Star(),b=end-.4;long present=controller.Plan.TStarStep+6;
+                Send(Phase.Began,b);Send(Phase.Moved,end-.01,18.5f);
+                if(delayed){while(app.Host.Current.Step<present)app.Host.Advance(StepReal);Send(Phase.Ended,end,18.5f,receivedAge:6*StepReal);}
+                else{At(end+.02);Send(Phase.Ended,end,18.5f,receivedAge:.02);}
+                controller.ProcessPending();Assert.That(controller.LastRecord.Applied,Is.True,controller.LastRecord.Reason);
+                while(app.Host.Current.Step<present)app.Host.Advance(StepReal);
+                Assert.That(app.Host.Current.Step,Is.EqualTo(present));return app.Host.Current;
+            }
+            var punctual=Capture(false);app.LaunchCurrent();var delayed=Capture(true);
+            Assert.That(delayed.Step,Is.EqualTo(punctual.Step));
+            foreach(var pair in new[]{(punctual.Position.x,delayed.Position.x),(punctual.Position.y,delayed.Position.y),(punctual.Position.z,delayed.Position.z),(punctual.Velocity.x,delayed.Velocity.x),(punctual.Velocity.y,delayed.Velocity.y),(punctual.Velocity.z,delayed.Velocity.z)})
+                Assert.That(BitConverter.SingleToInt32Bits(pair.Item1),Is.EqualTo(BitConverter.SingleToInt32Bits(pair.Item2)));
+        }
+        [Test] public void M2S2_N10_ExpiredHistory_IsSystemNotEvaluable_WithoutContactOrSecondAttempt()
+        {
+            double end=Star();var order=Order(end);At(end+.3);var before=app.Host.Current;
+            controller.Enqueue(order);controller.ProcessPending();Assert.That(controller.LastRecord.Result,Is.EqualTo("NotEvaluable"));Assert.That(controller.LastRecord.Reason,Is.EqualTo("history-expired"));
+            Assert.That(controller.LastRecord.ReleaseEventAtReal,Is.EqualTo(end));Assert.That(controller.LastRecord.Applied,Is.False);Assert.That(controller.AttemptConsumed,Is.True);Assert.That(app.Host.Current,Is.EqualTo(before));
+        }
+        [Test] public void M2S2_N11_PlanAfterBegan_UsesVisibleAtOriginalEnded_NotProcessingPlan()
+        {
+            double end=Star();var p=controller.Plan;
+            var changed=new ContactPlan(p.Exists,p.KIn,p.KOut,p.TStarStep,p.PStar,p.Side,p.Version+1,p.Body,p.Legal,p.Court,p.Reason);
+            controller.Presented.Present(end-.02,changed,end+.2);
+            controller.Presented.Present(end+.01,new ContactPlan(p.Exists,p.KIn,p.KOut,p.TStarStep,p.PStar,p.Side,p.Version+2,p.Body,p.Legal,p.Court,p.Reason),end+.5);
+            At(end+.02);var record=Submit(end);Assert.That(record.PlanVersion,Is.EqualTo(changed.Version));Assert.That(record.TargetContactAtReal,Is.EqualTo(end+.2));
+            Assert.That(record.DeltaMs,Is.EqualTo(-200).Within(.00001));Assert.That(new Vector2(record.AimX,record.AimY),Is.EqualTo(new Vector2(3.2f,2.2f)));
+        }
         [Test] public void InputInTransit_RecordsO2AndBeganProjectionSeparately()
         {double end=Star(),b=app.Host.LaunchRealTime+.1;Send(Phase.Began,b,receivedAge:.02);Send(Phase.Moved,b+.01,5,receivedAge:.04);Send(Phase.Moved,end-.01,18.5f);At(end+.02);double delivered=double.NaN;Action<TouchSample> capture=sample=>{if(sample.Phase==TouchPhaseKind.Ended)delivered=sample.TimeReal;};input.SampleReceived+=capture;Send(Phase.Ended,end,18.5f,receivedAge:.02);input.SampleReceived-=capture;controller.ProcessPending();Assert.That(controller.LastRecord,Is.Not.Null);Assert.That(controller.LastRecord.O2Count,Is.EqualTo(1));Assert.That(controller.LastRecord.ProjectionObservedAt,Is.EqualTo(b+.02));Assert.That(controller.LastRecord.ReleaseEventAtReal,Is.EqualTo(delivered));}
     }

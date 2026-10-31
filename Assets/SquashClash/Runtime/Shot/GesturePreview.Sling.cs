@@ -145,7 +145,8 @@ namespace SquashClash.Runtime.Shot
             SlingArmRejection=block+": "+remedy;Status="No se inició "+SlingArmRejection;
             app.RecordDevControl("sling-"+block,false,reason);return false;
         }
-        public bool ArmSlingBlock(string block)
+        public bool ArmSlingBlock(string block)=>ArmSlingBlock(block,null);
+        public bool ArmSlingBlock(string block,string expectedGestureHash)
         {
             app.RecordDevControl("sling-"+block,true,"invoked","activation");
             if(!new[]{"B0","B1","B2-soft","B2-medium","B2-strong","B3","B4","B5"}.Contains(block))
@@ -159,10 +160,13 @@ namespace SquashClash.Runtime.Shot
             if(app.Tuning.Applied.GetInt("gesture.control")<1)return RejectSlingArm(block,"wrong-control","Carga el preset experimental autorizado, aplica y relanza antes del bloque.");
             if(app.Tuning.PendingKeys.Count!=0)return RejectSlingArm(block,"pending-changes","Aplica y relanza los cambios pendientes; verifica preset y hash.");
             if(app.Tuning.Applied.Get("launcher.repeatSeconds")!=0)return RejectSlingArm(block,"repeat-not-zero","Pon repetición en 0, aplica y relanza sin guardar.");
+            var config=EffectiveConfig.From(CurrentGestureSource());
+            if(expectedGestureHash!=null&&!string.Equals(config.Hash,expectedGestureHash,StringComparison.Ordinal))
+                return RejectSlingArm(block,"wrong-hash","El hash no coincide con el predeclarado. Carga la configuración prevista, aplica y relanza; verifica el hash antes del bloque.");
             if(!SlingTrials.Arm(block))return RejectSlingArm(block,"pending-feedback","Responde el intento anterior con una de las opciones visibles.");
             SlingTrials.AbsoluteSupport=app.Tuning.Applied.GetInt("gesture.control")==2;
             SlingArmRejection=string.Empty;
-            var config=EffectiveConfig.From(CurrentGestureSource());slingBlockHash=config.Hash;
+            slingBlockHash=config.Hash;
             ProtocolTarget=TargetPosition(SlingTrials.TargetId,config.Source);
             string json="{\"schema\":1,\"block\":"+Q(block)+",\"session\":"+SlingTrials.Session+
                 ",\"control\":"+Q(SlingTrials.AbsoluteSupport?"M2-4":"S1-sling")+",\"expectedGestureHash\":"+Q(config.Hash)+",\"pending\":0,\"repeatSeconds\":0}";
