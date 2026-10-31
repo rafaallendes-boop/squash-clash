@@ -2,7 +2,15 @@
 
 Base8dd142dff2fcdc5d52871ac3c89733b4aff88fd6, rama firstshot/s2-m24. AutorizaciónPO2026-10-30 en [registro](2026-10-25-first-shot-po-approvals.md); [plan/D4](../superpowers/plans/2026-10-25-squash-clash-first-shot.md). Trabajo en curso; no se declara completada ninguna tarea sin evidencia.
 
-## Estado vigente — alcance 2.0–2.6 verificado, PR #30 para Claude
+## Estado vigente — fase 1 aprobada; predeclaración 2.7 para Claude (2026-10-31)
+
+PO comunica aprobación de Claude de **c2e8ee7**, producto **9131b1c**; 1bbaa39 y c2e8ee7 solo documentación. Fase 1 (2.0–2.6) aprobada sin bloqueos. Se autoriza exclusivamente predeclarar por escrito 2.7 en la misma PR #30: [protocolo propuesto](../validation/2026-10-31-first-shot-s2-session27-predeclaration.md), con orden/tareas/SL, hash externo manual, instrucciones, preguntas literales, métricas, parada y restauración. Son 25 bloques/206 recepciones previstas, no ejecutadas ni contactos logrados. Ningún número de ese protocolo es un nuevo umbral de aceptación.
+
+Observaciones de Claude sin cambios de código: (1) el overload de hash solo se usa en tests; DEV no proporciona un esperado y el campo del registro guarda el observado al armar; el protocolo no lo usa como validación automática; (2) el mapa puede sumar segmentos durante un vuelo activo y se reinicia en el lanzamiento siguiente; no se introduce poda/tope; (3) perfil conocido vence 2026-11-03T18:29:44Z: el PO deberá renovarlo y se comprobará el incorporado antes de cualquier instalación futura.
+
+Esta actualización modifica solo Markdown; no hay nuevas suites, exports, Xcode build, instalación, acceso al iPhone ni sesión. Defaults/SL/spec/plan/criterios/bandas/umbrales intactos. Los resultados que siguen son evidencia anterior de fase 1, sin nuevas ejecuciones ni aceptación de S2 inferida. **PR #30 abierta/lista para Claude, sin fusionar hasta que el PO juzgue 2.7.** Se detiene a esta entrega documental.
+
+## Histórico — alcance 2.0–2.6 verificado y entregado el 2026-10-30
 
 PO autorizó el 2026-10-30 la corrección acotada del reloj en la misma PR #30 y completar 2.6. Claude verificó el mecanismo en head `8777f9bcd48cfe0924bf4851ae7606abe312095f`; la parada anterior fue correcta y se conserva como historia. S2-TIME-01 sigue como observación predeclarada para 2.7; SL1–SL6 congeladas, sin tuning.
 
@@ -157,7 +165,7 @@ Fixtures ajustados únicamente en preparación (`practice.enabled=0` y relanzami
 ProjectSettings transitorios restaurados antes del cotejo: 514 archivos de Assets/ProjectSettings/Packages/scripts iguales al manifiesto de la fuente probada; 40 archivos protegidos del registro anterior coinciden en SHA-256. Defaults, 21 claves nuevas y los 85 valores anteriores conservan el estado revisado por Claude; Las seis filas de recetas de SL1–SL6 permanecen byte a byte iguales a su predeclaración documental en 0c638da; el archivo C# conserva el estado revisado en 8777f9b. Spec, plan/propuesta, criterios/umbrales, vuelos/velocidades/tempo, V/A, compensación, N2/dirección y `pullFullMm` intactos.
 
 
-## Gate final de entrega para revisión
+## Gate final de entrega para revisión (2026-10-30, histórico)
 
 `scripts/check-release.sh` terminó **OK**: exports dev y prod nuevos del head documental **1bbaa39**, ambos con `gitDirty=false`, Release/no Development según BuildScript intacto. Core/Runtime incluidos en ambos, DevPanel únicamente en dev, framework de pruebas de InputSystem excluido en ambos. No se invocó Xcode build ni se instaló. El [registro final](../validation/evidence/2026-10-30-s2-task26-final.json) conserva metadatos, SHA-256 de logs/evidencias y el manifiesto de 514 archivos cotejado después de exportar; no se sustituyen resultados de tests por un export.
 

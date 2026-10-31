@@ -1070,3 +1070,20 @@ Antes de implementar exige protecciones verdes para Ended tardío/r original, ex
 SL1–SL6 congeladas; S2-TIME-01 observación para2.7. Sin cambiar vuelos/velocidad/tempo/V-A/compensación/N2/dirección/pullFullMm/spec/criterios/umbrales. NoXcodebuild/instalación/iPhone/2.7/S3–S4/T8.
 
 Aplicación observada: bd84896 corrige reloj tras protecciones13/13 y16/16; RED original2/2 repetido→GREEN2/2, Core16/16/rollback25/25. Candidatos fallidos conservados en evidencia, sin tocar aserciones. Fuente final9131b1c: fixtures explícitos y cobertura adicional; guarda de hash predeclarado pendiente de D4.6 con esqueleto/RED1/1→GREEN; controlador65/65. Suites frescas522/522EditMode y297/297PlayMode, sinCS/cero omitidos; transitorios restaurados/514fuentes/40protegidos cotejados. **Check-release final dev/prod OK desde 1bbaa39 limpio, gitDirty=false ambos**; Core/Runtime en ambos, DevPanel solo dev y framework de pruebas excluido. 514 fuentes coinciden después de los exports y árbol limpio; 386 aserciones de los fixtures intactas. Alcance2.0–2.6verificado y entregado para revisión de Claude/PO en PR#30, abierta/lista/sin fusionar; no cierre ni aceptación de S2 inferidos. [Informe](2026-10-30-first-shot-s2-m24-phase1.md), [JSON final](../validation/evidence/2026-10-30-s2-task26-final.json). S1aceptado; sin aceptación de S2 inferida.
+
+
+## 2026-10-31 — aprobación de fase 1 PR #30 y predeclaración documental de 2.7
+
+PO comunica revisión aprobada de Claude del head **c2e8ee7** (producto **9131b1c**; 1bbaa39/c2e8ee7 solo documentación). Sin bloqueos: S2-CLOCK-01 correcto; fixtures solo preparación; cobertura D4.6/N01–N12 en rama; nada protegido cambia desde8777f9b; check-release dev/prod limpio. Aprobación de **fase 1 (2.0–2.6)**, no aceptación de sesión física ni cierre de S2.
+
+Observaciones registradas, sin código: overload ArmSlingBlock(block,expectedGestureHash) solo utilizado en pruebas, panel DEV llama sin hash; el campo expectedGestureHash del registro es el observado al armar y no uno predeclarado. El mapa puede seguir sumando segmentos durante vuelo activo y se borra en el lanzamiento siguiente. Perfil conocido vence **2026-11-03T18:29:44Z**.
+
+Autorización literal del PO:
+
+> Autorizado, solo documento y en la misma PR #30: predeclarar por escrito los bloques de 2.7.
+>
+> La PR #30 sigue sin fusionar hasta que el PO juzgue la sesión 2.7. Si aparece otro defecto, regístralo y detente. Entrega la PR #30 lista para Claude y detente.
+
+Requisitos de la predeclaración: orden/tarea/SL/instrucciones al PO; verificación de hash conforme a la observación (cualquier conexión solo propuesta, sin código); preguntas literales, métricas descriptivas, parada/restauraciónP0; antes de instalar, **perfil renovado por PO y comprobado, respaldo y cotejo de los tres archivos**. NoXcodebuild/instalación/accesoiPhone/2.7/código/tests/defaults/SL/spec/criterios/bandas/umbrales/S3–S4/T8.
+
+Aplicación documental: [predeclaración 2.7](../validation/2026-10-31-first-shot-s2-session27-predeclaration.md), 25 bloques propuestos (203 recepciones dev +3prod), comparación principal SL1–SL6/V100 frente a T3puro con T3 no suave, familiarización y ejercicios separados. Hoja externa/manual de esperado y observado por bloque, definición del manifiesto H(s,m,c) previa a observación y literales independientes resueltos antes de armar en una preparación futura autorizada; el campo de armado DEV no sustituye esa referencia. No botones S1 presentados como contadores S2, ni nueva conexión de hash implementada. Preguntas originales y triada por separado, métricas/ausencias/NotEvaluated, S2-TIME-01/abiertos conservados, parada y P0 en proceso nuevo/cotejo de tres archivos tras instalación y restauración. Se actualizan este registro, informe y AGENTS.md; plan/propuesta/spec y producto permanecen intactos. **Nada ejecutado en iPhone ni suites/builds/exports nuevos.** Entrega misma PR#30 paraClaude/sin fusionar y detenerse; juicioPOde2.7 sigue pendiente.
