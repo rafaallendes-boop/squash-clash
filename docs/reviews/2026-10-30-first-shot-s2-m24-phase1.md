@@ -2,7 +2,15 @@
 
 Base8dd142dff2fcdc5d52871ac3c89733b4aff88fd6, rama firstshot/s2-m24. AutorizaciónPO2026-10-30 en [registro](2026-10-25-first-shot-po-approvals.md); [plan/D4](../superpowers/plans/2026-10-25-squash-clash-first-shot.md). Trabajo en curso; no se declara completada ninguna tarea sin evidencia.
 
-## Estado vigente — ajustes documentales A1–A4 de 2.7 para Claude (2026-10-31)
+## Estado vigente — preparación de tanda 1 autorizada, en curso (2026-10-31)
+
+PO autoriza en la misma rama/PR #30 exclusivamente preparar la tanda 1, sin pedir gestos ni iniciar bloques. Se corrigió el origen del mscorlib en el [anexo de hashes](../validation/2026-10-31-first-shot-s2-session27-hashes.md): copia archivada ignorada con SHA-256 26bb31ee63f0b5b8daa34728d475b2d7029cb19d41cd8f00228568c4a0148eef, verificada antes de regenerar exports. Los 13 literales no cambian.
+
+Cotejo inicial Git/SHA-256: **506 archivos de Assets/ProjectSettings/Packages byte a byte idénticos a la fuente probada 9131b1c** y al manifiesto de regresión. Check-release dev/prod limpio y build dev Release ARM64/no Development autorizados, todavía por completar en este registro inicial. Exportación de logs/respaldo nuevo de los tres archivos en proceso; no hay instalación ni arranque S2 declarados. El único perfil en caché sigue creado el27oct/con vencimiento2026-11-03T18:29:44Z: el PO debe renovar antes de instalar; se solicita confirmación y horario previsto de tanda1/restauración para comprobar la vigencia efectiva del incorporado. No basta que la caché aún no venza.
+
+Al finalizar se registrarán identidad/build, perfil/cotejos/respaldo y primer hash observado en app B=H(1,V,0)=dd122831f592; diferencia→registrar/detener, sin recalcular. Los otros H se cotejan desde la propia app antes de cada bloque futuro, sin scripts/tests temporales. Sesión FAM/02–13 y tandas2–4/PROD no autorizadas. Producto y restricciones intactos; PR#30 sinfusionar y paraClaude, detenerse al concluir preparación.
+
+## Histórico — ajustes documentales A1–A4 de 2.7 entregados en f70cccc (2026-10-31)
 
 Claude aprobó `31d7433` con ajustes documentales autorizados por PO, sin bloqueos de producto. Se incorporan en la misma PR #30: frontera dev en el evento auditado de cierre DEV (foco de app no equivale a panel cerrado), relojes Mac/dispositivo relacionados sin asumir sincronía, lanzamientos interbloque preparación; triada por intento solo FAM/CAN/NEG-A–D y excepciones al cierre en los demás; **13 hashes esperados ya calculados**, deltas/SHA-256 de entradas/manifiestos y cuerpos float32→double en el [anexo A3](../validation/2026-10-31-first-shot-s2-session27-hashes.md); cuatro tandas con exportación/restauración nueva/cotejo de tres archivos en cada cierre, precheck completo y vigencia del perfil renovado en todos los tramos. H(1,V,0) coincide con `dd122831f592`; cálculo fuera de Unity y sin la app, usando el respaldo P0 local de SHA-256 aprobado, no un JSON reconstruido. Los literales requieren revisión de Claude antes de medir y cotejo con Unity en preparación futura autorizada; cualquier diferencia obliga a registrar y detenerse. Auditoría documental: 13 manifiestos completos reconstruidos desde el propio Markdown/SHA-256 y deltas, B verificado, 25 bloques/206 recepciones y 16 preguntas originales conservados; no es una ejecución de tests de producto.
 

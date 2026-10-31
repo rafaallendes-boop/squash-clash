@@ -15,7 +15,9 @@ Los archivos de producto coinciden byte a byte con la fuente aprobada `9131b1c`.
 | PracticeMode.cs | `Assets/SquashClash/Runtime/Shot/PracticeMode.cs` | `225d1be27cc472a49dfa658278bee8ed69b37498be9fa607986fee3553b05514` |
 | CourtDimensions.cs (Width=6.40f) | `Assets/SquashClash/Core/Court/CourtDimensions.cs` | `fd7b4c9d4574421b32374fec81da954726af664148d1cf3c460a314091a41546` |
 | EffectiveConfig.cs (Court.WithTinTop) | `Assets/SquashClash/Core/Config/EffectiveConfig.cs` | `746f97550b2ef6f6a73e24f5d7d578b3e03d1320d7db945e65b7bd672bb4a98c` |
-| Number.FormatDouble, export prod anterior 1bbaa39 | `Builds/iOS-prod/Il2CppOutputProject/Source/il2cppOutput/mscorlib__3.cpp` | `26bb31ee63f0b5b8daa34728d475b2d7029cb19d41cd8f00228568c4a0148eef` |
+| Number.FormatDouble, export prod anterior 1bbaa39 | `Logs/evidence/s2-preparation-tanda1-20261031/archive-1bbaa39/mscorlib__3.cpp` | `26bb31ee63f0b5b8daa34728d475b2d7029cb19d41cd8f00228568c4a0148eef` |
+
+La copia archivada de mscorlib__3.cpp se preservó y cotejó con el export anterior antes de generar exports nuevos; su SHA-256 es el mismo 26bb31ee… y los 13 literales no cambian. La ruta del archivo archivado es relativa a este worktree y queda ignorada, sin versionar el C++.
 
 El origen del respaldo es relativo al checkout principal `/Users/rafaallendes/Projects/Squash Clash`, no un archivo del iPhone leído ahora. Sus 41 valores se superponen a los 106 defaults; se comprobó que la única diferencia de valores respecto de defaults es `launcher.repeatSeconds: 0 → 3`. Se preservan el preset y los 41 valores heredados.
 
