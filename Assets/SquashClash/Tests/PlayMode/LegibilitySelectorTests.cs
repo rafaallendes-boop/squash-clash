@@ -20,6 +20,7 @@ namespace SquashClash.Runtime.Tests
             selection=Path.Combine(Application.persistentDataPath,"presets","last-active.txt");
             backup=File.Exists(selection)?File.ReadAllText(selection):null;File.Delete(selection);
             yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
+            var app=AppBootstrap.Instance;app.Tuning.Set("practice.enabled",0);app.LaunchCurrent();
         }
         [UnityTearDown] public IEnumerator Cleanup()
         {

@@ -30,6 +30,7 @@ namespace SquashClash.Runtime.Tests
             backup=File.Exists(selection)?File.ReadAllText(selection):null;File.Delete(selection);
             yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
             app=AppBootstrap.Instance;app.enabled=false;app.Host.enabled=false;app.GetComponent<ResumeOverlay>().Continue();
+            app.Tuning.Set("practice.enabled",0);app.LaunchCurrent();
             app.GetComponent<ThermalMonitor>().enabled=false;app.GetComponent<ThermalMonitor>().Observe("nominal",0);
             app.GetComponent<FrameTimingSampler>().enabled=false;
         }

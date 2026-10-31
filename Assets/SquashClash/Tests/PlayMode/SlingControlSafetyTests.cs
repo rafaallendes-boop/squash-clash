@@ -21,7 +21,7 @@ namespace SquashClash.Runtime.Tests
             yield return PlayModeTestWorld.ClearApp();yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
             app=AppBootstrap.Instance;app.GetComponent<ResumeOverlay>().Continue();app.Clock.Paused=false;
             app.Tuning.LoadPreset(PresetCodec.FromSet(app.Tuning.Defaults,"Control test",app.Build.Label),new System.Collections.Generic.List<string>());
-            app.Tuning.Set("gesture.control",1);app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();app.Host.enabled=false;
+            app.Tuning.Set("practice.enabled",0);app.Tuning.Set("gesture.control",1);app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();app.Host.enabled=false;
             preview=app.GetComponent<GesturePreview>();bar=UnityEngine.Object.FindFirstObjectByType<DevBar>();root=app.GetComponent<UIDocument>().rootVisualElement;
         }
         [UnityTearDown] public IEnumerator Cleanup(){yield return PlayModeTestWorld.ClearApp();}

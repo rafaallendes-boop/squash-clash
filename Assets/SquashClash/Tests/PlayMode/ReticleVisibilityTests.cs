@@ -57,7 +57,7 @@ namespace SquashClash.Runtime.Tests
             yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
             app=AppBootstrap.Instance;app.GetComponent<ResumeOverlay>().Continue();app.Clock.Paused=false;
             app.Tuning.LoadPreset(SquashClash.Core.Config.PresetCodec.FromSet(app.Tuning.Defaults,"Visibility fixture",app.Build.Label),new System.Collections.Generic.List<string>());
-            app.LaunchCurrent();app.Host.enabled=false;
+            app.Tuning.Set("practice.enabled",0);app.LaunchCurrent();app.Host.enabled=false;
             camera=UnityEngine.Camera.main;previousCameraTarget=camera.targetTexture;previousAspect=camera.aspect;
             target=new RenderTexture(Width,Height,24);target.Create();camera.targetTexture=target;camera.aspect=Width/(float)Height;
             var document=app.GetComponent<UIDocument>();settings=document.panelSettings;previousPanelTarget=settings.targetTexture;settings.targetTexture=target;
