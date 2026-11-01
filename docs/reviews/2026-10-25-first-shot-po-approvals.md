@@ -1138,6 +1138,18 @@ Operación continuada por Claude a pedido del PO («Ayúdame a realizar las prue
 - Comprensión: anillo no identificado → **«Aclarar el anillo»**; tras aclaración verbal: «Ah perfecto, veo el circulo celeste y el circulo que se va cerrando.»
 - 03 intento 1 interrumpido/frontera ambigua → **«Sí, repetir 03»** (bloque adicional 03b; parcial conservado).
 - 04 intento 1 con dos cierres completados → PO repite por iniciativa propia: **«Hice la prueba de nuevo, para que revises»** (04b; ambos candidatos conservados).
-- Tras el bloque 11, segundo juicio negativo de trayectoria en SL5 escalado por §8 → **«Seguir con 12»**; en 12 el PO difiere la revisión («eso se puede ver después»).
+- Tras el bloque 11, segundo juicio negativo de trayectoria en SL5 escalado por la parada de §7 (la primera versión citaba §8 por error); el operador recomendó seguir → **«Seguir con 12»**: desviación de §7 autorizada por el PO. En 12 el PO difiere la revisión («eso se puede ver después»).
 
 Resultado: FAM y 02–13 medidos, respuestas literales separadas, P0 restaurado en proceso nuevo 21:56:11.3538050Z (dd122831f592/pending 0) y tres archivos idénticos byte a byte al respaldo. Sin aceptación inferida; PR #30 sin fusionar. [Informe de tanda1](2026-10-31-first-shot-s2-tanda1.md).
+
+## 2026-11-01 — revisión independiente de la tanda 1 y decisión del PO sobre la trayectoria
+
+**Revisión independiente** (sesión Claude distinta del operador, solo lectura) del head `66095c8`: **CAMBIOS SOLICITADOS**. Datos primarios confirmados (fronteras, hashes, pending, conteos, contactos, P, restauración y citas literales). Hallazgo bloqueante: preguntas de cierre no literales sin declarar (pregunta 1 de 02 reformulada; las cinco de 09–13 no literales, sin triada y con la pregunta 2 sugerente), además de preguntas enviadas juntas y tras mostrar resultados. Correcciones: extras, gestos previos a FAM (26), 9 gestos tardíos de la preparación de Codex, LaunchId de 03 intento 1 (L150/L151), cita §7 en vez de §8, 03b/04b sin precheck previo y 03b sin §3.2 «Reinicio/segundo plano». El operador cotejó cada hallazgo y corrigió el [informe](2026-10-31-first-shot-s2-tanda1.md); los datos primarios no cambian.
+
+**Pendiente de decisión del PO:** cómo tratar las respuestas a preguntas no literales, en especial el juicio del salto de 09–13 («¿Cómo viste el salto?»), que es condición de fusión.
+
+**Decisión literal del PO (2026-11-01), posterior al head revisado:**
+
+> Perfecto. Con respecto a mi observación, la trataremos como un posible defecto que se habra en un PR aparte. Pero las tandas 2 a 4 no se bloquea. Cuando vuelva el revisor te comento, y luego vamos avanzando hasta que tenga creditos en codex y ahí seguimos tal cual estabamos antes
+
+Consecuencias registradas: la trayectoria SL5/SL6 se tratará como posible defecto en una PR aparte, fuera de PR #30, sin declarar defecto ni ajustar nada aquí. Las tandas 2–4 no quedan bloqueadas por esa observación. Claude sigue como operador hasta que Codex recupere créditos. PR #30 sin fusionar.
