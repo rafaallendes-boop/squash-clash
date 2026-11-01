@@ -1123,3 +1123,21 @@ Export previo31metrics+11spike/9.962.251bytes y respaldo nuevoP0/Po-1/last-activ
 CLI inicialdenegadoLocked, appnoiniciada; resuelto alabrir icono porDuplicación. **Proceso nuevodev18:05:40.5084170Z/15:05:40.508417local**,P0**dd122831f592/0pendientes**,primer cotejonativo B=H(1,V,0) satisfecho sinrecalcular. DEV abierto/cerrado solo poragente para comprobar: Jugando/P2/P0/cero pendientes; cierre18:07:20.6044640Zpausedfalse/focusedtrue/devOpenfalse, estadofinalDEVcerrado/sinpausa. Capturafinal0gestos/órdenesjuego;4eventosUI filtrados/4dev-control/32NoOrderautomáticos, todospreparaciónsinbloques. El cierreDEV delagente no eslafronteraPOdeFAM. Losotros12Hse cotejarán conappenfuturos prechecksautorizados; sin scripts/tests temporales. [Informe completo](2026-10-30-first-shot-s2-m24-phase1.md); fuenteCppSHA26bb31ee… archivadayreferenciacorregida/literalesintactos.
 
 **Preparación terminada para Claude; PR#30 abierta/lista/sinfusionar.** AppenP0/sinconfigtemporal/ningúngesto pedido. No suites, nuevo código/tests/defaults/SL/presets/spec/plan/criterios/bandas/umbrales. No sesiónFAM/02–13 ni tandas2–4/PROD/S3–S4/T8 autorizadas. Fin deesta entrega: detenerse. ÚltimoajustedeGit documentalno cambiaappinstalada.
+
+
+## 2026-10-31 — preparación head68f5383 aprobada; sesión de tanda 1 autorizada
+
+PO comunica verificación de Claude: producto idéntico a9131b1c, perfil31oct17:58:46Z→7nov17:58:46Z,140líneas2ef4807dev/dd122831f592/pending0/singestos/cierreDEVlínea104 y tresarchivosidénticos. Autoriza soloFAM(01) y02–13 en misma rama/PR#30 sinfusionar, predeclaración sin cambios. Revalidar perfil/build, respaldo nuevo yproceso nuevoP0/dd/pending0/Jugando/sinpausa. Explicaciónliteral§4/trescomprensiones antesFAM; noentiende→restaurar/detener. Unbloque a la vez/B→SL1→SL/panel/singuardar/deltasúnicos/precheckcompleto/hashpropioapp=literal/sinrecalcular. CierreDEVporPOdevOpenfalse esfrontera, recepción1primernuevoLaunchId posterior;MacUTCsecundario/sintocarteléfonodurantegestos. FAMtriadaporintento,02–13excepcionesalcierre/restosinrespuesta/preguntatarea+tres2.7, sin16S1. Sinrepeticiones/sustituciones, conservar todoslosintentos/paradas§7. Cierre exportaciónantesnuevaapertura/P0procesonuevo/dd/pending0/3archivosidénticos, antes1nov22America/Santiago incluida restauración. Si parcial, nocompletarotro día. Informe descriptivo/respuestasliteralesseparadas/sinjuicioinferido/PRlistaClaude/detenerse. Sin tandas2–4/PROD/S3–S4/T8 ni código/tests/builds/instalaciones/defaults/presetguardado/SL/spec/plan/criterios/bandas/umbrales;otrodefecto→registrar/restaurar/detener.
+
+Recheck y respaldo inicial completados; proceso nuevo20:20:13.1061270Z2ef4807dev/P0dd122831f592/pending0. Comprensión solicitada y pendiente; ningún bloque iniciado. [Informe de tanda1](2026-10-31-first-shot-s2-tanda1.md).
+
+## 2026-11-01 — tanda 1 terminada; decisiones literales del PO durante la sesión
+
+Operación continuada por Claude a pedido del PO («Ayúdame a realizar las pruebas... Usa mi PC en duplicar pantalla para revisar»), por falta de créditos de Codex; Claude no es revisor independiente de esta tanda. Decisiones literales del PO registradas:
+
+- Comprensión: anillo no identificado → **«Aclarar el anillo»**; tras aclaración verbal: «Ah perfecto, veo el circulo celeste y el circulo que se va cerrando.»
+- 03 intento 1 interrumpido/frontera ambigua → **«Sí, repetir 03»** (bloque adicional 03b; parcial conservado).
+- 04 intento 1 con dos cierres completados → PO repite por iniciativa propia: **«Hice la prueba de nuevo, para que revises»** (04b; ambos candidatos conservados).
+- Tras el bloque 11, segundo juicio negativo de trayectoria en SL5 escalado por §8 → **«Seguir con 12»**; en 12 el PO difiere la revisión («eso se puede ver después»).
+
+Resultado: FAM y 02–13 medidos, respuestas literales separadas, P0 restaurado en proceso nuevo 21:56:11.3538050Z (dd122831f592/pending 0) y tres archivos idénticos byte a byte al respaldo. Sin aceptación inferida; PR #30 sin fusionar. [Informe de tanda1](2026-10-31-first-shot-s2-tanda1.md).

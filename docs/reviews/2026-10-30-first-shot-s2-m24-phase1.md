@@ -2,7 +2,11 @@
 
 Base8dd142dff2fcdc5d52871ac3c89733b4aff88fd6, rama firstshot/s2-m24. AutorizaciónPO2026-10-30 en [registro](2026-10-25-first-shot-po-approvals.md); [plan/D4](../superpowers/plans/2026-10-25-squash-clash-first-shot.md). Trabajo en curso; no se declara completada ninguna tarea sin evidencia.
 
-## Estado vigente — preparación de tanda 1 completada, sin sesión (2026-10-31)
+## Estado de 2.7 — tanda 1 terminada y cerrada (2026-11-01)
+
+Claude/PO aprobó la preparación en head `68f5383` y autorizó solo FAM y 02–13. Tanda 1 completada con FAM y 02–13 medidos, parciales 03/04 conservados con repeticiones 03b/04b decididas por el PO, P0 restaurado en proceso nuevo y tres archivos idénticos al respaldo. Resultados, respuestas literales, desviaciones y la observación del PO sobre trayectoria en SL5/SL6 en el [informe de tanda 1](2026-10-31-first-shot-s2-tanda1.md). Sin aceptación inferida. Los datos siguientes describen la preparación anterior aprobada.
+
+## Histórico — preparación de tanda 1 completada, sin sesión (2026-10-31)
 
 **Build dev instalada: 0.1.0+2ef4807 dev**, Release/IL2CPP/ARM64, no Development. Producto igual a la fuente probada **9131b1c60e7ffe1d91eb1bc49404151dc257a01d**: diff Git vacío y **506 archivos Assets/ProjectSettings/Packages cotejados por SHA-256 antes y después de export/build/instalación**; sin código, tests, defaults, SL, presets, spec, plan, criterios, bandas o umbrales nuevos. No se ejecutaron suites. Los commits posteriores de entrega son documentales y no sustituyen la build instalada.
 
