@@ -1153,3 +1153,18 @@ Resultado: FAM y 02–13 medidos, respuestas literales separadas, P0 restaurado 
 > Perfecto. Con respecto a mi observación, la trataremos como un posible defecto que se habra en un PR aparte. Pero las tandas 2 a 4 no se bloquea. Cuando vuelva el revisor te comento, y luego vamos avanzando hasta que tenga creditos en codex y ahí seguimos tal cual estabamos antes
 
 Consecuencias registradas: la trayectoria SL5/SL6 se tratará como posible defecto en una PR aparte, fuera de PR #30, sin declarar defecto ni ajustar nada aquí. Las tandas 2–4 no quedan bloqueadas por esa observación. Claude sigue como operador hasta que Codex recupere créditos. PR #30 sin fusionar.
+
+
+## 2026-11-01 — decisión de repreguntar el salto en tanda 2 y retorno de Codex
+
+Decisión literal del PO, posterior al head revisado `66095c8`, comunicada a Codex al retomar desde `e160f98`:
+
+> Repreguntemos en tanda 2
+
+Se refiere al juicio del salto de **09 SL4/V, 10 SL5/V, 11 SL5/T, 12 SL6/T y 13 SL6/V**. La decisión sustituye la espera de una decisión sobre cómo abordar ese juicio; no convierte las respuestas a «¿Cómo viste el salto?» en respuestas a «¿el salto es aceptable?». Las respuestas originales, el envío conjunto y la exposición previa de resultados se conservan sin borrar ni reinterpretar. El juicio literal sigue pendiente; no hay Pass ni autorización de fusión inferidos.
+
+**Propuesta operativa de Codex, pendiente de confirmación expresa del PO:** al inicio de tanda 2, antes de 14 y sin mostrar resultados, identificar cada condición anterior en ese orden y preguntar únicamente **«¿el salto es aceptable?»**, una a una, esperando cada respuesta antes de pasar a la siguiente. Serán repreguntas retrospectivas sobre la tanda 1, separadas de sus respuestas originales, con fecha/condición y limitación de recuerdo; «No recuerdo» se conserva literal y deja pendiente ese juicio. No se propone repetir los bloques ni presentar las repreguntas como una medición nueva. Codex solicita al PO confirmar este procedimiento antes de empezar; la confirmación aún no está recibida al escribir este registro.
+
+El PO pide retomar en el mismo worktree/rama/PR #30. Siguiente trabajo: **tanda 2 dev, 14–22**, con precheck completo nuevo desde P0 verificado y la **0.1.0+2ef4807 dev instalada**, sin build ni instalación nuevas. Rigen predeclaración §3.2/§5.1/§6/§7/§8, preparación B→SL1→SL, preguntas literales una a una antes de resultados, preservación de parciales/extras y parada ante posible defecto nuevo. La trayectoria SL5/SL6 queda como observación conocida destinada por el PO a otra PR, sin corrección aquí.
+
+Antes de cada tanda comprobar el perfil incorporado (vencimiento **2026-11-07T17:58:46Z**) y cobertura de todo el tramo, incluida restauración. Cerrar cada tanda con exportación, P0 restaurado en proceso nuevo **dd122831f592/pending 0** y comparación byte a byte de los tres archivos con respaldo/referencia inicial. Actualizar informe y entregar para revisión Claude/PO; **detenerse al cierre de tanda 2**. Tanda 3 y luego PROD siguen la secuencia indicada por el PO, después de la parada; la instalación PROD requiere autorización propia, respaldo nuevo y frontera §5. Sin código/tests/defaults/SL/presets guardados/spec/plan/criterios/bandas/umbrales nuevos. PR #30 sin fusionar; S3–S4/T8 no autorizados. Este registro inicial no acredita precheck ni bloque nuevo.
