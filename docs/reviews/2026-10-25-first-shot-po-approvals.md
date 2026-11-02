@@ -1181,3 +1181,8 @@ Respuesta literal del PO, posterior al commit documental `c336c51`:
 > 4. Las preguntas 1–4 de 09–13 se mantienen como están, declaradas no literales; solo se repregunta el salto.
 
 Este literal confirma y precisa la propuesta anterior. Se recogerán las cinco respuestas una a una antes del precheck de 14; no se repiten condiciones de tanda 1 ni se autoriza un bloque adicional para resolver un recuerdo ausente. Las preguntas 1–4 y respuestas originales de 09–13 conservan su estado no literal y sus limitaciones. [Registro nuevo de tanda 2](2026-11-01-first-shot-s2-tanda2.md); todavía sin precheck ni bloque nuevo.
+
+
+### Respuestas retrospectivas del salto, antes del precheck de 14 — 2026-11-01
+
+Con el procedimiento confirmado se preguntó una condición cada vez, solo con número/SL/ventana/cuerpo nominal y sin resultados. A «¿el salto es aceptable?» el PO respondió literalmente **«si»** por separado en **R09 SL4/V100, R10 SL5/V100, R11 SL5/T3 puro, R12 SL6/T3 puro y R13 SL6/V100**. Horas Mac secundarias de formulación y recepción-registro en el [informe de tanda 2](2026-11-01-first-shot-s2-tanda2.md). Todas son retrospectivas, de memoria/un día después según el procedimiento aprobado, y anteriores al precheck de 14. Originales intactos; preguntas 1–4 de 09–13 siguen no literales, sin repreguntar. Son juicios explícitos de aceptabilidad del salto recordado, no nueva medición, aceptación global de S2 ni autorización de fusión. PR #30 permanece sin fusionar.

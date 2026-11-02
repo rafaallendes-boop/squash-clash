@@ -16,8 +16,10 @@ Las horas son **UTC del Mac secundarias**, con equivalente America/Santiago: hor
 
 | Repregunta | Condición | Cuerpo nominal (x,z) m | Pregunta literal | Hora de formulación/registro Mac | Respuesta nueva literal / hora de recepción-registro |
 |---|---|---|---|---|---|
-| R09 | Bloque 09, SL4, V100 | (5,1; 8,3) | «¿el salto es aceptable?» | Pendiente | Pendiente |
-| R10 | Bloque 10, SL5, V100 | (3,2; 1,6) | «¿el salto es aceptable?» | Pendiente | Pendiente |
-| R11 | Bloque 11, SL5, T3 puro | (3,2; 1,6) | «¿el salto es aceptable?» | Pendiente | Pendiente |
-| R12 | Bloque 12, SL6, T3 puro | (3,2; 1,6) | «¿el salto es aceptable?» | Pendiente | Pendiente |
-| R13 | Bloque 13, SL6, V100 | (3,2; 1,6) | «¿el salto es aceptable?» | Pendiente | Pendiente |
+| R09 | Bloque 09, SL4, V100 | (5,1; 8,3) | «¿el salto es aceptable?» | 2026-11-02T00:33:50.736854+00:00 / 2026-11-01T21:33:50.736854-03:00 (formulación previa al envío) | «si» / 2026-11-02T00:41:25.214304+00:00 / 2026-11-01T21:41:25.214304-03:00 (recepción-registro; hora exacta del envío del PO no disponible) |
+| R10 | Bloque 10, SL5, V100 | (3,2; 1,6) | «¿el salto es aceptable?» | 2026-11-02T00:41:25.214304+00:00 / 2026-11-01T21:41:25.214304-03:00 (formulación previa al envío) | «si» / 2026-11-02T00:41:35.433067+00:00 / 2026-11-01T21:41:35.433067-03:00 (recepción-registro; hora exacta del envío del PO no disponible) |
+| R11 | Bloque 11, SL5, T3 puro | (3,2; 1,6) | «¿el salto es aceptable?» | 2026-11-02T00:41:35.433067+00:00 / 2026-11-01T21:41:35.433067-03:00 (formulación previa al envío) | «si» / 2026-11-02T00:41:46.812081+00:00 / 2026-11-01T21:41:46.812081-03:00 (recepción-registro; hora exacta del envío del PO no disponible) |
+| R12 | Bloque 12, SL6, T3 puro | (3,2; 1,6) | «¿el salto es aceptable?» | 2026-11-02T00:41:46.812081+00:00 / 2026-11-01T21:41:46.812081-03:00 (formulación previa al envío) | «si» / 2026-11-02T00:41:57.469307+00:00 / 2026-11-01T21:41:57.469307-03:00 (recepción-registro; hora exacta del envío del PO no disponible) |
+| R13 | Bloque 13, SL6, V100 | (3,2; 1,6) | «¿el salto es aceptable?» | 2026-11-02T00:41:57.469307+00:00 / 2026-11-01T21:41:57.469307-03:00 (formulación previa al envío) | «si» / 2026-11-02T00:45:24.099170+00:00 / 2026-11-01T21:45:24.099170-03:00 (recepción-registro; hora exacta del envío del PO no disponible) |
+
+Las cinco repreguntas se recogieron una a una **antes del precheck de 14**: R09/R10/R11/R12/R13 = «si» en cada una. Juicios retrospectivos explícitos sobre aceptabilidad del salto, con las limitaciones de recuerdo declaradas; no son una observación nueva ni eliminan el sesgo/desviaciones de la tanda 1. No se repreguntaron las preguntas 1–4. PR #30 sigue sin fusionar; no se infiere aceptación global de S2 ni autorización de merge.
