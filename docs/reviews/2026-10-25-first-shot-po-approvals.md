@@ -1186,3 +1186,8 @@ Este literal confirma y precisa la propuesta anterior. Se recogerán las cinco r
 ### Respuestas retrospectivas del salto, antes del precheck de 14 — 2026-11-01
 
 Con el procedimiento confirmado se preguntó una condición cada vez, solo con número/SL/ventana/cuerpo nominal y sin resultados. A «¿el salto es aceptable?» el PO respondió literalmente **«si»** por separado en **R09 SL4/V100, R10 SL5/V100, R11 SL5/T3 puro, R12 SL6/T3 puro y R13 SL6/V100**. Horas Mac secundarias de formulación y recepción-registro en el [informe de tanda 2](2026-11-01-first-shot-s2-tanda2.md). Todas son retrospectivas, de memoria/un día después según el procedimiento aprobado, y anteriores al precheck de 14. Originales intactos; preguntas 1–4 de 09–13 siguen no literales, sin repreguntar. Son juicios explícitos de aceptabilidad del salto recordado, no nueva medición, aceptación global de S2 ni autorización de fusión. PR #30 permanece sin fusionar.
+
+
+### Modal de preguntas solicitado por el PO durante el cierre de 14 — 2026-11-01
+
+Literal: **«Para el resto de las preguntas dejamelas de una para ir respondiendo en un pequeño modal.»** Recepción-registro Mac **2026-11-02T00:55:27.212861+00:00 / 2026-11-01T21:55:27.212861-03:00**. Autoriza desde este punto la desviación de modalidad: agrupar las preguntas restantes en un modal con campos separados, manteniendo los literales y sin mostrar resultados previamente. Las preguntas ya respondidas no se repiten; la triada por intento solo donde §6.1 la requiere se mantiene asociada al intento. No cambia el contenido de la predeclaración ni sus criterios/umbrales, ni autoriza bloques adicionales o fusión.
