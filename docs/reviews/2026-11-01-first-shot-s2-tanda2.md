@@ -108,3 +108,62 @@ Proceso nuevo **metrics-20261102T00564278…**, arranque **2026-11-02T00:56:42.8
 Precheck de **15 POT-M, 10 recepciones, SL1/V100/cámara fija/pulgar izquierdo dominante/potencia media voluntaria**, esperado externo **dd122831f592** = efectivo/recepciones, pending0. El conjunto B de106claves y cuerpo3.2/5.5 se coteja por hash completo tras recarga/aplicación; mismos control2/P2/tempo0.65/slowMotion1/A40/V100/comp0/T3nosuave. Export `pre-15/Documents`: **210 líneas**, todosH/pending iguales, **cero gestos** y ningún cierreDEV del agente. Tres archivos siguen iguales. Perfil vigente comprobado para esta tanda, vence7nov17:58:46Z; sin nueva instalación. **14 terminado no se repite; solo15 solicitado.**
 
 **M_s de solicitud de cierre único DEV para15, formulación Mac previa al envío: 2026-11-02T00:59:00.564431+00:00 / 2026-11-01T21:59:00.564431-03:00.** Falta frontera única delPO/M_r; primera recepción será primerLaunchId posterior al cierre. No hay bloque15 iniciado por el agente.
+
+## Recepción del cierre de 15 y preguntas en modal
+
+PO: **«Terminé 15»**. Hora Mac secundaria de recepción-registro **2026-11-02T01:02:12.900626+00:00 / 2026-11-01T22:02:12.900626-03:00**; hora exacta del envío del PO no disponible. Export `after-15/Documents` completo; cotejo de los tres archivos byte a byte idénticos al respaldo. Frontera única, cuota y hashes recuperados en `block15-primary-private.json` ignorado; resultados reservados hasta recoger las respuestas. M_r aproximado del intercambio, sin sincronización calibrada con el dispositivo. No se prepara ni solicita16 todavía.
+
+Preguntas agrupadas en un modal según petición literal del PO, cada una con campo propio; desviación de modalidad ya registrada, sin resultados previos. Preguntas1/2de§6.1 y tres originales como feedback complementario de potencia (mismo alcance aclarado en14, no criterio nuevo). Formulación previa al envío Mac **2026-11-02T01:02:12.900626+00:00 / 2026-11-01T22:02:12.900626-03:00**:
+
+| Pregunta literal | Respuesta nueva literal | Hora recepción-registro Mac |
+|---|---|---|
+| «Por número de recepción, ¿qué excepciones recuerdas: Apoyo sin querer, No fijó / falló u otra dificultad?» | **«Esta vez iba a distintas velocidades por lo que me costó agarrar los timing, pero todas fueron intencionadas»** | 2026-11-02T01:05:57.464054+00:00 / 2026-11-01T22:05:57.464054-03:00 (recepción-registro; hora exacta de envío no disponible) |
+| «¿Seguiste la tarea y la intensidad que se pidió en este bloque? Si no, ¿qué intentabas hacer?» | **«Si»** | 2026-11-02T01:05:57.464054+00:00 / 2026-11-01T22:05:57.464054-03:00 (recepción-registro; hora exacta de envío no disponible) |
+| «¿la pelota va donde apunto?» | **«Cuando logré golpear, si»** | 2026-11-02T01:05:57.464054+00:00 / 2026-11-01T22:05:57.464054-03:00 (recepción-registro; hora exacta de envío no disponible) |
+| «¿el timing es justo?» | **«si, me costó agarrar el timing, pero si»** | 2026-11-02T01:05:57.464054+00:00 / 2026-11-01T22:05:57.464054-03:00 (recepción-registro; hora exacta de envío no disponible) |
+| «¿el salto es aceptable?» | **«si»** | 2026-11-02T01:05:57.464054+00:00 / 2026-11-01T22:05:57.464054-03:00 (recepción-registro; hora exacta de envío no disponible) |
+
+### Resultado de 15 POT-M (después de recoger el modal)
+
+Proceso **metrics-20261102T00564278…**. Frontera única del PO línea **287**, **2026-11-02T01:00:15.1467090Z**, timeReal **214.46274866875058**, dev-toggle/result/completed/accepted=true/devOpen=false/paused=false/focused=true. Primera recepción posterior línea **292**, **2026-11-02T01:00:16.2440040Z**, LaunchId53; cuota **L53–L62**, diez sucesivas completas. Último cierre final línea **359**, **2026-11-02T01:01:02.8650430Z**. Sin reapertura DEV en el tramo; hash externo/lanzamiento/gesto **dd122831f592**, pending0. Todas las versiones se conservan; resultados usan una final por recepción. Campo `comparableToArmedBlock=false` del protocolo S1 no se confunde con la comprobación externa S2.
+
+| R | LaunchId | Línea final | Resultado / motivo | P (%) | Contacto aplicado |
+|---|---:|---:|---|---:|---|
+| 1 | 53 | 296 | Failed / outside-v | 52,837944 | No |
+| 2 | 54 | 303 | Failed / before-k-in | 67,897230 | No |
+| 3 | 55 | 310 | Failed / after-k-out | 72,080356 | No |
+| 4 | 56 | 317 | Failed / after-k-out | 56,519103 | No |
+| 5 | 57 | 324 | Failed / outside-v | 63,881439 | No |
+| 6 | 58 | 331 | Perfect / applied | 60,200262 | Sí |
+| 7 | 59 | 338 | Perfect / applied | 59,363633 | Sí |
+| 8 | 60 | 345 | Perfect / applied | 58,527005 | Sí |
+| 9 | 61 | 352 | Failed / after-k-out | 61,204195 | No |
+| 10 | 62 | 359 | Valid / applied | 50,328058 | Sí |
+
+**10 Swing/10 recepciones, 4 contactos**; resultados **{'Failed': 6, 'Perfect': 3, 'Valid': 1}**. Bandas vigentes: **0 suaves/5 medios/5 fuertes** sobre 10 Swing, sin sustituir fallos. Entre contactos: **3/4** en media. Saturación **0**. Muestras **336**, O2 **0**. La declaración global de intención no se convierte en OK por recepción; no se identificaron excepciones individuales por número y se mantienen sin respuesta propia.
+
+| Métrica cruda (unidad en nombre) | n | Mínimo | p50 | p95 | p99 | Máximo |
+|---|---:|---:|---:|---:|---:|---:|
+| P (%) | 10 | 50,328058 | 59,363633 | 72,080356 | 72,080356 | 72,080356 |
+| Duración Began→Ended (ms) | 10 | 1212,705292 | 1529,412084 | 1854,537667 | 1854,537667 | 1854,537667 |
+| Distancia descendente estimada DPI (mm) | 10 | 18,608259 | 21,589998 | 25,786518 | 25,786518 | 25,786518 |
+| Aim(Began)→C, referencia verbal sin marcador (m) | 10 | 0,292350 | 0,951901 | 2,263438 | 2,263438 | 2,263438 |
+| DeltaMs | 10 | -277,891985 | -35,742652 | 189,492680 | 189,492680 | 189,492680 |
+| JumpMeters, aplicadas | 4 | 0,016483 | 0,018264 | 0,030472 | 0,030472 | 0,030472 |
+| JumpPixels, aplicadas/HasJumpPixels | 4 | 1,057217 | 1,171442 | 3,081582 | 3,081582 | 3,081582 |
+| JumpBallDiameters, aplicadas | 4 | 0,412064 | 0,456611 | 0,761788 | 0,761788 | 0,761788 |
+| PlannerCostMs, uno por lanzamiento | 10 | 0,090800 | 0,136100 | 0,171000 | 0,171000 | 0,171000 |
+| SolverCostMs, aplicadas | 4 | 0,026000 | 0,030400 | 0,122500 | 0,122500 | 0,122500 |
+| ReconstructionCostMs, aplicadas | 4 | 0,003700 | 0,003900 | 0,018200 | 0,018200 | 0,018200 |
+| PredictionCostMs, aplicadas | 4 | 0,034300 | 0,053000 | 0,059300 | 0,059300 | 0,059300 |
+| ReconciliationCostMs, aplicadas | 4 | 0,025300 | 0,027700 | 1,487400 | 1,487400 | 1,487400 |
+
+Rango más próximo ceil(p·n), sin interpolación; muestras de coste por parte solo donde se ejecutó y una planificación por recepción. No sumar percentiles ni ceros no medidos; frame completo/asignaciones por parte **NotEvaluated**. No se infieren Pass, precisión humana o calibración. **Extras:** 0 gestos previos, **3 posteriores**, **LaunchId 63,64,65**, contados por launchSerial=LaunchId−1 y fuera de cuotas. Presets/selección idénticos al respaldo tras el export.
+
+### Aclaración de «distintas velocidades»
+
+Antes de preparar16 se pidió aclaración sin cambiar parámetros. Literal del PO: **«Ritmo entre lanzamientos»** (recepción-registro Mac **2026-11-02T01:05:57.464054+00:00 / 2026-11-01T22:05:57.464054-03:00**; hora exacta de envío no disponible). No se refiere a velocidad de entrada ni salida. Contraste de registros: los diez planes de SL1 tienen idénticos intervalos relativos lanzamiento→frontis **0,715897s**, primer bote **1,741539s**, Kout **2,031727s**, dentro de la precisión registrada. Entre inicios consecutivos de cuota: **4,167034–6,668706s**; los tramos más largos siguen a contactos aplicados. Es compatible con `PracticeMode` aprobado (Resolved→Observing hasta terminar vuelo/límite observeMaxSeconds, después Waiting/repeatSeconds), no un temporizador metronómico constante. Esta correspondencia es interpretación de código/registro, **no prueba del origen de toda sensación del PO**. Se conserva la dificultad literal del timing, sin nuevo criterio ni ajuste. Con la aclaración y este contraste no se identifica un defecto distinto que requiera la parada de§7.
+
+### Acceso entre15 y16
+
+Duplicación muestra **«iPhone en uso»** después del cierre de15. Al intentar Conectar pide autenticación local del Mac; se solicitó al PO completar el aviso directamente, sin compartir contraseña. Export `between-15-16/Documents` recuperado antes de otro arranque; precheck16 aún no realizado, ningún gesto16 solicitado. Aplicar§3.2/proceso nuevo/P0/cotejo completo al recuperar acceso, sin prolongar un bloque de15 ya cerrado. Restauración final de tanda2 aún pendiente; la selección/archivos persistidos siguenP0 y no se afirma un arranque nuevo todavía.
