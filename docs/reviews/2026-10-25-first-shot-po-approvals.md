@@ -1168,3 +1168,16 @@ Se refiere al juicio del salto de **09 SL4/V, 10 SL5/V, 11 SL5/T, 12 SL6/T y 13 
 El PO pide retomar en el mismo worktree/rama/PR #30. Siguiente trabajo: **tanda 2 dev, 14–22**, con precheck completo nuevo desde P0 verificado y la **0.1.0+2ef4807 dev instalada**, sin build ni instalación nuevas. Rigen predeclaración §3.2/§5.1/§6/§7/§8, preparación B→SL1→SL, preguntas literales una a una antes de resultados, preservación de parciales/extras y parada ante posible defecto nuevo. La trayectoria SL5/SL6 queda como observación conocida destinada por el PO a otra PR, sin corrección aquí.
 
 Antes de cada tanda comprobar el perfil incorporado (vencimiento **2026-11-07T17:58:46Z**) y cobertura de todo el tramo, incluida restauración. Cerrar cada tanda con exportación, P0 restaurado en proceso nuevo **dd122831f592/pending 0** y comparación byte a byte de los tres archivos con respaldo/referencia inicial. Actualizar informe y entregar para revisión Claude/PO; **detenerse al cierre de tanda 2**. Tanda 3 y luego PROD siguen la secuencia indicada por el PO, después de la parada; la instalación PROD requiere autorización propia, respaldo nuevo y frontera §5. Sin código/tests/defaults/SL/presets guardados/spec/plan/criterios/bandas/umbrales nuevos. PR #30 sin fusionar; S3–S4/T8 no autorizados. Este registro inicial no acredita precheck ni bloque nuevo.
+
+
+### Confirmación del procedimiento de repreguntas — PO, 2026-11-01
+
+Respuesta literal del PO, posterior al commit documental `c336c51`:
+
+> Confirmo el procedimiento, con estas precisiones:
+> 1. En cada repregunta da solo el contexto de condición (número de bloque, SL, ventana y posición del cuerpo), sin resultados, contactos, timing ni trayectoria.
+> 2. Haz las cinco repreguntas antes del precheck del bloque 14, con su hora, registradas como retrospectivas (de memoria, un día después) y separadas de las respuestas originales, que no se borran.
+> 3. Si respondo «No recuerdo», queda literal y pendiente. La tanda 2 es solo SL1, así que resolverla requeriría un bloque nuevo que yo autorice aparte.
+> 4. Las preguntas 1–4 de 09–13 se mantienen como están, declaradas no literales; solo se repregunta el salto.
+
+Este literal confirma y precisa la propuesta anterior. Se recogerán las cinco respuestas una a una antes del precheck de 14; no se repiten condiciones de tanda 1 ni se autoriza un bloque adicional para resolver un recuerdo ausente. Las preguntas 1–4 y respuestas originales de 09–13 conservan su estado no literal y sus limitaciones. [Registro nuevo de tanda 2](2026-11-01-first-shot-s2-tanda2.md); todavía sin precheck ni bloque nuevo.
