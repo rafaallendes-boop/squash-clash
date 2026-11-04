@@ -1252,3 +1252,18 @@ Método en commits **c000f85/7b5d943 anteriores al cálculo**. Sin sesión físi
 [Informe del mapa](2026-11-04-first-shot-sl56-feasibility-map.md), [matrices por contacto](../diagnostics/2026-11-04-sl56-feasibility-matrices.md), [resumen derivado](../validation/evidence/2026-11-04-sl56-feasibility-summary.json), [método](../diagnostics/2026-11-04-sl56-feasibility-method.md), [reproducción](../diagnostics/2026-11-04-sl56-feasibility-reproduction.md). Las soluciones con ajustes existentes se separan de las solicitudes respetadas. Retorno dentro de cancha es intersección geométrica descriptiva, **no regla de golpe jugable aprobada**. Ninguna zona/P/corte se elige como producto; decidir regla y ajuste visibleC4 queda paraPO y nueva revisión.
 
 Corrección21/24 calculada desde el JSON anterior sin volver a simular salidas históricas; precisión4,001148m conservada. Una sola entrada vigente deAGENTS, idéntica entrePR#30/#31 y anteriores históricas. La campaña física permanece en pausa hasta aviso delPO y conserva prioridad antes del7nov17:58:46Z; mapa no prepara16 ni habilita instalaciónPROD. PR#30/#31 sin fusionar; S3–S4/T8 sin implementación.
+
+
+## Aprobación Claude y autorización de evaluar candidata, PO2026-11-04
+
+El PO comunica **APROBADO sin correcciones** de Claude sobre PR#31/head **546b184**: verificó correcciones, estado vigente único e idéntico en ambas ramas, decisión literal y mapa conforme a c000f85/7b5d943. PR#31 sigue sin fusionar. La aprobación del mapa no aprueba una regla de producto.
+
+**Decisión literal del PO:**
+
+> Sí perfecto. Me parece esa regla candidata para evaluarla offline
+
+La candidata es **bajar el punto conservando x y P pedidas**. Solo diagnóstico en arnés, sin modificar ShotSolver/P2: preservar base ya dentro de cancha; si no, búsqueda descendente predeclarada del punto más alto muestreado que da retorno dentro, límite tin+huella, sin inventar otra asistencia si no hay solución. Registrar interacción con SpeedRaised/TargetLowered. Contraste de bajar potencia, mismas73posiciones/rejilla/P0–1, frecuencias/resultados/Δy/cercanía tin/continuidad/dejadas/controles. [Método a confirmar antes de calcular](../diagnostics/2026-11-04-sl56-lowering-rule-method.md); paso propuesto0.05m y contrasteP0.05 solo diagnósticos, sin valores de producto elegidos.
+
+Lectura **exploratoria atribuida aClaude, fuera del método del mapa y no formal**, comunicada porPO: enC(3.2,2.2),24focales conP0.2 dentro/cortos, P0.3fondo17/24, P≥0.4out; bajar punto misma x/P daría24/24dentro y fondo conP0.3–0.7/y0.7–1.5, sin cambio en49controles; bajar potencia17/24fondo. Se conserva como contexto, no resultados formales ni objetivo que el arnés deba alcanzar. El método formal distingue primer bote trasero de pared trasera y conserva retornos ya dentro aunque sean cortos.
+
+Prioridad: tandas2–4 dePR#30 y restauraciones antes de2026-11-07T17:58:46Z; evaluación solo sin sesión física. No producto/tests/defaults/SL/spec/plan/criterios ni implementación; C4 solo nota de diseño. PR#30/#31 sin fusionar.
