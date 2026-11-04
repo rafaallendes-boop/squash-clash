@@ -4,7 +4,7 @@
 
 Retomada por Codex desde `e160f98`, rama `firstshot/s2-m24`, PR #30 sin fusionar. Decisión de repreguntar registrada en `c336c51`; procedimiento confirmado y precisado literalmente por el PO en [aprobaciones](2026-10-25-first-shot-po-approvals.md). Rigen la [predeclaración](../validation/2026-10-31-first-shot-s2-session27-predeclaration.md) y el estado vigente de AGENTS.md. App prevista: **0.1.0+2ef4807 dev ya instalada**, sin build/instalación nuevos.
 
-**Cinco repreguntas recogidas y precheck de 14 completado; bloque 14 aún no iniciado.** Tanda 2 prevista: 14–22, 57 recepciones SL1. Perfil y P0 de esta tanda comprobados abajo; la restauración final de tanda 2 sigue pendiente. No se atribuyen aquí las comprobaciones de tanda 1. Al cierre se requiere exportación/restauración en proceso nuevo/dd122831f592/pending 0 y cotejo de los tres archivos; entrega para Claude/PO y parada. S3–S4/T8 no autorizados.
+**14 y15 completos, conservados; reanudación del4nov preparada para16, aún sin iniciar.** Tanda 2 prevista: 14–22, 57 recepciones SL1. Perfil y P0 de esta tanda comprobados abajo; la restauración final de tanda 2 sigue pendiente. No se atribuyen aquí las comprobaciones de tanda 1. Al cierre se requiere exportación/restauración en proceso nuevo/dd122831f592/pending 0 y cotejo de los tres archivos; entrega para Claude/PO y parada. S3–S4/T8 no autorizados.
 
 ## Repreguntas retrospectivas sobre el salto de 09–13
 
@@ -167,3 +167,30 @@ Antes de preparar16 se pidió aclaración sin cambiar parámetros. Literal del P
 ### Acceso entre15 y16
 
 Duplicación muestra **«iPhone en uso»** después del cierre de15. Al intentar Conectar pide autenticación local del Mac; se solicitó al PO completar el aviso directamente, sin compartir contraseña. Export `between-15-16/Documents` recuperado antes de otro arranque; precheck16 aún no realizado, ningún gesto16 solicitado. Aplicar§3.2/proceso nuevo/P0/cotejo completo al recuperar acceso, sin prolongar un bloque de15 ya cerrado. Restauración final de tanda2 aún pendiente; la selección/archivos persistidos siguenP0 y no se afirma un arranque nuevo todavía.
+
+
+## Reanudación autorizada por el PO — 2026-11-04, segmento nuevo antes de16
+
+El PO vuelve y pide literalmente: «Volví. Retomemos la tanda 2 de PR #30 desde el bloque 16, tal como estaba predeclarado». Solicita ventana/perfil, proceso nuevo/P0/cero pendientes y precheck. **Nueva instrucción vigente:** «Las preguntas van literales, una a la vez y antes de mostrar resultados. Avísame qué necesitas de mí en cada paso». Sustituye desde esta reanudación el modal agrupado solicitado el1nov; no modifica ni borra respuestas/desviación de14/15. No repetir14/15 ni simular continuidad de día/proceso.
+
+Evidencia local ignorada nueva: Logs/evidence/s2-session27-tanda2-resume-20261104/. Trabajo solo en la campaña originalPR#30/producto9131b1c/dev2ef4807; no usar PR#32, sus defaults o su regla. Diff deproducto frente a9131b1c vacío. Sinbuild/instalación/tests nuevos.
+
+### Ventana y respaldo antes del proceso nuevo
+
+Comprobación delperfil incorporado a la appdev firmada preservada **2026-11-04T23:46:12.497332Z**: creación31oct17:58:46Z/vencimiento **7nov17:58:46Z (14:58:46Chile)**; firma estricta,bundle/equipo/dispositivo/entitlement coincidentes. Restan≈66,21h; cubre la reserva técnica propuesta de90min para37recepciones restantes16–22 yrestauración. La reserva no es un criterio ni duración mínima. Hora límite personal solicitada porchat, aún sin respuesta al preparar16; no se presume disponibilidad confirmada. Tandas3/PROD/restauraciones y revisiones aún pendientes conservan prioridad dentro delperfil; revalidar ventana antes de cada tramo yavisar antes deinstalar si noalcanza.
+
+Export before-new-process **23:46:12.533215Z→23:46:19.137811Z**,31metrics/22.589.613bytes, documentos completos preservados antes de abrir otro proceso/retención. P0-calib-1/Po-1/last-active idénticos byte a byte alrespaldo válido inicial detanda2 (before-session-retry), que ya estaba cotejado con referencia inicial detanda1. Mismos bytes/SHA de3614–2843–10bytes registrados arriba. No se sobrescribe evidencia previa.
+
+### Proceso nuevo y P0 verificados
+
+Reinicio CLI sin instalar aceptado **23:46:46.815873Z** (horaMac secundaria de finalización). Nuevo proceso prefijo **metrics-20261104T23464928…**: línea1 **2026-11-04T23:46:49.3045200Z**, build **0.1.0+2ef4807dev**, preset **P0-calib-1**, hash **dd122831f592**, **pending0**. Exportstartup23:47:38→23:47:43, tres archivos de nuevo byte a byte iguales. UI confirma P0/P2/Jugando/0pendientes, sin overlay; no segundo plano/bloqueo observado durante esta preparación. No se infiere horaUTC sincronizadaMac-dispositivo.
+
+### Precheck de16 POT-F aceptado, bloque sin iniciar
+
+Codex abreDEV (no frontera debloque), cargaP0 sin guardar en líneas178/180 (resultado23:49:34.082407Z) yrecupera/coteja los3archivos **antes deaplicar** (after-load-before-apply,23:49:41→23:49:46, todosiguales). Aplicar/relanzar anclaSL1 aceptado línea232 **23:50:21.6751200Z**, paused=false/focused=true/devOpen=true. La condición solicitada es tambiénSL1: B→SL1→SL1, sin vía directa desde otra receta ni otrohash. Parámetros abierto poroperador línea25623:50:43.004283Z; DEV sigueabierto.
+
+**16POT-F:10recepciones, SL1/V100/T3nosuave/cámarafija/pulgarizquierdodominante; buscarC y anillo, potencia fuerte voluntaria, sin exigir máximo.** Hexterno=efectivo=recepción **dd122831f592**, pending0. Igualdad delhash completo de106claves respecto almanifiestoB tras cargar/aplicar; cuerpo3,2/5,5/control2/P2/tempo0,65/slowMotion1/A40/V100/comp0/2–35mm intactos. UIJugando/sinpausa/DEVabierto; contexto nativo aplicado sin pausa/con foco.
+
+Exportpre16 **23:50:49.602400Z→23:50:55.302701Z**:265líneas delproceso, todosHdd/pending0, **0gestosM24 y0cierresDEV**; último plan línea265/LaunchId60 hasPlan/front/bounce=true. Tres archivos byte a byte iguales después deaplicar. Todos estos lanzamientos son preparación, fuera de cuota. No se armaS1B0–B5 ni se usa un contador inexistente.
+
+Solo elPO cerraráDEV una vez para empezar16; frontera nativa yprimerLaunchId posterior aún pendientes. Eloperador no accede al teléfono durante los gestos. Tras las10recepciones completas y avisoPO, exportar y preguntar literal/una auna antes de mostrar resultados; no solicitar17 hasta cerrar16. Restauración final detanda2 pendiente.

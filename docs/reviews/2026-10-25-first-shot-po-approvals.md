@@ -1209,3 +1209,10 @@ Referencia deproducto9131b1c, appdevinstalada0.1.0+2ef4807;headPR30alrecibirenca
 ### Resultado de preparación PROD offline, sin instalación — 2026-11-04
 
 Checksdev/prodfrescosOKen **a11fb32 limpio/gitDirty=false** yprodRelease/IL2CPP/ARM64/noDevelopmentfirmada,producto9131b1c idéntico a2ef4807devinstalada. DestinoXcodegenérico/sinprovisioningupdates/sinaccesoiPhone. Perfilincorporadovence **2026-11-07T17:58:46Z**. Logs/evidence3145archivos íntegros también enmtimeNs;514fuentesprotegidas/ProjectSettingsintactos,árbollimpioalterminar. [Informe completo](2026-11-04-first-shot-prod-preparation.md). **No instalación ni campañaPROD; no relanzamiento/precheck16**. Pausafísicaseconserva,autorizaciónPRODpresente/respaldo nuevo/ventanapendientes;PR30sinfusionar/S3–S4/T8sinimplementación.
+
+
+### Reanudación física de tanda2 desde16 — PO, 2026-11-04
+
+ElPO vuelve y autoriza «Volví. Retomemos la tanda 2 de PR #30 desde el bloque 16, tal como estaba predeclarado». Exige ventana antes de7nov17:58:46Z, proceso nuevo/P0/cero pendientes/precheck. Literal vigente **«Las preguntas van literales, una a la vez y antes de mostrar resultados. Avísame qué necesitas de mí en cada paso».** Desde ahora sustituye elmodal agrupado anterior; originales de14/15 se conservan.
+
+Preparación condev2ef4807/producto9131b1c, sinbuild/instalación nuevos ni PR#32. Perfilrevalidado23:46:12Z/firma-identidadcorrectas/cubre reserva técnica90min; disponibilidad personal solicitada,aún sinrespuesta alpreparar16. Exportnuevo/respaldo3archivosidénticos; procesonuevo23:46:49.304520Z/P0dd122831f592/pending0; B→SL1→SL1/3cmp antes ydespués deaplicar/precheck16aceptado. DEVabierto: soloPOcierra parafrontera16, aúnsin iniciar. [Informe y evidencia](2026-11-01-first-shot-s2-tanda2.md). No resultados de16 ni restauraciónfinal inferidos; tandas2–4 primero/PR30–32sinfusionar/S3–S4/T8sinimplementar.
