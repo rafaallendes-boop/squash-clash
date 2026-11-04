@@ -1257,3 +1257,16 @@ Costo diagnósticoMac: resolver79497solicitudes p95≈0,8033ms/p99≈2,0327ms/m�
 Check-release dev/prod final desde **a048e71 limpio/gitDirty=false**, exportsfrescos/símbolos/módulos correctos. **Sinxcodebuild/IPA/app para instalar/instalación/iPhone/relanzar/preparar16.** Logs/evidence3145archivos/875351187bytes/rutas+SHA+tamaño+mtime intactos. D5aditiva/ShotSolver/P2/SL/specv0.3 intactos; ProjectSettingsrestaurados/árboles limpios al cierre. [Informe](2026-11-04-first-shot-return-rule-implementation.md), [verificación](../validation/evidence/2026-11-04-return-rule-product-validation.json), [reproducción](../diagnostics/2026-11-04-return-rule-product-reproduction.md).
 
 PR#30/#31/#32 sinfusionar; PR#32lista paraClaude/PO y detenerse. Activación por defecto yvalidación física de regla requieren decisión propia. Tandas2–4/restauraciones antes del7nov17:58:46Z primero; permanecen enproducto9131b1c/dev2ef4807/prod preparadaa11fb32, sin usar esta rama. Pausa física hasta avisoPO; avisar antes deinstalar si noalcanza. S3–S4/T8 sin implementación.
+
+
+### Revisión independiente de PR #32 aprobada — PO, 2026-11-04
+
+El PO comunica **APROBADO, sin correcciones** de Claude sobre **PR #32/head61df159**. Verificó el método de margen0,05 **f901ea7** anterior a la corrida, arnés con un solo cambio de línea y corridas idénticas; comparación **bf89e75** anterior al esqueleto TDD, RED6/7 poraserción→GREEN y suites530/530EditMode–301/301PlayMode; regla desactivada por defecto, ShotSolver/P2 intactos,106valores previos/SimulationKey intactos; D5aditiva sin cambiar líneas anteriores, decisión literal registrada y una entrada Estado vigente igual aPR#30. Esta aprobación no autoriza fusión, activación por defecto o validación física.
+
+**Observaciones de Claude para una futura activación, solo registro y sin cambios ahora:**
+
+1. Costo de la vista previa en el dispositivo: recalcula en cada frame del apuntado (Mac: máximo3,5ms,81llamadas). **Medir en el iPhone conDEVcerrado antes de cualquier sesión física con la regla.** No se ejecuta esa medición por este registro.
+2. La vista previa usa el contacto pronosticado; el punto al soltar puede diferir si cambia el timing.
+3. En10controles, TargetLowered deja TargetUsed bajo tin+0,05: el margen no garantiza el resultado final. Aplicarlo al resultado requiere otra decisión delPO.
+
+PR#30/#31/#32 siguen abiertas/sin fusionar. Activación por defecto y validación física requieren otra autorización. Tandas2–4 y sus restauraciones antes de **2026-11-07T17:58:46Z/7nov14:58:46Chile** siguen primero, con producto9131b1c/dev2ef4807/prod preparadaa11fb32. Pausa física hasta avisoPO, sin iPhone/relanzar/preparar16. Este ajuste solo documental no ejecuta código, tests, exports, builds, instalaciones o mediciones nuevos. S3–S4/T8 sin implementación.

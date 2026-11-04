@@ -1,6 +1,6 @@
 # Regla experimental de retorno — entrega PR #32
 
-2026-11-04. Rama `codex/sl56-return-rule`, apilada sobre `firstshot/s2-m24` / PR #30. **Lista para revisión de Claude/PO, sin fusionar.** Fuente de producto y pruebas finales: `a048e71`. Ninguna activación por defecto, build nativa para instalar, instalación o sesión física.
+2026-11-04. Rama `codex/sl56-return-rule`, apilada sobre `firstshot/s2-m24` / PR #30. **Claude aprobó head61df159 sin correcciones, comunicado por el PO; PR sin fusionar.** Fuente de producto y pruebas finales: `a048e71`. Ninguna activación por defecto, build nativa para instalar, instalación o sesión física.
 
 ## Resultado y decisión
 
@@ -96,3 +96,16 @@ Llamadas alsolver en la rejilla: mediana1/p9531/p9960/máximo81; con caché0. La
 Archivos fuente probados cotejadosSHA-256 después deexports. ProjectSettings de pruebas restaurados antes deexportar; worktree limpio alcierre. D5aditiva/specv0.3 intacta, ShotSolver/P2 intactos. Logs/evidence dePR#30 conserva **3.145archivos/875.351.187bytes**, mismasrutas/hash/tamaños/mtimeNs. Sin versionarLogs, scripts/device.env, builds, cachés, identificadores del iPhone ni claves.
 
 **PR#30/#31/#32 sinfusionar.** Activar pordefecto y validar físicamente laregla requieren otra decisión. Tandas2–4/restauraciones dePR#30 conservan prioridad antes de **2026-11-07T17:58:46Z /7nov14:58:46America/Santiago**. Sesiónfísica pausada hasta avisoPO; no se relanzó app ni se preparó16. Cuando vuelva, revalidar P0/proceso nuevo/precheck y ventana completa; avisar antes deinstalar si no alcanza. Esta entrega se detiene paraClaude/PO.
+
+
+## Revisión independiente de Claude — registro posterior, sin cambios de producto
+
+El PO comunica **APROBADO, sin correcciones** sobre **61df159**. Claude verificó método f901ea7 antes de la corrida, único cambio de línea del arnés y corridas idénticas; comparación bf89e75 antes del esqueleto TDD, RED por aserciones y530/530–301/301; regla desactivada/ShotSolver/P2/106valores/SimulationKey intactos; D5aditiva, decisión literal yEstado vigente igual aPR#30. Los resultados y el código revisados se conservan; no se repiten pruebas o cálculos para este registro.
+
+Observaciones para futura activación, **no correcciones ni trabajo autorizado ahora**:
+
+- Medir costo depreview en el iPhone **conDEVcerrado antes de cualquier sesión física con laregla**. Se recalcula cadaframe duranteapuntado; máximoMac≈3,5ms y81llamadas no sustituyen esa medición.
+- Elcontacto depreview espronosticado; cambiartiming puede cambiar elpunto alsoltar.
+- TargetLowered dejaTargetUsed bajo tin+0,05 en10controles; el margen no garantiza resultadofinal. Extenderlo alresultado exige otra decisiónPO.
+
+[Registro de aprobación](2026-10-25-first-shot-po-approvals.md). PR#30/#31/#32 sinfusionar; activación por defecto yvalidación física requieren otra autorización. Prioridad tandas2–4/restauraciones antes del7nov17:58:46Z, con la sesión física enpausa hasta avisoPO. Solo documentación; detenerse.
