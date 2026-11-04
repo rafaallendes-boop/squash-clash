@@ -13,7 +13,7 @@ using UnityEngine;
 namespace SquashClash.Runtime.Shot
 {
     // Receives immutable closures from GesturePreview; never subscribes to another input source.
-    public sealed class ShotController : MonoBehaviour
+    public sealed partial class ShotController : MonoBehaviour
     {
         private AppBootstrap app;
         private readonly Queue<ClosedGesture> orders=new Queue<ClosedGesture>();

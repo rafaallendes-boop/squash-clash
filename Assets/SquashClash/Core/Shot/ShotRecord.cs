@@ -41,6 +41,10 @@ namespace SquashClash.Core.Shot
     }
     [Serializable] public sealed class ShotRecord
     {
+        public string ReturnRuleState;
+        public bool ReturnRuleEnabled;
+        public float ReturnRequestedX,ReturnRequestedY;
+        public int ReturnSolverCalls;
         public int Schema=1,Version,Seed,PlanVersion,Pending,O2Count,FingerId,StepsResimulated,ObsoleteEffects;
         public long LaunchId,ContactStep,TStarStep;
         public string AttemptId,PredecessorId,GestureOutcome,Reason,Result,Fail,LaunchHash,GestureHash,Preset,FileHash,Build,Side;
