@@ -32,5 +32,20 @@ namespace SquashClash.Runtime.Tests
             EnableReturn();app.Tuning.Set("shot.returnTinMargin",6);app.LaunchCurrent();var record=Submit(Star(),p:1);
             Assert.That(record.ReturnRuleEnabled,Is.True);Assert.That(record.ReturnRuleState,Is.EqualTo("NoSolution"));Assert.That(record.Applied,Is.True,record.Reason);Assert.That(record.ReturnRequestedY,Is.EqualTo(record.AimY));Assert.That(record.TargetUsedY,Is.EqualTo(record.AimY));
         }
+        [Test] public void ReturnPreview_CostSamples_NoNewPerformanceThreshold()
+        {
+            foreach(int launch in new[]{0,4,5})
+            {
+                app.Tuning.Set("practice.launch",launch);app.Tuning.Set("shot.returnEnabled",1);app.LaunchCurrent();double end=Star();At(end);
+                for(int ip=0;ip<=10;ip++)
+                {
+                    Assert.That(controller.TryPreviewReturn(new Vector2(3.2f,2.2f),ip/10f,end,out var cold),Is.True);
+                    double coldCost=controller.LastPreviewReturnCostMs;
+                    Assert.That(controller.TryPreviewReturn(new Vector2(3.2f,2.2f),ip/10f,end,out var warm),Is.True);
+                    Assert.That(warm.SolverCalls,Is.Zero);
+                    TestContext.WriteLine("RETURN_PREVIEW_COST "+launch+" "+ip+" "+coldCost.ToString("R",System.Globalization.CultureInfo.InvariantCulture)+" "+controller.LastPreviewReturnCostMs.ToString("R",System.Globalization.CultureInfo.InvariantCulture)+" "+cold.SolverCalls);
+                }
+            }
+        }
     }
 }

@@ -13,11 +13,12 @@ namespace SquashClash.Core.Shot
         public float VMin {get;}
         public float VMax {get;}
         public float VCap {get;}
+        public ReturnRuleSettings ReturnRule {get;}
         public ShotConfig(ParamSet reception,BodyFrame? body=null,ParamSet gesture=null)
         {
             if(!ShotConfigValidator.TryValidate(reception,out var error))throw new ArgumentException(error,nameof(reception));
             Reception=reception;Gesture=gesture??reception;Body=body??BodyFrame.From(reception);Timing=TimingSettings.From(reception);
-            VMin=(float)reception.Get("shot.vMin");VMax=(float)reception.Get("shot.vMax");VCap=(float)reception.Get("shot.vCap");
+            VMin=(float)reception.Get("shot.vMin");VMax=(float)reception.Get("shot.vMax");VCap=(float)reception.Get("shot.vCap");ReturnRule=ReturnRuleSettings.From(reception);
         }
         public ShotConfig WithGesture(ParamSet gesture)=>new ShotConfig(Reception,Body,gesture);
     }
@@ -44,7 +45,8 @@ namespace SquashClash.Core.Shot
         public string ReturnRuleState;
         public bool ReturnRuleEnabled;
         public float ReturnRequestedX,ReturnRequestedY;
-        public int ReturnSolverCalls;
+        public int ReturnSolverCalls,ReturnPreviewSolverCalls;
+        public double ReturnPreviewCostMs;
         public int Schema=1,Version,Seed,PlanVersion,Pending,O2Count,FingerId,StepsResimulated,ObsoleteEffects;
         public long LaunchId,ContactStep,TStarStep;
         public string AttemptId,PredecessorId,GestureOutcome,Reason,Result,Fail,LaunchHash,GestureHash,Preset,FileHash,Build,Side;

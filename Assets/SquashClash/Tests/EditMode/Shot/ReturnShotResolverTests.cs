@@ -39,7 +39,12 @@ namespace SquashClash.Core.Tests.Shot
             var p=ConfigFixtures.Default();foreach(string k in new[]{"shot.returnEnabled","shot.returnTinMargin","shot.returnSearchStep"})Assert.That(ParamCatalog.TryGet(k,out _),Is.True,k);
             Assert.That(p.GetBool("shot.returnEnabled"),Is.False);Assert.That(p.Get("shot.returnTinMargin"),Is.EqualTo(.05));Assert.That(p.Get("shot.returnSearchStep"),Is.EqualTo(.05));
             var old=JsonUtility.FromJson<PresetFile>(File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Tests/Fixtures/pre-return-rule-defaults.json")));Assert.That(old.values.Count,Is.EqualTo(106));foreach(var v in old.values)Assert.That(p.Get(v.key),Is.EqualTo(v.value),v.key);
-            Assert.That(p.Ordered.Count,Is.EqualTo(109));Assert.That(EffectiveConfig.From(p).SimulationKey,Is.EqualTo("166a96e319c7"));var legacy=PresetCodec.Overlay(p,old,new System.Collections.Generic.List<string>());Assert.That(ReturnRuleSettings.From(legacy).Enabled,Is.False);
+            TestContext.WriteLine("RETURN_DEFAULTS_HASH="+p.Hash+" P0="+p.With("launcher.repeatSeconds",3).Hash);Assert.That(p.Ordered.Count,Is.EqualTo(109));Assert.That(EffectiveConfig.From(p).SimulationKey,Is.EqualTo("166a96e319c7"));var legacy=PresetCodec.Overlay(p,old,new System.Collections.Generic.List<string>());Assert.That(ReturnRuleSettings.From(legacy).Enabled,Is.False);
+            string path=Path.GetFullPath(Path.Combine(Application.dataPath,"..","docs/validation/presets/S2-return-rule.json"));
+            Assert.That(PresetCodec.TryParse(File.ReadAllText(path),out var experimental,out var error),Is.True,error);
+            var enabled=PresetCodec.Overlay(p,experimental,new System.Collections.Generic.List<string>());Assert.That(ReturnRuleSettings.From(enabled).Enabled,Is.True);
+            foreach(var v in p.Ordered)if(v.Key!="shot.returnEnabled")Assert.That(enabled.Get(v.Key),Is.EqualTo(v.Value),v.Key);
+            TestContext.WriteLine("RETURN_EXPERIMENT_HASH="+enabled.Hash);
         }
     }
 }
