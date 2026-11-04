@@ -61,6 +61,10 @@ namespace SquashClash.Core.Shot
             var baseline=Solve(request);int calls=1;
             if(!settings.Enabled)return new ReturnResolution(request,request,baseline,baseline,ReturnRuleState.Disabled,calls);
             if(flight.Within(request.ContactCenter,baseline))return new ReturnResolution(request,request,baseline,baseline,ReturnRuleState.Preserved,calls);
+            // Invalid input is not a missed return. Preserve the solver's existing rejection;
+            // in particular do not search an unbounded/illegal front-wall request.
+            if(!baseline.Solved&&(baseline.Reason=="invalid-request-or-physics"||baseline.Reason=="target-or-contact-outside-court"||baseline.Reason=="zero-horizontal-distance"))
+                return new ReturnResolution(request,request,baseline,baseline,ReturnRuleState.NoSolution,calls);
             if(float.IsNaN(request.AimOnFrontWall.y)||float.IsInfinity(request.AimOnFrontWall.y))
                 return new ReturnResolution(request,request,baseline,baseline,ReturnRuleState.NoSolution,calls);
             // R gives the canonical decimal for a float input (the approved grid uses these decimals).
