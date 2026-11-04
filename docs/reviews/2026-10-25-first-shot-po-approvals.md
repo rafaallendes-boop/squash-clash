@@ -1209,3 +1209,64 @@ Referencia deproducto9131b1c, appdevinstalada0.1.0+2ef4807;headPR30alrecibirenca
 ### Resultado de preparación PROD offline, sin instalación — 2026-11-04
 
 Checksdev/prodfrescosOKen **a11fb32 limpio/gitDirty=false** yprodRelease/IL2CPP/ARM64/noDevelopmentfirmada,producto9131b1c idéntico a2ef4807devinstalada. DestinoXcodegenérico/sinprovisioningupdates/sinaccesoiPhone. Perfilincorporadovence **2026-11-07T17:58:46Z**. Logs/evidence3145archivos íntegros también enmtimeNs;514fuentesprotegidas/ProjectSettingsintactos,árbollimpioalterminar. [Informe completo](2026-11-04-first-shot-prod-preparation.md). **No instalación ni campañaPROD; no relanzamiento/precheck16**. Pausafísicaseconserva,autorizaciónPRODpresente/respaldo nuevo/ventanapendientes;PR30sinfusionar/S3–S4/T8sinimplementación.
+
+
+## PR #31 aprobada y regla experimental autorizada — PO, 2026-11-04
+
+Claude **APROBADO sin correcciones** sobre head **84ad994**. Verificó método140d0ca anterior al cálculo, arnés conforme, dos corridas byte a byte idénticas y base igual al mapa aprobado. Recalculó independientemente desde results.tsv retorno dentro, bote trasero y columnaC: coincide. PR#31 permanece sin fusionar.
+
+Lecturas de Claude comunicadas porPO, **no correcciones ni nuevos criterios**: (a) la regla corrige retorno alto/out pero no lateral; alrededor del80% de retornos focales dentro tocan lateral antes del bote por geometría de contacto a1,1–1,2m del frontis; (b) enC/P0,6–1,0 se llega a pared trasera antes del bote; (c) la guardia crea saltos entreP vecinas de hasta2,95m focal, lectura atribuida a la contracción rápida de la zona alcanzable conP cerca del frontis; (d) conP baja hay márgenes casi nulos al tin. No se recalculan aquí los resultados aprobados.
+
+**Decisión literal del PO:**
+
+> Dale con la recomendada
+
+Referencia punto por punto de la recomendación elegida porPO:
+
+1. **Bajar el punto**, conservando x/P pedidas y buscando hacia abajo el punto solicitado más alto que da retorno dentro. Se elige sobre bajar potencia por retornos/profundidad/casos sin solución y por conservar la potencia elegida. La velocidad final sigue pudiendo estar afectada por SpeedRaised original; no se modifica esa política.
+2. **Guardia**: base dentro intacta aunque corta; mostrar punto ajustado durante apuntado antes de soltar, C4.
+3. Margen sobre tin configurable, valor inicial **0,05m**; paso de búsqueda **0,05m**.
+4. P alta a pared trasera aceptada por ahora, observación First Rally.
+5. Lateral desde contacto próximo al frontis fuera de esta regla, observación S3/First Rally sin cambio ahora.
+6. PR propia con TDD, sin instalar y con tandas físicas primero. Regla **desactivada por defecto**; activarla exige otra decisiónPO. Preset experimental separado.
+
+Encargo: rama nueva apilada sobrePR#30, D5 aditiva a plan/propuesta r2, specv0.3 intacta. **Antes del código**, mismo arnés aprobado con margen0,05 en lugar del límite anterior0,010, método commiteado antes de calcular; informar cambios de sin solución/retorno/Δy/continuidad y detenerse antes de implementar si cambia el panorama. Mantener clasificación y guardia para que la base siga byte a byte; el margen limita la búsqueda nueva, no altera una base preservada.
+
+Producto condicionado a esa evaluación: claves compatiblesR2-3 de activación/margen/paso, wrapper deShotSolver sin cambiar contrato/SpeedRaised/TargetLowered/P2; sin solución devuelve resultado actual delsolver y lo registra. Vista previa/lanzamiento usan la misma resolución determinista y predicción aislada. Registro porgolpe: original, pedido trasregla,TargetUsed,flags/estado preservado-cambiado-sin solución. TDD RED poraserciones antes deimplementación, mínimos del encargo; regresión offline73contactos contra margen0,05 y desactivada baseidéntica; costo por solicitud depreview sin umbral nuevo, caché solo determinista si hace falta; suites completas frescas/check-release dev-prod/hashnuevo/106valores previos y41heredados/SimulationKey intactos. Sin build para instalar/instalación/sesión física conregla; su validación física exige otra autorización. C4 solo distingue original/ajustado; si requiere estilo nuevo, proponer y esperarPO.
+
+Tandas2–4/restauraciones dePR#30 antes de2026-11-07T17:58:46Z/7nov14:58:46Chile son prioridad. Trabajo offline solo mientras no haya sesión física, pausa inmediata al avisoPO. PR#30/#31 siguen sin fusionar; nuevaPR listaClaude sinfusionar y detenerse. S3–S4/T8 sinimplementación.
+
+
+### Comparación previa al código con margen0,05 — 2026-11-04
+
+Métodof901ea7 anterior alcálculo; doscorridas idénticas/baseidéntica/único cambio límiteY. Sin soluciónY11→20focal y114→160control; retorno26125→26116 y53247→53201. Bote trasero6270/22831 yC intactos; distribucionesΔy/continuidad conservan lectura. **Juicio deCodex:** no cambia panorama, siguen ventajasY frente aP y riesgos conocidos; procedeTDD autorizado, no aceptación física. [Comparación completa](2026-11-04-first-shot-return-rule-margin005.md). Regla desactivada por defecto; ninguna instalación.
+
+
+### Implementación experimental entregada en PR #32 — 2026-11-04
+
+[PR#32](https://github.com/rafaallendes-boop/squash-clash/pull/32), rama codex/sl56-return-rule apilada sobrePR#30. Métodof901ea7 antes de cálculo; comparaciónbf89e75 antes delcódigo/RED32695f7. Juicio previo deCodex: margen0,05 conserva panorama; Y dentro26116/26136focales y53201/53361controles, sin solución20/160, profundidad/C y máximos decontinuidad intactos. No se refinó método.
+
+Fuente final **a048e71**, TDD núcleos6RED poraserción→7/7; integración3RED→4/4; rechazo inválido1RED→GREEN. Regresión final fresca **530/530EditMode y301/301PlayMode**, sinCS/omitidas. Las79497solicitudes deproducto coinciden con margen0,05 (66447preservadas/12870cambiadas/180sin solución); desactivada TSV idéntico byte a byte a base. Sin solución devuelve solver original, incluidoUnsolved sin velocidad fabricada.
+
+Claves nuevas activación0/margen0,05/paso0,05; **defaults af2114f4cbc7 /109claves**,106valores previos y41heredados/SimulationKey intactos. Preset separado S2-return-rule/hash192546939375; no instalado. P0overlaynuevo3c37a3959ca8 calculadoUnity solo enesta rama; PR#30 instalada sigueP0dd122831f592. Una resolución compartida/cache exacta porbits, predicción aislada; C4usa mira original ymarcador blanco yaexistente antes deEnded, sin estilo nuevo. Puntos original/pedido/TargetUsed yflags/estado/costo registrados.
+
+**Límite del margen:** limita peticiones de búsqueda, no cambia guardia ni TargetLowered. Además de bases bajas preservadas,10cambios decontroles tienen TargetUsed bajo tin+0,05 por asistencia original (petición≈0,65/TargetUsed≈0,506259918); elJSONprevio ya lo contenía yse explicita ahora, sin alterar método. No se garantiza margen físico final absoluto ni se introduce filtro nuevo.
+
+Costo diagnósticoMac: resolver79497solicitudes p95≈0,8033ms/p99≈2,0327ms/máx≈3,5089ms, hasta81llamadas; cache exacta0llamadas. RutaTryPreviewReturn33casos(SL1/5/6×11P) p95≈1,0995ms sincache /0,0193ms con repetición exacta; no dibujo/GPU, nativo, H17 o umbral nuevo.
+
+Check-release dev/prod final desde **a048e71 limpio/gitDirty=false**, exportsfrescos/símbolos/módulos correctos. **Sinxcodebuild/IPA/app para instalar/instalación/iPhone/relanzar/preparar16.** Logs/evidence3145archivos/875351187bytes/rutas+SHA+tamaño+mtime intactos. D5aditiva/ShotSolver/P2/SL/specv0.3 intactos; ProjectSettingsrestaurados/árboles limpios al cierre. [Informe](2026-11-04-first-shot-return-rule-implementation.md), [verificación](../validation/evidence/2026-11-04-return-rule-product-validation.json), [reproducción](../diagnostics/2026-11-04-return-rule-product-reproduction.md).
+
+PR#30/#31/#32 sinfusionar; PR#32lista paraClaude/PO y detenerse. Activación por defecto yvalidación física de regla requieren decisión propia. Tandas2–4/restauraciones antes del7nov17:58:46Z primero; permanecen enproducto9131b1c/dev2ef4807/prod preparadaa11fb32, sin usar esta rama. Pausa física hasta avisoPO; avisar antes deinstalar si noalcanza. S3–S4/T8 sin implementación.
+
+
+### Revisión independiente de PR #32 aprobada — PO, 2026-11-04
+
+El PO comunica **APROBADO, sin correcciones** de Claude sobre **PR #32/head61df159**. Verificó el método de margen0,05 **f901ea7** anterior a la corrida, arnés con un solo cambio de línea y corridas idénticas; comparación **bf89e75** anterior al esqueleto TDD, RED6/7 poraserción→GREEN y suites530/530EditMode–301/301PlayMode; regla desactivada por defecto, ShotSolver/P2 intactos,106valores previos/SimulationKey intactos; D5aditiva sin cambiar líneas anteriores, decisión literal registrada y una entrada Estado vigente igual aPR#30. Esta aprobación no autoriza fusión, activación por defecto o validación física.
+
+**Observaciones de Claude para una futura activación, solo registro y sin cambios ahora:**
+
+1. Costo de la vista previa en el dispositivo: recalcula en cada frame del apuntado (Mac: máximo3,5ms,81llamadas). **Medir en el iPhone conDEVcerrado antes de cualquier sesión física con la regla.** No se ejecuta esa medición por este registro.
+2. La vista previa usa el contacto pronosticado; el punto al soltar puede diferir si cambia el timing.
+3. En10controles, TargetLowered deja TargetUsed bajo tin+0,05: el margen no garantiza el resultado final. Aplicarlo al resultado requiere otra decisión delPO.
+
+PR#30/#31/#32 siguen abiertas/sin fusionar. Activación por defecto y validación física requieren otra autorización. Tandas2–4 y sus restauraciones antes de **2026-11-07T17:58:46Z/7nov14:58:46Chile** siguen primero, con producto9131b1c/dev2ef4807/prod preparadaa11fb32. Pausa física hasta avisoPO, sin iPhone/relanzar/preparar16. Este ajuste solo documental no ejecuta código, tests, exports, builds, instalaciones o mediciones nuevos. S3–S4/T8 sin implementación.

@@ -21,7 +21,7 @@ using UnityEngine.UIElements;
 using Phase=UnityEngine.InputSystem.TouchPhase;
 namespace SquashClash.Runtime.Tests
 {
-    public sealed class ShotControllerTests
+    public sealed partial class ShotControllerTests
     {
         private AppBootstrap app;
         private ShotController controller;

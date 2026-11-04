@@ -955,3 +955,30 @@ Antes del feedback, repetir ejemplos de la triada para separar **OK** (orden/fij
 **Juicios por separado, respuestas literales:** conservar las preguntas de 2.7 «¿la pelota va donde apunto?», «¿el timing es justo?» (preliminar, sin afirmar calibración de latencia) y «¿el salto es aceptable?», más las16 preguntas originales de S1 que figuran en [respuestasM2-4](../../validation/evidence/2026-10-30-m24-po-answers.json). Relacionar sus respuestas con saturación/riesgos/fluidez/dirección sin inferir porcentajes de «no recuerdo» ni aprobación de otra fase. No confundir la mecánica referida por el PO con la medición técnica.
 
 **Cierre futuro:** recuperar evidencia antes de que opere la retención, restaurar P0 en **proceso nuevo**, observar el hash extendido propio de la build S2 y cero pendientes/selecciónP0, cotejar los tres archivos byte a byte con el respaldo de esa instalación. Preset/hash/número de claves real y proyecciones heredadas registrados. Informe nuevo separado de S1, limitaciones/desviaciones/NotEvaluated intactos; PR para Claude sin fusionar y parada para PO. Esta D4 se entrega ahora como documentación, no ejecuta ninguno de esos pasos.
+
+
+## Adenda D5 — retorno experimental bajando el punto (PO, 2026-11-04)
+
+**Aditiva:** todo el texto anterior y D1–D4 se conservan íntegros. Specv0.3 intacta. Decisión literal delPO **«Dale con la recomendada»**, referencia y aprobaciónClaude dePR#31/head84ad994 en [aprobaciones](../../reviews/2026-10-25-first-shot-po-approvals.md). Esta entrega es una PR propia apilada sobrePR#30; no modifica la campaña instalada ni autoriza fusionarPR#30/#31.
+
+### D5.1 Decisión y condición previa
+
+La mira sigue significando punto del frontis. Envoltura experimental delShotSolver original: si la solicitud ya retorna dentro de cancha, se conserva incluso corta; si no, mantener x/P y bajar y en pasos hasta la petición más alta probada con retorno dentro. Si no se encuentra, usar el resultado original delsolver, sin otra asistencia, y registrar sin solución. No cambiar contrato ni SpeedRaised/TargetLowered/P2. ConservarP no anula la elevación de velocidad existente.
+
+Margen tin configurable inicial0,05m; paso inicial0,05m. Antes del código, [método de margen](../../diagnostics/2026-11-04-sl56-margin005-method.md) commiteado antes del cálculo, idéntico al arnés aprobado salvo ese margen. Mismas73posiciones/99puntos/11P, guardia/clasificación/horizonte originales. Si cambia el panorama, detenerse y avisar antes de implementar; sin refinar parámetros tras resultados.
+
+### D5.2 Implementación y compatibilidad
+
+Tres claves nuevas compatibles segúnR2-3: activación, margen y paso; **desactivada por defecto**, margen/paso0,05. Nueva activación por defecto requiere decisiónPO. Preset experimental separado para la regla activada, sin tocar presets guardados/P0/Po-1. Los106valores previos,41heredados ySimulationKey se conservan; registrar hash real de defaults ampliados.
+
+Una única resolución determinista compartida entre vista previa y lanzamiento, con contexto/configuración de recepción y posición de contacto explícitos; simulación de predicción separada de pelota autoritativa. No aplicar al estado autoritativo una predicción vista antes de soltar. Registrar punto original, solicitud trasregla,TargetUsed yflags originales, estado preservado/cambiado/sin solución. Desactivada debe conservar salida y comportamiento previos. Sin solución conserva elShotSolution original aunque no sea retorno dentro.
+
+C4: distinguir intención original del punto ajustado durante apuntado, antes de soltar, usando como primera referencia la mira y el marcador factible ya existentes; no elegir un estilo visual nuevo sin proponerlo y esperar decisiónPO. No retargetear la intención delBegan. SpeedRaised/TargetLowered pueden separar petición trasregla deTargetUsed: registro distingue los tres puntos.
+
+### D5.3 Verificación y límites
+
+TDD con esqueleto compilable y RED poraserción antes de implementación: guardia preserva baseválida corta; cambio conserva x/P; búsqueda respeta tin+margen; sin solución conserva solver original; vista previa y lanzamiento coinciden para idéntica solicitud/contexto; desactivada idéntica al comportamiento previo. Casos negativos y futuras planificaciones no cambian criterios existentes.
+
+Regresión offline de73contactos/rejilla completa: activada contra evaluación margen0,05; desactivada contra base byte a byte. Medir costo por solicitud depreview (distribución y llamadas alsolver), sin umbral nuevo; caché si necesaria debe ser determinista y totalmente invalidada por contexto. Regresión completa fresca ycheck-release dev/prod desde árbol limpio; transitorios restaurados, nuevo hash/defaults y claves previas cotejados.
+
+P alta a pared trasera se acepta por ahora y se observa enFirstRally. Lateral desde contactos próximos al frontis queda fuera de esta regla, observación S3/FirstRally sin cambio. Sin build para instalar, instalación ni sesión física con la regla; validación física exige autorización propia. S3–S4/T8 sinimplementación. Tandas2–4/restauraciones dePR#30 antes del7nov17:58:46Z vanprimero; pausa al avisoPO. NuevaPR lista paraClaude, sin fusionar, y detenerse.

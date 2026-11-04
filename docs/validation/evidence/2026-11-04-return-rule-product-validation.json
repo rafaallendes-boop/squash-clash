@@ -1,0 +1,420 @@
+{
+  "schema": "return-rule-product-validation-v1",
+  "kind": "offline-product-regression-and-editor-cost",
+  "sourceCommit": "a048e71cbbb2bfefe4a3f3e81220c460f790e3f0",
+  "methodCommitBeforeMarginCalculation": "f901ea7",
+  "marginComparisonBeforeCode": "bf89e75",
+  "defaults": {
+    "hash": "af2114f4cbc7",
+    "keys": 109,
+    "previousValuesUnchanged": 106,
+    "inheritedValuesUnchanged": 41,
+    "inheritedProjection": "0d39e6016bd8",
+    "simulationKey": "166a96e319c7",
+    "enabled": false,
+    "margin": 0.05,
+    "step": 0.05,
+    "experimentalHash": "192546939375",
+    "p0OverlayHashNotInstalled": "3c37a3959ca8"
+  },
+  "offline": {
+    "requests": 79497,
+    "counts": {
+      "Preserved": 66447,
+      "Changed": 12870,
+      "NoSolution": 180
+    },
+    "mismatchCount": 0,
+    "firstMismatches": [],
+    "disabledByteIdentical": true,
+    "stopwatchFrequency": 10000000,
+    "uncachedMilliseconds": {
+      "n": 79497,
+      "min": 0.0038,
+      "p50": 0.0205,
+      "p95": 0.8033,
+      "p99": 2.0327,
+      "max": 3.5089
+    },
+    "cachedMilliseconds": {
+      "n": 79497,
+      "min": 0.0,
+      "p50": 0.0001,
+      "p95": 0.0001,
+      "p99": 0.0001,
+      "max": 0.0483
+    },
+    "solverCalls": {
+      "n": 79497,
+      "min": 1,
+      "p50": 1,
+      "p95": 31,
+      "p99": 60,
+      "max": 81
+    },
+    "cachedCallsAllZero": true
+  },
+  "previewRouteEditor": {
+    "environment": "Unity 6000.3.27f1 PlayMode on development Mac; not iPhone/native/H17",
+    "cases": [
+      {
+        "launch": 1,
+        "power": 0.0,
+        "uncachedMs": 0.0649,
+        "cachedMs": 0.0928,
+        "solverCalls": 1
+      },
+      {
+        "launch": 1,
+        "power": 0.1,
+        "uncachedMs": 0.0529,
+        "cachedMs": 0.0189,
+        "solverCalls": 1
+      },
+      {
+        "launch": 1,
+        "power": 0.2,
+        "uncachedMs": 0.0451,
+        "cachedMs": 0.0183,
+        "solverCalls": 1
+      },
+      {
+        "launch": 1,
+        "power": 0.3,
+        "uncachedMs": 0.0411,
+        "cachedMs": 0.0193,
+        "solverCalls": 1
+      },
+      {
+        "launch": 1,
+        "power": 0.4,
+        "uncachedMs": 0.0386,
+        "cachedMs": 0.0178,
+        "solverCalls": 1
+      },
+      {
+        "launch": 1,
+        "power": 0.5,
+        "uncachedMs": 0.0363,
+        "cachedMs": 0.0172,
+        "solverCalls": 1
+      },
+      {
+        "launch": 1,
+        "power": 0.6,
+        "uncachedMs": 0.0379,
+        "cachedMs": 0.0165,
+        "solverCalls": 1
+      },
+      {
+        "launch": 1,
+        "power": 0.7,
+        "uncachedMs": 0.0354,
+        "cachedMs": 0.0172,
+        "solverCalls": 1
+      },
+      {
+        "launch": 1,
+        "power": 0.8,
+        "uncachedMs": 0.0344,
+        "cachedMs": 0.0171,
+        "solverCalls": 1
+      },
+      {
+        "launch": 1,
+        "power": 0.9,
+        "uncachedMs": 0.033,
+        "cachedMs": 0.017,
+        "solverCalls": 1
+      },
+      {
+        "launch": 1,
+        "power": 1.0,
+        "uncachedMs": 0.0363,
+        "cachedMs": 0.017,
+        "solverCalls": 1
+      },
+      {
+        "launch": 5,
+        "power": 0.0,
+        "uncachedMs": 0.0418,
+        "cachedMs": 0.0136,
+        "solverCalls": 1
+      },
+      {
+        "launch": 5,
+        "power": 0.1,
+        "uncachedMs": 0.0376,
+        "cachedMs": 0.0147,
+        "solverCalls": 1
+      },
+      {
+        "launch": 5,
+        "power": 0.2,
+        "uncachedMs": 0.0386,
+        "cachedMs": 0.0148,
+        "solverCalls": 1
+      },
+      {
+        "launch": 5,
+        "power": 0.3,
+        "uncachedMs": 0.0418,
+        "cachedMs": 0.0128,
+        "solverCalls": 1
+      },
+      {
+        "launch": 5,
+        "power": 0.4,
+        "uncachedMs": 0.5022,
+        "cachedMs": 0.018,
+        "solverCalls": 17
+      },
+      {
+        "launch": 5,
+        "power": 0.5,
+        "uncachedMs": 0.6248,
+        "cachedMs": 0.0138,
+        "solverCalls": 22
+      },
+      {
+        "launch": 5,
+        "power": 0.6,
+        "uncachedMs": 0.7226,
+        "cachedMs": 0.0139,
+        "solverCalls": 24
+      },
+      {
+        "launch": 5,
+        "power": 0.7,
+        "uncachedMs": 0.8227,
+        "cachedMs": 0.0147,
+        "solverCalls": 26
+      },
+      {
+        "launch": 5,
+        "power": 0.8,
+        "uncachedMs": 0.9187,
+        "cachedMs": 0.0149,
+        "solverCalls": 28
+      },
+      {
+        "launch": 5,
+        "power": 0.9,
+        "uncachedMs": 1.0415,
+        "cachedMs": 0.0172,
+        "solverCalls": 30
+      },
+      {
+        "launch": 5,
+        "power": 1.0,
+        "uncachedMs": 1.0995,
+        "cachedMs": 0.0135,
+        "solverCalls": 31
+      },
+      {
+        "launch": 6,
+        "power": 0.0,
+        "uncachedMs": 0.0416,
+        "cachedMs": 0.0149,
+        "solverCalls": 1
+      },
+      {
+        "launch": 6,
+        "power": 0.1,
+        "uncachedMs": 0.0374,
+        "cachedMs": 0.0139,
+        "solverCalls": 1
+      },
+      {
+        "launch": 6,
+        "power": 0.2,
+        "uncachedMs": 0.0374,
+        "cachedMs": 0.0145,
+        "solverCalls": 1
+      },
+      {
+        "launch": 6,
+        "power": 0.3,
+        "uncachedMs": 0.0423,
+        "cachedMs": 0.013,
+        "solverCalls": 1
+      },
+      {
+        "launch": 6,
+        "power": 0.4,
+        "uncachedMs": 0.476,
+        "cachedMs": 0.0128,
+        "solverCalls": 17
+      },
+      {
+        "launch": 6,
+        "power": 0.5,
+        "uncachedMs": 0.6247,
+        "cachedMs": 0.0157,
+        "solverCalls": 22
+      },
+      {
+        "launch": 6,
+        "power": 0.6,
+        "uncachedMs": 0.7281,
+        "cachedMs": 0.0144,
+        "solverCalls": 24
+      },
+      {
+        "launch": 6,
+        "power": 0.7,
+        "uncachedMs": 0.8224,
+        "cachedMs": 0.0134,
+        "solverCalls": 26
+      },
+      {
+        "launch": 6,
+        "power": 0.8,
+        "uncachedMs": 0.9274,
+        "cachedMs": 0.0145,
+        "solverCalls": 28
+      },
+      {
+        "launch": 6,
+        "power": 0.9,
+        "uncachedMs": 1.0181,
+        "cachedMs": 0.0141,
+        "solverCalls": 30
+      },
+      {
+        "launch": 6,
+        "power": 1.0,
+        "uncachedMs": 1.1015,
+        "cachedMs": 0.0143,
+        "solverCalls": 31
+      }
+    ],
+    "uncachedMs": {
+      "n": 33,
+      "min": 0.033,
+      "p50": 0.0451,
+      "p95": 1.0995,
+      "p99": 1.1015,
+      "max": 1.1015
+    },
+    "cachedMs": {
+      "n": 33,
+      "min": 0.0128,
+      "p50": 0.0148,
+      "p95": 0.0193,
+      "p99": 0.0928,
+      "max": 0.0928
+    },
+    "solverCalls": {
+      "n": 33,
+      "min": 1,
+      "p50": 1,
+      "p95": 31,
+      "p99": 31,
+      "max": 31
+    }
+  },
+  "suites": {
+    "editmode": {
+      "total": 530,
+      "passed": 530,
+      "failed": 0,
+      "skipped": 0,
+      "endedUtc": "2026-11-04 21:11:10Z",
+      "xmlSha256": "8674cb17b2693f934f54f8cc6fecf92d1457b5132d73322b340872970655b8d1"
+    },
+    "playmode": {
+      "total": 301,
+      "passed": 301,
+      "failed": 0,
+      "skipped": 0,
+      "endedUtc": "2026-11-04 21:13:18Z",
+      "xmlSha256": "37eaf4630cf859fff670711dc992aba74b3b783dee8ccc10171627eba73d499b"
+    }
+  },
+  "exports": {
+    "dev": {
+      "profile": "dev",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "a048e71",
+        "profile": "dev",
+        "builtAtUtc": "2026-11-04T21:15:37.3483110Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": true,
+      "runtimeThermalBridge": true
+    },
+    "prod": {
+      "profile": "prod",
+      "metadata": {
+        "version": "0.1.0",
+        "gitHash": "a048e71",
+        "profile": "prod",
+        "builtAtUtc": "2026-11-04T21:15:59.6708880Z",
+        "unityVersion": "6000.3.27f1",
+        "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+        "gitDirty": false
+      },
+      "freshExport": true,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "nativeThermalBridge": false,
+      "runtimeThermalBridge": true
+    }
+  },
+  "integrity": {
+    "testedSourceFiles": 504,
+    "sourcesMatchTestsAfterExports": true,
+    "evidenceFiles": 3145,
+    "evidenceBytes": 875351187,
+    "evidencePathsHashesSizesMtimesUnchanged": true
+  },
+  "fullDataSha256": {
+    "product-final/product-disabled.tsv": "913551248ac43ad9e029dfbcd5d6551f9cf19cf9775faeb0e7b3a2aaaba69b43",
+    "product-final/product-enabled.tsv": "d035f4c9f7861de4ba811ab8076a6ef2e4d1229aa08a227e92a7fa6f7388e93d",
+    "product-final/product-states.tsv": "591c917d597e19972c621f971bed58b0fbbea75c8aac913e7dac9fb8fb0176ae"
+  },
+  "productSourceHashes": {
+    "Assets/SquashClash/Core/Simulation/AnalyticBallSimulation.cs": "f84953ee1f78ecd73575a4f23a753605abf60aa9dab630f2d1f4992b083f1428",
+    "Assets/SquashClash/Core/Simulation/Ballistics.cs": "caaab79469ce107223a881ec552fed696c9e058d0e55e6484137a23310d8cd06",
+    "Assets/SquashClash/Core/Simulation/BallState.cs": "bf2613ffb614750e5e53998d91783007e1a3adf5aeb09ce0a8342af2d7909825",
+    "Assets/SquashClash/Core/Simulation/PhysicsParams.cs": "fd5c83d8ba49ce6b498ded522e35bd4aa429f10187a8921c587de5b2c6b8a740",
+    "Assets/SquashClash/Core/Simulation/SurfaceMaterial.cs": "7e4fb3175f2ad0259026761a1648bbc55ab9b54b8a15d25c36cff67d658c52a2",
+    "Assets/SquashClash/Core/Simulation/IBallSimulation.cs": "3c29d80dd3537df8a1358f8623b3de35d151bdee6772a9135d9f55a3df66733d",
+    "Assets/SquashClash/Core/Simulation/ContactEvent.cs": "126813c787684da37bcedab50d963dd0334cad654f663a79665c5948c88b4e86",
+    "Assets/SquashClash/Core/Court/CourtDimensions.cs": "fd7b4c9d4574421b32374fec81da954726af664148d1cf3c460a314091a41546",
+    "Assets/SquashClash/Core/Court/SurfaceId.cs": "74a3a572072cb748b5fe58221da77c0cb8cdae97009264b3d7c3d0aa03dfbe99",
+    "Assets/SquashClash/Core/Court/CourtLines.cs": "e843855be96aadd1c0d43a7a2757547508f8e0bdd83806ffc31a5f68e4e25a81",
+    "Assets/SquashClash/Core/Court/LineBand.cs": "4601b2097e0eabbd906f487619540e0e69ae9c16296c1d26434b5a7d619f16dc",
+    "Assets/SquashClash/Core/Court/LineId.cs": "e635dc294046472314d5ba86a30132719632c787b3b5df81621e5ab36d08fe68",
+    "Assets/SquashClash/Core/Court/LineContactClassifier.cs": "7ce1d61e117878033016c0462af32aa65481d7532f57458b59d95c6bc00e4981",
+    "Assets/SquashClash/Core/Shot/ShotSolver.cs": "b1c629ff800d66148cb082d055bbfdc4c3cafaf431bca37f15465ae63a325cda",
+    "Assets/SquashClash/Core/Simulation/AnalyticBallSimulationFactory.cs": "d5460a03dec068117e5c26605839aaf1b244cc8056f14a97c77d5905b10b5dab",
+    "Assets/SquashClash/Core/Shot/ReturnShotResolver.cs": "31cbf59a375cdb24fee9de243ef4081f83bf7ad50703ecb2c69e125e08c46589",
+    "Assets/SquashClash/Core/Shot/ReturnFlightClassifier.cs": "2254f6f3517c8ea6bc4581c0882c6e3c9110a41f8ea0fdc2a69f0dd49099e591",
+    "Assets/SquashClash/Core/Config/ParamSet.cs": "86105715dbd4e8a83d39e582143f67fd055e9136c38e384b0429c85f5773c51d",
+    "Assets/SquashClash/Core/Config/ParamCatalog.cs": "7291105bdb17198d6fe6f86446d9da4363b330dab443835ce4858d23bd59b3d0",
+    "Assets/SquashClash/Core/Config/ParamDef.cs": "fca589361b177022a193fc4caa772e119c7d8933999b6bd56dac53c26a914f05",
+    "Assets/SquashClash/Core/Config/ParamKind.cs": "001629f4b5a733bf6576135a6d9d504ae45c44d2737fd1c91ed691bb17e2142e",
+    "Assets/SquashClash/Core/Config/ApplyClass.cs": "959578504371b48be07ec468d3662a3eb5728bd23eec73007317e75d1a8863ad"
+  },
+  "limits": [
+    "Not native iPhone performance or H17 acceptance.",
+    "Margin bounds searched requests; guard and original TargetLowered remain unchanged.",
+    "Ten changed control requests have TargetUsed below tin + 0.05 because original TargetLowered acts.",
+    "No default activation, native app build, installation or physical validation authorized."
+  ],
+  "externalHarnessSha256": "3ce1cbc58ff0310ee02153cad9074391e60bce4c7659eb5c5daa633faff2e6f6",
+  "externalComparisonSha256": "4be0eae206050740cf57a0943b60e771829f87dd47d6ad9d9bf4f47fa25b645a"
+}

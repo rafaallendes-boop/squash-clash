@@ -426,6 +426,9 @@
     {
       "key": "timing.showNotes",
       "value": 1
-    }
+    },
+    { "key": "shot.returnEnabled", "value": 0 },
+    { "key": "shot.returnTinMargin", "value": 0.05 },
+    { "key": "shot.returnSearchStep", "value": 0.05 }
   ]
 }

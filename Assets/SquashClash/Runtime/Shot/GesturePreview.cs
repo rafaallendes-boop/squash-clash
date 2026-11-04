@@ -147,7 +147,7 @@ namespace SquashClash.Runtime.Shot
         {
             if(!initialized)return;
             if(ContextChanged()||M24ViewportChanged()){if(Active||Sampling)input.CancelSystem();return;}
-            TickSling(now);
+            TickSling(now);UpdateReturnPreview(now);
             if(Sampling&&now-samplingStart>=120)FinishSampling(now,true,"elapsed");
         }
         private void Update(){Tick(input?.ReadRealTime()??0);RefreshSlingStatus();}

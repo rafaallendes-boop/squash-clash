@@ -23,5 +23,13 @@ namespace SquashClash.Runtime.Shot
             shotController.Enqueue(new ClosedGesture(shotHostLaunch,shotGestureId,primary,began,hasRelease?release:0,hasRelease,Outcome,aim,Power.P,GestureConfig,
                 M24?.Reason??Sling?.Reason??Outcome.ToString(),input.ReadRealTime(),M24?.Projection.ObservedAt??0,M24!=null?m24LockObservedAt:0,o2,m24Predecessor,preset,fileHash,app.Build.Label,shotLaunchHash,pending,seed));
         }
+        private void UpdateReturnPreview(double now)
+        {
+            if(!Active||shotController==null||!shotController.Snapshot.ReturnRule.Enabled)return;
+            var aim=M24!=null?M24.Aim:Sling!=null?Sling.Aim:Model.Aim;
+            if(view.IsInvalid||!shotController.TryPreviewReturn(aim,Power.P,now,out var result))
+            {view.ShowFeasible(default,false);return;}
+            view.ShowFeasible(result.Solution.TargetUsed,result.Solution.Solved&&(result.State==ReturnRuleState.Changed||result.Solution.TargetLowered));
+        }
     }
 }

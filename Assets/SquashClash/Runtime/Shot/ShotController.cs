@@ -13,7 +13,7 @@ using UnityEngine;
 namespace SquashClash.Runtime.Shot
 {
     // Receives immutable closures from GesturePreview; never subscribes to another input source.
-    public sealed class ShotController : MonoBehaviour
+    public sealed partial class ShotController : MonoBehaviour
     {
         private AppBootstrap app;
         private readonly Queue<ClosedGesture> orders=new Queue<ClosedGesture>();
@@ -50,7 +50,7 @@ namespace SquashClash.Runtime.Shot
         }
         private void OnLaunched(EffectiveConfig cfg)
         {
-            Snapshot=new ShotConfig(cfg.Source);seen.Clear();Presented=new PresentedPlans();AttemptConsumed=WaitingForContact=false;
+            Snapshot=new ShotConfig(cfg.Source);InitializeReturnResolver();seen.Clear();Presented=new PresentedPlans();AttemptConsumed=WaitingForContact=false;
             LastRecord=LastClosureRecord=pendingContact=null;LastDiscardReason=null;LastSolution=default;closedAt=null;recordVersion=0;
             double start=Stopwatch.GetTimestamp();
             var legal=new LegalSettings((float)cfg.Source.Get("legal.minHeight"),(float)cfg.Source.Get("legal.maxHeight"),cfg.Physics.StepHz,cfg.Physics.Gravity,cfg.Physics.BallRadius,cfg.Court);
@@ -111,7 +111,7 @@ namespace SquashClash.Runtime.Shot
             var contact=authoritative.States[(int)offset];
             LastSolution=Solve(shot,order,contact,record);FillSolution(record,LastSolution,contact);
             var reticle=app.GetComponentInChildren<AimReticleView>(true);reticle.gameObject.SetActive(true);
-            reticle.SetAim(order.Aim,AimState.Frozen,app.Host.ActiveConfig.Court);reticle.ShowFeasible(LastSolution.TargetUsed,LastSolution.Solved&&LastSolution.TargetLowered);
+            reticle.SetAim(order.Aim,AimState.Frozen,app.Host.ActiveConfig.Court);reticle.ShowFeasible(LastSolution.TargetUsed,LastSolution.Solved&&(LastSolution.TargetLowered||record.ReturnRuleState==ReturnRuleState.Changed.ToString()));
             if(!LastSolution.Solved){Fault(record,ShotResult.SystemFault,LastSolution.Reason);return;}
             pendingContact=record;
             if(decision.ContactStep>app.Host.Current.Step)
@@ -141,9 +141,7 @@ namespace SquashClash.Runtime.Shot
         private ShotSolution Solve(ShotConfig shot,ClosedGesture order,BallState contact,ShotRecord record)
         {
             double start=Stopwatch.GetTimestamp();
-            var cfg=app.Host.ActiveConfig;
-            var solution=ShotSolver.Solve(new ShotRequest(contact.Position,order.Aim,order.P),shot.VMin,shot.VMax,shot.VCap,cfg.Physics.Gravity,cfg.Physics.BallRadius,cfg.Court,
-                new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold),cfg.Physics);
+            var solution=ResolveReturn(shot,order,contact,record).Solution;
             record.SolverCostMs+=(Stopwatch.GetTimestamp()-start)*1000/Stopwatch.Frequency;return solution;
         }
         private static void FillSolution(ShotRecord r,ShotSolution s,BallState contact)
