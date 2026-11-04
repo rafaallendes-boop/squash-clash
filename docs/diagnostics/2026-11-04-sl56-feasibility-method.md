@@ -65,3 +65,9 @@ Repetir una vez el cálculo completo final y comparar salidas byte a byte como c
 ## Fin del alcance
 
 Entregar mapa e informe documental en PR#31 para Claude/PO, sin fusionar PR#30/#31. La elección de regla, valores y C4 requiere otra decisión. S3 sigue solo plan; S3–S4/T8 sin implementación. Pausa física y prioridad del perfil vigentes.
+
+## Precisión previa al cálculo: tramo de ida y tramo de retorno
+
+Algunos controles SL1–SL4 empiezan con el centro ya en la mitad trasera. Por eso, además de la columna de presencia/paso z≥4.875 antes del primer bote de toda la salida, se separará **paso a mitad trasera después del primer frontis y antes del primer bote**. Solo esa columna se interpretará como profundidad del retorno; no contar la posición inicial trasera del control como que el golpe volvió al fondo. Se conserva también la columna de primer bote en mitad trasera.
+
+Para la intersección descriptiva de retorno dentro de cancha, un out/tin/escape en el mismo instante del primer bote se registra por separado y se incluye como impedimento (antes o en ese instante), sin inventar arbitraje de partido. Esta precisión se confirma antes de calcular. Las matrices legibles por contacto mostrarán los P discretos de retorno dentro de cancha y de ese retorno con primer bote trasero; el JSON mantendrá las demás máscaras y flags. No se infiere continuidad entre muestras.
