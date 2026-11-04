@@ -34,6 +34,11 @@ namespace SquashClash.Core.Tests.Shot
         {foreach(float p in new[]{0f,.2f,.6f,1f}){var r=new ShotRequest(focal,new Vector2(3.2f,2.2f),p);var s=Resolver(false).Resolve(r);Assert.That(s.State,Is.EqualTo(ReturnRuleState.Disabled));Assert.That(s.SolverCalls,Is.EqualTo(1));Same(Original(r),s.Solution);}}
         [Test] public void RepeatedExactRequest_UsesDeterministicCachedResolution()
         {var resolver=Resolver(true);var r=new ShotRequest(focal,new Vector2(3.2f,2.2f),1);var a=resolver.Resolve(r);var b=resolver.Resolve(r);Assert.That(a.State,Is.EqualTo(ReturnRuleState.Changed));Same(a.Solution,b.Solution);Assert.That(b.SolverCalls,Is.EqualTo(0));}
+        [Test] public void InvalidOriginalAim_PreservesSolverFailure_WithoutSearching()
+        {
+            var r=new ShotRequest(focal,new Vector2(3.2f,6),1);var result=Resolver(true).Resolve(r);
+            Assert.That(result.State,Is.EqualTo(ReturnRuleState.NoSolution));Assert.That(result.SolverCalls,Is.EqualTo(1));Same(Original(r),result.Solution);
+        }
         [Test] public void NewKeys_DefaultOff_AndAll106PriorValuesAreUnchanged()
         {
             var p=ConfigFixtures.Default();foreach(string k in new[]{"shot.returnEnabled","shot.returnTinMargin","shot.returnSearchStep"})Assert.That(ParamCatalog.TryGet(k,out _),Is.True,k);
