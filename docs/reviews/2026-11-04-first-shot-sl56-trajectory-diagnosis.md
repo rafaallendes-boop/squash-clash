@@ -87,3 +87,5 @@ La observación del PO sobre lateral/elevación es **compatible** con el modelo 
 ## Integridad y entrega
 
 JSON derivado: 40 recepciones, 24 estados, eventos, hashes/configuración/limitaciones. Sin identificadores personalesdel iPhone,logs primarios versionados ni claves. Outputs nuevos soloenLogs/offline-sl56-20261104delworktree diagnóstico,ignorados. Producto/tests/defaults/SL/spec/plan originales intactos. PR documental Claude,sin fusionar;PR #30sin fusionar/S3–S4/T8sinimplementación. Sesión física en pausa;16 no preparado/restauración tanda 2 pendiente.
+
+**Entrega:** [PR #31 para Claude/PO](https://github.com/rafaallendes-boop/squash-clash/pull/31), apilada sobre PR #30; ambas abiertas y sin fusionar. Base documental actualizada sin cambios de producto, conservando los commits de método anteriores al cálculo.

@@ -1223,3 +1223,10 @@ Sesiónfísicaenpausa;noiPhone/relanzar/preparar16. Logs/evidenceoriginalesintac
 Método 975b597/2141676 anterior al primer cálculo; auditoría de endpoints del arnés 4a55d80, sin cambio P2. Selección primaria de40recepciones/24Applied, sin extras: ejecución P2 original offline repetida con salida idéntica byte a byte. [Informe de trayectoria](2026-11-04-first-shot-sl56-trajectory-diagnosis.md), [método](../diagnostics/2026-11-04-sl56-p2-method.md), [derivado](../validation/evidence/2026-11-04-sl56-p2-offline.json), [reproducción](../diagnostics/2026-11-04-sl56-p2-reproduction.md). Primer frontis respetado, pero trayectoria posterior con laterales/out/escape según tabla y limitaciones; sin atribuir campaña nueva, Fail nuevo o elección del PO. Ninguna opción seleccionada.
 
 [Plan S3 documental](2026-11-04-first-shot-s3-documentary-plan.md), tareas3.1–3.4, dependencias sobre S2/M2-4, TDD futuro y validación propia; no modifica plan/spec ni autoriza código. Sesión física permanece en pausa, sin acceso al iPhone/relanzamiento/preparación16. PR30 sin fusionar; entrega en PR documental propia para Claude, sin fusionar ni implementación S3–S4/T8.
+
+
+### Entrega para revisión de Claude/PO — PR #31, 2026-11-04
+
+[PR #31](https://github.com/rafaallendes-boop/squash-clash/pull/31) abierta, no borrador, sobre firstshot/s2-m24/PR#30, sin fusionar. Solo siete archivos documentales respecto de #30; métodos previos y datos derivados preservados, ningún producto/test/default/SL/spec/plan/criterio modificado. Ambas historias documentales se sincronizaron conservando los commits originales de predeclaración. Fuentes y primarios cotejados por hashes;141rutas de enlaces locales comprobadas. Ningún mensaje/revisión externa solicitado por herramientas.
+
+Preparación PROD en #30, builda11fb32firmada/sininstalar,Logs/evidenceintactos. Pausa física permanece por instrucción del PO;16sinpreparar. Perfilvence7nov17:58:46Z/14:58:46Chile;las reservas deagenda son propuesta, disponibilidad aún pendiente. No implementación S3–S4/T8 ni elección de opción de trayectoria.
