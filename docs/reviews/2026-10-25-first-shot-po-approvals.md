@@ -1240,3 +1240,20 @@ Tandas2–4/restauraciones dePR#30 antes de2026-11-07T17:58:46Z/7nov14:58:46Chil
 ### Comparación previa al código con margen0,05 — 2026-11-04
 
 Métodof901ea7 anterior alcálculo; doscorridas idénticas/baseidéntica/único cambio límiteY. Sin soluciónY11→20focal y114→160control; retorno26125→26116 y53247→53201. Bote trasero6270/22831 yC intactos; distribucionesΔy/continuidad conservan lectura. **Juicio deCodex:** no cambia panorama, siguen ventajasY frente aP y riesgos conocidos; procedeTDD autorizado, no aceptación física. [Comparación completa](2026-11-04-first-shot-return-rule-margin005.md). Regla desactivada por defecto; ninguna instalación.
+
+
+### Implementación experimental entregada en PR #32 — 2026-11-04
+
+[PR#32](https://github.com/rafaallendes-boop/squash-clash/pull/32), rama codex/sl56-return-rule apilada sobrePR#30. Métodof901ea7 antes de cálculo; comparaciónbf89e75 antes delcódigo/RED32695f7. Juicio previo deCodex: margen0,05 conserva panorama; Y dentro26116/26136focales y53201/53361controles, sin solución20/160, profundidad/C y máximos decontinuidad intactos. No se refinó método.
+
+Fuente final **a048e71**, TDD núcleos6RED poraserción→7/7; integración3RED→4/4; rechazo inválido1RED→GREEN. Regresión final fresca **530/530EditMode y301/301PlayMode**, sinCS/omitidas. Las79497solicitudes deproducto coinciden con margen0,05 (66447preservadas/12870cambiadas/180sin solución); desactivada TSV idéntico byte a byte a base. Sin solución devuelve solver original, incluidoUnsolved sin velocidad fabricada.
+
+Claves nuevas activación0/margen0,05/paso0,05; **defaults af2114f4cbc7 /109claves**,106valores previos y41heredados/SimulationKey intactos. Preset separado S2-return-rule/hash192546939375; no instalado. P0overlaynuevo3c37a3959ca8 calculadoUnity solo enesta rama; PR#30 instalada sigueP0dd122831f592. Una resolución compartida/cache exacta porbits, predicción aislada; C4usa mira original ymarcador blanco yaexistente antes deEnded, sin estilo nuevo. Puntos original/pedido/TargetUsed yflags/estado/costo registrados.
+
+**Límite del margen:** limita peticiones de búsqueda, no cambia guardia ni TargetLowered. Además de bases bajas preservadas,10cambios decontroles tienen TargetUsed bajo tin+0,05 por asistencia original (petición≈0,65/TargetUsed≈0,506259918); elJSONprevio ya lo contenía yse explicita ahora, sin alterar método. No se garantiza margen físico final absoluto ni se introduce filtro nuevo.
+
+Costo diagnósticoMac: resolver79497solicitudes p95≈0,8033ms/p99≈2,0327ms/máx≈3,5089ms, hasta81llamadas; cache exacta0llamadas. RutaTryPreviewReturn33casos(SL1/5/6×11P) p95≈1,0995ms sincache /0,0193ms con repetición exacta; no dibujo/GPU, nativo, H17 o umbral nuevo.
+
+Check-release dev/prod final desde **a048e71 limpio/gitDirty=false**, exportsfrescos/símbolos/módulos correctos. **Sinxcodebuild/IPA/app para instalar/instalación/iPhone/relanzar/preparar16.** Logs/evidence3145archivos/875351187bytes/rutas+SHA+tamaño+mtime intactos. D5aditiva/ShotSolver/P2/SL/specv0.3 intactos; ProjectSettingsrestaurados/árboles limpios al cierre. [Informe](2026-11-04-first-shot-return-rule-implementation.md), [verificación](../validation/evidence/2026-11-04-return-rule-product-validation.json), [reproducción](../diagnostics/2026-11-04-return-rule-product-reproduction.md).
+
+PR#30/#31/#32 sinfusionar; PR#32lista paraClaude/PO y detenerse. Activación por defecto yvalidación física de regla requieren decisión propia. Tandas2–4/restauraciones antes del7nov17:58:46Z primero; permanecen enproducto9131b1c/dev2ef4807/prod preparadaa11fb32, sin usar esta rama. Pausa física hasta avisoPO; avisar antes deinstalar si noalcanza. S3–S4/T8 sin implementación.
