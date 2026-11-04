@@ -1191,3 +1191,10 @@ Con el procedimiento confirmado se preguntó una condición cada vez, solo con n
 ### Modal de preguntas solicitado por el PO durante el cierre de 14 — 2026-11-01
 
 Literal: **«Para el resto de las preguntas dejamelas de una para ir respondiendo en un pequeño modal.»** Recepción-registro Mac **2026-11-02T00:55:27.212861+00:00 / 2026-11-01T21:55:27.212861-03:00**. Autoriza desde este punto la desviación de modalidad: agrupar las preguntas restantes en un modal con campos separados, manteniendo los literales y sin mostrar resultados previamente. Las preguntas ya respondidas no se repiten; la triada por intento solo donde §6.1 la requiere se mantiene asociada al intento. No cambia el contenido de la predeclaración ni sus criterios/umbrales, ni autoriza bloques adicionales o fusión.
+
+
+## 2026-11-04 — diagnóstico SL5/SL6 y plan S3, solo documentación offline
+
+POautoriza diagnóstico enrama/worktreepropiosdesdeheadPR30 **dfffd58**: significado de mira enspec/propuesta, simulaciónP2offline deestadosdecontacto10–13conmétodopredeclaradoantesdecalcular,primerbote/laterales/outyopcionesconventajas/riesgos,sinelegir. AutorizaademásplanS3documental3.1–3.4sinimplementación;CodexlosagrupaenmismaPRdocumentalseparadade#30. Método: [predeclaración](../diagnostics/2026-11-04-sl56-p2-method.md),commitantesdelprimer cálculo.
+
+Sesiónfísicaenpausa;noiPhone/relanzar/preparar16. Logs/evidenceoriginalesintactos/sololectura. Sinproducto/tests/defaults/SL/spec/criteriosnuevos;PRparaClaude,sinfusionar. PreparaciónPRODocurreporseparadoenworktreeS2y **noautoriza instalar**. Perfilconocidovence7nov17:58:46Z;POpresente/autorizaciónpropia/respaldo nuevoantesdecualquierinstalación. PR30sinfusionar/S3–S4/T8sinimplementación.
