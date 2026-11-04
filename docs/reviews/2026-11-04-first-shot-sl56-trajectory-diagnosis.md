@@ -38,6 +38,24 @@ Out es **geometría de impacto en pared finita** según líneas originales/huell
 
 En 24/24 el primer impacto es frontis; error máximo a TargetUsed **0,000005243m** (~0,0053mm), descriptivo offline. No es error humano ni precisión respecto de intención. Impact-cap: 24/24 cero. Todos alcanzaron segundo bote antes del horizonte, pero 11 primeros botes son fuera y parte delrecorrido es continuación contrafactual después de out/escape. Doscasos producen contactos de un plano fuera del ancho real de pared; no se etiquetan como out de pared finita. El JSON mantiene esos eventos/márgenes.
 
+## Lectura conjunta descriptiva — corrección de revisión Claude
+
+Calculada **solo desde el JSON derivado existente**, sin volver a ejecutar la simulación. La unión de las tres condiciones —out en pared antes del primer bote, envolvente superada o primer bote fuera del rectángulo— contiene **21/24 contactos**. Las condiciones se solapan; no se suman sus conteos ni se crea un criterio de aceptación.
+
+Los **3 restantes** son los siguientes:
+
+| Caso | Primer bote x (m) | Primer bote z desde el frontis (m) | z redondeada a una décima |
+|---|---:|---:|---:|
+| 10-02 | 4,660476 | 1,96420944 | 2,0 |
+| 11-07 | 6,24676466 | 3,08716846 | 3,1 |
+| 11-08 | 5,102349 | 4,001148 | 4,0 |
+
+Los tres botan en la **mitad delantera** de la cancha de 9,75 m: z < 4,875 m. Ninguno de esos tres retornos sin las condiciones anteriores llega a la mitad trasera o al fondo. Los otros21 no se presentan como retornos jugables al fondo: sus botes o continuaciones posteriores al out/escape conservan las limitaciones ya declaradas.
+
+**Precisión de la formulación recibida:** «≤4,0 m» solo describe aquí la cifra redondeada. El caso11-08 es **4,001148 m**, aproximadamente1,148 mm por encima de4,0 m; por tanto, no se afirma esa desigualdad literal para los tres. El alcance descriptivo de la observación es que los tres quedan alrededor de4m o menos y antes de4,875m, sin mover valores, bandas, criterios ni la frontera geométrica de media cancha.
+
+La interpretación se calcula como OR sobre firstWallOut.timeSim < firstFloor.timeSim, exceededGeometryEnvelope y firstFloorOutsideCourt. La lectura de envolvente conserva el horizonte del derivado original; no se transforma retroactivamente en una medida exclusiva anterior al primer bote.
+
 ## Detalle de los24contactos
 
 Tiempo desde contacto en segundos de simulación; equivalente real descriptivo t/0,65, sin medición nativa. Bote=(x;z)m. Fuera mantienecálculo delsuelo no acotado y **no es bote legal**. Out indica primer contacto out en pared finita. **Se sigue calculando tras out** para localizar botes; no significa que el runtime mostrara todo hasta el relanzamiento.
@@ -71,7 +89,7 @@ Tiempo desde contacto en segundos de simulación; equivalente real descriptivo t
 
 La observación del PO sobre lateral/elevación es **compatible** con el modelo actual y estos estados. En 13/24 hay lateral antes del primer bote; 9/24 out geométrico en pared finita antes de bote;otros atraviesan regiones no acotadas por la pared planar al superar 6 m. Esto localiza diferencia entre contrato de impacto en frontis y expectativa de retorno; **no adjudica causa perceptiva completa**, no demuestra recorrido realmente visto ni clasifica un bug cerrado. Captura real/contraste humano requerirían autorización propia.
 
-## Opciones para decisión del PO, sin elección
+## Opciones registradas antes de la decisión posterior del PO
 
 | Opción posible | Ventaja | Riesgo/coste | Autorización previa necesaria |
 |---|---|---|---|
@@ -82,10 +100,14 @@ La observación del PO sobre lateral/elevación es **compatible** con el modelo 
 | Agregar restricciones posteriores al solver (ángulo/descenso/bote) | Explicita una garantía hoy ausente. | Puede volver incompatiblesAim,P ytrayectoria; implicaría cambiarobjetivo/velocidad/fallar oasistenciaoculta. | Contrato/precedencias/criteriosPO yTDDenotraPR; sinvalor elegido. |
 | Ampliar representación del límite físico | Evita interpretar planos fuera decancha como retorno normal. | Alcance mayor/nuevosestados; no resuelve significado de Aim. | Diseño/autorizaciónpropia; no reabrirgateP2por inferencia. |
 
-**Ninguna opción seleccionada.** No tuning ni objetivo bajo promovido. S3calidad/feedback no debe corregirSL5/SL6silenciosamente ni introducir desvíolateral. [PlanS3documental](2026-11-04-first-shot-s3-documentary-plan.md) conserva la frontera.
+**Histórico de la entrega ef7edb3:** entonces no había una opción seleccionada. La decisión posterior mantiene la mira en el frontis y pide mapa antes de elegir una regla; no hay tuning ni objetivo bajo promovido. S3calidad/feedback no debe corregirSL5/SL6silenciosamente ni introducir desvíolateral. [PlanS3documental](2026-11-04-first-shot-s3-documentary-plan.md) conserva la frontera.
 
 ## Integridad y entrega
 
 JSON derivado: 40 recepciones, 24 estados, eventos, hashes/configuración/limitaciones. Sin identificadores personalesdel iPhone,logs primarios versionados ni claves. Outputs nuevos soloenLogs/offline-sl56-20261104delworktree diagnóstico,ignorados. Producto/tests/defaults/SL/spec/plan originales intactos. PR documental Claude,sin fusionar;PR #30sin fusionar/S3–S4/T8sinimplementación. Sesión física en pausa;16 no preparado/restauración tanda 2 pendiente.
 
 **Entrega:** [PR #31 para Claude/PO](https://github.com/rafaallendes-boop/squash-clash/pull/31), apilada sobre PR #30; ambas abiertas y sin fusionar. Base documental actualizada sin cambios de producto, conservando los commits de método anteriores al cálculo.
+
+## Decisión posterior del PO — 2026-11-04
+
+El PO mantiene la mira como punto del frontis y autoriza investigar una regla de golpe jugable en el solver, con ajuste visible como C4, **sin elegir aún la regla**. Literal completo y alcance del mapa en [aprobaciones](2026-10-25-first-shot-po-approvals.md). Las opciones anteriores se conservan como historial, no como alternativas todavía abiertas para redefinir la mira. El nuevo [método de mapa offline](../diagnostics/2026-11-04-sl56-feasibility-method.md) se confirma en Git antes de calcular; ninguna opción de producto ni implementación queda autorizada.

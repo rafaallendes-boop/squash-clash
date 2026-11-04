@@ -1230,3 +1230,16 @@ Método 975b597/2141676 anterior al primer cálculo; auditoría de endpoints del
 [PR #31](https://github.com/rafaallendes-boop/squash-clash/pull/31) abierta, no borrador, sobre firstshot/s2-m24/PR#30, sin fusionar. Solo siete archivos documentales respecto de #30; métodos previos y datos derivados preservados, ningún producto/test/default/SL/spec/plan/criterio modificado. Ambas historias documentales se sincronizaron conservando los commits originales de predeclaración. Fuentes y primarios cotejados por hashes;141rutas de enlaces locales comprobadas. Ningún mensaje/revisión externa solicitado por herramientas.
 
 Preparación PROD en #30, builda11fb32firmada/sininstalar,Logs/evidenceintactos. Pausa física permanece por instrucción del PO;16sinpreparar. Perfilvence7nov17:58:46Z/14:58:46Chile;las reservas deagenda son propuesta, disponibilidad aún pendiente. No implementación S3–S4/T8 ni elección de opción de trayectoria.
+
+
+## Revisión Claude de PR #31 y decisión del PO — 2026-11-04
+
+El PO comunica **APROBADO CON CORRECCIONES** de Claude sobre head **ef7edb3**. Claude verificó método fijado antes del cálculo, estados coincidentes con el JSONL primario (SHA-256 e8d3be96…,24contactos idénticos) y cifras coherentes con una cota balística independiente. Correcciones autorizadas, solo documentales: lectura conjunta desde el JSON existente y una sola entrada de estado vigente coherente entre PR#30/#31. La lectura da21/24 por unión; el caso11-08 tienez4,001148m (4,0m redondeados), precisión preservada sin afirmar≤4,0literal ni cambiar criterios. Los tres restantes quedan antes de4,875m.
+
+**Decisión literal del PO:**
+
+> Mantenemos la mira como punto del frontis. La dirección a investigar es una regla de golpe jugable en el solver, con ajuste visible como el de C4. Antes de elegir la regla, haz un mapa offline de factibilidad.
+
+Alcance autorizado del mapa, exclusivamente diagnóstico: posiciones de los24contactos10–13, control con contactosSL1–SL4 de tanda1, rejilla predeclarada de puntos del frontis/P con ShotSolver/P2 originales sin cambios; primer frontis/out antes de bote/escape/primer bote(x,z)/mitad trasera/laterales; resumen porcontacto de zonas/P que permanecen en juego y alcanzan profundidad/fondo. Método y commit anteriores al cálculo. Sin elegir regla/valores de producto ni implementación; ninguna opción de producto autorizada.
+
+**Prioridad literal:** las tandas2–4 de PR#30 antes del vencimiento **2026-11-07T17:58:46Z** van primero; el mapa solo se hace cuando no haya sesión física. La pausa anterior continúa hasta que el PO avise, sin tocar el iPhone, relanzar o preparar16. Perfil insuficiente→avisar antes de instalar. PR#30/#31 siguen sin fusionar; sin producto/tests/defaults/SL/spec/criterios nuevos.
