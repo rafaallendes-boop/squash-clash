@@ -1267,3 +1267,14 @@ La candidata es **bajar el punto conservando x y P pedidas**. Solo diagnóstico 
 Lectura **exploratoria atribuida aClaude, fuera del método del mapa y no formal**, comunicada porPO: enC(3.2,2.2),24focales conP0.2 dentro/cortos, P0.3fondo17/24, P≥0.4out; bajar punto misma x/P daría24/24dentro y fondo conP0.3–0.7/y0.7–1.5, sin cambio en49controles; bajar potencia17/24fondo. Se conserva como contexto, no resultados formales ni objetivo que el arnés deba alcanzar. El método formal distingue primer bote trasero de pared trasera y conserva retornos ya dentro aunque sean cortos.
 
 Prioridad: tandas2–4 dePR#30 y restauraciones antes de2026-11-07T17:58:46Z; evaluación solo sin sesión física. No producto/tests/defaults/SL/spec/plan/criterios ni implementación; C4 solo nota de diseño. PR#30/#31 sin fusionar.
+
+
+### Entrega de evaluación offline de la candidata — 2026-11-04
+
+Método **140d0ca confirmado antes del primer cálculo**, sin refinamientos tras resultados. Mismas73posiciones,99puntos y11P:79.497solicitudes/brazo,238.491filas base/Y/P. ShotSolver/P2 originales sin cambios; dos ejecuciones con cincoTSV idénticos byte a byte; base completa idéntica al mapa aprobado. Auditadas380.725referencias de candidatos/195.936evaluaciones únicas,521protegidos yLogs/evidence3145archivos intactos. Ninguna build/suite/instalación/acceso al iPhone nuevo.
+
+Y conserva exactamente17.403bases focales y49.044controles ya dentro; cambia8.722/4.203 y deja11/114sin solución encontrada. Retorno dentro Y26.125/26.136focales y53.247/53.361controles; bajarP26.099/26.136 y53.089/53.361. EnC, Y llega a mitad trasera24/24focales P0,3–1,0 ybajarP17/24; los539controles deC quedan intactos, pero toda la rejilla decontroles sí tiene cambios. Retornos bajos/suaves ya válidos preservados; solicitudes antesUnsolved pueden cambiar o seguir sin solución.
+
+Hay márgenes casi nulos junto al tin enP baja y variaciones deTargetUsed entre vecinos (focal2,95m al variarP, controles hasta3,913845m al variarx), distinguiendo búsqueda externa y asistencias originales. Son datos descriptivos, sin criterio nuevo ni percepción humana medida. C4 solo nota; **no se elige regla/parámetros de producto ni se declara aprobada la candidata**. [Informe](2026-11-04-first-shot-sl56-lowering-candidate.md), [método](../diagnostics/2026-11-04-sl56-lowering-rule-method.md), [reproducción](../diagnostics/2026-11-04-sl56-lowering-rule-reproduction.md), [resumen](../validation/evidence/2026-11-04-sl56-lowering-summary.json). Se entrega para nueva revisión Claude/PO y se detiene.
+
+Prioridad física vigente: tandas2–4 y restauraciones antes de2026-11-07T17:58:46Z/7nov14:58:46Chile; pausa hasta aviso delPO, sin tocar iPhone/relanzar/preparar16. InstalaciónPROD requiere autorización propia/respaldo nuevo; avisar antes deinstalar si no alcanza. PR#30/#31 sin fusionar; S3–S4/T8 sin implementación.
