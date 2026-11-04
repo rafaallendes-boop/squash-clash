@@ -1191,3 +1191,16 @@ Con el procedimiento confirmado se preguntó una condición cada vez, solo con n
 ### Modal de preguntas solicitado por el PO durante el cierre de 14 — 2026-11-01
 
 Literal: **«Para el resto de las preguntas dejamelas de una para ir respondiendo en un pequeño modal.»** Recepción-registro Mac **2026-11-02T00:55:27.212861+00:00 / 2026-11-01T21:55:27.212861-03:00**. Autoriza desde este punto la desviación de modalidad: agrupar las preguntas restantes en un modal con campos separados, manteniendo los literales y sin mostrar resultados previamente. Las preguntas ya respondidas no se repiten; la triada por intento solo donde §6.1 la requiere se mantiene asociada al intento. No cambia el contenido de la predeclaración ni sus criterios/umbrales, ni autoriza bloques adicionales o fusión.
+
+
+## 2026-11-04 — pausa física y preparación offline autorizadas por el PO
+
+El PO comunica que no puede completar la autenticación de Duplicación porque está en el trabajo. Orden literal: **«Deja la sesión física en pausa tal como está. No toques el iPhone, no relances la app y no prepares 16. Cuando vuelva, te aviso, y entonces verificas P0 en un proceso nuevo y preparas 16 según el protocolo.»** Sustituye la continuación física pendiente; no implica restauración observada ni cierre de tanda2.
+
+Autoriza sin acceso al iPhone:
+
+1. Preparar tanda4PROD: check-release dev/prod y buildprodRelease de la misma fuente de producto de devinstalada, exportslimpios/gitDirty=false; **no instalar**, instalaciónconautorizaciónpropiaPOpresente/respaldo nuevo§2/§8. **No modificar Logs/evidence.** Dejarworktree/ProjectSettingslimpios.
+2. DiagnósticoSL5/SL6 solo documental en rama/worktree propios desdeheadPR30: contrato de mira en spec/propuesta; **predeclarar antes de calcular** simulaciónP2offline desdecontactosregistrados10–13 conprimerbote/laterales/out;opcionesconventajas/riesgos,sinelegir. Sinproducto/tests/defaults/SL/spec/criteriosnuevos. PRClaude sinfusionar.
+3. PlanS3documental3.1–3.4a laluzdeS2/M2-4, sinimplementar/autorizarcódigo. Se agrupa con diagnóstico en PRdocumental separada de#30.
+
+Referencia deproducto9131b1c, appdevinstalada0.1.0+2ef4807;headPR30alrecibirencargo **dfffd58cc984f3902ce823644a35fa8d4b8cac8f**. Perfilconocidovence7nov17:58:46Z/14:58:46Chile;planificarrestantestandasconsusrestauracionesantesdelfin,advertirantesdeinstalarsinoalcanza. PR30sinfusionar;S3–S4/T8sinimplementación. PreparaciónPROD se registra en [informe](2026-11-04-first-shot-prod-preparation.md); no autoriza tocar el teléfono.
