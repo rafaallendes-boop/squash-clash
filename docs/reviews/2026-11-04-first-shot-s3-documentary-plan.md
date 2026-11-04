@@ -75,7 +75,7 @@ PROD S3 requiere verificación funcional real de sonido/háptica/notas/swing con
 ## Decisiones pendientes del PO
 
 - Autorizar o no la implementación futura de S3 y su división en incrementos, una vez fijada la fuente de S2.
-- Elegir tratamiento de la observación SL5/SL6 en su PR propia; ninguna opción del diagnóstico queda seleccionada aquí.
+- La decisión posterior del PO mantiene la mira como punto del frontis y pide un mapa offline antes de elegir una regla de golpe jugable con ajuste visible C4. El [mapa documental](2026-11-04-first-shot-sl56-feasibility-map.md) no elige esa regla ni autoriza incorporarla a S3.
 - Resolver cualquier incompatibilidad real del invariante §17.A.12 que aparezca al implementar T3.1; no anticipar una excepción.
 - Autorizar protocolo/instalaciones/campañas S3 y disponibilidad, con fuente de audio/háptica y condiciones verificadas.
 
