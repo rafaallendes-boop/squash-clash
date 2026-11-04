@@ -1204,3 +1204,8 @@ Autoriza sin acceso al iPhone:
 3. PlanS3documental3.1–3.4a laluzdeS2/M2-4, sinimplementar/autorizarcódigo. Se agrupa con diagnóstico en PRdocumental separada de#30.
 
 Referencia deproducto9131b1c, appdevinstalada0.1.0+2ef4807;headPR30alrecibirencargo **dfffd58cc984f3902ce823644a35fa8d4b8cac8f**. Perfilconocidovence7nov17:58:46Z/14:58:46Chile;planificarrestantestandasconsusrestauracionesantesdelfin,advertirantesdeinstalarsinoalcanza. PR30sinfusionar;S3–S4/T8sinimplementación. PreparaciónPROD se registra en [informe](2026-11-04-first-shot-prod-preparation.md); no autoriza tocar el teléfono.
+
+
+### Resultado de preparación PROD offline, sin instalación — 2026-11-04
+
+Checksdev/prodfrescosOKen **a11fb32 limpio/gitDirty=false** yprodRelease/IL2CPP/ARM64/noDevelopmentfirmada,producto9131b1c idéntico a2ef4807devinstalada. DestinoXcodegenérico/sinprovisioningupdates/sinaccesoiPhone. Perfilincorporadovence **2026-11-07T17:58:46Z**. Logs/evidence3145archivos íntegros también enmtimeNs;514fuentesprotegidas/ProjectSettingsintactos,árbollimpioalterminar. [Informe completo](2026-11-04-first-shot-prod-preparation.md). **No instalación ni campañaPROD; no relanzamiento/precheck16**. Pausafísicaseconserva,autorizaciónPRODpresente/respaldo nuevo/ventanapendientes;PR30sinfusionar/S3–S4/T8sinimplementación.
