@@ -1209,3 +1209,29 @@ Referencia deproducto9131b1c, appdevinstalada0.1.0+2ef4807;headPR30alrecibirenca
 ### Resultado de preparación PROD offline, sin instalación — 2026-11-04
 
 Checksdev/prodfrescosOKen **a11fb32 limpio/gitDirty=false** yprodRelease/IL2CPP/ARM64/noDevelopmentfirmada,producto9131b1c idéntico a2ef4807devinstalada. DestinoXcodegenérico/sinprovisioningupdates/sinaccesoiPhone. Perfilincorporadovence **2026-11-07T17:58:46Z**. Logs/evidence3145archivos íntegros también enmtimeNs;514fuentesprotegidas/ProjectSettingsintactos,árbollimpioalterminar. [Informe completo](2026-11-04-first-shot-prod-preparation.md). **No instalación ni campañaPROD; no relanzamiento/precheck16**. Pausafísicaseconserva,autorizaciónPRODpresente/respaldo nuevo/ventanapendientes;PR30sinfusionar/S3–S4/T8sinimplementación.
+
+
+## PR #31 aprobada y regla experimental autorizada — PO, 2026-11-04
+
+Claude **APROBADO sin correcciones** sobre head **84ad994**. Verificó método140d0ca anterior al cálculo, arnés conforme, dos corridas byte a byte idénticas y base igual al mapa aprobado. Recalculó independientemente desde results.tsv retorno dentro, bote trasero y columnaC: coincide. PR#31 permanece sin fusionar.
+
+Lecturas de Claude comunicadas porPO, **no correcciones ni nuevos criterios**: (a) la regla corrige retorno alto/out pero no lateral; alrededor del80% de retornos focales dentro tocan lateral antes del bote por geometría de contacto a1,1–1,2m del frontis; (b) enC/P0,6–1,0 se llega a pared trasera antes del bote; (c) la guardia crea saltos entreP vecinas de hasta2,95m focal, lectura atribuida a la contracción rápida de la zona alcanzable conP cerca del frontis; (d) conP baja hay márgenes casi nulos al tin. No se recalculan aquí los resultados aprobados.
+
+**Decisión literal del PO:**
+
+> Dale con la recomendada
+
+Referencia punto por punto de la recomendación elegida porPO:
+
+1. **Bajar el punto**, conservando x/P pedidas y buscando hacia abajo el punto solicitado más alto que da retorno dentro. Se elige sobre bajar potencia por retornos/profundidad/casos sin solución y por conservar la potencia elegida. La velocidad final sigue pudiendo estar afectada por SpeedRaised original; no se modifica esa política.
+2. **Guardia**: base dentro intacta aunque corta; mostrar punto ajustado durante apuntado antes de soltar, C4.
+3. Margen sobre tin configurable, valor inicial **0,05m**; paso de búsqueda **0,05m**.
+4. P alta a pared trasera aceptada por ahora, observación First Rally.
+5. Lateral desde contacto próximo al frontis fuera de esta regla, observación S3/First Rally sin cambio ahora.
+6. PR propia con TDD, sin instalar y con tandas físicas primero. Regla **desactivada por defecto**; activarla exige otra decisiónPO. Preset experimental separado.
+
+Encargo: rama nueva apilada sobrePR#30, D5 aditiva a plan/propuesta r2, specv0.3 intacta. **Antes del código**, mismo arnés aprobado con margen0,05 en lugar del límite anterior0,010, método commiteado antes de calcular; informar cambios de sin solución/retorno/Δy/continuidad y detenerse antes de implementar si cambia el panorama. Mantener clasificación y guardia para que la base siga byte a byte; el margen limita la búsqueda nueva, no altera una base preservada.
+
+Producto condicionado a esa evaluación: claves compatiblesR2-3 de activación/margen/paso, wrapper deShotSolver sin cambiar contrato/SpeedRaised/TargetLowered/P2; sin solución devuelve resultado actual delsolver y lo registra. Vista previa/lanzamiento usan la misma resolución determinista y predicción aislada. Registro porgolpe: original, pedido trasregla,TargetUsed,flags/estado preservado-cambiado-sin solución. TDD RED poraserciones antes deimplementación, mínimos del encargo; regresión offline73contactos contra margen0,05 y desactivada baseidéntica; costo por solicitud depreview sin umbral nuevo, caché solo determinista si hace falta; suites completas frescas/check-release dev-prod/hashnuevo/106valores previos y41heredados/SimulationKey intactos. Sin build para instalar/instalación/sesión física conregla; su validación física exige otra autorización. C4 solo distingue original/ajustado; si requiere estilo nuevo, proponer y esperarPO.
+
+Tandas2–4/restauraciones dePR#30 antes de2026-11-07T17:58:46Z/7nov14:58:46Chile son prioridad. Trabajo offline solo mientras no haya sesión física, pausa inmediata al avisoPO. PR#30/#31 siguen sin fusionar; nuevaPR listaClaude sinfusionar y detenerse. S3–S4/T8 sinimplementación.
