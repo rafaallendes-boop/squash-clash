@@ -109,20 +109,28 @@ namespace SquashClash.Runtime.Tests
             Assert.That(controller.PresentationCount,Is.Zero);Assert.That(controller.LastPresentation,Is.Null);
             var r=Submit(Star());Assert.That(r.Applied,Is.True);Assert.That(seen.Count,Is.EqualTo(2));Assert.That(seen[1].LaunchId,Is.EqualTo(old+1));Assert.That(controller.PresentationCount,Is.EqualTo(1));
         }
-        [TestCase("lateral-slip")][TestCase("accidental-slip")]
-        public void SlipGestures_DeliveryFollowsFinalResultOnly(string kind)
+        [TestCase("accidental-slip",true)][TestCase("accidental-slip",false)][TestCase("lateral-slip",true)][TestCase("lateral-slip",false)]
+        public void SlipGestures_DeliveryFollowsFinalResultOnly(string kind,bool applied)
         {
-            double end=Star(),b=end-1;
+            double star=Star(),end=applied?star:star-.15,b=Math.Max(app.Host.LaunchRealTime+.02,end-1);
+            int contact=feedback.ContactCount,swish=feedback.SwishCount;
             var projection=new FrontisProjection(Matrix4x4.TRS(new Vector3(3.2f,3,10),Quaternion.identity,Vector3.one),Matrix4x4.Ortho(-3.2f,3.2f,-3,3,.1f,100),new Rect(0,0,640,600),new Rect(0,0,640,600),app.Config.Court,b,0);
             var model=new M24Model(SlingSettings.From(app.Tuning.Applied),projection,1);
             model.Push(new TouchSample(1,TouchPhaseKind.Began,new Vector2(320,220),b,1));model.Push(new TouchSample(1,TouchPhaseKind.Moved,new Vector2(320,185),b+.1,2));
-            var point=kind=="lateral-slip"?new Vector2(350,217.9f):new Vector2(320,220);
-            model.Push(new TouchSample(1,TouchPhaseKind.Ended,point,end,3));
+            model.Push(new TouchSample(1,TouchPhaseKind.Ended,kind=="lateral-slip"?new Vector2(350,217.9f):new Vector2(320,185),end,3));
+            Assert.That(model.Outcome,Is.EqualTo(GestureOutcome.Swing));
             At(end);controller.Enqueue(new ClosedGesture(app.Host.LaunchId,Guid.NewGuid().ToString("N"),1,b,end,true,model.Outcome,model.Aim,model.P,app.Tuning.Applied));controller.ProcessPending();
-            var r=controller.LastRecord;
-            if(model.Outcome!=GestureOutcome.Swing||r==null){Assert.That(seen.Count,Is.Zero,"a closure that is not a final shot result never delivers");return;}
-            Assert.That(seen.Count,Is.EqualTo(r.Applied||r.Result=="Failed"?1:0));
-            if(seen.Count==1)Assert.That(seen[0].Category.ToString(),Is.EqualTo(r.Result));
+            var r=controller.LastRecord;Assert.That(r,Is.Not.Null);Assert.That(seen.Count,Is.EqualTo(1));
+            if(applied)
+            {
+                Assert.That(r.Applied,Is.True,r.Reason);Assert.That(seen[0].Category.ToString(),Is.EqualTo(r.Result));Assert.That(seen[0].HasContact,Is.True);
+                Assert.That(feedback.ContactCount,Is.EqualTo(contact+1));Assert.That(feedback.SwishCount,Is.EqualTo(swish));
+            }
+            else
+            {
+                Assert.That(r.Result,Is.EqualTo("Failed"));Assert.That(seen[0].Category,Is.EqualTo(PresentationCategory.Failed));Assert.That(seen[0].HasContact,Is.False);
+                Assert.That(feedback.SwishCount,Is.EqualTo(swish+1));Assert.That(feedback.ContactCount,Is.EqualTo(contact));
+            }
         }
     }
 }
