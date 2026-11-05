@@ -432,3 +432,57 @@ Nuevo arranque **2026-11-05T00:30:18.5199710Z / 0.1.0+2ef4807dev / P0-calib-1 / 
 **20NEG-C:3recepciones/SL1/V100/T3no suave/cámarafija/pulgarizq/control2/P2/cuerpo3,2;5,5.** Hexterno **dd122831f592**=efectivo=recepción/pending0; igualdad delhashcompleto106valores contra manifiesto independienteB. UIJugando/sinpausa/sinoverlay/DEVabierto ycon foco en auditoría; mira/anillo conservados. Exportpre20 **145líneas/0gestos/0cierresDEV**,3archivos byte a byte iguales despuésdeaplicar. Sinsegundoplano observado duranteesta preparación. **SoloPOcierraDEV una vez para empezar20**, M_sMacUTC **2026-11-05T00:33:00.022598+00:00**; frontera/primerLaunchIdposterior aúnpendientes. Vueloencurso/previos quedanpreparación.
 
 Se solicita solo20: tresrecepciones consecutivas completas, imitarresbalón descendente trasapoyar sinbuscar golpe; puedeproducirSwing/contacto porN04conocido. **Resbalónsolicitado parasimular riesgo**, nofrecuencia espontánea ni detección devoluntad. NoexigirP0/milímetrosexactos/ajustar parámetros/repetir omisiones-fallos. Triada porapoyo ytarealiteral al cierre/modal porpeticiónPO/antes deresultados; no21hasta recuperar/cerrar20. Perfil7nov17:58:46Z/reserva hasta22:15Chile aún cubrenresto20–22/restauraciónfinalpendiente.
+
+### Aviso de cierre20 y feedback pendiente
+
+LiteralPO **«terminé 20»**, recepción-registroMacUTC **2026-11-05T00:34:23.845480+00:00**. Exportafter20 preservado/3archivos byte a byte iguales. Frontera/cuota/hash verificadosinternamente; resultados reservados hasta feedback. Modal formulación-registroMacUTC **2026-11-05T00:35:20.610577+00:00**: triada literal porcada intento identificado deR1–R3/primerapoyo ytarea, camposseparados porpeticiónPO. Después delterminal/retrospectivas decierre, sininterrumpir contacto ni ampliarrecepciones. Resbalónsolicitado parasimularN04, segúninstrucción previa; voluntariedad/adhesión requierenrespuesta, no se deducen deSwing. No21preparado ni accesoUIposterior.
+
+### Respuestas de20 recibidas antes de mostrar resultados
+
+Recepción-registroMacUTC **2026-11-05T00:38:57.432880+00:00**, hora exacta deenvío nodisponible.
+
+| Contexto | Pregunta literal | Respuesta literal |
+|---|---|---|
+| Recepción1,primerapoyo | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«ok»** |
+| Recepción2,primerapoyo | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«ok»** |
+| Recepción3,primerapoyo | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«ok»** |
+| Cierre | «¿Seguiste la tarea y la intensidad que se pidió en este bloque? Si no, ¿qué intentabas hacer?» | **«si»** |
+
+Tresapoyos queridos segúnPO/adhesión declarada. **Resbalón descendente solicitado para simularN04**: no demuestra apoyo espontáneo involuntario ni frecuencia deaccidentes, yOK noaprueba timing/puntería.
+
+### Resultado de20 NEG-C
+
+Proceso **metrics-20261105T003018504-ba510538120642f9b7d9523514c86ceb.jsonl**, fronteraúnica **237 / 2026-11-05T00:33:48.3968500Z**, timeReal **212.00301750028345**; dev-toggle/result/completed/acceptedtrue/devOpenfalse/pausedfalse/focusedtrue. Cuota **L53–L55**, tres sucesivas completas/primerplan posterior, todasversiones conservadas. Hexterno=recepción=gesto **dd122831f592**, pending0; sinotroDEV enventana.
+
+| R | LaunchId | Línea gesto | Gesto | Línea final | Resultado/motivo | P(%) | Descenso al soltar(mm estimadosDPI) |
+|---|---:|---:|---|---:|---|---:|---:|
+| 1 | 53 | 242 | Swing | 245 | Failed / before-k-in | 6.990797 | 4.306963 |
+| 2 | 54 | 249 | Swing | 252 | Failed / before-k-in | 8.664051 | 4.859137 |
+| 3 | 55 | 256 | Swing | 259 | Failed / before-k-in | 32.926238 | 12.865659 |
+
+**3Swing/3recepciones/0contactos/3Failed-before-k-in**. 2potencias suaves/1media segúnbandasvigentes; no era tarea de obtenerintensidades, por loque no se interpretan comoacierto/fallo de bandas solicitadas. Saturación0/3. Ningúnreapoyo. Resultado compatible conN04conocido/descenso fuera de zonamuerta ydesplazamiento≥3mm: elcontrol generaSwing sin conocerintención; no se añade filtro/criterio ni detector devoluntad.
+
+| Métrica cruda | n | Mínimo | p50 | p95 | p99 | Máximo |
+|---|---:|---:|---:|---:|---:|---:|
+| P(%) | 3 | 6.990797 | 8.664051 | 32.926238 | 32.926238 | 32.926238 |
+| Duración Began→terminal(ms) | 3 | 212.535208 | 712.608000 | 1046.010041 | 1046.010041 | 1046.010041 |
+| Descenso al soltar estimadoDPI(mm) | 3 | 4.306963 | 4.859137 | 12.865659 | 12.865659 | 12.865659 |
+| Máximo desplazamiento estimadoDPI(mm) | 3 | 4.315803 | 4.911873 | 12.869924 | 12.869924 | 12.869924 |
+| Aim(Began)→C,referenciaverbalsinmarcador(m) | 3 | 0.614901 | 0.625826 | 0.675449 | 0.675449 | 0.675449 |
+| DeltaMs | 3 | -1336.518901 | -369.805484 | -336.259068 | -336.259068 | -336.259068 |
+| PlannerCostMs,unoporlanzamiento | 3 | 0.086400 | 0.107200 | 0.132600 | 0.132600 | 0.132600 |
+
+Muestras **54**,O2 **0**. Salto/costes decontacto NotEvaluated(0contactos), sin cerosmedidos. Rangomáspróximo ceil(p·n),sininterpolación. **1gestoextra posterior/LaunchId56 (launchSerial55),Swing**, separado de3cuota/sinfeedbackindividual inferido. Tresarchivos byte a byte iguales enexportafter20. Sinajustes/criterios/umbrales nuevos/aceptaciónS2inferida.
+
+### Incidencia entre20/21
+
+Duplicación muestra **«Conexión en pausa»**, eloperador pulsaReanudar trasobservarlaconexión yexportbetween20-21 preservado/3cmpiguales. No se atribuye causa/hora exacta. Antesde21 corresponde§3.2/proceso nuevo/P0/hash0pendientes/cotejo/precheck completo. Ningún21 solicitado ni preparación decondición aún.
+
+
+### Proceso nuevo y precheck21 NEG-D aceptado
+
+ReanudarDuplicación recupera pantalla con«Toca para continuar»/Pausa. Se aplica§3.2, sinretomar vueloanterior niatribuir causa: nuevo arranque **2026-11-05T00:40:23.4595570Z / 0.1.0+2ef4807dev / P0-calib-1 / dd122831f592 / pending0**, UI normal/sinoverlay/Pausa disponible. Exportstartup-before21 coteja3archivos byte a byte iguales. Proceso **metrics-20261105T004023444-761d4c81dedf49128460868d21988942.jsonl**. CargaB/P0 sin guardar resultado **76 / 2026-11-05T00:41:22.7746500Z**, exportbefore21-load-before-apply coteja3antesdeaplicar. Aplicar/relanzar anclaSL1 resultado **104 / 2026-11-05T00:41:45.7163170Z**, acceptedtrue/pausedfalse/focusedtrue/devOpentrue. Vía **B→SL1→SL1**, mismaSL1solicitada. Parámetros resultado **116 / 2026-11-05T00:41:54.3687770Z**.
+
+**21NEG-D:3recepciones/SL1/V100/T3no suave/cámarafija/pulgarizq/control2/P2/cuerpo3,2;5,5.** Hexterno **dd122831f592**=efectivo=recepción/pending0; igualdad delhashcompleto106valores contra manifiesto independienteB. UIJugando/sinpausa/sinoverlay/DEVabierto/foco en auditoría/mira-anilloconservados. Exportpre21 **126líneas/0gestos/0cierresDEV**,3archivos byte a byte iguales despuésdeaplicar; sinsegundoplano observado durante preparación. **SoloPOcierraDEV una vez para empezar21**, M_sMacUTC **2026-11-05T00:42:45.379618+00:00**; frontera/primerLaunchIdposterior pendientes. Vueloencurso/previos preparación/fuera decuota.
+
+Solicitar solo21: tresrecepciones consecutivas completas, imitarresbalón mayormentelateral conpequeñacomponente descendente,sinbuscarcarga. **Simulaciónsolicitada deN04b**, separada deapoyos involuntariosespontáneos, sinexigirmilímetros exactos/forzarP0/repetirfallos-omisiones/ajustar. Triadaporapoyo ytarealiteral enmodal decierre antes deresultados; no22hasta recuperar/cerrar21. Perfil7nov17:58:46Z/reservahasta22:15Chile aúncubren21–22/restauraciónfinalpendiente.
