@@ -1522,3 +1522,25 @@ El PO comunicó **CAMBIOS SOLICITADOS** en `d64466b`, solo documentales. Claude 
 Claude corrigió un error de redacción propio del encargo anterior. El requisito de contacto aplicado final se refiere a las señales de impacto. Fallido conserva swish y nota «¡Al aire!» o «¡Tarde!» desde su resultado final sin contacto, sin háptica ni señales de contacto y con la misma entrega única. El swing al soltar o al confirmar queda como decisión del PO. La propuesta registra por separado los elementos de r2 y del plan pendientes de alcance y el efecto hipotético de `feedback.haptics` en el hash de defaults según R2-3, con P0 y los 41 valores heredados intactos.
 
 [Propuesta corregida](2026-11-05-first-shot-s3-design-plan.md) para nueva revisión de Claude. Sin implementación, pruebas, builds, instalación ni acceso al iPhone. PR #33 abierta y sin fusionar. #32 conserva su base y su estado de espera, con solo la sincronización del «Estado vigente».
+
+## Decisión del PO sobre el diseño de S3 y aprobación de Claude — 5 de noviembre de 2026 (Chile)
+
+El PO comunicó que Claude **aprobó sin cambios pendientes** la propuesta corregida de PR #33 en `1c29fa7530cfe2526beb18a831db8c7dbe7bd1c6`. La revisión confirmó Fallido según r2 §4.6, las opciones de swing (a) y (b), las seis decisiones de alcance listadas y el efecto de `feedback.haptics` en el hash. [Head aprobado por Claude](https://github.com/rafaallendes-boop/squash-clash/pull/33/commits/1c29fa7530cfe2526beb18a831db8c7dbe7bd1c6).
+
+A la pregunta «¿Aceptas mis recomendaciones para el diseño de S3?», el PO respondió literalmente:
+
+> Sí, todas
+
+1. **Fallido.** Entregar una sola vez el swish y la nota «¡Al aire!» o «¡Tarde!» desde el `Failed` final resuelto, sin vibración ni señales de contacto, conforme a r2 §4.6.
+2. **Swing.** Elegir la opción (a). Iniciar la animación de intención al aceptar la orden Swing al soltar. Reservar la pose de impacto y el destello, cuando corresponda, para contacto aplicado. Continuar el swing al aire en `Failed` final. Deduplicar por identidad de orden. Una cancelación, un rechazo, `NoOrder` o un callback obsoleto no disparan ninguna señal.
+3. **Nota de Válido.** Mantener «Adelantado» o «Atrasado», como en r2.
+4. **Destello.** Mostrarlo solo en Perfecto con contacto aplicado.
+5. **Perfiles.** Usar dos clips de impacto distintos, seco y contundente para `Perfect` y más suave para `Valid`, y dos estilos hápticos, firme y discreto, respectivamente. Usar un swish distinto para `Failed`.
+6. **Modo silencio.** Respetar el silencio del sistema. En silencio se omite el audio y se mantienen la nota, el destello y el swing cuando correspondan. La háptica sigue la configuración del sistema y de la app.
+7. **Interruptor `feedback.haptics`.** Incluir el interruptor previsto en el plan r2 3.2. Al implementarlo con autorización propia, añadir la clave a defaults y registrar el cambio de hash global según R2-3. Conservar P0-calib-1, sus 41 valores heredados y la SimulationKey.
+8. **Protocolo físico.** Incluir S3-A, S3-B, S3-C y S3-D (18 recepciones en conjunto), además de S3-E porque se aprueba el interruptor de la app. La ejecución del protocolo, la build y la instalación requieren autorización propia.
+9. **Alcance diferido.** Quedan pendientes y fuera de S3 los sonidos de frontis, laterales y tin, la configuración de audio de menor latencia y la comparación Default/Best Latency, la instrumentación de latencias y costes, las dos sesiones de 15 min, la calidad causal de 3.1 y la superposición causal de 3.3.
+
+La adenda a spec v0.3, propuesta r2 y plan r2 sigue sugerida, pendiente del PO. El PO autorizó un único commit documental en #33 para registrar estas decisiones y sincronizar el «Estado vigente» en #32 únicamente en `AGENTS.md`. [Decisiones en la propuesta](2026-11-05-first-shot-s3-design-plan.md#decisiones-del-po).
+
+PR #33 queda abierta para revisión de Claude. #32 sigue en espera. La implementación de S3, S4 y las etapas posteriores quedan pendientes de autorización.
