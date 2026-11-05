@@ -1585,3 +1585,130 @@ Claude (Opus) dirigió y revisó. Un subagente Sonnet implementó cada increment
 **Resultado entregado.** Incrementos A, B y C y verificación final: 546/546 EditMode y 338/338 PlayMode, `check-release` dev/prod OK con `gitDirty=false` y puente háptico presente en prod. Defaults `c0d8ec7050e0`/107 claves. **P0 efectivo esperado `6ecfdfa78cbb`**, que debe declararse antes de cualquier precheck futuro. SimulationKey `166a96e319c7`, las proyecciones `0d39e6016bd8`/`8de3f2ecb217`, los bytes de P0-calib-1 y sus 41 valores siguen intactos. [Informe de implementación](2026-11-05-first-shot-s3-implementation.md).
 
 La PR queda abierta y sin fusionar. La build, la instalación y el protocolo S3-A–E requieren autorización propia. El perfil vence el 2026-11-12T13:55:07Z. S4, First Rally, First Match y etapas posteriores siguen sin autorizar.
+
+
+## Correcciones previas a la fusión de PR #34 — 5 de noviembre de 2026 (Chile)
+
+**Revisión independiente.** Otra sesión de Claude revisó el head `f5bc7a2` de PR #34: **APROBADO CON OBSERVACIONES**, sin bloqueantes. Cuatro hallazgos importantes: (1) las notas informativas de resultados no elegibles contradecían la tabla de diseño; (2) `SwingView` y `PerfectFlashView` avanzaban durante la pausa; (3) faltaban pruebas de rechazos programados tardíos (`schedule-rejected`, `invalid-velocity`, `present-not-mappable`); (4) la prueba de independencia de la pelota solo alternaba `placeholders.visible`. El revisor volvió a ejecutar 546/546 EditMode y 338/338 PlayMode sobre `f5bc7a2`.
+
+**Decisión literal del PO** (primer mensaje):
+
+> Claude, gracias por la revisión independiente de la PR #34 sobre el head f5bc7a2.
+>
+> Como Product Owner, acepto tu evaluación técnica y los resultados de las suites. Sin embargo, antes de autorizar la fusión quiero resolver los hallazgos importantes identificados.
+>
+> Decisión general: APROBACIÓN TÉCNICA CON CORRECCIONES PREVIAS A LA FUSIÓN.
+>
+> No autorizo todavía el merge de la PR #34.
+>
+> 1. Notas de resultados no elegibles — MANTENER
+>
+> Decido conservar las notas informativas de S2:
+>
+> * SystemFault → «Fallo del sistema».
+> * NotEvaluable → «No evaluable».
+> * NoOrder → «Sin golpe».
+>
+> Considero que ayudan al jugador a entender qué ocurrió y evitan que una recepción termine sin explicación.
+>
+> Sin embargo, debemos distinguir explícitamente entre:
+>
+> * Feedback de impacto: sonido, háptica y destello asociados a un contacto aplicado.
+> * Feedback de fallo: swish y nota correspondientes a un Failed final sin contacto.
+> * Notas informativas: mensajes de estado que no representan un golpe ni una entrega de impacto.
+>
+> Las notas informativas no deben generar sonido de impacto, vibración ni destello.
+>
+> Solicito corregir la contradicción documental con la tabla aprobada, preservando la trazabilidad de la decisión original y registrando esta nueva decisión del PO.
+>
+> No quiero alterar el contrato de contacto ni la física.
+>
+> 2. Animaciones durante pausa — CORREGIR
+>
+> Estoy de acuerdo con el hallazgo.
+>
+> Si la simulación está pausada, la animación de swing y el destello deben quedar congelados, igual que la pelota y las ayudas visuales.
+>
+> No quiero que la raqueta vuelva al reposo mientras la pelota está detenida.
+>
+> Solicito:
+>
+> * Respetar Clock.Paused en SwingView y PerfectFlashView.
+> * Conservar el estado visual durante la pausa.
+> * Reanudar correctamente al continuar.
+> * Añadir pruebas automatizadas para ambos componentes.
+> * Evitar modificar el reloj global o el comportamiento de la simulación.
+>
+> Esta corrección debe ser mínima y localizada.
+>
+> 3. Cobertura de rechazos tardíos — COMPLETAR
+>
+> Solicito incorporar las pruebas faltantes identificadas:
+>
+> * Rechazo programado por invalid-velocity.
+> * Rechazo por present-not-mappable.
+> * Caso schedule-rejected.
+> * Verificación de que la intención visual termina correctamente.
+> * Ausencia de feedback de impacto para intentos sin contacto aplicado.
+>
+> Mantener la separación entre intención, resultado final y aplicación real del contacto.
+>
+> No introducir nuevas reglas de gameplay.
+>
+> 4. Prueba de independencia de las vistas — CORREGIR
+>
+> Coincido en que cambiar únicamente placeholders.visible no demuestra que las vistas estén realmente activadas o desactivadas.
+>
+> Solicito una prueba que compare ambas condiciones efectivamente y confirme que la presentación visual no altera el estado autoritativo de la pelota.
+>
+> La prueba debe detectar una regresión real y no limitarse a una comparación que pueda pasar con las mismas vistas activas.
+>
+> 5. Observaciones menores
+>
+> * feedback.haptics: mantener por ahora la lectura por lanzamiento, pero registrar claramente que el cambio requiere un nuevo lanzamiento y no se aplica inmediatamente al contacto en curso. No cambiar el contrato de configuración sin una propuesta específica.
+> * Entrega única: revisar el caso inverso en que una identidad recibe primero un resultado no elegible y después uno elegible. Documentar el comportamiento esperado y añadir cobertura si corresponde, sin introducir una segunda entrega ni alterar el controlador sin autorización.
+> * Corregir las imprecisiones del informe sobre literales, RED de Notes_MatchResult y cobertura de SlipGestures.
+> * Añadir una prueba del interruptor háptico apagado durante Prepare, si puede realizarse sin ampliar el alcance.
+>
+> 6. Sensación del swing y háptica
+>
+> Mantengamos provisionalmente el desfase de 0,06 segundos de la raqueta y la preparación háptica existente.
+>
+> No autorizo recalibrarlos basándonos únicamente en una revisión estática.
+>
+> Quiero evaluar en el iPhone:
+>
+> * Si la raqueta acompaña visualmente el contacto.
+> * Si Perfect y Valid se distinguen claramente.
+> * Si el swing se siente natural.
+> * Si el sonido y la vibración están sincronizados.
+> * Si hay oclusiones o distracciones visuales.
+>
+> Cualquier ajuste perceptivo posterior deberá basarse en esa validación.
+>
+> 7. Próximos pasos
+>
+> Solicito que transmitas estas decisiones a Codex para preparar las correcciones acotadas dentro de la PR #34, siguiendo nuestra metodología TDD.
+>
+> Antes de implementar, identifica si alguna corrección implica una decisión de arquitectura o modificación de contrato que no esté cubierta por estas autorizaciones. En ese caso, detente y consúltame.
+>
+> Una vez completadas:
+>
+> 1. Codex entrega el nuevo commit y la evidencia de pruebas.
+> 2. Claude revisa independientemente el nuevo head.
+> 3. Se verifica que las regresiones estén en verde.
+> 4. Se confirma que P2, M2-4, el solver, la trayectoria, el timing y los presets protegidos permanecen intactos.
+> 5. Se comprueba que el árbol y las configuraciones queden restaurados.
+> 6. Se presenta la PR nuevamente para mi aprobación final.
+>
+> No fusionar todavía la PR #34. No iniciar S4, First Rally ni trabajos fuera de S3.
+>
+> El objetivo es cerrar S3 con una implementación sólida, sin convertir esta etapa en un rediseño innecesario.
+>
+> Avancemos con estas correcciones y luego pasamos a la validación física en el iPhone.
+
+**Cambio de método, literal del PO (mismo día):**
+
+> Realiza tu los cambios, con un Sub agente que haga los cambios y luego tú revisas. Sigamos avanzando juntos y luego códex retoma
+
+**Método.** Claude (Opus) dirige y revisa. Un subagente Sonnet implementa. Codex retoma después. **La revisión de Claude de estas correcciones vuelve a no ser independiente.** Se recomienda una revisión independiente (Codex u otra sesión de Claude) del nuevo head antes de fusionar. PR #34 sigue sin fusionar. S4 y First Rally no están autorizados. Detalle en la sección E del [informe de implementación](2026-11-05-first-shot-s3-implementation.md#e-correcciones-previas-a-la-fusión).

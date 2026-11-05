@@ -38,11 +38,46 @@ Claude redactó los encargos, revisó cada incremento contra el diff y la eviden
 
 ### D. Verificación final
 
+> **Actualizado en E:** los totales de esta sección corresponden al head `f5bc7a2` y anteriores. Tras las correcciones: 546/546 EditMode y 353/353 PlayMode sobre `f21ed00`.
+
 - `scripts/check-release.sh` comprueba ahora que el puente `SquashHaptics.mm` aparece exactamente una vez en dev y en prod, y que la salida IL2CPP referencia `SquashHapticsImpact` y `SquashHapticsPrepare`. Las demás comprobaciones quedan idénticas.
 - Regresión completa fresca sobre `d13ddac`: **546/546 EditMode y 338/338 PlayMode**, sin errores CS. La base en `main` era 522/522 y 297/297.
 - `check-release` dev y prod: **RELEASE-CHECK: OK** desde `d13ddac` limpio, con `gitDirty=false` en ambos perfiles. Prod incluye solo Core y Runtime, sin DevPanel ni framework de pruebas. El puente háptico y sus símbolos están en ambos perfiles. Los puentes térmicos no cambian.
 - Archivos protegidos: ni `P0-calib-1.json`, ni `Po-1.json`, ni `last-active.txt` están en el diff. Tampoco hay cambios en spec, planes, propuesta, `ProjectSettings/`, `Packages/` ni en fuentes de física, solver, Aim o M2-4.
 - La evidencia de RED y GREEN por incremento y las copias de `check-release` quedan en `Logs/evidence/s3-feedback/` (ignorado).
+
+## E. Correcciones previas a la fusión
+
+Revisión independiente de `f5bc7a2`: APROBADO CON OBSERVACIONES, sin bloqueantes. El PO decidió las correcciones (ver [registro](2026-10-25-first-shot-po-approvals.md#correcciones-previas-a-la-fusión-de-pr-34--5-de-noviembre-de-2026-chile)). Método: Claude (Opus) dirige y revisa, un subagente Sonnet implementa, Codex retoma después. **Esta revisión de Claude no es independiente**: se recomienda revisar el nuevo head con Codex u otra sesión de Claude antes de fusionar.
+
+### Cambios por tarea
+
+- **T1, pausa (`e74486d`).** `SwingView.Tick` y `PerfectFlashView.Tick` retornan mientras `app.Clock.Paused`. Una línea por vista, sin tocar el reloj. RED por aserción: 4/17 en `SwingViewTests`. GREEN focal 17/17 y PlayMode 343/343. La prueba de relanzar con pausa activa pasa antes de la corrección: es solo cobertura.
+- **T2, rechazos tardíos (`d34c748`, solo pruebas).** Archivo nuevo `S3LateRejectionTests.cs`. `schedule-rejected` de extremo a extremo, reservando el host con `ScheduleShot` público. `invalid-velocity` emitido por el host. `present-not-mappable` no se puede producir con la API pública del host, así que no hay prueba a nivel de host ni se añadió un punto de inyección; se cubre con una prueba de controlador y vistas que emite `ShotApplied` por reflexión en código de prueba, igual que los efectos de `invalid-velocity` en el controlador. Tras el evento sintetizado el host aplica igualmente su golpe programado y el controlador lo ignora: esas pruebas muestran que no se presenta nada, no que la pelota siga sin golpear. Mutación: retirar el reinicio en `SwingView.OnResolved` hace fallar 3 pruebas por aserción. PlayMode 348/348.
+- **T3, independencia y notas (`f21ed00`, solo pruebas).** `Ball_IsBitIdentical_WithViewsOnAndOff` se sustituye por una comparación real con vistas presentes frente a destruidas, por fotograma: bits de la pelota, `RenderPosition`, `CanonicalContacts` y `Prediction`. Se comprueba por aserción que las vistas no existen ni están suscritas en la segunda corrida. Control negativo con un suscriptor de prueba que avanza el host un paso: el comparador lo detecta. Pruebas de notas informativas para `NoOrder`, `SystemFault` y `NotEvaluable`: solo nota, sin presentación, sonido, háptica ni destello. `Prepare` con `feedback.haptics=0` no prepara. Mutaciones a, b1–b4 y c fallan por aserción y se revirtieron. PlayMode 353/353.
+
+Único cambio de producto desde `f5bc7a2`: la línea de guarda en `SwingView.cs` y en `PerfectFlashView.cs`.
+
+### Decisiones y aclaraciones
+
+- **Decisión 1 (notas de resultados no elegibles): decidida por el PO.** Se mantienen «Sin golpe», «Fallo del sistema» y «No evaluable» como notas informativas, sin sonido de impacto, háptica ni destello. Sustituye la decisión 1 tomada por Claude en nombre del PO. Se distingue feedback de impacto, de fallo y notas informativas.
+- **Decisión 5 (aclarada).** `feedback.haptics` se lee en cada lanzamiento. Un cambio requiere un lanzamiento nuevo y nunca afecta al contacto en curso. `ApplyClass` no cambia. No se altera el contrato de configuración sin propuesta propia.
+- **Entrega única, caso inverso.** Si una identidad recibiera primero un resultado no elegible y después uno elegible: con el controlador actual no puede ocurrir, porque `Finish` se ejecuta una vez por intento. La puerta entregaría una vez, porque el resultado no elegible no reserva nada. No hay cambio de comportamiento. Lo cubre `IneligibleRecords_NeverDeliver`.
+- **Sensación del swing (punto 6 del PO).** Se mantienen los 0,06 s de alcance de la raqueta y el `prepare()` existente, pendientes de validación en el iPhone (S3-A–E, con autorización propia).
+
+### Correcciones a este informe
+
+- «Cinco valores» en B (y en la decisión 6) son 5 líneas con 7 literales cambiados, no cinco literales.
+- El RED de C para `Notes_MatchResult` falló por un error de montaje de la prueba (`Star()+.07` producía `Failed`), no por falta de comportamiento.
+- La versión de `SlipGestures` con 4 casos se añadió después del GREEN, sin RED propio.
+
+### Verificación final de E
+
+- Regresión fresca sobre `f21ed00`: **546/546 EditMode y 353/353 PlayMode**, sin errores CS. Recorrido de PlayMode: 338, 343, 348, 353.
+- `check-release` dev y prod: **RELEASE-CHECK: OK** con `gitDirty=false`; puente háptico y símbolos P/Invoke en ambos; prod sin DevPanel.
+- Hashes intactos: defaults `c0d8ec7050e0`/107 claves, P0 efectivo `6ecfdfa78cbb`, SimulationKey `166a96e319c7`, proyecciones `0d39e6016bd8`/`8de3f2ecb217`. Presets protegidos sin tocar.
+- Evidencia local ignorada en `Logs/evidence/s3-feedback/E/` (T1, T2, T3, final).
+- PR #34 sin fusionar. S4 y First Rally sin autorizar.
 
 ## Fuera de alcance, conforme a la decisión 9
 
