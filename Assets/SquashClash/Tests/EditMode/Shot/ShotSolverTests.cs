@@ -51,6 +51,6 @@ namespace SquashClash.Core.Tests.Shot
         [Test] public void SameRequest_SameSolutionBits()
         {var from=new Vector3(2,.5f,7);var a=Solve(from,new Vector2(5,3),.2f);var b=Solve(from,new Vector2(5,3),.2f);Assert.That(a.Solved,Is.True);Assert.That(BitConverter.SingleToInt32Bits(a.Velocity.x),Is.EqualTo(BitConverter.SingleToInt32Bits(b.Velocity.x)));Assert.That(BitConverter.SingleToInt32Bits(a.Velocity.y),Is.EqualTo(BitConverter.SingleToInt32Bits(b.Velocity.y)));Assert.That(BitConverter.SingleToInt32Bits(a.Velocity.z),Is.EqualTo(BitConverter.SingleToInt32Bits(b.Velocity.z)));}
         [Test] public void ApprovedSpeedKeys_ArePresentAndUnchanged()
-        {var p=ConfigFixtures.Default();Assert.That(p.Ordered.Count,Is.EqualTo(106));Assert.That(p.Get("shot.vMin"),Is.EqualTo(6));Assert.That(p.Get("shot.vMax"),Is.EqualTo(28));Assert.That(p.Get("shot.vCap"),Is.EqualTo(32));}
+        {var p=ConfigFixtures.Default();Assert.That(p.Ordered.Count,Is.EqualTo(107));Assert.That(p.Get("shot.vMin"),Is.EqualTo(6));Assert.That(p.Get("shot.vMax"),Is.EqualTo(28));Assert.That(p.Get("shot.vCap"),Is.EqualTo(32));}
     }
 }

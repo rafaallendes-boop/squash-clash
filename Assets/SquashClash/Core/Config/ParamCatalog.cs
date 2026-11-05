@@ -14,6 +14,7 @@ namespace SquashClash.Core.Config
             new ParamDef("practice.repeatSeconds", "Practice wait", "s", "First Shot / practice", ParamKind.Float, .5, 5, .1, ApplyClass.Immediate),
             new ParamDef("practice.observeMaxSeconds", "Outgoing observation limit", "s", "First Shot / practice", ParamKind.Float, 1, 8, .1, ApplyClass.Immediate),
             new ParamDef("timing.showNotes", "Shot notes", "", "First Shot / timing", ParamKind.Bool, 0, 1, 1, ApplyClass.Immediate),
+            new ParamDef("feedback.haptics", "App haptics", "", "First Shot / feedback", ParamKind.Bool, 0, 1, 1, ApplyClass.Immediate),
             new ParamDef("rollback.historyMs", "Rollback history", "ms", "First Shot / history", ParamKind.Float, 100, 500, 1, ApplyClass.Immediate),
             new ParamDef("shot.vMin", "Minimum shot speed", "m/s", "First Shot / solver", ParamKind.Float, 2, 15, .1, ApplyClass.Immediate),
             new ParamDef("shot.vMax", "Maximum requested speed", "m/s", "First Shot / solver", ParamKind.Float, 10, 45, .1, ApplyClass.Immediate),
