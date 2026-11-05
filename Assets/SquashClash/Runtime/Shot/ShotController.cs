@@ -41,6 +41,7 @@ namespace SquashClash.Runtime.Shot
         public string LastDiscardReason {get;private set;}
         public event Action<ShotRecord> ShotResolved;
         public event Action<ShotPresentation> PresentationDelivered;
+        public event Action<SwingIntent> SwingAccepted;
         public ShotPresentation? LastPresentation {get;private set;}
         public int PresentationCount {get;private set;}
         public int PresentationDiscrepancyCount=>gate.DiscrepancyCount;
@@ -52,6 +53,7 @@ namespace SquashClash.Runtime.Shot
             app.Host.Launched+=OnLaunched;app.Host.ShotApplied+=OnApplied;
             ring=gameObject.AddComponent<TimingRingView>();notes=gameObject.AddComponent<ShotNoteView>();notes.Initialize(app);
             feedback=gameObject.AddComponent<ShotFeedback>();feedback.Initialize();PresentationDelivered+=feedback.Present;
+            gameObject.AddComponent<SwingView>().Initialize(app,this);gameObject.AddComponent<PerfectFlashView>().Initialize(app,this);
             OnLaunched(app.Host.ActiveConfig);
         }
         private void OnLaunched(EffectiveConfig cfg)
@@ -105,6 +107,7 @@ namespace SquashClash.Runtime.Shot
             if(!CanBegin(order.BeganAt,out var reason)){Discard(order,reason);return;}
             // Reserve before any callback or solver. Failed timing / no plan / system failure never reopens it.
             AttemptConsumed=true;var shot=Snapshot.WithGesture(order.Source);
+            SwingAccepted?.Invoke(new SwingIntent(order.LaunchId,order.AttemptId,Plan.Side));
             var authoritative=AuthoritativeTrajectory();
             var decision=ContactContract.Decide(order.ReleaseAt,Presented,app.Host.ClockMap,authoritative,shot.Timing,false);
             var record=BaseRecord(order);FillDecision(record,decision);record.Version=++recordVersion;LastRecord=record;Write("shot-order",record);

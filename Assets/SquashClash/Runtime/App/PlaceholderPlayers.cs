@@ -9,6 +9,7 @@ namespace SquashClash.Runtime.App
     {
         private GameObject human, rival;
         private Mesh capsule;
+        public Transform Human => human != null ? human.transform : null;
 
         public void Apply(ParamSet p)
         {
