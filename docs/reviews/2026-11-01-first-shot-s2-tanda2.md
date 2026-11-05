@@ -328,3 +328,54 @@ Mismo proceso **metrics-20261105T000516652-e9cdebfabcb1499385f9e52e5e4c48c6.json
 **18NEG-A:3recepciones/SL1/V100/T3no suave/cámarafija/pulgarizq/control2/P2/cuerpo3,2;5,5.** Referencia externa **dd122831f592**=efectivo=recepción; pending0. Igualdad delhashcompleto106valores contra manifiestoB. UIJugando/sinpausa/sinoverlay/DEVabierto; auditoría con foco. Exportpre18 **467líneas**,0gestos/0cierresDEV desdeaplicación. Tresarchivos byte a byte iguales. RegistroM_sMacUTC **2026-11-05T00:15:35.877662+00:00** alformular solicitud de cierreDEV; **soloPOcierrauna vez**, frontera aúnpendiente/recepción1primer lanzamiento posterior; vueloencurso/preparación no cuentan.
 
 Solicitar solo18/tresrecepciones consecutivas completas: apoyo sin tirón yretirada/incluirduda breve sinmedirla/sinpedirSwing oP0 contirónintencional. Fallos/omisiones no sesustituyen. Triada porapoyo/cierre literal, modal separadoporpedidoPO yantesderesultados; no19hasta revisión. Restauraciónfinaltanda2pendiente.
+
+### Aviso de cierre18 y feedback pendiente
+
+LiteralPO **«temine 18»**, recepción-registroMacUTC **2026-11-05T00:17:29.321985+00:00**. Exportafter18 preservado/3archivos byte a byte iguales alrespaldo. Integridad ycuota verificadasinternamente; resultados reservados. Modal formulación-registroMacUTC **2026-11-05T00:18:29.667603+00:00**: triada literal porrecepción1–3 ytarea, camposseparados/antes deresultados, porpeticiónPO. Feedback retrospectivo trasterminal al cierre; nointerrumpe contacto ni ampliarecepción, modalidadtemporal declarada. Contexto ordinal nofabrica un gesto ni unattemptId enrecepción sinregistro; asociar soloidentidades existentes. No19preparado ni otroaccesoUI.
+
+### Respuestas de18 recibidas antes de mostrar resultados
+
+Recepción-registroMacUTC **2026-11-05T00:18:51.661719+00:00**; horaexacta deenvío nodisponible.
+
+| Contexto | Pregunta literal | Respuesta literal |
+|---|---|---|
+| Recepción1 | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«OK»** |
+| Recepción2 | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«OK»** |
+| Recepción3 | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«OK»** |
+| Cierre | «¿Seguiste la tarea y la intensidad que se pidió en este bloque? Si no, ¿qué intentabas hacer?» | **«si»** |
+
+Tras recoger las cuatrorespuestas ymostrar la discrepancia instrumental, se pidió aclaración deasociación: «Bloque18: ¿tus tres«OK» corresponden,enorden,a los tresapoyos quehiciste,o alasrecepciones1–3 quecontaste?». Respuesta literal **«A las tres recepciones que conté»**, recepción-registroMacUTC **2026-11-05T00:20:07.956407+00:00**. Se conservan tresOK declarados porordinal de recepción yla tarea«si». **R1 no tiene gesto/attemptId registrado**: no se crea uno ni se convierte la declaración en una acción instrumentada. R2/R3 tienenidentidades. **El apoyoextraL122 no recibeOK porinferencia**; tampoco se mueve lafrontera/cuota o se sustituye R1. No repetición ni aceptaciónS2inferida.
+
+### Resultado de18 NEG-A
+
+Proceso **metrics-20261105T000516652-e9cdebfabcb1499385f9e52e5e4c48c6.jsonl**, fronteraúnica línea **578 / 2026-11-05T00:16:54.7675640Z**, timeReal **700.2326008378187**; dev-toggle/result/completed/acceptedtrue/devOpenfalse/pausedfalse/focusedtrue. Cuota **L119–L121**, tres sucesivas completas desdeprimerplan posterior; todasversiones conservadas. Hexterno=recepción=gestos **dd122831f592**, pending0; sinotroDEV enventana.
+
+| R | LaunchId | Gesto | Línea gesto | Línea final recepción | Resultado recepción | FeedbackPO porordinal |
+|---|---:|---|---:|---:|---|---|
+| 1 | 119 | Sin gesto registrado | — | 583 | NoOrder / reception-ended-without-order | «OK» |
+| 2 | 120 | AbandonedNoPull | 587 | 589 | NoOrder / reception-ended-without-order | «OK» |
+| 3 | 121 | AbandonedNoPull | 593 | 595 | NoOrder / reception-ended-without-order | «OK» |
+
+**3recepcionescompletas/2AbandonedNoPull/0Swing/0contactos**, sinreapoyos encuota. TresNoOrder soncierres de recepción sinordenSwing, no otrogesto ni tresfallos deSwing. **1gestoextra posterior**, LaunchId122/launchSerial121, AbandonedNoPull, separado de las3recepciones; no feedback individual asociado. ToquesDEVfiltrados no son gestos.
+
+| Métrica cruda | n | Mínimo | p50 | p95 | p99 | Máximo |
+|---|---:|---:|---:|---:|---:|---:|
+| Duración Began→terminal(ms) | 2 | 354.215001 | 354.215001 | 1571.097833 | 1571.097833 | 1571.097833 |
+| Aim(Began)→C,referenciaverbalsinmarcador(m) | 2 | 0.757178 | 0.757178 | 0.891793 | 0.891793 | 0.891793 |
+| Máximo desplazamiento estimadoDPI(mm) | 2 | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.000000 |
+| PlannerCostMs,unoporlanzamiento | 3 | 0.103900 | 0.119300 | 0.139600 | 0.139600 | 0.139600 |
+
+Muestras **4**,O2 **0**. PotenciaSwing/bandas/saturación/DeltaMs/salto/costescontacto **NotEvaluated(0Swing/0contactos)**, sin convertir ceros delregistro enmediciones. Rangomáspróximo ceil(p·n),sininterpolación. Tresarchivos byte a byte iguales enexportafter18. Sin parámetros/criterios/umbrales nuevos.
+
+
+### Incidencia entre18/19 y proceso nuevo
+
+Tras cerrar feedback/aclaración18, Duplicación muestra **«Toca para continuar»/Pausa**. Causa/hora de entrada noatribuidas; no se afirma foco continuo porausencia de controlesDEV. Se conserva exportbetween18-19 antes dearranque/3archivosiguales. Aplicar§3.2 antesde19: proceso nuevo observado **2026-11-05T00:20:37.0783100Z / 0.1.0+2ef4807dev / P0-calib-1 / dd122831f592 / pending0**; UI normal/sinoverlay/Pausa disponible. Exportstartup-before19 coteja3archivos iguales.18conservado sin repetición/ampliación;19aún sin gestos.
+
+### Precheck19 NEG-B aceptado
+
+Proceso **metrics-20261105T002037061-db8f69d7529b450ca51573540c8e9df4.jsonl**. CargaB/P0 sin guardar resultado **80 / 2026-11-05T00:21:41.4128190Z**; exportbefore19-load-before-apply coteja3archivos **antes** de aplicar. Aplicar/relanzar anclaSL1 resultado **107 / 2026-11-05T00:22:02.0024580Z**, acceptedtrue/pausedfalse/focusedtrue/devOpentrue; vía **B→SL1→SL1**, mismaSL1solicitada. Parámetros resultado **115 / 2026-11-05T00:22:07.3994680Z**.
+
+**19NEG-B:3recepciones/SL1/V100/T3no suave/cámarafija/pulgarizq/control2/P2/cuerpo3,2;5,5.** Hexterno **dd122831f592**=efectivo=recepción/pending0, igualdad delhashcompleto106valores frentealmanifiesto independienteB. UIJugando/sinpausa/sinoverlay/DEVabierto/foco en auditoría; mira/anillo conservados. Exportpre19 **128líneas/0gestos/0cierresDEV**,3archivos byte a byte iguales. No segundo plano observado duranteesta preparación. **SoloPOcierraDEV una vez para empezar19**, M_sMacUTC **2026-11-05T00:22:57.422030+00:00**; frontera/primerLaunchIdposterior pendientes. Vueloencurso yprevios preparación/fuera cuota.
+
+Solicitar solo19: apoyo ypequeñotemblor/rozamiento, sinintención decargar; registrar desplazamientoreal ycierre, sinforzar zona muerta ni milímetrosexactos. Tresrecepciones consecutivas completas/fallos-omisionesincluidos/sinrepetir. Triada porapoyo ytarealiteral enmodal decierre antes deresultados. No20hasta recuperar/cerrar19. Restauraciónfinaltanda2pendiente; perfil vigente7nov17:58:46Z yventanahasta22:15Chile aúncubrenresto19–22/restauración.
