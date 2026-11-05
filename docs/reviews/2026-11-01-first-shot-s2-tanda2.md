@@ -4,7 +4,7 @@
 
 Retomada por Codex desde `e160f98`, rama `firstshot/s2-m24`, PR #30 sin fusionar. Decisión de repreguntar registrada en `c336c51`; procedimiento confirmado y precisado literalmente por el PO en [aprobaciones](2026-10-25-first-shot-po-approvals.md). Rigen la [predeclaración](../validation/2026-10-31-first-shot-s2-session27-predeclaration.md) y el estado vigente de AGENTS.md. App prevista: **0.1.0+2ef4807 dev ya instalada**, sin build/instalación nuevos.
 
-**14 y15 completos, conservados; reanudación del4nov preparada para16, aún sin iniciar.** Tanda 2 prevista: 14–22, 57 recepciones SL1. Perfil y P0 de esta tanda comprobados abajo; la restauración final de tanda 2 sigue pendiente. No se atribuyen aquí las comprobaciones de tanda 1. Al cierre se requiere exportación/restauración en proceso nuevo/dd122831f592/pending 0 y cotejo de los tres archivos; entrega para Claude/PO y parada. S3–S4/T8 no autorizados.
+**Bloques 14–21 cerrados; precheck del22 RIT aceptado, aún sin iniciar por el PO. La restauración final de tanda2 sigue pendiente.** Tanda 2 prevista: 14–22, 57 recepciones SL1. Perfil y P0 de esta tanda comprobados abajo; la restauración final de tanda 2 sigue pendiente. No se atribuyen aquí las comprobaciones de tanda 1. Al cierre se requiere exportación/restauración en proceso nuevo/dd122831f592/pending 0 y cotejo de los tres archivos; entrega para Claude/PO y parada. S3–S4/T8 no autorizados.
 
 ## Repreguntas retrospectivas sobre el salto de 09–13
 
@@ -486,3 +486,58 @@ ReanudarDuplicación recupera pantalla con«Toca para continuar»/Pausa. Se apli
 **21NEG-D:3recepciones/SL1/V100/T3no suave/cámarafija/pulgarizq/control2/P2/cuerpo3,2;5,5.** Hexterno **dd122831f592**=efectivo=recepción/pending0; igualdad delhashcompleto106valores contra manifiesto independienteB. UIJugando/sinpausa/sinoverlay/DEVabierto/foco en auditoría/mira-anilloconservados. Exportpre21 **126líneas/0gestos/0cierresDEV**,3archivos byte a byte iguales despuésdeaplicar; sinsegundoplano observado durante preparación. **SoloPOcierraDEV una vez para empezar21**, M_sMacUTC **2026-11-05T00:42:45.379618+00:00**; frontera/primerLaunchIdposterior pendientes. Vueloencurso/previos preparación/fuera decuota.
 
 Solicitar solo21: tresrecepciones consecutivas completas, imitarresbalón mayormentelateral conpequeñacomponente descendente,sinbuscarcarga. **Simulaciónsolicitada deN04b**, separada deapoyos involuntariosespontáneos, sinexigirmilímetros exactos/forzarP0/repetirfallos-omisiones/ajustar. Triadaporapoyo ytarealiteral enmodal decierre antes deresultados; no22hasta recuperar/cerrar21. Perfil7nov17:58:46Z/reservahasta22:15Chile aúncubren21–22/restauraciónfinalpendiente.
+
+### Aviso de cierre21 y feedback pendiente
+
+LiteralPO **«Terminé 21»**, recepción-registroMacUTC **2026-11-05T00:45:17.154252+00:00**. Exportafter21 preservado/3archivos byte a byte iguales. Frontera/cuota/hash verificadosinternamente; resultados reservados hastarecoger feedback. Modal formulación-registroMacUTC **2026-11-05T00:46:43.580412+00:00**: triada literal porintento identificado R1–R3/primerapoyo ytarea, camposseparados porpeticiónPO. Después delterminal/retrospectivas decierre, sininterrumpir contacto ni ampliarrecepción. Resbalónsolicitado parasimularN04b segúninstrucción previa, separado devoluntad espontánea. No22preparado ni accesoUIposterior.
+
+### Respuestas de21 recibidas antes de mostrar resultados
+
+Recepción-registro MacUTC **2026-11-05T00:47:30.712039+00:00**; hora exacta de envío no disponible.
+
+| Contexto | Pregunta literal | Respuesta literal |
+|---|---|---|
+| Recepción1, primer apoyo | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«ok»** |
+| Recepción2, primer apoyo | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«ok»** |
+| Recepción3, primer apoyo | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«ok»** |
+| Cierre | «¿Seguiste la tarea y la intensidad que se pidió en este bloque? Si no, ¿qué intentabas hacer?» | **«si»** |
+
+Tres apoyos queridos y adhesión declarada por el PO. **Resbalón lateral/descendente solicitado para simular N04b**; no son apoyos involuntarios espontáneos ni una tasa de accidentes. OK no acredita precisión/timing.
+
+### Resultado de21 NEG-D
+
+Proceso **metrics-20261105T004023444-761d4c81dedf49128460868d21988942.jsonl**, frontera única **271 / 2026-11-05T00:44:33.4022810Z**, timeReal **252.0937949194014**; dev-toggle/result/completed/accepted=true/devOpen=false/paused=false/focused=true. Cuota **L62–L64**, tres sucesivas completas desde el primer plan posterior al cierre; todas las versiones conservadas. H externo=recepción=gesto **dd122831f592**, pending0; sin otroDEV en ventana.
+
+| R | LaunchId | Línea gesto | Línea final | Resultado / motivo | P(%) | Descenso al soltar(mm estimadosDPI) | Lateral(mm estimadosDPI) |
+|---|---:|---:|---:|---|---:|---:|---:|
+| 1 | 62 | 277 | 280 | Failed / before-k-in | 13.851120 | 6.570869 | -9.552608 |
+| 2 | 63 | 297 | 300 | Failed / before-k-in | 10.337305 | 5.411311 | -17.338261 |
+| 3 | 64 | 304 | 307 | Failed / before-k-in | 11.675868 | 5.853036 | -16.013042 |
+
+**3Swing/3recepciones/0contactos/3Failed-before-k-in**, sin reapoyos. Tres potencias suaves según bandas vigentes; no era tarea de lograr bandas, por lo que no son tres aciertos de intensidad solicitada. Saturación0/3. La componente lateral absoluta es mayor que el descenso en los tres; descensos de5,411311–6,570869mm, por encima de la zona muerta existente de2mm. **Estas trazas no se tratan como prueba del caso límite apenas fuera de zona/P≈0 de N04b**: se conservan trayectorias reales y adhesión declarada, sin exigir repetición ni añadir cortes nuevos. Swing compatible con el riesgo abierto; no detector de voluntad ni defecto distinto demostrado.
+
+| Métrica cruda | n | Mínimo | p50 | p95 | p99 | Máximo |
+|---|---:|---:|---:|---:|---:|---:|
+| P(%) | 3 | 10.337305 | 11.675868 | 13.851120 | 13.851120 | 13.851120 |
+| Duración Began→terminal(ms) | 3 | 187.531042 | 229.227042 | 529.256084 | 529.256084 | 529.256084 |
+| Descenso al soltar estimadoDPI(mm) | 3 | 5.411311 | 5.853036 | 6.570869 | 6.570869 | 6.570869 |
+| Máximo desplazamiento estimadoDPI(mm) | 3 | 11.594337 | 17.049212 | 18.163082 | 18.163082 | 18.163082 |
+| Lateral absoluto estimadoDPI(mm) | 3 | 9.552608 | 16.013042 | 17.338261 | 17.338261 | 17.338261 |
+| Aim(Began)→C,referencia verbal sin marcador(m) | 3 | 0.708002 | 0.712991 | 0.763013 | 0.763013 | 0.763013 |
+| DeltaMs | 3 | -1347.986946 | -805.894904 | -364.513863 | -364.513863 | -364.513863 |
+| PlannerCostMs,uno por lanzamiento | 3 | 0.089300 | 0.115200 | 0.119900 | 0.119900 | 0.119900 |
+
+Muestras **46**,O2 **0**. Salto/costes de contacto NotEvaluated(0contactos), sin ceros serializados tratados como medidas. Rango más próximo ceil(p·n), sin interpolación. **1gesto extra posterior/LaunchId65 (launchSerial64), Swing**, separado de la cuota/sin feedback individual inferido. Tres archivos byte a byte iguales en exportafter21. Sin ajustes ni criterios/umbrales nuevos.
+
+### Incidencia entre21/22
+
+Después de recoger feedback, Duplicación muestra«Toca para continuar»/Pausa. Causa/hora de entrada no atribuidas. Se preserva exportbetween21-22 y se aplica§3.2: proceso nuevo/P0/hash-cero pendientes/cotejo antes del precheck22. El21 se conserva sin repetición;22 aún no solicitado.
+
+
+### Proceso nuevo y precheck22 RIT aceptado
+
+Según§3.2 trasoverlay entre21/22, nuevo arranque **2026-11-05T00:48:56.1583660Z / 0.1.0+2ef4807dev / P0-calib-1 / dd122831f592 / pending0**, UI normal/sinoverlay/Pausa disponible. Exportstartup-before22 coteja3archivos byte a byte iguales. Proceso **metrics-20261105T004856144-c0dae5723b974b9183907c1c7b1a6daf.jsonl**. CargaB/P0 sin guardar resultado **80 / 2026-11-05T00:50:00.8854070Z**; exportbefore22-load-before-apply coteja3antesdeaplicar. Aplicar/relanzar anclaSL1 resultado **124 / 2026-11-05T00:50:40.6481380Z**, acceptedtrue/pausedfalse/focusedtrue/devOpentrue. Vía **B→SL1→SL1**, mismaSL1 solicitada. Parámetros resultado **133 / 2026-11-05T00:50:48.4114630Z**.
+
+**22 RIT:10recepciones/SL1/V100/T3no suave/cámarafija/pulgarizq/control2/P2/cuerpo3,2;5,5.** Hexterno **dd122831f592**=efectivo=recepción/pending0, igualdad delhashcompleto106valores contra manifiesto independienteB. UIJugando/sinpausa/sinoverlay/DEVabierto/foco en auditoría/mira-anilloconservados. Exportpre22 **146líneas/0gestos/0cierresDEV**,3archivos byte a byte iguales despuésdeaplicar. Sinsegundoplano observado durante preparación. **SoloPOcierraDEV una vez para empezar22**, M_sMacUTC **2026-11-05T00:51:50.342873+00:00**; frontera/primerLaunchIdposterior aúnpendientes. Vueloencurso/previos sonpreparación.
+
+Solicitar solo22, diezrecepciones sucesivas completas: **«Busca C y golpea a ritmo cómodo; puedes corregir cancelando y reapoyando. No hay secuencia de intensidades que debas seguir»**. Omitidos/fallos cuentan sinrepetir. No triada durante intentos; al cierre excepciones porrecepción/tarea y tresoriginales enmodal literal separado/antes deresultados. RIT espráctica repetida, sinrival/rally implementado. Después export/restauraciónP0/procesonuevo/cmp3/informe yparada; **no23 niPROD** enesta continuación. Perfil7nov17:58:46Z yreserva22:15Chile cubrenúltimobloque/restauración.
