@@ -1425,3 +1425,82 @@ Procede con este orden, informa cualquier bloqueo y no amplíes el alcance sin c
 ```
 
 El encargo inmediato autoriza un solo commit de cierre documental en PR #30 y la sincronización del «Estado vigente» en las otras dos ramas. La revisión de `403f8ca` precede al nuevo commit de cierre, cuyo SHA debe revisar Claude antes de fusionar. La PR #31 queda para integración documental después de #30 y de su propia revisión final. La PR #32 queda en espera. La preparación documental de S3 empieza después del cierre e integración de S2. [Resumen previo al juicio del PO](2026-11-05-first-shot-s2-closing-summary.md) · [Registro de observaciones abiertas](2026-11-05-first-shot-s2-open-observations.md).
+
+
+## 2026-11-04 — diagnóstico SL5/SL6 y plan S3, solo documentación offline
+
+POautoriza diagnóstico enrama/worktreepropiosdesdeheadPR30 **dfffd58**: significado de mira enspec/propuesta, simulaciónP2offline deestadosdecontacto10–13conmétodopredeclaradoantesdecalcular,primerbote/laterales/outyopcionesconventajas/riesgos,sinelegir. AutorizaademásplanS3documental3.1–3.4sinimplementación;CodexlosagrupaenmismaPRdocumentalseparadade#30. Método: [predeclaración](../diagnostics/2026-11-04-sl56-p2-method.md),commitantesdelprimer cálculo.
+
+Sesiónfísicaenpausa;noiPhone/relanzar/preparar16. Logs/evidenceoriginalesintactos/sololectura. Sinproducto/tests/defaults/SL/spec/criteriosnuevos;PRparaClaude,sinfusionar. PreparaciónPRODocurreporseparadoenworktreeS2y **noautoriza instalar**. Perfilconocidovence7nov17:58:46Z;POpresente/autorizaciónpropia/respaldo nuevoantesdecualquierinstalación. PR30sinfusionar/S3–S4/T8sinimplementación.
+
+
+### Resultado documental del diagnóstico y plan S3 — 2026-11-04
+
+Método 975b597/2141676 anterior al primer cálculo; auditoría de endpoints del arnés 4a55d80, sin cambio P2. Selección primaria de40recepciones/24Applied, sin extras: ejecución P2 original offline repetida con salida idéntica byte a byte. [Informe de trayectoria](2026-11-04-first-shot-sl56-trajectory-diagnosis.md), [método](../diagnostics/2026-11-04-sl56-p2-method.md), [derivado](../validation/evidence/2026-11-04-sl56-p2-offline.json), [reproducción](../diagnostics/2026-11-04-sl56-p2-reproduction.md). Primer frontis respetado, pero trayectoria posterior con laterales/out/escape según tabla y limitaciones; sin atribuir campaña nueva, Fail nuevo o elección del PO. Ninguna opción seleccionada.
+
+[Plan S3 documental](2026-11-04-first-shot-s3-documentary-plan.md), tareas3.1–3.4, dependencias sobre S2/M2-4, TDD futuro y validación propia; no modifica plan/spec ni autoriza código. Sesión física permanece en pausa, sin acceso al iPhone/relanzamiento/preparación16. PR30 sin fusionar; entrega en PR documental propia para Claude, sin fusionar ni implementación S3–S4/T8.
+
+
+### Entrega para revisión de Claude/PO — PR #31, 2026-11-04
+
+[PR #31](https://github.com/rafaallendes-boop/squash-clash/pull/31) abierta, no borrador, sobre firstshot/s2-m24/PR#30, sin fusionar. Solo siete archivos documentales respecto de #30; métodos previos y datos derivados preservados, ningún producto/test/default/SL/spec/plan/criterio modificado. Ambas historias documentales se sincronizaron conservando los commits originales de predeclaración. Fuentes y primarios cotejados por hashes;141rutas de enlaces locales comprobadas. Ningún mensaje/revisión externa solicitado por herramientas.
+
+Preparación PROD en #30, builda11fb32firmada/sininstalar,Logs/evidenceintactos. Pausa física permanece por instrucción del PO;16sinpreparar. Perfilvence7nov17:58:46Z/14:58:46Chile;las reservas deagenda son propuesta, disponibilidad aún pendiente. No implementación S3–S4/T8 ni elección de opción de trayectoria.
+
+
+## Revisión Claude de PR #31 y decisión del PO — 2026-11-04
+
+El PO comunica **APROBADO CON CORRECCIONES** de Claude sobre head **ef7edb3**. Claude verificó método fijado antes del cálculo, estados coincidentes con el JSONL primario (SHA-256 e8d3be96…,24contactos idénticos) y cifras coherentes con una cota balística independiente. Correcciones autorizadas, solo documentales: lectura conjunta desde el JSON existente y una sola entrada de estado vigente coherente entre PR#30/#31. La lectura da21/24 por unión; el caso11-08 tienez4,001148m (4,0m redondeados), precisión preservada sin afirmar≤4,0literal ni cambiar criterios. Los tres restantes quedan antes de4,875m.
+
+**Decisión literal del PO:**
+
+> Mantenemos la mira como punto del frontis. La dirección a investigar es una regla de golpe jugable en el solver, con ajuste visible como el de C4. Antes de elegir la regla, haz un mapa offline de factibilidad.
+
+Alcance autorizado del mapa, exclusivamente diagnóstico: posiciones de los24contactos10–13, control con contactosSL1–SL4 de tanda1, rejilla predeclarada de puntos del frontis/P con ShotSolver/P2 originales sin cambios; primer frontis/out antes de bote/escape/primer bote(x,z)/mitad trasera/laterales; resumen porcontacto de zonas/P que permanecen en juego y alcanzan profundidad/fondo. Método y commit anteriores al cálculo. Sin elegir regla/valores de producto ni implementación; ninguna opción de producto autorizada.
+
+**Prioridad literal:** las tandas2–4 de PR#30 antes del vencimiento **2026-11-07T17:58:46Z** van primero; el mapa solo se hace cuando no haya sesión física. La pausa anterior continúa hasta que el PO avise, sin tocar el iPhone, relanzar o preparar16. Perfil insuficiente→avisar antes de instalar. PR#30/#31 siguen sin fusionar; sin producto/tests/defaults/SL/spec/criterios nuevos.
+
+
+### Entrega del mapa offline predeclarado — 2026-11-04
+
+Método en commits **c000f85/7b5d943 anteriores al cálculo**. Sin sesión física activa y sin acceso al iPhone: 73 posiciones registradas (24 focales,49 controles),120 recepciones preservadas y **79.497 combinaciones** de rejilla congelada. ShotSolver/P2 originales, ninguna fuente de producto, test, default, SL, spec, plan o criterio modificada. Repetición completa con archivo idéntico byte a byte; primarios y fuentes protegidas conservan sus hashes.
+
+[Informe del mapa](2026-11-04-first-shot-sl56-feasibility-map.md), [matrices por contacto](../diagnostics/2026-11-04-sl56-feasibility-matrices.md), [resumen derivado](../validation/evidence/2026-11-04-sl56-feasibility-summary.json), [método](../diagnostics/2026-11-04-sl56-feasibility-method.md), [reproducción](../diagnostics/2026-11-04-sl56-feasibility-reproduction.md). Las soluciones con ajustes existentes se separan de las solicitudes respetadas. Retorno dentro de cancha es intersección geométrica descriptiva, **no regla de golpe jugable aprobada**. Ninguna zona/P/corte se elige como producto; decidir regla y ajuste visibleC4 queda paraPO y nueva revisión.
+
+Corrección21/24 calculada desde el JSON anterior sin volver a simular salidas históricas; precisión4,001148m conservada. Una sola entrada vigente deAGENTS, idéntica entrePR#30/#31 y anteriores históricas. La campaña física permanece en pausa hasta aviso delPO y conserva prioridad antes del7nov17:58:46Z; mapa no prepara16 ni habilita instalaciónPROD. PR#30/#31 sin fusionar; S3–S4/T8 sin implementación.
+
+
+## Aprobación Claude y autorización de evaluar candidata, PO2026-11-04
+
+El PO comunica **APROBADO sin correcciones** de Claude sobre PR#31/head **546b184**: verificó correcciones, estado vigente único e idéntico en ambas ramas, decisión literal y mapa conforme a c000f85/7b5d943. PR#31 sigue sin fusionar. La aprobación del mapa no aprueba una regla de producto.
+
+**Decisión literal del PO:**
+
+> Sí perfecto. Me parece esa regla candidata para evaluarla offline
+
+La candidata es **bajar el punto conservando x y P pedidas**. Solo diagnóstico en arnés, sin modificar ShotSolver/P2: preservar base ya dentro de cancha; si no, búsqueda descendente predeclarada del punto más alto muestreado que da retorno dentro, límite tin+huella, sin inventar otra asistencia si no hay solución. Registrar interacción con SpeedRaised/TargetLowered. Contraste de bajar potencia, mismas73posiciones/rejilla/P0–1, frecuencias/resultados/Δy/cercanía tin/continuidad/dejadas/controles. [Método a confirmar antes de calcular](../diagnostics/2026-11-04-sl56-lowering-rule-method.md); paso propuesto0.05m y contrasteP0.05 solo diagnósticos, sin valores de producto elegidos.
+
+Lectura **exploratoria atribuida aClaude, fuera del método del mapa y no formal**, comunicada porPO: enC(3.2,2.2),24focales conP0.2 dentro/cortos, P0.3fondo17/24, P≥0.4out; bajar punto misma x/P daría24/24dentro y fondo conP0.3–0.7/y0.7–1.5, sin cambio en49controles; bajar potencia17/24fondo. Se conserva como contexto, no resultados formales ni objetivo que el arnés deba alcanzar. El método formal distingue primer bote trasero de pared trasera y conserva retornos ya dentro aunque sean cortos.
+
+Prioridad: tandas2–4 dePR#30 y restauraciones antes de2026-11-07T17:58:46Z; evaluación solo sin sesión física. No producto/tests/defaults/SL/spec/plan/criterios ni implementación; C4 solo nota de diseño. PR#30/#31 sin fusionar.
+
+
+### Entrega de evaluación offline de la candidata — 2026-11-04
+
+Método **140d0ca confirmado antes del primer cálculo**, sin refinamientos tras resultados. Mismas73posiciones,99puntos y11P:79.497solicitudes/brazo,238.491filas base/Y/P. ShotSolver/P2 originales sin cambios; dos ejecuciones con cincoTSV idénticos byte a byte; base completa idéntica al mapa aprobado. Auditadas380.725referencias de candidatos/195.936evaluaciones únicas,521protegidos yLogs/evidence3145archivos intactos. Ninguna build/suite/instalación/acceso al iPhone nuevo.
+
+Y conserva exactamente17.403bases focales y49.044controles ya dentro; cambia8.722/4.203 y deja11/114sin solución encontrada. Retorno dentro Y26.125/26.136focales y53.247/53.361controles; bajarP26.099/26.136 y53.089/53.361. EnC, Y llega a mitad trasera24/24focales P0,3–1,0 ybajarP17/24; los539controles deC quedan intactos, pero toda la rejilla decontroles sí tiene cambios. Retornos bajos/suaves ya válidos preservados; solicitudes antesUnsolved pueden cambiar o seguir sin solución.
+
+Hay márgenes casi nulos junto al tin enP baja y variaciones deTargetUsed entre vecinos (focal2,95m al variarP, controles hasta3,913845m al variarx), distinguiendo búsqueda externa y asistencias originales. Son datos descriptivos, sin criterio nuevo ni percepción humana medida. C4 solo nota; **no se elige regla/parámetros de producto ni se declara aprobada la candidata**. [Informe](2026-11-04-first-shot-sl56-lowering-candidate.md), [método](../diagnostics/2026-11-04-sl56-lowering-rule-method.md), [reproducción](../diagnostics/2026-11-04-sl56-lowering-rule-reproduction.md), [resumen](../validation/evidence/2026-11-04-sl56-lowering-summary.json). Se entrega para nueva revisión Claude/PO y se detiene.
+
+Prioridad física vigente: tandas2–4 y restauraciones antes de2026-11-07T17:58:46Z/7nov14:58:46Chile; pausa hasta aviso delPO, sin tocar iPhone/relanzar/preparar16. InstalaciónPROD requiere autorización propia/respaldo nuevo; avisar antes deinstalar si no alcanza. PR#30/#31 sin fusionar; S3–S4/T8 sin implementación.
+
+## Cierre efectivo de PR #30 y actualización documental de PR #31 — 5 de noviembre de 2026 (Chile)
+
+El PO comunicó la aprobación final de Claude sin bloqueantes sobre el SHA exacto `8f8a7343a5ec932ac8bbc0d32f57ca89749c23dc` de PR #30 y autorizó la fusión y la preparación de #31. Antes de fusionar se verificaron head local y remoto, árboles limpios, PR abierta y no borrador, MERGEABLE/CLEAN, main en `8dd142dff2fcdc5d52871ac3c89733b4aff88fd6` y producto intacto desde `9131b1c`.
+
+PR #30 quedó fusionada mediante **merge commit `60ae2d6ade661859ea80b71be96f52991d52ef5d`**, primer padre `8dd142dff2fcdc5d52871ac3c89733b4aff88fd6` y segundo padre **`8f8a7343a5ec932ac8bbc0d32f57ca89749c23dc`**. Su árbol **`d4c8dadff6a2034fb576c7ba187deca878ae50cd`** es idéntico al del head aprobado. La rama local y remota `firstshot/s2-m24` se conservó en ese SHA y sigue siendo la base de #32. Main local quedó sincronizada por fast-forward y limpia. El registro de cierre va en esta entrega de #31.
+
+Se archivaron las ocho rutas ignoradas del worktree de #30 en **`Logs/archive-s2-m24-20261105/`** bajo el checkout de main. Incluye la evidencia de las cuatro tandas, builds, exports y el perfil anterior apartado en `Logs/prod-renewal-20261105/`. El inventario de rutas y los SHA-256 antes y después coincidieron, con **40.090 archivos regulares y 17.800.549.298 bytes**. SHA-256 del inventario `de2917a42bd166a1c6bd14f9cd8e4b18ed4c567574ef17fb265b153f72f974a0`. El worktree se retiró sin `--force` tras el cotejo.
+
+PR #31 quedó basada en `main` y se actualizó con un merge de `origin/main`. Los conflictos se limitaron a `AGENTS.md` y este registro y se conservaron ambos historiales. El diagnóstico, sus conclusiones y la evidencia quedan idénticos a `84ad994` según cotejo SHA-256. El diff contra main es exclusivamente documental. **PR #31 queda abierta para revisión final de Claude.** PR #32 conserva su base y queda abierta en espera. Solo se sincroniza su «Estado vigente». Sesión física detenida.
