@@ -4,7 +4,7 @@
 
 Retomada por Codex desde `e160f98`, rama `firstshot/s2-m24`, PR #30 sin fusionar. Decisión de repreguntar registrada en `c336c51`; procedimiento confirmado y precisado literalmente por el PO en [aprobaciones](2026-10-25-first-shot-po-approvals.md). Rigen la [predeclaración](../validation/2026-10-31-first-shot-s2-session27-predeclaration.md) y el estado vigente de AGENTS.md. App prevista: **0.1.0+2ef4807 dev ya instalada**, sin build/instalación nuevos.
 
-**Tanda2 completa:14–22,57recepciones; preguntas recogidas antes de resultados y P0 restaurado/verificado en proceso nuevo el4nov21:59:07Chile. Lista para revisión Claude/PO, sin fusionar.** Tanda 2 prevista: 14–22, 57 recepciones SL1. Perfil, P0 y restauración final comprobados abajo. No se atribuyen aquí las comprobaciones de tanda 1. Al cierre se requiere exportación/restauración en proceso nuevo/dd122831f592/pending 0 y cotejo de los tres archivos; entrega para Claude/PO y parada. S3–S4/T8 no autorizados.
+**Tanda 2 completa y APROBADA por Claude, sin correcciones, sobre el head `0cc8060` de PR #30; aprobación comunicada por el PO.** Son 57 recepciones de14–22. Las respuestas iniciales se recogieron antes de resultados; la aclaración de asociación del18 llegó **después de mostrar resultados**, como se etiqueta abajo. P0 restaurado/verificado en proceso nuevo el4nov21:59:07Chile. PR sin fusionar; sesión detenida hasta aviso del PO. Tanda 2 prevista: 14–22, 57 recepciones SL1. Perfil, P0 y restauración final comprobados abajo. No se atribuyen aquí las comprobaciones de tanda 1. Al cierre se requiere exportación/restauración en proceso nuevo/dd122831f592/pending 0 y cotejo de los tres archivos; entrega para Claude/PO y parada. S3–S4/T8 no autorizados.
 
 ## Repreguntas retrospectivas sobre el salto de 09–13
 
@@ -344,7 +344,7 @@ Recepción-registroMacUTC **2026-11-05T00:18:51.661719+00:00**; horaexacta deenv
 | Recepción3 | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«OK»** |
 | Cierre | «¿Seguiste la tarea y la intensidad que se pidió en este bloque? Si no, ¿qué intentabas hacer?» | **«si»** |
 
-Tras recoger las cuatrorespuestas ymostrar la discrepancia instrumental, se pidió aclaración deasociación: «Bloque18: ¿tus tres«OK» corresponden,enorden,a los tresapoyos quehiciste,o alasrecepciones1–3 quecontaste?». Respuesta literal **«A las tres recepciones que conté»**, recepción-registroMacUTC **2026-11-05T00:20:07.956407+00:00**. Se conservan tresOK declarados porordinal de recepción yla tarea«si». **R1 no tiene gesto/attemptId registrado**: no se crea uno ni se convierte la declaración en una acción instrumentada. R2/R3 tienenidentidades. **El apoyoextraL122 no recibeOK porinferencia**; tampoco se mueve lafrontera/cuota o se sustituye R1. No repetición ni aceptaciónS2inferida.
+**Aclaración posterior a mostrar resultados del bloque18:** tras recoger las cuatro respuestas iniciales y mostrar la discrepancia instrumental, se pidió aclaración de asociación: «Bloque18: ¿tus tres«OK» corresponden,enorden,a los tresapoyos quehiciste,o alasrecepciones1–3 quecontaste?». Respuesta literal **«A las tres recepciones que conté»**, recepción-registroMacUTC **2026-11-05T00:20:07.956407+00:00**. Se conservan tresOK declarados porordinal de recepción yla tarea«si». **R1 no tiene gesto/attemptId registrado**: no se crea uno ni se convierte la declaración en una acción instrumentada. R2/R3 tienenidentidades. **El apoyoextraL122 no recibeOK porinferencia**; tampoco se mueve lafrontera/cuota o se sustituye R1. No repetición ni aceptaciónS2inferida.
 
 ### Resultado de18 NEG-A
 
@@ -636,9 +636,9 @@ Potencia solicitada:14 tiene8/10Swing suaves(8/10recepciones);15 tiene5/10Swing 
 ### Límites y desviaciones conservados
 
 - Modal agrupado por petición literal del PO durante14 y de nuevo durante16; cada pregunta/campo y su respuesta son literales y los resultados se reservaron hasta recogerlos. La recogida de la triada17–21 fue retrospectiva al cierre, después de los terminales, sin interrumpir el contacto ni ampliar la recepción; se declara esa modalidad temporal y no se presenta como feedback inmediato durante cada oportunidad. El pedido de modal no se transforma en una autorización distinta de protocolo por inferencia.
-- CAN17:R5 conserva «creo que no miré y miré las reglas», sin categoría de triada inferida. NEG-A18:el PO aclaró que sus tresOK eran por las recepciones que contó;R1no tiene gesto registrado y el extraL122no recibeOK. NEG-B19:tarea original«is» conservada junto a aclaración«Sí, seguí la tarea».
+- CAN17:R5 conserva «creo que no miré y miré las reglas», sin categoría de triada inferida. NEG-A18: **después de mostrar resultados**, el PO aclaró «A las tres recepciones que conté»; las respuestas iniciales habían llegado antes. R1 no tiene gesto registrado y el extraL122 no recibeOK. NEG-B19:tarea original«is» conservada junto a aclaración«Sí, seguí la tarea».
 - No se identificaron excepciones numeradas en las respuestas globales POT/RIT; quedan sin respuesta individual. No se fabricanOK ni voluntad desde cierres técnicos.
-- Overlay/bloqueo/conexión entre bloques: evidencia conservada y§3.2/proceso nuevo/P0/cotejo/precheck repetidos. Se observaron antes de la preparación siguiente; causa y hora exacta de entrada no demostradas. Las cuotas/fronteras nativas se conservaron, sin borrar ni sustituir recepciones.
+- **«Toca para continuar» apareció seis veces entre bloques**:14→15,16→17,18→19,19→20,20→21 y21→22; en20→21 se observó tras reanudar la conexión de Duplicación. Se aplicó§3.2, conservando evidencia y verificando P0 en proceso nuevo/cotejo/precheck. **Sin causa atribuida**; hora exacta de entrada no demostrada. Las cuotas/fronteras nativas se conservaron, sin borrar ni sustituir recepciones. Tener esta eventualidad prevista en tanda3 yPROD, aplicando el protocolo vigente, sin nueva instrumentación ni ajuste.
 - N04/N04b siguen abiertos.21tuvo componente lateral mayor que descenso, pero esas trazas no se toman como acreditación del caso límite apenas fuera de zona/P≈0. No se fuerzan recorridos ni se añade filtro.
 - Mira/anillo y mano izquierda dominante conservados; C es referencia verbal sin marcador. No hay nueva calibración física de DPI/latencia, H3/H17/rally o criterio de precisión; frame completo/asignaciones por parte no evaluados. Batería/ruta de audio no verificadas de nuevo; los registros térmicos disponibles son contexto, no aceptación de rendimiento.
 
@@ -674,11 +674,23 @@ Primer reinicio rechazado por iPhone bloqueado: no cuenta como restauración. El
 
 Comparación binaria real con cmp -s, además de SHA-256. No se guardó ni promovió ningún preset. P0 conserva repeat3, suspendido por práctica; restaurar no significa volver a defaults. Producto9131b1c/dev2ef4807 intactos: diff de Assets/ProjectSettings/Packages/scripts vacío. No nuevas suites, exportsUnity, builds, instalaciones, código/defaults/SL/spec/plan/criterios/bandas/umbrales. Se conserva la evidencia local; solo se versiona documentación.
 
-## Pendiente para retomar mañana5nov
+## Pendiente tras la aprobación — retomar solo al aviso del PO
 
-1. **Revisión Claude/PO de esta tanda2**. PR#30 permanece abierta y sin fusionar; completar cuotas no aprueba S2 ni autoriza merge. Se detiene hoy tras esta entrega.
+1. **Revisión de tanda2 completada:** Claude aprobó `0cc8060` sin correcciones, según comunicación del PO. PR#30 permanece abierta y sin fusionar; esta aprobación de tanda2 no acepta globalmente S2 ni autoriza merge. Mantener la parada hasta aviso del PO.
 2. **Tanda3 dev:**23CAM-F(10recepciones) y24CAM-S(10), fija→seguimiento, cada una con precheck y frontera propios. Al cierre: preguntas literales de cada condición, las16preguntas originalesS1 más la preferencia de dirección, export/restauraciónP0 en proceso nuevo/cmp3 y entrega para revisión/parada. Usar la dev instalada2ef4807, sin la regla dePR#32. Antes de comenzar: verificar otra vez ventana/perfil y nuevo precheck completo desdeP0.
 3. **Tanda4 PROD:**25(3recepciones) independiente. La prod preparada0.1.0+a11fb32 usa el mismo producto9131b1c; **todavía no instalada**. Requiere autorización propia de instalación conPOpresente, export/restauración dev verificada, respaldo nuevo/cotejo§2/§8 y perfil incorporado vigente. Precheck y fronteraPROD específicos§5, cuatro preguntas funcionales literales, export/restauración en proceso nuevo/cmp3 y entrega/parada. No instalar por inferencia de«seguimos mañana».
 4. **Límite de tiempo:** todas las mediciones, instalación necesaria y restauraciones deben terminar antes de **7nov2026 14:58:46Chile /17:58:46Z**. Como reserva de agenda, no criterio:60min para tanda3 y45min paraPROD, más revisión y acceso; disponibilidad de mañana sin fijar. Avisar antes de instalar si no alcanza.
 
 PR#30/#31/#32 siguen sin fusionar. La regla dePR#32 continúa desactivada por defecto y sin autorización de validación física. S3–S4/T8 siguen sin implementación autorizada. No mensajes externos aClaude por herramientas.
+
+## Revisión de Claude de tanda 2 — aprobación comunicada por el PO
+
+**APROBADO, sin correcciones, sobre el head `0cc8060` de PR #30.** Registro solo documental; no se modifica ni recalcula evidencia, respuestas originales, producto, criterios o umbrales. Se conservan las siguientes observaciones de Claude comunicadas por el PO:
+
+1. **Modal por petición del PO.** En 17–21 la pregunta por intento se hizo al cierre del bloque, retrospectivamente. En 18 las respuestas iniciales llegaron antes de resultados, pero la aclaración literal **«A las tres recepciones que conté» llegó después de mostrar resultados**. Se etiqueta como tal; no se la presenta como respuesta previa ni se borra su orden de recogida.
+2. **Seis apariciones entre bloques de «Toca para continuar».** Se aplicó §3.2, sin causa atribuida. Tenerlo previsto en las preparaciones de tanda 3 y PROD, con conservación/proceso nuevo/P0/cotejo/precheck según el protocolo existente.
+3. **Recepción 1 de 18 y 19 sin gesto registrado.** Es una observación de los registros, **no un defecto demostrado**. No se fabrica un gesto ni se sustituye la recepción.
+4. **Resbalones simulados de los bloques 20/21: golpe en 6/6**, entendido como orden **Swing**: 3/3 en cada bloque. Los seis quedaron antes de K-in y hubo 0 contactos aplicados. Compatible con **N04/N04b, que siguen abiertos**; no se interpreta como seis impactos de pelota ni como tasa accidental espontánea.
+5. **Juicio del salto:** los «sí» del PO cubren saltos observados de hasta unos **8 diámetros en 16**; máximo ya publicado **7,988459 diámetros** en 3 contactos aplicados. Es el alcance descriptivo del juicio comunicado, **sin nuevo umbral, criterio o aceptación universal del salto**. No se recalculan los datos.
+
+La aprobación no autoriza fusión de PR #30/#31/#32, otra sesión, instalación PROD, activación/validación física de la regla experimental ni implementación S3–S4/T8. **No tocar el iPhone; detenerse hasta el aviso del PO.** P0 conserva la última restauración verificada; no se declara una comprobación física nueva en este registro.

@@ -1232,3 +1232,17 @@ Tanda2 completada según cuotas14–22:57recepciones/44Swing/17contactos; todos 
 Primer reinicio final rechazado por bloqueo; el PO recuperó acceso: **«Listo, ya lo desbloqueé y volví a bloquear»**. Reintento aceptado y restauración final verificada en proceso nuevo **2026-11-05T00:59:07.010631Z /4nov21:59:07Chile /0.1.0+2ef4807dev /P0-calib-1/dd122831f592/pending0**. Tresarchivos byte a byte iguales porcmp tanto alrespaldo de tanda2 como al inicial de tanda1. No instalación/código/tests/defaults/SL/spec/plan/criterios/bandas/umbrales nuevos.
 
 Pendientes: revisión de tanda2; tanda3(23CAM-F/24CAM-S,20recepciones y16preguntasS1+preferencia); tanda4PROD25(3recepciones), con autorización propia de instalación/POpresente/respaldo nuevo yfrontera§5. Cada tanda exporta/restauraP0 en proceso nuevo/cmp3/entrega yparada. Revalidar ventana/perfil antes de cada una; todo debe terminar antes del7nov2026 14:58:46Chile/17:58:46Z. PR#30/#31/#32 sinfusionar; regla experimental no autorizada para sesión física ni activación por defecto. S3–S4/T8 sinimplementación. Detenerse hoy.
+
+## Tanda 2 aprobada por Claude en `0cc8060` — comunicado por el PO
+
+El PO comunica: **«Claude aprobó la tanda 2 en el head 0cc8060 de PR #30, sin correcciones.»** Se registra la aprobación de **tanda 2**, sin extenderla a aceptación global de S2 o autorización de fusión. [Informe y observaciones](2026-11-01-first-shot-s2-tanda2.md).
+
+Observaciones comunicadas, solo registro documental:
+
+1. Modal de preguntas por petición del PO. En 17–21 la pregunta por intento se recogió al cierre del bloque. En 18 la aclaración **«A las tres recepciones que conté» llegó después de mostrar resultados**; conservar esta etiqueta y las respuestas iniciales anteriores, sin reordenarlas.
+2. **«Toca para continuar» apareció 6 veces entre bloques**. Se aplicó §3.2 sin causa atribuida. Tenerlo previsto en tanda 3 y PROD con el protocolo existente.
+3. Recepción 1 de 18 y 19 sin gesto registrado: **no es un defecto demostrado**. No sustituir ni fabricar acciones.
+4. Los resbalones simulados de 20/21 generaron golpe **6/6, como Swing**, con 0 contactos aplicados; compatible con **N04/N04b, que siguen abiertos**. No es una tasa accidental espontánea.
+5. Los «sí» del PO al salto cubren hasta unos **8 diámetros en 16** (máximo ya publicado 7,988459). No se introduce un umbral ni un criterio nuevo.
+
+Instrucción vigente del PO: **«No toques el iPhone; detente hasta el aviso del PO.»** No hay acceso al dispositivo, reinicio, precheck, export, cálculo, build, instalación, test o cambio de producto en este registro. P0 sigue con la última restauración verificada, sin comprobarlo de nuevo. Mantener un único «Estado vigente», idéntico en PR #30/#31/#32. Todas siguen sin fusionar; tandas 3/4 pendientes al aviso, PROD con autorización propia de instalación/respaldo nuevo y perfil vigente. Activación/validación física de la regla y S3–S4/T8 sin nueva autorización.
