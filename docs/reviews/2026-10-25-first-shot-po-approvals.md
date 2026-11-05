@@ -1279,7 +1279,7 @@ P0-calib-1 **`dd122831f592`, cero pendientes** en proceso nuevo PROD a las **202
 
 A las **2026-11-05T13:53:40.0456190Z (10:53:40 Chile)**, después de restaurar la tanda 3 y antes del respaldo nuevo, la app DEV registró en L471 `dev-control` / `legibility-launch`, `stage=activation`, `accepted=true` y `devOpen=false`. Lo precedieron toques filtrados en la parte superior de la pantalla (L467–469). En L475 el resultado cambió el hash temporal a `141920afa6af` con cero pendientes. Los tres archivos conservaron sus bytes. El reinicio posterior en P0 repuso `dd122831f592`. Según el historial de herramientas de la sesión, Codex estaba preparando el export PROD en el Mac y sus herramientas no interactuaban con el iPhone ni con Duplicación en ese momento. Ante la pregunta de si tocó el iPhone hacia las 10:53 de Chile, el PO respondió literalmente «No recuerdo». La respuesta expresa falta de recuerdo. El log conserva los toques y su origen queda sin atribuir.
 
-El PO confirmó lanzamiento, golpe y nota del resultado. El log confirma dos contactos. **Sonido NotEvaluated** por iPhone en silencio, sin resultado Fail. Una comprobación posterior requiere autorización propia. «todo ok» es una respuesta global y el feedback individual queda «sin respuesta». La recepción 1 de PROD fue la tercera recepción sin gesto registrado en la campaña, después de la recepción 1 de NEG-A y la recepción 1 de NEG-B en tanda 2. Es un recuento descriptivo, sin atribución de causa.
+El PO confirmó lanzamiento, golpe y nota del resultado. El log confirma dos contactos. **Sonido NotEvaluated** por iPhone en silencio, sin resultado Fail. Una comprobación posterior requiere autorización propia. «todo ok» es una respuesta global y el feedback individual queda «sin respuesta». La recepción 1 de PROD fue la **cuarta** sin gesto registrado en el subtotal de tandas 2–4, que incluye 16 POT-F, 18 NEG-A, 19 NEG-B y 25 PROD. Claude corrigió su error en la observación 3 de tanda 4, donde había contado «tercera» al omitir 16 POT-F. Tanda 1 queda N/Agg para este campo. Es un recuento descriptivo, sin atribución de causa.
 
 En el estado verificado al cierre, **`0.1.0+8f030a8 prod` queda instalada y DEV no está instalada**. El perfil renovado está vigente hasta **2026-11-12T13:55:07Z**. El anterior quedó apartado y conservado. Registro documental sin acceso al iPhone. La sesión queda detenida y las tres PR siguen abiertas, sin fusionar. [Informe de tanda 4](2026-11-05-first-shot-s2-tanda4-prod.md).
 
@@ -1288,3 +1288,17 @@ En el estado verificado al cierre, **`0.1.0+8f030a8 prod` queda instalada y DEV 
 El PO autorizó una entrega solo documental en PR #30 para su juicio global sobre S2 con M2-4, incluido el salto, antes de decidir sobre la fusión. El [resumen de cierre](2026-11-05-first-shot-s2-closing-summary.md) enlaza los cuatro informes y las revisiones registradas, consolida las cifras publicadas, separa las cifras no agregables y conserva las respuestas literales y su contexto. Tanda 1 conserva la revisión con cambios solicitados y el informe corregido. Las tandas 2–4 conservan sus aprobaciones registradas. El resumen distingue los resultados funcionales PROD, el sonido NotEvaluated y las decisiones pendientes del PO.
 
 Entrega para Claude, sin juicio global ni fusión autorizados. PR #30, #31 y #32 abiertas y sin fusionar, con un único «Estado vigente» idéntico. Solo documentación. Sesión física detenida. PROD `0.1.0+8f030a8` queda instalada según la última verificación, DEV sin instalar y perfil renovado vigente hasta `2026-11-12T13:55:07Z`. S3–S4/T8 sin autorización de implementación.
+
+## Revisión de Claude del resumen de cierre 2.7
+
+El PO comunicó que Claude aprobó el resumen en `d6f3529` con dos correcciones documentales. Verificó contra las tablas publicadas 206 recepciones, 181 Swing (115 + 44 + 20 + 2), 106 contactos, 74 Valid, 32 Perfect, 7 C-A y 92 extras, además de las citas literales y la lista neutral de decisiones.
+
+Se corrigió el error de Claude en la observación 3 de tanda 4. El subtotal de tandas 2–4 es 4 recepciones sin gesto (16 POT-F, 18 NEG-A, 19 NEG-B y 25 PROD). Tanda 1 queda N/Agg. [Resumen corregido](2026-11-05-first-shot-s2-closing-summary.md).
+
+### Aprobación de Claude del informe corregido de tanda 1
+
+**Claude aprobó el informe corregido de tanda 1 en `e160f98`**, según comunicó el PO al revisar el resumen de cierre. Verificó las correcciones de la revisión independiente de `66095c8`: extras 11/12/13 = 4/3/2, 02 = 27 post, 06 con 1 pre, 26 gestos antes de FAM, 9 tardíos de preparación, LaunchId L150/L151 del 03 inicial y referencia a §7. Confirmó que 03b y 04b sin precheck previo y 03b sin aplicar §3.2 quedaron declarados como desviaciones. Los datos primarios conservan sus valores.
+
+Se conservan las limitaciones de formulación y las respuestas originales, incluidas la pregunta 1 de 02 y las preguntas 1–2 de 09–13. Los juicios originales reformulados de 09–13 permanecen separados de las repreguntas literales del salto, recogidas retrospectivamente antes del bloque 14. El juicio global sobre S2 queda pendiente del PO. [Repreguntas de tanda 2](2026-11-01-first-shot-s2-tanda2.md#repreguntas-retrospectivas-sobre-el-salto-de-0913).
+
+Se registran ambas correcciones solo en documentación. La sesión permanece detenida y las PR #30, #31 y #32 siguen abiertas y sin fusionar.
