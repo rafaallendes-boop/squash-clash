@@ -1302,3 +1302,126 @@ Se corrigió el error de Claude en la observación 3 de tanda 4. El subtotal de 
 Se conservan las limitaciones de formulación y las respuestas originales, incluidas la pregunta 1 de 02 y las preguntas 1–2 de 09–13. Los juicios originales reformulados de 09–13 permanecen separados de las repreguntas literales del salto, recogidas retrospectivamente antes del bloque 14. El juicio global sobre S2 queda pendiente del PO. [Repreguntas de tanda 2](2026-11-01-first-shot-s2-tanda2.md#repreguntas-retrospectivas-sobre-el-salto-de-0913).
 
 Se registran ambas correcciones solo en documentación. La sesión permanece detenida y las PR #30, #31 y #32 siguen abiertas y sin fusionar.
+
+## Decisión del PO y cierre documental de S2 — 5 de noviembre de 2026 (Chile)
+
+El PO comunicó la revisión final independiente de Claude sobre el head exacto `403f8caf22fd6fcd55fb0a182d037c8538e694dc` de PR #30, sin observaciones bloqueantes. Claude verificó que Assets, ProjectSettings, Packages y scripts coinciden con el producto `9131b1c`, con suites de 522/522 EditMode y 297/297 PlayMode sobre ese producto y check-release prod limpio de `8f030a8`. Confirmó base al día con main `8dd142d`, estado MERGEABLE/CLEAN y ausencia de CI. Las cuatro tandas quedaron documentadas y aprobadas, incluida tanda 1 corregida con sus limitaciones. La evidencia acredita P0 y los tres archivos restaurados. El diff está libre de archivos prohibidos.
+
+**Decisión literal del PO**
+
+```text
+Claude, revisé el resumen consolidado de S2, los resultados de las cuatro tandas y las observaciones pendientes.
+Como Product Owner de Squash Clash, comunico las siguientes decisiones para cerrar esta etapa y preparar la continuidad de First Shot.
+1. Aceptación de S2: APROBADO CON CONDICIONES
+Apruebo S2 con el control M2-4 («apuntar al apoyar») como control vigente.
+La evidencia acumulada de 206 recepciones, 181 swings y 106 contactos, junto con mis evaluaciones en el iPhone, es suficiente para aceptar esta etapa y avanzar.
+Considero satisfactorios:
+
+* La precisión general del apuntado.
+* La integración del gesto con el golpe real.
+* El funcionamiento inicial del timing.
+* La aceptabilidad del salto visual de la mira.
+* La naturalidad del control, pendiente de comprobar bajo condiciones de rally.
+
+Esta aprobación no significa que todos los problemas estén resueltos ni autoriza automáticamente nuevas funcionalidades.
+Las observaciones pendientes deben conservarse explícitamente, con su evidencia y estado, sin reinterpretarlas como aprobadas o descartadas.
+2. Potencia media y saturación: OBSERVAR SIN MODIFICAR
+No autorizo cambios a `pullFullMm` ni a la curva de potencia en este momento.
+En S2 no se observó la saturación de S1, pero permanece la dificultad para conseguir consistentemente una potencia media sin terminar ejecutando un golpe fuerte.
+Quiero conservar este hallazgo como observación abierta.
+La calibración definitiva deberá considerar la experiencia real del jugador y, posteriormente, el comportamiento durante los intercambios.
+No ajustemos parámetros únicamente para mejorar métricas de una prueba aislada.
+3. Trayectoria SL5/SL6: CONSERVAR DIAGNÓSTICO, NO ACTIVAR REGLA
+Apruebo integrar la PR #31 como trabajo documental y diagnóstico, una vez integrada correctamente la PR #30.
+La evaluación offline de «bajar el punto» debe conservarse como evidencia técnica, sin interpretarse como autorización para adoptar esa regla.
+Respecto de la PR #32:
+
+* Mantenerla abierta y sin fusionar.
+* No activar la regla experimental de retorno.
+* No modificar los valores predeterminados.
+* No realizar nuevas pruebas físicas con esa regla sin autorización.
+* Conservar sus resultados, pruebas y observaciones para una decisión posterior.
+
+El problema de SL5/SL6 sigue abierto. Deberemos resolverlo o delimitar su impacto antes de considerar validada la experiencia de rally.
+4. Orden de revisión y fusión de PR
+Autorizo el siguiente procedimiento, sujeto a las verificaciones correspondientes.
+Primero: PR #30 — S2
+Antes de fusionar:
+
+1. Claude debe realizar una revisión final independiente del último commit vigente de la PR #30, identificando su SHA exacto.
+2. Confirmar que los cambios posteriores a las revisiones anteriores no introdujeron modificaciones de producto sin validar.
+3. Verificar que las cuatro tandas estén correctamente documentadas y que el informe consolidado refleje las aprobaciones y limitaciones reales.
+4. Confirmar que P0 y los archivos respaldados quedaron restaurados según la evidencia.
+5. Comprobar el estado de integración, las pruebas exigibles y la ausencia de conflictos bloqueantes.
+6. Actualizar la descripción de la PR para que refleje el estado final de S2.
+
+Si Claude aprueba el último commit sin observaciones bloqueantes, queda autorizada la fusión de la PR #30, respetando las verificaciones anteriores.
+Si aparecen cambios sustantivos, conflictos o problemas que requieran modificar código, detenerse y solicitar mi autorización antes de continuar.
+Segundo: PR #31 — Diagnóstico SL5/SL6
+Después de fusionar la PR #30:
+
+1. Actualizar su base respecto de `main`.
+2. Resolver únicamente los conflictos documentales necesarios, sin alterar el diagnóstico ni sus conclusiones.
+3. Verificar que la evidencia y los resultados permanezcan intactos.
+4. Solicitar revisión final de Claude sobre el resultado actualizado.
+
+Si la revisión es satisfactoria y el alcance sigue siendo exclusivamente documental, autorizo su fusión.
+Tercero: PR #32 — Regla experimental
+No fusionar, activar ni incorporar a `main`.
+Mantenerla pendiente hasta una decisión posterior del PO. No resolver sus conflictos mediante cambios de producto ni ejecutar nuevas validaciones físicas sin autorización.
+5. Observaciones que deben permanecer abiertas
+Mantener un registro trazable de:
+
+* Trayectorias anómalas SL5/SL6.
+* Potencia media que ocasionalmente se interpreta como fuerte.
+* Diferencia de saturación entre S1 y S2.
+* Resbalones simulados que generaron swings involuntarios.
+* Sonido todavía no comprobado de forma adecuada en el iPhone.
+* Timing pendiente de calibración.
+* Comportamiento del gesto durante rallies reales.
+* Evento de interfaz en «Legibilidad» cuyo origen no pudo atribuirse.
+
+Cada observación debe conservar su evidencia, severidad o impacto conocido, y el momento propuesto para volver a evaluarla.
+No convertir observaciones abiertas en defectos resueltos por el solo hecho de aceptar S2.
+6. Próxima etapa: preparar S3
+Una vez completado el cierre e integración de S2, autorizo exclusivamente la preparación documental de S3.
+Quiero una propuesta técnica acotada para:
+
+* Sonido de contacto según calidad del golpe.
+* Vibración/háptica diferenciada.
+* Feedback visual de Perfecto, Válido y Fallido.
+* Swing básico de raqueta, conforme al diseño vigente.
+* Validación de que el feedback corresponde al contacto real y no solamente a la intención de golpear.
+* Pruebas automatizadas y protocolo breve de validación en el iPhone.
+
+La propuesta debe identificar dependencias, riesgos, criterios de aceptación y qué podemos comprobar automáticamente antes de requerir una sesión física.
+Priorizar una experiencia de golpe clara y satisfactoria, sin ampliar el alcance.
+No autorizo todavía implementar S3. Primero quiero revisar el diseño y el plan.
+S4, First Rally, First Match y cualquier trabajo fuera del alcance indicado siguen sin autorización.
+7. Criterio general de ejecución
+Mantengamos nuestra metodología:
+
+* Codex implementa cuando existe autorización.
+* Claude realiza la revisión técnica independiente.
+* TDD y regresiones según el alcance de cada cambio.
+* Evidencia verificable y trazabilidad de decisiones.
+* Validación en iPhone cuando corresponda.
+* Aprobación del PO antes de ampliar el alcance.
+
+No es necesario repetir pruebas físicas ya aceptadas si no existen cambios que las invaliden. Tampoco debemos declarar validaciones que no se hayan ejecutado.
+Mi objetivo es avanzar sin buscar una perfección prematura, pero manteniendo el rigor que nos permitió completar First Ball y llegar a golpes reales en First Shot.
+Decisión final del PO:
+
+* S2: APROBADO CON CONDICIONES.
+* M2-4: CONTROL VIGENTE.
+* Potencia: SIN CAMBIOS.
+* PR #30: FUSIÓN AUTORIZADA TRAS REVISIÓN FINAL SATISFACTORIA.
+* PR #31: FUSIÓN DOCUMENTAL AUTORIZADA DESPUÉS DE #30 Y SU REVISIÓN FINAL.
+* PR #32: EN ESPERA, SIN FUSIONAR.
+* S3: SOLO PREPARACIÓN DOCUMENTAL.
+* S4 y etapas posteriores: NO AUTORIZADAS.
+
+Procede con este orden, informa cualquier bloqueo y no amplíes el alcance sin consultarme.
+```
+
+El encargo inmediato autoriza un solo commit de cierre documental en PR #30 y la sincronización del «Estado vigente» en las otras dos ramas. La revisión de `403f8ca` precede al nuevo commit de cierre, cuyo SHA debe revisar Claude antes de fusionar. La PR #31 queda para integración documental después de #30 y de su propia revisión final. La PR #32 queda en espera. La preparación documental de S3 empieza después del cierre e integración de S2. [Resumen previo al juicio del PO](2026-11-05-first-shot-s2-closing-summary.md) · [Registro de observaciones abiertas](2026-11-05-first-shot-s2-open-observations.md).
