@@ -16,7 +16,8 @@ Check-release prod fresco con `gitDirty=false`, ejecutado desde una copia ignora
 
 ## Instalación y precheck
 
-El primer export DEV conservó la activación de «Legibilidad» registrada a las 13:53:40Z. El hash temporal pasó a `141920afa6af` con cero pendientes. Los tres archivos cotejados seguían intactos. Se conservó ese export. El primer reinicio DEV fue rechazado por bloqueo y el PO desbloqueó el iPhone.
+A las **2026-11-05T13:53:40.0456190Z (10:53:40 Chile)**, después de restaurar la tanda 3 y antes del respaldo nuevo, la app DEV registró en L471 `dev-control` / `legibility-launch`, `stage=activation`, `accepted=true` y `devOpen=false`. Lo precedieron toques filtrados en la parte superior de la pantalla (L467–469). En L475 el resultado cambió el hash temporal a `141920afa6af` con cero pendientes. Los tres archivos conservaron sus bytes. El reinicio posterior en P0 repuso `dd122831f592`. Según el historial de herramientas de la sesión, Codex estaba preparando el export PROD en el Mac y sus herramientas no interactuaban con el iPhone ni con Duplicación en ese momento. Ante la pregunta de si tocó el iPhone hacia las 10:53 de Chile, el PO respondió literalmente «No recuerdo». La respuesta expresa falta de recuerdo. El log conserva los toques y su origen queda sin atribuir. Se conservó el primer export DEV. El primer reinicio DEV fue rechazado por bloqueo y el PO desbloqueó el iPhone.
+
 Arranque DEV nuevo observado a las **2026-11-05T14:10:11.4607220Z**, con `0.1.0+2ef4807 dev`, P0 `dd122831f592` y cero pendientes. Respaldo nuevo `backup-before-install` cotejado con la referencia inicial y export DEV con el proceso nuevo `dev-p0-retry-export` terminado a las 2026-11-05T14:10:25.309518+00:00.
 Instalación autorizada finalizada **2026-11-05T14:10:50.194649+00:00**. Antes de lanzar PROD, `post-install` cotejó los tres archivos por `cmp` y SHA-256 contra el respaldo nuevo y la referencia inicial a las 2026-11-05T14:10:51.444649+00:00.
 Proceso PROD de comprobación `metrics-20261105T141054579-10b812cd3659429d9d13349052f65f82.jsonl` a las **2026-11-05T14:10:54.6003830Z**. Arranque `0.1.0+8f030a8 prod`, P0 `dd122831f592`, cero pendientes. Se verificaron el transitorio LaunchId 1 en L2 y el plan SL1 LaunchId 2 en L4. Se cerró este proceso de comprobación antes de pedir que el PO abriera el proceso medido. Sus lanzamientos quedaron fuera de cuota.
@@ -67,11 +68,11 @@ Extras: LaunchId 6 L27 AbandonedNoPull, LaunchId 6 L29 Swing.
 | Predicción (ms) | 2 | 0.056000 | 0.129100 | 0.129100 | 0.129100 |
 | Reconciliación (ms) | 2 | 0.036200 | 2.130200 | 2.130200 | 2.130200 |
 
-Percentiles crudos por rango más próximo. Los costes de contacto corresponden solo a golpes aplicados. Frame completo asociado al golpe y asignaciones por parte quedan NotEvaluated. El PO confirmó lanzamiento, golpe y nota del resultado. El log confirma dos contactos. El sonido queda **sin verificar** porque el PO indicó que el iPhone estaba en silencio. «todo ok» es una respuesta global y el feedback individual queda «sin respuesta». La recepción 1 quedó sin gesto registrado. Los dos gestos posteriores pertenecen a LaunchId 6, fuera de cuota. El recorrido PROD es funcional y se informa por separado.
+Percentiles crudos por rango más próximo. Los costes de contacto corresponden solo a golpes aplicados. Frame completo asociado al golpe y asignaciones por parte quedan NotEvaluated. El PO confirmó lanzamiento, golpe y nota del resultado. El log confirma dos contactos. **Sonido NotEvaluated** por iPhone en silencio, sin resultado Fail. Una comprobación posterior requiere autorización propia. «todo ok» es una respuesta global y el feedback individual queda «sin respuesta». La recepción 1 de PROD fue la tercera recepción sin gesto registrado en la campaña, después de la recepción 1 de NEG-A y la recepción 1 de NEG-B en tanda 2. Es un recuento descriptivo, sin atribución de causa. Los dos gestos posteriores pertenecen a LaunchId 6, fuera de cuota. El recorrido PROD es funcional y se informa por separado.
 
 ## Restauración final y entrega
 
-Tras el export se abrió el proceso nuevo `metrics-20261105T142709994-2de9475b88df459b8ed47d0a18397405.jsonl` a las **2026-11-05T14:27:10.0146510Z**, con `0.1.0+8f030a8 prod`, **P0-calib-1 `dd122831f592` y cero pendientes**. Export y cotejo final a las 2026-11-05T14:27:12.810360+00:00, antes del límite operativo y del vencimiento del perfil renovado. PROD queda instalada.
+Tras el export se abrió el proceso nuevo `metrics-20261105T142709994-2de9475b88df459b8ed47d0a18397405.jsonl` a las **2026-11-05T14:27:10.0146510Z**, con `0.1.0+8f030a8 prod`, **P0-calib-1 `dd122831f592` y cero pendientes**. Export y cotejo final a las 2026-11-05T14:27:12.810360+00:00, antes del límite operativo y del vencimiento del perfil renovado. En el estado verificado al cierre, **`0.1.0+8f030a8 prod` queda instalada y DEV no está instalada**. El perfil renovado está vigente hasta **2026-11-12T13:55:07Z**. El anterior quedó apartado y conservado.
 
 | Archivo | Bytes | SHA-256 final | Cotejo binario con respaldo nuevo e inicial |
 |---|---:|---|---|
@@ -79,4 +80,8 @@ Tras el export se abrió el proceso nuevo `metrics-20261105T142709994-2de9475b88
 | `Po-1.json` | 2843 | `9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767` | Idéntico |
 | `last-active.txt` | 10 | `5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087` | Idéntico |
 
-Evidencia local ignorada en `Logs/prod-renewal-20261105/`. La entrega queda para revisión de Claude/PO. La sesión física queda detenida y PR #30, #31 y #32 siguen abiertas. S3–S4/T8 siguen sin autorización de implementación.
+Evidencia local ignorada en `Logs/prod-renewal-20261105/`. La entrega se envió a revisión de Claude/PO. La sesión física queda detenida y PR #30, #31 y #32 siguen abiertas. S3–S4/T8 siguen sin autorización de implementación.
+
+## Revisión de Claude de tanda 4 PROD
+
+**Claude aprobó la tanda 4 PROD en `e75703b`**, según comunicó el PO. El recuento independiente desde el JSONL de `after-block25` confirmó LaunchId 1 transitorio, LaunchId 2 como frontera y cuota LaunchId 3–5 con NoOrder sin gesto, Perfect y Perfect. LaunchId 6 conservó los dos extras, AbandonedNoPull y Swing. Hash `dd122831f592` y cero pendientes. `block25-retry` es prefijo exacto del log de cierre. Verificó la identidad del producto `8f030a8` con `9131b1c`, el reinicio en P0 y los tres archivos restaurados. La copia de check-release difiere del script versionado únicamente en rutas de salida, el bucle solo PROD y la ruta de `source`.
