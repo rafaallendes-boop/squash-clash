@@ -34,7 +34,7 @@ namespace SquashClash.Runtime.Shot
             elapsed=0;IsVisible=true;ShowCount++;flash.gameObject.SetActive(true);
         }
         private void Hide(){IsVisible=false;elapsed=0;if(flash!=null)flash.gameObject.SetActive(false);}
-        public void Tick(double dt){if(!IsVisible)return;elapsed+=(float)dt;if(elapsed>=DurationSeconds)Hide();}
+        public void Tick(double dt){if(!IsVisible||app.Clock.Paused)return;elapsed+=(float)dt;if(elapsed>=DurationSeconds)Hide();}
         private void Update(){Tick(Time.unscaledDeltaTime);}
         private static Mesh Disc()
         {

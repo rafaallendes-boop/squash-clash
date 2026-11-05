@@ -126,6 +126,53 @@ namespace SquashClash.Runtime.Tests
             flash.Tick(PerfectFlashView.DurationSeconds*.5);Assert.That(flash.IsVisible,Is.True);flash.Tick(PerfectFlashView.DurationSeconds);Assert.That(flash.IsVisible,Is.False);
         }
         private static float SwingFlashDuration()=>PerfectFlashView.DurationSeconds;
+        private void AssertFrozenWhilePaused(SwingPhase phase)
+        {
+            app.Clock.Paused=true;
+            try
+            {
+                var pos=swing.RacketLocalPosition;var rot=swing.RacketLocalRotation;
+                for(int i=0;i<100;i++)swing.Tick(.01);
+                Assert.That(swing.Phase,Is.EqualTo(phase));
+                Assert.That(swing.RacketLocalPosition,Is.EqualTo(pos));Assert.That(swing.RacketLocalRotation,Is.EqualTo(rot));
+            }
+            finally{app.Clock.Paused=false;}
+        }
+        [Test] public void Swing_Intention_FreezesWhilePaused_AndResumes()
+        {
+            var r=Submit(Star()-.02);Assert.That(r.Scheduled,Is.True);Ticks(swing,.05);
+            var pos=swing.RacketLocalPosition;AssertFrozenWhilePaused(SwingPhase.Intention);
+            Ticks(swing,.2);Assert.That(swing.RacketLocalPosition,Is.Not.EqualTo(pos));Assert.That(swing.Phase,Is.EqualTo(SwingPhase.Intention));
+        }
+        [Test] public void Swing_Impact_FreezesWhilePaused_AndFinishes()
+        {
+            var r=Submit(Star());Assert.That(r.Result,Is.EqualTo("Perfect"));Assert.That(swing.Phase,Is.EqualTo(SwingPhase.Impact));Ticks(swing,.1);
+            var pos=swing.RacketLocalPosition;AssertFrozenWhilePaused(SwingPhase.Impact);
+            Ticks(swing,.05);Assert.That(swing.RacketLocalPosition,Is.Not.EqualTo(pos));
+            Ticks(swing,2);Assert.That(swing.Phase,Is.EqualTo(SwingPhase.Idle));
+        }
+        [Test] public void Swing_Air_FreezesWhilePaused_AndFinishes()
+        {
+            var r=Submit(Star()-.15);Assert.That(r.Result,Is.EqualTo("Failed"));Assert.That(swing.Phase,Is.EqualTo(SwingPhase.AirFollowThrough));Ticks(swing,.1);
+            var pos=swing.RacketLocalPosition;AssertFrozenWhilePaused(SwingPhase.AirFollowThrough);
+            Ticks(swing,.05);Assert.That(swing.RacketLocalPosition,Is.Not.EqualTo(pos));
+            Ticks(swing,2);Assert.That(swing.Phase,Is.EqualTo(SwingPhase.Idle));
+        }
+        [Test] public void Flash_FreezesWhilePaused_AndExpiresAfterRemainingUnpausedTime()
+        {
+            var r=Submit(Star());Assert.That(r.Result,Is.EqualTo("Perfect"));Assert.That(flash.IsVisible,Is.True);
+            flash.Tick(PerfectFlashView.DurationSeconds*.5);Assert.That(flash.IsVisible,Is.True);
+            app.Clock.Paused=true;
+            try{for(int i=0;i<100;i++)flash.Tick(.01);Assert.That(flash.IsVisible,Is.True);}finally{app.Clock.Paused=false;}
+            flash.Tick(PerfectFlashView.DurationSeconds*.4);Assert.That(flash.IsVisible,Is.True,"remaining time not yet consumed");
+            flash.Tick(PerfectFlashView.DurationSeconds*.2);Assert.That(flash.IsVisible,Is.False);
+        }
+        [Test] public void Relaunch_WhilePaused_ClearsSwingAndFlash()
+        {
+            var r=Submit(Star());Assert.That(r.Result,Is.EqualTo("Perfect"));Assert.That(swing.Phase,Is.EqualTo(SwingPhase.Impact));Assert.That(flash.IsVisible,Is.True);
+            app.Clock.Paused=true;
+            try{app.LaunchCurrent();Assert.That(swing.Phase,Is.EqualTo(SwingPhase.Idle));Assert.That(flash.IsVisible,Is.False);}finally{app.Clock.Paused=false;}
+        }
         [Test] public void Flash_NeverOnValidFailedOrNoDelivery()
         {
             var v=Submit(Star()-.07);Assert.That(v.Result,Is.EqualTo("Valid"));Finish(v);Assert.That(controller.LastRecord.Applied,Is.True);Assert.That(flash.IsVisible,Is.False);Assert.That(flash.ShowCount,Is.Zero);

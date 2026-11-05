@@ -99,7 +99,7 @@ namespace SquashClash.Runtime.Shot
         }
         public void Tick(double dt)
         {
-            if(sequence.Count==0||dt<=0)return;
+            if(sequence.Count==0||dt<=0||app.Clock.Paused)return; // frozen with the ball while the clock is paused
             float left=(float)dt;
             while(left>0&&index<sequence.Count)
             {
