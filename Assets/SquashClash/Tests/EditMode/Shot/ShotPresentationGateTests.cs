@@ -7,7 +7,7 @@ namespace SquashClash.Core.Tests.Shot
     {
         private ShotPresentationGate gate;
         [SetUp] public void Setup(){gate=new ShotPresentationGate();gate.Reset(5);}
-        private static ShotRecord Rec(string result,bool applied,string id="a1",long launch=5,int version=1,string fail="None")
+        private static ShotRecord Rec(string result,bool applied,string id="a1",long launch=5,int version:1,string fail="None")
             =>new ShotRecord{LaunchId=launch,AttemptId=id,Version=version,Result=result,Applied=applied,Fail=fail,ContactStep=42,ContactX=1.5f,ContactY=.7f,ContactZ=3.1f,Side="Right",DeltaMs=-12.5};
         private bool Try(ShotRecord r,out ShotPresentation p,long current=5)=>gate.TryDeliver(r,current,out p,out _);
         [Test] public void PerfectApplied_DeliversOneContactPresentation()
@@ -35,13 +35,13 @@ namespace SquashClash.Core.Tests.Shot
         }
         [Test] public void SameIdentityNewVersion_NoSecondDelivery_AndNoDiscrepancy()
         {
-            Assert.That(Try(Rec("Perfect",true,version=1),out _),Is.True);
-            Assert.That(Try(Rec("Perfect",true,version=2),out _),Is.False);Assert.That(gate.DiscrepancyCount,Is.Zero);
+            Assert.That(Try(Rec("Perfect",true,version:1),out _),Is.True);
+            Assert.That(Try(Rec("Perfect",true,version:2),out _),Is.False);Assert.That(gate.DiscrepancyCount,Is.Zero);
         }
         [Test] public void SameIdentityDifferentResult_NoDeliveryAndOneDiscrepancy()
         {
             Assert.That(Try(Rec("Perfect",true),out _),Is.True);
-            Assert.That(Try(Rec("Failed",false,version=2,fail:"Air"),out _),Is.False);
+            Assert.That(Try(Rec("Failed",false,version:2,fail:"Air"),out _),Is.False);
             Assert.That(gate.DiscrepancyCount,Is.EqualTo(1));Assert.That(gate.LastDiscrepancy,Does.Contain("Perfect").And.Contain("Failed"));
         }
         [Test] public void OtherLaunch_NeverDelivers_AndResetOpensNewLaunch()
