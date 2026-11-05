@@ -1544,3 +1544,44 @@ A la pregunta «¿Aceptas mis recomendaciones para el diseño de S3?», el PO re
 La adenda a spec v0.3, propuesta r2 y plan r2 sigue sugerida, pendiente del PO. El PO autorizó un único commit documental en #33 para registrar estas decisiones y sincronizar el «Estado vigente» en #32 únicamente en `AGENTS.md`. [Decisiones en la propuesta](2026-11-05-first-shot-s3-design-plan.md#decisiones-del-po).
 
 PR #33 queda abierta para revisión de Claude. #32 sigue en espera. La implementación de S3, S4 y las etapas posteriores quedan pendientes de autorización.
+
+## Cierre efectivo de PR #33 — 5 de noviembre de 2026 (Chile)
+
+PR #33 se fusionó mediante `f3b6486e1f0c45b7c1c524f06e5f9a1c5b053176`. El primer padre es `a82b2607afa1c597e9af45d12b710a333e62189e` y el segundo exactamente `69fab56b10aac6c33241e038c439427b544286e6`, el head aprobado por Claude. El árbol `eeebeff3fc77096249daa3ef78676cdee7ea04ea` es idéntico al de ese head. Claude verificó la fusión. PR #32 no cambió (head `10f162f`, base `firstshot/s2-m24`). El cierre se registra aquí, en la entrega siguiente, sin commit aparte en `main`.
+
+## Autorización de implementación de S3 — 5 de noviembre de 2026 (Chile)
+
+A «Sí, prepárala», Claude redactó la autorización y el PO la envió. Texto autorizado:
+
+> Autorizo la implementación de S3 conforme al diseño decidido en PR #33 (propuesta S3 y sus «Decisiones del PO»), una vez verificada por Claude la fusión de #33 en main.
+> 
+> Alcance — exactamente las nueve decisiones del PO:
+> - Entrega única de resultado final por identidad de lanzamiento/intento: señales de contacto (sonido de impacto, háptica, destello en Perfect, pose de impacto) solo para Perfect/Valid aplicados en su versión final; Failed final resuelto con swish y nota «¡Al aire!»/«¡Tarde!», sin háptica ni señales de contacto; nada para cancelación, rechazo, NoOrder, fallo del sistema, NotEvaluable, versión obsoleta o callback de otro lanzamiento. Rollback y resimulación sin duplicar ni contradecir señales.
+> - Swing opción (a): animación de intención al aceptar la orden Swing, pose de impacto solo con contacto aplicado, seguimiento al aire en Failed final, deduplicado por identidad de orden, limpieza en relanzamiento o rechazo tardío. Brazo y raqueta procedurales simples, sin rig ni collider, lado del contrato y cuerpo del lanzamiento, AX-1 intacto.
+> - Nota de Válido con «Adelantado»/«Atrasado»; destello solo en Perfect; dos clips de impacto distintos y un swish distinto, originales o CC0, precargados y con entrada en PROVENANCE; dos estilos hápticos (firme/discreto) mediante puente iOS mínimo (UIImpactFeedbackGenerator en el hilo principal, generadores reutilizados, prepare() permitido al armarse el gesto, impacto solo desde la entrega final, no-op fuera de iOS); respetar el modo silencio sin cambiar ruta, buffer ni grabación.
+> - Interruptor feedback.haptics: clave nueva en catálogo y DefaultPreset.json según R2-3. Informa el hash nuevo de defaults y el hash efectivo esperado de P0, que se declarará antes de cualquier precheck futuro. P0-calib-1 conserva sus bytes, sus 41 valores heredados y su proyección; SimulationKey intacta; ninguna otra clave o valor cambia.
+> 
+> Fuera de alcance: sonidos de frontis/laterales/tin, configuración de audio de menor latencia y comparación Default/Best Latency, instrumentación de latencias y costes, sesiones de 15 min, calidad causal (3.1), superposición causal y poses causales (3.3). Tampoco cambios de solver, Aim, SL, SL5/SL6, P2, física, M2-4, pullFullMm, cámara, ayudas de timing, tempo, spec, propuesta r2 ni planes; la adenda sigue pendiente. PR #32 no se toca salvo sincronizar el «Estado vigente» en AGENTS.md.
+> 
+> Método:
+> 1) Rama y worktree nuevos desde main tras #33, por ejemplo firstshot/s3-feedback; una PR para revisión de Claude, sin fusionar.
+> 2) Incrementos A (entrega de resultado final), B (audio y háptica) y C (nota, destello y swing), en ese orden. En cada uno: esqueleto compilable, RED válido por aserción observado y registrado, implementación mínima, GREEN focal y regresión completa fresca EditMode y PlayMode sin errores CS. Incluir al menos los casos de la tabla TDD de la propuesta, Failed_SwishNoHaptic de 3.2 y Swing_DriveBackhandAndAir de 3.3. No modificar aserciones existentes para pasar; si un caso existente choca con el diseño, detente y repórtalo.
+> 3) Si en A aparece un conflicto con el contrato de contacto, el rollback o el intento único que exija cambiar el diseño, detente antes de B y repórtalo.
+> 4) Al final: regresión completa fresca, check-release dev/prod limpio con gitDirty=false, símbolo háptico presente en prod, DevPanel y framework de pruebas excluidos, y archivos protegidos (P0, Po-1, last-active) intactos.
+> 5) Informe docs/reviews/2026-11-XX-first-shot-s3-implementation.md con RED/GREEN por incremento, suites, hashes de defaults y de P0 efectivo esperado, procedencia de clips, lo comprobado en Editor y lo que queda para el iPhone. Registra en aprobaciones y AGENTS el cierre de #33 (merge commit) y esta autorización, y corrige los enlaces del «Estado vigente» a main.
+> 
+> No autorizados en este encargo: build para dispositivo, instalación, acceso al iPhone y ejecución del protocolo físico S3-A–E, que requieren autorización propia. El perfil vigente vence 2026-11-12T13:55:07Z (10:55 Chile); si la sesión física cae después, habrá que renovarlo antes de instalar. S4, First Rally, First Match y posteriores siguen sin autorizar. Entrega la PR lista para Claude y detente.
+
+## Implementación de S3 por Claude con subagente — 5 de noviembre de 2026 (Chile)
+
+Después de la verificación de #33, el PO cambió quién implementa. Literal:
+
+> Me gustaría que estos incrementos los avances tu. Utiliza un sub agente con modelo sonnet para realizar la implementación y luego realiza la revisión. Y vamos avanzando. O dejame un prompt y abro una nueva conversación con Claude para que realice los avances
+
+Claude (Opus) dirigió y revisó. Un subagente Sonnet implementó cada incremento en la rama `firstshot/s3-feedback`, desde `f3b6486`. Codex no inició S3. Se mantienen la autorización anterior y sus límites: TDD por incremento, sin build para dispositivo, sin instalación, sin acceso al iPhone y PR sin fusionar.
+
+**Límite de independencia.** La revisión de Claude de cada incremento no es independiente, porque el mismo Claude dirigió la implementación. Antes de fusionar se recomienda una revisión independiente (otra sesión de Claude o Codex). Las decisiones que Claude tomó en nombre del PO están en el [informe](2026-11-05-first-shot-s3-implementation.md#decisiones-tomadas-por-claude-en-nombre-del-po).
+
+**Resultado entregado.** Incrementos A, B y C y verificación final: 546/546 EditMode y 338/338 PlayMode, `check-release` dev/prod OK con `gitDirty=false` y puente háptico presente en prod. Defaults `c0d8ec7050e0`/107 claves. **P0 efectivo esperado `6ecfdfa78cbb`**, que debe declararse antes de cualquier precheck futuro. SimulationKey `166a96e319c7`, las proyecciones `0d39e6016bd8`/`8de3f2ecb217`, los bytes de P0-calib-1 y sus 41 valores siguen intactos. [Informe de implementación](2026-11-05-first-shot-s3-implementation.md).
+
+La PR queda abierta y sin fusionar. La build, la instalación y el protocolo S3-A–E requieren autorización propia. El perfil vence el 2026-11-12T13:55:07Z. S4, First Rally, First Match y etapas posteriores siguen sin autorizar.
