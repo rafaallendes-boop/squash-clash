@@ -1253,4 +1253,14 @@ El PO autorizó 23 CAM-F y 24 CAM-S en PR #30, con revisión de la ventana, P0 e
 
 Duplicación mostró «iPhone en uso» durante la preparación de 24. Se preservó esa preparación y se repitió §3.2 desde P0 en proceso nuevo, sin causa atribuida. La restauración de cierre quedó verificada a las **2026-11-05T13:30:55.471226Z** con **P0-calib-1, `dd122831f592` y cero pendientes**, y los tres archivos cotejados byte a byte contra el respaldo nuevo y la referencia inicial.
 
-La entrega queda para revisión. Tanda 4 PROD e instalación esperan autorización aparte del PO, con respaldo nuevo, frontera §5 y perfil vigente durante el recorrido y su restauración. Se detiene la sesión. PR #30, #31 y #32 siguen sin fusionar.
+La entrega se envió a revisión. Tanda 4 PROD e instalación esperan autorización aparte del PO, con respaldo nuevo, frontera §5 y perfil vigente durante el recorrido y su restauración. Se detiene la sesión. PR #30, #31 y #32 siguen sin fusionar.
+
+## Revisión de Claude de tanda 3 — aprobación comunicada por el PO
+
+**Aprobada sin correcciones en `a0abbe3` de PR #30.** Claude hizo un recuento independiente desde los JSONL de `after-24`. En 23 CAM-F confirmó 10 Swing (6 Valid, 3 Failed y 1 Perfect), con LaunchId 71–74 como extras. En 24 CAM-S confirmó 10 Swing (5 Valid, 3 Failed y 2 Perfect). Confirmó los hashes `dd122831f592` y `398bae34bb81` respectivamente, con cero pendientes. También coincidieron los SHA-256 de los JSONL, el texto de las preguntas predeclaradas palabra por palabra, las respuestas literales y la restauración de P0.
+
+1. **Potencia media pedida.** Quedaron en banda media 4/10 Swing en CAM-F y 2/10 en CAM-S. Los demás quedaron en banda fuerte (6/10 y 8/10), con cero saturados. El PO declaró haber seguido la intensidad. Se conservan ambas lecturas. La observación se vincula al tema abierto de saturación. `pullFullMm` sigue en 35 mm y el PO aún no ha tomado una decisión al respecto.
+2. **Salto.** En fija, p50 4,18 y máximo 8,29 diámetros. En seguimiento, p50 2,52 y máximo 3,82 diámetros. El PO juzgó aceptable el salto en ambas condiciones antes de ver las cifras. Los bloques fueron secuenciales, con siete contactos por condición, de modo que no se atribuye un efecto causal a la cámara.
+3. **Conflictos documentales.** PR #31 y #32 tienen conflictos con #30 solo en `AGENTS.md` y aprobaciones. Se resolverán al fusionarlas, después de #30. La sincronización del «Estado vigente» en las tres ramas deja la resolución pendiente.
+
+Registro documental de la revisión, con evidencia y producto intactos. La sesión física sigue detenida. Tanda 4 PROD requiere autorización aparte del PO. Las tres PR siguen abiertas.
