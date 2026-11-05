@@ -7,7 +7,7 @@ namespace SquashClash.Core.Tests.Shot
     {
         private ShotPresentationGate gate;
         [SetUp] public void Setup(){gate=new ShotPresentationGate();gate.Reset(5);}
-        private static ShotRecord Rec(string result,bool applied,string id="a1",long launch=5,int version:1,string fail="None")
+        private static ShotRecord Rec(string result,bool applied,string id="a1",long launch=5,int version=1,string fail="None")
             =>new ShotRecord{LaunchId=launch,AttemptId=id,Version=version,Result=result,Applied=applied,Fail=fail,ContactStep=42,ContactX=1.5f,ContactY=.7f,ContactZ=3.1f,Side="Right",DeltaMs=-12.5};
         private bool Try(ShotRecord r,out ShotPresentation p,long current=5)=>gate.TryDeliver(r,current,out p,out _);
         [Test] public void PerfectApplied_DeliversOneContactPresentation()
