@@ -1504,3 +1504,43 @@ PR #30 quedó fusionada mediante **merge commit `60ae2d6ade661859ea80b71be96f529
 Se archivaron las ocho rutas ignoradas del worktree de #30 en **`Logs/archive-s2-m24-20261105/`** bajo el checkout de main. Incluye la evidencia de las cuatro tandas, builds, exports y el perfil anterior apartado en `Logs/prod-renewal-20261105/`. El inventario de rutas y los SHA-256 antes y después coincidieron, con **40.090 archivos regulares y 17.800.549.298 bytes**. SHA-256 del inventario `de2917a42bd166a1c6bd14f9cd8e4b18ed4c567574ef17fb265b153f72f974a0`. El worktree se retiró sin `--force` tras el cotejo.
 
 PR #31 quedó basada en `main` y se actualizó con un merge de `origin/main`. Los conflictos se limitaron a `AGENTS.md` y este registro y se conservaron ambos historiales. El diagnóstico, sus conclusiones y la evidencia quedan idénticos a `84ad994` según cotejo SHA-256. El diff contra main es exclusivamente documental. **PR #31 queda abierta para revisión final de Claude.** PR #32 conserva su base y queda abierta en espera. Solo se sincroniza su «Estado vigente». Sesión física detenida.
+
+## Cierre efectivo de PR #31 y entrega documental de S3 — 5 de noviembre de 2026 (Chile)
+
+El PO comunicó la aprobación final de Claude sin bloqueantes sobre el SHA exacto `739ead8d2347fef3321c2c975fd2ec2db1d7ffcb` de PR #31. Claude confirmó base main `60ae2d6`, estado MERGEABLE/CLEAN, diff solo documental, diagnóstico/evidencia/informes SL5/SL6 idénticos a `84ad994`, resolución de conflictos que conserva ambos historiales y «Estado vigente» único e idéntico en #31 y #32. También verificó la fusión de #30 y su rama conservada. Su observación no bloqueante sobre los enlaces se aplica en esta entrega, con los enlaces del estado de S2 dirigidos a `main`.
+
+Tras cotejar head local y remoto, PR abierta y no borrador, MERGEABLE/CLEAN, árboles limpios y main en `60ae2d6ade661859ea80b71be96f52991d52ef5d`, se fusionó #31 mediante **merge commit `a82b2607afa1c597e9af45d12b710a333e62189e`**, primer padre `60ae2d6ade661859ea80b71be96f52991d52ef5d` y segundo padre **`739ead8d2347fef3321c2c975fd2ec2db1d7ffcb`**. Árbol **`b47dbc4741c21e4b2dc904cab51145fa396a08db`** idéntico al head aprobado. Main local quedó sincronizada por fast-forward y limpia. Rama remota `codex/sl56-diagnostic-s3-plan` conservada. El worktree de diagnóstico se conserva con sus ignorados. El cierre se registra en la entrega S3.
+
+El PO autorizó solo preparación documental de S3 después de fusionar #31. La rama y el worktree `firstshot/s3-design` parten de `a82b2607afa1c597e9af45d12b710a333e62189e`. La [propuesta técnica](2026-11-05-first-shot-s3-design-plan.md) cubre sonido, háptica, visual, swing básico y feedback ligado a la aplicación final, con TDD y protocolo físico propuestos. El tratamiento de Fallido sin contacto requiere decisión del PO por la diferencia entre el disparador estricto solicitado y el swish y la nota previstos en el diseño vigente. La calidad causal de 3.1, la superposición causal de 3.3 y los cambios de trayectoria quedan fuera. El [plan documental anterior](2026-11-04-first-shot-s3-documentary-plan.md) se conserva como antecedente.
+
+Entrega para revisión de Claude, con implementación, pruebas, builds, instalación y sesión física pendientes de autorización propia. #32 conserva su base y su estado de espera, con solo la sincronización del «Estado vigente» de `AGENTS.md`. S4 y etapas posteriores siguen sin autorizar.
+
+## Revisión documental de Claude de S3 en PR #33 — 5 de noviembre de 2026 (Chile)
+
+El PO comunicó **CAMBIOS SOLICITADOS** en `d64466b`, solo documentales. Claude verificó el merge de #31 (`a82b260`, segundo padre exacto `739ead8` y árbol idéntico) y confirmó en #33 el alcance documental, la entrega única, el rollback y la deduplicación, la separación Editor/iPhone, las fuentes oficiales y la exclusión de calidad causal.
+
+Claude corrigió un error de redacción propio del encargo anterior. El requisito de contacto aplicado final se refiere a las señales de impacto. Fallido conserva swish y nota «¡Al aire!» o «¡Tarde!» desde su resultado final sin contacto, sin háptica ni señales de contacto y con la misma entrega única. El swing al soltar o al confirmar queda como decisión del PO. La propuesta registra por separado los elementos de r2 y del plan pendientes de alcance y el efecto hipotético de `feedback.haptics` en el hash de defaults según R2-3, con P0 y los 41 valores heredados intactos.
+
+[Propuesta corregida](2026-11-05-first-shot-s3-design-plan.md) para nueva revisión de Claude. Sin implementación, pruebas, builds, instalación ni acceso al iPhone. PR #33 abierta y sin fusionar. #32 conserva su base y su estado de espera, con solo la sincronización del «Estado vigente».
+
+## Decisión del PO sobre el diseño de S3 y aprobación de Claude — 5 de noviembre de 2026 (Chile)
+
+El PO comunicó que Claude **aprobó sin cambios pendientes** la propuesta corregida de PR #33 en `1c29fa7530cfe2526beb18a831db8c7dbe7bd1c6`. La revisión confirmó Fallido según r2 §4.6, las opciones de swing (a) y (b), las seis decisiones de alcance listadas y el efecto de `feedback.haptics` en el hash. [Head aprobado por Claude](https://github.com/rafaallendes-boop/squash-clash/pull/33/commits/1c29fa7530cfe2526beb18a831db8c7dbe7bd1c6).
+
+A la pregunta «¿Aceptas mis recomendaciones para el diseño de S3?», el PO respondió literalmente:
+
+> Sí, todas
+
+1. **Fallido.** Entregar una sola vez el swish y la nota «¡Al aire!» o «¡Tarde!» desde el `Failed` final resuelto, sin vibración ni señales de contacto, conforme a r2 §4.6.
+2. **Swing.** Elegir la opción (a). Iniciar la animación de intención al aceptar la orden Swing al soltar. Reservar la pose de impacto y el destello, cuando corresponda, para contacto aplicado. Continuar el swing al aire en `Failed` final. Deduplicar por identidad de orden. Una cancelación, un rechazo, `NoOrder` o un callback obsoleto no disparan ninguna señal.
+3. **Nota de Válido.** Mantener «Adelantado» o «Atrasado», como en r2.
+4. **Destello.** Mostrarlo solo en Perfecto con contacto aplicado.
+5. **Perfiles.** Usar dos clips de impacto distintos, seco y contundente para `Perfect` y más suave para `Valid`, y dos estilos hápticos, firme y discreto, respectivamente. Usar un swish distinto para `Failed`.
+6. **Modo silencio.** Respetar el silencio del sistema. En silencio se omite el audio y se mantienen la nota, el destello y el swing cuando correspondan. La háptica sigue la configuración del sistema y de la app.
+7. **Interruptor `feedback.haptics`.** Incluir el interruptor previsto en el plan r2 3.2. Al implementarlo con autorización propia, añadir la clave a defaults y registrar el cambio de hash global según R2-3. Conservar P0-calib-1, sus 41 valores heredados y la SimulationKey.
+8. **Protocolo físico.** Incluir S3-A, S3-B, S3-C y S3-D (18 recepciones en conjunto), además de S3-E porque se aprueba el interruptor de la app. La ejecución del protocolo, la build y la instalación requieren autorización propia.
+9. **Alcance diferido.** Quedan pendientes y fuera de S3 los sonidos de frontis, laterales y tin, la configuración de audio de menor latencia y la comparación Default/Best Latency, la instrumentación de latencias y costes, las dos sesiones de 15 min, la calidad causal de 3.1 y la superposición causal de 3.3.
+
+La adenda a spec v0.3, propuesta r2 y plan r2 sigue sugerida, pendiente del PO. El PO autorizó un único commit documental en #33 para registrar estas decisiones y sincronizar el «Estado vigente» en #32 únicamente en `AGENTS.md`. [Decisiones en la propuesta](2026-11-05-first-shot-s3-design-plan.md#decisiones-del-po).
+
+PR #33 queda abierta para revisión de Claude. #32 sigue en espera. La implementación de S3, S4 y las etapas posteriores quedan pendientes de autorización.
