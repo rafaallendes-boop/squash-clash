@@ -10,6 +10,8 @@ Este informe es descriptivo: **no infiere aceptación, no fija umbrales y no dec
 
 **Revisión independiente (2026-11-01, sesión Claude distinta del operador) sobre el head `66095c8`: CAMBIOS SOLICITADOS.** Confirmó los datos primarios: fronteras, hashes, pending, conteos, contactos, timing, P, restauración y citas literales del PO. Señaló que el informe declaraba cumplido el protocolo en puntos donde no lo fue. Esta versión corrige esos puntos tras cotejarlos con la evidencia y la transcripción. Ver §«Corrección tras la revisión independiente».
 
+**Aprobación posterior:** Claude aprobó el informe corregido en `e160f98`. Se conservan las limitaciones y las respuestas originales. [Aprobación y alcance](#aprobación-de-claude-del-informe-corregido).
+
 **Cambio de operador:** Codex preparó la sesión e inició la comprensión, hasta el 2026-10-31 ~22:19Z. Al quedarse Codex sin créditos, el PO pidió a Claude que operara el resto de la tanda desde la PC del PO, con Duplicación del iPhone, `devicectl` y extracción de registros. Consecuencia declarada: **Claude fue operador y no es revisor independiente de esta tanda** (ver §Limitaciones).
 
 ## Comprobaciones previas
@@ -269,3 +271,9 @@ Hallazgos de la revisión del head `66095c8`, todos cotejados de nuevo por el op
 Los datos primarios (fronteras, hashes, pending, contactos, timing, P, restauración y citas literales) no cambian. Las notas de sesión locales conservan el error L149/L150 como registro original; esta versión del informe prevalece.
 
 PR #30 sigue abierta y sin fusionar hasta el juicio del PO. Decisión del PO del 2026-11-01: la observación de trayectoria no bloquea las tandas 2–4. Su ejecución sigue el orden de la predeclaración, según indique el PO tras esta corrección. S3–S4 y T8 siguen sin autorizar.
+
+## Aprobación de Claude del informe corregido
+
+**Claude aprobó el informe corregido de tanda 1 en `e160f98`**, según comunicó el PO al revisar el resumen de cierre. Verificó las correcciones de la revisión independiente de `66095c8`: extras 11/12/13 = 4/3/2, 02 = 27 post, 06 con 1 pre, 26 gestos antes de FAM, 9 tardíos de preparación, LaunchId L150/L151 del 03 inicial y referencia a §7. Confirmó que 03b y 04b sin precheck previo y 03b sin aplicar §3.2 quedaron declarados como desviaciones. Los datos primarios conservan sus valores.
+
+Se conservan las limitaciones de formulación y las respuestas originales, incluidas la pregunta 1 de 02 y las preguntas 1–2 de 09–13. Los juicios originales reformulados de 09–13 permanecen separados de las repreguntas literales del salto, recogidas retrospectivamente antes del bloque 14. El juicio global sobre S2 queda pendiente del PO. [Repreguntas de tanda 2](2026-11-01-first-shot-s2-tanda2.md#repreguntas-retrospectivas-sobre-el-salto-de-0913).
