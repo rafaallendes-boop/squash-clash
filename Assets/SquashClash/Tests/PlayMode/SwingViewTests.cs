@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 using SquashClash.Core.Config;
 using SquashClash.Core.Shot;
@@ -202,23 +203,71 @@ namespace SquashClash.Runtime.Tests
             app.Tuning.Set("placeholders.visible",0);Assert.That(swing.Rig.gameObject.activeInHierarchy,Is.False);
             app.Tuning.Set("placeholders.visible",1);Assert.That(swing.Rig.gameObject.activeInHierarchy,Is.True);
         }
-        private (BallStateBits,List<string>) Run(bool visible)
+        private static object[] Targets(object owner,string eventField)
         {
-            app.Tuning.Set("placeholders.visible",visible?1:0);app.LaunchCurrent();var r=Submit(Star());Assert.That(r.Applied,Is.True,r.Reason);
-            for(int i=0;i<120;i++){app.Host.Advance(StepReal);swing.Tick(.01);flash.Tick(.01);}
-            var c=app.Host.Current;var contacts=new List<string>();foreach(var e in app.Host.CanonicalContacts)contacts.Add(e.Step+":"+e.Surface+":"+BitConverter.SingleToInt32Bits(e.Point.x)+","+BitConverter.SingleToInt32Bits(e.Point.y)+","+BitConverter.SingleToInt32Bits(e.Point.z));
-            return (new BallStateBits(c),contacts);
+            var field=owner.GetType().GetField(eventField,BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic);
+            Assert.That(field,Is.Not.Null,eventField+" backing field");
+            return (field.GetValue(owner) as Delegate)?.GetInvocationList().Select(d=>d.Target).ToArray()??new object[0];
         }
-        private readonly struct BallStateBits
+        private void AssertViewSubscriptions(bool expected)
         {
-            public readonly int[] Bits;public readonly long Step;
-            public BallStateBits(SquashClash.Core.Simulation.BallState s){Step=s.Step;Bits=new[]{s.Position.x,s.Position.y,s.Position.z,s.Velocity.x,s.Velocity.y,s.Velocity.z}.Select(BitConverter.SingleToInt32Bits).ToArray();}
+            var delivered=Targets(controller,"PresentationDelivered");var launched=Targets(app.Host,"Launched");var accepted=Targets(controller,"SwingAccepted");var resolved=Targets(controller,"ShotResolved");
+            foreach(var targets in new[]{delivered,launched,accepted,resolved})
+                Assert.That(targets.Any(t=>t is SwingView||t is PerfectFlashView),Is.EqualTo(expected),expected?"views subscribed":"no view handler remains");
+            Assert.That(delivered.Any(t=>t is SwingView),Is.EqualTo(expected));Assert.That(delivered.Any(t=>t is PerfectFlashView),Is.EqualTo(expected));
         }
-        [Test] public void Ball_IsBitIdentical_WithViewsOnAndOff()
+        private void DestroyViews()
         {
-            var on=Run(true);var off=Run(false);var again=Run(true);
-            Assert.That(on.Item1.Step,Is.EqualTo(off.Item1.Step));Assert.That(off.Item1.Bits,Is.EqualTo(on.Item1.Bits));Assert.That(again.Item1.Bits,Is.EqualTo(on.Item1.Bits));
-            Assert.That(off.Item2,Is.EqualTo(on.Item2));Assert.That(on.Item2.Count,Is.GreaterThan(0));
+            UnityEngine.Object.DestroyImmediate(swing);UnityEngine.Object.DestroyImmediate(flash);
+            Assert.That(controller.GetComponent<SwingView>()==null,Is.True);Assert.That(controller.GetComponent<PerfectFlashView>()==null,Is.True);
+            Assert.That(UnityEngine.Object.FindObjectsByType<SwingView>(FindObjectsInactive.Include,FindObjectsSortMode.None).Length,Is.Zero);
+            Assert.That(UnityEngine.Object.FindObjectsByType<PerfectFlashView>(FindObjectsInactive.Include,FindObjectsSortMode.None).Length,Is.Zero);
+        }
+        private static string Bits(Vector3 v)=>BitConverter.SingleToInt32Bits(v.x)+","+BitConverter.SingleToInt32Bits(v.y)+","+BitConverter.SingleToInt32Bits(v.z);
+        private static string FrameLine(SquashClash.Core.Simulation.BallState c,Vector3 render)=>c.Step+"|"+Bits(c.Position)+"|"+Bits(c.Velocity)+"|"+Bits(render);
+        // Per-frame trace of the authoritative ball plus final canonical contacts and prediction states, all as raw float bits.
+        private List<string> Record(bool tickViews,Action<ShotPresentation> perturb)
+        {
+            app.LaunchCurrent();var trace=new List<string>();
+            if(perturb!=null)controller.PresentationDelivered+=perturb;
+            try
+            {
+                var r=Submit(Star());Assert.That(r.Result,Is.EqualTo("Perfect"),r.Reason);Assert.That(r.Applied,Is.True,r.Reason);
+                trace.Add("submit|"+FrameLine(app.Host.Current,app.Host.RenderPosition));
+                for(int i=0;i<120;i++)
+                {
+                    app.Host.Advance(StepReal);if(tickViews){swing.Tick(.01);flash.Tick(.01);}
+                    trace.Add(i+"|"+FrameLine(app.Host.Current,app.Host.RenderPosition));
+                }
+            }
+            finally{if(perturb!=null)controller.PresentationDelivered-=perturb;}
+            foreach(var e in app.Host.CanonicalContacts)trace.Add("contact|"+e.Step+"|"+e.Surface+"|"+Bits(e.Point)+"|"+Bits(e.Normal)+"|"+BitConverter.SingleToInt32Bits(e.TimeInStep));
+            var p=app.Host.Prediction;trace.Add("prediction|"+p.States.Count+"|"+p.Contacts.Count+"|"+p.Exit+"|"+app.Host.PredictionMatchesBitwise);
+            foreach(var s in p.States)trace.Add("pstate|"+FrameLine(s,Vector3.zero));
+            foreach(var e in p.Contacts)trace.Add("pcontact|"+e.Step+"|"+e.Surface+"|"+Bits(e.Point));
+            return trace;
+        }
+        private static List<string> Diff(List<string> a,List<string> b)
+        {
+            var d=new List<string>();if(a.Count!=b.Count)d.Add("count "+a.Count+" vs "+b.Count);
+            for(int i=0;i<Math.Min(a.Count,b.Count)&&d.Count<5;i++)if(a[i]!=b[i])d.Add(i+": "+a[i]+" != "+b[i]);
+            return d;
+        }
+        [Test] public void Ball_IsBitIdentical_WithViewsPresentAndAbsent()
+        {
+            AssertViewSubscriptions(true);var present=Record(true,null);
+            DestroyViews();AssertViewSubscriptions(false);var absent=Record(false,null);
+            Assert.That(present.Count(l=>l.StartsWith("contact|")),Is.GreaterThan(0),"trace includes canonical contacts");Assert.That(present.Count,Is.GreaterThan(240));
+            Assert.That(Diff(present,absent),Is.Empty,"views present vs absent");
+        }
+        [Test] public void NegativeControl_ComparatorDetectsAViewThatPerturbsAuthoritativeState()
+        {
+            AssertViewSubscriptions(true);
+            Action<ShotPresentation> perturbing=_=>app.Host.Advance(StepReal);
+            var present=Record(true,perturbing);
+            Assert.That(Targets(controller,"PresentationDelivered").Any(d=>d is SwingViewTests),Is.False,"perturbing subscriber removed after its run");
+            DestroyViews();AssertViewSubscriptions(false);var absent=Record(false,null);
+            Assert.That(Diff(present,absent),Is.Not.Empty,"the comparator must report the extra authoritative step");
         }
         [Test] public void Views_DoNotChangeCameraTempoOrSlowMotion()
         {

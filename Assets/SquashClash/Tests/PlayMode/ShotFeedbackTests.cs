@@ -70,6 +70,22 @@ namespace SquashClash.Runtime.Tests
         {var r=Submit(Star(),new Vector2(8,2));Assert.That(r.Result,Is.EqualTo("SystemFault"));AssertCounts(0,0,0,0,0);}
         [Test] public void NotEvaluable_NoAudioNoHaptic()
         {double end=Star();var order=Order(end);At(end+.3);controller.Enqueue(order);controller.ProcessPending();Assert.That(controller.LastRecord.Result,Is.EqualTo("NotEvaluable"));AssertCounts(0,0,0,0,0);}
+        private void AssertInformativeOnly(string result,string text)
+        {
+            Assert.That(controller.LastRecord.Result,Is.EqualTo(result));Assert.That(controller.GetComponent<ShotNoteView>().Text,Is.EqualTo(text));
+            Assert.That(controller.PresentationCount,Is.Zero,"presentations");Assert.That(controller.LastPresentation,Is.Null);
+            AssertCounts(0,0,0,0,0);Assert.That(feedback.ContactCount,Is.Zero,"impact audio");Assert.That(feedback.LastClip,Is.Null);
+            Assert.That(controller.GetComponent<PerfectFlashView>().ShowCount,Is.Zero,"flash");Assert.That(controller.GetComponent<SwingView>().Phase,Is.Not.EqualTo(SwingPhase.Impact));
+        }
+        [Test] public void NoOrder_InformativeNoteOnly()
+        {
+            for(int i=0;i<1200&&app.Host.IsRunning;i++)app.Host.Advance(StepReal);practice.Tick(.001);
+            AssertInformativeOnly("NoOrder","Sin golpe");
+        }
+        [Test] public void SystemFault_InformativeNoteOnly()
+        {Submit(Star(),new Vector2(8,2));AssertInformativeOnly("SystemFault","Fallo del sistema");}
+        [Test] public void NotEvaluable_InformativeNoteOnly()
+        {double end=Star();var order=Order(end);At(end+.3);controller.Enqueue(order);controller.ProcessPending();AssertInformativeOnly("NotEvaluable","No evaluable");}
         [Test] public void HapticsToggle_RuntimeOff_KeepsVisualAlternative()
         {
             app.Tuning.Set("feedback.haptics",0);app.LaunchCurrent();
@@ -116,6 +132,12 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTearDown] public IEnumerator Cleanup(){Haptics.ResetBackend();if(screen!=null)InputSystem.RemoveDevice(screen);yield return PlayModeTestWorld.ClearApp();}
         private void Send(Phase phase,double dt,int id=1){now=start+dt;InputSystem.QueueStateEvent(screen,new TouchState{touchId=id,phase=phase,position=anchor},start+dt);InputSystem.Update();}
+        [UnityTest] public IEnumerator AcceptedBegan_WithHapticsSwitchOff_DoesNotPrepare()
+        {
+            app.Tuning.Set("feedback.haptics",0);app.LaunchCurrent();Assert.That(Haptics.Enabled,Is.False,"launch snapshot applied the switch");
+            Send(Phase.Began,0);Assert.That(preview.M24,Is.Not.Null,"accepted");Assert.That(haptics.Prepares,Is.Zero);
+            yield return null;
+        }
         [UnityTest] public IEnumerator AcceptedBegan_PreparesOnce_RejectedDoesNot()
         {
             Send(Phase.Began,0);Assert.That(preview.M24,Is.Not.Null,"accepted");Assert.That(haptics.Prepares,Is.EqualTo(1));
