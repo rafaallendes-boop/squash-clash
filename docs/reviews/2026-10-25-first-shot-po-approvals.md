@@ -1264,3 +1264,11 @@ La entrega se envió a revisión. Tanda 4 PROD e instalación esperan autorizaci
 3. **Conflictos documentales.** PR #31 y #32 tienen conflictos con #30 solo en `AGENTS.md` y aprobaciones. Se resolverán al fusionarlas, después de #30. La sincronización del «Estado vigente» en las tres ramas deja la resolución pendiente.
 
 Registro documental de la revisión, con evidencia y producto intactos. La sesión física sigue detenida. Tanda 4 PROD requiere autorización aparte del PO. Las tres PR siguen abiertas.
+
+## Renovación del perfil y tanda 4 PROD — PO, 5 de noviembre de 2026 (Chile)
+
+El PO autorizó renovar con su asistencia, conservando equipo, bundle, dispositivo, entitlements, certificados y claves, con contraseñas a su cargo si hicieran falta. También autorizó instalar y ejecutar el bloque 25 estando presente, con fecha límite operativa **2026-11-07T17:58:46Z** incluida la restauración. El perfil anterior quedó apartado y conservado. El incorporado nuevo se creó **2026-11-05T13:55:07Z** y vence **2026-11-12T13:55:07Z**. Se verificaron firma, certificado, equipo, bundle, dispositivo y entitlements antes de instalar.
+
+PROD firmada **`0.1.0+8f030a8 prod`**, fuente de producto **`9131b1c`**, 514 archivos cotejados, check-release prod fresco con `gitDirty=false`, Release ARM64, no Development y sin `SQUASH_DEV`. Respaldo nuevo, export DEV y cotejos posteriores contra ambas referencias. La frontera PROD se acreditó antes de LaunchId 3 y la cuota 3–5 cerró con tres recepciones, dos Swing con contacto Perfect y una sin orden ni gesto. Dos gestos extra en LaunchId 6. El PO confirmó lanzamiento, golpe y nota, y contestó sobre el sonido «tenía el cel en silencio a si que no». Queda sin verificar el audio.
+
+P0-calib-1 **`dd122831f592`, cero pendientes** en proceso nuevo PROD a las **2026-11-05T14:27:10.0146510Z**, con los tres archivos idénticos al respaldo nuevo y a la referencia inicial. PROD quedó instalada y la sesión se detuvo. [Informe para Claude/PO](2026-11-05-first-shot-s2-tanda4-prod.md). PR #30, #31 y #32 abiertas y sin fusionar.
