@@ -268,3 +268,63 @@ Exportbetween16-17 preservado antes de reiniciar;3archivos iguales. Proceso nuev
 Precheck **17 CAN:5recepciones/SL1/V100/T3no suave/cámarafija/pulgarizq/control2/P2**, cuerpo(3,2;5,5), mismos106valores deB porigualdad literal delhashcompleto contra manifiesto independiente **dd122831f592**. Todos los registros/exportpre17 mismohash/pending0;100líneas/0gestos/0cierresDEV. UIJugando/sinpausa/DEVabierto; foco verdadero en auditoría. Tresarchivos byte a byte iguales despuésdeaplicar. Últimaobservación sinbloqueo/segundoplano enesta preparación. **SoloPOcierraDEV para iniciar17; frontera aúnpendiente**, M_sMacUTC **2026-11-05T00:07:14.883733+00:00**. Vuelo ya iniciado alcerrar ytodoslanzamientos previos quedanpreparación. NoS1B0–B5.
 
 Se solicita solo17: cinco recepciones consecutivas completas, sin ampliar/repetir por fallos/omisiones; cancelar porretorno y reapoyar para medio siqueda tiempo. Triada por intento trasterminal, sinintervenir contacto ni ampliarrecepción; conservar ordinal deprimerapoyo/reapoyo o«sinrespuesta» sininferirOK. Modal de cierre porinstrucciónPO, antes deresultados. No18hasta recuperar/cerrar17. Restauraciónfinaltanda2pendiente; perfil7nov17:58:46Z yventanapersonal hasta22:15Chile aún cubrenresto/restauración.
+
+### Aviso de cierre17 y preguntas pendientes
+
+LiteralPO **«Terminé 017»**, recepción-registroMacUTC **2026-11-05T00:09:59.770732+00:00**. Exportafter17 preservado; los3archivos siguenbyte a byte iguales alrespaldo. Integridad/frontera/cuota/hash verificados internamente; resultados reservados hasta recoger feedback. Sin preparar18 ni más accesoUI.
+
+Modal completo porpetición vigentePO, formulación-registroMacUTC **2026-11-05T00:11:00.189121+00:00**: triada literal porcada intento identificado (contexto recepción1–5/primerapoyo), tarea y trespreguntas originales, campos separados. Triada después delterminal, aquí retrospectiva al cierre sininterrumpir elcontacto activo ni ampliarrecepciones; se declara esta modalidad temporal, sininferir respuesta ni intención desdecierres técnicos. SiPOnoasocia respuesta, «sinrespuesta». Sinresultados previos.
+
+### Respuestas de17, recibidas antes de mostrar resultados
+
+Recepción-registroMacUTC **2026-11-05T00:13:17.270424+00:00**; horaexacta deenvío nodisponible. Triada retrospectiva de cierre, campos literales separados enmodal porpeticiónPO.
+
+| Contexto | Pregunta literal | Respuesta literal |
+|---|---|---|
+| recepción 1, primer apoyo | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«Ok»** |
+| recepción 2, primer apoyo | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«Ok»** |
+| recepción 3, primer apoyo | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«OK»** |
+| recepción 4, primer apoyo | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«OK»** |
+| recepción 5, primer apoyo | «¿Fue querido el apoyo de este intento: OK, Apoyo sin querer o No fijó / falló?» | **«creo que no miré y miré las reglas»** |
+| cierre | «¿Seguiste la tarea y la intensidad que se pidió en este bloque? Si no, ¿qué intentabas hacer?» | **«Si»** |
+| cierre | «¿la pelota va donde apunto?» | **«Fueron cancelaciones, no hubo golpe»** |
+| cierre | «¿el timing es justo?» | **«si»** |
+| cierre | «¿el salto es aceptable?» | **«si»** |
+
+Recepciones1–4: cuatroOK declarados, sin convertirlos en acierto de timing/puntería. Recepción5: **«creo que no miré y miré las reglas»** no corresponde inequívocamente a una categoría: **sin respuesta clasificable**, originalintacto; noinferir apoyoaccidental/fallo niomisión desdeesta frase. Tarea«Si» conservado sininferir que se hicieron reapoyos. Dirección«Fueron cancelaciones, no hubo golpe» conservado; timing/salto«si» son juicios literales, sin salto físico medido en cuota.
+
+### Resultado de17 CAN
+
+Proceso **metrics-20261105T000516652-e9cdebfabcb1499385f9e52e5e4c48c6.jsonl**, fronteraúnica línea **247 / 2026-11-05T00:09:05.6631910Z**, timeReal **231.1290708798186**; dev-toggle/result/completed/acceptedtrue/devOpenfalse/pausedfalse/focusedtrue. Cuota **L56–L60**, cinco sucesivas completas, sin escoger por éxito. Hash externo/recepción/gestos **dd122831f592**, pending0; sin otroDEV en ventana. Primerplan posterior al cierre y todasversiones conservadas.
+
+| R | LaunchId | Línea gesto | Cierre gesto | Línea final recepción | Resultado recepción | Respuesta triada |
+|---|---:|---:|---|---:|---|---|
+| 1 | 56 | 252 | CanceledReturnToDeadZone | 254 | NoOrder / reception-ended-without-order | «Ok» |
+| 2 | 57 | 258 | CanceledReturnToDeadZone | 260 | NoOrder / reception-ended-without-order | «Ok» |
+| 3 | 58 | 264 | CanceledReturnToDeadZone | 266 | NoOrder / reception-ended-without-order | «OK» |
+| 4 | 59 | 271 | CanceledReturnToDeadZone | 270 | NoOrder / reception-ended-without-order | «OK» |
+| 5 | 60 | 276 | CanceledReturnToDeadZone | 278 | NoOrder / reception-ended-without-order | «creo que no miré y miré las reglas» |
+
+**5cancelaciones C-A por retorno/5recepciones,0Swing/0contactos/0reapoyos registrados en cuota**. Todas lasrecepciones cierranNoOrder al no haber ordenSwing: no es otra cancelación ni cincofallos deSwing. Cancelación deR4/gesto línea271 termina después delcierreNoOrder línea270; se conserva poridentidad launchSerial58→LaunchId59 y no se cambia la cuota pororden de escritura. La tarea permitía reapoyo solo si quedaba tiempo; no se prolonga ni repite para obtenerlo. Voluntariedad individual solo donde elPO diorespuesta; la cancelación técnica no demuestra por sí sola voluntad.
+
+| Métrica cruda | n | Mínimo | p50 | p95 | p99 | Máximo |
+|---|---:|---:|---:|---:|---:|---:|
+| Duración Began→terminal(ms) | 5 | 1095.944083 | 1379.339917 | 2712.870042 | 2712.870042 | 2712.870042 |
+| Aim(Began)→C,referenciaverbalsinmarcador(m) | 5 | 0.295969 | 0.605916 | 0.780181 | 0.780181 | 0.780181 |
+| Máxima distancia descendente estimadaDPI(mm) | 5 | 18.663490 | 23.853918 | 28.492172 | 28.492172 | 28.492172 |
+| PlannerCostMs,unoporlanzamiento | 5 | 0.077900 | 0.125700 | 0.149800 | 0.149800 | 0.149800 |
+
+Muestras **277**, O2 **0**. Potencia deSwing/bandas/saturación/DeltaMs/salto/costes decontacto: **NotEvaluated (0Swing/0contactos)**, sin introducir ceros como mediciones. Rango más próximo ceil(p·n),sininterpolación. Extraspostcuota **3gestos/LaunchId61,62,63** porlaunchSerial=LaunchId−1; separados de los5apoyos/cuota, no amplían muestra. Tresarchivos byte a byte iguales enexportafter17. Sinajustes/criterios nuevos/aceptaciónS2inferida.
+
+### Preparación18 iniciada tras cerrar17
+
+UIentrebloquesnormal/sinoverlay/Pausa disponible/build2ef4807/P0dd122831f592. No se observa segundo plano/bloqueo aquí; no se reinicia porinferencia. Se preparaB→SL1→SL1 conprecheckcompleto para18NEG-A; todavía no solicitado.
+
+
+### Precheck18 NEG-A aceptado
+
+Mismo proceso **metrics-20261105T000516652-e9cdebfabcb1499385f9e52e5e4c48c6.jsonl** verificado nuevo/P0 alpreparar17; sinreinicio/segundoplano observado entre17y18. DEVabierto poroperador; cargaB/P0 sin guardar resultado línea **423 / 2026-11-05T00:14:30.4670430Z**. Exportbefore18-load-before-apply coteja3archivos iguales **antes** de aplicar. Aplicar/relanzar anclaSL1 resultado **446 / 2026-11-05T00:14:48.3029900Z**, acceptedtrue/pausedfalse/focusedtrue/devOpentrue; condiciónSL1→vía **B→SL1→SL1**. Parámetros resultado **454 / 2026-11-05T00:14:53.2765900Z**.
+
+**18NEG-A:3recepciones/SL1/V100/T3no suave/cámarafija/pulgarizq/control2/P2/cuerpo3,2;5,5.** Referencia externa **dd122831f592**=efectivo=recepción; pending0. Igualdad delhashcompleto106valores contra manifiestoB. UIJugando/sinpausa/sinoverlay/DEVabierto; auditoría con foco. Exportpre18 **467líneas**,0gestos/0cierresDEV desdeaplicación. Tresarchivos byte a byte iguales. RegistroM_sMacUTC **2026-11-05T00:15:35.877662+00:00** alformular solicitud de cierreDEV; **soloPOcierrauna vez**, frontera aúnpendiente/recepción1primer lanzamiento posterior; vueloencurso/preparación no cuentan.
+
+Solicitar solo18/tresrecepciones consecutivas completas: apoyo sin tirón yretirada/incluirduda breve sinmedirla/sinpedirSwing oP0 contirónintencional. Fallos/omisiones no sesustituyen. Triada porapoyo/cierre literal, modal separadoporpedidoPO yantesderesultados; no19hasta revisión. Restauraciónfinaltanda2pendiente.
