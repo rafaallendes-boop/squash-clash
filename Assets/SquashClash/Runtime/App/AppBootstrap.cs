@@ -52,10 +52,16 @@ namespace SquashClash.Runtime.App
             Metrics.Write("dev-control",EffectiveConfig.From(Tuning.Applied),ActivePresetName,ActivePresetFileHash,
                 Tuning.PendingKeys.Count,MetricsSeed,Comparable(0),Clock.DroppedSinceRestart,JsonUtility.ToJson(record));
         }
-        public void LaunchCurrent() => Host.Launch(EffectiveConfig.From(Tuning.ApplyPending()));
+        public SquashClash.Runtime.Shot.PracticeMode Practice=>GetComponent<SquashClash.Runtime.Shot.PracticeMode>();
+        public void LaunchCurrent()
+        {
+            if(Practice?.TryLaunchCurrent()==true)return;
+            Host.Launch(EffectiveConfig.From(Tuning.ApplyPending()));
+        }
         public void ReplayCurrent()
         {
             if(Host.ActiveConfig==null)return;
+            if(Practice?.Enabled==true){LaunchCurrent();return;}
             var source=Host.ActiveConfig.Source;
             foreach(var def in ParamCatalog.All)
                 if(def.Apply==ApplyClass.Immediate)source=source.With(def.Key,Tuning.Applied.Get(def.Key));
@@ -71,6 +77,7 @@ namespace SquashClash.Runtime.App
         {
             if(double.IsNaN(seconds)||double.IsInfinity(seconds)||seconds<0)throw new ArgumentOutOfRangeException(nameof(seconds));
             if(discardRepeatResume){discardRepeatResume=false;repeatElapsed=0;return;}
+            if(Practice?.Enabled==true){repeatElapsed=0;return;}
             var interval=Tuning.Applied.Get("launcher.repeatSeconds");
             if(interval<=0||Clock==null||Clock.Paused||diagnosticsPaused||!diagnosticsFocused){repeatElapsed=0;return;}
             repeatElapsed+=seconds;
@@ -82,7 +89,12 @@ namespace SquashClash.Runtime.App
             if(!ParamCatalog.TryGet(key,out var def)||def.Apply!=ApplyClass.Immediate||Clock==null)return;
             FlushFrames();Params=Tuning.Applied;
             if(key.StartsWith("camera.",StringComparison.Ordinal))cameraRig.Apply(Params,Config.Court);
-            if(key=="placeholders.visible"||key.StartsWith("human.",StringComparison.Ordinal)||key.StartsWith("rival.",StringComparison.Ordinal))placeholderPlayers.Apply(Params);
+            if(key=="placeholders.visible"||key.StartsWith("rival.",StringComparison.Ordinal)||key.StartsWith("human.",StringComparison.Ordinal)&&Practice?.Enabled!=true)
+            {
+                var drawing=Params;
+                if(Practice?.Enabled==true)drawing=drawing.With("human.x",Host.ActiveConfig.Source.Get("human.x")).With("human.z",Host.ActiveConfig.Source.Get("human.z"));
+                placeholderPlayers.Apply(drawing);
+            }
             if(key=="debug.slowMotion")Clock.DebugSlowMotion=Params.Get(key);
             if(key=="launcher.repeatSeconds")repeatElapsed=0;
         }
@@ -258,7 +270,10 @@ namespace SquashClash.Runtime.App
             var input=gameObject.AddComponent<SquashClash.Runtime.Input.TouchInputAdapter>();
             var reticle=new GameObject("First Shot aim").AddComponent<SquashClash.Runtime.Shot.AimReticleView>();
             reticle.transform.SetParent(transform,false);
-            gameObject.AddComponent<SquashClash.Runtime.Shot.GesturePreview>().Initialize(this,input,reticle);
+            var preview=gameObject.AddComponent<SquashClash.Runtime.Shot.GesturePreview>();preview.Initialize(this,input,reticle);
+            var shot=gameObject.AddComponent<SquashClash.Runtime.Shot.ShotController>();shot.Initialize(this);preview.AttachShotController(shot);
+            var practice=gameObject.AddComponent<SquashClash.Runtime.Shot.PracticeMode>();practice.Initialize(this,shot);
+            if(Config.Source.GetBool("practice.enabled"))LaunchCurrent();
             Debug.Log($"[SquashClash] ball ready backend={Config.Backend} visualColliders=0 localPhysicsScenes={physX.LiveInstances} config={Config.Hash} predictedSteps={Host.Prediction.States.Count-1}");
         }
 

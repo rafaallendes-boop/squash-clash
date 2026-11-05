@@ -1,0 +1,211 @@
+{
+  "task": "2.6",
+  "status": "incomplete-stopped-S2-CLOCK-01",
+  "defaultsHash": "915ae1e479b9",
+  "p0ExtendedHash": "dd122831f592",
+  "keys": 106,
+  "hashOrigin": "Unity tests, not device observation",
+  "fullPlayModeAtCurrentTree": "not-run",
+  "releaseChecksAtCurrentTree": "not-run",
+  "finalWholeBranchReview": "not-run: PO stop on another defect",
+  "runs": [
+    {
+      "task": "2.6",
+      "phase": "RED-record",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ShotRecordTests"
+      ],
+      "startedUtc": "2026-10-30T21:14:33.782627+00:00",
+      "exitCode": 1,
+      "total": "2",
+      "passed": "0",
+      "failed": "2",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "5f3cacd8765ccf504b380cad6c42ccb49803188bd0aa759a76e1812af9ad4b6d"
+    },
+    {
+      "task": "2.6",
+      "phase": "GREEN-record",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ShotRecordTests"
+      ],
+      "startedUtc": "2026-10-30T21:24:21.769632+00:00",
+      "exitCode": 0,
+      "total": "2",
+      "passed": "2",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "d780305ddcfc6c287219d82a46e243a0ffde3e314e7bfb73d4b3459c5d897f8d"
+    },
+    {
+      "task": "2.6",
+      "phase": "RED-controller",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotControllerTests"
+      ],
+      "startedUtc": "2026-10-30T21:16:01.971319+00:00",
+      "exitCode": 1,
+      "total": "38",
+      "passed": "3",
+      "failed": "35",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "9dcea223e2af700e49fc9cb3cdd076b61dc79dcb765c57c6ad11f0789b21f181"
+    },
+    {
+      "task": "2.6",
+      "phase": "RED-controller-expanded",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotControllerTests"
+      ],
+      "startedUtc": "2026-10-30T21:19:29.577612+00:00",
+      "exitCode": 1,
+      "total": "44",
+      "passed": "3",
+      "failed": "41",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "3aaebc4baf253171a1503571a7315823a53e2b63832805c7f014a9910d681870"
+    },
+    {
+      "task": "2.6",
+      "phase": "GREEN-controller",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotControllerTests"
+      ],
+      "startedUtc": "2026-10-30T21:25:01.418321+00:00",
+      "exitCode": 1,
+      "total": "44",
+      "passed": "42",
+      "failed": "2",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": false,
+      "xmlSha256": "7e033e05b71b63958f754abdc489d3a2e516f97c9e5ed6c83bc63c7c673ff2e6"
+    },
+    {
+      "task": "2.6",
+      "phase": "RED-shot-section",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotControllerTests"
+      ],
+      "startedUtc": "2026-10-30T21:26:43.257658+00:00",
+      "exitCode": 1,
+      "total": "45",
+      "passed": "44",
+      "failed": "1",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "b5fc9c52fce586cff6d310f9138a023d08987abd4bf60b54d50a5d90481c99e7"
+    },
+    {
+      "task": "2.6",
+      "phase": "RED-captured-identity",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotControllerTests"
+      ],
+      "startedUtc": "2026-10-30T21:29:10.360255+00:00",
+      "exitCode": 1,
+      "total": "46",
+      "passed": "44",
+      "failed": "2",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "64dc934a88b2469d91400d167d2cf521ff09e865a367f78a61170085ff2388d6"
+    },
+    {
+      "task": "2.6",
+      "phase": "GREEN-controller-captured",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ShotControllerTests"
+      ],
+      "startedUtc": "2026-10-30T21:30:07.383425+00:00",
+      "exitCode": 0,
+      "total": "46",
+      "passed": "46",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "a920d326ab3ddc18bd37bcc8a06f0cc86367551c2762131f450cfaec0c661119"
+    },
+    {
+      "task": "2.6",
+      "phase": "RED-hash106",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode"
+      ],
+      "startedUtc": "2026-10-30T21:31:03.780536+00:00",
+      "exitCode": 1,
+      "total": "518",
+      "passed": "513",
+      "failed": "5",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "d1a47d83e0238862bace171b0ce37810f851c5d0c256d88487cef23c7ef10c7d"
+    },
+    {
+      "task": "2.6",
+      "phase": "suite",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode"
+      ],
+      "startedUtc": "2026-10-30T21:32:30.799089+00:00",
+      "exitCode": 0,
+      "total": "518",
+      "passed": "518",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "78c7418b2798a796fbd4fc4dd4bfa30b69bb38d280e783439ea3ef5df349ad74"
+    },
+    {
+      "task": "2.6",
+      "phase": "RED-clock-retention",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "ClockMap_StableStoppedOrPausedFlight"
+      ],
+      "startedUtc": "2026-10-30T21:35:32.953361+00:00",
+      "exitCode": 1,
+      "total": "2",
+      "passed": "0",
+      "failed": "2",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "d43ca633126deaf3d4c40bce28233d69bdf1d251139141c3790ebc42231816d3"
+    }
+  ],
+  "partialProductHead": "f1ae28f50b1f4f8e75361f03a742f4eba3fd29a5",
+  "noBehaviorChangeAfterStop": true
+}

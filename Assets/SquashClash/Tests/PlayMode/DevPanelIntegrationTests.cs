@@ -14,7 +14,7 @@ namespace SquashClash.Runtime.Tests
     public sealed class DevPanelIntegrationTests
     {
         [Serializable] private sealed class Row { public string kind,effectiveHash; public bool metricsValid; public int pending; }
-        [UnitySetUp] public IEnumerator Setup(){yield return PlayModeTestWorld.ClearApp();yield return SceneManager.LoadSceneAsync("Main");yield return null;}
+        [UnitySetUp] public IEnumerator Setup(){yield return PlayModeTestWorld.ClearApp();yield return SceneManager.LoadSceneAsync("Main");yield return null;var app=AppBootstrap.Instance;app.Tuning.Set("practice.enabled",0);app.LaunchCurrent();}
         [UnityTearDown] public IEnumerator Cleanup(){yield return PlayModeTestWorld.ClearApp();}
         [UnityTest] public IEnumerator LaunchCurrent_AppliesPendingAndKeepsBothBackendsAvailable()
         {

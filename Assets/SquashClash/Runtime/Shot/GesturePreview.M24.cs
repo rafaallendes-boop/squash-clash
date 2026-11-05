@@ -41,7 +41,7 @@ namespace SquashClash.Runtime.Shot
         {
             if(M24==null)return;
             m24LockObservedAt=0;
-            m24Id=Guid.NewGuid().ToString("N");m24Finished=false;m24Transitions.Clear();
+            m24Id=shotGestureId??Guid.NewGuid().ToString("N");m24Finished=false;m24Transitions.Clear();
             bool formal=SlingTrials.Running;
             m24Block=formal?SlingTrials.Block:"preview";m24Session=SlingTrials.Session;m24Trial=formal?SlingTrials.Completed+1:0;
             m24Target=formal?SlingTrials.TargetId:0;m24Requested=m24Block=="B1"?"none":formal?SlingTrials.RequestedPower:"unspecified";
@@ -123,6 +123,8 @@ namespace SquashClash.Runtime.Shot
             }
             bool ca=model.Outcome==GestureOutcome.AbandonedNoPull||model.Outcome==GestureOutcome.CanceledReturnToDeadZone;
             if(ca){priorCanceledId=m24Id;priorChain=m24Chain;priorContext=M24Context;priorTarget=m24Target;}else ResetM24Chain();
+            data.s1PreviewOnly=shotPreviewOnly;
+            EmitShotClosure(data.o2Count);
             RecordM24ProtocolCompletion(data,cfg);
             var savedPreset=preset;var savedFile=fileHash;int savedPending=pending,savedSeed=seed;long savedDropped=dropped;
             deferred.Enqueue(()=>

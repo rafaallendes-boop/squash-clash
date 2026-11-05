@@ -9,10 +9,10 @@ namespace SquashClash.Core.Tests.Shot
 {
     public sealed class SlingConfigTests
     {
-        [Test] public void SelectorDefaultsToReference_AndAllExisting62ValuesRemainIdentical()
+        [Test] public void ExplicitReferenceControl_AndAllExisting62ValuesRemainIdentical()
         {
             Assert.That(ParamCatalog.TryGet("gesture.control",out _),Is.True);
-            var p=ConfigFixtures.Default();Assert.That(p.Get("gesture.control"),Is.Zero);
+            var p=ConfigFixtures.Default().With("gesture.control",0);Assert.That(p.Get("gesture.control"),Is.Zero);
             var old=JsonUtility.FromJson<PresetFile>(File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Tests/Fixtures/pre-sling-defaults.json")));
             Assert.That(old.values.Count,Is.EqualTo(62));foreach(var e in old.values)Assert.That(p.Get(e.key),Is.EqualTo(e.value),e.key);
             Assert.That(p.HashOf(ConfigFixtures.FirstBallPrefixes),Is.EqualTo("0d39e6016bd8"));

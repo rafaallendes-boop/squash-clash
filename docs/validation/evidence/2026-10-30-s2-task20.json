@@ -1,0 +1,129 @@
+{
+  "task": "2.0",
+  "sourceBase": "8dd142d",
+  "defaultsHash": "1c8e598b099b",
+  "p0ExtendedHash": "944668168805",
+  "hashesComputedByUnityTests": true,
+  "nativeStartupObserved": false,
+  "inherited41Projection": "0d39e6016bd8",
+  "p0InheritedProjection": "8de3f2ecb217",
+  "simulationKey": "166a96e319c7",
+  "existingValuesChanged": [
+    "gesture.control"
+  ],
+  "referenceSettingsUnchanged": {
+    "pullDeadZoneMm": 2,
+    "pullFullMm": 35,
+    "tapMm": 3,
+    "tapMs": 250
+  },
+  "runs": [
+    {
+      "task": "2.0",
+      "phase": "GREEN",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "S2DefaultPromotionTests"
+      ],
+      "startedUtc": "2026-10-30T19:32:18.752164+00:00",
+      "exitCode": 0,
+      "total": "6",
+      "passed": "6",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "31db6f95fb56c8b65caee18e811db28a5ed0b0eff93ef21e07fdf62180674246"
+    },
+    {
+      "task": "2.0",
+      "phase": "GREEN",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "S2DefaultStartupTests"
+      ],
+      "startedUtc": "2026-10-30T19:32:53.211804+00:00",
+      "exitCode": 0,
+      "total": "1",
+      "passed": "1",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "4fa7f7019f52b04945e479b81aa5cdf36134fba314489577c8b6e26cd1ee5301"
+    },
+    {
+      "task": "2.0",
+      "phase": "RED",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "S2DefaultPromotionTests"
+      ],
+      "startedUtc": "2026-10-30T19:30:48.669951+00:00",
+      "exitCode": 1,
+      "total": "6",
+      "passed": "3",
+      "failed": "3",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "1398435540d6c830b57188c859d0df8623e0889301a920d98e23269a8ed435dd"
+    },
+    {
+      "task": "2.0",
+      "phase": "RED",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode",
+        "S2DefaultStartupTests"
+      ],
+      "startedUtc": "2026-10-30T19:31:11.783199+00:00",
+      "exitCode": 1,
+      "total": "1",
+      "passed": "0",
+      "failed": "1",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "32bcb575511924f6a4d84207d68e10e2eb48752cd1a22fabe05974c898605cbb"
+    },
+    {
+      "task": "2.0",
+      "phase": "suite",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode"
+      ],
+      "startedUtc": "2026-10-30T19:34:12.695152+00:00",
+      "exitCode": 0,
+      "total": "447",
+      "passed": "447",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "1e7aca466bb944f44cc3c7c25514cfd423cc54351c61e2aad8cb020dce310fb9"
+    },
+    {
+      "task": "2.0",
+      "phase": "suite",
+      "platform": "playmode",
+      "command": [
+        "scripts/test.sh",
+        "playmode"
+      ],
+      "startedUtc": "2026-10-30T19:34:27.215722+00:00",
+      "exitCode": 0,
+      "total": "208",
+      "passed": "208",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "5b5bbbe7c6f0a498cd070fc78e63779137ad46d4c74f3d595b7685714080e8e2"
+    }
+  ],
+  "noDeviceAccessOrXcodeBuild": true
+}

@@ -1,0 +1,79 @@
+{
+  "task": "2.3",
+  "defaultsHash": "f0e57daf7ba3",
+  "p0ExtendedHash": "725be2d95a35",
+  "keys": 97,
+  "hashOrigin": "Unity, no phone",
+  "runs": [
+    {
+      "task": "2.3",
+      "phase": "RED",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ContactContractTests"
+      ],
+      "startedUtc": "2026-10-30T20:50:18.096032+00:00",
+      "exitCode": 1,
+      "total": "30",
+      "passed": "0",
+      "failed": "30",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "3a715ed66221788c9b2e93792b624f459e095aea4d79084dd6b47c2d0767c25c"
+    },
+    {
+      "task": "2.3",
+      "phase": "GREEN",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode",
+        "ContactContractTests"
+      ],
+      "startedUtc": "2026-10-30T20:50:58.527876+00:00",
+      "exitCode": 0,
+      "total": "30",
+      "passed": "30",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "80c2376e3aadeeb13c79d7e0ef25e60b4a96b66558beb3194266ef89b8769417"
+    },
+    {
+      "task": "2.3",
+      "phase": "RED-hash97",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode"
+      ],
+      "startedUtc": "2026-10-30T20:51:22.455993+00:00",
+      "exitCode": 1,
+      "total": "503",
+      "passed": "500",
+      "failed": "3",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "72a451024d20c87dc66f9094b6c0e8e98a230c9d6395318b1c9f7977dc923fcb"
+    },
+    {
+      "task": "2.3",
+      "phase": "suite",
+      "platform": "editmode",
+      "command": [
+        "scripts/test.sh",
+        "editmode"
+      ],
+      "startedUtc": "2026-10-30T20:52:14.352165+00:00",
+      "exitCode": 0,
+      "total": "503",
+      "passed": "503",
+      "failed": "0",
+      "validCompilingTestRun": true,
+      "phaseExpectationMet": true,
+      "xmlSha256": "d8d93a237665cbcd900a41d6f52e1b428511d930ecaface58dee0f358f6fb72b"
+    }
+  ]
+}

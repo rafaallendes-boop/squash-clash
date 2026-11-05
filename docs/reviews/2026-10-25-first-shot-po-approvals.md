@@ -995,3 +995,433 @@ Se concreta en **D4 aditiva** del [plan](../superpowers/plans/2026-10-25-squash-
 D4 propone el mapeo aShotRequest con intenciónBegan/PdelEnded/roriginal del mismo dedo; tabla de cierres/consumo e identidad; análisis de vuelo frente a duración observada deS1 sin medir ni inventar tiemposSL; seguimiento con objetivo mundo fijo; negativos/TDD previstos y2.7con abiertosS1, un bloque cada vez/hash/triada/respuestas literales/restauraciónP0. La concreción operativa de intento por cada cierre se somete conD4 a revisión, no se atribuye como decisión adicional ya tomada por elPO. La duración del gesto no modificaA/V/K ni la regla de riesgo por fases; N04/N04b y preferencia de tirón se conservan abiertos.
 
 Alcance comprobable: únicamenteAGENTS.md, este registro y las dos adendasMarkdown. Sin código/tests/presets/defaults, specv0.3/criterios/bandas/umbrales, suites/check-release/build/instalación/sesión/acceso al iPhone ni replay/análisis nuevos de trazas. Baselines45c4e9af5c8f/e458bfd5ce9e y41heredados/SimulationKey intactos. **Entregar PR lista paraClaude, sin fusionar y detenerse. S1aceptado; códigoS2–S4/T8 sigue sin autorizar.** Perfilactualvence2026-11-03T18:29:44Z, no hay instalación autorizada.
+
+
+### 2026-10-30 — cierre PR #29 y autorización S2 fase1
+
+Merge**8dd142dff2fcdc5d52871ac3c89733b4aff88fd6**, segundo padre**1bae4615e8bec0e9b12624e73ce240a830638dae**/mismo árbol, verificado porClaude yGit. Heads exactos,PRabierta/no borrador/sinconflictos/árboleslimpios antes de fusionar;main sincronizada/limpia,worktree retirado sinforce/noignorados,inventarios vacíos enLogs/archive-s2-m24-plan-20261030,ramas remotas conservadas. Este registro va dentro de la nueva entrega, sincommitaparte enmain. Retoque N04 b→N04b efectuado enplan/propuesta, sin otro cambio de esa adenda.
+
+**Decisión literal del PO — tabla D4.2 aprobada tal como está en el plan:**
+
+> - InvalidAim (incluido tin/out), Tap, AbandonedNoPull, CanceledReturnToDeadZone, Rejected y SystemCanceled no golpean ni consumen el intento. Se puede volver a apoyar si queda tiempo en la recepción.
+> - Un Swing aceptado consume el intento de forma atómica aunque sea temprano, tardío, quede fuera de V o no alcance la pelota.
+> - Un contacto sin Ended al cerrar la recepción no dispara. Se registra como NoOrder o como el caso que corresponda.
+> - Las órdenes duplicadas, las de otro lanzamiento y las que llegan con el intento ya consumido se descartan con su motivo.
+> - Esto deja de ser propuesta de Codex: pasa a decisión del PO y se registra literalmente.
+
+**Decisión literal del PO — bloques2.7:** «no se deciden ahora. Codex los predeclara por escrito en la autorización de la fase 2 y se aprueban antes de cualquier sesión».
+
+Autoriza tareas2.0–2.6/D4/M2S2-N01–N12 enorden,TDDcompilable/REDporaserción→GREEN.2.0promueveúnicamentecontrol2/fixturas explícitas/overlayP041claves sin reescribirarchivos/hashreales/proyecciones41ySimulationKeyintactas/2-35mm/N2estrictointactos.2.2registra vueloenrelojreal/frontis-bote/K/T*; incompatibilidad detiempo se registra ydetiene,sinreajustarvelocidad,ventanas oSL. Cierreautorizado:regresión completafresca sinCS/restauracióntransitorios/check-release limpio dev-prod gitDirtyfalse/informe nuevo/PRlistaClaude sinfusionar. SinXcodebuild/instalación/accesoiPhone/sesión2.7 ni recorridoprod físico;spec/criterios/bandas/umbrales/dirección/pullFullMm intactos,sinhalo/lupa/cámara-zoom/dominioB/decaimiento/filtrosN04/rival-rally/S3–S4/T8. Ante defecto/incompatibilidadregistrar ydetener,sinajustar. No revisión deperfilahora;vence2026-11-03T18:29:44Z. S1aceptado;fase2posterior requiereotraautorización.
+
+
+### 2026-10-30 — aplicación de la parada por incompatibilidad de tiempo S2-TIME-01
+
+Se aplica la condición de la autorización de fase1, sin una decisión nueva delPO: **registrar y detenerse, sin ajustar**.2.0completada/2.1Corecompletado;2.2focal14/14 calcula las seis recetas iniciales predeclaradas [EXPERIMENTO] encommit0c638da antes de evaluarlas. SL5/SL6 tienenT*1,448718s/Kout1,694601s reales. Comparar con la mediana existenteB2mediosS1=1,662776708s implica, paraV100ycompensación0,un Began antes de lanzamiento;T3puro deja≈31,8ms para empezar un gesto deesa duración. Es análisis determinista de editor más una duración ya medida citada,no nueva sesión,ni replay de trazasS1,ni imposibilidad general para todoslos gestos. No se inventa una duración mínima/umbral de reacción o Fail delPO.
+
+No se ajustan recetas, velocidades, ventanas, tempo o gesto.2.3–2.6noiniciadas;2.2enprogreso/92claves, hashes actuales/expectativas yregresión/cierrecheck-releasependientes. No se afirma fasecompleta ni suiteglobalverde. Informe/evidencia entregados paraClaude/PO antes de continuar;sinmerge/buildXcode/instalación/acceso al iPhone/sesión2.7/prod físico.2.0hashes1c8e598b099b/944668168805 son los observadosUnityantes de añadir7claves;no se atribuyen alestado92claves.41heredados/SimulationKey/2-35mm/N2/spec/P2/L1-L6 intactos. S1aceptado;otra decisión delPO necesaria para resolver el margen y reanudar sin ajustes unilaterales. [Informe](2026-10-30-first-shot-s2-m24-phase1.md), [evidencia](../validation/evidence/2026-10-30-s2-time-01.json).
+
+
+### 2026-10-30 — S2-TIME-01 resuelto para continuar, misma PR #30
+
+Claude revisó cdc8e4666f2f5fa54c3b887c7dd1f366acb93ccd y confirma parada/cifras/predeclaración0c638da/2.0correcta y7claves2.2con valores/rangos delplan. **Decisión literal del PO: «Seguir sin cambiar SL».**
+
+Interpretación de Claude, **conversión de cifras ya publicadas, no medición nueva**, paraSL5/SL6/V100:
+
+| Serie S1 | Mediana | Último apoyo |
+|---|---:|---:|
+| B2 fuertes | 0,87 s | +0,68 s |
+| B5 «ritmo cómodo» | 1,12 s | +0,43 s |
+| B3 medios | 1,35 s | +0,20 s |
+| B2 suaves | 1,42 s | +0,13 s |
+| B2 medios | 1,66 s | −0,11 s |
+
+La incompatibilidad se observó solo con el gesto más lento deS1, sin pelota/apuntando con calma; no prueba inviabilidad deM2-4enpelotas cortas. Se relaciona con el abierto «aún mecánica/ritmo de rally». No se reescriben los datos/medianas deS1 ni la parada anterior.
+
+Decisiones delPO: recetasSL1–SL6congeladas como0c638da; sin cambiarvuelos/velocidad/tempo/V/A/compensación/N2/dirección ni apoyo dentro deRecepción (§6.5.1). **S2-TIME-01 observación predeclarada de2.7, no bloqueo:** medir con golpe real duraciónBegan→Ended, anticipación respecto a lanzamiento y llegada aV/T3puro enSL5/6, todos los intentos; si elPO no llega vuelve alPO para decidir,sin ajustes. Autoriza reanudar mismafase1/rama/PR: expectativas92claves yhashesreales conTDD, completar2.2y2.3–2.6enorden/REDporaserciones→GREEN/concasosoriginales/D4.6/M2S2-N01–N12. Suites completasfrescas/transitoriosrestaurados/check-release limpio dev-prod gitDirtyfalse/informeactualizado/PR#30listaClaude sinfusionar. SinXcodebuild/instalación/accesoiPhone/sesión2.7, cambiosspec/criterios/bandas/umbrales oS3–S4/T8. **Ante otro defecto/incompatibilidad distinto deS2-TIME-01 registrar/detener.**
+
+
+## S2 fase1 — avance y nueva parada S2-CLOCK-01 (2026-10-30)
+
+La decisión literal **«Seguir sin cambiar SL»** se aplicó: recetas0c638da intactas;S2-TIME-01 solo observación predeclarada2.7. No se cambian vuelo,velocidad,tempo,A/V,compensación,N2,dirección o regla deBegan enRecepción. La tablaD4.2 conserva su aprobación literal anterior.
+
+2.2retomada conTDDdehash92 yregresión473/473EditMode-208/208PlayMode;2.3contrato30/30focal y503/503EditMode;2.4solver12/12y515/515EditMode;2.5rollback21casos yregresión516/516EditMode-229/229PlayMode,sinCS.2.6queda en progreso:registros2/2,controlador46/46focal y518/518EditMode. Defaults106claves**915ae1e479b9**,P0extendido**dd122831f592**,observados porUnity enpruebas,noiPhone;solo gesture.control0→2 entre los85valores existentes y21claves nuevas delplan.41heredados0d39e6016bd8/SimulationKey166a96e319c7/2-35mm/N2estricto intactos. [Informe](2026-10-30-first-shot-s2-m24-phase1.md)/[auditoría](../validation/evidence/2026-10-30-s2-protected-state.json).
+
+**S2-CLOCK-01, confirmado y sin corregir:** la lista deClockMap crece unsegmento porframe durantepausa o después delvuelo detenido enmodoFirstBall.120frames:85→205detenido,32→152pausado,estado depelotaidéntico. Reproducciónsintética2tests/2fallos poraserción,sinCS;no memoria enbytes niH17 nativo medidos. [Evidencia](../validation/evidence/2026-10-30-s2-clock-01.json). Se aplica la condición delPO **«Ante otro defecto o incompatibilidad que no sea S2-TIME-01, registra y detente»**. No se infiere autorización para corregir/coalescer ni elegir nuevos límites. Propuesta de corrección para decisión, noimplementada,enelinforme.
+
+No hay suitePlayModecompleta con2.6 ni check-release finalgitDirtyfalse/revisión final de rama; no se declara cerrada lafase1 ni todosD4.6/M2S2-N01–N12. RegresiónFirstBall y,eventualmente,su preparación explícitapractice0 sin tocaraserciones,siguenpendientes. Código/evidencia/RED conservados en lamisma rama/PR#30paraClaude/PO,sinfusionar. No nuevaaceptación deS2,niXcodebuild,instalación,iPhone,sesión2.7,prod físico,S3–S4/T8. S1permanece aceptado ylosbloques2.7dependen deautorización futura. Perfilhasta2026-11-03T18:29:44Z,no comprobado por noinstalar. No commit aparte enmain.
+
+
+## S2-CLOCK-01 — revisión Claude y corrección acotada autorizada por PO (2026-10-30)
+
+PO comunica revisión de Claude del head **8777f9bcd48cfe0924bf4851ae7606abe312095f**: parada correcta; mecanismo ObserveClock→Mark verificado; mapa avanzando con pelota detenida intencionado/F02. Los21defaults nuevos coinciden con el plan y entre85anteriores solo cambia gesture.control. Estimación de Claude, no medición: unos40bytes/segmento/2,4KB por segundo a60fps y mayor recorrido lineal de TrySimToReal tras pausas largas.
+
+Autorización del PO para **la misma rama/PR #30**:
+
+> Agrupar observaciones estables. Si una observación no cambia tempo, cámara lenta, pausa ni descartes, y cae exactamente en la continuación del segmento anterior, no crea un segmento nuevo.
+>
+> Mantener exactos los cambios de estado: pausa y reanudación, paso manual, tempo, cámara lenta y descartes.
+>
+> Sin añadir nada nuevo: ni un segundo reloj, ni parámetros, ni límites de tiempo, ni umbrales, ni un recorte por antigüedad.
+
+Antes de implementar exige protecciones verdes para Ended tardío/r original, expiración, paso manual, F02 y golpe/rollback después de pausa larga. RED S2-CLOCK-01 2/2→GREEN; reflexión o contador de lectura sin efecto runtime permitidos. Continuar2.6: fixtures FirstBall con practice.enabled0 solo preparación/aserciones intactas, D4.6/N01–N12 pendientes, suites completas frescas/sinCS, transitorios restaurados, check-release dev-prod limpio/gitDirtyfalse e informe.
+
+> Ante otro defecto, registra y detente. Entrega la PR #30 lista para Claude, sin fusionar, y detente.
+
+SL1–SL6 congeladas; S2-TIME-01 observación para2.7. Sin cambiar vuelos/velocidad/tempo/V-A/compensación/N2/dirección/pullFullMm/spec/criterios/umbrales. NoXcodebuild/instalación/iPhone/2.7/S3–S4/T8.
+
+Aplicación observada: bd84896 corrige reloj tras protecciones13/13 y16/16; RED original2/2 repetido→GREEN2/2, Core16/16/rollback25/25. Candidatos fallidos conservados en evidencia, sin tocar aserciones. Fuente final9131b1c: fixtures explícitos y cobertura adicional; guarda de hash predeclarado pendiente de D4.6 con esqueleto/RED1/1→GREEN; controlador65/65. Suites frescas522/522EditMode y297/297PlayMode, sinCS/cero omitidos; transitorios restaurados/514fuentes/40protegidos cotejados. **Check-release final dev/prod OK desde 1bbaa39 limpio, gitDirty=false ambos**; Core/Runtime en ambos, DevPanel solo dev y framework de pruebas excluido. 514 fuentes coinciden después de los exports y árbol limpio; 386 aserciones de los fixtures intactas. Alcance2.0–2.6verificado y entregado para revisión de Claude/PO en PR#30, abierta/lista/sin fusionar; no cierre ni aceptación de S2 inferidos. [Informe](2026-10-30-first-shot-s2-m24-phase1.md), [JSON final](../validation/evidence/2026-10-30-s2-task26-final.json). S1aceptado; sin aceptación de S2 inferida.
+
+
+## 2026-10-31 — aprobación de fase 1 PR #30 y predeclaración documental de 2.7
+
+PO comunica revisión aprobada de Claude del head **c2e8ee7** (producto **9131b1c**; 1bbaa39/c2e8ee7 solo documentación). Sin bloqueos: S2-CLOCK-01 correcto; fixtures solo preparación; cobertura D4.6/N01–N12 en rama; nada protegido cambia desde8777f9b; check-release dev/prod limpio. Aprobación de **fase 1 (2.0–2.6)**, no aceptación de sesión física ni cierre de S2.
+
+Observaciones registradas, sin código: overload ArmSlingBlock(block,expectedGestureHash) solo utilizado en pruebas, panel DEV llama sin hash; el campo expectedGestureHash del registro es el observado al armar y no uno predeclarado. El mapa puede seguir sumando segmentos durante vuelo activo y se borra en el lanzamiento siguiente. Perfil conocido vence **2026-11-03T18:29:44Z**.
+
+Autorización literal del PO:
+
+> Autorizado, solo documento y en la misma PR #30: predeclarar por escrito los bloques de 2.7.
+>
+> La PR #30 sigue sin fusionar hasta que el PO juzgue la sesión 2.7. Si aparece otro defecto, regístralo y detente. Entrega la PR #30 lista para Claude y detente.
+
+Requisitos de la predeclaración: orden/tarea/SL/instrucciones al PO; verificación de hash conforme a la observación (cualquier conexión solo propuesta, sin código); preguntas literales, métricas descriptivas, parada/restauraciónP0; antes de instalar, **perfil renovado por PO y comprobado, respaldo y cotejo de los tres archivos**. NoXcodebuild/instalación/accesoiPhone/2.7/código/tests/defaults/SL/spec/criterios/bandas/umbrales/S3–S4/T8.
+
+Aplicación documental: [predeclaración 2.7](../validation/2026-10-31-first-shot-s2-session27-predeclaration.md), 25 bloques propuestos (203 recepciones dev +3prod), comparación principal SL1–SL6/V100 frente a T3puro con T3 no suave, familiarización y ejercicios separados. Hoja externa/manual de esperado y observado por bloque, definición del manifiesto H(s,m,c) previa a observación y literales independientes resueltos antes de armar en una preparación futura autorizada; el campo de armado DEV no sustituye esa referencia. No botones S1 presentados como contadores S2, ni nueva conexión de hash implementada. Preguntas originales y triada por separado, métricas/ausencias/NotEvaluated, S2-TIME-01/abiertos conservados, parada y P0 en proceso nuevo/cotejo de tres archivos tras instalación y restauración. Se actualizan este registro, informe y AGENTS.md; plan/propuesta/spec y producto permanecen intactos. **Nada ejecutado en iPhone ni suites/builds/exports nuevos.** Entrega misma PR#30 paraClaude/sin fusionar y detenerse; juicioPOde2.7 sigue pendiente.
+
+
+## 2026-10-31 — predeclaración 2.7 head31d7433 aprobada con ajustes documentales A1–A4
+
+PO comunica aprobación de Claude con ajustes y autoriza aplicarlos en la misma PR#30. Verificado sin bloqueos: delta desdec2e8ee7 exactamente cuatroMarkdown/producto intacto; tablaSL igual aPracticeLaunchDefinitions; slowMotion1 normal/validLimit1V-0T3puro/earlyPolicy0T3;16+3preguntasliterales;203+3recepciones/60V100+60T3puro; anclaB→SL1→SL necesaria/correcta por reasignación al cambiarreceta/comparaciónfloat; Claude reprodujo915ae1e479b9 ydd122831f592 fueraUnity.
+
+Ajustes autorizados/aplicados solo en Markdown:
+
+- **A1:** inicio dev con cierre DEV porPO, usando línea auditada dev-toggle/result/completed/accepted/devOpen=false; recepción1 primerLaunchId posterior. DevHasInputFocus solo es foco deapp: práctica sigue conDEVabierto. RelojMacUTC secundario, asociación con par timeReal/ts de dispositivo, incertidumbre explícita/sin calibrar latencia; interbloque/preparación fuera denominadores. PROD no tieneDEV: excepción documental con shot-plan del SL1 posterior a inicialización de práctica, primer nuevoLaunchId posterior como recepción1, sin evento/control nuevo; para revisiónClaude.
+- **A2:** triada porintento soloFAM/CAN/NEG-A–D; resto excepciones por número de recepción al cerrar, lo no señalado sinrespuesta/nuncaOK por defecto; no interrumpirV/T.
+- **A3:** calcular ahora13H(s,m,c), deltas/SHA256manifiesto e inputs, fueraUnity/sinapp. Fuentes: DefaultPreset de9131b1c, respaldoP0 local SHA256**2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd**, cuerposfloat32→double/canonicalizaciónParamSet.ComputeHash. [Anexo con resultados](../validation/2026-10-31-first-shot-s2-session27-hashes.md), sin nuevos scripts/JSON. H(1,V,0)=**dd122831f592** comprobado; Claude revisa literales antes deprimerbloque; cotejoUnity solo cuando la preparaciónestéautorizada ysi no coincide registrar/detener, sin ajustar literales.
+- **A4:** tandasFAM+02–13 /14–22 /23–24 /PROD (126/57/20/3). Cadauna empieza conprecheckcompleto y terminaexportando logs/restaurandoP0enproceso nuevo/cotejo byteabyte3archivos; todas dentrovigenciaperfilrenovado/comprobado. No fechaejecucióninferida.
+
+Menores: «1 = sin cámara lenta» junto aslowMotion; errorAim(Began)→C(3,2/2,2) descriptivo, referencia verbal sinmarcador/sin umbral. [Protocolo actualizado](../validation/2026-10-31-first-shot-s2-session27-predeclaration.md), informe y AGENTS actualizados. Cálculos documentales no son tests deproducto ni mediciones de app/dispositivo. **Solo Markdown**, sin código/tests/defaults/presets/SL/spec/plan/criterios/bandas/umbrales ni suites/check-release/build/instalación/accesoiPhone/sesión. PR#30 sigue sinfusionarhasta juicioPOde2.7;S3–S4/T8noautorizados. Otrodefecto→registrar/detener. EntregarlistaClaude ydetenerse; no inferir aprobación del nuevohead.
+
+
+## 2026-10-31 — preparación de tanda 1 de2.7 autorizada, no sesión
+
+PO autoriza misma rama firstshot/s2-m24/PR#30 sin fusionar, **solo preparación: ningún gesto al PO ni bloque iniciado**. Corrección documental: citar archivo archivado mscorlib__3.cpp SHA26bb31ee…/literales sin cambio. Producto aprobado fase1 intacto; comprobar por diffGit/SHA256 Assets/ProjectSettings/Packages idénticos a probado, discrepancia→registrar/detener. Check-release dev/prod limpio/gitDirtyfalse y builddevReleaseARM64/noDevelopment.
+
+Perfil: **PO renueva antes de instalar** (conocido vence2026-11-03T18:29:44Z); comprobar incorporado, inicio/vencimiento/firma/equipo/dispositivo/bundle y cobertura de toda tanda1+restauración. Sin cobertura noinstalar. Antes: exportarlogs/respaldo nuevoP0-calib-1/Po-1/last-active. Después: cotejo byte a byte3archivos/proceso nuevoP0/**dd122831f592**/0pendientes/Jugando/sinpausa/DEVcerrado; es primer cotejo B enapp, diferencia→registrar/detener/sin recalcular. Otros12literales segúncondición se cotejan enprecheck con propiaapp,sin scripts/tests temporales. Registrar build/perfil/respaldos/cotejos/hash observado enAGENTS/aprobaciones/informe; dejarP0/sinconfigtemporales/singestosnuevos, PRlistaClaude ydetenerse.
+
+Sin código/tests/defaults/SL/presets/spec/plan/criterios/bandas/umbrales nuevos. **FAM/02–13 requiere autorización posterior propia; tandas2–4/PROD/S3–S4/T8 no autorizados.** Registro inicial:506archivos deproducto Git/SHA256iguales a9131b1c y archivoCpp preservado conSHA esperado. RenovaciónPO/horario de tanda1 solicitados; aún no se afirma build/instalación/arranque ni preparación terminada.
+
+
+## 2026-10-31 — renovación delegada, ventana prevista y preparación completada
+
+Durante la preparación el PO respondió literalmente: **«Ayúdame tu a renovar el perfil Tienes el permiso de utilizar mi PC»**. Se autoriza así al agente a realizar la renovación con la cuenta/herramientas existentes; el requisito de perfil nuevo/verificado antes de instalar se conserva. Al precisar la previsión de vigencia confirmó **«Mañana 1 de noviembre, antes de las 22:00»**, America/Santiago, incluida restauración. Es previsión para cobertura, no autorización de sesión.
+
+Resultado: Git/SHA256 de506Assets/ProjectSettings/Packages coincide con9131b1c probado antes/después. Check-release dev/prod nuevo2ef4807limpio/gitDirtyfalse ambos; build **0.1.0+2ef4807 dev**,ReleaseARM64/IL2CPP/noDevelopment. Primer nativo firmado con perfilviejo noinstalado; elperfil anterior se respaldó/retiró solo decaché deforma recuperable y se regeneró con Xcode/firmaautomática por delegaciónPO. Incorporado **2026-10-31T17:58:46Z→2026-11-07T17:58:46Z**, vigente durante todalafecha1nov+hastalímite22local/restauración; firma/certificado autorizado preexistente/equipo/dispositivo/bundle comprobados. Sinrevocación solicitada ni clavesprivadas exportadas; identidadprivada en evidenciaignorada. [Método oficial Apple](https://developer.apple.com/help/account/provisioning-profiles/edit-download-or-delete-profiles/).
+
+Export previo31metrics+11spike/9.962.251bytes y respaldo nuevoP0/Po-1/last-active, repetido justoantesdeinstalar. P0**3614B/2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd**,Po-1**2843B/9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767**,selección**10B/5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087**. InstalaciónOK sinautolanzar; cotejosbyteabyte trasinstalar/antesabrir ytrasarranque/finalmantienenlos3archivosidénticos. No guardado/importación/cambio de presets ni selección.
+
+CLI inicialdenegadoLocked, appnoiniciada; resuelto alabrir icono porDuplicación. **Proceso nuevodev18:05:40.5084170Z/15:05:40.508417local**,P0**dd122831f592/0pendientes**,primer cotejonativo B=H(1,V,0) satisfecho sinrecalcular. DEV abierto/cerrado solo poragente para comprobar: Jugando/P2/P0/cero pendientes; cierre18:07:20.6044640Zpausedfalse/focusedtrue/devOpenfalse, estadofinalDEVcerrado/sinpausa. Capturafinal0gestos/órdenesjuego;4eventosUI filtrados/4dev-control/32NoOrderautomáticos, todospreparaciónsinbloques. El cierreDEV delagente no eslafronteraPOdeFAM. Losotros12Hse cotejarán conappenfuturos prechecksautorizados; sin scripts/tests temporales. [Informe completo](2026-10-30-first-shot-s2-m24-phase1.md); fuenteCppSHA26bb31ee… archivadayreferenciacorregida/literalesintactos.
+
+**Preparación terminada para Claude; PR#30 abierta/lista/sinfusionar.** AppenP0/sinconfigtemporal/ningúngesto pedido. No suites, nuevo código/tests/defaults/SL/presets/spec/plan/criterios/bandas/umbrales. No sesiónFAM/02–13 ni tandas2–4/PROD/S3–S4/T8 autorizadas. Fin deesta entrega: detenerse. ÚltimoajustedeGit documentalno cambiaappinstalada.
+
+
+## 2026-10-31 — preparación head68f5383 aprobada; sesión de tanda 1 autorizada
+
+PO comunica verificación de Claude: producto idéntico a9131b1c, perfil31oct17:58:46Z→7nov17:58:46Z,140líneas2ef4807dev/dd122831f592/pending0/singestos/cierreDEVlínea104 y tresarchivosidénticos. Autoriza soloFAM(01) y02–13 en misma rama/PR#30 sinfusionar, predeclaración sin cambios. Revalidar perfil/build, respaldo nuevo yproceso nuevoP0/dd/pending0/Jugando/sinpausa. Explicaciónliteral§4/trescomprensiones antesFAM; noentiende→restaurar/detener. Unbloque a la vez/B→SL1→SL/panel/singuardar/deltasúnicos/precheckcompleto/hashpropioapp=literal/sinrecalcular. CierreDEVporPOdevOpenfalse esfrontera, recepción1primernuevoLaunchId posterior;MacUTCsecundario/sintocarteléfonodurantegestos. FAMtriadaporintento,02–13excepcionesalcierre/restosinrespuesta/preguntatarea+tres2.7, sin16S1. Sinrepeticiones/sustituciones, conservar todoslosintentos/paradas§7. Cierre exportaciónantesnuevaapertura/P0procesonuevo/dd/pending0/3archivosidénticos, antes1nov22America/Santiago incluida restauración. Si parcial, nocompletarotro día. Informe descriptivo/respuestasliteralesseparadas/sinjuicioinferido/PRlistaClaude/detenerse. Sin tandas2–4/PROD/S3–S4/T8 ni código/tests/builds/instalaciones/defaults/presetguardado/SL/spec/plan/criterios/bandas/umbrales;otrodefecto→registrar/restaurar/detener.
+
+Recheck y respaldo inicial completados; proceso nuevo20:20:13.1061270Z2ef4807dev/P0dd122831f592/pending0. Comprensión solicitada y pendiente; ningún bloque iniciado. [Informe de tanda1](2026-10-31-first-shot-s2-tanda1.md).
+
+## 2026-11-01 — tanda 1 terminada; decisiones literales del PO durante la sesión
+
+Operación continuada por Claude a pedido del PO («Ayúdame a realizar las pruebas... Usa mi PC en duplicar pantalla para revisar»), por falta de créditos de Codex; Claude no es revisor independiente de esta tanda. Decisiones literales del PO registradas:
+
+- Comprensión: anillo no identificado → **«Aclarar el anillo»**; tras aclaración verbal: «Ah perfecto, veo el circulo celeste y el circulo que se va cerrando.»
+- 03 intento 1 interrumpido/frontera ambigua → **«Sí, repetir 03»** (bloque adicional 03b; parcial conservado).
+- 04 intento 1 con dos cierres completados → PO repite por iniciativa propia: **«Hice la prueba de nuevo, para que revises»** (04b; ambos candidatos conservados).
+- Tras el bloque 11, segundo juicio negativo de trayectoria en SL5 escalado por la parada de §7 (la primera versión citaba §8 por error); el operador recomendó seguir → **«Seguir con 12»**: desviación de §7 autorizada por el PO. En 12 el PO difiere la revisión («eso se puede ver después»).
+
+Resultado: FAM y 02–13 medidos, respuestas literales separadas, P0 restaurado en proceso nuevo 21:56:11.3538050Z (dd122831f592/pending 0) y tres archivos idénticos byte a byte al respaldo. Sin aceptación inferida; PR #30 sin fusionar. [Informe de tanda1](2026-10-31-first-shot-s2-tanda1.md).
+
+## 2026-11-01 — revisión independiente de la tanda 1 y decisión del PO sobre la trayectoria
+
+**Revisión independiente** (sesión Claude distinta del operador, solo lectura) del head `66095c8`: **CAMBIOS SOLICITADOS**. Datos primarios confirmados (fronteras, hashes, pending, conteos, contactos, P, restauración y citas literales). Hallazgo bloqueante: preguntas de cierre no literales sin declarar (pregunta 1 de 02 reformulada; las cinco de 09–13 no literales, sin triada y con la pregunta 2 sugerente), además de preguntas enviadas juntas y tras mostrar resultados. Correcciones: extras, gestos previos a FAM (26), 9 gestos tardíos de la preparación de Codex, LaunchId de 03 intento 1 (L150/L151), cita §7 en vez de §8, 03b/04b sin precheck previo y 03b sin §3.2 «Reinicio/segundo plano». El operador cotejó cada hallazgo y corrigió el [informe](2026-10-31-first-shot-s2-tanda1.md); los datos primarios no cambian.
+
+**Pendiente de decisión del PO:** cómo tratar las respuestas a preguntas no literales, en especial el juicio del salto de 09–13 («¿Cómo viste el salto?»), que es condición de fusión.
+
+**Decisión literal del PO (2026-11-01), posterior al head revisado:**
+
+> Perfecto. Con respecto a mi observación, la trataremos como un posible defecto que se habra en un PR aparte. Pero las tandas 2 a 4 no se bloquea. Cuando vuelva el revisor te comento, y luego vamos avanzando hasta que tenga creditos en codex y ahí seguimos tal cual estabamos antes
+
+Consecuencias registradas: la trayectoria SL5/SL6 se tratará como posible defecto en una PR aparte, fuera de PR #30, sin declarar defecto ni ajustar nada aquí. Las tandas 2–4 no quedan bloqueadas por esa observación. Claude sigue como operador hasta que Codex recupere créditos. PR #30 sin fusionar.
+
+
+## 2026-11-01 — decisión de repreguntar el salto en tanda 2 y retorno de Codex
+
+Decisión literal del PO, posterior al head revisado `66095c8`, comunicada a Codex al retomar desde `e160f98`:
+
+> Repreguntemos en tanda 2
+
+Se refiere al juicio del salto de **09 SL4/V, 10 SL5/V, 11 SL5/T, 12 SL6/T y 13 SL6/V**. La decisión sustituye la espera de una decisión sobre cómo abordar ese juicio; no convierte las respuestas a «¿Cómo viste el salto?» en respuestas a «¿el salto es aceptable?». Las respuestas originales, el envío conjunto y la exposición previa de resultados se conservan sin borrar ni reinterpretar. El juicio literal sigue pendiente; no hay Pass ni autorización de fusión inferidos.
+
+**Propuesta operativa de Codex, pendiente de confirmación expresa del PO:** al inicio de tanda 2, antes de 14 y sin mostrar resultados, identificar cada condición anterior en ese orden y preguntar únicamente **«¿el salto es aceptable?»**, una a una, esperando cada respuesta antes de pasar a la siguiente. Serán repreguntas retrospectivas sobre la tanda 1, separadas de sus respuestas originales, con fecha/condición y limitación de recuerdo; «No recuerdo» se conserva literal y deja pendiente ese juicio. No se propone repetir los bloques ni presentar las repreguntas como una medición nueva. Codex solicita al PO confirmar este procedimiento antes de empezar; la confirmación aún no está recibida al escribir este registro.
+
+El PO pide retomar en el mismo worktree/rama/PR #30. Siguiente trabajo: **tanda 2 dev, 14–22**, con precheck completo nuevo desde P0 verificado y la **0.1.0+2ef4807 dev instalada**, sin build ni instalación nuevas. Rigen predeclaración §3.2/§5.1/§6/§7/§8, preparación B→SL1→SL, preguntas literales una a una antes de resultados, preservación de parciales/extras y parada ante posible defecto nuevo. La trayectoria SL5/SL6 queda como observación conocida destinada por el PO a otra PR, sin corrección aquí.
+
+Antes de cada tanda comprobar el perfil incorporado (vencimiento **2026-11-07T17:58:46Z**) y cobertura de todo el tramo, incluida restauración. Cerrar cada tanda con exportación, P0 restaurado en proceso nuevo **dd122831f592/pending 0** y comparación byte a byte de los tres archivos con respaldo/referencia inicial. Actualizar informe y entregar para revisión Claude/PO; **detenerse al cierre de tanda 2**. Tanda 3 y luego PROD siguen la secuencia indicada por el PO, después de la parada; la instalación PROD requiere autorización propia, respaldo nuevo y frontera §5. Sin código/tests/defaults/SL/presets guardados/spec/plan/criterios/bandas/umbrales nuevos. PR #30 sin fusionar; S3–S4/T8 no autorizados. Este registro inicial no acredita precheck ni bloque nuevo.
+
+
+### Confirmación del procedimiento de repreguntas — PO, 2026-11-01
+
+Respuesta literal del PO, posterior al commit documental `c336c51`:
+
+> Confirmo el procedimiento, con estas precisiones:
+> 1. En cada repregunta da solo el contexto de condición (número de bloque, SL, ventana y posición del cuerpo), sin resultados, contactos, timing ni trayectoria.
+> 2. Haz las cinco repreguntas antes del precheck del bloque 14, con su hora, registradas como retrospectivas (de memoria, un día después) y separadas de las respuestas originales, que no se borran.
+> 3. Si respondo «No recuerdo», queda literal y pendiente. La tanda 2 es solo SL1, así que resolverla requeriría un bloque nuevo que yo autorice aparte.
+> 4. Las preguntas 1–4 de 09–13 se mantienen como están, declaradas no literales; solo se repregunta el salto.
+
+Este literal confirma y precisa la propuesta anterior. Se recogerán las cinco respuestas una a una antes del precheck de 14; no se repiten condiciones de tanda 1 ni se autoriza un bloque adicional para resolver un recuerdo ausente. Las preguntas 1–4 y respuestas originales de 09–13 conservan su estado no literal y sus limitaciones. [Registro nuevo de tanda 2](2026-11-01-first-shot-s2-tanda2.md); todavía sin precheck ni bloque nuevo.
+
+
+### Respuestas retrospectivas del salto, antes del precheck de 14 — 2026-11-01
+
+Con el procedimiento confirmado se preguntó una condición cada vez, solo con número/SL/ventana/cuerpo nominal y sin resultados. A «¿el salto es aceptable?» el PO respondió literalmente **«si»** por separado en **R09 SL4/V100, R10 SL5/V100, R11 SL5/T3 puro, R12 SL6/T3 puro y R13 SL6/V100**. Horas Mac secundarias de formulación y recepción-registro en el [informe de tanda 2](2026-11-01-first-shot-s2-tanda2.md). Todas son retrospectivas, de memoria/un día después según el procedimiento aprobado, y anteriores al precheck de 14. Originales intactos; preguntas 1–4 de 09–13 siguen no literales, sin repreguntar. Son juicios explícitos de aceptabilidad del salto recordado, no nueva medición, aceptación global de S2 ni autorización de fusión. PR #30 permanece sin fusionar.
+
+
+### Modal de preguntas solicitado por el PO durante el cierre de 14 — 2026-11-01
+
+Literal: **«Para el resto de las preguntas dejamelas de una para ir respondiendo en un pequeño modal.»** Recepción-registro Mac **2026-11-02T00:55:27.212861+00:00 / 2026-11-01T21:55:27.212861-03:00**. Autoriza desde este punto la desviación de modalidad: agrupar las preguntas restantes en un modal con campos separados, manteniendo los literales y sin mostrar resultados previamente. Las preguntas ya respondidas no se repiten; la triada por intento solo donde §6.1 la requiere se mantiene asociada al intento. No cambia el contenido de la predeclaración ni sus criterios/umbrales, ni autoriza bloques adicionales o fusión.
+
+
+## 2026-11-04 — pausa física y preparación offline autorizadas por el PO
+
+El PO comunica que no puede completar la autenticación de Duplicación porque está en el trabajo. Orden literal: **«Deja la sesión física en pausa tal como está. No toques el iPhone, no relances la app y no prepares 16. Cuando vuelva, te aviso, y entonces verificas P0 en un proceso nuevo y preparas 16 según el protocolo.»** Sustituye la continuación física pendiente; no implica restauración observada ni cierre de tanda2.
+
+Autoriza sin acceso al iPhone:
+
+1. Preparar tanda4PROD: check-release dev/prod y buildprodRelease de la misma fuente de producto de devinstalada, exportslimpios/gitDirty=false; **no instalar**, instalaciónconautorizaciónpropiaPOpresente/respaldo nuevo§2/§8. **No modificar Logs/evidence.** Dejarworktree/ProjectSettingslimpios.
+2. DiagnósticoSL5/SL6 solo documental en rama/worktree propios desdeheadPR30: contrato de mira en spec/propuesta; **predeclarar antes de calcular** simulaciónP2offline desdecontactosregistrados10–13 conprimerbote/laterales/out;opcionesconventajas/riesgos,sinelegir. Sinproducto/tests/defaults/SL/spec/criteriosnuevos. PRClaude sinfusionar.
+3. PlanS3documental3.1–3.4a laluzdeS2/M2-4, sinimplementar/autorizarcódigo. Se agrupa con diagnóstico en PRdocumental separada de#30.
+
+Referencia deproducto9131b1c, appdevinstalada0.1.0+2ef4807;headPR30alrecibirencargo **dfffd58cc984f3902ce823644a35fa8d4b8cac8f**. Perfilconocidovence7nov17:58:46Z/14:58:46Chile;planificarrestantestandasconsusrestauracionesantesdelfin,advertirantesdeinstalarsinoalcanza. PR30sinfusionar;S3–S4/T8sinimplementación. PreparaciónPROD se registra en [informe](2026-11-04-first-shot-prod-preparation.md); no autoriza tocar el teléfono.
+
+
+### Resultado de preparación PROD offline, sin instalación — 2026-11-04
+
+Checksdev/prodfrescosOKen **a11fb32 limpio/gitDirty=false** yprodRelease/IL2CPP/ARM64/noDevelopmentfirmada,producto9131b1c idéntico a2ef4807devinstalada. DestinoXcodegenérico/sinprovisioningupdates/sinaccesoiPhone. Perfilincorporadovence **2026-11-07T17:58:46Z**. Logs/evidence3145archivos íntegros también enmtimeNs;514fuentesprotegidas/ProjectSettingsintactos,árbollimpioalterminar. [Informe completo](2026-11-04-first-shot-prod-preparation.md). **No instalación ni campañaPROD; no relanzamiento/precheck16**. Pausafísicaseconserva,autorizaciónPRODpresente/respaldo nuevo/ventanapendientes;PR30sinfusionar/S3–S4/T8sinimplementación.
+
+
+### Reanudación física de tanda2 desde16 — PO, 2026-11-04
+
+ElPO vuelve y autoriza «Volví. Retomemos la tanda 2 de PR #30 desde el bloque 16, tal como estaba predeclarado». Exige ventana antes de7nov17:58:46Z, proceso nuevo/P0/cero pendientes/precheck. Literal vigente **«Las preguntas van literales, una a la vez y antes de mostrar resultados. Avísame qué necesitas de mí en cada paso».** Desde ahora sustituye elmodal agrupado anterior; originales de14/15 se conservan.
+
+Preparación condev2ef4807/producto9131b1c, sinbuild/instalación nuevos ni PR#32. Perfilrevalidado23:46:12Z/firma-identidadcorrectas/cubre reserva técnica90min; disponibilidad personal solicitada,aún sinrespuesta alpreparar16. Exportnuevo/respaldo3archivosidénticos; procesonuevo23:46:49.304520Z/P0dd122831f592/pending0; B→SL1→SL1/3cmp antes ydespués deaplicar/precheck16aceptado. DEVabierto: soloPOcierra parafrontera16, aúnsin iniciar. [Informe y evidencia](2026-11-01-first-shot-s2-tanda2.md). No resultados de16 ni restauraciónfinal inferidos; tandas2–4 primero/PR30–32sinfusionar/S3–S4/T8sinimplementar.
+
+
+## Modal de preguntas pedido de nuevo durante cierre16 (PO,4nov2026Chile)
+
+Literal: **«Deja el modal completo para ir 1 a 1 las preguntas , así vamos mas rápido»**. Sustituye desdeelcierre16 la entrega de una sola pregunta pormensaje solicitada alretomar4nov; preguntas literales/campos separados, sinresultados previos. Desviación deenvío agrupado autorizada explícitamente, sin modificar protocolo/criterios ni borrar originales de14–16. Respuestas individuales de16 eninforme detanda2.
+
+
+## Fin de tanda2 y continuación mañana — PO,4nov2026Chile
+
+Literal del PO: **«Terminé 22. Hagamos las preguntas y seguimos mañana, ahí tendré mas tiempo, y dejame lo pendiente de las tandas»**. Se recogieron las cinco respuestas literales del22 antes de resultados. «Mañana» corresponde al5nov local; no se fijó hora/disponibilidad. No se pide23niPROD hoy. La solicitud no autoriza instalarPROD por inferencia.
+
+Tanda2 completada según cuotas14–22:57recepciones/44Swing/17contactos; todos los cierres y20gestos extra separados. Desviaciones/modal retrospectivo y respuestas ambiguas conservadas en el [informe](2026-11-01-first-shot-s2-tanda2.md), para revisión Claude/PO, sin aceptarS2 ni autorizar fusión.
+
+Primer reinicio final rechazado por bloqueo; el PO recuperó acceso: **«Listo, ya lo desbloqueé y volví a bloquear»**. Reintento aceptado y restauración final verificada en proceso nuevo **2026-11-05T00:59:07.010631Z /4nov21:59:07Chile /0.1.0+2ef4807dev /P0-calib-1/dd122831f592/pending0**. Tresarchivos byte a byte iguales porcmp tanto alrespaldo de tanda2 como al inicial de tanda1. No instalación/código/tests/defaults/SL/spec/plan/criterios/bandas/umbrales nuevos.
+
+Pendientes: revisión de tanda2; tanda3(23CAM-F/24CAM-S,20recepciones y16preguntasS1+preferencia); tanda4PROD25(3recepciones), con autorización propia de instalación/POpresente/respaldo nuevo yfrontera§5. Cada tanda exporta/restauraP0 en proceso nuevo/cmp3/entrega yparada. Revalidar ventana/perfil antes de cada una; todo debe terminar antes del7nov2026 14:58:46Chile/17:58:46Z. PR#30/#31/#32 sinfusionar; regla experimental no autorizada para sesión física ni activación por defecto. S3–S4/T8 sinimplementación. Detenerse hoy.
+
+## Tanda 2 aprobada por Claude en `0cc8060` — comunicado por el PO
+
+El PO comunica: **«Claude aprobó la tanda 2 en el head 0cc8060 de PR #30, sin correcciones.»** Se registra la aprobación de **tanda 2**, sin extenderla a aceptación global de S2 o autorización de fusión. [Informe y observaciones](2026-11-01-first-shot-s2-tanda2.md).
+
+Observaciones comunicadas, solo registro documental:
+
+1. Modal de preguntas por petición del PO. En 17–21 la pregunta por intento se recogió al cierre del bloque. En 18 la aclaración **«A las tres recepciones que conté» llegó después de mostrar resultados**; conservar esta etiqueta y las respuestas iniciales anteriores, sin reordenarlas.
+2. **«Toca para continuar» apareció 6 veces entre bloques**. Se aplicó §3.2 sin causa atribuida. Tenerlo previsto en tanda 3 y PROD con el protocolo existente.
+3. Recepción 1 de 18 y 19 sin gesto registrado: **no es un defecto demostrado**. No sustituir ni fabricar acciones.
+4. Los resbalones simulados de 20/21 generaron golpe **6/6, como Swing**, con 0 contactos aplicados; compatible con **N04/N04b, que siguen abiertos**. No es una tasa accidental espontánea.
+5. Los «sí» del PO al salto cubren hasta unos **8 diámetros en 16** (máximo ya publicado 7,988459). No se introduce un umbral ni un criterio nuevo.
+
+Instrucción vigente del PO: **«No toques el iPhone; detente hasta el aviso del PO.»** No hay acceso al dispositivo, reinicio, precheck, export, cálculo, build, instalación, test o cambio de producto en este registro. P0 sigue con la última restauración verificada, sin comprobarlo de nuevo. Mantener un único «Estado vigente», idéntico en PR #30/#31/#32. Todas siguen sin fusionar; tandas 3/4 pendientes al aviso, PROD con autorización propia de instalación/respaldo nuevo y perfil vigente. Activación/validación física de la regla y S3–S4/T8 sin nueva autorización.
+
+## Reanudación y entrega de tanda 3 dev — PO, 5 de noviembre de 2026 (Chile)
+
+El PO autorizó 23 CAM-F y 24 CAM-S en PR #30, con revisión de la ventana, P0 en proceso nuevo, precheck completo y preguntas literales en modal de campos separados antes de resultados. Al cierre se recogieron las 16 preguntas S1 y la preferencia de dirección. Se completaron 20 recepciones, 20 Swing y 14 contactos, con cuatro gestos extra separados. El PO contestó «si» sobre el salto en ambas cámaras. Respuesta literal de preferencia: «Creo que ahora me gusta como está, ya que apunto donde quiero tirar la pelota y tenso lo necesario, me gustaría probar en u npartido». El detalle y las respuestas originales quedan en el [informe para Claude/PO](2026-11-05-first-shot-s2-tanda3.md).
+
+Duplicación mostró «iPhone en uso» durante la preparación de 24. Se preservó esa preparación y se repitió §3.2 desde P0 en proceso nuevo, sin causa atribuida. La restauración de cierre quedó verificada a las **2026-11-05T13:30:55.471226Z** con **P0-calib-1, `dd122831f592` y cero pendientes**, y los tres archivos cotejados byte a byte contra el respaldo nuevo y la referencia inicial.
+
+La entrega se envió a revisión. Tanda 4 PROD e instalación esperan autorización aparte del PO, con respaldo nuevo, frontera §5 y perfil vigente durante el recorrido y su restauración. Se detiene la sesión. PR #30, #31 y #32 siguen sin fusionar.
+
+## Revisión de Claude de tanda 3 — aprobación comunicada por el PO
+
+**Aprobada sin correcciones en `a0abbe3` de PR #30.** Claude hizo un recuento independiente desde los JSONL de `after-24`. En 23 CAM-F confirmó 10 Swing (6 Valid, 3 Failed y 1 Perfect), con LaunchId 71–74 como extras. En 24 CAM-S confirmó 10 Swing (5 Valid, 3 Failed y 2 Perfect). Confirmó los hashes `dd122831f592` y `398bae34bb81` respectivamente, con cero pendientes. También coincidieron los SHA-256 de los JSONL, el texto de las preguntas predeclaradas palabra por palabra, las respuestas literales y la restauración de P0.
+
+1. **Potencia media pedida.** Quedaron en banda media 4/10 Swing en CAM-F y 2/10 en CAM-S. Los demás quedaron en banda fuerte (6/10 y 8/10), con cero saturados. El PO declaró haber seguido la intensidad. Se conservan ambas lecturas. La observación se vincula al tema abierto de saturación. `pullFullMm` sigue en 35 mm y el PO aún no ha tomado una decisión al respecto.
+2. **Salto.** En fija, p50 4,18 y máximo 8,29 diámetros. En seguimiento, p50 2,52 y máximo 3,82 diámetros. El PO juzgó aceptable el salto en ambas condiciones antes de ver las cifras. Los bloques fueron secuenciales, con siete contactos por condición, de modo que no se atribuye un efecto causal a la cámara.
+3. **Conflictos documentales.** PR #31 y #32 tienen conflictos con #30 solo en `AGENTS.md` y aprobaciones. Se resolverán al fusionarlas, después de #30. La sincronización del «Estado vigente» en las tres ramas deja la resolución pendiente.
+
+Registro documental de la revisión, con evidencia y producto intactos. La sesión física sigue detenida. Tanda 4 PROD requiere autorización aparte del PO. Las tres PR siguen abiertas.
+
+## Renovación del perfil y tanda 4 PROD — PO, 5 de noviembre de 2026 (Chile)
+
+El PO autorizó renovar con su asistencia, conservando equipo, bundle, dispositivo, entitlements, certificados y claves, con contraseñas a su cargo si hicieran falta. También autorizó instalar y ejecutar el bloque 25 estando presente, con fecha límite operativa **2026-11-07T17:58:46Z** incluida la restauración. El perfil anterior quedó apartado y conservado. El incorporado nuevo se creó **2026-11-05T13:55:07Z** y vence **2026-11-12T13:55:07Z**. Se verificaron firma, certificado, equipo, bundle, dispositivo y entitlements antes de instalar.
+
+PROD firmada **`0.1.0+8f030a8 prod`**, fuente de producto **`9131b1c`**, 514 archivos cotejados, check-release prod fresco con `gitDirty=false`, Release ARM64, no Development y sin `SQUASH_DEV`. Respaldo nuevo, export DEV y cotejos posteriores contra ambas referencias. La frontera PROD se acreditó antes de LaunchId 3 y la cuota 3–5 cerró con tres recepciones, dos Swing con contacto Perfect y una sin orden ni gesto. Dos gestos extra en LaunchId 6. El PO confirmó lanzamiento, golpe y nota, y contestó sobre el sonido «tenía el cel en silencio a si que no». Queda sin verificar el audio.
+
+P0-calib-1 **`dd122831f592`, cero pendientes** en proceso nuevo PROD a las **2026-11-05T14:27:10.0146510Z**, con los tres archivos idénticos al respaldo nuevo y a la referencia inicial. PROD quedó instalada y la sesión se detuvo. [Informe para Claude/PO](2026-11-05-first-shot-s2-tanda4-prod.md). PR #30, #31 y #32 abiertas y sin fusionar.
+
+## Revisión de Claude de tanda 4 PROD — aprobación comunicada por el PO
+
+**Claude aprobó la tanda 4 PROD en `e75703b`**, según comunicó el PO. El recuento independiente desde el JSONL de `after-block25` confirmó LaunchId 1 transitorio, LaunchId 2 como frontera y cuota LaunchId 3–5 con NoOrder sin gesto, Perfect y Perfect. LaunchId 6 conservó los dos extras, AbandonedNoPull y Swing. Hash `dd122831f592` y cero pendientes. `block25-retry` es prefijo exacto del log de cierre. Verificó la identidad del producto `8f030a8` con `9131b1c`, el reinicio en P0 y los tres archivos restaurados. La copia de check-release difiere del script versionado únicamente en rutas de salida, el bucle solo PROD y la ruta de `source`.
+
+A las **2026-11-05T13:53:40.0456190Z (10:53:40 Chile)**, después de restaurar la tanda 3 y antes del respaldo nuevo, la app DEV registró en L471 `dev-control` / `legibility-launch`, `stage=activation`, `accepted=true` y `devOpen=false`. Lo precedieron toques filtrados en la parte superior de la pantalla (L467–469). En L475 el resultado cambió el hash temporal a `141920afa6af` con cero pendientes. Los tres archivos conservaron sus bytes. El reinicio posterior en P0 repuso `dd122831f592`. Según el historial de herramientas de la sesión, Codex estaba preparando el export PROD en el Mac y sus herramientas no interactuaban con el iPhone ni con Duplicación en ese momento. Ante la pregunta de si tocó el iPhone hacia las 10:53 de Chile, el PO respondió literalmente «No recuerdo». La respuesta expresa falta de recuerdo. El log conserva los toques y su origen queda sin atribuir.
+
+El PO confirmó lanzamiento, golpe y nota del resultado. El log confirma dos contactos. **Sonido NotEvaluated** por iPhone en silencio, sin resultado Fail. Una comprobación posterior requiere autorización propia. «todo ok» es una respuesta global y el feedback individual queda «sin respuesta». La recepción 1 de PROD fue la **cuarta** sin gesto registrado en el subtotal de tandas 2–4, que incluye 16 POT-F, 18 NEG-A, 19 NEG-B y 25 PROD. Claude corrigió su error en la observación 3 de tanda 4, donde había contado «tercera» al omitir 16 POT-F. Tanda 1 queda N/Agg para este campo. Es un recuento descriptivo, sin atribución de causa.
+
+En el estado verificado al cierre, **`0.1.0+8f030a8 prod` queda instalada y DEV no está instalada**. El perfil renovado está vigente hasta **2026-11-12T13:55:07Z**. El anterior quedó apartado y conservado. Registro documental sin acceso al iPhone. La sesión queda detenida y las tres PR siguen abiertas, sin fusionar. [Informe de tanda 4](2026-11-05-first-shot-s2-tanda4-prod.md).
+
+## Resumen de cierre 2.7 entregado para revisión — 5 de noviembre de 2026 (Chile)
+
+El PO autorizó una entrega solo documental en PR #30 para su juicio global sobre S2 con M2-4, incluido el salto, antes de decidir sobre la fusión. El [resumen de cierre](2026-11-05-first-shot-s2-closing-summary.md) enlaza los cuatro informes y las revisiones registradas, consolida las cifras publicadas, separa las cifras no agregables y conserva las respuestas literales y su contexto. Tanda 1 conserva la revisión con cambios solicitados y el informe corregido. Las tandas 2–4 conservan sus aprobaciones registradas. El resumen distingue los resultados funcionales PROD, el sonido NotEvaluated y las decisiones pendientes del PO.
+
+Entrega para Claude, sin juicio global ni fusión autorizados. PR #30, #31 y #32 abiertas y sin fusionar, con un único «Estado vigente» idéntico. Solo documentación. Sesión física detenida. PROD `0.1.0+8f030a8` queda instalada según la última verificación, DEV sin instalar y perfil renovado vigente hasta `2026-11-12T13:55:07Z`. S3–S4/T8 sin autorización de implementación.
+
+## Revisión de Claude del resumen de cierre 2.7
+
+El PO comunicó que Claude aprobó el resumen en `d6f3529` con dos correcciones documentales. Verificó contra las tablas publicadas 206 recepciones, 181 Swing (115 + 44 + 20 + 2), 106 contactos, 74 Valid, 32 Perfect, 7 C-A y 92 extras, además de las citas literales y la lista neutral de decisiones.
+
+Se corrigió el error de Claude en la observación 3 de tanda 4. El subtotal de tandas 2–4 es 4 recepciones sin gesto (16 POT-F, 18 NEG-A, 19 NEG-B y 25 PROD). Tanda 1 queda N/Agg. [Resumen corregido](2026-11-05-first-shot-s2-closing-summary.md).
+
+### Aprobación de Claude del informe corregido de tanda 1
+
+**Claude aprobó el informe corregido de tanda 1 en `e160f98`**, según comunicó el PO al revisar el resumen de cierre. Verificó las correcciones de la revisión independiente de `66095c8`: extras 11/12/13 = 4/3/2, 02 = 27 post, 06 con 1 pre, 26 gestos antes de FAM, 9 tardíos de preparación, LaunchId L150/L151 del 03 inicial y referencia a §7. Confirmó que 03b y 04b sin precheck previo y 03b sin aplicar §3.2 quedaron declarados como desviaciones. Los datos primarios conservan sus valores.
+
+Se conservan las limitaciones de formulación y las respuestas originales, incluidas la pregunta 1 de 02 y las preguntas 1–2 de 09–13. Los juicios originales reformulados de 09–13 permanecen separados de las repreguntas literales del salto, recogidas retrospectivamente antes del bloque 14. El juicio global sobre S2 queda pendiente del PO. [Repreguntas de tanda 2](2026-11-01-first-shot-s2-tanda2.md#repreguntas-retrospectivas-sobre-el-salto-de-0913).
+
+Se registran ambas correcciones solo en documentación. La sesión permanece detenida y las PR #30, #31 y #32 siguen abiertas y sin fusionar.
+
+## Decisión del PO y cierre documental de S2 — 5 de noviembre de 2026 (Chile)
+
+El PO comunicó la revisión final independiente de Claude sobre el head exacto `403f8caf22fd6fcd55fb0a182d037c8538e694dc` de PR #30, sin observaciones bloqueantes. Claude verificó que Assets, ProjectSettings, Packages y scripts coinciden con el producto `9131b1c`, con suites de 522/522 EditMode y 297/297 PlayMode sobre ese producto y check-release prod limpio de `8f030a8`. Confirmó base al día con main `8dd142d`, estado MERGEABLE/CLEAN y ausencia de CI. Las cuatro tandas quedaron documentadas y aprobadas, incluida tanda 1 corregida con sus limitaciones. La evidencia acredita P0 y los tres archivos restaurados. El diff está libre de archivos prohibidos.
+
+**Decisión literal del PO**
+
+```text
+Claude, revisé el resumen consolidado de S2, los resultados de las cuatro tandas y las observaciones pendientes.
+Como Product Owner de Squash Clash, comunico las siguientes decisiones para cerrar esta etapa y preparar la continuidad de First Shot.
+1. Aceptación de S2: APROBADO CON CONDICIONES
+Apruebo S2 con el control M2-4 («apuntar al apoyar») como control vigente.
+La evidencia acumulada de 206 recepciones, 181 swings y 106 contactos, junto con mis evaluaciones en el iPhone, es suficiente para aceptar esta etapa y avanzar.
+Considero satisfactorios:
+
+* La precisión general del apuntado.
+* La integración del gesto con el golpe real.
+* El funcionamiento inicial del timing.
+* La aceptabilidad del salto visual de la mira.
+* La naturalidad del control, pendiente de comprobar bajo condiciones de rally.
+
+Esta aprobación no significa que todos los problemas estén resueltos ni autoriza automáticamente nuevas funcionalidades.
+Las observaciones pendientes deben conservarse explícitamente, con su evidencia y estado, sin reinterpretarlas como aprobadas o descartadas.
+2. Potencia media y saturación: OBSERVAR SIN MODIFICAR
+No autorizo cambios a `pullFullMm` ni a la curva de potencia en este momento.
+En S2 no se observó la saturación de S1, pero permanece la dificultad para conseguir consistentemente una potencia media sin terminar ejecutando un golpe fuerte.
+Quiero conservar este hallazgo como observación abierta.
+La calibración definitiva deberá considerar la experiencia real del jugador y, posteriormente, el comportamiento durante los intercambios.
+No ajustemos parámetros únicamente para mejorar métricas de una prueba aislada.
+3. Trayectoria SL5/SL6: CONSERVAR DIAGNÓSTICO, NO ACTIVAR REGLA
+Apruebo integrar la PR #31 como trabajo documental y diagnóstico, una vez integrada correctamente la PR #30.
+La evaluación offline de «bajar el punto» debe conservarse como evidencia técnica, sin interpretarse como autorización para adoptar esa regla.
+Respecto de la PR #32:
+
+* Mantenerla abierta y sin fusionar.
+* No activar la regla experimental de retorno.
+* No modificar los valores predeterminados.
+* No realizar nuevas pruebas físicas con esa regla sin autorización.
+* Conservar sus resultados, pruebas y observaciones para una decisión posterior.
+
+El problema de SL5/SL6 sigue abierto. Deberemos resolverlo o delimitar su impacto antes de considerar validada la experiencia de rally.
+4. Orden de revisión y fusión de PR
+Autorizo el siguiente procedimiento, sujeto a las verificaciones correspondientes.
+Primero: PR #30 — S2
+Antes de fusionar:
+
+1. Claude debe realizar una revisión final independiente del último commit vigente de la PR #30, identificando su SHA exacto.
+2. Confirmar que los cambios posteriores a las revisiones anteriores no introdujeron modificaciones de producto sin validar.
+3. Verificar que las cuatro tandas estén correctamente documentadas y que el informe consolidado refleje las aprobaciones y limitaciones reales.
+4. Confirmar que P0 y los archivos respaldados quedaron restaurados según la evidencia.
+5. Comprobar el estado de integración, las pruebas exigibles y la ausencia de conflictos bloqueantes.
+6. Actualizar la descripción de la PR para que refleje el estado final de S2.
+
+Si Claude aprueba el último commit sin observaciones bloqueantes, queda autorizada la fusión de la PR #30, respetando las verificaciones anteriores.
+Si aparecen cambios sustantivos, conflictos o problemas que requieran modificar código, detenerse y solicitar mi autorización antes de continuar.
+Segundo: PR #31 — Diagnóstico SL5/SL6
+Después de fusionar la PR #30:
+
+1. Actualizar su base respecto de `main`.
+2. Resolver únicamente los conflictos documentales necesarios, sin alterar el diagnóstico ni sus conclusiones.
+3. Verificar que la evidencia y los resultados permanezcan intactos.
+4. Solicitar revisión final de Claude sobre el resultado actualizado.
+
+Si la revisión es satisfactoria y el alcance sigue siendo exclusivamente documental, autorizo su fusión.
+Tercero: PR #32 — Regla experimental
+No fusionar, activar ni incorporar a `main`.
+Mantenerla pendiente hasta una decisión posterior del PO. No resolver sus conflictos mediante cambios de producto ni ejecutar nuevas validaciones físicas sin autorización.
+5. Observaciones que deben permanecer abiertas
+Mantener un registro trazable de:
+
+* Trayectorias anómalas SL5/SL6.
+* Potencia media que ocasionalmente se interpreta como fuerte.
+* Diferencia de saturación entre S1 y S2.
+* Resbalones simulados que generaron swings involuntarios.
+* Sonido todavía no comprobado de forma adecuada en el iPhone.
+* Timing pendiente de calibración.
+* Comportamiento del gesto durante rallies reales.
+* Evento de interfaz en «Legibilidad» cuyo origen no pudo atribuirse.
+
+Cada observación debe conservar su evidencia, severidad o impacto conocido, y el momento propuesto para volver a evaluarla.
+No convertir observaciones abiertas en defectos resueltos por el solo hecho de aceptar S2.
+6. Próxima etapa: preparar S3
+Una vez completado el cierre e integración de S2, autorizo exclusivamente la preparación documental de S3.
+Quiero una propuesta técnica acotada para:
+
+* Sonido de contacto según calidad del golpe.
+* Vibración/háptica diferenciada.
+* Feedback visual de Perfecto, Válido y Fallido.
+* Swing básico de raqueta, conforme al diseño vigente.
+* Validación de que el feedback corresponde al contacto real y no solamente a la intención de golpear.
+* Pruebas automatizadas y protocolo breve de validación en el iPhone.
+
+La propuesta debe identificar dependencias, riesgos, criterios de aceptación y qué podemos comprobar automáticamente antes de requerir una sesión física.
+Priorizar una experiencia de golpe clara y satisfactoria, sin ampliar el alcance.
+No autorizo todavía implementar S3. Primero quiero revisar el diseño y el plan.
+S4, First Rally, First Match y cualquier trabajo fuera del alcance indicado siguen sin autorización.
+7. Criterio general de ejecución
+Mantengamos nuestra metodología:
+
+* Codex implementa cuando existe autorización.
+* Claude realiza la revisión técnica independiente.
+* TDD y regresiones según el alcance de cada cambio.
+* Evidencia verificable y trazabilidad de decisiones.
+* Validación en iPhone cuando corresponda.
+* Aprobación del PO antes de ampliar el alcance.
+
+No es necesario repetir pruebas físicas ya aceptadas si no existen cambios que las invaliden. Tampoco debemos declarar validaciones que no se hayan ejecutado.
+Mi objetivo es avanzar sin buscar una perfección prematura, pero manteniendo el rigor que nos permitió completar First Ball y llegar a golpes reales en First Shot.
+Decisión final del PO:
+
+* S2: APROBADO CON CONDICIONES.
+* M2-4: CONTROL VIGENTE.
+* Potencia: SIN CAMBIOS.
+* PR #30: FUSIÓN AUTORIZADA TRAS REVISIÓN FINAL SATISFACTORIA.
+* PR #31: FUSIÓN DOCUMENTAL AUTORIZADA DESPUÉS DE #30 Y SU REVISIÓN FINAL.
+* PR #32: EN ESPERA, SIN FUSIONAR.
+* S3: SOLO PREPARACIÓN DOCUMENTAL.
+* S4 y etapas posteriores: NO AUTORIZADAS.
+
+Procede con este orden, informa cualquier bloqueo y no amplíes el alcance sin consultarme.
+```
+
+El encargo inmediato autoriza un solo commit de cierre documental en PR #30 y la sincronización del «Estado vigente» en las otras dos ramas. La revisión de `403f8ca` precede al nuevo commit de cierre, cuyo SHA debe revisar Claude antes de fusionar. La PR #31 queda para integración documental después de #30 y de su propia revisión final. La PR #32 queda en espera. La preparación documental de S3 empieza después del cierre e integración de S2. [Resumen previo al juicio del PO](2026-11-05-first-shot-s2-closing-summary.md) · [Registro de observaciones abiertas](2026-11-05-first-shot-s2-open-observations.md).

@@ -12,6 +12,24 @@ namespace SquashClash.Runtime.Shot
         private LineRenderer line;private Material material;
         private IReadOnlyList<LineBand> bands;private float tin,outLine,lineWidth,width;
         private readonly List<LineId> touched=new List<LineId>(2);
+        private LineRenderer feasible;
+        public bool FeasibleVisible=>feasible!=null&&feasible.enabled;
+        public Vector2 FeasibleAim {get;private set;}
+        public void ShowFeasible(Vector2 target,bool visible)
+        {
+            FeasibleAim=target;
+            if(!visible){if(feasible!=null)feasible.enabled=false;return;}
+            if(feasible==null)
+            {
+                var go=new GameObject("First Shot feasible aim");go.transform.SetParent(transform,false);feasible=go.AddComponent<LineRenderer>();
+                feasible.useWorldSpace=true;feasible.loop=false;feasible.positionCount=4;feasible.widthMultiplier=.035f;
+                feasible.sharedMaterial=material;feasible.startColor=feasible.endColor=Color.white;
+                feasible.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off;feasible.receiveShadows=false;
+            }
+            feasible.enabled=true;
+            feasible.SetPosition(0,new Vector3(target.x-.12f,target.y,.035f));feasible.SetPosition(1,new Vector3(target.x+.12f,target.y,.035f));
+            feasible.SetPosition(2,new Vector3(target.x,target.y-.12f,.035f));feasible.SetPosition(3,new Vector3(target.x,target.y+.12f,.035f));
+        }
         public AimState State {get;private set;}
         public Vector2 Aim {get;private set;}
         public bool IsInvalid {get;private set;}

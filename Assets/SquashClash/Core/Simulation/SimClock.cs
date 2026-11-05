@@ -31,6 +31,13 @@ namespace SquashClash.Core.Simulation
             StepHz = stepHz; Tempo = tempo; accumulated = 0; singleStep = false;
         }
         public void Restart() { accumulated = 0; singleStep = false; DroppedSinceRestart = 0; }
+        // Rebase the existing accumulator when a stopped flight is restored at the real present.
+        // This does not advance time, execute steps, or change discard counters.
+        public void RestoreFraction(double fraction)
+        {
+            if(!Finite(fraction)||fraction<0||fraction>=1)throw new ArgumentOutOfRangeException(nameof(fraction));
+            accumulated=fraction;
+        }
         public void RequestSingleStep() => singleStep = true;
         public int Advance(double realDeltaSeconds)
         {

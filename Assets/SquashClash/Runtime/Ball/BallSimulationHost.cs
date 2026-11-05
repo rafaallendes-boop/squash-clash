@@ -7,7 +7,7 @@ using SquashClash.Core.Simulation;
 using UnityEngine;
 namespace SquashClash.Runtime.Ball
 {
-    public sealed class BallSimulationHost : MonoBehaviour
+    public sealed partial class BallSimulationHost : MonoBehaviour
     {
         private IReadOnlyList<IBallSimulationFactory> backends;
         private IBallSimulation game, predictor;
@@ -69,7 +69,7 @@ namespace SquashClash.Runtime.Ball
             Prediction = TrajectoryRunner.Run(predictor, initial, horizonSteps, stop, court);
             previous = current = initial; RenderPosition = initial.Position;
             floorBounces = 0; PredictionMatchesBitwise = true; IsRunning = true;
-            ActiveConfig = cfg; Launched?.Invoke(cfg);
+            ActiveConfig = cfg; BeginShotLaunch(); Launched?.Invoke(cfg);
         }
         public void Replay() { if (ActiveConfig != null) Replay(ActiveConfig); }
         public void Replay(EffectiveConfig cfg) { if(ActiveConfig!=null)Launch(cfg,launchState,launchMaxSteps,stopCondition); }
@@ -80,11 +80,16 @@ namespace SquashClash.Runtime.Ball
             // The input callback can run before Update on the first resumed frame.
             discardDeltaFrame = Time.frameCount;
         }
-        private void Update() => Advance(discardDeltaFrame == Time.frameCount ? 0 : Time.unscaledDeltaTime);
+        private void Update() => AdvanceCore(discardDeltaFrame == Time.frameCount ? 0 : Time.unscaledDeltaTime, Time.realtimeSinceStartupAsDouble);
         public void Advance(double realDeltaSeconds)
+            => AdvanceCore(realDeltaSeconds,null);
+        private void AdvanceCore(double realDeltaSeconds,double? observedAt)
         {
-            if (game == null || !IsRunning) return;
-            int count = Clock.Advance(realDeltaSeconds);
+            if(game==null)return;
+            if(double.IsNaN(realDeltaSeconds)||double.IsInfinity(realDeltaSeconds)||realDeltaSeconds<0)throw new ArgumentOutOfRangeException(nameof(realDeltaSeconds));
+            int count=IsRunning?Clock.Advance(realDeltaSeconds):0;
+            ObserveClock(realDeltaSeconds,count,observedAt);
+            if(!IsRunning)return;
             for (int i = 0; i < count; i++)
             {
                 previous = current; game.Step(contacts); current = game.State;
@@ -93,7 +98,19 @@ namespace SquashClash.Runtime.Ball
                 foreach (var contact in contacts)
                 {
                     if (contact.Surface == SurfaceId.Floor && !contact.Persistent) floorBounces++;
+                    if(!hasShot&&contact.Surface==SurfaceId.Floor&&!contact.Persistent)ReceptionBounces++;
+                    canonicalContacts.Add(contact);
                     ContactRaised?.Invoke(contact);
+                }
+                RecordHistorical(current);
+                if(scheduledVelocity!=null&&current.Step==scheduledStep)
+                {
+                    var callback=scheduledVelocity;scheduledVelocity=null;
+                    var velocity=callback(current);
+                    var result=ApplyShotCore(LaunchId,current.Step,velocity,scheduledRelease,true);
+                    if(!result.Applied)ShotApplied?.Invoke(result);
+                    // ApplyShotCore already reconstructed the remaining full steps to this frame's present.
+                    if(result.Applied)break;
                 }
                 if ((stopCondition == StopCondition.SecondFloorBounce && floorBounces >= 2) || current.Position.y > wallHeight || current.Step >= maxSteps)
                 { IsRunning = false; break; }

@@ -44,13 +44,24 @@ namespace SquashClash.Runtime.Ball
             prediction.startColor = prediction.endColor = new Color(.03f, .35f, .4f, .6f);
             prediction.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; prediction.receiveShadows = false;
             tuning.Changed += OnChanged;
-            host.ContactRaised += RecordContact; host.Launched += OnLaunched;
+            host.ContactRaised += RecordContact; host.Launched += OnLaunched; host.PredictionReplaced += OnPredictionReplaced;
+            host.ReadVisualBallDiameter=()=>view.transform.lossyScale.x;
             Apply(); Tick(host.RenderPosition, 0);
         }
         private void OnLaunched(EffectiveConfig config)
         {
             ClearTrail(); ClearMarks();
             Apply(); Tick(host.RenderPosition, 0);
+        }
+        private void OnPredictionReplaced(Trajectory trajectory)
+        {
+            ClearTrail();ClearMarks();Apply();
+            foreach(var contact in host.CanonicalContacts)
+            {
+                if(!host.ClockMap.TrySimToReal(contact.Step,0,out var when)||host.ObservedRealTime-when>=1.5)continue;
+                int before=marks.Count;RecordContact(contact);
+                if(marks.Count>before){var mark=marks[marks.Count-1];mark.Age=(float)(host.ObservedRealTime-when);marks[marks.Count-1]=mark;PaintMark(mark.Renderer,mark.Age);}
+            }
         }
         private void OnChanged(string key) { if (key.StartsWith("aids.", System.StringComparison.Ordinal)) Apply(); }
         private void Apply()
@@ -148,7 +159,7 @@ namespace SquashClash.Runtime.Ball
         private void OnDestroy()
         {
             if (tuning != null) tuning.Changed -= OnChanged;
-            if (host != null) { host.ContactRaised -= RecordContact; host.Launched -= OnLaunched; }
+            if (host != null) { host.ContactRaised -= RecordContact; host.Launched -= OnLaunched; host.PredictionReplaced -= OnPredictionReplaced; host.ReadVisualBallDiameter=null; }
             if (shadow != null) Destroy(shadow.gameObject);
             if (trail != null) Destroy(trail.gameObject); if (prediction != null) Destroy(prediction.gameObject);
             ClearMarks();
