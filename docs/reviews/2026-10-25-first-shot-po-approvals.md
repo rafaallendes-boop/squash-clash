@@ -1246,3 +1246,11 @@ Observaciones comunicadas, solo registro documental:
 5. Los «sí» del PO al salto cubren hasta unos **8 diámetros en 16** (máximo ya publicado 7,988459). No se introduce un umbral ni un criterio nuevo.
 
 Instrucción vigente del PO: **«No toques el iPhone; detente hasta el aviso del PO.»** No hay acceso al dispositivo, reinicio, precheck, export, cálculo, build, instalación, test o cambio de producto en este registro. P0 sigue con la última restauración verificada, sin comprobarlo de nuevo. Mantener un único «Estado vigente», idéntico en PR #30/#31/#32. Todas siguen sin fusionar; tandas 3/4 pendientes al aviso, PROD con autorización propia de instalación/respaldo nuevo y perfil vigente. Activación/validación física de la regla y S3–S4/T8 sin nueva autorización.
+
+## Reanudación y entrega de tanda 3 dev — PO, 5 de noviembre de 2026 (Chile)
+
+El PO autorizó 23 CAM-F y 24 CAM-S en PR #30, con revisión de la ventana, P0 en proceso nuevo, precheck completo y preguntas literales en modal de campos separados antes de resultados. Al cierre se recogieron las 16 preguntas S1 y la preferencia de dirección. Se completaron 20 recepciones, 20 Swing y 14 contactos, con cuatro gestos extra separados. El PO contestó «si» sobre el salto en ambas cámaras. Respuesta literal de preferencia: «Creo que ahora me gusta como está, ya que apunto donde quiero tirar la pelota y tenso lo necesario, me gustaría probar en u npartido». El detalle y las respuestas originales quedan en el [informe para Claude/PO](2026-11-05-first-shot-s2-tanda3.md).
+
+Duplicación mostró «iPhone en uso» durante la preparación de 24. Se preservó esa preparación y se repitió §3.2 desde P0 en proceso nuevo, sin causa atribuida. La restauración de cierre quedó verificada a las **2026-11-05T13:30:55.471226Z** con **P0-calib-1, `dd122831f592` y cero pendientes**, y los tres archivos cotejados byte a byte contra el respaldo nuevo y la referencia inicial.
+
+La entrega queda para revisión. Tanda 4 PROD e instalación esperan autorización aparte del PO, con respaldo nuevo, frontera §5 y perfil vigente durante el recorrido y su restauración. Se detiene la sesión. PR #30, #31 y #32 siguen sin fusionar.
