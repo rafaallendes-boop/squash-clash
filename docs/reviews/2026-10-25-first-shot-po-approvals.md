@@ -1221,3 +1221,14 @@ Preparación condev2ef4807/producto9131b1c, sinbuild/instalación nuevos ni PR#3
 ## Modal de preguntas pedido de nuevo durante cierre16 (PO,4nov2026Chile)
 
 Literal: **«Deja el modal completo para ir 1 a 1 las preguntas , así vamos mas rápido»**. Sustituye desdeelcierre16 la entrega de una sola pregunta pormensaje solicitada alretomar4nov; preguntas literales/campos separados, sinresultados previos. Desviación deenvío agrupado autorizada explícitamente, sin modificar protocolo/criterios ni borrar originales de14–16. Respuestas individuales de16 eninforme detanda2.
+
+
+## Fin de tanda2 y continuación mañana — PO,4nov2026Chile
+
+Literal del PO: **«Terminé 22. Hagamos las preguntas y seguimos mañana, ahí tendré mas tiempo, y dejame lo pendiente de las tandas»**. Se recogieron las cinco respuestas literales del22 antes de resultados. «Mañana» corresponde al5nov local; no se fijó hora/disponibilidad. No se pide23niPROD hoy. La solicitud no autoriza instalarPROD por inferencia.
+
+Tanda2 completada según cuotas14–22:57recepciones/44Swing/17contactos; todos los cierres y20gestos extra separados. Desviaciones/modal retrospectivo y respuestas ambiguas conservadas en el [informe](2026-11-01-first-shot-s2-tanda2.md), para revisión Claude/PO, sin aceptarS2 ni autorizar fusión.
+
+Primer reinicio final rechazado por bloqueo; el PO recuperó acceso: **«Listo, ya lo desbloqueé y volví a bloquear»**. Reintento aceptado y restauración final verificada en proceso nuevo **2026-11-05T00:59:07.010631Z /4nov21:59:07Chile /0.1.0+2ef4807dev /P0-calib-1/dd122831f592/pending0**. Tresarchivos byte a byte iguales porcmp tanto alrespaldo de tanda2 como al inicial de tanda1. No instalación/código/tests/defaults/SL/spec/plan/criterios/bandas/umbrales nuevos.
+
+Pendientes: revisión de tanda2; tanda3(23CAM-F/24CAM-S,20recepciones y16preguntasS1+preferencia); tanda4PROD25(3recepciones), con autorización propia de instalación/POpresente/respaldo nuevo yfrontera§5. Cada tanda exporta/restauraP0 en proceso nuevo/cmp3/entrega yparada. Revalidar ventana/perfil antes de cada una; todo debe terminar antes del7nov2026 14:58:46Chile/17:58:46Z. PR#30/#31/#32 sinfusionar; regla experimental no autorizada para sesión física ni activación por defecto. S3–S4/T8 sinimplementación. Detenerse hoy.

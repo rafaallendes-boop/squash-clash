@@ -4,7 +4,7 @@
 
 Retomada por Codex desde `e160f98`, rama `firstshot/s2-m24`, PR #30 sin fusionar. Decisión de repreguntar registrada en `c336c51`; procedimiento confirmado y precisado literalmente por el PO en [aprobaciones](2026-10-25-first-shot-po-approvals.md). Rigen la [predeclaración](../validation/2026-10-31-first-shot-s2-session27-predeclaration.md) y el estado vigente de AGENTS.md. App prevista: **0.1.0+2ef4807 dev ya instalada**, sin build/instalación nuevos.
 
-**Bloques 14–21 cerrados; precheck del22 RIT aceptado, aún sin iniciar por el PO. La restauración final de tanda2 sigue pendiente.** Tanda 2 prevista: 14–22, 57 recepciones SL1. Perfil y P0 de esta tanda comprobados abajo; la restauración final de tanda 2 sigue pendiente. No se atribuyen aquí las comprobaciones de tanda 1. Al cierre se requiere exportación/restauración en proceso nuevo/dd122831f592/pending 0 y cotejo de los tres archivos; entrega para Claude/PO y parada. S3–S4/T8 no autorizados.
+**Tanda2 completa:14–22,57recepciones; preguntas recogidas antes de resultados y P0 restaurado/verificado en proceso nuevo el4nov21:59:07Chile. Lista para revisión Claude/PO, sin fusionar.** Tanda 2 prevista: 14–22, 57 recepciones SL1. Perfil, P0 y restauración final comprobados abajo. No se atribuyen aquí las comprobaciones de tanda 1. Al cierre se requiere exportación/restauración en proceso nuevo/dd122831f592/pending 0 y cotejo de los tres archivos; entrega para Claude/PO y parada. S3–S4/T8 no autorizados.
 
 ## Repreguntas retrospectivas sobre el salto de 09–13
 
@@ -541,3 +541,144 @@ Según§3.2 trasoverlay entre21/22, nuevo arranque **2026-11-05T00:48:56.1583660
 **22 RIT:10recepciones/SL1/V100/T3no suave/cámarafija/pulgarizq/control2/P2/cuerpo3,2;5,5.** Hexterno **dd122831f592**=efectivo=recepción/pending0, igualdad delhashcompleto106valores contra manifiesto independienteB. UIJugando/sinpausa/sinoverlay/DEVabierto/foco en auditoría/mira-anilloconservados. Exportpre22 **146líneas/0gestos/0cierresDEV**,3archivos byte a byte iguales despuésdeaplicar. Sinsegundoplano observado durante preparación. **SoloPOcierraDEV una vez para empezar22**, M_sMacUTC **2026-11-05T00:51:50.342873+00:00**; frontera/primerLaunchIdposterior aúnpendientes. Vueloencurso/previos sonpreparación.
 
 Solicitar solo22, diezrecepciones sucesivas completas: **«Busca C y golpea a ritmo cómodo; puedes corregir cancelando y reapoyando. No hay secuencia de intensidades que debas seguir»**. Omitidos/fallos cuentan sinrepetir. No triada durante intentos; al cierre excepciones porrecepción/tarea y tresoriginales enmodal literal separado/antes deresultados. RIT espráctica repetida, sinrival/rally implementado. Después export/restauraciónP0/procesonuevo/cmp3/informe yparada; **no23 niPROD** enesta continuación. Perfil7nov17:58:46Z yreserva22:15Chile cubrenúltimobloque/restauración.
+
+## Cierre del22 RIT y de la tanda2 — 4nov2026, Chile
+
+### Respuestas del22, anteriores a mostrar resultados
+
+Recepción-registro MacUTC **2026-11-05T00:56:33.844726+00:00**. El modal se envió después de conservar/exportar la evidencia y antes de las respuestas, según el orden del chat; no se anotó su hora exacta de formulación. No se sustituye esa hora desconocida por la hora de recepción.
+
+| Pregunta literal | Respuesta literal |
+|---|---|
+| «Por número de recepción, ¿qué excepciones recuerdas: Apoyo sin querer, No fijó / falló u otra dificultad?» | **«Todo ok»** |
+| «¿Seguiste la tarea y la intensidad que se pidió en este bloque? Si no, ¿qué intentabas hacer?» | **«si»** |
+| «¿la pelota va donde apunto?» | **«si»** |
+| «¿el timing es justo?» | **«si»** |
+| «¿el salto es aceptable?» | **«si»** |
+
+El contexto de la pregunta de tarea recordó que no se pidió una secuencia de intensidades. «Todo ok» es una declaración global: no se fabrican diez OK individuales ni se atribuye intención propia a la cancelación deR10. El «si» de tarea declara adhesión al ritmo cómodo, sin inferir una secuencia de potencias.
+
+### Resultado del22
+
+Proceso **metrics-20261105T004856144-c0dae5723b974b9183907c1c7b1a6daf.jsonl**. Frontera única línea **255**, **2026-11-05T00:52:49.7170850Z**, timeReal **235.68907600448526**, dev-toggle/result/completed/accepted=true/devOpen=false/paused=false/focused=true. Cuota **L58–L67**, diez recepciones consecutivas completas desde el primer lanzamiento posterior al cierre. Se observa también el lanzamiento siguiente L68, fuera de cuota, lo que permite comprobar el término de la última recepción. H externo=efectivo=recepción=gesto **dd122831f592**, pending0; sin otroDEV en la ventana. Todas las versiones originales se conservan; aquí se usa una final por recepción.
+
+| R | LaunchId | Línea final | Resultado / motivo | P(%) de Swing | Contacto |
+|---|---:|---:|---|---:|---|
+| 1 | 58 | 264 | Failed / outside-v | 57.355750 | No |
+| 2 | 59 | 271 | Failed / outside-v | 52.503312 | No |
+| 3 | 60 | 278 | Failed / outside-v | 55.347800 | No |
+| 4 | 61 | 285 | Valid / applied | 53.172588 | Sí |
+| 5 | 62 | 292 | Valid / applied | 52.001292 | Sí |
+| 6 | 63 | 299 | Valid / applied | 48.152849 | Sí |
+| 7 | 64 | 306 | Valid / applied | 50.495386 | Sí |
+| 8 | 65 | 313 | Failed / after-k-out | 47.316220 | No |
+| 9 | 66 | 320 | Valid / applied | 56.853753 | Sí |
+| 10 | 67 | 328 | NoOrder / reception-ended-without-order | No aplicable | No |
+
+**9Swing/10recepciones,5contactos Valid,4Failed y1NoOrder**. R10/LaunchId67 tiene un gesto **CanceledReturnToDeadZone**, línea326, antes del cierreNoOrder línea328; no es un Swing de potencia0. No hay reapoyo registrado en esa recepción. **9/9 Swing medios**, sin secuencia solicitada; no es un criterio de acierto del bloque. Saturación0/9. **4gestos extra posteriores, LaunchId68–71**, por launchSerial=LaunchId−1, separados de los diez y sin feedback individual inferido.
+
+| Métrica cruda (unidad indicada) | n | Mínimo | p50 | p95 | p99 | Máximo |
+|---|---:|---:|---:|---:|---:|---:|
+| P(%) de Swing | 9 | 47.316220 | 52.503312 | 57.355750 | 57.355750 | 57.355750 |
+| Duración Began→Ended de Swing(ms) | 9 | 1246.043042 | 1554.370042 | 1696.164000 | 1696.164000 | 1696.164000 |
+| Descenso al soltar de Swing(mm estimadosDPI) | 9 | 17.614353 | 19.326094 | 20.927397 | 20.927397 | 20.927397 |
+| Aim(Began)→C, referencia verbal sin marcador(m) | 10 | 0.384018 | 0.470340 | 0.849307 | 0.849307 | 0.849307 |
+| DeltaMs de Swing | 9 | -169.105322 | -77.153906 | 39.880678 | 39.880678 | 39.880678 |
+| PlannerCostMs,uno por lanzamiento | 10 | 0.081000 | 0.125000 | 0.181500 | 0.181500 | 0.181500 |
+| JumpMeters,aplicadas | 5 | 0.084059 | 0.135424 | 0.215833 | 0.215833 | 0.215833 |
+| JumpPixels,aplicadas | 5 | 8.855281 | 14.248878 | 22.698687 | 22.698687 | 22.698687 |
+| JumpBallDiameters,aplicadas | 5 | 2.101471 | 3.385593 | 5.395818 | 5.395818 | 5.395818 |
+| SolverCostMs,aplicadas | 5 | 0.026800 | 0.036400 | 0.045500 | 0.045500 | 0.045500 |
+| ReconstructionCostMs,aplicadas | 5 | 0.003100 | 0.005700 | 0.011800 | 0.011800 | 0.011800 |
+| PredictionCostMs,aplicadas | 5 | 0.039300 | 0.042100 | 0.057400 | 0.057400 | 0.057400 |
+| ReconciliationCostMs,aplicadas | 5 | 0.025200 | 0.029400 | 3.263400 | 3.263400 | 3.263400 |
+
+Muestras **465**, O2 **0**. CancelaciónR10: duración **1229.373958ms**, separada de las nueve duraciones de Swing. Percentiles por rango más próximo ceil(p·n), sin interpolación. Costes de contacto solo donde se ejecutaron; frame completo y asignaciones por parte NotEvaluated. No se suman percentiles ni se usan ceros serializados como medidas no ejecutadas.
+
+### Datos de contacto y rollback de los bloques nuevos con contactos
+
+Valores originales de la versión final; punto pedido(Aim), TargetUsed y contacto no se confunden con la intención real del PO. Se mantienen las asistencias existentes.
+
+| Bloque/R | Aim(x,y)m | TargetUsed(x,y)m | Contacto(x,y,z)m | SpeedRaised/TargetLowered | Edad de orden(ms) | Error cuantización firmado(ms) | Pasos resimulados / efectos obsoletos |
+|---|---|---|---|---|---:|---:|---|
+| 16/3 | (3.740247,2.263752) | (3.740247,2.263752) | (2.600000,0.364853,6.383011) | False/False | 18.667714 | 4.098439 | 1 / 0 |
+| 16/6 | (3.858319,2.978762) | (3.858319,2.978762) | (2.600000,0.313514,6.202841) | False/False | 26.313214 | -5.430958 | 2 / 0 |
+| 16/10 | (3.605766,2.467506) | (3.605766,2.467506) | (2.600000,0.353040,6.337968) | False/False | 26.496673 | -0.400790 | 2 / 0 |
+| 22/4 | (3.616466,2.568477) | (3.616466,2.568477) | (2.600000,0.353040,6.337968) | False/False | 27.651922 | -0.326630 | 2 / 0 |
+| 22/5 | (3.754745,2.843102) | (3.754745,2.843102) | (2.600000,0.353040,6.337968) | False/False | 26.271921 | -0.034243 | 2 / 0 |
+| 22/6 | (3.152421,2.581059) | (3.152421,2.581059) | (2.600000,0.327371,6.247883) | False/False | 18.656672 | -1.105180 | 1 / 0 |
+| 22/7 | (3.211863,2.668858) | (3.211863,2.668858) | (2.600000,0.340546,6.292926) | False/False | 18.505172 | -4.567803 | 1 / 0 |
+| 22/9 | (3.389335,2.756205) | (3.389335,2.756205) | (2.600000,0.327371,6.247883) | False/False | 18.546838 | -0.864291 | 1 / 0 |
+
+## Resumen auditado de tanda2:14–22
+
+Datos nuevos conservados por segmento:14/15 del1nov local;16–22 del4nov local. No se declara continuidad entre días/procesos. Las cinco repreguntas retrospectivas09–13 siguen separadas de las originales y no son medición nueva.
+
+Se cotejaron las filas derivadas con los JSONL primarios de cada export: frontera, planes, finales y gestos idénticos. Se comprobó el lanzamiento posterior a la última recepción en los nueve bloques, además de las cuotas consecutivas. La identidad completa es proceso+LaunchId+attemptId/versión; los LaunchId se reinician entre procesos. Todos los H medidos coinciden con el literal independiente dd122831f592 y pending0. Los campos de comparabilidad/validez del protocolo S1 no armado no sustituyen esta comprobación externaS2.
+
+| Bloque | Cuota | Swing | Contactos | Cancelaciones C-A | AbandonedNoPull | Recepciones sin gesto registrado | Extras fuera de cuota |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 14 | 10 | 10 | 5 | 0 | 0 | 0 | 4 |
+| 15 | 10 | 10 | 4 | 0 | 0 | 0 | 3 |
+| 16 | 10 | 9 | 3 | 0 | 0 | 1 | 2 |
+| 17 | 5 | 0 | 0 | 5 | 0 | 0 | 3 |
+| 18 | 3 | 0 | 0 | 0 | 2 | 1 | 1 |
+| 19 | 3 | 0 | 0 | 0 | 2 | 1 | 1 |
+| 20 | 3 | 3 | 0 | 0 | 0 | 0 | 1 |
+| 21 | 3 | 3 | 0 | 0 | 0 | 0 | 1 |
+| 22 | 10 | 9 | 5 | 1 | 0 | 0 | 4 |
+| **Total** | **57** | **44** | **17** | **6** | **4** | **3** | **20** |
+
+Resultados finales: **27Failed,13NoOrder,12Valid y5Perfect**. Los13NoOrder incluyen las6recepciones con cancelación,4con abandono sin tirón y3sin gesto registrado; no se convierten en13fallos de Swing. Sin bloque repetido para completar éxitos. Los20extras no amplían denominadores ni reciben intención por defecto.
+
+Potencia solicitada:14 tiene8/10Swing suaves(8/10recepciones);15 tiene5/10Swing medios;16 tiene9/9Swing fuertes(9/10recepciones,una omisión), con3/3contactos fuertes. Saturación0/29Swing en las tres series POT y0/44Swing en la tanda; no elimina la advertencia histórica50% de S1 ni demuestra el riesgo resuelto. Negativos20/21 son simulaciones solicitadas, no una tasa accidental espontánea.
+
+### Límites y desviaciones conservados
+
+- Modal agrupado por petición literal del PO durante14 y de nuevo durante16; cada pregunta/campo y su respuesta son literales y los resultados se reservaron hasta recogerlos. La recogida de la triada17–21 fue retrospectiva al cierre, después de los terminales, sin interrumpir el contacto ni ampliar la recepción; se declara esa modalidad temporal y no se presenta como feedback inmediato durante cada oportunidad. El pedido de modal no se transforma en una autorización distinta de protocolo por inferencia.
+- CAN17:R5 conserva «creo que no miré y miré las reglas», sin categoría de triada inferida. NEG-A18:el PO aclaró que sus tresOK eran por las recepciones que contó;R1no tiene gesto registrado y el extraL122no recibeOK. NEG-B19:tarea original«is» conservada junto a aclaración«Sí, seguí la tarea».
+- No se identificaron excepciones numeradas en las respuestas globales POT/RIT; quedan sin respuesta individual. No se fabricanOK ni voluntad desde cierres técnicos.
+- Overlay/bloqueo/conexión entre bloques: evidencia conservada y§3.2/proceso nuevo/P0/cotejo/precheck repetidos. Se observaron antes de la preparación siguiente; causa y hora exacta de entrada no demostradas. Las cuotas/fronteras nativas se conservaron, sin borrar ni sustituir recepciones.
+- N04/N04b siguen abiertos.21tuvo componente lateral mayor que descenso, pero esas trazas no se toman como acreditación del caso límite apenas fuera de zona/P≈0. No se fuerzan recorridos ni se añade filtro.
+- Mira/anillo y mano izquierda dominante conservados; C es referencia verbal sin marcador. No hay nueva calibración física de DPI/latencia, H3/H17/rally o criterio de precisión; frame completo/asignaciones por parte no evaluados. Batería/ruta de audio no verificadas de nuevo; los registros térmicos disponibles son contexto, no aceptación de rendimiento.
+
+### Huellas de los exports primarios usados en la auditoría
+
+Cada SHA corresponde al snapshotafter del bloque.17y18 comparten archivo de proceso pero distintos snapshots, con apéndices posteriores; no se espera igualdad de SHA entre esos dos exports. Originales locales ignorados conservados.
+
+| Bloque / snapshot | Archivo de proceso | SHA-256 JSONL |
+|---|---|---|
+| 14/after-14 | metrics-20261102T004628684-562de38804164f388679bf29299ad693.jsonl | 468a863b73141d91b9ad81377db5540d73292e1516fd1fa7a17ed251bcb2936b |
+| 15/after-15 | metrics-20261102T005642785-ba72009dec6a42d38fc89dd8e54b7dfa.jsonl | 4815a00c2a5602220be54831954f90f097ab8fd6b18cbb8a0998ec94b4f2d042 |
+| 16/after-16 | metrics-20261104T234649289-c0c5bdfb186143cb890bca155c521f0d.jsonl | 40742133d8f6fa6ae114f8bded5cfc7eda54e48a5aa94e36ac65c9f6529c9d66 |
+| 17/after-17 | metrics-20261105T000516652-e9cdebfabcb1499385f9e52e5e4c48c6.jsonl | 71a6b7e986ec99453427b928a3f821ad4fe577a12263eca252091c5bc6091590 |
+| 18/after-18 | metrics-20261105T000516652-e9cdebfabcb1499385f9e52e5e4c48c6.jsonl | c8354f7eb3f9aef4fd861dc748425d2a45374e6c8c31d195552d95b8f9ce6404 |
+| 19/after-19 | metrics-20261105T002037061-db8f69d7529b450ca51573540c8e9df4.jsonl | e16c489fe39605c0624224537eae9d0a01c7ffe93ad5947a57f496a82c73fe7c |
+| 20/after-20 | metrics-20261105T003018504-ba510538120642f9b7d9523514c86ceb.jsonl | d421f98dfae07ce01eb8b900552b42630e356185bfb0b3bd020874b8cf1635d5 |
+| 21/after-21 | metrics-20261105T004023444-761d4c81dedf49128460868d21988942.jsonl | dfc9aee0b5f5c71397b723d01c603f57deef0edcef927ad5b87bab3b1cc9ce9c |
+| 22/after-22 | metrics-20261105T004856144-c0dae5723b974b9183907c1c7b1a6daf.jsonl | 00037f8f167ade20ec6ee2f01a3c4731a25d64198b4964609f32af9c8d3eb6e7 |
+
+## Restauración final verificada y parada de hoy
+
+El PO pidió literalmente: **«Terminé 22. Hagamos las preguntas y seguimos mañana, ahí tendré mas tiempo, y dejame lo pendiente de las tandas»**. Se recogieron las cinco respuestas antes de resultados y no se pidió23niPROD. Exportbefore-final-restore conservado antes de nuevas aperturas/retención.
+
+Primer reinicio rechazado por iPhone bloqueado: no cuenta como restauración. El export intermedio llamado final-restored-startup es solo diagnóstico del intento fallido, no prueba de proceso nuevo. Se pidió desbloquear/rebloquear; el PO respondió literalmente **«Listo, ya lo desbloqueé y volví a bloquear»**. Duplicación recuperada, reintento CLI aceptado, sin instalación ni cambio de configuración.
+
+**Arranque final: 2026-11-05T00:59:07.0106310Z (4nov21:59:07Chile), proceso metrics-20261105T005906994-70bf333cdf4b444bb0f72613ef5536b0.jsonl,0.1.0+2ef4807dev/P0-calib-1/dd122831f592/pending0.** Hash completo de P0 de106claves/control2,41claves heredadas/proyección8de3f2ecb217/SimulationKey166a96e319c7 conservados por correspondencia con el manifiesto aprobado. UI normal, DEV cerrado, sin overlay y botónPausa disponible. Export final-restored-retry-startup después del arranque: todos los hashes/pending correctos. Verificación-registroMacUTC **2026-11-05T01:00:23.571292+00:00**, antes de22:15Chile y del vencimiento incorporado7nov17:58:46Z.
+
+| Archivo después del arranque | Bytes | SHA-256 | cmp respaldo tanda2 | cmp referencia inicial tanda1 |
+|---|---:|---|---|---|
+| P0-calib-1.json | 3614 | 2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd | Idéntico | Idéntico |
+| Po-1.json | 2843 | 9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767 | Idéntico | Idéntico |
+| last-active.txt | 10 | 5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087 | Idéntico | Idéntico |
+
+Comparación binaria real con cmp -s, además de SHA-256. No se guardó ni promovió ningún preset. P0 conserva repeat3, suspendido por práctica; restaurar no significa volver a defaults. Producto9131b1c/dev2ef4807 intactos: diff de Assets/ProjectSettings/Packages/scripts vacío. No nuevas suites, exportsUnity, builds, instalaciones, código/defaults/SL/spec/plan/criterios/bandas/umbrales. Se conserva la evidencia local; solo se versiona documentación.
+
+## Pendiente para retomar mañana5nov
+
+1. **Revisión Claude/PO de esta tanda2**. PR#30 permanece abierta y sin fusionar; completar cuotas no aprueba S2 ni autoriza merge. Se detiene hoy tras esta entrega.
+2. **Tanda3 dev:**23CAM-F(10recepciones) y24CAM-S(10), fija→seguimiento, cada una con precheck y frontera propios. Al cierre: preguntas literales de cada condición, las16preguntas originalesS1 más la preferencia de dirección, export/restauraciónP0 en proceso nuevo/cmp3 y entrega para revisión/parada. Usar la dev instalada2ef4807, sin la regla dePR#32. Antes de comenzar: verificar otra vez ventana/perfil y nuevo precheck completo desdeP0.
+3. **Tanda4 PROD:**25(3recepciones) independiente. La prod preparada0.1.0+a11fb32 usa el mismo producto9131b1c; **todavía no instalada**. Requiere autorización propia de instalación conPOpresente, export/restauración dev verificada, respaldo nuevo/cotejo§2/§8 y perfil incorporado vigente. Precheck y fronteraPROD específicos§5, cuatro preguntas funcionales literales, export/restauración en proceso nuevo/cmp3 y entrega/parada. No instalar por inferencia de«seguimos mañana».
+4. **Límite de tiempo:** todas las mediciones, instalación necesaria y restauraciones deben terminar antes de **7nov2026 14:58:46Chile /17:58:46Z**. Como reserva de agenda, no criterio:60min para tanda3 y45min paraPROD, más revisión y acceso; disponibilidad de mañana sin fijar. Avisar antes de instalar si no alcanza.
+
+PR#30/#31/#32 siguen sin fusionar. La regla dePR#32 continúa desactivada por defecto y sin autorización de validación física. S3–S4/T8 siguen sin implementación autorizada. No mensajes externos aClaude por herramientas.
