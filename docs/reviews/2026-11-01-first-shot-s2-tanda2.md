@@ -194,3 +194,77 @@ Codex abreDEV (no frontera debloque), cargaP0 sin guardar en líneas178/180 (res
 Exportpre16 **23:50:49.602400Z→23:50:55.302701Z**:265líneas delproceso, todosHdd/pending0, **0gestosM24 y0cierresDEV**; último plan línea265/LaunchId60 hasPlan/front/bounce=true. Tres archivos byte a byte iguales después deaplicar. Todos estos lanzamientos son preparación, fuera de cuota. No se armaS1B0–B5 ni se usa un contador inexistente.
 
 Solo elPO cerraráDEV una vez para empezar16; frontera nativa yprimerLaunchId posterior aún pendientes. Eloperador no accede al teléfono durante los gestos. Tras las10recepciones completas y avisoPO, exportar y preguntar literal/una auna antes de mostrar resultados; no solicitar17 hasta cerrar16. Restauración final detanda2 pendiente.
+
+
+**Disponibilidad confirmada posteriormente porPO:** a la pregunta de reserva hasta22:15Chile, respuesta literal **«Hasta las 22:15 o más»**; recepción-registroMacUTC **2026-11-04T23:57:39.477815+00:00**. Se dispone almenos hasta2026-11-04T22:15:00−03:00, incluida restauración. No se infiere disponibilidad ilimitada ni cierre de16. Bloque16 solicitado solo alPO; no acceder al dispositivo durante sus gestos.
+
+
+### Cierre de16: evidencia reservada y nueva modalidad pedida porPO
+
+POavisa literalmente **«Termine 16»**; export after-16 conservado y cotejo3archivos idénticos. No se prepara17 ni se muestran resultados antes del cierre de preguntas. Primera pregunta literal enviada: «Por número de recepción, ¿qué excepciones recuerdas: Apoyo sin querer, No fijó / falló u otra dificultad?». Respuesta completa literal **«Fueron todas bien. Solo que el timing me costó un poco mas. Deja el modal completo para ir 1 a 1 las preguntas , así vamos mas rápido»**; recepción-registroMacUTC **2026-11-05T00:00:28.437746+00:00**. La primera parte se conserva como respuesta global, sin convertirla enOKindividuales ni confirmación de tarea/intensidad.
+
+La última frase es la nueva instrucción de modalidad: **modal completo con campos literales separados**, para responderlos uno auno; sustituye desdeahora la entrega de una sola pregunta por mensaje solicitada alretomar. Desviación deenvío agrupado autorizada explícitamente porPO; ninguna pregunta ocriterio cambia. Se ofrecen las cuatro pendientes (tarea y tres originales como feedback complementarioPOT-F, mismo alcance de14/15), sin repetir la deexcepciones ni mostrar resultados. Respuestas pendientes.
+
+
+### Respuestas restantes de16 recibidas antes de mostrar resultados
+
+Recepción-registro MacUTC **2026-11-05T00:04:59.036946+00:00**; hora exacta de envío no disponible. Modal agrupado por petición literal delPO, cada pregunta/campo por separado.
+
+| Pregunta literal | Respuesta literal |
+|---|---|
+| «¿Seguiste la tarea y la intensidad que se pidió en este bloque? Si no, ¿qué intentabas hacer?» | **«si, segui la intensidad correctamente»** |
+| «¿la pelota va donde apunto?» | **«si, cuando logré que salga la pelota si»** |
+| «¿el timing es justo?» | **«si»** |
+| «¿el salto es aceptable?» | **«si»** |
+
+### Resultado de16 POT-F
+
+Proceso **metrics-20261104T23464928…**, frontera única línea **652**, **2026-11-04T23:57:33.6333430Z**, timeReal **646.4526684223357**; dev-toggle/result/completed/accepted=true/devOpen=false/paused=false/focused=true. Cuota **L156–L165**, diez sucesivas completas; primera planificación posterior al cierre, sin escoger por éxito. Último cierre final línea **733 / 2026-11-04T23:58:17.2553060Z**. Hash externo/recepción/gesto **dd122831f592**, pending0. Todas las comprobaciones de integridad guardadas pasan; todas las versiones primarias se conservan.
+
+| R | LaunchId | Línea final | Resultado / motivo | P (%) | Contacto aplicado |
+|---|---:|---:|---|---:|---|
+| 1 | 156 | 657 | NoOrder / reception-ended-without-order | 0.000000 | No |
+| 2 | 157 | 664 | Failed / after-k-out | 67.395258 | No |
+| 3 | 158 | 671 | Valid / applied | 69.570512 | Sí |
+| 4 | 159 | 691 | Failed / outside-v | 80.111980 | No |
+| 5 | 160 | 698 | Failed / outside-v | 79.944670 | No |
+| 6 | 161 | 705 | Valid / applied | 74.757582 | Sí |
+| 7 | 162 | 712 | Failed / after-k-out | 79.610032 | No |
+| 8 | 163 | 719 | Failed / outside-v | 74.590236 | No |
+| 9 | 164 | 726 | Failed / after-k-out | 87.474304 | No |
+| 10 | 165 | 733 | Valid / applied | 80.948645 | Sí |
+
+**9 Swing/10 recepciones, 3 contactos**; resultados {'NoOrder': 1, 'Failed': 6, 'Valid': 3}. Primera recepción NoOrder conservada, sin sustitución. **9/9 Swing fuertes**,0 suaves/0 medios según bandas vigentes;3/3 contactos fuertes. Saturación0/9. Respuesta global no se convierte enOK individuales; no hay excepciones numeradas propias. Muestras 366, O2 0.
+
+| Métrica cruda (unidad en nombre) | n | Mínimo | p50 | p95 | p99 | Máximo |
+|---|---:|---:|---:|---:|---:|---:|
+| P (%) | 9 | 67.395258 | 79.610032 | 87.474304 | 87.474304 | 87.474304 |
+| Duración Began→Ended (ms) | 9 | 1129.413917 | 1529.424041 | 1629.310000 | 1629.310000 | 1629.310000 |
+| Distancia descendente estimada DPI (mm) | 9 | 24.240435 | 28.271311 | 30.866520 | 30.866520 | 30.866520 |
+| Aim(Began)→C, referencia verbal sin marcador (m) | 9 | 0.273857 | 0.538937 | 1.019733 | 1.019733 | 1.019733 |
+| DeltaMs | 9 | -160.162239 | -52.691240 | 30.665386 | 30.665386 | 30.665386 |
+| JumpMeters, aplicadas | 3 | 0.023938 | 0.245992 | 0.319538 | 0.319538 | 0.319538 |
+| JumpPixels, aplicadas | 3 | 2.491828 | 25.551849 | 33.794376 | 33.794376 | 33.794376 |
+| JumpBallDiameters, aplicadas | 3 | 0.598440 | 6.149812 | 7.988459 | 7.988459 | 7.988459 |
+| SolverCostMs, aplicadas | 3 | 0.030200 | 0.039600 | 0.046500 | 0.046500 | 0.046500 |
+| ReconstructionCostMs, aplicadas | 3 | 0.003700 | 0.006300 | 0.010100 | 0.010100 | 0.010100 |
+| PredictionCostMs, aplicadas | 3 | 0.033900 | 0.041200 | 0.058200 | 0.058200 | 0.058200 |
+| ReconciliationCostMs, aplicadas | 3 | 0.033600 | 0.051500 | 2.372300 | 2.372300 | 2.372300 |
+| PlannerCostMs, uno por lanzamiento | 10 | 0.058400 | 0.124200 | 0.191200 | 0.191200 | 0.191200 |
+
+Rango más próximo ceil(p·n), sin interpolación; costes por parte solo donde se ejecutó, sin sumar percentiles/ceros no medidos. Frame completo/asignaciones por parte NotEvaluated. Sin nuevos criterios, calibración o aceptaciónS2 inferidos.
+
+Extras fuera de cuota hasta exportafter16: **2** gestos, LaunchId **[166, 167]**, por launchSerial=LaunchId−1; no suman recepciones medidas. Tres archivos byte a byte iguales alrespaldo en ese export.
+
+### Incidencia entre16 y17
+
+Al observar Duplicación después de recoger respuestas y extraer16, aparece **«Toca para continuar»/Pausa**. Se conserva captura y evidencia previa; no se atribuye causa concreta. Aplicar§3.2: exportantes deotroarranque, proceso nuevo/P0dd122831f592/pending0/cotejo3/precheck17 completo. Ningún17 solicitado ni preparación realizada todavía.
+
+
+### Proceso nuevo y precheck17 CAN aceptado
+
+Exportbetween16-17 preservado antes de reiniciar;3archivos iguales. Proceso nuevo **2026-11-05T00:05:16.6685720Z / 0.1.0+2ef4807dev / P0-calib-1 / dd122831f592 / pending0**. Exportstartup-before17 coteja de nuevo los3archivos. UI normal/sinoverlay/Pausa disponible, luegoDEVabierto/Jugando/P2. CargaB desdeP0 sin guardar: resultado línea56/00:05:55.563299Z. Cotejobefore17-load-before-apply completo antes deaplicar,3iguales. Aplicar/relanzar anclaSL1 resultado línea79/00:06:13.889473Z, acceptedtrue/pausedfalse/focusedtrue/devOpentrue. Receta solicitadaSL1: **B→SL1→SL1**; sin vía directa desde otra receta. Parámetros resultado87/00:06:20.194054Z.
+
+Precheck **17 CAN:5recepciones/SL1/V100/T3no suave/cámarafija/pulgarizq/control2/P2**, cuerpo(3,2;5,5), mismos106valores deB porigualdad literal delhashcompleto contra manifiesto independiente **dd122831f592**. Todos los registros/exportpre17 mismohash/pending0;100líneas/0gestos/0cierresDEV. UIJugando/sinpausa/DEVabierto; foco verdadero en auditoría. Tresarchivos byte a byte iguales despuésdeaplicar. Últimaobservación sinbloqueo/segundoplano enesta preparación. **SoloPOcierraDEV para iniciar17; frontera aúnpendiente**, M_sMacUTC **2026-11-05T00:07:14.883733+00:00**. Vuelo ya iniciado alcerrar ytodoslanzamientos previos quedanpreparación. NoS1B0–B5.
+
+Se solicita solo17: cinco recepciones consecutivas completas, sin ampliar/repetir por fallos/omisiones; cancelar porretorno y reapoyar para medio siqueda tiempo. Triada por intento trasterminal, sinintervenir contacto ni ampliarrecepción; conservar ordinal deprimerapoyo/reapoyo o«sinrespuesta» sininferirOK. Modal de cierre porinstrucciónPO, antes deresultados. No18hasta recuperar/cerrar17. Restauraciónfinaltanda2pendiente; perfil7nov17:58:46Z yventanapersonal hasta22:15Chile aún cubrenresto/restauración.
