@@ -245,3 +245,7 @@ Cierre DEV en línea 31, **16:10:14.6949020Z**, `timeReal=24.066158791099777`, f
 | 3 | 10 | Swing | Failed / outside-v | No | Failed / Air, v2 |
 
 Planes y gestos con `6ecfdfa78cbb`, cero pendientes, una presentación concordante por intento y cero discrepancias. No hay otros gestos en el export. Los tres archivos cotejaron los dos respaldos. SHA-256 del proceso `dd7966a08a48e8863ebae463cf2b6bfcc3e5e8633743df6027d9fc62efaa8264`. Campos 1–7: «Nada que señalar» en cada uno. En esta cuota se observó silencio sin contacto según lo informado. Silencio durante un impacto aplicado queda **NotEvaluated** en la cuota válida. Las observaciones de los intentos tras bloqueo se conservan aparte.
+
+### S3-D · Preparación detenida antes de la frontera
+
+El PO declaró «Timbre activo, volumen audible y háptica del sistema desactivada». Proceso nuevo a las **16:11:31.3169610Z**, build `0.1.0+097eab9 dev`, P0-calib-1 `6ecfdfa78cbb`, cero pendientes, cero gestos al precheck y tres archivos cotejados. Se envió la consigna. Los exports de monitoreo muestran un gesto Rejected en preparación, sin cierre DEV. La última línea del segundo monitoreo es de las **16:13:27.7849300Z**. La consulta posterior confirmó `passcodeRequired=true`. Se retiró la señal y se pidió al PO informar si llegó a jugar y esperar un nuevo precheck con el teléfono desbloqueado.
