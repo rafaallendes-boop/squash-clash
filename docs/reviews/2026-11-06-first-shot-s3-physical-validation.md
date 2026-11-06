@@ -207,3 +207,9 @@ El PO informó «Termine S3 - C . Los primeros 3 golpes fueron al aire y los 4 s
 LaunchId 12–15 son extras, con tres Valid aplicados (12, 13 y 15) y un Failed / Air (14). Los siete intentos cotejan `6ecfdfa78cbb`, cero pendientes, una presentación concordante por intento y cero discrepancias. Los tres archivos cotejan ambos respaldos. SHA-256 del proceso en el export `544f7984ecb17f8825abff5f3defda6ce52b97f11de044cfb01a3c5bf77aa9eb`.
 
 Se solicitó el primer diálogo de respuestas del intento antes de mostrar el desglose. Al guardar este punto de control, las respuestas, la restauración de P0 tras el intento y la decisión de repetir S3-C seguían pendientes.
+
+**Respuestas literales del intento S3-C.** Campos 1–4 (2026-11-06T15:33:34Z): «todas ok», «no hubo ya que estaba en silencio», «vibraba en los golpes» y «se movia al intentar golpear».
+
+Campos 5–7 (2026-11-06T15:35:08Z): «Nada que señalar» en los tres.
+
+El PO confirmó «Timbre activo, iPhone desbloqueado y app en primer plano» y autorizó «Sí, autorizo repetir S3-C ahora». Antes del relanzamiento se exportó y se cotejaron los tres archivos. P0 restaurado en proceso nuevo **15:35:39.8880820Z**, build `0.1.0+097eab9 dev`, hash `6ecfdfa78cbb`, cero pendientes y tres archivos cotejados de nuevo contra el respaldo y la referencia inicial. El intento previo y sus respuestas quedan separados.
