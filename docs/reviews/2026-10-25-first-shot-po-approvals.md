@@ -1846,3 +1846,9 @@ Worktree `firstshot-s3-feedback` retirado sin `--force` después de mover sus oc
 > Procedamos con la corrección mínima y su revisión independiente.
 
 **Registro.** S3-A queda como evidencia parcial, no válida. Claude entregó al PO el encargo para Codex. La verificación de P0 en proceso nuevo se completó a las 2026-11-06T12:27:11Z: `6ecfdfa78cbb`, cero pendientes y tres archivos idénticos al respaldo. Los respaldos se conservan en `Logs/evidence/s3-physical-20261106/`.
+
+## Cierre de la corrección del audio (PR #35) y continuación de S3 — 6 de noviembre de 2026 (Chile)
+
+Claude aprobó la revisión independiente del head `636aa9e813fd89a2a8b4a240577cebcde7e985c0`. Reprodujo el RED en `d4f2628` y verificó 546/546 EditMode, 354/354 PlayMode y un único listener habilitado en la cámara principal de los exports DEV y PROD. Evidencia local en `Logs/archive-review-pr35-20261106/`. La PR #35 se fusionó en `27058e82674f633879a7a4f7cabc4f1306a6db6b` con segundo padre igual al head revisado y árbol idéntico `30982184171c34b0bf015b1bf9343b13ba2a32d3`. [PR #35](https://github.com/rafaallendes-boop/squash-clash/pull/35).
+
+El PO encarga a Codex la continuación autorizada en los puntos 4 y 5 de la decisión anterior. Primero se prueba el sonido con un impacto aplicado, fuera de cuota. Solo después de la confirmación explícita del PO se inicia S3-A–E desde cero. El PO autorizó la observación de pausa fuera de cuota después de S3-E: «Sí, incluirla». [Adenda predeclarada](../validation/2026-11-06-first-shot-s3-physical-predeclaration.md#adenda-del-6-de-noviembre-de-2026--prueba-breve-de-sonido-y-repetición-con-audio-corregido).
