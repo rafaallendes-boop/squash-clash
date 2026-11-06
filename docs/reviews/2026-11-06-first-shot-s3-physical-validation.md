@@ -187,3 +187,9 @@ Tres presentaciones, todas con Failed final y sin contactos aplicados. Cero disc
 **Respuestas literales.** Campos 1–4 (2026-11-06T15:09:52Z): «todo ok», «en las que pego al aire suena como que le pegaste al aire», «no se sintió» y «se mueve la raqueta al intentar golpear».
 
 Campos 5–7 (2026-11-06T15:10:44Z): «Nada que señalar», «Nada que señalar» y «cuando se intenta golpear la pelota, se mueve la raqueta».
+
+### S3-C · Preparación detenida antes de la frontera
+
+El PO confirmó «Modo silencio activado, app en primer plano». Se exportó antes de relanzar. Proceso nuevo a las **15:11:13.1167620Z**, `0.1.0+097eab9 dev`, P0-calib-1 `6ecfdfa78cbb`, cero pendientes, cero gestos y los tres archivos cotejados. Se envió la consigna de S3-C. En el export de monitoreo el registro termina en una línea de frames a las **15:11:37.2186140Z**, sin cierre DEV ni gestos. Una consulta posterior confirmó `passcodeRequired=true`. Se retiró la señal, se conservó la exportación y se pidió al PO informar si llegó a jugar, mantener el iPhone desbloqueado y esperar un nuevo precheck. El monitoreo disponible no acredita el inicio de S3-C.
+
+C, D, E y la observación de pausa quedan pendientes en este punto de control. El último arranque cotejado es P0 en la preparación de C. La restauración de cierre de la sesión y la reposición del modo silencio quedan pendientes de coordinación con el PO. No se abrió todavía la PR de validación.
