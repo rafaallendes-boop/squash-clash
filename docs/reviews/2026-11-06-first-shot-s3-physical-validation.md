@@ -115,3 +115,33 @@ Cada intento de la ventana tiene una presentación concordante y no hay discrepa
 **Respuestas literales, antes de mostrar resultados.** A «¿Oíste un sonido de impacto al golpear?», el PO respondió «Sí» (registro 14:47:25Z). Al precisar cuándo, respondió «En cada swing que intentaba hacer, sonaba el impacto» (14:47:54Z). La aclaración neutral sobre si sonaban iguales obtuvo «Distinguí sonidos diferentes» (14:48:05Z), seguida de «Un sonido al golpear exitosamente y otro cuando se me iba al aire» (registro 14:49:04Z). Queda acreditado audio audible y distinción global de los dos sonidos en la build corregida, con contactos aplicados dentro de la ventana. La percepción por recepción no fue identificada. La aclaración separa el sonido del intento al aire del que el PO atribuye al golpe exitoso.
 
 **Decisión del PO.** «Sí, autorizo iniciar S3-A». Estado del teléfono: «Timbre activo, volumen multimedia audible y háptica del sistema activa» tras la respuesta inicial «Estamos ok». El primer relanzamiento para S3-A fue rechazado porque el iPhone se bloqueó. Se pidió desbloquearlo para repetir el precheck. No se emitió señal de inicio de S3-A en ese intento.
+
+### S3-A · Contacto
+
+El PO confirmó que el iPhone estaba desbloqueado. El segundo relanzamiento abrió un proceso nuevo a las **14:53:01.6468410Z**, `0.1.0+097eab9 dev`, P0-calib-1, `6ecfdfa78cbb` y cero pendientes. El precheck verificó el plan y los tres archivos, con cero gestos. El cierre DEV aceptado y completado quedó en la línea 47 a las **14:53:40.2214280Z**, `timeReal=40.711298667800456`, con foco, sin pausa y DEV cerrado. Señal Mac 14:53:11Z. El PO avisó «Terminé S3-A» a las 14:54:47Z y se exportó antes de relanzar.
+
+| Recepción | LaunchId | Gesto | Resultado final / motivo | Aplicado | Presentación |
+| --- | ---: | --- | --- | --- | --- |
+| 1 | 12 | Swing | Valid / applied | Sí | Valid, v2 |
+| 2 | 13 | Swing | Valid / applied | Sí | Valid, v2 |
+| 3 | 14 | Swing | Valid / applied | Sí | Valid, v2 |
+| 4 | 15 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 5 | 16 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 6 | 17 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+
+Los planes y gestos de cuota tienen hash `6ecfdfa78cbb` y cero pendientes. Cada intento tuvo una presentación concordante, con cero discrepancias. **Fuera de cuota:** cinco Swing adicionales en LaunchId 18–22, cuatro Failed / Air y un Valid aplicado. El export de fin confirmó el prefijo del precheck y los tres archivos iguales al respaldo y a la referencia inicial. SHA-256 del proceso exportado `8d397eb491b574e50483b7550479f44ffec14c001802134cc1268bd520b08e92`. El contraste Perfect/Valid queda NotEvaluated en este bloque por falta de Perfect en la cuota.
+
+**Respuestas literales de S3-A.** Q4 (2026-11-06T14:58:58Z): «Veía como se movia la raqueta azul», sin desglose por recepción.
+
+El PO respondió después en ambos diálogos de los campos 1–4 (registro 14:59:20Z). Se conservan ambas series, sin desglose por recepción.
+
+| Campo | Diálogo original | Diálogo de campos pendientes |
+| --- | --- | --- |
+| 1 · Excepciones | «Nada que señalar» | «todo ok» |
+| 2 · Sonido | «El sonido del golpe» | «el sonido del golpe» |
+| 3 · Vibración | «VIbrar al intentar realizar el golpe» | «la vibración al intentar dar un golpe» |
+| 4 · Vista | «veía como se movia la raqueta azul» | — |
+
+Campos 5–7 (2026-11-06T15:00:04Z), respectivamente: «Nada que señalar», «Se veía como un sonido de que fallaste» y «Se ve el movimiento de la raqueta al intentar golpear».
+
+Preguntas extra (2026-11-06T15:00:30Z). «¿Un perfecto se siente claramente mejor?» → «Nada que señalar». «¿Entendiste el resultado del golpe sin el panel?» → «si». Ante la aclaración neutral sobre vibración al irse al aire, respondió «Solo recuerdo vibración al hacer contacto».
