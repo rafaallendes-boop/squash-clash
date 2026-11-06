@@ -215,3 +215,19 @@ Campos 5–7 (2026-11-06T15:35:08Z): «Nada que señalar» en los tres.
 El PO confirmó «Timbre activo, iPhone desbloqueado y app en primer plano» y autorizó «Sí, autorizo repetir S3-C ahora». Antes del relanzamiento se exportó y se cotejaron los tres archivos. P0 restaurado en proceso nuevo **15:35:39.8880820Z**, build `0.1.0+097eab9 dev`, hash `6ecfdfa78cbb`, cero pendientes y tres archivos cotejados de nuevo contra el respaldo y la referencia inicial. El intento previo y sus respuestas quedan separados.
 
 **Repetición autorizada, detenida en preparación.** El PO volvió a confirmar «Modo silencio activado, app en primer plano». Proceso nuevo a las **15:36:36.2332220Z**, P0-calib-1 `6ecfdfa78cbb`, cero pendientes y tres archivos cotejados. Después de la señal el teléfono se bloqueó otra vez (`passcodeRequired=true`). Los dos exports de monitoreo tienen el mismo proceso y bytes, última línea a las **15:37:00.3374140Z**, sin cierre DEV ni gestos. Se retiró la señal. S3-C sigue pendiente de un precheck nuevo antes de jugar. El último arranque comprobado conserva P0 y los tres archivos. El estado final del modo silencio queda pendiente de confirmación del PO.
+
+### S3-C · Repetición posterior al segundo bloqueo
+
+El PO informó «Terminé S3-C» y «Sí, ya jugué la repetición». El export posterior conserva como prefijo exacto los registros del monitoreo anterior. En el mismo proceso de las 15:36:36.2332220Z se registró un cierre DEV posterior al bloqueo, línea 43 a las **16:06:58.1913190Z**, `timeReal=1824.1082705890522`, foco activo, sin pausa y DEV cerrado. El cierre permite reconstruir las tres recepciones. El intento queda fuera de cuota porque ocurrió tras el bloqueo y sin un precheck nuevo.
+
+| Posición tras la frontera | LaunchId | Gesto | Resultado final / motivo | Aplicado | Presentación |
+| --- | ---: | --- | --- | --- | --- |
+| 1 | 10 | Swing | Valid / applied | Sí | Valid, v2 |
+| 2 | 11 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 3 | 12 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+
+Las tres recepciones cotejan `6ecfdfa78cbb`, cero pendientes y una presentación concordante por intento, con cero discrepancias. LaunchId 13 aparece fuera de ventana. Los tres archivos cotejan ambos respaldos. SHA-256 del proceso en el export `6dee04a6c77b603f70f9e219733982a79c5b846f22001d97fcf5816dac20a3ae`.
+
+**Respuestas literales.** Campos 1–4 (2026-11-06T16:08:22Z): «todo ok», «Nada que señalar», «vibración al golpear» y «Nada que señalar».
+
+Campos 5–7 (2026-11-06T16:08:41Z): «Nada que señalar» en los tres.
