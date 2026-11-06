@@ -1,0 +1,431 @@
+{
+  "schemaVersion": 1,
+  "name": "First Ball default",
+  "createdBuild": "I3",
+  "values": [
+    {
+      "key": "court.tinTop",
+      "value": 0.48
+    },
+    {
+      "key": "camera.height",
+      "value": 8
+    },
+    {
+      "key": "camera.backOffset",
+      "value": 5
+    },
+    {
+      "key": "camera.lookAtHeight",
+      "value": 0.4
+    },
+    {
+      "key": "camera.fovDeg",
+      "value": 90
+    },
+    {
+      "key": "placeholders.visible",
+      "value": 1
+    },
+    {
+      "key": "human.x",
+      "value": 3.2
+    },
+    {
+      "key": "human.z",
+      "value": 5.5
+    },
+    {
+      "key": "rival.x",
+      "value": 4.5
+    },
+    {
+      "key": "rival.z",
+      "value": 6.5
+    },
+    {
+      "key": "pace.tempo",
+      "value": 0.65
+    },
+    {
+      "key": "pace.launchScale",
+      "value": 1
+    },
+    {
+      "key": "physics.gravity",
+      "value": 9.81
+    },
+    {
+      "key": "physics.stepHz",
+      "value": 120
+    },
+    {
+      "key": "physics.maxImpactsPerStep",
+      "value": 4
+    },
+    {
+      "key": "physics.floor.restitution",
+      "value": 0.45
+    },
+    {
+      "key": "physics.floor.friction",
+      "value": 0.3
+    },
+    {
+      "key": "physics.front.restitution",
+      "value": 0.55
+    },
+    {
+      "key": "physics.front.friction",
+      "value": 0.2
+    },
+    {
+      "key": "physics.side.restitution",
+      "value": 0.55
+    },
+    {
+      "key": "physics.side.friction",
+      "value": 0.2
+    },
+    {
+      "key": "physics.back.restitution",
+      "value": 0.55
+    },
+    {
+      "key": "physics.back.friction",
+      "value": 0.2
+    },
+    {
+      "key": "physics.backend",
+      "value": 1
+    },
+    {
+      "key": "launcher.x",
+      "value": 3.2
+    },
+    {
+      "key": "launcher.y",
+      "value": 1
+    },
+    {
+      "key": "launcher.z",
+      "value": 7
+    },
+    {
+      "key": "launcher.yawDeg",
+      "value": 0
+    },
+    {
+      "key": "launcher.pitchDeg",
+      "value": 10
+    },
+    {
+      "key": "launcher.speed",
+      "value": 15
+    },
+    {
+      "key": "launcher.repeatSeconds",
+      "value": 0
+    },
+    {
+      "key": "debug.slowMotion",
+      "value": 1
+    },
+    {
+      "key": "camera.mode",
+      "value": 0
+    },
+    {
+      "key": "camera.followDamping",
+      "value": 0.3
+    },
+    {
+      "key": "camera.followMaxOffset",
+      "value": 1.5
+    },
+    {
+      "key": "aids.shadow",
+      "value": 1
+    },
+    {
+      "key": "aids.trail",
+      "value": 1
+    },
+    {
+      "key": "aids.impactMarks",
+      "value": 1
+    },
+    {
+      "key": "aids.prediction",
+      "value": 0
+    },
+    {
+      "key": "aids.trailSeconds",
+      "value": 0.15
+    },
+    {
+      "key": "aids.ballVisualScale",
+      "value": 1
+    },
+    {
+      "key": "aim.gainMPerMm",
+      "value": 0.12
+    },
+    {
+      "key": "aim.startHeight",
+      "value": 2.2
+    },
+    {
+      "key": "aim.flickMmPerS",
+      "value": 250
+    },
+    {
+      "key": "aim.flickHysteresisMmPerS",
+      "value": 40
+    },
+    {
+      "key": "aim.freezeLookbackMs",
+      "value": 50
+    },
+    {
+      "key": "aim.flickConfirmSamples",
+      "value": 2
+    },
+    {
+      "key": "power.windowMs",
+      "value": 80
+    },
+    {
+      "key": "power.minCoverageMs",
+      "value": 30
+    },
+    {
+      "key": "power.minSamples",
+      "value": 4
+    },
+    {
+      "key": "power.maxGapMs",
+      "value": 34
+    },
+    {
+      "key": "power.deadZoneMmPerS",
+      "value": 100
+    },
+    {
+      "key": "power.fullMmPerS",
+      "value": 1500
+    },
+    {
+      "key": "power.curveExponent",
+      "value": 1
+    },
+    {
+      "key": "gesture.tapMaxMm",
+      "value": 3
+    },
+    {
+      "key": "gesture.tapMaxMs",
+      "value": 250
+    },
+    {
+      "key": "gesture.cancelRadiusMm",
+      "value": 6
+    },
+    {
+      "key": "input.fallbackDpi",
+      "value": 460
+    },
+    {
+      "key": "power.method",
+      "value": 0
+    },
+    {
+      "key": "power.peakSmoothingMs",
+      "value": 20
+    },
+    {
+      "key": "power.peakDecayMs",
+      "value": 120
+    },
+    {
+      "key": "aim.freezeOnRelease",
+      "value": 0
+    },
+    {
+      "key": "gesture.control",
+      "value": 2
+    },
+    {
+      "key": "aim.holdMs",
+      "value": 120
+    },
+    {
+      "key": "aim.holdMaxSpeedMmPerS",
+      "value": 15
+    },
+    {
+      "key": "aim.holdRadiusMm",
+      "value": 1
+    },
+    {
+      "key": "aim.holdMaxGapMs",
+      "value": 51
+    },
+    {
+      "key": "aim.holdMinSamples",
+      "value": 3
+    },
+    {
+      "key": "power.pullDeadZoneMm",
+      "value": 2
+    },
+    {
+      "key": "power.pullFullMm",
+      "value": 35
+    },
+    {
+      "key": "gesture.slingCancelAboveMm",
+      "value": 12
+    },
+    {
+      "key": "gesture.slingCancelLateralMm",
+      "value": 20
+    },
+    {
+      "key": "gesture.slingCancelMinDepthMm",
+      "value": 8
+    },
+    {
+      "key": "gesture.slingPreferLeft",
+      "value": 1
+    },
+    {
+      "key": "aim.lockFlashMs",
+      "value": 120
+    },
+    {
+      "key": "gesture.slingTarget1X",
+      "value": 0.25
+    },
+    {
+      "key": "gesture.slingTarget1Y",
+      "value": 0.15
+    },
+    {
+      "key": "gesture.slingTarget2X",
+      "value": 0.75
+    },
+    {
+      "key": "gesture.slingTarget2Y",
+      "value": 0.15
+    },
+    {
+      "key": "gesture.slingTarget3X",
+      "value": 0.5
+    },
+    {
+      "key": "gesture.slingTarget3Y",
+      "value": 0.5
+    },
+    {
+      "key": "gesture.slingTarget4X",
+      "value": 0.25
+    },
+    {
+      "key": "gesture.slingTarget4Y",
+      "value": 0.8
+    },
+    {
+      "key": "gesture.slingTarget5X",
+      "value": 0.75
+    },
+    {
+      "key": "gesture.slingTarget5Y",
+      "value": 0.8
+    },
+    {
+      "key": "body.reach",
+      "value": 1.3
+    },
+    {
+      "key": "body.idealLateral",
+      "value": 0.6
+    },
+    {
+      "key": "body.preferredMinHeight",
+      "value": 0.4
+    },
+    {
+      "key": "body.preferredMaxHeight",
+      "value": 1.1
+    },
+    {
+      "key": "body.wallClearance",
+      "value": 0.3
+    },
+    {
+      "key": "legal.minHeight",
+      "value": 0.05
+    },
+    {
+      "key": "legal.maxHeight",
+      "value": 2
+    },
+    {
+      "key": "timing.assistMs",
+      "value": 40
+    },
+    {
+      "key": "timing.validLimit",
+      "value": 1
+    },
+    {
+      "key": "timing.validMs",
+      "value": 100
+    },
+    {
+      "key": "timing.earlyPolicy",
+      "value": 0
+    },
+    {
+      "key": "timing.latencyCompMs",
+      "value": 0
+    },
+    {
+      "key": "shot.vMin",
+      "value": 6
+    },
+    {
+      "key": "shot.vMax",
+      "value": 28
+    },
+    {
+      "key": "shot.vCap",
+      "value": 32
+    },
+    {
+      "key": "rollback.historyMs",
+      "value": 250
+    },
+    {
+      "key": "practice.enabled",
+      "value": 1
+    },
+    {
+      "key": "practice.launch",
+      "value": 0
+    },
+    {
+      "key": "practice.repeatSeconds",
+      "value": 1.5
+    },
+    {
+      "key": "practice.observeMaxSeconds",
+      "value": 4
+    },
+    {
+      "key": "timing.showNotes",
+      "value": 1
+    }
+  ]
+}

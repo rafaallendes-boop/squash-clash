@@ -35,10 +35,18 @@ native=list((root/f'Builds/iOS-{profile}').rglob('ThermalState.mm'))
 if bool(native)!=(profile=='dev'):raise SystemExit('Native thermal bridge inclusion mismatch for '+profile+': '+str(len(native)))
 runtime_native=list((root/f'Builds/iOS-{profile}').rglob('SquashThermal.mm'))
 if len(runtime_native)!=1:raise SystemExit('Runtime thermal diagnostic bridge missing/duplicated: '+profile)
+haptics_native=list((root/f'Builds/iOS-{profile}').rglob('SquashHaptics.mm'))
+if len(haptics_native)!=1:raise SystemExit('Runtime haptics bridge missing/duplicated: '+profile)
+haptics_symbols=False
+for cpp in (output/'Source').rglob('*.cpp'):
+    text=cpp.read_text(errors='replace')
+    if 'SquashHapticsImpact' in text and 'SquashHapticsPrepare' in text:
+        haptics_symbols=True;break
+if not haptics_symbols:raise SystemExit('Haptics P/Invoke symbols missing in '+profile)
 info=json.loads(metadata.read_text())
 if info['profile']!=profile:raise SystemExit('Wrong build metadata profile.')
 shutil.copyfile(metadata,root/f'Logs/evidence/buildinfo-{profile}.json')
-(root/f'Logs/evidence/release-{profile}.json').write_text(json.dumps({'profile':profile,'metadata':info,'freshExport':True,'productIl2CppModules':modules,'nativeThermalBridge':bool(native),'runtimeThermalBridge':bool(runtime_native)},indent=2)+'\n')
+(root/f'Logs/evidence/release-{profile}.json').write_text(json.dumps({'profile':profile,'metadata':info,'freshExport':True,'productIl2CppModules':modules,'nativeThermalBridge':bool(native),'runtimeThermalBridge':bool(runtime_native),'runtimeHapticsBridge':bool(haptics_native),'hapticsSymbols':haptics_symbols},indent=2)+'\n')
 print('RELEASE-CHECK: '+profile+' modules='+','.join(modules))
 PY
 done

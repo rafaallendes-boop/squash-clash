@@ -426,6 +426,10 @@
     {
       "key": "timing.showNotes",
       "value": 1
+    },
+    {
+      "key": "feedback.haptics",
+      "value": 1
     }
   ]
 }

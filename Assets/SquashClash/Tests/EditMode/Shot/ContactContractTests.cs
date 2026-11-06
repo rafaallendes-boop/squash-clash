@@ -93,6 +93,6 @@ namespace SquashClash.Core.Tests.Shot
         [Test] public void ReleaseOlderThanClockMap_IsNotEvaluable()
         {clock.Begin(1,1,0,1,1,100);Assert.That(Decide(.5).Result,Is.EqualTo(ShotResult.NotEvaluable));}
         [Test] public void NewTimingKeys_AreRecordedWithApprovedDefaults()
-        {var p=ConfigFixtures.Default();Assert.That(p.Ordered.Count,Is.EqualTo(106));Assert.That(TimingSettings.From(p).AssistMs,Is.EqualTo(40));Assert.That(TimingSettings.From(p).ValidLimitOn,Is.True);Assert.That(TimingSettings.From(p).ValidMs,Is.EqualTo(100));Assert.That(TimingSettings.From(p).EarlySoft,Is.False);Assert.That(TimingSettings.From(p).LatencyCompMs,Is.Zero);}
+        {var p=ConfigFixtures.Default();Assert.That(p.Ordered.Count,Is.EqualTo(107));Assert.That(TimingSettings.From(p).AssistMs,Is.EqualTo(40));Assert.That(TimingSettings.From(p).ValidLimitOn,Is.True);Assert.That(TimingSettings.From(p).ValidMs,Is.EqualTo(100));Assert.That(TimingSettings.From(p).EarlySoft,Is.False);Assert.That(TimingSettings.From(p).LatencyCompMs,Is.Zero);}
     }
 }

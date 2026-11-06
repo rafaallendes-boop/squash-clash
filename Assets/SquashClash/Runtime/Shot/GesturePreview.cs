@@ -1,3 +1,4 @@
+using SquashClash.Runtime.Feedback;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -78,6 +79,7 @@ namespace SquashClash.Runtime.Shot
                 if(Active){AuditM24Input(sample,"duplicate-or-secondary-began","m24-input-ignored");return;}
                 if(shotController!=null&&!shotController.CanBegin(sample.TimeReal,out var rejection))
                 {AuditM24Input(sample,rejection,"m24-input-filtered");return;}
+                Haptics.Prepare();
                 BeginShotHandoff();
                 var source=app.Host.ActiveConfig.Source;
                 foreach(var def in ParamCatalog.All)

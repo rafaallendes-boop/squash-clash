@@ -40,18 +40,26 @@ namespace SquashClash.Runtime.Shot
         public string UnavailableReason=>PracticeEnabled&&!Available?"First Shot no disponible con P1":"";
         public string LastDiscardReason {get;private set;}
         public event Action<ShotRecord> ShotResolved;
+        public event Action<ShotPresentation> PresentationDelivered;
+        public event Action<SwingIntent> SwingAccepted;
+        public ShotPresentation? LastPresentation {get;private set;}
+        public int PresentationCount {get;private set;}
+        public int PresentationDiscrepancyCount=>gate.DiscrepancyCount;
+        public string LastPresentationDiscrepancy=>gate.LastDiscrepancy;
+        private readonly ShotPresentationGate gate=new ShotPresentationGate();
         public void Initialize(AppBootstrap app)
         {
             if(this.app!=null)return;this.app=app;
             app.Host.Launched+=OnLaunched;app.Host.ShotApplied+=OnApplied;
             ring=gameObject.AddComponent<TimingRingView>();notes=gameObject.AddComponent<ShotNoteView>();notes.Initialize(app);
-            feedback=gameObject.AddComponent<ShotFeedback>();feedback.Initialize();
+            feedback=gameObject.AddComponent<ShotFeedback>();feedback.Initialize();PresentationDelivered+=feedback.Present;
+            gameObject.AddComponent<SwingView>().Initialize(app,this);gameObject.AddComponent<PerfectFlashView>().Initialize(app,this);
             OnLaunched(app.Host.ActiveConfig);
         }
         private void OnLaunched(EffectiveConfig cfg)
         {
-            Snapshot=new ShotConfig(cfg.Source);seen.Clear();Presented=new PresentedPlans();AttemptConsumed=WaitingForContact=false;
-            LastRecord=LastClosureRecord=pendingContact=null;LastDiscardReason=null;LastSolution=default;closedAt=null;recordVersion=0;
+            Snapshot=new ShotConfig(cfg.Source);Haptics.Enabled=Snapshot.Reception.GetBool("feedback.haptics");seen.Clear();Presented=new PresentedPlans();AttemptConsumed=WaitingForContact=false;
+            LastRecord=LastClosureRecord=pendingContact=null;gate.Reset(app.Host.LaunchId);LastPresentation=null;PresentationCount=0;LastDiscardReason=null;LastSolution=default;closedAt=null;recordVersion=0;
             double start=Stopwatch.GetTimestamp();
             var legal=new LegalSettings((float)cfg.Source.Get("legal.minHeight"),(float)cfg.Source.Get("legal.maxHeight"),cfg.Physics.StepHz,cfg.Physics.Gravity,cfg.Physics.BallRadius,cfg.Court);
             Plan=Available?ContactPlanner.Plan(app.Host.Prediction,Snapshot.Body,cfg.Court,legal,1):default;
@@ -99,6 +107,7 @@ namespace SquashClash.Runtime.Shot
             if(!CanBegin(order.BeganAt,out var reason)){Discard(order,reason);return;}
             // Reserve before any callback or solver. Failed timing / no plan / system failure never reopens it.
             AttemptConsumed=true;var shot=Snapshot.WithGesture(order.Source);
+            SwingAccepted?.Invoke(new SwingIntent(order.LaunchId,order.AttemptId,Plan.Side));
             var authoritative=AuthoritativeTrajectory();
             var decision=ContactContract.Decide(order.ReleaseAt,Presented,app.Host.ClockMap,authoritative,shot.Timing,false);
             var record=BaseRecord(order);FillDecision(record,decision);record.Version=++recordVersion;LastRecord=record;Write("shot-order",record);
@@ -167,8 +176,15 @@ namespace SquashClash.Runtime.Shot
         private void Finish(ShotRecord record)
         {
             record.Version=++recordVersion;LastRecord=record;Write("shot",record);notes.Show(record);
-            if(record.Applied)feedback.Contact();else if(record.Result==ShotResult.Failed.ToString())feedback.Swish();
+            Present(record);
             ShotResolved?.Invoke(record);
+        }
+        private void Present(ShotRecord record)
+        {
+            int before=gate.DiscrepancyCount;
+            if(!gate.TryDeliver(record,app.Host.LaunchId,out var p,out _))
+            {if(gate.DiscrepancyCount>before)WriteDiscrepancy(record);return;}
+            LastPresentation=p;PresentationCount++;WritePresentation(p);PresentationDelivered?.Invoke(p);
         }
         public void CloseReception()
         {
@@ -224,7 +240,15 @@ namespace SquashClash.Runtime.Shot
             if(Plan.Exists){host.ClockMap.TrySimToReal(Plan.KIn.Step,Plan.KIn.Fraction,out t.kInReal);host.ClockMap.TrySimToReal(Plan.KOut.Step,Plan.KOut.Fraction,out t.kOutReal);host.ClockMap.TrySimToReal(Plan.TStarStep,0,out t.targetReal);}
             app.Metrics?.Write("shot-plan",host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(t));
         }
+        [Serializable] private sealed class PresentationLine
+        {public long launchId,contactStep;public string attemptId,category,fail,description;public int version;public bool hasContact;public double observedRealTime;}
+        private void WritePresentation(ShotPresentation p)
+        {WriteLine("shot-presentation",new PresentationLine{launchId=p.LaunchId,attemptId=p.AttemptId,category=p.Category.ToString(),version=p.Version,hasContact=p.HasContact,contactStep=p.ContactStep,fail=p.Fail,observedRealTime=app.Host.ObservedRealTime});}
+        private void WriteDiscrepancy(ShotRecord record)
+        {WriteLine("shot-presentation-discrepancy",new PresentationLine{launchId=record.LaunchId,attemptId=record.AttemptId,category=record.Result,version=record.Version,description=gate.LastDiscrepancy,observedRealTime=app.Host.ObservedRealTime});}
+        private void WriteLine(string kind,PresentationLine line)
+        {app.Metrics?.Write(kind,app.Host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(line));}
         private static bool Finite(double x)=>!double.IsNaN(x)&&!double.IsInfinity(x);
-        private void OnDestroy(){if(app!=null){app.Host.Launched-=OnLaunched;app.Host.ShotApplied-=OnApplied;}}
+        private void OnDestroy(){if(app!=null){app.Host.Launched-=OnLaunched;app.Host.ShotApplied-=OnApplied;}if(feedback!=null)PresentationDelivered-=feedback.Present;}
     }
 }
