@@ -193,3 +193,17 @@ Campos 5–7 (2026-11-06T15:10:44Z): «Nada que señalar», «Nada que señalar�
 El PO confirmó «Modo silencio activado, app en primer plano». Se exportó antes de relanzar. Proceso nuevo a las **15:11:13.1167620Z**, `0.1.0+097eab9 dev`, P0-calib-1 `6ecfdfa78cbb`, cero pendientes, cero gestos y los tres archivos cotejados. Se envió la consigna de S3-C. En el export de monitoreo el registro termina en una línea de frames a las **15:11:37.2186140Z**, sin cierre DEV ni gestos. Una consulta posterior confirmó `passcodeRequired=true`. Se retiró la señal, se conservó la exportación y se pidió al PO informar si llegó a jugar, mantener el iPhone desbloqueado y esperar un nuevo precheck. El monitoreo disponible no acredita el inicio de S3-C.
 
 C, D, E y la observación de pausa quedan pendientes en este punto de control. El último arranque cotejado es P0 en la preparación de C. La restauración de cierre de la sesión y la reposición del modo silencio quedan pendientes de coordinación con el PO. No se abrió todavía la PR de validación.
+
+### S3-C · Intento tras bloqueo, conservado para revisión
+
+El PO informó «Termine S3 - C . Los primeros 3 golpes fueron al aire y los 4 siguientes logré golppear 3» y «Sí jugué después de la señal anterior». Se exportó el mismo proceso del precheck previo al bloqueo, antes de relanzar. El cierre DEV posterior quedó en línea 37 a las **15:21:53.9935070Z**, `timeReal=643.046550458567`, foco activo, sin pausa y DEV cerrado. El intento ocurrió sin precheck nuevo tras el bloqueo y se conserva separado de una cuota válida.
+
+| Posición tras la frontera | LaunchId | Gesto | Resultado final / motivo | Aplicado | Presentación |
+| --- | ---: | --- | --- | --- | --- |
+| 1 | 9 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 2 | 10 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 3 | 11 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+
+LaunchId 12–15 son extras, con tres Valid aplicados (12, 13 y 15) y un Failed / Air (14). Los siete intentos cotejan `6ecfdfa78cbb`, cero pendientes, una presentación concordante por intento y cero discrepancias. Los tres archivos cotejan ambos respaldos. SHA-256 del proceso en el export `544f7984ecb17f8825abff5f3defda6ce52b97f11de044cfb01a3c5bf77aa9eb`.
+
+Se solicitó el primer diálogo de respuestas del intento antes de mostrar el desglose. Al guardar este punto de control, las respuestas, la restauración de P0 tras el intento y la decisión de repetir S3-C seguían pendientes.
