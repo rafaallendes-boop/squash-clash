@@ -94,3 +94,24 @@ Codex prepara una PR independiente que corrige solo el audio, con una prueba que
 **Respaldo e instalación.** `Documents` exportado de la DEV anterior `0.1.0+fab60ef dev`, último arranque P0 a las 12:27:11Z. Los tres archivos protegidos coincidieron por bytes y SHA-256 con la referencia inicial. Se instaló sobre la app existente. Antes de abrir, se volvieron a cotejar los tres archivos y se comprobó que aún no había un proceso nuevo en los logs. Primer arranque corregido a las **14:03:12.0095980Z**, `0.1.0+097eab9 dev`, `P0-calib-1`, `6ecfdfa78cbb`, cero pendientes. Los tres archivos volvieron a coincidir con respaldo y referencia inicial.
 
 **Punto de control previo a la prueba breve.** El PO indicó «Listo a mano y conectado en duplicar». Se pidió cerrar Duplicación y confirmar el uso en mano, timbre y volumen multimedia audible antes de iniciar. La exportación de espera verificó, en el mismo proceso, `LaunchId 49` a las 14:06:28.5909160Z con hash `6ecfdfa78cbb`, cero pendientes, cero gestos y los tres archivos protegidos coincidentes. Esta exportación es preparación. La prueba breve y las nuevas cuotas S3-A–E están pendientes de ejecución.
+
+### Prueba breve de sonido
+
+El PO declaró «Duplicación cerrada, iPhone en mano, timbre activo y volumen multimedia audible» (registro 14:44:41Z). Proceso nuevo de la build corregida desde **14:38:30.3942540Z**, P0-calib-1 `6ecfdfa78cbb`, cero pendientes. La exportación antes de la señal verificó los tres archivos contra ambos respaldos. Los gestos anteriores a la frontera quedaron como preparación.
+
+**Frontera.** Cierre DEV aceptado y completado, línea 422 del proceso, **14:45:18.0549020Z**, `timeReal=409.815659458`, `focused=true`, `paused=false`, `devOpen=false`. Señal registrada en Mac a las 14:45:00Z y aviso de fin a las 14:46:29Z. Recepciones de la ventana predeclarada: LaunchId 98–103, con hash `6ecfdfa78cbb` y cero pendientes.
+
+| Recepción | LaunchId | Gesto | Resultado final / motivo | Aplicado | Presentación |
+| --- | ---: | --- | --- | --- | --- |
+| 1 | 98 | Swing | Valid / applied | Sí | Valid, v2 |
+| 2 | 99 | Swing | Valid / applied | Sí | Valid, v2 |
+| 3 | 100 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 4 | 101 | Swing | Valid / applied | Sí | Valid, v2 |
+| 5 | 102 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 6 | 103 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+
+Cada intento de la ventana tiene una presentación concordante y no hay discrepancias. **Desviación:** el PO dijo «Listo, hice 9 repeticiones en total». El log registra diez Swing tras cerrar DEV hasta la exportación de fin. LaunchId 104–107 son extras: tres Failed / Air y un Valid aplicado. El primer contacto aplicado ya consta en LaunchId 98. Se conservaron el exceso y la diferencia entre recuentos. La prueba breve completa, incluidos los extras, queda fuera de S3-A–E. Export de fin a las 14:46:37Z, SHA-256 del proceso `891030be7e7446fe7d8cc0e0b9d73707e06f64a1533912479a5f0df478818264`. Los tres archivos protegidos volvieron a coincidir.
+
+**Respuestas literales, antes de mostrar resultados.** A «¿Oíste un sonido de impacto al golpear?», el PO respondió «Sí» (registro 14:47:25Z). Al precisar cuándo, respondió «En cada swing que intentaba hacer, sonaba el impacto» (14:47:54Z). La aclaración neutral sobre si sonaban iguales obtuvo «Distinguí sonidos diferentes» (14:48:05Z), seguida de «Un sonido al golpear exitosamente y otro cuando se me iba al aire» (registro 14:49:04Z). Queda acreditado audio audible y distinción global de los dos sonidos en la build corregida, con contactos aplicados dentro de la ventana. La percepción por recepción no fue identificada. La aclaración separa el sonido del intento al aire del que el PO atribuye al golpe exitoso.
+
+**Decisión del PO.** «Sí, autorizo iniciar S3-A». Estado del teléfono: «Timbre activo, volumen multimedia audible y háptica del sistema activa» tras la respuesta inicial «Estamos ok». El primer relanzamiento para S3-A fue rechazado porque el iPhone se bloqueó. Se pidió desbloquearlo para repetir el precheck. No se emitió señal de inicio de S3-A en ese intento.
