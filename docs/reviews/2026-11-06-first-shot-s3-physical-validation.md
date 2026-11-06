@@ -231,3 +231,17 @@ Las tres recepciones cotejan `6ecfdfa78cbb`, cero pendientes y una presentación
 **Respuestas literales.** Campos 1–4 (2026-11-06T16:08:22Z): «todo ok», «Nada que señalar», «vibración al golpear» y «Nada que señalar».
 
 Campos 5–7 (2026-11-06T16:08:41Z): «Nada que señalar» en los tres.
+
+### S3-C · Repetición válida en modo silencio
+
+El PO repuso el timbre y eligió «Repetir S3-C ahora con más tiempo antes del bloqueo». Se verificó restauración en proceso nuevo a las **16:09:00.7916160Z**, P0-calib-1, `6ecfdfa78cbb`, cero pendientes y tres archivos iguales antes y después. La primera exportación posterior falló con CoreDeviceError 7000 y el reintento completo permitió el cotejo. Ante la propuesta de alargar el bloqueo automático, el PO dijo «dejaré el iphone abierto». Confirmó «Modo silencio activado y pantalla encendida con Squash Clash». Se preparó otro proceso a las **16:09:52.7672200Z** con P0, cero pendientes, cero gestos y cotejo de archivos antes de la señal.
+
+Cierre DEV en línea 31, **16:10:14.6949020Z**, `timeReal=24.066158791099777`, foco activo, sin pausa, DEV cerrado. El PO avisó «listo, los 3 salieron al aire eso si».
+
+| Recepción | LaunchId | Gesto | Resultado final / motivo | Aplicado | Presentación |
+| --- | ---: | --- | --- | --- | --- |
+| 1 | 8 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 2 | 9 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 3 | 10 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+
+Planes y gestos con `6ecfdfa78cbb`, cero pendientes, una presentación concordante por intento y cero discrepancias. No hay otros gestos en el export. Los tres archivos cotejaron los dos respaldos. SHA-256 del proceso `dd7966a08a48e8863ebae463cf2b6bfcc3e5e8633743df6027d9fc62efaa8264`. Campos 1–7: «Nada que señalar» en cada uno. En esta cuota se observó silencio sin contacto según lo informado. Silencio durante un impacto aplicado queda **NotEvaluated** en la cuota válida. Las observaciones de los intentos tras bloqueo se conservan aparte.
