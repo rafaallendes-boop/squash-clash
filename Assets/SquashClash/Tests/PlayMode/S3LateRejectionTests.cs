@@ -49,10 +49,11 @@ namespace SquashClash.Runtime.Tests
             Assert.That(h.OutgoingBounces,Is.Zero);Assert.That(h.CanonicalContacts.Count,Is.EqualTo(control.CanonicalContacts.Count));
             Assert.That(h.Current.Position,Is.EqualTo(control.Current.Position));Assert.That(h.Current.Velocity,Is.EqualTo(control.Current.Velocity));
         }
-        // present-not-mappable cannot be produced through the public host API: in Advance the scheduled callback runs at
+        // This test only checks that a regular scheduled shot is not rejected as present-not-mappable; it does not prove
+        // that the reason is unreachable. That claim rests on reading the code: in Advance the scheduled callback runs at
         // current.Step==contactStep after ObserveClock already marked the end of the frame, so ObservedRealTime always maps
         // to a present step >= contactStep. Without a product seam only the reflection-based controller test below covers it.
-        [Test] public void PresentNotMappable_IsNotReachableThroughPublicHostApi_Documented()
+        [Test] public void RegularScheduledShot_IsNotRejectedAsPresentNotMappable()
         {
             var h=Host();To(h,20);var results=new List<ShotApplyResult>();h.ShotApplied+=results.Add;
             Assert.That(h.ScheduleShot(h.LaunchId,25,s=>new Vector3(0,6,-15)),Is.True);
@@ -119,8 +120,10 @@ namespace SquashClash.Runtime.Tests
         private void ScheduledThenRejected(string reason)
         {
             int swish=feedback.SwishCount,contact=feedback.ContactCount;
-            var r=Submit(Star()-.02);Assert.That(r.Scheduled,Is.True);Assert.That(controller.WaitingForContact,Is.True);
-            for(int i=0;i<3&&app.Host.Current.Step<r.ContactStep-1;i++){app.Host.Advance(StepReal);Ticks(swing,.01);Assert.That(swing.Phase,Is.EqualTo(SwingPhase.Intention));Assert.That(seen.Count,Is.Zero);}
+            var r=Submit(Star()-.035);Assert.That(r.Scheduled,Is.True);Assert.That(controller.WaitingForContact,Is.True);
+            int intentionFrames=0;
+            for(int i=0;i<3&&app.Host.Current.Step<r.ContactStep-1;i++){app.Host.Advance(StepReal);Ticks(swing,.01);Assert.That(swing.Phase,Is.EqualTo(SwingPhase.Intention));Assert.That(seen.Count,Is.Zero);intentionFrames++;}
+            Assert.That(intentionFrames,Is.GreaterThanOrEqualTo(1),"intention must be checked on at least one host frame before contact");
             Assert.That(app.Host.Current.Step,Is.LessThan(r.ContactStep));
             // Host-level tests prove the host emits these results; here the event is raised in test code only.
             RaiseRejection(reason,r.ContactStep);
