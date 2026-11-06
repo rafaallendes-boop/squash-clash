@@ -1727,3 +1727,70 @@ La PR queda abierta y sin fusionar. La build, la instalación y el protocolo S3-
 > Corregir 1 y 3
 
 **Aplicado.** Solo cambia `S3LateRejectionTests.cs`: la prueba de la observación 1 se renombra y su comentario se aclara, y la observación 3 suelta en `Star()-.035` con una aserción de al menos una iteración. Claude hizo los cambios directamente, sin subagente Sonnet, por su tamaño; se declara como desviación del método y sin revisión independiente. Las observaciones 2 y 4 quedan registradas sin cambio; la 4 pasa a lo pendiente para el iPhone. Detalle y verificación en la sección F del [informe de implementación](2026-11-05-first-shot-s3-implementation.md#f-revisión-de-las-correcciones-y-observaciones-1-y-3). PR #34 sin fusionar hasta la decisión del PO. S4 y First Rally sin autorizar.
+
+## Cierre efectivo de PR #34 — 5 de noviembre de 2026 (Chile)
+
+El PO autorizó la fusión con «Sí, fusionar». Antes de fusionar se comprobó que el head local y el remoto eran exactamente `067ca9184af2a8256e49519a37098bc7ce44e34b`, que la PR estaba abierta, no era borrador y no tenía conflictos, y que ambos árboles estaban limpios. Merge **`adb8c8fd5fcf2c081d0633670a3faa7b4d6af677`** (2026-11-06T02:12:30Z), segundo padre exactamente `067ca91`, árbol `d63c94c5227c98fa4382fd9b30f83018e8e47805` idéntico al del head aprobado. Main sincronizada y limpia.
+
+Worktree `firstshot-s3-feedback` retirado sin `--force` después de mover sus ocho rutas ignoradas (ledger `.superpowers/`, `BuildInfo.json` y su `.meta`, `Builds/`, `Library/`, `Logs/`, `UserSettings/` y `scripts/device.env`) a `Logs/archive-s3-feedback-20261105/artifacts` del checkout principal. Inventario por ruta, tamaño y SHA-256 idéntico antes y después: 30.338 archivos, 4.608.523.699 bytes, sin enlaces simbólicos; SHA-256 del inventario `17b2234fd067f644c91eb0b226683b35c15e8b5a3fef3f80e04d73fc8746cd3c`. Rama `firstshot/s3-feedback` conservada en local y remoto. El cierre se registra en esta entrega, sin commit aparte en main.
+
+**La fusión no acepta S3.** Su aceptación funcional depende de la validación física.
+
+## Autorización de la validación física de S3 — 6 de noviembre de 2026 (Chile)
+
+**Decisión literal del PO:**
+
+> Claude, gracias por el resumen de First Ball, S1, S2 y S3, y por consolidar el estado del proyecto.
+> Como Product Owner de Squash Clash, confirmo las siguientes decisiones.
+> 1. S3: autorizo la validación física en el iPhone
+> Apruebo ejecutar exclusivamente la Fase 1 propuesta, correspondiente a la validación física de S3, con sus 21 recepciones distribuidas en los bloques S3-A, S3-B, S3-C, S3-D y S3-E.
+> El objetivo es comprobar la sensación real del golpe, especialmente:
+>
+> * Diferencia perceptible entre Perfect y Valid.
+> * Sincronización del sonido y la vibración con el contacto.
+> * Comportamiento de Failed sin contacto.
+> * Naturalidad del swing y posible desfase de 0,06 segundos.
+> * Legibilidad del destello y de las notas.
+> * Comportamiento con modo silencio y háptica desactivada.
+> * Correcta congelación y reanudación del feedback durante pausas.
+>
+> Quiero conservar las preguntas literales y las respuestas originales, sin reinterpretarlas a partir de métricas posteriores.
+> 2. Preparación y seguridad
+> Autorizo preparar, compilar e instalar la build dev de S3 en mi iPhone, una vez comprobados el perfil de firma, la fuente exacta y los requisitos de instalación.
+> Antes de comenzar:
+>
+> * Respaldar P0-calib-1, Po-1 y last-active.
+> * Confirmar el hash esperado `6ecfdfa78cbb` y cero cambios pendientes.
+> * Verificar que la build corresponde a S3 fusionado en `main`.
+> * Comprobar que la aplicación inicia y que la configuración protegida está intacta.
+>
+> Al terminar, restaurar y verificar los tres archivos byte a byte contra sus respaldos, documentar las incidencias y preparar el informe para revisión independiente.
+> No modificar parámetros de física, potencia, timing o trayectoria durante esta validación.
+> 3. Cierre documental
+> Autorizo incorporar el cierre de la PR #34 a AGENTS.md y al registro de aprobaciones, conservando la trazabilidad de las revisiones y correcciones realizadas.
+> La implementación de S3 está fusionada, pero su aceptación funcional definitiva queda pendiente de mis pruebas en el iPhone.
+> 4. S4 y decisiones diferidas
+> No autorizo todavía S4 ni la implementación de las cinco piezas diferidas.
+> Después de la validación física de S3 revisaremos:
+>
+> * Sonidos de superficies.
+> * Audio de baja latencia.
+> * Instrumentación de latencias.
+> * Calidad causal.
+> * Superposición causal.
+>
+> La PR #32 debe permanecer abierta, desactivada y sin fusionar. Su evaluación será una decisión independiente.
+> 5. Criterio de cierre
+> Una vez terminados los cinco bloques, quiero recibir:
+>
+> 1. Resultados objetivos de cada bloque.
+> 2. Mis respuestas literales.
+> 3. Problemas observados y su impacto.
+> 4. Verificaciones de configuración y restauración.
+> 5. Recomendación de Claude: aceptar S3, aceptarlo con condiciones o solicitar correcciones.
+>
+> No iniciar trabajos adicionales de producto hasta mi decisión posterior.
+> Decisión final: validación física de S3 AUTORIZADA. S4 y First Rally NO AUTORIZADOS.
+> Procedamos de forma incremental, manteniendo el rigor de las etapas anteriores.
+
+**Operación.** Claude opera la sesión: build, instalación, exportación, precheck y restauración. Rama documental `firstshot/s3-validation` desde `main` en `adb8c8f`. La predeclaración se confirma en Git antes del primer bloque: [predeclaración de la sesión S3](../validation/2026-11-06-first-shot-s3-physical-predeclaration.md). Esa predeclaración no tuvo revisión independiente previa; se declara como desviación y queda para la revisión del informe. El objetivo de pausas no forma parte de los bloques S3-A–E aprobados; la predeclaración lo propone como observación opcional fuera de cuota, sujeta a la decisión del PO.
