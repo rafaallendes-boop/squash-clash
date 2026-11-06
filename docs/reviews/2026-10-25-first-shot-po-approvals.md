@@ -1794,3 +1794,55 @@ Worktree `firstshot-s3-feedback` retirado sin `--force` después de mover sus oc
 > Procedamos de forma incremental, manteniendo el rigor de las etapas anteriores.
 
 **Operación.** Claude opera la sesión: build, instalación, exportación, precheck y restauración. Rama documental `firstshot/s3-validation` desde `main` en `adb8c8f`. La predeclaración se confirma en Git antes del primer bloque: [predeclaración de la sesión S3](../validation/2026-11-06-first-shot-s3-physical-predeclaration.md). Esa predeclaración no tuvo revisión independiente previa; se declara como desviación y queda para la revisión del informe. El objetivo de pausas no forma parte de los bloques S3-A–E aprobados; la predeclaración lo propone como observación opcional fuera de cuota, sujeta a la decisión del PO.
+
+## Detención de S3 y corrección puntual del audio — 6 de noviembre de 2026 (Chile)
+
+**Contexto.** S3-A se jugó sin la marca de DEV y el PO no oyó ningún sonido con el timbre activo. Diagnóstico estático de Claude: `Main.unity` no tiene `AudioListener`. Sesión detenida antes de S3-B. [Informe de la sesión](2026-11-06-first-shot-s3-physical-validation.md).
+
+**Decisión literal del PO** (recibida primero truncada en el punto 4 y después completa; se registra la versión completa):
+
+> Claude, gracias por detener la sesión y documentar el problema.
+> Como Product Owner de Squash Clash, apruebo la recomendación de detener S3 después del bloque S3-A.
+> Decisión: AUTORIZO UNA CORRECCIÓN PUNTUAL DEL AUDIO.
+> 1. Diagnóstico
+> Considero que la ausencia de `AudioListener` es una causa probable del silencio observado, pero debemos confirmarla mediante pruebas.
+> Los resultados de S3-A son útiles: el sistema registró correctamente los ocho intentos, las entregas de feedback y los contactos aplicados.
+> Conservemos el bloque como evidencia parcial, incluyendo la desviación por ausencia de la marca DEV, las respuestas literales y el golpe adicional fuera de cuota.
+> No debe contabilizarse como un bloque S3-A válido y completo.
+> 2. Corrección autorizada
+> Autorizo a Codex a preparar una PR independiente para corregir exclusivamente el problema del audio.
+> Solicito:
+>
+> * Verificar que la escena activa no dispone de un `AudioListener` funcional.
+> * Añadirlo a la cámara correspondiente, siempre que esa sea la solución mínima adecuada.
+> * Garantizar que exista un único listener activo.
+> * Incorporar una prueba automatizada que reproduzca el defecto y falle antes de la corrección.
+> * Verificar que el componente permanezca presente y activo en las builds DEV y PROD.
+> * No modificar clips, volúmenes, timing, háptica, física, M2-4 ni lógica de contacto.
+>
+> Si la investigación demuestra otra causa, detenerse y presentar el diagnóstico antes de ampliar el alcance.
+> 3. Revisión independiente
+> Una vez implementada la corrección:
+>
+> 1. Codex entrega la PR y los resultados de las pruebas.
+> 2. Claude revisa independientemente el último commit.
+> 3. Se ejecutan las regresiones correspondientes.
+> 4. Se verifica que los hashes y presets protegidos no cambien.
+> 5. Se comprueba que la modificación no introduce listeners duplicados ni regresiones en las escenas.
+>
+> No fusionar sin mi aprobación final.
+> 4. Validación física
+> Después de aprobar la corrección, autorizo preparar una nueva build para verificar el audio en el iPhone.
+> Primero quiero un smoke test breve que confirme que se escucha un sonido de impacto con el timbre activado.
+> Si el audio funciona correctamente, podremos repetir los cinco bloques S3-A–E con el protocolo predeclarado y la marca DEV correspondiente.
+> No reutilizar las recepciones de hoy como parte de la nueva cuota.
+> 5. Restauración pendiente
+> Antes de continuar, completar la verificación de P0 en un proceso nuevo y registrar el resultado.
+> Mantener los respaldos y comprobar nuevamente la restauración al finalizar la próxima sesión.
+> 6. Alcance
+> La corrección autorizada se limita al audio y a las pruebas necesarias.
+> No autorizo cambios adicionales en S3, calibraciones, PR #32, S4 ni First Rally.
+> Decisión final: S3 DETENIDO; CORRECCIÓN PUNTUAL DE AUDIO AUTORIZADA; NUEVA VALIDACIÓN SUJETA A REVISIÓN Y APROBACIÓN.
+> Procedamos con la corrección mínima y su revisión independiente.
+
+**Registro.** S3-A queda como evidencia parcial, no válida. Claude entregó al PO el encargo para Codex. La verificación de P0 en proceso nuevo sigue pendiente por iPhone bloqueado. Los respaldos se conservan en `Logs/evidence/s3-physical-20261106/`.
