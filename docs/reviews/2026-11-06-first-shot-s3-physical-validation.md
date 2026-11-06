@@ -78,7 +78,7 @@ Ausencia total de sonido con timbre activo y 8 peticiones de audio (5 impactos y
 ## 5. Restauración
 
 - 12:16:23Z, export `restore-check`: proceso `115246125` aún activo con P0, `6ecfdfa78cbb` y `pending=0`; **los tres archivos idénticos al respaldo** por `cmp` y SHA-256. No hubo configuración temporal: S3-E no se llegó a preparar y los ajustes del teléfono no se cambiaron.
-- **Verificación en proceso nuevo pendiente.** Dos relanzamientos rechazados con el iPhone bloqueado (`FBSOpenApplicationErrorDomain` 7, `Locked`), hacia las 12:16Z y en un segundo intento. Se completa cuando el PO desbloquee el iPhone.
+- **Verificación en proceso nuevo.** Dos relanzamientos hacia las 12:16Z y 12:23Z fueron rechazados con el iPhone bloqueado (`FBSOpenApplicationErrorDomain` 7, `Locked`). Tras el aviso del PO «Desbloqueado y abierto en duplicar», el relanzamiento de las 12:27Z funcionó. Proceso nuevo `metrics-20261106T122711061-b4af5cb7a8fe40e797dfa5f566920a3c.jsonl`, arranque **2026-11-06T12:27:11.0788920Z**: `0.1.0+fab60ef dev`, `P0-calib-1`, **`6ecfdfa78cbb`**, `pending=0`. Export a las 12:27:24Z: **los tres archivos idénticos por `cmp` y SHA-256 al respaldo y a la referencia inicial** después del arranque. **Restauración verificada.**
 - Queda instalada la build `0.1.0+fab60ef dev` en lugar de la PROD de S2.
 
 ## 6. Siguiente paso, según la decisión del PO

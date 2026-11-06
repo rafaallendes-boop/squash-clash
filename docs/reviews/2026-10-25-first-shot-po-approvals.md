@@ -1845,4 +1845,4 @@ Worktree `firstshot-s3-feedback` retirado sin `--force` después de mover sus oc
 > Decisión final: S3 DETENIDO; CORRECCIÓN PUNTUAL DE AUDIO AUTORIZADA; NUEVA VALIDACIÓN SUJETA A REVISIÓN Y APROBACIÓN.
 > Procedamos con la corrección mínima y su revisión independiente.
 
-**Registro.** S3-A queda como evidencia parcial, no válida. Claude entregó al PO el encargo para Codex. La verificación de P0 en proceso nuevo sigue pendiente por iPhone bloqueado. Los respaldos se conservan en `Logs/evidence/s3-physical-20261106/`.
+**Registro.** S3-A queda como evidencia parcial, no válida. Claude entregó al PO el encargo para Codex. La verificación de P0 en proceso nuevo se completó a las 2026-11-06T12:27:11Z: `6ecfdfa78cbb`, cero pendientes y tres archivos idénticos al respaldo. Los respaldos se conservan en `Logs/evidence/s3-physical-20261106/`.
