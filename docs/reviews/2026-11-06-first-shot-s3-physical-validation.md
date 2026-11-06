@@ -145,3 +145,26 @@ El PO respondió después en ambos diálogos de los campos 1–4 (registro 14:59
 Campos 5–7 (2026-11-06T15:00:04Z), respectivamente: «Nada que señalar», «Se veía como un sonido de que fallaste» y «Se ve el movimiento de la raqueta al intentar golpear».
 
 Preguntas extra (2026-11-06T15:00:30Z). «¿Un perfecto se siente claramente mejor?» → «Nada que señalar». «¿Entendiste el resultado del golpe sin el panel?» → «si». Ante la aclaración neutral sobre vibración al irse al aire, respondió «Solo recuerdo vibración al hacer contacto».
+
+### S3-B · Intento tras bloqueo, conservado para revisión
+
+El PO declaró «Timbre activo, volumen multimedia audible y háptica del sistema activa». Precheck en proceso nuevo a las **15:00:47.3728180Z**, P0-calib-1, `6ecfdfa78cbb`, cero pendientes, sin gestos y con los tres archivos cotejados. Señal Mac 15:00:53Z. El export de monitoreo terminaba a las 15:01:11.4929510Z sin marca DEV ni gestos. A las 15:02:19Z el iPhone reportó `passcodeRequired=true`. Se retiró la señal y se pidió desbloquear y esperar un precheck nuevo. El PO informó a las 15:04:14Z «Terminé S3-B fueron 8 golpes ya que el golpe 7 y 8 hice lo que pedía el golpe 6» y «Está desbloqueado, puedo seguir ahora».
+
+El export mostró el mismo proceso previo al bloqueo. Tras reanudarse quedó un cierre DEV inequívoco en línea 38 a las **15:02:48.4243410Z**, `timeReal=123.1789326707347`, foco activo, sin pausa, DEV cerrado. La frontera permite describir lo ocurrido. El bloque requiere un nuevo precheck tras el bloqueo conforme a §3.2 de S2, por lo que este intento se conserva fuera de una cuota válida. El LaunchId 8 ya estaba en curso al cerrar DEV y registró una cancelación fuera de la ventana. Primer LaunchId posterior al cierre: 9.
+
+| Posición tras la frontera | LaunchId | Gesto | Resultado final / motivo | Aplicado | Presentación |
+| --- | ---: | --- | --- | --- | --- |
+| 1 | 9 | CanceledReturnToDeadZone | NoOrder / fin sin orden | No | — |
+| 2 | 10 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 3 | 11 | AbandonedNoPull | NoOrder / fin sin orden | No | — |
+| 4 | 12 | Swing | Failed / before-k-in | No | Failed / Air, v2 |
+| 5 | 13 | AbandonedNoPull | NoOrder / fin sin orden | No | — |
+| 6 | 14 | Swing | Failed / after-k-out | No | Failed / Late, v2 |
+
+Planes y gestos con hash `6ecfdfa78cbb`, cero pendientes. La ventana no contiene contactos aplicados, las tres presentaciones tienen Failed final y no hay discrepancias. Después de esas seis recepciones se registraron cuatro Swing fuera de ventana (LaunchId 15 y 18–20) y dos NoOrder (16–17). El registro tiene un intervalo sin líneas entre 15:03:21.6180570Z y 15:03:57.5625040Z. Se conserva el recuento declarado por el PO separado del observado. Export de fin con SHA-256 `1e2a2ff697272ff0c359d4de21ebed3f580e984218e5788a376aeb62ec6c85fe` y tres archivos cotejados.
+
+**Respuestas literales del intento S3-B.** Campos 1–4 (2026-11-06T15:05:34Z), respectivamente: «Todo ok», «Sonido al intentar golpear», «Nada que señalar» y «Vi como se mueve la raqueta al intentar golpear».
+
+Campos 5–7 (2026-11-06T15:06:49Z): «Nada que señalar» en los tres.
+
+El PO aclaró «Como el sonido del intento al aire» y confirmó «iPhone desbloqueado y ajustes iniciales repuestos». Se exportó antes de relanzar. Restauración verificada en proceso nuevo **15:07:20.5700240Z**, build `0.1.0+097eab9 dev`, P0-calib-1 `6ecfdfa78cbb`, cero pendientes y tres archivos cotejados contra ambos respaldos antes y después. El PO autorizó de forma expresa «Sí, autorizo repetir S3-B ahora». Se hizo un nuevo export de precheck en el proceso recién restaurado, plan LaunchId 9 a las 15:07:49.8770740Z, P0, cero pendientes, cero gestos y tres archivos cotejados. Señal Mac 15:07:53Z. El intento anterior queda separado.
