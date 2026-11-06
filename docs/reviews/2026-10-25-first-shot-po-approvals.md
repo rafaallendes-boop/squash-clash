@@ -1727,3 +1727,15 @@ La PR queda abierta y sin fusionar. La build, la instalación y el protocolo S3-
 > Corregir 1 y 3
 
 **Aplicado.** Solo cambia `S3LateRejectionTests.cs`: la prueba de la observación 1 se renombra y su comentario se aclara, y la observación 3 suelta en `Star()-.035` con una aserción de al menos una iteración. Claude hizo los cambios directamente, sin subagente Sonnet, por su tamaño; se declara como desviación del método y sin revisión independiente. Las observaciones 2 y 4 quedan registradas sin cambio; la 4 pasa a lo pendiente para el iPhone. Detalle y verificación en la sección F del [informe de implementación](2026-11-05-first-shot-s3-implementation.md#f-revisión-de-las-correcciones-y-observaciones-1-y-3). PR #34 sin fusionar hasta la decisión del PO. S4 y First Rally sin autorizar.
+
+## Autorización del PO para el MVP de AutoQA — 6 de noviembre de 2026, Chile
+
+Decisión literal del PO, Puerta 0 satisfecha.
+
+> GO CON CONDICIONES — AUTORIZO IMPLEMENTAR EL MVP DE AUTOQA. Apruebo la opción B: arnés PlayMode determinista dentro de Unity Editor, utilizando el juego real y sin modificaciones de producción. Apruebo expresamente el contrato de observables y escrituras de la sección C.4 del estudio técnico, incluyendo sus restricciones y APIs prohibidas. Codex será el ejecutor principal del MVP. Claude será el revisor técnico independiente. No quiero dos implementaciones paralelas. Unity y el oráculo determinista deben decidir PASS/FAIL, nunca el modelo de lenguaje.
+
+El PO prefiere Luna 6 Low para nivel 1, QA rutinario y resumen de artefactos. Prefiere Luna 6 Medium para nivel 2, investigación de fallos, precondiciones, repetibilidad y errores de ejecución a partir de evidencia, sin cambiar producción ni criterios. Para nivel 3, problemas de contratos, física, timing, arquitectura, integridad o alcance, prefiere Sol 6.1 High u Opus 5.5 High. La elección depende de la disponibilidad de cada herramienta. Los modelos operan fuera de la ejecución y no sustituyen la revisión independiente.
+
+La Puerta 1 exige una PR abierta y lista para Claude, coordinada por el PO. Cualquier fusión requiere autorización explícita posterior a la revisión, cotejo del head local y remoto, PR abierta sin borrador ni conflictos, y árboles limpios. El merge commit debe tener como segundo padre el head aprobado. Luego se sincroniza main y se retira el worktree sin forzar, previa preservación de ignorados.
+
+El estudio recibido coincide antes y después de la copia, SHA-256 `fac103f0bbdc5a3777103de8d59118a52707fea2eb83aabede3fb03410b386b0`. [Estudio técnico aprobado](2026-11-06-autoqa-technical-study.md).
