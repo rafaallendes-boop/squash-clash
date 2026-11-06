@@ -95,6 +95,7 @@ namespace SquashClash.EditorTools
                 var cameraObject = new GameObject("Main Camera");
                 cameraObject.tag = "MainCamera";
                 camera = cameraObject.AddComponent<Camera>();
+                cameraObject.AddComponent<AudioListener>();
             }
             camera.clearFlags = CameraClearFlags.SolidColor;
             camera.backgroundColor = new Color(0.035f, 0.09f, 0.12f);
