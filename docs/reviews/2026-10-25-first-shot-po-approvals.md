@@ -1712,3 +1712,18 @@ La PR queda abierta y sin fusionar. La build, la instalación y el protocolo S3-
 > Realiza tu los cambios, con un Sub agente que haga los cambios y luego tú revisas. Sigamos avanzando juntos y luego códex retoma
 
 **Método.** Claude (Opus) dirige y revisa. Un subagente Sonnet implementa. Codex retoma después. **La revisión de Claude de estas correcciones vuelve a no ser independiente.** Se recomienda una revisión independiente (Codex u otra sesión de Claude) del nuevo head antes de fusionar. PR #34 sigue sin fusionar. S4 y First Rally no están autorizados. Detalle en la sección E del [informe de implementación](2026-11-05-first-shot-s3-implementation.md#e-correcciones-previas-a-la-fusión).
+
+## Revisión de las correcciones de PR #34 y observaciones 1 y 3 — 5 de noviembre de 2026 (Chile)
+
+**Revisión.** Otra sesión de Claude revisó el delta `f5bc7a2..47be753`: **APROBADO CON OBSERVACIONES**, sin bloqueantes ni hallazgos importantes. Su independencia es parcial: no hizo estas correcciones, pero dirigió la implementación original de S3 hasta `f5bc7a2`. Volvió a ejecutar 546/546 EditMode y 353/353 PlayMode sobre `47be753`. Cuatro observaciones menores:
+
+1. el nombre de la prueba de inalcanzabilidad de `present-not-mappable` afirma más de lo que comprueba;
+2. el rechazo emitido por reflexión deja un estado que el host real no produce (artefacto de prueba ya declarado);
+3. el bucle de intención de `ScheduledThenRejected` se ejecuta una sola vez y podría no ejecutarse sin que nada falle;
+4. un golpe aplicado durante la pausa suena y vibra, y deja el destello congelado; la raqueta espera a reanudar y «Paso» no avanza las vistas.
+
+**Decisión del PO, literal:**
+
+> Corregir 1 y 3
+
+**Aplicado.** Solo cambia `S3LateRejectionTests.cs`: la prueba de la observación 1 se renombra y su comentario se aclara, y la observación 3 suelta en `Star()-.035` con una aserción de al menos una iteración. Claude hizo los cambios directamente, sin subagente Sonnet, por su tamaño; se declara como desviación del método y sin revisión independiente. Las observaciones 2 y 4 quedan registradas sin cambio; la 4 pasa a lo pendiente para el iPhone. Detalle y verificación en la sección F del [informe de implementación](2026-11-05-first-shot-s3-implementation.md#f-revisión-de-las-correcciones-y-observaciones-1-y-3). PR #34 sin fusionar hasta la decisión del PO. S4 y First Rally sin autorizar.

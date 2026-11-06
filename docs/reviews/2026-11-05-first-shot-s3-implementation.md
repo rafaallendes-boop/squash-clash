@@ -79,6 +79,32 @@ Revisión independiente de `f5bc7a2`: APROBADO CON OBSERVACIONES, sin bloqueante
 - Evidencia local ignorada en `Logs/evidence/s3-feedback/E/` (T1, T2, T3, final).
 - PR #34 sin fusionar. S4 y First Rally sin autorizar.
 
+## F. Revisión de las correcciones y observaciones 1 y 3
+
+Otra sesión de Claude revisó el delta `f5bc7a2..47be753`: **APROBADO CON OBSERVACIONES**, sin bloqueantes ni hallazgos importantes. Su independencia es parcial: no hizo estas correcciones, pero dirigió la implementación original de S3 hasta `f5bc7a2`. Volvió a ejecutar 546/546 EditMode y 353/353 PlayMode sobre `47be753`, sin errores CS. No ejecutó `check-release` de nuevo. Cuatro observaciones menores:
+
+1. `PresentNotMappable_IsNotReachableThroughPublicHostApi_Documented` solo comprueba que un golpe programado normal no da ese motivo. La inalcanzabilidad se apoya en la lectura del código, no en esa prueba.
+2. El rechazo emitido por reflexión deja el golpe programado en el host. Al pasar el paso de contacto, el host golpea y el controlador sobrescribe con `FillSolution` el registro ya cerrado como SystemFault. Es un artefacto de la prueba, no una ruta de producto, y la sección E ya lo declaraba.
+3. En `ScheduledThenRejected`, soltar en `Star()-.02` deja unos 1,56 pasos de anticipo y el bucle de intención se ejecuta una sola vez. Si cambia el tempo, podría no ejecutarse sin que nada falle.
+4. Durante la pausa `ProcessPending` sigue funcionando. Si se aplica un golpe en pausa, suenan el impacto y la háptica, y el destello aparece y queda congelado. La raqueta no se mueve hasta reanudar. «Paso» avanza la pelota pero no las vistas, igual que la cámara.
+
+**Decisión del PO, literal:** «Corregir 1 y 3».
+
+### Cambios (solo pruebas)
+
+- **Observación 1.** La prueba pasa a llamarse `RegularScheduledShot_IsNotRejectedAsPresentNotMappable`. El comentario dice ahora que solo comprueba un golpe normal y que la inalcanzabilidad se apoya en la lectura del código. Aserciones sin cambios.
+- **Observación 3.** `ScheduledThenRejected` suelta en `Star()-.035`, todavía dentro de A, y afirma que el bucle de intención comprobó al menos un fotograma del host antes del contacto.
+- **Mutación.** Con el bucle limitado a cero iteraciones, las dos pruebas que usan `ScheduledThenRejected` fallan por la nueva aserción (2/5 en `S3LateRejection`). Se revirtió.
+- **Método.** Claude hizo estos dos cambios directamente, sin subagente Sonnet, por su tamaño. Se declara como desviación del método del PO. Esta corrección no tiene revisión independiente.
+- **Observaciones 2 y 4.** Quedan registradas sin cambio. La 4 se añade a lo pendiente para el iPhone.
+
+### Verificación de F
+
+- Focal `S3LateRejection`: 5/5 antes de la mutación.
+- Regresión fresca: **546/546 EditMode y 353/353 PlayMode**, sin errores CS, iniciada a las 02:08:53Z del 6 de noviembre (UTC) con el cambio ya aplicado; el log imprime `c0d8ec7050e0`. Transitorios de `ProjectSettings` restaurados después.
+- `check-release` no se repitió. El cambio toca solo un archivo de pruebas de PlayMode, excluido de ambos Players. La evidencia de release sigue siendo la de `f21ed00`.
+- Sin cambios de producto, defaults, presets, `ProjectSettings/`, `Packages/` ni `scripts/`. Evidencia local ignorada en `Logs/evidence/s3-review2-obs/`.
+
 ## Fuera de alcance, conforme a la decisión 9
 
 Sonidos de frontis, laterales y tin; audio de menor latencia y comparación Default/Best Latency; instrumentación de latencias y costes; sesiones de 15 min; calidad causal (3.1); superposición y poses causales (3.3). Sin cambios de solver, Aim, SL, SL5/SL6, P2, física, M2-4, `pullFullMm`, cámara, ayudas, tempo, spec, propuesta r2 ni planes. PR #32 sin tocar.
@@ -91,7 +117,8 @@ El Editor acredita peticiones, ausencia de duplicados, coherencia con rollback y
 - legibilidad del destello (unos 18 cm) y de la raqueta (mismo material que la cápsula);
 - si la preparación del swing sugiere un contacto falso;
 - el desfase de la raqueta, que llega al punto de contacto 0,06 s después del frame en que suenan el impacto y la háptica;
-- la oclusión.
+- la oclusión;
+- un golpe aplicado durante la pausa: suenan el impacto y la háptica, el destello queda congelado y la raqueta no se mueve hasta reanudar; «Paso» avanza la pelota pero no las vistas (observación 4 de F).
 
 El perfil vigente vence el **2026-11-12T13:55:07Z (10:55 Chile)**; renovarlo antes de instalar si la sesión cae después.
 
