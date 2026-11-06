@@ -168,3 +168,22 @@ Planes y gestos con hash `6ecfdfa78cbb`, cero pendientes. La ventana no contiene
 Campos 5–7 (2026-11-06T15:06:49Z): «Nada que señalar» en los tres.
 
 El PO aclaró «Como el sonido del intento al aire» y confirmó «iPhone desbloqueado y ajustes iniciales repuestos». Se exportó antes de relanzar. Restauración verificada en proceso nuevo **15:07:20.5700240Z**, build `0.1.0+097eab9 dev`, P0-calib-1 `6ecfdfa78cbb`, cero pendientes y tres archivos cotejados contra ambos respaldos antes y después. El PO autorizó de forma expresa «Sí, autorizo repetir S3-B ahora». Se hizo un nuevo export de precheck en el proceso recién restaurado, plan LaunchId 9 a las 15:07:49.8770740Z, P0, cero pendientes, cero gestos y tres archivos cotejados. Señal Mac 15:07:53Z. El intento anterior queda separado.
+
+### S3-B · Repetición autorizada
+
+Cierre DEV aceptado y completado en línea 67, **15:08:19.9638910Z**, `timeReal=61.52772345823357`, foco activo, sin pausa y DEV cerrado. Los planes avanzaron entre el precheck y la frontera. El PO avisó «Terminé S3-B» y se exportó antes de relanzar.
+
+| Recepción | LaunchId | Gesto | Resultado final / motivo | Aplicado | Presentación |
+| --- | ---: | --- | --- | --- | --- |
+| 1 | 17 | CanceledReturnToDeadZone | NoOrder / fin sin orden | No | — |
+| 2 | 18 | CanceledReturnToDeadZone | NoOrder / fin sin orden | No | — |
+| 3 | 19 | Swing | Failed / before-k-in | No | Failed / Air, v2 |
+| 4 | 20 | AbandonedNoPull | NoOrder / fin sin orden | No | — |
+| 5 | 21 | Swing | Failed / before-k-in | No | Failed / Air, v2 |
+| 6 | 22 | Swing | Failed / after-k-out | No | Failed / Late, v2 |
+
+Tres presentaciones, todas con Failed final y sin contactos aplicados. Cero discrepancias. Los planes y gestos cotejaron `6ecfdfa78cbb`, cero pendientes. LaunchId 23 aparece como plan fuera de cuota, sin gesto en el export de fin. Los tres archivos coinciden con respaldo y referencia inicial. SHA-256 `3b977bcf84b1504dfc6bb5824a89162d0466dce69d9c1938c0a0c47dae2a4856`.
+
+**Respuestas literales.** Campos 1–4 (2026-11-06T15:09:52Z): «todo ok», «en las que pego al aire suena como que le pegaste al aire», «no se sintió» y «se mueve la raqueta al intentar golpear».
+
+Campos 5–7 (2026-11-06T15:10:44Z): «Nada que señalar», «Nada que señalar» y «cuando se intenta golpear la pelota, se mueve la raqueta».
