@@ -29,7 +29,7 @@ Si `autoqa-operator` no está disponible en esta sesión (por ejemplo, se creó 
 2. Ejecuta tú el mismo verificador con los mismos parámetros que usó el operador (`--mode read` y, si lo informó, `--exit-code` y `--run-number`):
 
    ```bash
-   awk '/^# >>> autoqa-check v2/{f=1;next} /^# <<< autoqa-check v2/{f=0} f' "$AGENT_FILE" \
+   awk '/^# >>> autoqa-check v3/{f=1;next} /^# <<< autoqa-check v3/{f=0} f' "$AGENT_FILE" \
      | python3 -I - --run-dir "$RUN_DIR" --mode read [--exit-code N --run-number N]
    ```
 
