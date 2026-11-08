@@ -73,8 +73,10 @@ No hace:
 
 ### Nivel 2 — investigador (`autoqa-investigator`, Sonnet)
 
+Herramientas: solo `Read`, `Grep` y `Glob`, sin Bash (decisión del PO del 2026-11-08, opción B). El nivel 2 es de solo lectura por herramientas.
+
 Hace:
-- lee `summary.json`, los intentos no PASS de `attempts.jsonl`, los JSONL del juego y, si hace falta, escenarios, documentación de Codex e historial de git;
+- lee `summary.json`, los intentos no PASS de `attempts.jsonl`, los JSONL del juego y, si hace falta, escenarios y documentación de Codex;
 - separa hechos (con cita a archivo y campo o línea) de hipótesis (con lo que las confirmaría o refutaría);
 - recomienda una sola opción: `reoperar` (solo error de entorno con el reintento sin usar), `escalar-nivel-3` o `decision-PO`.
 
@@ -83,7 +85,7 @@ No hace:
 - proponer cambiar una expectativa para que un intento pase;
 - aprobar cambios;
 - proponer un nivel menor que el del operador;
-- ejecutar Unity ni scripts del proyecto.
+- ejecutar comandos: no tiene Bash, así que no hay `jq`, `shasum` ni historial de git. Si una causa exige un comando, recomienda `escalar-nivel-3` y anota el comando como evidencia pendiente.
 
 ### Nivel 3 — parada
 
@@ -139,12 +141,16 @@ Cambiar el verificador requiere aprobación del PO, como cualquier otro criterio
 
 2. La salida debe estar contenida, carácter por carácter, en el resumen del operador. `/autoqa` lo hace automáticamente comparando los bloques JSON.
 3. Cada SHA-256 citado debe coincidir con `shasum -a 256` del archivo.
-4. Cada valor de un hecho del investigador debe encontrarse en el archivo y campo que cita, por ejemplo con `jq`.
+4. Cada valor de un hecho del investigador debe encontrarse en el archivo y campo que cita, por ejemplo con `jq` (lo comprueba quien revisa, no el investigador).
 5. Un `runId` que empieza por `SYNTHETIC-` o `"synthetic": true` es un fixture de prueba, nunca evidencia.
 
 ## Limitaciones
 
-- **Bash no se puede restringir por comando** en el frontmatter de un subagente: `tools` acepta o quita la herramienta completa. La regla de solo lectura del investigador, y la de no escribir del operador, dependen de las instrucciones. Una garantía técnica exigiría reglas `permissions.deny` o hooks, que están fuera del alcance de esta entrega y requieren decisión del PO. Las verificaciones comprueban después que `git status` y los SHA-256 no cambien.
+- **Bash no se puede restringir por comando** en el frontmatter de un subagente: `tools` acepta o quita la herramienta completa. Decisión del PO del 2026-11-08, «Me parece la opción B»:
+  - el investigador no tiene Bash, así que el nivel 2 es de solo lectura por herramientas;
+  - el operador conserva Bash porque lo necesita para ejecutar `scripts/autoqa.sh` y el verificador. Su regla de no escribir depende de las instrucciones, y las verificaciones comprueban después que `git status` y los SHA-256 no cambien;
+  - una lista blanca técnica (hook o `permissions.deny`) queda fuera de alcance, para una posible PR futura. `.claude/settings*.json` no se toca.
+- Si el agente `autoqa-investigator` no está cargado, `/autoqa` usa un `general-purpose` con Sonnet, que sí tiene Bash y solo lo evita por instrucciones. La skill lo dice en la entrega.
 - El verificador detecta el gate de `report.md` por texto (`gate` o `RESULT` seguidos del veredicto). Si el informe real usa otra forma, lo indica como nota y no puede compararlo.
 - La detección de texto con forma de instrucción es heurística: lista frases sospechosas, no garantiza encontrarlas todas. La protección principal es que el operador solo copia la salida del verificador.
 - Los fixtures sintéticos prueban el comportamiento de los agentes, no el arnés. Ninguna corrida real se simuló con fixtures.

@@ -39,7 +39,7 @@ Si `autoqa-operator` no está disponible en esta sesión (por ejemplo, se creó 
 ## 4. Según el nivel
 
 - **Nivel 1.** Entrega el resumen del operador tal cual. Si `gatePass` es `true`, no hace falta intervención. Si la corrida es SYNTHETIC, dilo.
-- **Nivel 2.** Lanza el subagente `autoqa-investigator` (o, si no está disponible, `general-purpose` con `model: sonnet` y el cuerpo de `.claude/agents/autoqa-investigator.md`) con `RUN_DIR`, `REPO` y el bloque del operador. Comprueba su bloque `autoqa-investigator-result`:
+- **Nivel 2.** Lanza el subagente `autoqa-investigator`, que no tiene Bash (o, si no está disponible, `general-purpose` con `model: sonnet` y el cuerpo de `.claude/agents/autoqa-investigator.md`; ese sustituto sí tiene Bash y solo lo evita por instrucciones, así que dilo en la entrega) con `RUN_DIR`, `REPO` y el bloque del operador. Comprueba su bloque `autoqa-investigator-result`:
   - `proposedLevel` menor que `LEVEL` o `filesModified` distinto de `false` → ignora la propuesta y trata la corrida como nivel 3;
   - `git -C "$REPO" status --porcelain` debe seguir igual que antes del investigador; si cambió, nivel 3.
 
