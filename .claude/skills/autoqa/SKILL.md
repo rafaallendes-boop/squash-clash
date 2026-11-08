@@ -29,11 +29,11 @@ Si `autoqa-operator` no está disponible en esta sesión (por ejemplo, se creó 
 2. Ejecuta tú el mismo verificador con los mismos parámetros que usó el operador (`--mode read` y, si lo informó, `--exit-code` y `--run-number`):
 
    ```bash
-   awk '/^# >>> autoqa-check v1/{f=1;next} /^# <<< autoqa-check v1/{f=0} f' "$AGENT_FILE" \
+   awk '/^# >>> autoqa-check v2/{f=1;next} /^# <<< autoqa-check v2/{f=0} f' "$AGENT_FILE" \
      | python3 -I - --run-dir "$RUN_DIR" --mode read [--exit-code N --run-number N]
    ```
 
-3. Compara campo a campo `runId`, `gate`, `summaryEscalationLevel`, `operatorLevel`, `gatePass`, `incoherences` y `sha256` de ambos bloques. Si difieren, el operador alteró datos: **nivel 3** («resumen del operador no coincide con el verificador»).
+3. Compara campo a campo `runId`, `gate`, `summaryEscalationLevel`, `operatorLevel`, `gatePass`, `incoherences`, `sha256`, `expectedExitCode`, `acceptableExitCodes` y `hashMismatches` de ambos bloques. Si difieren, el operador alteró datos: **nivel 3** («resumen del operador no coincide con el verificador»).
 4. `LEVEL` = `operatorLevel` verificado, o 3 si los pasos 1 o 3 fallaron. Nunca menor.
 
 ## 4. Según el nivel
@@ -52,7 +52,7 @@ Si `autoqa-operator` no está disponible en esta sesión (por ejemplo, se creó 
 ## Escalamiento AutoQA nivel 3 — <runId>
 - Destino: Codex o Claude principal, según asigne el PO. No se envió a nadie.
 - RUN_DIR y summary.json (ruta y SHA-256 calculado)
-- gitHash · dirty · comando · código de salida (si lo hubo)
+- gitHash · dirty · comando · código de salida (si lo hubo) y el que corresponde a la evidencia (`expectedExitCode`)
 - gate · escalationLevel de summary.json · nivel final
 - escalationReasons (copiadas de summary.json)
 - Incoherencias del operador o de la comprobación (copiadas)
