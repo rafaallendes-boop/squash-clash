@@ -61,7 +61,7 @@ Antes de ejecutar, el operador comprueba que exista `scripts/autoqa.sh` y que ni
 
 Hace:
 - ejecuta el script una vez, o lee un `RUN_DIR`;
-- pasa el verificador determinista incluido en su propio archivo (bloque `autoqa-check v2`, extraído con `awk` y ejecutado con `python3 -I`, solo biblioteca estándar);
+- pasa el verificador determinista incluido en su propio archivo (bloque `autoqa-check v3`, extraído con `awk` y ejecutado con `python3 -I`, solo biblioteca estándar);
 - devuelve la salida del verificador carácter por carácter y una sección breve de notas (comandos, códigos, reintento);
 - ejecuta el único reintento solo si el verificador lo declara elegible.
 
@@ -104,7 +104,7 @@ El verificador es el único cálculo del operador. Solo copia valores, compara S
 | SHA-256 de `attempts.jsonl`, `report.md` y cada JSONL del juego declarado, en el resumen y en cada intento | Incoherencia, nivel 3 |
 | `report.md` no declara un gate o `RESULT` distinto del de `summary.json` | Incoherencia, nivel 3 |
 | Recuentos por veredicto y canario de `summary.json` iguales a los de `attempts.jsonl`, con `runId` igual en cada intento | Incoherencia, nivel 3 |
-| Integridad explícitamente `false` o canario `PASS` con nivel distinto de 3 | Incoherencia, nivel 3 |
+| Integridad explícitamente `false`, o canario que no falla, con nivel distinto de 3. El canario no falla si `observed` es `PASS`, o si es INCONCLUSIVE, NOT_EVALUATED o `null` en una corrida sin `executionError` ni gate ERROR | Incoherencia, nivel 3 |
 | Hash efectivo inesperado en un intento (`config.hashMatch=false` o `effectiveHash` distinto de `expectedHash`) con nivel distinto de 3, o con `integrity.hashesVerified=true` | Incoherencia, nivel 3 (decisión del PO del 2026-11-08: es fallo de integridad, nivel 3 y salida 3) |
 | Gate, recuentos, determinismo o `executionError` no PASS con nivel 1 | Incoherencia, nivel 3 |
 | En modo `run`, el código de salida del script es uno de los que corresponden a la evidencia (ver abajo), y 0 solo con nivel 1 | Incoherencia, nivel 3 |
@@ -116,7 +116,7 @@ El verificador es el único cálculo del operador. Solo copia valores, compara S
 
 | Categoría | Código |
 | --- | --- |
-| Integridad: algún campo de `integrity` en `false`, hash efectivo inesperado en un intento, SHA-256 de evidencia que no coincide o falta, o canario que no falla | 3 |
+| Integridad: algún campo de `integrity` en `false`, hash efectivo inesperado en un intento, SHA-256 de evidencia que no coincide o falta, o canario que no falla (con la misma excepción) | 3 |
 | `executionError` o gate ERROR | 4 |
 | FAIL en el gate o en los recuentos, o determinismo `false` | 1 |
 | INCONCLUSIVE o NOT_EVALUATED en el gate o en los recuentos | 2 |
@@ -133,7 +133,7 @@ Cambiar el verificador requiere aprobación del PO, como cualquier otro criterio
 1. Vuelve a ejecutar el verificador sobre el mismo `RUN_DIR`:
 
    ```bash
-   awk '/^# >>> autoqa-check v2/{f=1;next} /^# <<< autoqa-check v2/{f=0} f' .claude/agents/autoqa-operator.md \
+   awk '/^# >>> autoqa-check v3/{f=1;next} /^# <<< autoqa-check v3/{f=0} f' .claude/agents/autoqa-operator.md \
      | python3 -I - --run-dir "<RUN_DIR>" --mode read
    ```
 
@@ -152,7 +152,7 @@ Cambiar el verificador requiere aprobación del PO, como cualquier otro criterio
 
 ## Supuestos sobre el esquema
 
-Pendientes de contrastar con la implementación real de Codex. Por decisión del PO del 2026-11-08, cuando exista el `summary.json` real se cotejan estos nombres de campo (`counts`, `canary.observed`, `gameMetrics`, `executionError.kind`, la línea `RUN_DIR=` y la línea `gate:` de `report.md`) y la plantilla de resumen del verificador con la de `docs/autoqa/OPERATIONS.md`. **Si difieren, manda lo que implemente Codex:** se adapta el verificador y se registra la diferencia.
+Pendientes de contrastar con la implementación real de Codex. Por decisión del PO del 2026-11-08, cuando exista el `summary.json` real se cotejan estos nombres de campo (`counts`, `canary.observed`, `gameMetrics`, `executionError.kind`, la línea `RUN_DIR=`, la línea `gate:` de `report.md`, `attempts[].config.effectiveHash`, `attempts[].config.expectedHash`, `attempts[].config.hashMatch`, `integrity.hashesVerified` y el valor de gate `ERROR`) y la plantilla de resumen del verificador con la de `docs/autoqa/OPERATIONS.md`. **Si difieren, manda lo que implemente Codex:** se adapta el verificador y se registra la diferencia.
 
 | Supuesto | Origen |
 | --- | --- |
@@ -166,6 +166,9 @@ Pendientes de contrastar con la implementación real de Codex. Por decisión del
 | Con canario PASS, el gate de los 15 intentos puede ser PASS y el nivel 3 | No definido. El operador nunca declara éxito con nivel distinto de 1 |
 | `report.md` declara el gate en una línea `Gate: <veredicto>` o `RESULT: <veredicto>` | No definido. Si no se reconoce, se anota y no se compara |
 | Cada intento declara `config.effectiveHash`, `config.expectedHash` y `config.hashMatch` | Esquema `autoqa-attempt/1` del prompt de Codex |
+| `integrity.hashesVerified` es el campo que refleja la comprobación de hash de los intentos | Nombre del prompt de Codex; su relación con `config.hashMatch` no está definida |
+| Una corrida que no llega a ejecutarse tiene `gate: "ERROR"` y `executionError` no nulo | La política lista ERROR entre los valores de gate sin definir cuándo se usa |
+| Un canario sin resultado concluyente cuenta como «no falla» (nivel 3), salvo con `executionError` o gate ERROR, donde la ausencia la explica el error (nivel 2, salida 4) | La política dice «nivel 3 … si el canario NO falla». La excepción es supuesto de Claude, pendiente del PO |
 | Un hash efectivo inesperado da `integrity.hashesVerified=false`, nivel 3 y salida 3, aunque el intento sea INCONCLUSIVE | Decisión del PO del 2026-11-08. Una precondición que no es de integridad, como la pantalla, da nivel 2 y salida 2 |
 | `determinism` de un escenario con una repetición INCONCLUSIVE es `null` (no comparable), no `false` | No definido. `false` cuenta como determinismo distinto (salida 1) |
 | Con varias categorías de salida sin integridad, el arnés elige por la precedencia 4 > 1 > 2 | No definido. El verificador acepta cualquiera de las categorías presentes |
