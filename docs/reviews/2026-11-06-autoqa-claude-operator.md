@@ -143,10 +143,20 @@ A pedido del PO, la sesión de Claude que lleva la PR #36 revisó el head `025dd
 
 Cambios en `v3`:
 - Un canario con `expectedFail=true` que no da FAIL es fallo de integridad: nivel 3 y salida 3. Si `summary.json` declara otro nivel, es incoherencia y sube a 3.
-- **Excepción, supuesto de Claude pendiente del PO:** si la corrida no se ejecutó (`executionError` o gate ERROR), un canario sin resultado no cuenta, porque el error ya explica la ausencia. Así F5 sigue en nivel 2, salida 4 y reintento elegible. Un canario en `PASS` cuenta siempre.
+- **Excepción, confirmada por el PO (ver abajo):** si la corrida no se ejecutó (`executionError` o gate ERROR), un canario sin resultado no cuenta, porque el error ya explica la ausencia. Así F5 sigue en nivel 2, salida 4 y reintento elegible. Un canario en `PASS` cuenta siempre.
 - **F10, nuevo:** gate PASS y nivel 1 en `summary.json` con el canario INCONCLUSIVE. El verificador lo sube a 3, salida 3.
 - F1–F9 idénticos byte a byte. Los diez operadores se relanzaron con `v3` (prompt con SHA-256 `91164c213f3c6fc421c16d067c0500e769704f9d28701b8f139a66f444ab1d4c`). Las investigaciones de F2, F5, F7 y F9 se reutilizaron: sus fixtures y el investigador no cambiaron.
 - Supuestos añadidos a la guía: `attempts[].config.effectiveHash`, `expectedHash` y `hashMatch`, `integrity.hashesVerified` y el valor de gate `ERROR`.
+
+Decisión del PO del 2026-11-08, comunicada por la sesión de Claude de la PR #36. Pregunta formulada:
+
+> «¿Confirmas que, si la corrida no llegó a ejecutarse, un canario sin resultado no suba a nivel 3?»
+
+Respuesta literal del PO:
+
+> «Sí, confirmo».
+
+Alcance: con `executionError` o gate ERROR, un canario INCONCLUSIVE, NOT_EVALUATED o `null` no cuenta como integridad, y F5 queda en nivel 2, salida 4, con el reintento disponible. Un canario `PASS` sigue dando siempre nivel 3. El verificador `v3` ya lo implementaba así: no hubo cambios de código.
 
 Observación sin cambios: el operador de F10 puso su sección de notas antes de la salida del verificador, en lugar de después. La salida está completa y carácter por carácter, pero el orden no es el que pide el agente. La comprobación programática verifica que la salida esté contenida, no el orden.
 
@@ -156,7 +166,6 @@ Observación sin cambios: el operador de F10 puso su sección de notas antes de 
 
 - Confirmación del PO de la equivalencia de modelos.
 - Decisión del PO sobre la restricción de Bash.
-- Confirmación del PO de la excepción del canario: sin resultado en una corrida que no se ejecutó (`executionError` o gate ERROR) no cuenta como integridad.
 - `/autoqa` con los agentes reales tras reabrir la sesión.
 - Corrida real y contraste de los supuestos del esquema y de la plantilla de resumen con `summary.json` y `OPERATIONS.md` de Codex, cuando la PR #36 tenga el arnés. Si difieren, manda la implementación de Codex.
 - Revisión independiente de esta entrega, asignada por el PO (Codex u otra sesión de Claude).
