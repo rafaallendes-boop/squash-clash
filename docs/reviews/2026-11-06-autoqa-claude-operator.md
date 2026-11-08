@@ -24,7 +24,7 @@ Archivos creados, ninguno más:
 
 Sin cambios en `Tests/AutoQA/**`, `scripts/`, `Assets/`, `ProjectSettings/`, `Packages/`, `.claude/settings*.json`, `AGENTS.md`, el registro de aprobaciones ni los documentos de Codex. Sin intervención en PR #32, S3, S4, First Rally ni First Match. Sin iPhone. Sin mensajes a Codex.
 
-**Equivalencia de modelos, propuesta pendiente de confirmación del PO antes de fusionar:** nivel 1 Haiku 5.5, nivel 2 Sonnet 5.5, nivel 3 Opus 5.5 High en la sesión principal.
+**Equivalencia de modelos, confirmada por el PO el 2026-11-08:** nivel 1 Haiku 5.5, nivel 2 Sonnet 5.5, nivel 3 Opus 5.5 High en la sesión principal. Respuesta literal del PO, comunicada por la sesión principal de AutoQA: «Confirmo los modelos.» Hasta entonces era una propuesta de Claude.
 
 ## Contrato consumido y diferencias con la implementación de Codex
 
@@ -158,13 +158,16 @@ Respuesta literal del PO:
 
 Alcance: con `executionError` o gate ERROR, un canario INCONCLUSIVE, NOT_EVALUATED o `null` no cuenta como integridad, y F5 queda en nivel 2, salida 4, con el reintento disponible. Un canario `PASS` sigue dando siempre nivel 3. El verificador `v3` ya lo implementaba así: no hubo cambios de código.
 
+Segunda confirmación del PO ese mismo día, comunicada por la sesión principal de AutoQA y coherente con la anterior:
+
+> «el canario sin ejecución está correcto»
+
 Observación sin cambios: el operador de F10 puso su sección de notas antes de la salida del verificador, en lugar de después. La salida está completa y carácter por carácter, pero el orden no es el que pide el agente. La comprobación programática verifica que la salida esté contenida, no el orden.
 
 **Contraste con la implementación real: pendiente.** El 8 de noviembre la PR #36 sigue en `62bd6ad4a7260551cf59606f292a7a350df29636`, sin arnés, `summary.json` real ni `OPERATIONS.md`. Cuando existan, se cotejarán los nombres que asume el verificador (`counts`, `canary.observed`, `gameMetrics`, `executionError.kind`, `RUN_DIR=`, la línea `gate:` de `report.md`, `attempts[].config.effectiveHash`, `expectedHash` y `hashMatch`, `integrity.hashesVerified` y el gate `ERROR`) y su plantilla de resumen con la de `OPERATIONS.md`. Si difieren, manda lo que implemente Codex.
 
 ## Pendiente
 
-- Confirmación del PO de la equivalencia de modelos.
 - Decisión del PO sobre la restricción de Bash.
 - `/autoqa` con los agentes reales tras reabrir la sesión.
 - Corrida real y contraste de los supuestos del esquema y de la plantilla de resumen con `summary.json` y `OPERATIONS.md` de Codex, cuando la PR #36 tenga el arnés. Si difieren, manda la implementación de Codex.

@@ -33,7 +33,7 @@ A la fecha de esta entrega, la PR de Codex (`autoqa/mvp`) solo registra una para
 
 ## Equivalencia de modelos
 
-**Propuesta de Claude, pendiente de confirmación del PO antes de fusionar.** La política del PO nombra Luna 6 Low, Luna 6 Medium y Sol 6.1 High u Opus 5.5 High. En Claude Code se propone:
+**Confirmada por el PO el 2026-11-08** («Confirmo los modelos.»), comunicada por la sesión principal de AutoQA. Era una propuesta de Claude. La política del PO nombra Luna 6 Low, Luna 6 Medium y Sol 6.1 High u Opus 5.5 High. En Claude Code se usa:
 
 | Nivel | Política del PO | Claude Code |
 | --- | --- | --- |
@@ -168,7 +168,7 @@ Pendientes de contrastar con la implementación real de Codex. Por decisión del
 | Cada intento declara `config.effectiveHash`, `config.expectedHash` y `config.hashMatch` | Esquema `autoqa-attempt/1` del prompt de Codex |
 | `integrity.hashesVerified` es el campo que refleja la comprobación de hash de los intentos | Nombre del prompt de Codex; su relación con `config.hashMatch` no está definida |
 | Una corrida que no llega a ejecutarse tiene `gate: "ERROR"` y `executionError` no nulo | La política lista ERROR entre los valores de gate sin definir cuándo se usa |
-| Un canario sin resultado concluyente cuenta como «no falla» (nivel 3), salvo con `executionError` o gate ERROR, donde la ausencia la explica el error (nivel 2, salida 4, reintento disponible). Un canario `PASS` da siempre nivel 3 | La política dice «nivel 3 … si el canario NO falla». La excepción es **decisión del PO del 2026-11-08** («Sí, confirmo»), comunicada por la sesión de la PR #36 |
+| Un canario sin resultado concluyente cuenta como «no falla» (nivel 3), salvo con `executionError` o gate ERROR, donde la ausencia la explica el error (nivel 2, salida 4, reintento disponible). Un canario `PASS` da siempre nivel 3 | La política dice «nivel 3 … si el canario NO falla». La excepción es **decisión del PO del 2026-11-08**: «Sí, confirmo», comunicada por la sesión de la PR #36, y de nuevo «el canario sin ejecución está correcto», comunicada por la sesión principal de AutoQA |
 | Un hash efectivo inesperado da `integrity.hashesVerified=false`, nivel 3 y salida 3, aunque el intento sea INCONCLUSIVE | Decisión del PO del 2026-11-08. Una precondición que no es de integridad, como la pantalla, da nivel 2 y salida 2 |
 | `determinism` de un escenario con una repetición INCONCLUSIVE es `null` (no comparable), no `false` | No definido. `false` cuenta como determinismo distinto (salida 1) |
 | Con varias categorías de salida sin integridad, el arnés elige por la precedencia 4 > 1 > 2 | No definido. El verificador acepta cualquiera de las categorías presentes |
