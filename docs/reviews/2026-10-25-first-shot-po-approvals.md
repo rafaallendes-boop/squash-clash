@@ -1727,3 +1727,76 @@ La PR queda abierta y sin fusionar. La build, la instalación y el protocolo S3-
 > Corregir 1 y 3
 
 **Aplicado.** Solo cambia `S3LateRejectionTests.cs`: la prueba de la observación 1 se renombra y su comentario se aclara, y la observación 3 suelta en `Star()-.035` con una aserción de al menos una iteración. Claude hizo los cambios directamente, sin subagente Sonnet, por su tamaño; se declara como desviación del método y sin revisión independiente. Las observaciones 2 y 4 quedan registradas sin cambio; la 4 pasa a lo pendiente para el iPhone. Detalle y verificación en la sección F del [informe de implementación](2026-11-05-first-shot-s3-implementation.md#f-revisión-de-las-correcciones-y-observaciones-1-y-3). PR #34 sin fusionar hasta la decisión del PO. S4 y First Rally sin autorizar.
+
+## Autorización del PO para el MVP de AutoQA — 6 de noviembre de 2026, Chile
+
+Decisión literal del PO, Puerta 0 satisfecha.
+
+> GO CON CONDICIONES — AUTORIZO IMPLEMENTAR EL MVP DE AUTOQA. Apruebo la opción B: arnés PlayMode determinista dentro de Unity Editor, utilizando el juego real y sin modificaciones de producción. Apruebo expresamente el contrato de observables y escrituras de la sección C.4 del estudio técnico, incluyendo sus restricciones y APIs prohibidas. Codex será el ejecutor principal del MVP. Claude será el revisor técnico independiente. No quiero dos implementaciones paralelas. Unity y el oráculo determinista deben decidir PASS/FAIL, nunca el modelo de lenguaje.
+
+El PO prefiere Luna 6 Low para nivel 1, QA rutinario y resumen de artefactos. Prefiere Luna 6 Medium para nivel 2, investigación de fallos, precondiciones, repetibilidad y errores de ejecución a partir de evidencia, sin cambiar producción ni criterios. Para nivel 3, problemas de contratos, física, timing, arquitectura, integridad o alcance, prefiere Sol 6.1 High u Opus 5.5 High. La elección depende de la disponibilidad de cada herramienta. Los modelos operan fuera de la ejecución y no sustituyen la revisión independiente.
+
+La Puerta 1 exige una PR abierta y lista para Claude, coordinada por el PO. Cualquier fusión requiere autorización explícita posterior a la revisión, cotejo del head local y remoto, PR abierta sin borrador ni conflictos, y árboles limpios. El merge commit debe tener como segundo padre el head aprobado. Luego se sincroniza main y se retira el worktree sin forzar, previa preservación de ignorados.
+
+El estudio recibido coincide antes y después de la copia, SHA-256 `fac103f0bbdc5a3777103de8d59118a52707fea2eb83aabede3fb03410b386b0`. [Estudio técnico aprobado](2026-11-06-autoqa-technical-study.md).
+
+
+## Continuación del MVP de AutoQA — decisiones del PO, 2026-11-08 (Chile)
+
+Literales del PO y consecuencias comunicadas en el encargo de continuación:
+
+Registra ambas literalmente en el registro de aprobaciones vigente, como primer commit documental de esta continuación, con fecha 2026-11-08 y atribuidas al PO.
+
+1. Margen y línea de lanzamiento: «Sí, a SL5». Respuesta a la propuesta de Claude de exigir el margen de dos pasos reales también respecto de KIn/KOut y de mover a SL5 los escenarios con Δ=0. Consecuencias:
+- El margen de dos pasos reales (25,641 ms con los defaults actuales) se exige respecto de todas las fronteras: bordes de asistencia y validez, y KIn/KOut.
+- M24-PERFECT-SL1 pasa a M24-PERFECT-SL5 y el canario CANARY-WRONG-EXPECTATION usa el mismo gesto en SL5, ambos con Δ=0. Según la parada, en SL5 la ventana alrededor de T* va de −239,5 a +245,9 ms; recalcúlala con los valores reales y regístrala.
+- M24-NOPULL-SL1 y M24-REJECTED-SL1 siguen en SL1.
+- M24-VALID-EARLY-SL1 (Δ=−70 ms) y M24-FAILED-LATE-SL1 (Δ=+170 ms) siguen en SL1, porque ya cumplen el margen. Compruébalo con los valores reales.
+- El oráculo puede leer KIn/KOut del shot-plan registrado en el JSONL del juego, solo para invalidar un escenario por margen, nunca para decidir el resultado esperado. Sigue prohibido llamar a ContactPlanner, ContactContract o ShotSolver.
+- La línea se elige con Tuning.Set("practice.launch", n), que ya está en la lista blanca. El hash efectivo cambia con la línea: declara el hash esperado de SL1 y el de SL5, calculados una vez desde los defaults y registrados, y verifícalos en cada intento.
+2. Hash inesperado: «Nivel 3». El prompt definitivo se contradecía: listaba el hash inesperado como precondición INCONCLUSIVE y como fallo de integridad. Decisión: un hash efectivo inesperado es fallo de integridad, con integrity.hashesVerified=false, escalationLevel 3 y salida 3. El intento puede seguir marcándose INCONCLUSIVE, pero el gate y el nivel los decide la integridad. Consecuencia para el criterio 11: el INCONCLUSIVE forzado que debe dar salida 2 tiene que usar una precondición que no sea de integridad, por ejemplo el tamaño de pantalla.
+
+Confirmación adicional del PO del mismo día («Sí, confirmo»): un canario que no da FAIL es fallo de integridad (nivel 3), salvo que la corrida no haya llegado a ejecutarse (executionError o gate ERROR). En ese caso un canario sin resultado no cuenta como integridad. Un canario en PASS da siempre nivel 3. Hazlo así en la regla de triaje y cúbrelo con TDD.
+
+Se autoriza continuar desde la puerta POC en `autoqa/mvp`, mismo worktree y PR #36, sin fusionar. La rama operadora #37 es conocida y queda fuera de esta implementación. Ante una parada del contrato, documentar, hacer commit/push y detenerse; el PO no estará disponible. Sin iPhone ni cambios de producción.
+
+
+### Resultado de la continuación — AUTOQA-MVP-02 (2026-11-08, Chile)
+
+No es una aprobación del PO ni del MVP. Se resuelve AUTOQA-MVP-01 con las decisiones anteriores, pero la POC revela Scheduled=true/false/true en tres repeticiones de la misma intención SL5 Δ=0. El contrato exige detenerse ante falta de determinismo; no se cambian escenarios, oráculo ni producto y no se repite Unity para buscar un resultado favorable. Se conserva el fixture bfe1474, evidencia primaria y auditoría offline. Escalamiento técnico documental 3; `autoqa.sh`, sus salidas y el MVP completo siguen pendientes. [Informe de continuación y decisión pendiente](2026-11-08-autoqa-mvp.md). PR #36 abierta/lista/sin fusionar para revisión independiente coordinada por el PO; ninguna nueva autorización inferida.
+
+
+## Continuación AutoQA tras AUTOQA-MVP-02 — decisión del PO, 2026-11-09 (Chile)
+
+El PO autoriza ejecutar el prompt preparado por Claude: «Si, ejecuta esto. Es el prompt que armó claude». Decisión y consecuencias literales comunicadas en ese prompt:
+
+Regístrala literalmente en el registro de aprobaciones vigente, como primer commit documental de esta continuación, con fecha 2026-11-09 y atribuida al PO.
+
+**«Sí, ±10 ms».** Respuesta a la pregunta de Claude: «¿Cambiamos PERFECT a Δ=−10 ms y añadimos otro caso PERFECT a +10 ms?», tras el diagnóstico anterior. Consecuencias:
+
+- `M24-PERFECT-SL5` pasa a **Δ=−10 ms**. Esperado: Swing/Perfect/Applied, **`Scheduled=true`**, una presentación Perfect y el resto de expectativas de PERFECT sin cambios.
+- Se añade **un segundo caso PERFECT en SL5 con Δ=+10 ms**. Esperado: Swing/Perfect/Applied, **`Scheduled=false`**, una presentación Perfect y las mismas expectativas restantes. Elige un nombre coherente con los existentes; propuesta: `M24-PERFECT-EARLY10-SL5` y `M24-PERFECT-LATE10-SL5`. Documenta el que uses.
+- `CANARY-WRONG-EXPECTATION` usa el mismo gesto que el caso Δ=−10 en SL5, con el esperado deliberadamente falso ya aprobado (Failed).
+- **Δ=0 queda como frontera interna de `Scheduled`.** No se le aplica la regla de dos pasos. Se le exige una holgura numérica mínima de **1 ms**; ±10 ms la cumple. El margen de dos pasos frente a −A/+A, −V/+V y KIn/KOut sigue exigido sin cambios.
+- Los otros cuatro escenarios no cambian: VALID-EARLY y FAILED-LATE en SL1 con −70 y +170 ms, NOPULL y REJECTED en SL1.
+- El hash esperado de SL5 (`55a85f500cf1`) y el de SL1 (`c0d8ec7050e0`) no cambian, porque Δ no es un parámetro.
+- Recalcula y registra la tabla de distancias con los valores reales. Como referencia: −10 queda a 30/50 ms de −A/+A, 90/110 ms de −V/+V y 10 ms de la frontera interna; +10 queda en el simétrico.
+
+Diagnóstico de Claude, solo lectura: variación del origen absoluto y comparación corrected<=target coherentes con Scheduled true/false/true. No se rastreó la conversión del tiempo en InputSystem; no es causa demostrada ni evidencia de defecto de producto. La regla de dos pasos no cubre la frontera interna Scheduled=0; allí rige la holgura PO de 1 ms. Misma rama/worktree y PR #36 abierta/lista/sin fusionar. Ante nueva parada: registrar, commit/push y detenerse.
+
+
+### Entrega AutoQA del 9 de noviembre de 2026 — revisión independiente pendiente
+
+Implementación y comprobaciones autorizadas ejecutadas por Codex, sin nueva aprobación del PO inferida. Predeclaración 9c476bc; POC nueva 2/2 con seis instancias ±10, Scheduled estable true/false. Fuente final 491e10d: corrida final 18/18 PASS, canario FAIL, RESULT=PASS/salida 0/nivel 1 en 14,497 s; suite propia 76/76 y regresión fresca 546/546 EditMode, 354/354 PlayMode. Check-release dev/prod OK/gitDirty=false, sin AutoQA en Players. Salidas forzadas 1/2/3/4 verificadas y cambios restaurados byte a byte. Primer export falló por BUNDLE_ID ausente en entorno local; valor temporal del proyecto sin cambiar producto, entorno restaurado y fallo preservado. 312 archivos protegidos idénticos a main; sin iPhone/build nativa/instalación ni cambios en #32/#37/S3-validation. [Informe, decisiones, huellas y consumibilidad](2026-11-09-autoqa-mvp.md). PR #36 abierta/lista para Claude coordinado por el PO, sin fusionar. AUTOQA-MVP-01/02 resueltos; ninguna parada nueva. Detenerse tras entregar y esperar revisión/PO.
+
+
+## Correcciones de revisión de AutoQA PR #36 — decisión del PO, 2026-11-09 (Chile)
+
+Decisión literal del PO: **«Sí, redáctalo»**. Respuesta a la pregunta de Claude **«¿Redacto el prompt para que Codex corrija estos dos puntos?»**, tras su revisión independiente de bc82c3ee570df837142f423d736f6bf893ef7e40: **CAMBIOS SOLICITADOS**. Autoriza corregir con TDD el canario tras FAIL/determinismo y la restauración selectiva de los dos transitorios PlayMode. No cambia ninguna otra decisión.
+
+Claude comunicó una corrida limpia con PASS/salida0/nivel1, 76/76 y18/18, canario FAIL; evidencia local Logs/autoqa/20261109T130148Z-bc82c3e-10259. Tuvo que restaurar GraphicsSettings/QualitySettings. Continuar en mismo worktree/rama/PR #36, sin fusionar; revisión posterior de Claude coordinada por el PO. No cambiar escenarios/expectativas/márgenes/tolerancias/determinismo, producción ni device.env. Ante nueva parada, documentar/commit/push y detenerse.
+
+
+### Entrega de correcciones AutoQA — 2026-11-09 (Chile), revisión pendiente
+
+Codex aplica opción A: canario ejecutado tras FAIL normal/determinismo; omitido ante guardia roja/executionError, sin cambiar Report.Triage. RED de ejecución salida3/nivel3 con canario omitido y RED unitario82/85→GREEN9/9; inyecciones GREEN de oráculo/determinismo dan canario FAIL y salida1/nivel2. Script restaura solo GraphicsSettings/QualitySettings inicialmente limpios en finally; registro/SHA, preservación de cambios previos y ERROR4/dirty-after-run para diferencias posteriores. Observación opcional realizada: summary.harness.json e informe previo con referencias SHA ante ERROR. Fuente a537236: **dos corridas consecutivas PASS/0/nivel1/dirty=false**,85/85 cada una,18/18/canario FAIL, árbol limpio sin limpieza entre/después. Regresión fresca546/546 EditMode y354/354 PlayMode.312protegidos iguales a main; escenarios/expectativas/márgenes/tolerancia/predeclaración y device.env intactos. Check-release no repetido: solo tests/script/docs, sin efecto en Players. [Informe nuevo y huellas](2026-11-09-autoqa-mvp-corrections.md). PR #36 abierta/lista/sin fusionar para Claude coordinado por PO; no es aprobación ni fusión. Ninguna parada nueva.
