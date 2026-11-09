@@ -20,6 +20,7 @@ namespace SquashClash.AutoQA
             if(Regex.IsMatch(code,@"\bSquashClash\s*\.\s*DevPanel\b"))errors.Add("DevPanel");
             if(!editorGameView&&Regex.IsMatch(code,@"\b(GetField|GetProperty|GetMethod|GetType|Invoke|MakeGenericType|BindingFlags)\b"))errors.Add("reflection");
             if(Regex.IsMatch(code,@"\bnew\s+ShotRecord\b"))errors.Add("fabricated record");
+            if(Regex.IsMatch(code,@"\.\s*("+string.Join("|",PocObservation.KnownFields)+@")\s*(=(?!=)|\+\+|--|\+=|-=)"))errors.Add("record mutation");
             foreach(Match m in Regex.Matches(code,@"\.\s*Set\s*\("))
                 if(!Regex.IsMatch(source.Substring(m.Index),"^\\.\\s*Set\\s*\\(\\s*\"practice.launch\"\\s*,"))errors.Add("non-whitelisted tuning");
             return errors;
@@ -36,6 +37,8 @@ namespace SquashClash.AutoQA
         [TestCase("app.Tuning.Set(key,1);")][TestCase("app.Tuning.Set(\"human.z\",1);")][TestCase("input.UiBlocker = p=>false;")]
         [TestCase("typeof(X).GetMethod(\"x\");")][TestCase("app.Clock.Paused=true;")]
         public void ProhibitedSource_IsRejected(string source)=>Assert.That(Violations(source),Is.Not.Empty);
+        [TestCase("record.Result = \"Perfect\";")][TestCase("controller.LastRecord.Applied = true;")]
+        public void RecordWrites_AreRejected(string source)=>Assert.That(Violations(source),Is.Not.Empty);
         [Test] public void AllowedPreparationAndUiQuery_AreAccepted()=>Assert.That(Violations("app.Tuning.Set(\"practice.launch\",4); input.UiBlocker(anchor);"),Is.Empty);
     }
 }

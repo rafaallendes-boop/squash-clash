@@ -40,7 +40,9 @@ namespace SquashClash.AutoQA
             view?.Dispose();
 #endif
             if(dir==null)return;
-            integrity.presetsUnchanged=presetsBefore==EvidenceCollector.PresetsSnapshot(Path.Combine(Application.persistentDataPath,"presets"));
+            string presetsAfter=EvidenceCollector.PresetsSnapshot(Path.Combine(Application.persistentDataPath,"presets"));
+            integrity.presetsUnchanged=presetsBefore==presetsAfter;
+            File.WriteAllText(Path.Combine(dir,"presets-integrity.json"),"{\"beforeSha256\":"+Report.Q(presetsBefore)+",\"afterSha256\":"+Report.Q(presetsAfter)+"}\n");
             Report.Write(dir,started,attempts,integrity,deterministic,error);
         }
         private IEnumerator Run(int index,int repetition)
