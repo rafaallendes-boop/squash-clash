@@ -33,3 +33,7 @@ En el resumen normalizado estos observables exactos se serializan de forma estab
 Envoltura/metadata excluida de la comparación funcional, conservada en evidencia: `ts` (UTC de escritura), rutas de artefactos, SHA-256 del JSONL bruto, id de corrida/repetición y marcas build de la ejecución. Los ids de intento quedan fuera de observado normalizado, pero se verifican las correlaciones dentro de la instancia. Los rawSamples y matrices de m24 se preservan en el JSONL; la comparación de determinismo aquí se aplica al observado definido arriba, no a metadata de frame como projectionFrame, al coste ni al reloj absoluto de cada muestra.
 
 Ningún otro campo está tolerado o excluido. Cambios de esquema desconocidos deben fallar, no desaparecer. Esta predeclaración adopta las dos propuestas de Claude con la precisión de una comparación exacta semántica y numérica temporal; no es permiso para cambiar criterios de producto.
+
+## Datos ausentes en NoOrder, antes de la primera corrida MVP
+
+NoOrder no tiene TargetContactAtReal ni tiempos de un Swing (son ceros centinela). Sus siete relativos de ShotRecord no están definidos: se representan como cero, conservando el registro original completo y sin comparar un origen absoluto como duración. Los relativos de shot-plan KIn/KOut siguen comparándose. No añade campos excluidos ni tolerancias: los tiempos absolutos ya estaban excluidos; esta aclaración se compromete antes de ejecutar los escenarios NoOrder del MVP.
