@@ -1800,3 +1800,17 @@ Claude comunicó una corrida limpia con PASS/salida0/nivel1, 76/76 y18/18, canar
 ### Entrega de correcciones AutoQA — 2026-11-09 (Chile), revisión pendiente
 
 Codex aplica opción A: canario ejecutado tras FAIL normal/determinismo; omitido ante guardia roja/executionError, sin cambiar Report.Triage. RED de ejecución salida3/nivel3 con canario omitido y RED unitario82/85→GREEN9/9; inyecciones GREEN de oráculo/determinismo dan canario FAIL y salida1/nivel2. Script restaura solo GraphicsSettings/QualitySettings inicialmente limpios en finally; registro/SHA, preservación de cambios previos y ERROR4/dirty-after-run para diferencias posteriores. Observación opcional realizada: summary.harness.json e informe previo con referencias SHA ante ERROR. Fuente a537236: **dos corridas consecutivas PASS/0/nivel1/dirty=false**,85/85 cada una,18/18/canario FAIL, árbol limpio sin limpieza entre/después. Regresión fresca546/546 EditMode y354/354 PlayMode.312protegidos iguales a main; escenarios/expectativas/márgenes/tolerancia/predeclaración y device.env intactos. Check-release no repetido: solo tests/script/docs, sin efecto en Players. [Informe nuevo y huellas](2026-11-09-autoqa-mvp-corrections.md). PR #36 abierta/lista/sin fusionar para Claude coordinado por PO; no es aprobación ni fusión. Ninguna parada nueva.
+
+## Cierre de AutoQA PR #36 y alineación de la PR #37 — decisiones del PO, 2026-11-09 (Chile)
+
+**Cierre de #36.** Claude revisó las correcciones en el head `7cd5a18b04618ee0cc8d6c9efdd79ac8a5a153dc` y las aprobó, con una observación menor. Volvió a correr `scripts/autoqa.sh mvp` dos veces seguidas: PASS, salida 0, nivel 1, 85/85, `dirty=false` y árbol limpio. A la pregunta «¿Autorizas fusionar la PR #36 tal como está?», el PO respondió literalmente **«Sí, fusionar»**.
+
+Condiciones comprobadas antes de fusionar:
+- PR abierta, no borrador, `MERGEABLE`/`CLEAN`, sin CI;
+- head local y remoto exacto `7cd5a18`, sin commits nuevos, y ambos árboles limpios.
+
+Se fusionó con `--match-head-commit`. Merge commit **`e18d3e169beb01569d11b1fbbce7f26d130670a1`**, segundo padre exactamente `7cd5a18` y árbol `538696b6b26857cfb31f0358ed49476187f7ca23`, idéntico al head aprobado. Main local sincronizada y limpia. La rama `autoqa/mvp` y el worktree de Codex se conservan, porque los gestiona Codex. El cierre se registra aquí, dentro de la siguiente entrega, sin un commit aparte en main.
+
+Observación menor abierta, sin corrección en #36: si coinciden un fallo de integridad y `dirty-after-run`, el script sale con 4 aunque conserva el nivel 3. Eso contradice la precedencia 3 > 4. El verificador del operador lo detecta y mantiene el nivel 3.
+
+**Alineación de #37.** A la pregunta «¿Alineo ahora la PR #37 con el arnés fusionado?», el PO respondió literalmente **«Sí, alinear #37»**. Autoriza adaptar la capa de operador a la implementación real, que manda. No cambia el arnés, sus escenarios ni sus criterios.

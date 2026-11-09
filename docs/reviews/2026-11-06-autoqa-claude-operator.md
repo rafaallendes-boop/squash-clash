@@ -30,7 +30,7 @@ Sin cambios en `Tests/AutoQA/**`, `scripts/`, `Assets/`, `ProjectSettings/`, `Pa
 
 La PR de Codex es [rafaallendes-boop/squash-clash#36](https://github.com/rafaallendes-boop/squash-clash/pull/36), abierta y no borrador, head `62bd6ad4a7260551cf59606f292a7a350df29636`, comprobado de nuevo el 8 de noviembre. Solo contiene una parada documental previa a la POC (AUTOQA-MVP-01, margen de SL1). No hay `scripts/autoqa.sh`, `docs/autoqa/OPERATIONS.md`, `docs/autoqa/README.md` ni un `summary.json` real.
 
-Por eso no hay diferencias medibles frente a una implementación real. Esta capa consume el contrato de `<operations_policy>` del prompt de Codex, y cada interpretación quedó como supuesto explícito en la [tabla de supuestos](../autoqa/claude-operator.md#supuestos-sobre-el-esquema). Las tres más relevantes:
+Por eso no hay diferencias medibles frente a una implementación real. Esta capa consume el contrato de `<operations_policy>` del prompt de Codex, y cada interpretación quedó como supuesto explícito en la [tabla de supuestos](../autoqa/claude-operator.md#contraste-con-la-implementación-real). Las tres más relevantes:
 
 1. **Nombre del campo de recuentos.** La política no lo fija; se asume `counts`.
 2. **Hash inesperado: nivel 2 o 3. Resuelto por el PO el 8 de noviembre: nivel 3 y salida 3.** La regla fija dice nivel 3 si «hash o SimulationKey inesperados», mientras que el encargo de esta entrega esperaba nivel 2 para F4. En la primera entrega el operador copiaba el nivel de `summary.json` y F4 tenía integridad en verde. Ahora el verificador trata el hash inesperado como integridad y F4 espera nivel 3 y salida 3.
@@ -126,7 +126,7 @@ Ninguna instrucción de agente cambió por los resultados. Primera entrega: `all
 
 ### Corrida real
 
-**NOT_EVALUATED.** La PR de Codex está abierta y no es borrador, pero no contiene el arnés ni `scripts/autoqa.sh`, así que no hay nada que ejecutar. No se simuló con fixtures. En este estado, `/autoqa mvp` no ejecuta nada y escala a nivel 3 con «corrida no iniciada: scripts/autoqa.sh no existe en REPO».
+En la primera entrega fue **NOT_EVALUATED**: la PR de Codex todavía no tenía el arnés ni `scripts/autoqa.sh`. Se ejecutó el 9 de noviembre, después de fusionar la PR #36; ver [Alineación con la implementación real](#alineación-con-la-implementación-real-9-de-noviembre).
 
 ## Revisión del 8 de noviembre: hash efectivo inesperado
 
@@ -189,11 +189,52 @@ Observación sin cambios: F5, F7 y F9 anotan en «Evidencia pendiente» comandos
 
 **Contraste con la implementación real: pendiente.** El 8 de noviembre la PR #36 sigue en `62bd6ad4a7260551cf59606f292a7a350df29636`, sin arnés, `summary.json` real ni `OPERATIONS.md`. Cuando existan, se cotejarán los nombres que asume el verificador (`counts`, `canary.observed`, `gameMetrics`, `executionError.kind`, `RUN_DIR=`, la línea `gate:` de `report.md`, `attempts[].config.effectiveHash`, `expectedHash` y `hashMatch`, `integrity.hashesVerified` y el gate `ERROR`) y su plantilla de resumen con la de `OPERATIONS.md`. Si difieren, manda lo que implemente Codex.
 
+## Alineación con la implementación real (9 de noviembre)
+
+Decisión literal del PO: **«Sí, alinear #37»**, tras la fusión de la PR #36 (merge `e18d3e1`). Manda la implementación de Codex. Se integró `main` en esta rama sin conflictos y el verificador pasó a **`autoqa-check v4`**. El detalle de cada diferencia está en [Contraste con la implementación real](../autoqa/claude-operator.md#contraste-con-la-implementación-real).
+
+**Dos defectos de `v3` que la corrida real puso en evidencia.** Ninguno de los fixtures sintéticos los cubría, porque usaban el esquema supuesto:
+- **Determinismo.** `determinism` es `{id: {"identical": bool}}` y `v3` esperaba un booleano. Con `v3`, la corrida PASS real salía nivel 3 («señales no PASS con escalationLevel 1»).
+- **Intentos detenidos.** Un intento detenido tras un FAIL trae la `config` vacía, con `hashMatch=false`. `v3` lo leía como hash inesperado, así que una regresión real salía nivel 3 y salida 3, en vez de 1.
+
+**Otros cambios de `v4`:**
+- Rellena la plantilla única `docs/autoqa/operator-summary-template.md` con `--template`, en lugar de su formato propio. Un marcador que no reconoce es incoherencia.
+- Verifica los SHA-256 de `restoration.json`, `summary.harness.json` y `report.harness.md`. Ante un ERROR del envoltorio, coteja `attempts.jsonl` con `summary.harness.json`.
+- Aplica la precedencia estricta 3 > 4 > 1 > 2: solo acepta el código esperado.
+- Reintento solo con `executionError.kind` `environment` o `missing-xml`.
+- Un `null` en `determinism` es desconocido, no determinismo distinto.
+- Retira la nota «report.md no menciona el runId», porque el informe real no lo incluye.
+
+Las reglas del operador recogen además: el canario tras un FAIL (opción A), `dirty-after-run` sin reintento ni `git checkout`, y `summary.harness.json` como dato que no sustituye al gate.
+
+**Verificación sin agentes.** `v4` se ejecutó sobre diez corridas reales de Codex y de Claude, y sobre los fixtures F1–F10. Para cada uno de los 21 directorios se probaron los cinco códigos de salida, 105 pares en total: solo el esperado se acepta, y cualquier otro da incoherencia, nivel 3 y sin éxito. Resultados de las corridas reales:
+
+| Corrida | Caso | Gate / salida esperada | Nivel |
+| --- | --- | --- | ---: |
+| `20261109T140748Z-7cd5a18-30940` y `…140804Z-7cd5a18-28156` | Corridas de Claude, dos seguidas | PASS / 0 | 1 |
+| `20261109T120909Z-491e10d-19260` | Corrida final de Codex | PASS / 0 | 1 |
+| `20261109T120528Z-491e10d-22213` | Canario PASS forzado | FAIL / 3 | 3 |
+| `20261109T120542Z-491e10d-9435` | Precondición de pantalla forzada | INCONCLUSIVE / 2 | 2 |
+| `20261109T120557Z-491e10d-4834` | FAIL del informe forzado | FAIL / 1 | 2 |
+| `20261109T120612Z-491e10d-25404` | Hash inesperado forzado | FAIL / 3 | 3 |
+| `20261109T120626Z-491e10d-330` | Error de entorno forzado | ERROR / 4, reintento elegible | 2 |
+| `20261109T133622Z-8e187de-24321` | FAIL del oráculo, canario tras la parada | FAIL / 1 | 2 |
+| `20261109T133633Z-8e187de-29193` | Determinismo distinto, canario tras la parada | FAIL / 1 | 2 |
+| `20261109T133645Z-8e187de-24592` | Fallo de NUnit con resumen del arnés conservado | ERROR / 4 | 2 |
+
+Los fixtures F1–F10 dan el mismo nivel y la misma salida esperada que con `v3`. Una copia sintética del canario PASS con `dirty-after-run` y salida 4 queda en salida esperada 3, incoherencia y nivel 3: cubre la observación menor de la PR #36. Todas las corridas están en `Logs/autoqa/` del worktree de Codex, sin versionar.
+
+**Corrida real con el operador.** El operador corrió en modo `run` con Haiku, por equivalencia `general-purpose`, porque el agente cargado en la sesión era anterior a `v4`. `REPO` fue el worktree de Codex en `7cd5a18`, con el mismo árbol que `e18d3e1`; el checkout principal no tiene `Library/` y la importación de Unity habría llevado mucho tiempo.
+
+Resultado: corrida `20261109T142141Z-7cd5a18-12190`, `EXIT=0`, gate PASS, nivel 1, 18/18 PASS, canario FAIL, 41 SHA-256 correctos y sin intervención necesaria. `summary.json` tiene SHA-256 `a4e84854a9ec06130e2ea0981e5962844e53613b832e3e77c1619e9011157f29`.
+
+Claude volvió a ejecutar el verificador con los mismos parámetros y el bloque JSON coincide campo a campo. El árbol del worktree de Codex quedó limpio.
+
 ## Pendiente
 
-- `/autoqa` con los agentes reales tras reabrir la sesión.
-- Corrida real y contraste de los supuestos del esquema y de la plantilla de resumen con `summary.json` y `OPERATIONS.md` de Codex, cuando la PR #36 tenga el arnés. Si difieren, manda la implementación de Codex.
-- Revisión independiente de esta entrega, asignada por el PO (Codex u otra sesión de Claude).
-- Entrada en `AGENTS.md` y registro de aprobaciones al fusionar, después de la PR de Codex.
+- `/autoqa` con los agentes `autoqa-operator` y `autoqa-investigator` cargados tras reabrir la sesión. Hoy se usó la equivalencia `general-purpose`.
+- Revisión independiente de esta alineación, asignada por el PO.
+- Observación menor de la PR #36, en el arnés: salida 4 en lugar de 3 cuando coinciden integridad y `dirty-after-run`. El verificador ya la detecta; corregirla en el arnés requiere otra entrega de Codex.
+- Entrada de cierre en `AGENTS.md` y en el registro de aprobaciones cuando se fusione.
 
-Esta entrega no se fusiona sin aprobación explícita del PO ni antes que la PR de Codex ([rafaallendes-boop/squash-clash#36](https://github.com/rafaallendes-boop/squash-clash/pull/36)), por decisión del PO del 8 de noviembre.
+Esta entrega no se fusiona sin aprobación explícita del PO.

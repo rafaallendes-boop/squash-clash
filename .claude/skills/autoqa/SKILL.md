@@ -29,8 +29,8 @@ Si `autoqa-operator` no está disponible en esta sesión (por ejemplo, se creó 
 2. Ejecuta tú el mismo verificador con los mismos parámetros que usó el operador (`--mode read` y, si lo informó, `--exit-code` y `--run-number`):
 
    ```bash
-   awk '/^# >>> autoqa-check v3/{f=1;next} /^# <<< autoqa-check v3/{f=0} f' "$AGENT_FILE" \
-     | python3 -I - --run-dir "$RUN_DIR" --mode read [--exit-code N --run-number N]
+   awk '/^# >>> autoqa-check v4/{f=1;next} /^# <<< autoqa-check v4/{f=0} f' "$AGENT_FILE" \
+     | python3 -I - --run-dir "$RUN_DIR" --mode read --template "$REPO/docs/autoqa/operator-summary-template.md" [--exit-code N --run-number N]
    ```
 
 3. Compara campo a campo `runId`, `gate`, `summaryEscalationLevel`, `operatorLevel`, `gatePass`, `incoherences`, `sha256`, `expectedExitCode`, `acceptableExitCodes` y `hashMismatches` de ambos bloques. Si difieren, el operador alteró datos: **nivel 3** («resumen del operador no coincide con el verificador»).
