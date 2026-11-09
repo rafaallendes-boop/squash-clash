@@ -29,7 +29,15 @@ Las instancias son frescas. Se espera al cierre de recepción sin orden en negat
 
 `game-metrics/*.jsonl` son copias byte a byte antes de destruir cada app, con SHA-256. LaunchId y AttemptId proceden del juego y se cotejan sus correlaciones. `attempts.jsonl` usa `autoqa-attempt/1`; `summary.json`, `autoqa-summary/1`; `report.md` incluye `gate:`. Los campos de determinismo, exclusiones y tolerancias están predeclarados en [determinism.md](determinism.md); Scheduled y geometría son exactos. Los relativos admiten ≤10⁻⁶ ms. No se exige igualdad de SHA de tiempos que admiten tolerancia.
 
-La integridad registra hashes por intento, SHA de evidencia y una huella del directorio de presets antes/después (`presets-integrity.json`). Solo se leen presets; no se guardan ni se cambia last-active. Si un resultado no canario contradice el oráculo o falla determinismo, los siguientes quedan sin ejecutar/NOT_EVALUATED, para aplicar la parada del encargo. Errores o precondiciones no cuentan como PASS.
+La integridad registra hashes por intento, SHA de evidencia y una huella del directorio de presets antes/después (`presets-integrity.json`). Solo se leen presets; no se guardan ni se cambia last-active. Si un resultado no canario contradice el oráculo o falla determinismo, los siguientes escenarios normales quedan sin ejecutar/NOT_EVALUATED. El canario se ejecuta de todos modos, en instancia fresca, para conservar el control de integridad (opción A aprobada en las correcciones de revisión). Con canario FAIL, una regresión conserva salida 1/nivel 2. Ante guardia roja o executionError, se omite el canario porque el estado no es fiable; Report.Triage conserva sus reglas. Errores o precondiciones no cuentan como PASS.
+
+## Restauración automática del worktree
+
+Antes de Unity, el script captura el estado completo de `git status --porcelain -z` y el estado/SHA-256 de GraphicsSettings.asset y QualitySettings.asset. En `finally`, también ante ERROR o timeout, hace `git checkout --` exclusivamente de cada uno de esos dos archivos que estuviera limpio respecto de HEAD (índice y worktree). Si ya tenía cambios, no lo restaura. No restaura ningún otro archivo.
+
+`restoration.json` conserva estados previos/posteriores, hashes, operaciones, errores y comparación del estado completo; su ruta y SHA están en summary.artifacts.restoration. Si el estado final difiere del inicial o falla la restauración, el resultado es ERROR/salida 4, executionError.kind=dirty-after-run. Por eso dos corridas consecutivas desde árbol limpio mantienen dirty=false y el árbol limpio al terminar.
+
+Ante error que sustituye un resumen ya generado, se conserva `summary.harness.json` (y el informe previo en `report.harness.md`), con referencias y SHA-256 en el resumen de ERROR. Es evidencia adicional: no convierte ERROR en PASS.
 
 ## Historial, límites y reversión
 

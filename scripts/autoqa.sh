@@ -24,16 +24,49 @@ env_status=0
 source "$ROOT/scripts/unity-env.sh" > "$AUTOQA_RUN_DIR/environment.log" 2>&1 || env_status=$?
 printf 'RUN_DIR=%s\n' "$AUTOQA_RUN_DIR"
 python3 - "$ROOT" "$AUTOQA_RUN_DIR" "$UNITY" "$env_status" <<'PY'
-import datetime,hashlib,json,os,re,subprocess,sys,time
+import base64,datetime,hashlib,json,os,re,subprocess,sys,time
 from pathlib import Path
 from xml.etree import ElementTree as ET
 root,run=map(Path,sys.argv[1:3]);unity=sys.argv[3];start=time.time_ns()
 now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
 started=now();xml=run/'tests.xml';log=run/'unity.log';summary=None;guard_failed=False
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+# Snapshot both index/worktree status before Unity. A pre-existing change is never checked out.
+transient_paths=['ProjectSettings/GraphicsSettings.asset','ProjectSettings/QualitySettings.asset']
+def git_status(*paths):
+    return subprocess.check_output(['git','status','--porcelain','-z','--',*paths],cwd=root)
+status_before=git_status()
+transients=[]
+for name in transient_paths:
+    path=root/name;prior=git_status(name)
+    transients.append({'path':name,'cleanBefore':not prior,'statusBefore':prior.decode(errors='backslashreplace'),
+                       'sha256Before':sha(path) if path.is_file() else None})
+def restore_transients():
+    errors=[]
+    for item in transients:
+        item['restoreAttempted']=item['cleanBefore']
+        if item['cleanBefore']:
+            result=subprocess.run(['git','checkout','--',item['path']],cwd=root,capture_output=True,text=True)
+            item['restoreExitCode']=result.returncode
+            if result.returncode:errors.append(item['path']+': '+result.stderr.strip())
+        else:item['restoreExitCode']=None
+        path=root/item['path'];item['statusAfter']=git_status(item['path']).decode(errors='backslashreplace')
+        item['sha256After']=sha(path) if path.is_file() else None
+    after=git_status()
+    record={'schema':'autoqa-restoration/1','files':transients,
+            'gitStatusBeforeBase64':base64.b64encode(status_before).decode(),
+            'gitStatusAfterBase64':base64.b64encode(after).decode(),
+            'statusUnchanged':status_before==after,'errors':errors}
+    (run/'restoration.json').write_text(json.dumps(record,indent=2)+'\n')
+    return record
 def write_summary(s):
     (run/'summary.json').write_text(json.dumps(s,indent=2)+'\n')
 def failure(kind,message,integrity=False):
+    # Preserve the harness output before producing a wrapper ERROR summary.
+    existing=run/'summary.json';harness=run/'summary.harness.json';harness_report=run/'report.harness.md'
+    if existing.is_file() and not harness.exists():
+        existing.rename(harness)
+        if (run/'report.md').is_file():(run/'report.md').rename(harness_report)
     # Unknown checks stay null if the execution never reached them; they are not asserted true.
     s={'schema':'autoqa-summary/1','runId':run.name,'gitHash':os.environ['AUTOQA_GIT_HASH'],
        'dirty':os.environ['AUTOQA_DIRTY']=='true','command':os.environ['AUTOQA_COMMAND'],'startedAt':started,'finishedAt':now(),
@@ -47,6 +80,8 @@ def failure(kind,message,integrity=False):
     if not attempts.exists():attempts.write_text('')
     report=run/'report.md';report.write_text('# AutoQA MVP\n\ngate: '+s['gate']+'\n\n'+kind+': '+message+'\n\nNo verifica audibilidad, háptica percibida, lectura visual, latencia toque→imagen, sensación ni diversión.\n')
     s['artifacts']={'attemptsSha256':sha(attempts),'reportSha256':sha(report),'gameMetrics':[]}
+    if harness.is_file():s['artifacts']['harnessSummary']={'path':harness.name,'sha256':sha(harness)}
+    if harness_report.is_file():s['artifacts']['harnessReport']={'path':harness_report.name,'sha256':sha(harness_report)}
     write_summary(s);return s
 try:
     if int(sys.argv[4]) or not unity:raise RuntimeError('environment: Unity environment unavailable; see environment.log')
@@ -83,6 +118,22 @@ except subprocess.TimeoutExpired:
 except Exception as exc:
     message=str(exc);kind=message.split(':',1)[0] if ':' in message else 'execution'
     summary=failure(kind,message,guard_failed)
+finally:
+    try:
+        restoration=restore_transients()
+        if not restoration['statusUnchanged'] or restoration['errors']:
+            previous_error=summary.get('executionError') if summary else None
+            previous_level=summary.get('escalationLevel',2) if summary else 2
+            summary=failure('dirty-after-run','Working tree status changed or restoration failed; see restoration.json')
+            summary['escalationLevel']=max(previous_level,2)
+            if previous_error:summary['executionError']['previous']=previous_error
+            summary['escalationReasons'].append('dirty-after-run')
+    except Exception as exc:
+        summary=failure('dirty-after-run','Could not verify restoration: '+str(exc))
+    if summary is None:summary=failure('execution','Execution ended without a summary')
+    if (run/'restoration.json').is_file():
+        summary['artifacts']['restoration']={'path':'restoration.json','sha256':sha(run/'restoration.json')}
+    write_summary(summary)
 print('RESULT='+summary['gate']);print('ESCALATION_LEVEL='+str(summary['escalationLevel']))
 sys.exit(int(summary['exitCode']))
 PY

@@ -22,6 +22,8 @@ El escalamiento inicial se calcula en código. El operador puede señalar eviden
 
 Primero se evalúa integridad: hash/SimulationKey inesperados, presets alterados, guardia roja o SHA inconsistente implican nivel 3 y salida 3. También un canario ejecutado que no da FAIL. Si el canario no llegó a ejecutarse por executionError/gate ERROR, su ausencia no es por sí sola integridad; **un canario PASS siempre es nivel 3**, aunque también haya error de ejecución. Hash inesperado puede dejar el intento INCONCLUSIVE, pero integridad fija nivel/salida 3.
 
+Si un FAIL normal o una diferencia de determinismo detiene los escenarios normales, el canario se ejecuta igualmente (opción A), en una instancia fresca: con canario FAIL, la regresión sale 1/nivel 2. Se omite ante guardia roja o executionError; su ausencia en el ERROR no añade integridad. La guardia roja ya es por sí sola integridad. No se relanzan ni se sustituyen los escenarios normales detenidos.
+
 Sin fallo de integridad: nivel 2 ante cualquier intento no PASS, determinismo diferente o executionError; si todo pasa y el canario falla, nivel 1. Los recuentos excluyen el canario. El gate siempre está definido, incluso con canario PASS; ante integridad se usa FAIL (ERROR si también hay error de ejecución), nunca se oculta la salida 3.
 
 | Salida | Significado |
@@ -33,6 +35,14 @@ Sin fallo de integridad: nivel 2 ante cualquier intento no PASS, determinismo di
 | 4 | Error de ejecución o entorno, sin integridad fallida |
 
 Precedencia cuando coinciden causas: **3 > 4 > 1 > 2**. Cualquier salida distinta de cero es no aprobado. En errores que impiden evaluar una integridad, sus campos quedan `null` (desconocidos), no `true`; se conserva `executionError.kind`. Esto permite distinguir ausencia de resultado de un fallo de integridad demostrado.
+
+## Estado del árbol y errores
+
+El runner registra antes de Unity el estado completo de Git y si GraphicsSettings.asset/QualitySettings.asset estaban limpios respecto de HEAD, tanto en índice como en worktree. Al finalizar, incluso con ERROR o timeout, restaura solo esos dos transitorios que estuvieran limpios antes. Los previamente modificados se dejan tal cual respecto de la restauración; dirty ya era true. No restaura otros archivos.
+
+Consultar `restoration.json` y su referencia SHA-256 en summary.json. Si el estado completo posterior difiere del previo, o la restauración falla, el control final prescrito por el PO impone **ERROR/salida 4**, `executionError.kind=dirty-after-run`; conserva un nivel 3 previo si ya existía. No aprobar esa corrida ni ejecutar git checkout sobre otros archivos para ocultar el problema. Reportar los cambios y escalar.
+
+Antes de sustituir un resumen existente por un ERROR se conserva `summary.harness.json` y, cuando existe, `report.harness.md`, referenciados con SHA-256 en artifacts.harnessSummary/harnessReport. Esos archivos permiten consultar el resultado previo; el resultado operativo sigue siendo el ERROR del wrapper. Un archivo de restauración correcto tampoco sustituye el gate.
 
 ## Resumen del operador
 
