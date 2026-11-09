@@ -1759,3 +1759,8 @@ Registra ambas literalmente en el registro de aprobaciones vigente, como primer 
 Confirmación adicional del PO del mismo día («Sí, confirmo»): un canario que no da FAIL es fallo de integridad (nivel 3), salvo que la corrida no haya llegado a ejecutarse (executionError o gate ERROR). En ese caso un canario sin resultado no cuenta como integridad. Un canario en PASS da siempre nivel 3. Hazlo así en la regla de triaje y cúbrelo con TDD.
 
 Se autoriza continuar desde la puerta POC en `autoqa/mvp`, mismo worktree y PR #36, sin fusionar. La rama operadora #37 es conocida y queda fuera de esta implementación. Ante una parada del contrato, documentar, hacer commit/push y detenerse; el PO no estará disponible. Sin iPhone ni cambios de producción.
+
+
+### Resultado de la continuación — AUTOQA-MVP-02 (2026-11-08, Chile)
+
+No es una aprobación del PO ni del MVP. Se resuelve AUTOQA-MVP-01 con las decisiones anteriores, pero la POC revela Scheduled=true/false/true en tres repeticiones de la misma intención SL5 Δ=0. El contrato exige detenerse ante falta de determinismo; no se cambian escenarios, oráculo ni producto y no se repite Unity para buscar un resultado favorable. Se conserva el fixture bfe1474, evidencia primaria y auditoría offline. Escalamiento técnico documental 3; `autoqa.sh`, sus salidas y el MVP completo siguen pendientes. [Informe de continuación y decisión pendiente](2026-11-08-autoqa-mvp.md). PR #36 abierta/lista/sin fusionar para revisión independiente coordinada por el PO; ninguna nueva autorización inferida.

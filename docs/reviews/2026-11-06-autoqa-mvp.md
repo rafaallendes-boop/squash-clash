@@ -52,3 +52,8 @@ El `shot-plan` de SL1 se identifica por el sello `2026-11-06T22:20:09.6562710Z`.
 Estado de aceptación del MVP: **NOT_EVALUATED**. POC, RED/GREEN del arnés, determinismo, control SHA-256 de presets, check-release, triaje automatizado, códigos de salida y prueba de consumibilidad quedan pendientes. No existen `RESULT`, `escalationLevel` ni artefactos de una corrida de AutoQA. El conflicto corresponde a timing y contrato, materias del nivel 3 de la política del PO.
 
 Las comprobaciones de audibilidad, vibración percibida, lectura visual, latencia toque→imagen, sensación del golpe y diversión corresponden al PO en el iPhone. La regresión base se ejecutó en Unity Editor.
+
+
+## Continuación del 8 de noviembre de 2026
+
+AUTOQA-MVP-01 resuelto por decisiones explícitas del PO. La POC posterior quedó detenida por AUTOQA-MVP-02 (Scheduled difiere entre repeticiones). Este informe conserva la parada histórica inicial; el estado vigente está en el [informe de continuación](2026-11-08-autoqa-mvp.md).
