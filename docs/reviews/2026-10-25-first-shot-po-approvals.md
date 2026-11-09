@@ -1788,3 +1788,10 @@ Diagnóstico de Claude, solo lectura: variación del origen absoluto y comparaci
 ### Entrega AutoQA del 9 de noviembre de 2026 — revisión independiente pendiente
 
 Implementación y comprobaciones autorizadas ejecutadas por Codex, sin nueva aprobación del PO inferida. Predeclaración 9c476bc; POC nueva 2/2 con seis instancias ±10, Scheduled estable true/false. Fuente final 491e10d: corrida final 18/18 PASS, canario FAIL, RESULT=PASS/salida 0/nivel 1 en 14,497 s; suite propia 76/76 y regresión fresca 546/546 EditMode, 354/354 PlayMode. Check-release dev/prod OK/gitDirty=false, sin AutoQA en Players. Salidas forzadas 1/2/3/4 verificadas y cambios restaurados byte a byte. Primer export falló por BUNDLE_ID ausente en entorno local; valor temporal del proyecto sin cambiar producto, entorno restaurado y fallo preservado. 312 archivos protegidos idénticos a main; sin iPhone/build nativa/instalación ni cambios en #32/#37/S3-validation. [Informe, decisiones, huellas y consumibilidad](2026-11-09-autoqa-mvp.md). PR #36 abierta/lista para Claude coordinado por el PO, sin fusionar. AUTOQA-MVP-01/02 resueltos; ninguna parada nueva. Detenerse tras entregar y esperar revisión/PO.
+
+
+## Correcciones de revisión de AutoQA PR #36 — decisión del PO, 2026-11-09 (Chile)
+
+Decisión literal del PO: **«Sí, redáctalo»**. Respuesta a la pregunta de Claude **«¿Redacto el prompt para que Codex corrija estos dos puntos?»**, tras su revisión independiente de bc82c3ee570df837142f423d736f6bf893ef7e40: **CAMBIOS SOLICITADOS**. Autoriza corregir con TDD el canario tras FAIL/determinismo y la restauración selectiva de los dos transitorios PlayMode. No cambia ninguna otra decisión.
+
+Claude comunicó una corrida limpia con PASS/salida0/nivel1, 76/76 y18/18, canario FAIL; evidencia local Logs/autoqa/20261109T130148Z-bc82c3e-10259. Tuvo que restaurar GraphicsSettings/QualitySettings. Continuar en mismo worktree/rama/PR #36, sin fusionar; revisión posterior de Claude coordinada por el PO. No cambiar escenarios/expectativas/márgenes/tolerancias/determinismo, producción ni device.env. Ante nueva parada, documentar/commit/push y detenerse.
