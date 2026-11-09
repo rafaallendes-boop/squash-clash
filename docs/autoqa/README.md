@@ -37,7 +37,10 @@ Antes de Unity, el script captura el estado completo de `git status --porcelain 
 
 `restoration.json` conserva estados previos/posteriores, hashes, operaciones, errores y comparación del estado completo; su ruta y SHA están en summary.artifacts.restoration. Si el estado final difiere del inicial o falla la restauración, el resultado conserva gate ERROR y executionError.kind=dirty-after-run: salida3/nivel3 si ya hay integridad demostrada, y salida4/nivel al menos2 en caso contrario. Rige siempre la precedencia 3 > 4 > 1 > 2. Por eso dos corridas consecutivas desde árbol limpio mantienen dirty=false y el árbol limpio al terminar.
 
-Ante error que sustituye un resumen ya generado, se conserva `summary.harness.json` (y el informe previo en `report.harness.md`), con referencias y SHA-256 en el resumen de ERROR. Es evidencia adicional: no convierte ERROR en PASS. El envoltorio retiene las integridades booleanas conocidas, canary.observed, el nivel máximo y las razones; no baja una clasificación nivel3/salida3 al reemplazar el resumen por ERROR. Los counts/determinism del arnés quedan identificados en harnessResults (scope=harness-only), separados de los recuentos vacíos del ERROR. Un resumen corrupto o de otro schema no aporta señales; los desconocidos permanecen null. executionError.previous conserva la cadena de errores.
+Ante error que sustituye un resumen generado por el arnés, se conserva `summary.harness.json` (y el informe previo en `report.harness.md`), con referencias y SHA-256 en el resumen de ERROR. Es evidencia adicional: no convierte ERROR en PASS. El envoltorio retiene las integridades booleanas conocidas, canary.observed, el nivel máximo y las razones; no baja una clasificación nivel3/salida3 al reemplazar el resumen por ERROR. Los counts/determinism del arnés quedan identificados en harnessResults (scope=harness-only), separados de los recuentos vacíos del ERROR. Un resumen corrupto o de otro schema no aporta señales; los desconocidos permanecen null. executionError.previous conserva la cadena de errores.
+
+
+Si no hubo resumen del arnés y falla otra vez el envoltorio (por ejemplo missing-xml seguido de dirty-after-run), el primer ERROR se conserva en `summary.previous-error.json` y `report.previous-error.md`, con SHA-256 en `artifacts.previousErrorSummary` y `previousErrorReport`. Estos archivos pertenecen al envoltorio: no se crean `summary.harness.json`/`report.harness.md` ni `harnessResults` para ellos. La cadena `executionError.previous` conserva el triaje; los archivos propios conservan además el resumen completo y el informe exactos del primer ERROR. Se elige mantener ambos para poder auditar su evidencia, integridad y clasificación sin atribuirlos al arnés. Si sí existía un resumen original del arnés, se conservan los archivos y el comportamiento de #38.
 
 ## Historial, límites y reversión
 
@@ -54,3 +57,13 @@ python3 scripts/tests/test_autoqa_wrapper.py
 ```
 
 Pruebas deterministas versionadas con unittest y biblioteca estándar: ejecutan el script real en repositorios Git aislados bajo Logs/autoqa/wrapper-tests, con un proceso simulado que escribe resúmenes/evidencia sintéticos. Cubren precedencia, conservación de señales y artefactos, schemas ilegibles/desconocidos, errores sucesivos y controles anteriores PASS/FAIL/canario/hash/missing-xml. No son mediciones del juego ni invocan Unity, y no tocan Assets, ProjectSettings o device.env del proyecto real. La salida imprime FIXTURE_DIR para consultar las evidencias. Las dos corridas Unity consecutivas siguen siendo la comprobación del MVP real.
+
+
+## Pruebas del verificador sin Unity
+
+```sh
+python3 scripts/tests/test_autoqa_checker.py
+AUTOQA_REAL_RUNS="/ruta/al/worktree/Logs/autoqa" python3 scripts/tests/test_autoqa_checker.py
+```
+
+La suite extrae con el `awk` documentado el bloque vigente del agente y lo ejecuta en procesos `python3 -I`. Usa el generador del envoltorio para los errores y controles completos sintéticos para la clasificación. Con `AUTOQA_REAL_RUNS` añade copias de cinco corridas históricas declaradas en la suite (PASS, FAIL, canario, hash y entorno); sin esa variable ese método se marca omitido, nunca como validación real. Las copias y resultados quedan en `Logs/autoqa/checker-tests`; los originales son de solo lectura. `AUTOQA_CHECKER` permite usar una copia anterior extraída del bloque para observar RED. No invoca Unity ni cambia la plantilla canónica.

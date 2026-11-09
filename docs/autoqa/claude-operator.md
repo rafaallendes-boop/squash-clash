@@ -61,7 +61,7 @@ Antes de ejecutar, el operador comprueba que exista `scripts/autoqa.sh` y que ni
 
 Hace:
 - ejecuta el script una vez, o lee un `RUN_DIR`;
-- pasa el verificador determinista incluido en su propio archivo (bloque `autoqa-check v6`, extraído con `awk` y ejecutado con `python3 -I`, solo biblioteca estándar);
+- pasa el verificador determinista incluido en su propio archivo (bloque `autoqa-check v7`, extraído con `awk` y ejecutado con `python3 -I`, solo biblioteca estándar);
 - devuelve la salida del verificador carácter por carácter y una sección breve de notas (comandos, códigos, reintento);
 - ejecuta el único reintento solo si el verificador lo declara elegible.
 
@@ -103,7 +103,7 @@ El verificador es el único cálculo del operador. Solo copia valores, compara S
 | --- | --- |
 | `summary.json` existe, es JSON y `schema` es `autoqa-summary/1`, con todos los campos de la política | Incoherencia, nivel 3 |
 | `escalationLevel` ∈ {1, 2, 3} y `gate` ∈ {PASS, FAIL, INCONCLUSIVE, NOT_EVALUATED, ERROR} | Incoherencia, nivel 3 |
-| SHA-256 de `attempts.jsonl`, `report.md`, `restoration.json`, `summary.harness.json`, `report.harness.md` y cada JSONL del juego declarado, en el resumen y en cada intento. Toda evidencia debe estar dentro de `RUN_DIR` | Incoherencia, nivel 3 |
+| SHA-256 de `attempts.jsonl`, `report.md`, `restoration.json`, `summary.harness.json`, `report.harness.md`, `summary.previous-error.json`, `report.previous-error.md` y cada JSONL del juego declarado, en el resumen y en cada intento. Toda evidencia debe estar dentro de `RUN_DIR` | Incoherencia, nivel 3 |
 | `report.md` declara un gate y no es distinto del de `summary.json`; lo mismo para `report.harness.md` frente a `summary.harness.json` | Incoherencia, nivel 3 |
 | Recuentos por veredicto y canario iguales a los de `attempts.jsonl` (los de `summary.harness.json` si existe), con `runId` igual en cada intento, `canary.expectedFail=true` y un único intento canario cuando hay resultado del canario | Incoherencia, nivel 3 |
 | `exitCode` de `summary.json` igual al que corresponde a la evidencia | Incoherencia, nivel 3 |
@@ -122,7 +122,7 @@ El verificador es el único cálculo del operador. Solo copia valores, compara S
 
 | Categoría | Código |
 | --- | --- |
-| Integridad: algún campo de `integrity` en `false` (en `summary.json` o `summary.harness.json`), hash efectivo o SimulationKey inesperados en un intento, SHA-256 de evidencia que no coincide o falta, o canario que no falla (con la misma excepción) | 3 |
+| Integridad: declaración válida de nivel 3 o salida 3 del arnés, algún campo de `integrity` en `false` (en `summary.json` o `summary.harness.json`), hash efectivo o SimulationKey inesperados en un intento, SHA-256 de evidencia que no coincide o falta, o canario que no falla (con la misma excepción) | 3 |
 | `executionError` o gate ERROR | 4 |
 | FAIL en el gate o en los recuentos, o determinismo `false` (de cualquiera de los dos resúmenes) | 1 |
 | INCONCLUSIVE o NOT_EVALUATED en el gate o en los recuentos (de cualquiera de los dos resúmenes) | 2 |
@@ -139,7 +139,7 @@ Cambiar el verificador requiere aprobación del PO, como cualquier otro criterio
 1. Vuelve a ejecutar el verificador sobre el mismo `RUN_DIR`:
 
    ```bash
-   awk '/^# >>> autoqa-check v6/{f=1;next} /^# <<< autoqa-check v6/{f=0} f' .claude/agents/autoqa-operator.md \
+   awk '/^# >>> autoqa-check v7/{f=1;next} /^# <<< autoqa-check v7/{f=0} f' .claude/agents/autoqa-operator.md \
      | python3 -I - --run-dir "<RUN_DIR>" --mode read --template docs/autoqa/operator-summary-template.md
    ```
 
@@ -211,3 +211,16 @@ La revisión independiente de `0652660` aprobó `v5` con observaciones: el bloqu
 - **O2.** Un `executionError` propio de `summary.harness.json` que no es de entorno impide el reintento, aunque el error del envoltorio sí sea de entorno. Es la opción prudente; ver el registro de aprobaciones.
 
 Quedan como observaciones, sin cambio: separadores Unicode poco comunes sin escapar en la salida (riesgo bajo), un caso teórico de la guardia que no se alcanza, y que `summary.json` se lee sin `resolve()`. La contradicción de `OPERATIONS.md` sobre `dirty-after-run` con integridad previa (salida 3 frente a 4) es del arnés y va en la entrega de Codex.
+
+
+## Cambios de `v7`
+
+Autorizados por el PO el 9 de noviembre de 2026, tras los cierres de #37 y #38:
+
+- `summary.harness.json` con schema distinto de `autoqa-summary/1` conserva la comprobación SHA-256 y produce «summary.harness.json con schema inesperado», con nivel 3 del operador. Sus señales, recuentos y errores no se usan; la salida esperada sigue la evidencia válida del envoltorio (4 en el caso autorizado).
+- Un entero `escalationLevel=3` o `exitCode=3` de un resumen válido del arnés aporta categoría 3. Así se conserva salida esperada 3 incluso si todos sus flags son true y el canario FAIL. No se acepta un valor de otro tipo como declaración válida.
+- `previousErrorSummary`/`previousErrorReport` se verifican por ruta y SHA-256, como evidencia opaca del envoltorio. Nunca aportan señales del arnés. Un SHA-256 ausente, null o distinto sigue siendo integridad y salida esperada 3.
+
+Los demás invariantes y la plantilla canónica no cambian: el nivel solo sube; canario PASS y hash inesperado son integridad; canario sin ejecución por ERROR no lo es. Reintento únicamente ambiental y nunca con error no ambiental del arnés. Se conserva el bloque de nivel 3 ante excepción.
+
+Pruebas versionadas: `python3 scripts/tests/test_autoqa_checker.py`; para controles copiados de corridas reales, añadir `AUTOQA_REAL_RUNS=/ruta/a/Logs/autoqa`. Véase [README](README.md#pruebas-del-verificador-sin-unity) y el [informe de entrega](../reviews/2026-11-09-autoqa-followups.md). Las afirmaciones sobre contradicciones de salida en las secciones v5/v6 son históricas: #38 corrigió la precedencia del envoltorio y v7 alinea estos tres casos pendientes.

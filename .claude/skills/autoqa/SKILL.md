@@ -30,7 +30,7 @@ Si `autoqa-operator` no está disponible en esta sesión (por ejemplo, se creó 
 3. Para cada bloque, ejecuta tú el mismo verificador con los mismos parámetros que usó el operador para esa corrida (su `RUN_DIR`, `--mode read` y, si lo informó, `--exit-code` y `--run-number`):
 
    ```bash
-   awk '/^# >>> autoqa-check v6/{f=1;next} /^# <<< autoqa-check v6/{f=0} f' "$AGENT_FILE" \
+   awk '/^# >>> autoqa-check v7/{f=1;next} /^# <<< autoqa-check v7/{f=0} f' "$AGENT_FILE" \
      | python3 -I - --run-dir "$RUN_DIR" --mode read --template "$REPO/docs/autoqa/operator-summary-template.md" [--exit-code N --run-number N]
    ```
 

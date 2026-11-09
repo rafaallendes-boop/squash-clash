@@ -23,7 +23,7 @@ Eres el operador de nivel 1 de AutoQA de Squash Clash. Tu trabajo es mecánico: 
 Ejecuta exactamente, sustituyendo solo las rutas:
 
 ```bash
-awk '/^# >>> autoqa-check v6/{f=1;next} /^# <<< autoqa-check v6/{f=0} f' "$AGENT_FILE" \
+awk '/^# >>> autoqa-check v7/{f=1;next} /^# <<< autoqa-check v7/{f=0} f' "$AGENT_FILE" \
   | python3 -I - --run-dir "$RUN_DIR" --mode read --template "$REPO/docs/autoqa/operator-summary-template.md"
 ```
 
@@ -45,7 +45,7 @@ No ejecutas el arnés ni ningún reintento en este modo. Si el verificador indic
 4. Pasa el verificador:
 
    ```bash
-   awk '/^# >>> autoqa-check v6/{f=1;next} /^# <<< autoqa-check v6/{f=0} f' "$AGENT_FILE" \
+   awk '/^# >>> autoqa-check v7/{f=1;next} /^# <<< autoqa-check v7/{f=0} f' "$AGENT_FILE" \
      | python3 -I - --run-dir "$RUN_DIR" --mode run --exit-code <EXIT> --command "scripts/autoqa.sh mvp" --run-number 1 \
        --template "$REPO/docs/autoqa/operator-summary-template.md"
    ```
@@ -92,7 +92,7 @@ Nada más: ni causas, ni hipótesis, ni recomendaciones de corrección.
 El bloque siguiente es el único cálculo que hace el operador. Solo copia valores de los artefactos, compara SHA-256 y aplica comprobaciones que únicamente pueden subir el nivel. No recalcula el triaje.
 
 ```python
-# >>> autoqa-check v6
+# >>> autoqa-check v7
 import argparse, hashlib, json, os, re, sys
 
 VERDICTS = ("PASS", "FAIL", "INCONCLUSIVE", "NOT_EVALUATED")
@@ -153,7 +153,7 @@ def checker_failed(etype, value, tb):
     traceback.print_exception(etype, value, tb)
     why = ("el verificador falló con %s: %s" % (etype.__name__, value))[:300]
     why = why.replace("\r", "\\r").replace("\n", "\\n").replace("```", "\x27\x27\x27")
-    res = {"schema": "autoqa-operator-result/1", "checker": "autoqa-check v6", "checkerError": True,
+    res = {"schema": "autoqa-operator-result/1", "checker": "autoqa-check v7", "checkerError": True,
            "runDir": rd, "mode": a.mode, "runNumber": a.run_number, "exitCode": a.exit_code, "runId": None,
            "gate": None, "summaryEscalationLevel": None, "operatorLevel": 3, "gatePass": False,
            "incoherences": [why], "sha256": {"checked": 0, "ok": 0, "mismatches": []}, "expectedExitCode": None,
@@ -278,11 +278,15 @@ if summary is not None:
                     harness = json.load(fh)
                 if not isinstance(harness, dict):
                     raise ValueError("no es un objeto")
-                h = harness
                 scan("summary.harness.json", json.dumps(harness, ensure_ascii=False, indent=1))
-                notes.append("summary.json es el ERROR del envoltorio; se usa también summary.harness.json "
-                             "(gate del arnés %s, nivel %s, salida %s), que no sustituye al gate" % (
-                                 h.get("gate"), h.get("escalationLevel"), h.get("exitCode")))
+                if harness.get("schema") != "autoqa-summary/1":
+                    inc.append("summary.harness.json con schema inesperado: %r" % harness.get("schema"))
+                    harness = None
+                else:
+                    h = harness
+                    notes.append("summary.json es el ERROR del envoltorio; se usa también summary.harness.json "
+                                 "(gate del arnés %s, nivel %s, salida %s), que no sustituye al gate" % (
+                                     h.get("gate"), h.get("escalationLevel"), h.get("exitCode")))
             except Exception as e:
                 harness = None
                 inc.append("summary.harness.json ilegible: %s" % e)
@@ -353,7 +357,8 @@ if summary is not None:
             check_sha("gameMetrics[%d]" % i, gm.get("path"), gm.get("sha256"))
         else:
             check_sha("gameMetrics[%d]" % i, str(gm), None)
-    for key in ("restoration", "harnessReport"):
+    # Errores previos del envoltorio: evidencia opaca con SHA, nunca señales del arnés.
+    for key in ("restoration", "harnessReport", "previousErrorSummary", "previousErrorReport"):
         ref = arts.get(key)
         if isinstance(ref, dict):
             real = check_sha(key, ref.get("path"), ref.get("sha256"))
@@ -453,6 +458,7 @@ if summary is not None:
 cats = set()
 if summary is not None:
     if integ_red or hash_bad or canary_bad \
+            or any(type(h.get(k)) is int and h[k] == 3 for k in ("escalationLevel", "exitCode")) \
             or any(not x["ok"] for x in shas):
         cats.add(3)
     if err is not None or gate == "ERROR":
@@ -641,7 +647,7 @@ out.append("")
 out.append("### Artefactos")
 summary_sha = sha256(summary_path) if os.path.isfile(summary_path) else None
 out.append("- summary.json · SHA-256 calculado `%s`" % summary_sha)
-main = [x for x in shas if x["artifact"] in ("attempts.jsonl", "report.md", "restoration", "harnessSummary", "harnessReport")]
+main = [x for x in shas if x["artifact"] in ("attempts.jsonl", "report.md", "restoration", "harnessSummary", "harnessReport", "previousErrorSummary", "previousErrorReport")]
 rest = [x for x in shas if x not in main]
 for x in main:
     out.append("- %s · declarado `%s` · calculado `%s` · %s" % (x["artifact"], x["declared"], x["computed"], "OK" if x["ok"] else "NO COINCIDE"))
@@ -661,7 +667,7 @@ for x in instr:
 out.append("- reintento: elegible=%s · %s · ejecutado por el verificador: no" % (yn(retry_eligible), retry_reason))
 out.append("")
 result = {
-    "schema": "autoqa-operator-result/1", "checker": "autoqa-check v6", "templatePath": template_path,
+    "schema": "autoqa-operator-result/1", "checker": "autoqa-check v7", "templatePath": template_path,
     "templateSha256": template_sha, "runDir": rd, "mode": a.mode, "runNumber": a.run_number,
     "runId": s.get("runId"), "synthetic": synthetic, "gate": gate, "exitCode": a.exit_code,
     "summaryExitCode": declared_exit, "expectedExitCode": expected_exit, "acceptableExitCodes": acceptable_exits,
@@ -680,5 +686,5 @@ lines.append("```json autoqa-operator-result")
 lines.append(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True).replace("`", "\\u0060"))
 lines.append("```")
 print("\n".join(lines))
-# <<< autoqa-check v6
+# <<< autoqa-check v7
 ```

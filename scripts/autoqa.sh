@@ -76,11 +76,15 @@ def failure(kind,message,integrity=False):
     if not harness_loaded:
         harness_state=load_harness(harness if harness.exists() else existing)
         harness_loaded=True
+        if existing.is_file() and not harness.exists():
+            existing.rename(harness)
+            if (run/'report.md').is_file():(run/'report.md').rename(harness_report)
+    elif existing.is_file() and not harness.exists() and not (run/'summary.previous-error.json').exists():
+        # This file was written by failure(), not by the harness. Keep its provenance explicit.
+        existing.rename(run/'summary.previous-error.json')
+        if (run/'report.md').is_file():(run/'report.md').rename(run/'report.previous-error.md')
     previous=summary if readable_summary(summary) else None
     sources=[value for value in (harness_state,previous) if value is not None]
-    if existing.is_file() and not harness.exists():
-        existing.rename(harness)
-        if (run/'report.md').is_file():(run/'report.md').rename(harness_report)
     known={key:None for key in ['hashesVerified','presetsUnchanged','guardPassed','evidenceSha256Ok']}
     canary=None;level=2;exit_candidates=[4]
     reasons=['guard-failed' if integrity else 'execution-error']
@@ -140,6 +144,8 @@ def failure(kind,message,integrity=False):
     s['artifacts']={'attemptsSha256':sha(attempts),'reportSha256':sha(report),'gameMetrics':[]}
     if harness.is_file():s['artifacts']['harnessSummary']={'path':harness.name,'sha256':sha(harness)}
     if harness_report.is_file():s['artifacts']['harnessReport']={'path':harness_report.name,'sha256':sha(harness_report)}
+    for key,name in [('previousErrorSummary','summary.previous-error.json'),('previousErrorReport','report.previous-error.md')]:
+        if (run/name).is_file():s['artifacts'][key]={'path':name,'sha256':sha(run/name)}
     write_summary(s);return s
 
 try:

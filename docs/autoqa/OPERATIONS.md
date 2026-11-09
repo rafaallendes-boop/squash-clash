@@ -42,7 +42,7 @@ El runner registra antes de Unity el estado completo de Git y si GraphicsSetting
 
 Consultar `restoration.json` y su referencia SHA-256 en summary.json. Si el estado completo posterior difiere del previo, o la restauración falla, el control final conserva **gate ERROR** y `executionError.kind=dirty-after-run`. Con integridad demostrada se aplica la precedencia: **salida 3/nivel 3**; sin ella, salida 4/nivel al menos 2. Nunca baja la clasificación ya demostrada por el arnés. No aprobar esa corrida ni ejecutar git checkout sobre otros archivos para ocultar el problema. Reportar los cambios y escalar.
 
-Antes de sustituir un resumen existente por un ERROR se conserva `summary.harness.json` y, cuando existe, `report.harness.md`, referenciados con SHA-256 en artifacts.harnessSummary/harnessReport. Esos archivos permiten consultar el resultado previo; el resultado operativo sigue siendo el ERROR del wrapper. Un archivo de restauración correcto tampoco sustituye el gate.
+Antes de sustituir un resumen del arnés por un ERROR se conserva `summary.harness.json` y, cuando existe, `report.harness.md`, referenciados con SHA-256 en artifacts.harnessSummary/harnessReport. Esos archivos permiten consultar el resultado previo; el resultado operativo sigue siendo el ERROR del wrapper. Un archivo de restauración correcto tampoco sustituye el gate.
 
 ## Señales del arnés ante ERROR del envoltorio
 
@@ -53,6 +53,9 @@ El nivel final es el máximo conocido de envoltorio y arnés, y la salida sigue 
 El ERROR no evalúa recepciones: sus `counts` quedan en cero y `determinism` vacío. Los valores originales se exponen separados en **`harnessResults`**, con `source=summary.harness.json`, `scope=harness-only`, gate, counts y determinism del arnés. No deben confundirse con resultados del ERROR. `report.md` muestra gate, nivel y salida finales, integridad y razones conservadas. Se mantienen los archivos originales y SHA-256 en artifacts.harnessSummary/harnessReport.
 
 Un resumen corrupto o con otro schema se archiva pero no aporta señales de clasificación: integridades y canario desconocidos siguen null; no se usa para bajar ni subir nivel. Una guardia roja u otra señal conocida por el envoltorio sí conserva su valor propio. No asumir true para completar campos ausentes.
+
+
+Si no hubo resumen del arnés y falla otra vez el envoltorio (por ejemplo missing-xml seguido de dirty-after-run), el primer ERROR se conserva en `summary.previous-error.json` y `report.previous-error.md`, con SHA-256 en `artifacts.previousErrorSummary` y `previousErrorReport`. Estos archivos pertenecen al envoltorio: no se crean `summary.harness.json`/`report.harness.md` ni `harnessResults` para ellos. La cadena `executionError.previous` conserva el triaje; los archivos propios conservan además el resumen completo y el informe exactos del primer ERROR. Se elige mantener ambos para poder auditar su evidencia, integridad y clasificación sin atribuirlos al arnés. Si sí existía un resumen original del arnés, se conservan los archivos y el comportamiento de #38.
 
 ## Resumen del operador
 
