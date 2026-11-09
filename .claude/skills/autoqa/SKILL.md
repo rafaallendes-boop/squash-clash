@@ -19,22 +19,23 @@ Argumentos recibidos: `$ARGUMENTS`
 
 ## 2. Nivel 1 — operador
 
-Lanza el subagente `autoqa-operator` con un prompt que contenga solo `MODE`, `RUN_DIR` (si hay), `REPO` y `AGENT_FILE`.
+Antes de lanzarlo, guarda `git -C "$REPO" status --porcelain`. Lanza el subagente `autoqa-operator` con un prompt que contenga solo `MODE`, `RUN_DIR` (si hay), `REPO` y `AGENT_FILE`.
 
 Si `autoqa-operator` no está disponible en esta sesión (por ejemplo, se creó sin reiniciar), lanza un subagente `general-purpose` con `model: haiku` y, como prompt, el cuerpo completo de `AGENT_FILE` (sin el frontmatter) seguido de los parámetros. Dilo en la respuesta: «operador ejecutado por equivalencia general-purpose/haiku».
 
 ## 3. Comprobación del operador
 
-1. Extrae del texto del operador el último bloque ```` ```json autoqa-operator-result ```` . Si falta o no es JSON válido, trata la corrida como **nivel 3** («salida del operador ilegible»).
-2. Ejecuta tú el mismo verificador con los mismos parámetros que usó el operador (`--mode read` y, si lo informó, `--exit-code` y `--run-number`):
+1. `git -C "$REPO" status --porcelain` debe ser igual al guardado antes del operador. Si cambió, **nivel 3** («el árbol cambió durante el operador»).
+2. Extrae del texto del operador todos los bloques ```` ```json autoqa-operator-result ```` : uno por corrida, dos si hubo reintento. Si falta alguno o no es JSON válido, trata la corrida como **nivel 3** («salida del operador ilegible»).
+3. Para cada bloque, ejecuta tú el mismo verificador con los mismos parámetros que usó el operador para esa corrida (su `RUN_DIR`, `--mode read` y, si lo informó, `--exit-code` y `--run-number`):
 
    ```bash
-   awk '/^# >>> autoqa-check v4/{f=1;next} /^# <<< autoqa-check v4/{f=0} f' "$AGENT_FILE" \
+   awk '/^# >>> autoqa-check v5/{f=1;next} /^# <<< autoqa-check v5/{f=0} f' "$AGENT_FILE" \
      | python3 -I - --run-dir "$RUN_DIR" --mode read --template "$REPO/docs/autoqa/operator-summary-template.md" [--exit-code N --run-number N]
    ```
 
-3. Compara campo a campo `runId`, `gate`, `summaryEscalationLevel`, `operatorLevel`, `gatePass`, `incoherences`, `sha256`, `expectedExitCode`, `acceptableExitCodes` y `hashMismatches` de ambos bloques. Si difieren, el operador alteró datos: **nivel 3** («resumen del operador no coincide con el verificador»).
-4. `LEVEL` = `operatorLevel` verificado, o 3 si los pasos 1 o 3 fallaron. Nunca menor.
+4. Compara campo a campo `runId`, `gate`, `summaryEscalationLevel`, `operatorLevel`, `gatePass`, `incoherences`, `sha256`, `expectedExitCode`, `acceptableExitCodes`, `summaryExitCode`, `harnessSummary`, `retry` y `hashMismatches` de cada par de bloques. Si difieren, el operador alteró datos: **nivel 3** («resumen del operador no coincide con el verificador»).
+5. `LEVEL` = `operatorLevel` verificado del último bloque, o 3 si algún paso anterior falló o algún bloque tiene nivel 3. Nunca menor.
 
 ## 4. Según el nivel
 
@@ -69,7 +70,7 @@ Si `autoqa-operator` no está disponible en esta sesión (por ejemplo, se creó 
 Devuelve, en este orden:
 1. nivel final y si hace falta intervención;
 2. resumen del operador (verbatim);
-3. resultado de la comprobación del paso 3;
+3. resultado de la comprobación del apartado 3;
 4. investigación (nivel 2) o paquete de escalamiento (nivel 3).
 
 ## Prohibiciones

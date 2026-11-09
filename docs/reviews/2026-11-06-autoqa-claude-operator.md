@@ -207,7 +207,7 @@ Decisión literal del PO: **«Sí, alinear #37»**, tras la fusión de la PR #36
 
 Las reglas del operador recogen además: el canario tras un FAIL (opción A), `dirty-after-run` sin reintento ni `git checkout`, y `summary.harness.json` como dato que no sustituye al gate.
 
-**Verificación sin agentes.** `v4` se ejecutó sobre diez corridas reales de Codex y de Claude, y sobre los fixtures F1–F10. Para cada uno de los 21 directorios se probaron los cinco códigos de salida, 105 pares en total: solo el esperado se acepta, y cualquier otro da incoherencia, nivel 3 y sin éxito. Resultados de las corridas reales:
+**Verificación sin agentes.** `v4` se ejecutó sobre once corridas reales de Codex y de Claude, y sobre los fixtures F1–F10. Para cada uno de los 21 directorios se probaron los cinco códigos de salida, 105 pares en total: solo el esperado se acepta, y cualquier otro da incoherencia, nivel 3 y sin éxito. Resultados de las corridas reales:
 
 | Corrida | Caso | Gate / salida esperada | Nivel |
 | --- | --- | --- | ---: |
@@ -222,7 +222,9 @@ Las reglas del operador recogen además: el canario tras un FAIL (opción A), `d
 | `20261109T133633Z-8e187de-29193` | Determinismo distinto, canario tras la parada | FAIL / 1 | 2 |
 | `20261109T133645Z-8e187de-24592` | Fallo de NUnit con resumen del arnés conservado | ERROR / 4 | 2 |
 
-Los fixtures F1–F10 dan el mismo nivel y la misma salida esperada que con `v3`. Una copia sintética del canario PASS con `dirty-after-run` y salida 4 queda en salida esperada 3, incoherencia y nivel 3: cubre la observación menor de la PR #36. Todas las corridas están en `Logs/autoqa/` del worktree de Codex, sin versionar.
+Los fixtures F1–F10 dan el mismo nivel y la misma salida esperada que con `v3`. Todas las corridas están en `Logs/autoqa/` del worktree de Codex, sin versionar.
+
+**Afirmación corregida.** Esta entrega decía que una copia sintética del canario PASS con `dirty-after-run` y salida 4 quedaba en salida esperada 3 y que eso cubría la observación menor de la PR #36. La copia no era realista: conservaba `canary.observed=PASS` en `summary.json`, cuando el `failure()` real del envoltorio lo pone en `null`. Con `v4` el caso no se detectaba en general (ver [correcciones de `v5`](#correcciones-de-la-revisión-independiente-v5)).
 
 **Corrida real con el operador.** El operador corrió en modo `run` con Haiku, por equivalencia `general-purpose`, porque el agente cargado en la sesión era anterior a `v4`. `REPO` fue el worktree de Codex en `7cd5a18`, con el mismo árbol que `e18d3e1`; el checkout principal no tiene `Library/` y la importación de Unity habría llevado mucho tiempo.
 
@@ -230,11 +232,37 @@ Resultado: corrida `20261109T142141Z-7cd5a18-12190`, `EXIT=0`, gate PASS, nivel 
 
 Claude volvió a ejecutar el verificador con los mismos parámetros y el bloque JSON coincide campo a campo. El árbol del worktree de Codex quedó limpio.
 
+## Correcciones de la revisión independiente (`v5`)
+
+El PO asignó la revisión de `34693ce` a un subagente de Claude en solo lectura. Veredicto: **CAMBIOS SOLICITADOS**, con un bloqueante y once observaciones menores. Ante la pregunta «¿Corrijo ahora el bloqueante y los menores de la PR #37?», decisión literal del PO: **«Sí, corrige»**. El verificador pasó a **`autoqa-check v5`**; el detalle está en [Cambios de `v5`](../autoqa/claude-operator.md#cambios-de-v5-revisión-independiente).
+
+**Bloqueante B1.** Ante un ERROR del envoltorio, `v4` usaba `summary.harness.json` solo para cotejar recuentos. Consecuencias, reproducidas también por Claude:
+- un canario PASS conservado bajo un ERROR `tests` daba nivel 2 y salida esperada 4, sin incoherencias, contra la decisión del PO «canario PASS = siempre nivel 3»;
+- `presetsUnchanged=false` en el resumen del arnés daba lo mismo;
+- un FAIL del arnés bajo un error `environment` o `missing-xml` quedaba elegible para reintento, contra «nunca reintentar ante FAIL».
+
+**Menores corregidos.** `exitCode` de `summary.json` sin cotejar; `canary.expectedFail` y el intento canario sin exigir; gate PASS sin exigir 18/18; hash y SimulationKey sin anclar a los valores declarados; `null` de integridad aceptado con gate PASS, mientras el de determinismo subía a 3; reintento decidido antes de rellenar la plantilla; valores con saltos de línea o bloques de código copiados sin escapar; evidencia fuera de `RUN_DIR` aceptada; `report.md` sin gate y plantilla sin un marcador solo como nota o sin detectar; `def yn` y el cálculo del nivel duplicados. En la documentación: la afirmación falsa sobre `dirty-after-run` (aquí, en `claude-operator.md`, `AGENTS.md` y el registro de aprobaciones), «diez corridas» en lugar de once, y dos huecos de `/autoqa`: no comprobaba `git status` alrededor del operador y, tras un reintento, solo verificaba el último bloque.
+
+**Verificación de `v5`, sin agentes:**
+- Las 20 corridas reales de `Logs/autoqa/` del worktree de Codex dan el mismo nivel, salida esperada, reintento y número de incoherencias que con `v4`. No hay falsos positivos nuevos.
+- Suite de 24 mutaciones sobre copias de corridas reales, reproduciendo exactamente `failure()` y la rama `dirty-after-run` de `scripts/autoqa.sh`: **24/24 con `v5`; `v4` falla 19**. Incluye M16, M17, M17b, M17c, M18, M18b y M21 del bloqueante, y los casos de cada menor.
+- Los fixtures F1–F10 se regeneraron con el esquema real de la PR #36: seis escenarios por tres repeticiones, un intento canario, hashes declarados, `determinism.identical`, `executionError.kind` y `exitCode`. Los anteriores usaban el esquema supuesto y habrían fallado las comprobaciones nuevas sin motivo. Los SHA-256 de los 192 archivos anteriores quedan en `fixtures-before-v5.sha256` y el generador anterior en `make_fixtures-pre-v5.py`, sin versionar. Niveles y salidas esperadas iguales a los documentados: F1 1/0, F2 2/1, F3 3/3, F4 3/3, F5 2/4, F6 3/1, F7 2/1 con el texto con forma de instrucción listado, F8 3/3, F9 2/2 y F10 3/3.
+- 105 pares (11 corridas reales y 10 fixtures, por cinco códigos de salida): ninguno sale mal.
+- El bloque incrustado en `.claude/agents/autoqa-operator.md`, extraído con el `awk` documentado, es idéntico byte a byte al archivo probado.
+
+**Operador con `v5`.** Dos operadores Haiku, por equivalencia `general-purpose`, en modo `read` y sin Unity:
+- corrida PASS `20261109T142141Z-7cd5a18-12190`: nivel 1, salida esperada 0, 41/41 SHA-256 y sin intervención necesaria;
+- copia del canario PASS `20261109T120528Z-491e10d-22213` envuelta en un ERROR `tests` con el `failure()` real: nivel 3, salida esperada 3 y tres incoherencias (canario que no falla con nivel 2, el envoltorio bajó el nivel del arnés, `exitCode` 4 en lugar de 3), sin reintento.
+
+Ambos copiaron la salida del verificador sin cambios: nivel, salida esperada, incoherencias y SHA-256 coinciden con una ejecución propia de Claude. No editaron archivos.
+
+La causa de fondo sigue en el arnés: el envoltorio rebaja el nivel y el código de salida del arnés cuando lo sustituye por un ERROR. `v5` lo detecta y escala; corregirlo en `scripts/autoqa.sh` requiere una entrega de Codex.
+
 ## Pendiente
 
-- `/autoqa` con los agentes `autoqa-operator` y `autoqa-investigator` cargados tras reabrir la sesión. Hoy se usó la equivalencia `general-purpose`.
-- Revisión independiente de esta alineación, asignada por el PO.
-- Observación menor de la PR #36, en el arnés: salida 4 en lugar de 3 cuando coinciden integridad y `dirty-after-run`. El verificador ya la detecta; corregirla en el arnés requiere otra entrega de Codex.
+- Revisión independiente de `v5`, asignada por el PO.
+- `/autoqa` con los agentes `autoqa-operator` y `autoqa-investigator` cargados tras reabrir la sesión. Hasta ahora se usó la equivalencia `general-purpose`.
+- En el arnés, entrega de Codex: el envoltorio de `scripts/autoqa.sh` debe conservar el nivel y el código de salida del arnés (salida 4 en lugar de 3 cuando coinciden integridad y `dirty-after-run`, y nivel 2 en lugar de 3 con un canario PASS bajo un ERROR `tests`). `v5` lo marca como incoherencia y nivel 3.
 - Entrada de cierre en `AGENTS.md` y en el registro de aprobaciones cuando se fusione.
 
 Esta entrega no se fusiona sin aprobación explícita del PO.

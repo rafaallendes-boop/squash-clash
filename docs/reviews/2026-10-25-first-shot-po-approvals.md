@@ -1811,6 +1811,14 @@ Condiciones comprobadas antes de fusionar:
 
 Se fusionó con `--match-head-commit`. Merge commit **`e18d3e169beb01569d11b1fbbce7f26d130670a1`**, segundo padre exactamente `7cd5a18` y árbol `538696b6b26857cfb31f0358ed49476187f7ca23`, idéntico al head aprobado. Main local sincronizada y limpia. La rama `autoqa/mvp` y el worktree de Codex se conservan, porque los gestiona Codex. El cierre se registra aquí, dentro de la siguiente entrega, sin un commit aparte en main.
 
-Observación menor abierta, sin corrección en #36: si coinciden un fallo de integridad y `dirty-after-run`, el script sale con 4 aunque conserva el nivel 3. Eso contradice la precedencia 3 > 4. El verificador del operador lo detecta y mantiene el nivel 3.
+Observación menor abierta, sin corrección en #36: si coinciden un fallo de integridad y `dirty-after-run`, el script sale con 4 aunque conserva el nivel 3. Eso contradice la precedencia 3 > 4. *(Corregido el 2026-11-09, ver abajo: con `v4` el verificador no lo detectaba en general; lo detecta desde `v5`.)*
 
 **Alineación de #37.** A la pregunta «¿Alineo ahora la PR #37 con el arnés fusionado?», el PO respondió literalmente **«Sí, alinear #37»**. Autoriza adaptar la capa de operador a la implementación real, que manda. No cambia el arnés, sus escenarios ni sus criterios.
+
+## Revisión independiente de la PR #37 y correcciones `v5` — decisión del PO, 2026-11-09 (Chile)
+
+El PO pidió la revisión «antes con un sub agente de claude». Un subagente de Claude revisó `324ceed..34693ce` en solo lectura: **CAMBIOS SOLICITADOS**. El bloqueante B1: ante un ERROR del envoltorio, el verificador `v4` usaba `summary.harness.json` solo para los recuentos. Un canario PASS o una integridad en rojo del arnés daban nivel 2, y un FAIL del arnés bajo un error de entorno quedaba elegible para reintento. Claude lo reprodujo. La revisión también mostró que era falsa la afirmación de esta entrega de que el verificador detectaba la observación menor de #36: la copia sintética que la probó no reproducía el `failure()` real.
+
+A la pregunta «¿Corrijo ahora el bloqueante y los menores de la PR #37?», el PO respondió literalmente **«Sí, corrige»**. Esa respuesta autoriza el cambio del verificador, que según `docs/autoqa/claude-operator.md` requiere aprobación del PO. Solo cambia la capa de operador: el arnés, sus escenarios, criterios y umbrales quedan intactos.
+
+Resultado: verificador `autoqa-check v5`. Las 20 corridas reales dan lo mismo que con `v4`; 24/24 mutaciones correctas (`v4` fallaba 19); fixtures F1–F10 regenerados con el esquema real y los mismos niveles; 105 pares correctos. Detalle en el [informe](2026-11-06-autoqa-claude-operator.md#correcciones-de-la-revisión-independiente-v5). La PR #37 sigue sin fusionar hasta una nueva revisión independiente y la aprobación del PO.
