@@ -1,0 +1,12 @@
+{
+  "name": "SquashClash.AutoQA",
+  "rootNamespace": "SquashClash.AutoQA",
+  "references": [
+    "SquashClash.Core",
+    "SquashClash.Runtime",
+    "Unity.InputSystem"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}
