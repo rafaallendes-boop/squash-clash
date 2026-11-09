@@ -1,6 +1,6 @@
 # AutoQA — precedencia del envoltorio ante ERROR
 
-9 de noviembre de 2026, Chile. Rama/worktree nueva **autoqa/wrapper-precedence** desde main **e18d3e169beb01569d11b1fbbce7f26d130670a1**. Fuente corregida y probada **34b28c46c4c37a11256da902b208cc15df621fcf**. PR propia lista para revisión de Claude coordinada por el PO, sin fusionar. Esta entrada registra solo esta entrega; no duplica el cierre de #36 consignado en #37.
+9 de noviembre de 2026, Chile. Rama/worktree nueva **autoqa/wrapper-precedence** desde main **e18d3e169beb01569d11b1fbbce7f26d130670a1**. Fuente corregida y probada **34b28c46c4c37a11256da902b208cc15df621fcf**. Al crear la PR #38, main avanzó a **d1d740130cafce5e1c44aa874aa015c214dbbd5c** (merge externo de #37); se integró después en **e928c66**, sin cambiar el envoltorio ni Assets. PR propia lista para revisión de Claude coordinada por el PO, sin fusionar. Esta entrada registra solo esta entrega; no duplica el cierre de #36 consignado en #37.
 
 gate: PASS
 
@@ -90,7 +90,7 @@ Las listas completas y sus razones están en compatibility-results.json y en cad
 
 ## Evidencia y huellas
 
-Manifiesto local **`Logs/autoqa/wrapper-precedence/evidence-manifest.json`**, **1231 archivos**, SHA-256 **57057179b4bdd608cbffd343f10ce0a79bccb42eaf9fb63f2d9c13c5d53a2288**. Incluye pruebas versionadas ejecutadas, resúmenes/artefactos sintéticos, ambas corridas reales, registros de restauración, verificadores extraídos y sus salidas. Logs, artefactos, cachés y configuración local no se versionan.
+Manifiesto local **`Logs/autoqa/wrapper-precedence/evidence-manifest.json`**, **1233 archivos**, SHA-256 **9bbbd5ad82b20befd6f1754d4d9c4d78c2b2067015b108043b0488d5f372eea8**. Incluye pruebas versionadas ejecutadas, resúmenes/artefactos sintéticos, ambas corridas reales, registros de restauración, verificadores extraídos y sus salidas. Logs, artefactos, cachés y configuración local no se versionan.
 
 | Principal | SHA-256 |
 | --- | --- |
@@ -101,7 +101,7 @@ Manifiesto local **`Logs/autoqa/wrapper-precedence/evidence-manifest.json`**, **
 | `Logs/autoqa/wrapper-precedence/real-runs.json` | `d35ec8de45423e3448c5f084f140ac6098b03b7b15987b29b544a6095f0b3cce` |
 | `Logs/autoqa/wrapper-precedence/compatibility-results.json` | `f9c9536459728210db642c826f279861256ac69f5bad0d2038ccd63477046564` |
 | `Logs/autoqa/wrapper-precedence/protected-files.json` | `5a5d06e42664698d96bc7b3de5b85674f569c2a33be56da0672889afda613c99` |
-| `Logs/autoqa/wrapper-precedence/evidence-manifest.json` | `57057179b4bdd608cbffd343f10ce0a79bccb42eaf9fb63f2d9c13c5d53a2288` |
+| `Logs/autoqa/wrapper-precedence/evidence-manifest.json` | `9bbbd5ad82b20befd6f1754d4d9c4d78c2b2067015b108043b0488d5f372eea8` |
 | `Logs/autoqa/20261109T195229Z-34b28c4-10968/summary.json` | `d60a64148dfb13c4dd5c9cd2ae33f4a3e185f3396a0f01d06139344c2ae88ab7` |
 | `Logs/autoqa/20261109T195229Z-34b28c4-10968/tests.xml` | `ca593f4b97f4576056a6dd8616d63403994bb989d360375cc456ab9286493c0d` |
 | `Logs/autoqa/20261109T195229Z-34b28c4-10968/restoration.json` | `3f01656d6c9117bda8c32bf03aab57885ec8659b45ebaf4f138de808324dc8f5` |
@@ -111,8 +111,12 @@ Manifiesto local **`Logs/autoqa/wrapper-precedence/evidence-manifest.json`**, **
 
 ## Entrega y límites
 
-Solo se añade la entrada propia de esta entrega a AGENTS.md/aprobaciones; no se duplica el registro de cierre de #36 de la rama #37. No hay conflicto de código con main; si esas entradas documentales confluyen con #37 se conservan ambos historiales, sin modificar esa rama en esta entrega.
+Solo se añade la entrada propia de esta entrega a AGENTS.md/aprobaciones; no se duplica el registro de cierre de #36 de la rama #37. Al crear #38, main ya contenía el merge externo de #37. Se integró origin/main en e928c66: hubo conflictos únicamente en AGENTS.md/aprobaciones, resueltos conservando el prefijo de main y el sufijo propio de esta entrega, con ambos historiales completos y sin duplicar la base común ni el cierre de #36. No se solicitó ni ejecutó la fusión de #37 ni se modificó su rama. La capa de operador heredada es exactamente la publicada en main. Auditada en Logs/autoqa/wrapper-precedence/merge-audit.json; el manifiesto previo se conserva por separado.
+
+Los scripts probados y Assets/ProjectSettings/Packages se cotejaron byte a byte tras integrar main: siguen iguales a la fuente validada y a main respectivamente. No se repiten las corridas por esta integración de registros y operador ya comprobado con v6.
 
 PR nueva abierta/lista para revisión de Claude coordinada por el PO, **sin fusionar**. Ninguna parada nueva ni aceptación del PO inferida. La preparación de configuración fue autorizada explícitamente y los primeros errores de fixture no se contaron como validación. Sin intervención en #32/#37, S3-validation, S4, First Rally o First Match; ningún mensaje externo enviado. Detenerse al entregar.
 
 AutoQA Editor no valida audibilidad, háptica percibida, lectura visual, latencia toque→imagen, sensación o diversión ni sustituye sesiones iPhone del PO.
+
+Auditoría de integración: `Logs/autoqa/wrapper-precedence/merge-audit.json`, SHA-256 `1c8792fad1531059988b2553e56d858d5a539cc77f2aaf9015573b1bd88bb184`.
