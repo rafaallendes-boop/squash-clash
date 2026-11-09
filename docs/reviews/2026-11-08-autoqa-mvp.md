@@ -119,3 +119,8 @@ Criterios 2–14 del MVP quedan pendientes salvo las comprobaciones parciales de
 AutoQA Editor no verifica digitalizador, UIKit, IL2CPP, audibilidad, háptica percibida, lectura visual, latencia toque→imagen, sensación ni diversión. Esas verificaciones siguen correspondiendo al PO en una sesión iPhone autorizada aparte.
 
 **Detenerse.** La revisión independiente de esta entrega corresponde a Claude, coordinada por el PO. Ningún mensaje externo enviado. PR #36 abierta/lista, sin fusión; resolver AUTOQA-MVP-02 requiere decisión del PO antes de retomar el punto 2. S4/First Rally/First Match siguen fuera de alcance.
+
+
+## Continuación autorizada del 9 de noviembre
+
+El PO resolvió AUTOQA-MVP-02 mediante ±10 ms y se completó el MVP para revisión independiente, sin fusionar. Este informe conserva la parada histórica; ver [entrega del 9 de noviembre](2026-11-09-autoqa-mvp.md).
