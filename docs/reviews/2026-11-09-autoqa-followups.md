@@ -71,7 +71,21 @@ La corrida histórica 20261109T133200Z conserva sus dos incoherencias con ambas 
 
 ## Dos corridas reales nuevas
 
-Pendientes de la autorización solicitada al PO para copiar scripts/device.env byte a byte desde autoqa/mvp. No se ha copiado ni modificado el archivo. No se han iniciado corridas dependientes de esa autorización.
+El PO respondió literalmente **«Sí, copiarlo sin cambios»**. Se copió `scripts/device.env` byte a byte desde autoqa/mvp, sin cambiar valores ni versionarlo. SHA-256 de origen y copia: `7fbd47039b15d9ca89dc70250193590a41eeff79b22833872e7fadce701dc44f`. Ambos siguen idénticos al terminar. Registro ignorado: `Logs/autoqa-followups/local-env-copy.json`.
+
+Dos ejecuciones consecutivas de `scripts/autoqa.sh mvp` desde **72b2b3ff935794e57d19405c9ad7fa4dcb3459ce**, código probado c2117b1, árbol limpio antes, entre y después; sin checkout manual. Solo el envoltorio ejecutó su restauración automática existente de transitorios.
+
+| Corrida | Tiempo de proceso | Unity | Gate/salida/nivel | dirty | Intentos/canario | v7 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 20261109T232416Z-72b2b3f-12736 | 41.95 s | 85/85, cero fallos/omisiones | PASS/0/1 | false | 18 PASS/FAIL esperado | 41/41 SHA, cero incoherencias |
+| 20261109T232458Z-72b2b3f-19058 | 14.29 s | 85/85, cero fallos/omisiones | PASS/0/1 | false | 18 PASS/FAIL esperado | 41/41 SHA, cero incoherencias |
+
+XML frescos del 9 de noviembre: primera suite 23:24:49–23:24:57Z y segunda 23:25:04–23:25:11Z. `restoration.json` registra statusUnchanged=true y ausencia de errores en ambas. V7 aplicado en modo run con salida real 0, comando y plantilla canónicos; también v6/v7 en modo read: **PASS/0/nivel1, gatePass=true, sin reintento ni incoherencias**.
+
+Compatibilidad final repetida sobre **25/25 corridas reales** ahora disponibles (23 históricas + estas dos): cero diferencias de salida esperada, nivel, gatePass, objeto de reintento o número de incoherencias. Todos los 845 archivos históricos conservan SHA/tamaño/mtimeNs; 585 archivos protegidos y configuración idénticos. Evidencia: `real-runs.json`, `real-checker-results.json`, `compatibility-final.json`, `compatibility-final/` y `final-verification.json`, bajo Logs/autoqa-followups. Los archivos de las dos corridas nuevas tienen manifiesto SHA propio.
+
+**Entrega técnica completa en [PR #39](https://github.com/rafaallendes-boop/squash-clash/pull/39), para revisión de Claude coordinada por el PO, sin fusionar.** Sin nuevas paradas, diferencias sin justificar ni cambios fuera de alcance. Las limitaciones de Editor/Mono y la validación física no autorizada siguen intactas.
+
 
 ## Huellas y archivos protegidos
 
@@ -89,3 +103,30 @@ Pendientes de la autorización solicitada al PO para copiar scripts/device.env b
 | mutations-v7.txt | 2aa87f0e0d298ae35ed22b779c317e68c0809a5f28a6b3c1fd750fd2b183a1e8 |
 | compatibility.json | 829e47d26b87a8849c7e22a2d97e7330ee136879babac2aa6847a297c2e1ca43 |
 | historical-manifest.json | b21459d14526a55138d78747ff356ea59f4b8879ae9af563ec72fe95588c7684 |
+
+
+### Huellas de la comprobación final
+
+| Evidencia local (bajo Logs/autoqa-followups) | SHA-256 |
+| --- | --- |
+| local-env-copy.json | f8e8ebdb35c7667887c1183bca096534ba10819fda6f1c5c2ab572a22c265083 |
+| real-runs.json | 1f112c8d10fb3594aef05424928161e154e3ee491b58056e29fb26ffa9cf901c |
+| real-checker-results.json | cceef0a928811650691ae49e8e56974d2b464acf0b35d8ae89403e476e25d957 |
+| compatibility-final.json | ee1cf0f8b26ce7e9ba2f9a392d07f89eda624331a95c7bbdd8e4dbca505127ac |
+| final-verification.json | 584be7bec12b9dfcaee175709c0e2877fb799e1d44583662042a0675f5a57549 |
+| real-artifacts-manifest.json | fcbc622e4643efd82a70264d4a5476d692b34b5f7a5e9aa1c9693a5108e6fd0d |
+| real-1-v7-run.md | 10028aa981318076cf169980e64f03dd300a8fc997147382a3fbcec57a944a41 |
+| real-2-v7-run.md | df00e5bfd4c4b36708c246880502ec960fdc2a0e93781ad3b6ee4f02c45fae2f |
+
+| Corrida / archivo | SHA-256 |
+| --- | --- |
+| 20261109T232416Z-72b2b3f-12736/summary.json | 33f8cb258eadce0d83d20770220175e6b5b598a7ea43a56bcb6cd007ce2a3f2a |
+| 20261109T232416Z-72b2b3f-12736/attempts.jsonl | 4541cd41d2e0be793dae12b4b66c8b81095c2c1f00c4fd07b5ff73ff9988559d |
+| 20261109T232416Z-72b2b3f-12736/report.md | fdc79df942193fc1720536f80f4b0662982b9d97d026efa024a3886910c5a35a |
+| 20261109T232416Z-72b2b3f-12736/tests.xml | 2822ace67320b29e299438daa36851283d04b12250a26d569257ba875ec9b363 |
+| 20261109T232416Z-72b2b3f-12736/restoration.json | 3f01656d6c9117bda8c32bf03aab57885ec8659b45ebaf4f138de808324dc8f5 |
+| 20261109T232458Z-72b2b3f-19058/summary.json | d3f700c620b198f6c409d186f162cbe37c9bf252a600b067fe424ffd63e60c18 |
+| 20261109T232458Z-72b2b3f-19058/attempts.jsonl | 378357564394d9df868e8fc8bfc286d06128a6ca4a2b8c4a216486724a3c5ef4 |
+| 20261109T232458Z-72b2b3f-19058/report.md | fdc79df942193fc1720536f80f4b0662982b9d97d026efa024a3886910c5a35a |
+| 20261109T232458Z-72b2b3f-19058/tests.xml | 2d36e09c7d26eb1c6334a56f7daca302e117c58277b02aecad04bdd2a311faf3 |
+| 20261109T232458Z-72b2b3f-19058/restoration.json | 3f01656d6c9117bda8c32bf03aab57885ec8659b45ebaf4f138de808324dc8f5 |
