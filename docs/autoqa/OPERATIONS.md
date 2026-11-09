@@ -40,9 +40,19 @@ Precedencia cuando coinciden causas: **3 > 4 > 1 > 2**. Cualquier salida distint
 
 El runner registra antes de Unity el estado completo de Git y si GraphicsSettings.asset/QualitySettings.asset estaban limpios respecto de HEAD, tanto en índice como en worktree. Al finalizar, incluso con ERROR o timeout, restaura solo esos dos transitorios que estuvieran limpios antes. Los previamente modificados se dejan tal cual respecto de la restauración; dirty ya era true. No restaura otros archivos.
 
-Consultar `restoration.json` y su referencia SHA-256 en summary.json. Si el estado completo posterior difiere del previo, o la restauración falla, el control final prescrito por el PO impone **ERROR/salida 4**, `executionError.kind=dirty-after-run`; conserva un nivel 3 previo si ya existía. No aprobar esa corrida ni ejecutar git checkout sobre otros archivos para ocultar el problema. Reportar los cambios y escalar.
+Consultar `restoration.json` y su referencia SHA-256 en summary.json. Si el estado completo posterior difiere del previo, o la restauración falla, el control final conserva **gate ERROR** y `executionError.kind=dirty-after-run`. Con integridad demostrada se aplica la precedencia: **salida 3/nivel 3**; sin ella, salida 4/nivel al menos 2. Nunca baja la clasificación ya demostrada por el arnés. No aprobar esa corrida ni ejecutar git checkout sobre otros archivos para ocultar el problema. Reportar los cambios y escalar.
 
 Antes de sustituir un resumen existente por un ERROR se conserva `summary.harness.json` y, cuando existe, `report.harness.md`, referenciados con SHA-256 en artifacts.harnessSummary/harnessReport. Esos archivos permiten consultar el resultado previo; el resultado operativo sigue siendo el ERROR del wrapper. Un archivo de restauración correcto tampoco sustituye el gate.
+
+## Señales del arnés ante ERROR del envoltorio
+
+Si existe un resumen legible con schema `autoqa-summary/1`, el envoltorio conserva las integridades conocidas (solo booleanos), `canary.observed` y las razones del arnés. Una integridad falsa domina cualquier true/null posterior. Un canario PASS, una integridad falsa o una clasificación válida nivel/salida 3 del arnés no se pierden por un fallo posterior del proceso, esquema, evidencia o restauración. El gate lo sigue fijando el envoltorio (ERROR, o FAIL ante guardia roja); no inventa un nuevo resultado del juego.
+
+El nivel final es el máximo conocido de envoltorio y arnés, y la salida sigue **3 > 4 > 1 > 2**. Un FAIL/salida1 del arnés más un error del envoltorio termina en ERROR/salida4/nivel2, conservando evidencia del FAIL. Con integridad demostrada, ERROR sigue visible pero termina en salida3/nivel3. Las llamadas sucesivas al manejador de error retienen el resumen original y encadenan `executionError.previous`.
+
+El ERROR no evalúa recepciones: sus `counts` quedan en cero y `determinism` vacío. Los valores originales se exponen separados en **`harnessResults`**, con `source=summary.harness.json`, `scope=harness-only`, gate, counts y determinism del arnés. No deben confundirse con resultados del ERROR. `report.md` muestra gate, nivel y salida finales, integridad y razones conservadas. Se mantienen los archivos originales y SHA-256 en artifacts.harnessSummary/harnessReport.
+
+Un resumen corrupto o con otro schema se archiva pero no aporta señales de clasificación: integridades y canario desconocidos siguen null; no se usa para bajar ni subir nivel. Una guardia roja u otra señal conocida por el envoltorio sí conserva su valor propio. No asumir true para completar campos ausentes.
 
 ## Resumen del operador
 
