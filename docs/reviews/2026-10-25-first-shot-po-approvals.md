@@ -1809,3 +1809,8 @@ El PO autoriza corregir en `scripts/autoqa.sh` el origen por el que el envoltori
 **Decisión confirmada por el PO al enviar el encargo:** «con integridad demostrada, manda la precedencia: **salida 3, nivel 3**, gate ERROR y `executionError.kind=dirty-after-run`, que se conserva visible. Sin integridad, dirty-after-run sigue siendo ERROR/salida 4». Resuelve la contradicción de OPERATIONS sin cambiar las demás decisiones de juego. Se conservan señales conocidas del arnés, sus razones y artefactos; los datos desconocidos no pasan a true.
 
 TDD determinista sin Unity antes del fix, pruebas versionadas ejecutables y dos corridas reales consecutivas limpias PASS/0/nivel1. Alcance solo scripts y documentación; no tocar Assets/ProjectSettings/Packages ni device.env, escenarios, expectativas, márgenes, tolerancias, determinismo, defaults, spec/planes/criterios, PR #32/#37 ni S3/S4/First Rally/First Match. Sin iPhone/build/instalación. PR propia lista para revisión de Claude coordinada por el PO, sin fusionar. Ante otro defecto, registrar y detenerse.
+
+
+### Preparación del worktree de precedencia — confirmación adicional del PO
+
+El worktree nuevo no incluía scripts/device.env, requerido por el lanzador. Consultado por esa restricción, el PO autorizó literalmente **«Sí, copiarlo sin cambios»** desde autoqa/mvp. Se copia byte a byte, con SHA-256 coincidente, sin cambiar valores ni modificar el original; archivo ignorado, no versionado. No autoriza otros cambios de configuración.
