@@ -35,9 +35,9 @@ La integridad registra hashes por intento, SHA de evidencia y una huella del dir
 
 Antes de Unity, el script captura el estado completo de `git status --porcelain -z` y el estado/SHA-256 de GraphicsSettings.asset y QualitySettings.asset. En `finally`, también ante ERROR o timeout, hace `git checkout --` exclusivamente de cada uno de esos dos archivos que estuviera limpio respecto de HEAD (índice y worktree). Si ya tenía cambios, no lo restaura. No restaura ningún otro archivo.
 
-`restoration.json` conserva estados previos/posteriores, hashes, operaciones, errores y comparación del estado completo; su ruta y SHA están en summary.artifacts.restoration. Si el estado final difiere del inicial o falla la restauración, el resultado es ERROR/salida 4, executionError.kind=dirty-after-run. Por eso dos corridas consecutivas desde árbol limpio mantienen dirty=false y el árbol limpio al terminar.
+`restoration.json` conserva estados previos/posteriores, hashes, operaciones, errores y comparación del estado completo; su ruta y SHA están en summary.artifacts.restoration. Si el estado final difiere del inicial o falla la restauración, el resultado conserva gate ERROR y executionError.kind=dirty-after-run: salida3/nivel3 si ya hay integridad demostrada, y salida4/nivel al menos2 en caso contrario. Rige siempre la precedencia 3 > 4 > 1 > 2. Por eso dos corridas consecutivas desde árbol limpio mantienen dirty=false y el árbol limpio al terminar.
 
-Ante error que sustituye un resumen ya generado, se conserva `summary.harness.json` (y el informe previo en `report.harness.md`), con referencias y SHA-256 en el resumen de ERROR. Es evidencia adicional: no convierte ERROR en PASS.
+Ante error que sustituye un resumen ya generado, se conserva `summary.harness.json` (y el informe previo en `report.harness.md`), con referencias y SHA-256 en el resumen de ERROR. Es evidencia adicional: no convierte ERROR en PASS. El envoltorio retiene las integridades booleanas conocidas, canary.observed, el nivel máximo y las razones; no baja una clasificación nivel3/salida3 al reemplazar el resumen por ERROR. Los counts/determinism del arnés quedan identificados en harnessResults (scope=harness-only), separados de los recuentos vacíos del ERROR. Un resumen corrupto o de otro schema no aporta señales; los desconocidos permanecen null. executionError.previous conserva la cadena de errores.
 
 ## Historial, límites y reversión
 
@@ -45,4 +45,12 @@ AUTOQA-MVP-01 y AUTOQA-MVP-02 se conservan como historia en los informes del 6 y
 
 La recepción automatizada se ejecuta en Editor/Mono. No verifica digitalizador, UIKit, IL2CPP, audibilidad, háptica percibida, lectura visual, latencia toque→imagen, sensación ni diversión. La solicitud de clip es observable; no demuestra que se oiga. No sustituye la validación física S3 ni autoriza iPhone, S4, First Rally o First Match.
 
-Reversión: revertir los commits aditivos de esta PR, o retirar `Tests/AutoQA/` y `scripts/autoqa.sh`; no hay migraciones ni cambios de producto/presets/defaults. La PR #36 permanece abierta para revisión independiente de Claude, coordinada por el PO, sin fusión hasta autorización explícita.
+Reversión: revertir los commits aditivos de esta PR, o retirar `Tests/AutoQA/` y `scripts/autoqa.sh`; no hay migraciones ni cambios de producto/presets/defaults. Las correcciones posteriores se entregan en PR propia para revisión independiente de Claude, coordinada por el PO, sin fusión hasta autorización explícita. El historial de autorizaciones se consulta en AGENTS.md y el registro de aprobaciones.
+
+## Pruebas del envoltorio sin Unity
+
+```sh
+python3 scripts/tests/test_autoqa_wrapper.py
+```
+
+Pruebas deterministas versionadas con unittest y biblioteca estándar: ejecutan el script real en repositorios Git aislados bajo Logs/autoqa/wrapper-tests, con un proceso simulado que escribe resúmenes/evidencia sintéticos. Cubren precedencia, conservación de señales y artefactos, schemas ilegibles/desconocidos, errores sucesivos y controles anteriores PASS/FAIL/canario/hash/missing-xml. No son mediciones del juego ni invocan Unity, y no tocan Assets, ProjectSettings o device.env del proyecto real. La salida imprime FIXTURE_DIR para consultar las evidencias. Las dos corridas Unity consecutivas siguen siendo la comprobación del MVP real.

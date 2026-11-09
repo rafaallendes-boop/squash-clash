@@ -1830,3 +1830,27 @@ El PO pidió literalmente **«Si, revisa v5»**. Un subagente de Claude revisó 
 Claude ofreció corregir M1–M3 e incluir también O1 (bloque de nivel 3 cuando el verificador falla con una excepción) y la opción prudente de O2 (sin reintento si `summary.harness.json` tiene su propio `executionError` no ambiental). A la pregunta «¿Corrijo M1–M3 en la #37 antes de fusionar?», el PO respondió literalmente **«Sí, corrige M1–M3»**. La opción prudente de O2 se aplica en esa respuesta; si el PO prefiere permitir el reintento en ese caso, se revierte en una entrega aparte.
 
 Solo cambia la capa de operador: el arnés, sus escenarios, criterios y umbrales quedan intactos. Resultado: `autoqa-check v6`, once casos nuevos RED con `v5` y suite 35/35 GREEN; corridas reales y fixtures sin cambios de nivel ni salida. Detalle en el [informe](2026-11-06-autoqa-claude-operator.md#revisión-independiente-de-v5-y-correcciones-v6). La PR #37 sigue sin fusionar hasta la aprobación del PO.
+
+
+## AutoQA — autorización del PO para precedencia del envoltorio (2026-11-09, Chile)
+
+El PO autoriza corregir en `scripts/autoqa.sh` el origen por el que el envoltorio, al reemplazar summary.json por un ERROR, rebaja nivel/salida y pierde señales ya demostradas por el arnés. Rama/worktree nueva `autoqa/wrapper-precedence`, desde main e18d3e1. Este registro corresponde solo a esta entrega y no duplica el cierre de PR #36 registrado en la rama operadora #37.
+
+**Decisión confirmada por el PO al enviar el encargo:** «con integridad demostrada, manda la precedencia: **salida 3, nivel 3**, gate ERROR y `executionError.kind=dirty-after-run`, que se conserva visible. Sin integridad, dirty-after-run sigue siendo ERROR/salida 4». Resuelve la contradicción de OPERATIONS sin cambiar las demás decisiones de juego. Se conservan señales conocidas del arnés, sus razones y artefactos; los datos desconocidos no pasan a true.
+
+TDD determinista sin Unity antes del fix, pruebas versionadas ejecutables y dos corridas reales consecutivas limpias PASS/0/nivel1. Alcance solo scripts y documentación; no tocar Assets/ProjectSettings/Packages ni device.env, escenarios, expectativas, márgenes, tolerancias, determinismo, defaults, spec/planes/criterios, PR #32/#37 ni S3/S4/First Rally/First Match. Sin iPhone/build/instalación. PR propia lista para revisión de Claude coordinada por el PO, sin fusionar. Ante otro defecto, registrar y detenerse.
+
+
+### Preparación del worktree de precedencia — confirmación adicional del PO
+
+El worktree nuevo no incluía scripts/device.env, requerido por el lanzador. Consultado por esa restricción, el PO autorizó literalmente **«Sí, copiarlo sin cambios»** desde autoqa/mvp. Se copia byte a byte, con SHA-256 coincidente, sin cambiar valores ni modificar el original; archivo ignorado, no versionado. No autoriza otros cambios de configuración.
+
+
+### Entrega de precedencia del envoltorio — 2026-11-09 (Chile), revisión pendiente
+
+Fuente34b28c4 en autoqa/wrapper-precedence desde main e18d3e1. RED válido17métodos/21fallos por aserción/cero errores → GREEN17métodos/32fixtures. El ERROR conserva integridades booleanas conocidas/canario/razones, máximo de niveles y salida3>4>1>2; dirty-after-run con integridad sale3/nivel3 manteniendo kind/gateERROR. Counts/determinism del arnés separados en harnessResults; original, informe y SHA conservados; previous encadenado. Dos corridas nuevas85/85,18/18PASS/canarioFAIL, PASS/0/nivel1/dirty=false y árbol limpio sin checkout manual. Solo scripts/docs: Assets/ProjectSettings/Packages intactos, sin regresión completa ni check-release según autorización. Copia idéntica de device.env autorizada expresamente por PO, sin valores cambiados. V5 histórico/v6 actual de #37 solo lectura: cero incoherencias en corridas reales; fixtures sintéticos generan incidencias de formato documentadas, salidas esperadas coinciden. [Informe y huellas](2026-11-09-autoqa-wrapper-precedence.md). PR propia para Claude coordinado por PO, sin fusionar; no duplica cierre #36 ni toca #37. Sin nueva parada.
+
+
+### Integración de main durante la entrega de precedencia
+
+Al abrir PR #38, main avanzó a d1d7401 (merge externo de #37). Integrado en e928c66; conflictos solo en AGENTS.md y este registro, resueltos preservando íntegros el contenido de main y las entradas propias, sin duplicar la base ni el cierre de #36. No se solicitó/ejecutó la fusión de #37 ni se modificó su rama. Scripts probados y Assets/ProjectSettings/Packages byte a byte sin cambio; nueva revisión de #38 pendiente, sin fusionar. Auditoría local de combinación y huellas en el informe.

@@ -24,12 +24,12 @@ env_status=0
 source "$ROOT/scripts/unity-env.sh" > "$AUTOQA_RUN_DIR/environment.log" 2>&1 || env_status=$?
 printf 'RUN_DIR=%s\n' "$AUTOQA_RUN_DIR"
 python3 - "$ROOT" "$AUTOQA_RUN_DIR" "$UNITY" "$env_status" <<'PY'
-import base64,datetime,hashlib,json,os,re,subprocess,sys,time
+import base64,copy,datetime,hashlib,json,os,re,subprocess,sys,time
 from pathlib import Path
 from xml.etree import ElementTree as ET
 root,run=map(Path,sys.argv[1:3]);unity=sys.argv[3];start=time.time_ns()
 now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
-started=now();xml=run/'tests.xml';log=run/'unity.log';summary=None;guard_failed=False
+started=now();xml=run/'tests.xml';log=run/'unity.log';summary=None;guard_failed=False;harness_state=None;harness_loaded=False
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 # Snapshot both index/worktree status before Unity. A pre-existing change is never checked out.
 transient_paths=['ProjectSettings/GraphicsSettings.asset','ProjectSettings/QualitySettings.asset']
@@ -61,28 +61,87 @@ def restore_transients():
     return record
 def write_summary(s):
     (run/'summary.json').write_text(json.dumps(s,indent=2)+'\n')
+def readable_summary(value):
+    return isinstance(value,dict) and value.get('schema')=='autoqa-summary/1'
+def load_harness(path):
+    try:
+        value=json.loads(path.read_text())
+        return value if readable_summary(value) else None
+    except (OSError,ValueError,TypeError):
+        return None
 def failure(kind,message,integrity=False):
-    # Preserve the harness output before producing a wrapper ERROR summary.
+    global harness_state,harness_loaded
     existing=run/'summary.json';harness=run/'summary.harness.json';harness_report=run/'report.harness.md'
+    # Capture the original once, including when the exception happened before summary parsing.
+    if not harness_loaded:
+        harness_state=load_harness(harness if harness.exists() else existing)
+        harness_loaded=True
+    previous=summary if readable_summary(summary) else None
+    sources=[value for value in (harness_state,previous) if value is not None]
     if existing.is_file() and not harness.exists():
         existing.rename(harness)
         if (run/'report.md').is_file():(run/'report.md').rename(harness_report)
-    # Unknown checks stay null if the execution never reached them; they are not asserted true.
+    known={key:None for key in ['hashesVerified','presetsUnchanged','guardPassed','evidenceSha256Ok']}
+    canary=None;level=2;exit_candidates=[4]
+    reasons=['guard-failed' if integrity else 'execution-error']
+    if kind=='dirty-after-run':reasons.append('dirty-after-run')
+    demonstrated_integrity=integrity
+    for value in sources:
+        flags=value.get('integrity')
+        if isinstance(flags,dict):
+            for key in known:
+                flag=flags.get(key)
+                # Only booleans are knowledge; a demonstrated False cannot become True/null.
+                if type(flag) is bool and known[key] is not False:known[key]=flag
+        signal=value.get('canary');observed=signal.get('observed') if isinstance(signal,dict) else None
+        if observed in ['PASS','FAIL','INCONCLUSIVE','NOT_EVALUATED']:
+            if canary is None or observed=='PASS':canary=observed
+            if observed=='PASS' or (observed!='FAIL' and value.get('gate')!='ERROR' and value.get('executionError') is None):
+                demonstrated_integrity=True
+                reasons.append('canary-not-failed')
+        declared_level=value.get('escalationLevel');declared_exit=value.get('exitCode')
+        if type(declared_level) is int and 1<=declared_level<=3:
+            level=max(level,declared_level)
+            if declared_level==3:
+                demonstrated_integrity=True;reasons.append('known-level-3')
+        if type(declared_exit) is int and declared_exit in [0,1,2,3,4]:exit_candidates.append(declared_exit)
+        prior_reasons=value.get('escalationReasons')
+        if isinstance(prior_reasons,list):reasons.extend(item for item in prior_reasons if isinstance(item,str))
+    if integrity:known['guardPassed']=False
+    for key,flag in known.items():
+        if flag is False:
+            demonstrated_integrity=True;reasons.append('integrity-'+key+'-failed')
+    if demonstrated_integrity:level=3;exit_candidates.append(3)
+    final_exit=max(exit_candidates,key={0:0,2:1,1:2,4:3,3:4}.__getitem__)
+    if final_exit==3:level=3
+    previous_error=previous.get('executionError') if previous is not None else None
+    if previous_error is None and harness_state is not None:previous_error=harness_state.get('executionError')
+    error={'kind':kind,'message':message}
+    if previous_error is not None:error['previous']=copy.deepcopy(previous_error)
     s={'schema':'autoqa-summary/1','runId':run.name,'gitHash':os.environ['AUTOQA_GIT_HASH'],
        'dirty':os.environ['AUTOQA_DIRTY']=='true','command':os.environ['AUTOQA_COMMAND'],'startedAt':started,'finishedAt':now(),
        'gate':'FAIL' if integrity else 'ERROR','counts':{k:0 for k in ['PASS','FAIL','INCONCLUSIVE','NOT_EVALUATED']},
-       'canary':{'expectedFail':True,'observed':None},'determinism':{},
-       'integrity':{k:None for k in ['hashesVerified','presetsUnchanged','guardPassed','evidenceSha256Ok']},
-       'executionError':{'kind':kind,'message':message},'escalationLevel':3 if integrity else 2,
-       'escalationReasons':['guard-failed' if integrity else 'execution-error'],'exitCode':3 if integrity else 4}
-    if integrity:s['integrity']['guardPassed']=False
+       'canary':{'expectedFail':True,'observed':canary},'determinism':{},'integrity':known,
+       'executionError':error,'escalationLevel':level,'escalationReasons':list(dict.fromkeys(reasons)),'exitCode':final_exit,
+       'harnessResults':None}
+    if harness_state is not None:
+        # Counts/determinism remain explicitly scoped to the archived harness, never to this ERROR.
+        s['harnessResults']={'source':harness.name,'scope':'harness-only','gate':harness_state.get('gate'),
+                             'counts':copy.deepcopy(harness_state.get('counts')) if isinstance(harness_state.get('counts'),dict) else None,
+                             'determinism':copy.deepcopy(harness_state.get('determinism')) if isinstance(harness_state.get('determinism'),dict) else None}
     attempts=run/'attempts.jsonl'
     if not attempts.exists():attempts.write_text('')
-    report=run/'report.md';report.write_text('# AutoQA MVP\n\ngate: '+s['gate']+'\n\n'+kind+': '+message+'\n\nNo verifica audibilidad, háptica percibida, lectura visual, latencia toque→imagen, sensación ni diversión.\n')
+    report=run/'report.md'
+    report.write_text('# AutoQA MVP\n\ngate: '+s['gate']+'\nescalationLevel: '+str(level)+'\nexitCode: '+str(final_exit)+
+                      '\n\n'+kind+': '+message+'\n\nIntegridad conocida: '+json.dumps(known,ensure_ascii=False)+
+                      '\nCanario del arnés: '+json.dumps(canary)+'\nRazones: '+json.dumps(s['escalationReasons'],ensure_ascii=False)+
+                      '\n\nLos recuentos y el determinismo del arnés, si existen, están separados en harnessResults y summary.harness.json; no son resultados del ERROR.\n'+
+                      '\nNo verifica audibilidad, háptica percibida, lectura visual, latencia toque→imagen, sensación ni diversión.\n')
     s['artifacts']={'attemptsSha256':sha(attempts),'reportSha256':sha(report),'gameMetrics':[]}
     if harness.is_file():s['artifacts']['harnessSummary']={'path':harness.name,'sha256':sha(harness)}
     if harness_report.is_file():s['artifacts']['harnessReport']={'path':harness_report.name,'sha256':sha(harness_report)}
     write_summary(s);return s
+
 try:
     if int(sys.argv[4]) or not unity:raise RuntimeError('environment: Unity environment unavailable; see environment.log')
     args=[unity,'-batchmode','-projectPath',str(root),'-runTests','-testPlatform','PlayMode','-assemblyNames','SquashClash.AutoQA','-testResults',str(xml),'-logFile',str(log)]
@@ -122,12 +181,7 @@ finally:
     try:
         restoration=restore_transients()
         if not restoration['statusUnchanged'] or restoration['errors']:
-            previous_error=summary.get('executionError') if summary else None
-            previous_level=summary.get('escalationLevel',2) if summary else 2
             summary=failure('dirty-after-run','Working tree status changed or restoration failed; see restoration.json')
-            summary['escalationLevel']=max(previous_level,2)
-            if previous_error:summary['executionError']['previous']=previous_error
-            summary['escalationReasons'].append('dirty-after-run')
     except Exception as exc:
         summary=failure('dirty-after-run','Could not verify restoration: '+str(exc))
     if summary is None:summary=failure('execution','Execution ended without a summary')
