@@ -1854,3 +1854,12 @@ Fuente34b28c4 en autoqa/wrapper-precedence desde main e18d3e1. RED válido17mét
 ### Integración de main durante la entrega de precedencia
 
 Al abrir PR #38, main avanzó a d1d7401 (merge externo de #37). Integrado en e928c66; conflictos solo en AGENTS.md y este registro, resueltos preservando íntegros el contenido de main y las entradas propias, sin duplicar la base ni el cierre de #36. No se solicitó/ejecutó la fusión de #37 ni se modificó su rama. Scripts probados y Assets/ProjectSettings/Packages byte a byte sin cambio; nueva revisión de #38 pendiente, sin fusionar. Auditoría local de combinación y huellas en el informe.
+
+
+## AutoQA — cierres de PR #37/#38 y pendientes autorizados (2026-11-09, Chile)
+
+PR #37: PO literal «Si, fusionar». Merge `d1d740130cafce5e1c44aa874aa015c214dbbd5c`, segundo padre exacto `9a3eb3782372efd8c8561ac013b828f019145af6`; árbol idéntico al head aprobado. Capa de operador con `autoqa-check v6` cerrada.
+
+PR #38: Claude **APROBADO CON OBSERVACIONES** sobre `dde63e6`: 17/17 pruebas del autor, RED de 21 aserciones contra el script anterior y ocho casos adicionales del revisor GREEN. Primera corrida real de `/autoqa` con `autoqa-operator` cargado: `20261109T200908Z-dde63e6-29660`, PASS/0/nivel 1, 41/41 SHA-256; comprobación independiente coincidente campo a campo. PO literal «Sí, fusionar #38». Merge `9ae34fc69806a917d8e24096fcaad5e0a5b8bcc0`, segundo padre exacto `dde63e631b58ec4d4ea556b18cd54ed9549712c9`; árbol idéntico al head aprobado.
+
+El PO autoriza esta entrega en rama/worktree nuevos `autoqa/followups` desde main `9ae34fc`: impedir que el envoltorio archive su propio ERROR como arnés; alinear schema y declaraciones de nivel/salida 3 en `autoqa-check v7`, incluida autorización expresa para editar el verificador. Este registro documental precede todo cambio de código. TDD por aserción, pruebas versionadas, 35 mutaciones de v6, compatibilidad sobre todas las corridas reales de nuestros worktrees y dos corridas reales consecutivas limpias PASS/0/nivel 1 con v7 sin incoherencias. Alcance solo scripts, agente operador, versión en skill y documentación; sin Assets/ProjectSettings/Packages, investigador ni otros cambios de `/autoqa`. Sin producto, escenarios, umbrales, tolerancias, defaults, spec/planes/criterios, iPhone, Xcode, instalación ni etapas ajenas. No modificar device.env; copia idéntica requiere autorización propia. Informe propio y PR lista para Claude coordinado por el PO, **sin fusionar**. Ante otro defecto o diferencia de compatibilidad sin justificar, registrar y detenerse.
