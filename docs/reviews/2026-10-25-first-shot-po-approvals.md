@@ -1822,3 +1822,11 @@ El PO pidió la revisión «antes con un sub agente de claude». Un subagente de
 A la pregunta «¿Corrijo ahora el bloqueante y los menores de la PR #37?», el PO respondió literalmente **«Sí, corrige»**. Esa respuesta autoriza el cambio del verificador, que según `docs/autoqa/claude-operator.md` requiere aprobación del PO. Solo cambia la capa de operador: el arnés, sus escenarios, criterios y umbrales quedan intactos.
 
 Resultado: verificador `autoqa-check v5`. Las 20 corridas reales dan lo mismo que con `v4`; 24/24 mutaciones correctas (`v4` fallaba 19); fixtures F1–F10 regenerados con el esquema real y los mismos niveles; 105 pares correctos. Detalle en el [informe](2026-11-06-autoqa-claude-operator.md#correcciones-de-la-revisión-independiente-v5). La PR #37 sigue sin fusionar hasta una nueva revisión independiente y la aprobación del PO.
+
+## Revisión independiente de `v5` y correcciones `v6` de la PR #37 — decisión del PO, 2026-11-09 (Chile)
+
+El PO pidió literalmente **«Si, revisa v5»**. Un subagente de Claude revisó `0652660` en solo lectura: **APROBADO CON OBSERVACIONES**, con el bloqueante B1 resuelto y tres menores nuevos (M1: un SHA-256 declarado ausente o `null` no bloqueaba un PASS; M2: un PASS no exigía los seis escenarios por tres repeticiones; M3: un marcador `<summary.*>` desconocido no era incoherencia).
+
+Claude ofreció corregir M1–M3 e incluir también O1 (bloque de nivel 3 cuando el verificador falla con una excepción) y la opción prudente de O2 (sin reintento si `summary.harness.json` tiene su propio `executionError` no ambiental). A la pregunta «¿Corrijo M1–M3 en la #37 antes de fusionar?», el PO respondió literalmente **«Sí, corrige M1–M3»**. La opción prudente de O2 se aplica en esa respuesta; si el PO prefiere permitir el reintento en ese caso, se revierte en una entrega aparte.
+
+Solo cambia la capa de operador: el arnés, sus escenarios, criterios y umbrales quedan intactos. Resultado: `autoqa-check v6`, once casos nuevos RED con `v5` y suite 35/35 GREEN; corridas reales y fixtures sin cambios de nivel ni salida. Detalle en el [informe](2026-11-06-autoqa-claude-operator.md#revisión-independiente-de-v5-y-correcciones-v6). La PR #37 sigue sin fusionar hasta la aprobación del PO.

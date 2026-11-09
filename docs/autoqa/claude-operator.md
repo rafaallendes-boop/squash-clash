@@ -61,7 +61,7 @@ Antes de ejecutar, el operador comprueba que exista `scripts/autoqa.sh` y que ni
 
 Hace:
 - ejecuta el script una vez, o lee un `RUN_DIR`;
-- pasa el verificador determinista incluido en su propio archivo (bloque `autoqa-check v5`, extraído con `awk` y ejecutado con `python3 -I`, solo biblioteca estándar);
+- pasa el verificador determinista incluido en su propio archivo (bloque `autoqa-check v6`, extraído con `awk` y ejecutado con `python3 -I`, solo biblioteca estándar);
 - devuelve la salida del verificador carácter por carácter y una sección breve de notas (comandos, códigos, reintento);
 - ejecuta el único reintento solo si el verificador lo declara elegible.
 
@@ -139,7 +139,7 @@ Cambiar el verificador requiere aprobación del PO, como cualquier otro criterio
 1. Vuelve a ejecutar el verificador sobre el mismo `RUN_DIR`:
 
    ```bash
-   awk '/^# >>> autoqa-check v5/{f=1;next} /^# <<< autoqa-check v5/{f=0} f' .claude/agents/autoqa-operator.md \
+   awk '/^# >>> autoqa-check v6/{f=1;next} /^# <<< autoqa-check v6/{f=0} f' .claude/agents/autoqa-operator.md \
      | python3 -I - --run-dir "<RUN_DIR>" --mode read --template docs/autoqa/operator-summary-template.md
    ```
 
@@ -199,3 +199,15 @@ La revisión independiente de `34693ce` encontró un bloqueante: ante un ERROR d
 - escapa los valores copiados de los artefactos.
 
 Con `v5`, si coinciden un fallo de integridad y `dirty-after-run`, el script sale 4 con nivel 3; el verificador espera 3, marca la incoherencia y mantiene el nivel 3. Esta vez se comprobó reproduciendo el `failure()` real. Corregir el código de salida en el arnés sigue requiriendo una entrega de Codex.
+
+## Cambios de `v6` (revisión independiente de `v5`)
+
+La revisión independiente de `0652660` aprobó `v5` con observaciones: el bloqueante quedó resuelto y no hubo regresiones. Encontró tres menores y, entre las observaciones, dos que se corrigen aquí. `v6`:
+
+- **M1.** Un SHA-256 declarado ausente o `null` ya no es una nota: es integridad, nivel 3 y salida esperada 3, igual que en el arnés y en `OPERATIONS.md`. Con `v5`, una corrida PASS con el SHA-256 de un JSONL del juego en `null` salía nivel 1 y sin intervención necesaria.
+- **M2.** Un gate PASS exige exactamente los seis escenarios declarados de la suite, cada uno en las repeticiones 1, 2 y 3, y determinismo `identical=true` para los seis. Con `v5` bastaban 18 intentos PASS, aunque fueran 18 copias del mismo escenario.
+- **M3.** Un marcador `<summary.*>` de la plantilla que el verificador no conoce es incoherencia. Con `v5` se rellenaba como «(ausente en summary.json)» sin avisar.
+- **O1.** Si el verificador falla con una excepción, por ejemplo por un tipo inesperado en los artefactos, imprime igualmente un bloque `autoqa-operator-result` con `checkerError: true`, nivel 3 y sin reintento, y termina con código distinto de 0. Con `v5` solo salía la traza y `/autoqa` lo trataba como salida ilegible, también nivel 3.
+- **O2.** Un `executionError` propio de `summary.harness.json` que no es de entorno impide el reintento, aunque el error del envoltorio sí sea de entorno. Es la opción prudente; ver el registro de aprobaciones.
+
+Quedan como observaciones, sin cambio: separadores Unicode poco comunes sin escapar en la salida (riesgo bajo), un caso teórico de la guardia que no se alcanza, y que `summary.json` se lee sin `resolve()`. La contradicción de `OPERATIONS.md` sobre `dirty-after-run` con integridad previa (salida 3 frente a 4) es del arnés y va en la entrega de Codex.

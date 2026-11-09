@@ -258,11 +258,30 @@ Ambos copiaron la salida del verificador sin cambios: nivel, salida esperada, in
 
 La causa de fondo sigue en el arnés: el envoltorio rebaja el nivel y el código de salida del arnés cuando lo sustituye por un ERROR. `v5` lo detecta y escala; corregirlo en `scripts/autoqa.sh` requiere una entrega de Codex.
 
+## Revisión independiente de `v5` y correcciones `v6`
+
+El PO pidió revisar `v5`: «Si, revisa v5». Un subagente de Claude revisó `0652660` en solo lectura: **APROBADO CON OBSERVACIONES**. B1 quedó resuelto en todas las variantes, reproduciendo literalmente `failure()` y la rama `dirty-after-run`; los menores anteriores, corregidos; las 20 corridas reales, iguales que con `v4`. Encontró tres menores nuevos:
+- **M1.** Un SHA-256 declarado ausente o `null` no impedía un PASS: nivel 1, sin incoherencias. Claude lo confirmó.
+- **M2.** Un PASS solo contaba 18 intentos; 18 copias del mismo escenario pasaban.
+- **M3.** Un marcador `<summary.*>` desconocido de la plantilla no era incoherencia.
+
+Y siete observaciones (O1–O7), entre ellas: O1, un tipo inesperado en los artefactos hacía fallar al verificador sin bloque JSON; O2, el reintento ignoraba un `executionError` propio y no ambiental de `summary.harness.json`; O5, la contradicción de `OPERATIONS.md` sobre la salida cuando coinciden integridad y `dirty-after-run`.
+
+Claude ofreció corregir M1–M3 e incluir O1 y la opción prudente de O2. A la pregunta «¿Corrijo M1–M3 en la #37 antes de fusionar?», el PO respondió literalmente **«Sí, corrige M1–M3»**. El verificador pasó a **`autoqa-check v6`**; el detalle está en [Cambios de `v6`](../autoqa/claude-operator.md#cambios-de-v6-revisión-independiente-de-v5).
+
+**Verificación de `v6`, sin agentes:**
+- Once casos nuevos en la suite de mutaciones (M1a–M1d, M2a–M2b, M3, O1a–O1c y O2), escritos antes del cambio: **RED 11/11 con `v5`**, por aserción o por excepción sin bloque, y **GREEN 35/35 con `v6`**, incluidos los 24 anteriores.
+- Las 20 corridas reales de `Logs/autoqa/` del worktree de Codex y los fixtures F1–F10 dan con `v6` exactamente la misma salida esperada, nivel, `gatePass`, reintento y número de incoherencias que con `v5`.
+- 100 pares (20 corridas reales por cinco códigos de salida): ninguno sale mal.
+- El bloque incrustado, extraído con el `awk` documentado, es el archivo probado; en modo `read` sobre la corrida PASS `20261109T142141Z-7cd5a18-12190` da nivel 1 y sin intervención necesaria, y la comprobación previa sin Unity sigue dando nivel 3.
+
+Quedan sin cambio O3 (separadores Unicode poco comunes), O4 (caso teórico de la guardia), O6 (corrida antigua `133200Z`, correctamente nivel 3) y O7 (lectura sin `resolve()`). O5 pertenece al arnés y está en el encargo de Codex para `scripts/autoqa.sh`.
+
 ## Pendiente
 
-- Revisión independiente de `v5`, asignada por el PO.
+- Nueva revisión independiente de `v6`, si el PO la pide, y su aprobación para fusionar.
 - `/autoqa` con los agentes `autoqa-operator` y `autoqa-investigator` cargados tras reabrir la sesión. Hasta ahora se usó la equivalencia `general-purpose`.
-- En el arnés, entrega de Codex: el envoltorio de `scripts/autoqa.sh` debe conservar el nivel y el código de salida del arnés (salida 4 en lugar de 3 cuando coinciden integridad y `dirty-after-run`, y nivel 2 en lugar de 3 con un canario PASS bajo un ERROR `tests`). `v5` lo marca como incoherencia y nivel 3.
+- En el arnés, entrega de Codex: el envoltorio de `scripts/autoqa.sh` debe conservar el nivel y el código de salida del arnés. `v6`, como `v5`, lo marca como incoherencia y nivel 3.
 - Entrada de cierre en `AGENTS.md` y en el registro de aprobaciones cuando se fusione.
 
 Esta entrega no se fusiona sin aprobación explícita del PO.
