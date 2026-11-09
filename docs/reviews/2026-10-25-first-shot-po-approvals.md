@@ -1801,6 +1801,36 @@ Claude comunicó una corrida limpia con PASS/salida0/nivel1, 76/76 y18/18, canar
 
 Codex aplica opción A: canario ejecutado tras FAIL normal/determinismo; omitido ante guardia roja/executionError, sin cambiar Report.Triage. RED de ejecución salida3/nivel3 con canario omitido y RED unitario82/85→GREEN9/9; inyecciones GREEN de oráculo/determinismo dan canario FAIL y salida1/nivel2. Script restaura solo GraphicsSettings/QualitySettings inicialmente limpios en finally; registro/SHA, preservación de cambios previos y ERROR4/dirty-after-run para diferencias posteriores. Observación opcional realizada: summary.harness.json e informe previo con referencias SHA ante ERROR. Fuente a537236: **dos corridas consecutivas PASS/0/nivel1/dirty=false**,85/85 cada una,18/18/canario FAIL, árbol limpio sin limpieza entre/después. Regresión fresca546/546 EditMode y354/354 PlayMode.312protegidos iguales a main; escenarios/expectativas/márgenes/tolerancia/predeclaración y device.env intactos. Check-release no repetido: solo tests/script/docs, sin efecto en Players. [Informe nuevo y huellas](2026-11-09-autoqa-mvp-corrections.md). PR #36 abierta/lista/sin fusionar para Claude coordinado por PO; no es aprobación ni fusión. Ninguna parada nueva.
 
+## Cierre de AutoQA PR #36 y alineación de la PR #37 — decisiones del PO, 2026-11-09 (Chile)
+
+**Cierre de #36.** Claude revisó las correcciones en el head `7cd5a18b04618ee0cc8d6c9efdd79ac8a5a153dc` y las aprobó, con una observación menor. Volvió a correr `scripts/autoqa.sh mvp` dos veces seguidas: PASS, salida 0, nivel 1, 85/85, `dirty=false` y árbol limpio. A la pregunta «¿Autorizas fusionar la PR #36 tal como está?», el PO respondió literalmente **«Sí, fusionar»**.
+
+Condiciones comprobadas antes de fusionar:
+- PR abierta, no borrador, `MERGEABLE`/`CLEAN`, sin CI;
+- head local y remoto exacto `7cd5a18`, sin commits nuevos, y ambos árboles limpios.
+
+Se fusionó con `--match-head-commit`. Merge commit **`e18d3e169beb01569d11b1fbbce7f26d130670a1`**, segundo padre exactamente `7cd5a18` y árbol `538696b6b26857cfb31f0358ed49476187f7ca23`, idéntico al head aprobado. Main local sincronizada y limpia. La rama `autoqa/mvp` y el worktree de Codex se conservan, porque los gestiona Codex. El cierre se registra aquí, dentro de la siguiente entrega, sin un commit aparte en main.
+
+Observación menor abierta, sin corrección en #36: si coinciden un fallo de integridad y `dirty-after-run`, el script sale con 4 aunque conserva el nivel 3. Eso contradice la precedencia 3 > 4. *(Corregido el 2026-11-09, ver abajo: con `v4` el verificador no lo detectaba en general; lo detecta desde `v5`.)*
+
+**Alineación de #37.** A la pregunta «¿Alineo ahora la PR #37 con el arnés fusionado?», el PO respondió literalmente **«Sí, alinear #37»**. Autoriza adaptar la capa de operador a la implementación real, que manda. No cambia el arnés, sus escenarios ni sus criterios.
+
+## Revisión independiente de la PR #37 y correcciones `v5` — decisión del PO, 2026-11-09 (Chile)
+
+El PO pidió la revisión «antes con un sub agente de claude». Un subagente de Claude revisó `324ceed..34693ce` en solo lectura: **CAMBIOS SOLICITADOS**. El bloqueante B1: ante un ERROR del envoltorio, el verificador `v4` usaba `summary.harness.json` solo para los recuentos. Un canario PASS o una integridad en rojo del arnés daban nivel 2, y un FAIL del arnés bajo un error de entorno quedaba elegible para reintento. Claude lo reprodujo. La revisión también mostró que era falsa la afirmación de esta entrega de que el verificador detectaba la observación menor de #36: la copia sintética que la probó no reproducía el `failure()` real.
+
+A la pregunta «¿Corrijo ahora el bloqueante y los menores de la PR #37?», el PO respondió literalmente **«Sí, corrige»**. Esa respuesta autoriza el cambio del verificador, que según `docs/autoqa/claude-operator.md` requiere aprobación del PO. Solo cambia la capa de operador: el arnés, sus escenarios, criterios y umbrales quedan intactos.
+
+Resultado: verificador `autoqa-check v5`. Las 20 corridas reales dan lo mismo que con `v4`; 24/24 mutaciones correctas (`v4` fallaba 19); fixtures F1–F10 regenerados con el esquema real y los mismos niveles; 105 pares correctos. Detalle en el [informe](2026-11-06-autoqa-claude-operator.md#correcciones-de-la-revisión-independiente-v5). La PR #37 sigue sin fusionar hasta una nueva revisión independiente y la aprobación del PO.
+
+## Revisión independiente de `v5` y correcciones `v6` de la PR #37 — decisión del PO, 2026-11-09 (Chile)
+
+El PO pidió literalmente **«Si, revisa v5»**. Un subagente de Claude revisó `0652660` en solo lectura: **APROBADO CON OBSERVACIONES**, con el bloqueante B1 resuelto y tres menores nuevos (M1: un SHA-256 declarado ausente o `null` no bloqueaba un PASS; M2: un PASS no exigía los seis escenarios por tres repeticiones; M3: un marcador `<summary.*>` desconocido no era incoherencia).
+
+Claude ofreció corregir M1–M3 e incluir también O1 (bloque de nivel 3 cuando el verificador falla con una excepción) y la opción prudente de O2 (sin reintento si `summary.harness.json` tiene su propio `executionError` no ambiental). A la pregunta «¿Corrijo M1–M3 en la #37 antes de fusionar?», el PO respondió literalmente **«Sí, corrige M1–M3»**. La opción prudente de O2 se aplica en esa respuesta; si el PO prefiere permitir el reintento en ese caso, se revierte en una entrega aparte.
+
+Solo cambia la capa de operador: el arnés, sus escenarios, criterios y umbrales quedan intactos. Resultado: `autoqa-check v6`, once casos nuevos RED con `v5` y suite 35/35 GREEN; corridas reales y fixtures sin cambios de nivel ni salida. Detalle en el [informe](2026-11-06-autoqa-claude-operator.md#revisión-independiente-de-v5-y-correcciones-v6). La PR #37 sigue sin fusionar hasta la aprobación del PO.
+
 
 ## AutoQA — autorización del PO para precedencia del envoltorio (2026-11-09, Chile)
 
