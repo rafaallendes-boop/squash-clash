@@ -1764,3 +1764,22 @@ Se autoriza continuar desde la puerta POC en `autoqa/mvp`, mismo worktree y PR #
 ### Resultado de la continuación — AUTOQA-MVP-02 (2026-11-08, Chile)
 
 No es una aprobación del PO ni del MVP. Se resuelve AUTOQA-MVP-01 con las decisiones anteriores, pero la POC revela Scheduled=true/false/true en tres repeticiones de la misma intención SL5 Δ=0. El contrato exige detenerse ante falta de determinismo; no se cambian escenarios, oráculo ni producto y no se repite Unity para buscar un resultado favorable. Se conserva el fixture bfe1474, evidencia primaria y auditoría offline. Escalamiento técnico documental 3; `autoqa.sh`, sus salidas y el MVP completo siguen pendientes. [Informe de continuación y decisión pendiente](2026-11-08-autoqa-mvp.md). PR #36 abierta/lista/sin fusionar para revisión independiente coordinada por el PO; ninguna nueva autorización inferida.
+
+
+## Continuación AutoQA tras AUTOQA-MVP-02 — decisión del PO, 2026-11-09 (Chile)
+
+El PO autoriza ejecutar el prompt preparado por Claude: «Si, ejecuta esto. Es el prompt que armó claude». Decisión y consecuencias literales comunicadas en ese prompt:
+
+Regístrala literalmente en el registro de aprobaciones vigente, como primer commit documental de esta continuación, con fecha 2026-11-09 y atribuida al PO.
+
+**«Sí, ±10 ms».** Respuesta a la pregunta de Claude: «¿Cambiamos PERFECT a Δ=−10 ms y añadimos otro caso PERFECT a +10 ms?», tras el diagnóstico anterior. Consecuencias:
+
+- `M24-PERFECT-SL5` pasa a **Δ=−10 ms**. Esperado: Swing/Perfect/Applied, **`Scheduled=true`**, una presentación Perfect y el resto de expectativas de PERFECT sin cambios.
+- Se añade **un segundo caso PERFECT en SL5 con Δ=+10 ms**. Esperado: Swing/Perfect/Applied, **`Scheduled=false`**, una presentación Perfect y las mismas expectativas restantes. Elige un nombre coherente con los existentes; propuesta: `M24-PERFECT-EARLY10-SL5` y `M24-PERFECT-LATE10-SL5`. Documenta el que uses.
+- `CANARY-WRONG-EXPECTATION` usa el mismo gesto que el caso Δ=−10 en SL5, con el esperado deliberadamente falso ya aprobado (Failed).
+- **Δ=0 queda como frontera interna de `Scheduled`.** No se le aplica la regla de dos pasos. Se le exige una holgura numérica mínima de **1 ms**; ±10 ms la cumple. El margen de dos pasos frente a −A/+A, −V/+V y KIn/KOut sigue exigido sin cambios.
+- Los otros cuatro escenarios no cambian: VALID-EARLY y FAILED-LATE en SL1 con −70 y +170 ms, NOPULL y REJECTED en SL1.
+- El hash esperado de SL5 (`55a85f500cf1`) y el de SL1 (`c0d8ec7050e0`) no cambian, porque Δ no es un parámetro.
+- Recalcula y registra la tabla de distancias con los valores reales. Como referencia: −10 queda a 30/50 ms de −A/+A, 90/110 ms de −V/+V y 10 ms de la frontera interna; +10 queda en el simétrico.
+
+Diagnóstico de Claude, solo lectura: variación del origen absoluto y comparación corrected<=target coherentes con Scheduled true/false/true. No se rastreó la conversión del tiempo en InputSystem; no es causa demostrada ni evidencia de defecto de producto. La regla de dos pasos no cubre la frontera interna Scheduled=0; allí rige la holgura PO de 1 ms. Misma rama/worktree y PR #36 abierta/lista/sin fusionar. Ante nueva parada: registrar, commit/push y detenerse.
