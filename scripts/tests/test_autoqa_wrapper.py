@@ -82,7 +82,7 @@ class WrapperTests(unittest.TestCase):
         record={'test':self.id(),'fixture':str(fixture.relative_to(SESSION)),'trigger':trigger,'exit':result.returncode,'level':summary['escalationLevel'],'gate':summary['gate'],'kind':summary.get('executionError',{}).get('kind') if summary.get('executionError') else None}
         with (SESSION/'cases.jsonl').open('a') as stream:stream.write(json.dumps(record)+'\n')
         self.assertEqual(result.returncode,summary['exitCode'])
-        for key in ['harnessSummary','harnessReport','restoration']:
+        for key in ['harnessSummary','harnessReport','previousErrorSummary','previousErrorReport','restoration']:
             if key in summary['artifacts']:
                 ref=summary['artifacts'][key];self.assertEqual(hashlib.sha256((run/ref['path']).read_bytes()).hexdigest(),ref['sha256'])
         return summary,result,run
@@ -126,6 +126,18 @@ class WrapperTests(unittest.TestCase):
         self.assertEqual(s['executionError']['previous']['previous']['kind'],'harness-error')
         self.assertEqual(s['canary']['observed'],'PASS');self.assertIn('canary-not-failed',s['escalationReasons'])
         self.assertEqual(json.loads((r/'summary.harness.json').read_text())['canary']['observed'],'PASS')
+
+    def test_two_wrapper_errors_without_harness_keep_their_own_evidence(self):
+        s,p,r=self.invoke(trigger='missing-xml',malformed='missing',dirty_after=True)
+        self.assert_error(s,p,'dirty-after-run',2,4)
+        self.assertEqual(s['executionError']['previous']['kind'],'missing-xml')
+        self.assertIsNone(s['harnessResults'])
+        for name in ['summary.harness.json','report.harness.md']:
+            self.assertFalse((r/name).exists(),name+' must contain original harness evidence only')
+        self.assertNotIn('harnessSummary',s['artifacts']);self.assertNotIn('harnessReport',s['artifacts'])
+        prior=json.loads((r/s['artifacts']['previousErrorSummary']['path']).read_text())
+        self.assertEqual(prior['executionError']['kind'],'missing-xml')
+        self.assertIn('missing-xml',(r/s['artifacts']['previousErrorReport']['path']).read_text())
 
     def test_all_error_paths_preserve_demonstrated_integrity(self):
         for kind in ['tests','compilation','summary-schema','attempt-schema','artifact-path','incomplete-run','missing-summary']:
