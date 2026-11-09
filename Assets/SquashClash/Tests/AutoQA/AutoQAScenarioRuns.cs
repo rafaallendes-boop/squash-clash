@@ -45,6 +45,7 @@ namespace SquashClash.AutoQA
             File.WriteAllText(Path.Combine(dir,"presets-integrity.json"),"{\"beforeSha256\":"+Report.Q(presetsBefore)+",\"afterSha256\":"+Report.Q(presetsAfter)+"}\n");
             Report.Write(dir,started,attempts,integrity,deterministic,error);
         }
+        internal static bool CanExecute(bool blocked,bool canary,bool guardPassed,string executionError)=>!blocked||(canary&&guardPassed&&executionError==null);
         private IEnumerator Run(int index,int repetition)
         {
             var s=catalog.scenarios[index];
@@ -53,7 +54,7 @@ namespace SquashClash.AutoQA
             var attempt=new Attempt{runId=Path.GetFileName(dir),scenario=new ScenarioRef{id=s.id,repetition=repetition,sha256=EvidenceCollector.ShaText(JsonUtility.ToJson(s)),canary=s.canary},
                 build=new BuildMeta{gitHash=System.Environment.GetEnvironmentVariable("AUTOQA_GIT_HASH"),dirty=System.Environment.GetEnvironmentVariable("AUTOQA_DIRTY")=="true",unity=Application.unityVersion},
                 repro="scripts/autoqa.sh mvp --scenario "+s.id+" --repetition "+repetition,verdict="NOT_EVALUATED"};
-            attempts.Add(attempt);if(blocked){attempt.failure="stopped-after-prior-failure";yield break;}
+            attempts.Add(attempt);if(!CanExecute(blocked,s.canary,integrity.guardPassed,error)){attempt.failure="stopped-after-prior-failure";yield break;}
             yield return null;yield return null;yield return null;
             using(var driver=new DeterministicDriver())
             {
