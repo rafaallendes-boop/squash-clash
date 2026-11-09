@@ -4,7 +4,7 @@ using System.Linq;
 namespace SquashClash.AutoQA
 {
     [Serializable] internal sealed class Decision {public string gate;public int exitCode,escalationLevel;public string[] escalationReasons;}
-    internal static class Report
+    internal static partial class Report
     {
         internal static Decision Triage(string[] verdicts,string canary,bool integrity,bool deterministic,string executionError=null)
         {

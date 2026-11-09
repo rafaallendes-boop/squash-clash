@@ -46,14 +46,15 @@ namespace SquashClash.AutoQA
             var plan=lines.Where(x=>x.kind=="shot-plan").Select(x=>JsonUtility.FromJson<PlanMetric>(x.payload)).Last(x=>x.launchId==launch);
             var gesture=lines.Where(x=>x.kind=="m24-gesture").Select(x=>JsonUtility.FromJson<GestureMetric>(x.payload)).Last();
             var presentations=lines.Where(x=>x.kind=="shot-presentation").Select(x=>JsonUtility.FromJson<PresentationMetric>(x.payload)).Where(x=>x.launchId==launch).ToArray();
-            Assert.That(gesture.attemptId,Is.EqualTo(shot.AttemptId));
-            Assert.That(presentations.All(p=>p.attemptId==shot.AttemptId),Is.True);
+            var closure=lines.Where(x=>x.kind=="shot-gesture").Select(x=>JsonUtility.FromJson<ShotRecord>(x.payload)).Last(x=>x.LaunchId==launch);
+            Assert.That(gesture.attemptId,Is.EqualTo(closure.AttemptId));
+            Assert.That(presentations.All(p=>p.attemptId==closure.AttemptId),Is.True);
             var c=app.GetComponent<ShotController>();var feedback=app.GetComponent<ShotFeedback>();var input=app.GetComponent<TouchInputAdapter>();
             float mm=ScreenMetrics.MmPerPx(Screen.dpi,(float)app.Tuning.Applied.Get("input.fallbackDpi"),out var dpi);
             var first=app.Host.Prediction.Contacts.First();
             float error=Vector2.Distance(new Vector2(first.Point.x,first.Point.y),new Vector2(shot.TargetUsedX,shot.TargetUsedY));
             var extra=new Additional {closure=gesture.outcome,launchId=launch,identityMatches=true,presentations=presentations.Length,
-                category=presentations.Single().category,presentationStep=presentations.Single().contactStep,
+                category=presentations.Length==1?presentations[0].category:null,presentationStep=presentations.Length==1?presentations[0].contactStep:0,
                 discrepancies=lines.Count(x=>x.kind=="shot-presentation-discrepancy"),attemptConsumed=c.AttemptConsumed,
                 clip=feedback.LastClip,perfect=feedback.PerfectCount,valid=feedback.ValidCount,swish=feedback.SwishCount,contact=feedback.ContactCount,
                 predictionMatches=app.Host.PredictionMatchesBitwise,hash=app.Host.ActiveConfig.Hash,gestureHash=gesture.gestureConfigHash,
@@ -61,10 +62,11 @@ namespace SquashClash.AutoQA
                 width=Screen.width,height=Screen.height,safeArea=Screen.safeArea,dpi=Screen.dpi,dpiSource=dpi.ToString(),mmPerPx=mm,uiBlocked=input.UiBlocker(anchor),
                 current=app.Host.Current,firstSurface=first.Surface.ToString(),firstPoint=first.Point,firstStep=first.Step,frontError=error};
             double target=shot.TargetContactAtReal;
+            double RelativeTime(double value)=>target==0?0:(value-target)*1000;
             return new PocObservation {exactShot=ExactRecord(raw),additional=JsonUtility.ToJson(extra),relativeMs=new[]{
-                shot.DeltaMs,shot.QuantizationErrorMsSigned,shot.OrderAgeMs,(shot.BeganAtReal-target)*1000,
-                (shot.ReleaseEventAtReal-target)*1000,(shot.ReleaseCorrectedAtReal-target)*1000,(shot.InputReceivedAtReal-target)*1000,
-                (shot.ProcessingAtReal-target)*1000,(shot.ProjectionObservedAt-target)*1000,(shot.LockObservedAt-target)*1000,
+                shot.DeltaMs,shot.QuantizationErrorMsSigned,shot.OrderAgeMs,RelativeTime(shot.BeganAtReal),
+                RelativeTime(shot.ReleaseEventAtReal),RelativeTime(shot.ReleaseCorrectedAtReal),RelativeTime(shot.InputReceivedAtReal),
+                RelativeTime(shot.ProcessingAtReal),RelativeTime(shot.ProjectionObservedAt),RelativeTime(shot.LockObservedAt),
                 (plan.kInReal-plan.targetReal)*1000,(plan.kOutReal-plan.targetReal)*1000}};
         }
         internal void AssertIdentical(PocObservation other)
