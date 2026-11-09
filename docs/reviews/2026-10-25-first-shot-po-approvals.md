@@ -1814,3 +1814,8 @@ TDD determinista sin Unity antes del fix, pruebas versionadas ejecutables y dos 
 ### Preparación del worktree de precedencia — confirmación adicional del PO
 
 El worktree nuevo no incluía scripts/device.env, requerido por el lanzador. Consultado por esa restricción, el PO autorizó literalmente **«Sí, copiarlo sin cambios»** desde autoqa/mvp. Se copia byte a byte, con SHA-256 coincidente, sin cambiar valores ni modificar el original; archivo ignorado, no versionado. No autoriza otros cambios de configuración.
+
+
+### Entrega de precedencia del envoltorio — 2026-11-09 (Chile), revisión pendiente
+
+Fuente34b28c4 en autoqa/wrapper-precedence desde main e18d3e1. RED válido17métodos/21fallos por aserción/cero errores → GREEN17métodos/32fixtures. El ERROR conserva integridades booleanas conocidas/canario/razones, máximo de niveles y salida3>4>1>2; dirty-after-run con integridad sale3/nivel3 manteniendo kind/gateERROR. Counts/determinism del arnés separados en harnessResults; original, informe y SHA conservados; previous encadenado. Dos corridas nuevas85/85,18/18PASS/canarioFAIL, PASS/0/nivel1/dirty=false y árbol limpio sin checkout manual. Solo scripts/docs: Assets/ProjectSettings/Packages intactos, sin regresión completa ni check-release según autorización. Copia idéntica de device.env autorizada expresamente por PO, sin valores cambiados. V5 histórico/v6 actual de #37 solo lectura: cero incoherencias en corridas reales; fixtures sintéticos generan incidencias de formato documentadas, salidas esperadas coinciden. [Informe y huellas](2026-11-09-autoqa-wrapper-precedence.md). PR propia para Claude coordinado por PO, sin fusionar; no duplica cierre #36 ni toca #37. Sin nueva parada.
