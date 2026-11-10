@@ -9,7 +9,7 @@ scripts/autoqa.sh mvp --scenario M24-PERFECT-LATE10-SL5 --repetition 2
 
 El primer comando exige seis escenarios × tres repeticiones = **18 PASS**, más un canario con FAIL esperado. El segundo sirve para reproducir; una selección parcial no aprueba el MVP y sale 2 aunque el intento seleccionado pase. Los artefactos se crean en una carpeta nueva `Logs/autoqa/<runId>/`. No se sobreescriben corridas. `RUN_DIR`, `RESULT` y `ESCALATION_LEVEL` se imprimen explícitamente. Los códigos y las reglas del operador están en [OPERATIONS](OPERATIONS.md).
 
-Por decisión del PO (10 nov 2026, 12:26 America/Santiago, vía SC-Lead), AutoQA es **obligatorio al cerrar una PR solo cuando el cambio toca timing, gesto o contrato**. No es gate de todo cambio de producto. La regresión de `scripts/test.sh` tiene su gate oficial en el Mac del PO (354/354 PlayMode); ver `AGENTS.md`.
+Por decisión del PO (10 nov 2026, 12:26 America/Santiago, vía SC-Lead), AutoQA es **obligatorio al cerrar una PR solo cuando el cambio toca timing, gesto o contrato**. Que no sea gate de todo cambio de producto es una lectura derivada nuestra, no una cita del PO. La regresión de `scripts/test.sh` tiene su gate oficial en el Mac del PO (354/354 PlayMode); ver `AGENTS.md`.
 
 ## Escenarios y autoridad
 

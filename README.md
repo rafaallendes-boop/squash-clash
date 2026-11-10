@@ -1,6 +1,6 @@
 # Squash Clash
 
-Prototipo de squash para iPhone en Unity 6.3 LTS. First Ball está cerrado y aceptado. El trabajo vigente es First Shot: un modo práctica en el que el PO, con una mano, apunta al frontis y golpea una pelota del lanzador.
+Prototipo de squash para iPhone en Unity 6.3 LTS. First Ball está cerrado y se aceptó con la desviación H17: el p95 sigue en Fail (17,2/16,8 ms frente a ≤16,7 ms), sin cambiar el umbral ([registro de aprobaciones, 24 oct 2026](docs/reviews/2026-10-21-first-ball-po-approvals.md#revisión-final-claude-y-aceptación-po-de-first-ball--2026-10-24); también el cierre I7a/Etapa 7 en [AGENTS.md](AGENTS.md) y el [informe I7a](docs/reviews/2026-10-24-first-ball-i7a-validation.md#revisión-de-claude-y-decisión-del-po--2026-10-24)). El trabajo vigente es First Shot: un modo práctica en el que el PO, con una mano, apunta al frontis y golpea una pelota del lanzador.
 
 [Spec v0.3](docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md) · [Plan First Ball r2](docs/superpowers/plans/2026-10-20-squash-clash-first-ball.md) · [Propuesta First Shot r2](docs/superpowers/specs/2026-10-24-first-shot-design.md) · [Plan First Shot r2](docs/superpowers/plans/2026-10-25-squash-clash-first-shot.md) · [Entorno](docs/validation/environment.md) · [AutoQA](docs/autoqa/README.md) · Las reglas y el diario de cierre están en [AGENTS.md](AGENTS.md).
 
@@ -22,9 +22,9 @@ scripts/autoqa.sh mvp
 
 `dev` usa `SQUASH_DEV`, IL2CPP Release y Xcode Release, sin Development Player. `prod` omite el define. `debug` es Development Player e IL2CPP/Xcode Debug; sus métricas no son comparables. `--console` mantiene la sesión hasta cerrar la app; sin esa opción la instalación y el lanzamiento retornan.
 
-**Regresión y gate oficial.** `scripts/test.sh editmode` corre `SquashClash.Core.Tests`; `playmode`, `SquashClash.Runtime.Tests`. El gate oficial de PlayMode es **354/354 en el Mac del PO**, registrado en `main` p. ej. en la base AutoQA MVP ([informe del 6 de noviembre](docs/reviews/2026-11-06-autoqa-mvp.md): 546/546 EditMode y 354/354 PlayMode) y en regresiones posteriores del mismo periodo. Por decisión del PO (10 nov 2026, 12:26 America/Santiago, vía SC-Lead): si en Linux fallan `GesturePreviewTests`, `ReticleVisibilityTests` o `ShotRollbackTests`, se tratan como **fallas de entorno**, no como regresión de producto. En el repo no hay un informe versionado de esas corridas en Linux ni una causa técnica.
+**Regresión y gate oficial.** `scripts/test.sh editmode` corre `SquashClash.Core.Tests`; `playmode`, `SquashClash.Runtime.Tests`. El gate oficial de PlayMode es **354/354 en el Mac del PO**, registrado en `main` p. ej. en la base AutoQA MVP ([informe del 6 de noviembre](docs/reviews/2026-11-06-autoqa-mvp.md): 546/546 EditMode y 354/354 PlayMode) y en regresiones posteriores del mismo periodo. Por decisión del PO (10 nov 2026, 12:26 America/Santiago, vía SC-Lead): si en Linux fallan `GesturePreviewTests`, `ReticleVisibilityTests` o `ShotRollbackTests`, se tratan como **fallas de entorno**, no como regresión de producto, **siempre que el Mac dé 354/354**. En el repo no hay un informe versionado de esas corridas en Linux ni una causa técnica.
 
-**AutoQA.** `scripts/autoqa.sh mvp` es obligatorio al cerrar una PR solo cuando el cambio toca timing, gesto o contrato. No es gate de todo cambio de producto. Detalle en [docs/autoqa/README.md](docs/autoqa/README.md).
+**AutoQA.** `scripts/autoqa.sh mvp` es obligatorio al cerrar una PR solo cuando el cambio toca timing, gesto o contrato. Que no sea gate de todo cambio de producto es una lectura derivada nuestra, no una cita del PO. Detalle en [docs/autoqa/README.md](docs/autoqa/README.md).
 
 **Perfil de firma vigente:** vence el **2026-11-12T13:55:07Z (10:55:07 America/Santiago del 12 de noviembre de 2026)**; renovación pendiente por el PO. Comprobar vigencia efectiva antes de toda instalación.
 
