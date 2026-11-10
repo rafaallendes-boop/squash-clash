@@ -1,4 +1,6 @@
-# First Shot S3 — validación física, sesión detenida tras S3-A
+# First Shot S3 — validación física S3-A–E
+
+Título anterior, conservado como histórico: «First Shot S3 — validación física, sesión detenida tras S3-A». Las secciones 1–6 describen la primera sesión del 6 de noviembre, detenida por falta de audio. Las siguientes, la continuación con el audio corregido.
 
 **6 de noviembre de 2026, Chile.** Operación de Claude conforme a la [autorización del PO](2026-10-25-first-shot-po-approvals.md#autorización-de-la-validación-física-de-s3--6-de-noviembre-de-2026-chile) y la [predeclaración](../validation/2026-11-06-first-shot-s3-physical-predeclaration.md), confirmada en `fab60ef` antes del primer bloque. **Sesión detenida después de S3-A** por ausencia de sonido. S3-A se conserva como **evidencia parcial, no válida ni completa**, por [decisión del PO](2026-10-25-first-shot-po-approvals.md#detención-de-s3-y-corrección-puntual-del-audio--6-de-noviembre-de-2026-chile). S3-B a S3-E y la observación de pausa no se ejecutaron.
 
@@ -255,3 +257,110 @@ El PO declaró «Timbre activo, volumen audible y háptica del sistema desactiva
 ## Continuación operada por Claude · 9 de noviembre de 2026 (Chile)
 
 El PO asignó la operación a Claude («Claude, ahora»). Se retoma tras la pausa con los mismos helpers, respaldos y carpeta de evidencia. Antes de cualquier bloque se exporta el estado del teléfono, se cotejan los tres archivos y se prepara un proceso nuevo en P0 con precheck completo. El intento de S3-D del 6 de noviembre, sin frontera, queda como preparación.
+
+**Estado al retomar.** Export `resume-before-D2` con el iPhone desbloqueado: tres archivos iguales al respaldo y a la referencia inicial. Después de la pausa del 6 de noviembre la app se abrió tres veces fuera de la sesión: 2026-11-06T20:13:50Z (7 gestos), 2026-11-07T00:36:11Z (2 gestos) y 2026-11-10T00:09:35Z (sin gestos). Las tres estaban en P0-calib-1, `6ecfdfa78cbb`, cero pendientes y sin controles DEV. Se conservan como preparación, fuera de cuota.
+
+### S3-D · Háptica del sistema desactivada
+
+Proceso nuevo a las **2026-11-10T00:10:18.5123010Z**, `0.1.0+097eab9 dev`, P0-calib-1, `6ecfdfa78cbb`, cero pendientes y cero gestos. Tres archivos cotejados. Precheck aceptado. Declaración del PO, por diálogo y después del precheck: «Timbre activo, volumen audible y háptica del sistema desactivada». Señal en Mac a las 00:12:36Z.
+
+Cierre DEV en la línea 90, **00:14:31.2495560Z**, `timeReal=254.86540617228573`, con foco, sin pausa y DEV cerrado. El PO avisó «Terminé S3-D».
+
+| Recepción | LaunchId | Gesto | Resultado final / motivo | Aplicado | Presentación |
+| --- | ---: | --- | --- | --- | --- |
+| 1 | 16 | Swing | Valid / applied | Sí | Valid, v2 |
+| 2 | 17 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 3 | 18 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+
+Planes y gestos con `6ecfdfa78cbb` y cero pendientes. Una presentación concordante por intento, sin discrepancias. LaunchId 15 estaba en curso al cerrar DEV y registró un Rejected después del cierre, fuera de la ventana. LaunchId 19–21 son planes sin gesto. Tres archivos cotejados. SHA-256 del proceso `50eb5ae717adc891da035a236372cd30126e177e7c7cf5a18d30c63cf2533db4`.
+
+**Respuestas literales**, antes de mostrar resultados. Campos 1–4: «Nada que señalar», «Sonido al golpear la pelota», «Vibración al golpear la pelota» y «Nada que señalar». Campos 5–7: «Nada que señalar» en los tres. A la aclaración neutral sobre qué ajuste se desactivó, respondió «Sonidos y vibraciones → Háptica del sistema».
+
+**Observación.** El PO percibió vibración en el golpe con «Háptica del sistema» desactivada. La recepción 1 tiene contacto aplicado. El registro no permite saber si iOS reproduce la háptica de la app con ese ajuste apagado. Queda abierta, sin atribuir causa.
+
+### S3-E · Interruptor de la app
+
+Proceso nuevo a las **2026-11-10T00:18:14.9825770Z** en P0, `6ecfdfa78cbb`, cero pendientes, cero gestos y tres archivos cotejados. Declaración del PO: «Timbre activo, volumen audible y háptica del sistema activa».
+
+**Primer precheck rechazado.** El PO abrió y cerró DEV (00:19:40Z–00:19:49Z), pero no se registró el despliegue del grupo de parámetros y los planes siguieron en `6ecfdfa78cbb`. No se dio la señal. Se indicó la ruta: pestaña de parámetros, grupo «First Shot / feedback». El PO respondió «Lo encontré, lo apagué y cerré DEV».
+
+**Segundo precheck, aceptado, en el mismo proceso.** Se registraron el despliegue de «First Shot / feedback» a las 00:20:42Z, el cambio de `feedback.haptics` a las 00:20:44.026Z y el cierre de DEV a las 00:20:44.882Z. Desde el cambio, el hash es **`4f33dff747fb`**, igual al literal predeclarado. El último plan antes de la señal fue LaunchId 48, con cero pendientes y sin pausa. Un Rejected a las 00:20:22Z, anterior al cambio, es preparación. Tres archivos cotejados. El script `precheck.py` exige que el proceso sea nuevo respecto al export que recibe como anterior. Aquí se le pasó `after-D2`, porque el cambio de S3-E ocurre en el mismo proceso del precheck en P0. Señal en Mac a las 00:21:53Z.
+
+Cierre DEV en la línea 906, **00:22:10.7191790Z**, `timeReal=237.87285262518367`, `activeLaunchHash=4f33dff747fb`, con foco, sin pausa y DEV cerrado. El PO avisó «Terminé S3-E».
+
+| Recepción | LaunchId | Gesto | Resultado final / motivo | Aplicado | Presentación |
+| --- | ---: | --- | --- | --- | --- |
+| 1 | 51 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 2 | 52 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+| 3 | 53 | Swing | Failed / outside-v | No | Failed / Air, v2 |
+
+Planes y gestos con `4f33dff747fb` y cero pendientes. Una presentación concordante por intento, sin discrepancias. LaunchId 54 es un plan sin gesto. Tres archivos cotejados. SHA-256 del proceso `5b8a82634f221568b96d7f356c35216093f4f7654f2dfd88335d0bde6905ea00`.
+
+**Respuestas literales.** Campos 1–7: «Nada que señalar» en cada uno. A la aclaración neutral «¿oíste algún sonido?», respondió «Sí, oí sonido».
+
+**NotEvaluated.** En la cuota no hubo contacto aplicado. Por lo tanto, no se evaluó si `feedback.haptics=0` elimina la vibración de un golpe. No se repitieron recepciones para conseguir un contacto. El apagado no persistió: el siguiente proceso nuevo arrancó en `6ecfdfa78cbb`.
+
+### Observación de pausa, fuera de cuota
+
+El primer relanzamiento falló porque el iPhone estaba bloqueado. Tras el desbloqueo se abrió un proceso nuevo a las **2026-11-10T00:28:54.1207750Z** en P0, `6ecfdfa78cbb`, cero pendientes, cero gestos y tres archivos cotejados.
+
+Secuencia registrada:
+
+| Hora (Z) | Evento |
+| --- | --- |
+| 00:30:24 / 00:30:29 | DEV abierto y cerrado |
+| 00:30:32 | Swing en LaunchId 18, Failed / outside-v, presentación Failed / Air |
+| 00:30:39.350 | Pausa, siete segundos después del swing, durante LaunchId 20 sin gesto |
+| 00:30:45.647 | Reanudación |
+| Después | Rejected (L20), Swing Failed / before-k-in con Failed / Air (L21) y Rejected (L22) |
+
+El proceso no tiene ninguna presentación Perfect ni contactos aplicados. SHA-256 `78620d40b83629913935847a113edebe17529c751cbb4a13c4da7c150cd24c93`.
+
+**Respuesta literal** a la pregunta de §5: «Se vio la raqueta, el sonido y el destello». A la aclaración neutral sobre el momento del destello: «Al golpear».
+
+**Parada de §8.** El PO percibió un destello al golpear sin contacto aplicado. El destello solo corresponde a un Perfect, y el registro no tiene ninguno. Se cumple la condición de parada de §8 por percepción del destello sin aplicación. No se hicieron más gestos y se pasó a la restauración, que era el paso siguiente. El registro no distingue si fue otro elemento visual o un destello real; queda abierta sin atribuir causa. La pausa no llegó justo después de un golpe con contacto, así que la congelación de raqueta y destello en pausa queda **NotEvaluated en el iPhone**. Conserva la cobertura de Editor ya registrada.
+
+### Restauración final
+
+El PO declaró «Listo, repuestos». Antes del relanzamiento, los tres archivos del export `after-pause` coincidían con el respaldo y la referencia inicial. Proceso nuevo a las **2026-11-10T00:33:41.2169830Z**, `0.1.0+097eab9 dev`, P0-calib-1, **`6ecfdfa78cbb`, cero pendientes** y cero gestos. Después del arranque, P0-calib-1, Po-1 y last-active seguían iguales byte a byte y por SHA-256 al respaldo y a la referencia inicial. SHA-256 del proceso `2246aada484d4c56da9510406c1fd4a3587ad81d25c99c849716f581c52f828f`. Queda instalada la build DEV `0.1.0+097eab9 dev` y no se reinstaló nada.
+
+## Resumen de las cuotas válidas S3-A–E
+
+| Bloque | Operador | Recepciones | Contactos aplicados | Perfect | Discrepancias | Hash |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| S3-A · Contacto | Codex | 6 | 3 | 0 | 0 | `6ecfdfa78cbb` |
+| S3-B · Sin contacto e intención (repetición) | Codex | 6 | 0 | 0 | 0 | `6ecfdfa78cbb` |
+| S3-C · Silencio (repetición válida) | Codex | 3 | 0 | 0 | 0 | `6ecfdfa78cbb` |
+| S3-D · Háptica del sistema desactivada | Claude | 3 | 1 | 0 | 0 | `6ecfdfa78cbb` |
+| S3-E · Interruptor de la app | Claude | 3 | 0 | 0 | 0 | `4f33dff747fb` |
+| **Total** | | **21** | **4** | **0** | **0** | |
+
+**Acreditado por el registro.** En las 21 recepciones hubo una presentación como máximo por intento, siempre concordante con el resultado final. No se presentó nada para cancelaciones, rechazos ni NoOrder, y no hubo discrepancias. Los hashes coinciden con los literales predeclarados y todo quedó con cero pendientes.
+
+**Acreditado por el PO.** Audio audible con impacto aplicado y dos sonidos distinguidos (prueba breve). Sonido y vibración en el golpe (S3-A y S3-D). Sonido de intento al aire (S3-B). Movimiento de la raqueta al intentar golpear.
+
+**NotEvaluated:**
+- contraste Perfect/Valid y destello de Perfect, porque las cuotas no tuvieron ningún Perfect;
+- silencio durante un impacto aplicado (S3-C);
+- `feedback.haptics=0` con contacto aplicado (S3-E);
+- congelación de feedback en pausa en el iPhone.
+
+**Observaciones abiertas:**
+1. vibración percibida con «Háptica del sistema» desactivada (S3-D);
+2. destello percibido al golpear sin Perfect ni contacto, que cumple la condición de parada de §8 (observación de pausa);
+3. bloqueos repetidos del iPhone, que obligaron a rehacer prechecks o intentos el 6 y el 9 de noviembre;
+4. aperturas de la app fuera de la sesión, todas en P0.
+
+## Recomendación de Claude
+
+El registro respalda la cadena técnica de feedback de S3: el resultado final se entrega una sola vez, la presentación concuerda con él, las señales Valid y Failed aparecen en su caso y ningún intento sin contacto tiene presentación de contacto. La percepción del PO respalda el audio audible, la distinción entre golpe e intento al aire, la vibración en el golpe y el swing visible.
+
+La sesión deja sin evaluar justo lo distintivo del Perfect: su nota, su destello y el contraste con un Valid. Tampoco quedan evaluados el silencio y el interruptor de háptica durante un impacto. Hay además dos percepciones que el registro no explica: la vibración con la háptica del sistema apagada y el destello sin Perfect.
+
+**Claude recomienda no aceptar S3 solo con esta evidencia.** Propone una sesión complementaria breve con su propia predeclaración y autorización del PO, dirigida a cuatro puntos:
+- obtener contacto Perfect y Valid;
+- impactos aplicados con silencio y con `feedback.haptics=0`;
+- pausa justo después de un contacto;
+- aclarar las dos observaciones abiertas.
+
+Las cuotas de esta sesión no se repiten. Otra opción es aceptar S3 con condiciones y dejar estos puntos registrados para S4. **Decide el PO.**
