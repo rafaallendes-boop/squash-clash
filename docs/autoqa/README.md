@@ -9,6 +9,8 @@ scripts/autoqa.sh mvp --scenario M24-PERFECT-LATE10-SL5 --repetition 2
 
 El primer comando exige seis escenarios × tres repeticiones = **18 PASS**, más un canario con FAIL esperado. El segundo sirve para reproducir; una selección parcial no aprueba el MVP y sale 2 aunque el intento seleccionado pase. Los artefactos se crean en una carpeta nueva `Logs/autoqa/<runId>/`. No se sobreescriben corridas. `RUN_DIR`, `RESULT` y `ESCALATION_LEVEL` se imprimen explícitamente. Los códigos y las reglas del operador están en [OPERATIONS](OPERATIONS.md).
 
+Por decisión del PO (10 nov 2026, 12:26 America/Santiago, vía SC-Lead), AutoQA es **obligatorio al cerrar una PR solo cuando el cambio toca timing, gesto o contrato**. No es gate de todo cambio de producto. La regresión de `scripts/test.sh` tiene su gate oficial en el Mac del PO (354/354 PlayMode); ver `AGENTS.md`.
+
 ## Escenarios y autoridad
 
 El catálogo es `Assets/SquashClash/Tests/AutoQA/Scenarios/mvp.json`. PERFECT-EARLY10 y PERFECT-LATE10 usan SL5 con Δ=−10/+10 ms y Scheduled=true/false. VALID-EARLY (−70), FAILED-LATE (+170), NOPULL (300 ms sin tirón) y REJECTED (ancla segura fuera del frontis) conservan SL1. El canario repite EARLY10 esperando deliberadamente Failed. Se ejecuta una sola vez y se reporta separado de los 18 intentos. Defaults, escenarios de producto y parámetros permanecen intactos.
