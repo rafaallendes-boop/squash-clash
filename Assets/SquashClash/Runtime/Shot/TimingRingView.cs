@@ -17,6 +17,10 @@ namespace SquashClash.Runtime.Shot
         public bool Visible=>line!=null&&line.enabled;
         public void Show(ContactPlan plan,double targetContactAtReal,bool visible,TimingSettings timing)
         {
+            this.timing=timing;target=targetContactAtReal;presented=Time.realtimeSinceStartupAsDouble;
+            shown=visible&&plan.Exists;
+            // Keep the hidden path free of GameObjects, LineRenderers, and materials.
+            if(!shown){if(ring!=null)Tick(presented);return;}
             if(ring==null)
             {
                 ring=new GameObject("First Shot timing cue").transform;ring.SetParent(transform,false);
@@ -27,8 +31,7 @@ namespace SquashClash.Runtime.Shot
                 perfectBand=CreateLine("Perfect band",CircleSegments);
                 DrawCircle(triangle,FitRadius*2,Mathf.PI/2);
             }
-            this.timing=timing;target=targetContactAtReal;presented=Time.realtimeSinceStartupAsDouble;
-            shown=visible&&plan.Exists;ring.position=plan.PStar;Tick(presented);
+            ring.position=plan.PStar;Tick(presented);
         }
         private LineRenderer CreateLine(string name,int count)
         {
