@@ -24,9 +24,9 @@ scripts/autoqa.sh mvp
 
 **Regresión y gate oficial.** `scripts/test.sh editmode` corre `SquashClash.Core.Tests`; `playmode`, `SquashClash.Runtime.Tests`. El gate oficial de PlayMode es **354/354 en el Mac del PO**, registrado en `main` p. ej. en la base AutoQA MVP ([informe del 6 de noviembre](docs/reviews/2026-11-06-autoqa-mvp.md): 546/546 EditMode y 354/354 PlayMode) y en regresiones posteriores del mismo periodo. Por decisión del PO (10 nov 2026, 12:26 America/Santiago, vía SC-Lead): si en Linux fallan `GesturePreviewTests`, `ReticleVisibilityTests` o `ShotRollbackTests`, se tratan como **fallas de entorno**, no como regresión de producto, **siempre que el Mac dé 354/354**. En el repo no hay un informe versionado de esas corridas en Linux ni una causa técnica.
 
-**AutoQA.** `scripts/autoqa.sh mvp` es obligatorio al cerrar una PR solo cuando el cambio toca timing, gesto o contrato. Que no sea gate de todo cambio de producto es una lectura derivada nuestra, no una cita del PO. Detalle en [docs/autoqa/README.md](docs/autoqa/README.md).
+**AutoQA.** `scripts/autoqa.sh mvp` es obligatorio cuando el cambio toca timing, gesto o contrato, cualquiera de los tres. Detalle en [docs/autoqa/README.md](docs/autoqa/README.md).
 
-**Perfil de firma vigente:** vence el **2026-11-12T13:55:07Z (10:55:07 America/Santiago del 12 de noviembre de 2026)**; renovación pendiente por el PO. Comprobar vigencia efectiva antes de toda instalación.
+**Perfil de firma vigente:** creado el 2026-11-05T13:55:07Z (tanda 4 PROD), vence el **2026-11-12T13:55:07Z (10:55:07 America/Santiago del 12 de noviembre de 2026)**. Renovación pendiente por el PO. Comprobar vigencia efectiva antes de toda instalación.
 
 `scripts/spike.sh baseline|speculative|offset05|solver12|no-ed` ejecuta la campaña de física del editor separada de la regresión. Salida 0 exige informe completo y limpieza de recursos; los veredictos físicos pueden ser Fail y se reportan como datos.
 
