@@ -1858,3 +1858,153 @@ El PO encarga a Codex la continuación autorizada en los puntos 4 y 5 de la deci
 Tras la pausa del 6 de noviembre («Dejemos en pausa mientras y después retomamos» y «Dejemos la restauración para cuando retomemos»), Claude preguntó al PO quién operaría la sesión física de S3. Respuesta literal del PO: **«Claude, ahora»**.
 
 **Alcance.** Claude retoma la continuación autorizada el 6 de noviembre en el mismo punto, en la rama `firstshot/s3-validation` y con la misma evidencia: S3-D y S3-E según la predeclaración (§4, §6–§8 y la adenda), la observación de pausa fuera de cuota ya autorizada («Sí, incluirla») y la restauración final con cotejo de los tres archivos. Las cuotas válidas de S3-A, S3-B y S3-C registradas por Codex se conservan sin repetirlas ni reinterpretarlas. El intento de S3-D detenido en preparación el 6 de noviembre no tiene frontera y no cuenta. Sin build ni instalación nuevas: queda instalada `0.1.0+097eab9 dev`, con perfil incorporado vigente hasta el 2026-11-12T13:55:07Z (10:55 Chile). Sin cambios de producto, hashes esperados, criterios ni umbrales. S4, First Rally y PR #32 siguen sin autorizar. El informe se entrega en una PR para revisión, sin fusionar.
+
+## Autorización del PO para el MVP de AutoQA — 6 de noviembre de 2026, Chile
+
+Decisión literal del PO, Puerta 0 satisfecha.
+
+> GO CON CONDICIONES — AUTORIZO IMPLEMENTAR EL MVP DE AUTOQA. Apruebo la opción B: arnés PlayMode determinista dentro de Unity Editor, utilizando el juego real y sin modificaciones de producción. Apruebo expresamente el contrato de observables y escrituras de la sección C.4 del estudio técnico, incluyendo sus restricciones y APIs prohibidas. Codex será el ejecutor principal del MVP. Claude será el revisor técnico independiente. No quiero dos implementaciones paralelas. Unity y el oráculo determinista deben decidir PASS/FAIL, nunca el modelo de lenguaje.
+
+El PO prefiere Luna 6 Low para nivel 1, QA rutinario y resumen de artefactos. Prefiere Luna 6 Medium para nivel 2, investigación de fallos, precondiciones, repetibilidad y errores de ejecución a partir de evidencia, sin cambiar producción ni criterios. Para nivel 3, problemas de contratos, física, timing, arquitectura, integridad o alcance, prefiere Sol 6.1 High u Opus 5.5 High. La elección depende de la disponibilidad de cada herramienta. Los modelos operan fuera de la ejecución y no sustituyen la revisión independiente.
+
+La Puerta 1 exige una PR abierta y lista para Claude, coordinada por el PO. Cualquier fusión requiere autorización explícita posterior a la revisión, cotejo del head local y remoto, PR abierta sin borrador ni conflictos, y árboles limpios. El merge commit debe tener como segundo padre el head aprobado. Luego se sincroniza main y se retira el worktree sin forzar, previa preservación de ignorados.
+
+El estudio recibido coincide antes y después de la copia, SHA-256 `fac103f0bbdc5a3777103de8d59118a52707fea2eb83aabede3fb03410b386b0`. [Estudio técnico aprobado](2026-11-06-autoqa-technical-study.md).
+
+
+## Continuación del MVP de AutoQA — decisiones del PO, 2026-11-08 (Chile)
+
+Literales del PO y consecuencias comunicadas en el encargo de continuación:
+
+Registra ambas literalmente en el registro de aprobaciones vigente, como primer commit documental de esta continuación, con fecha 2026-11-08 y atribuidas al PO.
+
+1. Margen y línea de lanzamiento: «Sí, a SL5». Respuesta a la propuesta de Claude de exigir el margen de dos pasos reales también respecto de KIn/KOut y de mover a SL5 los escenarios con Δ=0. Consecuencias:
+- El margen de dos pasos reales (25,641 ms con los defaults actuales) se exige respecto de todas las fronteras: bordes de asistencia y validez, y KIn/KOut.
+- M24-PERFECT-SL1 pasa a M24-PERFECT-SL5 y el canario CANARY-WRONG-EXPECTATION usa el mismo gesto en SL5, ambos con Δ=0. Según la parada, en SL5 la ventana alrededor de T* va de −239,5 a +245,9 ms; recalcúlala con los valores reales y regístrala.
+- M24-NOPULL-SL1 y M24-REJECTED-SL1 siguen en SL1.
+- M24-VALID-EARLY-SL1 (Δ=−70 ms) y M24-FAILED-LATE-SL1 (Δ=+170 ms) siguen en SL1, porque ya cumplen el margen. Compruébalo con los valores reales.
+- El oráculo puede leer KIn/KOut del shot-plan registrado en el JSONL del juego, solo para invalidar un escenario por margen, nunca para decidir el resultado esperado. Sigue prohibido llamar a ContactPlanner, ContactContract o ShotSolver.
+- La línea se elige con Tuning.Set("practice.launch", n), que ya está en la lista blanca. El hash efectivo cambia con la línea: declara el hash esperado de SL1 y el de SL5, calculados una vez desde los defaults y registrados, y verifícalos en cada intento.
+2. Hash inesperado: «Nivel 3». El prompt definitivo se contradecía: listaba el hash inesperado como precondición INCONCLUSIVE y como fallo de integridad. Decisión: un hash efectivo inesperado es fallo de integridad, con integrity.hashesVerified=false, escalationLevel 3 y salida 3. El intento puede seguir marcándose INCONCLUSIVE, pero el gate y el nivel los decide la integridad. Consecuencia para el criterio 11: el INCONCLUSIVE forzado que debe dar salida 2 tiene que usar una precondición que no sea de integridad, por ejemplo el tamaño de pantalla.
+
+Confirmación adicional del PO del mismo día («Sí, confirmo»): un canario que no da FAIL es fallo de integridad (nivel 3), salvo que la corrida no haya llegado a ejecutarse (executionError o gate ERROR). En ese caso un canario sin resultado no cuenta como integridad. Un canario en PASS da siempre nivel 3. Hazlo así en la regla de triaje y cúbrelo con TDD.
+
+Se autoriza continuar desde la puerta POC en `autoqa/mvp`, mismo worktree y PR #36, sin fusionar. La rama operadora #37 es conocida y queda fuera de esta implementación. Ante una parada del contrato, documentar, hacer commit/push y detenerse; el PO no estará disponible. Sin iPhone ni cambios de producción.
+
+
+### Resultado de la continuación — AUTOQA-MVP-02 (2026-11-08, Chile)
+
+No es una aprobación del PO ni del MVP. Se resuelve AUTOQA-MVP-01 con las decisiones anteriores, pero la POC revela Scheduled=true/false/true en tres repeticiones de la misma intención SL5 Δ=0. El contrato exige detenerse ante falta de determinismo; no se cambian escenarios, oráculo ni producto y no se repite Unity para buscar un resultado favorable. Se conserva el fixture bfe1474, evidencia primaria y auditoría offline. Escalamiento técnico documental 3; `autoqa.sh`, sus salidas y el MVP completo siguen pendientes. [Informe de continuación y decisión pendiente](2026-11-08-autoqa-mvp.md). PR #36 abierta/lista/sin fusionar para revisión independiente coordinada por el PO; ninguna nueva autorización inferida.
+
+
+## Continuación AutoQA tras AUTOQA-MVP-02 — decisión del PO, 2026-11-09 (Chile)
+
+El PO autoriza ejecutar el prompt preparado por Claude: «Si, ejecuta esto. Es el prompt que armó claude». Decisión y consecuencias literales comunicadas en ese prompt:
+
+Regístrala literalmente en el registro de aprobaciones vigente, como primer commit documental de esta continuación, con fecha 2026-11-09 y atribuida al PO.
+
+**«Sí, ±10 ms».** Respuesta a la pregunta de Claude: «¿Cambiamos PERFECT a Δ=−10 ms y añadimos otro caso PERFECT a +10 ms?», tras el diagnóstico anterior. Consecuencias:
+
+- `M24-PERFECT-SL5` pasa a **Δ=−10 ms**. Esperado: Swing/Perfect/Applied, **`Scheduled=true`**, una presentación Perfect y el resto de expectativas de PERFECT sin cambios.
+- Se añade **un segundo caso PERFECT en SL5 con Δ=+10 ms**. Esperado: Swing/Perfect/Applied, **`Scheduled=false`**, una presentación Perfect y las mismas expectativas restantes. Elige un nombre coherente con los existentes; propuesta: `M24-PERFECT-EARLY10-SL5` y `M24-PERFECT-LATE10-SL5`. Documenta el que uses.
+- `CANARY-WRONG-EXPECTATION` usa el mismo gesto que el caso Δ=−10 en SL5, con el esperado deliberadamente falso ya aprobado (Failed).
+- **Δ=0 queda como frontera interna de `Scheduled`.** No se le aplica la regla de dos pasos. Se le exige una holgura numérica mínima de **1 ms**; ±10 ms la cumple. El margen de dos pasos frente a −A/+A, −V/+V y KIn/KOut sigue exigido sin cambios.
+- Los otros cuatro escenarios no cambian: VALID-EARLY y FAILED-LATE en SL1 con −70 y +170 ms, NOPULL y REJECTED en SL1.
+- El hash esperado de SL5 (`55a85f500cf1`) y el de SL1 (`c0d8ec7050e0`) no cambian, porque Δ no es un parámetro.
+- Recalcula y registra la tabla de distancias con los valores reales. Como referencia: −10 queda a 30/50 ms de −A/+A, 90/110 ms de −V/+V y 10 ms de la frontera interna; +10 queda en el simétrico.
+
+Diagnóstico de Claude, solo lectura: variación del origen absoluto y comparación corrected<=target coherentes con Scheduled true/false/true. No se rastreó la conversión del tiempo en InputSystem; no es causa demostrada ni evidencia de defecto de producto. La regla de dos pasos no cubre la frontera interna Scheduled=0; allí rige la holgura PO de 1 ms. Misma rama/worktree y PR #36 abierta/lista/sin fusionar. Ante nueva parada: registrar, commit/push y detenerse.
+
+
+### Entrega AutoQA del 9 de noviembre de 2026 — revisión independiente pendiente
+
+Implementación y comprobaciones autorizadas ejecutadas por Codex, sin nueva aprobación del PO inferida. Predeclaración 9c476bc; POC nueva 2/2 con seis instancias ±10, Scheduled estable true/false. Fuente final 491e10d: corrida final 18/18 PASS, canario FAIL, RESULT=PASS/salida 0/nivel 1 en 14,497 s; suite propia 76/76 y regresión fresca 546/546 EditMode, 354/354 PlayMode. Check-release dev/prod OK/gitDirty=false, sin AutoQA en Players. Salidas forzadas 1/2/3/4 verificadas y cambios restaurados byte a byte. Primer export falló por BUNDLE_ID ausente en entorno local; valor temporal del proyecto sin cambiar producto, entorno restaurado y fallo preservado. 312 archivos protegidos idénticos a main; sin iPhone/build nativa/instalación ni cambios en #32/#37/S3-validation. [Informe, decisiones, huellas y consumibilidad](2026-11-09-autoqa-mvp.md). PR #36 abierta/lista para Claude coordinado por el PO, sin fusionar. AUTOQA-MVP-01/02 resueltos; ninguna parada nueva. Detenerse tras entregar y esperar revisión/PO.
+
+
+## Correcciones de revisión de AutoQA PR #36 — decisión del PO, 2026-11-09 (Chile)
+
+Decisión literal del PO: **«Sí, redáctalo»**. Respuesta a la pregunta de Claude **«¿Redacto el prompt para que Codex corrija estos dos puntos?»**, tras su revisión independiente de bc82c3ee570df837142f423d736f6bf893ef7e40: **CAMBIOS SOLICITADOS**. Autoriza corregir con TDD el canario tras FAIL/determinismo y la restauración selectiva de los dos transitorios PlayMode. No cambia ninguna otra decisión.
+
+Claude comunicó una corrida limpia con PASS/salida0/nivel1, 76/76 y18/18, canario FAIL; evidencia local Logs/autoqa/20261109T130148Z-bc82c3e-10259. Tuvo que restaurar GraphicsSettings/QualitySettings. Continuar en mismo worktree/rama/PR #36, sin fusionar; revisión posterior de Claude coordinada por el PO. No cambiar escenarios/expectativas/márgenes/tolerancias/determinismo, producción ni device.env. Ante nueva parada, documentar/commit/push y detenerse.
+
+
+### Entrega de correcciones AutoQA — 2026-11-09 (Chile), revisión pendiente
+
+Codex aplica opción A: canario ejecutado tras FAIL normal/determinismo; omitido ante guardia roja/executionError, sin cambiar Report.Triage. RED de ejecución salida3/nivel3 con canario omitido y RED unitario82/85→GREEN9/9; inyecciones GREEN de oráculo/determinismo dan canario FAIL y salida1/nivel2. Script restaura solo GraphicsSettings/QualitySettings inicialmente limpios en finally; registro/SHA, preservación de cambios previos y ERROR4/dirty-after-run para diferencias posteriores. Observación opcional realizada: summary.harness.json e informe previo con referencias SHA ante ERROR. Fuente a537236: **dos corridas consecutivas PASS/0/nivel1/dirty=false**,85/85 cada una,18/18/canario FAIL, árbol limpio sin limpieza entre/después. Regresión fresca546/546 EditMode y354/354 PlayMode.312protegidos iguales a main; escenarios/expectativas/márgenes/tolerancia/predeclaración y device.env intactos. Check-release no repetido: solo tests/script/docs, sin efecto en Players. [Informe nuevo y huellas](2026-11-09-autoqa-mvp-corrections.md). PR #36 abierta/lista/sin fusionar para Claude coordinado por PO; no es aprobación ni fusión. Ninguna parada nueva.
+
+## Cierre de AutoQA PR #36 y alineación de la PR #37 — decisiones del PO, 2026-11-09 (Chile)
+
+**Cierre de #36.** Claude revisó las correcciones en el head `7cd5a18b04618ee0cc8d6c9efdd79ac8a5a153dc` y las aprobó, con una observación menor. Volvió a correr `scripts/autoqa.sh mvp` dos veces seguidas: PASS, salida 0, nivel 1, 85/85, `dirty=false` y árbol limpio. A la pregunta «¿Autorizas fusionar la PR #36 tal como está?», el PO respondió literalmente **«Sí, fusionar»**.
+
+Condiciones comprobadas antes de fusionar:
+- PR abierta, no borrador, `MERGEABLE`/`CLEAN`, sin CI;
+- head local y remoto exacto `7cd5a18`, sin commits nuevos, y ambos árboles limpios.
+
+Se fusionó con `--match-head-commit`. Merge commit **`e18d3e169beb01569d11b1fbbce7f26d130670a1`**, segundo padre exactamente `7cd5a18` y árbol `538696b6b26857cfb31f0358ed49476187f7ca23`, idéntico al head aprobado. Main local sincronizada y limpia. La rama `autoqa/mvp` y el worktree de Codex se conservan, porque los gestiona Codex. El cierre se registra aquí, dentro de la siguiente entrega, sin un commit aparte en main.
+
+Observación menor abierta, sin corrección en #36: si coinciden un fallo de integridad y `dirty-after-run`, el script sale con 4 aunque conserva el nivel 3. Eso contradice la precedencia 3 > 4. *(Corregido el 2026-11-09, ver abajo: con `v4` el verificador no lo detectaba en general; lo detecta desde `v5`.)*
+
+**Alineación de #37.** A la pregunta «¿Alineo ahora la PR #37 con el arnés fusionado?», el PO respondió literalmente **«Sí, alinear #37»**. Autoriza adaptar la capa de operador a la implementación real, que manda. No cambia el arnés, sus escenarios ni sus criterios.
+
+## Revisión independiente de la PR #37 y correcciones `v5` — decisión del PO, 2026-11-09 (Chile)
+
+El PO pidió la revisión «antes con un sub agente de claude». Un subagente de Claude revisó `324ceed..34693ce` en solo lectura: **CAMBIOS SOLICITADOS**. El bloqueante B1: ante un ERROR del envoltorio, el verificador `v4` usaba `summary.harness.json` solo para los recuentos. Un canario PASS o una integridad en rojo del arnés daban nivel 2, y un FAIL del arnés bajo un error de entorno quedaba elegible para reintento. Claude lo reprodujo. La revisión también mostró que era falsa la afirmación de esta entrega de que el verificador detectaba la observación menor de #36: la copia sintética que la probó no reproducía el `failure()` real.
+
+A la pregunta «¿Corrijo ahora el bloqueante y los menores de la PR #37?», el PO respondió literalmente **«Sí, corrige»**. Esa respuesta autoriza el cambio del verificador, que según `docs/autoqa/claude-operator.md` requiere aprobación del PO. Solo cambia la capa de operador: el arnés, sus escenarios, criterios y umbrales quedan intactos.
+
+Resultado: verificador `autoqa-check v5`. Las 20 corridas reales dan lo mismo que con `v4`; 24/24 mutaciones correctas (`v4` fallaba 19); fixtures F1–F10 regenerados con el esquema real y los mismos niveles; 105 pares correctos. Detalle en el [informe](2026-11-06-autoqa-claude-operator.md#correcciones-de-la-revisión-independiente-v5). La PR #37 sigue sin fusionar hasta una nueva revisión independiente y la aprobación del PO.
+
+## Revisión independiente de `v5` y correcciones `v6` de la PR #37 — decisión del PO, 2026-11-09 (Chile)
+
+El PO pidió literalmente **«Si, revisa v5»**. Un subagente de Claude revisó `0652660` en solo lectura: **APROBADO CON OBSERVACIONES**, con el bloqueante B1 resuelto y tres menores nuevos (M1: un SHA-256 declarado ausente o `null` no bloqueaba un PASS; M2: un PASS no exigía los seis escenarios por tres repeticiones; M3: un marcador `<summary.*>` desconocido no era incoherencia).
+
+Claude ofreció corregir M1–M3 e incluir también O1 (bloque de nivel 3 cuando el verificador falla con una excepción) y la opción prudente de O2 (sin reintento si `summary.harness.json` tiene su propio `executionError` no ambiental). A la pregunta «¿Corrijo M1–M3 en la #37 antes de fusionar?», el PO respondió literalmente **«Sí, corrige M1–M3»**. La opción prudente de O2 se aplica en esa respuesta; si el PO prefiere permitir el reintento en ese caso, se revierte en una entrega aparte.
+
+Solo cambia la capa de operador: el arnés, sus escenarios, criterios y umbrales quedan intactos. Resultado: `autoqa-check v6`, once casos nuevos RED con `v5` y suite 35/35 GREEN; corridas reales y fixtures sin cambios de nivel ni salida. Detalle en el [informe](2026-11-06-autoqa-claude-operator.md#revisión-independiente-de-v5-y-correcciones-v6). La PR #37 sigue sin fusionar hasta la aprobación del PO.
+
+
+## AutoQA — autorización del PO para precedencia del envoltorio (2026-11-09, Chile)
+
+El PO autoriza corregir en `scripts/autoqa.sh` el origen por el que el envoltorio, al reemplazar summary.json por un ERROR, rebaja nivel/salida y pierde señales ya demostradas por el arnés. Rama/worktree nueva `autoqa/wrapper-precedence`, desde main e18d3e1. Este registro corresponde solo a esta entrega y no duplica el cierre de PR #36 registrado en la rama operadora #37.
+
+**Decisión confirmada por el PO al enviar el encargo:** «con integridad demostrada, manda la precedencia: **salida 3, nivel 3**, gate ERROR y `executionError.kind=dirty-after-run`, que se conserva visible. Sin integridad, dirty-after-run sigue siendo ERROR/salida 4». Resuelve la contradicción de OPERATIONS sin cambiar las demás decisiones de juego. Se conservan señales conocidas del arnés, sus razones y artefactos; los datos desconocidos no pasan a true.
+
+TDD determinista sin Unity antes del fix, pruebas versionadas ejecutables y dos corridas reales consecutivas limpias PASS/0/nivel1. Alcance solo scripts y documentación; no tocar Assets/ProjectSettings/Packages ni device.env, escenarios, expectativas, márgenes, tolerancias, determinismo, defaults, spec/planes/criterios, PR #32/#37 ni S3/S4/First Rally/First Match. Sin iPhone/build/instalación. PR propia lista para revisión de Claude coordinada por el PO, sin fusionar. Ante otro defecto, registrar y detenerse.
+
+
+### Preparación del worktree de precedencia — confirmación adicional del PO
+
+El worktree nuevo no incluía scripts/device.env, requerido por el lanzador. Consultado por esa restricción, el PO autorizó literalmente **«Sí, copiarlo sin cambios»** desde autoqa/mvp. Se copia byte a byte, con SHA-256 coincidente, sin cambiar valores ni modificar el original; archivo ignorado, no versionado. No autoriza otros cambios de configuración.
+
+
+### Entrega de precedencia del envoltorio — 2026-11-09 (Chile), revisión pendiente
+
+Fuente34b28c4 en autoqa/wrapper-precedence desde main e18d3e1. RED válido17métodos/21fallos por aserción/cero errores → GREEN17métodos/32fixtures. El ERROR conserva integridades booleanas conocidas/canario/razones, máximo de niveles y salida3>4>1>2; dirty-after-run con integridad sale3/nivel3 manteniendo kind/gateERROR. Counts/determinism del arnés separados en harnessResults; original, informe y SHA conservados; previous encadenado. Dos corridas nuevas85/85,18/18PASS/canarioFAIL, PASS/0/nivel1/dirty=false y árbol limpio sin checkout manual. Solo scripts/docs: Assets/ProjectSettings/Packages intactos, sin regresión completa ni check-release según autorización. Copia idéntica de device.env autorizada expresamente por PO, sin valores cambiados. V5 histórico/v6 actual de #37 solo lectura: cero incoherencias en corridas reales; fixtures sintéticos generan incidencias de formato documentadas, salidas esperadas coinciden. [Informe y huellas](2026-11-09-autoqa-wrapper-precedence.md). PR propia para Claude coordinado por PO, sin fusionar; no duplica cierre #36 ni toca #37. Sin nueva parada.
+
+
+### Integración de main durante la entrega de precedencia
+
+Al abrir PR #38, main avanzó a d1d7401 (merge externo de #37). Integrado en e928c66; conflictos solo en AGENTS.md y este registro, resueltos preservando íntegros el contenido de main y las entradas propias, sin duplicar la base ni el cierre de #36. No se solicitó/ejecutó la fusión de #37 ni se modificó su rama. Scripts probados y Assets/ProjectSettings/Packages byte a byte sin cambio; nueva revisión de #38 pendiente, sin fusionar. Auditoría local de combinación y huellas en el informe.
+
+
+## AutoQA — cierres de PR #37/#38 y pendientes autorizados (2026-11-09, Chile)
+
+PR #37: PO literal «Si, fusionar». Merge `d1d740130cafce5e1c44aa874aa015c214dbbd5c`, segundo padre exacto `9a3eb3782372efd8c8561ac013b828f019145af6`; árbol idéntico al head aprobado. Capa de operador con `autoqa-check v6` cerrada.
+
+PR #38: Claude **APROBADO CON OBSERVACIONES** sobre `dde63e6`: 17/17 pruebas del autor, RED de 21 aserciones contra el script anterior y ocho casos adicionales del revisor GREEN. Primera corrida real de `/autoqa` con `autoqa-operator` cargado: `20261109T200908Z-dde63e6-29660`, PASS/0/nivel 1, 41/41 SHA-256; comprobación independiente coincidente campo a campo. PO literal «Sí, fusionar #38». Merge `9ae34fc69806a917d8e24096fcaad5e0a5b8bcc0`, segundo padre exacto `dde63e631b58ec4d4ea556b18cd54ed9549712c9`; árbol idéntico al head aprobado.
+
+El PO autoriza esta entrega en rama/worktree nuevos `autoqa/followups` desde main `9ae34fc`: impedir que el envoltorio archive su propio ERROR como arnés; alinear schema y declaraciones de nivel/salida 3 en `autoqa-check v7`, incluida autorización expresa para editar el verificador. Este registro documental precede todo cambio de código. TDD por aserción, pruebas versionadas, 35 mutaciones de v6, compatibilidad sobre todas las corridas reales de nuestros worktrees y dos corridas reales consecutivas limpias PASS/0/nivel 1 con v7 sin incoherencias. Alcance solo scripts, agente operador, versión en skill y documentación; sin Assets/ProjectSettings/Packages, investigador ni otros cambios de `/autoqa`. Sin producto, escenarios, umbrales, tolerancias, defaults, spec/planes/criterios, iPhone, Xcode, instalación ni etapas ajenas. No modificar device.env; copia idéntica requiere autorización propia. Informe propio y PR lista para Claude coordinado por el PO, **sin fusionar**. Ante otro defecto o diferencia de compatibilidad sin justificar, registrar y detenerse.
+
+
+### Histórico — AutoQA followups: avance verificable, corridas nuevas pendientes (2026-11-09, Chile)
+
+Rama autoqa/followups desde main 9ae34fc; primer commit documental 7d270d0 antes de código. Fix del envoltorio 6543733: primer ERROR sin arnés conservado como previous-error con SHA, sin atribuirlo al arnés. V7 c2117b1 alinea schema desconocido y declaraciones nivel/salida3; comprueba SHA de los archivos propios sin usar sus señales. TDD: envoltorio 18 métodos/1 fallo por aserción→18/18 GREEN (33 fixtures); verificador 6 métodos/5 fallos por aserción→6/6 GREEN, 17 ejecuciones y controles copiados de cinco corridas reales, sin omisiones. Mutaciones v6: 35/35 GREEN con ambas versiones. Compatibilidad de las 23 corridas históricas disponibles: cero diferencias en salida esperada/nivel/gatePass/reintento/incoherencias y originales intactos. 585 archivos protegidos iguales a main. [Informe](2026-11-09-autoqa-followups.md).
+
+Pendiente la respuesta del PO a la autorización solicitada para copiar device.env byte a byte desde autoqa/mvp. No copiado ni modificado. Las dos corridas Unity nuevas y la entrega final lista para Claude siguen pendientes; no inferir aceptación ni completar la entrega con pruebas sintéticas. Sin otro defecto ni diferencias de compatibilidad sin justificar. Sin iPhone/build/instalación ni cambios fuera de alcance; no fusionar.
+
+
+### AutoQA followups — entrega técnica completa para revisión de PR #39 (2026-11-09, Chile)
+
+Resuelta la espera anterior: el PO autorizó literalmente «Sí, copiarlo sin cambios»; device.env copiado byte a byte desde autoqa/mvp, SHA-256 de origen/copia 7fbd47039b15d9ca89dc70250193590a41eeff79b22833872e7fadce701dc44f e idéntico al terminar, ignorado/sin versionar. Dos corridas consecutivas desde 72b2b3f limpio: 20261109T232416Z-72b2b3f-12736 (41,95 s) y 20261109T232458Z-72b2b3f-19058 (14,29 s); cada una 85/85 pruebas frescas, 18 PASS/canario FAIL esperado, PASS/0/nivel1/dirty=false, árbol limpio antes/entre/después y restauración automática sin errores, sin checkout manual. V7 en ambas: 41/41 SHA, cero incoherencias, gatePass=true. Compatibilidad final v6/v7 25/25 corridas reales sin diferencias; 845 archivos históricos y 585 archivos protegidos intactos. Permanecen GREEN las pruebas ya registradas: 18/18 envoltorio, 6/6 verificador y 35/35 mutaciones con ambas versiones.
+
+[PR #39](https://github.com/rafaallendes-boop/squash-clash/pull/39) preparada para revisión de Claude coordinada por el PO, **sin fusionar**. [Informe y SHA-256](2026-11-09-autoqa-followups.md). Este registro sustituye el estado pendiente de la entrada anterior, conservada como histórica. Solo documentación desde el código probado c2117b1. Sin cambios de producto/escenarios/criterios, investigador, iPhone/Xcode/instalación, regresión completa ni check-release, conforme al alcance. Sin otra parada ni diferencias sin justificar.

@@ -1,0 +1,88 @@
+{
+  "scenarios": [
+    {
+      "id": "M24-PERFECT-EARLY10-SL5",
+      "launch": 4,
+      "kind": "swing",
+      "releaseOffsetMs": -10,
+      "pullMm": 18.5,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": false,
+      "deliberateExpectedResult": ""
+    },
+    {
+      "id": "M24-PERFECT-LATE10-SL5",
+      "launch": 4,
+      "kind": "swing",
+      "releaseOffsetMs": 10,
+      "pullMm": 18.5,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": false,
+      "deliberateExpectedResult": ""
+    },
+    {
+      "id": "M24-VALID-EARLY-SL1",
+      "launch": 0,
+      "kind": "swing",
+      "releaseOffsetMs": -70,
+      "pullMm": 18.5,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": false,
+      "deliberateExpectedResult": ""
+    },
+    {
+      "id": "M24-FAILED-LATE-SL1",
+      "launch": 0,
+      "kind": "swing",
+      "releaseOffsetMs": 170,
+      "pullMm": 18.5,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": false,
+      "deliberateExpectedResult": ""
+    },
+    {
+      "id": "M24-NOPULL-SL1",
+      "launch": 0,
+      "kind": "nopull",
+      "releaseOffsetMs": 0,
+      "pullMm": 0,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": false,
+      "deliberateExpectedResult": ""
+    },
+    {
+      "id": "M24-REJECTED-SL1",
+      "launch": 0,
+      "kind": "rejected",
+      "releaseOffsetMs": 0,
+      "pullMm": 0,
+      "aimX": -1,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": false,
+      "deliberateExpectedResult": ""
+    },
+    {
+      "id": "CANARY-WRONG-EXPECTATION",
+      "launch": 4,
+      "kind": "swing",
+      "releaseOffsetMs": -10,
+      "pullMm": 18.5,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": true,
+      "deliberateExpectedResult": "Failed"
+    }
+  ]
+}
