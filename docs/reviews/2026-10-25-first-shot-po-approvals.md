@@ -2028,3 +2028,19 @@ Primer commit documental `7d00ef3` conserva las dos frases literales del encargo
 Preparación documental para PR #40, sin fusionar; Claude revisa por coordinación del PO. La sesión propuesta del 10 de noviembre **no está ejecutada ni autorizada al momento de empezar**: requiere autorización expresa y operador elegido por el PO. App instalada 0.1.0+097eab9 dev, sin nueva build/instalación. Proponer bloqueo automático Nunca temporal; solo PO toca Ajustes y repone estado previo. Perfil conocido vence 12nov2026 13:55:07Z/10:55:07Chile; toda sesión/restauración debe caber antes. Restauración futura P0 en proceso nuevo, hash literal 6ecfdfa78cbb/pending0 y tres archivos idénticos al respaldo y referencia inicial; H único hash alternativo 4f33dff747fb, sin recalcular. Sin iPhone hoy ni tests/Unity/build/instalación; sin cambios de producto/defaults/presets/spec/planes/criterios/umbrales, #32/S4/First Rally/First Match. Ante defecto demostrado/sorpresa o §8, detener/exportar/restaurar; ninguna corrección en #40. Las 21 recepciones históricas y sus NotEvaluated permanecen intactos.
 
 Diagnóstico confirmado en `8bb4b7a`; adenda y registro de preparación confirmados en el commit de esta entrada, antes de cualquier acceso futuro al iPhone. Comprobación documental: originales conservados como prefijo en cuatro Markdown, 7+2+1 preguntas literales y 30 referencias locales cotejadas; 2.808 archivos de evidencia con rutas/SHA-256 intactos. Cotejo offline de tres archivos en after-D2/after-E/after-pause/restored-final igual a ambos respaldos. Sin tests/check-release nuevos por delta exclusivamente documental; ninguna observación física nueva. Entrega para revisión en #40, sin fusionar; autorización de ejecución y designación de operador aún pendientes del PO.
+
+## Revisión de Claude de la preparación complementaria y acortamiento de la sesión — 9 de noviembre de 2026 (Chile)
+
+Claude revisó en la PR #40 el head `6a147ba` (Codex): **APROBADO CON OBSERVACIONES**. La entrega cambia solo cuatro Markdown y conserva el texto anterior. El diagnóstico coincide con el código: el destello de Perfect exige una presentación Perfect con contacto, y el puente háptico usa `UIImpactFeedbackGenerator`. La adenda cumple el encargo.
+
+Observaciones:
+1. C4 pedía una pregunta por diálogo, por una redacción ambigua del encargo de Claude. Eso son más de 35 diálogos.
+2. Los 20 minutos previstos no alcanzan para cinco bloques.
+
+Claude preguntó: «¿Corrijo la adenda antes de mañana para usar dos diálogos por bloque?». **Respuesta literal del PO: «Si, algo que sea lo más corto posible. Y ya para que avancemos a S4».** Claude agrega la sección C8 a la predeclaración, sin modificar C1–C7:
+- dos diálogos por bloque;
+- la pausa dentro del proceso de F, fuera de su cuota;
+- orden F → G → H, con I opcional;
+- unos 30 minutos.
+
+Esta respuesta expresa la intención del PO de avanzar a S4. No es una autorización de S4: falta la decisión del PO sobre S3 después de la sesión complementaria.
