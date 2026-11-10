@@ -41,9 +41,10 @@ namespace SquashClash.Runtime.Shot
         {
             var state=ImpactCue.Evaluate(now,presented,target,timing,shown,!shown);
             if(ring==null)return;
+            if(state.Phase==ImpactCuePhase.Hidden||state.Phase==ImpactCuePhase.Closed)
+            {line.enabled=triangle.enabled=validBand.enabled=perfectBand.enabled=false;return;}
             float alpha=1;
-            if(state.Phase==ImpactCuePhase.Hidden||state.Phase==ImpactCuePhase.Closed)alpha=0;
-            else if(state.AtOrAfterIdeal&&!state.InAssistWindow)
+            if(state.AtOrAfterIdeal&&!state.InAssistWindow)
                 alpha=state.InValidWindow&&timing.ValidMs>timing.AssistMs?
                     Mathf.Clamp01((float)((timing.ValidMs-state.DeltaMs)/(timing.ValidMs-timing.AssistMs))):0;
             var camera=UnityEngine.Camera.main;
