@@ -53,6 +53,7 @@ namespace SquashClash.Experiments.EditMode
                 var plan=ContactPlanner.Plan(incoming,recipe.Body,court,legal,1);
                 row.TStar=plan.TStarStep;row.PStar=plan.PStar;
                 if(!plan.Exists||plan.TStarStep<0||!Finite(plan.PStar)){row.Reason=plan.Reason??"no-usable-contact";continue;}
+                // Aim and power are fixture values, not product defaults.
                 var solution=ShotSolver.Solve(new ShotRequest(plan.PStar,new Vector2(3.2f,2.2f),.5f),
                     (float)preset.Get("shot.vMin"),(float)preset.Get("shot.vMax"),(float)preset.Get("shot.vCap"),
                     physics.Gravity,physics.BallRadius,court,factory,physics);
@@ -64,16 +65,16 @@ namespace SquashClash.Experiments.EditMode
                 row.Stop=flight.Stop;row.EscapeStep=flight.EscapeStep;row.EscapePosition=flight.EscapePosition;row.EscapeVelocity=flight.EscapeVelocity;
                 Describe(row,flight.Trajectory,court,solution.TargetUsed);
             }
-            var root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));var git=GitShort(root);
+            var root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));var git=GitShort(root);var gitDirty=GitDirty(root);
             var utc=DateTime.UtcNow.ToString("yyyyMMdd'T'HHmmss'Z'",C);
             var directory=Path.Combine(root,"Logs/experiments/sl56-post-frontis",utc+"-"+git);Directory.CreateDirectory(directory);
             var tsv=new StringBuilder("id\tstatus\treason\tstopReason\tincomingX\tincomingY\tincomingZ\tcontactStep\tcontactX\tcontactY\tcontactZ\tvelocityX\tvelocityY\tvelocityZ\tfirstAfterFrontisCategory\tfirstAfterFrontisSurface\tfrontHeight\ttargetUsedX\ttargetUsedHeight\tfrontHeightError\tfrontTargetDistance\tfirstBounceHeight\tfirstBounceX\tfirstBounceZ\tnearestLateralDistance\tfirstBounceOutsideCourt\tpointOut\tfootprintOut\ttouchesOutBand\tgeometryEnvelopeEscape\tescapeStep\tescapeX\tescapeY\tescapeZ\tgeometricOut\n");
             foreach(var r in cases)tsv.Append(string.Join("\t",new[]{r.Id,r.Status,Clean(r.Reason),r.Stop,R(r.Incoming.x),R(r.Incoming.y),R(r.Incoming.z),r.TStar.ToString(C),R(r.PStar.x),R(r.PStar.y),R(r.PStar.z),R(r.Velocity.x),R(r.Velocity.y),R(r.Velocity.z),r.After,r.Surface,N(r.FrontHeight),N(r.TargetX),N(r.TargetHeight),N(r.HeightError),N(r.TargetError),N(r.BounceHeight),N(r.BounceX),N(r.BounceZ),N(r.LateralDistance),B(r.FloorOutside),B(r.PointOut),B(r.FootprintOut),B(r.TouchesOutBand),B(r.Escape),r.EscapeStep.HasValue?r.EscapeStep.Value.ToString(C):"",r.EscapeStep.HasValue?R(r.EscapePosition.x):"",r.EscapeStep.HasValue?R(r.EscapePosition.y):"",r.EscapeStep.HasValue?R(r.EscapePosition.z):"",B(r.GeometricOut)})).Append('\n');
             File.WriteAllText(Path.Combine(directory,"cases.tsv"),tsv.ToString(),new UTF8Encoding(false));
             var groups=new[]{"SL5","SL6","total"}.Select(id=>Group(id,cases.Where(r=>id=="total"||r.Id==id).ToList()));
-            var json="{\n\"utc\":"+Q(utc)+",\"gitShort\":"+Q(git)+",\"presetHash\":"+Q(preset.Hash)+",\"SimulationKey\":"+Q(cfg.SimulationKey)+",\"unityVersion\":"+Q(Application.unityVersion)+
-                ",\"bounceThreshold\":"+R(BounceThreshold)+",\"horizonSeconds\":10,\"outgoingStop\":\"second non-persistent floor bounce or 1200 steps; envelope escape is recorded but does not stop the flight\",\"power\":0.5,\"aim\":[3.2,2.2],\"footprintRadius\":0.01,\"nPerRecipe\":1,"+
-                "\"units\":\"metres; percentages 0..100; height error = observed minus TargetUsed.y\",\"denominator\":\"solved cases, including notObserved; unsolved excluded\",\n\"groups\":["+string.Join(",",groups)+"],\n\"cases\":["+
+            var json="{\n\"utc\":"+Q(utc)+",\"gitShort\":"+Q(git)+",\"gitDirty\":"+B(gitDirty)+",\"presetHash\":"+Q(preset.Hash)+",\"SimulationKey\":"+Q(cfg.SimulationKey)+",\"unityVersion\":"+Q(Application.unityVersion)+
+                ",\"bounceThreshold\":"+R(BounceThreshold)+",\"horizonSeconds\":10,\"outgoingStop\":\"second non-persistent floor bounce or 1200 steps; envelope escape is recorded but does not stop the flight\",\"fixtureValues\":{\"power\":0.5,\"aim\":[3.2,2.2]},\"footprintRadius\":0.01,\"nPerRecipe\":1,"+
+                "\"units\":\"metres; percentages 0..100; height error = observed minus TargetUsed.y; nearestLateralDistance = min(bounceX, court.Width - bounceX): >= 0 means bounce X is inside [0, Width], distance to the nearer sideline; < 0 means bounce X is outside [0, Width], the same min (bounceX when bounceX < 0, Width-bounceX when bounceX > Width), signed distance beyond the nearer sideline\",\"denominator\":\"solved cases, including notObserved; unsolved excluded\",\n\"groups\":["+string.Join(",",groups)+"],\n\"cases\":["+
                 string.Join(",",cases.Select(CaseJson))+ "]\n}\n";
             File.WriteAllText(Path.Combine(directory,"summary.json"),json,new UTF8Encoding(false));
             Assert.That(Directory.Exists(directory)&&File.Exists(Path.Combine(directory,"summary.json"))&&File.Exists(Path.Combine(directory,"cases.tsv")),Is.True);
@@ -110,7 +111,8 @@ namespace SquashClash.Experiments.EditMode
                 for(int i=front+1;i<t.Contacts.Count;i++)
                 {
                     h=t.Contacts[i];if(h.Persistent)continue;
-                    r.Surface=h.Surface.ToString();r.After=h.Surface==SurfaceId.LeftWall||h.Surface==SurfaceId.RightWall?"lateral":h.Surface==SurfaceId.Floor?"floor":h.Surface==SurfaceId.BackWall?"backWall":"other";break;
+                    bool postEscape=(r.EscapeStep.HasValue&&h.Step>=r.EscapeStep.Value)||OutsideWallFace(h,court);
+                    r.Surface=h.Surface.ToString();r.After=postEscape?"postEscape":h.Surface==SurfaceId.LeftWall||h.Surface==SurfaceId.RightWall?"lateral":h.Surface==SurfaceId.Floor?"floor":h.Surface==SurfaceId.BackWall?"backWall":"other";break;
                 }
             }
             int floor=t.Contacts.FindIndex(h=>h.Surface==SurfaceId.Floor&&!h.Persistent);
@@ -137,7 +139,7 @@ namespace SquashClash.Experiments.EditMode
             string Percent(int count)=>solved.Count==0?"null":(100.0*count/solved.Count).ToString("R",C);
             string Mean(Func<Case,float?> value){var v=solved.Select(value).Where(x=>x.HasValue).Select(x=>(double)x.Value).ToArray();return v.Length==0?"null":v.Average().ToString("R",C);}
             return "{\"id\":"+Q(id)+",\"n\":"+rows.Count.ToString(C)+",\"solved\":"+solved.Count.ToString(C)+",\"unsolved\":"+(rows.Count-solved.Count).ToString(C)+
-                ",\"firstAfterFrontisPercent\":{"+string.Join(",",new[]{"lateral","floor","backWall","notObserved","other"}.Select(k=>Q(k)+":"+Percent(solved.Count(r=>r.After==k))))+"},"+
+                ",\"firstAfterFrontisPercent\":{"+string.Join(",",new[]{"lateral","floor","backWall","postEscape","notObserved","other"}.Select(k=>Q(k)+":"+Percent(solved.Count(r=>r.After==k))))+"},"+
                 "\"meanFrontHeight\":"+Mean(r=>r.FrontHeight)+",\"meanTargetUsedHeight\":"+Mean(r=>r.TargetHeight)+",\"meanFrontHeightError\":"+Mean(r=>r.HeightError)+",\"meanFrontTargetDistance\":"+Mean(r=>r.TargetError)+
                 ",\"meanFirstBounceHeight\":"+Mean(r=>r.BounceHeight)+",\"meanFirstBounceX\":"+Mean(r=>r.BounceX)+",\"meanFirstBounceZ\":"+Mean(r=>r.BounceZ)+",\"meanNearestLateralDistance\":"+Mean(r=>r.LateralDistance)+
                 ",\"firstBounceOutsideCourtCount\":"+solved.Count(r=>r.FloorOutside).ToString(C)+",\"geometricOutCount\":"+solved.Count(r=>r.GeometricOut).ToString(C)+",\"geometricOutPercent\":"+Percent(solved.Count(r=>r.GeometricOut))+
@@ -150,6 +152,13 @@ namespace SquashClash.Experiments.EditMode
             ",\"escapePosition\":"+(r.EscapeStep.HasValue?"["+R(r.EscapePosition.x)+","+R(r.EscapePosition.y)+","+R(r.EscapePosition.z)+"]":"null")+
             ",\"escapeVelocity\":"+(r.EscapeStep.HasValue?"["+R(r.EscapeVelocity.x)+","+R(r.EscapeVelocity.y)+","+R(r.EscapeVelocity.z)+"]":"null")+
             ",\"contacts\":["+string.Join(",",r.Contacts)+"],\"outBandContacts\":["+string.Join(",",r.OutContacts)+"]}";
+        private static bool OutsideWallFace(ContactEvent h,CourtDimensions court)
+        {
+            var p=h.Point;
+            if(h.Surface==SurfaceId.FrontWall||h.Surface==SurfaceId.BackWall)return !(p.x>=0&&p.x<=court.Width&&p.y>=0&&p.y<=court.WallHeight);
+            if(h.Surface==SurfaceId.LeftWall||h.Surface==SurfaceId.RightWall)return !(p.z>=0&&p.z<=court.Length&&p.y>=0&&p.y<=court.WallHeight);
+            return false;
+        }
         private static bool IsOut(LineId id)=>id==LineId.FrontOut||id==LineId.BackOut||id==LineId.LeftSideOut||id==LineId.RightSideOut;
         private static bool Finite(Vector3 p)=>!float.IsNaN(p.x)&&!float.IsInfinity(p.x)&&!float.IsNaN(p.y)&&!float.IsInfinity(p.y)&&!float.IsNaN(p.z)&&!float.IsInfinity(p.z);
         private static string R(float x)=>x.ToString("R",C);
@@ -157,6 +166,15 @@ namespace SquashClash.Experiments.EditMode
         private static string B(bool x)=>x?"true":"false";
         private static string Clean(string x)=>(x??"").Replace('\t',' ').Replace('\r',' ').Replace('\n',' ');
         private static string Q(string x)=>"\""+(x??"").Replace("\\","\\\\").Replace("\"","\\\"").Replace("\r","\\r").Replace("\n","\\n").Replace("\t","\\t")+"\"";
+        private static bool GitDirty(string root)
+        {
+            using(var process=Process.Start(new ProcessStartInfo("git","status --porcelain"){WorkingDirectory=root,UseShellExecute=false,RedirectStandardOutput=true,RedirectStandardError=true,CreateNoWindow=true}))
+            {
+                string value=process.StandardOutput.ReadToEnd();string error=process.StandardError.ReadToEnd();process.WaitForExit();
+                if(process.ExitCode!=0)throw new IOException("Cannot obtain git status: "+error);
+                return value.Length>0;
+            }
+        }
         private static string GitShort(string root)
         {
             using(var process=Process.Start(new ProcessStartInfo("git","rev-parse --short HEAD"){WorkingDirectory=root,UseShellExecute=false,RedirectStandardOutput=true,RedirectStandardError=true,CreateNoWindow=true}))
