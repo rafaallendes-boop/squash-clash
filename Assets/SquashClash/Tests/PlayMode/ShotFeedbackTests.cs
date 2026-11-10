@@ -60,6 +60,12 @@ namespace SquashClash.Runtime.Tests
         }
         [Test] public void Failed_SwishNoHaptic()
         {var r=Submit(Star()-.15);Assert.That(r.Result,Is.EqualTo("Failed"));AssertCounts(0,0,1,0,0);Assert.That(feedback.LastClip,Is.EqualTo("swish-provisional"));}
+        [Test] public void HapticsOff_FailedAttempt_NoImpactAudioNoHaptic()
+        {
+            app.Tuning.Set("feedback.haptics",0);app.LaunchCurrent();
+            var r=Submit(Star()-.15);Assert.That(r.Result,Is.EqualTo("Failed"));Assert.That(feedback.ContactCount,Is.Zero,"impact audio");
+            Assert.That(haptics.Firm,Is.Zero);Assert.That(haptics.Discreet,Is.Zero);
+        }
         [Test] public void NoDelivery_NoAudioNoHaptic()
         {
             controller.Enqueue(Order(app.Host.LaunchRealTime+.3,GestureOutcome.CanceledReturnToDeadZone));controller.ProcessPending();
