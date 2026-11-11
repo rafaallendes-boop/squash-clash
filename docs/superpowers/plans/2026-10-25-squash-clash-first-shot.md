@@ -37,7 +37,7 @@
 - **No se usan:** frameworks genéricos de input, audio o habilidades; ECS; inyección de dependencias; buses globales.
 - La desviación H17 de First Ball **no se extiende** a First Shot; las metas de §17.C siguen vigentes.
 - Documentación en español; identificadores, código y commits en inglés. Codex no modifica la spec: las discrepancias van a Claude, que las presenta al PO.
-- **Perfil de firma (dato vigente, 10 nov 2026):** la renovación registrada más reciente en `main` (tanda 4 PROD, creada el 2026-11-05T13:55:07Z; [informe](../../reviews/2026-11-05-first-shot-s2-tanda4-prod.md)) vence el **2026-11-12T13:55:07Z (10:55:07 America/Santiago del 12 de noviembre de 2026)**. El vencimiento 2026-10-28T14:59:31Z es un dato histórico y está superado. **Renovación pendiente por el PO.** Comprobar vigencia efectiva antes de toda instalación; no instalar si el perfil no está vigente.
+- **Perfil de firma (dato vigente, 11 nov 2026):** el PO renovó el perfil el 2026-11-11T13:50:05Z; vence el **2026-11-18T13:50:05Z (10:50:05 America/Santiago del 18 de noviembre de 2026)**, con el mismo certificado, equipo, dispositivo y entitlements. La app instalada sigue firmada con el perfil anterior (tanda 4 PROD, creado el 2026-11-05T13:55:07Z; [informe](../../reviews/2026-11-05-first-shot-s2-tanda4-prod.md)), que vence el **2026-11-12T13:55:07Z (10:55:07 America/Santiago)**; después de esa hora hay que reinstalar con el perfil nuevo. Los vencimientos 2026-10-28T14:59:31Z y 2026-11-12T13:55:07Z quedan como datos históricos. Comprobar vigencia efectiva antes de toda instalación; no instalar si el perfil no está vigente.
 
 ## Review Focus
 

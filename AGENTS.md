@@ -508,3 +508,16 @@ El bloque «Estado vigente» del 5 de noviembre permanece como histórico de ese
   Los NotEvaluated no cuentan como Pass. No hay decisión sobre las dos pausas fuera del máximo de C8.2, que se conservan como desviación. [Registro](docs/reviews/2026-10-25-first-shot-po-approvals.md#decisión-del-po-sobre-s3--11-de-noviembre-de-2026-chile).
 
   No autoriza S4, First Rally ni First Match, ni fusionar #40, ni la #44 (fusión, build o instalación). Cada una requiere autorización propia del PO.
+
+- **Cierre de #40, perfil renovado y autorización de Fable (PO, 2026-11-11 Chile).**
+  - **#40:** «Sí, fusionar #40». Merge `433633f`, segundo padre exacto `e606361`, árbol idéntico.
+  - **Perfil:** renovado en la caché de Xcode, vence el **2026-11-18T13:50:05Z (10:50:05 Chile)**. La app instalada vence el 2026-11-12T13:55:07Z; después de esa hora hay que reinstalar con el perfil nuevo.
+  - **Autorización del PO para Fable**, en dos ramas/worktrees en paralelo:
+    - gameplay First Rally **R1–R3** (reglas del punto, movimiento automático, IA «Fondo»), con parada e informe tras R3;
+    - **pase visual** solo en la capa Runtime/vista, sin Core, física, SimulationKey `166a96e319c7` ni `DefaultPreset.json`, sin empeorar el p95 ni la legibilidad H1, con capturas antes/después.
+
+    Cita literal: «dejo registrada mi autorización literal para First Rally y la excepción «dirección de arte» solo para el pase visual. Spec, escenarios, umbrales y criterios no se modifican».
+  - **Sin autorizar:** R4–R6, First Match y S4. Nada se fusiona sin aprobación del PO.
+  - **Revisión:** Claude hace la revisión independiente de ambas ramas.
+  - **Base recomendada:** `main` al abrir las ramas.
+  - [Registro literal completo](docs/reviews/2026-10-25-first-shot-po-approvals.md#cierre-de-pr-40-y-autorización-de-first-rally-r1r3-y-pase-visual-con-fable--11-de-noviembre-de-2026-chile).

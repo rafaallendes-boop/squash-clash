@@ -2096,3 +2096,38 @@ La aceptación no reinterpreta los datos: los NotEvaluated siguen siéndolo y no
 - cambiar parámetros.
 
 Cada una de esas acciones requiere autorización propia del PO.
+
+## Cierre de PR #40 y autorización de First Rally R1–R3 y pase visual con Fable — 11 de noviembre de 2026 (Chile)
+
+**Cierre de #40.** Respuesta literal del PO: «Sí, fusionar #40». Merge `433633f0c96f3a4b75c2d40b5520c807ce54e98a`, con segundo padre exacto `e606361ae759e2f7f85ec2b4e42ad99f72339520` y árbol idéntico al head aprobado. Antes de fusionar se comprobó que el head local y el remoto eran el mismo, que la PR estaba abierta, no era borrador y no tenía conflictos, y que los árboles estaban limpios. Main quedó sincronizada. Rama y worktree de Codex conservados con su evidencia ignorada.
+
+**Perfil de firma.** Informe del PO: perfil renovado el 2026-11-11T13:50:05Z, vence el 2026-11-18T13:50:05Z (10:50:05 Chile), con el mismo certificado, dispositivo y permisos. Claude lo comprobó en la caché de Xcode. La app instalada sigue firmada con el perfil que vence el 2026-11-12T13:55:07Z y no se reinstaló.
+
+**Autorización del PO para Fable**, en su «Aviso para el revisor — plan con Fable (11-nov-2026)». Citas literales:
+
+> Contexto: probé S3 en el iPhone y no salió bien: [El timing para golpear me está dando dificultades].
+>
+> Decisión del PO: aprovechar Fable desde Claude Code, en mi Mac, con dos prompts en paralelo y ramas/worktrees separados, ambos con esfuerzo high:
+>
+> 1) Gameplay (First Rally): R1 reglas del punto, R2 movimiento automático, R3 IA básica «Fondo». Se detiene tras R3 con informe. R4–R5 (loop de rally, HUD y UX mínimos) y R6 (First Match) quedan para una segunda ronda, previa revisión.
+> 2) Visual: personajes low-poly, cancha, iluminación, pelota, impactos y UI. Solo capa Runtime/vista; sin tocar Core, física, SimulationKey 166a96e319c7 ni DefaultPreset.json. Sin empeorar el p95 ni la legibilidad de altura/profundidad aprobada en H1. Con capturas antes/después.
+>
+> Autorización: dejo registrada mi autorización literal para First Rally y la excepción «dirección de arte» solo para el pase visual. Spec, escenarios, umbrales y criterios no se modifican.
+>
+> Lo que te pido:
+> - Revisión independiente de ambas ramas cuando Fable entregue, como en los cierres anteriores.
+> - Que no se fusione nada sin mi aprobación.
+> - Tener presente cuando vence el perfil de firma
+
+**Alcance autorizado:**
+- First Rally R1–R3: reglas del punto, movimiento automático e IA básica «Fondo», con informe y parada después de R3;
+- pase visual en la capa Runtime/vista, con la excepción de dirección de arte.
+
+**Sin autorizar:**
+- R4–R6, que requieren revisión previa;
+- First Match;
+- S4;
+- cambios de spec, escenarios, umbrales o criterios;
+- cualquier fusión sin aprobación del PO.
+
+El pase visual no toca Core, física, SimulationKey `166a96e319c7` ni `DefaultPreset.json`. La base de las ramas quedó por completar: Claude recomienda `main` en el momento de abrir las ramas y no `firstshot/s3-feedback`, que ya está fusionada en `main` y desactualizada. Las observaciones de Claude como revisor están en el registro de la sesión y en `AGENTS.md`.
