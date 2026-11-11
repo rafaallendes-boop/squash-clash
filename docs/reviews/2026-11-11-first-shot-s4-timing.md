@@ -34,3 +34,9 @@ El encargo indica literalmente: «Ante cualquier defecto o sorpresa: registra y 
 - Propuesta completa de 4.2 y protocolo físico aún pendientes. No implementación de 4.2 ni tareas 4.4/4.5.
 - Sin iPhone, Duplicación, builds, instalación, sesión física, cambios en #32/First Rally/First Match ni fusión.
 - PR final no creada: la entrega solicitada todavía no está completa ni lista para revisión final de Claude. Rama local preservada para continuar cuando el PO decida esta dependencia.
+
+## Decisión del PO sobre S4-TIMING-01 — continuación autorizada
+
+Respuesta literal: **«Continuar con vector causal NotEvaluated (recomendado)»**, a la consulta que autoriza continuar 4.1 y los bots, dejando el vector causal de H3b NotEvaluated y midiendo las demás variables disponibles, sin implementar la capa causal. Sustituye la parada vigente de la sección anterior, conservada como historia. Se mantienen el resto del encargo y sus límites. Este registro precede todo código.
+
+Método previsto de 4.1: tres series de ocho pulsos medidos, período de un segundo, cuatro pulsos de familiarización por serie; marcas reales de emisión y de evento táctil, emparejamiento al pulso más cercano (empate anterior), sin eliminar outliers. Serie incompleta, ambigua o con condición inválida no propone compensación. Media, desviación muestral por serie, intervalo/rango de medias y tiempos de separación entre series; intervalo del 95 % de la media de tres series con t de Student (2 grados de libertad). Es incertidumbre de repetición bajo este método, no de latencia del dispositivo. Sin calibración física en esta entrega.
