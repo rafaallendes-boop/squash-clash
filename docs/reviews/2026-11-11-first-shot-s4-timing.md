@@ -188,3 +188,16 @@ Esqueleto existente y tres pruebas nuevas: **RED válido 14/16**, dos fallos por
 ### O2 — RED/GREEN
 
 Nueva prueba del writer con las cuatro combinaciones reloj válido/inválido × payload válido/inválido: **RED válido 16/17**, un fallo por aserción del sobre, sin CS. Writer corregido a `!app.Clock.MetricsInvalid`, sin modificar payload: **GREEN 17/17**, XML/log frescos. La prueba conserva valid/kind/reason; líneas de contexto ya no implican por sí mismas métricas inválidas del reloj. Evidencia `Logs/evidence/s4-timing/claude-fixes/o2`.
+
+### Correcciones de Claude — verificación final previa al merge
+
+Fuente `bf0cd2a` (O1 `0d8a6e5`, O2 `8609c90`, sincronización documental O6 `bf0cd2a`; primer commit solo documental `30ea5d6`).
+
+- **O1:** RED 14/16 (dos aserciones) → GREEN 16/16. **O2:** RED 16/17 (una aserción) → GREEN 17/17. Sin RED por CS, XML viejo, cero tests o excepciones; pruebas intactas al implementar.
+- Suites completas frescas: **562/562 EditMode (N=0)** y **372/372 PlayMode (M=4)**, cero skipped/fallos/errores CS. Transitorios restaurados con el checkout solicitado y cotejados al cerrar. Evidencia separada en `Logs/evidence/s4-timing/claude-fixes/regression`.
+- **Check-release dev/prod OK**, ambos metadata `gitHash=bf0cd2a`, `gitDirty=false`; calibración presente solo en código generado DEV y ausente de PROD. Exports Unity/IL2CPP sin build nativa Xcode ni instalación. Evidencia en `Logs/evidence/s4-timing/claude-fixes/release`.
+- **AutoQA PASS/salida 0/nivel 1**, `dirty=false`, 85/85 tests, 18/18 PASS y canario FAIL esperado; integridad/SHA/presets/guard correctos, seis escenarios deterministas. Corrida `20261111T161534Z-bf0cd2a-10844`. Restauración automática sin errores y árbol limpio. Escenarios, márgenes y tolerancias sin cambios.
+- Delta desde `8e6e1c2` auditado: **exactamente seis archivos permitidos** (tres C#, informe, AGENTS y aprobaciones). Los otros **941 archivos versionados** fuera de los transitorios se cotejaron byte a byte; 609 hashes actuales de fuentes cotejados después de AutoQA. Entradas O6 idénticas. H3b original/derivado/arnés y SHA de artefactos intactos; **sin nueva ejecución del experimento**.
+- Invariantes conservadas por bytes/regresión: defaults `c0d8ec7050e0`/107, P0 `6ecfdfa78cbb`, SimulationKey `166a96e319c7`, proyección heredada `0d39e6016bd8`, M2-4, pullFullMm 35 y P2. Sin contrato/reloj/ImpactCue/TimingRingView/solver/spec/planes/criterios/umbrales/4.2/4.4/4.5 nuevos, ni iPhone, #32 o áreas de Fable.
+
+Solo documentación después de esta fuente probada. Se procede al control final de head local/remoto/PR/main/árboles y a la fusión condicionada ya autorizada; segundo padre exacto y árbol idéntico deben verificarse antes de darla por cerrada. Preservación de ignorados y cierre efectivo se informan en la entrega siguiente conforme al PO, sin commit aparte en main. **La fusión no acepta S4; las limitaciones/NotEvaluated y el protocolo físico pendiente permanecen.**
