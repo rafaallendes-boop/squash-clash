@@ -275,7 +275,8 @@ namespace SquashClash.Runtime.App
             var preview=gameObject.AddComponent<SquashClash.Runtime.Shot.GesturePreview>();preview.Initialize(this,input,reticle);
             var shot=gameObject.AddComponent<SquashClash.Runtime.Shot.ShotController>();shot.Initialize(this);preview.AttachShotController(shot);
             var practice=gameObject.AddComponent<SquashClash.Runtime.Shot.PracticeMode>();practice.Initialize(this,shot);
-            gameObject.AddComponent<SquashClash.Runtime.Rally.RallyDirector>().Initialize(this,shot,practice,placeholderPlayers);
+            var rally=gameObject.AddComponent<SquashClash.Runtime.Rally.RallyDirector>();rally.Initialize(this,shot,practice,placeholderPlayers);
+            gameObject.AddComponent<SquashClash.Runtime.Rally.RallyHud>().Initialize(this,rally,header);
             if(Config.Source.GetBool("practice.enabled"))LaunchCurrent();
             Debug.Log($"[SquashClash] ball ready backend={Config.Backend} visualColliders=0 localPhysicsScenes={physX.LiveInstances} config={Config.Hash} predictedSteps={Host.Prediction.States.Count-1}");
         }
