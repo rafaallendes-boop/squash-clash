@@ -2075,3 +2075,24 @@ Hubo una presentación concordante por intento, cero discrepancias y cero pendie
 - congelación del destello.
 
 Recomendación de Claude: aceptar S3 con condiciones, o integrar antes una ayuda de timing con autorización propia, como la #44. **Decide el PO.** S4 no está autorizado. Detalle en el [informe](2026-11-06-first-shot-s3-physical-validation.md#sesión-complementaria-c8--11-de-noviembre-de-2026-chile).
+
+## Decisión del PO sobre S3 — 11 de noviembre de 2026 (Chile)
+
+Claude preguntó, tras la sesión complementaria: «¿Cómo cierras S3?», con dos opciones: aceptar con condiciones o probar antes la PR #44. **Respuesta literal del PO: «Aceptar con condiciones».**
+
+**S3 queda aceptado con condiciones.** Estas son las condiciones, tal como Claude las presentó en la opción (a); quedan pendientes para observarlas en S4 o cuando mejore el timing:
+1. contraste Perfect/Valid y destello de Perfect (0 Perfect en las 45 recepciones de cuota de S3);
+2. silencio con impacto aplicado;
+3. `feedback.haptics=0` con contacto dentro de cuota (solo existe L43, que es preparación);
+4. háptica del sistema desactivada con contacto, y la observación (b) de S3-D: vibración percibida con «Háptica del sistema» desactivada;
+5. congelación del destello de Perfect en pausa.
+
+La aceptación no reinterpreta los datos: los NotEvaluated siguen siéndolo y no cuentan como Pass. El PO no decidió si las dos pausas fuera del máximo de C8.2 cuentan como evidencia, así que se conservan como desviación registrada. La observación del destello percibido sin Perfect (9 nov) queda abierta sin defecto demostrado.
+
+**Esta decisión no autoriza:**
+- S4, First Rally ni First Match;
+- fusionar #40;
+- fusionar, compilar o instalar la #44;
+- cambiar parámetros.
+
+Cada una de esas acciones requiere autorización propia del PO.

@@ -469,3 +469,14 @@ Diagnóstico confirmado en `8bb4b7a`; adenda y registro de preparación confirma
   Restauración: proceso nuevo a las 2026-11-11T14:35:33Z en P0 `6ecfdfa78cbb`, con cero pendientes y los tres archivos idénticos.
 
   Perfil incorporado vence el 2026-11-12T13:55:07Z; el PO renovó el perfil en caché hasta el 18 nov 10:50:05 Chile, pero la app no se reinstaló. Recomendación de Claude: aceptar S3 con condiciones o probar antes una ayuda de timing con autorización propia. Decide el PO; S4 sin autorizar.
+
+- **S3 aceptado con condiciones por el PO (2026-11-11 Chile).** Respuesta literal del PO a «¿Cómo cierras S3?»: «Aceptar con condiciones». Condiciones pendientes para S4, o para cuando mejore el timing:
+  - contraste y destello de Perfect;
+  - silencio con impacto;
+  - háptica de app desactivada con contacto en cuota;
+  - háptica del sistema desactivada con contacto, más la observación (b) de S3-D;
+  - congelación del destello en pausa.
+
+  Los NotEvaluated no cuentan como Pass. No hay decisión sobre las dos pausas fuera del máximo de C8.2, que se conservan como desviación. [Registro](docs/reviews/2026-10-25-first-shot-po-approvals.md#decisión-del-po-sobre-s3--11-de-noviembre-de-2026-chile).
+
+  No autoriza S4, First Rally ni First Match, ni fusionar #40, ni la #44 (fusión, build o instalación). Cada una requiere autorización propia del PO.
