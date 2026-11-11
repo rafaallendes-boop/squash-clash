@@ -52,3 +52,7 @@ Por modo/receta/desfase se conservan resultado y motivo del contrato, geometría
 ## T4.1 — TDD inicial
 
 Esqueleto compilable: primera corrida 0/11 con 10 fallos por aserción y un acceso nulo en el esqueleto; se conserva como intermedia no válida para el grupo completo. Se inicializó el resultado vacío del esqueleto, sin implementar el cálculo: **RED válido 0/11, once fallos por aserción, sin errores CS**. Tras implementar: 10/11; el último caso exigía preservar el toque que invalida timestamps. Corregido el registro sin cambiar la prueba: **GREEN 11/11**. XML/log frescos separados en `Logs/evidence/s4-timing/t4-1`. Son datos sintéticos; la accesibilidad del control se comprueba en Main del Editor. No calibración física ni aceptación inferida.
+
+## T4.3 — TDD del bot y el protocolo
+
+Esqueleto compilable. Un primer intento no produjo XML por usar un matcher no disponible en el NUnit del proyecto; se conserva el log y **no cuenta como RED**. Corregida esa sintaxis de prueba: **RED válido 1/10, nueve fallos por aserción, sin CS**. Implementación sin alterar contrato, reloj, solver ni P2: **GREEN 10/10**. La prueba con vectores usa valores sintéticos declarados, no atribuye esos valores al producto. El reductor mantiene modos separados y ausencia de vector como null/NotEvaluated; un fallo nunca añade una muestra cero. Evidencia en `Logs/evidence/s4-timing/t4-3`.
