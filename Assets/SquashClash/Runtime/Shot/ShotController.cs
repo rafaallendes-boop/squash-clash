@@ -72,11 +72,11 @@ namespace SquashClash.Runtime.Shot
         private void CaptureClockContext(){lastTempo=app.Clock.Tempo;lastSlow=app.Clock.DebugSlowMotion;lastPaused=app.Clock.Paused;lastDrops=app.Clock.DroppedSinceRestart;}
         private void PresentCurrentPlan()
         {
-            if(!Available){ring.Show(default,0,false);return;}
+            if(!Available){ring.Show(default,0,false,Snapshot.Timing);return;}
             double target=0;
             bool mapped=Plan.Exists&&Plan.TStarStep>=0&&app.Host.ClockMap.TrySimToReal(Plan.TStarStep,0,out target);
             Presented.Present(Time.realtimeSinceStartupAsDouble,Plan,target);
-            ring.Show(Plan,target,mapped&&!AttemptConsumed);
+            ring.Show(Plan,target,mapped&&!AttemptConsumed,Snapshot.Timing);
         }
         public bool CanBegin(double eventTime,out string reason)
         {
@@ -111,7 +111,7 @@ namespace SquashClash.Runtime.Shot
             var authoritative=AuthoritativeTrajectory();
             var decision=ContactContract.Decide(order.ReleaseAt,Presented,app.Host.ClockMap,authoritative,shot.Timing,false);
             var record=BaseRecord(order);FillDecision(record,decision);record.Version=++recordVersion;LastRecord=record;Write("shot-order",record);
-            ring.Show(Plan,record.TargetContactAtReal,false);
+            ring.Show(Plan,record.TargetContactAtReal,false,Snapshot.Timing);
             if(decision.Result!=ShotResult.Perfect&&decision.Result!=ShotResult.Valid){Finish(record);return;}
             if(decision.ContactStep<=app.Host.Current.Step&&!app.Host.TryGetHistoricalState(decision.ContactStep,out _))
             {Fault(record,ShotResult.NotEvaluable,"history-expired");return;}
