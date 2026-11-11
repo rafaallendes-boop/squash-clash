@@ -56,3 +56,74 @@ Esqueleto compilable: primera corrida 0/11 con 10 fallos por aserción y un acce
 ## T4.3 — TDD del bot y el protocolo
 
 Esqueleto compilable. Un primer intento no produjo XML por usar un matcher no disponible en el NUnit del proyecto; se conserva el log y **no cuenta como RED**. Corregida esa sintaxis de prueba: **RED válido 1/10, nueve fallos por aserción, sin CS**. Implementación sin alterar contrato, reloj, solver ni P2: **GREEN 10/10**. La prueba con vectores usa valores sintéticos declarados, no atribuye esos valores al producto. El reductor mantiene modos separados y ausencia de vector como null/NotEvaluated; un fallo nunca añade una muestra cero. Evidencia en `Logs/evidence/s4-timing/t4-3`.
+
+## T4.2 — Step 0 documental; implementación no autorizada
+
+La ayuda actual #44 es la referencia **completa** del experimento. No se incorpora ninguna clave ni filtro de vista en esta rama. Propuesta para decisión del PO:
+
+| Nivel propuesto | Representación sobre ImpactCue / TimingRingView | Ventajas | Riesgos / decisión pendiente |
+|---|---|---|---|
+| Completo | Mantener anillo convergente, triángulo fijo y bandas Perfect/Valid de #44, incluyendo la supresión de la banda Valid en T3 puro. | Referencia ya implementada; enseña aproximación y punto ideal. | Visibilidad de 2 px y asimetría de las bandas pendientes; no equivale a validación física de #44. |
+| Parcial, opción A | Ocultar solo anillo móvil y bandas desde T*−150 ms; conservar triángulo fijo sin destello ni desvanecimiento dependiente de T*. | Conserva referencia espacial, reduce información temporal final. | El triángulo revela P*; si heredase el fade actual filtraría tiempo. Requiere separar estilos y comprobarlo con TDD. |
+| Parcial, opción B **recomendada para discutir** | Ocultar todo el conjunto de timing desde T*−150 ms hasta resolver/cerrar la recepción. Tras el corte no reaparece por un cambio de plan. | Respeta la intención de retirar la señal temporal final sin pistas residuales del triángulo/fade. | Más exigente; retirar también P* cambia la referencia espacial. Se registran el target y versión que activaron el corte y los planes posteriores, sin cambiar el contrato. |
+| Ninguno | No dibujar anillo, triángulo ni bandas desde el inicio de la recepción; ImpactCue/contrato siguen calculándose para trazabilidad. | Compara dependencia del indicador sin modificar timing. | Se pierde P*. «Pelota y sombra» del test del plan debe entenderse respecto de las ayudas de timing; no autoriza borrar mira/potencia/feedback/UI ajena. Confirmar esa interpretación antes de implementar. |
+
+El PO debe elegir A/B u otra definición antes de codificar 4.2. Todos los niveles conservarían la selección del plan visible en el timestamp original, los ms reales y la compensación aplicada una sola vez. El instante ideal y las ventanas no se desplazan para facilitar el test. No se implementa aquí el «últimos 150 ms» del plan sobre un diseño anterior de anillo.
+
+### Clave propuesta y compatibilidad
+
+`timing.aidLevel`: elección **0=completo (default propuesto), 1=parcial, 2=ninguno**, capturada por recepción; con un preset anterior sin esa clave se superpone el default 0. La clave nueva exige autorización de implementación 4.2 y R2-3: pasaría de 107 a 108 claves y cambiarían los hashes globales de defaults y P0 efectivo. Se calcularían y registrarían entonces desde el JSON real, sin inventarlos ahora. Los 41 valores heredados/proyección y SimulationKey deben seguir idénticos; P0-calib-1 guardado no se promueve ni reescribe. En esta rama **no se añade la clave**: defaults `c0d8ec7050e0`, P0 `6ecfdfa78cbb`, 107 claves, SimulationKey `166a96e319c7` y proyección heredada `0d39e6016bd8` permanecen intactos.
+
+### Tareas provisionales para aprobación antes de H2
+
+No son criterios nuevos ni zonas medidas de H2. Propuesta de etiquetas/valores iniciales, pendiente del PO (decisión 11):
+
+- Frontis: tres columnas en coordenadas AX-1, x∈[0,20;2,20), [2,20;4,20), [4,20;6,20] m, etiquetadas por intervalos X para evitar invertir derecha/izquierda de pantalla. Tres alturas: y∈[0,60;1,60), [1,60;2,60), [2,60;3,60] m. Una tarea marca un rectángulo concreto; fuera del margen legal no se presenta como zona válida.
+- Potencia normalizada P: suave [0;1/3), media [1/3;2/3), fuerte [2/3;1]. Registrar potencia pedida y congelada, saturación y fallos de captura; sin cambiar `pullFullMm=35`, curva ni clamp. No equivalen a velocidad física fija si el solver eleva v por factibilidad.
+- Primer bote posterior al golpe: dividir X en tres franjas iguales dentro de [0,20;6,20] m y Z en corto [0,20;3,20), medio [3,20;6,40), profundo [6,40;9,55] m. Registrar centro del primer bote, toque de línea/superficie previa y out por separado, sin convertirlo en regla de punto. Límites exactos y política de bordes deben aprobarse antes de H2.
+- Ejemplo de tarea combinada: «columna X baja, altura media, potencia fuerte, primer bote profundo». Pedido, mira congelada, objetivo factible, impacto de frontis y primer bote son campos distintos; un fallo no se reemplaza por un error cero. La zona del arnés H3b predeclarada arriba es independiente de estas propuestas H2.
+
+### Observaciones de revisión de #44 preservadas
+
+1. `StrokePixels=2`: puede ser demasiado fino en el iPhone. Proponer una comparación corta 2/4/6 px con fuente/cámara iguales en una autorización posterior; no se aumenta aquí ni se afirma mejora de legibilidad.
+2. Las bandas actuales sitúan solo el borde **temprano** de A y V; después de T* el anillo ya llegó al radio de encaje y el fade no representa simétricamente el borde tardío. Proponer explicar ambos bordes o añadir representación tardía en 4.2, con TDD y decisión del PO; sin modificar ahora las ventanas.
+3. En Δ=+ValidMs, el contrato todavía es Valid por borde inclusivo, pero el alpha del renderer llega a 0. Es una observación conocida del encargo, conservada sin corregirla en este Step 0. En la futura implementación probar −V, −A, 0, +A, +V y puntos a ambos lados, cotejando estado/visibilidad con el contrato, sin recortar la inclusión para hacer pasar el dibujo.
+
+## Sesión física futura propuesta — no autorizada ni ejecutada
+
+Requiere PO presente, autorización propia, revisión de Claude y build DEV nueva Release/ARM64/no Development que incorpore la calibración y #44. La app instalada conserva el perfil que vence el **12 de noviembre a las 10:55:07 Chile**. El perfil renovado en caché vence el **18 de noviembre a las 10:50:05 Chile**; verificar fecha efectiva del perfil incorporado, certificado/firma y tiempo para toda la sesión/restauración antes de instalar. No asumir que la renovación en caché actualizó la app instalada.
+
+1. Exportar logs antes de nuevas aperturas por la retención existente. Respaldo nuevo de `P0-calib-1.json`, `Po-1.json` y `last-active.txt`, SHA-256 y bytes; cotejarlos después de instalar sin desinstalar/borrar datos. Proceso nuevo con P0, hash efectivo `6ecfdfa78cbb`, cero pendientes, backend P2, M2-4, sin cámara lenta, foco y térmico/contexto registrados. Altavoz, sin Bluetooth, timbre y volumen confirmados por el PO; registrar buffer DSP/frecuencia/ruta declarada y ajustes de audio, sin afirmar latencia de pantalla/altavoz medida.
+2. Explicar antes de empezar: «Toca al ritmo del destello y clic. Esto estima un offset conjunto de presentación, sonido, captura y tu respuesta, no la latencia del iPhone. No golpea la pelota y no se aplica nada hasta que confirmes». Preguntar una a una: **«¿Ves el destello?»**, **«¿Oyes el clic?»**, **«¿Entiendes que debes seguir el ritmo y que no estamos midiendo solo el dispositivo?»**. Si falta identificación o hay defecto, conservar parcial y detenerse.
+3. Desde First Shot / S4 en DEV: tres series de 4 pulsos de familiarización + 8 medidos, período nominal 1 s, espera inicial 2 s. El PO inicia cada serie tras un descanso libre, cuyo intervalo queda registrado. Se usan timestamps reales de emisión lógica del frame y `InputEvent.time` de Began; registro nominal/real y edad al recibir. La emisión lógica no acredita presentación óptica ni salida acústica. Emparejar cada toque con el pulso real más cercano (empate anterior, máximo medio período); duplicados, faltantes, ambigüedad, cámara lenta, pérdida de foco/segundo plano o pulso perdido invalidan, sin eliminar outliers ni repetir para lograr un número. Guardar todos los intentos.
+4. Antes de mostrar números, preguntar **«¿Pudiste seguir un ritmo estable en las tres series?»** y **«¿Percibiste el destello y el clic juntos o separados?»**, una a una y conservando literales. Mostrar media, desviaciones por serie, rango de medias, IC95% entre series e intervalos de descanso. No hay umbral de aceptación nuevo. Fuera del rango existente −100…100 ms no se recorta ni se aplica: elevar al PO. Pregunta final separada **«¿Confirmas aplicar este offset conjunto solo para esta sesión?»**; solo una confirmación explícita habilita el botón. Cancelar deja `timing.latencyCompMs` intacto. No guardar preset.
+5. Chequeo breve de #44 propuesto, sujeto a cuota/autorización futura: misma SL1 y cámara, ayuda actual completa; primero identificar **«¿Ves el triángulo fijo, el anillo que converge y las bandas?»**, después hasta 6 recepciones sin repetir para conseguir un Perfect. Preguntas una a una, antes de resultados: **«¿Entiendes cuándo encaja el anillo en el triángulo?»**, **«¿El trazo se ve con claridad?»**, **«¿El indicador te ayuda a decidir cuándo soltar?»**. Sin inferir H3/H2, aprendizaje ni condiciones pendientes de S3 por ese chequeo. Perfect/silencio/háptica/destello en pausa requieren sus bloques y autorización propios.
+6. Exportar antes de otra apertura. Restaurar transitorios sin guardar y reiniciar el proceso desde el P0 guardado; comprobar **P0 `6ecfdfa78cbb`, cero pendientes**, compensación heredada 0, y cotejar los tres archivos byte a byte contra el respaldo y sus SHA-256. Registrar arranque nuevo, build/fecha/perfil, literales, parciales y límites. Si no alcanza la vigencia/tiempo reservado para restaurar, no iniciar el bloque. No hay instalación ni acción de iPhone en esta entrega Mac.
+
+## Fuentes técnicas del método
+
+- [Unity Input System 1.20, InputEvent.time](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.20/api/UnityEngine.InputSystem.LowLevel.InputEvent.html): timestamp del evento en la misma línea temporal real de Unity; se conserva en lugar de usar el frame de procesamiento como hora del toque. No separa el retardo de captura del resto del offset conjunto.
+- [NIST, tabla t de Student](https://www.itl.nist.gov/div898/handbook/eda/section3/eda3672.htm): IC bilateral 95 %, t(0,975;2)≈4,303 para tres medias de serie. El intervalo supone repetición independiente y no captura sesgo sistemático, acoplamiento audio/visual ni latencia individual de los componentes. La incertidumbre física sigue NotEvaluated hoy.
+
+## Resultado del experimento H3b en el Mac
+
+Fuente `5f3321c21698ce3d69a3fd7b7cfba74b2b08bb99`, árbol limpio. Ejecución explícita terminada, XML fresco 1/1 **solo como ejecución del arnés**, no como Pass de la hipótesis. [Resumen derivado y SHA-256 de los datos](../validation/evidence/2026-11-11-first-shot-s4-h3b-summary.json). Originales locales ignorados: `Logs/experiments/h3b/20261111T152312Z-5f3321c`.
+
+| Modo | Δ fijo ms | Intentos | Contactos | Al aire | Tarde | Otros | Zona/aciertos observados | Aciertos/intentos | Causal |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| T3 | 0 | 48 | 48 | 0 | 0 | 0 | 48/48 | 48/48 | NotEvaluated |
+| T3 | -60 | 48 | 32 | 16 | 0 | 0 | 32/32 | 32/48 | NotEvaluated |
+| T3 | -100 | 48 | 32 | 16 | 0 | 0 | 32/32 | 32/48 | NotEvaluated |
+| T3 | -150 | 48 | 32 | 16 | 0 | 0 | 32/32 | 32/48 | NotEvaluated |
+| V | 0 | 48 | 48 | 0 | 0 | 0 | 48/48 | 48/48 | NotEvaluated |
+| V | -60 | 48 | 32 | 16 | 0 | 0 | 32/32 | 32/48 | NotEvaluated |
+| V | -100 | 48 | 32 | 16 | 0 | 0 | 32/32 | 32/48 | NotEvaluated |
+| V | -150 | 48 | 0 | 48 | 0 | 0 | 0/0 | 0/48 | NotEvaluated |
+
+Son 384 intentos, 256 contactos y 128 al aire, cero tarde/otras categorías. Los 256 contactos tuvieron primer impacto observado en la zona de frontis del fixture. Denominador cero en V/−150: tasa de zona entre contactos **NotEvaluated**, no 0 %; la tasa sobre 48 intentos sí es 0/48. **112 pares con contacto en ambos modos, cero diferencias de paso, geometría y salida**. Desglose por SL/semilla/desfase y ajustes de factibilidad en los originales; totales por SL en el JSON derivado.
+
+Interpretación limitada: frente al preciso, los bots anticipados pierden contactos por K; V filtra además −150 ms. Entre los contactos aceptados no aparece una pérdida de acierto en esta zona: con capa causal ausente, el solver vigente resuelve la intención factible. No se inventa una penalización ni se exige empeorar cada dimensión. La separación del límite V y la geometría permite observar qué cambió sin atribuirlo a un vector inexistente. El bot lee el plan presentado y usa ImpactCue como referencia lógica; no mide percepción humana, render, pantalla, audio ni captura. **H3b permanece incompleto/NotEvaluated como hipótesis completa** por el vector causal y los niveles parcial/ninguno pendientes.
+
+## T4.1 — cierre de ciclo y comprobación de UI
+
+Ampliada la verificación: emisión sintética con jitter real frente al pulso nominal; toque duplicado/faltante con timestamps monótonos; modal que bloquea juego y cancela sin aplicar; resultado ya confirmado que no debe registrarse como cancelado al destruir la vista. La preparación de UI necesita desplegar los foldouts y esperar layout/foco para enviar NavigationSubmit, como el resto de pruebas del panel; intermedios preservados. Con la UI preparada: **RED 12/13, un fallo por aserción** al cancelar un resultado confirmado. Guarda `!confirmed` en Cancel, sin alterar aserciones/cálculo: **GREEN 13/13**. El resumen visible ahora incluye medias/DE por serie y descansos, además del IC/rango. Evidencia en `Logs/evidence/s4-timing/calibration-lifecycle`.

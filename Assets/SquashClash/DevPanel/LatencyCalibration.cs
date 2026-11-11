@@ -91,7 +91,7 @@ namespace SquashClash.DevPanel
         }
         public void ObserveConditions(double slowMotion,bool focused)
         {if((Running||Result.complete)&&!confirmed&&(slowMotion!=1||!focused))Invalidate(!focused?"focus-lost":"slow-motion");}
-        public void Cancel(){if(Running||Result.complete)Invalidate("canceled");}
+        public void Cancel(){if(!confirmed&&(Running||Result.complete))Invalidate("canceled");}
         public bool Confirm()
         {
             if(invalid||confirmed||!Result.complete)return false;
@@ -212,7 +212,7 @@ namespace SquashClash.DevPanel
             InputSystem.onEvent-=OnInput;seriesActive=false;overlay?.RemoveFromHierarchy();overlay=null;
             if(app!=null)app.GetComponent<TouchInputAdapter>().BlockedByUi=blockedBefore;
             if(status==null)return;var r=session.Result;
-            status.text=r.valid?$"Offset conjunto {r.meanMs:F1} ms · IC95% [{r.ciLowMs:F1}, {r.ciHighMs:F1}] · rango entre series {r.seriesRangeMs:F1} ms. No aplicado.":"Calibración inválida: "+r.reason+". No aplicado.";
+            status.text=r.valid?$"Offset conjunto {r.meanMs:F1} ms · IC95% [{r.ciLowMs:F1}, {r.ciHighMs:F1}] · rango entre series {r.seriesRangeMs:F1} ms.\nMedias por serie: {string.Join(", ",r.meansMs.Select(n=>n.ToString("F1")))} ms; DE: {string.Join(", ",r.sdBySeriesMs.Select(n=>n.ToString("F1")))} ms.\nDescansos: {string.Join(", ",r.gapsSeconds.Select(n=>n.ToString("F1")))} s. No aplicado.":"Calibración inválida: "+r.reason+". No aplicado.";
             confirm.SetEnabled(r.complete&&r.valid);
         }
         private void Write(LatencyCalibrationRecord r)

@@ -74,14 +74,42 @@ namespace SquashClash.Runtime.Tests
         [Test] public void MissingAndDuplicateTapsInvalidateInsteadOfDiscardingOutliers()
         {
             session.Begin(0);session.BeginSeries(0);for(int i=0;i<8;i++)session.Stimulus(2+i);
-            for(int i=0;i<7;i++)session.Tap(2+i);session.Tap(2.01);
+            foreach(double t in new[]{2d,2.01,3,4,5,6,7,8})session.Tap(t);
             Assert.That(session.EndSeries(10),Is.False);Assert.That(session.Result.valid,Is.False);Assert.That(session.Confirm(),Is.False);
             Assert.That(records.Count(r=>r.kind=="tap"),Is.EqualTo(8));
         }
         [Test] public void CancelOrFocusLossAfterCompletionCannotConfirm()
         {Complete();session.ObserveConditions(1,false);Assert.That(session.Confirm(),Is.False);Complete();session.Cancel();Assert.That(session.Confirm(),Is.False);}
         [Test] public void PairingUsesActualEmissionNotNominalBeatAndAcceptsNegativeOffset()
-        {Complete(-30);Assert.That(session.Result.meanMs,Is.EqualTo(-30).Within(1e-8));Assert.That(session.Confirm(),Is.True);}
+        {
+            session.Begin(0);
+            for(int series=0;series<3;series++)
+            {
+                double start=series*12;session.BeginSeries(start);
+                for(int i=0;i<8;i++)session.Stimulus(start+2+i+.01*(i%3));
+                for(int i=0;i<8;i++)session.Tap(start+2+i+.01*(i%3)-.03);
+                Assert.That(session.EndSeries(start+10),Is.True);
+            }
+            Assert.That(session.Result.meanMs,Is.EqualTo(-30).Within(1e-8));Assert.That(session.Confirm(),Is.True);
+        }
+        [Test] public void ConfirmedResultIsNotCanceledByTeardown()
+        {Complete();Assert.That(session.Confirm(),Is.True);session.Cancel();Assert.That(session.Result.complete&&session.Result.valid,Is.True);Assert.That(records.Last().confirmed,Is.True);}
+        [UnityTest] public IEnumerator CalibrationModalBlocksGameplayAndCancelRestoresInputWithoutApplying()
+        {
+            yield return PlayModeTestWorld.ClearApp();yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
+            var app=AppBootstrap.Instance;var root=app.GetComponent<UIDocument>().rootVisualElement;
+            app.GetComponent<ResumeOverlay>().Continue();var input=app.GetComponent<SquashClash.Runtime.Input.TouchInputAdapter>();
+            UnityEngine.Object.FindFirstObjectByType<DevPanelView>().Toggle();
+            root.Q<Foldout>("first-shot-section").value=true;root.Q<Foldout>("latency-calibration").value=true;yield return null;yield return null;
+            bool blocked=input.BlockedByUi;string before=app.Tuning.Applied.Hash;
+            root.Q<Button>("calibration-start").Focus();
+            using(var e=NavigationSubmitEvent.GetPooled())root.Q<Button>("calibration-start").SendEvent(e);
+            Assert.That(root.Q("calibration-overlay"),Is.Not.Null);Assert.That(input.BlockedByUi,Is.True);yield return null;yield return null;
+            var cancel=root.Q("calibration-overlay").Query<Button>().ToList().Single(b=>b.text=="Cancelar sin aplicar");
+            cancel.Focus();using(var e=NavigationSubmitEvent.GetPooled())cancel.SendEvent(e);
+            Assert.That(root.Q("calibration-overlay"),Is.Null);Assert.That(input.BlockedByUi,Is.EqualTo(blocked));Assert.That(app.Tuning.Applied.Hash,Is.EqualTo(before));
+            yield return PlayModeTestWorld.ClearApp();
+        }
         [UnityTest] public IEnumerator CalibrationIsReachableOnlyThroughDevTimingSection()
         {
             yield return PlayModeTestWorld.ClearApp();yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
