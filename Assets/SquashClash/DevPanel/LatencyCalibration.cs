@@ -219,7 +219,7 @@ namespace SquashClash.DevPanel
         private void Write(LatencyCalibrationRecord r)
         {
             if(app?.Metrics==null)return;
-            app.Metrics.Write("latency-calibration",app.Config,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,0,r.valid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(r));
+            app.Metrics.Write("latency-calibration",app.Config,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,0,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(r));
         }
         private void OnApplicationFocus(bool focused){if(!focused&&session!=null){session.ObserveConditions(1,false);if(overlay!=null)FinishOverlay();}}
         private void OnApplicationPause(bool paused){if(paused)OnApplicationFocus(false);}

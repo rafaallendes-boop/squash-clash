@@ -167,5 +167,26 @@ namespace SquashClash.Runtime.Tests
             Assert.That(app.GetComponent<SquashClash.Runtime.Input.TouchInputAdapter>().BlockedByUi,Is.EqualTo(view.IsOpen));
             yield return PlayModeTestWorld.ClearApp();
         }
+        [UnityTest] public IEnumerator CalibrationMetricsEnvelopeTracksClockIndependentlyOfPayload()
+        {
+            yield return PlayModeTestWorld.ClearApp();yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
+            var app=AppBootstrap.Instance;var calibration=app.GetComponent<LatencyCalibration>();
+            var write=typeof(LatencyCalibration).GetMethod("Write",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic);
+            Assert.That(write,Is.Not.Null);Assert.That(app.Clock.MetricsInvalid,Is.False);
+            foreach(bool invalidClock in new[]{false,true})
+            {
+                if(invalidClock)app.Clock.DebugSlowMotion=.5;
+                foreach(bool payloadValid in new[]{false,true})
+                {
+                    var payload=new LatencyCalibrationRecord{kind=payloadValid?"stimulus":"audio-context",valid=payloadValid,reason="synthetic-envelope-check"};
+                    write.Invoke(calibration,new object[]{payload});
+                    var row=File.ReadAllLines(app.Metrics.CurrentFilePath).Select(JsonUtility.FromJson<MetricsRow>).Last(r=>r.kind=="latency-calibration");
+                    Assert.That(row.metricsValid,Is.EqualTo(!app.Clock.MetricsInvalid),"Envelope validity is the clock's state, not calibration validity");
+                    var saved=JsonUtility.FromJson<LatencyCalibrationRecord>(row.payload);
+                    Assert.That(saved.valid,Is.EqualTo(payloadValid));Assert.That(saved.kind,Is.EqualTo(payload.kind));Assert.That(saved.reason,Is.EqualTo(payload.reason));
+                }
+            }
+            yield return PlayModeTestWorld.ClearApp();
+        }
     }
 }
