@@ -1728,6 +1728,137 @@ La PR queda abierta y sin fusionar. La build, la instalación y el protocolo S3-
 
 **Aplicado.** Solo cambia `S3LateRejectionTests.cs`: la prueba de la observación 1 se renombra y su comentario se aclara, y la observación 3 suelta en `Star()-.035` con una aserción de al menos una iteración. Claude hizo los cambios directamente, sin subagente Sonnet, por su tamaño; se declara como desviación del método y sin revisión independiente. Las observaciones 2 y 4 quedan registradas sin cambio; la 4 pasa a lo pendiente para el iPhone. Detalle y verificación en la sección F del [informe de implementación](2026-11-05-first-shot-s3-implementation.md#f-revisión-de-las-correcciones-y-observaciones-1-y-3). PR #34 sin fusionar hasta la decisión del PO. S4 y First Rally sin autorizar.
 
+## Cierre efectivo de PR #34 — 5 de noviembre de 2026 (Chile)
+
+El PO autorizó la fusión con «Sí, fusionar». Antes de fusionar se comprobó que el head local y el remoto eran exactamente `067ca9184af2a8256e49519a37098bc7ce44e34b`, que la PR estaba abierta, no era borrador y no tenía conflictos, y que ambos árboles estaban limpios. Merge **`adb8c8fd5fcf2c081d0633670a3faa7b4d6af677`** (2026-11-06T02:12:30Z), segundo padre exactamente `067ca91`, árbol `d63c94c5227c98fa4382fd9b30f83018e8e47805` idéntico al del head aprobado. Main sincronizada y limpia.
+
+Worktree `firstshot-s3-feedback` retirado sin `--force` después de mover sus ocho rutas ignoradas (ledger `.superpowers/`, `BuildInfo.json` y su `.meta`, `Builds/`, `Library/`, `Logs/`, `UserSettings/` y `scripts/device.env`) a `Logs/archive-s3-feedback-20261105/artifacts` del checkout principal. Inventario por ruta, tamaño y SHA-256 idéntico antes y después: 30.338 archivos, 4.608.523.699 bytes, sin enlaces simbólicos; SHA-256 del inventario `17b2234fd067f644c91eb0b226683b35c15e8b5a3fef3f80e04d73fc8746cd3c`. Rama `firstshot/s3-feedback` conservada en local y remoto. El cierre se registra en esta entrega, sin commit aparte en main.
+
+**La fusión no acepta S3.** Su aceptación funcional depende de la validación física.
+
+## Autorización de la validación física de S3 — 6 de noviembre de 2026 (Chile)
+
+**Decisión literal del PO:**
+
+> Claude, gracias por el resumen de First Ball, S1, S2 y S3, y por consolidar el estado del proyecto.
+> Como Product Owner de Squash Clash, confirmo las siguientes decisiones.
+> 1. S3: autorizo la validación física en el iPhone
+> Apruebo ejecutar exclusivamente la Fase 1 propuesta, correspondiente a la validación física de S3, con sus 21 recepciones distribuidas en los bloques S3-A, S3-B, S3-C, S3-D y S3-E.
+> El objetivo es comprobar la sensación real del golpe, especialmente:
+>
+> * Diferencia perceptible entre Perfect y Valid.
+> * Sincronización del sonido y la vibración con el contacto.
+> * Comportamiento de Failed sin contacto.
+> * Naturalidad del swing y posible desfase de 0,06 segundos.
+> * Legibilidad del destello y de las notas.
+> * Comportamiento con modo silencio y háptica desactivada.
+> * Correcta congelación y reanudación del feedback durante pausas.
+>
+> Quiero conservar las preguntas literales y las respuestas originales, sin reinterpretarlas a partir de métricas posteriores.
+> 2. Preparación y seguridad
+> Autorizo preparar, compilar e instalar la build dev de S3 en mi iPhone, una vez comprobados el perfil de firma, la fuente exacta y los requisitos de instalación.
+> Antes de comenzar:
+>
+> * Respaldar P0-calib-1, Po-1 y last-active.
+> * Confirmar el hash esperado `6ecfdfa78cbb` y cero cambios pendientes.
+> * Verificar que la build corresponde a S3 fusionado en `main`.
+> * Comprobar que la aplicación inicia y que la configuración protegida está intacta.
+>
+> Al terminar, restaurar y verificar los tres archivos byte a byte contra sus respaldos, documentar las incidencias y preparar el informe para revisión independiente.
+> No modificar parámetros de física, potencia, timing o trayectoria durante esta validación.
+> 3. Cierre documental
+> Autorizo incorporar el cierre de la PR #34 a AGENTS.md y al registro de aprobaciones, conservando la trazabilidad de las revisiones y correcciones realizadas.
+> La implementación de S3 está fusionada, pero su aceptación funcional definitiva queda pendiente de mis pruebas en el iPhone.
+> 4. S4 y decisiones diferidas
+> No autorizo todavía S4 ni la implementación de las cinco piezas diferidas.
+> Después de la validación física de S3 revisaremos:
+>
+> * Sonidos de superficies.
+> * Audio de baja latencia.
+> * Instrumentación de latencias.
+> * Calidad causal.
+> * Superposición causal.
+>
+> La PR #32 debe permanecer abierta, desactivada y sin fusionar. Su evaluación será una decisión independiente.
+> 5. Criterio de cierre
+> Una vez terminados los cinco bloques, quiero recibir:
+>
+> 1. Resultados objetivos de cada bloque.
+> 2. Mis respuestas literales.
+> 3. Problemas observados y su impacto.
+> 4. Verificaciones de configuración y restauración.
+> 5. Recomendación de Claude: aceptar S3, aceptarlo con condiciones o solicitar correcciones.
+>
+> No iniciar trabajos adicionales de producto hasta mi decisión posterior.
+> Decisión final: validación física de S3 AUTORIZADA. S4 y First Rally NO AUTORIZADOS.
+> Procedamos de forma incremental, manteniendo el rigor de las etapas anteriores.
+
+**Operación.** Claude opera la sesión: build, instalación, exportación, precheck y restauración. Rama documental `firstshot/s3-validation` desde `main` en `adb8c8f`. La predeclaración se confirma en Git antes del primer bloque: [predeclaración de la sesión S3](../validation/2026-11-06-first-shot-s3-physical-predeclaration.md). Esa predeclaración no tuvo revisión independiente previa; se declara como desviación y queda para la revisión del informe. El objetivo de pausas no forma parte de los bloques S3-A–E aprobados; la predeclaración lo propone como observación opcional fuera de cuota, sujeta a la decisión del PO.
+
+## Detención de S3 y corrección puntual del audio — 6 de noviembre de 2026 (Chile)
+
+**Contexto.** S3-A se jugó sin la marca de DEV y el PO no oyó ningún sonido con el timbre activo. Diagnóstico estático de Claude: `Main.unity` no tiene `AudioListener`. Sesión detenida antes de S3-B. [Informe de la sesión](2026-11-06-first-shot-s3-physical-validation.md).
+
+**Decisión literal del PO** (recibida primero truncada en el punto 4 y después completa; se registra la versión completa):
+
+> Claude, gracias por detener la sesión y documentar el problema.
+> Como Product Owner de Squash Clash, apruebo la recomendación de detener S3 después del bloque S3-A.
+> Decisión: AUTORIZO UNA CORRECCIÓN PUNTUAL DEL AUDIO.
+> 1. Diagnóstico
+> Considero que la ausencia de `AudioListener` es una causa probable del silencio observado, pero debemos confirmarla mediante pruebas.
+> Los resultados de S3-A son útiles: el sistema registró correctamente los ocho intentos, las entregas de feedback y los contactos aplicados.
+> Conservemos el bloque como evidencia parcial, incluyendo la desviación por ausencia de la marca DEV, las respuestas literales y el golpe adicional fuera de cuota.
+> No debe contabilizarse como un bloque S3-A válido y completo.
+> 2. Corrección autorizada
+> Autorizo a Codex a preparar una PR independiente para corregir exclusivamente el problema del audio.
+> Solicito:
+>
+> * Verificar que la escena activa no dispone de un `AudioListener` funcional.
+> * Añadirlo a la cámara correspondiente, siempre que esa sea la solución mínima adecuada.
+> * Garantizar que exista un único listener activo.
+> * Incorporar una prueba automatizada que reproduzca el defecto y falle antes de la corrección.
+> * Verificar que el componente permanezca presente y activo en las builds DEV y PROD.
+> * No modificar clips, volúmenes, timing, háptica, física, M2-4 ni lógica de contacto.
+>
+> Si la investigación demuestra otra causa, detenerse y presentar el diagnóstico antes de ampliar el alcance.
+> 3. Revisión independiente
+> Una vez implementada la corrección:
+>
+> 1. Codex entrega la PR y los resultados de las pruebas.
+> 2. Claude revisa independientemente el último commit.
+> 3. Se ejecutan las regresiones correspondientes.
+> 4. Se verifica que los hashes y presets protegidos no cambien.
+> 5. Se comprueba que la modificación no introduce listeners duplicados ni regresiones en las escenas.
+>
+> No fusionar sin mi aprobación final.
+> 4. Validación física
+> Después de aprobar la corrección, autorizo preparar una nueva build para verificar el audio en el iPhone.
+> Primero quiero un smoke test breve que confirme que se escucha un sonido de impacto con el timbre activado.
+> Si el audio funciona correctamente, podremos repetir los cinco bloques S3-A–E con el protocolo predeclarado y la marca DEV correspondiente.
+> No reutilizar las recepciones de hoy como parte de la nueva cuota.
+> 5. Restauración pendiente
+> Antes de continuar, completar la verificación de P0 en un proceso nuevo y registrar el resultado.
+> Mantener los respaldos y comprobar nuevamente la restauración al finalizar la próxima sesión.
+> 6. Alcance
+> La corrección autorizada se limita al audio y a las pruebas necesarias.
+> No autorizo cambios adicionales en S3, calibraciones, PR #32, S4 ni First Rally.
+> Decisión final: S3 DETENIDO; CORRECCIÓN PUNTUAL DE AUDIO AUTORIZADA; NUEVA VALIDACIÓN SUJETA A REVISIÓN Y APROBACIÓN.
+> Procedamos con la corrección mínima y su revisión independiente.
+
+**Registro.** S3-A queda como evidencia parcial, no válida. Claude entregó al PO el encargo para Codex. La verificación de P0 en proceso nuevo se completó a las 2026-11-06T12:27:11Z: `6ecfdfa78cbb`, cero pendientes y tres archivos idénticos al respaldo. Los respaldos se conservan en `Logs/evidence/s3-physical-20261106/`.
+
+## Cierre de la corrección del audio (PR #35) y continuación de S3 — 6 de noviembre de 2026 (Chile)
+
+Claude aprobó la revisión independiente del head `636aa9e813fd89a2a8b4a240577cebcde7e985c0`. Reprodujo el RED en `d4f2628` y verificó 546/546 EditMode, 354/354 PlayMode y un único listener habilitado en la cámara principal de los exports DEV y PROD. Evidencia local en `Logs/archive-review-pr35-20261106/`. La PR #35 se fusionó en `27058e82674f633879a7a4f7cabc4f1306a6db6b` con segundo padre igual al head revisado y árbol idéntico `30982184171c34b0bf015b1bf9343b13ba2a32d3`. [PR #35](https://github.com/rafaallendes-boop/squash-clash/pull/35).
+
+El PO encarga a Codex la continuación autorizada en los puntos 4 y 5 de la decisión anterior. Primero se prueba el sonido con un impacto aplicado, fuera de cuota. Solo después de la confirmación explícita del PO se inicia S3-A–E desde cero. El PO autorizó la observación de pausa fuera de cuota después de S3-E: «Sí, incluirla». [Adenda predeclarada](../validation/2026-11-06-first-shot-s3-physical-predeclaration.md#adenda-del-6-de-noviembre-de-2026--prueba-breve-de-sonido-y-repetición-con-audio-corregido).
+
+## Cambio de operador para terminar S3 — 9 de noviembre de 2026 (Chile)
+
+Tras la pausa del 6 de noviembre («Dejemos en pausa mientras y después retomamos» y «Dejemos la restauración para cuando retomemos»), Claude preguntó al PO quién operaría la sesión física de S3. Respuesta literal del PO: **«Claude, ahora»**.
+
+**Alcance.** Claude retoma la continuación autorizada el 6 de noviembre en el mismo punto, en la rama `firstshot/s3-validation` y con la misma evidencia: S3-D y S3-E según la predeclaración (§4, §6–§8 y la adenda), la observación de pausa fuera de cuota ya autorizada («Sí, incluirla») y la restauración final con cotejo de los tres archivos. Las cuotas válidas de S3-A, S3-B y S3-C registradas por Codex se conservan sin repetirlas ni reinterpretarlas. El intento de S3-D detenido en preparación el 6 de noviembre no tiene frontera y no cuenta. Sin build ni instalación nuevas: queda instalada `0.1.0+097eab9 dev`, con perfil incorporado vigente hasta el 2026-11-12T13:55:07Z (10:55 Chile). Sin cambios de producto, hashes esperados, criterios ni umbrales. S4, First Rally y PR #32 siguen sin autorizar. El informe se entrega en una PR para revisión, sin fusionar.
+
 ## Autorización del PO para el MVP de AutoQA — 6 de noviembre de 2026, Chile
 
 Decisión literal del PO, Puerta 0 satisfecha.
@@ -1877,3 +2008,91 @@ Pendiente la respuesta del PO a la autorización solicitada para copiar device.e
 Resuelta la espera anterior: el PO autorizó literalmente «Sí, copiarlo sin cambios»; device.env copiado byte a byte desde autoqa/mvp, SHA-256 de origen/copia 7fbd47039b15d9ca89dc70250193590a41eeff79b22833872e7fadce701dc44f e idéntico al terminar, ignorado/sin versionar. Dos corridas consecutivas desde 72b2b3f limpio: 20261109T232416Z-72b2b3f-12736 (41,95 s) y 20261109T232458Z-72b2b3f-19058 (14,29 s); cada una 85/85 pruebas frescas, 18 PASS/canario FAIL esperado, PASS/0/nivel1/dirty=false, árbol limpio antes/entre/después y restauración automática sin errores, sin checkout manual. V7 en ambas: 41/41 SHA, cero incoherencias, gatePass=true. Compatibilidad final v6/v7 25/25 corridas reales sin diferencias; 845 archivos históricos y 585 archivos protegidos intactos. Permanecen GREEN las pruebas ya registradas: 18/18 envoltorio, 6/6 verificador y 35/35 mutaciones con ambas versiones.
 
 [PR #39](https://github.com/rafaallendes-boop/squash-clash/pull/39) preparada para revisión de Claude coordinada por el PO, **sin fusionar**. [Informe y SHA-256](2026-11-09-autoqa-followups.md). Este registro sustituye el estado pendiente de la entrada anterior, conservada como histórica. Solo documentación desde el código probado c2117b1. Sin cambios de producto/escenarios/criterios, investigador, iPhone/Xcode/instalación, regresión completa ni check-release, conforme al alcance. Sin otra parada ni diferencias sin justificar.
+
+
+## S3 — diagnóstico previo y predeclaración complementaria: decisión del PO, 9 de noviembre de 2026 (Chile)
+
+> «Haría la sesión complementaría pero ya hoy no tengo tiempo, entonces por eso está la idea del QA. O bien lo hacemos mañana, igual seguiría avanzando»
+>
+> «Deja el prompt para que lo haga codex. Y mañana haría una prueba mas y luego ya seguiría avanznado»
+
+Registro literal como primer commit documental del encargo, antes de cualquier otro cambio. Base local/remota comprobada `bacf39f7651e3fa1307c26b9a200b92498d22e86`, rama/worktree `firstshot/s3-validation`, PR #40 abierta y sin fusionar. Autorizado ahora: diagnóstico por lectura de código, logs y fuentes oficiales, e informe/adenda documental para revisión de Claude coordinada por el PO. Hoy sin acceso al iPhone, builds ni instalaciones; la sesión complementaria requiere autorización del PO al comenzar y elección de operador. Ante defecto demostrado u otra sorpresa, registrar y detenerse. Sin cambios de producto/tests/defaults/presets/spec/planes/criterios/umbrales; sin tocar #32, S4, First Rally ni First Match. No recalcular hashes esperados `6ecfdfa78cbb`/`4f33dff747fb` ni versionar logs/evidencia/device.env/identificadores del iPhone. Perfil conocido hasta `2026-11-12T13:55:07Z` (12 de noviembre, 10:55:07 Chile); toda sesión futura, incluida restauración, debe terminar antes de esa hora. La propuesta de mañana se refiere al 10 de noviembre; no consta autorización de ejecución ni aceptación de S3.
+
+
+## S3 — diagnóstico y sesión complementaria predeclarada (9 de noviembre de 2026, Chile)
+
+Primer commit documental `7d00ef3` conserva las dos frases literales del encargo antes de cualquier otro cambio, sobre `bacf39f` local/remoto comprobado. Diagnóstico offline de código/logs/fuentes oficiales en el [informe S3](2026-11-06-first-shot-s3-physical-validation.md#diagnóstico-previo-a-la-sesión-complementaria): PerfectFlash exige Perfect con contacto; Failed puede mostrar nota/raqueta/mira/anillo y la pelota puede dejar marcas de pared. El flash blanco de bloqueo existe solo en la ruta Sling, no en M2-4 usado en la sesión. Ninguna de esas rutas identifica lo percibido por el PO. UIKit usa UIImpactFeedbackGenerator Light para Valid; Apple no aclara en las fuentes consultadas su relación exacta con «Háptica del sistema». Ambas percepciones siguen abiertas, sin defecto nuevo demostrado ni Pass/aceptación inferidos.
+
+[Adenda complementaria](../validation/2026-11-06-first-shot-s3-physical-predeclaration.md#s3-complementaria-20261109) añadida sin alterar el protocolo anterior: F→P→G→H→I, máximo 12/4/4/4/4 recepciones (28 en total), corte F al primer Perfect+Valid aplicados; G/H/I al primer contacto aplicado; P observación de pausa separada. F necesita ambos resultados o queda contraste NotEvaluated. I incluido por observación del sistema no resuelta. Precheck completo en proceso nuevo desde P0 por bloque; H cambia app haptics en ese mismo proceso, desplegando First Shot / feedback y usando como export anterior uno donde el proceso aún no existía. Frontera por cierre DEV del PO; preguntas literales de §6 una a una/antes de resultados, extras Perfect de S3-A en F y pregunta literal de §5 en P. Sin repeticiones para conseguir categorías; parciales/extras conservados. Aproximadamente 20 min con 4 reservados para restauración; si falta tiempo, conservar NotEvaluated.
+
+Preparación documental para PR #40, sin fusionar; Claude revisa por coordinación del PO. La sesión propuesta del 10 de noviembre **no está ejecutada ni autorizada al momento de empezar**: requiere autorización expresa y operador elegido por el PO. App instalada 0.1.0+097eab9 dev, sin nueva build/instalación. Proponer bloqueo automático Nunca temporal; solo PO toca Ajustes y repone estado previo. Perfil conocido vence 12nov2026 13:55:07Z/10:55:07Chile; toda sesión/restauración debe caber antes. Restauración futura P0 en proceso nuevo, hash literal 6ecfdfa78cbb/pending0 y tres archivos idénticos al respaldo y referencia inicial; H único hash alternativo 4f33dff747fb, sin recalcular. Sin iPhone hoy ni tests/Unity/build/instalación; sin cambios de producto/defaults/presets/spec/planes/criterios/umbrales, #32/S4/First Rally/First Match. Ante defecto demostrado/sorpresa o §8, detener/exportar/restaurar; ninguna corrección en #40. Las 21 recepciones históricas y sus NotEvaluated permanecen intactos.
+
+Diagnóstico confirmado en `8bb4b7a`; adenda y registro de preparación confirmados en el commit de esta entrada, antes de cualquier acceso futuro al iPhone. Comprobación documental: originales conservados como prefijo en cuatro Markdown, 7+2+1 preguntas literales y 30 referencias locales cotejadas; 2.808 archivos de evidencia con rutas/SHA-256 intactos. Cotejo offline de tres archivos en after-D2/after-E/after-pause/restored-final igual a ambos respaldos. Sin tests/check-release nuevos por delta exclusivamente documental; ninguna observación física nueva. Entrega para revisión en #40, sin fusionar; autorización de ejecución y designación de operador aún pendientes del PO.
+
+## Revisión de Claude de la preparación complementaria y acortamiento de la sesión — 9 de noviembre de 2026 (Chile)
+
+Claude revisó en la PR #40 el head `6a147ba` (Codex): **APROBADO CON OBSERVACIONES**. La entrega cambia solo cuatro Markdown y conserva el texto anterior. El diagnóstico coincide con el código: el destello de Perfect exige una presentación Perfect con contacto, y el puente háptico usa `UIImpactFeedbackGenerator`. La adenda cumple el encargo.
+
+Observaciones:
+1. C4 pedía una pregunta por diálogo, por una redacción ambigua del encargo de Claude. Eso son más de 35 diálogos.
+2. Los 20 minutos previstos no alcanzan para cinco bloques.
+
+Claude preguntó: «¿Corrijo la adenda antes de mañana para usar dos diálogos por bloque?». **Respuesta literal del PO: «Si, algo que sea lo más corto posible. Y ya para que avancemos a S4».** Claude agrega la sección C8 a la predeclaración, sin modificar C1–C7:
+- dos diálogos por bloque;
+- la pausa dentro del proceso de F, fuera de su cuota;
+- orden F → G → H, con I opcional;
+- unos 30 minutos.
+
+Esta respuesta expresa la intención del PO de avanzar a S4. No es una autorización de S4: falta la decisión del PO sobre S3 después de la sesión complementaria.
+
+## S3 — sesión complementaria C8 operada por Claude (11 de noviembre de 2026, Chile)
+
+**Autorización literal del PO al empezar:** «Ahora estoy listo para hacer el smoke» y, a continuación, «Me refería a la prueba nuevamente de S3». Operó Claude con el PO presente y la app instalada `0.1.0+097eab9 dev`, sin build ni instalación; la PR #44 no se incluyó. El PO informó que renovó el perfil en caché, con el nuevo venciendo el 18 de noviembre a las 10:50:05 Chile. La app instalada conserva el perfil que vence el 2026-11-12T13:55:07Z y la sesión terminó antes.
+
+Decisiones literales del PO durante la sesión:
+- «Jugar S3-I», sobre el bloque opcional;
+- «me equivoque, el modo silencio, ya está ok», que corrige su primera declaración de G con timbre; el bloque no empezó hasta esa corrección.
+
+Resultados de las cuotas:
+- **F:** 12 recepciones, 4 Valid, 8 Failed y 0 Perfect;
+- **G:** 4 Failed;
+- **H:** 3 Failed y 1 NoOrder, con `4f33dff747fb`;
+- **I:** 4 Failed.
+
+Hubo una presentación concordante por intento, cero discrepancias y cero pendientes, sin condiciones de §8.
+
+**Pausa (extras de F).** Hubo dos pausas, después de los Valid L63 y L69. Son posteriores al máximo de 4 recepciones de C8.2; se conservan como desviación y el PO decide si cuentan.
+
+**H.** El Valid L43 con `feedback.haptics=0` es preparación, porque estaba en curso al cerrar DEV. El PO dijo «logré golepar 1 vez» y respondió vibración «no hubo».
+
+**Restauración.** Proceso nuevo a las 2026-11-11T14:35:33.0147180Z en P0 `6ecfdfa78cbb`, con cero pendientes y los tres archivos idénticos al respaldo y a la referencia inicial.
+
+**Siguen NotEvaluated:**
+- contraste y destello Perfect;
+- silencio con impacto;
+- háptica de app desactivada con contacto en cuota;
+- háptica del sistema desactivada con contacto;
+- congelación del destello.
+
+Recomendación de Claude: aceptar S3 con condiciones, o integrar antes una ayuda de timing con autorización propia, como la #44. **Decide el PO.** S4 no está autorizado. Detalle en el [informe](2026-11-06-first-shot-s3-physical-validation.md#sesión-complementaria-c8--11-de-noviembre-de-2026-chile).
+
+## Decisión del PO sobre S3 — 11 de noviembre de 2026 (Chile)
+
+Claude preguntó, tras la sesión complementaria: «¿Cómo cierras S3?», con dos opciones: aceptar con condiciones o probar antes la PR #44. **Respuesta literal del PO: «Aceptar con condiciones».**
+
+**S3 queda aceptado con condiciones.** Estas son las condiciones, tal como Claude las presentó en la opción (a); quedan pendientes para observarlas en S4 o cuando mejore el timing:
+1. contraste Perfect/Valid y destello de Perfect (0 Perfect en las 45 recepciones de cuota de S3);
+2. silencio con impacto aplicado;
+3. `feedback.haptics=0` con contacto dentro de cuota (solo existe L43, que es preparación);
+4. háptica del sistema desactivada con contacto, y la observación (b) de S3-D: vibración percibida con «Háptica del sistema» desactivada;
+5. congelación del destello de Perfect en pausa.
+
+La aceptación no reinterpreta los datos: los NotEvaluated siguen siéndolo y no cuentan como Pass. El PO no decidió si las dos pausas fuera del máximo de C8.2 cuentan como evidencia, así que se conservan como desviación registrada. La observación del destello percibido sin Perfect (9 nov) queda abierta sin defecto demostrado.
+
+**Esta decisión no autoriza:**
+- S4, First Rally ni First Match;
+- fusionar #40;
+- fusionar, compilar o instalar la #44;
+- cambiar parámetros.
+
+Cada una de esas acciones requiere autorización propia del PO.
