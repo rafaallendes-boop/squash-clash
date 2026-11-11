@@ -2,7 +2,8 @@
   "name": "SquashClash.EditMode.Experiments",
   "rootNamespace": "SquashClash.Experiments.EditMode",
   "references": [
-    "SquashClash.Experiments"
+    "SquashClash.Experiments",
+    "SquashClash.Core"
   ],
   "includePlatforms": [
     "Editor"
