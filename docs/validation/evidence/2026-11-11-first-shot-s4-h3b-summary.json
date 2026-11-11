@@ -1,0 +1,1109 @@
+{
+  "source": "5f3321c21698ce3d69a3fd7b7cfba74b2b08bb99",
+  "defaultsHash": "c0d8ec7050e0",
+  "simulationKey": "166a96e319c7",
+  "p0Hash": "6ecfdfa78cbb",
+  "aid": "current-44",
+  "causal": "NotEvaluated",
+  "partialAid": "NotEvaluated",
+  "noAid": "NotEvaluated",
+  "gitDirty": false,
+  "pairedContactsCompared": 112,
+  "pairedGeometryDifferences": 0,
+  "description": "Datos derivados de H3b offline, no hipótesis aprobada ni medición humana",
+  "fixtureFrontZone": {
+    "minX": 2.7,
+    "maxX": 3.7,
+    "minY": 1.7,
+    "maxY": 2.7,
+    "inclusive": true
+  },
+  "overall": {
+    "total": 384,
+    "contacts": 256,
+    "air": 128,
+    "late": 0,
+    "other": 0,
+    "zoneObserved": 256,
+    "zoneHits": 256,
+    "causalStatus": "NotEvaluated",
+    "causalMean": null,
+    "speedRaised": 0,
+    "targetLowered": 0,
+    "categories": {
+      "Perfect": 96,
+      "Valid": 160,
+      "Failed": 128
+    }
+  },
+  "byModeOffset": [
+    {
+      "mode": "T3",
+      "offsetMs": 0,
+      "total": 48,
+      "contacts": 48,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 48,
+      "zoneHits": 48,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 48
+      }
+    },
+    {
+      "mode": "T3",
+      "offsetMs": -60,
+      "total": 48,
+      "contacts": 32,
+      "air": 16,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 32,
+      "zoneHits": 32,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 32,
+        "Failed": 16
+      }
+    },
+    {
+      "mode": "T3",
+      "offsetMs": -100,
+      "total": 48,
+      "contacts": 32,
+      "air": 16,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 32,
+      "zoneHits": 32,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 32,
+        "Failed": 16
+      }
+    },
+    {
+      "mode": "T3",
+      "offsetMs": -150,
+      "total": 48,
+      "contacts": 32,
+      "air": 16,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 32,
+      "zoneHits": 32,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 32,
+        "Failed": 16
+      }
+    },
+    {
+      "mode": "V",
+      "offsetMs": 0,
+      "total": 48,
+      "contacts": 48,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 48,
+      "zoneHits": 48,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 48
+      }
+    },
+    {
+      "mode": "V",
+      "offsetMs": -60,
+      "total": 48,
+      "contacts": 32,
+      "air": 16,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 32,
+      "zoneHits": 32,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 32,
+        "Failed": 16
+      }
+    },
+    {
+      "mode": "V",
+      "offsetMs": -100,
+      "total": 48,
+      "contacts": 32,
+      "air": 16,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 32,
+      "zoneHits": 32,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 32,
+        "Failed": 16
+      }
+    },
+    {
+      "mode": "V",
+      "offsetMs": -150,
+      "total": 48,
+      "contacts": 0,
+      "air": 48,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 48
+      }
+    }
+  ],
+  "byRecipeModeOffset": [
+    {
+      "recipe": "SL1",
+      "mode": "T3",
+      "offsetMs": 0,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 8
+      }
+    },
+    {
+      "recipe": "SL2",
+      "mode": "T3",
+      "offsetMs": 0,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 8
+      }
+    },
+    {
+      "recipe": "SL3",
+      "mode": "T3",
+      "offsetMs": 0,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 8
+      }
+    },
+    {
+      "recipe": "SL4",
+      "mode": "T3",
+      "offsetMs": 0,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 8
+      }
+    },
+    {
+      "recipe": "SL5",
+      "mode": "T3",
+      "offsetMs": 0,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 8
+      }
+    },
+    {
+      "recipe": "SL6",
+      "mode": "T3",
+      "offsetMs": 0,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 8
+      }
+    },
+    {
+      "recipe": "SL1",
+      "mode": "T3",
+      "offsetMs": -60,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL2",
+      "mode": "T3",
+      "offsetMs": -60,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL3",
+      "mode": "T3",
+      "offsetMs": -60,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL4",
+      "mode": "T3",
+      "offsetMs": -60,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL5",
+      "mode": "T3",
+      "offsetMs": -60,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL6",
+      "mode": "T3",
+      "offsetMs": -60,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL1",
+      "mode": "T3",
+      "offsetMs": -100,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL2",
+      "mode": "T3",
+      "offsetMs": -100,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL3",
+      "mode": "T3",
+      "offsetMs": -100,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL4",
+      "mode": "T3",
+      "offsetMs": -100,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL5",
+      "mode": "T3",
+      "offsetMs": -100,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL6",
+      "mode": "T3",
+      "offsetMs": -100,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL1",
+      "mode": "T3",
+      "offsetMs": -150,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL2",
+      "mode": "T3",
+      "offsetMs": -150,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL3",
+      "mode": "T3",
+      "offsetMs": -150,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL4",
+      "mode": "T3",
+      "offsetMs": -150,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL5",
+      "mode": "T3",
+      "offsetMs": -150,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL6",
+      "mode": "T3",
+      "offsetMs": -150,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL1",
+      "mode": "V",
+      "offsetMs": 0,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 8
+      }
+    },
+    {
+      "recipe": "SL2",
+      "mode": "V",
+      "offsetMs": 0,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 8
+      }
+    },
+    {
+      "recipe": "SL3",
+      "mode": "V",
+      "offsetMs": 0,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 8
+      }
+    },
+    {
+      "recipe": "SL4",
+      "mode": "V",
+      "offsetMs": 0,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 8
+      }
+    },
+    {
+      "recipe": "SL5",
+      "mode": "V",
+      "offsetMs": 0,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 8
+      }
+    },
+    {
+      "recipe": "SL6",
+      "mode": "V",
+      "offsetMs": 0,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Perfect": 8
+      }
+    },
+    {
+      "recipe": "SL1",
+      "mode": "V",
+      "offsetMs": -60,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL2",
+      "mode": "V",
+      "offsetMs": -60,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL3",
+      "mode": "V",
+      "offsetMs": -60,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL4",
+      "mode": "V",
+      "offsetMs": -60,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL5",
+      "mode": "V",
+      "offsetMs": -60,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL6",
+      "mode": "V",
+      "offsetMs": -60,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL1",
+      "mode": "V",
+      "offsetMs": -100,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL2",
+      "mode": "V",
+      "offsetMs": -100,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL3",
+      "mode": "V",
+      "offsetMs": -100,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL4",
+      "mode": "V",
+      "offsetMs": -100,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL5",
+      "mode": "V",
+      "offsetMs": -100,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL6",
+      "mode": "V",
+      "offsetMs": -100,
+      "total": 8,
+      "contacts": 8,
+      "air": 0,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 8,
+      "zoneHits": 8,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Valid": 8
+      }
+    },
+    {
+      "recipe": "SL1",
+      "mode": "V",
+      "offsetMs": -150,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL2",
+      "mode": "V",
+      "offsetMs": -150,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL3",
+      "mode": "V",
+      "offsetMs": -150,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL4",
+      "mode": "V",
+      "offsetMs": -150,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL5",
+      "mode": "V",
+      "offsetMs": -150,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    },
+    {
+      "recipe": "SL6",
+      "mode": "V",
+      "offsetMs": -150,
+      "total": 8,
+      "contacts": 0,
+      "air": 8,
+      "late": 0,
+      "other": 0,
+      "zoneObserved": 0,
+      "zoneHits": 0,
+      "causalStatus": "NotEvaluated",
+      "causalMean": null,
+      "speedRaised": 0,
+      "targetLowered": 0,
+      "categories": {
+        "Failed": 8
+      }
+    }
+  ],
+  "artifactSha256": {
+    "trials.json": "1d13c19a1ab95f67eef6dcc08b05a89d820c48bf9c1e24690a95953cec0c727a",
+    "report.md": "84a6888169aa6227a0e3e0fded6f0db827a57cf084b7bbb04456f694cac696de",
+    "summary.tsv": "1c802c809ef239b9c8b27145fbad346f1cf650f66c0c5de883802135fe893c57"
+  }
+}
