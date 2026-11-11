@@ -12,7 +12,8 @@ namespace SquashClash.DevPanel
         {
             this.app=app;Root.style.flexShrink=0;captured.style.whiteSpace=WhiteSpace.Normal;Root.Add(captured);
             var help=new Label("Cuerpo, timing y solver se capturan al lanzar. Mira/potencia se capturan al apoyar y al soltar. V/T3 puro y T3/T3-suave son controles independientes. Los parámetros están debajo.");
-            help.style.whiteSpace=WhiteSpace.Normal;Root.Add(help);Refresh();
+            help.style.whiteSpace=WhiteSpace.Normal;Root.Add(help);
+            var calibration=app.gameObject.AddComponent<LatencyCalibration>();calibration.Initialize(app);Root.Add(calibration.Root);Refresh();
         }
         public void Refresh()
         {
