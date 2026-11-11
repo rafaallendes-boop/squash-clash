@@ -77,9 +77,19 @@ namespace SquashClash.Core.Rally
             }
             double total=0,temperature=Math.Max(1e-3,difficulty.Temperature);
             for(int i=0;i<options.Count;i++){weights[i]=double.IsNegativeInfinity(weights[i])?0:Math.Exp((weights[i]-best)/temperature);total+=weights[i];}
-            double pick=random.NextDouble()*total;int chosen=options.Count-1;
-            for(int i=0;i<options.Count;i++){pick-=weights[i];if(pick<0){chosen=i;break;}}
-            var option=options[chosen];
+            // Softmax draw; an option the AI itself predicts as a fault (out, tin, not up) is dropped and the draw repeats.
+            // Only the clean intention is checked: its own noise can still spoil the shot.
+            int chosen=-1,fallback=0;
+            for(int i=1;i<options.Count;i++)if(weights[i]>weights[fallback])fallback=i;
+            for(int attempt=0;attempt<options.Count&&total>0;attempt++)
+            {
+                double pick=random.NextDouble()*total;int candidate=-1;
+                for(int i=0;i<options.Count;i++){if(weights[i]<=0)continue;candidate=i;pick-=weights[i];if(pick<0)break;}
+                if(candidate<0)break;
+                if(RallyContact.Forecast(context,own.Contact.PStar,options[candidate].Aim,options[candidate].P).Good){chosen=candidate;break;}
+                total-=weights[candidate];weights[candidate]=0;
+            }
+            var option=options[chosen>=0?chosen:fallback];
             var aim=ShotOptions.ClampAim(context,option.Aim+new Vector2((float)random.NextGaussian(difficulty.AimSigma),(float)random.NextGaussian(difficulty.AimSigma)));
             float power=Mathf.Clamp01(option.P+(float)random.NextGaussian(difficulty.PowerSigma));
             return new AiShot(true,option,aim,power,random.NextGaussian(difficulty.TimingSigmaMs),defensive);

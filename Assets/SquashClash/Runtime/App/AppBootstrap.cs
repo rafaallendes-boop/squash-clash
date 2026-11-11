@@ -53,6 +53,8 @@ namespace SquashClash.Runtime.App
                 Tuning.PendingKeys.Count,MetricsSeed,Comparable(0),Clock.DroppedSinceRestart,JsonUtility.ToJson(record));
         }
         public SquashClash.Runtime.Shot.PracticeMode Practice=>GetComponent<SquashClash.Runtime.Shot.PracticeMode>();
+        public SquashClash.Runtime.Rally.RallyDirector Rally=>GetComponent<SquashClash.Runtime.Rally.RallyDirector>();
+        public PlaceholderPlayers Players=>placeholderPlayers;
         public void LaunchCurrent()
         {
             if(Practice?.TryLaunchCurrent()==true)return;
@@ -273,6 +275,7 @@ namespace SquashClash.Runtime.App
             var preview=gameObject.AddComponent<SquashClash.Runtime.Shot.GesturePreview>();preview.Initialize(this,input,reticle);
             var shot=gameObject.AddComponent<SquashClash.Runtime.Shot.ShotController>();shot.Initialize(this);preview.AttachShotController(shot);
             var practice=gameObject.AddComponent<SquashClash.Runtime.Shot.PracticeMode>();practice.Initialize(this,shot);
+            gameObject.AddComponent<SquashClash.Runtime.Rally.RallyDirector>().Initialize(this,shot,practice,placeholderPlayers);
             if(Config.Source.GetBool("practice.enabled"))LaunchCurrent();
             Debug.Log($"[SquashClash] ball ready backend={Config.Backend} visualColliders=0 localPhysicsScenes={physX.LiveInstances} config={Config.Hash} predictedSteps={Host.Prediction.States.Count-1}");
         }

@@ -44,6 +44,9 @@ namespace SquashClash.Core.Rally
                             aim=new Vector2(Through(corner),(float)(height==ShotHeight.Low?p.AimLow:height==ShotHeight.Mid?p.AimMid:p.AimHigh));
                             zone=new Vector2(corner,deep);strength=(float)(power==ShotPower.Strong?p.PowerStrong:p.PowerMedium);
                         }
+                        // Cap the launch elevation: the closer to the front wall, the lower the aim.
+                        float distance=Mathf.Sqrt((aim.x-contact.x)*(aim.x-contact.x)+contact.z*contact.z);
+                        aim.y=Mathf.Min(aim.y,contact.y+Mathf.Tan((float)p.MaxAimElevationDeg*Mathf.Deg2Rad)*distance);
                         options.Add(new ShotOption(line,height,power,ClampAim(context,aim),Mathf.Clamp01(strength),zone));
                     }
             return options;

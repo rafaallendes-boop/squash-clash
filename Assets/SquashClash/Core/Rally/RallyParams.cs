@@ -14,16 +14,20 @@ namespace SquashClash.Core.Rally
         // Rules (spec 8.7.3). 20 mm matches the footprint the existing contact planner already uses.
         public double FootprintRadius=.02;
         // Character kinematics (spec 9.1), identical for human and rival.
-        public double ReactionS=.15,Accel=14,MaxSpeed=5.5,Brake=18,ArriveEpsilon=.01;
+        public double ReactionS=.18,Accel=12,MaxSpeed=4.8,Brake=16,ArriveEpsilon=.01;
         // Contact candidate scoring (spec 9.1).
         public double CandidateIntervalS=.02,SlackCapS=.4,WeightSlack=1,WeightHeight=.5,WeightWall=.3;
+        // Prefer stances whose planned contact sits well inside the reachable run (margin on both sides of T*).
+        public double WeightWindow=1.5,WindowMarginCapS=.09;
         public double BodyWallMargin=.35,PlanAttempts=6;
         // Waiting positions (spec 9.2, 11.4). The lateral offset only keeps both bodies readable at the T.
         public double HumanWaitBehindT=0,RivalWaitBehindT=.5,WaitLateralOffset=.4;
         // Neutral launch (spec 15): a soft feed to the front wall that comes back to the receiver's side.
         public double LaunchHeight=1.2,LaunchZ=6.5,LaunchLateral=.9,LaunchTargetHeight=2.3,LaunchHorizontalSpeed=13;
         // Rally loop.
-        public double RestartSeconds=1.6,MaxRallySeconds=180,MaxShots=400;
+        public double RestartSeconds=1.6,MaxRallySeconds=900,MaxShots=200;
+        // A flight with no racket contact and no terminal event for this long is a block (must never happen).
+        public double StallSeconds=20;
         // AI difficulty (spec 11.5): Easy / Medium / Hard. Only these change with difficulty.
         public double EasyPerceptionS=.08,EasyStanceSigma=.12,EasyAimSigma=.28,EasyPowerSigma=.12,EasyTimingSigmaMs=55,EasyTemperature=1.2;
         public double MediumPerceptionS=.04,MediumStanceSigma=.06,MediumAimSigma=.16,MediumPowerSigma=.08,MediumTimingSigmaMs=38,MediumTemperature=.6;
@@ -33,6 +37,8 @@ namespace SquashClash.Core.Rally
         public double FondoDefenseSlackS=.12,FondoDropMinSlackS=.3;
         // Option geometry (spec 11.3).
         public double AimLow=.95,AimMid=1.7,AimHigh=3,DropHeight=.75,PowerDrop=.12,PowerMedium=.5,PowerStrong=.85,CornerInset=.6;
+        // Intentions never ask for a launch steeper than this: from the front court a fixed height would send the ball out.
+        public double MaxAimElevationDeg=22;
         public string Hash
         {
             get
