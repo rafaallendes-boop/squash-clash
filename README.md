@@ -1,10 +1,10 @@
 # Squash Clash
 
-Prototipo de squash para iPhone en Unity 6.3 LTS: validación progresiva, empezando por First Ball.
+Prototipo de squash para iPhone en Unity 6.3 LTS. First Ball está cerrado y se aceptó con la desviación H17: el p95 sigue en Fail (17,2/16,8 ms frente a ≤16,7 ms), sin cambiar el umbral ([registro de aprobaciones, 24 oct 2026](docs/reviews/2026-10-21-first-ball-po-approvals.md#revisión-final-claude-y-aceptación-po-de-first-ball--2026-10-24); también el cierre I7a/Etapa 7 en [AGENTS.md](AGENTS.md) y el [informe I7a](docs/reviews/2026-10-24-first-ball-i7a-validation.md#revisión-de-claude-y-decisión-del-po--2026-10-24)). El trabajo vigente es First Shot: un modo práctica en el que el PO, con una mano, apunta al frontis y golpea una pelota del lanzador.
 
-[Spec v0.3](docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md) · [Plan First Ball r2](docs/superpowers/plans/2026-10-20-squash-clash-first-ball.md) · [Entorno](docs/validation/environment.md) · [E1: instalación y evidencia](docs/validation/e1-first-installation.md) · [I2: cancha y cámara](docs/validation/i2-court.md)
+[Spec v0.3](docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md) · [Plan First Ball r2](docs/superpowers/plans/2026-10-20-squash-clash-first-ball.md) · [Propuesta First Shot r2](docs/superpowers/specs/2026-10-24-first-shot-design.md) · [Plan First Shot r2](docs/superpowers/plans/2026-10-25-squash-clash-first-shot.md) · [Entorno](docs/validation/environment.md) · [AutoQA](docs/autoqa/README.md) · Las reglas y el diario de cierre están en [AGENTS.md](AGENTS.md).
 
-**Estado actual — I4b, orden canónico para Claude:** PR #4 borrador, sin fusionar. Código da98fd4, EditMode 188/188 y PlayMode 58/58; cinco campañas nuevas del editor completas. Baseline pasa C5/C6/C7 y no cruza paredes; siguen fallando C3/C10/C11. Speculative conserva un fallo C6 de persistencia/terminación. [Informe, clasificación final y variantes](docs/reviews/2026-10-22-first-ball-physics-spike-P1.md). Históricos 16ad653 conservados. Detenido antes de generar build nativa para revisión de Claude; C17 del iPhone pendiente. I4c/P2/I5+ no autorizados.
+**Estado actual (main `433633f`, 11 de noviembre de 2026, America/Santiago):** S1 aceptado; S2 aprobado con condiciones e integrado ([PR #30](https://github.com/rafaallendes-boop/squash-clash/pull/30), merge `60ae2d6`). **S3 aceptado con condiciones por el PO** el 11 de noviembre: el código está en `main` ([PR #34](https://github.com/rafaallendes-boop/squash-clash/pull/34), merge `adb8c8f`; [PR #35](https://github.com/rafaallendes-boop/squash-clash/pull/35), merge `27058e8`) y la validación física S3-A–E más la sesión complementaria C8 se fusionaron con la [PR #40](https://github.com/rafaallendes-boop/squash-clash/pull/40) (merge `433633f`). Las cinco condiciones pendientes están en el [registro de aprobaciones](docs/reviews/2026-10-25-first-shot-po-approvals.md#decisión-del-po-sobre-s3--11-de-noviembre-de-2026-chile). AutoQA MVP está en `main` ([PRs #36](https://github.com/rafaallendes-boop/squash-clash/pull/36)–[#39](https://github.com/rafaallendes-boop/squash-clash/pull/39); #39 merge `2aebe1a`). La [PR #32](https://github.com/rafaallendes-boop/squash-clash/pull/32) sigue abierta, en conflicto, con la regla experimental desactivada por defecto. **El 11 de noviembre el PO autorizó First Rally R1–R3 y un pase visual con excepción de «dirección de arte»** ([AGENTS.md](AGENTS.md)). **S4, First Rally R4–R6, First Match y etapas posteriores no están autorizados.** El texto anterior de este README, que dejaba el estado en I4b / PR #4 en borrador, estaba desactualizado: I4b se cerró el 2026-10-23 (PR #4, merge `0e08daa`; [AGENTS.md](AGENTS.md)).
 
 Editor fijado: **6000.3.27f1 (Apple silicon)** con iOS Build Support. Configurar `scripts/device.env` a partir de `scripts/device.env.example`; el archivo real queda excluido de Git. Requiere la cuenta del PO en Xcode y el iPhone conectado, desbloqueado y con Modo de desarrollador.
 
@@ -17,11 +17,22 @@ scripts/build-ios.sh dev
 scripts/install-ios.sh dev --console
 scripts/build-ios.sh prod
 scripts/install-ios.sh prod
+scripts/autoqa.sh mvp
 ```
 
 `dev` usa `SQUASH_DEV`, IL2CPP Release y Xcode Release, sin Development Player. `prod` omite el define. `debug` es Development Player e IL2CPP/Xcode Debug; sus métricas no son comparables. `--console` mantiene la sesión hasta cerrar la app; sin esa opción la instalación y el lanzamiento retornan.
 
+**Regresión y gate oficial.** `scripts/test.sh editmode` corre `SquashClash.Core.Tests`; `playmode`, `SquashClash.Runtime.Tests`. El gate oficial de PlayMode es **354/354 en el Mac del PO**, registrado en `main` p. ej. en la base AutoQA MVP ([informe del 6 de noviembre](docs/reviews/2026-11-06-autoqa-mvp.md): 546/546 EditMode y 354/354 PlayMode) y en regresiones posteriores del mismo periodo. Por decisión del PO (10 nov 2026, 12:26 America/Santiago, vía SC-Lead): si en Linux fallan `GesturePreviewTests`, `ReticleVisibilityTests` o `ShotRollbackTests`, se tratan como **fallas de entorno**, no como regresión de producto, **siempre que el Mac dé 354/354**. En el repo no hay un informe versionado de esas corridas en Linux ni una causa técnica.
+
+**AutoQA.** `scripts/autoqa.sh mvp` es obligatorio cuando el cambio toca timing, gesto o contrato, cualquiera de los tres. Detalle en [docs/autoqa/README.md](docs/autoqa/README.md).
+
+**Perfil de firma vigente:** renovado por el PO el 2026-11-11T13:50:05Z; vence el **2026-11-18T13:50:05Z (10:50:05 America/Santiago del 18 de noviembre de 2026)**. La app instalada en el iPhone sigue firmada con el perfil anterior, que vence el 2026-11-12T13:55:07Z; para seguir usándola después hay que reinstalar una build firmada con el perfil nuevo. Comprobar vigencia efectiva antes de toda instalación.
+
 `scripts/spike.sh baseline|speculative|offset05|solver12|no-ed` ejecuta la campaña de física del editor separada de la regresión. Salida 0 exige informe completo y limpieza de recursos; los veredictos físicos pueden ser Fail y se reportan como datos.
+
+## Historial (First Ball y cierres posteriores)
+
+Los párrafos siguientes se conservan como registro de entregas. No describen el estado vigente: ese está arriba y en `AGENTS.md`.
 
 I1 se preparó en `main` como excepción de bootstrap; Claude revisó los commits locales y el PO validó ambas builds en el iPhone. El remoto y E2 requieren autorización independiente.
 

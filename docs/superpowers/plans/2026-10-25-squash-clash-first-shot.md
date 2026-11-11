@@ -37,7 +37,7 @@
 - **No se usan:** frameworks genéricos de input, audio o habilidades; ECS; inyección de dependencias; buses globales.
 - La desviación H17 de First Ball **no se extiende** a First Shot; las metas de §17.C siguen vigentes.
 - Documentación en español; identificadores, código y commits en inglés. Codex no modifica la spec: las discrepancias van a Claude, que las presenta al PO.
-- **Perfil de firma:** vence el 2026-10-28T14:59:31Z. **Renovarlo antes de cualquier instalación a partir del 27** y comprobar la vigencia antes de cada instalación.
+- **Perfil de firma (dato vigente, 11 nov 2026):** el PO renovó el perfil el 2026-11-11T13:50:05Z; vence el **2026-11-18T13:50:05Z (10:50:05 America/Santiago del 18 de noviembre de 2026)**, con el mismo certificado, equipo, dispositivo y entitlements. La app instalada sigue firmada con el perfil anterior (tanda 4 PROD, creado el 2026-11-05T13:55:07Z; [informe](../../reviews/2026-11-05-first-shot-s2-tanda4-prod.md)), que vence el **2026-11-12T13:55:07Z (10:55:07 America/Santiago)**; después de esa hora hay que reinstalar con el perfil nuevo. Los vencimientos 2026-10-28T14:59:31Z y 2026-11-12T13:55:07Z quedan como datos históricos. Comprobar vigencia efectiva antes de toda instalación; no instalar si el perfil no está vigente.
 
 ## Review Focus
 
@@ -62,6 +62,7 @@ Reglas, iguales a First Ball:
 - Una rama y una PR por incremento, commits pequeños, TDD con `scripts/test.sh editmode|playmode [filtro]`: **RED válido observado antes de implementar** y suites completas GREEN después. No vale un verde con cero tests, XML viejo, errores CS o builds anteriores.
 - **RED válido = aserciones ejecutadas que fallan** (F06). Cada tarea crea primero los **esqueletos compilables** de su API (firmas del bloque Interfaces que devuelven valores neutros o lanzan `NotImplementedException` capturada por la aserción), y el RED se observa con los tests compilando y descubiertos. Un error CS o un cambio de montaje de pruebas nunca cuenta como RED.
 - Al cerrar cada incremento: regresión completa (EditMode y PlayMode), `scripts/check-release.sh` dev/prod, build dev instalada en el iPhone tras comprobar el perfil, informe en `docs/reviews/` y PR lista para Claude **sin fusionar**. Fusiona solo con la revisión de Claude y la aprobación del PO.
+- **Nota vigente (10 nov 2026, 13:39 America/Santiago, autorización del PO vía SC-Lead):** `scripts/autoqa.sh mvp` es obligatorio cuando el cambio toca timing, gesto o contrato, cualquiera de los tres. El gate oficial de PlayMode es 354/354 en el Mac del PO; detalle en `AGENTS.md`.
 - Los parámetros `[EXPERIMENTO]` de este plan son valores de partida; cambiarlos con el panel no requiere aprobación. Cambiar criterios, contratos o decisiones del PO sí.
 
 ## Estructura de archivos

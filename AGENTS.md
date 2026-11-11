@@ -24,11 +24,14 @@
 - **Observaciones Claude de I5a:** logs de métricas también en prod y sin retención: definir política antes de T8. Percentiles de segmento por borde superior de cubeta, sesgo ≤0,1 ms documentado. Observaciones registradas sin cambios de código en el cierre; panel/validación física corresponden a I5b.
 - Desde I2, incrementos en ramas/worktrees y PR, commits pequeños y coherentes, revisión de Claude antes de fusionar. Las autorizaciones están en `docs/reviews/2026-10-21-first-ball-po-approvals.md`. No enviar mensajes externos a Claude por herramientas; la revisión se coordina con el PO.
 - TDD para comportamiento con `scripts/test.sh editmode|playmode [filtro]`: observar RED válido antes de implementar y suite GREEN después. Los experimentos de física producen datos separados de la regresión; `NotEvaluated`, cancelado o incompleto nunca cuenta como aprobado. No declarar éxito con cero tests, XML viejo, errores CS o builds anteriores.
+- **Gate oficial de PlayMode: 354/354 en el Mac del PO.** `scripts/test.sh editmode` ejecuta `SquashClash.Core.Tests`; `playmode`, `SquashClash.Runtime.Tests`. Ese recuento está registrado en `main`, por ejemplo en la base AutoQA MVP (546/546 EditMode y 354/354 PlayMode; [informe del 6 de noviembre](docs/reviews/2026-11-06-autoqa-mvp.md)) y en regresiones posteriores del mismo periodo. Por decisión del PO (10 nov 2026, 12:26 America/Santiago, vía SC-Lead): si en Linux fallan `GesturePreviewTests`, `ReticleVisibilityTests` o `ShotRollbackTests`, se tratan como **fallas de entorno**, no como regresión de producto, **siempre que el Mac dé 354/354**. En el repo no hay un informe versionado de esas corridas en Linux ni una causa técnica; no se inventa.
+- **AutoQA** (`scripts/autoqa.sh mvp`) es obligatorio cuando el cambio toca timing, gesto o contrato, cualquiera de los tres (PO, 10 nov 2026, 13:39 America/Santiago, vía SC-Lead, literal: «AutoQA es obligatorio cuando se toca timing, gesto o contrato (cualquiera de los tres)»; en la tarjeta: «Si toca timing, gesto o contrato»).
+- En el Mac del PO, SC-Dev puede ejecutar `scripts/test.sh`, `scripts/check-release.sh` y AutoQA sin autorización por cada corrida, siempre que no instale nada ni toque el iPhone. Copiar `scripts/device.env` sin cambios a un worktree nuevo no exige un «sí» literal adicional del PO.
 - Una sola autoridad del estado de pelota; juego y predicción aislados. Configuración efectiva por lanzamiento. `DefaultPreset.json` es la única fuente de defaults. Sin panel completo, ayudas visuales, reglas de punto ni gameplay posterior en I4.
 - AX-1: coordenadas/cámara conservadas; LeftWall x=6,40, normal −X; RightWall x=0, normal +X. Cajas de saque intercambiadas y S3 reetiquetado lateral derecha, sin reflejar sus números. Aclaración posterior: yaw positivo hacia la derecha de pantalla (−X), verificado por proyección RED→GREEN.
 - Pelota negra por indicación del PO; radio físico/visual 20 mm en I3. Tamaño insuficiente registrado para T6.2, ahora autorizado en I6a; radio físico 20 mm intacto, solo escala visual configurable. Pérdida de pausa manual tras «Toca para continuar» corregida con TDD en I5a aprobado/cerrado; PO reportó correcto el recorrido de pausa en I5b.
 - Perfiles: dev con SQUASH_DEV, Player no Development, IL2CPP/Xcode Release; prod sin define, no Development, Release; debug Development y Debug. Pasar defines con extraScriptingDefines, sin mutar los persistentes.
-- **Renovar el perfil antes de la próxima instalación si ocurre el 27 de octubre de 2026 o después**, y comprobar vigencia efectiva antes de toda instalación (perfil actual vence 2026-10-28T14:59:31Z). No instalar otro Xcode ni cambiar herramientas sin autorización; diagnosticar primero cualquier incompatibilidad.
+- **Perfil de firma (dato vigente, 10 nov 2026):** la renovación registrada más reciente en `main` (tanda 4 PROD, creada el 2026-11-05T13:55:07Z; [informe](docs/reviews/2026-11-05-first-shot-s2-tanda4-prod.md)) vence el **2026-11-12T13:55:07Z (10:55:07 America/Santiago del 12 de noviembre de 2026)**. El vencimiento 2026-10-28T14:59:31Z es un dato histórico y está superado. **Renovación pendiente por el PO.** Comprobar vigencia efectiva antes de toda instalación; no instalar si el perfil no está vigente. No instalar otro Xcode ni cambiar herramientas sin autorización; diagnosticar primero cualquier incompatibilidad.
 - No cambiar la visibilidad privada del remoto. No versionar scripts/device.env, credenciales, identificadores personales del iPhone, logs, cachés o builds. No exportar claves privadas.
 - Documentación en español; identificadores/código/commits en inglés. Citar fuentes oficiales para decisiones técnicas externas. No crear frameworks ni abstracciones fuera de la necesidad inmediata de First Ball.
 
@@ -450,6 +453,31 @@ Preparación documental para PR #40, sin fusionar; Claude revisa por coordinaci�
 Diagnóstico confirmado en `8bb4b7a`; adenda y registro de preparación confirmados en el commit de esta entrada, antes de cualquier acceso futuro al iPhone. Comprobación documental: originales conservados como prefijo en cuatro Markdown, 7+2+1 preguntas literales y 30 referencias locales cotejadas; 2.808 archivos de evidencia con rutas/SHA-256 intactos. Cotejo offline de tres archivos en after-D2/after-E/after-pause/restored-final igual a ambos respaldos. Sin tests/check-release nuevos por delta exclusivamente documental; ninguna observación física nueva. Entrega para revisión en #40, sin fusionar; autorización de ejecución y designación de operador aún pendientes del PO.
 - **S3 complementaria acortada (PO, 2026-11-09).** Claude aprobó con observaciones la preparación de Codex en `6a147ba`. Respuesta literal del PO: «Si, algo que sea lo más corto posible. Y ya para que avancemos a S4». La sección C8 de la predeclaración fija dos diálogos por bloque, la pausa dentro del proceso de F, el orden F → G → H con I opcional y unos 30 minutos. Las preguntas, hashes, máximos y la regla de no repetir no cambian. La sesión requiere la autorización del PO al empezar y un operador designado. S4 sigue sin autorizar hasta la decisión del PO sobre S3. PR #40 sin fusionar.
 
+### Cierre de PR #39 y autorizaciones de flujo (10 de noviembre de 2026, Chile)
+
+[PR #39](https://github.com/rafaallendes-boop/squash-clash/pull/39) quedó fusionada: merge `2aebe1a533c2352974a51a60afa9f3300dc101b9` (9 nov 2026, 20:34:38 America/Santiago). El párrafo anterior, que la dejaba «sin fusionar», queda como registro de esa entrega, no como estado vigente.
+
+El 10 de noviembre de 2026, a las 12:26 America/Santiago, el PO (Rafael) autorizó lo siguiente en el chat de SC-Lead, que lo transmitió a SC-Dev. Citas literales:
+
+- Pregunta 6, PR solo de docs para README, AGENTS.md (#39 ya fusionada) y la fecha de vencimiento del perfil: «Si, autorizo».
+- Pregunta 7, documentar las 3 fallas de PlayMode en Linux como fallas de entorno, con 354/354 en Mac como gate oficial, **siempre que el Mac dé 354/354**: «Si».
+- Pregunta 8, AutoQA obligatorio solo «cuando toca timing gesto o contrato».
+- Pregunta 9, se pueden correr test.sh, check-release.sh y AutoQA en su Mac sin pedir permiso por cada corrida, sin instalar nada ni tocar el iPhone: «Si, puede».
+- Pregunta 10, copiar device.env sin cambios a un worktree nuevo: «No es necesario» pedirle el sí literal.
+- Pregunta 2: SC-Lead transmitió que el PO va a renovar el perfil de firma (sin cita literal en ese ítem).
+
+El mismo 10 de noviembre de 2026, a las 13:39 America/Santiago, el PO confirmó la regla de AutoQA, vía SC-Lead. Palabras literales: «AutoQA es obligatorio cuando se toca timing, gesto o contrato (cualquiera de los tres)». En la tarjeta: «Si toca timing, gesto o contrato».
+
+**Perfil vigente:** creado el 2026-11-05T13:55:07Z (tanda 4 PROD), vence el **2026-11-12T13:55:07Z (10:55:07 America/Santiago del 12 de noviembre de 2026)**. Renovación pendiente por el PO. Comprobar vigencia efectiva antes de toda instalación. El 2026-10-28T14:59:31Z de la regla inicial y de registros históricos es un dato de ese momento; no se reescriben esos registros.
+
+**Regresión:** el gate oficial es **354/354 PlayMode en el Mac del PO**, citado en `main` p. ej. en la base AutoQA MVP y en [docs/reviews/2026-11-06-autoqa-mvp.md](docs/reviews/2026-11-06-autoqa-mvp.md) (546/546 EditMode y 354/354 PlayMode). Si en Linux fallan `GesturePreviewTests`, `ReticleVisibilityTests` o `ShotRollbackTests`, son fallas de entorno, no de producto, **siempre que el Mac dé 354/354**. En `main` no hay un informe versionado de esas corridas en Linux ni una causa técnica.
+
+**AutoQA** es obligatorio cuando el cambio toca timing, gesto o contrato, cualquiera de los tres.
+
+SC-Dev puede ejecutar `scripts/test.sh`, `scripts/check-release.sh` y AutoQA en el Mac del PO sin autorización por corrida, siempre que no instale ni toque el iPhone. Copiar `scripts/device.env` sin cambios a un worktree nuevo no exige un «sí» literal adicional.
+
+El bloque «Estado vigente» del 5 de noviembre permanece como histórico de ese día. Hechos posteriores en `main`, sin reescribirlo: [PR #34](https://github.com/rafaallendes-boop/squash-clash/pull/34) fusionada (`adb8c8fd5fcf2c081d0633670a3faa7b4d6af677`, 5 nov 2026, 23:12:30 America/Santiago) y [PR #35](https://github.com/rafaallendes-boop/squash-clash/pull/35) fusionada (`27058e82674f633879a7a4f7cabc4f1306a6db6b`, 6 nov 2026, 09:47:43 America/Santiago). La [PR #32](https://github.com/rafaallendes-boop/squash-clash/pull/32) sigue abierta, en conflicto, con la regla experimental desactivada. La [PR #40](https://github.com/rafaallendes-boop/squash-clash/pull/40) está abierta (informe de validación física S3-A..E), sin fusionar. S4, First Rally y First Match siguen sin autorizar. Esta entrega es solo documentación; no fusionar hasta revisión de Claude y autorización del PO.
+
 - **S3 / sesión complementaria C8 jugada, PR #40 sin fusionar (Claude, 2026-11-11 Chile).** Autorización literal del PO: «Ahora estoy listo para hacer el smoke» / «Me refería a la prueba nuevamente de S3». Operó Claude con la app `0.1.0+097eab9 dev` instalada, sin build ni instalación y sin la #44.
 
   Cuotas:
@@ -480,3 +508,16 @@ Diagnóstico confirmado en `8bb4b7a`; adenda y registro de preparación confirma
   Los NotEvaluated no cuentan como Pass. No hay decisión sobre las dos pausas fuera del máximo de C8.2, que se conservan como desviación. [Registro](docs/reviews/2026-10-25-first-shot-po-approvals.md#decisión-del-po-sobre-s3--11-de-noviembre-de-2026-chile).
 
   No autoriza S4, First Rally ni First Match, ni fusionar #40, ni la #44 (fusión, build o instalación). Cada una requiere autorización propia del PO.
+
+- **Cierre de #40, perfil renovado y autorización de Fable (PO, 2026-11-11 Chile).**
+  - **#40:** «Sí, fusionar #40». Merge `433633f`, segundo padre exacto `e606361`, árbol idéntico.
+  - **Perfil:** renovado en la caché de Xcode, vence el **2026-11-18T13:50:05Z (10:50:05 Chile)**. La app instalada vence el 2026-11-12T13:55:07Z; después de esa hora hay que reinstalar con el perfil nuevo.
+  - **Autorización del PO para Fable**, en dos ramas/worktrees en paralelo:
+    - gameplay First Rally **R1–R3** (reglas del punto, movimiento automático, IA «Fondo»), con parada e informe tras R3;
+    - **pase visual** solo en la capa Runtime/vista, sin Core, física, SimulationKey `166a96e319c7` ni `DefaultPreset.json`, sin empeorar el p95 ni la legibilidad H1, con capturas antes/después.
+
+    Cita literal: «dejo registrada mi autorización literal para First Rally y la excepción «dirección de arte» solo para el pase visual. Spec, escenarios, umbrales y criterios no se modifican».
+  - **Sin autorizar:** R4–R6, First Match y S4. Nada se fusiona sin aprobación del PO.
+  - **Revisión:** Claude hace la revisión independiente de ambas ramas.
+  - **Base recomendada:** `main` al abrir las ramas.
+  - [Registro literal completo](docs/reviews/2026-10-25-first-shot-po-approvals.md#cierre-de-pr-40-y-autorización-de-first-rally-r1r3-y-pase-visual-con-fable--11-de-noviembre-de-2026-chile).
