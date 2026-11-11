@@ -141,3 +141,17 @@ Se aplica la instrucción del encargo «Ante cualquier defecto o sorpresa: regis
 ## Decisión del PO sobre S4-TIMING-02 — publicación autorizada
 
 Respuesta literal: **«Sí, es intencional; continuar y crear el PR»** a la consulta sobre la visibilidad pública de `rafaallendes-boop/squash-clash`, continuación de checks y publicación conservando esa visibilidad. Sustituye la pausa vigente de la sección anterior. No se cambia visibilidad. Pendientes inmediatos: check-release dev/prod desde árbol limpio, AutoQA PASS/salida 0/nivel 1 y PR a main listo para revisión coordinada por el PO, sin fusionar.
+
+## Verificación final y entrega técnica
+
+- Regresión fresca sobre `f1870da`: **562/562 EditMode, 368/368 PlayMode**, sin errores CS ni skipped. Producto idéntico hasta el head de exports/AutoQA `2fc2afef651ca39d3fd4dc6441eab7e87ba65549`; solo documentación entre ambos. Esqueletos/intermedios y RED válidos preservados según las secciones TDD.
+- `scripts/check-release.sh`: **dev/prod RELEASE-CHECK: OK**, metadata `gitHash=2fc2afe`, **gitDirty=false** ambos. DEV: Core/Runtime/DevPanel; PROD: solo Core/Runtime. Código generado de LatencyCalibration presente en DEV y ausente en PROD; framework de pruebas excluido, puentes térmico/háptico y símbolos comprobados por el script. Exports Unity/IL2CPP, **sin build nativa Xcode ni instalación**. Logs/metadata copiados a `Logs/evidence/s4-timing/release`.
+- `scripts/autoqa.sh mvp`: **PASS, salida 0, nivel 1**, `dirty=false`, 85/85 tests, **18/18 PASS**, canario FAIL esperado. Determinismo de los seis escenarios idéntico; hashes/presets/guard/SHA de evidencia correctos. Corrida `20261111T153744Z-2fc2afe-25993`, sin cambiar escenarios, márgenes ni tolerancias. Restauración automática de transitorios sin errores, estado limpio antes/después; GraphicsSettings/QualitySettings también cotejados con Git al cerrar. No fue necesaria repetición.
+- **607 archivos existentes protegidos** (incluyendo spec/planes, AGENTS/aprobaciones comunes, código ajeno y scripts) cotejados byte a byte con `18b796a`; se exceptuó exclusivamente la inserción de la rutina de timing en ShotSection. **609 hashes de fuentes actuales** conservados en evidencia local y cotejados tras AutoQA. Los 13 paths de la entrega están dentro del alcance autorizado. `device.env` sigue idéntico al origen autorizado, ignorado y sin versionar.
+- Invariantes comprobadas por regresión/experimento y cotejo de bytes: defaults **c0d8ec7050e0 / 107**, P0 **6ecfdfa78cbb**, SimulationKey **166a96e319c7**, proyección 41 heredados **0d39e6016bd8**, M2-4, pullFullMm **35**, P2. Sin clave nueva, promoción de presets ni cambio de contrato/reloj, ImpactCue/TimingRingView, spec/planes/criterios/umbrales.
+
+### Lo que sigue NotEvaluated o pendiente de decisión
+
+Calibración física y efecto del offset en el iPhone; legibilidad/uso real de #44; vector causal productivo y niveles parcial/ninguno de H3b, y por tanto H3b como hipótesis completa; H2/zonas/bandas propuestas; implementación de 4.2; 4.4/4.5; condiciones pendientes de S3. Las pruebas sintéticas no acreditan el protocolo físico. El Step 0 y el protocolo de arriba son propuestas, no autorizaciones de ejecución. Sin iPhone, Duplicación, sesión, instalación, #32, First Rally/First Match, cambios de visibilidad o fusión.
+
+Entrega para revisión de Claude coordinada por el PO, **sin fusionar ni declarar aceptación de S4**. Se detiene el trabajo al entregar el PR; decisiones de 4.2 y toda actividad física requieren autorización propia.
