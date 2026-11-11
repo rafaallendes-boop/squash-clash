@@ -58,7 +58,7 @@ namespace SquashClash.DevPanel
             gesture=gameObject.AddComponent<ThreeFingerHold>();gesture.CanToggle=CanToggle;gesture.Held+=Toggle;
             Place();Refresh();
         }
-        private bool CanToggle()=>app!=null&&!app.GetComponent<ResumeOverlay>().IsVisible&&!(GetComponent<SpikeSection>()?.IsRunning??false)&&!(GetComponent<PerformanceSession>()?.IsRunning??false);
+        private bool CanToggle()=>app!=null&&!app.GetComponent<ResumeOverlay>().IsVisible&&!(app.GetComponent<LatencyCalibration>()?.IsActive??false)&&!(GetComponent<SpikeSection>()?.IsRunning??false)&&!(GetComponent<PerformanceSession>()?.IsRunning??false);
         public void Toggle()
         {
             app.RecordDevControl("dev-toggle",true,"invoked","activation");

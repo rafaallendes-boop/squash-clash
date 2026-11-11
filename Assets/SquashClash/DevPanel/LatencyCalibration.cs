@@ -120,10 +120,11 @@ namespace SquashClash.DevPanel
         private Button next,confirm;
         private AudioSource audioSource;
         private AudioClip click;
-        private bool seriesActive,blockedBefore;
+        private bool seriesActive;
         private double firstBeat,nextBeat,lastFlash;
         private int beat,series;
         public VisualElement Root {get;private set;}
+        public bool IsActive=>overlay!=null;
         public void Initialize(AppBootstrap app)
         {
             this.app=app;session=new LatencyCalibrationSession(app.Tuning,Write);
@@ -143,7 +144,7 @@ namespace SquashClash.DevPanel
                 !session.Begin(Time.realtimeSinceStartupAsDouble,app.Tuning.Applied.Get("debug.slowMotion"),app.DevHasInputFocus))
             {status.text="No iniciada: aplica o descarta pendientes, sin cámara lenta ni pérdida de foco; audio precargado.";return;}
             confirm.SetEnabled(false);series=0;seriesActive=false;
-            var input=app.GetComponent<TouchInputAdapter>();blockedBefore=input.BlockedByUi;input.BlockedByUi=true;
+            app.GetComponent<TouchInputAdapter>().BlockedByUi=true;
             var root=app.GetComponent<UIDocument>().rootVisualElement;
             overlay=new VisualElement{name="calibration-overlay"};overlay.style.position=Position.Absolute;
             overlay.style.left=overlay.style.right=overlay.style.top=overlay.style.bottom=0;overlay.style.backgroundColor=new Color(.02f,.04f,.06f);overlay.style.color=Color.white;
@@ -210,7 +211,7 @@ namespace SquashClash.DevPanel
         private void FinishOverlay()
         {
             InputSystem.onEvent-=OnInput;seriesActive=false;overlay?.RemoveFromHierarchy();overlay=null;
-            if(app!=null)app.GetComponent<TouchInputAdapter>().BlockedByUi=blockedBefore;
+            if(app!=null)app.GetComponent<TouchInputAdapter>().BlockedByUi=FindFirstObjectByType<DevPanelView>()?.IsOpen??false;
             if(status==null)return;var r=session.Result;
             status.text=r.valid?$"Offset conjunto {r.meanMs:F1} ms · IC95% [{r.ciLowMs:F1}, {r.ciHighMs:F1}] · rango entre series {r.seriesRangeMs:F1} ms.\nMedias por serie: {string.Join(", ",r.meansMs.Select(n=>n.ToString("F1")))} ms; DE: {string.Join(", ",r.sdBySeriesMs.Select(n=>n.ToString("F1")))} ms.\nDescansos: {string.Join(", ",r.gapsSeconds.Select(n=>n.ToString("F1")))} s. No aplicado.":"Calibración inválida: "+r.reason+". No aplicado.";
             confirm.SetEnabled(r.complete&&r.valid);

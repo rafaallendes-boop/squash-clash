@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using SquashClash.Core.Config;
@@ -116,6 +117,54 @@ namespace SquashClash.Runtime.Tests
             var root=AppBootstrap.Instance.GetComponent<UIDocument>().rootVisualElement;
             Assert.That(root.Q("first-shot-section").Q("latency-calibration"),Is.Not.Null);
             Assert.That(root.Q<Button>("calibration-start"),Is.Not.Null);Assert.That(root.Q<Button>("calibration-confirm"),Is.Not.Null);
+            yield return PlayModeTestWorld.ClearApp();
+        }
+        [Serializable] private sealed class MetricsRow
+        {public string kind,payload;public bool metricsValid;}
+        [Serializable] private sealed class DevControlRow
+        {public string control,stage,reason;public bool accepted;}
+        private static IEnumerator OpenCalibrationModal()
+        {
+            yield return PlayModeTestWorld.ClearApp();yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
+            var app=AppBootstrap.Instance;var root=app.GetComponent<UIDocument>().rootVisualElement;
+            app.GetComponent<ResumeOverlay>().Continue();var view=UnityEngine.Object.FindFirstObjectByType<DevPanelView>();
+            if(!view.IsOpen)view.Toggle();
+            root.Q<Foldout>("first-shot-section").value=true;root.Q<Foldout>("latency-calibration").value=true;
+            yield return null;yield return null;
+            var start=root.Q<Button>("calibration-start");start.Focus();
+            using(var e=NavigationSubmitEvent.GetPooled())start.SendEvent(e);
+            yield return null;yield return null;
+            Assert.That(root.Q("calibration-overlay"),Is.Not.Null,"The test must start a real DEV calibration modal");
+        }
+        [UnityTest] public IEnumerator CalibrationModalRejectsDevToggleAndPreservesBlockedInput()
+        {
+            yield return OpenCalibrationModal();
+            var app=AppBootstrap.Instance;var view=UnityEngine.Object.FindFirstObjectByType<DevPanelView>();
+            var hold=UnityEngine.Object.FindFirstObjectByType<ThreeFingerHold>();
+            bool before=view.IsOpen;view.Toggle();
+            Assert.That(view.IsOpen,Is.EqualTo(before),"DEV must not change while calibration owns input");
+            Assert.That(app.GetComponent<SquashClash.Runtime.Input.TouchInputAdapter>().BlockedByUi,Is.True);
+            Assert.That(hold.CanToggle(),Is.False,"The three-finger path must use the same guard");
+            var row=File.ReadAllLines(app.Metrics.CurrentFilePath).Select(JsonUtility.FromJson<MetricsRow>)
+                .Where(r=>r.kind=="dev-control").Select(r=>JsonUtility.FromJson<DevControlRow>(r.payload)).Last();
+            Assert.That(row.control,Is.EqualTo("dev-toggle"));Assert.That(row.stage,Is.EqualTo("result"));
+            Assert.That(row.accepted,Is.False);Assert.That(row.reason,Is.EqualTo("dev-unavailable"));
+            yield return PlayModeTestWorld.ClearApp();
+        }
+        [UnityTest] public IEnumerator CalibrationCancelMatchesOpenDev()=>CancelAgainstActualDev(true);
+        [UnityTest] public IEnumerator CalibrationCancelMatchesClosedDev()=>CancelAgainstActualDev(false);
+        private static IEnumerator CancelAgainstActualDev(bool open)
+        {
+            yield return OpenCalibrationModal();
+            var app=AppBootstrap.Instance;var root=app.GetComponent<UIDocument>().rootVisualElement;
+            var view=UnityEngine.Object.FindFirstObjectByType<DevPanelView>();
+            // Exercise teardown against the actual UI state independently of the state captured at start.
+            root.Q("dev-panel").style.display=open?DisplayStyle.Flex:DisplayStyle.None;
+            var cancel=root.Q("calibration-overlay").Query<Button>().ToList().Single(b=>b.text=="Cancelar sin aplicar");
+            cancel.Focus();using(var e=NavigationSubmitEvent.GetPooled())cancel.SendEvent(e);
+            Assert.That(root.Q("calibration-overlay"),Is.Null);
+            Assert.That(view.IsOpen,Is.EqualTo(open));
+            Assert.That(app.GetComponent<SquashClash.Runtime.Input.TouchInputAdapter>().BlockedByUi,Is.EqualTo(view.IsOpen));
             yield return PlayModeTestWorld.ClearApp();
         }
     }

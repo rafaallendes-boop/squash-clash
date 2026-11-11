@@ -172,3 +172,7 @@ Autorización literal del PO: **«Dejame el prompt para que codex arregle las ob
 Delta permitido desde `8e6e1c2`: LatencyCalibration.cs, DevPanelView.cs, LatencyCalibrationTests.cs (test nuevo/.meta solo si necesario), informe S4, AGENTS.md y aprobaciones. Sin contrato/reloj/ImpactCue/TimingRingView/solver/P2/AutoQA/spec/planes/criterios/umbrales, 4.2/4.4/4.5, iPhone, build nativa, instalación, #32 ni áreas de Fable. Ante defecto, sorpresa, archivo ajeno o RED no basado en aserción, registrar/detener sin fusionar.
 
 Pendiente: RED/GREEN de O1/O2, suites completas frescas, restauración de transitorios, check-release dev/prod limpio, AutoQA PASS/0/1, cotejo de invariantes/delta/head/PR/árboles; solo entonces merge commit con segundo padre exacto y árbol idéntico, main sincronizada y preservación verificada de ignorados antes de retirar worktree sin force, conservando rama remota.
+
+### O1 — RED/GREEN
+
+Esqueleto existente y tres pruebas nuevas: **RED válido 14/16**, dos fallos por aserción (Toggle cambiaba DEV y cierre con DEV cerrado dejaba input bloqueado), sin CS. Propiedad IsActive del modal en CanToggle, motivo `dev-unavailable` existente y restitución según DevPanelView.IsOpen: **GREEN 16/16**, XML/log frescos. La misma guarda es la que consulta ThreeFingerHold; se comprueba el motivo registrado. Sin cambios de reloj/gesto/contrato ni parámetros. Evidencia `Logs/evidence/s4-timing/claude-fixes/o1`.
