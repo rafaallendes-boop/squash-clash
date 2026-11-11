@@ -155,3 +155,20 @@ Respuesta literal: **«Sí, es intencional; continuar y crear el PR»** a la con
 Calibración física y efecto del offset en el iPhone; legibilidad/uso real de #44; vector causal productivo y niveles parcial/ninguno de H3b, y por tanto H3b como hipótesis completa; H2/zonas/bandas propuestas; implementación de 4.2; 4.4/4.5; condiciones pendientes de S3. Las pruebas sintéticas no acreditan el protocolo físico. El Step 0 y el protocolo de arriba son propuestas, no autorizaciones de ejecución. Sin iPhone, Duplicación, sesión, instalación, #32, First Rally/First Match, cambios de visibilidad o fusión.
 
 Entrega para revisión de Claude coordinada por el PO, **sin fusionar ni declarar aceptación de S4**. Se detiene el trabajo al entregar el PR; decisiones de 4.2 y toda actividad física requieren autorización propia.
+
+## Revisión de Claude y correcciones autorizadas de PR #45
+
+Claude revisó el head `8e6e1c25d5ef33b7c56b58cb7993517f0dc88f29`: **APROBADO CON OBSERVACIONES, sin bloqueantes**. Reprodujo 562/562 EditMode y 368/368 PlayMode. El verificador autoqa-check v7 coincide con el operador en `20261111T153744Z-2fc2afe-25993`: PASS/salida 0/nivel 1, 41/41 SHA.
+
+Autorización literal del PO: **«Dejame el prompt para que codex arregle las observaciones y luego haga el merge»**. Este primer commit registra la autorización antes de tocar código. Misma rama/PR; solo las correcciones siguientes, verificación completa y merge commit condicionado a los controles del encargo, sin aceptación de S4.
+
+1. **O1, código/TDD:** CanToggle debe rechazar mientras el overlay de calibración está activo y conservar el diagnóstico dev-control existente; al cerrar, BlockedByUi debe reflejar el estado real de DEV, no blockedBefore. PlayMode debe probar Toggle durante modal y alineación tras Cancelar.
+2. **O2, código/TDD:** metricsValid del sobre de latency-calibration debe ser `!app.Clock.MetricsInvalid`. La validez de la calibración queda en payload valid/kind/reason. Probar ambos sin confundirlos.
+3. **O3, documentación:** −100 ms es exactamente el borde inclusivo de V; V/−100=T3/−100 confirma su inclusión. Las 16 pérdidas por desfase anticipado pertenecen íntegramente a SL3/SL4. Sin reejecutar ni cambiar el experimento, desfases o recetas.
+4. **O4, sin cambios:** H3b sigue NotEvaluated como hipótesis completa.
+5. **O5, documentación:** protocolo futuro debe advertir la asincronía media negativa de tareas de seguir un ritmo (Repp, 2005): el offset puede incluir ese sesgo y no trasladarse igual a intercepción. Información para la confirmación del PO, sin nuevo umbral/criterio.
+6. **O6, documentación:** entrada vigente idéntica en AGENTS.md y aprobaciones First Shot con autorización S4 limitada, decisión literal de visibilidad pública intencional que sustituye el estado privado histórico y observaciones de Claude. Sin reescribir histórico. Cierre del merge se registra en la siguiente entrega, sin commit aparte en main.
+
+Delta permitido desde `8e6e1c2`: LatencyCalibration.cs, DevPanelView.cs, LatencyCalibrationTests.cs (test nuevo/.meta solo si necesario), informe S4, AGENTS.md y aprobaciones. Sin contrato/reloj/ImpactCue/TimingRingView/solver/P2/AutoQA/spec/planes/criterios/umbrales, 4.2/4.4/4.5, iPhone, build nativa, instalación, #32 ni áreas de Fable. Ante defecto, sorpresa, archivo ajeno o RED no basado en aserción, registrar/detener sin fusionar.
+
+Pendiente: RED/GREEN de O1/O2, suites completas frescas, restauración de transitorios, check-release dev/prod limpio, AutoQA PASS/0/1, cotejo de invariantes/delta/head/PR/árboles; solo entonces merge commit con segundo padre exacto y árbol idéntico, main sincronizada y preservación verificada de ignorados antes de retirar worktree sin force, conservando rama remota.
