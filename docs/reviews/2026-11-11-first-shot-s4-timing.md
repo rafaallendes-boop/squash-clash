@@ -127,3 +127,13 @@ Interpretación limitada: frente al preciso, los bots anticipados pierden contac
 ## T4.1 — cierre de ciclo y comprobación de UI
 
 Ampliada la verificación: emisión sintética con jitter real frente al pulso nominal; toque duplicado/faltante con timestamps monótonos; modal que bloquea juego y cancela sin aplicar; resultado ya confirmado que no debe registrarse como cancelado al destruir la vista. La preparación de UI necesita desplegar los foldouts y esperar layout/foco para enviar NavigationSubmit, como el resto de pruebas del panel; intermedios preservados. Con la UI preparada: **RED 12/13, un fallo por aserción** al cancelar un resultado confirmado. Guarda `!confirmed` en Cancel, sin alterar aserciones/cálculo: **GREEN 13/13**. El resumen visible ahora incluye medias/DE por serie y descansos, además del IC/rango. Evidencia en `Logs/evidence/s4-timing/calibration-lifecycle`.
+
+## Regresión completa fresca
+
+Fuente `f1870da`: **562/562 EditMode y 368/368 PlayMode**, cero skipped/fallos/errores CS, XML nuevos. PlayMode incluye 355 existentes en la base #44 + 13 de calibración. EditMode incluye 10 del bot sobre la base vigente. Originales preservados en `Logs/evidence/s4-timing/regression`; GraphicsSettings/QualitySettings se restauran al terminar conforme al encargo. No se ejecutaron todavía check-release ni AutoQA; no se declaran aprobados.
+
+## S4-TIMING-02 — discrepancia de visibilidad del remoto; pausa antes de publicar
+
+Durante la revisión previa a publicar, `gh repo view --json isPrivate,viewerPermission` informó `isPrivate=false`. Confirmación explícita independiente de la selección implícita: `gh repo view rafaallendes-boop/squash-clash --json nameWithOwner,isPrivate,url` devolvió `rafaallendes-boop/squash-clash`, `isPrivate=false`, URL `https://github.com/rafaallendes-boop/squash-clash`. El origin local apunta a ese mismo repositorio y no hay override GH_REPO. Es el estado leído de GitHub, no un cambio realizado por esta rama. Las instrucciones describen un remoto privado y prohíben cambiar su visibilidad. No se modificó la visibilidad, no se hizo push de esta rama ni se creó el PR. No se atribuye quién/cuándo cambió ese estado.
+
+Se aplica la instrucción del encargo «Ante cualquier defecto o sorpresa: registra y detente». Consulta al PO: confirmar que la visibilidad pública es intencional y autorizar continuar los checks pendientes y publicar el PR allí conservándola. **Ningún cambio de visibilidad autorizado ni realizado por inferencia.** Rama y evidencia local preservadas. Implementación y experimento terminados según se informa arriba; entrega final de PR todavía pendiente, sin fusión.
