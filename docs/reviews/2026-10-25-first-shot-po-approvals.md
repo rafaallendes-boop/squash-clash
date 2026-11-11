@@ -2044,3 +2044,34 @@ Claude preguntó: «¿Corrijo la adenda antes de mañana para usar dos diálogos
 - unos 30 minutos.
 
 Esta respuesta expresa la intención del PO de avanzar a S4. No es una autorización de S4: falta la decisión del PO sobre S3 después de la sesión complementaria.
+
+## S3 — sesión complementaria C8 operada por Claude (11 de noviembre de 2026, Chile)
+
+**Autorización literal del PO al empezar:** «Ahora estoy listo para hacer el smoke» y, a continuación, «Me refería a la prueba nuevamente de S3». Operó Claude con el PO presente y la app instalada `0.1.0+097eab9 dev`, sin build ni instalación; la PR #44 no se incluyó. El PO informó que renovó el perfil en caché, con el nuevo venciendo el 18 de noviembre a las 10:50:05 Chile. La app instalada conserva el perfil que vence el 2026-11-12T13:55:07Z y la sesión terminó antes.
+
+Decisiones literales del PO durante la sesión:
+- «Jugar S3-I», sobre el bloque opcional;
+- «me equivoque, el modo silencio, ya está ok», que corrige su primera declaración de G con timbre; el bloque no empezó hasta esa corrección.
+
+Resultados de las cuotas:
+- **F:** 12 recepciones, 4 Valid, 8 Failed y 0 Perfect;
+- **G:** 4 Failed;
+- **H:** 3 Failed y 1 NoOrder, con `4f33dff747fb`;
+- **I:** 4 Failed.
+
+Hubo una presentación concordante por intento, cero discrepancias y cero pendientes, sin condiciones de §8.
+
+**Pausa (extras de F).** Hubo dos pausas, después de los Valid L63 y L69. Son posteriores al máximo de 4 recepciones de C8.2; se conservan como desviación y el PO decide si cuentan.
+
+**H.** El Valid L43 con `feedback.haptics=0` es preparación, porque estaba en curso al cerrar DEV. El PO dijo «logré golepar 1 vez» y respondió vibración «no hubo».
+
+**Restauración.** Proceso nuevo a las 2026-11-11T14:35:33.0147180Z en P0 `6ecfdfa78cbb`, con cero pendientes y los tres archivos idénticos al respaldo y a la referencia inicial.
+
+**Siguen NotEvaluated:**
+- contraste y destello Perfect;
+- silencio con impacto;
+- háptica de app desactivada con contacto en cuota;
+- háptica del sistema desactivada con contacto;
+- congelación del destello.
+
+Recomendación de Claude: aceptar S3 con condiciones, o integrar antes una ayuda de timing con autorización propia, como la #44. **Decide el PO.** S4 no está autorizado. Detalle en el [informe](2026-11-06-first-shot-s3-physical-validation.md#sesión-complementaria-c8--11-de-noviembre-de-2026-chile).

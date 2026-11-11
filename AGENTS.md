@@ -449,3 +449,23 @@ Preparación documental para PR #40, sin fusionar; Claude revisa por coordinaci�
 
 Diagnóstico confirmado en `8bb4b7a`; adenda y registro de preparación confirmados en el commit de esta entrada, antes de cualquier acceso futuro al iPhone. Comprobación documental: originales conservados como prefijo en cuatro Markdown, 7+2+1 preguntas literales y 30 referencias locales cotejadas; 2.808 archivos de evidencia con rutas/SHA-256 intactos. Cotejo offline de tres archivos en after-D2/after-E/after-pause/restored-final igual a ambos respaldos. Sin tests/check-release nuevos por delta exclusivamente documental; ninguna observación física nueva. Entrega para revisión en #40, sin fusionar; autorización de ejecución y designación de operador aún pendientes del PO.
 - **S3 complementaria acortada (PO, 2026-11-09).** Claude aprobó con observaciones la preparación de Codex en `6a147ba`. Respuesta literal del PO: «Si, algo que sea lo más corto posible. Y ya para que avancemos a S4». La sección C8 de la predeclaración fija dos diálogos por bloque, la pausa dentro del proceso de F, el orden F → G → H con I opcional y unos 30 minutos. Las preguntas, hashes, máximos y la regla de no repetir no cambian. La sesión requiere la autorización del PO al empezar y un operador designado. S4 sigue sin autorizar hasta la decisión del PO sobre S3. PR #40 sin fusionar.
+
+- **S3 / sesión complementaria C8 jugada, PR #40 sin fusionar (Claude, 2026-11-11 Chile).** Autorización literal del PO: «Ahora estoy listo para hacer el smoke» / «Me refería a la prueba nuevamente de S3». Operó Claude con la app `0.1.0+097eab9 dev` instalada, sin build ni instalación y sin la #44.
+
+  Cuotas:
+  - F: 12 recepciones, 4 Valid, 8 Failed, 0 Perfect.
+  - G: 4 Failed.
+  - H: 3 Failed y 1 NoOrder, con `4f33dff747fb`.
+  - I: 4 Failed.
+
+  Cero discrepancias y cero pendientes; §8 no se activó.
+
+  Desviaciones y observaciones:
+  - Dos pausas tras los Valid L63/L69, fuera del máximo de C8.2; el PO decide si cuentan.
+  - En H, el Valid L43 con háptica de app desactivada es preparación (estaba en curso al cerrar DEV).
+
+  Siguen NotEvaluated: Perfect, silencio, háptica de app y háptica del sistema con contacto en cuota, y la congelación del destello. El PO atribuye los fallos al timing.
+
+  Restauración: proceso nuevo a las 2026-11-11T14:35:33Z en P0 `6ecfdfa78cbb`, con cero pendientes y los tres archivos idénticos.
+
+  Perfil incorporado vence el 2026-11-12T13:55:07Z; el PO renovó el perfil en caché hasta el 18 nov 10:50:05 Chile, pero la app no se reinstaló. Recomendación de Claude: aceptar S3 con condiciones o probar antes una ayuda de timing con autorización propia. Decide el PO; S4 sin autorizar.

@@ -420,3 +420,72 @@ Failed solicita únicamente el swish y retorna antes de la háptica. Perfect sol
 No se ha demostrado un defecto nuevo ni se ha resuelto por inferencia ninguna de las dos percepciones. Los NotEvaluated y las 21 recepciones originales permanecen intactos. Se prepara una [adenda complementaria](../validation/2026-11-06-first-shot-s3-physical-predeclaration.md#s3-complementaria-20261109), para revisión de Claude coordinada por el PO en #40, sin fusionar. La sesión futura requiere autorización del PO al comenzar y operador designado; ningún bloque, precheck o restauración nuevos se declara ejecutado. Ante defecto demostrado u otra sorpresa se registra y se detiene, sin corregir en esta PR.
 
 **Comprobación documental de la entrega.** Los cuatro Markdown autorizados conservan el contenido anterior de `bacf39f` byte a byte como prefijo, incluida la predeclaración original; las dos citas literales ya están en el primer commit. Verificadas las siete preguntas de §6, las dos de Perfect y la de pausa, sin cambios de texto, y 30 referencias locales nuevas (destinos y líneas de fuentes). Los 2.808 archivos de la carpeta de evidencia conservaron rutas y SHA-256 durante la preparación. Cotejo offline adicional de los tres archivos de presets/selección en `after-D2`, `after-E`, `after-pause` y `restored-final`: iguales al respaldo y referencia inicial, sin lectura nueva del teléfono. Delta propio limitado a AGENTS/aprobaciones/informe/predeclaración; sin ejecución de tests o check-release por tratarse exclusivamente de documentación.
+
+## Sesión complementaria C8 · 11 de noviembre de 2026 (Chile)
+
+**Operador: Claude**, con el PO presente. Autorización literal del PO al empezar (10:4x Chile): «Ahora estoy listo para hacer el smoke» y, al aclarar a qué se refería, «Me refería a la prueba nuevamente de S3». Protocolo: adenda C1–C7 con C8 (`a407b7e`). Se usó la app ya instalada `0.1.0+097eab9 dev`, sin build ni instalación. Antes de acceder al iPhone se verificaron la firma estricta, Release ARM64, IL2CPP y SQUASH_DEV. El perfil incorporado se creó el 2026-11-05T13:55:07Z y vence el 2026-11-12T13:55:07Z. El PO informó que había renovado el perfil en caché: el nuevo vence el 18 de noviembre a las 10:50:05 Chile. La app instalada conserva el anterior y no se reinstaló. Toda la sesión, incluida la restauración, terminó antes del vencimiento del perfil incorporado. La [PR #44](https://github.com/rafaallendes-boop/squash-clash/pull/44), el aviso visual de impacto, no se incluyó: no está fusionada y C1 fija la build instalada.
+
+**Preparación.** El primer export falló por conexión («Connection reset by peer») y se conserva como `complement-20261111-before-F`. El segundo intento fue correcto, con los tres archivos iguales al respaldo y a la referencia inicial. Desde la restauración del 10 de noviembre, la app se abrió cinco veces fuera de la sesión: 16:42, 17:13, 20:13 y 20:41 del 10 de noviembre, y 13:48 del 11, todas en UTC. Todas fueron en P0 `6ecfdfa78cbb`, con cero pendientes y sin DEV; quedan como preparación. Un primer precheck de F se aceptó a las 13:54:25Z, pero el PO fue luego a Ajustes para cambiar el bloqueo automático, así que se abrió otro proceso y se repitió el precheck. Declaraciones literales del PO: «Tengo el telefono desbloquedo con la app en primer plano» y «listo. Todo en orden, ya cambie el bloqueo automatico». El PO no declaró el valor previo del bloqueo.
+
+Todos los prechecks se hicieron en un proceso nuevo desde P0, `0.1.0+097eab9 dev`, P0-calib-1 con el hash de archivo de §2, `6ecfdfa78cbb` y cero pendientes, con los tres archivos iguales después del arranque. Las fronteras son el cierre único de DEV del PO. `audit.py` no reportó errores en ningún bloque. En todos los procesos de la sesión hubo una presentación por intento, siempre concordante con el resultado final; ninguna presentación para NoOrder; cero discrepancias y cero pendientes. No se activó ninguna condición de parada de §8.
+
+| Bloque | Proceso (Z) / SHA-256 | Frontera (Z) | Cuota | Resultado de la cuota | Corte |
+| --- | --- | --- | --- | --- | --- |
+| **S3-F** | 13:57:15 · `28e5a2f2…8257` | 13:58:50.549 | L25–36 | 12 Swing: 4 Valid aplicados (recepciones 1, 2, 4 y 7) y 8 Failed / Air (7 outside-v, 1 before-k-in). **0 Perfect** | Máximo de 12, sin el par Perfect/Valid |
+| **S3-G** | 14:07:53 · `26f38750…890d` | 14:14:30.599 | L98–101 | 4 Swing Failed / Air (outside-v) | Máximo de 4, sin contacto |
+| **S3-H** | 14:17:04 · `5a311f53…f286` | 14:19:56.313 | L44–47 | 3 Swing Failed / Air y 1 NoOrder; hash `4f33dff747fb` | Máximo de 4, sin contacto |
+| **S3-I** | 14:27:51 · `dc4917c1…4490` | 14:30:28.543 | L40–43 | 4 Swing Failed / Air (outside-v) | Máximo de 4, sin contacto |
+
+Fuera de cuota: en F, las recepciones L37–57 son NoOrder sin gesto; en G, L102 es un Swing Failed. En las cuatro cuotas hubo 1 contacto aplicado cada 6 recepciones, 4 de 24.
+
+**S3-F.** Teléfono con timbre activo, volumen audible y háptica del sistema activa, según la declaración anterior del PO. Al terminar, el PO dijo: «listo hice 12 golpes».
+
+**Pausa dentro del proceso de F, fuera de cuota (C8.2).** La instrucción se dio a las 14:00:35Z. El PO empezó a gesticular en L58. Hasta el primer contacto hizo 6 Swing: L58–62 Failed / Air y **L63 Valid aplicado**. Pausó **1,05 s** después de la presentación de L63 (pausa en `timeReal` 268,015, presentación observada en 266,966) y reanudó 1,73 s más tarde. Después siguió jugando: L64–68 Failed y **L69 Valid aplicado**. Pausó 0,55 s después de esa presentación y reanudó 12,55 s más tarde. A partir de L70 no hay gestos. Comentario literal del PO: «listo. Logré hacer 2 repeticiiones, esto es porque el timing de golpear es lo que me cuesta actualmente y terminan muchas pelotas al aire. Pero con esas 2 se vio bien».
+
+**Desviación.** C8.2 fija como máximo 4 recepciones posteriores. El primer contacto llegó en la sexta recepción con gesto, y en la vigésimo séptima si se cuentan las NoOrder desde el corte. El PO además hizo una segunda pausa. Ambas pausas se conservan y se registran fuera del máximo predeclarado; **decide el PO si cuentan como evidencia**. Las dos fueron después de un Valid, así que la congelación del destello Perfect sigue NotEvaluated.
+
+**S3-G.** Antes del bloque, el PO declaró primero «El telefono quedo con timbre, haptic activa y app en primer plano». El operador no inició el bloque porque G exige silencio. Luego el PO corrigió: «me equivoque, el modo silencio, ya está ok». La frontera llegó unos 6 minutos después de la señal. Al terminar, el PO dijo: «listo, salieron todos al aire, no agarre el timing».
+
+**S3-H.** Antes del bloque, el PO declaró «quedo listo el telefono». A la aclaración neutral respondió: «está en timbre, haptica activva, feedback aptics apagado. cerre dev aún no golepo». Preparación en el mismo proceso: despliegue de «First Shot / feedback» a las 14:17:59Z, cambio de `feedback.haptics` en `timeReal` 57,93 y cierre de DEV de preparación a las 14:18:08Z. Los planes siguientes ya tienen `4f33dff747fb` y el precheck se aceptó con `before-H` como export anterior. Después vino un segundo par de apertura y cierre de DEV, que es la frontera.
+
+**L43 es preparación.** Su plan empezó a las 14:19:55.986Z, con DEV abierto. Por eso estaba en curso al cerrar DEV, y C2.6 lo clasifica como preparación. Es un **Valid aplicado con `4f33dff747fb`**: `LaunchHash` y `GestureHash` coinciden y no hay pendientes. Al terminar, el PO dijo: «listo, logré golepar 1 vez». Ese golpe corresponde a L43. La cuota, L44–47, no tuvo contacto. La frontera no se movió para incluirlo.
+
+**S3-I.** El PO decidió literalmente «Jugar S3-I» y declaró: «Listo, timbre activo, volumen audible y háptica del sistema desactivada». Al terminar dijo: «listo, terminé S3-I. No logré golpear ninguna vez».
+
+**Respuestas literales** (diálogos 1–4 y 5–7, con las preguntas de §6, antes de mostrar resultados):
+
+| Bloque | 1 Excepciones | 2 Sonido | 3 Vibración | 4 Nota / destello / raqueta | 5 Sin contacto | 6 Aire o tardío | 7 Raqueta |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| F | Nada que señalar | El sonido al golpear | Vibración al golpear | Se ve la raqueta al golpear | Nada que señalar | Sonido de que le pegaste al aire | Se veía buen movimiento |
+| G | Nada que señalar | Nada que señalar | Nada que señalar | Nada que señalar | Nada que señalar | Nada que señalar | Nada que señalar |
+| H | Nada que señalar | sonido al golpear | no hubo | movimiento al intentar golpear | Nada que señalar | El sonido al intentar golpear | movimiento al intetar golpear |
+| I | Nada que señalar | Nada que señalar | Nada que señalar | Nada que señalar | Nada que señalar | Nada que señalar | Nada que señalar |
+
+Preguntas adicionales de F: «¿Un perfecto se siente claramente mejor?» → «Nada que señalar»; «¿Entendiste el resultado del golpe sin el panel?» → «Nada que señalar». Pregunta de §5 tras la pausa: «¿Qué viste en la raqueta, el destello, el sonido y la vibración al pausar y al reanudar?» → «Nada que señalar». No se hicieron aclaraciones posteriores.
+
+**Restauración.** El PO declaró «Listo, repuestos», sin detallar los valores repuestos. Antes de relanzar se tomó el export `before-restore-2`, con los tres archivos iguales. Proceso nuevo a las **2026-11-11T14:35:33.0147180Z**: `0.1.0+097eab9 dev`, P0-calib-1, **`6ecfdfa78cbb`, cero pendientes y cero gestos**. Después del arranque, P0-calib-1, Po-1 y last-active seguían iguales byte a byte y por SHA-256 al respaldo y a la referencia inicial. SHA-256 del proceso `71c8f1424673cd2748e2bfaed7ba1a05373cbdd5fdc0ab63e90c469040029490`. «App haptics» volvió a 1 al abrir el proceso nuevo, sin guardarse en ningún preset. Queda instalada `0.1.0+097eab9 dev`.
+
+### Qué cubre y qué no la sesión complementaria
+
+**Acreditado por el registro.** En los cuatro bloques y en la pausa hubo una presentación concordante por intento, cero discrepancias, cero pendientes y los hashes literales. La pausa y la reanudación se registraron 1,05 s y 0,55 s después de un Valid aplicado. Con `feedback.haptics=0` hubo un Valid aplicado (L43), que es preparación.
+
+**Acreditado por el PO.** En F, sonido y vibración al golpear y raqueta visible; sonido distinto al pegarle al aire. En H, que corresponde a L43 fuera de cuota, sonido al golpear y vibración «no hubo». Sobre las pausas dijo «con esas 2 se vio bien», y a la pregunta de §5 respondió «Nada que señalar».
+
+**Sigue NotEvaluated:**
+- contraste Perfect/Valid y destello de Perfect: 0 Perfect en 12 + 12 recepciones;
+- silencio con impacto aplicado (G);
+- `feedback.haptics=0` con contacto **dentro de cuota** (H); solo existe L43, que es preparación;
+- háptica del sistema desactivada con contacto (I); la observación (b) de S3-D sigue abierta;
+- congelación del destello en pausa.
+
+**Observación recurrente.** El PO atribuye los fallos al timing: «el timing de golpear es lo que me cuesta actualmente», «no agarre el timing». Las cuotas C8 tuvieron 4 contactos en 24 recepciones, todos en F; en S3-A–E fueron 4 en 21. La [PR #44](https://github.com/rafaallendes-boop/squash-clash/pull/44), un aviso visual del instante de impacto, apunta a este problema, pero no se probó aquí.
+
+### Recomendación de Claude tras la sesión complementaria
+
+La cadena técnica de feedback se comporta como se predeclaró en las 45 recepciones de cuota de S3 y en todos los extras: entrega única, presentación concordante y ninguna señal de contacto sin contacto. Sin embargo, la sesión no logró evaluar lo que buscaba, porque casi no hubo contactos, y no por un fallo del feedback. Repetir los mismos bloques con el mismo timing probablemente dé el mismo resultado.
+
+Claude recomienda que el PO elija una de dos opciones:
+- **(a) Aceptar S3 con condiciones.** Los cinco NotEvaluated y la observación (b) quedan registrados como pendientes para observarlos en S4 o después de mejorar el timing.
+- **(b) No aceptar todavía.** Primero se integra y prueba una ayuda de timing, como la PR #44, con su propia autorización, y luego se hace otra sesión breve.
+
+Las dos pausas fuera del máximo predeclarado se conservan; el PO decide si cuentan. **Decide el PO.** S4 sigue sin autorizar.
