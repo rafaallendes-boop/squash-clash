@@ -13,7 +13,7 @@ namespace SquashClash.Runtime.Rally
         private Label status;
         private Button toggle,match,pause,next,rematch,demo;
         private string shown;
-        private int human=-1,rival=-1,shots=-1,played=-1;
+        private int human=-1,rival=-1,shots=-1,played=-1,buttons=-1;
         private PlayerId toHit;
         private RallyPhase phase=(RallyPhase)(-1);
         public void Initialize(AppBootstrap app,RallyDirector rally,VisualElement parent)
@@ -46,24 +46,29 @@ namespace SquashClash.Runtime.Rally
         public void TogglePause(){app.Clock.Paused=!app.Clock.Paused;Refresh();}
         public void ToggleDemo(){rally.Autopilot=!rally.Autopilot;Refresh();}
         private void Update()=>Refresh();
+        // Called every frame: it touches the UI only when what it shows changed, so an idle HUD costs nothing.
         public void Refresh()
         {
             if(rally==null||toggle==null)return;
-            bool active=rally.Active;
-            toggle.text=active?"Práctica":"Rally";toggle.SetEnabled(active||rally.CanStart);
-            var visible=active?DisplayStyle.Flex:DisplayStyle.None;
-            pause.style.display=rematch.style.display=demo.style.display=status.style.display=visible;
-            match.style.display=active?DisplayStyle.None:DisplayStyle.Flex;match.SetEnabled(rally.CanStart);
-            // "Seguir" skips the pause between points (spec 5.2: the pause can be skipped).
-            next.style.display=active&&rally.Phase==RallyPhase.PointOver?DisplayStyle.Flex:DisplayStyle.None;
+            bool active=rally.Active,canStart=active||rally.CanStart,paused=app.Clock!=null&&app.Clock.Paused,auto=rally.Autopilot;
+            int key=(active?1:0)|(canStart?2:0)|(paused?4:0)|(auto?8:0)|((int)rally.Phase<<4);
+            if(key!=buttons)
+            {
+                buttons=key;
+                toggle.text=active?"Práctica":"Rally";toggle.SetEnabled(canStart);
+                var visible=active?DisplayStyle.Flex:DisplayStyle.None;
+                pause.style.display=rematch.style.display=demo.style.display=status.style.display=visible;
+                match.style.display=active?DisplayStyle.None:DisplayStyle.Flex;match.SetEnabled(canStart);
+                // "Seguir" skips the pause between points (spec 5.2: the pause can be skipped).
+                next.style.display=active&&rally.Phase==RallyPhase.PointOver?DisplayStyle.Flex:DisplayStyle.None;
+                pause.text=paused?"Reanudar":"Pausa";demo.text=auto?"Demo: sí":"Demo: no";
+            }
             if(!active){shown=null;phase=(RallyPhase)(-1);return;}
-            pause.text=app.Clock.Paused?"Reanudar":"Pausa";demo.text=rally.Autopilot?"Demo: sí":"Demo: no";
             var rules=rally.Rules;
             // Rebuild the line only when something it shows changed.
             if(shown!=null&&phase==rally.Phase&&human==rally.HumanPoints&&rival==rally.RivalPoints&&shots==rules.Shots&&toHit==rules.ToHit&&played==rally.PointsPlayed)return;
             phase=rally.Phase;human=rally.HumanPoints;rival=rally.RivalPoints;shots=rules.Shots;toHit=rules.ToHit;played=rally.PointsPlayed;
-            var last=rally.LastPoint;
-            var game=rally.Match;
+            var last=rally.LastPoint;var game=rally.Match;
             shown=phase==RallyPhase.MatchOver&&game!=null&&game.Winner.HasValue?RallyText.MatchOver(game.Winner.Value,game.Human,game.Rival)
                 :phase==RallyPhase.PointOver&&last.HasValue?RallyText.Point(last.Value.Winner,last.Value.Cause,last.Value.Reception,last.Value.Shots,human,rival)
                 :game!=null?RallyText.LiveMatch(human,rival,shots,toHit,game.Server,game.Box)
