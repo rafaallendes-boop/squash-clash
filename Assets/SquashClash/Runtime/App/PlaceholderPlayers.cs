@@ -10,6 +10,13 @@ namespace SquashClash.Runtime.App
         private GameObject human, rival;
         private Mesh capsule;
         public Transform Human => human != null ? human.transform : null;
+        public Transform Rival => rival != null ? rival.transform : null;
+        // Gameplay owns where the bodies are; this only draws them (floor x, z in metres).
+        public void Place(Vector2 humanXZ, Vector2 rivalXZ)
+        {
+            if (human != null) human.transform.localPosition = new Vector3(humanXZ.x, 0.9f, humanXZ.y);
+            if (rival != null) rival.transform.localPosition = new Vector3(rivalXZ.x, 0.9f, rivalXZ.y);
+        }
 
         public void Apply(ParamSet p)
         {
