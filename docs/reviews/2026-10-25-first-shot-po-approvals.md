@@ -2207,3 +2207,125 @@ ENTREGA:
 - PR documental lista para revisión de Claude coordinada por el PO, sin fusionar.
 - Detenerse.
 ````
+
+
+## Registro verificado del 11–12 de noviembre de 2026 — Fable, cierres y decisiones de First Shot
+
+Entrega documental desde `a844c76cfadb1e1c5321ff4d185d9b57f77fb79b`. Primer commit **`385b8ef`**: encargo literal completo anterior a este registro. Fuentes: archivos de las ramas indicadas, Git local, estado de PR consultado en GitHub, evidencia local ignorada y hechos/citas de la sesión del PO transmitidos literalmente en el encargo anterior. Las suites y la instalación siguientes son **históricas**: no se ejecutaron en esta entrega. Las entradas anteriores se conservan; este registro actualiza sus estados pendientes.
+
+### Autorizaciones posteriores de Fable
+
+La entrada del 11 de noviembre que limitaba First Rally a R1–R3 y ordenaba parar después de R3 se conserva como histórica. La autorización ampliada que ejecutó Fable figura literalmente en [plan First Rally, §1](https://github.com/rafaallendes-boop/squash-clash/blob/d9605b50d1b6337d7a08549473b0a9da91d25770/docs/reviews/2026-11-11-first-rally-plan.md#1-autorización-literal-del-po):
+
+> AUTORIZACIÓN: autorizo First Rally, etapas R1–R5 y, si queda tiempo, R6 (First Match). Haz un commit por etapa con tests verdes, para que yo pueda cortar donde quiera. Mi uso de Fable es limitado: prioriza avance funcional y commitea seguido.
+
+El plan la registra como del 11 de noviembre; Git acredita su incorporación en `f271125f50b60d2e0337c8348a56cecf8c9c8791`, el **11 de noviembre de 2026 a las 15:52:57 America/Santiago**. Esto fecha el registro, no el mensaje original del PO: **fecha exacta de emisión de la ampliación pendiente de confirmación del PO**. Es posterior a la autorización limitada y habilita R1–R5 y R6 si quedaba tiempo; el [informe de gameplay](https://github.com/rafaallendes-boop/squash-clash/blob/d9605b50d1b6337d7a08549473b0a9da91d25770/docs/reviews/2026-11-11-first-rally-gameplay.md) declara R1–R6 implementadas, con R6 mínimo y saque automático. No acredita aceptación física.
+
+Autorización del pase visual del **12 de noviembre de 2026**, copiada de [su plan](https://github.com/rafaallendes-boop/squash-clash/blob/a96de94bf9a53ed4a3272c67adf4b98ed530ef12/docs/reviews/2026-11-12-visual-pass-plan.md#autorización-literal-del-po-12-de-noviembre-de-2026):
+
+> AUTORIZACIÓN: autorizo un pase visual, saliendo del alcance «dirección de arte = FUTURO» solo para esta tarea. Cítala en tu informe. Mi uso de Fable es limitado (cuota de 5 horas): trabaja por bloques en este orden de prioridad, haz un commit por bloque que deje la app funcionando, y si te quedas sin tiempo lo ya entregado debe servir.
+
+Los límites de ambos planes se conservan: spec, escenarios, umbrales y criterios intactos; el pase visual protege Core/física/reglas/timing, SimulationKey y defaults. La instalación y las fusiones posteriores tienen autorizaciones propias, registradas abajo.
+
+### Revisión independiente de Claude — 12 de noviembre
+
+Según la sesión independiente del PO, comunicada en el encargo literal: sin bloqueantes de código salvo la regla «fuera tras el primer bote». Claude reprodujo **#46: 676/676 EditMode y 393/393 PlayMode sobre `f57a09c`**; **#47: 676/676 y 400/400 sobre `62e2f4f`**. No son nuevas corridas de Codex ni resultados posteriores a la corrección.
+
+El [informe First Rally, §11](https://github.com/rafaallendes-boop/squash-clash/blob/d9605b50d1b6337d7a08549473b0a9da91d25770/docs/reviews/2026-11-11-first-rally-gameplay.md#11-corrección-de-la-regla-fuera-tras-el-primer-bote-12-de-noviembre) registra la referencia WSF 6.2.4 y definición OUT: también después del primer bote **pierde quien pegó**, en lugar del receptor. Corregido en `c9e2488fbf76ed73f615330dcdb2b40219736a91`; head final de gameplay `d9605b50d1b6337d7a08549473b0a9da91d25770`. Integrado al pase visual por merge `c92c64c58a0062bf6ef2875c588093c211914256` (padres `5d0d511` y `d9605b5`), head final `a96de94bf9a53ed4a3272c67adf4b98ed530ef12`.
+
+Resultados posteriores, atribuidos a sus sesiones e informes:
+
+| Fuente | Commit probado | EditMode | PlayMode | AutoQA | check-release |
+|---|---|---|---|---|---|
+| First Rally, §11 | `c9e2488` | 678/678 | 393/393 | PASS / 0 / nivel 1 | No se atribuye una corrida nueva tras el fix |
+| [Pase visual, §9](https://github.com/rafaallendes-boop/squash-clash/blob/a96de94bf9a53ed4a3272c67adf4b98ed530ef12/docs/reviews/2026-11-12-visual-pass.md#9-build-dev) | `c92c64c` | 678/678 | 400/400 | PASS / 0 / nivel 1 | OK dev/prod, árbol limpio |
+
+Observaciones preservadas del [pase visual, §6 bis](https://github.com/rafaallendes-boop/squash-clash/blob/a96de94bf9a53ed4a3272c67adf4b98ed530ef12/docs/reviews/2026-11-12-visual-pass.md#6-bis-observaciones-de-la-revisión-independiente-12-de-noviembre):
+
+- El temblor de cámara **no se congela en pausa**; avanza con tiempo no escalado durante los 0,18 s posteriores a un golpe fuerte.
+- Un apoyo durante esos **0,18 s** puede fijar la mira M2-4 con la proyección desplazada hasta unos **2,8 cm**; no se corrige por esta documentación.
+- Sombra y estela cambiaron ayudas aprobadas en H1. No empeorar altura/profundidad requiere juicio en iPhone con L1–L6 y DEV cerrado; no se infiere validación de H1.
+- p95 del editor **0,51→0,81 ms**, batches aproximadamente **27→58**. El p95 de iPhone sigue pendiente; no se extrapola del editor.
+- Desviación de TDD declarada en **§2** del mismo informe: las pruebas de vistas se escribieron después del código, sin RED previo por aserción de producto. §6 bis contiene las cuatro observaciones independientes; no se atribuye allí una quinta observación ni se presenta ese TDD posterior como RED→GREEN.
+
+### Instalación autorizada y arranque comprobado — 12 de noviembre
+
+Autorización literal del PO, transmitida en este encargo: **«Realiza la instalación en el iphone. lo tengo desbloqueado»**. Instalación histórica de **`0.1.0+c92c64c dev`**, Release ARM64, IL2CPP, no Development, SQUASH_DEV. Perfil incorporado creado el **2026-11-11T13:50:05Z**, vigente hasta **2026-11-18T13:50:05Z (10:50:05 America/Santiago)**; fechas cotejadas offline en la build conservada. Sustituye como dato vigente de la app instalada al perfil anterior que vencía el 12 de noviembre; ese histórico permanece.
+
+Respaldo previo: los seis archivos de presets/selección son idénticos a `complement-20261111-restored` del worktree `s3-validation`. Se cotejaron de nuevo offline en esta entrega, byte a byte, contra el export posterior a la instalación: **6/6 idénticos** (`P0-calib-1.json`, `Po-1.json`, `S1-M2-4.json`, `S1-calib-gesture.json`, `S1-sling.json`, `last-active.txt`). SHA-256:
+
+| Archivo | SHA-256 |
+|---|---|
+| P0-calib-1.json | `2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd` |
+| Po-1.json | `9008c33ab89f82e669bc227a81b37ed641f69e4657ee70df6c89ff0c0edb1767` |
+| last-active.txt | `5885ce8a7add389b2c82cb43f6944d7e2ef7ebeb0bffd77b5b635361a8a46087` |
+
+Según la sesión del PO, el primer lanzamiento fue rechazado por iOS: **«profile has not been explicitly trusted by the user»**. El PO verificó la app en Ajustes. El export conservado acredita un **proceso nuevo 2026-11-12T20:18:23Z** (17:18:23 Chile; primer launch `20:18:23.1814010Z`), build `0.1.0+c92c64c dev`, **P0-calib-1 / `6ecfdfa78cbb` / pending 0**, presets y selección idénticos byte a byte. Esto acredita arranque/restauración, no aceptación ni una sesión 4.5.
+
+Evidencia ignorada conservada en **`.claude/worktrees/visual-art-pass/Logs/evidence/install-c92c64c-20261112`**: `backup-before-install`, `after-launch` y registros de instalación/arranque. No se versiona evidencia, logs, perfiles, builds ni identificadores personales. Este encargo no accedió al iPhone.
+
+### Cierres auditados con Git y estado de las PR
+
+#41, #42 y #43 quedaron fusionadas el **11 de noviembre de 2026**, respectivamente a las **11:59:31, 11:59:42 y 11:59:52 America/Santiago según el commit de merge** (GitHub marca #41 a las 11:59:32; un segundo de diferencia de registro). #45 se fusionó el mismo día a las **13:18:17**. En la base `a844c76`, ninguno de los dos Markdown registraba estos cuatro cierres efectivos; #45 conservaba la autorización/revisión y el merge pendiente. Este registro completa esos cierres sin inventar otra aprobación literal.
+
+- **#41:** sincronización documental de onboarding/estado y reglas del flujo.
+- **#42:** test `HapticsOff_FailedAttempt_NoImpactAudioNoHaptic`, sin cambio de producto.
+- **#43:** experimento explícito descriptivo SL5/SL6 post-frontis; no es aceptación ni regresión ordinaria.
+- **#45:** cierre técnico S4 4.1/4.3 y Step 0 de 4.2, con correcciones de Claude. El [informe S4](https://github.com/rafaallendes-boop/squash-clash/blob/f359f7c039ad79f4096990a70dae91628950f229/docs/reviews/2026-11-11-first-shot-s4-timing.md#correcciones-de-claude--verificación-final-previa-al-merge) conserva 562/562 EditMode, 372/372 PlayMode, check-release dev/prod OK y AutoQA PASS/0/nivel 1 desde `bf0cd2a`; **la fusión no acepta S4**.
+
+Padres completos comprobados con `git show -s --format=%P`; estado fusionado cotejado en GitHub:
+
+| PR | Merge commit | Primer padre | Segundo padre exacto |
+|---|---|---|---|
+| [#41](https://github.com/rafaallendes-boop/squash-clash/pull/41) | `cb145c31837cb344e464d60675217b5c46bdd20b` | `433633f0c96f3a4b75c2d40b5520c807ce54e98a` | `d7cdc44f5243bcbc5b023f70882e506410c1aa63` |
+| [#42](https://github.com/rafaallendes-boop/squash-clash/pull/42) | `7d83f4a96a2d02ed4965953e32661b12ea36b6d6` | `cb145c31837cb344e464d60675217b5c46bdd20b` | `689cc6612757500a8e84b783f4bdea6d6225f431` |
+| [#43](https://github.com/rafaallendes-boop/squash-clash/pull/43) | `98701deaa4c52cebb0a855cfe0896e2c97d416c4` | `7d83f4a96a2d02ed4965953e32661b12ea36b6d6` | `5331667045fdcadd84488e75c0f2baf3cac577fc` |
+| [#45](https://github.com/rafaallendes-boop/squash-clash/pull/45) | `a844c76cfadb1e1c5321ff4d185d9b57f77fb79b` | `18b796a615b5bbca856c1624829a8ddc1895e214` | `f359f7c039ad79f4096990a70dae91628950f229` |
+| [#46](https://github.com/rafaallendes-boop/squash-clash/pull/46) | `2fbb5be72041b59a25231815270d173d2673ebc5` | `a844c76cfadb1e1c5321ff4d185d9b57f77fb79b` | `d9605b50d1b6337d7a08549473b0a9da91d25770` |
+| [#47](https://github.com/rafaallendes-boop/squash-clash/pull/47) | `9af2b0c8bd92fd5d27f9b2486ea7b626da903874` | `2fbb5be72041b59a25231815270d173d2673ebc5` | `a96de94bf9a53ed4a3272c67adf4b98ed530ef12` |
+
+Árboles obtenidos con `git rev-parse <commit>^{tree}` y `<commit>^2^{tree}`:
+
+| PR | Árbol del merge | Comparación con el árbol del segundo padre |
+|---|---|---|
+| #41 | `82844ca5200c230f10dcb3e735be440ab7e6ee47` | Idéntico |
+| #42 | `0d769c028c1e19518139513966056fe9cbdf130b` | **Distinto**: `a67d6af74ca8b71e59fc0eec35780b3bb59d4199` |
+| #43 | `0602177e45e15d120402812c37c3d941bdd97915` | **Distinto**: `92e1570565f41c5919446473a88f259c2bf88675` |
+| #45 | `d9bbdccdbe6720453ad3865975b2644991c0c835` | Idéntico |
+| #46 | `f74e4825ecbad712b3da8869bb4f5b26b01fe436` | Idéntico |
+| #47 | `a3b69342d9b4e1f63feadc5a299d9f17239d8ae5` | Idéntico |
+
+**#42 y #43 no tienen árbol idéntico al segundo padre.** En #42, los ocho archivos distintos respecto del segundo padre son idénticos al primer padre; el delta del merge respecto del primer padre es solo `ShotFeedbackTests.cs`. En #43 son nueve archivos heredados idénticos al primer padre; el delta nuevo son `Sl56PostFrontisTrajectoryReport.cs`, su `.meta` y el asmdef de experimentos. Cotejado por objetos Git: las diferencias proceden de los cambios ya integrados en main, no se declara falsamente igualdad de árboles.
+
+### Fusiones #46 y #47 — 12 de noviembre
+
+Aprobación literal del PO, comunicada en el encargo: **«Si, apruebo fusionar»**, para fusionar **#46 y #47 antes de la capa causal**. Cierres técnicos:
+
+- **#46**, a las **17:36:38 America/Santiago** (`20:36:38Z`): merge `2fbb5be72041b59a25231815270d173d2673ebc5`, segundo padre exacto `d9605b50d1b6337d7a08549473b0a9da91d25770`, árbol idéntico.
+- **#47**, a las **17:37:09 America/Santiago** (`20:37:09Z`): base cambiada de `firstrally/gameplay` a **`main`**; el plan/PR apilada documentan la base anterior y GitHub confirma la final. Merge `9af2b0c8bd92fd5d27f9b2486ea7b626da903874`, segundo padre exacto `a96de94bf9a53ed4a3272c67adf4b98ed530ef12`, árbol idéntico.
+
+Ramas remotas `firstrally/gameplay` y `visual/art-pass` y sus worktrees **conservados**, heads cotejados con `git ls-remote` y los checkouts locales. La build instalada y su evidencia permanecen en el worktree `visual-art-pass`. No se modificaron esas ramas ni #32.
+
+**Mismo producto instalado que main `9af2b0c`:** `git diff --name-only c92c64c 9af2b0c` devuelve únicamente `docs/reviews/2026-11-12-visual-pass.md`. Por tanto, el código/recursos versionados coinciden; la etiqueta de la build sigue siendo `0.1.0+c92c64c dev`. Esto no afirma identidad binaria con otra build ni mediciones nuevas. Los informes de Fable que aún dicen «sin fusionar»/«sin instalar» describen su entrega anterior y quedan actualizados por este registro posterior.
+
+**La fusión no acepta First Shot, First Rally ni First Match. Su aceptación queda para el playtest integrado.** Las observaciones H1/p95/temblor/TDD y los NotEvaluated siguen abiertos.
+
+### Decisiones literales D1–D4 y aceptación reservada — PO, 12 de noviembre
+
+Fuente de las tres citas siguientes: mensaje del PO del encargo documental, reproducido íntegro en el primer commit. Se conservan los signos **[…]** tal como fueron recibidos; no se reconstruye texto omitido. Contexto: [Step 0 de T4.2](https://github.com/rafaallendes-boop/squash-clash/blob/f359f7c039ad79f4096990a70dae91628950f229/docs/reviews/2026-11-11-first-shot-s4-timing.md#t42--step-0-documental-implementación-no-autorizada) y observaciones **2 y 3** de la revisión de #44 recogidas en ese informe (borde tardío y alpha cero en +ValidMs inclusivo).
+
+> Decisiones D1–D4:
+> * D1: Aprobada opción B. Ocultar completamente el indicador de timing durante el intervalo propuesto, sin pistas residuales. Mantener ayuda completa por defecto y actualizar los hashes y anclajes de AutoQA correspondientes.
+> * D2: Aprobada la propuesta de Codex: 3×3 zonas, potencia en tercios y clasificación del primer bote. Son bandas provisionales de observación, no criterios de aceptación.
+> * D3: Aprobada la implementación de la capa causal no direccional. Prefiero completar H3b antes de cerrar First Shot, manteniéndola como una entrega independiente.
+> * D4: Aprobadas ambas correcciones del indicador mediante TDD, sin modificar las ventanas ni sus umbrales.
+
+> Las pruebas que realizaremos ahora en el iPhone estarán enfocadas principalmente en revisar y validar lo que hizo Fable, incluyendo personajes, cancha, animaciones, efectos visuales, HUD y su integración con los controles. Las pruebas reales de jugabilidad las quiero realizar cuando tengamos First Shot y First Rally cerrados e integrados. […] No quiero declarar First Shot aceptado solo por pruebas técnicas o visuales. Podemos dejar implementadas y verificadas sus tareas, pero reservar su aceptación física definitiva para el playtest integrado.
+
+> Objetivo: dejar First Shot y First Rally técnicamente completos, integrados y listos para una sesión real de juego en iPhone. […] Mantengamos el enfoque incremental, con pruebas automatizadas, revisión independiente y aprobación del PO antes de cada fusión.
+
+**Estado vigente que resulta de estas decisiones:** implementación de 4.2 y capa causal no direccional (Tarea 3.1 del plan r2) autorizadas como **entregas propias**, con pruebas automatizadas, revisión independiente y aprobación del PO antes de cada fusión. 4.4 se implementa solo después de que el PO valide el anexo C. **4.5, sesiones físicas, sigue sin autorizar.** La aceptación física definitiva de First Shot se reserva al playtest integrado; las pruebas técnicas y visuales no la sustituyen. H3b completo permanece NotEvaluated hasta completar y verificar lo pendiente. Este registro no implementa ninguna de esas tareas ni inicia sesiones.
+
+### Verificación y entrega de este registro
+
+Delta propio limitado a **AGENTS.md** y **docs/reviews/2026-10-25-first-shot-po-approvals.md**, conservando los originales como prefijo. Autorizaciones de los planes copiadas literalmente y decisiones D1–D4 cotejadas con el encargo del primer commit; padres/árboles, producto versionado y seis archivos de presets cotejados por lectura offline. Sin código/tests/spec/planes/criterios/defaults modificados, sin suites/AutoQA/check-release/builds/instalaciones nuevos ni acceso al iPhone. PR documental lista para revisión de Claude **coordinada por el PO**, **sin fusionar**. **Detenerse**; las entregas de implementación autorizadas requieren encargos propios.
