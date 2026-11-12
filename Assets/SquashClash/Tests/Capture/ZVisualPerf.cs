@@ -38,17 +38,22 @@ namespace SquashClash.Capture
             for(int i=0;i<120;i++)yield return null; // warm-up at the app's 60 fps cap
             Application.targetFrameRate=-1;
             for(int i=0;i<60;i++)yield return null;
-            const int frames=900;var ms=new double[frames];long batches=0,setPass=0,triangles=0,maxBatches=0;
-            long allocated=GC.GetAllocatedBytesForCurrentThread();int gen0=GC.CollectionCount(0);
-            for(int i=0;i<frames;i++)
+            // Twenty seconds of real time, so whole points are played whatever the frame rate.
+            const int capacity=400000;const double seconds=20;var ms=new double[capacity];int frames=0;long batches=0,setPass=0,triangles=0,maxBatches=0;
+            long bytes=0,maxBytes=0;int gen0=GC.CollectionCount(0);
+            var gc=Unity.Profiling.ProfilerRecorder.StartNew(Unity.Profiling.ProfilerCategory.Memory,"GC Allocated In Frame");
+            double started=Time.realtimeSinceStartupAsDouble;
+            while(frames<capacity&&Time.realtimeSinceStartupAsDouble-started<seconds)
             {
-                yield return null;ms[i]=Time.unscaledDeltaTime*1000.0;
+                yield return null;ms[frames++]=Time.unscaledDeltaTime*1000.0;
+                long frameBytes=gc.Valid?gc.LastValue:-1;bytes+=frameBytes;maxBytes=Math.Max(maxBytes,frameBytes);
 #if UNITY_EDITOR
                 batches+=UnityEditor.UnityStats.batches;setPass+=UnityEditor.UnityStats.setPassCalls;triangles+=UnityEditor.UnityStats.triangles;
                 maxBatches=Math.Max(maxBatches,UnityEditor.UnityStats.batches);
 #endif
             }
-            long bytes=GC.GetAllocatedBytesForCurrentThread()-allocated;int collections=GC.CollectionCount(0)-gen0;
+            gc.Dispose();int collections=GC.CollectionCount(0)-gen0;
+            Array.Resize(ref ms,frames);
             Array.Sort(ms);
             int renderers=UnityEngine.Object.FindObjectsByType<Renderer>(FindObjectsSortMode.None).Length;
             // Art-pass components, if present: direct cost of one pose update per figure.
@@ -60,16 +65,16 @@ namespace SquashClash.Capture
                 var call=new List<Action<float>>();
                 foreach(var view in views)call.Add((Action<float>)Delegate.CreateDelegate(typeof(Action<float>),view,animate));
                 foreach(var c in call)c(1f/60);
-                long before=GC.GetAllocatedBytesForCurrentThread();var watch=Stopwatch.StartNew();
+                int gcBefore=GC.CollectionCount(0);long before=GC.GetTotalMemory(false);var watch=Stopwatch.StartNew();
                 const int loops=2000;
                 for(int i=0;i<loops;i++)foreach(var c in call)c(1f/60);
-                watch.Stop();figureBytes=(GC.GetAllocatedBytesForCurrentThread()-before)/loops;
+                watch.Stop();figureBytes=GC.CollectionCount(0)!=gcBefore?-2:Math.Max(0,GC.GetTotalMemory(false)-before)/loops;
                 figureMicros=watch.Elapsed.TotalMilliseconds*1000/loops;
             }
             string F(double v)=>v.ToString("0.###",CultureInfo.InvariantCulture);
-            string json="{\"set\":\""+set+"\",\"frames\":"+frames+",\"frameMsP50\":"+F(ms[frames/2])+",\"frameMsP95\":"+F(ms[(int)(frames*.95)])+",\"frameMsP99\":"+F(ms[(int)(frames*.99)])+
+            string json="{\"set\":\""+set+"\",\"seconds\":"+F(seconds)+",\"frames\":"+frames+",\"frameMsP50\":"+F(ms[frames/2])+",\"frameMsP95\":"+F(ms[(int)(frames*.95)])+",\"frameMsP99\":"+F(ms[(int)(frames*.99)])+
                 ",\"batchesAvg\":"+F(batches/(double)frames)+",\"batchesMax\":"+maxBatches+",\"setPassAvg\":"+F(setPass/(double)frames)+",\"trianglesAvg\":"+F(triangles/(double)frames)+
-                ",\"renderers\":"+renderers+",\"managedBytesPerFrame\":"+F(bytes/(double)frames)+",\"gen0Collections\":"+collections+
+                ",\"renderers\":"+renderers+",\"gcBytesPerFrameAvg\":"+F(bytes/(double)frames)+",\"gcBytesPerFrameMax\":"+maxBytes+",\"gen0Collections\":"+collections+
                 ",\"figures\":"+figures+",\"figurePoseMicrosPerFrame\":"+F(figureMicros)+",\"figurePoseBytesPerFrame\":"+figureBytes+
                 ",\"pointsPlayed\":"+rally.PointsPlayed+",\"unity\":\""+Application.unityVersion+"\",\"device\":\""+SystemInfo.deviceModel+"\"}";
             File.WriteAllText(Path.Combine(root,"perf-"+set+".json"),json+"\n");

@@ -35,7 +35,8 @@ namespace SquashClash.Runtime.Ball
                 GetComponent<MeshFilter>().sharedMesh = mesh;
                 // Art pass: still the flat black ball (its strongest contrast against the light walls and floor), wrapped in a
                 // soft dark halo that makes the dot read a little larger without changing its scale. Visual only: the radius is
-                // unchanged. A white outline was tried and rejected: at game distance it averaged the dot to grey on the walls.
+                // unchanged. A white outline was tried first and dropped without a device test: it cannot show against the white walls and,
+                // on a dot this small, it competes with the black core. Worth revisiting on the iPhone.
                 material = new Material(SquashClash.Runtime.Visual.VisualKit.ToonShader) { name="Ball visual black" };
                 material.SetColor("_BaseColor", new Color(.012f,.012f,.016f)); material.SetColor("_ShadeColor", Color.white);
                 material.SetColor("_RimColor", new Color(0,0,0,0));
