@@ -51,6 +51,13 @@ namespace SquashClash.Core.Rally
             using(var simulation=Factory.Create(Physics,Court))
                 return TrajectoryRunner.Run(simulation,from,Steps(horizonSeconds),StopCondition.SecondFloorBounce,Court);
         }
+        private readonly BallState?[] serves=new BallState?[2];
+        // The automatic serve from a box; found once per context.
+        public BallState Serve(ServiceBox box)
+        {
+            if(!serves[(int)box].HasValue)serves[(int)box]=ServePlanner.Find(this,box);
+            return serves[(int)box].Value;
+        }
         public BallState NeutralLaunch(PlayerId receiver)
         {
             float side=receiver==PlayerId.Human?-1:1;

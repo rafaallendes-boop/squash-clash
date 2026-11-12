@@ -28,6 +28,10 @@ namespace SquashClash.Core.Rally
         public double RestartSeconds=1.6,MaxRallySeconds=900,MaxShots=200;
         // A flight with no racket contact and no terminal event for this long is a block (must never happen).
         public double StallSeconds=20;
+        // Match (spec 5.4, 5.2): point-a-rally to 7 by 2, pause between points in real seconds.
+        public double MatchTarget=7,MatchMargin=2,MatchPauseSeconds=2.5;
+        // Automatic serve: height of the hand and preferred landing spot in the receiver's quarter.
+        public double ServeHandHeight=1.1,ServeLandingDepth=8,ServeLandingFromWall=1.4;
         // AI difficulty (spec 11.5): Easy / Medium / Hard. Only these change with difficulty.
         public double EasyPerceptionS=.08,EasyStanceSigma=.12,EasyAimSigma=.28,EasyPowerSigma=.12,EasyTimingSigmaMs=55,EasyTemperature=1.2;
         public double MediumPerceptionS=.04,MediumStanceSigma=.06,MediumAimSigma=.16,MediumPowerSigma=.08,MediumTimingSigmaMs=38,MediumTemperature=.6;

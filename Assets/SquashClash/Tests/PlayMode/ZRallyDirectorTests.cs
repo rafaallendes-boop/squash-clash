@@ -145,6 +145,62 @@ namespace SquashClash.Runtime.Tests
             Assert.That(Drive(()=>rally.Phase==RallyPhase.HumanReception,2),Is.True);
             yield return null;
         }
+        [UnityTest] public IEnumerator Match_HumanServesFirst_AndCannotStrikeTheirOwnServe()
+        {
+            Assert.That(rally.StartMatch(),Is.True);
+            Assert.That(rally.Match,Is.Not.Null);Assert.That(rally.Match.Server,Is.EqualTo(PlayerId.Human));Assert.That(rally.Match.Box,Is.EqualTo(ServiceBox.Right));
+            Assert.That(rally.Phase,Is.EqualTo(RallyPhase.RivalReception),"the receiver takes the serve");
+            Assert.That(rally.Rules.Striker,Is.EqualTo(PlayerId.Human));Assert.That(rally.Rules.Serving,Is.True);Assert.That(rally.Rules.ToHit,Is.EqualTo(PlayerId.Rival));
+            Assert.That(app.Host.ActiveConfig.Source.GetBool("practice.enabled"),Is.False,"no human stroke on the human's own serve");
+            Assert.That(controller.Plan.Exists,Is.False);Assert.That(app.Tuning.Applied.GetBool("practice.enabled"),Is.True,"the applied tuning is never edited");
+            var court=app.Host.ActiveConfig.Court;
+            Assert.That(rally.Human.Position.x,Is.LessThan(court.ServiceBoxInner),"the server starts in the right box");
+            Assert.That(rally.Human.Position.y,Is.GreaterThan(court.Length-court.ShortLineNearBackEdgeFromBack));
+            yield return null;
+        }
+        [UnityTest] public IEnumerator Match_AfterThePoint_TheWinnerServes()
+        {
+            rally.SetParams(new RallyParams{MatchPauseSeconds=.3});rally.StartMatch();
+            // The human never swings: either the rival returns the serve and wins on the second bounce, or it misses.
+            Assert.That(Drive(()=>rally.Phase==RallyPhase.PointOver||rally.Phase==RallyPhase.MatchOver,40),Is.True);
+            var point=rally.LastPoint.Value;Assert.That(point.Cause,Is.Not.EqualTo(PointEndCause.ServiceFault),"the automatic serve is valid");
+            if(point.Winner==PlayerId.Rival)
+            {
+                Assert.That(rally.Match.Rival,Is.EqualTo(1));Assert.That(rally.Match.Server,Is.EqualTo(PlayerId.Rival));Assert.That(rally.Match.Box,Is.EqualTo(ServiceBox.Right));
+                Assert.That(Drive(()=>rally.Phase==RallyPhase.HumanReception,2),Is.True,"the rival's serve comes to the human after the pause");
+                Assert.That(rally.Rules.Striker,Is.EqualTo(PlayerId.Rival));Assert.That(rally.Rules.Serving,Is.True);
+                Assert.That(app.Host.ActiveConfig.Source.GetBool("practice.enabled"),Is.True);Assert.That(controller.Plan.Exists,Is.True,"the human can return the serve");
+            }
+            else
+            {
+                Assert.That(rally.Match.Human,Is.EqualTo(1));Assert.That(rally.Match.Server,Is.EqualTo(PlayerId.Human));Assert.That(rally.Match.Box,Is.EqualTo(ServiceBox.Left));
+            }
+            yield return null;
+        }
+        [UnityTest] public IEnumerator Match_IsPlayedToSevenByTwo_ThenWaitsForTheRematch()
+        {
+            rally.Autopilot=true;rally.AutopilotTimingSigmaMs=30;rally.Level=AiLevel.Medium;rally.Seed=9;
+            rally.SetParams(new RallyParams{MatchPauseSeconds=.1,MaxShots=16});int points=0;rally.PointEnded+=_=>points++;
+            rally.StartMatch();
+            Assert.That(Drive(()=>rally.Phase==RallyPhase.MatchOver,1500),Is.True,"score "+rally.HumanPoints+"-"+rally.RivalPoints+" after "+points+" points, phase "+rally.Phase);
+            var game=rally.Match;int high=Mathf.Max(game.Human,game.Rival),low=Mathf.Min(game.Human,game.Rival);
+            Assert.That(game.Finished,Is.True);Assert.That(high,Is.GreaterThanOrEqualTo(7));Assert.That(high-low,Is.GreaterThanOrEqualTo(2));
+            Assert.That(rally.HumanPoints,Is.EqualTo(game.Human));Assert.That(rally.RivalPoints,Is.EqualTo(game.Rival));Assert.That(rally.SystemFaults,Is.EqualTo(0));
+            long launch=app.Host.LaunchId;Drive(()=>false,3);
+            Assert.That(app.Host.LaunchId,Is.EqualTo(launch),"no point starts after the game is over");Assert.That(rally.Phase,Is.EqualTo(RallyPhase.MatchOver));
+            rally.Rematch();
+            Assert.That(rally.Match.Human+rally.Match.Rival,Is.EqualTo(0));Assert.That(rally.Match.Server,Is.EqualTo(PlayerId.Human));Assert.That(app.Host.LaunchId,Is.EqualTo(launch+1));
+            Assert.That(rally.Phase,Is.EqualTo(RallyPhase.RivalReception));
+            yield return null;
+        }
+        [UnityTest] public IEnumerator SkipWait_StartsTheNextPointAtOnce()
+        {
+            rally.SetParams(new RallyParams{MatchPauseSeconds=30});rally.StartMatch();
+            Assert.That(Drive(()=>rally.Phase==RallyPhase.PointOver,40),Is.True);long launch=app.Host.LaunchId;
+            Drive(()=>false,1);Assert.That(app.Host.LaunchId,Is.EqualTo(launch),"still inside the pause");
+            rally.SkipWait();Assert.That(Drive(()=>app.Host.LaunchId==launch+1,.2),Is.True);
+            yield return null;
+        }
         [UnityTest] public IEnumerator Rematch_ClearsTheScore_AndStartsAtOnce()
         {
             rally.StartMode();Assert.That(Drive(()=>rally.Phase==RallyPhase.PointOver,20),Is.True);Assert.That(rally.RivalPoints,Is.EqualTo(1));

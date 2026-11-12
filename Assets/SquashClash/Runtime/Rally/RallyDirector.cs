@@ -8,7 +8,7 @@ using SquashClash.Runtime.Shot;
 using UnityEngine;
 namespace SquashClash.Runtime.Rally
 {
-    public enum RallyPhase { Off, HumanReception, RivalReception, PointOver }
+    public enum RallyPhase { Off, HumanReception, RivalReception, PointOver, MatchOver }
     public readonly struct PointResult
     {
         public readonly PlayerId? Winner;public readonly PointEndCause Cause;public readonly int Shots;
@@ -37,6 +37,7 @@ namespace SquashClash.Runtime.Rally
         private int planVersion,autoSerial;
         private double closedSeenAt=double.NaN,lastObserved,waited,bodyCarry;
         private ReceptionResult? rivalReception;
+        private PlayerId? served;private ServiceBox servedBox;
         public RallyParams Params {get;private set;}=new RallyParams();
         public AiLevel Level {get;set;}=AiLevel.Medium;
         public long Seed {get;set;}=1;
@@ -56,6 +57,9 @@ namespace SquashClash.Runtime.Rally
         public int PointsPlayed {get;private set;}
         public int SystemFaults {get;private set;}
         public PointResult? LastPoint {get;private set;}
+        // Null in the plain rally (neutral launch, open score). Set in match mode: serve, rotation, game to 7 by 2.
+        public MatchScore Match {get;private set;}
+        public double WaitBetweenPoints=>Match!=null?Params.MatchPauseSeconds:Params.RestartSeconds;
         public event Action RallyStarted;
         public event Action<PointResult> PointEnded;
         // Rival swing: stroke side and whether it makes contact. The human's swing already has ShotController.SwingAccepted.
@@ -74,9 +78,20 @@ namespace SquashClash.Runtime.Rally
         {
             if(Active)return true;
             if(!CanStart)return false;
-            Active=true;practice.enabled=false;Human=Rival=null;ResetScore();ModeChanged?.Invoke(true);
+            Active=true;practice.enabled=false;Human=Rival=null;Match=null;ResetScore();ModeChanged?.Invoke(true);
             BeginPoint();return true;
         }
+        // First Match: every point starts with the automatic serve; the human serves first.
+        public bool StartMatch()
+        {
+            if(Active)StopMode(false);
+            if(!CanStart)return false;
+            Active=true;practice.enabled=false;Human=Rival=null;ResetScore();Match=NewMatch();ModeChanged?.Invoke(true);
+            BeginPoint();return true;
+        }
+        private MatchScore NewMatch()=>new MatchScore((int)Params.MatchTarget,(int)Params.MatchMargin,PlayerId.Human);
+        // Skips the rest of the pause between points; the next tick starts the point.
+        public void SkipWait(){if(Active&&Phase==RallyPhase.PointOver)waited=double.MaxValue/4;}
         public void StopMode()=>StopMode(true);
         private void StopMode(bool relaunchPractice)
         {
@@ -86,7 +101,7 @@ namespace SquashClash.Runtime.Rally
         }
         // Rematch: same rival, score back to zero, next point starts at once.
         public void ResetScore(){HumanPoints=RivalPoints=PointsPlayed=0;LastPoint=null;}
-        public void Rematch(){if(!Active)return;ResetScore();BeginPoint();}
+        public void Rematch(){if(!Active)return;ResetScore();if(Match!=null)Match=NewMatch();BeginPoint();}
         private void BeginPoint()
         {
             var cfg=EffectiveConfig.From(app.Tuning.ApplyPending());
@@ -96,8 +111,16 @@ namespace SquashClash.Runtime.Rally
             Rival.MoveTo(context.WaitPosition(PlayerId.Rival),0,BodyPhase.Recovering,BodyPhase.Waiting);
             rivalBrain=new FondoAi(context,AiDifficulty.For(Params,Level),Seed+PointsPlayed*7919L);
             humanBrain=new BotBrain(context,AutopilotTimingSigmaMs,Seed*31+PointsPlayed*104729L);
-            committed=new PointRules(context.Court,(float)Params.FootprintRadius);committed.Begin(null,PlayerId.Human);
-            rivalReception=null;LaunchToHuman(context.NeutralLaunch(PlayerId.Human));
+            committed=new PointRules(context.Court,(float)Params.FootprintRadius);rivalReception=null;served=null;
+            if(Match==null){committed.Begin(null,PlayerId.Human);LaunchToHuman(context.NeutralLaunch(PlayerId.Human));}
+            else
+            {
+                // Automatic placement in the box and automatic serve for both players (spec 8.7.5 adaptation).
+                var server=Match.Server;var box=Match.Box;var body=server==PlayerId.Human?Human:Rival;served=server;servedBox=box;
+                committed.BeginServe(server,box);body.Teleport(ServePlanner.BoxPosition(context,box));
+                body.MoveTo(context.WaitPosition(server),0,BodyPhase.Recovering,BodyPhase.Waiting);
+                if(server==PlayerId.Rival)LaunchToHuman(context.Serve(box));else LaunchToRival(context.Serve(box));
+            }
             RallyStarted?.Invoke();
         }
         private void LaunchToHuman(BallState ball)
@@ -121,6 +144,18 @@ namespace SquashClash.Runtime.Rally
                     autoShot=humanBrain.Decide(Observe(PlayerId.Human,ball),new ReceptionPlan(true,HumanPlan.Stance,at,plan,HumanPlan.ArrivalStep,HumanPlan.SlackS,HumanPlan.Quality,"autopilot"));
             }
             PlaceBodies();
+        }
+        // The human's own serve: the same host launch, with the practice shot switched off for this flight so the
+        // human cannot strike the ball that is not theirs to hit (turn of stroke).
+        private void LaunchToRival(BallState ball)
+        {
+            var source=app.Tuning.ApplyPending().With("practice.enabled",0);
+            launching=true;
+            try{app.Host.Launch(EffectiveConfig.From(source),ball,context.StepHz*10,StopCondition.SecondFloorBounce);}
+            finally{launching=false;}
+            flightLaunchId=app.Host.LaunchId;flightStartStep=ball.Step;bodyStep=app.Host.Current.Step;bodyCarry=0;lastObserved=app.Host.ObservedRealTime;
+            Phase=RallyPhase.RivalReception;resolved=null;closedSeenAt=double.NaN;hasPending=needDecision=autoQueued=false;autoShot=default;
+            Rules=committed.Clone();PlanRival();PlaceBodies();
         }
         private AiObservation Observe(PlayerId who,BallState ball)
         {
@@ -149,7 +184,7 @@ namespace SquashClash.Runtime.Rally
             double elapsed=host.Clock.Paused?0:Math.Max(0,host.ObservedRealTime-lastObserved);lastObserved=host.ObservedRealTime;
             StepBodies(elapsed);
             // A rally that reaches the configured stroke limit is cut with no winner (never seen with human timing).
-            if(Phase!=RallyPhase.PointOver&&committed.Shots>=Params.MaxShots){Rules=committed.Clone();if(Phase==RallyPhase.HumanReception)controller.CloseReception();EndPoint(null);}
+            if(Phase!=RallyPhase.PointOver&&Phase!=RallyPhase.MatchOver&&committed.Shots>=Params.MaxShots){Rules=committed.Clone();if(Phase==RallyPhase.HumanReception)controller.CloseReception();EndPoint(null);}
             else if(Phase==RallyPhase.HumanReception)TickHuman();
             else if(Phase==RallyPhase.RivalReception)TickRival();
             else if(Phase==RallyPhase.PointOver)TickPointOver(elapsed);
@@ -281,6 +316,9 @@ namespace SquashClash.Runtime.Rally
             var rules=Rules;Phase=RallyPhase.PointOver;waited=0;hasPending=needDecision=false;
             if(rules.Winner==PlayerId.Human)HumanPoints++;else if(rules.Winner==PlayerId.Rival)RivalPoints++;
             PointsPlayed++;
+            // A point with no winner is replayed from the same box; the game ends once and stays ended.
+            if(Match!=null&&rules.Winner.HasValue)Match.PointWon(rules.Winner.Value);
+            if(Match!=null&&Match.Finished)Phase=RallyPhase.MatchOver;
             var result=new PointResult(rules.Winner,rules.Cause,rules.Shots,rules.Cause==PointEndCause.DoubleBounce?reception:null);
             LastPoint=result;
             Human.MoveTo(context.WaitPosition(PlayerId.Human),0,BodyPhase.Recovering,BodyPhase.Waiting);
@@ -291,15 +329,16 @@ namespace SquashClash.Runtime.Rally
         private void TickPointOver(double elapsed)
         {
             waited+=elapsed;
-            if(AutoRestart&&waited>=Params.RestartSeconds)BeginPoint();
+            if(AutoRestart&&waited>=WaitBetweenPoints)BeginPoint();
         }
         private void PlaceBodies(){if(players!=null&&Human!=null)players.Place(Human.Position,Rival.Position);}
         [Serializable] private sealed class PointLine
-        {public string winner,cause,reception,rallyParams,level;public int shots,humanPoints,rivalPoints,systemFaults;public bool autopilot;public long seed;}
+        {public string winner,cause,reception,rallyParams,level,server,box;public int shots,humanPoints,rivalPoints,systemFaults;public bool autopilot,match,matchOver;public long seed;}
         private void WriteMetrics(PointResult r)
         {
             var line=new PointLine{winner=r.Winner?.ToString()??"None",cause=r.Cause.ToString(),reception=r.Reception?.ToString()??"",shots=r.Shots,humanPoints=HumanPoints,rivalPoints=RivalPoints,
-                systemFaults=SystemFaults,rallyParams=Params.Hash,level=Level.ToString(),autopilot=Autopilot,seed=Seed};
+                systemFaults=SystemFaults,rallyParams=Params.Hash,level=Level.ToString(),autopilot=Autopilot,seed=Seed,match=Match!=null,matchOver=Match?.Finished??false,
+                server=served?.ToString()??"",box=served.HasValue?servedBox.ToString():""};
             app.Metrics?.Write("rally-point",app.Host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,
                 !app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(line));
         }

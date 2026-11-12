@@ -8,6 +8,11 @@ namespace SquashClash.Core.Rally
         public static string Live(int human,int rival,int shots,PlayerId toHit)=>Score(human,rival)+" · golpes "+shots+" · turno: "+Player(toHit);
         public static string Point(PlayerId? winner,PointEndCause cause,ReceptionResult? reception,int shots,int human,int rival)
             =>(winner.HasValue?"Punto "+Player(winner.Value):"Sin punto")+": "+Cause(cause,reception)+" · "+shots+(shots==1?" golpe":" golpes")+" · "+Score(human,rival);
+        public static string Box(ServiceBox box)=>box==ServiceBox.Right?"der.":"izq.";
+        // Match line while a point is played: score, who serves and from where, strokes and turn.
+        public static string LiveMatch(int human,int rival,int shots,PlayerId toHit,PlayerId server,ServiceBox box)
+            =>Score(human,rival)+" · saca "+Player(server)+" ("+Box(box)+") · golpes "+shots+" · turno: "+Player(toHit);
+        public static string MatchOver(PlayerId winner,int human,int rival)=>"Partido para "+Player(winner)+": "+Score(human,rival)+" · Revancha para jugar otro";
         public static string Cause(PointEndCause cause,ReceptionResult? reception)
         {
             switch(cause)
@@ -17,6 +22,7 @@ namespace SquashClash.Core.Rally
                 case PointEndCause.Out:return "fuera";
                 case PointEndCause.NotUp:return "no llegó al frontis";
                 case PointEndCause.LaunchFault:return "lanzamiento nulo";
+                case PointEndCause.ServiceFault:return "saque fallado";
                 default:return "tope de golpes";
             }
         }

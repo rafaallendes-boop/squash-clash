@@ -21,6 +21,13 @@ namespace SquashClash.Core.Tests.Rally
         [TestCase(PointEndCause.LaunchFault,null,"lanzamiento nulo")]
         public void Cause_NamesEveryTerminalEvent(PointEndCause cause,ReceptionResult? reception,string expected)
             =>Assert.That(RallyText.Cause(cause,reception),Is.EqualTo(expected));
+        [Test] public void Match_ShowsServerAndBox_AndTheFinalResult()
+        {
+            Assert.That(RallyText.LiveMatch(3,2,4,PlayerId.Human,PlayerId.Rival,ServiceBox.Left),Is.EqualTo("Tú 3 – 2 Rival · saca Rival (izq.) · golpes 4 · turno: Tú"));
+            Assert.That(RallyText.LiveMatch(0,0,0,PlayerId.Rival,PlayerId.Human,ServiceBox.Right),Is.EqualTo("Tú 0 – 0 Rival · saca Tú (der.) · golpes 0 · turno: Rival"));
+            Assert.That(RallyText.MatchOver(PlayerId.Rival,5,7),Is.EqualTo("Partido para Rival: Tú 5 – 7 Rival · Revancha para jugar otro"));
+            Assert.That(RallyText.Cause(PointEndCause.ServiceFault,null),Is.EqualTo("saque fallado"));
+        }
         [Test] public void Point_ShowsWinnerCauseStrokesAndScore_InOneLine()
         {
             Assert.That(RallyText.Point(PlayerId.Rival,PointEndCause.DoubleBounce,ReceptionResult.Late,5,2,2),Is.EqualTo("Punto Rival: doble bote (tarde) · 5 golpes · Tú 2 – 2 Rival"));

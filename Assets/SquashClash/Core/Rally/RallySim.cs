@@ -25,7 +25,14 @@ namespace SquashClash.Core.Rally
         public ReceptionResult? LastReception;
         // Who struck the ball in flight when the point ended (null: neutral launch), and where it ended.
         public PlayerId? Striker;public SurfaceId TerminalSurface;public bool OutAfterBounce;
+        // Set when the point started with a serve.
+        public PlayerId? Server;public ServiceBox Box;
         public readonly List<ReceptionLog> Receptions=new List<ReceptionLog>();
+    }
+    public sealed class MatchOutcome
+    {
+        public PlayerId? Winner;public int Human,Rival,Replays;public bool Aborted;public double RealSeconds;
+        public readonly List<RallyOutcome> Points=new List<RallyOutcome>();
     }
     // Scripted stand-in for the human in headless runs: one fixed intention and a Gaussian release, same contract.
     public sealed class BotBrain : IRallyBrain
@@ -78,7 +85,35 @@ namespace SquashClash.Core.Rally
         {
             var outcome=new RallyOutcome{FirstReceiver=firstReceiver};
             Human.Teleport(context.WaitPosition(PlayerId.Human));Rival.Teleport(context.WaitPosition(PlayerId.Rival));
-            ball.Reset(context.NeutralLaunch(firstReceiver));Rules.Begin(null,firstReceiver);hasPending=false;
+            ball.Reset(context.NeutralLaunch(firstReceiver));Rules.Begin(null,firstReceiver);
+            return Run(outcome,firstReceiver);
+        }
+        // A point that starts with the automatic serve from the server's box (spec 8.5).
+        public RallyOutcome PlayPoint(PlayerId server,ServiceBox box)
+        {
+            var outcome=new RallyOutcome{FirstReceiver=server.Other(),Server=server,Box=box};
+            Human.Teleport(context.WaitPosition(PlayerId.Human));Rival.Teleport(context.WaitPosition(PlayerId.Rival));
+            Body(server).Teleport(ServePlanner.BoxPosition(context,box));
+            Body(server).MoveTo(context.WaitPosition(server),0,BodyPhase.Recovering,BodyPhase.Waiting);
+            ball.Reset(context.Serve(box));Rules.BeginServe(server,box);
+            return Run(outcome,server.Other());
+        }
+        // A whole game: point-a-rally to the target with the margin, winner serves, boxes alternate.
+        public MatchOutcome PlayMatch(PlayerId firstServer)
+        {
+            var match=new MatchOutcome();var score=new MatchScore((int)context.Params.MatchTarget,(int)context.Params.MatchMargin,firstServer);
+            while(!score.Finished)
+            {
+                var point=PlayPoint(score.Server,score.Box);match.Points.Add(point);match.RealSeconds+=point.RealSeconds+context.Params.MatchPauseSeconds;
+                if(point.Winner.HasValue)score.PointWon(point.Winner.Value);
+                // A point with no winner (stroke limit) is replayed from the same box.
+                else if(++match.Replays>50){match.Aborted=true;break;}
+            }
+            match.Winner=score.Winner;match.Human=score.Human;match.Rival=score.Rival;return match;
+        }
+        private RallyOutcome Run(RallyOutcome outcome,PlayerId firstReceiver)
+        {
+            hasPending=false;
             long cap=context.Steps(context.Params.MaxRallySeconds),steps=0;long stall=context.Steps(context.Params.StallSeconds),flight=0;int shots=0;
             BeginReception(firstReceiver,outcome);
             while(!Rules.Closed)

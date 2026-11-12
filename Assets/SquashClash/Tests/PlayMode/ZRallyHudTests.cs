@@ -133,6 +133,24 @@ namespace SquashClash.Runtime.Tests
             Click("rally-demo");Assert.That(rally.Autopilot,Is.False);
             yield return null;
         }
+        [UnityTest] public IEnumerator MatchButton_StartsAMatch_AndTheLineShowsTheServer()
+        {
+            Assert.That(Shown(root.Q("rally-match")),Is.True);
+            Click("rally-match");yield return null;
+            Assert.That(rally.Match,Is.Not.Null);Assert.That(Shown(root.Q("rally-match")),Is.False);
+            Assert.That(root.Q<Label>("rally-status").text,Is.EqualTo("Tú 0 – 0 Rival · saca Tú (der.) · golpes 0 · turno: Rival"));
+            Assert.That(Shown(root.Q("rally-next")),Is.False);
+            Assert.That(Drive(()=>rally.Phase==RallyPhase.PointOver,40),Is.True);yield return null;
+            Assert.That(Shown(root.Q("rally-next")),Is.True,"the pause between points can be skipped");
+            long launch=app.Host.LaunchId;Click("rally-next");Drive(()=>app.Host.LaunchId>launch,.2);
+            Assert.That(app.Host.LaunchId,Is.EqualTo(launch+1));
+            var front=FrontisRect();
+            foreach(var e in root.Q("rally-hud").Query<VisualElement>().ToList().Where(Shown))
+            {
+                Assert.That(e.worldBound.yMax,Is.LessThanOrEqualTo(front.yMin),e.name);
+                Assert.That(e.worldBound.xMax,Is.LessThanOrEqualTo(root.worldBound.xMax),e.name+" fits the screen width");
+            }
+        }
         [UnityTest] public IEnumerator PracticeButton_LeavesTheRally()
         {
             Click("rally-toggle");Click("rally-toggle");yield return null;

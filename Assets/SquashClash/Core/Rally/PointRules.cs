@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SquashClash.Core.Rally
 {
     public enum PlayerId { Human=0, Rival=1 }
-    public enum PointEndCause { None, DoubleBounce, Tin, Out, NotUp, LaunchFault }
+    public enum PointEndCause { None, DoubleBounce, Tin, Out, NotUp, LaunchFault, ServiceFault }
     public enum LineVerdict { Good, Tin, Out }
     public static class PlayerIds
     {
@@ -18,7 +18,7 @@ namespace SquashClash.Core.Rally
     {
         private readonly CourtDimensions court;
         private readonly float radius;
-        private readonly LineBand tin,frontOut,backOut,leftOut,rightOut;
+        private readonly LineBand tin,frontOut,backOut,leftOut,rightOut,service,shortLine,halfCourt;
         public ReturnLineJudge(CourtDimensions court,float footprintRadius)
         {
             this.court=court??throw new ArgumentNullException(nameof(court));
@@ -32,7 +32,24 @@ namespace SquashClash.Core.Rally
                     case LineId.BackOut:backOut=band;break;
                     case LineId.LeftSideOut:leftOut=band;break;
                     case LineId.RightSideOut:rightOut=band;break;
+                    case LineId.Service:service=band;break;
+                    case LineId.ShortLine:shortLine=band;break;
+                    case LineId.HalfCourt:halfCourt=band;break;
                 }
+        }
+        // Serve column of spec 8.7.4: above the service line (touching it is a fault), clear of tin and out.
+        public bool ServeFrontWallGood(Vector3 point)
+        {
+            var uv=court.ToSurfaceUV(SurfaceId.FrontWall,point);
+            return Judge(SurfaceId.FrontWall,point)==LineVerdict.Good&&uv.y>court.ServiceLower+court.LineWidth&&!LineContactClassifier.Touches(in service,uv,radius);
+        }
+        // First bounce of a serve: the back quarter opposite to the server's box, clear of the short and half-court lines.
+        public bool ServeLandsInQuarter(Vector3 point,ServiceBox from)
+        {
+            var uv=court.ToSurfaceUV(SurfaceId.Floor,point);
+            if(uv.y<=court.Length-court.ShortLineNearBackEdgeFromBack||LineContactClassifier.Touches(in shortLine,uv,radius)||LineContactClassifier.Touches(in halfCourt,uv,radius))return false;
+            // The right box is beside the right wall (x = 0); its serve lands on the other half.
+            return from==ServiceBox.Right?uv.x>court.Width*.5f:uv.x<court.Width*.5f;
         }
         public LineVerdict Judge(SurfaceId surface,Vector3 point)
         {
@@ -84,18 +101,40 @@ namespace SquashClash.Core.Rally
         public void Begin(PlayerId? striker,PlayerId receiver)
         {
             if(striker.HasValue&&striker.Value==receiver)throw new ArgumentException("The receiver cannot be the striker.",nameof(receiver));
-            Closed=false;Winner=null;Cause=PointEndCause.None;Striker=striker;ToHit=receiver;FloorBounces=0;FrontWallReached=OutAfterBounce=false;
+            Closed=false;Winner=null;Cause=PointEndCause.None;Striker=striker;ToHit=receiver;FloorBounces=0;FrontWallReached=OutAfterBounce=false;Serving=false;
             Shots=IgnoredAfterClose=RejectedContacts=0;TerminalSurface=default;TerminalPoint=default;
+        }
+        // True from the serve until its first bounce is judged (or the receiver strikes it).
+        public bool Serving {get;private set;}
+        public ServiceBox ServeBox {get;private set;}
+        // One attempt: any fault gives the point to the receiver (spec 8.5).
+        public void BeginServe(PlayerId server,ServiceBox from){Begin(server,server.Other());Serving=true;ServeBox=from;}
+        private void OnServeContact(in ContactEvent e)
+        {
+            if(e.Surface==SurfaceId.Floor)
+            {
+                if(!FrontWallReached||e.Persistent||!judge.ServeLandsInQuarter(e.Point,ServeBox)){Close(PointEndCause.ServiceFault,Striker,e);return;}
+                FloorBounces=1;Serving=false;return;
+            }
+            if(e.Persistent)return;
+            if(!FrontWallReached)
+            {
+                // Straight to the front wall: any other wall first is a fault whatever the line.
+                if(e.Surface!=SurfaceId.FrontWall||!judge.ServeFrontWallGood(e.Point)){Close(PointEndCause.ServiceFault,Striker,e);return;}
+                FrontWallReached=true;return;
+            }
+            if(judge.Judge(e.Surface,e.Point)!=LineVerdict.Good)Close(PointEndCause.ServiceFault,Striker,e);
         }
         public bool CanHit(PlayerId who)=>!Closed&&who==ToHit&&FrontWallReached&&(volleyAllowed?FloorBounces<=1:FloorBounces==1);
         public bool RacketContact(PlayerId who)
         {
             if(!CanHit(who)){RejectedContacts++;return false;}
-            Striker=who;ToHit=who.Other();FloorBounces=0;FrontWallReached=false;Shots++;return true;
+            Striker=who;ToHit=who.Other();FloorBounces=0;FrontWallReached=false;Serving=false;Shots++;return true;
         }
         public void OnBallContact(in ContactEvent e)
         {
             if(Closed){IgnoredAfterClose++;return;}
+            if(Serving){OnServeContact(e);return;}
             if(e.Surface==SurfaceId.Floor)
             {
                 if(!FrontWallReached){Close(PointEndCause.NotUp,Striker,e);return;}
@@ -119,6 +158,7 @@ namespace SquashClash.Core.Rally
         public void OnOverTop()
         {
             if(Closed){IgnoredAfterClose++;return;}
+            if(Serving){Close(PointEndCause.ServiceFault,Striker,default);return;}
             if(FloorBounces>0)OutAfterBounce=true;
             Close(PointEndCause.Out,FloorBounces==0?Striker:ToHit,default);
         }
@@ -134,7 +174,7 @@ namespace SquashClash.Core.Rally
             var copy=new PointRules(court,radius,volleyAllowed);
             copy.Closed=Closed;copy.Winner=Winner;copy.Cause=Cause;copy.Striker=Striker;copy.ToHit=ToHit;copy.FloorBounces=FloorBounces;
             copy.FrontWallReached=FrontWallReached;copy.OutAfterBounce=OutAfterBounce;copy.Shots=Shots;copy.IgnoredAfterClose=IgnoredAfterClose;
-            copy.RejectedContacts=RejectedContacts;copy.TerminalSurface=TerminalSurface;copy.TerminalPoint=TerminalPoint;return copy;
+            copy.RejectedContacts=RejectedContacts;copy.Serving=Serving;copy.ServeBox=ServeBox;copy.TerminalSurface=TerminalSurface;copy.TerminalPoint=TerminalPoint;return copy;
         }
     }
 }

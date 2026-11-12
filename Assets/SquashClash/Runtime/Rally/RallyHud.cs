@@ -11,7 +11,7 @@ namespace SquashClash.Runtime.Rally
         private AppBootstrap app;
         private RallyDirector rally;
         private Label status;
-        private Button toggle,pause,rematch,demo;
+        private Button toggle,match,pause,next,rematch,demo;
         private string shown;
         private int human=-1,rival=-1,shots=-1,played=-1;
         private PlayerId toHit;
@@ -20,13 +20,17 @@ namespace SquashClash.Runtime.Rally
         {
             this.app=app;this.rally=rally;
             var box=new VisualElement{name="rally-hud",pickingMode=PickingMode.Ignore};
-            box.style.alignItems=Align.Center;box.style.marginTop=6;parent.Add(box);
+            box.style.alignItems=Align.Center;box.style.marginTop=6;box.style.maxWidth=Length.Percent(100);box.style.flexShrink=1;parent.Add(box);
             status=new Label{name="rally-status",pickingMode=PickingMode.Ignore};
-            status.style.fontSize=15;status.style.color=Color.white;status.style.whiteSpace=WhiteSpace.NoWrap;status.style.height=22;status.style.display=DisplayStyle.None;
+            status.style.fontSize=13;status.style.color=Color.white;status.style.whiteSpace=WhiteSpace.NoWrap;status.style.height=22;status.style.display=DisplayStyle.None;
+            // One line always: a text longer than the screen is cut with an ellipsis, never wrapped or spilled.
+            status.style.maxWidth=Length.Percent(100);status.style.overflow=Overflow.Hidden;status.style.textOverflow=TextOverflow.Ellipsis;
             box.Add(status);
-            var row=new VisualElement{name="rally-buttons",pickingMode=PickingMode.Ignore};row.style.flexDirection=FlexDirection.Row;row.style.marginTop=4;box.Add(row);
+            var row=new VisualElement{name="rally-buttons",pickingMode=PickingMode.Ignore};row.style.flexDirection=FlexDirection.Row;row.style.flexWrap=Wrap.Wrap;row.style.justifyContent=Justify.Center;row.style.maxWidth=Length.Percent(100);row.style.marginTop=4;box.Add(row);
             toggle=Add(row,"rally-toggle","Rally",ToggleMode);
+            match=Add(row,"rally-match","Partido",StartMatch);
             pause=Add(row,"rally-pause","Pausa",TogglePause);
+            next=Add(row,"rally-next","Seguir",()=>rally.SkipWait());
             rematch=Add(row,"rally-rematch","Revancha",()=>rally.Rematch());
             demo=Add(row,"rally-demo","Demo: no",ToggleDemo);
             Refresh();
@@ -34,10 +38,11 @@ namespace SquashClash.Runtime.Rally
         private static Button Add(VisualElement row,string name,string text,System.Action action)
         {
             var button=new Button(action){name=name,text=text};
-            button.style.height=44;button.style.minWidth=76;button.style.fontSize=15;button.style.marginLeft=3;button.style.marginRight=3;
+            button.style.height=44;button.style.minWidth=56;button.style.fontSize=14;button.style.marginLeft=2;button.style.marginRight=2;button.style.paddingLeft=6;button.style.paddingRight=6;
             row.Add(button);return button;
         }
         public void ToggleMode(){if(rally.Active)rally.StopMode();else rally.StartMode();Refresh();}
+        public void StartMatch(){rally.StartMatch();Refresh();}
         public void TogglePause(){app.Clock.Paused=!app.Clock.Paused;Refresh();}
         public void ToggleDemo(){rally.Autopilot=!rally.Autopilot;Refresh();}
         private void Update()=>Refresh();
@@ -48,6 +53,9 @@ namespace SquashClash.Runtime.Rally
             toggle.text=active?"Práctica":"Rally";toggle.SetEnabled(active||rally.CanStart);
             var visible=active?DisplayStyle.Flex:DisplayStyle.None;
             pause.style.display=rematch.style.display=demo.style.display=status.style.display=visible;
+            match.style.display=active?DisplayStyle.None:DisplayStyle.Flex;match.SetEnabled(rally.CanStart);
+            // "Seguir" skips the pause between points (spec 5.2: the pause can be skipped).
+            next.style.display=active&&rally.Phase==RallyPhase.PointOver?DisplayStyle.Flex:DisplayStyle.None;
             if(!active){shown=null;phase=(RallyPhase)(-1);return;}
             pause.text=app.Clock.Paused?"Reanudar":"Pausa";demo.text=rally.Autopilot?"Demo: sí":"Demo: no";
             var rules=rally.Rules;
@@ -55,8 +63,10 @@ namespace SquashClash.Runtime.Rally
             if(shown!=null&&phase==rally.Phase&&human==rally.HumanPoints&&rival==rally.RivalPoints&&shots==rules.Shots&&toHit==rules.ToHit&&played==rally.PointsPlayed)return;
             phase=rally.Phase;human=rally.HumanPoints;rival=rally.RivalPoints;shots=rules.Shots;toHit=rules.ToHit;played=rally.PointsPlayed;
             var last=rally.LastPoint;
-            shown=phase==RallyPhase.PointOver&&last.HasValue
-                ?RallyText.Point(last.Value.Winner,last.Value.Cause,last.Value.Reception,last.Value.Shots,human,rival)
+            var game=rally.Match;
+            shown=phase==RallyPhase.MatchOver&&game!=null&&game.Winner.HasValue?RallyText.MatchOver(game.Winner.Value,game.Human,game.Rival)
+                :phase==RallyPhase.PointOver&&last.HasValue?RallyText.Point(last.Value.Winner,last.Value.Cause,last.Value.Reception,last.Value.Shots,human,rival)
+                :game!=null?RallyText.LiveMatch(human,rival,shots,toHit,game.Server,game.Box)
                 :RallyText.Live(human,rival,shots,toHit);
             status.text=shown;
         }
