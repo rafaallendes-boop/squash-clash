@@ -17,7 +17,7 @@ namespace SquashClash.Runtime.Shot
         private ShotController controller;
         private PlaceholderPlayers players;
         private Transform rig,arm,head;
-        private Mesh cube;
+        private Mesh cube,racket;
         private readonly Dictionary<string,int> starts=new Dictionary<string,int>();
         private readonly List<Key> sequence=new List<Key>();
         private int index;
@@ -33,6 +33,11 @@ namespace SquashClash.Runtime.Shot
         public Vector3 RacketLocalPosition=>pos;
         public Quaternion RacketLocalRotation=>head!=null?head.localRotation:Quaternion.identity;
         public int TotalStarts {get;private set;}
+        // Presentation hooks for the character figure: which shoulder holds the racket, where that shoulder is drawn
+        // (human-local), and a re-pose after the figure moved. They never change the racket position, phases or timing.
+        public float ShoulderSign=>sign;
+        public Func<float,Vector3> ShoulderAnchor {get;set;}
+        public void Repose()=>ApplyPose();
         public int StartCountFor(string attemptId)=>attemptId!=null&&starts.TryGetValue(attemptId,out var n)?n:0;
         public void Initialize(AppBootstrap app,ShotController controller)
         {
@@ -45,9 +50,13 @@ namespace SquashClash.Runtime.Shot
             if(rig!=null)return;
             if(players==null)players=UnityEngine.Object.FindFirstObjectByType<PlaceholderPlayers>();
             var human=players?.Human;if(human==null)return;
-            cube=Cube();var material=human.GetComponent<MeshRenderer>().sharedMaterial;
+            // Art pass: the same two parts, drawn as a sleeved arm and a racket instead of two boxes. Poses and timing are unchanged.
+            var palette=SquashClash.Runtime.Visual.CharacterView.HumanPalette;var material=SquashClash.Runtime.Visual.VisualKit.Toon;
+            cube=SquashClash.Runtime.Visual.VisualKit.Rebase(SquashClash.Runtime.Visual.VisualKit.Limb("Swing arm",.75f,.6f,palette.Accent,.3f,palette.Skin,.72f),
+                Matrix4x4.TRS(new Vector3(0,0,-.5f),Quaternion.FromToRotation(Vector3.up,Vector3.forward),Vector3.one));
+            racket=SquashClash.Runtime.Visual.VisualKit.Racket("Swing racket",new Color(.98f,.86f,.18f),SquashClash.Runtime.Visual.VisualKit.Ink,new Color(.93f,.96f,1f));
             rig=new GameObject("Swing").transform;rig.SetParent(human,false);
-            arm=Part("Arm",material);head=Part("Racket",material);
+            arm=Part("Arm",material);head=Part("Racket",material);head.GetComponent<MeshFilter>().sharedMesh=racket;
             ApplyPose();
         }
         private Transform Part(string name,Material material)
@@ -118,10 +127,10 @@ namespace SquashClash.Runtime.Shot
         private void ApplyPose()
         {
             EnsureRig();if(arm==null)return;
-            var shoulder=new Vector3(sign*ShoulderLateral,ShoulderHeight,0);var dir=pos-shoulder;float len=dir.magnitude;if(len<1e-4f){dir=Vector3.forward;len=1;}dir/=len;
+            var shoulder=ShoulderAnchor!=null?ShoulderAnchor(sign):new Vector3(sign*ShoulderLateral,ShoulderHeight,0);var dir=pos-shoulder;float len=dir.magnitude;if(len<1e-4f){dir=Vector3.forward;len=1;}dir/=len;
             var grip=pos-dir*GripBack;var forearm=grip-shoulder;float flen=Mathf.Max(forearm.magnitude,1e-3f);
             arm.localPosition=(shoulder+grip)*.5f;arm.localRotation=Quaternion.LookRotation(forearm.sqrMagnitude>1e-8f?forearm:dir);arm.localScale=new Vector3(.07f,.07f,flen);
-            head.localPosition=pos;head.localRotation=Quaternion.LookRotation(dir,Mathf.Abs(dir.y)>.99f?Vector3.forward:Vector3.up);head.localScale=new Vector3(.22f,.03f,.3f);
+            head.localPosition=pos;head.localRotation=Quaternion.LookRotation(dir,Mathf.Abs(dir.z)>.95f?Vector3.up:Vector3.back);head.localScale=new Vector3(.22f,.03f,.3f);
         }
         private void Update(){Tick(Time.unscaledDeltaTime);}
         private static Mesh Cube()
@@ -140,7 +149,7 @@ namespace SquashClash.Runtime.Shot
         {
             if(app!=null)app.Host.Launched-=OnLaunched;
             if(controller!=null){controller.SwingAccepted-=OnAccepted;controller.PresentationDelivered-=OnDelivered;controller.ShotResolved-=OnResolved;}
-            if(rig!=null)Destroy(rig.gameObject);if(cube!=null)Destroy(cube);
+            if(rig!=null)Destroy(rig.gameObject);if(cube!=null)Destroy(cube);if(racket!=null)Destroy(racket);
         }
     }
 }
