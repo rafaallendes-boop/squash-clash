@@ -19,14 +19,19 @@ namespace SquashClash.Runtime.Court
             // Art pass: the same unlit materials, now with small procedural textures that bake the light
             // (floor pool, contact occlusion at the wall joints). No realtime light or shadow is involved.
             var line = Material("CourtLine");
-            var plaster = Keep(WallTexture());
+            var plaster = Shared(ref wallTexture, WallTexture);
             var wall = Textured("CourtWall", plaster, Color.white);
             var side = Textured("CourtWall", plaster, new Color(0.89f, 0.915f, 0.95f));
             // The camera looks through the back wall: a faint tint keeps the glass readable without washing out the court.
             var glass = Keep(new Material(Material("CourtGlass")));
             glass.SetColor("_BaseColor", new Color(0.75f, 0.88f, 0.95f, 0.07f));
-            var floor = Textured("CourtFloor", Keep(FloorTexture(d)), Color.white);
-            var tin = Textured("CourtTin", Keep(TinTexture()), Color.white);
+            if (floorTexture == null || floorWidth != d.Width || floorLength != d.Length)
+            {
+                if (floorTexture != null) Destroy(floorTexture);
+                floorTexture = FloorTexture(d); floorTexture.hideFlags = HideFlags.HideAndDontSave; floorWidth = d.Width; floorLength = d.Length;
+            }
+            var floor = Textured("CourtFloor", floorTexture, Color.white);
+            var tin = Textured("CourtTin", Shared(ref tinTexture, TinTexture), Color.white);
 
             Surface(SurfaceId.Floor, d.Width, d.Length, floor, d);
             Surface(SurfaceId.FrontWall, d.Width, d.WallHeight, wall, d);
@@ -92,6 +97,15 @@ namespace SquashClash.Runtime.Court
             ?? throw new InvalidOperationException("Missing court material " + name + "; run ProjectSetup.Apply.");
 
         private T Keep<T>(T resource) where T : UnityEngine.Object { owned.Add(resource); return resource; }
+        // The procedural textures are generated once per process and shared by every court build (a rebuild after a
+        // dimension change, a scene reload): only the floor depends on the court size.
+        private static Texture2D wallTexture, tinTexture, hallTexture, floorTexture;
+        private static float floorWidth, floorLength;
+        private static Texture2D Shared(ref Texture2D cache, Func<Texture2D> create)
+        {
+            if (cache == null) { cache = create(); cache.hideFlags = HideFlags.HideAndDontSave; }
+            return cache;
+        }
         private Material Textured(string name, Texture texture, Color tint)
         {
             var material = Keep(new Material(Material(name)));
@@ -105,7 +119,7 @@ namespace SquashClash.Runtime.Court
         {
             var decor = new GameObject("Decor");
             decor.transform.SetParent(geometry.transform, false);
-            var hall = Textured("CourtWall", Keep(HallTexture()), Color.white);
+            var hall = Textured("CourtWall", Shared(ref hallTexture, HallTexture), Color.white);
             const float margin = 14, depth = 7;
             Quad("HallFloor", decor.transform, new[] { new Vector3(-margin, -0.02f, -depth), new Vector3(d.Width + margin, -0.02f, -depth),
                 new Vector3(d.Width + margin, -0.02f, d.Length + 14), new Vector3(-margin, -0.02f, d.Length + 14) }, Vector3.up, hall);
