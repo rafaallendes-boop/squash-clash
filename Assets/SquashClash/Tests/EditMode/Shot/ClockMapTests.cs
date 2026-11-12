@@ -5,6 +5,37 @@ namespace SquashClash.Core.Tests.Shot
 {
     public sealed class ClockMapTests
     {
+        [TestCase(10d,false)][TestCase(70d,false)][TestCase(100d,false)][TestCase(200d,false)]
+        [TestCase(10d,true)][TestCase(70d,true)][TestCase(100d,true)][TestCase(200d,true)]
+        public void ExactStepAfterAbsoluteTimeSubtraction_MatchesSimClock(double realBase,bool interpolate)
+        {
+            const int hz=120;const double tempo=.65;
+            var clock=new SquashClash.Core.Simulation.SimClock(hz,tempo);
+            var c=new ClockMap();c.Begin(1,realBase,200,tempo,1,hz);
+            double delta=3d/hz/tempo;
+            if(interpolate)c.Mark(realBase+4d/hz/tempo,204,0,tempo,1,false);
+            int advanced=clock.Advance(delta);
+            Assert.That(advanced,Is.EqualTo(3));Assert.That(clock.Alpha,Is.Zero);
+            Assert.That(c.TryRealToSim(realBase+delta,out var step,out var fraction),Is.True);
+            TestContext.WriteLine($"CLOCK_PRECISION base={realBase:R} interpolate={interpolate} rawDeltaSteps={(realBase+delta-realBase)*tempo*hz:R} step={step} fraction={fraction:R}");
+            Assert.That(step,Is.EqualTo(200+advanced));Assert.That(fraction,Is.Zero);
+        }
+        [TestCase(10d)][TestCase(70d)][TestCase(100d)][TestCase(200d)]
+        public void AbsoluteTimeNormalization_PreservesResolvableFractionsOnBothSides(double realBase)
+        {
+            const double rate=78,offset=1e-8;
+            var c=new ClockMap();c.Begin(1,realBase,200,.65,1,120);
+            foreach(bool interpolate in new[]{false,true})
+            {
+                if(interpolate)c.Mark(realBase+4/rate,204,0,.65,1,false);
+                foreach(double sign in new[]{-1d,1d})
+                {
+                    Assert.That(c.TryRealToSim(realBase+(3+sign*offset)/rate,out var step,out var fraction),Is.True);
+                    Assert.That(step,Is.EqualTo(sign<0?202:203));
+                    Assert.That(fraction,Is.GreaterThan(0).And.LessThan(1));
+                }
+            }
+        }
         [Test] public void ContinuousSegment_MapsWithTempo()
         {
             var c=new ClockMap();c.Begin(7,10,0,.65,1,120);
