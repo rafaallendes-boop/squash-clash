@@ -114,7 +114,7 @@ El estado de las entidades está expuesto para leer, sin lógica que tocar:
 3. **Soltar antes de que el cuerpo llegue** puede dar contacto con el personaje todavía en camino (consecuencia de K con cuerpo fijo).
 4. **Pelota fuera después del primer bote**: la regla implementada da el punto a quien pegó. Es un **supuesto**; no verifiqué el reglamento WSF para ese caso.
 5. **El hash de configuración en los registros cambia en cada recepción del rally.** Las líneas `rally-point` llevan el hash de `RallyParams` para agrupar.
-6. **La IA elige cruzado más que paralelo** (58 % contra 34 %). Es efecto del rasgo «lejos del humano» contra un bot que siempre juega paralelo. Pesos de partida.
+6. **La IA elige cruzado más que paralelo** (51 % contra 39 %; drop 10 %). Es efecto del rasgo «lejos del humano» contra un bot que siempre juega paralelo. Pesos de partida.
 7. **R6 (First Match) no está en esta entrega.**
 
 ## 7. Qué decide el PO
