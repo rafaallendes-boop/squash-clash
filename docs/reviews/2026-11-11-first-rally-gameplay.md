@@ -1,8 +1,8 @@
-# First Rally — informe de la entrega de gameplay (R1–R5)
+# First Rally y First Match — informe de la entrega de gameplay (R1–R6)
 
 Rama `firstrally/gameplay`, base `a844c76` (main con la PR #45). Implementó Claude (Fable) con la [autorización y el plan del 11 de noviembre](2026-11-11-first-rally-plan.md). PR en borrador, sin fusionar. Sin instalación ni acceso al iPhone.
 
-**Estado:** R1–R5 implementadas y verificadas. El rally funciona de punta a punta: lanzamiento neutro, intercambio contra la IA «Fondo», cierre del punto, reinicio y HUD mínimo. **No está juzgado por jugabilidad humana**: eso queda para después de calibrar el timing (S4). La validación es headless y por tests.
+**Estado:** R1–R6 implementadas. El rally funciona de punta a punta: lanzamiento neutro, intercambio contra la IA «Fondo», cierre del punto, reinicio y HUD mínimo. R6 agrega el partido: saque, rotación, PAR a 7 con diferencia de 2, pausa entre puntos y revancha (§9). **No está juzgado por jugabilidad humana**: eso queda para después de calibrar el timing (S4). La validación es headless y por tests.
 
 ## 1. Qué quedó
 
@@ -13,6 +13,7 @@ Rama `firstrally/gameplay`, base `a844c76` (main con la PR #45). Implementó Cla
 | R3 | `da03bb9` | `FondoAi`: 18 intenciones, utilidad y softmax, defensa obligatoria, ruido de intención y de timing, tres dificultades (Medio por defecto). Pega por el mismo `ContactContract` y `ShotSolver` que el humano. |
 | R4 | `df62f4e` | `RallySim` (rally completo headless) y `RallyDirector` (el mismo loop sobre el host real). Simulación de 1000 rallies dentro de la regresión. |
 | R5 | `5b28e89`, `859edb6` | `RallyHud`: una línea de estado, botones Rally/Práctica, Pausa/Reanudar, Revancha y Demo. |
+| R6 | `01b9535`, `f57a09c` | `MatchScore`, reglas y líneas del saque, saque automático, partidos headless y modo partido en director y HUD. |
 
 Cómo se juega: la app arranca en práctica, como siempre. El botón **Rally** de la cabecera inicia el modo; **Práctica** lo deja. **Demo** hace que un bot juegue por el humano, para ver el intercambio sin depender del timing propio.
 
@@ -30,9 +31,11 @@ Cada commit de etapa se verificó en un worktree limpio aparte (`scripts/test.sh
 | R3 `da03bb9` | 635/635 | 372/372 | PASS / 0 / 1 |
 | R4 `df62f4e` | 644/644 | 381/381 | PASS / 0 / 1 |
 | R5 `5b28e89` | 655/655 | 387/388 en siete corridas | PASS / 0 / 1 |
-| R5 `859edb6` | 655/655 | **388/388** | PASS / 0 / 1 |
+| R5 `859edb6` | 655/655 | **388/388** (dos corridas) | PASS / 0 / 1 |
+| R6 `01b9535` | 676/676 | 392/393 en tres corridas | PASS / 0 / 1 |
+| R6 `f57a09c` | 676/676 | **393/393** (tres corridas) | PASS / 0 / 1 |
 
-`scripts/check-release.sh` sobre `859edb6`: OK, dev y prod. El panel sigue fuera de prod; el HUD del rally está en ambos.
+`scripts/check-release.sh` sobre `859edb6` y sobre `01b9535`: OK, dev y prod. El panel sigue fuera de prod; el HUD del rally está en ambos.
 
 Hashes protegidos, comprobados por los tests existentes y por AutoQA: defaults `c0d8ec7050e0` (107 claves), SimulationKey `166a96e319c7`, proyección `0d39e6016bd8`, P0 `6ecfdfa78cbb`. `DefaultPreset.json` no cambió.
 
@@ -42,7 +45,8 @@ Todas las corridas que no dieron el total fallaron en el mismo test: `ShotRollba
 
 - **Causa, medida:** el test avanza el host en múltiplos exactos de un paso y espera un paso exacto. Con el reloj real de Unity entre unos 64 y 128 s desde el arranque, el redondeo deja la posición un pelo por debajo y cae un paso antes. Una sonda aritmética con `SimClock` y `ClockMap` dio 0/200 fallos con el lanzamiento a 2–45 s, 40/200 a 60 s, 200/200 entre 64,5 y 120 s, y 0/200 a 130–300 s.
 - **Por qué apareció ahora:** depende de cuántos segundos lleva Unity abierto cuando le toca a ese test. Una recompilación o más tests antes lo empujan a esa franja. En R1 y R2, que solo agregan código de Core, falló justo en las corridas con recompilación. En `main` sin cambios y aislado pasó 6 de 6.
-- **Qué hice:** no toqué ese test ni el reloj, que son de la zona de timing. Renombré mis dos fixtures de PlayMode (`ZRallyDirectorTests`, `ZRallyHudTests`) para que corran al final y no lo desplacen. Con eso, 388/388.
+- **Qué hice:** no toqué ese test ni el reloj, que son de la zona de timing. Renombré mis dos fixtures de PlayMode (`ZRallyDirectorTests`, `ZRallyHudTests`) para que corran al final y no lo desplacen. Con eso, 388/388. En R6 volvió a fallar (`01b9535`, tres corridas: el test arrancó a los 64 s del inicio de la corrida, justo en el borde). Ahí encontré un costo mío: el HUD reescribía estilos en cada frame. Lo corregí (`f57a09c`) y las tres corridas siguientes dieron 393/393. El mismo test, aislado sobre `f57a09c`, pasa 24/24.
+- **Lo que no puedo afirmar:** que el conjunto sea estable. En este Mac la suite llega a ese test cerca de los 60 s, al filo de la franja. Dos de las corridas limpias de `f57a09c` fueron lentas y lo pasaron por arriba de la franja, no por debajo.
 - **Queda latente:** cualquier test nuevo que corra antes, o un Mac más lento, lo vuelve a meter en la franja. La corrección de fondo es de Codex (ver §6).
 
 ## 3. Simulación headless (R4)
@@ -115,7 +119,7 @@ El estado de las entidades está expuesto para leer, sin lógica que tocar:
 4. **Pelota fuera después del primer bote**: la regla implementada da el punto a quien pegó. Es un **supuesto**; no verifiqué el reglamento WSF para ese caso.
 5. **El hash de configuración en los registros cambia en cada recepción del rally.** Las líneas `rally-point` llevan el hash de `RallyParams` para agrupar.
 6. **La IA elige cruzado más que paralelo** (51 % contra 39 %; drop 10 %). Es efecto del rasgo «lejos del humano» contra un bot que siempre juega paralelo. Pesos de partida.
-7. **R6 (First Match) no está en esta entrega.**
+7. **R6 es una versión mínima** (§9): el saque es automático para los dos y no hay gesto de saque.
 
 ## 7. Qué decide el PO
 
@@ -158,3 +162,37 @@ Para anotar
 - [ ] ¿Llegas a pelotas a las que no deberías llegar, o al revés?
 - [ ] ¿Se nota un salto de la pelota cuando pega el rival?
 - [ ] ¿Los dos personajes se estorban a la vista cerca de la T?
+
+## 9. R6 — First Match (versión mínima)
+
+Se hizo después de cerrar R1–R5, con el tiempo que quedaba. Botón **Partido** en la cabecera.
+
+**Qué hace**
+
+- `MatchScore`: punto por rally hasta 7 con diferencia de 2, sin tope. Saca quien gana el punto; el mismo sacador alterna de cuadro y un sacador nuevo empieza por la derecha. El marcador no cambia después del final.
+- Reglas del saque en `PointRules` (§8.5 y columna «saque» de §8.7.4): directo al frontis, por encima de la línea de saque (tocarla es fallo), sin tin ni out; primer bote en el cuarto trasero opuesto sin tocar la short line ni la línea media; un solo intento. Pruebas en el borde (debajo, rozando, exacto) de la línea de saque y de las dos líneas del suelo. Las líneas del suelo no se juzgan en el rally.
+- Saque automático para los dos jugadores: el personaje se coloca solo en el cuadro y `ServePlanner` busca, en una rejilla fija, un saque que las reglas aceptan. El mismo cuadro da siempre el mismo saque.
+- Modo partido en el director: empieza sacando el humano; pausa de 2,5 s entre puntos que se puede saltar con **Seguir**; al terminar muestra «Partido para …» y espera **Revancha**.
+- En el saque propio, el lanzamiento va con el golpe de práctica apagado para ese vuelo, de modo que el humano no puede pegarle a una pelota que no le toca. La configuración aplicada no se edita.
+
+**Simulación headless:** 60 partidos de Fondo Medio contra el bot de 30 ms. Todos terminan con marcador válido, sin repeticiones ni saques fallados. Mediana de 10 puntos por partido, máximo 16. Duración mediana 7,0 min y p90 10,5 min con la pausa incluida, por encima de la referencia de 3–5 min de §5.4: los rallies del bot son largos. El bot ganó 3 de 60.
+
+**Desviaciones respecto de la spec**
+
+| Spec | Qué quedó | Motivo |
+|---|---|---|
+| §6.6 saque con gesto del jugador | El saque del humano es automático | Un gesto de saque es trabajo de control y timing, fuera de esta rama. Consecuencia: el saque nunca falla en juego; los fallos de saque están cubiertos solo por pruebas de reglas. |
+| §8.5 el receptor puede volear el saque | Sin volea | First Rally base va sin volea. La regla admite volea si se activa. |
+| §8.7.6 marca de cantado | No implementada | Es trabajo visual. La causa del punto sale en la línea del HUD. |
+| §5.2 personaje apoyado en la pared durante la pausa | Los personajes vuelven a su posición de espera | Sin arte en esta rama. |
+| §5.3 pantalla final con duración y rally más largo | Una línea con el resultado y el botón Revancha | HUD mínimo. Los datos por punto quedan en el log (`rally-point`). |
+
+**Checklist de playtest del partido**
+
+- [ ] **Partido** arranca con tu saque automático desde el cuadro derecho; no puedes pegarle a tu propio saque.
+- [ ] La línea muestra quién saca y desde qué cuadro.
+- [ ] Quien gana el punto saca el siguiente; si repite, cambia de cuadro.
+- [ ] Entre puntos hay una pausa corta y **Seguir** la salta.
+- [ ] El partido termina en 7 con dos de diferencia (o sigue desde 6–6) y muestra el resultado.
+- [ ] **Revancha** empieza otro partido en un toque.
+
