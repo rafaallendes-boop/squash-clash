@@ -49,6 +49,7 @@ Suites completas y AutoQA en un worktree de verificación aparte, sobre cada com
 | Bloque 2 `9015347` | 676/676 | 395/396 dos veces (el mismo test) | PASS / 0 / nivel 1 |
 | Bloque 4 `ac49df9` (incluye el 3) | 676/676 | **399/399** | PASS / 0 / nivel 1 |
 | Bloque 5 `96ec780` | 676/676 | **400/400** | PASS / 0 / nivel 1 |
+| Final `62e2f4f` | 676/676 | **400/400** | PASS / 0 / nivel 1 |
 
 El bloque 3 (`796c010`) no tuvo corrida completa propia: se verificó con sus tests focales (28/28) y quedó cubierto por la corrida completa del bloque 4.
 
@@ -223,4 +224,11 @@ Rendimiento
 
 ## 9. Build dev
 
-@@BUILD@@
+- **Verificación del commit final `62e2f4f`** (el producto de `96ec780` más la corrección de un comentario en `BallView`): 676/676 EditMode, 400/400 PlayMode, AutoQA PASS / salida 0 / nivel 1, con el árbol limpio.
+- **`scripts/check-release.sh` OK** desde `62e2f4f` limpio, `gitDirty=false` en dev y prod. Prod contiene solo los módulos `Core` y `Runtime` (sin panel de desarrollador; el HUD del rally vive en `Runtime` y sí va). Dev agrega `DevPanel`. El ensamblado de captura y el framework de pruebas no entran en ningún Player.
+- **`scripts/build-ios.sh dev`: BUILD SUCCEEDED.** Etiqueta **`0.1.0+62e2f4f dev`**: `gitDirty=false`, no Development, IL2CPP Release, `SQUASH_DEV`, arm64, firma verificada con `codesign --verify --strict`.
+- Los shaders nuevos (`SquashClash/Toon` y `SquashClash/Fx`) compilan para Metal con una variante cada uno, sin errores en el log de la build.
+- Perfil incorporado: creado el 2026-11-11T13:50:05Z, vence el **2026-11-18T13:50:05Z** (10:50:05 America/Santiago).
+- Ruta: `.claude/worktrees/visual-art-pass/Builds/DerivedData-dev/Build/Products/Release-iphoneos/SquashClash.app`.
+- **No se instaló ni se tocó el iPhone.** Para instalar, con tu autorización y desde ese worktree: `scripts/install-ios.sh dev`. Antes, respaldo y cotejo de P0-calib-1, Po-1 y last-active, como en las sesiones anteriores, y comprobar que el perfil sigue vigente.
+- Esta build incluye el gameplay de First Rally (PR #46) tal como estaba en `93777e3`, sin la corrección de la regla mencionada en el encargo.
