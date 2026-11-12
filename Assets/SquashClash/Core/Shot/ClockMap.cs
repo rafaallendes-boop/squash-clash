@@ -43,7 +43,7 @@ namespace SquashClash.Core.Shot
             }
             var next=new Segment(tReal,position,tempo,slowMotion,paused,droppedSteps,invalid);
             // Exact continuation only. No tolerance, pruning, time cap or second clock.
-            if(!invalid&&position==NormalizePosition(observed.Position+(tReal-observed.Real)*Rate(observed)))
+            if(!invalid&&position==NormalizePosition(observed.Position+(tReal-observed.Real)*Rate(observed),Math.Max(tReal,observed.Real)*Rate(observed)))
             {observed=next;return;}
             // Do not stretch a later gap or an inexact interval over an already known prefix.
             if(observed.Real>last.Real)segments.Add(observed);
@@ -58,17 +58,22 @@ namespace SquashClash.Core.Shot
         {
             step=0;fraction=0;
             if(!Finite(tReal)||SegmentCount==0||tReal<At(0).Real)return false;
-            int i=Find(tReal);var a=At(i);double position;
+            int i=Find(tReal);var a=At(i);double position,timeScale=0;
             if(tReal==a.Real)position=a.Position;
             else if(i+1<SegmentCount)
             {
                 var b=At(i+1);if(b.GapBefore)return false;
                 // A paused single step is discrete, never a fabricated fractional advance.
                 position=a.Paused?a.Position:a.Position+(b.Position-a.Position)*(tReal-a.Real)/(b.Real-a.Real);
+                if(!a.Paused)timeScale=Math.Max(tReal,b.Real)*Math.Abs((b.Position-a.Position)/(b.Real-a.Real));
             }
-            else position=a.Position+(tReal-a.Real)*Rate(a);
+            else
+            {
+                position=a.Position+(tReal-a.Real)*Rate(a);
+                timeScale=Math.Max(tReal,a.Real)*Rate(a);
+            }
             if(!Finite(position)||position<0||position>=long.MaxValue)return false;
-            position=NormalizePosition(position);
+            position=NormalizePosition(position,timeScale);
             step=(long)Math.Floor(position);fraction=position-step;return true;
         }
         public bool TrySimToReal(long step,double fraction,out double tReal)
@@ -104,12 +109,16 @@ namespace SquashClash.Core.Shot
         // The latest supplied endpoint remains queryable exactly without retaining every frame.
         private int SegmentCount=>segments.Count+(segments.Count>0&&observed.Real>segments[segments.Count-1].Real?1:0);
         private Segment At(int index)=>index<segments.Count?segments[index]:observed;
-        private static double NormalizePosition(double position)
+        private static double NormalizePosition(double position,double timeScale=0)
         {
-            // Arithmetic such as (.5-.4)*120 may land a few ulps below an exact step.
-            // Bound this normalization by double representation error, not a game-time tolerance.
+            // Subtracting absolute double timestamps can lose ulps at their magnitude, even
+            // when the resulting step position is small. Propagate that scale through the
+            // local steps/second slope, including interpolation's timestamp denominator.
+            // The existing four-epsilon envelope covers representation/arithmetic error;
+            // it is not a game-time window. Exact observations have no timestamp arithmetic.
             double nearest=Math.Round(position);
-            if(Math.Abs(position-nearest)<=4*2.2204460492503131e-16*Math.Max(1,Math.Abs(position)))position=nearest;
+            double scale=Math.Max(1,Math.Max(Math.Abs(position),timeScale));
+            if(Math.Abs(position-nearest)<=4*2.2204460492503131e-16*scale)position=nearest;
             return position;
         }
         private double Rate(Segment s)=>s.Paused?0:s.Tempo*s.Slow*stepHz;
