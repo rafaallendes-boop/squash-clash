@@ -2140,3 +2140,70 @@ El pase visual no toca Core, física, SimulationKey `166a96e319c7` ni `DefaultPr
 - **Revisión de Claude:** PR #45/head `8e6e1c25d5ef33b7c56b58cb7993517f0dc88f29`, APROBADO CON OBSERVACIONES, sin bloqueantes; 562/562 EditMode y 368/368 PlayMode reproducidos. Autoqa-check v7 coincide con el operador: PASS/0/nivel 1 y 41/41 SHA de la corrida `20261111T153744Z-2fc2afe-25993`.
 - **Observaciones autorizadas:** O1 bloquear DEV/tres dedos durante el modal y reponer BlockedByUi según DEV real, con TDD; O2 sobre metricsValid según reloj, validez de calibración solo en payload, con TDD; O3 aclarar el borde inclusivo −100 ms y las pérdidas de SL3/SL4 sin reejecutar H3b; O4 H3b completo NotEvaluated sin cambio; O5 documentar asincronía media negativa (Repp, 2005) y transferencia a intercepción no demostrada, sin nuevo umbral; O6 esta entrada vigente idéntica en AGENTS.md y aprobaciones. [Informe S4](https://github.com/rafaallendes-boop/squash-clash/blob/firstshot/s4-timing/docs/reviews/2026-11-11-first-shot-s4-timing.md).
 - **Autorización literal del PO para corregir y fusionar:** «Dejame el prompt para que codex arregle las observaciones y luego haga el merge». Misma rama/PR, delta limitado a LatencyCalibration.cs, DevPanelView.cs, LatencyCalibrationTests.cs y documentación autorizada; RED por aserción/GREEN, suites frescas, check-release dev/prod limpio y AutoQA PASS/0/1 antes del merge commit. Head exacto y árboles limpios; segundo padre=head verificado y árbol idéntico; sincronizar main y preservar ignorados con inventario/SHA antes de retirar worktree sin force, rama remota conservada. El cierre del merge se registra en la siguiente entrega, **sin commit aparte en main**. La fusión no acepta S4. Sin contrato/reloj/renderers #44/solver/P2/AutoQA/spec/planes/criterios nuevos ni #32/áreas de Fable/First Rally/First Match, iPhone, build nativa o instalación. Ante defecto/sorpresa/RED no basado en aserción, registrar y detener sin fusionar.
+
+
+## Encargo documental del PO — 12 de noviembre de 2026
+
+Primer commit documental de `docs/register-fable-round`, desde `a844c76`. Fuente: mensaje del PO en este chat del 12 de noviembre de 2026. Texto íntegro del encargo recibido, sin convertir los hechos solicitados en hechos verificados antes de la auditoría:
+
+````text
+Encargo del PO (Squash Clash), autorización literal del 12 de noviembre de 2026: «dejame los encargos a codex para ir avanzando».
+
+TAREA: entrega SOLO documental (AGENTS.md y docs/reviews/2026-10-25-first-shot-po-approvals.md) que registre lo hecho entre el 11 y el 12 de noviembre. Primer commit: este encargo literal.
+
+BASE: main a844c76. Rama y worktree propios, por ejemplo docs/register-fable-round.
+
+REGISTRAR, con citas literales tomadas de los archivos y sin parafrasear las autorizaciones:
+1. Autorización de First Rally que ejecutó Fable. Literal en docs/reviews/2026-11-11-first-rally-plan.md §1 (rama firstrally/gameplay): «autorizo First Rally, etapas R1–R5 y, si queda tiempo, R6 (First Match)…».
+   - Hoy AGENTS.md y aprobaciones (línea ~2112) registran solo R1–R3 con parada tras R3.
+   - Registrar la autorización ampliada como posterior, sin borrar la anterior. Si no puedes fechar la ampliación con evidencia, dilo y deja la fecha como pendiente de confirmación del PO.
+2. Pase visual. Literal en docs/reviews/2026-11-12-visual-pass-plan.md (rama visual/art-pass).
+3. Revisión independiente de Claude (sesión del PO, 12 nov). Sin bloqueantes de código, salvo:
+   - Defecto en la regla «fuera tras el primer bote»: la regla WSF 6.2.4 y la definición OUT dicen que pierde quien pegó. Corregido en c9e2488 (head firstrally/gameplay d9605b5) e integrado con merge c92c64c en visual/art-pass (head #47 a96de94).
+   - Suites reproducidas por Claude: #46 676/676 EditMode y 393/393 PlayMode (sobre f57a09c); #47 676/676 y 400/400 (sobre 62e2f4f).
+   - Tras la corrección, según la sesión de First Rally: 678/678 y 393/393, AutoQA PASS/0/1. Según la sesión del pase visual: 678/678 y 400/400, AutoQA PASS/0/1, check-release OK.
+   - Observaciones del pase visual: H1, temblor de cámara (no se congela en pausa; afecta la proyección de M2-4 durante 0,18 s), p95 y TDD posterior. Están en el §6 bis del informe del pase.
+4. Instalación autorizada por el PO el 12 nov: «Realiza la instalación en el iphone. lo tengo desbloqueado».
+   - Build 0.1.0+c92c64c dev, perfil incorporado vigente hasta 2026-11-18T13:50:05Z.
+   - Respaldo previo: seis presets idénticos a la restauración del 11 nov. SHA-256 de P0-calib-1 2f1295f2…e4fd, Po-1 9008c33a…1767 y last-active 5885ce8a…6087.
+   - Primer lanzamiento rechazado por iOS: «profile has not been explicitly trusted by the user». El PO verificó la app en Ajustes.
+   - Proceso nuevo 2026-11-12T20:18:23Z: P0-calib-1, 6ecfdfa78cbb, pending 0, presets idénticos byte a byte.
+   - Evidencia ignorada en Logs/evidence/install-c92c64c-20261112 del worktree visual-art-pass.
+5. Cierres de #41 (cb145c3), #42 (7d83f4a) y #43 (98701de), que no figuran en AGENTS.md. Verifica con git el merge commit, el segundo padre y el árbol de cada uno antes de escribirlos. Revisa también si el cierre de #45 (a844c76) quedó registrado.
+6. Cierres de #46 y #47 (12 nov 2026). Aprobación literal del PO: «Si, apruebo fusionar» (fusionar #46 y #47 antes de la capa causal).
+   - #46: merge 2fbb5be72041b59a25231815270d173d2673ebc5, segundo padre exacto d9605b50d1b6337d7a08549473b0a9da91d25770, árbol idéntico.
+   - #47: base cambiada de firstrally/gameplay a main; merge 9af2b0c8bd92fd5d27f9b2486ea7b626da903874, segundo padre exacto a96de94bf9a53ed4a3272c67adf4b98ed530ef12, árbol idéntico.
+   - Ramas remotas y worktrees conservados (build instalada y evidencia en el worktree visual-art-pass).
+   - La build instalada 0.1.0+c92c64c dev tiene el mismo producto que main 9af2b0c (después solo hay documentación).
+   - La fusión no acepta First Shot, First Rally ni First Match: la aceptación queda para el playtest integrado.
+   Verificar con git los padres y árboles antes de escribirlos.
+
+LÍMITES:
+- Solo esos dos Markdown. Sin código, tests, spec, planes, criterios ni defaults.
+- No tocar las ramas de #46/#47 ni #32.
+- Sin iPhone.
+- Documentación en español.
+
+7. Decisiones del PO del 12 de noviembre de 2026 sobre el cierre de First Shot. Registrar LITERALES, sin parafrasear:
+
+«Decisiones D1–D4:
+* D1: Aprobada opción B. Ocultar completamente el indicador de timing durante el intervalo propuesto, sin pistas residuales. Mantener ayuda completa por defecto y actualizar los hashes y anclajes de AutoQA correspondientes.
+* D2: Aprobada la propuesta de Codex: 3×3 zonas, potencia en tercios y clasificación del primer bote. Son bandas provisionales de observación, no criterios de aceptación.
+* D3: Aprobada la implementación de la capa causal no direccional. Prefiero completar H3b antes de cerrar First Shot, manteniéndola como una entrega independiente.
+* D4: Aprobadas ambas correcciones del indicador mediante TDD, sin modificar las ventanas ni sus umbrales.»
+
+«Las pruebas que realizaremos ahora en el iPhone estarán enfocadas principalmente en revisar y validar lo que hizo Fable, incluyendo personajes, cancha, animaciones, efectos visuales, HUD y su integración con los controles. Las pruebas reales de jugabilidad las quiero realizar cuando tengamos First Shot y First Rally cerrados e integrados. […] No quiero declarar First Shot aceptado solo por pruebas técnicas o visuales. Podemos dejar implementadas y verificadas sus tareas, pero reservar su aceptación física definitiva para el playtest integrado.»
+
+«Objetivo: dejar First Shot y First Rally técnicamente completos, integrados y listos para una sesión real de juego en iPhone. […] Mantengamos el enfoque incremental, con pruebas automatizadas, revisión independiente y aprobación del PO antes de cada fusión.»
+
+Contexto de D1–D4: propuesta del Step 0 de 4.2 en docs/reviews/2026-11-11-first-shot-s4-timing.md (§T4.2) y observaciones 2 y 3 de la revisión de #44.
+Estado que resulta:
+- 4.2 (implementación) y la capa causal (Tarea 3.1 del plan r2) quedan AUTORIZADAS como entregas propias.
+- 4.4 se implementa solo tras la validación del anexo C por el PO.
+- 4.5 (sesiones físicas) sigue sin autorizar.
+- La aceptación de First Shot queda reservada al playtest integrado.
+
+ENTREGA:
+- PR documental lista para revisión de Claude coordinada por el PO, sin fusionar.
+- Detenerse.
+````
