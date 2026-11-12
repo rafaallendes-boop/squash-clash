@@ -35,7 +35,7 @@ Cada commit de etapa se verificó en un worktree limpio aparte (`scripts/test.sh
 | R6 `01b9535` | 676/676 | 392/393 en tres corridas | PASS / 0 / 1 |
 | R6 `f57a09c` | 676/676 | **393/393** (tres corridas) | PASS / 0 / 1 |
 
-`scripts/check-release.sh` sobre `859edb6` y sobre `01b9535`: OK, dev y prod. El panel sigue fuera de prod; el HUD del rally está en ambos.
+`scripts/check-release.sh` sobre `859edb6`, `01b9535` y `f57a09c`: OK, dev y prod. El panel sigue fuera de prod; el HUD del rally está en ambos.
 
 Hashes protegidos, comprobados por los tests existentes y por AutoQA: defaults `c0d8ec7050e0` (107 claves), SimulationKey `166a96e319c7`, proyección `0d39e6016bd8`, P0 `6ecfdfa78cbb`. `DefaultPreset.json` no cambió.
 
@@ -195,4 +195,12 @@ Se hizo después de cerrar R1–R5, con el tiempo que quedaba. Botón **Partido*
 - [ ] Entre puntos hay una pausa corta y **Seguir** la salta.
 - [ ] El partido termina en 7 con dos de diferencia (o sigue desde 6–6) y muestra el resultado.
 - [ ] **Revancha** empieza otro partido en un toque.
+
+## 10. Build dev lista, sin instalar
+
+- `scripts/build-ios.sh dev` desde el árbol limpio en `5536962` (solo documentación después de `f57a09c`, el último commit de producto).
+- Etiqueta **`0.1.0+5536962 dev`**: `gitDirty=false`, no Development, IL2CPP Release, `SQUASH_DEV`, arm64, firma verificada con `codesign --verify --strict`.
+- Perfil incorporado: creado el 2026-11-11T13:50:05Z, vence el **2026-11-18T13:50:05Z** (10:50:05 America/Santiago).
+- Ruta: `.claude/worktrees/firstrally-gameplay/Builds/DerivedData-dev/Build/Products/Release-iphoneos/SquashClash.app`.
+- **No se instaló ni se tocó el iPhone.** Para instalar, con tu autorización y desde ese worktree: `scripts/install-ios.sh dev`. Antes, respaldo y cotejo de P0-calib-1, Po-1 y last-active, como en las sesiones anteriores.
 
