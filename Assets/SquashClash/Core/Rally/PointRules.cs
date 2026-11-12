@@ -152,15 +152,16 @@ namespace SquashClash.Core.Rally
                 else if(e.Surface==SurfaceId.FrontWall)FrontWallReached=true;
                 return;
             }
-            // [ASSUMPTION] After a good return has bounced once, a ball leaving the court ends the rally against the receiver.
-            if(verdict==LineVerdict.Out){OutAfterBounce=true;Close(PointEndCause.Out,ToHit,e);}
+            // WSF Rules of Singles Squash, rule 6.2.4 and the definition of OUT: a return that goes out is not good,
+            // bounced or not. The striker loses (spec 8.5, 8.7.4).
+            if(verdict==LineVerdict.Out){OutAfterBounce=true;Close(PointEndCause.Out,Striker,e);}
         }
         public void OnOverTop()
         {
             if(Closed){IgnoredAfterClose++;return;}
             if(Serving){Close(PointEndCause.ServiceFault,Striker,default);return;}
             if(FloorBounces>0)OutAfterBounce=true;
-            Close(PointEndCause.Out,FloorBounces==0?Striker:ToHit,default);
+            Close(PointEndCause.Out,Striker,default);
         }
         private void Close(PointEndCause cause,PlayerId? loser,in ContactEvent e)
         {
