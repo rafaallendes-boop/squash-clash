@@ -176,6 +176,17 @@ Si quieres ajustar el pase desde el panel, harían falta estas claves. Agregarla
 | `visual.ballHalo` | Tamaño del halo en diámetros de pelota. | 2,3 |
 | `visual.glassTint` | Opacidad del vidrio trasero. | 0,07 |
 
+## 6 bis. Observaciones de la revisión independiente (12 de noviembre)
+
+Otra sesión de Claude, por encargo del PO, revisó la PR #47 en `41bbba5` y repitió las suites sobre `62e2f4f` (676/676 EditMode, 400/400 PlayMode). No pidió correcciones de código en el pase. Dejó cuatro observaciones para el PO, **sin cambio de código por ahora**. Las comprobé en el código antes de anotarlas:
+
+1. **El temblor de cámara no se congela en pausa.** `CourtCameraRig.LateUpdate` avanza el temblor con `Time.unscaledDeltaTime` y no mira el reloj de simulación. Si se pausa dentro de los 0,18 s posteriores a un golpe fuerte, la cámara termina su temblor con el juego detenido. El resto del pase sí se congela (figuras, efectos de impacto). Es un descuido mío, no una decisión.
+2. **El temblor puede desplazar la mira de M2-4.** `GesturePreview.M24.cs:31` toma la matriz de la cámara en el instante en que se apoya el dedo. Un apoyo durante los 0,18 s del temblor fija la mira con la cámara corrida hasta unos 2,8 cm. Al escribir el temblor supuse que la mira no dependía de la cámara; para M2-4 eso es falso en ese instante. El caso realista es apoyar justo después de un golpe fuerte del rival.
+3. **Sombra y estela agrandadas.** `LegibilityAids` dibuja ayudas que aprobaste en H1. La sombra pasó de 7–14 cm a 8,5–17 cm de radio, con borde difuso y más opaca al centro; la estela, de 0,5 a 0,8 diámetros de pelota en la cabeza. «No empeorar H1» solo se puede juzgar en el iPhone, con L1–L6 y DEV cerrado.
+4. **p95 del editor de 0,51 a 0,81 ms y batches de 27 a 58** (§4). Hay que medir el p95 en el iPhone antes de aceptar.
+
+Mi recomendación sobre 1 y 2, para cuando decidas: lo más simple y seguro es apagar el temblor (una línea en `ImpactFx`) hasta que tenga pausa y hasta que la mira de M2-4 lea la pose colocada de la cámara y no la temblada. Lo segundo toca `GesturePreview`, que es zona de gesto.
+
 ## 7. Qué decide el PO
 
 1. **Instalar la build dev** para el playtest, antes del 18 de noviembre (§9).
@@ -184,7 +195,8 @@ Si quieres ajustar el pase desde el panel, harían falta estas claves. Agregarla
 4. **Vidrio trasero al 7 %**: ¿se mantiene o prefieres más presencia de la pared?
 5. **Ambidiestros** y brazo sin codo del humano: ¿vale la pena otra pasada?
 6. **Las cuatro claves** de §6.
-7. **Fusionar o no.** Nada se fusiona sin tu aprobación.
+7. **El temblor de cámara** (§6 bis, puntos 1 y 2): ¿se apaga hasta corregirlo, se corrige ahora o se deja?
+8. **Fusionar o no.** Nada se fusiona sin tu aprobación.
 
 ## 8. Checklist de playtest en el iPhone
 
@@ -210,6 +222,8 @@ Cancha e impactos
 - [ ] ¿Echas de menos el vidrio trasero?
 - [ ] ¿Ves el polvo en el bote y la onda en la pared? ¿Distraen?
 - [ ] ¿Notas el temblor en los golpes fuertes? ¿Es sutil o molesta?
+- [ ] Apoya el dedo justo después de un golpe fuerte del rival: ¿la mira aparece corrida respecto de donde apoyaste?
+- [ ] Pausa justo después de un golpe fuerte: ¿la cámara sigue moviéndose un instante?
 - [ ] ¿Algún efecto se confunde con el destello de Perfect?
 
 HUD
