@@ -223,6 +223,6 @@ Pedida por el PO a través de la revisión independiente de la PR #46 (head `937
 
 **Verificación** sobre `c9e2488`, en el worktree limpio y sin otro Unity en paralelo: EditMode 678/678, PlayMode 393/393 en la primera corrida, AutoQA PASS / salida 0 / nivel 1 (`20261112T200455Z-c9e2488-25949`). Árbol limpio después; ProjectSettings sin cambios.
 
-**Qué no cambió.** La simulación headless no tuvo ningún caso de «fuera tras el bote» (0 de 1000), y su informe de evidencia se regenera idéntico. `RallyParams` y su hash, `DefaultPreset.json`, el predictor, el contrato y el reloj no se tocaron.
+**Qué no cambió.** La simulación headless no tuvo ningún caso de «fuera tras el bote» (0 de 1000). Regenerada sobre `c9e2488`, su tabla de 1000 rallies (`rallies.tsv`) es idéntica byte a byte a la evidencia versionada. El resumen solo difiere en el tiempo de cómputo y en el hash de `RallyParams` (`7d50ddaf5d4f` en vez de `23ddf7292b9e`): ese hash cambió en R6, al agregar los parámetros del partido, no con esta corrección. `RallyParams.cs`, `DefaultPreset.json`, el predictor, el contrato y el reloj no se tocaron.
 
 **Build.** La build `0.1.0+5536962 dev` de §10 **no incluye esta corrección**. No se rehízo: se hará desde `visual/art-pass` una vez integrada.
