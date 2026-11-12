@@ -121,10 +121,24 @@ namespace SquashClash.Core.Tests.Rally
             var rules=New();rules.OnBallContact(Front());rules.OnBallContact(Floor());rules.OnBallContact(Front(.2f));
             Assert.That(rules.Closed,Is.False);
         }
-        [Test] public void OutAfterTheFirstBounce_ReceiverLoses_Assumption()
+        // WSF Rules of Singles Squash, rule 6.2.4 and the definition of OUT: a return that goes out is not good, bounced or not.
+        [Test] public void OutAfterTheFirstBounce_StrikerLoses_Wsf()
         {
             var rules=New();rules.OnBallContact(Front());rules.OnBallContact(Floor());rules.OnBallContact(Hit(SurfaceId.BackWall,3,2.6f));
-            Assert.That(rules.Cause,Is.EqualTo(PointEndCause.Out));Assert.That(rules.OutAfterBounce,Is.True);Assert.That(rules.Winner,Is.EqualTo(PlayerId.Rival));
+            Assert.That(rules.Cause,Is.EqualTo(PointEndCause.Out));Assert.That(rules.OutAfterBounce,Is.True);Assert.That(rules.Winner,Is.EqualTo(PlayerId.Human));
+        }
+        [Test] public void OverTheTopAfterTheFirstBounce_StrikerLoses_Wsf()
+        {
+            var rules=New();rules.OnBallContact(Front());rules.OnBallContact(Floor());rules.OnOverTop();
+            Assert.That(rules.FloorBounces,Is.EqualTo(1));
+            Assert.That(rules.Cause,Is.EqualTo(PointEndCause.Out));Assert.That(rules.OutAfterBounce,Is.True);Assert.That(rules.Winner,Is.EqualTo(PlayerId.Human));
+        }
+        [Test] public void NeutralLaunch_OutAfterTheFirstBounce_HasNoWinner()
+        {
+            var wall=New(null);wall.OnBallContact(Front());wall.OnBallContact(Floor());wall.OnBallContact(Hit(SurfaceId.BackWall,3,2.6f));
+            var top=New(null);top.OnBallContact(Front());top.OnBallContact(Floor());top.OnOverTop();
+            foreach(var rules in new[]{wall,top})
+            {Assert.That(rules.Closed,Is.True);Assert.That(rules.Cause,Is.EqualTo(PointEndCause.LaunchFault));Assert.That(rules.Winner,Is.Null);Assert.That(rules.OutAfterBounce,Is.True);}
         }
         [Test] public void NeutralLaunchFault_HasNoWinner()
         {
