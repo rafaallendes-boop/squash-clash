@@ -8,7 +8,7 @@ Rama `visual/art-pass`, base `firstrally/gameplay` en `93777e3` (PR #46, borrado
 
 **Estado:** los cinco bloques están entregados, cada uno en su commit y con la app funcionando. **Nada está juzgado en el iPhone**: la lectura de la pelota, el movimiento de los personajes y el p95 los decide el PO en el dispositivo. La verificación de esta entrega es por tests, AutoQA, capturas y mediciones en el editor del Mac.
 
-**Nota sobre la base.** El encargo pedía partir de «firstrally/gameplay con la corrección de la regla». Al abrir la rama, `firstrally/gameplay` (local y remota) estaba en `93777e3` y no tenía un commit posterior con esa corrección. Se partió de `93777e3`. Este pase no toca Core ni reglas; integrar la corrección después no debería dar conflictos en los archivos de vista.
+**Nota sobre la base.** El encargo pedía partir de «firstrally/gameplay con la corrección de la regla». Al abrir la rama, `firstrally/gameplay` estaba en `93777e3` y esa corrección aún no existía, así que se partió de ahí. La corrección llegó después (`c9e2488`: con un fuera después del primer bote pierde quien pegó, WSF 6.2.4) y **se integró con el merge `c92c64c`**, sin conflictos: el pase no toca Core. La build de §9 ya la lleva.
 
 ## 1. Qué quedó
 
@@ -50,10 +50,11 @@ Suites completas y AutoQA en un worktree de verificación aparte, sobre cada com
 | Bloque 4 `ac49df9` (incluye el 3) | 676/676 | **399/399** | PASS / 0 / nivel 1 |
 | Bloque 5 `96ec780` | 676/676 | **400/400** | PASS / 0 / nivel 1 |
 | Final `62e2f4f` | 676/676 | **400/400** | PASS / 0 / nivel 1 |
+| Merge `c92c64c` (con la corrección de la regla) | **678/678** | **400/400** | PASS / 0 / nivel 1 |
 
 El bloque 3 (`796c010`) no tuvo corrida completa propia: se verificó con sus tests focales (28/28) y quedó cubierto por la corrida completa del bloque 4.
 
-Tests nuevos, todos con prefijo `Z`: `ZCharacterViewTests` (3), `ZImpactFxTests` (3) y un caso más en `ZRallyHudTests`. PlayMode pasa de 393 a 400 casos; EditMode sigue en 676.
+Tests nuevos, todos con prefijo `Z`: `ZCharacterViewTests` (3), `ZImpactFxTests` (3) y un caso más en `ZRallyHudTests`. PlayMode pasa de 393 a 400 casos. EditMode sigue en 676 por este pase y sube a 678 con los dos tests de la corrección de la regla, que son de First Rally.
 
 **Desviación de TDD, declarada.** Los tests de las vistas nuevas se escribieron después del código, no antes. No hubo un RED por aserción previo a cada implementación. Dos de los tests de `ZImpactFxTests` sí fallaron por aserción en su primera corrida, pero por errores del propio test (contaba hijos ajenos; pedía dos golpes en una misma recepción), que se corrigieron sin tocar el producto.
 
@@ -238,11 +239,16 @@ Rendimiento
 
 ## 9. Build dev
 
-- **Verificación del commit final `62e2f4f`** (el producto de `96ec780` más la corrección de un comentario en `BallView`): 676/676 EditMode, 400/400 PlayMode, AutoQA PASS / salida 0 / nivel 1, con el árbol limpio.
-- **`scripts/check-release.sh` OK** desde `62e2f4f` limpio, `gitDirty=false` en dev y prod. Prod contiene solo los módulos `Core` y `Runtime` (sin panel de desarrollador; el HUD del rally vive en `Runtime` y sí va). Dev agrega `DevPanel`. El ensamblado de captura y el framework de pruebas no entran en ningún Player.
-- **`scripts/build-ios.sh dev`: BUILD SUCCEEDED.** Etiqueta **`0.1.0+62e2f4f dev`**: `gitDirty=false`, no Development, IL2CPP Release, `SQUASH_DEV`, arm64, firma verificada con `codesign --verify --strict`.
-- Los shaders nuevos (`SquashClash/Toon` y `SquashClash/Fx`) compilan para Metal con una variante cada uno, sin errores en el log de la build.
-- Perfil incorporado: creado el 2026-11-11T13:50:05Z, vence el **2026-11-18T13:50:05Z** (10:50:05 America/Santiago).
-- Ruta: `.claude/worktrees/visual-art-pass/Builds/DerivedData-dev/Build/Products/Release-iphoneos/SquashClash.app`.
+**Build vigente: `0.1.0+c92c64c dev`.** Sustituye a `0.1.0+62e2f4f dev`, que no llevaba la corrección de la regla. La build de la PR #46 (`0.1.0+5536962 dev`) tampoco debe instalarse: no lleva el pase visual.
+
+- **Qué contiene:** el pase visual completo y First Rally con la corrección de la regla del fuera después del primer bote (`c9e2488`), integrada con el merge `c92c64c` (padres `5d0d511` y `d9605b5`).
+- **Verificación del merge `c92c64c`**, en el worktree de verificación y sin otro Unity en paralelo: 678/678 EditMode, 400/400 PlayMode, AutoQA PASS / salida 0 / nivel 1. Los ProjectSettings transitorios quedaron restaurados.
+- **`scripts/check-release.sh` OK** desde `c92c64c` limpio, `gitDirty=false` en dev y prod. Prod contiene solo los módulos `Core` y `Runtime` (sin panel de desarrollador; el HUD del rally vive en `Runtime` y sí va). Dev agrega `DevPanel`. El ensamblado de captura y el framework de pruebas no entran en ningún Player.
+- **`scripts/build-ios.sh dev`: BUILD SUCCEEDED** desde el árbol limpio. Etiqueta `0.1.0+c92c64c dev`: `gitDirty=false`, no Development, IL2CPP Release, `SQUASH_DEV`, arm64, firma verificada con `codesign --verify --strict`.
+- **Perfil incorporado:** creado el 2026-11-11T13:50:05Z, vence el **2026-11-18T13:50:05Z** (10:50:05 America/Santiago). Vigente al construir (2026-11-12T20:11Z).
+- **Ruta:** `.claude/worktrees/visual-art-pass/Builds/DerivedData-dev/Build/Products/Release-iphoneos/SquashClash.app`.
 - **No se instaló ni se tocó el iPhone.** Para instalar, con tu autorización y desde ese worktree: `scripts/install-ios.sh dev`. Antes, respaldo y cotejo de P0-calib-1, Po-1 y last-active, como en las sesiones anteriores, y comprobar que el perfil sigue vigente.
-- Esta build incluye el gameplay de First Rally (PR #46) tal como estaba en `93777e3`, sin la corrección de la regla mencionada en el encargo.
+
+### Registro de la build anterior
+
+`0.1.0+62e2f4f dev` se construyó antes de que existiera la corrección de la regla, con 676/676 EditMode, 400/400 PlayMode, AutoQA PASS / 0 / nivel 1 y `check-release` OK sobre `62e2f4f`. Los shaders nuevos (`SquashClash/Toon` y `SquashClash/Fx`) compilaron para Metal con una variante cada uno y sin errores. Queda reemplazada.
