@@ -37,6 +37,29 @@ namespace SquashClash.Runtime.Visual
                 soft.SetPixels32(pixels);soft.Apply(false,true);return soft;
             }
         }
+        // Soft ring for outlines and impact flashes: transparent inside `inner`, opaque up to `outer` (fractions of the half size).
+        public static Texture2D RingTexture(string name,float inner,float outer,float feather=.08f)
+        {
+            const int size=64;var texture=new Texture2D(size,size,TextureFormat.RGBA32,true){name=name,wrapMode=TextureWrapMode.Clamp,filterMode=FilterMode.Trilinear};
+            var pixels=new Color32[size*size];
+            for(int y=0;y<size;y++)for(int x=0;x<size;x++)
+            {
+                float dx=(x+.5f)/size*2-1,dy=(y+.5f)/size*2-1,d=Mathf.Sqrt(dx*dx+dy*dy);
+                float a=Mathf.Clamp01((d-inner)/feather)*Mathf.Clamp01((outer-d)/feather);
+                pixels[y*size+x]=new Color32(255,255,255,(byte)(a*255));
+            }
+            texture.SetPixels32(pixels);texture.Apply(true,true);return texture;
+        }
+        // Unit quad on the XY plane facing -Z (toward a camera it is aligned with), centred at the origin.
+        public static Mesh BillboardQuad(string name)
+        {
+            var mesh=new Mesh{name=name};
+            mesh.vertices=new[]{new Vector3(-.5f,-.5f,0),new Vector3(.5f,-.5f,0),new Vector3(.5f,.5f,0),new Vector3(-.5f,.5f,0)};
+            mesh.uv=new[]{Vector2.zero,Vector2.right,Vector2.one,Vector2.up};
+            mesh.colors=new[]{Color.white,Color.white,Color.white,Color.white};
+            mesh.normals=new[]{Vector3.back,Vector3.back,Vector3.back,Vector3.back};
+            mesh.triangles=new[]{0,2,1,0,3,2};mesh.RecalculateBounds();return mesh;
+        }
         public static Material NewFx(string name,Color color,bool additive,Texture texture=null)
         {
             var material=new Material(FxShader){name=name};

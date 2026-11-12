@@ -8,6 +8,9 @@ namespace SquashClash.Runtime.Ball
         private Mesh mesh;
         private Material material;
         private float radius;
+        // Halo quad size in ball diameters: it fades from the ball's edge to nothing a little over one radius further out.
+        public const float OutlineScale = 2.3f;
+        private Mesh outlineMesh; private Material outlineMaterial; private Transform outline; private UnityEngine.Camera view;
         public void Initialize(BallSimulationHost host, float radius)
         {
             this.host = host;
@@ -30,15 +33,34 @@ namespace SquashClash.Runtime.Ball
                 }
                 mesh = new Mesh { name="Ball visual", vertices=vertices, normals=normals, triangles=triangles }; mesh.RecalculateBounds();
                 GetComponent<MeshFilter>().sharedMesh = mesh;
-                material = new Material(Resources.Load<Material>("CourtMaterials/CourtBlue")) { name="Ball visual black" };
-                material.SetColor("_BaseColor", Color.black);
-                GetComponent<MeshRenderer>().sharedMaterial = material;
+                // Art pass: still the flat black ball (its strongest contrast against the light walls and floor), wrapped in a
+                // soft dark halo that makes the dot read a little larger without changing its scale. Visual only: the radius is
+                // unchanged. A white outline was tried and rejected: at game distance it averaged the dot to grey on the walls.
+                material = new Material(SquashClash.Runtime.Visual.VisualKit.ToonShader) { name="Ball visual black" };
+                material.SetColor("_BaseColor", new Color(.012f,.012f,.016f)); material.SetColor("_ShadeColor", Color.white);
+                material.SetColor("_RimColor", new Color(0,0,0,0));
+                var ballRenderer = GetComponent<MeshRenderer>(); ballRenderer.sharedMaterial = material;
+                ballRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; ballRenderer.receiveShadows = false;
+                outlineMesh = SquashClash.Runtime.Visual.VisualKit.BillboardQuad("Ball halo");
+                outlineMaterial = SquashClash.Runtime.Visual.VisualKit.NewFx("Ball halo", new Color(.012f,.012f,.016f,.55f), false);
+                outline = SquashClash.Runtime.Visual.VisualKit.Part("Halo", transform, outlineMesh, outlineMaterial).transform;
+                outline.localScale = Vector3.one * OutlineScale;
             }
             transform.localScale = Vector3.one * (radius * 2);
             transform.position = host.RenderPosition;
         }
         public void ApplyVisualScale(float scale) => transform.localScale = Vector3.one * (radius * 2 * scale);
-        private void LateUpdate() { if (host != null && host.ActiveConfig != null) transform.position = host.RenderPosition; }
-        private void OnDestroy() { if (mesh != null) Destroy(mesh); if (material != null) Destroy(material); }
+        private void LateUpdate()
+        {
+            if (host != null && host.ActiveConfig != null) transform.position = host.RenderPosition;
+            if (outline == null) return;
+            if (view == null) view = UnityEngine.Camera.main;
+            if (view != null) outline.rotation = view.transform.rotation;
+        }
+        private void OnDestroy()
+        {
+            if (mesh != null) Destroy(mesh); if (material != null) Destroy(material);
+            if (outlineMesh != null) Destroy(outlineMesh); if (outlineMaterial != null) Destroy(outlineMaterial);
+        }
     }
 }
