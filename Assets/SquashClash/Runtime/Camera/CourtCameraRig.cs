@@ -36,9 +36,33 @@ namespace SquashClash.Runtime.Camera
             Place();
         }
 
+        // Art pass: a short, decaying nudge for strong strokes. It moves the camera and its target together (no rotation)
+        // and returns exactly to the placed pose; with no shake running the rig behaves as before.
+        private float shakeAmplitude, shakeLeft, shakeDuration;
+        private Vector3 shakeOffset;
+        public bool Shaking => shakeLeft > 0;
+        public void Shake(float amplitudeMeters, float seconds)
+        {
+            if (amplitudeMeters <= 0 || seconds <= 0) return;
+            shakeAmplitude = amplitudeMeters; shakeLeft = shakeDuration = seconds;
+        }
+        public void TickShake(float dt)
+        {
+            if (shakeLeft <= 0 || dt <= 0 || float.IsNaN(dt) || float.IsInfinity(dt)) return;
+            shakeLeft -= dt;
+            if (shakeLeft <= 0) { shakeLeft = 0; shakeOffset = Vector3.zero; }
+            else
+            {
+                float k = shakeLeft / shakeDuration, phase = (shakeDuration - shakeLeft) * 70;
+                shakeOffset = new Vector3(Mathf.Sin(phase) * shakeAmplitude * k, Mathf.Cos(phase * 1.3f) * shakeAmplitude * k * .6f, 0);
+            }
+            Place();
+        }
+        private void LateUpdate() => TickShake(Time.unscaledDeltaTime);
+
         private void Place()
         {
-            var translation = Vector3.right * offset;
+            var translation = Vector3.right * offset + shakeOffset;
             transform.position = basePosition + translation;
             transform.LookAt(baseTarget + translation);
         }

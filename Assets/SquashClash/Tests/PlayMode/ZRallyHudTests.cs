@@ -151,6 +151,29 @@ namespace SquashClash.Runtime.Tests
                 Assert.That(e.worldBound.xMax,Is.LessThanOrEqualTo(root.worldBound.xMax),e.name+" fits the screen width");
             }
         }
+        // Art pass: score row and match result card.
+        [UnityTest] public IEnumerator Score_ShowsThePoints_AndTheResultCardAppearsOnlyWhenTheMatchIsOver()
+        {
+            Assert.That(Shown(root.Q("rally-score")),Is.False);Assert.That(Shown(root.Q("match-result")),Is.False);
+            rally.Autopilot=true;rally.AutopilotTimingSigmaMs=30;rally.Seed=9;
+            Click("rally-match");yield return null;
+            Assert.That(Shown(root.Q("rally-score")),Is.True);Assert.That(Shown(root.Q("match-result")),Is.False);
+            Assert.That(root.Q<Label>("rally-score-human").text,Is.EqualTo("0"));Assert.That(root.Q<Label>("rally-score-rival").text,Is.EqualTo("0"));
+            Assert.That(Drive(()=>rally.HumanPoints+rally.RivalPoints>=1,200),Is.True);hud.Refresh();
+            Assert.That(root.Q<Label>("rally-score-human").text,Is.EqualTo(rally.HumanPoints.ToString()));
+            Assert.That(root.Q<Label>("rally-score-rival").text,Is.EqualTo(rally.RivalPoints.ToString()));
+            Assert.That(Shown(root.Q("match-result")),Is.False,"no card while the match is being played");
+            Assert.That(Drive(()=>rally.Phase==RallyPhase.MatchOver,1500),Is.True);hud.Refresh();yield return null;
+            Assert.That(Shown(root.Q("match-result")),Is.True);
+            Assert.That(root.Q<Label>("match-result-score").text,Is.EqualTo(rally.Match.Human+" – "+rally.Match.Rival));
+            Assert.That(root.Q<Label>("match-result-title").text,Is.EqualTo(rally.Match.Winner==PlayerId.Human?"¡Ganaste el partido!":"Partido para Rival"));
+            var card=root.Q("match-result-card").worldBound;
+            Assert.That(card.xMin,Is.GreaterThanOrEqualTo(root.worldBound.xMin));Assert.That(card.xMax,Is.LessThanOrEqualTo(root.worldBound.xMax));
+            Assert.That(card.yMin,Is.GreaterThanOrEqualTo(root.Q("boot-header").worldBound.yMax),"the card does not cover the header buttons");
+            Click("match-result-rematch");hud.Refresh();yield return null;
+            Assert.That(Shown(root.Q("match-result")),Is.False);Assert.That(rally.Phase,Is.Not.EqualTo(RallyPhase.MatchOver));
+            Assert.That(root.Q<Label>("rally-score-human").text,Is.EqualTo("0"));Assert.That(root.Q<Label>("rally-score-rival").text,Is.EqualTo("0"));
+        }
         [UnityTest] public IEnumerator PracticeButton_LeavesTheRally()
         {
             Click("rally-toggle");Click("rally-toggle");yield return null;
