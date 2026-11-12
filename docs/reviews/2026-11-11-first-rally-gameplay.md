@@ -34,6 +34,7 @@ Cada commit de etapa se verificó en un worktree limpio aparte (`scripts/test.sh
 | R5 `859edb6` | 655/655 | **388/388** (dos corridas) | PASS / 0 / 1 |
 | R6 `01b9535` | 676/676 | 392/393 en tres corridas | PASS / 0 / 1 |
 | R6 `f57a09c` | 676/676 | **393/393** (tres corridas) | PASS / 0 / 1 |
+| Corrección `c9e2488` (§11) | 678/678 | **393/393** (una corrida) | PASS / 0 / 1 |
 
 `scripts/check-release.sh` sobre `859edb6`, `01b9535` y `f57a09c`: OK, dev y prod. El panel sigue fuera de prod; el HUD del rally está en ambos.
 
@@ -116,7 +117,7 @@ El estado de las entidades está expuesto para leer, sin lógica que tocar:
 1. **Test intermitente de rollback** (§2). Es de la zona de timing. Sugerencia para Codex: que el test fije su base de tiempo, o que la normalización de `ClockMap` tolere el error según la magnitud del tiempo real y no solo de la posición.
 2. **El contacto del rival se aplica al final del frame.** La física es exacta (se relanza desde el estado histórico de su paso), pero la pelota puede verse hasta un frame atrás en ese instante. Para hacerlo en el paso exacto habría que tocar el loop del host.
 3. **Soltar antes de que el cuerpo llegue** puede dar contacto con el personaje todavía en camino (consecuencia de K con cuerpo fijo).
-4. **Pelota fuera después del primer bote**: la regla implementada da el punto a quien pegó. Es un **supuesto**; no verifiqué el reglamento WSF para ese caso.
+4. **Pelota fuera después del primer bote — cerrado el 12 de noviembre (§11).** La regla original daba el punto a quien pegó (perdía el receptor). Era un supuesto sin verificar y contradecía el reglamento WSF. Corregido en `c9e2488`: pierde quien pegó.
 5. **El hash de configuración en los registros cambia en cada recepción del rally.** Las líneas `rally-point` llevan el hash de `RallyParams` para agrupar.
 6. **La IA elige cruzado más que paralelo** (51 % contra 39 %; drop 10 %). Es efecto del rasgo «lejos del humano» contra un bot que siempre juega paralelo. Pesos de partida.
 7. **R6 es una versión mínima** (§9): el saque es automático para los dos y no hay gesto de saque.
@@ -127,7 +128,7 @@ El estado de las entidades está expuesto para leer, sin lógica que tocar:
 2. **Cinemática de los personajes**: ¿el sistema devuelve demasiado? Hoy lo inalcanzable es menos del 1 %.
 3. **Dificultad Medio**: 38 ms de error de timing, 16 cm de error de apunte. ¿Punto de partida razonable?
 4. **Pasar los parámetros del rally al panel.** Requiere actualizar los anclajes de hash de AutoQA; es trabajo de Codex.
-5. **Supuesto de «fuera tras el bote»** y huella de 20 mm.
+5. **Huella de 20 mm.** El supuesto de «fuera tras el bote» ya no requiere decisión: quedó corregido según el reglamento WSF (§11).
 6. **El test intermitente**: encargar a Codex la corrección de fondo.
 7. **Fusionar o no.** Nada se fusiona sin tu aprobación.
 
@@ -204,3 +205,24 @@ Se hizo después de cerrar R1–R5, con el tiempo que quedaba. Botón **Partido*
 - Ruta: `.claude/worktrees/firstrally-gameplay/Builds/DerivedData-dev/Build/Products/Release-iphoneos/SquashClash.app`.
 - **No se instaló ni se tocó el iPhone.** Para instalar, con tu autorización y desde ese worktree: `scripts/install-ios.sh dev`. Antes, respaldo y cotejo de P0-calib-1, Po-1 y last-active, como en las sesiones anteriores.
 
+## 11. Corrección de la regla «fuera tras el primer bote» (12 de noviembre)
+
+Pedida por el PO a través de la revisión independiente de la PR #46 (head `93777e3`).
+
+**Qué estaba mal.** `PointRules` daba el punto a quien pegó cuando la pelota salía después del primer bote: perdía el receptor. Lo había dejado marcado como supuesto (§6.4).
+
+**Fuente.** *WSF Rules of Singles Squash* (2024 V1.2 y 2025), regla 6.2.4: un retorno es bueno solo si no es out. La definición de OUT no distingue antes o después del bote. La spec v0.3 coincide: §8.5 («En ninguna pared puede tocar la línea de out ni pasarla») y §8.7.4.
+
+**Qué cambió** (commit `c9e2488`, solo `PointRules.cs` y sus pruebas):
+
+- Pelota que toca o pasa la línea de out después del primer bote: **pierde quien pegó**. Lo mismo si se va por arriba de la pared.
+- `OutAfterBounce` se conserva como dato del cierre.
+- Consecuencia en el lanzamiento neutro: como no tiene autor, un lanzamiento que se va fuera después de su bote es ahora falla de lanzamiento (sin ganador, se repite), igual que sus otras faltas. Antes perdía el receptor.
+
+**TDD.** RED: 3 fallos por aserción sobre 25 pruebas de `PointRulesTests`, sin errores de compilación (el test original renombrado a `OutAfterTheFirstBounce_StrikerLoses_Wsf`, más el caso por arriba y el del lanzamiento neutro). GREEN: 116/116 en las pruebas del rally.
+
+**Verificación** sobre `c9e2488`, en el worktree limpio y sin otro Unity en paralelo: EditMode 678/678, PlayMode 393/393 en la primera corrida, AutoQA PASS / salida 0 / nivel 1 (`20261112T200455Z-c9e2488-25949`). Árbol limpio después; ProjectSettings sin cambios.
+
+**Qué no cambió.** La simulación headless no tuvo ningún caso de «fuera tras el bote» (0 de 1000), y su informe de evidencia se regenera idéntico. `RallyParams` y su hash, `DefaultPreset.json`, el predictor, el contrato y el reloj no se tocaron.
+
+**Build.** La build `0.1.0+5536962 dev` de §10 **no incluye esta corrección**. No se rehízo: se hará desde `visual/art-pass` una vez integrada.
