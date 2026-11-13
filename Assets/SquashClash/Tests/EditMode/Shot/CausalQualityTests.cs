@@ -18,7 +18,7 @@ namespace SquashClash.Core.Tests.Shot
             for(int i=0;i<=230;i++)flight.States.Add(new BallState{Step=i,Position=new Vector3(2.6f,.6f,5.5f+(i-150)*.01f),Velocity=new Vector3(0,0,1)});
             flight.Contacts.Add(Event(SurfaceId.FrontWall,1,1.2f));flight.Contacts.Add(Event(SurfaceId.Floor,101,.02f));flight.Contacts.Add(Event(SurfaceId.Floor,201,.02f));
             plan=new ContactPlan(true,new SimTime(100),new SimTime(200),150,flight.States[150].Position,StrokeSide.Drive,1,body,new LegalSettings(.05f,2,100,0),CourtDimensions.Standard());
-            clock=new ClockMap();clock.Begin(1,0,0,1,1,100);timing=new TimingSettings();settings=new CausalSettings(.6f);
+            clock=new ClockMap();clock.Begin(1,0,0,1,1,100);timing=new TimingSettings(40);settings=new CausalSettings(.6f);
             plans=new PresentedPlans();plans.Present(0,plan,1.5);
         }
         private ContactEvent Event(SurfaceId surface,long step,float height)
@@ -64,7 +64,7 @@ namespace SquashClash.Core.Tests.Shot
         [Test] public void MirroredSide_IsSymmetric()
         {
             var r=Reference();var q=new Vector3(2,.9f,5.5f);var v=CausalQuality.Evaluate(r,body,q,settings);
-            var mirror=new Trajectory();foreach(var b in flight.States){var s=b;s.Position.x=6.4f-b.Position.x;s.Velocity.x=-b.Velocity.x;mirror.States.Add(s);}mirror.Contacts.AddRange(flight.Contacts.Select(e=>new ContactEvent(e.Surface,new Vector3(6.4f-e.Point.x,e.Point.y,e.Point.z),e.SurfaceUV,e.Normal,e.Step,e.TimeInStep,e.Timing,e.ApproachVelocity,e.Persistent)));
+            var mirror=new Trajectory();foreach(var b in flight.States){var s=b;s.Position.x=6.4f-b.Position.x;s.Velocity.x=-b.Velocity.x;mirror.States.Add(s);}mirror.Contacts.AddRange(flight.Contacts.Select(e=>new ContactEvent(e.Surface,new Vector3(6.4f-e.Point.x,e.Point.y,e.Point.z),e.UV,e.Normal,e.Step,e.TimeInStep,e.Timing,e.ApproachVelocity,e.Persistent)));
             var mb=new BodyFrame(new Vector2(3.2f,5.5f),false,1.3f,.6f,.4f,1.1f,.3f);
             var mp=new ContactPlan(true,plan.KIn,plan.KOut,150,mirror.States[150].Position,StrokeSide.Drive,1,mb,plan.Legal,plan.Court);
             var mr=CausalQuality.Prepare(mirror,mp,clock,timing,0,1);var mv=CausalQuality.Evaluate(mr,mb,new Vector3(6.4f-q.x,q.y,q.z),settings);
