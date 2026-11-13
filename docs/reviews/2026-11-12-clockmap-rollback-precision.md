@@ -1,4 +1,8 @@
-# Precisión de ClockMap y rollback detenido — 12 de noviembre de 2026
+# Precisión de ClockMap y rollback — 12 de noviembre de 2026
+
+## Estado vigente: validación integrada completa, sin fusionar
+
+La decisión del PO «Sí, ajeno a #48» permitió continuar. Tras integrar main por merge: **690/690 EditMode, 404/404 PlayMode (una corrida), AutoQA PASS/0/nivel 1 (85/85) y check-release dev/prod OK, gitDirty=false** sobre `c9e0f3b`. Detalle y evidencia al final; los registros de parada siguientes son históricos. La fusión requiere aprobación explícita del PO.
 
 ## Estado histórico inicial: detenido por fallo distinto en PlayMode
 
@@ -124,3 +128,35 @@ Este registro sigue a la decisión literal del PO y al resumen de revisión guar
 - Las pruebas usan **reflexión sobre setters privados del host** para preparar la base fija. Se conserva como observación de mantenimiento; no se cambian tests, host ni encapsulación en esta continuación.
 
 Validación autorizada: sobre la integración limpia, **un solo Unity a la vez**, EditMode completo y **una sola** PlayMode completa con XML fresco, AutoQA mvp PASS/salida 0/nivel 1 y check-release dev/prod con `gitDirty=false`; restaurar los ProjectSettings transitorios. **Si vuelve a fallar ReticleVisibilityTests, registrar hora/salida y detenerse sin reintentar para obtener Pass**. Sin más cambios de producto (ClockMap conserva el fix revisado), tests, spec, planes, criterios, umbrales ni defaults. Sin iPhone, build nativa ni instalación; los exports Unity de check-release son solo la comprobación expresamente solicitada. PR lista para el PO, **sin fusionar: se requiere su aprobación explícita para la fusión**. Resultados nuevos aún pendientes al guardar esta predeclaración.
+
+
+## Cierre de la validación integrada — 12 de noviembre de 2026, Chile
+
+**Validación completa; PR #48 lista para el PO y sin fusionar.** Fuente de producto/tests verificada: **`c9e0f3bbd188736e0f79b739294bcbdc4e433ef3`**, árbol limpio antes y después de cada comando. La continuación conserva ClockMap y los dos archivos de tests exactamente como en el head revisado `3615b85`; solo añade el merge de main y documentación. No se reejecutó RED: el 22/28 de la revisión sigue atribuido a Claude.
+
+Ejecutado en el Mac del PO, Unity **6000.3.27f1**. Antes de cada comando se comprobó que no hubiera otro proceso Unity. Corridas secuenciales; **una sola PlayMode completa**, sin reintentos. Horas **America/Santiago del 12 de noviembre** (corresponden al 13 de noviembre en UTC):
+
+| Comando | Inicio–fin Chile | Resultado | Salida |
+|---|---|---|---|
+| `scripts/test.sh editmode` | 21:55:44–21:56:30 | **690/690**, cero skipped/CS, XML fresco | 0 |
+| `scripts/test.sh playmode` | 21:56:35–21:58:07 | **404/404**, cero skipped/CS, XML fresco; ReticleVisibilityTests **9/9 Pass** | 0 |
+| `scripts/autoqa.sh mvp` | 21:58:11–21:58:26 | **85/85; PASS / 0 / nivel 1**, dirty=false | 0 |
+| `scripts/check-release.sh` | 21:58:31–21:59:37 | **dev/prod OK**, gitHash=c9e0f3b y gitDirty=false en ambos | 0 |
+
+El test original de rollback pasó; entrada real **62,479577046151931 s**, **2026-11-13T00:57:44.0023590Z** (12 nov **21:57:44.0023590 Chile**). Está fuera del tramo 64–128 s; no se presenta como cobertura del tramo. Los cuatro casos con bases fijas **10/70/100/200 s** pasan. Las pruebas y su preparación por reflexión permanecen intactas. **CRP-01 no reapareció**; se conserva el fallo histórico y la decisión del PO de tratarlo como intermitente ajeno a #48, con causa no demostrada. No se atribuye una causa nueva ni una corrección del retículo.
+
+AutoQA: corrida **`20261113T005811Z-c9e0f3b-26557`**, **18/18 PASS**, canario FAIL esperado, integridad reportada hashesVerified/presetsUnchanged/guardPassed/evidenceSha256Ok=true, salida 0/nivel 1 y `dirty=false`. Restauración automática sin errores; no se presenta como una revisión independiente adicional del verificador.
+
+Check-release produjo exports Unity/IL2CPP frescos para comprobar los módulos: dev **Core/Runtime/DevPanel**, prod **Core/Runtime**, sin framework de pruebas ni ensamblado de captura en Players. Metadata de ambos **gitHash=c9e0f3b**, **gitDirty=false**. Sin compilación nativa Xcode, build firmada, acceso al iPhone ni instalación.
+
+**Integridad:** snapshots de todos los archivos versionados antes de cada comando, diffs transitorios preservados y ProjectSettings restaurados después. Cero diferencias versionadas al finalizar cada etapa, `device.env` sin cambios e ignorado. Todo ProjectSettings/scripts/Packages coincide con main integrado. El delta propio frente a main sigue limitado a ClockMap, los dos tests ya revisados y los dos Markdown; fuera de ClockMap no hay producto distinto de main. Defaults, spec, planes, escenarios, criterios, umbrales, física y vistas sin cambio propio; hashes esperados `c0d8ec7050e0`, P0 `6ecfdfa78cbb`, SimulationKey `166a96e319c7` intactos.
+
+Evidencia nueva separada y **sin versionar** en `Logs/evidence/clockmap-precision/integrated-c9e0f3b/`: por comando `run.json`, salida, XML/logs, manifiesto SHA-256 previo, diffs/restauración de ProjectSettings y `sha256.json`; `audit.json` recoge integración, delta y fuentes revisadas intactas. AutoQA conserva su carpeta propia en `Logs/autoqa/20261113T005811Z-c9e0f3b-26557/`. La evidencia anterior a CRP-01 se conserva.
+
+| XML nuevo | SHA-256 |
+|---|---|
+| `editmode/editmode-results.xml` | `396826b5747f8f98ff378436e181d022236fa394a8cda659ba9aa3e5d6c02387` |
+| `playmode/playmode-results.xml` | `65a24054b50a97167b81c035c6b38d5e8a2a99d6b877d6bdf171c8d2a76e4e08` |
+| AutoQA `tests.xml` | `81222f2ed06e4ab1ea2986c46ebc25db46f57edb2395127be21d9e816a7457fa` |
+
+Después de esta fuente verificada solo se registran los resultados en AGENTS.md y este informe; no cambian producto/tests ni se amplían las ejecuciones. Los estados iniciales de parada y pendientes quedan como históricos, actualizados por esta entrada. **Sin fusionar: la fusión requiere aprobación explícita del PO.**
