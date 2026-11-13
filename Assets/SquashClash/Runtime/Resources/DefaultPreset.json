@@ -434,6 +434,46 @@
     {
       "key": "feedback.haptics",
       "value": 1
+    },
+    {
+      "key": "causal.timingHeightPerM",
+      "value": 0.6
+    },
+    {
+      "key": "causal.timingSpeedPerM",
+      "value": -0.25
+    },
+    {
+      "key": "causal.stretchStart",
+      "value": 0.85
+    },
+    {
+      "key": "causal.jamDistance",
+      "value": 0.35
+    },
+    {
+      "key": "causal.stretchHeight",
+      "value": 0.4
+    },
+    {
+      "key": "causal.stretchSpeed",
+      "value": -0.2
+    },
+    {
+      "key": "causal.jamHeight",
+      "value": 0.3
+    },
+    {
+      "key": "causal.jamSpeed",
+      "value": -0.15
+    },
+    {
+      "key": "causal.capHeight",
+      "value": 1
+    },
+    {
+      "key": "causal.capSpeed",
+      "value": -0.4
     }
   ]
 }

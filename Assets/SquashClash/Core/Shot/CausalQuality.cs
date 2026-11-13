@@ -14,6 +14,10 @@ namespace SquashClash.Core.Shot
     }
     public readonly struct CausalSettings
     {
+        public static CausalSettings From(ParamSet p)=>new CausalSettings(
+            (float)p.Get("causal.timingHeightPerM"),(float)p.Get("causal.timingSpeedPerM"),(float)p.Get("causal.stretchStart"),(float)p.Get("causal.jamDistance"),
+            (float)p.Get("causal.stretchHeight"),(float)p.Get("causal.stretchSpeed"),(float)p.Get("causal.jamHeight"),(float)p.Get("causal.jamSpeed"),
+            (float)p.Get("causal.capHeight"),(float)p.Get("causal.capSpeed"));
         public readonly float TimingHeight,TimingSpeed,StretchStart,JamDistance,StretchHeight,StretchSpeed,JamHeight,JamSpeed,CapHeight,CapSpeed;
         public CausalSettings(float timingHeight=.6f,float timingSpeed=-.25f,float stretchStart=.85f,float jamDistance=.35f,float stretchHeight=.4f,float stretchSpeed=-.2f,float jamHeight=.3f,float jamSpeed=-.15f,float capHeight=1,float capSpeed=-.4f)
         {TimingHeight=timingHeight;TimingSpeed=timingSpeed;StretchStart=stretchStart;JamDistance=jamDistance;StretchHeight=stretchHeight;StretchSpeed=stretchSpeed;JamHeight=jamHeight;JamSpeed=jamSpeed;CapHeight=capHeight;CapSpeed=capSpeed;}
@@ -62,7 +66,17 @@ namespace SquashClash.Core.Shot
     }
     public static class CausalQuality
     {
-        public static CausalShotResult Solve(CausalReference reference,BodyFrame body,Vector3 contact,Vector2 aim,float power,EffectiveConfig config,IBallSimulationFactory factory)=>default;
+        public static CausalShotResult Solve(CausalReference reference,BodyFrame body,Vector3 contact,Vector2 aim,float power,EffectiveConfig config,IBallSimulationFactory factory)
+        {
+            var settings=CausalSettings.From(config.Source);var vectors=Evaluate(reference,body,contact,settings);
+            float requested=(float)config.Source.Get("shot.vMin")+power*((float)config.Source.Get("shot.vMax")-(float)config.Source.Get("shot.vMin"));
+            var input=Apply(aim,requested,vectors,settings);
+            // The existing solver retains its feasibility raising/lowering, cap and verifier unchanged.
+            // Equal endpoints convey the already composed total speed without clamping it back to vMin.
+            var solution=ShotSolver.Solve(new ShotRequest(contact,input.Aim,power),input.Speed,input.Speed,(float)config.Source.Get("shot.vCap"),
+                config.Physics.Gravity,config.Physics.BallRadius,config.Court,factory,config.Physics);
+            return new CausalShotResult(vectors,input,solution);
+        }
         public static CausalReference Prepare(Trajectory trajectory,ContactPlan plan,ClockMap clock,TimingSettings timing,double presented,double tempo,Func<long,BodyFrame> bodyAt=null)
         {
             if(trajectory==null||clock==null)throw new ArgumentNullException(nameof(trajectory));
