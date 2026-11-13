@@ -47,6 +47,23 @@ namespace SquashClash.Core.Tests.Rally
                 Assert.That(outcome.Shots,Is.EqualTo(0));Assert.That(outcome.LastReception,Is.EqualTo(ReceptionResult.NoSwing));
             }
         }
+        // B4 follow-up A1: the frozen causal reference belongs to one reception. A reception that does not swing
+        // (here the rival never does) must not leave the previous reception's reference reachable.
+        [Test] public void CausalReference_DoesNotSurviveIntoAReceptionWithoutASwing()
+        {
+            var context=RallyFixtures.Context();
+            using(var sim=new RallySim(context,Bot(context,1,0),new NeverSwing()))
+            {
+                var outcome=sim.Play(PlayerId.Human);
+                Assert.That(outcome.Receptions[0].Who,Is.EqualTo(PlayerId.Human));Assert.That(outcome.Receptions[0].Result,Is.EqualTo(ReceptionResult.Contact),Signature(outcome));
+                Assert.That(outcome.Receptions[0].Vectors,Is.Not.Null,"the human contact used its own frozen reference");
+                var last=outcome.Receptions[outcome.Receptions.Count-1];
+                Assert.That(last.Who,Is.EqualTo(PlayerId.Rival));Assert.That(last.Result,Is.EqualTo(ReceptionResult.NoSwing).Or.EqualTo(ReceptionResult.Unreachable));
+                var field=typeof(RallySim).GetField("pendingCausal",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic);
+                Assert.That(field,Is.Not.Null);
+                Assert.That(field.GetValue(sim),Is.Null,"a reception without a swing kept the previous reception's causal reference");
+            }
+        }
         [Test] public void PerfectTiming_ProducesAnExchange()
         {
             var context=RallyFixtures.Context();

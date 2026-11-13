@@ -140,6 +140,8 @@ namespace SquashClash.Core.Rally
         private void BeginReception(PlayerId who,RallyOutcome outcome)
         {
             var brain=brains[(int)who];var body=Body(who);var other=Body(who.Other());var state=ball.State;
+            // The frozen causal reference belongs to this reception only (RallyDirector clears its trace list per point).
+            pendingCausal=null;
             var trajectory=context.Predict(state);
             int delay=context.Steps(context.Params.ReactionS)+brain.PerceptionSteps;
             var plan=ReceptionPlanner.Plan(context,trajectory,Rules,body,delay,++planVersion,brain.StanceNoise());
