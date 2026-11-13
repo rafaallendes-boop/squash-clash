@@ -78,7 +78,7 @@ namespace SquashClash.Core.Tests.Shot
         {var fast=Reference(1);var slow=Reference(.3);Assert.That(fast.ArcRadius,Is.GreaterThan(slow.ArcRadius));TestContext.WriteLine("fast L="+fast.ArcRadius+" slow L="+slow.ArcRadius);}
         [Test] public void Edges_ExactWindows_KOutNeighborAndEarlierTie()
         {
-            var r=Reference();Assert.That(r.PerfectSteps,Does.Contain(154));Assert.That(r.PerfectSteps,Does.Not.Contain(155));
+            var r=Reference();Assert.That(r.PerfectSteps,Does.Contain(154));Assert.That(r.PerfectSteps,Is.Not.Contains(155L));
             foreach(double delta in new[]{-.1,.1})Assert.That(ContactContract.Decide(1.5+delta,plans,clock,flight,timing,false).Result,Is.EqualTo(ShotResult.Valid));
             clock.Begin(1,0,0,1,1,128);plans=new PresentedPlans();plans.Present(0,plan,150/128d);
             var tie=ContactContract.Decide(155.5/128d,plans,clock,flight,new TimingSettings(0,false,100),false);Assert.That(tie.ContactStep,Is.EqualTo(155));
