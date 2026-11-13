@@ -530,3 +530,50 @@ El bloque «Estado vigente» del 5 de noviembre permanece como histórico de ese
 - **Revisión de Claude:** PR #45/head `8e6e1c25d5ef33b7c56b58cb7993517f0dc88f29`, APROBADO CON OBSERVACIONES, sin bloqueantes; 562/562 EditMode y 368/368 PlayMode reproducidos. Autoqa-check v7 coincide con el operador: PASS/0/nivel 1 y 41/41 SHA de la corrida `20261111T153744Z-2fc2afe-25993`.
 - **Observaciones autorizadas:** O1 bloquear DEV/tres dedos durante el modal y reponer BlockedByUi según DEV real, con TDD; O2 sobre metricsValid según reloj, validez de calibración solo en payload, con TDD; O3 aclarar el borde inclusivo −100 ms y las pérdidas de SL3/SL4 sin reejecutar H3b; O4 H3b completo NotEvaluated sin cambio; O5 documentar asincronía media negativa (Repp, 2005) y transferencia a intercepción no demostrada, sin nuevo umbral; O6 esta entrada vigente idéntica en AGENTS.md y aprobaciones. [Informe S4](https://github.com/rafaallendes-boop/squash-clash/blob/firstshot/s4-timing/docs/reviews/2026-11-11-first-shot-s4-timing.md).
 - **Autorización literal del PO para corregir y fusionar:** «Dejame el prompt para que codex arregle las observaciones y luego haga el merge». Misma rama/PR, delta limitado a LatencyCalibration.cs, DevPanelView.cs, LatencyCalibrationTests.cs y documentación autorizada; RED por aserción/GREEN, suites frescas, check-release dev/prod limpio y AutoQA PASS/0/1 antes del merge commit. Head exacto y árboles limpios; segundo padre=head verificado y árbol idéntico; sincronizar main y preservar ignorados con inventario/SHA antes de retirar worktree sin force, rama remota conservada. El cierre del merge se registra en la siguiente entrega, **sin commit aparte en main**. La fusión no acepta S4. Sin contrato/reloj/renderers #44/solver/P2/AutoQA/spec/planes/criterios nuevos ni #32/áreas de Fable/First Rally/First Match, iPhone, build nativa o instalación. Ante defecto/sorpresa/RED no basado en aserción, registrar y detener sin fusionar.
+
+
+## ClockMap / rollback — parada CRP-01 (PO, 12 de noviembre de 2026)
+
+Encargo literal del PO: «dejame los encargos a codex para ir avanzando». Base `main a844c76`, rama/worktree propios `fix/clockmap-rollback-precision`. Defecto de producto reproducido con epoch fijo: 70/100 s dan «esperado 6, fue 5» sin esperar el uptime de Unity. RED `30a99aa`, corrección mínima `dd46548` solo en la normalización de ClockMap: propaga la escala de los timestamps absolutos a pasos dentro de la envolvente existente de representación double. SimClock, paso, ventanas, contrato, compensación y criterios/umbrales intactos. GREEN focal 28/28 ClockMap y 28/28 rollback; regresión EditMode 574/574.
+
+**Detenido conforme a «Ante otro defecto o sorpresa: registrar y detenerse».** Primera PlayMode completa 376/376; segunda 375/376, por `ReticleVisibilityTests.DevOpen_ProtocolActionsRemainUsable_AndCloseDevBeforeArming` (línea 209: esperado ≤674.663208, observado 788.198853), en Mac. No se atribuye causa ni se aplica la excepción Linux; prueba/vistas intactas. El rollback original pasó en ambas, comenzando a 61,887585 s y 65,744064 s (la segunda dentro de 64–128 s); los cuatro casos fijos también pasan. No se reintenta ni se corrige el fallo distinto. **Tercera PlayMode, AutoQA obligatorio PASS/0/nivel 1 y check-release pendientes** por parada; no declarar validación completa ni aptitud para fusionar.
+
+ProjectSettings transitorios restaurados, device.env idéntico/ignorado; spec/planes/escenarios/defaults y hashes `c0d8ec7050e0` / P0 `6ecfdfa78cbb` / SimulationKey `166a96e319c7` intactos. Sin iPhone, builds, exports, Xcode, instalación ni cambios en #32, firstrally/gameplay o visual/art-pass. [Informe](docs/reviews/2026-11-12-clockmap-rollback-precision.md) y evidencia local ignorada `Logs/evidence/clockmap-precision/`. PR para revisión de Claude coordinada por PO, sin fusionar; continuación sujeta a decisión del PO sobre CRP-01.
+
+
+## PR #48 — decisión del PO sobre CRP-01 y revisión independiente (12 de noviembre de 2026)
+
+**Decisión literal del PO**, 12 de noviembre de 2026, **21:52 America/Santiago**: **«Sí, ajeno a #48»**. CRP-01 se trata como intermitente ajeno al cambio; **su causa no está demostrada y no se corrige en esta PR**. Fuente: encargo del PO en este chat.
+
+Claude revisó independientemente el head **`3615b8588a732eab174cd79cb89bb9bb9a03c464`**: **APROBADO CON OBSERVACIONES, sin bloqueantes**. Sobre un merge local con main `9af2b0c`, según la revisión comunicada por el PO:
+
+- RED **22/28** con el ClockMap original.
+- EditMode **690/690**.
+- PlayMode **404/404 en tres corridas seguidas**, con `ReticleVisibilityTests` en Pass las tres veces.
+- AutoQA **PASS / salida 0 / nivel 1**, **85/85**.
+- check-release **dev/prod OK**.
+
+Estos resultados pertenecen a la revisión de Claude sobre su integración local; no se presentan como nuevas corridas de Codex ni sustituyen los fallos históricos registrados.
+
+
+## Continuación autorizada de #48 e integración de main
+
+Este registro sigue a la decisión literal del PO y al resumen de revisión guardados primero en **`7821a1b`**, antes de integrar o ejecutar verificaciones nuevas. `main` remoto se comprobó en **`9af2b0c8bd92fd5d27f9b2486ea7b626da903874`**; **#49 seguía abierta, sin fusionar**, por lo que no se incorpora esa PR ni se resuelve un conflicto inexistente. Integración mediante **merge `b736832169c57d68eca5b7cc6e900b9e907ccc03`**, sin rebase; conserva el historial de #48 y añade main como segundo padre.
+
+**Observaciones de Claude, sin cambios de código ni pruebas:**
+
+- En la revisión independiente, el test original de rollback empezó a los **60 s**, fuera del tramo **64–128 s**. Ese tramo está cubierto por los casos con base fija; no se presenta esa corrida del test original como cobertura temporal dentro del tramo. No se sustituyen los instantes históricos de las corridas anteriores de Codex.
+- Las pruebas usan **reflexión sobre setters privados del host** para preparar la base fija. Se conserva como observación de mantenimiento; no se cambian tests, host ni encapsulación en esta continuación.
+
+Validación autorizada: sobre la integración limpia, **un solo Unity a la vez**, EditMode completo y **una sola** PlayMode completa con XML fresco, AutoQA mvp PASS/salida 0/nivel 1 y check-release dev/prod con `gitDirty=false`; restaurar los ProjectSettings transitorios. **Si vuelve a fallar ReticleVisibilityTests, registrar hora/salida y detenerse sin reintentar para obtener Pass**. Sin más cambios de producto (ClockMap conserva el fix revisado), tests, spec, planes, criterios, umbrales ni defaults. Sin iPhone, build nativa ni instalación; los exports Unity de check-release son solo la comprobación expresamente solicitada. PR lista para el PO, **sin fusionar: se requiere su aprobación explícita para la fusión**. Resultados nuevos aún pendientes al guardar esta predeclaración.
+
+
+## PR #48 — validación integrada completa, sin fusionar (12 de noviembre de 2026, Chile)
+
+Primer commit de esta continuación **`7821a1b`** registra la decisión literal del PO a las 21:52 Chile: **«Sí, ajeno a #48»**, y la revisión de Claude del head `3615b85`, APROBADO CON OBSERVACIONES/sin bloqueantes (RED original 22/28; 690/690 EditMode; tres PlayMode 404/404 con ReticleVisibility Pass; AutoQA PASS/0/1, 85/85; check-release OK en su merge local). CRP-01 se trata como intermitente ajeno al cambio, **causa no demostrada**, sin corregirlo en #48. No se borran fallos previos ni se convierten en Pass.
+
+Main **`9af2b0c`** integrado por merge **`b736832169c57d68eca5b7cc6e900b9e907ccc03`**, sin rebase; segundo padre exacto `9af2b0c8bd92fd5d27f9b2486ea7b626da903874`, primer padre `7821a1b`. #49 seguía abierta al integrar; no hubo conflicto. Predeclaración/observaciones **`c9e0f3b`**, fuente limpia verificada el 12 nov **21:55:44–21:59:37 Chile**: **690/690 EditMode**, **404/404 PlayMode en una única corrida**, **ReticleVisibilityTests 9/9 Pass**, XML nuevos/sin CS ni skipped; **AutoQA PASS/salida 0/nivel 1, 85/85**, 18 PASS/canario FAIL esperado/dirty=false; **check-release dev/prod OK**, ambos metadata `gitHash=c9e0f3b`/`gitDirty=false`. Un solo Unity a la vez; sin reintentos. CRP-01 no reapareció. ProjectSettings transitorios restaurados y todos los archivos versionados idénticos a la fuente después de cada etapa.
+
+Observaciones de Claude conservadas sin código: su test original comenzó a los 60 s, fuera de 64–128 s, cubierto por bases fijas; preparación mediante reflexión sobre setters privados del host. En la nueva corrida Codex, el original pasó a **62,479577 s**, también fuera del tramo; casos fijos 10/70/100/200 Pass. ClockMap y ambos tests conservan los bytes de `3615b85`. Sin más producto/tests/spec/planes/criterios/umbrales/defaults, sin iPhone, build nativa ni instalación; check-release solo exports Unity expresamente solicitados.
+
+[Informe](docs/reviews/2026-11-12-clockmap-rollback-precision.md). Evidencia nueva ignorada `Logs/evidence/clockmap-precision/integrated-c9e0f3b/`, AutoQA `20261113T005811Z-c9e0f3b-26557`; histórico preservado. Solo documentación después del head probado. **PR #48 lista para el PO, SIN FUSIONAR: la fusión requiere su aprobación explícita.**

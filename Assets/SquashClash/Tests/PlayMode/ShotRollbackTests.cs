@@ -26,6 +26,17 @@ namespace SquashClash.Runtime.Tests
             if(incoming)host.Launch(config);else host.Launch(config,new BallState{Position=new Vector3(3.2f,1.2f,3),Velocity=new Vector3(0,0,-6)},1200,StopCondition.SecondFloorBounce);
             return host;
         }
+        private BallSimulationHost HostAtRealTime(double realBase)
+        {
+            var h=Host();
+            // Rebase this disabled test host before any advance. Keep the map and initial history
+            // on the same fixed epoch without adding a production clock or waiting for Unity uptime.
+            typeof(BallSimulationHost).GetProperty(nameof(h.LaunchRealTime)).SetValue(h,realBase);
+            typeof(BallSimulationHost).GetProperty(nameof(h.ObservedRealTime)).SetValue(h,realBase);
+            h.ClockMap.Begin(h.LaunchId,realBase,h.Current.Step,h.Clock.Tempo,h.Clock.DebugSlowMotion,h.Clock.StepHz);
+            typeof(BallSimulationHost).GetMethod("RecordHistorical",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(h,new object[]{h.Current});
+            return h;
+        }
         private void To(BallSimulationHost host,long step){for(int i=0;i<1500&&host.Current.Step<step&&host.IsRunning;i++)host.Advance(StepReal);Assert.That(host.Current.Step,Is.EqualTo(step));}
         private static void Bits(BallState a,BallState b)
         {
@@ -72,7 +83,18 @@ namespace SquashClash.Runtime.Tests
         [Test] public void PauseStep_AndSlowMotion_DoNotBreakRollback()
         {var h=Host();To(h,30);h.Clock.Paused=true;h.Advance(.2);h.Clock.RequestSingleStep();h.Advance(0);Assert.That(h.Current.Step,Is.EqualTo(31));Assert.That(h.ApplyShot(h.LaunchId,30,new Vector3(0,6,-15)).Applied,Is.True);h.Clock.Paused=false;h.Clock.DebugSlowMotion=.5;h.Advance(StepReal*2);Assert.That(h.Current.Step,Is.EqualTo(32));Assert.That(h.PredictionMatchesBitwise,Is.True);}
         [Test] public void ApplyShot_AfterFlightStopped_ResimulatesToRealPresentViaClockMap()
-        {var h=Host();long last=h.Prediction.States.Last().Step;To(h,last);h.Advance(3*StepReal);var d=h.ApplyShot(h.LaunchId,last-3,new Vector3(0,6,-10));Assert.That(d.Applied,Is.True,d.Reason);Assert.That(d.StepsResimulated,Is.EqualTo(6));Assert.That(h.Current.Step,Is.EqualTo(last+3));}
+        {TestContext.WriteLine($"ROLLBACK_TEST_START unityReal={Time.realtimeSinceStartupAsDouble:R} utc={DateTime.UtcNow:O}");var h=Host();long last=h.Prediction.States.Last().Step;To(h,last);h.Advance(3*StepReal);var d=h.ApplyShot(h.LaunchId,last-3,new Vector3(0,6,-10));Assert.That(d.Applied,Is.True,d.Reason);Assert.That(d.StepsResimulated,Is.EqualTo(6));Assert.That(h.Current.Step,Is.EqualTo(last+3));}
+        [TestCase(10d)][TestCase(70d)][TestCase(100d)][TestCase(200d)]
+        public void ApplyShot_AfterFlightStopped_ExactStepsAtFixedRealBase(double realBase)
+        {
+            TestContext.WriteLine($"ROLLBACK_FIXED_START base={realBase:R} unityReal={Time.realtimeSinceStartupAsDouble:R} utc={DateTime.UtcNow:O}");
+            var h=HostAtRealTime(realBase);long last=h.Prediction.States.Last().Step;To(h,last);
+            h.Advance(3*StepReal);
+            var d=h.ApplyShot(h.LaunchId,last-3,new Vector3(0,6,-10));
+            Assert.That(d.Applied,Is.True,d.Reason);Assert.That(d.StepsResimulated,Is.EqualTo(6));
+            Assert.That(h.Current.Step,Is.EqualTo(last+3));Assert.That(h.Clock.Alpha,Is.Zero);
+            h.Advance(StepReal);Assert.That(h.Current.Step,Is.EqualTo(last+4));
+        }
         [Test] public void AfterStoppedRollback_FractionalPresentAndNextFrameRemainContinuous()
         {var h=Host();long last=h.Prediction.States.Last().Step;To(h,last);h.Advance(3.4*StepReal);var d=h.ApplyShot(h.LaunchId,last-3,new Vector3(0,6,-10));Assert.That(d.Applied,Is.True,d.Reason);Assert.That(h.Current.Step,Is.EqualTo(last+3));Assert.That(h.Clock.Alpha,Is.EqualTo(.4f).Within(.00001));h.Advance(StepReal);Assert.That(h.Current.Step,Is.EqualTo(last+4));Assert.That(h.Clock.Alpha,Is.EqualTo(.4f).Within(.00001));}
         [Test] public void ApplyShot_RecordsPerPartCosts()
