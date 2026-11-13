@@ -539,3 +539,18 @@ Encargo literal del PO: «dejame los encargos a codex para ir avanzando». Base 
 **Detenido conforme a «Ante otro defecto o sorpresa: registrar y detenerse».** Primera PlayMode completa 376/376; segunda 375/376, por `ReticleVisibilityTests.DevOpen_ProtocolActionsRemainUsable_AndCloseDevBeforeArming` (línea 209: esperado ≤674.663208, observado 788.198853), en Mac. No se atribuye causa ni se aplica la excepción Linux; prueba/vistas intactas. El rollback original pasó en ambas, comenzando a 61,887585 s y 65,744064 s (la segunda dentro de 64–128 s); los cuatro casos fijos también pasan. No se reintenta ni se corrige el fallo distinto. **Tercera PlayMode, AutoQA obligatorio PASS/0/nivel 1 y check-release pendientes** por parada; no declarar validación completa ni aptitud para fusionar.
 
 ProjectSettings transitorios restaurados, device.env idéntico/ignorado; spec/planes/escenarios/defaults y hashes `c0d8ec7050e0` / P0 `6ecfdfa78cbb` / SimulationKey `166a96e319c7` intactos. Sin iPhone, builds, exports, Xcode, instalación ni cambios en #32, firstrally/gameplay o visual/art-pass. [Informe](docs/reviews/2026-11-12-clockmap-rollback-precision.md) y evidencia local ignorada `Logs/evidence/clockmap-precision/`. PR para revisión de Claude coordinada por PO, sin fusionar; continuación sujeta a decisión del PO sobre CRP-01.
+
+
+## PR #48 — decisión del PO sobre CRP-01 y revisión independiente (12 de noviembre de 2026)
+
+**Decisión literal del PO**, 12 de noviembre de 2026, **21:52 America/Santiago**: **«Sí, ajeno a #48»**. CRP-01 se trata como intermitente ajeno al cambio; **su causa no está demostrada y no se corrige en esta PR**. Fuente: encargo del PO en este chat.
+
+Claude revisó independientemente el head **`3615b8588a732eab174cd79cb89bb9bb9a03c464`**: **APROBADO CON OBSERVACIONES, sin bloqueantes**. Sobre un merge local con main `9af2b0c`, según la revisión comunicada por el PO:
+
+- RED **22/28** con el ClockMap original.
+- EditMode **690/690**.
+- PlayMode **404/404 en tres corridas seguidas**, con `ReticleVisibilityTests` en Pass las tres veces.
+- AutoQA **PASS / salida 0 / nivel 1**, **85/85**.
+- check-release **dev/prod OK**.
+
+Estos resultados pertenecen a la revisión de Claude sobre su integración local; no se presentan como nuevas corridas de Codex ni sustituyen los fallos históricos registrados.

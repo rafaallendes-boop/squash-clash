@@ -97,3 +97,18 @@ SHA-256 de los XML preservados:
 | `editmode-full/editmode-results.xml` | `adb0417d578ab9c71f8f4aba9dd4028da8b02975b312d33c0f40f7b50f18dff5` |
 | `playmode-full-1/playmode-results.xml` | `dec5b3f90d6c4970e68bad6f4d4b652437a0bfd5bbf60f08690a1ef8599ef8c8` |
 | `playmode-full-2/playmode-results.xml` | `fdcaf57e5e9f031d3edab604a603fc9158772ed2df0697037f3624dac5d7b9f0` |
+
+
+## PR #48 — decisión del PO sobre CRP-01 y revisión independiente (12 de noviembre de 2026)
+
+**Decisión literal del PO**, 12 de noviembre de 2026, **21:52 America/Santiago**: **«Sí, ajeno a #48»**. CRP-01 se trata como intermitente ajeno al cambio; **su causa no está demostrada y no se corrige en esta PR**. Fuente: encargo del PO en este chat.
+
+Claude revisó independientemente el head **`3615b8588a732eab174cd79cb89bb9bb9a03c464`**: **APROBADO CON OBSERVACIONES, sin bloqueantes**. Sobre un merge local con main `9af2b0c`, según la revisión comunicada por el PO:
+
+- RED **22/28** con el ClockMap original.
+- EditMode **690/690**.
+- PlayMode **404/404 en tres corridas seguidas**, con `ReticleVisibilityTests` en Pass las tres veces.
+- AutoQA **PASS / salida 0 / nivel 1**, **85/85**.
+- check-release **dev/prod OK**.
+
+Estos resultados pertenecen a la revisión de Claude sobre su integración local; no se presentan como nuevas corridas de Codex ni sustituyen los fallos históricos registrados.
