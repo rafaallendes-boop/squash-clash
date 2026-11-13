@@ -808,3 +808,34 @@ Spec incorpora **solo adiciones** en §0.3 D36, §7.1.3, §7.6.2, §17.A.12 y An
 Continuación desde ac3f79b limitada a los cinco Markdown autorizados; producto, tests/arnés, evidencia/hashes, defaults/presets y todo archivo fuera de ellos intactos. Sin Unity, tests, AutoQA, check-release, iPhone ni builds/instalación. PR #52 para revisión Claude coordinada por PO, **SIN FUSIONAR** ni merge automático. Revisión técnica y prueba jugable pendientes antes del cierre de First Shot; no hay aceptación inferida. **Detenerse al entregar.**
 
 [Informe vigente y encargo futuro](docs/reviews/2026-11-13-first-shot-causal-quality.md#b4-cq01-documentary-d36).
+
+
+## B4 — encargo literal de implementación y cierre de PR #52 (13 nov 2026)
+
+> Registrar también el cierre de PR #52: merge 09764ab, segundo padre exacto 44dea6d, árbol idéntico 8ca36ec, fusionada el 13 nov 2026 por aprobación del PO («Yes, merge #52»).
+>
+> B4 — IMPLEMENTACIÓN DE LA CALIDAD CAUSAL (Tarea 3.1 + Adenda D6/D36)
+>
+> Rama/worktree nuevos firstshot/causal-quality-impl desde main, después de fusionar la PR #52. PR INDEPENDIENTE. Primer commit: registro de este encargo literal en AGENTS.md y aprobaciones.
+>
+> Alcance:
+> - CausalQuality según spec §7.6.2/D36 y plan Adenda D6: contexto de referencia de timing preparado una vez por recepción (trayectoria, pace.tempo, ClockMap, compensación congelados); J_A exhaustivo con ContactContract.Decide real; Z_T por arco ±L recortado a K; d = distancia mínima a Z_T; vector (min(capH, 0,6·d), 0, max(capV, −0,25·d)). Sin bool perfect, sin Δ ni categoría como entrada, sin recalcular la zona por intento.
+> - E3/E5 (estirado/atorado) independientes; Perfect no los anula. Composición con topes por componente aplicada a P/v ANTES del solver, nunca después.
+> - Una sola ruta compartida de preparación/evaluación/aplicación para ShotController y RallyContact.Solve, con el cuerpo efectivo en el contacto. Registro de cada vector por causa (humano y rival).
+> - 10 claves causal.* del plan con sus valores [EXPERIMENTO], en catálogo y DefaultPreset.json. Contrato de contacto, ventanas, P2, SimulationKey, M2-4 y rangos intactos.
+>
+> TDD: esqueletos compilables y RED por aserción antes de cada GREEN, con las pruebas de la Adenda D6 y el plan TDD de la PR #52. Ajuste: la igualdad se exige dentro de la misma recepción; entre tempos se documenta la diferencia sin exigir igualdad. Incluir la medición documentada del salto −41 → −40 ms (SL1 y las demás recetas donde aparezca), sin cambiar el contrato.
+>
+> Verificación, un solo Unity a la vez:
+> - Hashes de defaults/P0 y anclajes de AutoQA recalculados en Unity, en un commit propio, sin copiarlos.
+> - RallySimTests regenerados si cambian, explicando por qué.
+> - EditMode y PlayMode completas con XML fresco.
+> - AutoQA PASS/0/nivel 1 (obligatorio: toca el golpe).
+> - check-release dev/prod con gitDirty=false.
+> - ProjectSettings transitorios restaurados.
+>
+> Fuera de alcance: H3b completo y la nueva medición de R3 del Anexo C (entregas pequeñas posteriores); iPhone, build nativa, instalación, #32, First Rally, arte. Sin rondas nuevas de experimentación. Ante un defecto o sorpresa: registrar y detenerse. Informe y PR lista para revisión de Claude coordinada por el PO, SIN FUSIONAR. La fusión no cierra First Shot: falta la prueba jugable del playtest integrado.
+
+**Cierre comprobado antes de implementar:** PR #52 fusionada el 2026-11-13T17:30:37Z (14:30:37 America/Santiago), autorización del PO «Yes, merge #52». Merge `09764ab1899fc01460f848050eed1288635bbff2`, segundo padre exacto `44dea6d07de7ee67522e6620d6d2bcaa0c8a2cab`; árbol de ambos `8ca36ec98d6d7d22ee7f9b0908d7c44c38cec343`, idéntico. Main y origin/main locales coinciden en ese merge, árbol limpio. Git local y metadatos de GitHub contrastados. No se ejecuta otra fusión.
+
+**Inicio autorizado:** rama `firstshot/causal-quality-impl`, worktree independiente creado desde main/09764ab. Este primer commit contiene solo el encargo literal y cierre en AGENTS.md y aprobaciones; precede a cualquier cambio de producto o prueba. La autorización actual sustituye la pausa anterior de implementación exclusivamente para B4. H3b completo y nueva medición R3 quedan expresamente fuera aunque la plantilla histórica de #52 los previera. R3 conserva Fail 0/42 y observación abierta. Revisión de Claude coordinada por el PO, PR independiente SIN FUSIONAR; First Shot no aceptado.
