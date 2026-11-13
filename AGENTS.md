@@ -766,3 +766,32 @@ Método **e8a26c1**, arnés explícito/fuente limpia **ad3d259**. Dos procesos U
 706 archivos protegidos intactos, ningún ProjectSettings transitorio pendiente; defaults c0e9f00176d5/108, P0 derivado 42d9efbf50fc, SimulationKey 166a96e319c7 y RallyParams actual 7d50ddaf5d4f intactos. Solo docs/evidencia y arnés Tests/Experiments. Sin producto/claves/spec/plan/criterios/ventanas/contrato, AutoQA/check-release/regresiones/H3b/RallySimTests, iPhone/build/instalación. Propuesta lista para revisión de Claude coordinada por PO, **SIN FUSIONAR**. Implementación sigue detenida y requiere autorización nueva del PO después de la revisión. **Detenerse al entregar.**
 
 [Informe B4 y evidencia](docs/reviews/2026-11-13-first-shot-causal-quality.md).
+
+
+## B4 / CQ-01 — decisión literal del PO y registro documental (13 nov 2026)
+
+Fuente: respuesta literal del PO recibida en la continuación documental de PR #52, desde head `ac3f79b`. Sustituye la fase de selección pendiente de la propuesta; sus textos y datos se conservan como históricos. Este registro es el primer commit de la continuación, anterior a las adendas de spec/plan.
+
+> Apruebo como decisión de PO la zona muerta geométrica por trayectoria, calculada una vez por recepción, con las siguientes precisiones:
+>
+> 1. La zona debe calcularse utilizando la trayectoria y el `pace.tempo` congelados de esa recepción.
+> 2. §17.A.12 se interpretará como un invariante dentro del mismo contexto de recepción: misma geometría, misma intención y mismo contexto deben producir el mismo resultado, independientemente del instante de liberación.
+> 3. La clasificación Perfecto/Valid no puede intervenir directamente en el cálculo del vector.
+> 4. Se mantiene la continuidad de la penalización fuera de la zona muerta.
+> 5. Se descarta el radio fijo y la envolvente universal entre tempos por los resultados experimentales.
+> 6. Se debe medir y documentar específicamente el salto anticipado de −41 a −40 ms, sin modificar todavía el contrato de contacto.
+> 7. Las magnitudes experimentales se mantienen provisionales hasta validarlas en iPhone.
+> 8. Exigir pruebas automatizadas de determinismo, bordes, diferentes tempos, trayectorias y ausencia de dependencias de la categoría temporal.
+>
+> Solicito actualizar la especificación y su adenda para reflejar esta decisión sin contradicciones.
+> Después, preparar el encargo de implementación para Codex mediante TDD y una PR independiente.
+> No realizar merge automático. La implementación debe pasar revisión técnica y una prueba jugable antes del cierre de First Shot.
+> El objetivo es cerrar esta mecánica con suficiente calidad para el MVP, sin iniciar otra ronda extensa de experimentación salvo que aparezca un defecto relevante.
+
+**Precisión de Claude, separada del literal del PO:** el contexto congelado incluye el ClockMap y la compensación perceptiva vigentes; la compensación es técnicamente necesaria para obtener J_A y no cambia dentro de la recepción. No es una dimensión nueva de decisión. Esta precisión no se atribuye al texto del PO ni se inserta dentro de su cita.
+
+**Significado operativo:** se aprueba Z_T, familia «trayectoria» de CQ-ZONE-v1, preparada una vez por recepción antes del intento con trayectoria visible, `pace.tempo`, ClockMap y compensación congelados. §17.A.12 rige dentro de ese mismo contexto; se descartan radio fijo y envolvente universal entre tempos. Categoría y Δ no entran en la magnitud. La diferencia entre tempos se documenta como efecto del ajuste de ritmo, no como incumplimiento de esa invariante contextual. E3/E5 siguen independientes y el contrato no cambia. Magnitudes [EXPERIMENTO] hasta iPhone.
+
+**Alcance de esta continuación:** solo documentación, en esta misma rama y PR #52. Primero este registro en AGENTS.md, aprobaciones e informe; después D36 aditiva en spec, D6 aditiva en plan y nota de sustitución del texto propuesto del informe. Preparar el encargo futuro de implementación con TDD y PR independiente, sin ejecutarlo ahora. Sin código, tests, defaults, presets, Unity, AutoQA, check-release, iPhone ni builds. Revisión de Claude coordinada por el PO; SIN FUSIONAR, sin merge automático ni aceptación de First Shot. La revisión técnica y prueba jugable siguen pendientes antes del cierre.
+
+**Ruta aclarada por el PO:** la referencia `docs/reviews/2025-10-25-first-shot-po-approvals.md` tenía un error de año; se usa el archivo existente `docs/reviews/2026-10-25-first-shot-po-approvals.md`. No se crea un registro paralelo de 2025.
