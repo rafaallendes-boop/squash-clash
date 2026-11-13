@@ -112,6 +112,7 @@ namespace SquashClash.Experiments.EditMode
             var physics=cfg.Physics;
             var factory=new AnalyticBallSimulationFactory(summary.bounceThreshold);
             var heights = new List<float> { court.TinTop+.05f,court.TinTop+.10f,court.TinTop+.15f };
+            var dropHeights = new HashSet<float>(heights); // Store float nodes once; avoid comparing stored floats with unrounded expressions.
             for(int i=0;i<=12;i++) heights.Add(Mathf.Lerp(court.TinTop+physics.BallRadius,court.FrontOutLower-physics.BallRadius,i/12f));
             float[] aimY=heights.Distinct().OrderBy(v=>v).ToArray();
             var rows=new List<Trial>();
@@ -177,13 +178,13 @@ namespace SquashClash.Experiments.EditMode
                     }
                     // F1/B1 and F2/B2; a is the front contact, b the rear.
                     if(ci>=4 && a.pi<=6 && (a.aim.x==a.center.x) &&
-                        (a.aim.y==court.TinTop+.05f||a.aim.y==court.TinTop+.10f||a.aim.y==court.TinTop+.15f))
+                        dropHeights.Contains(a.aim.y))
                     {
                         var b=lookup[(ci-3,xi,yi,pi)];
                         string excluded=null;
                         if(!a.solved||!b.solved) excluded="unsolved";
                         else if(!a.legal||!b.legal) excluded="not-a-legal-two-bounce-return";
-                        else if(a.target!=b.target) excluded="effective-target-differs";
+                        else if(a.target.x!=b.target.x||a.target.y!=b.target.y) excluded="effective-target-differs";
                         Record(pairs,r3,a,b,excluded,a.second.z,b.second.z);
                     }
                 }
