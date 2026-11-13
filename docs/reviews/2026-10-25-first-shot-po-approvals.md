@@ -2349,3 +2349,89 @@ El PO aprobó el Anexo C el **2026-11-12T20:33:07Z (17:33:07 America/Santiago)**
 ### Verificación y entrega de este registro
 
 Delta propio limitado a **AGENTS.md** y **docs/reviews/2026-10-25-first-shot-po-approvals.md**, conservando los originales como prefijo. Autorizaciones de los planes copiadas literalmente y decisiones D1–D4 cotejadas con el encargo del primer commit; padres/árboles, producto versionado y seis archivos de presets cotejados por lectura offline. Sin código/tests/spec/planes/criterios/defaults modificados, sin suites/AutoQA/check-release/builds/instalaciones nuevos ni acceso al iPhone. PR documental lista para revisión de Claude **coordinada por el PO**, **sin fusionar**. **Detenerse**; las entregas de implementación autorizadas requieren encargos propios.
+
+
+## Encargo literal T4.2 — PO, 12 de noviembre de 2026
+
+Encargo del PO (Squash Clash): implementar la Tarea 4.2 del plan First Shot r2 (docs/superpowers/plans/2026-10-25-squash-clash-first-shot.md, Etapa S4), con las decisiones literales del PO del 12 de noviembre de 2026:
+«D1: Aprobada opción B. Ocultar completamente el indicador de timing durante el intervalo propuesto, sin pistas residuales. Mantener ayuda completa por defecto y actualizar los hashes y anclajes de AutoQA correspondientes.
+D2: Aprobada la propuesta de Codex: 3×3 zonas, potencia en tercios y clasificación del primer bote. Son bandas provisionales de observación, no criterios de aceptación.
+D4: Aprobadas ambas correcciones del indicador mediante TDD, sin modificar las ventanas ni sus umbrales.»
+Primer commit: este encargo literal en el registro de aprobaciones (o en el informe de la entrega si A2 aún no está fusionado).
+
+FUENTE DEL DISEÑO: tu propia propuesta del Step 0, en docs/reviews/2026-11-11-first-shot-s4-timing.md §T4.2 (niveles, clave, tareas provisionales y observaciones de #44).
+
+BASE: main vigente al empezar. Rama y worktree propios, por ejemplo firstshot/s4-aids-tasks. Puedes copiar device.env sin cambios.
+
+ALCANCE
+1. timing.aidLevel: 0 = completa (default), 1 = parcial, 2 = ninguna. Se captura por recepción.
+   - Parcial = opción B: desde T*−150 ms y hasta resolver o cerrar la recepción, no se dibuja ningún elemento de timing (anillo, triángulo fijo, bandas). Sin fade dependiente de T*. No reaparece si cambia el plan. Se registran el target y la versión que activaron el corte.
+   - Ninguna: sin anillo, triángulo ni bandas desde el inicio. ImpactCue y el contrato se siguen calculando para la traza. No se ocultan mira, potencia, feedback ni otra UI.
+   - Instante ideal, ventanas, compensación y contrato: sin cambios.
+2. Tareas en pantalla (PracticeTask + TaskSection en DevPanel) con las bandas provisionales D2:
+   - frontis en columnas X [0,20;2,20) [2,20;4,20) [4,20;6,20] e y [0,60;1,60) [1,60;2,60) [2,60;3,60] (AX-1);
+   - P en tercios;
+   - primer bote: X en tres franjas iguales y Z corto [0,20;3,20), medio [3,20;6,40), profundo [6,40;9,55].
+   Se registran pedido, mira congelada, objetivo factible, impacto en el frontis, primer bote, potencia pedida/congelada/saturación y fallos de captura, en campos separados. Un fallo nunca se convierte en error cero. Son observación, no criterio: sin umbrales de aceptación.
+   Si un borde exacto o la política de bordes no está definida en tu propuesta, decláralo en el informe y elige la regla más simple, documentada, sin presentarla como aprobada.
+3. Observaciones 2 y 3 de #44 (D4), con TDD:
+   - representar también el borde TARDÍO de las ventanas A/V;
+   - en Δ=+ValidMs la visibilidad tiene que coincidir con el contrato (borde inclusivo).
+   Probar −V, −A, 0, +A, +V y puntos a ambos lados de cada borde, cotejando estado y visibilidad contra el contrato. No recortar la inclusión para que pase el dibujo.
+4. Pruebas del plan: Task_RecordsRequestedVsFinalAimInCm, Task_RecordsInvoluntaryPower, Task_RecordsFirstBounceZoneHit, AidPartial_HidesRingLast150ms (adaptada a la opción B: todo el conjunto), AidNone_ShowsOnlyBallAndShadow (respecto de las ayudas de timing). RED por aserción antes de cada GREEN.
+
+HASHES Y ANCLAJES (D1 autoriza actualizarlos)
+- La clave nueva lleva el catálogo de 107 a 108 claves.
+- Calcular en Unity, desde el JSON real, el nuevo hash de defaults y el nuevo P0 efectivo. No inventarlos.
+- Actualizar los anclajes de AutoQA (Tests/AutoQA/Scenario.cs, hashes SL1/SL5) y el verificador del operador (autoqa-check v7, en .claude/agents y en el skill autoqa) en un commit propio y trazable, con antes/después.
+- Deben quedar idénticos: los 41 valores heredados y su proyección 0d39e6016bd8, SimulationKey 166a96e319c7 y los bytes de P0-calib-1 (no se reescribe ni se promueve).
+- Declarar el nuevo P0 efectivo en el informe, para cualquier precheck futuro.
+- Escenarios, expectativas, márgenes y tolerancias de AutoQA no cambian. Si un escenario cambia de resultado, detente y avisa.
+
+VERIFICACIÓN
+- scripts/test.sh editmode y playmode completos, sin otro Unity en paralelo.
+- AutoQA obligatorio (toca timing y contrato): PASS / 0 / nivel 1 con los anclajes nuevos.
+- scripts/check-release.sh dev/prod con gitDirty=false.
+- Restaurar los ProjectSettings transitorios.
+
+LÍMITES
+- Sin iPhone, build para instalar, instalación ni sesión física (4.5 no está autorizada).
+- Sin capa causal (es otra entrega).
+- Sin tocar spec, criterios, umbrales, ventanas, pullFullMm, M2-4, #32, firstrally/gameplay ni visual/art-pass.
+- Ante otro defecto o sorpresa: registrar y detenerse.
+- Esta entrega no acepta First Shot.
+
+ENTREGA
+- Informe en docs/reviews/ con decisiones, RED→GREEN, hashes antes/después y corridas.
+- PR lista para revisión independiente de Claude coordinada por el PO, sin fusionar.
+- Detenerse.
+
+Base comprobada main/origin/main: `ef9be56b382936fe948217c0efe4ee02cce28b4c`. Rama propia `firstshot/s4-aids-tasks`; primer commit exclusivamente documental.
+
+
+### Resultado detenido T4.2 — 12 de noviembre de 2026
+
+El encargo literal anterior se registró en primer commit 1f9c8fb. Implementación con TDD; fuente limpia verificada 6c149ad: 691/691 EditMode, 450/450 PlayMode. AutoQA ERROR/salida 3/nivel 3: nuevo ShotRecord incompatible con lector estricto y anclaje SL5 calculado sin la preparación human.z (esperado introducido 1877d083c345, observado Unity 50efa6d33c0c). Se registra y detiene conforme al encargo, sin reintentar/corregir tras el ERROR; check-release pendiente. Defaults c0e9f00176d5 / P0 efectivo 42d9efbf50fc; bytes/proyecciones heredadas intactos. Ver [informe con evidencia y límites](2026-11-12-first-shot-s4-aids-tasks.md). Sin fusión, aceptación ni iPhone; continuación pendiente de decisión del PO.
+
+PR T4.2 **[#50](https://github.com/rafaallendes-boop/squash-clash/pull/50)** abierta/no borrador, marcada BLOCKED para revisión, **sin fusionar ni aptitud de fusión**. Informe y evidencia de la parada preservados; detenerse.
+
+
+## Continuación literal T4.2 / PR #50 — PO, 13 de noviembre de 2026
+
+Encargo del PO (Squash Clash) para PR #50, rama de 4.2. Continuación tras la parada S4-42-AQ-01.
+
+DECISIÓN DEL PO: opción A. Autorizo ampliar la lista de campos predeclarados del lector de AutoQA (PocObservation) solo para los seis campos nuevos de 4.2. Primer commit: registrar esta decisión literal.
+
+TAREA:
+1. Clasificar los seis campos en PocObservation, sin tocar escenarios, expectativas, márgenes ni tolerancias:
+   - AidLevel, AidCutoff, AidCutoffPlanVersion, CuePhase y Solved: comparación exacta.
+   - AidCutoffTarget es un instante absoluto de reloj real: va a los excluidos, igual que TargetContactAtReal. No puede entrar en la comparación exacta.
+   El fallo actual de AutoQAPocTests es el RED; documentarlo y llegar a GREEN.
+2. Anclaje SL5: recalcularlo en Unity con la preparación COMPLETA del escenario (preset más human.z=(double)1.6f) y corregir el diagnóstico de TimingAidConfigTests para que calcule ese hash efectivo. No copiar el valor observado en la corrida fallida: calcularlo y después comprobar que coincide con 50efa6d33c0c. Si no coincide, registrar y detenerse.
+   Corregir los cuatro lugares: Scenario.cs, autoqa-check v7 en .claude/agents/autoqa-operator.md, .claude/skills/autoqa/SKILL.md y scripts/tests/test_autoqa_checker.py.
+3. Sobre el head final, un solo Unity a la vez: EditMode y PlayMode completos, AutoQA mvp (debe dar PASS/0/nivel 1, con el canario FAIL esperado), y check-release dev/prod con gitDirty=false. Restaurar los ProjectSettings transitorios.
+4. Ante otro defecto o sorpresa: registrar y detenerse, sin reintentar para sacar un Pass.
+
+LÍMITES: sin cambios de producto aparte de los ya hechos en 4.2, ni de escenarios, criterios, umbrales o defaults. Sin iPhone, builds ni instalación. Quitar [BLOCKED] del título solo si todo queda verde. PR lista para revisión de Claude, SIN FUSIONAR.
+
+Registro previo a toda modificación de esta continuación, sobre head `58adfc9`, en la misma rama/worktree `firstshot/s4-aids-tasks`. Los resultados originales de S4-42-AQ-01 se conservan; la autorización anterior sustituye su pausa solo dentro de este alcance. Ningún check nuevo se declara ejecutado en este registro.

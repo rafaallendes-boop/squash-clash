@@ -4,6 +4,10 @@
   "createdBuild": "I3",
   "values": [
     {
+      "key": "timing.aidLevel",
+      "value": 0
+    },
+    {
       "key": "court.tinTop",
       "value": 0.48
     },

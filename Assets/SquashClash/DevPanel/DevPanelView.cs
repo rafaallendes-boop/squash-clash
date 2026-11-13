@@ -11,6 +11,7 @@ namespace SquashClash.DevPanel
         private Label heading;
         private ParamSection parameters;
         private ShotSection shotSection;
+        private TaskSection tasks;
         private PresetsSection presets;
         private DiagnosticsSection diagnostics;
         private ThreeFingerHold gesture;
@@ -38,6 +39,7 @@ namespace SquashClash.DevPanel
             }
             parameters=new ParamSection(app,Refresh);presets=new PresetsSection(app,Refresh);diagnostics=new DiagnosticsSection(app);
             shotSection=new ShotSection(app);paramsScroll.Add(shotSection.Root);
+            tasks=new TaskSection(app);paramsScroll.Add(tasks.Root);
             paramsScroll.Add(parameters.Root);presetsScroll.Add(presets.Root);diagnosticsScroll.Add(diagnostics.Root);
             void Show(ScrollView selected)
             {
@@ -72,7 +74,7 @@ namespace SquashClash.DevPanel
         {
             if(app==null||heading==null)return;
             heading.text=app.ActivePresetName+" · "+app.Config.Backend+"\n"+app.Tuning.Applied.Hash+" · "+(app.Clock.Paused?"Pausa":"Jugando")+"\n"+app.Tuning.PendingKeys.Count+(app.Tuning.PendingKeys.Count==1?" cambio pendiente":" cambios pendientes");
-            shotSection?.Refresh();parameters?.Refresh();presets?.Refresh();diagnostics?.Refresh();
+            tasks?.Refresh();shotSection?.Refresh();parameters?.Refresh();presets?.Refresh();diagnostics?.Refresh();
         }
         private void OnGeometry(GeometryChangedEvent evt)=>Place();
         private void Place()

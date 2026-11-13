@@ -39,6 +39,7 @@ namespace SquashClash.Runtime.Shot
         public bool Available=>PracticeEnabled&&app.Host.ActiveConfig.Backend=="P2-Analytic";
         public string UnavailableReason=>PracticeEnabled&&!Available?"First Shot no disponible con P1":"";
         public string LastDiscardReason {get;private set;}
+        public event Action<ShotRecord> GestureClosed;
         public event Action<ShotRecord> ShotResolved;
         public event Action<ShotPresentation> PresentationDelivered;
         public event Action<SwingIntent> SwingAccepted;
@@ -51,14 +52,14 @@ namespace SquashClash.Runtime.Shot
         {
             if(this.app!=null)return;this.app=app;
             app.Host.Launched+=OnLaunched;app.Host.ShotApplied+=OnApplied;
-            ring=gameObject.AddComponent<TimingRingView>();notes=gameObject.AddComponent<ShotNoteView>();notes.Initialize(app);
+            ring=gameObject.AddComponent<TimingRingView>();ring.CutoffActivated+=RecordAidCutoff;notes=gameObject.AddComponent<ShotNoteView>();notes.Initialize(app);
             feedback=gameObject.AddComponent<ShotFeedback>();feedback.Initialize();PresentationDelivered+=feedback.Present;
             gameObject.AddComponent<SwingView>().Initialize(app,this);gameObject.AddComponent<PerfectFlashView>().Initialize(app,this);
             OnLaunched(app.Host.ActiveConfig);
         }
         private void OnLaunched(EffectiveConfig cfg)
         {
-            Snapshot=new ShotConfig(cfg.Source);Haptics.Enabled=Snapshot.Reception.GetBool("feedback.haptics");seen.Clear();Presented=new PresentedPlans();AttemptConsumed=WaitingForContact=false;
+            Snapshot=new ShotConfig(cfg.Source);ring.BeginReception(Snapshot.Reception.GetInt("timing.aidLevel"));Haptics.Enabled=Snapshot.Reception.GetBool("feedback.haptics");seen.Clear();Presented=new PresentedPlans();AttemptConsumed=WaitingForContact=false;
             LastRecord=LastClosureRecord=pendingContact=null;gate.Reset(app.Host.LaunchId);LastPresentation=null;PresentationCount=0;LastDiscardReason=null;LastSolution=default;closedAt=null;recordVersion=0;
             double start=Stopwatch.GetTimestamp();
             var legal=new LegalSettings((float)cfg.Source.Get("legal.minHeight"),(float)cfg.Source.Get("legal.maxHeight"),cfg.Physics.StepHz,cfg.Physics.Gravity,cfg.Physics.BallRadius,cfg.Court);
@@ -67,7 +68,6 @@ namespace SquashClash.Runtime.Shot
             CaptureClockContext();PresentCurrentPlan();
             app.GetComponentInChildren<AimReticleView>(true)?.ShowFeasible(default,false);
             if(PracticeEnabled&&!Available)notes.ShowText(UnavailableReason);
-            RecordLaunchTiming();
         }
         private void CaptureClockContext(){lastTempo=app.Clock.Tempo;lastSlow=app.Clock.DebugSlowMotion;lastPaused=app.Clock.Paused;lastDrops=app.Clock.DroppedSinceRestart;}
         private void PresentCurrentPlan()
@@ -76,7 +76,7 @@ namespace SquashClash.Runtime.Shot
             double target=0;
             bool mapped=Plan.Exists&&Plan.TStarStep>=0&&app.Host.ClockMap.TrySimToReal(Plan.TStarStep,0,out target);
             Presented.Present(Time.realtimeSinceStartupAsDouble,Plan,target);
-            ring.Show(Plan,target,mapped&&!AttemptConsumed,Snapshot.Timing);
+            ring.Show(Plan,target,mapped&&!AttemptConsumed,Snapshot.Timing);RecordLaunchTiming();
         }
         public bool CanBegin(double eventTime,out string reason)
         {
@@ -99,7 +99,7 @@ namespace SquashClash.Runtime.Shot
             if(!PracticeEnabled)return;
             if(!Available){Discard(order,"unsupported-backend");return;}
             if(string.IsNullOrEmpty(order.AttemptId)||!seen.Add(order.AttemptId)){Discard(order,"duplicate-order");return;}
-            LastClosureRecord=BaseRecord(order);LastClosureRecord.Result="Closure";Write("shot-gesture",LastClosureRecord);
+            LastClosureRecord=BaseRecord(order);LastClosureRecord.Result="Closure";Write("shot-gesture",LastClosureRecord);GestureClosed?.Invoke(LastClosureRecord);
             if(order.Outcome!=GestureOutcome.Swing)return;
             if(AttemptConsumed){Discard(order,"attempt-consumed");return;}
             if(!order.HasRelease||!Finite(order.ReleaseAt)||!Finite(order.BeganAt)||order.ReleaseAt<order.BeganAt||!Finite(order.P)||order.P<0||order.P>1||!Finite(order.Aim.x)||!Finite(order.Aim.y)||order.Source==null)
@@ -157,7 +157,7 @@ namespace SquashClash.Runtime.Shot
         }
         private static void FillSolution(ShotRecord r,ShotSolution s,BallState contact)
         {
-            r.ContactX=contact.Position.x;r.ContactY=contact.Position.y;r.ContactZ=contact.Position.z;r.SpeedRaised=s.SpeedRaised;r.TargetLowered=s.TargetLowered;
+            r.Solved=s.Solved;r.ContactX=contact.Position.x;r.ContactY=contact.Position.y;r.ContactZ=contact.Position.z;r.SpeedRaised=s.SpeedRaised;r.TargetLowered=s.TargetLowered;
             r.TargetUsedX=s.TargetUsed.x;r.TargetUsedY=s.TargetUsed.y;r.Speed=s.Speed;r.VelocityX=s.Velocity.x;r.VelocityY=s.Velocity.y;r.VelocityZ=s.Velocity.z;
         }
         private void OnApplied(ShotApplyResult result)
@@ -189,7 +189,7 @@ namespace SquashClash.Runtime.Shot
         public void CloseReception()
         {
             if(!PracticeEnabled||!Available||closedAt.HasValue)return;
-            closedAt=app.Host.ObservedRealTime;
+            closedAt=app.Host.ObservedRealTime;ring.Show(Plan,0,false,Snapshot.Timing);
             if(AttemptConsumed)return;
             var record=new ShotRecord{LaunchId=app.Host.LaunchId,Version=++recordVersion,Result=(Plan.Exists?ShotResult.NoOrder:ShotResult.Unreachable).ToString(),Reason="reception-ended-without-order",
                 LaunchHash=Snapshot.Reception.Hash,Preset=app.ActivePresetName,FileHash=app.ActivePresetFileHash,Build=app.Build.Label,Seed=app.MetricsSeed,ProcessingAtReal=app.Host.ObservedRealTime,
@@ -203,6 +203,8 @@ namespace SquashClash.Runtime.Shot
                 HasRelease=o.HasRelease,BeganAtReal=o.BeganAt,ReleaseEventAtReal=o.HasRelease?o.ReleaseAt:0,InputReceivedAtReal=o.ReceivedAt,ProcessingAtReal=app.Host.ObservedRealTime,
                 Power=o.P,AimX=o.Aim.x,AimY=o.Aim.y,LaunchHash=o.LaunchHash??Snapshot.Reception.Hash,GestureHash=o.Source?.Hash,Preset=o.PresetName??app.ActivePresetName,FileHash=o.FileHash??app.ActivePresetFileHash,
                 Build=o.BuildLabel??app.Build.Label,Seed=o.BuildLabel!=null?o.Seed:app.MetricsSeed,Pending=o.BuildLabel!=null?o.Pending:app.Tuning.PendingKeys.Count,O2Count=o.O2Count,ProjectionObservedAt=o.ProjectionObservedAt,LockObservedAt=o.LockObservedAt,
+                AidLevel=Snapshot.Reception.GetInt("timing.aidLevel"),AidCutoff=ring.CutoffLatched,AidCutoffTarget=ring.CutoffTarget,AidCutoffPlanVersion=ring.CutoffPlanVersion,
+                CuePhase=CueAt(o.HasRelease?o.ReleaseAt:app.Host.ObservedRealTime),
                 ValidLimitOn=timing.ValidLimitOn,EarlySoft=timing.EarlySoft,AssistMs=timing.AssistMs,ValidMs=timing.ValidMs,LatencyCompMs=timing.LatencyCompMs,
                 KInSteps=Plan.KIn.Steps,KOutSteps=Plan.KOut.Steps,TStarStep=Plan.TStarStep,Side=Plan.Side.ToString(),PlannerCostMs=plannerCost};
         }
@@ -227,11 +229,11 @@ namespace SquashClash.Runtime.Shot
             ring.Tick(Time.realtimeSinceStartupAsDouble);notes.SetVisible(app.Tuning.Applied.GetBool("timing.showNotes"));
         }
         [Serializable] private sealed class LaunchTiming
-        {public long launchId;public int planVersion;public string hash;public bool hasPlan,hasFront,hasBounce;public double launchReal,frontReal,bounceReal,kInReal,kOutReal,targetReal,plannerCostMs;}
+        {public long launchId;public int planVersion,aidLevel;public string hash;public bool hasPlan,hasFront,hasBounce;public double launchReal,frontReal,bounceReal,kInReal,kOutReal,targetReal,plannerCostMs;}
         private void RecordLaunchTiming()
         {
             if(!PracticeEnabled||!Available)return;
-            var host=app.Host;var t=new LaunchTiming{launchId=host.LaunchId,planVersion=Plan.Version,hash=Snapshot.Reception.Hash,hasPlan=Plan.Exists,launchReal=host.LaunchRealTime,plannerCostMs=plannerCost};
+            var host=app.Host;var t=new LaunchTiming{launchId=host.LaunchId,planVersion=Plan.Version,aidLevel=Snapshot.Reception.GetInt("timing.aidLevel"),hash=Snapshot.Reception.Hash,hasPlan=Plan.Exists,launchReal=host.LaunchRealTime,plannerCostMs=plannerCost};
             foreach(var e in host.Prediction.Contacts)
             {
                 if(e.Surface==SurfaceId.FrontWall&&!t.hasFront)t.hasFront=host.ClockMap.TrySimToReal(e.Step-1,e.TimeInStep*app.Clock.StepHz,out t.frontReal);
@@ -239,6 +241,18 @@ namespace SquashClash.Runtime.Shot
             }
             if(Plan.Exists){host.ClockMap.TrySimToReal(Plan.KIn.Step,Plan.KIn.Fraction,out t.kInReal);host.ClockMap.TrySimToReal(Plan.KOut.Step,Plan.KOut.Fraction,out t.kOutReal);host.ClockMap.TrySimToReal(Plan.TStarStep,0,out t.targetReal);}
             app.Metrics?.Write("shot-plan",host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(t));
+        }
+        private string CueAt(double eventTime)
+        {
+            if(!Presented.TryVisibleAt(eventTime,out var plan,out var target,out var presented))return ImpactCuePhase.Hidden.ToString();
+            return ImpactCue.Evaluate(eventTime-Snapshot.Timing.LatencyCompMs/1000,presented,target,Snapshot.Timing,plan.Exists,false).Phase.ToString();
+        }
+        [Serializable] private sealed class AidCutoffLine
+        {public long launchId;public int aidLevel,planVersion;public double target,observedAt;}
+        private void RecordAidCutoff()
+        {
+            var line=new AidCutoffLine{launchId=app.Host.LaunchId,aidLevel=ring.AidLevel,planVersion=ring.CutoffPlanVersion,target=ring.CutoffTarget,observedAt=Time.realtimeSinceStartupAsDouble};
+            app.Metrics?.Write("shot-aid-cutoff",app.Host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(line));
         }
         [Serializable] private sealed class PresentationLine
         {public long launchId,contactStep;public string attemptId,category,fail,description;public int version;public bool hasContact;public double observedRealTime;}
