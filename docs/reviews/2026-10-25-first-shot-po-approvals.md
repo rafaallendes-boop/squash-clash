@@ -2659,3 +2659,20 @@ Primer commit literal **218204c** sobre head exacto **92a6696**, misma rama/work
 **Hipótesis de Claude (no demostrada):** `CausalQuality.Apply` sube `aim.y` con la altura compuesta (estirado/atorado/timing) y `ShotSolver.Solve` rechaza `aim.y >= FrontOutLower` (4,57) con «target-or-contact-outside-court»; el golpe queda sin resolver (SystemFault) y `TargetLowered` queda False.
 
 Misma rama `firstshot/causal-quality-impl`, misma PR #53, head `415e5ba`. Sin H3b, R3, iPhone, build nativa ni instalación; no acepta First Shot; sin fusionar.
+
+## Encargo B4 follow-ups y H3b completo — registro literal (13 de noviembre de 2026, Chile)
+
+Instrucción literal del PO, registrada tal cual como primer commit de esta entrega:
+
+> «Realiza el mergeo de 53. Luego Realiza un build al iphone, para probar como está actualment (no es prueba oficial). Luego lanza un sub agente sonnet para realizar las observaciones y con h3b y luego dime cuales serían los siguientes pasos. El iphone está desbloqueado»
+
+Hechos ya verificados por Claude (no se rehacen aquí):
+
+- **PR #53 fusionada** por el «Yes, merge #53» del PO: merge `78b2b656b3d3bffee9f43d3ac35c99c22e055b94`, padres `09764ab1899fc01460f848050eed1288635bbff2` y exactamente `7fb7315a8165697dccdb3bbc67effb421e1a677b`, árbol `971c70a4487b5a4b7bb118f62d34fab63d64542a` idéntico al head. La fusión no acepta First Shot.
+- **Build informal, no oficial:** `0.1.0+78b2b65 dev` instalada en el iPhone del PO el 2026-11-13 hacia las 18:38Z; arranque P0-calib-1, hash efectivo `b6914a349068`, cero pendientes, presets idénticos byte a byte al respaldo. No es prueba oficial ni aceptación.
+
+**Alcance de esta entrega** (rama/worktree `firstshot/b4-followups-h3b` desde main `78b2b65`, operada por un subagente Sonnet dirigido por Claude; Claude revisa después, revisión no independiente de la dirección):
+
+- Parte A, con TDD: observaciones A1 (reinicio por recepción de `pendingCausal` en RallySim) y A2 (marco corporal vivo frente al congelado; solo se cambia código si se demuestra diferencia), más A3 solo registro.
+- Parte B: completar H3b como experimento explícito (vector causal productivo y niveles de ayuda 0/1/2), fuera de las suites de regresión, método predeclarado antes de ejecutar.
+- Sin tocar valores `causal.*`, defaults, presets, reglas del solver, contrato, ventanas ni física P2. **No se toca el iPhone, devicectl, Duplicación ni xcodebuild de dispositivo**: el PO está probando la build instalada. Sin instalación. PR no borrador, **sin fusionar**. Informe: [docs/reviews/2026-11-13-first-shot-b4-followups-h3b.md](2026-11-13-first-shot-b4-followups-h3b.md).
