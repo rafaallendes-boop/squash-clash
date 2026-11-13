@@ -1,0 +1,470 @@
+{
+    "source": "fd81c2dba3500dbf7b6bd7677f853009203dd4b9",
+    "defaultsHash": "c0e9f00176d5",
+    "defaultsSha256": "68a17d60090583fc87ff24a79c8e8141f2131ec7c53e8ca111ce5e8497981319",
+    "simulationKey": "166a96e319c7",
+    "p0Hash": "42d9efbf50fc",
+    "gitDirty": false,
+    "bounceThreshold": 0.10000000149011612,
+    "footprint": 0.019999999552965165,
+    "trialCount": 38304,
+    "solved": 36264,
+    "legalTwoBounces": 28711,
+    "unsolved": 2040,
+    "incomplete": 0,
+    "impactCaps": 0,
+    "random": "off",
+    "energy": "fixed",
+    "timingAid": "complete",
+    "contactMode": "synthetic PStar at TStar, delta=0",
+    "deferred": "R4,C5:E3; X6,X7,R5,R8:out of current scope; R6:random layer; layer4:integrated iPhone playtest",
+    "contacts": [
+        {
+            "id": "B0",
+            "center": {
+                "x": 0.3499999940395355,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "body": {
+                "x": 0.9500000476837158,
+                "y": 7.5
+            },
+            "tStarStep": 120,
+            "deltaMs": 0.0
+        },
+        {
+            "id": "B1",
+            "center": {
+                "x": 2.5999999046325685,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "body": {
+                "x": 3.1999998092651369,
+                "y": 7.5
+            },
+            "tStarStep": 120,
+            "deltaMs": 0.0
+        },
+        {
+            "id": "B2",
+            "center": {
+                "x": 3.799999952316284,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "body": {
+                "x": 3.1999998092651369,
+                "y": 7.5
+            },
+            "tStarStep": 120,
+            "deltaMs": 0.0
+        },
+        {
+            "id": "B3",
+            "center": {
+                "x": 6.050000190734863,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "body": {
+                "x": 5.450000286102295,
+                "y": 7.5
+            },
+            "tStarStep": 120,
+            "deltaMs": 0.0
+        },
+        {
+            "id": "F1",
+            "center": {
+                "x": 2.5999999046325685,
+                "y": 0.75,
+                "z": 1.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "body": {
+                "x": 3.1999998092651369,
+                "y": 1.5
+            },
+            "tStarStep": 120,
+            "deltaMs": 0.0
+        },
+        {
+            "id": "F2",
+            "center": {
+                "x": 3.799999952316284,
+                "y": 0.75,
+                "z": 1.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "body": {
+                "x": 3.1999998092651369,
+                "y": 1.5
+            },
+            "tStarStep": 120,
+            "deltaMs": 0.0
+        }
+    ],
+    "scenarios": [
+        {
+            "scenario": "X1",
+            "contact": "B0",
+            "status": "Exists",
+            "found": 442,
+            "sampled": 6384,
+            "witness": 5530,
+            "minimumSideDistance": 0.019999999552965165
+        },
+        {
+            "scenario": "X2",
+            "contact": "B0",
+            "status": "Exists",
+            "found": 263,
+            "sampled": 6384,
+            "witness": 14,
+            "minimumSideDistance": 0.019999999552965165
+        },
+        {
+            "scenario": "X4",
+            "contact": "B0",
+            "status": "Exists",
+            "found": 5387,
+            "sampled": 6384,
+            "witness": 2,
+            "minimumSideDistance": 0.019999999552965165
+        },
+        {
+            "scenario": "X5",
+            "contact": "B0",
+            "status": "Exists",
+            "found": 5387,
+            "sampled": 6384,
+            "witness": 2,
+            "minimumSideDistance": 0.019999999552965165
+        },
+        {
+            "scenario": "X1",
+            "contact": "B1",
+            "status": "Exists",
+            "found": 237,
+            "sampled": 6384,
+            "witness": 9959,
+            "minimumSideDistance": 0.019999999552965165
+        },
+        {
+            "scenario": "X2",
+            "contact": "B1",
+            "status": "Exists",
+            "found": 74,
+            "sampled": 6384,
+            "witness": 6399,
+            "minimumSideDistance": 0.019999999552965165
+        },
+        {
+            "scenario": "X4",
+            "contact": "B1",
+            "status": "Exists",
+            "found": 5379,
+            "sampled": 6384,
+            "witness": 6384,
+            "minimumSideDistance": 0.019999999552965165
+        },
+        {
+            "scenario": "X5",
+            "contact": "B1",
+            "status": "Exists",
+            "found": 5379,
+            "sampled": 6384,
+            "witness": 6384,
+            "minimumSideDistance": 0.019999999552965165
+        },
+        {
+            "scenario": "X1",
+            "contact": "B2",
+            "status": "Exists",
+            "found": 237,
+            "sampled": 6384,
+            "witness": 16355,
+            "minimumSideDistance": 0.019999980926513673
+        },
+        {
+            "scenario": "X2",
+            "contact": "B2",
+            "status": "Exists",
+            "found": 74,
+            "sampled": 6384,
+            "witness": 12771,
+            "minimumSideDistance": 0.019999980926513673
+        },
+        {
+            "scenario": "X4",
+            "contact": "B2",
+            "status": "Exists",
+            "found": 5373,
+            "sampled": 6384,
+            "witness": 12769,
+            "minimumSideDistance": 0.019999980926513673
+        },
+        {
+            "scenario": "X5",
+            "contact": "B2",
+            "status": "Exists",
+            "found": 5373,
+            "sampled": 6384,
+            "witness": 12769,
+            "minimumSideDistance": 0.019999980926513673
+        },
+        {
+            "scenario": "X1",
+            "contact": "B3",
+            "status": "Exists",
+            "found": 351,
+            "sampled": 6384,
+            "witness": 24698,
+            "minimumSideDistance": 0.019999980926513673
+        },
+        {
+            "scenario": "X2",
+            "contact": "B3",
+            "status": "Exists",
+            "found": 263,
+            "sampled": 6384,
+            "witness": 19155,
+            "minimumSideDistance": 0.019999980926513673
+        },
+        {
+            "scenario": "X4",
+            "contact": "B3",
+            "status": "Exists",
+            "found": 5398,
+            "sampled": 6384,
+            "witness": 19152,
+            "minimumSideDistance": 0.019999980926513673
+        },
+        {
+            "scenario": "X5",
+            "contact": "B3",
+            "status": "Exists",
+            "found": 5398,
+            "sampled": 6384,
+            "witness": 19152,
+            "minimumSideDistance": 0.019999980926513673
+        },
+        {
+            "scenario": "X3",
+            "contact": "F1",
+            "status": "Exists",
+            "found": 2933,
+            "sampled": 6384,
+            "witness": 28498,
+            "minimumSideDistance": 0.019999999552965165
+        },
+        {
+            "scenario": "X5",
+            "contact": "F1",
+            "status": "Exists",
+            "found": 5413,
+            "sampled": 6384,
+            "witness": 25552,
+            "minimumSideDistance": 0.019999999552965165
+        },
+        {
+            "scenario": "X3",
+            "contact": "F2",
+            "status": "Exists",
+            "found": 3034,
+            "sampled": 6384,
+            "witness": 35150,
+            "minimumSideDistance": 0.019999980926513673
+        },
+        {
+            "scenario": "X5",
+            "contact": "F2",
+            "status": "Exists",
+            "found": 5411,
+            "sampled": 6384,
+            "witness": 31922,
+            "minimumSideDistance": 0.019999980926513673
+        }
+    ],
+    "relations": [
+        {
+            "id": "R1",
+            "evaluated": 2110,
+            "increasing": 2110,
+            "equal": 0,
+            "counterexamples": 0,
+            "notEvaluated": 34370,
+            "fractionIncreasing": 1.0
+        },
+        {
+            "id": "R2",
+            "evaluated": 3463,
+            "increasing": 3173,
+            "equal": 0,
+            "counterexamples": 290,
+            "notEvaluated": 32447,
+            "fractionIncreasing": 0.9162575801328328
+        },
+        {
+            "id": "R3",
+            "evaluated": 42,
+            "increasing": 0,
+            "equal": 0,
+            "counterexamples": 42,
+            "notEvaluated": 0,
+            "fractionIncreasing": 0.0
+        }
+    ],
+    "tempoPairs": [
+        {
+            "recipe": "SL1",
+            "status": "Shorter",
+            "reason": "identical-P2-geometry-lambda1-tempo-only",
+            "body": {
+                "x": 3.200000047683716,
+                "y": 5.5
+            },
+            "pStar": {
+                "x": 2.5999999046325685,
+                "y": 0.39620453119277956,
+                "z": 6.518138408660889
+            },
+            "kInSteps": 137.08478936662113,
+            "kOutSteps": 158.47470997896932,
+            "slowSeconds": 0.35649867687246986,
+            "fastSeconds": 0.17824933843623493,
+            "slowTStar": 2.6333333333333335,
+            "fastTStar": 1.3166666666666667
+        },
+        {
+            "recipe": "SL2",
+            "status": "Shorter",
+            "reason": "identical-P2-geometry-lambda1-tempo-only",
+            "body": {
+                "x": 3.200000047683716,
+                "y": 5.5
+            },
+            "pStar": {
+                "x": 3.8000001907348635,
+                "y": 0.39620453119277956,
+                "z": 6.518138408660889
+            },
+            "kInSteps": 137.08478936662113,
+            "kOutSteps": 158.47470997896932,
+            "slowSeconds": 0.35649867687246986,
+            "fastSeconds": 0.17824933843623493,
+            "slowTStar": 2.6333333333333335,
+            "fastTStar": 1.3166666666666667
+        },
+        {
+            "recipe": "SL3",
+            "status": "Shorter",
+            "reason": "identical-P2-geometry-lambda1-tempo-only",
+            "body": {
+                "x": 1.2999999523162842,
+                "y": 8.300000190734864
+            },
+            "pStar": {
+                "x": 0.3499999940395355,
+                "y": 0.3078906834125519,
+                "z": 7.6965718269348148
+            },
+            "kInSteps": 147.0355937447027,
+            "kOutSteps": 164.92356137154614,
+            "slowSeconds": 0.29813279378072368,
+            "fastSeconds": 0.14906639689036184,
+            "slowTStar": 2.466666666666667,
+            "fastTStar": 1.2333333333333335
+        },
+        {
+            "recipe": "SL4",
+            "status": "Shorter",
+            "reason": "identical-P2-geometry-lambda1-tempo-only",
+            "body": {
+                "x": 5.100000381469727,
+                "y": 8.300000190734864
+            },
+            "pStar": {
+                "x": 6.050000190734863,
+                "y": 0.3078906834125519,
+                "z": 7.6965718269348148
+            },
+            "kInSteps": 147.03559019191199,
+            "kOutSteps": 164.92356483483438,
+            "slowSeconds": 0.2981329107153732,
+            "fastSeconds": 0.1490664553576866,
+            "slowTStar": 2.466666666666667,
+            "fastTStar": 1.2333333333333335
+        },
+        {
+            "recipe": "SL5",
+            "status": "Shorter",
+            "reason": "identical-P2-geometry-lambda1-tempo-only",
+            "body": {
+                "x": 3.200000047683716,
+                "y": 1.600000023841858
+            },
+            "pStar": {
+                "x": 2.5999999046325685,
+                "y": 0.1720542311668396,
+                "z": 1.1979354619979859
+            },
+            "kInSteps": 94.3167335072558,
+            "kOutSteps": 132.17889331971566,
+            "slowSeconds": 0.6310359968743307,
+            "fastSeconds": 0.3155179984371653,
+            "slowTStar": 1.8833333333333334,
+            "fastTStar": 0.9416666666666667
+        },
+        {
+            "recipe": "SL6",
+            "status": "Shorter",
+            "reason": "identical-P2-geometry-lambda1-tempo-only",
+            "body": {
+                "x": 3.200000047683716,
+                "y": 1.600000023841858
+            },
+            "pStar": {
+                "x": 3.8000001907348635,
+                "y": 0.1720542311668396,
+                "z": 1.1979354619979859
+            },
+            "kInSteps": 94.3167335072558,
+            "kOutSteps": 132.17889331971566,
+            "slowSeconds": 0.6310359968743307,
+            "fastSeconds": 0.3155179984371653,
+            "slowTStar": 1.8833333333333334,
+            "fastTStar": 0.9416666666666667
+        }
+    ]
+}

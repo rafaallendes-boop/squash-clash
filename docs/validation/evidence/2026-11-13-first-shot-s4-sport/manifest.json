@@ -1,0 +1,84 @@
+{
+  "files": {
+    "counterexamples.tsv": {
+      "bytes": 271346,
+      "sha256": "b83c33143529f5a9e565a0d7ea349ba4fbd753dea8e46a02c693d1960877c0b1"
+    },
+    "pairs.tsv.gz": {
+      "bytes": 804381,
+      "sha256": "fd36b36ae9374c0604f5f76b22b55089fa87352c1072b97cf9245a70f571769e",
+      "uncompressedBytes": 5841367,
+      "uncompressedSha256": "208440a787f21591cf54d857fbbd6685add2825ac743b9696e11c4dabde73149"
+    },
+    "summary.json": {
+      "bytes": 13508,
+      "sha256": "731c91e196be2b9ef626ad2a43927fb66a0840f85191ffa1e05a8e4eba581a01",
+      "uncompressedBytes": 13508,
+      "uncompressedSha256": "731c91e196be2b9ef626ad2a43927fb66a0840f85191ffa1e05a8e4eba581a01"
+    },
+    "trials.tsv.gz": {
+      "bytes": 2705507,
+      "sha256": "4ba7a97e96c21dc084381ef2c47318e2cf620db41642725a74bbb430feed308e",
+      "uncompressedBytes": 13344347,
+      "uncompressedSha256": "36fb4b1ac133806dd02edee23f9edf7a211065804e0569a4617004d1cc4fbb2c"
+    },
+    "witnesses.json": {
+      "bytes": 68890,
+      "sha256": "33834b9dee8a9b818fb0b28d3e2d815e2d4b9b5e4b57b578612c763a175f08c6",
+      "uncompressedBytes": 68890,
+      "uncompressedSha256": "33834b9dee8a9b818fb0b28d3e2d815e2d4b9b5e4b57b578612c763a175f08c6"
+    }
+  },
+  "gridTrials": 38304,
+  "identicalExecutions": true,
+  "relations": [
+    {
+      "counterexamples": 0,
+      "equal": 0,
+      "evaluated": 2110,
+      "fractionIncreasing": 1.0,
+      "id": "R1",
+      "increasing": 2110,
+      "notEvaluated": 34370,
+      "notEvaluatedReasons": {
+        "aim-outside-middle-band": 29640,
+        "lower-power-back-wall-before-first-bounce": 88,
+        "not-a-legal-two-bounce-return": 92,
+        "side-wall-before-first-bounce": 3640,
+        "solver-adjustment": 550,
+        "unsolved": 360
+      }
+    },
+    {
+      "counterexamples": 290,
+      "equal": 0,
+      "evaluated": 3463,
+      "fractionIncreasing": 0.9162575801328328,
+      "id": "R2",
+      "increasing": 3173,
+      "notEvaluated": 32447,
+      "notEvaluatedReasons": {
+        "aim-outside-middle-band": 31122,
+        "first-bounce-not-observed": 638,
+        "solver-adjustment": 687
+      }
+    },
+    {
+      "counterexamples": 42,
+      "equal": 0,
+      "evaluated": 42,
+      "fractionIncreasing": 0.0,
+      "id": "R3",
+      "increasing": 0,
+      "notEvaluated": 0,
+      "notEvaluatedReasons": {}
+    }
+  ],
+  "source": "fd81c2dba3500dbf7b6bd7677f853009203dd4b9",
+  "terminalCounts": {
+    "DoubleBounce": 28711,
+    "Out": 5636,
+    "Tin": 1917,
+    "Unsolved": 2040
+  }
+}
