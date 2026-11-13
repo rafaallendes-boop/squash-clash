@@ -1,6 +1,8 @@
 # First Shot T4.2 — ayudas y tareas provisionales
 
-**ENTREGA DETENIDA: AutoQA ERROR / salida 3 / nivel 3. No apta para fusión.** Regresión completa GREEN; check-release pendiente por la parada. Sin reintentos ni correcciones de código posteriores al ERROR.
+**Continuación autorizada por el PO el 13 de noviembre: opción A**, registrada literalmente primero en `bc5b212`. Ver [registro de continuación y verificación del head final](2026-11-13-first-shot-s4-autoqa-continuation.md) y los resultados finales publicados en [PR #50](https://github.com/rafaallendes-boop/squash-clash/pull/50). **Sin fusionar; revisión de Claude coordinada por el PO.**
+
+Todo lo que sigue conserva el informe histórico de la parada S4-42-AQ-01 del 12 de noviembre: AutoQA ERROR / salida 3 / nivel 3, check-release no ejecutado entonces. Los fallos originales y las evidencias no se sustituyen por la continuación.
 
 Base main/origin/main `ef9be56b382936fe948217c0efe4ee02cce28b4c`. Encargo literal guardado primero en `1f9c8fb`, en el registro de aprobaciones. D1 opción B, D2 bandas de observación y D4 correcciones autorizadas; diseño de origen: [Step 0 T4.2](2026-11-11-first-shot-s4-timing.md#t42--step-0-documental-implementación-no-autorizada). Sin aceptación de First Shot, sin sesión física/4.5 ni capa causal.
 
