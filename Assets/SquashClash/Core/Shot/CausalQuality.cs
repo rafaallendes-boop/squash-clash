@@ -60,12 +60,12 @@ namespace SquashClash.Core.Shot
     [Serializable] public sealed class CausalShotTrace
     {
         public string player,attemptId;public long launchId,contactStep;public int planVersion;
-        public double tempo,latencyCompMs,arcRadius;public float bodyX,bodyZ,reach,aimX,aimY,speed;
+        public double tempo,latencyCompMs,arcRadius;public float bodyX,bodyZ,reach,aimX,aimY,speed,unclampedAimX,unclampedAimY;public bool aimClamped;
         public bool solved;public CausalVector[] vectors;
         public static CausalShotTrace Create(string player,long launchId,string attemptId,long step,CausalReference reference,BodyFrame body,CausalShotResult result)
             =>new CausalShotTrace{player=player,launchId=launchId,attemptId=attemptId,contactStep=step,planVersion=reference.PlanVersion,
                 tempo=reference.Tempo,latencyCompMs=reference.Timing.LatencyCompMs,arcRadius=reference.ArcRadius,bodyX=body.PositionXZ.x,bodyZ=body.PositionXZ.y,
-                reach=body.Reach,aimX=result.Input.Aim.x,aimY=result.Input.Aim.y,speed=result.Input.Speed,solved=result.Solution.Solved,vectors=result.Vectors};
+                reach=body.Reach,aimX=result.Input.Aim.x,aimY=result.Input.Aim.y,speed=result.Input.Speed,unclampedAimX=result.Input.UnclampedAim.x,unclampedAimY=result.Input.UnclampedAim.y,aimClamped=result.Input.Clamped,solved=result.Solution.Solved,vectors=result.Vectors};
     }
     public readonly struct CausalShotResult
     {
@@ -75,7 +75,10 @@ namespace SquashClash.Core.Shot
     public readonly struct CausalInput
     {
         public readonly Vector2 Aim;public readonly float Speed;
-        public CausalInput(Vector2 aim,float speed){Aim=aim;Speed=speed;}
+        // Aim after the composed causal height and before the legal front-wall bound; Clamped marks that the bound acted.
+        public readonly Vector2 UnclampedAim;public readonly bool Clamped;
+        public CausalInput(Vector2 aim,float speed):this(aim,speed,aim,false){}
+        public CausalInput(Vector2 aim,float speed,Vector2 unclampedAim,bool clamped){Aim=aim;Speed=speed;UnclampedAim=unclampedAim;Clamped=clamped;}
     }
     public static class CausalQuality
     {

@@ -121,6 +121,63 @@ namespace SquashClash.Core.Tests.Shot
             Assert.That(r.BodyAt(153).PositionXZ.x,Is.EqualTo(3.206f).Within(1e-6));Assert.That(r.BodyAt(153).Reach,Is.EqualTo(body.Reach));
             foreach(long j in r.PerfectSteps)Assert.That(r.Distance(flight.States[(int)j].Position,r.BodyAt(j)),Is.Zero);
         }
+        private static float LegalFrontMax(EffectiveConfig cfg)=>cfg.Court.FrontOutLower-cfg.Physics.BallRadius;
+        [Test] public void CausalHeightNearOutLine_IsBoundedToLegalFrontMax_AndSolves()
+        {
+            var cfg=EffectiveConfig.From(ConfigFixtures.Default());var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
+            var r=Reference();var contact=new Vector3(2f,.9f,5.5f);var aim=new Vector2(2.6f,4.5f);
+            var vectors=CausalQuality.Evaluate(r,body,contact,CausalSettings.From(cfg.Source));
+            Assert.That(vectors.Sum(v=>v.DeltaHeight),Is.GreaterThan(.1f),"precondition: the penalty must push the aim past the legal bound");
+            var plain=CausalQuality.Apply(aim,10,vectors,CausalSettings.From(cfg.Source));Assert.That(plain.Aim.y,Is.GreaterThan(cfg.Court.FrontOutLower),"precondition");
+            var result=CausalQuality.Solve(r,body,contact,aim,0,cfg,factory);
+            Assert.That(result.Input.Clamped,Is.True);Assert.That(result.Input.Aim.y,Is.EqualTo(LegalFrontMax(cfg)).Within(2e-6f));Assert.That(result.Input.Aim.y,Is.LessThan(cfg.Court.FrontOutLower));
+            Assert.That(result.Input.UnclampedAim.y,Is.GreaterThan(cfg.Court.FrontOutLower));Assert.That(result.Input.Aim.x,Is.EqualTo(aim.x));
+            Assert.That(result.Solution.Reason,Is.Not.EqualTo("target-or-contact-outside-court"));Assert.That(result.Solution.Solved,Is.True,result.Solution.Reason);
+            Assert.That(factory.LiveInstances,Is.Zero);
+        }
+        [Test] public void CausalHeightWithinLegalBound_IsNotClamped_AndSpeedIsNeverChangedByTheBound()
+        {
+            var cfg=EffectiveConfig.From(ConfigFixtures.Default());var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
+            var r=Reference();var point=new Vector3(2.7f,.6f,5.5f);var aim=new Vector2(2.6f,1.5f);
+            var result=CausalQuality.Solve(r,body,point,aim,.5f,cfg,factory);var plain=CausalQuality.Apply(aim,(float)cfg.Source.Get("shot.vMin")+.5f*((float)cfg.Source.Get("shot.vMax")-(float)cfg.Source.Get("shot.vMin")),result.Vectors,CausalSettings.From(cfg.Source));
+            Assert.That(result.Input.Clamped,Is.False);Assert.That(result.Input.Aim,Is.EqualTo(plain.Aim));Assert.That(result.Input.UnclampedAim,Is.EqualTo(plain.Aim));Assert.That(result.Input.Speed,Is.EqualTo(plain.Speed));
+            var clamped=CausalQuality.Solve(r,body,new Vector3(2f,.9f,5.5f),new Vector2(2.6f,4.5f),.5f,cfg,factory);
+            var unbounded=CausalQuality.Apply(new Vector2(2.6f,4.5f),clamped.Input.Speed/(1+Mathf.Max(-.4f,clamped.Vectors.Sum(v=>v.DeltaSpeedFraction))),clamped.Vectors,CausalSettings.From(cfg.Source));
+            Assert.That(clamped.Input.Clamped,Is.True);Assert.That(clamped.Input.Speed,Is.EqualTo(unbounded.Speed).Within(1e-5f));
+        }
+        [Test] public void RequestedAimAlreadyAboveLegalMax_IsNeverLoweredByTheBound()
+        {
+            var cfg=EffectiveConfig.From(ConfigFixtures.Default());var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
+            float above=cfg.Court.FrontOutLower-cfg.Physics.BallRadius*.5f;
+            var result=CausalQuality.Solve(Reference(),body,new Vector3(2f,.9f,5.5f),new Vector2(2.6f,above),0,cfg,factory);
+            Assert.That(result.Input.Aim.y,Is.EqualTo(above));Assert.That(result.Input.Clamped,Is.True);Assert.That(result.Input.UnclampedAim.y,Is.GreaterThan(above));
+        }
+        [Test] public void NearOutAim_WithAnyPenalty_NeverFaultsInsideTheCausalLayer()
+        {
+            var cfg=EffectiveConfig.From(ConfigFixtures.Default());var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);var r=Reference();
+            var contacts=new[]{new Vector3(2f,.9f,5.5f),new Vector3(2.7f,.6f,5.5f),new Vector3(2.6f,.9f,5.5f),new Vector3(4.2f,1.1f,5.3f)};
+            for(float y=3.9f;y<=LegalFrontMax(cfg);y+=.07f)
+                foreach(var c in contacts)
+                {
+                    var result=CausalQuality.Solve(r,body,c,new Vector2(2.6f,y),0,cfg,factory);
+                    Assert.That(result.Solution.Reason,Is.Not.EqualTo("target-or-contact-outside-court"),"y="+y+" contact="+c);
+                }
+        }
+        [Test] public void Trace_RecordsPreviousAndBoundedAim_AndClampFlag()
+        {
+            var cfg=EffectiveConfig.From(ConfigFixtures.Default());var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);var r=Reference();
+            var result=CausalQuality.Solve(r,body,new Vector3(2f,.9f,5.5f),new Vector2(2.6f,4.5f),0,cfg,factory);
+            var trace=CausalShotTrace.Create("Human",1,"a",150,r,body,result);
+            Assert.That(trace.aimClamped,Is.True);Assert.That(trace.aimY,Is.EqualTo(result.Input.Aim.y));Assert.That(trace.unclampedAimY,Is.EqualTo(result.Input.UnclampedAim.y));Assert.That(trace.unclampedAimY,Is.GreaterThan(trace.aimY));
+        }
+        [Test] public void RivalPath_UsesTheSameBound()
+        {
+            var cfg=EffectiveConfig.From(ConfigFixtures.Default());var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
+            var context=new RallyContext(cfg,new RallyParams(),factory);var r=Reference();var contact=new Vector3(2f,.9f,5.5f);var aim=new Vector2(2.6f,4.5f);
+            var human=CausalQuality.Solve(r,body,contact,aim,0,cfg,factory);var rival=RallyContact.Solve(context,r,body,contact,aim,0);
+            Assert.That(human.Input.Clamped,Is.True);Assert.That(rival.Input.Clamped,Is.EqualTo(human.Input.Clamped));Assert.That(rival.Input.Aim,Is.EqualTo(human.Input.Aim));Assert.That(rival.Input.UnclampedAim,Is.EqualTo(human.Input.UnclampedAim));
+            Assert.That(rival.Solution.Reason,Is.EqualTo(human.Solution.Reason));Assert.That(rival.Solution.Velocity,Is.EqualTo(human.Solution.Velocity));
+        }
         [Test] public void MovingBodySnapshot_IsTheSameStepper_WithoutMutatingThePlayer()
         {
             var cfg=EffectiveConfig.From(ConfigFixtures.Default());var context=new RallyContext(cfg,new RallyParams(),new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
