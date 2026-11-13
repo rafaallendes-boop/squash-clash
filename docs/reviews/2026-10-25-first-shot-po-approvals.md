@@ -2414,3 +2414,24 @@ Base comprobada main/origin/main: `ef9be56b382936fe948217c0efe4ee02cce28b4c`. Ra
 El encargo literal anterior se registró en primer commit 1f9c8fb. Implementación con TDD; fuente limpia verificada 6c149ad: 691/691 EditMode, 450/450 PlayMode. AutoQA ERROR/salida 3/nivel 3: nuevo ShotRecord incompatible con lector estricto y anclaje SL5 calculado sin la preparación human.z (esperado introducido 1877d083c345, observado Unity 50efa6d33c0c). Se registra y detiene conforme al encargo, sin reintentar/corregir tras el ERROR; check-release pendiente. Defaults c0e9f00176d5 / P0 efectivo 42d9efbf50fc; bytes/proyecciones heredadas intactos. Ver [informe con evidencia y límites](2026-11-12-first-shot-s4-aids-tasks.md). Sin fusión, aceptación ni iPhone; continuación pendiente de decisión del PO.
 
 PR T4.2 **[#50](https://github.com/rafaallendes-boop/squash-clash/pull/50)** abierta/no borrador, marcada BLOCKED para revisión, **sin fusionar ni aptitud de fusión**. Informe y evidencia de la parada preservados; detenerse.
+
+
+## Continuación literal T4.2 / PR #50 — PO, 13 de noviembre de 2026
+
+Encargo del PO (Squash Clash) para PR #50, rama de 4.2. Continuación tras la parada S4-42-AQ-01.
+
+DECISIÓN DEL PO: opción A. Autorizo ampliar la lista de campos predeclarados del lector de AutoQA (PocObservation) solo para los seis campos nuevos de 4.2. Primer commit: registrar esta decisión literal.
+
+TAREA:
+1. Clasificar los seis campos en PocObservation, sin tocar escenarios, expectativas, márgenes ni tolerancias:
+   - AidLevel, AidCutoff, AidCutoffPlanVersion, CuePhase y Solved: comparación exacta.
+   - AidCutoffTarget es un instante absoluto de reloj real: va a los excluidos, igual que TargetContactAtReal. No puede entrar en la comparación exacta.
+   El fallo actual de AutoQAPocTests es el RED; documentarlo y llegar a GREEN.
+2. Anclaje SL5: recalcularlo en Unity con la preparación COMPLETA del escenario (preset más human.z=(double)1.6f) y corregir el diagnóstico de TimingAidConfigTests para que calcule ese hash efectivo. No copiar el valor observado en la corrida fallida: calcularlo y después comprobar que coincide con 50efa6d33c0c. Si no coincide, registrar y detenerse.
+   Corregir los cuatro lugares: Scenario.cs, autoqa-check v7 en .claude/agents/autoqa-operator.md, .claude/skills/autoqa/SKILL.md y scripts/tests/test_autoqa_checker.py.
+3. Sobre el head final, un solo Unity a la vez: EditMode y PlayMode completos, AutoQA mvp (debe dar PASS/0/nivel 1, con el canario FAIL esperado), y check-release dev/prod con gitDirty=false. Restaurar los ProjectSettings transitorios.
+4. Ante otro defecto o sorpresa: registrar y detenerse, sin reintentar para sacar un Pass.
+
+LÍMITES: sin cambios de producto aparte de los ya hechos en 4.2, ni de escenarios, criterios, umbrales o defaults. Sin iPhone, builds ni instalación. Quitar [BLOCKED] del título solo si todo queda verde. PR lista para revisión de Claude, SIN FUSIONAR.
+
+Registro previo a toda modificación de esta continuación, sobre head `58adfc9`, en la misma rama/worktree `firstshot/s4-aids-tasks`. Los resultados originales de S4-42-AQ-01 se conservan; la autorización anterior sustituye su pausa solo dentro de este alcance. Ningún check nuevo se declara ejecutado en este registro.
