@@ -39,7 +39,9 @@ namespace SquashClash.Core.Tests.Shot
                 Assert.That(File.ReadAllBytes(path),Is.EqualTo(bytes));
                 TestContext.WriteLine("S4_REAL_P0 effective="+realEffective.Hash+" inherited="+realEffective.HashOf(ConfigFixtures.FirstBallPrefixes)+" bytesUnchanged=true");
             }
-            TestContext.WriteLine("S4_HASH defaults="+p.Hash+" P0="+effective.Hash+" SL5="+p.With("practice.launch",4).Hash);
+            var sl5=p.With("practice.launch",4).With("human.z",(double)1.6f);
+            TestContext.WriteLine("S4_HASH defaults="+p.Hash+" P0="+effective.Hash+" SL5="+sl5.Hash);
+            Assert.That(sl5.Hash,Is.EqualTo("50efa6d33c0c"),"SL5 with complete existing scenario preparation");
         }
     }
 }
