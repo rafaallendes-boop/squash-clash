@@ -41,6 +41,10 @@ namespace SquashClash.Core.Shot
     }
     [Serializable] public sealed class ShotRecord
     {
+        public int AidLevel,AidCutoffPlanVersion;
+        public bool AidCutoff;
+        public double AidCutoffTarget;
+        public string CuePhase;
         public int Schema=1,Version,Seed,PlanVersion,Pending,O2Count,FingerId,StepsResimulated,ObsoleteEffects;
         public long LaunchId,ContactStep,TStarStep;
         public string AttemptId,PredecessorId,GestureOutcome,Reason,Result,Fail,LaunchHash,GestureHash,Preset,FileHash,Build,Side;

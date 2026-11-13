@@ -13,6 +13,7 @@ namespace SquashClash.Core.Config
                 new ChoiceOption(0,"SL1"),new ChoiceOption(1,"SL2"),new ChoiceOption(2,"SL3"),new ChoiceOption(3,"SL4"),new ChoiceOption(4,"SL5"),new ChoiceOption(5,"SL6")),
             new ParamDef("practice.repeatSeconds", "Practice wait", "s", "First Shot / practice", ParamKind.Float, .5, 5, .1, ApplyClass.Immediate),
             new ParamDef("practice.observeMaxSeconds", "Outgoing observation limit", "s", "First Shot / practice", ParamKind.Float, 1, 8, .1, ApplyClass.Immediate),
+            new ParamDef("timing.aidLevel", "Ayuda de timing", "", "First Shot / timing", ParamKind.Choice, 0, 2, 1, ApplyClass.Immediate, new ChoiceOption(0,"Completa"), new ChoiceOption(1,"Parcial"), new ChoiceOption(2,"Ninguna")),
             new ParamDef("timing.showNotes", "Shot notes", "", "First Shot / timing", ParamKind.Bool, 0, 1, 1, ApplyClass.Immediate),
             new ParamDef("feedback.haptics", "App haptics", "", "First Shot / feedback", ParamKind.Bool, 0, 1, 1, ApplyClass.Immediate),
             new ParamDef("rollback.historyMs", "Rollback history", "ms", "First Shot / history", ParamKind.Float, 100, 500, 1, ApplyClass.Immediate),

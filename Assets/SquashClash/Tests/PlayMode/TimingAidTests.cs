@@ -56,6 +56,25 @@ namespace SquashClash.Runtime.Tests
             Assert.That(R("Converging ring"),Is.LessThan(R("Late perfect band")));
             Assert.That(R("Late perfect band"),Is.LessThan(.1f));
         }
+        [Test] public void AidPartial_HidesRingLast150ms()
+        {
+            view.BeginReception(1);view.Show(plan,target,true,new TimingSettings(40,true,100));
+            view.Tick(target-.150001);Assert.That(view.Visible,Is.True);
+            Assert.That(root.GetComponentsInChildren<LineRenderer>().All(r=>r.enabled),Is.True);
+            view.Tick(target-.15);Assert.That(view.CutoffLatched,Is.True);
+            Assert.That(root.GetComponentsInChildren<LineRenderer>().All(r=>!r.enabled),Is.True);
+            Assert.That(view.CutoffTarget,Is.EqualTo(target));Assert.That(view.CutoffPlanVersion,Is.EqualTo(7));
+            view.Show(plan,target+10,true,new TimingSettings(40,true,100));view.Tick(target);
+            Assert.That(view.Visible,Is.False);Assert.That(view.CutoffTarget,Is.EqualTo(target));
+            view.BeginReception(0);view.Show(plan,target+10,true,new TimingSettings(40,true,100));Assert.That(view.Visible,Is.True);
+        }
+        [Test] public void AidNone_ShowsOnlyBallAndShadow()
+        {
+            var unrelated=new GameObject("aim power feedback ball shadow");unrelated.transform.SetParent(root.transform);
+            view.BeginReception(2);view.Show(plan,target,true,new TimingSettings(40,true,100));view.Tick(target);
+            Assert.That(view.Visible,Is.False);Assert.That(root.GetComponentsInChildren<LineRenderer>().All(r=>!r.enabled),Is.True);
+            Assert.That(view.CueState.Phase,Is.EqualTo(ImpactCuePhase.AtIdeal));Assert.That(unrelated.activeSelf,Is.True);
+        }
         [Test] public void PureT3_HasNoValidBands()
         {
             view.Show(plan,target,true,new TimingSettings(40,false,100));view.Tick(target);

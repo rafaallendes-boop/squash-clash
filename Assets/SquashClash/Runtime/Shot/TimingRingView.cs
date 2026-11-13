@@ -14,13 +14,27 @@ namespace SquashClash.Runtime.Shot
         private TimingSettings timing;
         private bool shown;
         private double target,presented;
+        private int aidLevel,planVersion;
+        public int AidLevel=>aidLevel;
+        public event System.Action CutoffActivated;
+        public void BeginReception(int level)
+        {
+            aidLevel=level;CutoffLatched=false;CutoffTarget=0;CutoffPlanVersion=0;
+            shown=false;if(ring!=null)Tick(Time.realtimeSinceStartupAsDouble);
+        }
+        public bool CutoffLatched {get;private set;}
+        public double CutoffTarget {get;private set;}
+        public int CutoffPlanVersion {get;private set;}
+        public ImpactCueState CueState {get;private set;}
         public bool Visible=>line!=null&&line.enabled;
         public void Show(ContactPlan plan,double targetContactAtReal,bool visible,TimingSettings timing)
         {
-            this.timing=timing;target=targetContactAtReal;presented=Time.realtimeSinceStartupAsDouble;
+            // Observe the old plan before replacing it: a replan cannot reopen a passed cutoff.
+            Tick(Time.realtimeSinceStartupAsDouble);
+            this.timing=timing;target=targetContactAtReal;planVersion=plan.Version;presented=Time.realtimeSinceStartupAsDouble;
             shown=visible&&plan.Exists;
             // Keep the hidden path free of GameObjects, LineRenderers, and materials.
-            if(!shown){if(ring!=null)Tick(presented);return;}
+            if(!shown||aidLevel==2||CutoffLatched){Tick(presented);return;}
             if(ring==null)
             {
                 ring=new GameObject("First Shot timing cue").transform;ring.SetParent(transform,false);
@@ -44,9 +58,11 @@ namespace SquashClash.Runtime.Shot
         }
         public void Tick(double now)
         {
-            var state=ImpactCue.Evaluate(now,presented,target,timing,shown,!shown);
+            var state=ImpactCue.Evaluate(now,presented,target,timing,shown,!shown);CueState=state;
+            if(aidLevel==1&&shown&&!CutoffLatched&&now>=target-.15)
+            {CutoffLatched=true;CutoffTarget=target;CutoffPlanVersion=planVersion;CutoffActivated?.Invoke();}
             if(ring==null)return;
-            if(state.Phase==ImpactCuePhase.Hidden||state.Phase==ImpactCuePhase.Closed)
+            if(aidLevel==2||CutoffLatched||state.Phase==ImpactCuePhase.Hidden||state.Phase==ImpactCuePhase.Closed)
             {line.enabled=triangle.enabled=validBand.enabled=perfectBand.enabled=lateValidBand.enabled=latePerfectBand.enabled=false;return;}
             const float alpha=1;
             var camera=UnityEngine.Camera.main;
