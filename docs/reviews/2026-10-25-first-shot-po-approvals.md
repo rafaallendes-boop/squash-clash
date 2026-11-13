@@ -2219,7 +2219,7 @@ La entrada del 11 de noviembre que limitaba First Rally a R1–R3 y ordenaba par
 
 > AUTORIZACIÓN: autorizo First Rally, etapas R1–R5 y, si queda tiempo, R6 (First Match). Haz un commit por etapa con tests verdes, para que yo pueda cortar donde quiera. Mi uso de Fable es limitado: prioriza avance funcional y commitea seguido.
 
-El plan la registra como del 11 de noviembre; Git acredita su incorporación en `f271125f50b60d2e0337c8348a56cecf8c9c8791`, el **11 de noviembre de 2026 a las 15:52:57 America/Santiago**. Esto fecha el registro, no el mensaje original del PO: **fecha exacta de emisión de la ampliación pendiente de confirmación del PO**. Es posterior a la autorización limitada y habilita R1–R5 y R6 si quedaba tiempo; el [informe de gameplay](https://github.com/rafaallendes-boop/squash-clash/blob/d9605b50d1b6337d7a08549473b0a9da91d25770/docs/reviews/2026-11-11-first-rally-gameplay.md) declara R1–R6 implementadas, con R6 mínimo y saque automático. No acredita aceptación física.
+El plan la registra como del 11 de noviembre; Git acredita su incorporación en `f271125f50b60d2e0337c8348a56cecf8c9c8791`, el **11 de noviembre de 2026 a las 15:52:57 America/Santiago**. Esto fecha el registro. **Hora del mensaje según la transcripción, comunicada en el encargo de corrección de PR #49: 2026-11-11T18:44:19Z (15:44:19 America/Santiago), anterior a `f271125`; pendiente de confirmación del PO.** No se infiere esa hora del commit. Es posterior a la autorización limitada y habilita R1–R5 y R6 si quedaba tiempo; el [informe de gameplay](https://github.com/rafaallendes-boop/squash-clash/blob/d9605b50d1b6337d7a08549473b0a9da91d25770/docs/reviews/2026-11-11-first-rally-gameplay.md) declara R1–R6 implementadas, con R6 mínimo y saque automático. No acredita aceptación física.
 
 Autorización del pase visual del **12 de noviembre de 2026**, copiada de [su plan](https://github.com/rafaallendes-boop/squash-clash/blob/a96de94bf9a53ed4a3272c67adf4b98ed530ef12/docs/reviews/2026-11-12-visual-pass-plan.md#autorización-literal-del-po-12-de-noviembre-de-2026):
 
@@ -2324,7 +2324,27 @@ Fuente de las tres citas siguientes: mensaje del PO del encargo documental, repr
 
 > Objetivo: dejar First Shot y First Rally técnicamente completos, integrados y listos para una sesión real de juego en iPhone. […] Mantengamos el enfoque incremental, con pruebas automatizadas, revisión independiente y aprobación del PO antes de cada fusión.
 
-**Estado vigente que resulta de estas decisiones:** implementación de 4.2 y capa causal no direccional (Tarea 3.1 del plan r2) autorizadas como **entregas propias**, con pruebas automatizadas, revisión independiente y aprobación del PO antes de cada fusión. 4.4 se implementa solo después de que el PO valide el anexo C. **4.5, sesiones físicas, sigue sin autorizar.** La aceptación física definitiva de First Shot se reserva al playtest integrado; las pruebas técnicas y visuales no la sustituyen. H3b completo permanece NotEvaluated hasta completar y verificar lo pendiente. Este registro no implementa ninguna de esas tareas ni inicia sesiones.
+**Histórico — estado anterior a la aprobación del Anexo C:** implementación de 4.2 y capa causal no direccional (Tarea 3.1 del plan r2) autorizadas como **entregas propias**, con pruebas automatizadas, revisión independiente y aprobación del PO antes de cada fusión. 4.4 se implementa solo después de que el PO valide el anexo C. **4.5, sesiones físicas, sigue sin autorizar.** La aceptación física definitiva de First Shot se reserva al playtest integrado; las pruebas técnicas y visuales no la sustituyen. H3b completo permanece NotEvaluated hasta completar y verificar lo pendiente. Este registro no implementa ninguna de esas tareas ni inicia sesiones.
+
+### Aprobación literal del Anexo C — PO, 12 de noviembre de 2026
+
+El PO aprobó el Anexo C el **2026-11-12T20:33:07Z (17:33:07 America/Santiago)**, después del encargo original de esta PR. Fuente: encargo de corrección de PR #49 tras la revisión de Claude del head `1127fbf` (**CAMBIOS SOLICITADOS**). Literal completo:
+
+> Apruebo el Anexo C para 4.4, con las siguientes consideraciones:
+>
+> * X1: aceptamos los 0,5 m como umbral inicial, sujeto a calibración. Buscamos un paralelo realmente pegado a la lateral.
+> * X2: validamos la capacidad de generar ese cruzado ancho, pero no lo consideremos la única trayectoria válida de un buen cruzado.
+> * R1 y R2: deben cumplirse como tendencias dentro de condiciones comparables y rangos válidos, no como leyes absolutas.
+> * R4: queda pendiente hasta implementar la capa causal E3.
+> * X6, X7, R5 y R8: fuera del alcance actual, sin descartarlos para futuras etapas.
+> * R6: diferido hasta contar con la capa aleatoria.
+> * C1–C5: informativas, sin bloquear el avance.
+>
+> Mantengamos los escenarios reproducibles y sus resultados documentados. Si alguno falla, presenta el diagnóstico, la causa probable y las alternativas de ajuste antes de modificar física o calibración.
+> Importante: estas pruebas buscan validar técnicamente lo implementado. La evaluación de si los golpes se sienten naturales y realmente representan squash la haremos en iPhone, una vez cerrados e integrados First Shot y First Rally.
+> Puedes avanzar con 4.4 bajo estos criterios, sin ampliar el alcance ni introducir mecánicas nuevas.
+
+**Estado vigente tras la aprobación del Anexo C:** **4.4 queda AUTORIZADA como entrega propia bajo todas las condiciones del literal anterior**, sin ampliar el alcance ni introducir mecánicas nuevas. Sustituye la condición pendiente del párrafo histórico anterior. Implementación de 4.2 y capa causal no direccional (Tarea 3.1 del plan r2) continúan autorizadas como entregas propias, con pruebas automatizadas, revisión independiente y aprobación del PO antes de cada fusión. **4.5, sesiones físicas, sigue sin autorizar.** La aceptación física definitiva de First Shot se reserva al playtest integrado una vez cerrados e integrados First Shot y First Rally; H3b completo permanece NotEvaluated hasta completar y verificar lo pendiente. Esta PR solo registra la autorización, sin implementar esas entregas ni iniciar sesiones.
 
 ### Verificación y entrega de este registro
 
