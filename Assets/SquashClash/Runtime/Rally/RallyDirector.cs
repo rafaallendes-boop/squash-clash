@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SquashClash.Core.Config;
 using SquashClash.Core.Rally;
 using SquashClash.Core.Shot;
@@ -32,6 +33,8 @@ namespace SquashClash.Runtime.Rally
         private IRallyBrain rivalBrain,humanBrain;
         private ShotRecord resolved;
         private AiShot pendingShot,autoShot;
+        private CausalReference rivalCausal;
+        private readonly List<CausalShotTrace> pointCausal=new List<CausalShotTrace>();
         private bool launching,hasPending,needDecision,autoQueued;
         private long flightLaunchId,flightStartStep,bodyStep,pendingStep;
         private int planVersion,autoSerial;
@@ -128,6 +131,8 @@ namespace SquashClash.Runtime.Rally
             var trajectory=context.Predict(ball);int delay=context.Steps(Params.ReactionS);
             HumanPlan=ReceptionPlanner.Plan(context,trajectory,committed,Human,delay,++planVersion);
             Human.MoveTo(HumanPlan.Stance,delay,BodyPhase.Approaching,BodyPhase.Set);
+            var positions=Human.PositionsAfter(trajectory.States.Count);
+            controller.SetNextReceptionBody(j=>context.FrameAt(positions[(int)(j-ball.Step)]));
             // The fixed-body contact planner reads the human from the launch configuration, as practice already does.
             var at=HumanPlan.BodyAtContact;
             var source=app.Tuning.ApplyPending().With("human.x",at.x).With("human.z",at.y);
@@ -171,7 +176,12 @@ namespace SquashClash.Runtime.Rally
         }
         private void OnResolved(ShotRecord record)
         {
-            if(Active&&Phase==RallyPhase.HumanReception&&record.LaunchId==flightLaunchId)resolved=record;
+            if(Active&&Phase==RallyPhase.HumanReception&&record.LaunchId==flightLaunchId)
+            {
+                resolved=record;
+                if(controller.LastCausal.Vectors!=null&&controller.CausalReference!=null)
+                    pointCausal.Add(CausalShotTrace.Create("Human",record.LaunchId,record.AttemptId,record.ContactStep,controller.CausalReference,controller.CausalReference.BodyAt(record.ContactStep),controller.LastCausal));
+            }
         }
         private void Update()=>Tick();
         // One evaluation at the host's observed present. Tests call it directly after Host.Advance.
@@ -272,6 +282,14 @@ namespace SquashClash.Runtime.Rally
             int delay=Math.Max(0,context.Steps(Params.ReactionS)+rivalBrain.PerceptionSteps-elapsed);
             RivalPlan=ReceptionPlanner.Plan(context,trajectory,committed,Rival,delay,++planVersion,rivalBrain.StanceNoise(),elapsed);
             Rival.MoveTo(RivalPlan.Stance,delay,BodyPhase.Approaching,BodyPhase.Set);
+            rivalCausal=null;
+            if(RivalPlan.Contact.Exists&&RivalPlan.Contact.TStarStep>=0&&host.ClockMap.TrySimToReal(RivalPlan.Contact.TStarStep,0,out _))
+            {
+                var future=Rival.PositionsAfter(trajectory.States.Count-elapsed);var past=new Vector2[trajectory.States.Count];
+                // Before this presentation the receiver has no attempt; retain its present position for that prefix.
+                for(int i=0;i<past.Length;i++)past[i]=i<elapsed?Rival.Position:future[i-elapsed];
+                rivalCausal=CausalQuality.Prepare(trajectory,RivalPlan.Contact,host.ClockMap,context.Timing,host.ObservedRealTime,context.Tempo,j=>context.FrameAt(past[(int)(j-start)]));
+            }
             pendingShot=rivalBrain.Decide(Observe(PlayerId.Rival,trajectory.States[0]),RivalPlan);
             hasPending=false;needDecision=pendingShot.Swing;
             rivalReception=pendingShot.Swing?(ReceptionResult?)null:RivalPlan.Reachable?ReceptionResult.NoSwing:ReceptionResult.Unreachable;
@@ -297,7 +315,13 @@ namespace SquashClash.Runtime.Rally
             {
                 hasPending=false;var at=Evaluate(pendingStep);var state=host.Current;
                 bool have=state.Step==pendingStep||host.TryGetHistoricalState(pendingStep,out state);
-                var solution=have&&at.CanHit(PlayerId.Rival)?RallyContact.Solve(context,state.Position,pendingShot.Aim,pendingShot.P):default;
+                var causal=have&&at.CanHit(PlayerId.Rival)&&rivalCausal!=null?RallyContact.Solve(context,rivalCausal,rivalCausal.BodyAt(pendingStep),state.Position,pendingShot.Aim,pendingShot.P):default;
+                var solution=causal.Solution;
+                if(causal.Vectors!=null)
+                {
+                    var trace=CausalShotTrace.Create("Rival",host.LaunchId,"",pendingStep,rivalCausal,rivalCausal.BodyAt(pendingStep),causal);pointCausal.Add(trace);
+                    app.Metrics?.Write("rally-causal",host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(trace));
+                }
                 if(solution.Solved&&at.RacketContact(PlayerId.Rival))
                 {
                     committed=at;rivalReception=ReceptionResult.Contact;RivalSwing?.Invoke(RivalPlan.Contact.Side,true);
@@ -333,12 +357,12 @@ namespace SquashClash.Runtime.Rally
         }
         private void PlaceBodies(){if(players!=null&&Human!=null)players.Place(Human.Position,Rival.Position);}
         [Serializable] private sealed class PointLine
-        {public string winner,cause,reception,rallyParams,level,server,box;public int shots,humanPoints,rivalPoints,systemFaults;public bool autopilot,match,matchOver;public long seed;}
+        {public string winner,cause,reception,rallyParams,level,server,box;public int shots,humanPoints,rivalPoints,systemFaults;public bool autopilot,match,matchOver;public long seed;public CausalShotTrace[] causal;}
         private void WriteMetrics(PointResult r)
         {
             var line=new PointLine{winner=r.Winner?.ToString()??"None",cause=r.Cause.ToString(),reception=r.Reception?.ToString()??"",shots=r.Shots,humanPoints=HumanPoints,rivalPoints=RivalPoints,
                 systemFaults=SystemFaults,rallyParams=Params.Hash,level=Level.ToString(),autopilot=Autopilot,seed=Seed,match=Match!=null,matchOver=Match?.Finished??false,
-                server=served?.ToString()??"",box=served.HasValue?servedBox.ToString():""};
+                server=served?.ToString()??"",box=served.HasValue?servedBox.ToString():"",causal=pointCausal.ToArray()};
             app.Metrics?.Write("rally-point",app.Host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,
                 !app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(line));
         }

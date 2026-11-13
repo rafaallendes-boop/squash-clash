@@ -42,7 +42,7 @@ namespace SquashClash.Core.Tests.Rally
         {
             var context=RallyFixtures.Context();
             foreach(var o in ShotOptions.Build(context,Contact))
-                Assert.That(RallyContact.Solve(context,Contact,o.Aim,o.P).Solved,Is.True,o.Line+"/"+o.Height+"/"+o.Power);
+                Assert.That(RallyContact.SolveIntention(context,Contact,o.Aim,o.P).Solved,Is.True,o.Line+"/"+o.Height+"/"+o.Power);
         }
         [Test] public void ClampAim_KeepsNoisyIntentionsInsideTheSolverDomain()
         {
@@ -50,7 +50,7 @@ namespace SquashClash.Core.Tests.Rally
             var low=ShotOptions.ClampAim(context,new Vector2(-1,.1f));var high=ShotOptions.ClampAim(context,new Vector2(9,7));
             Assert.That(low.y,Is.GreaterThan(context.Court.TinTop+r));Assert.That(low.x,Is.GreaterThanOrEqualTo(r));
             Assert.That(high.y,Is.LessThan(context.Court.FrontOutLower-r));Assert.That(high.x,Is.LessThanOrEqualTo(context.Court.Width-r));
-            Assert.That(RallyContact.Solve(context,Contact,low,.5f).Reason,Is.Not.EqualTo("target-or-contact-outside-court"));
+            Assert.That(RallyContact.SolveIntention(context,Contact,low,.5f).Reason,Is.Not.EqualTo("target-or-contact-outside-court"));
         }
     }
     public sealed class FondoAiTests
@@ -229,7 +229,7 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void Solve_UsesTheSharedSolverAndSpeedLimits()
         {
             var s=Setup();var contact=s.plan.PStar;var aim=new Vector2(3.2f,1.8f);
-            var via=RallyContact.Solve(s.context,contact,aim,.5f);
+            var via=RallyContact.SolveIntention(s.context,contact,aim,.5f);
             var direct=ShotSolver.Solve(new ShotRequest(contact,aim,.5f),s.context.VMin,s.context.VMax,s.context.VCap,s.context.Physics.Gravity,s.context.Physics.BallRadius,s.context.Court,s.context.Factory,s.context.Physics);
             Assert.That(via.Solved,Is.True);Assert.That(via.Velocity,Is.EqualTo(direct.Velocity));Assert.That(via.Speed,Is.EqualTo(direct.Speed));
         }

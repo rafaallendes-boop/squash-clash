@@ -29,14 +29,14 @@ namespace SquashClash.Core.Rally
         }
         public static CausalShotResult Solve(RallyContext context,CausalReference reference,BodyFrame body,Vector3 point,Vector2 aim,float power)
             =>CausalQuality.Solve(reference,body,point,aim,power,context.Config,context.Factory);
-        public static ShotSolution Solve(RallyContext context,Vector3 contactCenter,Vector2 aim,float power)
+        public static ShotSolution SolveIntention(RallyContext context,Vector3 contactCenter,Vector2 aim,float power)
             =>ShotSolver.Solve(new ShotRequest(contactCenter,aim,power),context.VMin,context.VMax,context.VCap,context.Physics.Gravity,context.Physics.BallRadius,
                 context.Court,context.Factory,context.Physics);
         // What the shared solver and predictor say about one's own intention from a contact point: does it reach the
         // front wall legally and bounce in court? Own shot, shared predictor, observed state only (spec 11.2).
         public static ShotForecast Forecast(RallyContext context,Vector3 contactCenter,Vector2 aim,float power)
         {
-            var solution=Solve(context,contactCenter,aim,power);
+            var solution=SolveIntention(context,contactCenter,aim,power);
             if(!solution.Solved)return new ShotForecast(false,PointEndCause.None,default,0);
             var rules=new PointRules(context.Court,(float)context.Params.FootprintRadius);rules.Begin(PlayerId.Human,PlayerId.Rival);
             using(var simulation=context.Factory.Create(context.Physics,context.Court))

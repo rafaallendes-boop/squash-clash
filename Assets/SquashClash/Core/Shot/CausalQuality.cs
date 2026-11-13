@@ -57,6 +57,16 @@ namespace SquashClash.Core.Shot
             return Math.Sqrt(best);
         }
     }
+    [Serializable] public sealed class CausalShotTrace
+    {
+        public string player,attemptId;public long launchId,contactStep;public int planVersion;
+        public double tempo,latencyCompMs,arcRadius;public float bodyX,bodyZ,reach,aimX,aimY,speed;
+        public bool solved;public CausalVector[] vectors;
+        public static CausalShotTrace Create(string player,long launchId,string attemptId,long step,CausalReference reference,BodyFrame body,CausalShotResult result)
+            =>new CausalShotTrace{player=player,launchId=launchId,attemptId=attemptId,contactStep=step,planVersion=reference.PlanVersion,
+                tempo=reference.Tempo,latencyCompMs=reference.Timing.LatencyCompMs,arcRadius=reference.ArcRadius,bodyX=body.PositionXZ.x,bodyZ=body.PositionXZ.y,
+                reach=body.Reach,aimX=result.Input.Aim.x,aimY=result.Input.Aim.y,speed=result.Input.Speed,solved=result.Solution.Solved,vectors=result.Vectors};
+    }
     public readonly struct CausalShotResult
     {
         public readonly CausalVector[] Vectors;public readonly CausalInput Input;public readonly ShotSolution Solution;
