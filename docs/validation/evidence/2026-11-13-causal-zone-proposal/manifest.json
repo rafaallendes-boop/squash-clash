@@ -1,0 +1,105 @@
+{
+  "method": "CQ-ZONE-v1",
+  "source": "ad3d25977cab6c912085ca281dc47a0cd6c6f5aa",
+  "predeclaration": "e8a26c1",
+  "dataFiles": [
+    {
+      "file": "capture.tsv",
+      "bytes": 5011,
+      "sha256": "07e9fffa040502f3993dca7e4c613c876089de14d61b6b664ee50b5cf7477c4e",
+      "run1EqualsRun2": true
+    },
+    {
+      "file": "cells.tsv",
+      "bytes": 2819781,
+      "sha256": "f6dcb8bb87636ac51e3c6e049d2c16ed13563b7b8d1129672d4f0de0abfcda59",
+      "run1EqualsRun2": true
+    },
+    {
+      "file": "events.tsv",
+      "bytes": 5157,
+      "sha256": "863b1cfa6e87fc42b9650e3c603826dda53fe940b339ca6a493197e8e021127c",
+      "run1EqualsRun2": true
+    },
+    {
+      "file": "geometry.tsv",
+      "bytes": 798326,
+      "sha256": "8bf0ef3fe82bab59ecd77102924717a006e6ad86b2c0c66f2b452ea7df679a41",
+      "run1EqualsRun2": true
+    },
+    {
+      "file": "metadata.tsv",
+      "bytes": 453,
+      "sha256": "5adec24fad100c457dc4de81bfc6935dab34b88d6ed9daeaa5ec7ef8a2db6d43",
+      "run1EqualsRun2": true
+    },
+    {
+      "file": "probes.tsv",
+      "bytes": 731919,
+      "sha256": "082ea5dcbbfeba966cdc5b1391656d9a5022ebaa5f5956be6e6ba43e7ea7138c",
+      "run1EqualsRun2": true
+    },
+    {
+      "file": "rally-sample.tsv",
+      "bytes": 374,
+      "sha256": "dad93352945493b7aedc6b0c90a024141486ad345daa8681725437b2b6056b23",
+      "run1EqualsRun2": true
+    },
+    {
+      "file": "zones.tsv",
+      "bytes": 377449,
+      "sha256": "072cbc283ecf257a69ce233ef3b0033b4063297f3c34924f6df6ac3aa260c9dd",
+      "run1EqualsRun2": true
+    }
+  ],
+  "executions": [
+    {
+      "run": "run1",
+      "xml": {
+        "id": "2",
+        "testcasecount": "1",
+        "result": "Passed",
+        "total": "1",
+        "passed": "1",
+        "failed": "0",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-13 12:06:31Z",
+        "end-time": "2026-11-13 12:06:36Z",
+        "duration": "4.8511049"
+      },
+      "xmlSha256": "5afd7dc7261f5a3bdc0543d2bfc289b29ae2e9f35c6454d0f77a94606bc34cfa",
+      "logSha256": "30a3319816e941d387285864d9e7798397f008a2d2dda39367eb570ead6b7a09",
+      "exitCode": 0
+    },
+    {
+      "run": "run2",
+      "xml": {
+        "id": "2",
+        "testcasecount": "1",
+        "result": "Passed",
+        "total": "1",
+        "passed": "1",
+        "failed": "0",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-13 12:08:00Z",
+        "end-time": "2026-11-13 12:08:03Z",
+        "duration": "3.2432769"
+      },
+      "xmlSha256": "fe6bfa854616ab23c86d1d9999ecf15f9144c18f75cdc8ec2e363d8a839455c4",
+      "logSha256": "1851077e8fd6a0d261e324404a6404a1dbce142150647fc1d5020bfcf2679082",
+      "exitCode": 0
+    }
+  ],
+  "protectedFileCount": 706,
+  "protectedFilesUnchanged": true,
+  "protectedManifestSha256": "bc3192914d5bfcdc5ce99e364bd30c89aaba15abbe306176f3bc9e2b2541aaa9",
+  "defaultPresetSha256": "68a17d60090583fc87ff24a79c8e8141f2131ec7c53e8ca111ce5e8497981319"
+}

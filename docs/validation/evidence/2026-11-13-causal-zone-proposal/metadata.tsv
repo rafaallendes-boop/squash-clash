@@ -1,0 +1,20 @@
+method	CQ-ZONE-v1
+source	ad3d25977cab6c912085ca281dc47a0cd6c6f5aa
+defaults	c0e9f00176d5
+keys	108
+simulationKey	166a96e319c7
+rallyParams	7d50ddaf5d4f
+p0Effective	42d9efbf50fc
+bounceThreshold	0.1
+stepHz	120
+rallies	8
+rivalReceptionsSeen	97
+rivalCaptured	24
+rivalUnusable	0
+rivalBeyondCaptureLimit	73
+samples	30
+conditions	270
+fixedRadiusM	0.31612509229966818
+impactCaps	0
+liveInstances	0
+status	proposal only; causal product absent; not H3b or acceptance
