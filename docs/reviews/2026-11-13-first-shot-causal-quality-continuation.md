@@ -87,3 +87,32 @@ Un solo Unity por vez; **ningún Unity ni corrida nueva después de la parada**.
 ## 6. Continuación tras B4-CQ-IMPL-02 (13 de noviembre de 2026)
 
 Decisión literal del PO, interpretación de Claude, operador (subagente Sonnet dirigido por Claude, no Codex) e hipótesis no demostrada: ver [aprobaciones](2026-10-25-first-shot-po-approvals.md#b4--decisión-del-po-tras-b4-cq-impl-02-y-continuación-con-subagente-sonnet-13-de-noviembre-de-2026). Plan: (1) diagnóstico sin tocar producto; (2) solo si coincide con la hipótesis, TDD de la acotación al máximo legal; (3) gate completo. Ante otra sorpresa: registrar y detenerse. Resultados a continuación, a medida que se observan.
+
+### 6.1 Diagnóstico (commit f69a106, sin tocar producto)
+
+Prueba de diagnóstico en PlayMode que reproduce el caso (SL3, `vMax=vCap=10`, P=0, objetivo (3,2; 4,4), suelta en T*). Salida observada, antes de cualquier corrección:
+
+- Resultado `SystemFault`, razón del solver `target-or-contact-outside-court`, `solved=False`, `TargetLowered=False`, `SpeedRaised=False`.
+- Vectores causales: `timing` dh=0, dv=0; `stretch` dh=0,341947377, dv=−0,170973688. No hay `jam`.
+- Entrada al solver: objetivo (3,2; **4,74194765**) y velocidad 4,974158. El objetivo pedido era 4,4; con la altura compuesta pasa a 4,4+0,3419 = 4,7419, por encima de `FrontOutLower` = 4,57.
+
+**Coincide con la hipótesis de Claude:** `Apply` sube `aim.y` y `ShotSolver.Solve` rechaza `aim.y >= FrontOutLower`, por lo que el golpe queda sin resolver. La causa es el estirado; el timing aporta cero.
+
+### 6.2 Corrección con TDD
+
+Convención usada: el solver acota por abajo con `CeilingFloat(TinTop + radio)`; la acotación es su espejo, `FloorFloat(FrontOutLower − radio)` con el radio físico de la bola (0,02 m), sin margen nuevo. Las reglas de punto tratan como Out un centro que toca la banda de la línea con ese radio, de modo que el centro legal más alto es ese valor.
+
+- **634db67 RED:** esqueleto compilable (`CausalInput.UnclampedAim/Clamped`, campos de traza) sin cambio de comportamiento y seis pruebas nuevas en `CausalQualityTests`; 6 fallos por aserción, 15 pasan, cero errores CS.
+- **e6524f9 GREEN:** `CausalQuality.BoundToLegalFront`, aplicada en `Solve`, función compartida por humano y rival (`RallyContact.Solve` delega en `CausalQuality.Solve`). Solo se acota cuando la altura causal lleva el objetivo por encima del máximo legal; si el objetivo pedido ya estaba por encima de ese máximo, la capa no lo baja (queda en el pedido, como antes). La velocidad compuesta no cambia. La traza registra `unclampedAimX/Y`, `aimY` (acotado) y `aimClamped`. No se modifican `ShotSolver`, contrato, ventanas, pesos ni topes. La prueba `FeasibleAdjustment_ShowsIntentionAndFeasibleMarks` queda sin cambios y pasa; en el caso reproducido el objetivo composicional queda en 4,55 y el solver lo baja (`target-lowered`). El diagnóstico temporal se retira; su resultado queda en 6.1.
+- Pruebas nuevas: acotación y resolución de un objetivo cerca del out con penalización, velocidad sin cambios, objetivo ya alto no se baja, barrido de objetivos y contactos que nunca produce la razón de fuera de cancha por la capa causal, traza y ruta del rival idéntica.
+
+### 6.3 Resultados del gate (fuente e6524f9, XML frescos, un solo Unity a la vez)
+
+| Comando | Resultado |
+|---|---|
+| `scripts/test.sh editmode` | **714/714**, cero failed/skipped/CS |
+| `scripts/test.sh playmode` | **457/457**, cero failed/skipped/CS |
+| `scripts/autoqa.sh mvp` | PASS, exit 0, nivel 1, 85/85, canario FAIL esperado, `dirty=false`; corrida `20261113T182709Z-e6524f9-7280` |
+| `scripts/check-release.sh` | dev OK y prod OK, `gitHash=e6524f9`, `gitDirty=false` en ambos |
+
+Los hashes de defaults (9041c4aafc77/118), P0 (b6914a349068) y SL5 (e2ffa032a588) no cambiaron: las pruebas que los anclan pasan; no se añadieron claves. ProjectSettings restaurado a HEAD tras PlayMode. XML y corridas locales ignorados en `Logs/`. Sin H3b, R3, iPhone, build nativa ni instalación; no acepta First Shot; PR #53 para revisión de Claude, sin fusionar.
