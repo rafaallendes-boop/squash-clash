@@ -2412,3 +2412,5 @@ Base comprobada main/origin/main: `ef9be56b382936fe948217c0efe4ee02cce28b4c`. Ra
 ### Resultado detenido T4.2 — 12 de noviembre de 2026
 
 El encargo literal anterior se registró en primer commit 1f9c8fb. Implementación con TDD; fuente limpia verificada 6c149ad: 691/691 EditMode, 450/450 PlayMode. AutoQA ERROR/salida 3/nivel 3: nuevo ShotRecord incompatible con lector estricto y anclaje SL5 calculado sin la preparación human.z (esperado introducido 1877d083c345, observado Unity 50efa6d33c0c). Se registra y detiene conforme al encargo, sin reintentar/corregir tras el ERROR; check-release pendiente. Defaults c0e9f00176d5 / P0 efectivo 42d9efbf50fc; bytes/proyecciones heredadas intactos. Ver [informe con evidencia y límites](2026-11-12-first-shot-s4-aids-tasks.md). Sin fusión, aceptación ni iPhone; continuación pendiente de decisión del PO.
+
+PR T4.2 **[#50](https://github.com/rafaallendes-boop/squash-clash/pull/50)** abierta/no borrador, marcada BLOCKED para revisión, **sin fusionar ni aptitud de fusión**. Informe y evidencia de la parada preservados; detenerse.
