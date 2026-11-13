@@ -1,0 +1,1911 @@
+{
+  "source": "e0ca095",
+  "matrix": {
+    "contexts": 270,
+    "perfectContacts": 1026,
+    "changedContactStepPairs": 252,
+    "xmlSHA256": "3b51cc9dc721af436caac95d9c547d6da9e4a6f490e49807a22f958a5355a0c9"
+  },
+  "snap": [
+    {
+      "id": "SL1",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=157/d=0.046089741468661884/height=0.0276538469/speed=-0.0115224356",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL1",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=157/d=0.046089741468661884/height=0.0276538469/speed=-0.0115224356",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL1",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=157/d=0.046089741468661884/height=0.0276538469/speed=-0.0115224356",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL1",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=155/d=0.13871678991808684/height=0.08323008/speed=-0.0346791968",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL1",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=155/d=0.13871678991808684/height=0.08323008/speed=-0.0346791968",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL1",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=155/d=0.13871678991808684/height=0.08323008/speed=-0.0346791968",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL1",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=153/d=0.23198823479252398/height=0.139192954/speed=-0.05799706",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL1",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=153/d=0.23198823479252398/height=0.139192954/speed=-0.05799706",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL1",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=153/d=0.23198823479252398/height=0.139192954/speed=-0.05799706",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL2",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=157/d=0.046089741468661884/height=0.0276538469/speed=-0.0115224356",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL2",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=157/d=0.046089741468661884/height=0.0276538469/speed=-0.0115224356",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL2",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=157/d=0.046089741468661884/height=0.0276538469/speed=-0.0115224356",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL2",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=155/d=0.13871678991808684/height=0.08323008/speed=-0.0346791968",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL2",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=155/d=0.13871678991808684/height=0.08323008/speed=-0.0346791968",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL2",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=155/d=0.13871678991808684/height=0.08323008/speed=-0.0346791968",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL2",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=153/d=0.23198823479252398/height=0.139192954/speed=-0.05799706",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL2",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=153/d=0.23198823479252398/height=0.139192954/speed=-0.05799706",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL2",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=153/d=0.23198823479252398/height=0.139192954/speed=-0.05799706",
+      "minus40": "Perfect/step=158/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL3",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL3",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL3",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL3",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL3",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL3",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL3",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL3",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL3",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL4",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL4",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL4",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL4",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL4",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL4",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL4",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL4",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL4",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Failed/Air/no-vector",
+      "minus40": "Failed/Air/no-vector"
+    },
+    {
+      "id": "SL5",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=112/d=8.4691048205405579E-06/height=5.08146331E-06/speed=-2.11727615E-06",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL5",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=112/d=8.4691048205405579E-06/height=5.08146331E-06/speed=-2.11727615E-06",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL5",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=112/d=8.4691048205405579E-06/height=5.08146331E-06/speed=-2.11727615E-06",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL5",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=110/d=7.5785055682147322E-05/height=4.54710353E-05/speed=-1.89462644E-05",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL5",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=110/d=7.5785055682147322E-05/height=4.54710353E-05/speed=-1.89462644E-05",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL5",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=110/d=7.5785055682147322E-05/height=4.54710353E-05/speed=-1.89462644E-05",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL5",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=108/d=0.00020847235766066182/height=0.000125083418/speed=-5.211809E-05",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL5",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=108/d=0.00020847235766066182/height=0.000125083418/speed=-5.211809E-05",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL5",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=108/d=0.00020847235766066182/height=0.000125083418/speed=-5.211809E-05",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL6",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=112/d=8.4691048205405579E-06/height=5.08146331E-06/speed=-2.11727615E-06",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL6",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=112/d=8.4691048205405579E-06/height=5.08146331E-06/speed=-2.11727615E-06",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL6",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=112/d=8.4691048205405579E-06/height=5.08146331E-06/speed=-2.11727615E-06",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL6",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=110/d=7.5785055682147322E-05/height=4.54710353E-05/speed=-1.89462644E-05",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL6",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=110/d=7.5785055682147322E-05/height=4.54710353E-05/speed=-1.89462644E-05",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL6",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=110/d=7.5785055682147322E-05/height=4.54710353E-05/speed=-1.89462644E-05",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL6",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=108/d=0.00020847235766066182/height=0.000125083418/speed=-5.211809E-05",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL6",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=108/d=0.00020847235766066182/height=0.000125083418/speed=-5.211809E-05",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "SL6",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=108/d=0.00020847235766066182/height=0.000125083418/speed=-5.211809E-05",
+      "minus40": "Perfect/step=113/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR01",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=306/d=1.4901161193847656E-07/height=8.940697E-08/speed=-3.7252903E-08",
+      "minus40": "Perfect/step=307/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR01",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=306/d=1.4901161193847656E-07/height=8.940697E-08/speed=-3.7252903E-08",
+      "minus40": "Perfect/step=307/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR01",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=306/d=1.4901161193847656E-07/height=8.940697E-08/speed=-3.7252903E-08",
+      "minus40": "Perfect/step=307/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR01",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=304/d=1.4615297121094738E-06/height=8.76917852E-07/speed=-3.65382419E-07",
+      "minus40": "Perfect/step=307/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR01",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=304/d=1.4615297121094738E-06/height=8.76917852E-07/speed=-3.65382419E-07",
+      "minus40": "Perfect/step=307/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR01",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=304/d=1.4615297121094738E-06/height=8.76917852E-07/speed=-3.65382419E-07",
+      "minus40": "Perfect/step=307/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR01",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=302/d=4.0712787387421669E-06/height=2.44276725E-06/speed=-1.01781973E-06",
+      "minus40": "Perfect/step=307/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR01",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=302/d=4.0712787387421669E-06/height=2.44276725E-06/speed=-1.01781973E-06",
+      "minus40": "Perfect/step=307/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR01",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=302/d=4.0712787387421669E-06/height=2.44276725E-06/speed=-1.01781973E-06",
+      "minus40": "Perfect/step=307/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR02",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=634/d=4.2025501633813952E-06/height=2.52153018E-06/speed=-1.05063759E-06",
+      "minus40": "Perfect/step=635/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR02",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=634/d=4.2025501633813952E-06/height=2.52153018E-06/speed=-1.05063759E-06",
+      "minus40": "Perfect/step=635/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR02",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=634/d=4.2025501633813952E-06/height=2.52153018E-06/speed=-1.05063759E-06",
+      "minus40": "Perfect/step=635/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR02",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=632/d=3.7756849104816504E-05/height=2.265411E-05/speed=-9.439213E-06",
+      "minus40": "Perfect/step=635/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR02",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=632/d=3.7756849104816504E-05/height=2.265411E-05/speed=-9.439213E-06",
+      "minus40": "Perfect/step=635/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR02",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=632/d=3.7756849104816504E-05/height=2.265411E-05/speed=-9.439213E-06",
+      "minus40": "Perfect/step=635/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR02",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=630/d=0.00010483004179185357/height=6.289803E-05/speed=-2.620751E-05",
+      "minus40": "Perfect/step=635/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR02",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=630/d=0.00010483004179185357/height=6.289803E-05/speed=-2.620751E-05",
+      "minus40": "Perfect/step=635/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR02",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=630/d=0.00010483004179185357/height=6.289803E-05/speed=-2.620751E-05",
+      "minus40": "Perfect/step=635/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR03",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=968/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=969/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR03",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=968/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=969/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR03",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=968/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=969/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR03",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=966/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=969/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR03",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=966/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=969/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR03",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=966/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=969/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR03",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=964/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=969/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR03",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=964/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=969/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR03",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=964/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=969/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR04",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=1276/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=1277/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR04",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=1276/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=1277/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR04",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=1276/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=1277/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR04",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=1274/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=1277/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR04",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=1274/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=1277/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR04",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=1274/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=1277/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR04",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=1272/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=1277/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR04",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=1272/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=1277/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR04",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=1272/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=1277/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR05",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=1584/d=6.5565109252929688E-07/height=3.93390678E-07/speed=-1.63912773E-07",
+      "minus40": "Perfect/step=1585/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR05",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=1584/d=6.5565109252929688E-07/height=3.93390678E-07/speed=-1.63912773E-07",
+      "minus40": "Perfect/step=1585/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR05",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=1584/d=6.5565109252929688E-07/height=3.93390678E-07/speed=-1.63912773E-07",
+      "minus40": "Perfect/step=1585/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR05",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=1582/d=5.8142031983932648E-06/height=3.488522E-06/speed=-1.45355079E-06",
+      "minus40": "Perfect/step=1585/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR05",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=1582/d=5.8142031983932648E-06/height=3.488522E-06/speed=-1.45355079E-06",
+      "minus40": "Perfect/step=1585/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR05",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=1582/d=5.8142031983932648E-06/height=3.488522E-06/speed=-1.45355079E-06",
+      "minus40": "Perfect/step=1585/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR05",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=1580/d=1.6136361432416307E-05/height=9.681818E-06/speed=-4.03409058E-06",
+      "minus40": "Perfect/step=1585/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR05",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=1580/d=1.6136361432416307E-05/height=9.681818E-06/speed=-4.03409058E-06",
+      "minus40": "Perfect/step=1585/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR05",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=1580/d=1.6136361432416307E-05/height=9.681818E-06/speed=-4.03409058E-06",
+      "minus40": "Perfect/step=1585/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR06",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=1877/d=1.9073486328125E-06/height=1.14440923E-06/speed=-4.76837158E-07",
+      "minus40": "Perfect/step=1878/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR06",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=1877/d=1.9073486328125E-06/height=1.14440923E-06/speed=-4.76837158E-07",
+      "minus40": "Perfect/step=1878/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR06",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=1877/d=1.9073486328125E-06/height=1.14440923E-06/speed=-4.76837158E-07",
+      "minus40": "Perfect/step=1878/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR06",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=1875/d=1.7206267011185868E-05/height=1.03237608E-05/speed=-4.30156661E-06",
+      "minus40": "Perfect/step=1878/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR06",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=1875/d=1.7206267011185868E-05/height=1.03237608E-05/speed=-4.30156661E-06",
+      "minus40": "Perfect/step=1878/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR06",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=1875/d=1.7206267011185868E-05/height=1.03237608E-05/speed=-4.30156661E-06",
+      "minus40": "Perfect/step=1878/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR06",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=1873/d=4.7758203028885051E-05/height=2.86549221E-05/speed=-1.19395509E-05",
+      "minus40": "Perfect/step=1878/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR06",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=1873/d=4.7758203028885051E-05/height=2.86549221E-05/speed=-1.19395509E-05",
+      "minus40": "Perfect/step=1878/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR06",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=1873/d=4.7758203028885051E-05/height=2.86549221E-05/speed=-1.19395509E-05",
+      "minus40": "Perfect/step=1878/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR07",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=2189/d=4.1727508600204323E-06/height=2.50365065E-06/speed=-1.04318769E-06",
+      "minus40": "Perfect/step=2190/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR07",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=2189/d=4.1727508600204323E-06/height=2.50365065E-06/speed=-1.04318769E-06",
+      "minus40": "Perfect/step=2190/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR07",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=2189/d=4.1727508600204323E-06/height=2.50365065E-06/speed=-1.04318769E-06",
+      "minus40": "Perfect/step=2190/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR07",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=2187/d=3.7518602794790986E-05/height=2.25111635E-05/speed=-9.379651E-06",
+      "minus40": "Perfect/step=2190/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR07",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=2187/d=3.7518602794790986E-05/height=2.25111635E-05/speed=-9.379651E-06",
+      "minus40": "Perfect/step=2190/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR07",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=2187/d=3.7518602794790986E-05/height=2.25111635E-05/speed=-9.379651E-06",
+      "minus40": "Perfect/step=2190/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR07",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=2185/d=0.00010416103986172545/height=6.249663E-05/speed=-2.604026E-05",
+      "minus40": "Perfect/step=2190/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR07",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=2185/d=0.00010416103986172545/height=6.249663E-05/speed=-2.604026E-05",
+      "minus40": "Perfect/step=2190/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR07",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=2185/d=0.00010416103986172545/height=6.249663E-05/speed=-2.604026E-05",
+      "minus40": "Perfect/step=2190/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR08",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=2504/d=6.5565109252929688E-07/height=3.93390678E-07/speed=-1.63912773E-07",
+      "minus40": "Perfect/step=2505/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR08",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=2504/d=6.5565109252929688E-07/height=3.93390678E-07/speed=-1.63912773E-07",
+      "minus40": "Perfect/step=2505/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR08",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=2504/d=6.5565109252929688E-07/height=3.93390678E-07/speed=-1.63912773E-07",
+      "minus40": "Perfect/step=2505/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR08",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=2502/d=5.9035685131141582E-06/height=3.54214126E-06/speed=-1.47589208E-06",
+      "minus40": "Perfect/step=2505/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR08",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=2502/d=5.9035685131141582E-06/height=3.54214126E-06/speed=-1.47589208E-06",
+      "minus40": "Perfect/step=2505/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR08",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=2502/d=5.9035685131141582E-06/height=3.54214126E-06/speed=-1.47589208E-06",
+      "minus40": "Perfect/step=2505/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR08",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=2500/d=1.6404121146066639E-05/height=9.842473E-06/speed=-4.1010303E-06",
+      "minus40": "Perfect/step=2505/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR08",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=2500/d=1.6404121146066639E-05/height=9.842473E-06/speed=-4.1010303E-06",
+      "minus40": "Perfect/step=2505/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR08",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=2500/d=1.6404121146066639E-05/height=9.842473E-06/speed=-4.1010303E-06",
+      "minus40": "Perfect/step=2505/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR09",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=2816/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=2817/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR09",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=2816/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=2817/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR09",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=2816/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=2817/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR09",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=2814/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=2817/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR09",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=2814/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=2817/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR09",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=2814/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=2817/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR09",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=2812/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=2817/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR09",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=2812/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=2817/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR09",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=2812/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=2817/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR10",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=3058/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3059/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR10",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=3058/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3059/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR10",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=3058/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3059/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR10",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=3056/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3059/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR10",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=3056/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3059/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR10",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=3056/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3059/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR10",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=3054/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3059/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR10",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=3054/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3059/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR10",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=3054/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3059/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR11",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=3362/d=2.0563602447509766E-06/height=1.23381619E-06/speed=-5.14090061E-07",
+      "minus40": "Perfect/step=3363/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR11",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=3362/d=2.0563602447509766E-06/height=1.23381619E-06/speed=-5.14090061E-07",
+      "minus40": "Perfect/step=3363/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR11",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=3362/d=2.0563602447509766E-06/height=1.23381619E-06/speed=-5.14090061E-07",
+      "minus40": "Perfect/step=3363/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR11",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=3360/d=1.8548731784035179E-05/height=1.11292393E-05/speed=-4.637183E-06",
+      "minus40": "Perfect/step=3363/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR11",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=3360/d=1.8548731784035179E-05/height=1.11292393E-05/speed=-4.637183E-06",
+      "minus40": "Perfect/step=3363/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR11",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=3360/d=1.8548731784035179E-05/height=1.11292393E-05/speed=-4.637183E-06",
+      "minus40": "Perfect/step=3363/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR11",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=3358/d=5.1476557400097087E-05/height=3.08859344E-05/speed=-1.2869139E-05",
+      "minus40": "Perfect/step=3363/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR11",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=3358/d=5.1476557400097087E-05/height=3.08859344E-05/speed=-1.2869139E-05",
+      "minus40": "Perfect/step=3363/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR11",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=3358/d=5.1476557400097087E-05/height=3.08859344E-05/speed=-1.2869139E-05",
+      "minus40": "Perfect/step=3363/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR12",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=3679/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3680/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR12",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=3679/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3680/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR12",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=3679/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3680/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR12",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=3677/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3680/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR12",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=3677/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3680/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR12",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=3677/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3680/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR12",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=3675/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3680/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR12",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=3675/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3680/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR12",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=3675/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=3680/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR13",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=4008/d=3.1292438507080078E-07/height=1.87754637E-07/speed=-7.82310963E-08",
+      "minus40": "Perfect/step=4009/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR13",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=4008/d=3.1292438507080078E-07/height=1.87754637E-07/speed=-7.82310963E-08",
+      "minus40": "Perfect/step=4009/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR13",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=4008/d=3.1292438507080078E-07/height=1.87754637E-07/speed=-7.82310963E-08",
+      "minus40": "Perfect/step=4009/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR13",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=4006/d=2.8188412845072078E-06/height=1.69130487E-06/speed=-7.047103E-07",
+      "minus40": "Perfect/step=4009/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR13",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=4006/d=2.8188412845072078E-06/height=1.69130487E-06/speed=-7.047103E-07",
+      "minus40": "Perfect/step=4009/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR13",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=4006/d=2.8188412845072078E-06/height=1.69130487E-06/speed=-7.047103E-07",
+      "minus40": "Perfect/step=4009/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR13",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=4004/d=7.8227548291723054E-06/height=4.693653E-06/speed=-1.95568873E-06",
+      "minus40": "Perfect/step=4009/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR13",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=4004/d=7.8227548291723054E-06/height=4.693653E-06/speed=-1.95568873E-06",
+      "minus40": "Perfect/step=4009/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR13",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=4004/d=7.8227548291723054E-06/height=4.693653E-06/speed=-1.95568873E-06",
+      "minus40": "Perfect/step=4009/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR14",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=4311/d=6.2584877014160156E-07/height=3.75509273E-07/speed=-1.56462193E-07",
+      "minus40": "Perfect/step=4312/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR14",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=4311/d=6.2584877014160156E-07/height=3.75509273E-07/speed=-1.56462193E-07",
+      "minus40": "Perfect/step=4312/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR14",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=4311/d=6.2584877014160156E-07/height=3.75509273E-07/speed=-1.56462193E-07",
+      "minus40": "Perfect/step=4312/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR14",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=4309/d=5.6503702108043885E-06/height=3.39022222E-06/speed=-1.4125925E-06",
+      "minus40": "Perfect/step=4312/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR14",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=4309/d=5.6503702108043885E-06/height=3.39022222E-06/speed=-1.4125925E-06",
+      "minus40": "Perfect/step=4312/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR14",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=4309/d=5.6503702108043885E-06/height=3.39022222E-06/speed=-1.4125925E-06",
+      "minus40": "Perfect/step=4312/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR14",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=4307/d=1.5667819896450172E-05/height=9.400693E-06/speed=-3.916955E-06",
+      "minus40": "Perfect/step=4312/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR14",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=4307/d=1.5667819896450172E-05/height=9.400693E-06/speed=-3.916955E-06",
+      "minus40": "Perfect/step=4312/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR14",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=4307/d=1.5667819896450172E-05/height=9.400693E-06/speed=-3.916955E-06",
+      "minus40": "Perfect/step=4312/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR15",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=4607/d=4.142951600092007E-06/height=2.48577112E-06/speed=-1.03573791E-06",
+      "minus40": "Perfect/step=4608/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR15",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=4607/d=4.142951600092007E-06/height=2.48577112E-06/speed=-1.03573791E-06",
+      "minus40": "Perfect/step=4608/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR15",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=4607/d=4.142951600092007E-06/height=2.48577112E-06/speed=-1.03573791E-06",
+      "minus40": "Perfect/step=4608/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR15",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=4605/d=3.72356881658981E-05/height=2.23414136E-05/speed=-9.308922E-06",
+      "minus40": "Perfect/step=4608/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR15",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=4605/d=3.72356881658981E-05/height=2.23414136E-05/speed=-9.308922E-06",
+      "minus40": "Perfect/step=4608/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR15",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=4605/d=3.72356881658981E-05/height=2.23414136E-05/speed=-9.308922E-06",
+      "minus40": "Perfect/step=4608/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR15",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=4603/d=0.00010336144704823308/height=6.201687E-05/speed=-2.58403616E-05",
+      "minus40": "Perfect/step=4608/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR15",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=4603/d=0.00010336144704823308/height=6.201687E-05/speed=-2.58403616E-05",
+      "minus40": "Perfect/step=4608/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR15",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=4603/d=0.00010336144704823308/height=6.201687E-05/speed=-2.58403616E-05",
+      "minus40": "Perfect/step=4608/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR16",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=4912/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=4913/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR16",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=4912/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=4913/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR16",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=4912/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=4913/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR16",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=4910/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=4913/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR16",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=4910/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=4913/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR16",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=4910/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=4913/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR16",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=4908/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=4913/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR16",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=4908/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=4913/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR16",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=4908/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=4913/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR17",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=5171/d=3.1596084310289791E-06/height=1.89576508E-06/speed=-7.899021E-07",
+      "minus40": "Perfect/step=5172/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR17",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=5171/d=3.1596084310289791E-06/height=1.89576508E-06/speed=-7.899021E-07",
+      "minus40": "Perfect/step=5172/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR17",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=5171/d=3.1596084310289791E-06/height=1.89576508E-06/speed=-7.899021E-07",
+      "minus40": "Perfect/step=5172/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR17",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=5169/d=2.8302746371903272E-05/height=1.69816485E-05/speed=-7.07568643E-06",
+      "minus40": "Perfect/step=5172/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR17",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=5169/d=2.8302746371903272E-05/height=1.69816485E-05/speed=-7.07568643E-06",
+      "minus40": "Perfect/step=5172/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR17",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=5169/d=2.8302746371903272E-05/height=1.69816485E-05/speed=-7.07568643E-06",
+      "minus40": "Perfect/step=5172/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR17",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=5167/d=7.8558550131997386E-05/height=4.713513E-05/speed=-1.96396377E-05",
+      "minus40": "Perfect/step=5172/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR17",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=5167/d=7.8558550131997386E-05/height=4.713513E-05/speed=-1.96396377E-05",
+      "minus40": "Perfect/step=5172/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR17",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=5167/d=7.8558550131997386E-05/height=4.713513E-05/speed=-1.96396377E-05",
+      "minus40": "Perfect/step=5172/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR18",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=5499/d=3.7555656437929546E-06/height=2.25333952E-06/speed=-9.388914E-07",
+      "minus40": "Perfect/step=5500/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR18",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=5499/d=3.7555656437929546E-06/height=2.25333952E-06/speed=-9.388914E-07",
+      "minus40": "Perfect/step=5500/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR18",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=5499/d=3.7555656437929546E-06/height=2.25333952E-06/speed=-9.388914E-07",
+      "minus40": "Perfect/step=5500/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR18",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=5497/d=3.3789223343231568E-05/height=2.02735355E-05/speed=-8.447306E-06",
+      "minus40": "Perfect/step=5500/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR18",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=5497/d=3.3789223343231568E-05/height=2.02735355E-05/speed=-8.447306E-06",
+      "minus40": "Perfect/step=5500/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR18",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=5497/d=3.3789223343231568E-05/height=2.02735355E-05/speed=-8.447306E-06",
+      "minus40": "Perfect/step=5500/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR18",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=5495/d=9.3813536991088766E-05/height=5.62881251E-05/speed=-2.34533836E-05",
+      "minus40": "Perfect/step=5500/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR18",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=5495/d=9.3813536991088766E-05/height=5.62881251E-05/speed=-2.34533836E-05",
+      "minus40": "Perfect/step=5500/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR18",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=5495/d=9.3813536991088766E-05/height=5.62881251E-05/speed=-2.34533836E-05",
+      "minus40": "Perfect/step=5500/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR19",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=5813/d=2.9510319220841592E-06/height=1.77061918E-06/speed=-7.37758E-07",
+      "minus40": "Perfect/step=5814/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR19",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=5813/d=2.9510319220841592E-06/height=1.77061918E-06/speed=-7.37758E-07",
+      "minus40": "Perfect/step=5814/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR19",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=5813/d=2.9510319220841592E-06/height=1.77061918E-06/speed=-7.37758E-07",
+      "minus40": "Perfect/step=5814/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR19",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=5811/d=2.6675230377656328E-05/height=1.60051386E-05/speed=-6.6688076E-06",
+      "minus40": "Perfect/step=5814/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR19",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=5811/d=2.6675230377656328E-05/height=1.60051386E-05/speed=-6.6688076E-06",
+      "minus40": "Perfect/step=5814/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR19",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=5811/d=2.6675230377656328E-05/height=1.60051386E-05/speed=-6.6688076E-06",
+      "minus40": "Perfect/step=5814/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR19",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=5809/d=7.4052120779389286E-05/height=4.44312755E-05/speed=-1.851303E-05",
+      "minus40": "Perfect/step=5814/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR19",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=5809/d=7.4052120779389286E-05/height=4.44312755E-05/speed=-1.851303E-05",
+      "minus40": "Perfect/step=5814/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR19",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=5809/d=7.4052120779389286E-05/height=4.44312755E-05/speed=-1.851303E-05",
+      "minus40": "Perfect/step=5814/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR20",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=6095/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=6096/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR20",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=6095/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=6096/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR20",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=6095/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=6096/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR20",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=6093/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=6096/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR20",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=6093/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=6096/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR20",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=6093/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=6096/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR20",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=6091/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=6096/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR20",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=6091/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=6096/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR20",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=6091/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=6096/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR21",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=6410/d=2.6822090148925781E-07/height=1.60932544E-07/speed=-6.70552254E-08",
+      "minus40": "Perfect/step=6411/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR21",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=6410/d=2.6822090148925781E-07/height=1.60932544E-07/speed=-6.70552254E-08",
+      "minus40": "Perfect/step=6411/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR21",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=6410/d=2.6822090148925781E-07/height=1.60932544E-07/speed=-6.70552254E-08",
+      "minus40": "Perfect/step=6411/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR21",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=6408/d=2.4743107822165271E-06/height=1.48458651E-06/speed=-6.185777E-07",
+      "minus40": "Perfect/step=6411/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR21",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=6408/d=2.4743107822165271E-06/height=1.48458651E-06/speed=-6.185777E-07",
+      "minus40": "Perfect/step=6411/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR21",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=6408/d=2.4743107822165271E-06/height=1.48458651E-06/speed=-6.185777E-07",
+      "minus40": "Perfect/step=6411/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR21",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=6406/d=6.8672207895478245E-06/height=4.12033251E-06/speed=-1.71680517E-06",
+      "minus40": "Perfect/step=6411/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR21",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=6406/d=6.8672207895478245E-06/height=4.12033251E-06/speed=-1.71680517E-06",
+      "minus40": "Perfect/step=6411/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR21",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=6406/d=6.8672207895478245E-06/height=4.12033251E-06/speed=-1.71680517E-06",
+      "minus40": "Perfect/step=6411/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR22",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=6719/d=3.3383922493315806E-06/height=2.00303543E-06/speed=-8.3459804E-07",
+      "minus40": "Perfect/step=6720/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR22",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=6719/d=3.3383922493315806E-06/height=2.00303543E-06/speed=-8.3459804E-07",
+      "minus40": "Perfect/step=6720/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR22",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=6719/d=3.3383922493315806E-06/height=2.00303543E-06/speed=-8.3459804E-07",
+      "minus40": "Perfect/step=6720/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR22",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=6717/d=3.0091861081441444E-05/height=1.80551178E-05/speed=-7.52296546E-06",
+      "minus40": "Perfect/step=6720/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR22",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=6717/d=3.0091861081441444E-05/height=1.80551178E-05/speed=-7.52296546E-06",
+      "minus40": "Perfect/step=6720/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR22",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=6717/d=3.0091861081441444E-05/height=1.80551178E-05/speed=-7.52296546E-06",
+      "minus40": "Perfect/step=6720/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR22",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=6715/d=8.3495981159288093E-05/height=5.009759E-05/speed=-2.08739948E-05",
+      "minus40": "Perfect/step=6720/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR22",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=6715/d=8.3495981159288093E-05/height=5.009759E-05/speed=-2.08739948E-05",
+      "minus40": "Perfect/step=6720/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR22",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=6715/d=8.3495981159288093E-05/height=5.009759E-05/speed=-2.08739948E-05",
+      "minus40": "Perfect/step=6720/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR23",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=7018/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=7019/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR23",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=7018/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=7019/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR23",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=7018/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=7019/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR23",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=7016/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=7019/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR23",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=7016/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=7019/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR23",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=7016/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=7019/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR23",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=7014/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=7019/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR23",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=7014/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=7019/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR23",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=7014/d=0/height=0/speed=0",
+      "minus40": "Perfect/step=7019/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR24",
+      "tempo": "0.3",
+      "compMs": "-75",
+      "minus41": "Valid/step=7348/d=2.0265579223632813E-06/height=1.21593484E-06/speed=-5.066395E-07",
+      "minus40": "Perfect/step=7349/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR24",
+      "tempo": "0.3",
+      "compMs": "0",
+      "minus41": "Valid/step=7348/d=2.0265579223632813E-06/height=1.21593484E-06/speed=-5.066395E-07",
+      "minus40": "Perfect/step=7349/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR24",
+      "tempo": "0.3",
+      "compMs": "75",
+      "minus41": "Valid/step=7348/d=2.0265579223632813E-06/height=1.21593484E-06/speed=-5.066395E-07",
+      "minus40": "Perfect/step=7349/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR24",
+      "tempo": "0.65",
+      "compMs": "-75",
+      "minus41": "Valid/step=7346/d=1.8191236030725109E-05/height=1.09147422E-05/speed=-4.547809E-06",
+      "minus40": "Perfect/step=7349/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR24",
+      "tempo": "0.65",
+      "compMs": "0",
+      "minus41": "Valid/step=7346/d=1.8191236030725109E-05/height=1.09147422E-05/speed=-4.547809E-06",
+      "minus40": "Perfect/step=7349/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR24",
+      "tempo": "0.65",
+      "compMs": "75",
+      "minus41": "Valid/step=7346/d=1.8191236030725109E-05/height=1.09147422E-05/speed=-4.547809E-06",
+      "minus40": "Perfect/step=7349/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR24",
+      "tempo": "1",
+      "compMs": "-75",
+      "minus41": "Valid/step=7344/d=5.0492902188193825E-05/height=3.02957433E-05/speed=-1.26232253E-05",
+      "minus40": "Perfect/step=7349/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR24",
+      "tempo": "1",
+      "compMs": "0",
+      "minus41": "Valid/step=7344/d=5.0492902188193825E-05/height=3.02957433E-05/speed=-1.26232253E-05",
+      "minus40": "Perfect/step=7349/d=0/height=0/speed=0"
+    },
+    {
+      "id": "FR24",
+      "tempo": "1",
+      "compMs": "75",
+      "minus41": "Valid/step=7344/d=5.0492902188193825E-05/height=3.02957433E-05/speed=-1.26232253E-05",
+      "minus40": "Perfect/step=7349/d=0/height=0/speed=0"
+    }
+  ],
+  "hashesMeasuredInUnity": {
+    "defaults": "9041c4aafc77",
+    "P0": "b6914a349068",
+    "SL5": "e2ffa032a588",
+    "keys": "118",
+    "inherited": "0d39e6016bd8",
+    "P0inherited": "8de3f2ecb217",
+    "simulation": "166a96e319c7"
+  },
+  "historicalP0FileSHA256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd"
+}

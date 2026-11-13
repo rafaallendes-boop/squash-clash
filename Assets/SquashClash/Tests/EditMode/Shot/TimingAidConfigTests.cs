@@ -15,7 +15,7 @@ namespace SquashClash.Core.Tests.Shot
         {
             var p=ConfigFixtures.Default();
             Assert.That(ParamCatalog.TryGet("timing.aidLevel",out var def),Is.True);
-            Assert.That(p.GetInt("timing.aidLevel"),Is.Zero);Assert.That(p.Ordered.Count,Is.EqualTo(108));
+            Assert.That(p.GetInt("timing.aidLevel"),Is.Zero);Assert.That(p.Ordered.Count,Is.EqualTo(118));
             Assert.That(def.Kind,Is.EqualTo(ParamKind.Choice));Assert.That(def.Choices.Select(c=>c.Value),Is.EqualTo(new double[]{0,1,2}));
             foreach(var level in new[]{0,1,2})Assert.That(p.With("timing.aidLevel",level).GetInt("timing.aidLevel"),Is.EqualTo(level));
             var canonical=new StringBuilder();var legacy=p.Ordered.Where(e=>ConfigFixtures.IsFirstBallKey(e.Key)).ToArray();
@@ -41,7 +41,7 @@ namespace SquashClash.Core.Tests.Shot
             }
             var sl5=p.With("practice.launch",4).With("human.z",(double)1.6f);
             TestContext.WriteLine("S4_HASH defaults="+p.Hash+" P0="+effective.Hash+" SL5="+sl5.Hash);
-            Assert.That(sl5.Hash,Is.EqualTo("50efa6d33c0c"),"SL5 with complete existing scenario preparation");
+            Assert.That(sl5.Hash,Is.EqualTo("e2ffa032a588"),"SL5 with complete existing scenario preparation");
         }
     }
 }
