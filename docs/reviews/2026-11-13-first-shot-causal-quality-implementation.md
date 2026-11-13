@@ -1,5 +1,7 @@
 # B4 — implementación de calidad causal (T3.1, D6/D36)
 
+**Estado vigente tras continuación autorizada:** B4-CQ-IMPL-01 resuelta, matriz 270/270 contextos e integración focal GREEN; nueva parada **B4-CQ-IMPL-02**, PlayMode completa 456/457 en marcas factibles. [Informe de continuación y evidencia](2026-11-13-first-shot-causal-quality-continuation.md). PR #53 conserva [BLOCKED], SIN FUSIONAR. El registro siguiente se conserva como histórico de la primera parada.
+
 **Estado: DETENIDA por B4-CQ-IMPL-01, defecto del arnés de cobertura; implementación parcial, no apta para fusión.** Base main `09764ab`; rama independiente `firstshot/causal-quality-impl`. [Encargo literal y cierre de #52](2026-10-25-first-shot-po-approvals.md#b4--encargo-literal-de-implementación-y-cierre-de-pr-52-13-nov-2026), primer commit `1772bfc`. La revisión se coordina con el PO; sin fusión automática. First Shot sigue pendiente de prueba jugable integrada.
 
 ## Método de implementación y TDD

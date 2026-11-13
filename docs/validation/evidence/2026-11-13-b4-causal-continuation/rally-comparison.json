@@ -1,0 +1,34 @@
+{
+  "historical": {
+    "rallies": 1000,
+    "causes": {
+      "DoubleBounce/Air": 615,
+      "DoubleBounce/Late": 316,
+      "DoubleBounce/Unreachable": 33,
+      "Out/": 36
+    },
+    "winners": {
+      "Rival": 689,
+      "Human": 311
+    },
+    "meanShots": 19.265,
+    "meanRealSeconds": 40.2739102564102,
+    "systemFaults": 0
+  },
+  "current": {
+    "rallies": 1000,
+    "causes": {
+      "DoubleBounce/Air": 593,
+      "DoubleBounce/Late": 312,
+      "Out/": 59,
+      "DoubleBounce/Unreachable": 36
+    },
+    "winners": {
+      "Rival": 670,
+      "Human": 330
+    },
+    "meanShots": 19.367,
+    "meanRealSeconds": 40.768423076923106,
+    "systemFaults": 0
+  }
+}
