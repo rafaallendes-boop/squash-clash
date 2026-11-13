@@ -27,6 +27,8 @@ namespace SquashClash.Runtime.Shot
         private TimingRingView ring;
         private ShotNoteView notes;
         private ShotFeedback feedback;
+        public CausalReference CausalReference {get;private set;}
+        public CausalShotResult LastCausal {get;private set;}
         public ShotConfig Snapshot {get;private set;}
         public ContactPlan Plan {get;private set;}
         public PresentedPlans Presented {get;private set;}=new PresentedPlans();

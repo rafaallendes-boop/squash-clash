@@ -3,6 +3,7 @@ using System.Linq;
 using NUnit.Framework;
 using SquashClash.Core.Court;
 using SquashClash.Core.Config;
+using SquashClash.Core.Rally;
 using SquashClash.Core.Tests.Config;
 using SquashClash.Core.Shot;
 using SquashClash.Core.Simulation;
@@ -105,6 +106,28 @@ namespace SquashClash.Core.Tests.Shot
             var direct=ShotSolver.Solve(new ShotRequest(point,evaluated.Input.Aim,.5f),evaluated.Input.Speed,evaluated.Input.Speed,32,cfg.Physics.Gravity,cfg.Physics.BallRadius,cfg.Court,factory,cfg.Physics);
             Assert.That(evaluated.Solution.Solved,Is.True);Assert.That(evaluated.Solution.Velocity,Is.EqualTo(direct.Velocity));Assert.That(evaluated.Solution.Speed,Is.EqualTo(direct.Speed));Assert.That(evaluated.Solution.TargetUsed,Is.EqualTo(direct.TargetUsed));
             Assert.That(factory.LiveInstances,Is.Zero);
+        }
+
+        [Test] public void HumanAndRival_SharedPath_SameResult()
+        {
+            var p=ConfigFixtures.Default();var cfg=EffectiveConfig.From(p);var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
+            var context=new RallyContext(cfg,new RallyParams(),factory);var reference=Reference();var contact=new Vector3(2.7f,.6f,5.5f);var aim=new Vector2(2.6f,1.5f);
+            var human=CausalQuality.Solve(reference,body,contact,aim,.5f,cfg,factory);var rival=RallyContact.Solve(context,reference,body,contact,aim,.5f);
+            Assert.That(rival.Vectors,Is.EqualTo(human.Vectors));Assert.That(rival.Input.Aim,Is.EqualTo(human.Input.Aim));Assert.That(rival.Input.Speed,Is.EqualTo(human.Input.Speed));Assert.That(rival.Solution.Velocity,Is.EqualTo(human.Solution.Velocity));
+        }
+        [Test] public void EffectiveBody_IsFrozenAtEachContactStep()
+        {
+            var r=CausalQuality.Prepare(flight,plan,clock,timing,0,1,j=>new BodyFrame(new Vector2(3.2f+(j-150)*.002f,5.5f),true,1.3f,.6f,.4f,1.1f,.3f));
+            Assert.That(r.BodyAt(153).PositionXZ.x,Is.EqualTo(3.206f).Within(1e-6));Assert.That(r.BodyAt(153).Reach,Is.EqualTo(body.Reach));
+            foreach(long j in r.PerfectSteps)Assert.That(r.Distance(flight.States[(int)j].Position,r.BodyAt(j)),Is.Zero);
+        }
+        [Test] public void MovingBodySnapshot_IsTheSameStepper_WithoutMutatingThePlayer()
+        {
+            var cfg=EffectiveConfig.From(ConfigFixtures.Default());var context=new RallyContext(cfg,new RallyParams(),new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
+            var player=new PlayerBody(PlayerId.Rival,new Vector2(3,6),context.Move);var target=new Vector2(2,5);player.MoveTo(target,10,BodyPhase.Approaching,BodyPhase.Set);
+            var positions=player.PositionsAfter(160);Assert.That(positions.Length,Is.EqualTo(160));
+            for(int i=0;i<positions.Length;i++)Assert.That(positions[i],Is.EqualTo(player.PositionAfter(target,10,i)),"step "+i);
+            Assert.That(player.Position,Is.EqualTo(new Vector2(3,6)));Assert.That(player.Velocity,Is.EqualTo(Vector2.zero));
         }
     }
 }

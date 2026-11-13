@@ -39,6 +39,7 @@ namespace SquashClash.Core.Shot
         public int PlanVersion {get;}
         internal CausalReference(Segment[] zone,long[] perfect,double radius,double tempo,TimingSettings timing,int version)
         {this.zone=zone;this.perfect=Array.AsReadOnly(perfect);ArcRadius=radius;Tempo=tempo;Timing=timing;PlanVersion=version;}
+        public BodyFrame BodyAt(long step)=>default;
         public double Distance(Vector3 point,BodyFrame body)
         {
             var q=point-new Vector3(body.PositionXZ.x,body.ReferenceHeight,body.PositionXZ.y);

@@ -27,6 +27,7 @@ namespace SquashClash.Core.Rally
             double release=Math.Max(presentedAtReal,target+deltaMs/1000+timing.LatencyCompMs/1000);
             return ContactContract.Decide(release,plans,clock,trajectory,timing,false);
         }
+        public static CausalShotResult Solve(RallyContext context,CausalReference reference,BodyFrame body,Vector3 point,Vector2 aim,float power)=>default;
         public static ShotSolution Solve(RallyContext context,Vector3 contactCenter,Vector2 aim,float power)
             =>ShotSolver.Solve(new ShotRequest(contactCenter,aim,power),context.VMin,context.VMax,context.VCap,context.Physics.Gravity,context.Physics.BallRadius,
                 context.Court,context.Factory,context.Physics);

@@ -65,6 +65,17 @@ namespace SquashClash.Runtime.Tests
             float mm=ScreenMetrics.MmPerPx(Screen.dpi,(float)app.Tuning.Applied.Get("input.fallbackDpi"),out _);
             now=time+receivedAge;InputSystem.QueueStateEvent(screen,new TouchState{touchId=id,phase=phase,position=anchor+Vector2.down*(down/mm)},time);InputSystem.Update();
         }
+        [Test] public void CausalReference_IsPreparedAtLaunch_AndSharedInputIsAppliedAndTraced()
+        {
+            var reference=controller.CausalReference;Assert.That(reference,Is.Not.Null);
+            var aim=new Vector2(2.6f,1.5f);var record=Submit(Star()-.06,aim:aim);
+            Assert.That(record.Applied,Is.True);Assert.That(controller.CausalReference,Is.SameAs(reference));
+            Assert.That(controller.LastCausal.Vectors,Is.Not.Null);Assert.That(controller.LastCausal.Vectors.Any(v=>v.Cause=="timing"),Is.True);
+            Assert.That(controller.LastCausal.Input.Speed,Is.LessThan(17));
+            var direct=CausalQuality.Solve(reference,reference.BodyAt(record.ContactStep),new Vector3(record.ContactX,record.ContactY,record.ContactZ),aim,.5f,app.Host.ActiveConfig,new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
+            Assert.That(controller.LastSolution.Velocity,Is.EqualTo(direct.Solution.Velocity));
+            Assert.That(File.ReadAllText(app.Metrics.CurrentFilePath),Does.Contain("shot-causal"));
+        }
         [Test] public void TaskSection_StagesObservationAndShowsCapturedRequest()
         {
             var root=app.GetComponent<UIDocument>().rootVisualElement;
