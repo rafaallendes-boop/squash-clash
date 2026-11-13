@@ -2459,3 +2459,45 @@ Significado de esa opción, según la recomendación de Claude que el PO eligió
 - No convierte el Fail en Pass ni cambia la condición de R3.
 
 Esta decisión sustituye el estado pendiente de decisión del PO sobre S4-44-R3-01 consignado en el registro anterior, que se conserva como histórico. **R3 sigue Fail 0/42; observación abierta, sin ajuste de producto.** Solo documentación en AGENTS.md, aprobaciones e informe de #51; arnés y evidencia intactos. Sin Unity, AutoQA, check-release, iPhone, builds ni instalación. PR #51 para verificación de Claude coordinada por el PO, **SIN FUSIONAR**; detenerse al entregar.
+
+
+## PR #51 — cierres verificados y observaciones de Claude (13 de noviembre de 2026)
+
+Continuación **solo documental** desde `578dfdf`, en la misma rama/worktree y PR #51. La decisión literal del PO «Open observation» se guardó primero en **`b4c763e`**, antes de este registro. Se conservan íntegros los registros históricos; las menciones anteriores de PR abiertas o de decisión R3 pendiente describen su estado de entonces.
+
+### Cierres pendientes de registro, comprobados con Git
+
+Se verificaron dos padres por merge, segundo padre exacto y la igualdad del árbol del merge con el de ese segundo padre mediante `git show -s --format=%P` y `git rev-parse <commit>^{tree}`. **Los tres datos coinciden; no hay discrepancia.** No se ejecutó ninguna fusión en esta continuación.
+
+| PR ya fusionada | Merge | Primer padre | Segundo padre | Árbol idéntico al segundo padre |
+|---|---|---|---|---|
+| #48 | `5e7e7e3` | `9af2b0c` | `61afe61` | `918b047` |
+| #49 | `ef9be56` | `5e7e7e3` | `4d0a353` | `97b5952` |
+| #50 | `8e53b41` | `ef9be56` | `cdc7bbf` | `1c41c08` |
+
+### Observaciones de Claude sobre #50, sin código
+
+Fuente: revisión comunicada por el PO en este encargo; no son mediciones nuevas de esta continuación.
+
+- **O1:** `shot-plan` se escribe en cada re-presentación; distinguir las líneas por `planVersion`.
+- **O2:** `CuePhase` ignora el nivel de ayuda; leerlo junto con `AidLevel`/`AidCutoff`. No interpretar `CuePhase` por sí solo como indicador visible.
+- **O3:** el corte parcial se fija por frame (hasta ~1 frame tarde, ~16 ms); observar en iPhone. Es una observación pendiente, sin sesión ni umbral de aceptación nuevo en este registro.
+
+### Revisión de Claude sobre #51: APROBADO CON OBSERVACIONES, sin bloqueantes
+
+Revisión del head **`578dfdfaa9c452e826f961e78a3af6ea5aee1d13`**, comunicada por el PO. Los recuentos que siguen pertenecen a Claude; **Codex no los recalcula ni ejecuta el experimento en esta continuación**. Arnés, tablas originales, testigos y evidencia permanecen intactos.
+
+- **R3, recuento independiente:** desde `trials.tsv`, resultado idéntico **0/42**, con **18 pares con velocidad elevada y 24 sin ella**. El Fail se conserva.
+- **Interpretación de la intención:** la lectura «misma intención = misma potencia» es de **Codex y no está aprobada por el PO**. Es la operacionalización de la muestra original, no una decisión normativa del PO sobre R3. La lectura alternativa —drop legal más suave de cada lado al mismo objetivo— también falla según Claude: adelante **z2≈1,56–1,68 m**, atrás **≈0,86–0,88 m**. Se registra sin sustituir ni reetiquetar la muestra original.
+- **Hipótesis no demostrada:** Claude señala que P2 no modela resistencia del aire (solo gravedad, restitución y fricción) como posible explicación a investigar; no se demuestra aquí que esa ausencia cause R3. Agregar resistencia del aire sería **una mecánica nueva, fuera del alcance aprobado**. No se implementa ni se autoriza por este registro.
+- **X1, representatividad:** los testigos de **B0/B3** llegan a la pared trasera sin botar, luego tocan la lateral y se deslizan pegados a ella (**x=radio**, expresado como distancia a su lateral propia en el lado espejado). Son testigos poco representativos. Según Claude, existen **273/87 tiros X1 más limpios**, respectivamente B0/B3; esa caracterización no introduce un umbral aprobado ni reemplaza los testigos predeclarados.
+- **Bandas alcanzables, recuentos derivados de Claude sin umbrales aprobados:** X2 con segundo bote en el cuarto trasero **49/10/10/49** para B0/B1/B2/B3; unos **430 tiros tipo C3** y unos **1.000 tipo C4**. Las bandas son alcanzables en la grilla según ese análisis; no se convierten los recuentos en criterios ni Pass nuevos y no se alteran las tablas de los testigos originales.
+- **Alcance de R7:** se cumple **por construcción**, porque el tempo escala el reloj. La comparación prueba la **conversión de tiempo, no el planificador**. El uso de K obtenido del planificador real no implica que esta comparación valide su corrección. Se conserva la medición histórica con ese límite interpretativo.
+
+### Estado vigente y límites de esta continuación
+
+**R3 sigue Fail 0/42 y observación abierta**, igual que la saturación, por decisión literal del PO en `b4c763e`. Sin cambios de física, solver, calibración ni presets; se vuelve a medir después de la capa causal en **entrega propia**, y en el playtest integrado se observa si el drop desde atrás resulta demasiado letal. La decisión no convierte Fail en Pass ni cambia la condición de R3. Esta continuación no inicia la entrega causal, esa medición ni el playtest.
+
+Solo se añaden registros en **AGENTS.md, aprobaciones First Shot e informe de #51**. Sin reescribir historia ni modificar arnés/evidencia/producto/tests/spec/planes/criterios/defaults. No se ejecutan Unity, suites, AutoQA o check-release; las cifras anteriores siguen siendo históricas, sin corridas nuevas. Sin iPhone, builds ni instalación. Delta documental comprobado contra `578dfdf`; todo archivo versionado fuera de los tres permitidos conserva sus bytes, y el árbol de trabajo queda limpio al entregar.
+
+**PR #51 lista para la verificación de Claude coordinada por el PO, SIN FUSIONAR.** La aprobación de la revisión comunicada no se trata como autorización de fusión. No acepta First Shot ni el juicio deportivo reservado al playtest integrado. **Detenerse al entregar.**
