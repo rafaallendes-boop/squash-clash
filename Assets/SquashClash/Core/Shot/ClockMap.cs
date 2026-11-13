@@ -18,6 +18,15 @@ namespace SquashClash.Core.Shot
         private Segment observed;
         private int stepHz;
         public long LaunchId {get;private set;}
+        // Value snapshot for a reception reference. Later observations never mutate this copy.
+        internal ClockMap Freeze()
+        {
+            var copy=new ClockMap {stepHz=stepHz,LaunchId=LaunchId,observed=observed};
+            copy.segments.AddRange(segments);return copy;
+        }
+        internal IEnumerable<double> ObservationTimes
+        {get{for(int i=0;i<SegmentCount;i++)yield return At(i).Real;}}
+
         public void Begin(long launchId,double tReal,long step,double tempo,double slowMotion,int stepHz)
         {
             Validate(tReal,step,0,tempo,slowMotion);
