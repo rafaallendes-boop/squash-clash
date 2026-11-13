@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using NUnit.Framework;
 using SquashClash.Core.Court;
+using SquashClash.Core.Config;
+using SquashClash.Core.Tests.Config;
 using SquashClash.Core.Shot;
 using SquashClash.Core.Simulation;
 using UnityEngine;
@@ -83,6 +85,26 @@ namespace SquashClash.Core.Tests.Shot
             clock.Begin(1,0,0,1,1,128);plans=new PresentedPlans();plans.Present(0,plan,150/128d);
             var tie=ContactContract.Decide(155.5/128d,plans,clock,flight,new TimingSettings(0,false,100),false);Assert.That(tie.ContactStep,Is.EqualTo(155));
             var neighbor=ContactContract.Decide(199.8/128d,plans,clock,flight,new TimingSettings(0,false,100),false);Assert.That(neighbor.ContactStep,Is.EqualTo(199));Assert.That(neighbor.UsedNeighborLegalStep,Is.True);
+        }
+
+        [Test] public void CausalKeys_AreExperimentalReceptionDefaults_AndSnapshotValues()
+        {
+            var p=ConfigFixtures.Default();var keys=new[]{"timingHeightPerM","timingSpeedPerM","stretchStart","jamDistance","stretchHeight","stretchSpeed","jamHeight","jamSpeed","capHeight","capSpeed"};
+            var values=new double[]{.6,-.25,.85,.35,.4,-.2,.3,-.15,1,-.4};
+            for(int i=0;i<keys.Length;i++)
+            {string key="causal."+keys[i];Assert.That(ParamCatalog.TryGet(key,out var def),Is.True,key);Assert.That(p.Get(key),Is.EqualTo(values[i]));Assert.That(def.Label,Does.Contain("EXPERIMENT"));Assert.That(def.Apply,Is.EqualTo(ApplyClass.NextLaunch));}
+            Assert.That(p.Ordered.Count,Is.EqualTo(118));Assert.That(EffectiveConfig.From(p).SimulationKey,Is.EqualTo("166a96e319c7"));
+        }
+        [Test] public void AppliedBeforeSolver_NeverCorrectedAfter()
+        {
+            var p=ConfigFixtures.Default();var cfg=EffectiveConfig.From(p);var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
+            var point=new Vector3(2.7f,.6f,5.5f);var aim=new Vector2(2.6f,1.5f);var r=Reference();
+            var evaluated=CausalQuality.Solve(r,body,point,aim,.5f,cfg,factory);
+            Assert.That(evaluated.Vectors,Is.Not.Null);Assert.That(evaluated.Input.Aim.y,Is.GreaterThan(aim.y));
+            Assert.That(evaluated.Input.Speed,Is.LessThan(17));
+            var direct=ShotSolver.Solve(new ShotRequest(point,evaluated.Input.Aim,.5f),evaluated.Input.Speed,evaluated.Input.Speed,32,cfg.Physics.Gravity,cfg.Physics.BallRadius,cfg.Court,factory,cfg.Physics);
+            Assert.That(evaluated.Solution.Solved,Is.True);Assert.That(evaluated.Solution.Velocity,Is.EqualTo(direct.Velocity));Assert.That(evaluated.Solution.Speed,Is.EqualTo(direct.Speed));Assert.That(evaluated.Solution.TargetUsed,Is.EqualTo(direct.TargetUsed));
+            Assert.That(factory.LiveInstances,Is.Zero);
         }
     }
 }

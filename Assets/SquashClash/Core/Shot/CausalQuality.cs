@@ -50,6 +50,11 @@ namespace SquashClash.Core.Shot
             return Math.Sqrt(best);
         }
     }
+    public readonly struct CausalShotResult
+    {
+        public readonly CausalVector[] Vectors;public readonly CausalInput Input;public readonly ShotSolution Solution;
+        public CausalShotResult(CausalVector[] vectors,CausalInput input,ShotSolution solution){Vectors=vectors;Input=input;Solution=solution;}
+    }
     public readonly struct CausalInput
     {
         public readonly Vector2 Aim;public readonly float Speed;
@@ -57,6 +62,7 @@ namespace SquashClash.Core.Shot
     }
     public static class CausalQuality
     {
+        public static CausalShotResult Solve(CausalReference reference,BodyFrame body,Vector3 contact,Vector2 aim,float power,EffectiveConfig config,IBallSimulationFactory factory)=>default;
         public static CausalReference Prepare(Trajectory trajectory,ContactPlan plan,ClockMap clock,TimingSettings timing,double presented,double tempo,Func<long,BodyFrame> bodyAt=null)
         {
             if(trajectory==null||clock==null)throw new ArgumentNullException(nameof(trajectory));
