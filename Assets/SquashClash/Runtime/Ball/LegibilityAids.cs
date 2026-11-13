@@ -10,7 +10,7 @@ namespace SquashClash.Runtime.Ball
         private BallSimulationHost host;
         private TuningState tuning;
         private BallView view;
-        private Mesh disc;
+        private Mesh disc, softDisc;
         private MeshRenderer shadow;
         private Material shadowMaterial;
         private Material strokeMaterial, impactMaterial;
@@ -30,13 +30,15 @@ namespace SquashClash.Runtime.Ball
             disc = DiscMesh();
             shadowMaterial = NewMaterial("Ball shadow", Color.black);
             shadow = Disc("Ball shadow", shadowMaterial);
+            // Art pass: the ball shadow fades toward its edge (vertex alpha) instead of ending in a hard rim.
+            softDisc = SoftDiscMesh(); shadow.GetComponent<MeshFilter>().sharedMesh = softDisc;
             shadow.transform.rotation = Quaternion.FromToRotation(Vector3.forward, Vector3.up);
             strokeMaterial = NewMaterial("Ball trajectory", Color.white);
             impactMaterial = NewMaterial("Wall impact", Color.white);
             var trailObject = new GameObject("Ball trail"); trailObject.transform.SetParent(transform, false);
             trail = trailObject.AddComponent<LineRenderer>(); trail.sharedMaterial = strokeMaterial;
             trail.useWorldSpace = true; trail.numCapVertices = 2;
-            trail.startColor = new Color(.05f, .08f, .09f, 0); trail.endColor = new Color(.05f, .08f, .09f, .55f);
+            trail.startColor = new Color(.05f, .08f, .09f, 0); trail.endColor = new Color(.05f, .08f, .09f, .62f);
             trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; trail.receiveShadows = false;
             var lineObject = new GameObject("Ball prediction"); lineObject.transform.SetParent(transform, false);
             prediction = lineObject.AddComponent<LineRenderer>(); prediction.sharedMaterial = strokeMaterial;
@@ -72,7 +74,7 @@ namespace SquashClash.Runtime.Ball
             bool showTrail = tuning.Applied.GetBool("aids.trail") && trailSeconds > 0;
             if (!showTrail) ClearTrail();
             trail.enabled = showTrail;
-            trail.startWidth = 0; trail.endWidth = view.transform.lossyScale.x * .5f;
+            trail.startWidth = 0; trail.endWidth = view.transform.lossyScale.x * .8f;
             if (!tuning.Applied.GetBool("aids.impactMarks")) ClearMarks();
             prediction.enabled = tuning.Applied.GetBool("aids.prediction");
             prediction.positionCount = prediction.enabled ? host.Prediction.States.Count : 0;
@@ -84,8 +86,8 @@ namespace SquashClash.Runtime.Ball
             // Experimental visual cue: smaller and lighter at height, retaining a visible minimum.
             float height = Mathf.Max(0, ballRenderPosition.y - host.ActiveConfig.Physics.BallRadius);
             float proximity = 1 / (1 + height * .4f);
-            shadow.transform.localScale = Vector3.one * (.07f + .07f * proximity);
-            block.SetColor("_BaseColor", new Color(0, 0, 0, .14f + .28f * proximity)); shadow.SetPropertyBlock(block);
+            shadow.transform.localScale = Vector3.one * (.085f + .085f * proximity);
+            block.SetColor("_BaseColor", new Color(0, 0, 0, .22f + .40f * proximity)); shadow.SetPropertyBlock(block);
             // Own the trail's ages: Unity's automatic TrailRenderer clock cannot pause with SimClock.
             float ageSeconds = host.Clock.Paused ? 0 : Mathf.Max(0, realSeconds);
             for (int i = trailPoints.Count - 1; i >= 0; i--)
@@ -156,8 +158,26 @@ namespace SquashClash.Runtime.Ball
             }
             var mesh = new Mesh { name = "Legibility disc", vertices = vertices, colors = colors, triangles = triangles }; mesh.RecalculateBounds(); return mesh;
         }
+        private static Mesh SoftDiscMesh()
+        {
+            const int sides = 24;
+            var vertices = new Vector3[1 + sides * 2]; var colors = new Color[vertices.Length]; var triangles = new int[sides * 9];
+            colors[0] = Color.white; var mid = new Color(1, 1, 1, .75f); var rim = new Color(1, 1, 1, 0);
+            for (int i = 0; i < sides; i++)
+            {
+                float angle = 2 * Mathf.PI * i / sides; var d = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
+                int inner = 1 + i, outer = 1 + sides + i, nextInner = 1 + (i + 1) % sides, nextOuter = 1 + sides + (i + 1) % sides;
+                vertices[inner] = d * .5f; colors[inner] = mid; vertices[outer] = d; colors[outer] = rim;
+                int t = i * 9;
+                triangles[t] = 0; triangles[t + 1] = inner; triangles[t + 2] = nextInner;
+                triangles[t + 3] = inner; triangles[t + 4] = outer; triangles[t + 5] = nextOuter;
+                triangles[t + 6] = inner; triangles[t + 7] = nextOuter; triangles[t + 8] = nextInner;
+            }
+            var mesh = new Mesh { name = "Legibility soft disc", vertices = vertices, colors = colors, triangles = triangles }; mesh.RecalculateBounds(); return mesh;
+        }
         private void OnDestroy()
         {
+            if (softDisc != null) Destroy(softDisc);
             if (tuning != null) tuning.Changed -= OnChanged;
             if (host != null) { host.ContactRaised -= RecordContact; host.Launched -= OnLaunched; host.PredictionReplaced -= OnPredictionReplaced; host.ReadVisualBallDiameter=null; }
             if (shadow != null) Destroy(shadow.gameObject);

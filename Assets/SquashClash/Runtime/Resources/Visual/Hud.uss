@@ -1,0 +1,93 @@
+/* Art pass: one palette and one type scale for the in-game HUD (rally bar, score and match result). */
+.sc-header {
+    background-color: rgba(9, 16, 26, 0.9);
+    border-radius: 16px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+.sc-title {
+    font-size: 15px;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+    color: rgb(244, 247, 250);
+}
+.sc-meta {
+    font-size: 11px;
+    color: rgb(140, 158, 176);
+}
+.sc-status {
+    font-size: 13px;
+    color: rgb(214, 224, 234);
+}
+.unity-button.sc-button {
+    height: 44px;
+    min-width: 52px;
+    font-size: 13px;
+    -unity-font-style: bold;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 12px;
+    border-width: 0;
+    background-color: rgb(30, 44, 64);
+    color: rgb(236, 242, 248);
+}
+.unity-button.sc-button:hover { background-color: rgb(38, 55, 79); }
+.unity-button.sc-button:active { background-color: rgb(58, 82, 114); }
+.unity-button.sc-button:disabled { opacity: 0.45; }
+.unity-button.sc-button--primary { background-color: rgb(255, 210, 63); color: rgb(18, 22, 30); }
+.unity-button.sc-button--primary:hover { background-color: rgb(255, 218, 92); }
+.unity-button.sc-button--primary:active { background-color: rgb(255, 232, 140); }
+.sc-score {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    margin-top: 2px;
+}
+.sc-score-name {
+    font-size: 12px;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+    color: rgb(190, 204, 218);
+    margin-left: 6px;
+    margin-right: 6px;
+}
+.sc-score-points {
+    font-size: 26px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    min-width: 30px;
+    -unity-text-align: middle-center;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding: 0;
+}
+.sc-score-dash { font-size: 20px; color: rgb(120, 138, 156); }
+.sc-chip { width: 10px; height: 10px; border-radius: 5px; }
+.sc-chip--human { background-color: rgb(30, 136, 255); }
+.sc-chip--rival { background-color: rgb(255, 77, 51); }
+.sc-serve { width: 6px; height: 6px; border-radius: 3px; background-color: rgb(255, 210, 63); margin-left: 3px; margin-right: 3px; }
+.sc-result-layer {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    align-items: center;
+    justify-content: center;
+}
+.sc-result-card {
+    width: 300px;
+    padding: 22px;
+    align-items: center;
+    background-color: rgba(11, 19, 30, 0.97);
+    border-radius: 22px;
+    border-width: 2px;
+    border-color: rgb(255, 210, 63);
+}
+.sc-result-kicker { font-size: 12px; -unity-font-style: bold; letter-spacing: 2px; color: rgb(140, 158, 176); }
+.sc-result-title { font-size: 26px; -unity-font-style: bold; color: rgb(255, 255, 255); margin-top: 6px; -unity-text-align: middle-center; white-space: normal; }
+.sc-result-score { font-size: 60px; -unity-font-style: bold; color: rgb(255, 210, 63); margin-top: 4px; margin-bottom: 2px; }
+.sc-result-note { font-size: 13px; color: rgb(190, 204, 218); margin-bottom: 16px; -unity-text-align: middle-center; white-space: normal; }
+.sc-result-buttons { flex-direction: row; justify-content: center; }

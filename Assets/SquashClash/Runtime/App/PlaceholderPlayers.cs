@@ -10,25 +10,37 @@ namespace SquashClash.Runtime.App
         private GameObject human, rival;
         private Mesh capsule;
         public Transform Human => human != null ? human.transform : null;
+        public Transform Rival => rival != null ? rival.transform : null;
+        // Gameplay owns where the bodies are; this only draws them (floor x, z in metres).
+        public void Place(Vector2 humanXZ, Vector2 rivalXZ)
+        {
+            if (human != null) human.transform.localPosition = new Vector3(humanXZ.x, 0.9f, humanXZ.y);
+            if (rival != null) rival.transform.localPosition = new Vector3(rivalXZ.x, 0.9f, rivalXZ.y);
+        }
 
         public void Apply(ParamSet p)
         {
             if (capsule == null) capsule = Capsule();
-            if (human == null) human = Player("Human", "CourtBlue");
-            if (rival == null) rival = Player("Rival", "CourtRed");
+            if (human == null) human = Player("Human", "CourtBlue", true);
+            if (rival == null) rival = Player("Rival", "CourtRed", false);
             human.transform.localPosition = new Vector3((float)p.Get("human.x"), 0.9f, (float)p.Get("human.z"));
             rival.transform.localPosition = new Vector3((float)p.Get("rival.x"), 0.9f, (float)p.Get("rival.z"));
             human.SetActive(p.GetBool("placeholders.visible"));
             rival.SetActive(p.GetBool("placeholders.visible"));
         }
 
-        private GameObject Player(string name, string materialName)
+        private GameObject Player(string name, string materialName, bool isHuman)
         {
             var player = new GameObject(name, typeof(MeshFilter), typeof(MeshRenderer));
             player.transform.SetParent(transform, false);
             player.GetComponent<MeshFilter>().sharedMesh = capsule;
             player.GetComponent<MeshRenderer>().sharedMaterial = Resources.Load<Material>("CourtMaterials/" + materialName)
                 ?? throw new InvalidOperationException("Missing reference-player material.");
+            // Art pass: the 1.80 m capsule stays as the reference volume but is no longer drawn; the figure is.
+            player.GetComponent<MeshRenderer>().forceRenderingOff = true;
+            var figure = new GameObject("Figure").AddComponent<SquashClash.Runtime.Visual.CharacterView>();
+            figure.transform.SetParent(player.transform, false);
+            figure.Initialize(isHuman, isHuman ? SquashClash.Runtime.Visual.CharacterView.HumanPalette : SquashClash.Runtime.Visual.CharacterView.RivalPalette);
             return player;
         }
 
