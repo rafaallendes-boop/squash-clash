@@ -1,6 +1,6 @@
 # Precisión de ClockMap y rollback detenido — 12 de noviembre de 2026
 
-## Estado: detenido por fallo distinto en PlayMode
+## Estado histórico inicial: detenido por fallo distinto en PlayMode
 
 La corrección focal está GREEN, pero la entrega **no tiene validación completa ni AutoQA PASS**. La segunda PlayMode completa falló en ReticleVisibilityTests; se cumple la orden «Ante otro defecto o sorpresa: registrar y detenerse». No se ejecutan la tercera PlayMode, AutoQA ni check-release, no se corrige la otra prueba y no se fusiona. PR preparada para que Claude revise tanto el cambio acotado como esta parada, coordinado por el PO.
 
@@ -112,3 +112,15 @@ Claude revisó independientemente el head **`3615b8588a732eab174cd79cb89bb9bb9a0
 - check-release **dev/prod OK**.
 
 Estos resultados pertenecen a la revisión de Claude sobre su integración local; no se presentan como nuevas corridas de Codex ni sustituyen los fallos históricos registrados.
+
+
+## Continuación autorizada de #48 e integración de main
+
+Este registro sigue a la decisión literal del PO y al resumen de revisión guardados primero en **`7821a1b`**, antes de integrar o ejecutar verificaciones nuevas. `main` remoto se comprobó en **`9af2b0c8bd92fd5d27f9b2486ea7b626da903874`**; **#49 seguía abierta, sin fusionar**, por lo que no se incorpora esa PR ni se resuelve un conflicto inexistente. Integración mediante **merge `b736832169c57d68eca5b7cc6e900b9e907ccc03`**, sin rebase; conserva el historial de #48 y añade main como segundo padre.
+
+**Observaciones de Claude, sin cambios de código ni pruebas:**
+
+- En la revisión independiente, el test original de rollback empezó a los **60 s**, fuera del tramo **64–128 s**. Ese tramo está cubierto por los casos con base fija; no se presenta esa corrida del test original como cobertura temporal dentro del tramo. No se sustituyen los instantes históricos de las corridas anteriores de Codex.
+- Las pruebas usan **reflexión sobre setters privados del host** para preparar la base fija. Se conserva como observación de mantenimiento; no se cambian tests, host ni encapsulación en esta continuación.
+
+Validación autorizada: sobre la integración limpia, **un solo Unity a la vez**, EditMode completo y **una sola** PlayMode completa con XML fresco, AutoQA mvp PASS/salida 0/nivel 1 y check-release dev/prod con `gitDirty=false`; restaurar los ProjectSettings transitorios. **Si vuelve a fallar ReticleVisibilityTests, registrar hora/salida y detenerse sin reintentar para obtener Pass**. Sin más cambios de producto (ClockMap conserva el fix revisado), tests, spec, planes, criterios, umbrales ni defaults. Sin iPhone, build nativa ni instalación; los exports Unity de check-release son solo la comprobación expresamente solicitada. PR lista para el PO, **sin fusionar: se requiere su aprobación explícita para la fusión**. Resultados nuevos aún pendientes al guardar esta predeclaración.
