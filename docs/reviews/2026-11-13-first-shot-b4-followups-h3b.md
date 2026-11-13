@@ -84,4 +84,13 @@ Las medias son sobre contactos resueltos (denominador cero: NotEvaluated, no cer
 
 ## Estado de verificación
 
-(Se completa tras las compuertas finales; ver sección siguiente.)
+Compuertas ejecutadas sobre el head `713c44c` (árbol limpio, un solo Unity a la vez, XML frescos preservados en `Logs/evidence/b4-followups-h3b/`, ignorado):
+
+- EditMode completa: **715/715** (714 + la prueba nueva A1), cero fallos/omitidos/errores CS.
+- PlayMode completa: **457/457**, cero errores CS. `ProjectSettings/GraphicsSettings.asset` y `QualitySettings.asset` quedaron modificados por la corrida y se restauraron a HEAD.
+- AutoQA `scripts/autoqa.sh mvp` (no es obligatorio aquí: no se toca timing, gesto ni contrato): **PASS / salida 0 / nivel 1**, 85/85, RUN_DIR `Logs/autoqa/20261113T184825Z-713c44c-10767`.
+- `scripts/check-release.sh`: **OK** para dev y prod, metadata `gitHash=713c44c`, `gitDirty=false` en ambos; dev incluye el módulo DevPanel y prod no.
+- Hashes intactos: defaults `9041c4aafc77`/118, P0 `b6914a349068` y SimulationKey `166a96e319c7` verificados por la guarda del experimento; las pruebas que anclan el hash de SL5 (`e2ffa032a588`) pasan. No se tocó `causal.*`, defaults, presets, solver, contrato, ventanas ni P2.
+- Los commits posteriores a `713c44c` son solo documentación (este bloque).
+
+No se tocó el iPhone ni se usó devicectl/Duplicación/xcodebuild de dispositivo. Un `UnityAutoQuitter` residual de la primera corrida del experimento apareció en `pgrep`, pero ya había terminado la corrida (era solo el ayudante); no hubo dos editores simultáneos.
