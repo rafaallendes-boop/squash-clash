@@ -297,7 +297,7 @@ namespace SquashClash.Experiments.EditMode
                 found=found.Length,witness=found.Length>0?found[0].id:-1,minimumSideDistance=side.Length>0?side.Min(r=>r.sideMin):-1});
         }
         private static bool Middle(float y,CourtDimensions court)
-        { float third=(court.FrontOutLower-court.TinTop)/3;return y>=court.TinTop+third&&y<=court.TinTop+2*third; }
+        { return y>=1.6f&&y<2.6f; } // Existing PracticeTask.FrontRow == 1 (T4.2 D2), no new band.
         private static string CommonPair(Trial a,Trial b)
         {
             if(!a.solved||!b.solved) return "unsolved";
