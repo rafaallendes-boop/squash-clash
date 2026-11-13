@@ -2568,3 +2568,16 @@ Fuente: respuesta literal del PO recibida en la continuación documental de PR #
 **Alcance de esta continuación:** solo documentación, en esta misma rama y PR #52. Primero este registro en AGENTS.md, aprobaciones e informe; después D36 aditiva en spec, D6 aditiva en plan y nota de sustitución del texto propuesto del informe. Preparar el encargo futuro de implementación con TDD y PR independiente, sin ejecutarlo ahora. Sin código, tests, defaults, presets, Unity, AutoQA, check-release, iPhone ni builds. Revisión de Claude coordinada por el PO; SIN FUSIONAR, sin merge automático ni aceptación de First Shot. La revisión técnica y prueba jugable siguen pendientes antes del cierre.
 
 **Ruta aclarada por el PO:** la referencia `docs/reviews/2025-10-25-first-shot-po-approvals.md` tenía un error de año; se usa el archivo existente `docs/reviews/2026-10-25-first-shot-po-approvals.md`. No se crea un registro paralelo de 2025.
+
+
+## B4 / CQ-01 — D36 y D6 documentales (13 nov 2026)
+
+Primer commit **809ac47**, solo registro literal completo del PO en aprobaciones/AGENTS/informe. ClockMap/compensación se registran como precisión de Claude **separada del literal**. Ruta de aprobaciones corregida a 2026-10-25 por aclaración expresa del PO.
+
+**Decisión vigente D36:** Z_T por trayectoria preparada una vez por recepción, antes del intento, con trayectoria visible, `pace.tempo`, ClockMap y compensación congelados. §17.A.12 rige dentro del mismo contexto; mismo contacto/cuerpo/intención/contexto produce mismo vector/entrada/golpe para cualquier Δ y categoría, incluido +39/+41. Se descartan radio fijo y envolvente universal entre tempos; diferencias entre tempos documentadas como efecto de ritmo. E3/E5 independientes, contrato intacto y magnitudes [EXPERIMENTO] hasta iPhone.
+
+Spec incorpora **solo adiciones** en §0.3 D36, §7.1.3, §7.6.2, §17.A.12 y Anexo E. Plan incorpora **Adenda D6**, sin reutilizar D5, ajustando interfaz (sin bool perfect, referencia inmutable), pruebas y ruta ShotController/RallyContact.Solve. La propuesta del informe que rechazaba el alcance «solo dentro del mismo contexto» queda **sustituida por D36**, conservada íntegra como histórica junto con sus mediciones. Encargo futuro de implementación con TDD/PR independiente preparado en el informe, sin ejecutar ni autorizar implementación por este registro.
+
+Continuación desde ac3f79b limitada a los cinco Markdown autorizados; producto, tests/arnés, evidencia/hashes, defaults/presets y todo archivo fuera de ellos intactos. Sin Unity, tests, AutoQA, check-release, iPhone ni builds/instalación. PR #52 para revisión Claude coordinada por PO, **SIN FUSIONAR** ni merge automático. Revisión técnica y prueba jugable pendientes antes del cierre de First Shot; no hay aceptación inferida. **Detenerse al entregar.**
+
+[Informe vigente y encargo futuro](2026-11-13-first-shot-causal-quality.md#b4-cq01-documentary-d36).

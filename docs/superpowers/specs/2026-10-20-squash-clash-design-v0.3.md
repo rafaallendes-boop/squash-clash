@@ -92,6 +92,7 @@ Registro de decisiones posteriores a R3, con [autorización documental del PO pa
 | D33 | Aclaración **D-6**: la diagonal lateral mide **50 mm perpendiculares a la diagonal**, con el **borde inferior** como referencia (§8.7.2). | [D-6](../../reviews/2026-10-20-first-ball-plan-review-response-claude.md#41-decisiones-del-po-antes-de-autorizar-la-implementación); [autorización PO T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). | Precisión de la interpretación geométrica; no cambia la geometría implementada ni los criterios. |
 | D34 | **First Ball aceptado por el PO con desviación H17 p95**: H17-1 **17,2 ms**, H17-2 **16,8 ms**, frente a **≤16,7 ms**. Ambos resultados se conservan como **Fail**, sin cambiar umbral, restar sesgo de cubeta ni repetir. El umbral sigue **[EXPERIMENTO hasta conocer el iPhone]**. | [Decisión PO tras revisión I7a](../../reviews/2026-10-21-first-ball-po-approvals.md#revisión-final-claude-y-aceptación-po-de-first-ball--2026-10-24); [registro solo en §0.3 autorizado para T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). | P99, frames >33 ms/min, térmico y DroppedSteps cumplen; distribución estrecha en torno a 16,7 ms; frames >33 ms: 1 en H17-1 (0,067/min) y 0 en H17-2, ambos dentro de ≤1/min. Interpretación de Claude, no demostrada: oscilación de la cadencia de presentación más que carga; CPU p95 = cpuFrameTime incluye la espera de presentación. [Precisión factual aprobada tras revisión T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#revisión-claude-de-t73-y-fusión-condicionada-por-el-po). **§17.C/§17.D permanecen intactos.** |
 | D35 | **No promover P0-calib-1 a DefaultPreset.json**. Solo difiere en `launcher.repeatSeconds=3`, que no es física. Defaults efectivos **0d39e6016bd8** intactos, con P2 por defecto. | [Decisión PO, paso 2 de T7.3](../../reviews/2026-10-21-first-ball-po-approvals.md#autorización-r1-de-retención-y-secuencia-posterior-t73--2026-10-24). | [Punto de control de Etapa 5 y diferencia de preset](../../reviews/2026-10-21-first-ball-po-approvals.md#cierre-i6a-punto-de-control-etapa-5-y-autorización-i6b--2026-10-24). |
+| D36 | **Calidad causal del timing (CQ-01):** zona muerta geométrica por trayectoria, preparada una vez por recepción con la trayectoria visible, `pace.tempo`, ClockMap y compensación congelados. El vector de timing depende solo de la distancia del contacto a esa zona; la clasificación Perfecto/Valid y Δ no son entradas. §17.A.12 es un invariante dentro del mismo contexto de recepción. Se descartan el radio fijo y la envolvente universal entre tempos. Contrato de contacto sin cambios. Magnitudes [EXPERIMENTO] hasta validarlas en iPhone. | [Decisión literal del PO, 13 nov 2026](../../reviews/2026-10-25-first-shot-po-approvals.md#b4-cq01-po-decision-20261113) | [Propuesta CQ-ZONE-v1 y evidencia, PR #52](../../reviews/2026-11-13-first-shot-causal-quality.md) |
 
 ### 0.4 Cambios principales respecto de la v0.2 (resumen ejecutivo)
 
@@ -343,6 +344,8 @@ El swing termina **con contacto** o **sin contacto** (al aire o tarde). Además,
 | 13 | La pelota ya botó dos veces o no es legal | Nunca hay contacto. | — | — |
 | 14 | Hay dos oportunidades (volea y bote) | Ver §7.3. El contrato se aplica a la oportunidad **en cuyo tramo cae r**. | — | — |
 
+**Aclaración del caso 1 [APROBADO·D36].** El contrato de contacto no cambia: ventanas Perfecto (±40 ms) y Valid, K, programación en T*/P* y cuantización vigentes. «El vector causal de timing es cero» se cumple porque, por construcción, todo contacto Perfecto alcanzable cae dentro de la zona muerta geométrica de la recepción (§7.6.2), no porque la categoría anule el vector. Un Valid con la misma geometría de contacto que uno Perfecto recibe el mismo vector, que es cero si está en la zona. Los casos 2 y 3 usan la misma función: distancia geométrica a la zona. E3/E5 no se anulan por ser Perfecto. El salto del lado anticipado por el ajuste a P* (p. ej. SL1, −41 → −40 ms) proviene del contrato vigente y se mide y documenta sin modificarlo.
+
 **Las cuatro categorías de fallo son distintas, y el jugador ve cuál fue:**
 - **Fallo de timing:** casos 4 y 5. Es una decisión de la mano del jugador.
 - **Error de ejecución:** caso 12. Solo existe desde First Fun, con cansancio y mala posición.
@@ -489,6 +492,7 @@ Cada causa produce un **vector de efecto con signo**, expresado **relativo al cu
 - **Composición:** `e_causal = clamp( Σ (1 − t·k_tec,i) · vᵢ ; tope por componente )`, donde `t` es la técnica normalizada y `k_tec,i` indica cuánto atenúa la técnica la causa i (0 para el timing). Los pesos y los topes son configurables.
 - **El cansancio no es una fuente directa.** Afecta a la posición y al timing a través de la cadena causal [APROBADO·D06], así que no se cuenta dos veces (F16).
 - **Orden en el solver (§7.4):** e_causal (y después e_aleatorio) se aplica sobre el objetivo P y la velocidad v **antes** de resolver la trayectoria. Nunca se corrige la salida después.
+- **Zona muerta del timing [APROBADO·D36; forma: PROPUESTA; valores: EXPERIMENTO]:** al preparar cada recepción, antes de cualquier intento, se congela un contexto de referencia: trayectoria visible, `pace.tempo`, ClockMap y compensación vigentes. Con él se obtiene el conjunto J_A de contactos legales que alguna suelta Perfecto alcanzable puede producir, incluidos el vecino legal y el empate del contrato. La zona Z_T es el tramo de la trayectoria, en el marco del cuerpo, de longitud de arco ±L alrededor del contacto ideal, con L el mayor |s| de J_A, recortado a K sin inventar contactos fuera. El vector de timing es (min(tope, `causal.timingHeightPerM`·d), 0, max(tope, `causal.timingSpeedPerM`·d)), con d la distancia euclídea mínima del contacto a Z_T: cero dentro y continuo fuera. Ni Δ, ni el paso relativo, ni la categoría entran en la magnitud. La zona no se recalcula según el intento. Humano y rival usan el mismo contexto y la misma función. Se descartan el radio fijo y la envolvente común entre tempos según la evidencia de la PR #52.
 - **Registro:** cada vector se guarda por separado, con su causa.
 
 #### 7.6.3 Tabla de casos de error relativos al cuerpo [PENDIENTE PO: P3]
@@ -1092,6 +1096,9 @@ Los criterios son una **guía flexible** y el PO decide cuándo se cumple un mil
 10. **Panel excluido de producción.** Una build de producción no contiene sus tipos.
 11. **Fallas del sistema** (caso 9 que termina en inalcanzable): se registran y su objetivo es ≈ 0.
 12. **Sin penalización duplicada del timing:** con la misma geometría del contacto, Δ no cambia el resultado. Hay una prueba en la que dos contactos con Δ distinto y la misma geometría producen el mismo golpe.
+
+    **Aclaración [APROBADO·D36]:** la invariante se verifica dentro de un mismo contexto de recepción (misma trayectoria visible, `pace.tempo`, ClockMap y compensación congelados). Con la misma geometría efectiva del contacto (pelota y cuerpo), la misma intención y el mismo contexto, el vector causal, la entrada al solver y el golpe son idénticos para cualquier Δ admitido y cualquier clasificación temporal, incluido el par +39/+41 ms cuantizado al mismo paso. Entre contextos distintos (p. ej. otro `pace.tempo`) la zona puede tener otro tamaño: es un efecto del ajuste de ritmo, se documenta y no viola la invariante. La zona se prepara antes del intento y nunca a partir de su categoría. SameGeometryDifferentDelta_SameShot no se acota por categoría.
+
 13. **La capa aleatoria no depende de las causas:** con la misma intención, Consistencia y semilla, la desviación aleatoria es la misma con cualquier timing, posición o energía.
 14. **Presets:** se recupera el preset tras reiniciar la app. El registro de métricas incluye el preset, el build y la semilla.
 
@@ -1332,6 +1339,10 @@ El PO juega o mira cada escenario en el iPhone y lo valora de 1 a 5 en "se sient
 | R3 §8: ratificación | — | D01–D13 | §0.3 |
 
 ## Anexo E. Registro de cambios
+
+### Adenda D36 (2026-11-13)
+
+Secciones **§0.3, §7.1.3, §7.6.2 y §17.A.12**. Cambio **aditivo**, con el texto previo conservado. Fuente: [decisión literal del PO, 13 nov 2026](../../reviews/2026-10-25-first-shot-po-approvals.md#b4-cq01-po-decision-20261113), con precisión de Claude sobre ClockMap/compensación separada del literal. Z_T se prepara una vez por recepción y §17.A.12 rige en ese contexto congelado; el contrato no cambia. Magnitudes [EXPERIMENTO] hasta iPhone. **Ninguna otra decisión aprobada cambia.**
 
 ### E.0 Enmienda tras la verificación WSF (2026-10-20), después de la aprobación de la v0.3
 
