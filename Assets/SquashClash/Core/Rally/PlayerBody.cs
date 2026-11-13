@@ -35,7 +35,13 @@ namespace SquashClash.Core.Rally
             Id=other.Id;settings=other.settings;Position=other.Position;Velocity=other.Velocity;Phase=other.Phase;Target=other.Target;
             arrivedPhase=other.arrivedPhase;pendingMoving=other.pendingMoving;pendingArrived=other.pendingArrived;pendingTarget=other.pendingTarget;pendingDelay=other.pendingDelay;
         }
-        public Vector2[] PositionsAfter(int count)=>Array.Empty<Vector2>();
+        public Vector2[] PositionsAfter(int count)
+        {
+            if(count<0)throw new ArgumentOutOfRangeException(nameof(count));
+            var copy=new PlayerBody(this);var positions=new Vector2[count];
+            for(int i=0;i<count;i++){positions[i]=copy.Position;copy.Step();}
+            return positions;
+        }
         public void Teleport(Vector2 position)
         {Position=Target=position;Velocity=Vector2.zero;Phase=arrivedPhase=BodyPhase.Waiting;pendingDelay=0;}
         // After delaySteps the body turns to target. Until then it keeps whatever it was doing.

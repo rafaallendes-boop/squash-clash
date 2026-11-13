@@ -31,15 +31,17 @@ namespace SquashClash.Core.Shot
             internal Segment(Vector3 a,Vector3 b){A=a;B=b;}
         }
         private readonly Segment[] zone;
+        private readonly BodyFrame[] frames;
+        private readonly long firstStep;
         private readonly IReadOnlyList<long> perfect;
         public IReadOnlyList<long> PerfectSteps=>perfect;
         public double ArcRadius {get;}
         public double Tempo {get;}
         public TimingSettings Timing {get;}
         public int PlanVersion {get;}
-        internal CausalReference(Segment[] zone,long[] perfect,double radius,double tempo,TimingSettings timing,int version)
-        {this.zone=zone;this.perfect=Array.AsReadOnly(perfect);ArcRadius=radius;Tempo=tempo;Timing=timing;PlanVersion=version;}
-        public BodyFrame BodyAt(long step)=>default;
+        internal CausalReference(Segment[] zone,long[] perfect,double radius,double tempo,TimingSettings timing,int version,BodyFrame[] frames,long firstStep)
+        {this.frames=frames;this.firstStep=firstStep;this.zone=zone;this.perfect=Array.AsReadOnly(perfect);ArcRadius=radius;Tempo=tempo;Timing=timing;PlanVersion=version;}
+        public BodyFrame BodyAt(long step)=>frames[checked((int)(step-firstStep))];
         public double Distance(Vector3 point,BodyFrame body)
         {
             var q=point-new Vector3(body.PositionXZ.x,body.ReferenceHeight,body.PositionXZ.y);
@@ -109,11 +111,11 @@ namespace SquashClash.Core.Shot
                 if(i+1<times.Length)Probe(times[i]+(times[i+1]-times[i])*.5);
             }
             long start=trajectory.States[0].Step;int n=trajectory.States.Count,star=checked((int)(plan.TStarStep-start));
-            var q=new Vector3[n];var arc=new double[n];
+            var q=new Vector3[n];var arc=new double[n];var frames=new BodyFrame[n];
             for(int i=0;i<n;i++)
             {
                 var state=trajectory.States[i];if(state.Step!=start+i)throw new ArgumentException("Noncontiguous reception trajectory.");
-                var frame=bodyAt==null?plan.Body:bodyAt(state.Step);
+                var frame=bodyAt==null?plan.Body:bodyAt(state.Step);frames[i]=frame;
                 q[i]=state.Position-new Vector3(frame.PositionXZ.x,frame.ReferenceHeight,frame.PositionXZ.y);
                 if(i>0)
                 {
@@ -140,7 +142,7 @@ namespace SquashClash.Core.Shot
                 zone.Add(new CausalReference.Segment(Vector3.LerpUnclamped(q[i],q[i+1],(float)lo),Vector3.LerpUnclamped(q[i],q[i+1],(float)hi)));
             }
             if(zone.Count==0)throw new InvalidOperationException("No geometric zone in reception K.");
-            return new CausalReference(zone.ToArray(),perfect.ToArray(),radius,tempo,timing,plan.Version);
+            return new CausalReference(zone.ToArray(),perfect.ToArray(),radius,tempo,timing,plan.Version,frames,start);
         }
         public static CausalVector[] Evaluate(CausalReference reference,BodyFrame body,Vector3 contact,CausalSettings settings)
         {
