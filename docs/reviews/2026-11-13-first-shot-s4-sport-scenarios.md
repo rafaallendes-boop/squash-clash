@@ -244,3 +244,20 @@ ProjectSettings/GraphicsSettings.asset y QualitySettings.asset, modificados tran
 T4.4 implementada como arnés experimental y evaluada en su alcance predeclarado: X1–X5 con testigos; R1/R2 como tendencias; **R3 Fail / S4-44-R3-01**; R7 menor duración con misma geometría; C1–C4 informativas. Informe listo para revisión independiente de Claude coordinada por el PO en PR propia, **sin fusionar**. El cierre o cualquier ajuste de producto por R3 queda pendiente de decisión del PO (§17.F). Árbol final limpio después del commit documental, con el arnés probado conservado byte a byte.
 
 No se acepta First Shot ni se inicia T4.5, capa causal, #32, First Rally/gameplay o visual/art-pass. Sin acceso al iPhone. Capa 4 y la evaluación de naturalidad se reservan al playtest integrado First Shot + First Rally. **Detenerse.**
+
+
+## PR #51 — decisión literal del PO sobre R3 (13 de noviembre de 2026)
+
+Fuente: encargo documental del PO del 13 de noviembre, recibido sobre head `578dfdf`, en la misma rama/worktree `firstshot/s4-sport-scenarios`. Este registro es el primer commit de la continuación, anterior al registro de cierres y observaciones.
+
+Pregunta de Claude: **«¿Cómo tratamos R3?»**. Respuesta literal del PO: **«Open observation»**.
+
+Significado de esa opción, según la recomendación de Claude que el PO eligió:
+
+- R3 queda registrado como **Fail 0/42** y como **observación abierta**, igual que la saturación.
+- No se cambian física, solver, calibración ni presets ahora.
+- R3 se vuelve a medir después de la capa causal (**entrega propia**). Este encargo documental no ejecuta ni inicia esa medición.
+- En el playtest integrado se observa si el drop desde atrás resulta demasiado letal.
+- No convierte el Fail en Pass ni cambia la condición de R3.
+
+Esta decisión sustituye el estado pendiente de decisión del PO sobre S4-44-R3-01 consignado en el registro anterior, que se conserva como histórico. **R3 sigue Fail 0/42; observación abierta, sin ajuste de producto.** Solo documentación en AGENTS.md, aprobaciones e informe de #51; arnés y evidencia intactos. Sin Unity, AutoQA, check-release, iPhone, builds ni instalación. PR #51 para verificación de Claude coordinada por el PO, **SIN FUSIONAR**; detenerse al entregar.

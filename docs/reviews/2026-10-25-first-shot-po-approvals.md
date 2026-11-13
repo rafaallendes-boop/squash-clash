@@ -2442,3 +2442,20 @@ Registro previo a toda modificación de esta continuación, sobre head `58adfc9`
 Encargo propio desde main **8e53b41**, rama/worktree **firstshot/s4-sport-scenarios**. Aprobación literal del PO del 12 nov registrada primero en **e65e289**; método **4d71717** y correcciones de arnés antes de las corridas definitivas. Fuente limpia **fd81c2d**: **38.304 tiros** y **72.432 pares** por corrida; cuatro archivos idénticos byte a byte en dos procesos independientes. X1–X5 con testigos para los seis contactos sintetizados aplicables; R1 **2110/2110**, R2 **3173/3463** crecientes (290 contraejemplos, sin porcentaje de aceptación nuevo); **R3 Fail, 0/42**, S4-44-R3-01, sin modificar física/solver/calibración. R7 menor duración K en **6/6** recetas SL con geometría P2 idéntica a tempo 0,5/1. C1–C4 informativas; R4/C5 E3 pendientes, X6/X7/R5/R8 fuera del alcance actual y R6 aleatoria diferida. Contacto asistido P*/T*/Δ=0 fijado por construcción, no prueba extremo a extremo del contrato.
 
 Regresión fresca **691/691 EditMode y 450/450 PlayMode**, recuentos intactos y experimento fuera de suites/AutoQA; sin CS/skipped. AutoQA no aplica: solo arnés/docs, sin timing/gesto/contrato productivos. ProjectSettings restaurados; defaults **c0e9f00176d5**, P0 derivado **42d9efbf50fc**, SimulationKey **166a96e319c7** intactos. Datos derivados completos con SHA-256 y geometrías de los 332 contraejemplos en [informe](2026-11-13-first-shot-s4-sport-scenarios.md) y paquete versionado; prechecks preservados, sin ocultar correcciones de banda/enumeración. PR lista para revisión independiente de Claude coordinada por PO, **SIN FUSIONAR**. **Detener avance para decisión PO sobre R3 (§17.F)**; no se implementa ninguna alternativa. Sin spec/planes/criterios/umbrales/defaults/producto nuevos, #32, gameplay/arte, iPhone, build/export/instalación ni aceptación de First Shot; capa 4 reservada al playtest integrado.
+
+
+## PR #51 — decisión literal del PO sobre R3 (13 de noviembre de 2026)
+
+Fuente: encargo documental del PO del 13 de noviembre, recibido sobre head `578dfdf`, en la misma rama/worktree `firstshot/s4-sport-scenarios`. Este registro es el primer commit de la continuación, anterior al registro de cierres y observaciones.
+
+Pregunta de Claude: **«¿Cómo tratamos R3?»**. Respuesta literal del PO: **«Open observation»**.
+
+Significado de esa opción, según la recomendación de Claude que el PO eligió:
+
+- R3 queda registrado como **Fail 0/42** y como **observación abierta**, igual que la saturación.
+- No se cambian física, solver, calibración ni presets ahora.
+- R3 se vuelve a medir después de la capa causal (**entrega propia**). Este encargo documental no ejecuta ni inicia esa medición.
+- En el playtest integrado se observa si el drop desde atrás resulta demasiado letal.
+- No convierte el Fail en Pass ni cambia la condición de R3.
+
+Esta decisión sustituye el estado pendiente de decisión del PO sobre S4-44-R3-01 consignado en el registro anterior, que se conserva como histórico. **R3 sigue Fail 0/42; observación abierta, sin ajuste de producto.** Solo documentación en AGENTS.md, aprobaciones e informe de #51; arnés y evidencia intactos. Sin Unity, AutoQA, check-release, iPhone, builds ni instalación. PR #51 para verificación de Claude coordinada por el PO, **SIN FUSIONAR**; detenerse al entregar.
