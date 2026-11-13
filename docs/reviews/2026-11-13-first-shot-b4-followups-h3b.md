@@ -29,3 +29,59 @@ Contexto: el experimento del 2026-11-11 dejó el vector causal y los niveles de 
 **Qué no se hace:** no se fuerza Pass/Fail de H3b, no se exige desigualdad estricta en ninguna dimensión, no se cambia la zona del arnés ni física, solver, valores causales o ventanas tras ver los datos. El juicio de H3b es del PO.
 
 **Verificación de reproducibilidad:** dos ejecuciones en procesos Unity distintos y secuenciales, con el árbol limpio (`gitDirty=false`) y el mismo head; los archivos de salida deben ser idénticos byte a byte (SHA-256). Salidas crudas en `Logs/experiments/h3b-causal/` (ignorado); solo se versiona un JSON derivado en `docs/validation/evidence/2026-11-13-b4-h3b/` con los SHA-256 de los archivos crudos. Un solo Unity a la vez. Guarda de configuración: defaults `9041c4aafc77`/118 claves, P0 `b6914a349068`, SimulationKey `166a96e319c7`.
+
+## Parte A — observaciones de la revisión de #53
+
+### A1 — `pendingCausal` de RallySim (TDD, corregido)
+
+- Hallazgo: el campo `pendingCausal` (`RallySim.cs`) solo se asignaba cuando había plan de contacto y nunca se reiniciaba; una recepción sin golpe podía dejar viva la referencia congelada de la anterior (RallyDirector, en cambio, limpia `pointCausal` en `BeginPoint`, `RallyDirector.cs:111`). Con el código actual no es alcanzable un uso erróneo: `Strike` solo ocurre con `hasPending`, que exige un contacto resuelto con plan; es una guarda de invariante, no un defecto observable en partidas.
+- RED por aserción: `RallySimTests.CausalReference_DoesNotSurviveIntoAReceptionWithoutASwing` (humano Bot σ=0 golpea y el rival nunca golpea; la recepción del rival no hace swing). Primer fallo: «a reception without a swing kept the previous reception's causal reference». Las aserciones previas (primer contacto del humano con vectores propios, última recepción NoSwing/Unreachable) pasan. XML: `Logs/evidence/b4-followups-h3b/red-a1.xml` (local, ignorado). Sin errores CS.
+- GREEN: `pendingCausal=null` al inicio de `BeginReception` (`RallySim.cs:144`). Focal 1/1; `RallySimTests` 10/10. Sin cambio de contrato, defaults, solver ni resultados de partidas (RallySimTests regenerados no cambian).
+- Nota de método: la prueba lee el campo privado por reflexión (misma advertencia de mantenimiento ya registrada para las pruebas de #48); no existe otro observable porque la referencia obsoleta nunca llega a usarse.
+
+### A2 — marco corporal vivo frente al congelado (equivalencia demostrada, sin cambio de código)
+
+`Strike` resuelve con `context.FrameAt(Body(who).Position)` (`RallySim.cs:182`), mientras que `Prepare` recibió marcos de `positions[j-first]` (`RallySim.cs:162-163`). No hay diferencia posible por construcción:
+
+1. `positions` se toma con `body.PositionsAfter(n)` (`RallySim.cs:162`), que copia el cuerpo con todo su estado (`PlayerBody.cs:36`) y aplica `Step()` una vez por posición (`PlayerBody.cs:38-44`). La copia se hace **después** de `body.MoveTo(plan.Stance,…)` (`RallySim.cs:149`).
+2. Entre esa copia y el golpe, el cuerpo `who` solo cambia por `Step()` (`RallySim.cs:131`, una vez por `ball.Step`, `RallySim.cs:128`). Los otros `MoveTo/Teleport` de ese cuerpo ocurren en `Strike` después de leer la posición (tras `RallySim.cs:182`) o en `BeginReception` del oponente, que solo ocurre tras el golpe de `who`. El cuerpo del oponente no es el que golpea.
+3. `Strike` se ejecuta cuando `ball.State.Step==pendingStep` (`RallySim.cs:125`), con el cuerpo avanzado exactamente `pendingStep−first` pasos, que es el índice que `Prepare` usa para `BodyAt`. `ball.Reset` en `Strike` conserva `Step` (`RallySim.cs`, `Strike`), sin desplazar esa cuenta.
+
+Por tanto `FrameAt(Body(who).Position)` en el paso de contacto es idéntico a `reference.BodyAt(contactStep)`, que es lo que usan RallyDirector (`RallyDirector.cs:327`) y la ruta humana. No se demostró ni se buscó un caso en que difieran: la equivalencia es determinista. No se cambia código ni se añade prueba nueva. (No se ejecutó un experimento adicional de cotejo numérico; el argumento es estático.)
+
+### A3 — Observaciones registradas (sin código)
+
+- Cerca de la línea de out la altura causal se satura en 4,55 m (límite legal del frontis tras el acotado de #53) y solo queda la pérdida de velocidad: observar en el playtest.
+- Simulación de rallies tras la capa causal: Rival Out 36→59 (sobre todo pared trasera) y victorias del humano 311→330. Observar junto con R3 (drop desde atrás).
+- La fórmula de E3/E5 (distancia 3D, rampas lineales) es la lectura de Codex, no una decisión del PO.
+
+## Parte B — resultado de H3b
+
+Fuente `7f3176ef5713df956409a1780c72eb5d003ea35f`, árbol limpio, defaults `9041c4aafc77`/118, P0 `b6914a349068`, SimulationKey `166a96e319c7`. Dos procesos Unity secuenciales (`SquashClash.EditMode.Experiments`, filtro por nombre; XML de ejecución en `Logs/evidence/b4-followups-h3b/h3b-run1.xml` y `h3b-run2.xml`, 1/1 solo como ejecución del arnés). **Los tres archivos de salida son idénticos byte a byte** entre ambas corridas (`trials.json` SHA-256 `67f50b9141ba5859de149059d9150b82d9bddbe600e87edb50e2dd6a01aee1b6`, `summary.tsv` `e5f6f9f3…c`, `report.md` `e44b1dc8…a`; completos en el JSON derivado). Resumen derivado y SHA-256: `docs/validation/evidence/2026-11-13-b4-h3b/summary.json`. Crudos locales ignorados: `Logs/experiments/h3b-causal/`. 384 intentos, cero topes P2, cero instancias vivas, cero diferencias de geometría entre V y T3 en los 112 pares con contacto en ambos.
+
+| Modo | Δ ms | Intentos | Contactos | Al aire | Tarde | Zona sin causal | Zona causal | ΔAltura media (m) | ΔVel. media (frac.) | d media (m) | d=0 | Acotado |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| T3 | 0 | 48 | 48 | 0 | 0 | 48/48 | 43/48 | 0,2368 | −0,1184 | 0 | 48 | 0 |
+| T3 | −60 | 48 | 32 | 16 | 0 | 32/32 | 32/32 | 0,1148 | −0,0509 | 0,1299 | 0 | 0 |
+| T3 | −100 | 48 | 32 | 16 | 0 | 32/32 | 32/32 | 0,1332 | −0,0555 | 0,2220 | 0 | 0 |
+| T3 | −150 | 48 | 32 | 16 | 0 | 32/32 | 30/32 | 0,2385 | −0,1019 | 0,3478 | 0 | 0 |
+| V | 0 | 48 | 48 | 0 | 0 | 48/48 | 43/48 | 0,2368 | −0,1184 | 0 | 48 | 0 |
+| V | −60 | 48 | 32 | 16 | 0 | 32/32 | 32/32 | 0,1148 | −0,0509 | 0,1299 | 0 | 0 |
+| V | −100 | 48 | 32 | 16 | 0 | 32/32 | 32/32 | 0,1332 | −0,0555 | 0,2220 | 0 | 0 |
+| V | −150 | 48 | 0 | 48 | 0 | 0/0 | 0/0 | NotEvaluated | NotEvaluated | NotEvaluated | 0 | 0 |
+
+Las medias son sobre contactos resueltos (denominador cero: NotEvaluated, no cero). Con la capa causal resueltos 100 % de los contactos en todas las celdas. El desglose por causa y por receta está en `summary.tsv`/summary.json.
+
+**Niveles de ayuda.** Los bots no perciben la vista y el nivel de ayuda no entra en el contrato, el solver ni la capa causal: las tablas por nivel del informe crudo son los mismos 384 intentos y no son muestras independientes. Lo único que varía es si el anillo seguía visible en el instante de soltar: **completa 384/384, parcial 0/384, ninguna 0/384**. Parcial queda en 0 porque el anillo se oculta desde T*−0,15 s y todos los bots sueltan en o después de ese instante (con Δ=−150 exacto, oculto por la regla `now≥target−0,15` de la vista). Es un dato derivado, no un efecto medido sobre jugadores: el efecto de la ayuda sobre una persona solo puede evaluarse en el iPhone.
+
+### Interpretación limitada (el juicio de H3b es del PO)
+
+- Contactos y al aire/tarde reproducen el experimento del 11 de noviembre exactamente (256 contactos, 128 al aire, cero tarde): la capa causal no cambia quién conecta. V a −150 ms sigue sin contactos por la ventana; V filtra solo ahí.
+- El vector causal medio crece con el adelanto de T3 hasta −150 (ΔAltura +0,115/+0,133/+0,239 m; pérdida de velocidad −0,051/−0,056/−0,102) con distancia a la zona muerta 0,13/0,22/0,35 m; con Δ=0, d=0.
+- En Δ=0 el vector no es cero (+0,237 m, −0,118): proviene de la componente de estiramiento (E5, posición del cuerpo en SL1–SL4), no del tiempo; SL5/SL6 sí dan 0. Esto es coherente con E3/E5 independientes y significa que la comparación «bot preciso» no es un vector cero.
+- El acierto de zona por la ruta productiva baja en 5/48 (Δ=0) y 2/32 (T3 −150) frente a la ruta sin causal: los fallos son impactos de frontis que pasan por encima del borde superior (y>2,7) de la zona del arnés por la subida causal (SL1 y SL4). Con la zona del arnés y sin cambiar nada, no hay un efecto «de desventaja por anticipar» visible en la zona: el acierto por zona en −60/−100 se mantiene 32/32 y el efecto de mayor magnitud en altura aparece en Δ=0 por posición, no por anticipación. Esto no demuestra ni refuta H3b; la zona de 1,0 m de alto del arnés es un fixture, no un criterio.
+- Cero objetivos acotados por el límite legal del frontis en esta muestra; la saturación a 4,55 m no se ejercita en estos escenarios.
+
+## Estado de verificación
+
+(Se completa tras las compuertas finales; ver sección siguiente.)
