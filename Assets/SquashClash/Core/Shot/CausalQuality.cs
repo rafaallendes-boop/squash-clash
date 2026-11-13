@@ -86,7 +86,7 @@ namespace SquashClash.Core.Shot
         {
             var settings=CausalSettings.From(config.Source);var vectors=Evaluate(reference,body,contact,settings);
             float requested=(float)config.Source.Get("shot.vMin")+power*((float)config.Source.Get("shot.vMax")-(float)config.Source.Get("shot.vMin"));
-            var input=Apply(aim,requested,vectors,settings);
+            var input=BoundToLegalFront(Apply(aim,requested,vectors,settings),aim,config.Court,config.Physics.BallRadius);
             // The existing solver retains its feasibility raising/lowering, cap and verifier unchanged.
             // Equal endpoints convey the already composed total speed without clamping it back to vMin.
             var solution=ShotSolver.Solve(new ShotRequest(contact,input.Aim,power),input.Speed,input.Speed,(float)config.Source.Get("shot.vCap"),
@@ -170,6 +170,22 @@ namespace SquashClash.Core.Shot
             if(stretch>0)vectors.Add(new CausalVector((float)(settings.StretchHeight*stretch),(float)(settings.StretchSpeed*stretch),"stretch"));
             if(jam>0)vectors.Add(new CausalVector((float)(settings.JamHeight*jam),(float)(settings.JamSpeed*jam),"jam"));
             return vectors.ToArray();
+        }
+        // The causal height may not carry the target past the highest legal center on the front wall: the out line
+        // minus the physical ball radius, the mirror of the tin bound the solver uses (TinTop + radius).
+        // A requested aim already above that bound is left to the solver as before; the layer never lowers it.
+        // Speed is untouched.
+        public static CausalInput BoundToLegalFront(CausalInput composed,Vector2 requested,CourtDimensions court,float radius)
+        {
+            float max=FloorFloat((double)court.FrontOutLower-radius);
+            if(!(composed.Aim.y>max))return composed;
+            float bounded=Math.Max(requested.y,max);
+            return new CausalInput(new Vector2(composed.Aim.x,bounded),composed.Speed,composed.Aim,bounded<composed.Aim.y);
+        }
+        private static float FloorFloat(double value)
+        {
+            float rounded=(float)value;
+            return rounded>value?BitConverter.Int32BitsToSingle(BitConverter.SingleToInt32Bits(rounded)-1):rounded;
         }
         public static CausalInput Apply(Vector2 aim,float speed,IReadOnlyList<CausalVector> vectors,CausalSettings settings)
         {

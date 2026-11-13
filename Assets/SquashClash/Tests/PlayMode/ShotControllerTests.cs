@@ -162,17 +162,6 @@ namespace SquashClash.Runtime.Tests
             var r=Submit(Star(),p:0,aim:new Vector2(3.2f,4.4f));Assert.That(r.TargetLowered,Is.True);var reticle=app.GetComponentInChildren<AimReticleView>(true);
             Assert.That(reticle.Aim,Is.EqualTo(new Vector2(3.2f,4.4f)));Assert.That(reticle.FeasibleVisible,Is.True);Assert.That(reticle.FeasibleAim.y,Is.LessThan(reticle.Aim.y));
         }
-        [Test] public void Diagnostic_FeasibleAdjustmentCase_RecordsCausalVectorsAndSolverReason()
-        {
-            app.Tuning.Set("practice.launch",2);app.Tuning.Set("shot.vMax",10);app.Tuning.Set("shot.vCap",10);app.LaunchCurrent();
-            var r=Submit(Star(),p:0,aim:new Vector2(3.2f,4.4f));var c=controller.LastCausal;
-            var sb=new System.Text.StringBuilder("B4-CQ-DIAG result="+r.Result+" reason="+r.Reason+" solved="+c.Solution.Solved+" solverReason="+c.Solution.Reason);
-            sb.Append(" lowered="+c.Solution.TargetLowered+" raised="+c.Solution.SpeedRaised+" inputAim="+c.Input.Aim.x.ToString("R")+","+c.Input.Aim.y.ToString("R")+" inputSpeed="+c.Input.Speed.ToString("R"));
-            sb.Append(" requestedAim=3.2,4.4 frontOutLower="+app.Host.ActiveConfig.Court.FrontOutLower.ToString("R"));
-            if(c.Vectors!=null)foreach(var v in c.Vectors)sb.Append(" ["+v.Cause+" dh="+v.DeltaHeight.ToString("R")+" dv="+v.DeltaSpeedFraction.ToString("R")+"]");
-            Debug.Log(sb.ToString());
-            Assert.That(c.Vectors,Is.Not.Null);
-        }
         [Test] public void PanelChange_MidReception_DoesNotAffectCurrentShot()
         {
             double end=Star()-.15;var body=controller.Snapshot.Body;app.Tuning.Set("timing.validLimit",0);app.Tuning.Set("shot.vMax",10);app.Tuning.Set("human.x",4);
