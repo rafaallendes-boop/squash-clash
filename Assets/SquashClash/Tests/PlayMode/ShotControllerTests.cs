@@ -65,6 +65,23 @@ namespace SquashClash.Runtime.Tests
             float mm=ScreenMetrics.MmPerPx(Screen.dpi,(float)app.Tuning.Applied.Get("input.fallbackDpi"),out _);
             now=time+receivedAge;InputSystem.QueueStateEvent(screen,new TouchState{touchId=id,phase=phase,position=anchor+Vector2.down*(down/mm)},time);InputSystem.Update();
         }
+        [Test] public void CausalPausedLaunch_ResumesPreparationBeforeAnyOrder_AndFreezesOnce()
+        {
+            app.Clock.Paused=true;app.LaunchCurrent();Assert.That(controller.CausalReference,Is.Null);
+            app.Host.Advance(.02);app.Clock.Paused=false;app.Host.Advance(0);
+            controller.ProcessPending();
+            var reference=controller.CausalReference;Assert.That(reference,Is.Not.Null,"an empty input queue still prepares the resumed reception");
+            var record=Submit(Star());Assert.That(record.Applied,Is.True,record.Reason);
+            Assert.That(controller.CausalReference,Is.SameAs(reference));Assert.That(controller.LastCausal.Vectors,Is.Not.Null);
+        }
+        [Test] public void CausalPausedLaunch_WithoutMappedTarget_IsNotEvaluableAndHasNoVector()
+        {
+            app.Clock.Paused=true;app.LaunchCurrent();app.Host.Advance(.05);now=app.Host.ObservedRealTime;
+            controller.Enqueue(Order(now));controller.ProcessPending();
+            Assert.That(controller.LastRecord,Is.Not.Null);Assert.That(controller.LastRecord.Result,Is.EqualTo("NotEvaluable"));
+            Assert.That(controller.LastRecord.Reason,Is.EqualTo("no-presented-plan-at-event"));
+            Assert.That(controller.LastCausal.Vectors,Is.Null);Assert.That(controller.LastRecord.Applied,Is.False);
+        }
         [Test] public void CausalReference_IsPreparedAtLaunch_AndSharedInputIsAppliedAndTraced()
         {
             var reference=controller.CausalReference;Assert.That(reference,Is.Not.Null);

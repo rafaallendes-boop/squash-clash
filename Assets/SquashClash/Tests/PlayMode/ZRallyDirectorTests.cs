@@ -1,8 +1,12 @@
+using System;
+using System.IO;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using SquashClash.Core.Config;
 using SquashClash.Core.Rally;
+using SquashClash.Core.Shot;
 using SquashClash.Runtime.App;
 using SquashClash.Runtime.Rally;
 using SquashClash.Runtime.Shot;
@@ -47,6 +51,32 @@ namespace SquashClash.Runtime.Tests
         }
         private Vector2 Drawn(string name){var t=app.Players.transform.Find(name);return new Vector2(t.localPosition.x,t.localPosition.z);}
 
+        [Serializable] private sealed class CausalMetricLine {public string kind,payload;}
+        [Serializable] private sealed class CausalPointLine {public CausalShotTrace[] causal;}
+        private CausalShotTrace[] LastPointCausal()=>File.ReadLines(app.Metrics.CurrentFilePath)
+            .Select(JsonUtility.FromJson<CausalMetricLine>).Where(line=>line.kind=="rally-point")
+            .Select(line=>JsonUtility.FromJson<CausalPointLine>(line.payload)).Last().causal;
+        [Test] public void CausalTrace_NewPointContainsOnlyItsOwnContacts()
+        {
+            rally.Autopilot=true;rally.AutopilotTimingSigmaMs=0;rally.Seed=5;rally.AutoRestart=false;
+            rally.SetParams(new RallyParams{MaxShots=4});rally.StartMode();
+            Assert.That(Drive(()=>rally.Phase==RallyPhase.PointOver,120),Is.True);
+            var first=LastPointCausal();Assert.That(first,Is.Not.Empty);
+            rally.Rematch();long secondStart=app.Host.LaunchId;
+            Assert.That(Drive(()=>rally.Phase==RallyPhase.PointOver,120),Is.True);
+            var second=LastPointCausal();Assert.That(second,Is.Not.Empty);
+            Assert.That(second.All(trace=>trace.launchId>=secondStart),Is.True,"rally-point must not retain vectors from the previous point");
+        }
+        [Test] public void CausalPausedRival_PreparesOnResumeBeforeTheContact()
+        {
+            app.Clock.Paused=true;rally.StartMatch();Assert.That(rally.Phase,Is.EqualTo(RallyPhase.RivalReception));
+            Assert.That(rally.RivalPlan.Contact.Exists,Is.True);int contacts=0;rally.RivalSwing+=(_,hit)=>{if(hit)contacts++;};
+            app.Host.Advance(.02);rally.Tick();Assert.That(contacts,Is.Zero);
+            app.Clock.Paused=false;app.Host.Advance(0);
+            Assert.That(Drive(()=>contacts>0||rally.Phase==RallyPhase.PointOver,30),Is.True);
+            Assert.That(contacts,Is.GreaterThan(0),"resumed reception must prepare its causal reference before solving");
+            Assert.That(rally.SystemFaults,Is.Zero);
+        }
         [UnityTest] public IEnumerator StartMode_FeedsANeutralBallToTheHuman()
         {
             long before=app.Host.LaunchId;
