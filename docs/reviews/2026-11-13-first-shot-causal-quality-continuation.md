@@ -82,3 +82,8 @@ El cuerpo del test es **idéntico al de 92a6696**. No se altera el test ni se at
 XML/logs y diff de ProjectSettings preservados localmente en `Logs/evidence/b4-causal-continuation/`; [SHA-256, resultados y pendientes](../validation/evidence/2026-11-13-b4-causal-continuation/continuation-stop.json). GraphicsSettings/QualitySettings transitorios restaurados desde su estado limpio; todo ProjectSettings idéntico al head inicial. Corpus #52 íntegro por SHA-256. Spec/plan, Core (incluidos contrato, reloj, solver y capa causal), DefaultPreset, rangos, RallyParams, pesos y cinemática sin cambios durante esta continuación. Solo los dos archivos runtime autorizados, tests, anclajes y documentación cambian.
 
 Un solo Unity por vez; **ningún Unity ni corrida nueva después de la parada**. Sin build nativa, instalación, iPhone, H3b o R3 nuevos. R3 conserva Fail 0/42 como observación abierta. Falta el gate completo PlayMode/AutoQA/check-release para quitar [BLOCKED]. PR #53 para revisión de Claude coordinada por el PO, **SIN FUSIONAR**, sin mensajes externos a Claude. First Shot sigue sin aceptar y pendiente del playtest integrado.
+
+
+## 6. Continuación tras B4-CQ-IMPL-02 (13 de noviembre de 2026)
+
+Decisión literal del PO, interpretación de Claude, operador (subagente Sonnet dirigido por Claude, no Codex) e hipótesis no demostrada: ver [aprobaciones](2026-10-25-first-shot-po-approvals.md#b4--decisión-del-po-tras-b4-cq-impl-02-y-continuación-con-subagente-sonnet-13-de-noviembre-de-2026). Plan: (1) diagnóstico sin tocar producto; (2) solo si coincide con la hipótesis, TDD de la acotación al máximo legal; (3) gate completo. Ante otra sorpresa: registrar y detenerse. Resultados a continuación, a medida que se observan.

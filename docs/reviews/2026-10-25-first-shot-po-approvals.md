@@ -2644,3 +2644,18 @@ Hashes medidos en Unity: defaults **9041c4aafc77/118**, P0 efectivo **b6914a3490
 Primer commit literal **218204c** sobre head exacto **92a6696**, misma rama/worktree/PR #53. Revisión de Claude comunicada por el PO: error de columna del arnés confirmado, no del producto. **e0ca095** corrige lectura por encabezado, sin cambiar tolerancia/corpus/producto: **270 condiciones**, 1.026 Perfect cubiertos, 270 pares −41→−40 completos; 252 cambian paso (180 timing no cero→cero, 72 cero→cero), 18 Air–Air sin vector. **81111ec RED 0/4 por aserción→bad5df2 GREEN 4/4**: aislamiento de trazas por punto, preparación con reloj pausado/reanudado en humano/rival y NotEvaluable sin target ficticio. **3ef1a3c GREEN 3/3** integración/equivalencia runtime. Hashes re-medidos en Unity coinciden: defaults 9041c4aafc77/118, P0 b6914a349068, SL5 e2ffa032a588; commits propios **330d190/0ed17c5** de recuentos/anclajes/operador, heredados/SimulationKey intactos.
 
 **EditMode completa 708/708** con XML fresco; RallySimTests regeneró 1.000 rallies, todos Point, cero fallas de sistema: media 19,367 golpes/40,7684 s, ganador Human/Rival 330/670, Air593/Late312/Unreachable36/Out59. Pesos/cinemática/RallyParams intactos, comparación histórica documentada. **PlayMode única 456/457**, fuente limpia 0ed17c5, 15:10:19–15:12:43 Chile: falla `FeasibleAdjustment_ShowsIntentionAndFeasibleMarks`, TargetLowered esperado True/observado False. Test idéntico al head inicial; causa no demostrada por XML, sin atribución al entorno. **Detenerse, sin corrección ni reintento**. AutoQA/check-release no ejecutados tras la parada; PR #53 mantiene **[BLOCKED] y SIN FUSIONAR**. ProjectSettings transitorios preservados/restaurados, corpus #52/spec/plan/Core/DefaultPreset intactos durante la continuación. Sin H3b/R3 nuevos, iPhone, build nativa ni instalación; First Shot no aceptado. [Informe](2026-11-13-first-shot-causal-quality-continuation.md), evidencia local preservada.
+
+
+## B4 — decisión del PO tras B4-CQ-IMPL-02 y continuación con subagente Sonnet (13 de noviembre de 2026)
+
+**Respuesta literal del PO**, dada a la pregunta de Claude sobre cómo tratar una subida causal por encima de la línea de out (opción recomendada por Claude: (a) «acotar al máximo legal»):
+
+> «Envía ese prompt a un sub agente que sea de sonnet, luego revisa su PR y seguimos avanzando.»
+
+**Interpretación de Claude, separada del literal:** el PO aprueba continuar con la opción recomendada (a), aplicada **solo si el diagnóstico confirma la hipótesis**; si no la confirma, se registra y se detiene.
+
+**Operador de esta continuación:** un subagente Sonnet dirigido por Claude, no Codex. Claude revisa después; esa revisión no es la de un operador independiente.
+
+**Hipótesis de Claude (no demostrada):** `CausalQuality.Apply` sube `aim.y` con la altura compuesta (estirado/atorado/timing) y `ShotSolver.Solve` rechaza `aim.y >= FrontOutLower` (4,57) con «target-or-contact-outside-court»; el golpe queda sin resolver (SystemFault) y `TargetLowered` queda False.
+
+Misma rama `firstshot/causal-quality-impl`, misma PR #53, head `415e5ba`. Sin H3b, R3, iPhone, build nativa ni instalación; no acepta First Shot; sin fusionar.
