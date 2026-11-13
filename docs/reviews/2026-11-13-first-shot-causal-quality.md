@@ -49,3 +49,27 @@ Reconciliar la exigencia de «Perfect sin vector de timing» con la independenci
 - La entrega de implementación y la PR final lista para Claude quedan **pendientes de la decisión del PO sobre CQ-01**. No se declara completada T3.1, H3b ni First Shot; no se fusiona.
 
 Se conserva la rama/worktree para una continuación autorizada. Se aplica la parada pedida por el PO; no se implementa una solución alternativa dentro de este encargo.
+
+## Continuación B4 / CQ-01 — decisión literal del PO (13 nov 2026)
+
+> Apruebo conceptualmente la opción C: zona muerta geométrica, con validación técnica previa.
+> Como PO, quiero priorizar una mecánica consistente, predecible y justa. Dos golpes con idéntica geometría e intención deben producir el mismo resultado, independientemente de su clasificación temporal.
+> Condiciones:
+> 1. Mantener las ventanas actuales de Perfecto (±40 ms) y Valid, sin modificar el contrato de contacto.
+> 2. El vector de timing dependerá exclusivamente de la geometría efectiva del contacto, sin bonificaciones ni penalizaciones adicionales por categoría.
+> 3. Definir una zona muerta geométrica donde el vector sea cero, con crecimiento continuo fuera de ella.
+> 4. Verificar que todos los contactos Perfecto alcanzables queden cubiertos, considerando diferentes trayectorias, velocidades y estados de contacto.
+> 5. Mantener independientes los efectos de posición E3/E5.
+> 6. Aceptar que un Valid cercano al límite de Perfecto pueda tener idéntica salida si su geometría es equivalente.
+> 7. Actualizar explícitamente §7.1 y §17.A.12 para eliminar la contradicción, sin alterar otros criterios aprobados.
+> 8. Implementar TDD para continuidad, determinismo, límites y ausencia de ventajas artificiales por anticipación.
+> Antes de modificar código, presentar la definición matemática propuesta, los casos límite y una evaluación del tamaño de la zona muerta. Si resulta demasiado amplia o elimina la penalización que buscamos, detenerse y presentar alternativas.
+> Una vez validada la propuesta técnica, podremos autorizar la implementación mediante el flujo habitual de Codex, r
+
+El mensaje del PO llegó cortado al final; se registra tal cual, sin completarlo. Esta continuación autoriza **solo propuesta técnica y experimento explícito** en Tests/Experiments. La implementación sigue detenida y requiere autorización nueva del PO después de la revisión de Claude. Sin producto, claves/defaults, spec/plan/criterios/ventanas/contrato, AutoQA, check-release, iPhone, builds o instalación. Unity solo para el experimento y una instancia a la vez. Método en commit previo a ejecutar; dos corridas idénticas byte a byte con SHA-256. Entrega en esta misma rama, SIN FUSIONAR.
+
+### Cierre verificado de PR #51 y corrección X1
+
+PO: **«Yes, merge #51»**. Git verificado antes de este registro: merge **11ac6da80a8ac04ff727cbf55f1da47396d1c725**, padres **8e53b41ce3119c03951cce3aefe5fa55a1be4f5f** y **e4386525d13815925c94e10288595ec4749e9e6f** (segundo padre exacto). Árbol de merge y segundo padre idéntico: **2665cd7315589daa721196feaf07df4fc2811207**. No se ejecuta ninguna fusión en esta continuación. No acepta First Shot; **R3 sigue Fail 0/42 como observación abierta**.
+
+Corrección de atribución comunicada por el PO: los tiros X1 más limpios señalados por Claude son **273 en B0 y en B3, y 87 en B1 y en B2**. La atribución anterior «273/87, respectivamente B0/B3» interpretó mal una redacción ambigua de Claude. Se corrige en los tres registros, sin recalcular ni alterar arnés, evidencia, testigos o criterios de #51.

@@ -2490,7 +2490,7 @@ Revisión del head **`578dfdfaa9c452e826f961e78a3af6ea5aee1d13`**, comunicada po
 - **R3, recuento independiente:** desde `trials.tsv`, resultado idéntico **0/42**, con **18 pares con velocidad elevada y 24 sin ella**. El Fail se conserva.
 - **Interpretación de la intención:** la lectura «misma intención = misma potencia» es de **Codex y no está aprobada por el PO**. Es la operacionalización de la muestra original, no una decisión normativa del PO sobre R3. La lectura alternativa —drop legal más suave de cada lado al mismo objetivo— también falla según Claude: adelante **z2≈1,56–1,68 m**, atrás **≈0,86–0,88 m**. Se registra sin sustituir ni reetiquetar la muestra original.
 - **Hipótesis no demostrada:** Claude señala que P2 no modela resistencia del aire (solo gravedad, restitución y fricción) como posible explicación a investigar; no se demuestra aquí que esa ausencia cause R3. Agregar resistencia del aire sería **una mecánica nueva, fuera del alcance aprobado**. No se implementa ni se autoriza por este registro.
-- **X1, representatividad:** los testigos de **B0/B3** llegan a la pared trasera sin botar, luego tocan la lateral y se deslizan pegados a ella (**x=radio**, expresado como distancia a su lateral propia en el lado espejado). Son testigos poco representativos. Según Claude, existen **273/87 tiros X1 más limpios**, respectivamente B0/B3; esa caracterización no introduce un umbral aprobado ni reemplaza los testigos predeclarados.
+- **X1, representatividad:** los testigos de **B0/B3** llegan a la pared trasera sin botar, luego tocan la lateral y se deslizan pegados a ella (**x=radio**, expresado como distancia a su lateral propia en el lado espejado). Son testigos poco representativos. Según la aclaración del PO del 13 nov, los recuentos de Claude son **273 tiros X1 más limpios en B0 y en B3, y 87 en B1 y en B2** (la atribución anterior interpretó una redacción ambigua); esa caracterización no introduce un umbral aprobado ni reemplaza los testigos predeclarados.
 - **Bandas alcanzables, recuentos derivados de Claude sin umbrales aprobados:** X2 con segundo bote en el cuarto trasero **49/10/10/49** para B0/B1/B2/B3; unos **430 tiros tipo C3** y unos **1.000 tipo C4**. Las bandas son alcanzables en la grilla según ese análisis; no se convierten los recuentos en criterios ni Pass nuevos y no se alteran las tablas de los testigos originales.
 - **Alcance de R7:** se cumple **por construcción**, porque el tempo escala el reloj. La comparación prueba la **conversión de tiempo, no el planificador**. El uso de K obtenido del planificador real no implica que esta comparación valide su corrección. Se conserva la medición histórica con ese límite interpretativo.
 
@@ -2501,3 +2501,28 @@ Revisión del head **`578dfdfaa9c452e826f961e78a3af6ea5aee1d13`**, comunicada po
 Solo se añaden registros en **AGENTS.md, aprobaciones First Shot e informe de #51**. Sin reescribir historia ni modificar arnés/evidencia/producto/tests/spec/planes/criterios/defaults. No se ejecutan Unity, suites, AutoQA o check-release; las cifras anteriores siguen siendo históricas, sin corridas nuevas. Sin iPhone, builds ni instalación. Delta documental comprobado contra `578dfdf`; todo archivo versionado fuera de los tres permitidos conserva sus bytes, y el árbol de trabajo queda limpio al entregar.
 
 **PR #51 lista para la verificación de Claude coordinada por el PO, SIN FUSIONAR.** La aprobación de la revisión comunicada no se trata como autorización de fusión. No acepta First Shot ni el juicio deportivo reservado al playtest integrado. **Detenerse al entregar.**
+
+
+## Continuación B4 / CQ-01 — decisión literal del PO (13 nov 2026)
+
+> Apruebo conceptualmente la opción C: zona muerta geométrica, con validación técnica previa.
+> Como PO, quiero priorizar una mecánica consistente, predecible y justa. Dos golpes con idéntica geometría e intención deben producir el mismo resultado, independientemente de su clasificación temporal.
+> Condiciones:
+> 1. Mantener las ventanas actuales de Perfecto (±40 ms) y Valid, sin modificar el contrato de contacto.
+> 2. El vector de timing dependerá exclusivamente de la geometría efectiva del contacto, sin bonificaciones ni penalizaciones adicionales por categoría.
+> 3. Definir una zona muerta geométrica donde el vector sea cero, con crecimiento continuo fuera de ella.
+> 4. Verificar que todos los contactos Perfecto alcanzables queden cubiertos, considerando diferentes trayectorias, velocidades y estados de contacto.
+> 5. Mantener independientes los efectos de posición E3/E5.
+> 6. Aceptar que un Valid cercano al límite de Perfecto pueda tener idéntica salida si su geometría es equivalente.
+> 7. Actualizar explícitamente §7.1 y §17.A.12 para eliminar la contradicción, sin alterar otros criterios aprobados.
+> 8. Implementar TDD para continuidad, determinismo, límites y ausencia de ventajas artificiales por anticipación.
+> Antes de modificar código, presentar la definición matemática propuesta, los casos límite y una evaluación del tamaño de la zona muerta. Si resulta demasiado amplia o elimina la penalización que buscamos, detenerse y presentar alternativas.
+> Una vez validada la propuesta técnica, podremos autorizar la implementación mediante el flujo habitual de Codex, r
+
+El mensaje del PO llegó cortado al final; se registra tal cual, sin completarlo. Esta continuación autoriza **solo propuesta técnica y experimento explícito** en Tests/Experiments. La implementación sigue detenida y requiere autorización nueva del PO después de la revisión de Claude. Sin producto, claves/defaults, spec/plan/criterios/ventanas/contrato, AutoQA, check-release, iPhone, builds o instalación. Unity solo para el experimento y una instancia a la vez. Método en commit previo a ejecutar; dos corridas idénticas byte a byte con SHA-256. Entrega en esta misma rama, SIN FUSIONAR.
+
+### Cierre verificado de PR #51 y corrección X1
+
+PO: **«Yes, merge #51»**. Git verificado antes de este registro: merge **11ac6da80a8ac04ff727cbf55f1da47396d1c725**, padres **8e53b41ce3119c03951cce3aefe5fa55a1be4f5f** y **e4386525d13815925c94e10288595ec4749e9e6f** (segundo padre exacto). Árbol de merge y segundo padre idéntico: **2665cd7315589daa721196feaf07df4fc2811207**. No se ejecuta ninguna fusión en esta continuación. No acepta First Shot; **R3 sigue Fail 0/42 como observación abierta**.
+
+Corrección de atribución comunicada por el PO: los tiros X1 más limpios señalados por Claude son **273 en B0 y en B3, y 87 en B1 y en B2**. La atribución anterior «273/87, respectivamente B0/B3» interpretó mal una redacción ambigua de Claude. Se corrige en los tres registros, sin recalcular ni alterar arnés, evidencia, testigos o criterios de #51.
