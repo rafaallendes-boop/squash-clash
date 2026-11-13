@@ -1,0 +1,173 @@
+{
+  "status": "Stopped B4-CQ-IMPL-01; incomplete implementation, not mergeable",
+  "base": "09764ab1899fc01460f848050eed1288635bbff2",
+  "source": "4d08f35",
+  "failure": {
+    "test": "ZoneCovers_AllReachablePerfect_AcrossTemposAndTrajectories_AndMeasuresEarlySnap",
+    "context": {
+      "recipe": "SL3",
+      "tempo": 0.65,
+      "compMs": -75
+    },
+    "actualArcRadiusM": 0.18950885632079206,
+    "wrongExpectedAdaptiveRadiusM": 0.18950155531216195,
+    "historicalLarcM": 0.18950885632079206,
+    "toleranceInTestM": 1e-09,
+    "cause": "Test reads zones.tsv column 14 (adaptiveRadiusM) instead of column 13 (LarcM). No product geometry defect demonstrated. Assertion and evidence left unchanged after stop."
+  },
+  "freshXml": {
+    "01-red.xml": {
+      "sha256": "09cbd5142faf3cf0199dec67563c801aafa58c1c601eb33dee4d715da9030453",
+      "counts": {
+        "total": "10",
+        "passed": "0",
+        "failed": "10",
+        "skipped": "0",
+        "start-time": "2026-11-13 17:38:49Z",
+        "end-time": "2026-11-13 17:38:49Z"
+      }
+    },
+    "01-green.xml": {
+      "sha256": "e3e80aa836b0d253595a52fd4cebc7a90faa9c4000eb8799bdbcb0047a5a6c76",
+      "counts": {
+        "total": "10",
+        "passed": "10",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-11-13 17:41:23Z",
+        "end-time": "2026-11-13 17:41:23Z"
+      }
+    },
+    "02-red.xml": {
+      "sha256": "47842cc8fabfde6e57dffa0078482ce72c845956ebe1e24b02f6bf43ef67d944",
+      "counts": {
+        "total": "12",
+        "passed": "10",
+        "failed": "2",
+        "skipped": "0",
+        "start-time": "2026-11-13 17:43:53Z",
+        "end-time": "2026-11-13 17:43:53Z"
+      }
+    },
+    "02-green.xml": {
+      "sha256": "692674dcca362e94f94df47737a9c2a93a9447de347f141965733b05cd1e5e79",
+      "counts": {
+        "total": "12",
+        "passed": "12",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-11-13 17:45:47Z",
+        "end-time": "2026-11-13 17:45:47Z"
+      }
+    },
+    "03-red.xml": {
+      "sha256": "d4ff4a0b2daa0c9aeb96d8ff431b2fc0bb52cb1b3299d4e1fe433617c60b8683",
+      "counts": {
+        "total": "15",
+        "passed": "12",
+        "failed": "3",
+        "skipped": "0",
+        "start-time": "2026-11-13 17:49:05Z",
+        "end-time": "2026-11-13 17:49:06Z"
+      }
+    },
+    "04-red.xml": {
+      "sha256": "41251852c1d5a22204b511dbbb90e44ec03ce6ca9a317dd4536f4b15985725ae",
+      "counts": {
+        "total": "1",
+        "passed": "0",
+        "failed": "1",
+        "skipped": "0",
+        "start-time": "2026-11-13 17:52:09Z",
+        "end-time": "2026-11-13 17:52:13Z"
+      }
+    },
+    "03-green-attempt-coverage-failure.xml": {
+      "sha256": "70b9a1928b757045a1ad15fbbcfe63bf62bc2b8490e0393f661543fe93b2da77",
+      "counts": {
+        "total": "17",
+        "passed": "16",
+        "failed": "1",
+        "skipped": "0",
+        "start-time": "2026-11-13 17:53:49Z",
+        "end-time": "2026-11-13 17:53:50Z"
+      }
+    }
+  },
+  "measuredInUnity": {
+    "defaults": "9041c4aafc77",
+    "p0Effective": "b6914a349068",
+    "sl5Scenario": "e2ffa032a588",
+    "keys": 118,
+    "inherited": "0d39e6016bd8",
+    "p0Inherited": "8de3f2ecb217",
+    "simulationKey": "166a96e319c7",
+    "p0FileSHA256": "2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd",
+    "anchorUpdates": "Pending; not applied after stop"
+  },
+  "snapMeasurement": {
+    "completeContexts": 21,
+    "failedContextOrdinal": 22,
+    "plannedContexts": 270,
+    "note": "Only 21 complete contexts before stop, not complete coverage. 18 accepted SL1/SL2 pairs and 3 SL3 Air/Air pairs with no vector. Other recipes pending.",
+    "lines": [
+      "B4_SNAP SL1 tempo=0.3 comp=-75 minus41=Valid/step=157/d=0.046089741468661884/height=0.0276538469/speed=-0.0115224356 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL1 tempo=0.3 comp=0 minus41=Valid/step=157/d=0.046089741468661884/height=0.0276538469/speed=-0.0115224356 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL1 tempo=0.3 comp=75 minus41=Valid/step=157/d=0.046089741468661884/height=0.0276538469/speed=-0.0115224356 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL1 tempo=0.65 comp=-75 minus41=Valid/step=155/d=0.13871678991808684/height=0.08323008/speed=-0.0346791968 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL1 tempo=0.65 comp=0 minus41=Valid/step=155/d=0.13871678991808684/height=0.08323008/speed=-0.0346791968 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL1 tempo=0.65 comp=75 minus41=Valid/step=155/d=0.13871678991808684/height=0.08323008/speed=-0.0346791968 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL1 tempo=1 comp=-75 minus41=Valid/step=153/d=0.23198823479252398/height=0.139192954/speed=-0.05799706 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL1 tempo=1 comp=0 minus41=Valid/step=153/d=0.23198823479252398/height=0.139192954/speed=-0.05799706 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL1 tempo=1 comp=75 minus41=Valid/step=153/d=0.23198823479252398/height=0.139192954/speed=-0.05799706 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL2 tempo=0.3 comp=-75 minus41=Valid/step=157/d=0.046089741468661884/height=0.0276538469/speed=-0.0115224356 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL2 tempo=0.3 comp=0 minus41=Valid/step=157/d=0.046089741468661884/height=0.0276538469/speed=-0.0115224356 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL2 tempo=0.3 comp=75 minus41=Valid/step=157/d=0.046089741468661884/height=0.0276538469/speed=-0.0115224356 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL2 tempo=0.65 comp=-75 minus41=Valid/step=155/d=0.13871678991808684/height=0.08323008/speed=-0.0346791968 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL2 tempo=0.65 comp=0 minus41=Valid/step=155/d=0.13871678991808684/height=0.08323008/speed=-0.0346791968 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL2 tempo=0.65 comp=75 minus41=Valid/step=155/d=0.13871678991808684/height=0.08323008/speed=-0.0346791968 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL2 tempo=1 comp=-75 minus41=Valid/step=153/d=0.23198823479252398/height=0.139192954/speed=-0.05799706 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL2 tempo=1 comp=0 minus41=Valid/step=153/d=0.23198823479252398/height=0.139192954/speed=-0.05799706 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL2 tempo=1 comp=75 minus41=Valid/step=153/d=0.23198823479252398/height=0.139192954/speed=-0.05799706 minus40=Perfect/step=158/d=0/height=0/speed=0",
+      "B4_SNAP SL3 tempo=0.3 comp=-75 minus41=Failed/Air/no-vector minus40=Failed/Air/no-vector",
+      "B4_SNAP SL3 tempo=0.3 comp=0 minus41=Failed/Air/no-vector minus40=Failed/Air/no-vector",
+      "B4_SNAP SL3 tempo=0.3 comp=75 minus41=Failed/Air/no-vector minus40=Failed/Air/no-vector"
+    ]
+  },
+  "protectedUnchanged": [
+    "Assets/SquashClash/Core/Shot/ContactContract.cs",
+    "Assets/SquashClash/Core/Shot/ShotSolver.cs",
+    "Assets/SquashClash/Core/Rally/RallyParams.cs",
+    "docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md",
+    "docs/superpowers/plans/2026-10-25-squash-clash-first-shot.md"
+  ],
+  "all108PreviousDefaultValuesUnchanged": true,
+  "historicalCorpusSHA256": {
+    "docs/validation/evidence/2026-11-13-causal-zone-proposal/README.md": "78d1bedd86f1e1036b60e400bb28142232e51e192d1c32fb916f479c1a44c800",
+    "docs/validation/evidence/2026-11-13-causal-zone-proposal/analyze.py": "498b7d95fc695d4ffb417189408ccae4f53fab65e68748581a1ef66f621771fe",
+    "docs/validation/evidence/2026-11-13-causal-zone-proposal/capture.tsv": "07e9fffa040502f3993dca7e4c613c876089de14d61b6b664ee50b5cf7477c4e",
+    "docs/validation/evidence/2026-11-13-causal-zone-proposal/cells.tsv": "f6dcb8bb87636ac51e3c6e049d2c16ed13563b7b8d1129672d4f0de0abfcda59",
+    "docs/validation/evidence/2026-11-13-causal-zone-proposal/events.tsv": "863b1cfa6e87fc42b9650e3c603826dda53fe940b339ca6a493197e8e021127c",
+    "docs/validation/evidence/2026-11-13-causal-zone-proposal/geometry.tsv": "8bf0ef3fe82bab59ecd77102924717a006e6ad86b2c0c66f2b452ea7df679a41",
+    "docs/validation/evidence/2026-11-13-causal-zone-proposal/manifest.json": "3c2d289a4efbe048dd13491a0d6c914dffce18864a4fc36ee82779d33385ff49",
+    "docs/validation/evidence/2026-11-13-causal-zone-proposal/metadata.tsv": "5adec24fad100c457dc4de81bfc6935dab34b88d6ed9daeaa5ec7ef8a2db6d43",
+    "docs/validation/evidence/2026-11-13-causal-zone-proposal/probes.tsv": "082ea5dcbbfeba966cdc5b1391656d9a5022ebaa5f5956be6e6ba43e7ea7138c",
+    "docs/validation/evidence/2026-11-13-causal-zone-proposal/rally-sample.tsv": "dad93352945493b7aedc6b0c90a024141486ad345daa8681725437b2b6056b23",
+    "docs/validation/evidence/2026-11-13-causal-zone-proposal/tables.md": "41867ca3ec42447571d86404ae3f8fa7667429bfce2eae03237458a74165fe1e",
+    "docs/validation/evidence/2026-11-13-causal-zone-proposal/zones.tsv": "072cbc283ecf257a69ce233ef3b0033b4063297f3c34924f6df6ac3aa260c9dd"
+  },
+  "pending": [
+    "Runtime GREEN",
+    "Correct coverage harness after PO decision",
+    "Complete matrix and snap coverage",
+    "Separate Unity hash/AutoQA anchor commit",
+    "Full EditMode/PlayMode",
+    "RallySimTests regeneration/report",
+    "AutoQA PASS/0/level1",
+    "check-release dev/prod gitDirty=false",
+    "Review per-point trace reset and paused reception setup"
+  ],
+  "noNewRunsAfterStop": true,
+  "noIPhoneNativeBuildInstall": true,
+  "projectSettingsUnchanged": true
+}
