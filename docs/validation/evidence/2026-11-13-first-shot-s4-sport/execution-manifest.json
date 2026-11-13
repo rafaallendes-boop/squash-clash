@@ -1,0 +1,306 @@
+[
+  {
+    "classification": "precheck-7025fd1",
+    "files": {
+      "Logs/evidence/sport/precheck-7025fd1/run01.log": {
+        "bytes": 168815,
+        "sha256": "3c49421e11e570819bc9a8dace212e9fb4213bea304fcfc95419cb4b58b61f12"
+      },
+      "Logs/evidence/sport/precheck-7025fd1/run01.xml": {
+        "bytes": 4049,
+        "sha256": "6bab8520976e579c628f422800614d415a0ff92f3c005b8fe9fb08ecf660dfe0"
+      },
+      "Logs/experiments/sport/precheck-7025fd1/run01/pairs.tsv": {
+        "bytes": 5791911,
+        "sha256": "30007d501e2df284413f1ed27f253f1ba48598c22c8b8c52be7d88e0080cdaf2"
+      },
+      "Logs/experiments/sport/precheck-7025fd1/run01/summary.json": {
+        "bytes": 13509,
+        "sha256": "19e58f5bd3a620d5279842cb6bf8f41834ec32865ad9d0f750e0922deffa5db6"
+      },
+      "Logs/experiments/sport/precheck-7025fd1/run01/trials.tsv": {
+        "bytes": 13344347,
+        "sha256": "36fb4b1ac133806dd02edee23f9edf7a211065804e0569a4617004d1cc4fbb2c"
+      },
+      "Logs/experiments/sport/precheck-7025fd1/run01/witnesses.json": {
+        "bytes": 68890,
+        "sha256": "33834b9dee8a9b818fb0b28d3e2d815e2d4b9b5e4b57b578612c763a175f08c6"
+      }
+    },
+    "gitDirty": false,
+    "run": "run01",
+    "source": "7025fd1554fc09faca38f762a92e443d4843a207",
+    "xml": {
+      "asserts": "0",
+      "clr-version": "4.0.30319.42000",
+      "duration": "1.8790102",
+      "end-time": "2026-11-13 10:50:14Z",
+      "engine-version": "3.5.0.0",
+      "failed": "0",
+      "id": "2",
+      "inconclusive": "0",
+      "passed": "1",
+      "result": "Passed",
+      "skipped": "0",
+      "start-time": "2026-11-13 10:50:13Z",
+      "testcasecount": "1",
+      "total": "1"
+    }
+  },
+  {
+    "classification": "precheck-88391dd",
+    "files": {
+      "Logs/evidence/sport/precheck-88391dd/run01.log": {
+        "bytes": 62127,
+        "sha256": "f16df48b03db06f47dbaa0ac80b6ae7600f86c4375a1f0a04b68808b9c7663bf"
+      },
+      "Logs/evidence/sport/precheck-88391dd/run01.xml": {
+        "bytes": 4050,
+        "sha256": "ffe680ac021aa54290c3c7cbcd3d774b555ca606523bcb5e0efb6fe01105d804"
+      },
+      "Logs/experiments/sport/precheck-88391dd/run01/pairs.tsv": {
+        "bytes": 5839183,
+        "sha256": "2b3e4a13fcfba336009019e9f0ae14a127dae2f3045dc56ebd1196a8c073b99a"
+      },
+      "Logs/experiments/sport/precheck-88391dd/run01/summary.json": {
+        "bytes": 13508,
+        "sha256": "bbeeda1717cb63777eef686d7094f5ed3f7c8aadf10fcf8ce1a6d1459c90caa3"
+      },
+      "Logs/experiments/sport/precheck-88391dd/run01/trials.tsv": {
+        "bytes": 13344347,
+        "sha256": "36fb4b1ac133806dd02edee23f9edf7a211065804e0569a4617004d1cc4fbb2c"
+      },
+      "Logs/experiments/sport/precheck-88391dd/run01/witnesses.json": {
+        "bytes": 68890,
+        "sha256": "33834b9dee8a9b818fb0b28d3e2d815e2d4b9b5e4b57b578612c763a175f08c6"
+      }
+    },
+    "gitDirty": false,
+    "run": "run01",
+    "source": "88391dd5eac25fd400b5d4284f49eb8460a8c869",
+    "xml": {
+      "asserts": "0",
+      "clr-version": "4.0.30319.42000",
+      "duration": "1.8460358",
+      "end-time": "2026-11-13 10:50:50Z",
+      "engine-version": "3.5.0.0",
+      "failed": "0",
+      "id": "2",
+      "inconclusive": "0",
+      "passed": "1",
+      "result": "Passed",
+      "skipped": "0",
+      "start-time": "2026-11-13 10:50:48Z",
+      "testcasecount": "1",
+      "total": "1"
+    }
+  },
+  {
+    "classification": "precheck-88391dd",
+    "files": {
+      "Logs/evidence/sport/precheck-88391dd/run02.log": {
+        "bytes": 59679,
+        "sha256": "96c5b4af366dbd9081d32dd949bd16a6e8daa6fc74361b6005af955374bc11d7"
+      },
+      "Logs/evidence/sport/precheck-88391dd/run02.xml": {
+        "bytes": 4051,
+        "sha256": "0d5acd2901784d23b903d69100d7d78dce57d0e1924c79a94ba0d97189f59ef8"
+      },
+      "Logs/experiments/sport/precheck-88391dd/run02/pairs.tsv": {
+        "bytes": 5839183,
+        "sha256": "2b3e4a13fcfba336009019e9f0ae14a127dae2f3045dc56ebd1196a8c073b99a"
+      },
+      "Logs/experiments/sport/precheck-88391dd/run02/summary.json": {
+        "bytes": 13508,
+        "sha256": "bbeeda1717cb63777eef686d7094f5ed3f7c8aadf10fcf8ce1a6d1459c90caa3"
+      },
+      "Logs/experiments/sport/precheck-88391dd/run02/trials.tsv": {
+        "bytes": 13344347,
+        "sha256": "36fb4b1ac133806dd02edee23f9edf7a211065804e0569a4617004d1cc4fbb2c"
+      },
+      "Logs/experiments/sport/precheck-88391dd/run02/witnesses.json": {
+        "bytes": 68890,
+        "sha256": "33834b9dee8a9b818fb0b28d3e2d815e2d4b9b5e4b57b578612c763a175f08c6"
+      }
+    },
+    "gitDirty": false,
+    "run": "run02",
+    "source": "88391dd5eac25fd400b5d4284f49eb8460a8c869",
+    "xml": {
+      "asserts": "0",
+      "clr-version": "4.0.30319.42000",
+      "duration": "1.8975975",
+      "end-time": "2026-11-13 10:51:08Z",
+      "engine-version": "3.5.0.0",
+      "failed": "0",
+      "id": "2",
+      "inconclusive": "0",
+      "passed": "1",
+      "result": "Passed",
+      "skipped": "0",
+      "start-time": "2026-11-13 10:51:06Z",
+      "testcasecount": "1",
+      "total": "1"
+    }
+  },
+  {
+    "classification": "final",
+    "files": {
+      "Logs/evidence/sport/run01.log": {
+        "bytes": 61957,
+        "sha256": "eb92a61d16c32fcb282a24db1e61986c9e0bcd88cb0e8c7d82b9a5c7b05a203b"
+      },
+      "Logs/evidence/sport/run01.xml": {
+        "bytes": 4050,
+        "sha256": "1cdcefe2b28b23ad75ee0a5ec624009be23eb0ff45b1737b19ccb47b672c46e8"
+      },
+      "Logs/experiments/sport/run01/pairs.tsv": {
+        "bytes": 5841367,
+        "sha256": "208440a787f21591cf54d857fbbd6685add2825ac743b9696e11c4dabde73149"
+      },
+      "Logs/experiments/sport/run01/summary.json": {
+        "bytes": 13508,
+        "sha256": "731c91e196be2b9ef626ad2a43927fb66a0840f85191ffa1e05a8e4eba581a01"
+      },
+      "Logs/experiments/sport/run01/trials.tsv": {
+        "bytes": 13344347,
+        "sha256": "36fb4b1ac133806dd02edee23f9edf7a211065804e0569a4617004d1cc4fbb2c"
+      },
+      "Logs/experiments/sport/run01/witnesses.json": {
+        "bytes": 68890,
+        "sha256": "33834b9dee8a9b818fb0b28d3e2d815e2d4b9b5e4b57b578612c763a175f08c6"
+      }
+    },
+    "gitDirty": false,
+    "run": "run01",
+    "source": "fd81c2dba3500dbf7b6bd7677f853009203dd4b9",
+    "xml": {
+      "asserts": "0",
+      "clr-version": "4.0.30319.42000",
+      "duration": "1.9228742",
+      "end-time": "2026-11-13 10:52:25Z",
+      "engine-version": "3.5.0.0",
+      "failed": "0",
+      "id": "2",
+      "inconclusive": "0",
+      "passed": "1",
+      "result": "Passed",
+      "skipped": "0",
+      "start-time": "2026-11-13 10:52:23Z",
+      "testcasecount": "1",
+      "total": "1"
+    }
+  },
+  {
+    "classification": "final",
+    "files": {
+      "Logs/evidence/sport/run02.log": {
+        "bytes": 59680,
+        "sha256": "503dace19404bc9c3622d19a7303e7d8eceeba691bfa23bddae2cc3afb1ea67e"
+      },
+      "Logs/evidence/sport/run02.xml": {
+        "bytes": 4051,
+        "sha256": "d46b63892c5b88beca0b90a806904fe7f0f96988dcfd85fbb82603a35d14c2bf"
+      },
+      "Logs/experiments/sport/run02/pairs.tsv": {
+        "bytes": 5841367,
+        "sha256": "208440a787f21591cf54d857fbbd6685add2825ac743b9696e11c4dabde73149"
+      },
+      "Logs/experiments/sport/run02/summary.json": {
+        "bytes": 13508,
+        "sha256": "731c91e196be2b9ef626ad2a43927fb66a0840f85191ffa1e05a8e4eba581a01"
+      },
+      "Logs/experiments/sport/run02/trials.tsv": {
+        "bytes": 13344347,
+        "sha256": "36fb4b1ac133806dd02edee23f9edf7a211065804e0569a4617004d1cc4fbb2c"
+      },
+      "Logs/experiments/sport/run02/witnesses.json": {
+        "bytes": 68890,
+        "sha256": "33834b9dee8a9b818fb0b28d3e2d815e2d4b9b5e4b57b578612c763a175f08c6"
+      }
+    },
+    "gitDirty": false,
+    "run": "run02",
+    "source": "fd81c2dba3500dbf7b6bd7677f853009203dd4b9",
+    "xml": {
+      "asserts": "0",
+      "clr-version": "4.0.30319.42000",
+      "duration": "1.9445641",
+      "end-time": "2026-11-13 10:52:45Z",
+      "engine-version": "3.5.0.0",
+      "failed": "0",
+      "id": "2",
+      "inconclusive": "0",
+      "passed": "1",
+      "result": "Passed",
+      "skipped": "0",
+      "start-time": "2026-11-13 10:52:43Z",
+      "testcasecount": "1",
+      "total": "1"
+    }
+  },
+  {
+    "classification": "regression",
+    "files": {
+      "Logs/editmode-results.xml": {
+        "bytes": 558010,
+        "sha256": "40164f468e2526f4c526493c5118fcec4f18a56b474e483d368797f53193e679"
+      },
+      "Logs/editmode.log": {
+        "bytes": 143030,
+        "sha256": "0c4164fb434919d36317cb5b9a3c968273806654971031dc827913755d9ef0b4"
+      }
+    },
+    "gitDirty": false,
+    "mode": "editmode",
+    "source": "fd81c2dba3500dbf7b6bd7677f853009203dd4b9",
+    "xml": {
+      "asserts": "0",
+      "clr-version": "4.0.30319.42000",
+      "duration": "38.2246805",
+      "end-time": "2026-11-13 10:53:55Z",
+      "engine-version": "3.5.0.0",
+      "failed": "0",
+      "id": "2",
+      "inconclusive": "0",
+      "passed": "691",
+      "result": "Passed",
+      "skipped": "0",
+      "start-time": "2026-11-13 10:53:17Z",
+      "testcasecount": "691",
+      "total": "691"
+    }
+  },
+  {
+    "classification": "regression",
+    "files": {
+      "Logs/playmode-results.xml": {
+        "bytes": 460005,
+        "sha256": "c1436b33c1b4aa87f06f5788c84c806c3c23e2c5b28dd260e02adb680839e208"
+      },
+      "Logs/playmode.log": {
+        "bytes": 940368,
+        "sha256": "0f0fd01459536fa2fc379bcda7ef32e23433347aef084ec3b721b04d7bbea30e"
+      }
+    },
+    "gitDirty": false,
+    "mode": "playmode",
+    "source": "fd81c2dba3500dbf7b6bd7677f853009203dd4b9",
+    "xml": {
+      "asserts": "0",
+      "clr-version": "4.0.30319.42000",
+      "duration": "87.1205995",
+      "end-time": "2026-11-13 10:57:11Z",
+      "engine-version": "3.5.0.0",
+      "failed": "0",
+      "id": "2",
+      "inconclusive": "0",
+      "passed": "450",
+      "result": "Passed",
+      "skipped": "0",
+      "start-time": "2026-11-13 10:55:44Z",
+      "testcasecount": "450",
+      "total": "450"
+    }
+  }
+]
