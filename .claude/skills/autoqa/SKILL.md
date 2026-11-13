@@ -23,6 +23,8 @@ Antes de lanzarlo, guarda `git -C "$REPO" status --porcelain`. Lanza el subagent
 
 Si `autoqa-operator` no está disponible en esta sesión (por ejemplo, se creó sin reiniciar), lanza un subagente `general-purpose` con `model: haiku` y, como prompt, el cuerpo completo de `AGENT_FILE` (sin el frontmatter) seguido de los parámetros. Dilo en la respuesta: «operador ejecutado por equivalencia general-purpose/haiku».
 
+Anclajes D1/T4.2 (12 nov 2026): el v7 del operador fija SL1 `c0e9f00176d5` y SL5 `1877d083c345` (antes `c0d8ec7050e0` / `55a85f500cf1`); SimulationKey `166a96e319c7` intacta. Catálogo 108 claves, ayuda completa por defecto. No sustituir escenarios ni tolerancias para compensar un resultado distinto.
+
 ## 3. Comprobación del operador
 
 1. `git -C "$REPO" status --porcelain` debe ser igual al guardado antes del operador. Si cambió, **nivel 3** («el árbol cambió durante el operador»).

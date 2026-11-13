@@ -41,7 +41,7 @@ namespace SquashClash.Experiments.EditMode
             var root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));
             var p=PresetCodec.LoadDefault(File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Runtime/Resources/DefaultPreset.json")));
             var cfg=EffectiveConfig.From(p);
-            if(p.Hash!="c0d8ec7050e0"||p.Ordered.Count!=107||cfg.SimulationKey!="166a96e319c7"||p.With("launcher.repeatSeconds",3).Hash!="6ecfdfa78cbb"||
+            if(p.Hash!="c0e9f00176d5"||p.Ordered.Count!=108||cfg.SimulationKey!="166a96e319c7"||p.With("launcher.repeatSeconds",3).Hash!="42d9efbf50fc"||
                 p.Get("timing.latencyCompMs")!=0||p.Get("power.pullFullMm")!=35||cfg.Backend!="P2-Analytic")throw new InvalidDataException("Protected configuration changed.");
             var data=new Data{source=Git(root,"rev-parse HEAD"),gitDirty=Git(root,"status --porcelain").Length>0,defaultsHash=p.Hash,simulationKey=cfg.SimulationKey,p0Hash=p.With("launcher.repeatSeconds",3).Hash};
             var directory=Path.Combine(root,"Logs/experiments/h3b",DateTime.UtcNow.ToString("yyyyMMdd'T'HHmmss'Z'",C)+"-"+data.source.Substring(0,7));Directory.CreateDirectory(directory);

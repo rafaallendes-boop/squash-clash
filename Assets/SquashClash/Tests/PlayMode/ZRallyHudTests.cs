@@ -96,7 +96,7 @@ namespace SquashClash.Runtime.Tests
         {
             Assert.That(root.Q<Button>("rally-toggle").text,Is.EqualTo("Rally"));Assert.That(Shown(root.Q("rally-toggle")),Is.True);
             foreach(var name in new[]{"rally-status","rally-pause","rally-rematch","rally-demo"})Assert.That(Shown(root.Q(name)),Is.False,name);
-            Assert.That(rally.Active,Is.False);Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("c0d8ec7050e0"));
+            Assert.That(rally.Active,Is.False);Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("c0e9f00176d5"));
             Assert.That(root.Q<Label>("boot-title").text,Is.EqualTo("Squash Clash — First Ball"));
             yield return null;
         }
@@ -178,7 +178,7 @@ namespace SquashClash.Runtime.Tests
         {
             Click("rally-toggle");Click("rally-toggle");yield return null;
             Assert.That(rally.Active,Is.False);Assert.That(root.Q<Button>("rally-toggle").text,Is.EqualTo("Rally"));
-            Assert.That(Shown(root.Q("rally-status")),Is.False);Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("c0d8ec7050e0"));
+            Assert.That(Shown(root.Q("rally-status")),Is.False);Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("c0e9f00176d5"));
         }
         [UnityTest] public IEnumerator Hud_StaysAboveTheProjectedFrontWall_InsideTheSafeWidth()
         {

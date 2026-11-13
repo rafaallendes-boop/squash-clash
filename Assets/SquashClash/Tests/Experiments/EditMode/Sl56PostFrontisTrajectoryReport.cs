@@ -41,7 +41,7 @@ namespace SquashClash.Experiments.EditMode
         public void WriteSl56PostFrontisTrajectoryReport()
         {
             var preset=PresetCodec.LoadDefault(File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Runtime/Resources/DefaultPreset.json")));
-            if(preset.Hash!="c0d8ec7050e0")throw new InvalidDataException("Unexpected DefaultPreset hash: "+preset.Hash);
+            if(preset.Hash!="c0e9f00176d5")throw new InvalidDataException("Unexpected DefaultPreset hash: "+preset.Hash);
             var cfg=EffectiveConfig.From(preset);var physics=cfg.Physics;var court=cfg.Court;
             var factory=new AnalyticBallSimulationFactory(BounceThreshold);var cases=new List<Case>();
             foreach(var recipe in PracticeLaunchDefinitions.Create(cfg).Where(r=>r.Id=="SL5"||r.Id=="SL6").OrderBy(r=>r.Id))
