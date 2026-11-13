@@ -956,3 +956,55 @@ Antes del feedback, repetir ejemplos de la triada para separar **OK** (orden/fij
 **Juicios por separado, respuestas literales:** conservar las preguntas de 2.7 «¿la pelota va donde apunto?», «¿el timing es justo?» (preliminar, sin afirmar calibración de latencia) y «¿el salto es aceptable?», más las16 preguntas originales de S1 que figuran en [respuestasM2-4](../../validation/evidence/2026-10-30-m24-po-answers.json). Relacionar sus respuestas con saturación/riesgos/fluidez/dirección sin inferir porcentajes de «no recuerdo» ni aprobación de otra fase. No confundir la mecánica referida por el PO con la medición técnica.
 
 **Cierre futuro:** recuperar evidencia antes de que opere la retención, restaurar P0 en **proceso nuevo**, observar el hash extendido propio de la build S2 y cero pendientes/selecciónP0, cotejar los tres archivos byte a byte con el respaldo de esa instalación. Preset/hash/número de claves real y proyecciones heredadas registrados. Informe nuevo separado de S1, limitaciones/desviaciones/NotEvaluated intactos; PR para Claude sin fusionar y parada para PO. Esta D4 se entrega ahora como documentación, no ejecuta ninguno de esos pasos.
+
+
+<a id="adenda-d6-cq01"></a>
+
+## Adenda D6 — calidad causal CQ-01 (PO, 2026-11-13)
+
+[Decisión literal del PO](../../reviews/2026-10-25-first-shot-po-approvals.md#b4-cq01-po-decision-20261113), precisión técnica de Claude separada y **D36** de la [spec v0.3](../specs/2026-10-20-squash-clash-design-v0.3.md). Se incorpora de forma **aditiva**: todo texto previo se conserva como antecedente; esta adenda ajusta la Tarea 3.1 en los puntos siguientes. Se usa **D6**, sin reutilizar D5, reservada a la entrega de PR #32 según el encargo del PO.
+
+### D6.1 Contexto de referencia e interfaz de T3.1
+
+`Evaluate` **deja de recibir `bool perfect`**. Recibe un contexto de referencia de timing **inmutable**, preparado una vez por recepción antes de cualquier intento: trayectoria visible, `pace.tempo`, ClockMap, compensación vigentes, imagen J_A de todos los contactos Perfecto alcanzables y zona geométrica Z_T. Los nombres exactos de los tipos y parámetros quedan a criterio de la implementación. Se mantienen CausalVector, la aplicación sobre P/v antes del solver, la composición por componente y el registro separado por causa. La categoría y Δ no son argumentos de la magnitud; no se recalcula la zona a partir del intento.
+
+J_A incluye programación, cuantización, vecino legal y empate del contrato. Z_T es la imagen del tramo de arco ±L alrededor del contacto ideal en el marco corporal, L=max|s| de J_A, recortada a K; d es la distancia euclídea mínima del contacto a Z_T. Timing es cero dentro y crece continuamente fuera. Se descartan el radio fijo y la envolvente universal entre tempos. La invariante de §17.A.12 se verifica **dentro del mismo contexto de recepción**, sin acotarla por categoría: mismo contacto/cuerpo, intención y contexto producen mismo vector/entrada al solver/golpe para cualquier Δ admitido, incluido +39/+41 ms al mismo paso. Otro tempo puede producir otra zona; la diferencia se documenta como ajuste de ritmo, no se exige igualdad entre contextos.
+
+### D6.2 Pruebas de T3.1 y TDD
+
+RED por aserción con esqueletos compilables antes de cada GREEN. Los dos nombres anteriores se conservan en el texto histórico de T3.1; sus sustituciones vigentes son:
+
+- `Perfect_HasNoTimingVector_ButKeepsStretchAndJam` → **`AllReachablePerfectContacts_InsideZone_ButKeepStretchAndJam`**: el cero de timing surge de la inclusión geométrica de todos los Perfect alcanzables, sin anular E3/E5.
+- `Valid_TimingVector_GrowsWithGeometricDistance` → **`TimingVector_GrowsContinuouslyWithDistanceToZone`**: crecimiento desde cero en el borde, sin salto geométrico por clasificación.
+
+Se mantienen:
+
+- `NoVector_HasLateralComponent` (DeltaLateral=0 siempre).
+- `SameGeometryDifferentDelta_SameShot` (dentro de la misma recepción/contexto congelado, **sin acotar por categoría**, incluido Perfect/Valid +39/+41 al mismo paso).
+- `Caps_ArePerComponent`.
+- `AppliedBeforeSolver_NeverCorrectedAfter`.
+- `MirroredSide_IsSymmetric`.
+
+Se agregan:
+
+- `ZonePreparedOncePerReception_IndependentOfAttemptCategory`.
+- `ZoneCovers_AllReachablePerfect_AcrossTemposAndTrajectories`: tempo **0,3/0,65/1**, compensación **−75/0/+75 ms**, SL1–SL6 y trayectorias de rival; cada contexto cubre su imagen Perfect completa.
+- `Determinism_SameInputsSameVectorAndShot`.
+- `Edges`: borde geométrico exacto, ventanas **±40/±100 inclusivas**, KIn/KOut, vecino legal y empate anterior.
+- `DifferentTempo_DifferenceDocumented_NotRequiredEqual`.
+- `EarlySnap_Minus41ToMinus40_MeasuredAndDocumented`: medir/documentar el salto del contrato anticipado, sin modificarlo.
+- `HumanAndRival_SharedPath_SameResult`.
+
+No hay bonificación o penalización adicional por categoría, término directo de Δ ni azar. Anticipar y atrasar a igual distancia geométrica a Z_T usan la misma función; las diferencias por geometría o snap del contrato se miden y documentan sin alterar ventanas. El cambio de contexto entre tempos no es una excepción por categoría dentro de una recepción.
+
+### D6.3 Ruta compartida y valores experimentales
+
+**ShotController y RallyContact.Solve** usan la misma preparación de contexto, evaluación y aplicación causal. El humano usa human.x/z o PlayerBody efectivo; el rival usa su PlayerBody en el punto de llegada, con **el mismo alcance R**. La prueba de simetría compara entradas equivalentes a ambas rutas, sin dejar al rival sin capa causal. P/v se modifican antes del solver y nunca se corrige la salida. Cada vector con su causa se conserva en las trazas humana/rival, incluida rally-point si aplica.
+
+Las diez claves `causal.*` de T3.1 mantienen sus valores: timingHeightPerM **0,6**; timingSpeedPerM **−0,25**; stretchStart **0,85**; jamDistance **0,35**; stretchHeight **0,4**; stretchSpeed **−0,2**; jamHeight **0,3**; jamSpeed **−0,15**; capHeight **1,0**; capSpeed **−0,4**. Todas son **[EXPERIMENTO] hasta validarlas en iPhone**; este registro no crea las claves ni modifica DefaultPreset.json. E3/E5 son independientes del cero de timing; E7 sin vector cuando no hay causas posicionales; técnica t=0. Sin E8/volea, efectos direccionales E1/E2/E4/E6 ni capa aleatoria.
+
+### D6.4 Alcance documental y entrega futura
+
+Esta adenda no ejecuta implementación, tests, experimentos, Unity, AutoQA/check-release, builds, iPhone ni instalación. Se mantiene la evidencia CQ-ZONE-v1 intacta. La propuesta histórica que rechazaba la invariancia «solo dentro del mismo contexto» queda sustituida por D36: la precisión es una decisión explícita del PO, no un filtro añadido a una prueba para hacerla pasar.
+
+El [informe de PR #52](../../reviews/2026-11-13-first-shot-causal-quality.md) deja preparado el encargo futuro de implementación con TDD y **PR independiente**. La continuación actual es documental, para revisión de Claude coordinada por el PO, SIN FUSIONAR y sin merge automático. La implementación requiere el encargo autorizado posterior; antes del cierre de First Shot debe pasar revisión técnica y una prueba jugable. Las magnitudes siguen provisionales hasta iPhone; esta adenda no autoriza acceder al dispositivo ni declara First Shot aceptado. No se inicia otra ronda extensa de experimentación salvo defecto relevante.
