@@ -65,6 +65,49 @@ namespace SquashClash.Runtime.Tests
             float mm=ScreenMetrics.MmPerPx(Screen.dpi,(float)app.Tuning.Applied.Get("input.fallbackDpi"),out _);
             now=time+receivedAge;InputSystem.QueueStateEvent(screen,new TouchState{touchId=id,phase=phase,position=anchor+Vector2.down*(down/mm)},time);InputSystem.Update();
         }
+        [Test] public void TaskSection_StagesObservationAndShowsCapturedRequest()
+        {
+            var root=app.GetComponent<UIDocument>().rootVisualElement;
+            Assert.That(root.Q("practice-task-section"),Is.Not.Null);
+            var enabled=root.Q<Toggle>("task-enabled");Assert.That(enabled,Is.Not.Null);
+            enabled.value=true;Assert.That(app.GetComponent<PracticeTask>().NextRequest,Is.Not.Null);
+            root.Q<DropdownField>("task-front-column").index=2;app.LaunchCurrent();
+            Assert.That(app.GetComponent<PracticeTask>().CurrentRequest.FrontColumn,Is.EqualTo(2));
+            Assert.That(root.Q<Label>("practice-task").text,Does.Contain("[4,20;6,20]").And.Contain("Observación"));
+            root.Q<DropdownField>("task-front-column").index=0;
+            Assert.That(app.GetComponent<PracticeTask>().CurrentRequest.FrontColumn,Is.EqualTo(2));
+            Assert.That(app.GetComponent<PracticeTask>().NextRequest.FrontColumn,Is.Zero);
+        }
+        [Test] public void Task_CapturesSelectionPerReception_AndRecordsActualOutgoingContacts()
+        {
+            var task=app.GetComponent<PracticeTask>();Assert.That(task,Is.Not.Null);
+            var request=new PracticeTaskRequest(1,1,1,1,2);task.Select(request);request.FrontColumn=2;
+            app.LaunchCurrent();Assert.That(task.CurrentRequest,Is.Not.Null);Assert.That(task.CurrentRequest.FrontColumn,Is.EqualTo(1));
+            task.Select(new PracticeTaskRequest(0,0,0,0,0));Assert.That(task.CurrentRequest.FrontColumn,Is.EqualTo(1));
+            var r=Submit(Star());task.Tick();Assert.That(task.LastRecord,Is.Not.Null);Assert.That(task.LastRecord.HasFrozenAim,Is.True);
+            Assert.That(task.LastRecord.HasFeasibleAim,Is.True);Assert.That(task.LastRecord.Requested.FrontColumn,Is.EqualTo(1));
+            for(int i=0;i<1400&&app.Host.OutgoingBounces<1&&app.Host.IsRunning;i++)app.Host.Advance(StepReal);
+            task.Tick();Assert.That(task.LastRecord.HasFrontImpact,Is.True);Assert.That(task.LastRecord.HasFirstBounce,Is.True);
+            Assert.That(task.LastRecord.LaunchId,Is.EqualTo(r.LaunchId));
+            Assert.That(File.ReadAllText(app.Metrics.CurrentFilePath),Does.Contain("practice-task").And.Contain(r.AttemptId));
+            task.Select(null);app.LaunchCurrent();Assert.That(task.CurrentRequest,Is.Null);
+        }
+        [Test] public void Task_LogsCaptureFailureAndNoOrder_WithoutFabricatingMeasurements()
+        {
+            var task=app.GetComponent<PracticeTask>();task.Select(new PracticeTaskRequest(0,0,0,0,0));app.LaunchCurrent();
+            controller.Enqueue(Order(app.Host.LaunchRealTime+.1,GestureOutcome.InvalidAim));controller.ProcessPending();
+            Assert.That(task.LastRecord,Is.Not.Null);Assert.That(task.LastRecord.HasFrozenAim,Is.False);
+            Assert.That(task.LastRecord.AimErrorCm,Is.EqualTo(-1));Assert.That(task.LastRecord.CaptureFailure,Is.Not.Null.And.Not.Empty);
+            controller.CloseReception();Assert.That(task.LastRecord.Stage,Is.EqualTo("NoOrder"));Assert.That(task.LastRecord.HasFirstBounce,Is.False);
+        }
+        [Test] public void AidLevel_IsCapturedPerReception_AndTraceRetainsCueWithNoAid()
+        {
+            var ring=app.GetComponent<TimingRingView>();app.Tuning.Set("timing.aidLevel",2);app.LaunchCurrent();
+            double target=Star();app.Tuning.Set("timing.aidLevel",0);ring.Tick(target);
+            Assert.That(ring.AidLevel,Is.EqualTo(2));Assert.That(ring.Visible,Is.False);Assert.That(ring.CueState.Phase,Is.EqualTo(ImpactCuePhase.AtIdeal));
+            var r=Submit(target);Assert.That(r.Applied,Is.True);Assert.That(r.AidLevel,Is.EqualTo(2));Assert.That(r.CuePhase,Is.EqualTo("AtIdeal"));
+            app.LaunchCurrent();Assert.That(ring.AidLevel,Is.Zero);
+        }
         [Test] public void FirstPlayableShot_BallReachesAimWithinSolverTolerance()
         {
             double end=Star();var r=Submit(end);Assert.That(r.Applied,Is.True,r.Reason);var front=app.Host.Prediction.Contacts.First();Assert.That(front.Surface,Is.EqualTo(SquashClash.Core.Court.SurfaceId.FrontWall));

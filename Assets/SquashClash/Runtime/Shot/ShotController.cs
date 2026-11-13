@@ -39,6 +39,7 @@ namespace SquashClash.Runtime.Shot
         public bool Available=>PracticeEnabled&&app.Host.ActiveConfig.Backend=="P2-Analytic";
         public string UnavailableReason=>PracticeEnabled&&!Available?"First Shot no disponible con P1":"";
         public string LastDiscardReason {get;private set;}
+        public event Action<ShotRecord> GestureClosed;
         public event Action<ShotRecord> ShotResolved;
         public event Action<ShotPresentation> PresentationDelivered;
         public event Action<SwingIntent> SwingAccepted;
@@ -98,7 +99,7 @@ namespace SquashClash.Runtime.Shot
             if(!PracticeEnabled)return;
             if(!Available){Discard(order,"unsupported-backend");return;}
             if(string.IsNullOrEmpty(order.AttemptId)||!seen.Add(order.AttemptId)){Discard(order,"duplicate-order");return;}
-            LastClosureRecord=BaseRecord(order);LastClosureRecord.Result="Closure";Write("shot-gesture",LastClosureRecord);
+            LastClosureRecord=BaseRecord(order);LastClosureRecord.Result="Closure";Write("shot-gesture",LastClosureRecord);GestureClosed?.Invoke(LastClosureRecord);
             if(order.Outcome!=GestureOutcome.Swing)return;
             if(AttemptConsumed){Discard(order,"attempt-consumed");return;}
             if(!order.HasRelease||!Finite(order.ReleaseAt)||!Finite(order.BeganAt)||order.ReleaseAt<order.BeganAt||!Finite(order.P)||order.P<0||order.P>1||!Finite(order.Aim.x)||!Finite(order.Aim.y)||order.Source==null)
@@ -156,7 +157,7 @@ namespace SquashClash.Runtime.Shot
         }
         private static void FillSolution(ShotRecord r,ShotSolution s,BallState contact)
         {
-            r.ContactX=contact.Position.x;r.ContactY=contact.Position.y;r.ContactZ=contact.Position.z;r.SpeedRaised=s.SpeedRaised;r.TargetLowered=s.TargetLowered;
+            r.Solved=s.Solved;r.ContactX=contact.Position.x;r.ContactY=contact.Position.y;r.ContactZ=contact.Position.z;r.SpeedRaised=s.SpeedRaised;r.TargetLowered=s.TargetLowered;
             r.TargetUsedX=s.TargetUsed.x;r.TargetUsedY=s.TargetUsed.y;r.Speed=s.Speed;r.VelocityX=s.Velocity.x;r.VelocityY=s.Velocity.y;r.VelocityZ=s.Velocity.z;
         }
         private void OnApplied(ShotApplyResult result)
@@ -203,7 +204,7 @@ namespace SquashClash.Runtime.Shot
                 Power=o.P,AimX=o.Aim.x,AimY=o.Aim.y,LaunchHash=o.LaunchHash??Snapshot.Reception.Hash,GestureHash=o.Source?.Hash,Preset=o.PresetName??app.ActivePresetName,FileHash=o.FileHash??app.ActivePresetFileHash,
                 Build=o.BuildLabel??app.Build.Label,Seed=o.BuildLabel!=null?o.Seed:app.MetricsSeed,Pending=o.BuildLabel!=null?o.Pending:app.Tuning.PendingKeys.Count,O2Count=o.O2Count,ProjectionObservedAt=o.ProjectionObservedAt,LockObservedAt=o.LockObservedAt,
                 AidLevel=Snapshot.Reception.GetInt("timing.aidLevel"),AidCutoff=ring.CutoffLatched,AidCutoffTarget=ring.CutoffTarget,AidCutoffPlanVersion=ring.CutoffPlanVersion,
-                CuePhase=ImpactCue.Evaluate(o.HasRelease?o.ReleaseAt:app.Host.ObservedRealTime,0,CurrentTarget(),timing,Plan.Exists,false).Phase.ToString(),
+                CuePhase=CueAt(o.HasRelease?o.ReleaseAt:app.Host.ObservedRealTime),
                 ValidLimitOn=timing.ValidLimitOn,EarlySoft=timing.EarlySoft,AssistMs=timing.AssistMs,ValidMs=timing.ValidMs,LatencyCompMs=timing.LatencyCompMs,
                 KInSteps=Plan.KIn.Steps,KOutSteps=Plan.KOut.Steps,TStarStep=Plan.TStarStep,Side=Plan.Side.ToString(),PlannerCostMs=plannerCost};
         }
@@ -241,8 +242,11 @@ namespace SquashClash.Runtime.Shot
             if(Plan.Exists){host.ClockMap.TrySimToReal(Plan.KIn.Step,Plan.KIn.Fraction,out t.kInReal);host.ClockMap.TrySimToReal(Plan.KOut.Step,Plan.KOut.Fraction,out t.kOutReal);host.ClockMap.TrySimToReal(Plan.TStarStep,0,out t.targetReal);}
             app.Metrics?.Write("shot-plan",host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(t));
         }
-        private double CurrentTarget()
-        {app.Host.ClockMap.TrySimToReal(Plan.TStarStep,0,out var target);return target;}
+        private string CueAt(double eventTime)
+        {
+            if(!Presented.TryVisibleAt(eventTime,out var plan,out var target,out var presented))return ImpactCuePhase.Hidden.ToString();
+            return ImpactCue.Evaluate(eventTime-Snapshot.Timing.LatencyCompMs/1000,presented,target,Snapshot.Timing,plan.Exists,false).Phase.ToString();
+        }
         [Serializable] private sealed class AidCutoffLine
         {public long launchId;public int aidLevel,planVersion;public double target,observedAt;}
         private void RecordAidCutoff()

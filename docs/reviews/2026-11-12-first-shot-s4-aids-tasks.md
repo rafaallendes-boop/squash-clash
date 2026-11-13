@@ -32,4 +32,14 @@ D2: intervalos cerrados por abajo/abiertos por arriba, último extremo incluido,
 - D1 vista: RED 17/19 (parcial/ninguna), GREEN 19/19.
 - D1 catálogo: RED 0/1 (clave ausente), GREEN 1/1.
 
-Implementación de tareas y verificaciones finales pendientes; este informe es incremental y no declara entrega completa.
+- Tareas/bandas: RED válido 4/22 → GREEN 22/22. La primera preparación produjo dos excepciones por campos nulos del esqueleto; se completó el esqueleto y se repitió RED por aserciones, sin cambiar criterios. Se conserva como RED válido la segunda corrida.
+- Conexión de tareas: RED 0/2 → GREEN 2/2 (selección por recepción, captura fallida y contactos canónicos).
+- Panel/solver no aplicado: RED 0/2 → focal ampliada 45/46 → GREEN 46/46 tras excluir la mira factible en una captura inválida; sin cambiar las aserciones. La ampliación incluye los cinco nombres del plan, D4 y snapshots por recepción.
+
+La selección de tareas queda en memoria, desactivada por defecto y capturada al relanzar; no introduce más claves ni escribe presets. El HUD muestra las bandas y marca un rectángulo del frontis. TaskSection permite combinar columna/altura/potencia/columna y profundidad de bote para la siguiente recepción. Se emite pedido aun sin gesto y se conservan todas las capturas fallidas/reapoyos, el resultado técnico y las actualizaciones de contactos observados.
+
+`Requested` conserva las cinco bandas pedidas. Para distancias descriptivas se usa el centro del rectángulo (`RequestedAim`) y de la banda de potencia (`RequestedPower`); es una referencia de implementación documentada, no un objetivo puntual adicional aprobado ni un criterio. `AimErrorCm`, `FeasibleErrorCm` y `FrontErrorCm` son distancias separadas a ese centro; los aciertos de banda se registran aparte. Ausencias: flags `Has*`, motivo y error **−1**, nunca 0. Saturación significa **P congelada = 1**, no estima cuánto sobrepasó el tirón el clamp ni infiere voluntariedad. La potencia pedida y la observada se conservan sin declarar intención del usuario.
+
+El primer bote es el primero posterior al contacto aplicado, no un punto de predicción: centro reconstruido desde contacto+normal×radio; contactos persistentes e incoming excluidos. `PriorSurfaces`, `LineTouches`, `OutObserved` y `TinObserved` son campos independientes, basados en geometría/clasificación ya existente, sin cambiar reglas de punto. El solver resuelto y una aplicación fallida conservan objetivo factible; ningún bote incoming se convierte en bote del golpe. La traza se actualiza por hitos y cierra como completa o recepción reemplazada; no inventa impactos fuera de la observación. Las tareas no completan H2 ni la aceptación física.
+
+Verificaciones completas pendientes; este informe es incremental y no declara entrega completa.

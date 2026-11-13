@@ -27,6 +27,18 @@ namespace SquashClash.Core.Tests.Shot
             p0File.values.Single(e=>e.key=="launcher.repeatSeconds").value=3;
             var effective=PresetCodec.Overlay(p,p0File,new List<string>());
             Assert.That(effective.GetInt("timing.aidLevel"),Is.Zero);
+            var path=System.Environment.GetEnvironmentVariable("S4_P0_PATH");
+            if(!string.IsNullOrEmpty(path))
+            {
+                byte[] bytes=File.ReadAllBytes(path);
+                using(var sha=SHA256.Create())Assert.That(System.BitConverter.ToString(sha.ComputeHash(bytes)).Replace("-","").ToLowerInvariant(),Is.EqualTo("2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd"));
+                Assert.That(PresetCodec.TryParse(Encoding.UTF8.GetString(bytes),out var realP0,out var error),Is.True,error);
+                var warnings=new List<string>();var realEffective=PresetCodec.Overlay(p,realP0,warnings);
+                Assert.That(warnings,Is.Empty);Assert.That(realEffective.Hash,Is.EqualTo(effective.Hash));
+                Assert.That(realEffective.HashOf(ConfigFixtures.FirstBallPrefixes),Is.EqualTo("8de3f2ecb217"));
+                Assert.That(File.ReadAllBytes(path),Is.EqualTo(bytes));
+                TestContext.WriteLine("S4_REAL_P0 effective="+realEffective.Hash+" inherited="+realEffective.HashOf(ConfigFixtures.FirstBallPrefixes)+" bytesUnchanged=true");
+            }
             TestContext.WriteLine("S4_HASH defaults="+p.Hash+" P0="+effective.Hash+" SL5="+p.With("practice.launch",4).Hash);
         }
     }

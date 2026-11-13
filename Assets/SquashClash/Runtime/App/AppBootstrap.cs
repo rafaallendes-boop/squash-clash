@@ -274,6 +274,7 @@ namespace SquashClash.Runtime.App
             reticle.transform.SetParent(transform,false);
             var preview=gameObject.AddComponent<SquashClash.Runtime.Shot.GesturePreview>();preview.Initialize(this,input,reticle);
             var shot=gameObject.AddComponent<SquashClash.Runtime.Shot.ShotController>();shot.Initialize(this);preview.AttachShotController(shot);
+            gameObject.AddComponent<SquashClash.Runtime.Shot.PracticeTask>().Initialize(this,shot);
             var practice=gameObject.AddComponent<SquashClash.Runtime.Shot.PracticeMode>();practice.Initialize(this,shot);
             var rally=gameObject.AddComponent<SquashClash.Runtime.Rally.RallyDirector>();rally.Initialize(this,shot,practice,placeholderPlayers);
             gameObject.AddComponent<SquashClash.Runtime.Rally.RallyHud>().Initialize(this,rally,header);
