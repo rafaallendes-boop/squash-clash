@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using SquashClash.Core.Config;
+using SquashClash.Core.Rally;
 using SquashClash.Core.Shot;
 using SquashClash.Core.Simulation;
 using SquashClash.Runtime.App;
@@ -81,6 +82,20 @@ namespace SquashClash.Runtime.Tests
             Assert.That(controller.LastRecord,Is.Not.Null);Assert.That(controller.LastRecord.Result,Is.EqualTo("NotEvaluable"));
             Assert.That(controller.LastRecord.Reason,Is.EqualTo("no-presented-plan-at-event"));
             Assert.That(controller.LastCausal.Vectors,Is.Null);Assert.That(controller.LastRecord.Applied,Is.False);
+        }
+        [TestCase(-60d),TestCase(0d)] public void HumanAndRival_RuntimeSharedPath_EquivalentReceptionMatches(double deltaMs)
+        {
+            var aim=new Vector2(2.6f,1.5f);var record=Submit(Star()+deltaMs/1000,aim:aim);
+            Assert.That(record.Applied,Is.True,record.Reason);var reference=controller.CausalReference;
+            var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
+            var context=new RallyContext(app.Host.ActiveConfig,new RallyParams(),factory);
+            var point=new Vector3(record.ContactX,record.ContactY,record.ContactZ);
+            var rival=RallyContact.Solve(context,reference,reference.BodyAt(record.ContactStep),point,aim,.5f);
+            Assert.That(rival.Vectors,Is.EqualTo(controller.LastCausal.Vectors));
+            Assert.That(rival.Input.Aim,Is.EqualTo(controller.LastCausal.Input.Aim));Assert.That(rival.Input.Speed,Is.EqualTo(controller.LastCausal.Input.Speed));
+            Assert.That(rival.Solution.Solved,Is.True);Assert.That(rival.Solution.Velocity,Is.EqualTo(controller.LastSolution.Velocity));
+            Assert.That(rival.Solution.TargetUsed,Is.EqualTo(controller.LastSolution.TargetUsed));Assert.That(rival.Solution.Speed,Is.EqualTo(controller.LastSolution.Speed));
+            Assert.That(factory.LiveInstances,Is.Zero);
         }
         [Test] public void CausalReference_IsPreparedAtLaunch_AndSharedInputIsAppliedAndTraced()
         {
