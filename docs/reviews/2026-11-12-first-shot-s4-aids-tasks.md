@@ -43,3 +43,14 @@ La selección de tareas queda en memoria, desactivada por defecto y capturada al
 El primer bote es el primero posterior al contacto aplicado, no un punto de predicción: centro reconstruido desde contacto+normal×radio; contactos persistentes e incoming excluidos. `PriorSurfaces`, `LineTouches`, `OutObserved` y `TinObserved` son campos independientes, basados en geometría/clasificación ya existente, sin cambiar reglas de punto. El solver resuelto y una aplicación fallida conservan objetivo factible; ningún bote incoming se convierte en bote del golpe. La traza se actualiza por hitos y cierra como completa o recepción reemplazada; no inventa impactos fuera de la observación. Las tareas no completan H2 ni la aceptación física.
 
 Verificaciones completas pendientes; este informe es incremental y no declara entrega completa.
+
+
+### Alineación adicional de metadatos D1
+
+Primera regresión completa EditMode, fuente limpia `9a221c8`: **690/691**, sin skipped ni CS. Única falla: `S3FeedbackConfigTests.OnlyDifference_FromPreS3Fixture_IsHapticsKey` esperaba solo la clave S3 frente al fixture previo; debe enumerar también la clave nueva T4.2 autorizada. Se amplía explícitamente a feedback.haptics/timing.aidLevel; valores previos idénticos siguen exigidos. Es actualización de catálogo de D1, sin cambiar un escenario, criterio o comportamiento de producto. Evidencia original preservada en `Logs/evidence/s4-aids-tasks/regression-catalog-anchor`.
+
+El fixture sintético del verificador (`scripts/tests/test_autoqa_checker.py`) también tenía SL1/SL5 antiguos. Su control completo dio RED por aserciones (mismatches de hash); se actualizan solo esas dos constantes a c0e9f00176d5/1877d083c345. No se reescribe evidencia histórica ni se rebaja la clasificación del v7. Un v7 con anclajes nuevos no debe aprobar una corrida histórica de hashes anteriores.
+
+La regresión confirmó **en Unity y desde los bytes del P0 archivado**: efectivo 42d9efbf50fc, proyección P0 8de3f2ecb217, bytes intactos. Archivo local ignorado: Logs/evidence/s4-aids-tasks/P0-calib-1.json, SHA-256 2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd. No accedido ni reescrito en iPhone.
+
+Control sintético actualizado del verificador: **1/1 método, cinco controles (pass/fail/canario/hash/environment) GREEN**, sin skipped. No equivale a AutoQA de juego; corrida Unity todavía pendiente.
