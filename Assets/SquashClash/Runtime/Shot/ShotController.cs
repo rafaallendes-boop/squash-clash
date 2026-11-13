@@ -16,6 +16,9 @@ namespace SquashClash.Runtime.Shot
     public sealed class ShotController : MonoBehaviour
     {
         private AppBootstrap app;
+        private Func<long,BodyFrame> nextCausalBody,causalBody;
+        // Consumed only by the next launch, then copied into its immutable reference.
+        public void SetNextReceptionBody(Func<long,BodyFrame> bodyAt)=>nextCausalBody=bodyAt;
         private readonly Queue<ClosedGesture> orders=new Queue<ClosedGesture>();
         private readonly HashSet<string> seen=new HashSet<string>();
         private ShotRecord pendingContact;
@@ -27,6 +30,8 @@ namespace SquashClash.Runtime.Shot
         private TimingRingView ring;
         private ShotNoteView notes;
         private ShotFeedback feedback;
+        public CausalReference CausalReference {get;private set;}
+        public CausalShotResult LastCausal {get;private set;}
         public ShotConfig Snapshot {get;private set;}
         public ContactPlan Plan {get;private set;}
         public PresentedPlans Presented {get;private set;}=new PresentedPlans();
@@ -59,6 +64,7 @@ namespace SquashClash.Runtime.Shot
         }
         private void OnLaunched(EffectiveConfig cfg)
         {
+            CausalReference=null;LastCausal=default;causalBody=nextCausalBody;nextCausalBody=null;
             Snapshot=new ShotConfig(cfg.Source);ring.BeginReception(Snapshot.Reception.GetInt("timing.aidLevel"));Haptics.Enabled=Snapshot.Reception.GetBool("feedback.haptics");seen.Clear();Presented=new PresentedPlans();AttemptConsumed=WaitingForContact=false;
             LastRecord=LastClosureRecord=pendingContact=null;gate.Reset(app.Host.LaunchId);LastPresentation=null;PresentationCount=0;LastDiscardReason=null;LastSolution=default;closedAt=null;recordVersion=0;
             double start=Stopwatch.GetTimestamp();
@@ -75,7 +81,15 @@ namespace SquashClash.Runtime.Shot
             if(!Available){ring.Show(default,0,false,Snapshot.Timing);return;}
             double target=0;
             bool mapped=Plan.Exists&&Plan.TStarStep>=0&&app.Host.ClockMap.TrySimToReal(Plan.TStarStep,0,out target);
-            Presented.Present(Time.realtimeSinceStartupAsDouble,Plan,target);
+            double presented=Time.realtimeSinceStartupAsDouble;
+            // A paused map has no target yet: do not publish a fabricated target=0.
+            // With no visible mapped plan the existing contract returns NotEvaluable.
+            if(!Plan.Exists||mapped)Presented.Present(presented,Plan,target);
+            if(mapped&&CausalReference==null)
+            {
+                CausalReference=CausalQuality.Prepare(app.Host.Prediction,Plan,app.Host.ClockMap,Snapshot.Timing,presented,app.Host.ActiveConfig.Tempo,causalBody);
+                causalBody=null;
+            }
             ring.Show(Plan,target,mapped&&!AttemptConsumed,Snapshot.Timing);RecordLaunchTiming();
         }
         public bool CanBegin(double eventTime,out string reason)
@@ -91,6 +105,7 @@ namespace SquashClash.Runtime.Shot
         public void ProcessPending()
         {
             if(app==null)return;
+            RefreshClockPresentation();
             while(orders.Count>0)Process(orders.Dequeue());
         }
         private void Process(ClosedGesture order)
@@ -151,8 +166,11 @@ namespace SquashClash.Runtime.Shot
         {
             double start=Stopwatch.GetTimestamp();
             var cfg=app.Host.ActiveConfig;
-            var solution=ShotSolver.Solve(new ShotRequest(contact.Position,order.Aim,order.P),shot.VMin,shot.VMax,shot.VCap,cfg.Physics.Gravity,cfg.Physics.BallRadius,cfg.Court,
-                new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold),cfg.Physics);
+            var body=CausalReference.BodyAt(contact.Step);
+            LastCausal=CausalQuality.Solve(CausalReference,body,contact.Position,order.Aim,order.P,cfg,new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
+            var trace=CausalShotTrace.Create("Human",order.LaunchId,order.AttemptId,contact.Step,CausalReference,body,LastCausal);
+            app.Metrics?.Write("shot-causal",cfg,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(trace));
+            var solution=LastCausal.Solution;
             record.SolverCostMs+=(Stopwatch.GetTimestamp()-start)*1000/Stopwatch.Frequency;return solution;
         }
         private static void FillSolution(ShotRecord r,ShotSolution s,BallState contact)
@@ -218,14 +236,18 @@ namespace SquashClash.Runtime.Shot
         {LastDiscardReason=reason;if(Snapshot==null)return;var r=BaseRecord(o);r.Result="Discarded";r.Reason=reason;Write("shot-discarded",r);}
         private void Write(string kind,ShotRecord record)
         {app.Metrics?.Write(kind,app.Host.ActiveConfig,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,record.ToJson());}
-        private void LateUpdate()
+        // Runs even with an empty queue: preparation follows clock availability, never attempt data.
+        private void RefreshClockPresentation()
         {
-            ProcessPending();if(app==null)return;
             if(lastTempo!=app.Clock.Tempo||lastSlow!=app.Clock.DebugSlowMotion||lastPaused!=app.Clock.Paused||lastDrops!=app.Clock.DroppedSinceRestart)
             {
                 CaptureClockContext();var p=Plan;
                 Plan=new ContactPlan(p.Exists,p.KIn,p.KOut,p.TStarStep,p.PStar,p.Side,p.Version+1,p.Body,p.Legal,p.Court,p.Reason);PresentCurrentPlan();
             }
+        }
+        private void LateUpdate()
+        {
+            ProcessPending();if(app==null)return;
             ring.Tick(Time.realtimeSinceStartupAsDouble);notes.SetVisible(app.Tuning.Applied.GetBool("timing.showNotes"));
         }
         [Serializable] private sealed class LaunchTiming

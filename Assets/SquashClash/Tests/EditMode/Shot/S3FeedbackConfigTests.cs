@@ -15,14 +15,14 @@ namespace SquashClash.Core.Tests.Shot
             Assert.That(def.Min,Is.EqualTo(0));Assert.That(def.Max,Is.EqualTo(1));Assert.That(def.Step,Is.EqualTo(1));Assert.That(def.Apply,Is.EqualTo(ApplyClass.Immediate));
             Assert.That(def.Group,Is.EqualTo("First Shot / feedback"));Assert.That(ConfigFixtures.Default().Get("feedback.haptics"),Is.EqualTo(1));
         }
-        [Test] public void OnlyDifferences_FromPreS3Fixture_AreApprovedHapticsAndAidKeys()
+        [Test] public void OnlyDifferences_FromPreS3Fixture_AreApprovedHapticsAidAndCausalKeys()
         {
             var json=File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Tests/Fixtures/pre-s3-defaults.json"));
             Assert.That(PresetCodec.TryParse(json,out var old,out var error),Is.True,error);Assert.That(old.values.Count,Is.EqualTo(106));
-            var now=ConfigFixtures.Default();Assert.That(now.Ordered.Count,Is.EqualTo(108));
+            var now=ConfigFixtures.Default();Assert.That(now.Ordered.Count,Is.EqualTo(118));
             foreach(var e in old.values)Assert.That(now.Get(e.key),Is.EqualTo(e.value),e.key);
             var added=now.Ordered.Select(e=>e.Key).Except(old.values.Select(e=>e.key)).ToArray();
-            Assert.That(added,Is.EqualTo(new[]{"feedback.haptics","timing.aidLevel"}));
+            Assert.That(added,Is.EqualTo(new[]{"causal.capHeight","causal.capSpeed","causal.jamDistance","causal.jamHeight","causal.jamSpeed","causal.stretchHeight","causal.stretchSpeed","causal.stretchStart","causal.timingHeightPerM","causal.timingSpeedPerM","feedback.haptics","timing.aidLevel"}));
             Assert.That(EffectiveConfig.From(now).SimulationKey,Is.EqualTo("166a96e319c7"));Assert.That(now.HashOf(ConfigFixtures.FirstBallPrefixes),Is.EqualTo("0d39e6016bd8"));
         }
         [Test] public void EveryClip_HasProvenanceEntry()

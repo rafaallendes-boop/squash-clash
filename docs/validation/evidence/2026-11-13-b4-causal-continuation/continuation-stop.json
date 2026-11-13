@@ -1,0 +1,172 @@
+{
+  "status": "Stopped B4-CQ-IMPL-02; PR 53 remains BLOCKED and unmerged",
+  "initialHead": "92a6696",
+  "literalMandateCommit": "218204c",
+  "harnessFix": "e0ca095",
+  "tddRed": "81111ec",
+  "tddGreen": "bad5df2",
+  "runtimeEquality": "3ef1a3c",
+  "hashAnchorCommits": [
+    "330d190",
+    "0ed17c5"
+  ],
+  "fullPlayModeSource": "0ed17c5",
+  "fullEditModeSource": "330d190; only operator Markdown anchors changed while it ran, no Assets/test changes",
+  "failure": {
+    "test": "SquashClash.Runtime.Tests.ShotControllerTests.FeasibleAdjustment_ShowsIntentionAndFeasibleMarks",
+    "message": "  Expected: True\n  But was:  False\n",
+    "stack": "at SquashClash.Runtime.Tests.ShotControllerTests.FeasibleAdjustment_ShowsIntentionAndFeasibleMarks () [0x000a1] in /Users/rafaallendes/.codex/worktrees/firstshot-causal-quality-impl/Squash Clash/Assets/SquashClash/Tests/PlayMode/ShotControllerTests.cs:162\n",
+    "assertion": "TargetLowered expected True, observed False",
+    "fixture": {
+      "practice.launch": 2,
+      "shot.vMax": 10,
+      "shot.vCap": 10,
+      "power": 0,
+      "aimX": 3.2,
+      "aimY": 4.4,
+      "release": "TStar"
+    },
+    "testBodyUnchangedSinceInitialHead": true,
+    "testBodySHA256": "00bc5b1b746949ce46beeecdb6e74f9537448903aeed855e3ab9f260fe21b633",
+    "cause": "Not demonstrated by retained XML. No follow-up run or product/test correction after stop."
+  },
+  "xml": {
+    "01-matrix-hashes.xml": {
+      "sha256": "3b51cc9dc721af436caac95d9c547d6da9e4a6f490e49807a22f958a5355a0c9",
+      "counts": {
+        "total": "2",
+        "passed": "2",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-11-13 18:02:01Z",
+        "end-time": "2026-11-13 18:02:02Z"
+      }
+    },
+    "02-red.xml": {
+      "sha256": "fd969cddc41f21db56c1c062f4e3e31231caed26ac85fe2e252f7219dafd319a",
+      "counts": {
+        "total": "4",
+        "passed": "0",
+        "failed": "4",
+        "skipped": "0",
+        "start-time": "2026-11-13 18:03:51Z",
+        "end-time": "2026-11-13 18:03:53Z"
+      }
+    },
+    "02-green.xml": {
+      "sha256": "572b13ba90e32ea91983199f56135eff3a771bd1b4086ba9fb12a27924fed311",
+      "counts": {
+        "total": "4",
+        "passed": "4",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-11-13 18:04:49Z",
+        "end-time": "2026-11-13 18:04:51Z"
+      }
+    },
+    "03-runtime-green.xml": {
+      "sha256": "46b54133ed7a5ff09c0c7c4fb0750f4acb0b661351aa2d73a75173ee4d6499fb",
+      "counts": {
+        "total": "3",
+        "passed": "3",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-11-13 18:05:58Z",
+        "end-time": "2026-11-13 18:05:59Z"
+      }
+    },
+    "04-editmode-full.xml": {
+      "sha256": "9ab407ca7c62f71df568c41297cdbe5c6e7621247b5401718b5b243ad720285b",
+      "counts": {
+        "total": "708",
+        "passed": "708",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-11-13 18:07:11Z",
+        "end-time": "2026-11-13 18:09:31Z"
+      }
+    },
+    "05-playmode-full.xml": {
+      "sha256": "17402be5cb4140939adeb34327d40f9b82c15aec4a26f88c072d6f49033e3f0c",
+      "counts": {
+        "total": "457",
+        "passed": "456",
+        "failed": "1",
+        "skipped": "0",
+        "start-time": "2026-11-13 18:10:19Z",
+        "end-time": "2026-11-13 18:12:43Z"
+      }
+    }
+  },
+  "hashesRemeasuredInFullEditMode": {
+    "defaults": "9041c4aafc77",
+    "P0": "b6914a349068",
+    "SL5": "e2ffa032a588",
+    "keys": "118",
+    "inherited": "0d39e6016bd8",
+    "P0inherited": "8de3f2ecb217",
+    "simulation": "166a96e319c7"
+  },
+  "matrix": {
+    "contexts": 270,
+    "perfectContacts": 1026,
+    "snapPairsWithDifferentStep": 252,
+    "timingZeroOnBothSidesAmongContactPairs": 72,
+    "nonzeroTimingToZeroPairs": 180,
+    "airAirNoVectorPairs": 18
+  },
+  "rallyComparison": {
+    "historical": {
+      "rallies": 1000,
+      "causes": {
+        "DoubleBounce/Air": 615,
+        "DoubleBounce/Late": 316,
+        "DoubleBounce/Unreachable": 33,
+        "Out/": 36
+      },
+      "winners": {
+        "Rival": 689,
+        "Human": 311
+      },
+      "meanShots": 19.265,
+      "meanRealSeconds": 40.2739102564102,
+      "systemFaults": 0
+    },
+    "current": {
+      "rallies": 1000,
+      "causes": {
+        "DoubleBounce/Air": 593,
+        "DoubleBounce/Late": 312,
+        "Out/": 59,
+        "DoubleBounce/Unreachable": 36
+      },
+      "winners": {
+        "Rival": 670,
+        "Human": 330
+      },
+      "meanShots": 19.367,
+      "meanRealSeconds": 40.768423076923106,
+      "systemFaults": 0
+    }
+  },
+  "operatorCheckerTests": {
+    "total": 6,
+    "passed": 5,
+    "optionalCopiedRealControlSkipped": 1,
+    "code": 0
+  },
+  "projectSettingsRestored": true,
+  "protectedUnchanged": [
+    "Assets/SquashClash/Core/Shot/ContactContract.cs",
+    "Assets/SquashClash/Core/Shot/ShotSolver.cs",
+    "Assets/SquashClash/Core/Rally/RallyParams.cs",
+    "Assets/SquashClash/Core/Rally/FondoAi.cs",
+    "docs/superpowers/specs/2026-10-20-squash-clash-design-v0.3.md",
+    "docs/superpowers/plans/2026-10-25-squash-clash-first-shot.md"
+  ],
+  "historicalCorpusUnchanged": true,
+  "autoqa": "Not run after full PlayMode stop",
+  "checkRelease": "Not run after full PlayMode stop",
+  "noNewUnityAfterStop": true,
+  "noNativeBuildInstallOrIPhone": true
+}

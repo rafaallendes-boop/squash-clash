@@ -110,7 +110,7 @@ class CheckerTests(unittest.TestCase):
         rows = []
         for sid in SCENARIOS+('CANARY-WRONG-EXPECTATION',):
             for rep in ((1,) if sid.startswith('CANARY') else (1, 2, 3)):
-                anchor = '50efa6d33c0c' if sid.endswith('SL5') or sid.startswith('CANARY') else 'c0e9f00176d5'
+                anchor = 'e2ffa032a588' if sid.endswith('SL5') or sid.startswith('CANARY') else '9041c4aafc77'
                 rows.append({'schema': 'autoqa-attempt/1', 'runId': run.name,
                              'scenario': {'id': sid, 'repetition': rep},
                              'verdict': 'FAIL' if sid.startswith('CANARY') else 'PASS',

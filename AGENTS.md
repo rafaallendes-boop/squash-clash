@@ -808,3 +808,68 @@ Spec incorpora **solo adiciones** en §0.3 D36, §7.1.3, §7.6.2, §17.A.12 y An
 Continuación desde ac3f79b limitada a los cinco Markdown autorizados; producto, tests/arnés, evidencia/hashes, defaults/presets y todo archivo fuera de ellos intactos. Sin Unity, tests, AutoQA, check-release, iPhone ni builds/instalación. PR #52 para revisión Claude coordinada por PO, **SIN FUSIONAR** ni merge automático. Revisión técnica y prueba jugable pendientes antes del cierre de First Shot; no hay aceptación inferida. **Detenerse al entregar.**
 
 [Informe vigente y encargo futuro](docs/reviews/2026-11-13-first-shot-causal-quality.md#b4-cq01-documentary-d36).
+
+
+## B4 — encargo literal de implementación y cierre de PR #52 (13 nov 2026)
+
+> Registrar también el cierre de PR #52: merge 09764ab, segundo padre exacto 44dea6d, árbol idéntico 8ca36ec, fusionada el 13 nov 2026 por aprobación del PO («Yes, merge #52»).
+>
+> B4 — IMPLEMENTACIÓN DE LA CALIDAD CAUSAL (Tarea 3.1 + Adenda D6/D36)
+>
+> Rama/worktree nuevos firstshot/causal-quality-impl desde main, después de fusionar la PR #52. PR INDEPENDIENTE. Primer commit: registro de este encargo literal en AGENTS.md y aprobaciones.
+>
+> Alcance:
+> - CausalQuality según spec §7.6.2/D36 y plan Adenda D6: contexto de referencia de timing preparado una vez por recepción (trayectoria, pace.tempo, ClockMap, compensación congelados); J_A exhaustivo con ContactContract.Decide real; Z_T por arco ±L recortado a K; d = distancia mínima a Z_T; vector (min(capH, 0,6·d), 0, max(capV, −0,25·d)). Sin bool perfect, sin Δ ni categoría como entrada, sin recalcular la zona por intento.
+> - E3/E5 (estirado/atorado) independientes; Perfect no los anula. Composición con topes por componente aplicada a P/v ANTES del solver, nunca después.
+> - Una sola ruta compartida de preparación/evaluación/aplicación para ShotController y RallyContact.Solve, con el cuerpo efectivo en el contacto. Registro de cada vector por causa (humano y rival).
+> - 10 claves causal.* del plan con sus valores [EXPERIMENTO], en catálogo y DefaultPreset.json. Contrato de contacto, ventanas, P2, SimulationKey, M2-4 y rangos intactos.
+>
+> TDD: esqueletos compilables y RED por aserción antes de cada GREEN, con las pruebas de la Adenda D6 y el plan TDD de la PR #52. Ajuste: la igualdad se exige dentro de la misma recepción; entre tempos se documenta la diferencia sin exigir igualdad. Incluir la medición documentada del salto −41 → −40 ms (SL1 y las demás recetas donde aparezca), sin cambiar el contrato.
+>
+> Verificación, un solo Unity a la vez:
+> - Hashes de defaults/P0 y anclajes de AutoQA recalculados en Unity, en un commit propio, sin copiarlos.
+> - RallySimTests regenerados si cambian, explicando por qué.
+> - EditMode y PlayMode completas con XML fresco.
+> - AutoQA PASS/0/nivel 1 (obligatorio: toca el golpe).
+> - check-release dev/prod con gitDirty=false.
+> - ProjectSettings transitorios restaurados.
+>
+> Fuera de alcance: H3b completo y la nueva medición de R3 del Anexo C (entregas pequeñas posteriores); iPhone, build nativa, instalación, #32, First Rally, arte. Sin rondas nuevas de experimentación. Ante un defecto o sorpresa: registrar y detenerse. Informe y PR lista para revisión de Claude coordinada por el PO, SIN FUSIONAR. La fusión no cierra First Shot: falta la prueba jugable del playtest integrado.
+
+**Cierre comprobado antes de implementar:** PR #52 fusionada el 2026-11-13T17:30:37Z (14:30:37 America/Santiago), autorización del PO «Yes, merge #52». Merge `09764ab1899fc01460f848050eed1288635bbff2`, segundo padre exacto `44dea6d07de7ee67522e6620d6d2bcaa0c8a2cab`; árbol de ambos `8ca36ec98d6d7d22ee7f9b0908d7c44c38cec343`, idéntico. Main y origin/main locales coinciden en ese merge, árbol limpio. Git local y metadatos de GitHub contrastados. No se ejecuta otra fusión.
+
+**Inicio autorizado:** rama `firstshot/causal-quality-impl`, worktree independiente creado desde main/09764ab. Este primer commit contiene solo el encargo literal y cierre en AGENTS.md y aprobaciones; precede a cualquier cambio de producto o prueba. La autorización actual sustituye la pausa anterior de implementación exclusivamente para B4. H3b completo y nueva medición R3 quedan expresamente fuera aunque la plantilla histórica de #52 los previera. R3 conserva Fail 0/42 y observación abierta. Revisión de Claude coordinada por el PO, PR independiente SIN FUSIONAR; First Shot no aceptado.
+
+
+## B4 — parada B4-CQ-IMPL-01 (13 nov 2026)
+
+Primer registro literal `1772bfc`, base main/merge de #52 `09764ab`, rama independiente `firstshot/causal-quality-impl`. Fuente parcial limpia **4d08f35**: TDD 0/10→10/10, 10/12→12/12, 12/15→15/15 Core; RED PlayMode 0/1 válido, GREEN runtime pendiente. Última corrida focal fresca **17/16 Pass/1 Fail/0 skipped**, sin CS. **Detenida ante la sorpresa, sin corregir ni reintentar**: la prueba nueva de cobertura usa `zone[14]` (adaptiveRadiusM) para comparar L. En SL3/tempo0,65/comp−75 espera 0,18950155531216195 m, producto obtiene 0,18950885632079206 m; `zone[13]` (LarcM) contiene exactamente este último valor. Defecto del arnés nuevo, no defecto geométrico de producto demostrado; evidencia/aserción/tolerancia conservadas. Matriz incompleta: 21 contextos completos y fallo en el 22.º, de 270 previstos. Snap SL1/SL2 medido en tres tempos/tres compensaciones; SL3/0,3 Air–Air sin vector; resto pendiente.
+
+Hashes medidos en Unity: defaults **9041c4aafc77/118**, P0 efectivo **b6914a349068**, SL5 **e2ffa032a588**; heredados/P0 heredado/SimulationKey intactos. Respaldo local P0 leído sin mutarlo, SHA-256 histórico intacto; sin iPhone. **Commit propio de hashes/anclajes, GREEN runtime, regresiones completas, RallySimTests, AutoQA y check-release pendientes**. Observaciones estáticas adicionales pendientes: vaciado de pointCausal por punto y preparación con reloj pausado; no se corrigen tras parar. ProjectSettings, contrato, solver, RallyParams, spec/plan y corpus #52 intactos; 108 valores anteriores de defaults conservados. Sin H3b/R3 nuevos, nativo, instalación ni campañas. PR independiente para revisión de la parada coordinada por el PO, bloqueada y **SIN FUSIONAR**; no acepta First Shot. [Informe](docs/reviews/2026-11-13-first-shot-causal-quality-implementation.md).
+
+
+## B4 — continuación autorizada tras B4-CQ-IMPL-01 (13 nov 2026)
+
+> B4 — CONTINUACIÓN AUTORIZADA DE PR #53 TRAS B4-CQ-IMPL-01 (13 nov 2026)
+>
+> Misma rama/worktree firstshot/causal-quality-impl, misma PR #53 (head 92a6696). Primer commit: registrar literal la autorización del PO «[pegar la respuesta literal del PO]» y la revisión de Claude: el diagnóstico está confirmado con zones.tsv (columna 13 LarcM = 0,18950885632079206 = valor del producto; columna 14 = adaptiveRadiusM). Es un defecto del arnés de prueba, no del producto.
+>
+> 1) Arnés: leer las columnas de zones.tsv POR NOMBRE de encabezado (LarcM para ArcRadius y cada columna que se compare), sin índices fijos. No cambiar tolerancias, evidencia ni producto. Correr la matriz completa (270 condiciones, SL1–SL6 y rivales) y documentar la cobertura real y la medición completa del salto −41→−40 ms en todas las recetas/contextos.
+> 2) Con TDD (RED por aserción → GREEN): vaciar pointCausal en BeginPoint, y preparar correctamente la recepción con ClockMap pausado (o documentar NotEvaluable según el contrato, sin inventar cero).
+> 3) GREEN PlayMode de la integración en ShotController. Igualdad humano/rival en runtime.
+> 4) Commit propio con hashes/anclajes medidos en Unity (defaults 9041c4aafc77/118, P0 b6914a349068, SL5 e2ffa032a588), recuentos actualizados. Si algún valor difiere al re-medir, registrar y detenerse.
+> 5) RallySimTests regenerados con explicación de los cambios (duración, causas, ganador), sin ajustar pesos ni cinemática.
+> 6) Suites completas EditMode/PlayMode con XML fresco, AutoQA PASS/0/nivel 1, check-release dev/prod gitDirty=false, transitorios restaurados. Un solo Unity a la vez.
+>
+> Ante otra sorpresa: registrar y detenerse. Quitar [BLOCKED] solo con todo lo anterior en verde. PR lista para revisión de Claude coordinada por el PO, SIN FUSIONAR. Sin H3b, R3, iPhone, build nativa ni instalación. No acepta First Shot.
+
+**Registro de procedencia:** el encargo recibido arriba constituye la autorización expresa para continuar. Incluye literalmente el marcador «[pegar la respuesta literal del PO]»; no se inventa una respuesta adicional para sustituirlo. La revisión de Claude se registra como comunicada en este mismo encargo: confirma el diagnóstico por encabezados de zones.tsv, defecto del arnés y no del producto. Este primer commit contiene únicamente AGENTS.md y aprobaciones; precede a cambios del arnés/producto y a cualquier corrida nueva. Base/head local y remoto de PR #53 comprobados en `92a6696f721240e8fb23005238e1c63177ba3c6b`, árbol limpio. La parada anterior se conserva como histórica; la continuación autorizada se limita a los seis puntos y mantiene [BLOCKED] hasta verificarlos todos.
+
+
+## B4 — continuación y parada B4-CQ-IMPL-02 (13 nov 2026)
+
+Primer commit literal **218204c** sobre head exacto **92a6696**, misma rama/worktree/PR #53. Revisión de Claude comunicada por el PO: error de columna del arnés confirmado, no del producto. **e0ca095** corrige lectura por encabezado, sin cambiar tolerancia/corpus/producto: **270 condiciones**, 1.026 Perfect cubiertos, 270 pares −41→−40 completos; 252 cambian paso (180 timing no cero→cero, 72 cero→cero), 18 Air–Air sin vector. **81111ec RED 0/4 por aserción→bad5df2 GREEN 4/4**: aislamiento de trazas por punto, preparación con reloj pausado/reanudado en humano/rival y NotEvaluable sin target ficticio. **3ef1a3c GREEN 3/3** integración/equivalencia runtime. Hashes re-medidos en Unity coinciden: defaults 9041c4aafc77/118, P0 b6914a349068, SL5 e2ffa032a588; commits propios **330d190/0ed17c5** de recuentos/anclajes/operador, heredados/SimulationKey intactos.
+
+**EditMode completa 708/708** con XML fresco; RallySimTests regeneró 1.000 rallies, todos Point, cero fallas de sistema: media 19,367 golpes/40,7684 s, ganador Human/Rival 330/670, Air593/Late312/Unreachable36/Out59. Pesos/cinemática/RallyParams intactos, comparación histórica documentada. **PlayMode única 456/457**, fuente limpia 0ed17c5, 15:10:19–15:12:43 Chile: falla `FeasibleAdjustment_ShowsIntentionAndFeasibleMarks`, TargetLowered esperado True/observado False. Test idéntico al head inicial; causa no demostrada por XML, sin atribución al entorno. **Detenerse, sin corrección ni reintento**. AutoQA/check-release no ejecutados tras la parada; PR #53 mantiene **[BLOCKED] y SIN FUSIONAR**. ProjectSettings transitorios preservados/restaurados, corpus #52/spec/plan/Core/DefaultPreset intactos durante la continuación. Sin H3b/R3 nuevos, iPhone, build nativa ni instalación; First Shot no aceptado. [Informe](docs/reviews/2026-11-13-first-shot-causal-quality-continuation.md), evidencia local preservada.
+
+- **B4 — continuación tras B4-CQ-IMPL-02 (PO, 13 de noviembre de 2026), PR #53:** decisión literal del PO en [aprobaciones](docs/reviews/2026-10-25-first-shot-po-approvals.md#b4--decisión-del-po-tras-b4-cq-impl-02-y-continuación-con-subagente-sonnet-13-de-noviembre-de-2026): «Envía ese prompt a un sub agente que sea de sonnet, luego revisa su PR y seguimos avanzando.» Interpretación de Claude (separada): aprobar la opción (a), acotar al máximo legal, solo si el diagnóstico confirma la hipótesis. Operador: subagente Sonnet dirigido por Claude, no Codex. Hipótesis de Claude no demostrada: la altura causal compuesta lleva `aim.y` a ≥ FrontOutLower y el solver rechaza el objetivo. Misma rama/PR (head 415e5ba), sin fusionar; sin H3b/R3/iPhone/build/instalación; no acepta First Shot.

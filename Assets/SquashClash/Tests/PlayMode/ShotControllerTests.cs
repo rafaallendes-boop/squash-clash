@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using SquashClash.Core.Config;
+using SquashClash.Core.Rally;
 using SquashClash.Core.Shot;
 using SquashClash.Core.Simulation;
 using SquashClash.Runtime.App;
@@ -64,6 +65,48 @@ namespace SquashClash.Runtime.Tests
             var anchor=(Vector2)UnityEngine.Camera.main.WorldToScreenPoint(new Vector3(3.2f,2.2f,0));
             float mm=ScreenMetrics.MmPerPx(Screen.dpi,(float)app.Tuning.Applied.Get("input.fallbackDpi"),out _);
             now=time+receivedAge;InputSystem.QueueStateEvent(screen,new TouchState{touchId=id,phase=phase,position=anchor+Vector2.down*(down/mm)},time);InputSystem.Update();
+        }
+        [Test] public void CausalPausedLaunch_ResumesPreparationBeforeAnyOrder_AndFreezesOnce()
+        {
+            app.Clock.Paused=true;app.LaunchCurrent();Assert.That(controller.CausalReference,Is.Null);
+            app.Host.Advance(.02);app.Clock.Paused=false;app.Host.Advance(0);
+            controller.ProcessPending();
+            var reference=controller.CausalReference;Assert.That(reference,Is.Not.Null,"an empty input queue still prepares the resumed reception");
+            var record=Submit(Star());Assert.That(record.Applied,Is.True,record.Reason);
+            Assert.That(controller.CausalReference,Is.SameAs(reference));Assert.That(controller.LastCausal.Vectors,Is.Not.Null);
+        }
+        [Test] public void CausalPausedLaunch_WithoutMappedTarget_IsNotEvaluableAndHasNoVector()
+        {
+            app.Clock.Paused=true;app.LaunchCurrent();app.Host.Advance(.05);now=app.Host.ObservedRealTime;
+            controller.Enqueue(Order(now));controller.ProcessPending();
+            Assert.That(controller.LastRecord,Is.Not.Null);Assert.That(controller.LastRecord.Result,Is.EqualTo("NotEvaluable"));
+            Assert.That(controller.LastRecord.Reason,Is.EqualTo("no-presented-plan-at-event"));
+            Assert.That(controller.LastCausal.Vectors,Is.Null);Assert.That(controller.LastRecord.Applied,Is.False);
+        }
+        [TestCase(-60d),TestCase(0d)] public void HumanAndRival_RuntimeSharedPath_EquivalentReceptionMatches(double deltaMs)
+        {
+            var aim=new Vector2(2.6f,1.5f);var record=Submit(Star()+deltaMs/1000,aim:aim);
+            Assert.That(record.Applied,Is.True,record.Reason);var reference=controller.CausalReference;
+            var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
+            var context=new RallyContext(app.Host.ActiveConfig,new RallyParams(),factory);
+            var point=new Vector3(record.ContactX,record.ContactY,record.ContactZ);
+            var rival=RallyContact.Solve(context,reference,reference.BodyAt(record.ContactStep),point,aim,.5f);
+            Assert.That(rival.Vectors,Is.EqualTo(controller.LastCausal.Vectors));
+            Assert.That(rival.Input.Aim,Is.EqualTo(controller.LastCausal.Input.Aim));Assert.That(rival.Input.Speed,Is.EqualTo(controller.LastCausal.Input.Speed));
+            Assert.That(rival.Solution.Solved,Is.True);Assert.That(rival.Solution.Velocity,Is.EqualTo(controller.LastSolution.Velocity));
+            Assert.That(rival.Solution.TargetUsed,Is.EqualTo(controller.LastSolution.TargetUsed));Assert.That(rival.Solution.Speed,Is.EqualTo(controller.LastSolution.Speed));
+            Assert.That(factory.LiveInstances,Is.Zero);
+        }
+        [Test] public void CausalReference_IsPreparedAtLaunch_AndSharedInputIsAppliedAndTraced()
+        {
+            var reference=controller.CausalReference;Assert.That(reference,Is.Not.Null);
+            var aim=new Vector2(2.6f,1.5f);var record=Submit(Star()-.06,aim:aim);
+            Assert.That(record.Applied,Is.True);Assert.That(controller.CausalReference,Is.SameAs(reference));
+            Assert.That(controller.LastCausal.Vectors,Is.Not.Null);Assert.That(controller.LastCausal.Vectors.Any(v=>v.Cause=="timing"),Is.True);
+            Assert.That(controller.LastCausal.Input.Speed,Is.LessThan(17));
+            var direct=CausalQuality.Solve(reference,reference.BodyAt(record.ContactStep),new Vector3(record.ContactX,record.ContactY,record.ContactZ),aim,.5f,app.Host.ActiveConfig,new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
+            Assert.That(controller.LastSolution.Velocity,Is.EqualTo(direct.Solution.Velocity));
+            Assert.That(File.ReadAllText(app.Metrics.CurrentFilePath),Does.Contain("shot-causal"));
         }
         [Test] public void TaskSection_StagesObservationAndShowsCapturedRequest()
         {

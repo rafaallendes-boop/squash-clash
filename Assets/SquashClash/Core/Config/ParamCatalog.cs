@@ -8,6 +8,16 @@ namespace SquashClash.Core.Config
     {
         private static readonly IReadOnlyList<ParamDef> definitions = Array.AsReadOnly(new[]
         {
+            new ParamDef("causal.timingHeightPerM", "timingHeightPerM [EXPERIMENT]", "m/m", "First Shot / causal", ParamKind.Float, 0, 3, .01, ApplyClass.NextLaunch),
+            new ParamDef("causal.timingSpeedPerM", "timingSpeedPerM [EXPERIMENT]", "1/m", "First Shot / causal", ParamKind.Float, -1, 0, .01, ApplyClass.NextLaunch),
+            new ParamDef("causal.stretchStart", "stretchStart [EXPERIMENT]", "R", "First Shot / causal", ParamKind.Float, 0, 0.99, .01, ApplyClass.NextLaunch),
+            new ParamDef("causal.jamDistance", "jamDistance [EXPERIMENT]", "m", "First Shot / causal", ParamKind.Float, 0.01, 1, .01, ApplyClass.NextLaunch),
+            new ParamDef("causal.stretchHeight", "stretchHeight [EXPERIMENT]", "m", "First Shot / causal", ParamKind.Float, 0, 2, .01, ApplyClass.NextLaunch),
+            new ParamDef("causal.stretchSpeed", "stretchSpeed [EXPERIMENT]", "", "First Shot / causal", ParamKind.Float, -0.8, 0, .01, ApplyClass.NextLaunch),
+            new ParamDef("causal.jamHeight", "jamHeight [EXPERIMENT]", "m", "First Shot / causal", ParamKind.Float, 0, 2, .01, ApplyClass.NextLaunch),
+            new ParamDef("causal.jamSpeed", "jamSpeed [EXPERIMENT]", "", "First Shot / causal", ParamKind.Float, -0.8, 0, .01, ApplyClass.NextLaunch),
+            new ParamDef("causal.capHeight", "capHeight [EXPERIMENT]", "m", "First Shot / causal", ParamKind.Float, 0, 3, .01, ApplyClass.NextLaunch),
+            new ParamDef("causal.capSpeed", "capSpeed [EXPERIMENT]", "", "First Shot / causal", ParamKind.Float, -0.8, 0, .01, ApplyClass.NextLaunch),
             new ParamDef("practice.enabled", "First Shot practice", "", "First Shot / practice", ParamKind.Bool, 0, 1, 1, ApplyClass.Immediate),
             new ParamDef("practice.launch", "Practice launch", "", "First Shot / practice", ParamKind.Choice, 0, 5, 1, ApplyClass.Immediate,
                 new ChoiceOption(0,"SL1"),new ChoiceOption(1,"SL2"),new ChoiceOption(2,"SL3"),new ChoiceOption(3,"SL4"),new ChoiceOption(4,"SL5"),new ChoiceOption(5,"SL6")),

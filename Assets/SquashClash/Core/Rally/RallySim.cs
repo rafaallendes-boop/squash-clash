@@ -14,8 +14,9 @@ namespace SquashClash.Core.Rally
         public readonly PlayerId Who;public readonly ReceptionResult Result;public readonly bool Perfect,Reachable,Defensive;
         public readonly double DeltaMs,SlackS;public readonly ShotLine Line;public readonly ShotHeight Height;public readonly ShotPower Power;
         public readonly long ContactStep;public readonly string Reason;
-        public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason)
-        {Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
+        public readonly CausalVector[] Vectors;public readonly CausalInput Input;
+        public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason,CausalShotResult causal=default)
+        {Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
     }
     public sealed class RallyOutcome
     {
@@ -64,6 +65,7 @@ namespace SquashClash.Core.Rally
         private readonly IRallyBrain[] brains=new IRallyBrain[2];
         private readonly IBallSimulation ball;
         private readonly List<ContactEvent> contacts=new List<ContactEvent>(8);
+        private CausalReference pendingCausal;
         private bool hasPending;private long pendingStep;private AiShot pendingShot;private PlayerId pendingWho;private ReceptionLog pendingLog;
         private int planVersion;private long launchId;
         public PointRules Rules {get;}
@@ -153,6 +155,11 @@ namespace SquashClash.Core.Rally
             // Real perceived time for this flight: the same clock map type the touch path uses.
             double now=state.Step/(context.Tempo*context.StepHz);
             var clock=new ClockMap();clock.Begin(++launchId,now,state.Step,context.Tempo,1,context.StepHz);
+            if(plan.Contact.Exists&&plan.Contact.TStarStep>=0)
+            {
+                var positions=body.PositionsAfter(trajectory.States.Count);long first=trajectory.States[0].Step;
+                pendingCausal=CausalQuality.Prepare(trajectory,plan.Contact,clock,context.Timing,now,context.Tempo,j=>context.FrameAt(positions[(int)(j-first)]));
+            }
             var decision=RallyContact.Resolve(context,clock,trajectory,plan.Contact,now,shot.DeltaMs);
             ReceptionResult result;
             switch(decision.Result)
@@ -170,14 +177,16 @@ namespace SquashClash.Core.Rally
         private void Strike(RallyOutcome outcome)
         {
             hasPending=false;var who=pendingWho;var state=ball.State;
-            var solution=Rules.CanHit(who)?RallyContact.Solve(context,state.Position,pendingShot.Aim,pendingShot.P):default;
+            var causal=Rules.CanHit(who)?RallyContact.Solve(context,pendingCausal,context.FrameAt(Body(who).Position),state.Position,pendingShot.Aim,pendingShot.P):default;
+            var solution=causal.Solution;
             if(!solution.Solved)
             {
                 outcome.SystemFaults++;var l=pendingLog;
-                outcome.Receptions.Add(new ReceptionLog(who,ReceptionResult.SystemFault,false,l.Reachable,l.Defensive,l.DeltaMs,l.SlackS,pendingShot.Option,l.ContactStep,solution.Reason??"contact-not-legal"));
+                outcome.Receptions.Add(new ReceptionLog(who,ReceptionResult.SystemFault,false,l.Reachable,l.Defensive,l.DeltaMs,l.SlackS,pendingShot.Option,l.ContactStep,solution.Reason??"contact-not-legal",causal));
                 return;
             }
-            outcome.Receptions.Add(pendingLog);
+            var previous=pendingLog;
+            outcome.Receptions.Add(new ReceptionLog(who,previous.Result,previous.Perfect,previous.Reachable,previous.Defensive,previous.DeltaMs,previous.SlackS,pendingShot.Option,previous.ContactStep,previous.Reason,causal));
             // The racket only replaces the velocity of the authoritative state at the contact step.
             ball.Reset(new BallState{Position=state.Position,Velocity=solution.Velocity,Step=state.Step});
             Rules.RacketContact(who);
