@@ -34,6 +34,7 @@ namespace SquashClash.Runtime.Rally
         private ShotRecord resolved;
         private AiShot pendingShot,autoShot;
         private CausalReference rivalCausal;
+        private Func<long,BodyFrame> rivalCausalBody;
         private readonly List<CausalShotTrace> pointCausal=new List<CausalShotTrace>();
         private bool launching,hasPending,needDecision,autoQueued;
         private long flightLaunchId,flightStartStep,bodyStep,pendingStep;
@@ -107,6 +108,7 @@ namespace SquashClash.Runtime.Rally
         public void Rematch(){if(!Active)return;ResetScore();if(Match!=null)Match=NewMatch();BeginPoint();}
         private void BeginPoint()
         {
+            pointCausal.Clear();
             var cfg=EffectiveConfig.From(app.Tuning.ApplyPending());
             context=new RallyContext(cfg,Params,factory);
             Human=new PlayerBody(PlayerId.Human,Human?.Position??context.WaitPosition(PlayerId.Human),context.Move);
@@ -282,13 +284,13 @@ namespace SquashClash.Runtime.Rally
             int delay=Math.Max(0,context.Steps(Params.ReactionS)+rivalBrain.PerceptionSteps-elapsed);
             RivalPlan=ReceptionPlanner.Plan(context,trajectory,committed,Rival,delay,++planVersion,rivalBrain.StanceNoise(),elapsed);
             Rival.MoveTo(RivalPlan.Stance,delay,BodyPhase.Approaching,BodyPhase.Set);
-            rivalCausal=null;
-            if(RivalPlan.Contact.Exists&&RivalPlan.Contact.TStarStep>=0&&host.ClockMap.TrySimToReal(RivalPlan.Contact.TStarStep,0,out _))
+            rivalCausal=null;rivalCausalBody=null;
+            if(RivalPlan.Contact.Exists&&RivalPlan.Contact.TStarStep>=0)
             {
                 var future=Rival.PositionsAfter(trajectory.States.Count-elapsed);var past=new Vector2[trajectory.States.Count];
                 // Before this presentation the receiver has no attempt; retain its present position for that prefix.
                 for(int i=0;i<past.Length;i++)past[i]=i<elapsed?Rival.Position:future[i-elapsed];
-                rivalCausal=CausalQuality.Prepare(trajectory,RivalPlan.Contact,host.ClockMap,context.Timing,host.ObservedRealTime,context.Tempo,j=>context.FrameAt(past[(int)(j-start)]));
+                rivalCausalBody=j=>context.FrameAt(past[(int)(j-start)]);
             }
             pendingShot=rivalBrain.Decide(Observe(PlayerId.Rival,trajectory.States[0]),RivalPlan);
             hasPending=false;needDecision=pendingShot.Swing;
@@ -298,6 +300,13 @@ namespace SquashClash.Runtime.Rally
         private void DecideRival()
         {
             var host=app.Host;
+            // The body path is already frozen at reception planning. A paused map only defers
+            // preparation until its target is observable; no attempt or category builds the zone.
+            if(rivalCausal==null&&rivalCausalBody!=null&&host.ClockMap.TrySimToReal(RivalPlan.Contact.TStarStep,0,out _))
+            {
+                rivalCausal=CausalQuality.Prepare(host.Prediction,RivalPlan.Contact,host.ClockMap,context.Timing,host.ObservedRealTime,context.Tempo,rivalCausalBody);
+                rivalCausalBody=null;
+            }
             var decision=RallyContact.Resolve(context,host.ClockMap,host.Prediction,RivalPlan.Contact,host.ObservedRealTime,pendingShot.DeltaMs);
             // A paused clock cannot place a future instant yet: ask again on the next tick, same single attempt.
             if(decision.Result==ShotResult.NotEvaluable&&decision.Reason=="target-time-unmapped")return;

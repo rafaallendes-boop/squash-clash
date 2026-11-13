@@ -82,7 +82,9 @@ namespace SquashClash.Runtime.Shot
             double target=0;
             bool mapped=Plan.Exists&&Plan.TStarStep>=0&&app.Host.ClockMap.TrySimToReal(Plan.TStarStep,0,out target);
             double presented=Time.realtimeSinceStartupAsDouble;
-            Presented.Present(presented,Plan,target);
+            // A paused map has no target yet: do not publish a fabricated target=0.
+            // With no visible mapped plan the existing contract returns NotEvaluable.
+            if(!Plan.Exists||mapped)Presented.Present(presented,Plan,target);
             if(mapped&&CausalReference==null)
             {
                 CausalReference=CausalQuality.Prepare(app.Host.Prediction,Plan,app.Host.ClockMap,Snapshot.Timing,presented,app.Host.ActiveConfig.Tempo,causalBody);
@@ -103,6 +105,7 @@ namespace SquashClash.Runtime.Shot
         public void ProcessPending()
         {
             if(app==null)return;
+            RefreshClockPresentation();
             while(orders.Count>0)Process(orders.Dequeue());
         }
         private void Process(ClosedGesture order)
@@ -233,14 +236,18 @@ namespace SquashClash.Runtime.Shot
         {LastDiscardReason=reason;if(Snapshot==null)return;var r=BaseRecord(o);r.Result="Discarded";r.Reason=reason;Write("shot-discarded",r);}
         private void Write(string kind,ShotRecord record)
         {app.Metrics?.Write(kind,app.Host.ActiveConfig,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,record.ToJson());}
-        private void LateUpdate()
+        // Runs even with an empty queue: preparation follows clock availability, never attempt data.
+        private void RefreshClockPresentation()
         {
-            ProcessPending();if(app==null)return;
             if(lastTempo!=app.Clock.Tempo||lastSlow!=app.Clock.DebugSlowMotion||lastPaused!=app.Clock.Paused||lastDrops!=app.Clock.DroppedSinceRestart)
             {
                 CaptureClockContext();var p=Plan;
                 Plan=new ContactPlan(p.Exists,p.KIn,p.KOut,p.TStarStep,p.PStar,p.Side,p.Version+1,p.Body,p.Legal,p.Court,p.Reason);PresentCurrentPlan();
             }
+        }
+        private void LateUpdate()
+        {
+            ProcessPending();if(app==null)return;
             ring.Tick(Time.realtimeSinceStartupAsDouble);notes.SetVisible(app.Tuning.Applied.GetBool("timing.showNotes"));
         }
         [Serializable] private sealed class LaunchTiming
