@@ -8,7 +8,7 @@ namespace SquashClash.Runtime.Shot
         private const float FitRadius=.1f, OuterRadius=.45f, StrokePixels=2, FallbackWidth=.002f;
         private const float ValidAlpha=.35f, PerfectAlpha=.6f;
         private const int CircleSegments=96, TriangleVertices=3;
-        private LineRenderer line,triangle,validBand,perfectBand;
+        private LineRenderer line,triangle,validBand,perfectBand,lateValidBand,latePerfectBand;
         private Material material;
         private Transform ring;
         private TimingSettings timing;
@@ -29,6 +29,8 @@ namespace SquashClash.Runtime.Shot
                 triangle=CreateLine("Fixed triangle",TriangleVertices);
                 validBand=CreateLine("Valid band",CircleSegments);
                 perfectBand=CreateLine("Perfect band",CircleSegments);
+                lateValidBand=CreateLine("Late valid band",CircleSegments);
+                latePerfectBand=CreateLine("Late perfect band",CircleSegments);
                 DrawCircle(triangle,FitRadius*2,Mathf.PI/2);
             }
             ring.position=plan.PStar;Tick(presented);
@@ -45,11 +47,8 @@ namespace SquashClash.Runtime.Shot
             var state=ImpactCue.Evaluate(now,presented,target,timing,shown,!shown);
             if(ring==null)return;
             if(state.Phase==ImpactCuePhase.Hidden||state.Phase==ImpactCuePhase.Closed)
-            {line.enabled=triangle.enabled=validBand.enabled=perfectBand.enabled=false;return;}
-            float alpha=1;
-            if(state.AtOrAfterIdeal&&!state.InAssistWindow)
-                alpha=state.InValidWindow&&timing.ValidMs>timing.AssistMs?
-                    Mathf.Clamp01((float)((timing.ValidMs-state.DeltaMs)/(timing.ValidMs-timing.AssistMs))):0;
+            {line.enabled=triangle.enabled=validBand.enabled=perfectBand.enabled=lateValidBand.enabled=latePerfectBand.enabled=false;return;}
+            const float alpha=1;
             var camera=UnityEngine.Camera.main;
             float width=FallbackWidth;
             if(camera!=null)
@@ -62,14 +61,21 @@ namespace SquashClash.Runtime.Shot
             SetStyle(line,alpha,width);SetStyle(triangle,alpha,width);
             SetStyle(validBand,timing.ValidLimitOn?alpha*ValidAlpha:0,width);
             SetStyle(perfectBand,alpha*PerfectAlpha,width);
+            SetStyle(lateValidBand,timing.ValidLimitOn?alpha*ValidAlpha:0,width);
+            SetStyle(latePerfectBand,alpha*PerfectAlpha,width);
             float radius=Radius(state.Approach);
             // Float rounding must not visually snap to the fit radius before T*.
             if(!state.AtOrAfterIdeal&&radius<=FitRadius)radius=FitRadius+FitRadius*1.1920929e-7f;
-            DrawCircle(line,radius);
             double duration=System.Math.Max(0,target-System.Math.Max(presented,target-ImpactCue.ApproachMs/1000))*1000;
+            if(state.AtOrAfterIdeal)radius=LateRadius(System.Math.Max(0,state.DeltaMs),duration);
+            DrawCircle(line,radius);
+            DrawCircle(lateValidBand,LateRadius(timing.ValidMs,duration));
+            DrawCircle(latePerfectBand,LateRadius(timing.AssistMs,duration));
             DrawCircle(validBand,WindowRadius(timing.ValidMs,duration));
             DrawCircle(perfectBand,WindowRadius(timing.AssistMs,duration));
         }
+        // Continue inward after T*: the inner contours mark the inclusive late A/V edges.
+        private static float LateRadius(double ms,double duration)=>FitRadius/(1+(OuterRadius/FitRadius-1)*(float)(ms/System.Math.Max(1,duration)));
         private static float Radius(float approach)=>FitRadius+(OuterRadius-FitRadius)*approach;
         private static float WindowRadius(double ms,double duration)=>Radius(duration>0?Mathf.Clamp01((float)(ms/duration)):1);
         private static void SetStyle(LineRenderer renderer,float alpha,float width)
