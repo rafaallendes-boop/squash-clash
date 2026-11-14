@@ -139,7 +139,7 @@ namespace SquashClash.Core.Tests.Shot
         {
             var cfg=EffectiveConfig.From(ConfigFixtures.Default());var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
             var r=Reference();var point=new Vector3(2.7f,.6f,5.5f);var aim=new Vector2(2.6f,1.5f);
-            var result=CausalQuality.Solve(r,body,point,aim,.5f,cfg,factory);var plain=CausalQuality.Apply(aim,(float)cfg.Source.Get("shot.vMin")+.5f*((float)cfg.Source.Get("shot.vMax")-(float)cfg.Source.Get("shot.vMin")),result.Vectors,CausalSettings.From(cfg.Source));
+            var result=CausalQuality.Solve(r,body,point,aim,.5f,cfg,factory);var plain=CausalQuality.Apply(aim,ShotPace.Requested(.5f,point,aim,cfg.Physics.BallRadius,cfg.Source).Speed,result.Vectors,CausalSettings.From(cfg.Source));
             Assert.That(result.Input.Clamped,Is.False);Assert.That(result.Input.Aim,Is.EqualTo(plain.Aim));Assert.That(result.Input.UnclampedAim,Is.EqualTo(plain.Aim));Assert.That(result.Input.Speed,Is.EqualTo(plain.Speed));
             var clamped=CausalQuality.Solve(r,body,new Vector3(2f,.9f,5.5f),new Vector2(2.6f,4.5f),.5f,cfg,factory);
             var unbounded=CausalQuality.Apply(new Vector2(2.6f,4.5f),clamped.Input.Speed/(1+Mathf.Max(-.4f,clamped.Vectors.Sum(v=>v.DeltaSpeedFraction))),clamped.Vectors,CausalSettings.From(cfg.Source));
