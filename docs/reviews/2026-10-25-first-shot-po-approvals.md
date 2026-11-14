@@ -2676,3 +2676,42 @@ Hechos ya verificados por Claude (no se rehacen aquí):
 - Parte A, con TDD: observaciones A1 (reinicio por recepción de `pendingCausal` en RallySim) y A2 (marco corporal vivo frente al congelado; solo se cambia código si se demuestra diferencia), más A3 solo registro.
 - Parte B: completar H3b como experimento explícito (vector causal productivo y niveles de ayuda 0/1/2), fuera de las suites de regresión, método predeclarado antes de ejecutar.
 - Sin tocar valores `causal.*`, defaults, presets, reglas del solver, contrato, ventanas ni física P2. **No se toca el iPhone, devicectl, Duplicación ni xcodebuild de dispositivo**: el PO está probando la build instalada. Sin instalación. PR no borrador, **sin fusionar**. Informe: [docs/reviews/2026-11-13-first-shot-b4-followups-h3b.md](2026-11-13-first-shot-b4-followups-h3b.md).
+
+
+## Diseño de potencia según la distancia (SL5/SL6 y R3) — decisión literal del PO (14 de noviembre de 2026, Chile)
+
+Contexto: [propuesta de diseño de Claude](2026-11-14-first-shot-shot-pace-distance-design.md), solo diseño, sin código. Respuesta literal del PO, recibida el 14 de noviembre de 2026 hacia las 10:45 America/Santiago:
+
+> Claude, revisé la propuesta completa y apruebo avanzar con el diseño, con las siguientes decisiones como PO:
+> 1. APRUEBO la curva de potencia según distancia.
+>
+> * γ_max = 2,0 como alternativa principal.
+> * γ_max = 2,5 como respaldo predeclarado.
+> * Mantener P2, First Ball y M2-4 sin modificaciones.
+> * Mantener los extremos de potencia y el comportamiento actual desde 6 m.
+> * Aplicar una única función compartida, sin reglas especiales por escenario.
+>
+> 2. APRUEBO tratar R3a como tendencia ≥75 %, considerando los pares válidos con P > 0.
+> Los pares con P=0 deben seguir reportándose explícitamente, incluyendo su comportamiento y explicación. No quiero ocultar resultados desfavorables ni perder la trazabilidad del criterio original.
+> 3. APRUEBO incorporar R3b, con tiempo hasta el segundo bote mayor desde atrás en el 100 % de los pares válidos.
+> Sin embargo, dejemos explícito que el tiempo hasta el segundo bote es un indicador físico, no una demostración completa de letalidad. La efectividad real dependerá también de la posición, desplazamiento, anticipación y capacidad de respuesta del rival, que evaluaremos en First Rally.
+> Consideraciones adicionales:
+>
+> * Los números del modelo aproximado son hipótesis, no resultados validados.
+> * Codex debe medir nuevamente con P2 real.
+> * Se mantiene la regla de parada: probar 2,0 y 2,5 sin buscar otros valores si ambos fallan.
+> * Si las pruebas no cumplen, volvemos a revisar el diseño antes de modificar parámetros.
+> * La aceptación final de sensaciones sigue dependiendo del playtest en iPhone.
+> * No autorizo todavía el merge ni cambios adicionales de alcance.
+>
+> Registra estas tres decisiones literalmente en la documentación correspondiente, prepara el commit y abre la PR de documentación sin fusionarla.
+> Déjame también el encargo definitivo para Codex, alineado con estas decisiones.
+> Una vez revisada la PR de diseño, avanzaremos con la implementación.
+
+**Significado operativo** (lectura de Claude, separada del literal):
+
+- Diseño aprobado: curva `v = vMin + P^γ·(vMax − vMin)` con γ según la distancia D entre el contacto y el punto pedido; γ_max 2,0 principal y 2,5 respaldo predeclarado; `shot.paceNearM` 1,5 m y `shot.paceFullM` 6,0 m; identidad con la fórmula actual para D ≥ 6 m y en P=0/P=1. P2, First Ball y M2-4 sin cambios. Una única función compartida, sin reglas por escenario.
+- R3a: tendencia ≥ 75 % de los pares válidos con P > 0; los pares con P=0 se reportan aparte con su comportamiento y explicación. El criterio original z2(B) > z2(F) conserva su trazabilidad.
+- R3b: t2(B) > t2(F) en el 100 % de los pares válidos, como **indicador físico**, no como demostración completa de letalidad; la efectividad real (posición, desplazamiento, anticipación, respuesta del rival) se evalúa en First Rally.
+- Los números del modelo aproximado son hipótesis. Codex mide de nuevo con P2 real. Regla de parada: solo 2,0 y 2,5; si ambos fallan, se vuelve a revisar el diseño antes de tocar parámetros.
+- Esta entrega es solo documentación (PR sin fusionar). **La implementación no está autorizada todavía**: se avanza después de revisar la PR de diseño. Sin merge ni cambios de alcance. La aceptación de sensaciones queda para el playtest en iPhone.
