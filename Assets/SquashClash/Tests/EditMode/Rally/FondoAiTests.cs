@@ -230,7 +230,9 @@ namespace SquashClash.Core.Tests.Rally
         {
             var s=Setup();var contact=s.plan.PStar;var aim=new Vector2(3.2f,1.8f);
             var via=RallyContact.SolveIntention(s.context,contact,aim,.5f);
-            var direct=ShotSolver.Solve(new ShotRequest(contact,aim,.5f),s.context.VMin,s.context.VMax,s.context.VCap,s.context.Physics.Gravity,s.context.Physics.BallRadius,s.context.Court,s.context.Factory,s.context.Physics);
+            // The intention speed is the shared pace curve value (equal endpoints), then the unchanged solver.
+            var pace=ShotPace.Requested(.5f,contact,aim,s.context.Physics.BallRadius,s.context.Pace);
+            var direct=ShotSolver.Solve(new ShotRequest(contact,aim,.5f),pace.Speed,pace.Speed,s.context.VCap,s.context.Physics.Gravity,s.context.Physics.BallRadius,s.context.Court,s.context.Factory,s.context.Physics);
             Assert.That(via.Solved,Is.True);Assert.That(via.Velocity,Is.EqualTo(direct.Velocity));Assert.That(via.Speed,Is.EqualTo(direct.Speed));
         }
     }

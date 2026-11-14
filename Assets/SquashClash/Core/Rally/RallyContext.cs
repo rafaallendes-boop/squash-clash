@@ -19,6 +19,7 @@ namespace SquashClash.Core.Rally
         public float VMin {get;}
         public float VMax {get;}
         public float VCap {get;}
+        public ShotPaceSettings Pace {get;}
         public int StepHz=>Physics.StepHz;
         public double Tempo=>Config.Tempo;
         public Vector2 T {get;}
@@ -30,7 +31,7 @@ namespace SquashClash.Core.Rally
             Court=config.Court;Physics=config.Physics;var source=config.Source;
             Legal=new LegalSettings((float)source.Get("legal.minHeight"),(float)source.Get("legal.maxHeight"),Physics.StepHz,Physics.Gravity,Physics.BallRadius,Court);
             Timing=TimingSettings.From(source);
-            VMin=(float)source.Get("shot.vMin");VMax=(float)source.Get("shot.vMax");VCap=(float)source.Get("shot.vCap");
+            VMin=(float)source.Get("shot.vMin");VMax=(float)source.Get("shot.vMax");VCap=(float)source.Get("shot.vCap");Pace=ShotPaceSettings.From(source);
             T=new Vector2(Court.Width*.5f,Court.Length-Court.ShortLineNearBackEdgeFromBack-Court.LineWidth*.5f);
         }
         public int Steps(double simSeconds)=>(int)Math.Round(simSeconds*StepHz);

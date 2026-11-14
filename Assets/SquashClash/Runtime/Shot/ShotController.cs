@@ -171,6 +171,7 @@ namespace SquashClash.Runtime.Shot
             var trace=CausalShotTrace.Create("Human",order.LaunchId,order.AttemptId,contact.Step,CausalReference,body,LastCausal);
             app.Metrics?.Write("shot-causal",cfg,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(trace));
             var solution=LastCausal.Solution;
+            record.PaceDistanceM=LastCausal.Pace.DistanceM;record.PaceGamma=LastCausal.Pace.Gamma;record.RequestedSpeedLinear=LastCausal.Pace.LinearSpeed;record.RequestedSpeed=LastCausal.Pace.Speed;
             record.SolverCostMs+=(Stopwatch.GetTimestamp()-start)*1000/Stopwatch.Frequency;return solution;
         }
         private static void FillSolution(ShotRecord r,ShotSolution s,BallState contact)

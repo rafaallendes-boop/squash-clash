@@ -1,0 +1,2247 @@
+{
+    "trials": [
+        {
+            "id": 2,
+            "contactIndex": 0,
+            "xi": 2,
+            "yi": 0,
+            "pi": 0,
+            "contact": "B0",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 0.3499999940395355,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": -0.12144537270069123,
+                "y": 5.855870246887207,
+                "z": -6.0560760498046879
+            },
+            "first": {
+                "x": 0.1916130632162094,
+                "y": 0.0,
+                "z": 0.34848499298095705
+            },
+            "second": {
+                "x": 0.17903180420398713,
+                "y": 0.0,
+                "z": 0.8413136601448059
+            },
+            "aim": {
+                "x": 0.20000000298023225,
+                "y": 0.5
+            },
+            "target": {
+                "x": 0.20000000298023225,
+                "y": 0.5
+            },
+            "power": 0.0,
+            "speed": 8.42508316040039,
+            "frontMargin": 0.02001515030860901,
+            "sideHeight": 0.0,
+            "sideDepth": 0.0,
+            "paceDistance": 7.485679626464844,
+            "paceGamma": 1.0,
+            "speedLinear": 6.0,
+            "requested": 6.0,
+            "t1": 1.3337407112121583,
+            "t2": 1.824666142463684,
+            "solved": true,
+            "speedRaised": true,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": false,
+            "backBeforeFirst": false,
+            "oppositeAfterFirst": false,
+            "settled": false,
+            "sideMin": 0.17903180420398713,
+            "sideMax": 0.1916130632162094,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 269,
+                    "timeInStep": 0.0017881254898384214,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.199999138712883,
+                        "y": 0.500015139579773,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 281,
+                    "timeInStep": 0.00040733348578214645,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.1916130632162094,
+                        "y": 0.0,
+                        "z": 0.34848499298095705
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 339,
+                    "timeInStep": 0.007999420166015625,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.17903180420398713,
+                        "y": 0.0,
+                        "z": 0.8413136601448059
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "contactIndex": 0,
+            "xi": 14,
+            "yi": 0,
+            "pi": 0,
+            "contact": "B0",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 0.3499999940395355,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": 3.9677517414093019,
+                "y": 6.555373191833496,
+                "z": -5.445648193359375
+            },
+            "first": {
+                "x": 6.0563459396362309,
+                "y": 0.0,
+                "z": 0.26547378301620486
+            },
+            "second": {
+                "x": 6.192984580993652,
+                "y": 0.0,
+                "z": 0.795853853225708
+            },
+            "aim": {
+                "x": 5.800000190734863,
+                "y": 0.5
+            },
+            "target": {
+                "x": 5.800000190734863,
+                "y": 0.5
+            },
+            "power": 0.0,
+            "speed": 9.400588035583496,
+            "frontMargin": 0.02002134919166565,
+            "sideHeight": 0.42396777868270876,
+            "sideDepth": 0.575385332107544,
+            "paceDistance": 9.258261680603028,
+            "paceGamma": 1.0,
+            "speedLinear": 6.0,
+            "requested": 6.0,
+            "t1": 1.455530047416687,
+            "t2": 2.0269477367401125,
+            "solved": true,
+            "speedRaised": true,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": false,
+            "backBeforeFirst": false,
+            "oppositeAfterFirst": true,
+            "settled": false,
+            "sideMin": 6.0563459396362309,
+            "sideMax": 6.380000114440918,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 285,
+                    "timeInStep": 0.006905039772391319,
+                    "persistent": false,
+                    "point": {
+                        "x": 5.7999796867370609,
+                        "y": 0.5000213384628296,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 295,
+                    "timeInStep": 0.005529988091439009,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.0563459396362309,
+                        "y": 0.0,
+                        "z": 0.26547378301620486
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "LeftWall",
+                    "verdict": "Good",
+                    "step": 329,
+                    "timeInStep": 0.0008580138091929257,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.400000095367432,
+                        "y": 0.42396777868270876,
+                        "z": 0.575385332107544
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 364,
+                    "timeInStep": 0.0019477830501273275,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.192984580993652,
+                        "y": 0.0,
+                        "z": 0.795853853225708
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 5530,
+            "contactIndex": 0,
+            "xi": 1,
+            "yi": 13,
+            "pi": 18,
+            "contact": "B0",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 0.3499999940395355,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": -0.775214433670044,
+                "y": 11.272001266479493,
+                "z": -23.19441795349121
+            },
+            "first": {
+                "x": 0.019999999552965165,
+                "y": 0.0,
+                "z": 7.002853870391846
+            },
+            "second": {
+                "x": 0.019999999552965165,
+                "y": 0.0,
+                "z": 4.527035236358643
+            },
+            "aim": {
+                "x": 0.10000000149011612,
+                "y": 3.875
+            },
+            "target": {
+                "x": 0.10000000149011612,
+                "y": 3.875
+            },
+            "power": 0.8999999761581421,
+            "speed": 25.799999237060548,
+            "frontMargin": 3.3949995040893556,
+            "sideHeight": 0.0,
+            "sideDepth": 0.0,
+            "paceDistance": 8.110396385192871,
+            "paceGamma": 1.0,
+            "speedLinear": 25.799999237060548,
+            "requested": 25.799999237060548,
+            "t1": 1.472440242767334,
+            "t2": 2.056764841079712,
+            "solved": true,
+            "speedRaised": false,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": true,
+            "backBeforeFirst": true,
+            "oppositeAfterFirst": false,
+            "settled": false,
+            "sideMin": 0.019999999552965165,
+            "sideMax": 0.019999999552965165,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 159,
+                    "timeInStep": 0.005824629683047533,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.10000002384185791,
+                        "y": 3.874999523162842,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "BackWall",
+                    "verdict": "Good",
+                    "step": 251,
+                    "timeInStep": 0.00031192362075671554,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.030813802033662797,
+                        "y": 1.756916880607605,
+                        "z": 9.75
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    }
+                },
+                {
+                    "surface": "RightWall",
+                    "verdict": "Good",
+                    "step": 287,
+                    "timeInStep": 0.0029052100144326689,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.0,
+                        "y": 0.5325827598571777,
+                        "z": 7.606922626495361
+                    },
+                    "normal": {
+                        "x": 1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 297,
+                    "timeInStep": 0.005773595068603754,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.019999999552965165,
+                        "y": 0.0,
+                        "z": 7.002853870391846
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 367,
+                    "timeInStep": 0.006764884106814861,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.019999999552965165,
+                        "y": 0.0,
+                        "z": 4.527035236358643
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 6384,
+            "contactIndex": 1,
+            "xi": 0,
+            "yi": 0,
+            "pi": 0,
+            "contact": "B1",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 2.5999999046325685,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": -2.0312299728393556,
+                "y": 6.033341407775879,
+                "z": -5.888992786407471
+            },
+            "first": {
+                "x": 0.13929034769535066,
+                "y": 0.0,
+                "z": 0.3658495545387268
+            },
+            "second": {
+                "x": 0.32590094208717348,
+                "y": 0.0,
+                "z": 0.9068761467933655
+            },
+            "aim": {
+                "x": 0.019999999552965165,
+                "y": 0.5
+            },
+            "target": {
+                "x": 0.019999999552965165,
+                "y": 0.5
+            },
+            "power": 0.0,
+            "speed": 8.672216415405274,
+            "frontMargin": 0.020016342401504518,
+            "sideHeight": 0.0,
+            "sideDepth": 0.0,
+            "paceDistance": 7.916394233703613,
+            "paceGamma": 1.0,
+            "speedLinear": 6.0,
+            "requested": 6.0,
+            "t1": 1.3769429922103882,
+            "t2": 1.8374191522598267,
+            "solved": true,
+            "speedRaised": true,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": true,
+            "backBeforeFirst": false,
+            "oppositeAfterFirst": false,
+            "settled": false,
+            "sideMin": 0.13929034769535066,
+            "sideMax": 0.32590094208717348,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 273,
+                    "timeInStep": 0.0034978697076439859,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.019999999552965165,
+                        "y": 0.5000163316726685,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "RightWall",
+                    "verdict": "Good",
+                    "step": 273,
+                    "timeInStep": 0.0034978697076439859,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.0,
+                        "y": 0.5000163316726685,
+                        "z": 0.019999999552965165
+                    },
+                    "normal": {
+                        "x": 1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 286,
+                    "timeInStep": 0.0019429540261626244,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.13929034769535066,
+                        "y": 0.0,
+                        "z": 0.3658495545387268
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 341,
+                    "timeInStep": 0.00408586673438549,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.32590094208717348,
+                        "y": 0.0,
+                        "z": 0.9068761467933655
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 6399,
+            "contactIndex": 1,
+            "xi": 15,
+            "yi": 0,
+            "pi": 0,
+            "contact": "B1",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 2.5999999046325685,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": 2.662193775177002,
+                "y": 6.1635942459106449,
+                "z": -5.771944046020508
+            },
+            "first": {
+                "x": 6.228946208953857,
+                "y": 0.0,
+                "z": 0.3057161271572113
+            },
+            "second": {
+                "x": 6.274770259857178,
+                "y": 0.0,
+                "z": 0.7958495020866394
+            },
+            "aim": {
+                "x": 6.050000190734863,
+                "y": 0.5
+            },
+            "target": {
+                "x": 6.050000190734863,
+                "y": 0.5
+            },
+            "power": 0.0,
+            "speed": 8.853954315185547,
+            "frontMargin": 0.02000299096107483,
+            "sideHeight": 0.35841917991638186,
+            "sideDepth": 0.5468688607215881,
+            "paceDistance": 8.241080284118653,
+            "paceGamma": 1.0,
+            "speedLinear": 6.0,
+            "requested": 6.0,
+            "t1": 1.3859257698059083,
+            "t2": 1.9086358547210694,
+            "solved": true,
+            "speedRaised": true,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": false,
+            "backBeforeFirst": false,
+            "oppositeAfterFirst": true,
+            "settled": false,
+            "sideMin": 6.228946208953857,
+            "sideMax": 6.380000114440918,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 276,
+                    "timeInStep": 0.004257580265402794,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.049985885620117,
+                        "y": 0.5000029802322388,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 287,
+                    "timeInStep": 0.0025924555957317354,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.228946208953857,
+                        "y": 0.0,
+                        "z": 0.3057161271572113
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "LeftWall",
+                    "verdict": "Good",
+                    "step": 314,
+                    "timeInStep": 0.00820841547101736,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.400000095367432,
+                        "y": 0.35841917991638186,
+                        "z": 0.5468688607215881
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 350,
+                    "timeInStep": 0.0003024712495971471,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.274770259857178,
+                        "y": 0.0,
+                        "z": 0.7958495020866394
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 9959,
+            "contactIndex": 1,
+            "xi": 3,
+            "yi": 8,
+            "pi": 20,
+            "contact": "B1",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 2.5999999046325685,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": -7.850504398345947,
+                "y": 6.421401500701904,
+                "z": -26.09856605529785
+            },
+            "first": {
+                "x": 0.027604881674051286,
+                "y": 0.0,
+                "z": 9.441507339477539
+            },
+            "second": {
+                "x": 0.04313904792070389,
+                "y": 0.0,
+                "z": 7.999804973602295
+            },
+            "aim": {
+                "x": 0.3499999940395355,
+                "y": 2.1875
+            },
+            "target": {
+                "x": 0.3499999940395355,
+                "y": 2.1875
+            },
+            "power": 1.0,
+            "speed": 28.0,
+            "frontMargin": 1.7074997425079346,
+            "sideHeight": 0.0,
+            "sideDepth": 0.0,
+            "paceDistance": 7.942248344421387,
+            "paceGamma": 1.0,
+            "speedLinear": 28.0,
+            "requested": 28.0,
+            "t1": 1.0001314878463746,
+            "t2": 1.2117273807525635,
+            "solved": true,
+            "speedRaised": false,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": true,
+            "backBeforeFirst": true,
+            "oppositeAfterFirst": false,
+            "settled": false,
+            "sideMin": 0.027604881674051286,
+            "sideMax": 0.04313904792070389,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 155,
+                    "timeInStep": 0.0032723050098866226,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.3500012159347534,
+                        "y": 2.187499761581421,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "RightWall",
+                    "verdict": "Good",
+                    "step": 234,
+                    "timeInStep": 0.005200401414185762,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.0,
+                        "y": 0.2009301334619522,
+                        "z": 9.49753189086914
+                    },
+                    "normal": {
+                        "x": 1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "BackWall",
+                    "verdict": "Good",
+                    "step": 236,
+                    "timeInStep": 0.004890683572739363,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.024496397003531457,
+                        "y": 0.0984417200088501,
+                        "z": 9.75
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 241,
+                    "timeInStep": 0.0001314340770477429,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.027604881674051286,
+                        "y": 0.0,
+                        "z": 9.441507339477539
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 266,
+                    "timeInStep": 0.0033940612338483335,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.04313904792070389,
+                        "y": 0.0,
+                        "z": 7.999804973602295
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 12769,
+            "contactIndex": 2,
+            "xi": 1,
+            "yi": 0,
+            "pi": 0,
+            "contact": "B2",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 3.799999952316284,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": -2.836477041244507,
+                "y": 6.206600189208984,
+                "z": -5.734283447265625
+            },
+            "first": {
+                "x": 0.08694037795066834,
+                "y": 0.0,
+                "z": 0.29893437027931216
+            },
+            "second": {
+                "x": 0.22558075189590455,
+                "y": 0.0,
+                "z": 0.6317111253738403
+            },
+            "aim": {
+                "x": 0.10000000149011612,
+                "y": 0.5
+            },
+            "target": {
+                "x": 0.10000000149011612,
+                "y": 0.5
+            },
+            "power": 0.0,
+            "speed": 8.913444519042969,
+            "frontMargin": 0.020012885332107545,
+            "sideHeight": 0.0,
+            "sideDepth": 0.0,
+            "paceDistance": 8.34882640838623,
+            "paceGamma": 1.0,
+            "speedLinear": 6.0,
+            "requested": 6.0,
+            "t1": 1.398972749710083,
+            "t2": 1.8866246938705445,
+            "solved": true,
+            "speedRaised": true,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": true,
+            "backBeforeFirst": false,
+            "oppositeAfterFirst": false,
+            "settled": false,
+            "sideMin": 6.174419343471527,
+            "sideMax": 6.313059717416763,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 277,
+                    "timeInStep": 0.004433911759406328,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.10000518709421158,
+                        "y": 0.5000128746032715,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "RightWall",
+                    "verdict": "Good",
+                    "step": 282,
+                    "timeInStep": 0.00026369013357907534,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.0,
+                        "y": 0.3072432279586792,
+                        "z": 0.13825839757919312
+                    },
+                    "normal": {
+                        "x": 1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 288,
+                    "timeInStep": 0.007306029088795185,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.08694037795066834,
+                        "y": 0.0,
+                        "z": 0.29893437027931216
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 347,
+                    "timeInStep": 0.0032913440372794868,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.22558075189590455,
+                        "y": 0.0,
+                        "z": 0.6317111253738403
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 12771,
+            "contactIndex": 2,
+            "xi": 3,
+            "yi": 0,
+            "pi": 0,
+            "contact": "B2",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 3.799999952316284,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": -2.662242889404297,
+                "y": 6.1634721755981449,
+                "z": -5.7720513343811039
+            },
+            "first": {
+                "x": 0.17103666067123414,
+                "y": 0.0,
+                "z": 0.30573350191116335
+            },
+            "second": {
+                "x": 0.12523816525936128,
+                "y": 0.0,
+                "z": 0.795894980430603
+            },
+            "aim": {
+                "x": 0.3499999940395355,
+                "y": 0.5
+            },
+            "target": {
+                "x": 0.3499999940395355,
+                "y": 0.5
+            },
+            "power": 0.0,
+            "speed": 8.853954315185547,
+            "frontMargin": 0.020011335611343385,
+            "sideHeight": 0.35839539766311648,
+            "sideDepth": 0.5468711256980896,
+            "paceDistance": 8.241080284118653,
+            "paceGamma": 1.0,
+            "speedLinear": 6.0,
+            "requested": 6.0,
+            "t1": 1.38590407371521,
+            "t2": 1.9085973501205445,
+            "solved": true,
+            "speedRaised": true,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": false,
+            "backBeforeFirst": false,
+            "oppositeAfterFirst": true,
+            "settled": false,
+            "sideMin": 6.2289634346961979,
+            "sideMax": 6.3800000958144669,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 276,
+                    "timeInStep": 0.0042320978827774529,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.3500060737133026,
+                        "y": 0.5000113248825073,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 287,
+                    "timeInStep": 0.0025707557797431947,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.17103666067123414,
+                        "y": 0.0,
+                        "z": 0.30573350191116335
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "RightWall",
+                    "verdict": "Good",
+                    "step": 314,
+                    "timeInStep": 0.008151146583259106,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.0,
+                        "y": 0.35839539766311648,
+                        "z": 0.5468711256980896
+                    },
+                    "normal": {
+                        "x": 1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 350,
+                    "timeInStep": 0.00026401292416267097,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.12523816525936128,
+                        "y": 0.0,
+                        "z": 0.795894980430603
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 16355,
+            "contactIndex": 2,
+            "xi": 15,
+            "yi": 8,
+            "pi": 20,
+            "contact": "B2",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 3.799999952316284,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": 7.850505352020264,
+                "y": 6.421401500701904,
+                "z": -26.09856605529785
+            },
+            "first": {
+                "x": 6.372385025024414,
+                "y": 0.0,
+                "z": 9.441508293151856
+            },
+            "second": {
+                "x": 6.356850624084473,
+                "y": 0.0,
+                "z": 7.999802589416504
+            },
+            "aim": {
+                "x": 6.050000190734863,
+                "y": 2.1875
+            },
+            "target": {
+                "x": 6.050000190734863,
+                "y": 2.1875
+            },
+            "power": 1.0,
+            "speed": 28.0,
+            "frontMargin": 1.7074997425079346,
+            "sideHeight": 0.0,
+            "sideDepth": 0.0,
+            "paceDistance": 7.942248344421387,
+            "paceGamma": 1.0,
+            "speedLinear": 28.0,
+            "requested": 28.0,
+            "t1": 1.000131607055664,
+            "t2": 1.2117282152175904,
+            "solved": true,
+            "speedRaised": false,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": true,
+            "backBeforeFirst": true,
+            "oppositeAfterFirst": false,
+            "settled": false,
+            "sideMin": 0.027615070343017579,
+            "sideMax": 0.043149471282958987,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 155,
+                    "timeInStep": 0.0032723050098866226,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.050005912780762,
+                        "y": 2.187499761581421,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "LeftWall",
+                    "verdict": "Good",
+                    "step": 234,
+                    "timeInStep": 0.005164220929145813,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.400000095367432,
+                        "y": 0.20115640759468079,
+                        "z": 9.4970121383667
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "BackWall",
+                    "verdict": "Good",
+                    "step": 236,
+                    "timeInStep": 0.004891086835414171,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.37549352645874,
+                        "y": 0.09844160825014115,
+                        "z": 9.75
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 241,
+                    "timeInStep": 0.0001316583511652425,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.372385025024414,
+                        "y": 0.0,
+                        "z": 9.441508293151856
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 266,
+                    "timeInStep": 0.0033948475029319526,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.356850624084473,
+                        "y": 0.0,
+                        "z": 7.999802589416504
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 19152,
+            "contactIndex": 3,
+            "xi": 0,
+            "yi": 0,
+            "pi": 0,
+            "contact": "B3",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 6.050000190734863,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": -4.308503150939941,
+                "y": 6.68620491027832,
+                "z": -5.344544410705566
+            },
+            "first": {
+                "x": 0.2690924406051636,
+                "y": 0.0,
+                "z": 0.3289903402328491
+            },
+            "second": {
+                "x": 0.7270427346229553,
+                "y": 0.0,
+                "z": 0.8970622420310974
+            },
+            "aim": {
+                "x": 0.019999999552965165,
+                "y": 0.5
+            },
+            "target": {
+                "x": 0.019999999552965165,
+                "y": 0.5
+            },
+            "power": 0.0,
+            "speed": 9.582937240600586,
+            "frontMargin": 0.020023494958877565,
+            "sideHeight": 0.0,
+            "sideDepth": 0.0,
+            "paceDistance": 9.611128807067871,
+            "paceGamma": 1.0,
+            "speedLinear": 6.0,
+            "requested": 6.0,
+            "t1": 1.5046724081039429,
+            "t2": 1.9709270000457764,
+            "solved": true,
+            "speedRaised": true,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": true,
+            "backBeforeFirst": false,
+            "oppositeAfterFirst": false,
+            "settled": false,
+            "sideMin": 5.672957360744476,
+            "sideMax": 6.130907654762268,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 288,
+                    "timeInStep": 0.007889049127697945,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.019999999552965165,
+                        "y": 0.5000234842300415,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "RightWall",
+                    "verdict": "Good",
+                    "step": 288,
+                    "timeInStep": 0.007889049127697945,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.0,
+                        "y": 0.5000234842300415,
+                        "z": 0.019999999552965165
+                    },
+                    "normal": {
+                        "x": 1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 301,
+                    "timeInStep": 0.004672357812523842,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.2690924406051636,
+                        "y": 0.0,
+                        "z": 0.3289903402328491
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 357,
+                    "timeInStep": 0.004260350484400988,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.7270427346229553,
+                        "y": 0.0,
+                        "z": 0.8970622420310974
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 19155,
+            "contactIndex": 3,
+            "xi": 3,
+            "yi": 0,
+            "pi": 0,
+            "contact": "B3",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 6.050000190734863,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": -4.117026329040527,
+                "y": 6.610374450683594,
+                "z": -5.402693748474121
+            },
+            "first": {
+                "x": 0.08554709702730179,
+                "y": 0.0,
+                "z": 0.260668009519577
+            },
+            "second": {
+                "x": 0.3341399133205414,
+                "y": 0.0,
+                "z": 0.7631838321685791
+            },
+            "aim": {
+                "x": 0.3499999940395355,
+                "y": 0.5
+            },
+            "target": {
+                "x": 0.3499999940395355,
+                "y": 0.5
+            },
+            "power": 0.0,
+            "speed": 9.478188514709473,
+            "frontMargin": 0.020013242959976198,
+            "sideHeight": 0.15764202177524568,
+            "sideDepth": 0.32031577825546267,
+            "paceDistance": 9.407598495483399,
+            "paceGamma": 1.0,
+            "speedLinear": 6.0,
+            "requested": 6.0,
+            "t1": 1.4654861688613892,
+            "t2": 1.9828038215637208,
+            "solved": true,
+            "speedRaised": true,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": false,
+            "backBeforeFirst": false,
+            "oppositeAfterFirst": true,
+            "settled": false,
+            "sideMin": 6.06586018204689,
+            "sideMax": 6.3800000958144669,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 287,
+                    "timeInStep": 0.001160178566351533,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.3500180244445801,
+                        "y": 0.5000132322311401,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 296,
+                    "timeInStep": 0.007152782287448645,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.08554709702730179,
+                        "y": 0.0,
+                        "z": 0.260668009519577
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "RightWall",
+                    "verdict": "Good",
+                    "step": 303,
+                    "timeInStep": 0.002075490541756153,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.0,
+                        "y": 0.15764202177524568,
+                        "z": 0.32031577825546267
+                    },
+                    "normal": {
+                        "x": 1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 358,
+                    "timeInStep": 0.007803845684975386,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.3341399133205414,
+                        "y": 0.0,
+                        "z": 0.7631838321685791
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 24698,
+            "contactIndex": 3,
+            "xi": 17,
+            "yi": 13,
+            "pi": 18,
+            "contact": "B3",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 6.050000190734863,
+                "y": 0.75,
+                "z": 7.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": 0.7752144932746887,
+                "y": 11.272001266479493,
+                "z": -23.19441795349121
+            },
+            "first": {
+                "x": 6.380000114440918,
+                "y": 0.0,
+                "z": 7.00285530090332
+            },
+            "second": {
+                "x": 6.380000114440918,
+                "y": 0.0,
+                "z": 4.527064323425293
+            },
+            "aim": {
+                "x": 6.300000190734863,
+                "y": 3.875
+            },
+            "target": {
+                "x": 6.300000190734863,
+                "y": 3.875
+            },
+            "power": 0.8999999761581421,
+            "speed": 25.799999237060548,
+            "frontMargin": 3.3949995040893556,
+            "sideHeight": 0.0,
+            "sideDepth": 0.0,
+            "paceDistance": 8.110396385192871,
+            "paceGamma": 1.0,
+            "speedLinear": 25.799999237060548,
+            "requested": 25.799999237060548,
+            "t1": 1.4724410772323609,
+            "t2": 2.056766986846924,
+            "solved": true,
+            "speedRaised": false,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": true,
+            "backBeforeFirst": true,
+            "oppositeAfterFirst": false,
+            "settled": false,
+            "sideMin": 0.019999980926513673,
+            "sideMax": 0.019999980926513673,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 159,
+                    "timeInStep": 0.005824629683047533,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.300002574920654,
+                        "y": 3.874999523162842,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "BackWall",
+                    "verdict": "Good",
+                    "step": 251,
+                    "timeInStep": 0.00031192362075671554,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.369208812713623,
+                        "y": 1.756916880607605,
+                        "z": 9.75
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    }
+                },
+                {
+                    "surface": "LeftWall",
+                    "verdict": "Good",
+                    "step": 287,
+                    "timeInStep": 0.002067629713565111,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.400000095367432,
+                        "y": 0.5372114181518555,
+                        "z": 7.612799167633057
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 297,
+                    "timeInStep": 0.005774402525275946,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.380000114440918,
+                        "y": 0.0,
+                        "z": 7.00285530090332
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 367,
+                    "timeInStep": 0.006766967009752989,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.380000114440918,
+                        "y": 0.0,
+                        "z": 4.527064323425293
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 25552,
+            "contactIndex": 4,
+            "xi": 16,
+            "yi": 0,
+            "pi": 0,
+            "contact": "F1",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 2.5999999046325685,
+                "y": 0.75,
+                "z": 1.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": 4.24318265914917,
+                "y": 3.8668336868286135,
+                "z": -1.7444195747375489
+            },
+            "first": {
+                "x": 6.219448089599609,
+                "y": 0.0,
+                "z": 0.11820008605718613
+            },
+            "second": {
+                "x": 6.0536417961120609,
+                "y": 0.0,
+                "z": 0.17353257536888123
+            },
+            "aim": {
+                "x": 6.199999809265137,
+                "y": 0.5
+            },
+            "target": {
+                "x": 6.199999809265137,
+                "y": 0.5
+            },
+            "power": 0.0,
+            "speed": 6.0,
+            "frontMargin": 0.02000632882118225,
+            "sideHeight": 0.0,
+            "sideDepth": 0.0,
+            "paceDistance": 3.900371789932251,
+            "paceGamma": 1.0,
+            "speedLinear": 6.0,
+            "requested": 6.0,
+            "t1": 0.970352053642273,
+            "t2": 1.3453102111816407,
+            "solved": true,
+            "speedRaised": false,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": true,
+            "backBeforeFirst": false,
+            "oppositeAfterFirst": false,
+            "settled": false,
+            "sideMin": 6.0536417961120609,
+            "sideMax": 6.219448089599609,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 222,
+                    "timeInStep": 0.00675201928243041,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.199995994567871,
+                        "y": 0.5000063180923462,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "LeftWall",
+                    "verdict": "Good",
+                    "step": 228,
+                    "timeInStep": 0.0032613559160381557,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.400000095367432,
+                        "y": 0.3003579378128052,
+                        "z": 0.06462248414754868
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 237,
+                    "timeInStep": 0.0036854036152362825,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.219448089599609,
+                        "y": 0.0,
+                        "z": 0.11820008605718613
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 282,
+                    "timeInStep": 0.0036435655783861877,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.0536417961120609,
+                        "y": 0.0,
+                        "z": 0.17353257536888123
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 28498,
+            "contactIndex": 4,
+            "xi": 17,
+            "yi": 7,
+            "pi": 8,
+            "contact": "F1",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 2.5999999046325685,
+                "y": 0.75,
+                "z": 1.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": 12.853705406188965,
+                "y": 5.233299732208252,
+                "z": -5.141481876373291
+            },
+            "first": {
+                "x": 2.572892665863037,
+                "y": 0.0,
+                "z": 0.04004211351275444
+            },
+            "second": {
+                "x": 0.5909335613250732,
+                "y": 0.0,
+                "z": 0.04004211351275444
+            },
+            "aim": {
+                "x": 6.300000190734863,
+                "y": 1.8500001430511475
+            },
+            "target": {
+                "x": 6.300000190734863,
+                "y": 1.8500001430511475
+            },
+            "power": 0.4000000059604645,
+            "speed": 14.800000190734864,
+            "frontMargin": 1.3700003623962403,
+            "sideHeight": 0.0,
+            "sideDepth": 0.0,
+            "paceDistance": 4.134054183959961,
+            "paceGamma": 1.0,
+            "speedLinear": 14.800000190734864,
+            "requested": 14.800000190734864,
+            "t1": 0.9082087278366089,
+            "t2": 1.4601483345031739,
+            "solved": true,
+            "speedRaised": false,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": true,
+            "backBeforeFirst": false,
+            "oppositeAfterFirst": false,
+            "settled": false,
+            "sideMin": 0.5909335613250732,
+            "sideMax": 2.572892665863037,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 155,
+                    "timeInStep": 0.004521348979324102,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.300002574920654,
+                        "y": 1.8500003814697266,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "LeftWall",
+                    "verdict": "Good",
+                    "step": 156,
+                    "timeInStep": 0.003275506664067507,
+                    "persistent": false,
+                    "point": {
+                        "x": 6.400000095367432,
+                        "y": 1.8647496700286866,
+                        "z": 0.04004211351275444
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 229,
+                    "timeInStep": 0.008208745159208775,
+                    "persistent": false,
+                    "point": {
+                        "x": 2.572892665863037,
+                        "y": 0.0,
+                        "z": 0.04004211351275444
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 296,
+                    "timeInStep": 0.0018150521209463478,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.5909335613250732,
+                        "y": 0.0,
+                        "z": 0.04004211351275444
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 31922,
+            "contactIndex": 5,
+            "xi": 2,
+            "yi": 0,
+            "pi": 0,
+            "contact": "F2",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 3.799999952316284,
+                "y": 0.75,
+                "z": 1.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": -4.243182182312012,
+                "y": 3.8668339252471926,
+                "z": -1.7444194555282593
+            },
+            "first": {
+                "x": 0.18055132031440736,
+                "y": 0.0,
+                "z": 0.11820012331008911
+            },
+            "second": {
+                "x": 0.3463617265224457,
+                "y": 0.0,
+                "z": 0.1735326200723648
+            },
+            "aim": {
+                "x": 0.20000000298023225,
+                "y": 0.5
+            },
+            "target": {
+                "x": 0.20000000298023225,
+                "y": 0.5
+            },
+            "power": 0.0,
+            "speed": 6.0,
+            "frontMargin": 0.020006507635116578,
+            "sideHeight": 0.0,
+            "sideDepth": 0.0,
+            "paceDistance": 3.900371789932251,
+            "paceGamma": 1.0,
+            "speedLinear": 6.0,
+            "requested": 6.0,
+            "t1": 0.9703521132469177,
+            "t2": 1.3453102111816407,
+            "solved": true,
+            "speedRaised": false,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": true,
+            "backBeforeFirst": false,
+            "oppositeAfterFirst": false,
+            "settled": false,
+            "sideMin": 6.053638368844986,
+            "sideMax": 6.219448775053024,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 222,
+                    "timeInStep": 0.00675202626734972,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.20000408589839936,
+                        "y": 0.5000064969062805,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "RightWall",
+                    "verdict": "Good",
+                    "step": 228,
+                    "timeInStep": 0.0032614348456263544,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.0,
+                        "y": 0.30035778880119326,
+                        "z": 0.06462255865335465
+                    },
+                    "normal": {
+                        "x": 1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 237,
+                    "timeInStep": 0.003685425966978073,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.18055132031440736,
+                        "y": 0.0,
+                        "z": 0.11820012331008911
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 282,
+                    "timeInStep": 0.0036435811780393125,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.3463617265224457,
+                        "y": 0.0,
+                        "z": 0.1735326200723648
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 35150,
+            "contactIndex": 5,
+            "xi": 0,
+            "yi": 8,
+            "pi": 2,
+            "contact": "F2",
+            "reason": "solved",
+            "terminal": "DoubleBounce",
+            "center": {
+                "x": 3.799999952316284,
+                "y": 0.75,
+                "z": 1.5
+            },
+            "incoming": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 3.0
+            },
+            "velocity": {
+                "x": -5.734763145446777,
+                "y": 5.413950443267822,
+                "z": -2.245357036590576
+            },
+            "first": {
+                "x": 1.866397500038147,
+                "y": 0.0,
+                "z": 0.020001618191599847
+            },
+            "second": {
+                "x": 1.866397500038147,
+                "y": 0.0,
+                "z": 0.020001618191599847
+            },
+            "aim": {
+                "x": 0.019999999552965165,
+                "y": 2.1875
+            },
+            "target": {
+                "x": 0.019999999552965165,
+                "y": 2.1875
+            },
+            "power": 0.10000000149011612,
+            "speed": 8.199999809265137,
+            "frontMargin": 1.7075018882751465,
+            "sideHeight": 0.0,
+            "sideDepth": 0.0,
+            "paceDistance": 4.306414604187012,
+            "paceGamma": 1.0,
+            "speedLinear": 8.199999809265137,
+            "requested": 8.199999809265137,
+            "t1": 1.3238916397094727,
+            "t2": 1.9221688508987427,
+            "solved": true,
+            "speedRaised": false,
+            "targetLowered": false,
+            "goodFront": true,
+            "legal": true,
+            "firstObserved": true,
+            "secondObserved": true,
+            "sideBeforeFirst": true,
+            "backBeforeFirst": false,
+            "oppositeAfterFirst": false,
+            "settled": false,
+            "sideMin": 4.533602595329285,
+            "sideMax": 4.533602595329285,
+            "hits": [
+                {
+                    "surface": "FrontWall",
+                    "verdict": "Good",
+                    "step": 200,
+                    "timeInStep": 0.0008041771943680942,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.02000662125647068,
+                        "y": 2.187501907348633,
+                        "z": 0.0
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 1.0
+                    }
+                },
+                {
+                    "surface": "RightWall",
+                    "verdict": "Good",
+                    "step": 200,
+                    "timeInStep": 0.0008054884383454919,
+                    "persistent": false,
+                    "point": {
+                        "x": 0.0,
+                        "y": 2.1875007152557375,
+                        "z": 0.020001618191599847
+                    },
+                    "normal": {
+                        "x": 1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 279,
+                    "timeInStep": 0.00722496397793293,
+                    "persistent": false,
+                    "point": {
+                        "x": 1.866397500038147,
+                        "y": 0.0,
+                        "z": 0.020001618191599847
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                },
+                {
+                    "surface": "Floor",
+                    "verdict": "Good",
+                    "step": 351,
+                    "timeInStep": 0.0055022211745381359,
+                    "persistent": false,
+                    "point": {
+                        "x": 1.866397500038147,
+                        "y": 0.0,
+                        "z": 0.020001618191599847
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    }
+                }
+            ]
+        }
+    ]
+}

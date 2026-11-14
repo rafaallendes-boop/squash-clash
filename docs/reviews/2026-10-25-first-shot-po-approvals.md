@@ -2715,3 +2715,17 @@ Contexto: [propuesta de diseño de Claude](2026-11-14-first-shot-shot-pace-dista
 - R3b: t2(B) > t2(F) en el 100 % de los pares válidos, como **indicador físico**, no como demostración completa de letalidad; la efectividad real (posición, desplazamiento, anticipación, respuesta del rival) se evalúa en First Rally.
 - Los números del modelo aproximado son hipótesis. Codex mide de nuevo con P2 real. Regla de parada: solo 2,0 y 2,5; si ambos fallan, se vuelve a revisar el diseño antes de tocar parámetros.
 - Esta entrega es solo documentación (PR sin fusionar). **La implementación no está autorizada todavía**: se avanza después de revisar la PR de diseño. Sin merge ni cambios de alcance. La aceptación de sensaciones queda para el playtest en iPhone.
+
+
+## Implementación de la potencia según la distancia — autorización del PO y cierres (14 de noviembre de 2026, Chile)
+
+Autorización literal del PO, 14 de noviembre de 2026 (Chile):
+
+> «Utiliza a un sub agente de modelo sonnet para realizar la implementación que se le está solicitando a codex.»
+
+**Operador:** subagente Sonnet dirigido por Claude, no Codex. La revisión posterior de Claude **no es independiente** de la dirección. Rama/worktree `firstshot/shot-pace-distance` desde main `7fdef02ec1682bcae5b3229b6b1a373557bdba25`; ejecuta el encargo de la sección 9 del [diseño](2026-11-14-first-shot-shot-pace-distance-design.md). PR sin fusionar; sin iPhone, build nativa ni instalación.
+
+**Cierres comprobados con Git antes de implementar:**
+
+- **PR #54** («Yes, merge #54»): merge `52c4e9f84b1bf622e71a7a2d8c5db34a20abed0f`, padres `78b2b656b3d3bffee9f43d3ac35c99c22e055b94` y exactamente `f71913ac4ddc644f0103605e58b208953d276fa7` (segundo padre); árbol `326c40827d5538d98ecc4e536d2838646bf79b9d`, idéntico al del segundo padre.
+- **PR #55**, diseño solo documentación («Yes, merge #55»): merge `7fdef02ec1682bcae5b3229b6b1a373557bdba25`, padres `52c4e9f84b1bf622e71a7a2d8c5db34a20abed0f` y exactamente `8f1329f88a90c00ef254f946f7c229b348941863`; árbol `74038f2cb8fdb9a50daab75e0b3876e1aeb6831b`, idéntico al del segundo padre. Fusionar no acepta First Shot.
