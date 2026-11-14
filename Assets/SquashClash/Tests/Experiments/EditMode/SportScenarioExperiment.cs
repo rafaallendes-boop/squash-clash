@@ -21,9 +21,10 @@ namespace SquashClash.Experiments.EditMode
     {
         private static readonly CultureInfo Invariant = CultureInfo.InvariantCulture;
         private static readonly UTF8Encoding Utf8 = new UTF8Encoding(false);
+        internal static readonly string[] FirstBallPrefixes={"court.","camera.","placeholders.","human.","rival.","pace.","physics.","launcher.","debug.","aids."};
         private static readonly float[] AimX = { .02f,.10f,.20f,.35f,.60f,1.20f,1.60f,2f,2.60f,3.20f,3.80f,4.40f,4.80f,5.20f,5.80f,6.05f,6.20f,6.30f,6.38f };
 
-        [Serializable] private sealed class Hit
+        [Serializable] internal sealed class Hit
         {
             public string surface, verdict;
             public long step;
@@ -31,7 +32,7 @@ namespace SquashClash.Experiments.EditMode
             public bool persistent;
             public Vector3 point, normal;
         }
-        [Serializable] private sealed class Contact
+        [Serializable] internal sealed class Contact
         {
             public string id;
             public Vector3 center, incoming = new Vector3(0,-1,3);
@@ -39,13 +40,13 @@ namespace SquashClash.Experiments.EditMode
             public int tStarStep = 120;
             public float deltaMs;
         }
-        [Serializable] private sealed class Trial
+        [Serializable] internal sealed class Trial
         {
             public int id, contactIndex, xi, yi, pi;
             public string contact, reason, terminal;
             public Vector3 center, incoming, velocity, first, second;
             public Vector2 aim, target;
-            public float power, speed, frontMargin, sideHeight, sideDepth;
+            public float power, speed, frontMargin, sideHeight, sideDepth, paceDistance, paceGamma, speedLinear, requested, t1, t2;
             public bool solved, speedRaised, targetLowered, goodFront, legal, firstObserved, secondObserved;
             public bool sideBeforeFirst, backBeforeFirst, oppositeAfterFirst, settled;
             public double sideMin, sideMax;
@@ -70,6 +71,13 @@ namespace SquashClash.Experiments.EditMode
             public Vector3 pStar;
             public double kInSteps, kOutSteps, slowSeconds, fastSeconds, slowTStar, fastTStar;
         }
+        [Serializable] private sealed class P0Pair
+        {
+            public int front, rear;
+            public string status;
+            public float z2Front, z2Rear, t2Front, t2Rear, speedFront, speedRear;
+            public bool raisedFront, raisedRear;
+        }
         [Serializable] private sealed class Summary
         {
             public string source, defaultsHash, defaultsSha256, simulationKey, p0Hash;
@@ -83,6 +91,9 @@ namespace SquashClash.Experiments.EditMode
             public List<Scenario> scenarios = new List<Scenario>();
             public List<Relation> relations = new List<Relation>();
             public List<TempoPair> tempoPairs = new List<TempoPair>();
+            public List<P0Pair> r3P0 = new List<P0Pair>();
+            public string variant;
+            public float paceGammaMax, paceNearM, paceFullM;
         }
         [Serializable] private sealed class Witnesses { public List<Trial> trials = new List<Trial>(); }
 
@@ -93,17 +104,23 @@ namespace SquashClash.Experiments.EditMode
             string run = Environment.GetEnvironmentVariable("SC_SPORT_RUN");
             if(run != "run01" && run != "run02") throw new InvalidDataException("Set SC_SPORT_RUN=run01 or run02; outputs are never overwritten.");
             string directory = Path.Combine(root,"Logs/experiments/sport",run);
-            if(Directory.Exists(directory)) throw new IOException("Experiment output already exists: "+directory);
             string presetFile = Path.Combine(Application.dataPath,"SquashClash/Runtime/Resources/DefaultPreset.json");
-            var preset = PresetCodec.LoadDefault(File.ReadAllText(presetFile));
+            Harness(directory,PresetCodec.LoadDefault(File.ReadAllText(presetFile)),File.ReadAllBytes(presetFile),"defaults");
+        }
+
+        // The Annex C harness for one effective configuration. Speeds go through the shared ShotPace function, then the unchanged solver.
+        internal static void Harness(string directory,ParamSet preset,byte[] presetBytes,string variant)
+        {
+            string root = Path.GetFullPath(Path.Combine(Application.dataPath,".."));
+            if(Directory.Exists(directory)) throw new IOException("Experiment output already exists: "+directory);
             var cfg = EffectiveConfig.From(preset);
-            if(preset.Hash!="c0e9f00176d5" || preset.Ordered.Count!=108 || cfg.SimulationKey!="166a96e319c7" ||
-                preset.With("launcher.repeatSeconds",3).Hash!="42d9efbf50fc" || cfg.Backend!="P2-Analytic" ||
-                preset.GetInt("timing.aidLevel")!=0 || cfg.LaunchScale!=1)
+            if(preset.Ordered.Count!=121 || cfg.SimulationKey!="166a96e319c7" || preset.HashOf(FirstBallPrefixes)!="0d39e6016bd8" ||
+                cfg.Backend!="P2-Analytic" || preset.GetInt("timing.aidLevel")!=0 || cfg.LaunchScale!=1)
                 throw new InvalidDataException("Protected base configuration changed.");
             var summary = new Summary {
                 source=Git(root,"rev-parse HEAD"), gitDirty=Git(root,"status --porcelain").Length!=0,
-                defaultsHash=preset.Hash, defaultsSha256=Sha(File.ReadAllBytes(presetFile)), simulationKey=cfg.SimulationKey,
+                defaultsHash=preset.Hash, defaultsSha256=Sha(presetBytes), simulationKey=cfg.SimulationKey, variant=variant,
+                paceGammaMax=(float)preset.Get("shot.paceGammaMax"), paceNearM=(float)preset.Get("shot.paceNearM"), paceFullM=(float)preset.Get("shot.paceFullM"),
                 p0Hash=preset.With("launcher.repeatSeconds",3).Hash, bounceThreshold=Physics.bounceThreshold,
                 footprint=(float)new RallyParams().FootprintRadius, contacts=Contacts(preset)
             };
@@ -122,7 +139,7 @@ namespace SquashClash.Experiments.EditMode
             using(var pairs=new StreamWriter(Path.Combine(directory,"pairs.tsv"),false,Utf8))
             {
                 trials.NewLine=pairs.NewLine="\n";
-                trials.WriteLine("id\tcontact\tcx\tcy\tcz\taimX\taimY\tpower\tsolved\tspeedRaised\ttargetLowered\ttargetX\ttargetY\tspeed\tvx\tvy\tvz\tgoodFront\tlegal\tterminal\tfirstObserved\tx1\ty1\tz1\tsecondObserved\tx2\ty2\tz2\tfrontMargin\tsideBeforeFirst\tbackBeforeFirst\toppositeAfterFirst\tsideHeight\tsideDepth\tsideMin\tsideMax\tsettled\treason");
+                trials.WriteLine("id\tcontact\tcx\tcy\tcz\taimX\taimY\tpower\tsolved\tspeedRaised\ttargetLowered\ttargetX\ttargetY\tspeed\tvx\tvy\tvz\tgoodFront\tlegal\tterminal\tfirstObserved\tx1\ty1\tz1\tsecondObserved\tx2\ty2\tz2\tfrontMargin\tsideBeforeFirst\tbackBeforeFirst\toppositeAfterFirst\tsideHeight\tsideDepth\tsideMin\tsideMax\tsettled\treason\tpaceDistance\tpaceGamma\tspeedLinear\trequested\tt1\tt2");
                 pairs.WriteLine("relation\ta\tb\tstatus\treason\tvalueA\tvalueB");
                 for(int ci=0;ci<summary.contacts.Length;ci++)
                 for(int yi=0;yi<aimY.Length;yi++)
@@ -150,7 +167,8 @@ namespace SquashClash.Experiments.EditMode
                     AddScenario(summary,"X5",contact,subset,r=>r.goodFront,r=>r.id);
                 }
                 var r1=new Relation{id="R1"}; var r2=new Relation{id="R2"}; var r3=new Relation{id="R3"};
-                summary.relations.AddRange(new[]{r1,r2,r3});
+                var r3a=new Relation{id="R3a"}; var r3b=new Relation{id="R3b"}; var r3p0=new Relation{id="R3-P0"};
+                summary.relations.AddRange(new[]{r1,r2,r3,r3a,r3b,r3p0});
                 for(int ci=0;ci<summary.contacts.Length;ci++)
                 for(int xi=0;xi<AimX.Length;xi++)
                 for(int yi=0;yi<aimY.Length;yi++)
@@ -185,7 +203,13 @@ namespace SquashClash.Experiments.EditMode
                         if(!a.solved||!b.solved) excluded="unsolved";
                         else if(!a.legal||!b.legal) excluded="not-a-legal-two-bounce-return";
                         else if(a.target.x!=b.target.x||a.target.y!=b.target.y) excluded="effective-target-differs";
+                        // R3 keeps the original definition over every pair (traceability); R3a is the PO trend over valid pairs with P>0,
+                        // the P=0 pairs are reported apart with their behaviour; R3b compares time to the second bounce (physical indicator).
                         Record(pairs,r3,a,b,excluded,a.second.z,b.second.z);
+                        Record(pairs,a.pi>0?r3a:r3p0,a,b,excluded,a.second.z,b.second.z);
+                        Record(pairs,r3b,a,b,excluded,a.t2,b.t2);
+                        if(a.pi==0)summary.r3P0.Add(new P0Pair{front=a.id,rear=b.id,status=excluded??(b.second.z>a.second.z?"Increasing":b.second.z==a.second.z?"Equal":"Counterexample"),
+                            z2Front=a.second.z,z2Rear=b.second.z,t2Front=a.t2,t2Rear=b.t2,speedFront=a.speed,speedRear=b.speed,raisedFront=a.speedRaised,raisedRear=b.speedRaised});
                     }
                 }
                 foreach(var relation in summary.relations)
@@ -223,15 +247,17 @@ namespace SquashClash.Experiments.EditMode
                 throw new InvalidDataException("Synthetic contact violates declared good position: "+id);
             return new Contact{id=id,center=center,body=body};
         }
-        private static Trial Run(int id,int ci,int xi,int yi,int pi,Contact contact,Vector2 aim,ParamSet preset,EffectiveConfig cfg,AnalyticBallSimulationFactory factory,float footprint)
+        internal static Trial Run(int id,int ci,int xi,int yi,int pi,Contact contact,Vector2 aim,ParamSet preset,EffectiveConfig cfg,AnalyticBallSimulationFactory factory,float footprint)
         {
             var court=cfg.Court; var physics=cfg.Physics;
-            var solution=ShotSolver.Solve(new ShotRequest(contact.center,aim,pi/20f),
-                (float)preset.Get("shot.vMin"),(float)preset.Get("shot.vMax"),(float)preset.Get("shot.vCap"),
+            // The shared pace curve first, then the unchanged solver with equal endpoints (as CausalQuality.Solve does).
+            var pace=ShotPace.Requested(pi/20f,contact.center,aim,physics.BallRadius,preset);
+            var solution=ShotSolver.Solve(new ShotRequest(contact.center,aim,pi/20f),pace.Speed,pace.Speed,(float)preset.Get("shot.vCap"),
                 physics.Gravity,physics.BallRadius,court,factory,physics);
             var row=new Trial { id=id,contactIndex=ci,contact=contact.id,xi=xi,yi=yi,pi=pi,center=contact.center,incoming=contact.incoming,
                 aim=aim,power=pi/20f,solved=solution.Solved,speedRaised=solution.SpeedRaised,targetLowered=solution.TargetLowered,
-                velocity=solution.Velocity,target=solution.TargetUsed,speed=solution.Speed,reason=solution.Reason,terminal="Unsolved",sideMin=-1,sideMax=-1 };
+                velocity=solution.Velocity,target=solution.TargetUsed,speed=solution.Speed,reason=solution.Reason,terminal="Unsolved",sideMin=-1,sideMax=-1,
+                paceDistance=pace.DistanceM,paceGamma=pace.Gamma,speedLinear=pace.LinearSpeed,requested=pace.Speed };
             if(!solution.Solved) return row;
             var rules=new PointRules(court,footprint); rules.Begin(PlayerId.Human,PlayerId.Rival);
             var judge=new ReturnLineJudge(court,footprint);
@@ -264,8 +290,8 @@ namespace SquashClash.Experiments.EditMode
                             if(hit.Surface==SurfaceId.Floor)
                             {
                                 floors++;
-                                if(floors==1){row.firstObserved=true;row.first=hit.Point;SampleSide(hit.Point+hit.Normal*physics.BallRadius);}
-                                if(floors==2){row.secondObserved=true;row.second=hit.Point;}
+                                if(floors==1){row.firstObserved=true;row.first=hit.Point;row.t1=step/(float)physics.StepHz+hit.TimeInStep;SampleSide(hit.Point+hit.Normal*physics.BallRadius);}
+                                if(floors==2){row.secondObserved=true;row.second=hit.Point;row.t2=step/(float)physics.StepHz+hit.TimeInStep;}
                             }
                             if(hit.Surface==SurfaceId.LeftWall||hit.Surface==SurfaceId.RightWall)
                             {
@@ -346,15 +372,15 @@ namespace SquashClash.Experiments.EditMode
                 summary.tempoPairs.Add(pair);
             }
         }
-        private static void WriteTrial(StreamWriter w,Trial t)
+        internal static void WriteTrial(StreamWriter w,Trial t)
         {
             w.WriteLine(string.Join("\t",new[]{t.id.ToString(Invariant),t.contact,F(t.center.x),F(t.center.y),F(t.center.z),F(t.aim.x),F(t.aim.y),F(t.power),
                 B(t.solved),B(t.speedRaised),B(t.targetLowered),F(t.target.x),F(t.target.y),F(t.speed),F(t.velocity.x),F(t.velocity.y),F(t.velocity.z),B(t.goodFront),B(t.legal),t.terminal,
                 B(t.firstObserved),F(t.first.x),F(t.first.y),F(t.first.z),B(t.secondObserved),F(t.second.x),F(t.second.y),F(t.second.z),F(t.frontMargin),
-                B(t.sideBeforeFirst),B(t.backBeforeFirst),B(t.oppositeAfterFirst),F(t.sideHeight),F(t.sideDepth),F(t.sideMin),F(t.sideMax),B(t.settled),t.reason}));
+                B(t.sideBeforeFirst),B(t.backBeforeFirst),B(t.oppositeAfterFirst),F(t.sideHeight),F(t.sideDepth),F(t.sideMin),F(t.sideMax),B(t.settled),t.reason,F(t.paceDistance),F(t.paceGamma),F(t.speedLinear),F(t.requested),F(t.t1),F(t.t2)}));
         }
-        private static string F(double value)=>value.ToString("R",Invariant);
-        private static string B(bool value)=>value?"1":"0";
+        internal static string F(double value)=>value.ToString("R",Invariant);
+        internal static string B(bool value)=>value?"1":"0";
         private static string Sha(byte[] bytes)
         {using(var sha=SHA256.Create())return BitConverter.ToString(sha.ComputeHash(bytes)).Replace("-","").ToLowerInvariant();}
         private static string Git(string root,string arguments)
