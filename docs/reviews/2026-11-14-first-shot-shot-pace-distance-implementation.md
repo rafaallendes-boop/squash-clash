@@ -69,7 +69,7 @@ Dos procesos Unity separados (`run01`, `run02`), un solo Unity a la vez; **los 1
 | S5: tiros con contacto B0–B3 (D ≥ 6 m), 25.536 filas | idénticas | **idénticas a la referencia** | **idénticas a la referencia** |
 
 - **S1 y S2 mejoran mucho con la curva** (de 79 % a 94,5 % y de 65 % a 99,7 % con γ_max = 2,0). Es el efecto buscado para «desde adelante».
-- **S3b falla igual en la referencia lineal (42,6 %)**: P = 1 no cambia de velocidad, así que no depende de la curva. El diseño no daba porcentaje para S3b; el 90 % lo fijó el operador por analogía con S1 y S2, y la muestra incluye mira lateral (x = 1,2 y 4,0), donde el golpe fuerte muere antes por rebote lateral (2.º bote entre 0 y 7 m en 29 de 54). **Hay que revisar esa operacionalización** (y también por qué se pedía que un golpe fuerte desde 1,2 m al drop vaya al fondo con mira lateral). No cambia la conclusión, porque R3a falla de forma independiente.
+- **S3b falla igual en la referencia lineal (42,6 %)**: P = 1 no cambia de velocidad, así que no depende de la curva. El diseño no daba porcentaje para S3b; el 90 % lo fijó el operador por analogía con S1 y S2, y la muestra incluye miras laterales (x = 1,2 y 4,0). 31 de los 54 tiros no cumplen (segundo bote por debajo de 8 m sin tocar la trasera antes); no se analizó la causa de cada uno. **Hay que revisar esa operacionalización** (y también por qué se pedía que un golpe fuerte desde 1,2 m al drop vaya al fondo con mira lateral). No cambia la conclusión, porque R3a falla de forma independiente.
 
 ### 6.2 R3 (Anexo C, arnés y emparejamiento sin cambios)
 
