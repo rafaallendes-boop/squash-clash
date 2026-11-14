@@ -909,3 +909,17 @@ Hechos ya verificados por Claude (no se rehacen aquí):
 > Sin embargo, dejemos explícito que el tiempo hasta el segundo bote es un indicador físico, no una demostración completa de letalidad. La efectividad real dependerá también de la posición, desplazamiento, anticipación y capacidad de respuesta del rival, que evaluaremos en First Rally.
 
 Mensaje completo, con sus consideraciones adicionales, en el [registro de aprobaciones](docs/reviews/2026-10-25-first-shot-po-approvals.md). Los números del modelo aproximado son hipótesis; Codex mide de nuevo con P2 real. Regla de parada: solo γ_max 2,0 y 2,5; si ambos fallan, volver a revisar el diseño antes de modificar parámetros. **La implementación no está autorizada todavía**: se avanza después de revisar la PR de diseño. PR de documentación **sin fusionar**; sin cambios de alcance. Aceptación de sensaciones reservada al playtest en iPhone.
+
+
+## Implementación de la potencia según la distancia — autorización del PO y cierres (14 de noviembre de 2026, Chile)
+
+Autorización literal del PO, 14 de noviembre de 2026 (Chile):
+
+> «Utiliza a un sub agente de modelo sonnet para realizar la implementación que se le está solicitando a codex.»
+
+**Operador:** subagente Sonnet dirigido por Claude, no Codex. La revisión posterior de Claude **no es independiente** de la dirección. Rama/worktree `firstshot/shot-pace-distance` desde main `7fdef02ec1682bcae5b3229b6b1a373557bdba25`; ejecuta el encargo de la sección 9 del [diseño](2026-11-14-first-shot-shot-pace-distance-design.md). PR sin fusionar; sin iPhone, build nativa ni instalación.
+
+**Cierres comprobados con Git antes de implementar:**
+
+- **PR #54** («Yes, merge #54»): merge `52c4e9f84b1bf622e71a7a2d8c5db34a20abed0f`, padres `78b2b656b3d3bffee9f43d3ac35c99c22e055b94` y exactamente `f71913ac4ddc644f0103605e58b208953d276fa7` (segundo padre); árbol `326c40827d5538d98ecc4e536d2838646bf79b9d`, idéntico al del segundo padre.
+- **PR #55**, diseño solo documentación («Yes, merge #55»): merge `7fdef02ec1682bcae5b3229b6b1a373557bdba25`, padres `52c4e9f84b1bf622e71a7a2d8c5db34a20abed0f` y exactamente `8f1329f88a90c00ef254f946f7c229b348941863`; árbol `74038f2cb8fdb9a50daab75e0b3876e1aeb6831b`, idéntico al del segundo padre. Fusionar no acepta First Shot.
