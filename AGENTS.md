@@ -890,3 +890,22 @@ Hechos ya verificados por Claude (no se rehacen aquí):
 - Parte A, con TDD: observaciones A1 (reinicio por recepción de `pendingCausal` en RallySim) y A2 (marco corporal vivo frente al congelado; solo se cambia código si se demuestra diferencia), más A3 solo registro.
 - Parte B: completar H3b como experimento explícito (vector causal productivo y niveles de ayuda 0/1/2), fuera de las suites de regresión, método predeclarado antes de ejecutar.
 - Sin tocar valores `causal.*`, defaults, presets, reglas del solver, contrato, ventanas ni física P2. **No se toca el iPhone, devicectl, Duplicación ni xcodebuild de dispositivo**: el PO está probando la build instalada. Sin instalación. PR no borrador, **sin fusionar**. Informe: [docs/reviews/2026-11-13-first-shot-b4-followups-h3b.md](docs/reviews/2026-11-13-first-shot-b4-followups-h3b.md).
+
+## Diseño de potencia según la distancia (SL5/SL6 y R3) — decisión del PO (14 nov 2026, Chile)
+
+[Propuesta de diseño de Claude](docs/reviews/2026-11-14-first-shot-shot-pace-distance-design.md), solo documentación. El PO aprobó, literalmente:
+
+> 1. APRUEBO la curva de potencia según distancia.
+>
+> * γ_max = 2,0 como alternativa principal.
+> * γ_max = 2,5 como respaldo predeclarado.
+> * Mantener P2, First Ball y M2-4 sin modificaciones.
+> * Mantener los extremos de potencia y el comportamiento actual desde 6 m.
+> * Aplicar una única función compartida, sin reglas especiales por escenario.
+>
+> 2. APRUEBO tratar R3a como tendencia ≥75 %, considerando los pares válidos con P > 0.
+> Los pares con P=0 deben seguir reportándose explícitamente, incluyendo su comportamiento y explicación. No quiero ocultar resultados desfavorables ni perder la trazabilidad del criterio original.
+> 3. APRUEBO incorporar R3b, con tiempo hasta el segundo bote mayor desde atrás en el 100 % de los pares válidos.
+> Sin embargo, dejemos explícito que el tiempo hasta el segundo bote es un indicador físico, no una demostración completa de letalidad. La efectividad real dependerá también de la posición, desplazamiento, anticipación y capacidad de respuesta del rival, que evaluaremos en First Rally.
+
+Mensaje completo, con sus consideraciones adicionales, en el [registro de aprobaciones](docs/reviews/2026-10-25-first-shot-po-approvals.md). Los números del modelo aproximado son hipótesis; Codex mide de nuevo con P2 real. Regla de parada: solo γ_max 2,0 y 2,5; si ambos fallan, volver a revisar el diseño antes de modificar parámetros. **La implementación no está autorizada todavía**: se avanza después de revisar la PR de diseño. PR de documentación **sin fusionar**; sin cambios de alcance. Aceptación de sensaciones reservada al playtest en iPhone.
