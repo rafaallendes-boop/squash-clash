@@ -161,7 +161,7 @@ namespace SquashClash.Runtime.Tests
             rally.StopMode();
             Assert.That(rally.Active,Is.False);Assert.That(practice.enabled,Is.True);Assert.That(app.Host.LaunchId,Is.EqualTo(launch+1));
             Assert.That(app.Tuning.Applied.Hash,Is.EqualTo(before),"rally never edits the applied tuning");
-            Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("9041c4aafc77"),"back to the default practice launch");
+            Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("06fed4bd4ac9"),"back to the default practice launch");
             yield return null;
         }
         [UnityTest] public IEnumerator Pause_FreezesBallBodiesAndTheWaitBetweenPoints()

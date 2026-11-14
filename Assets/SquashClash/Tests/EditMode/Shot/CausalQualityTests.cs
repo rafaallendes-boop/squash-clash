@@ -94,7 +94,7 @@ namespace SquashClash.Core.Tests.Shot
             var values=new double[]{.6,-.25,.85,.35,.4,-.2,.3,-.15,1,-.4};
             for(int i=0;i<keys.Length;i++)
             {string key="causal."+keys[i];Assert.That(ParamCatalog.TryGet(key,out var def),Is.True,key);Assert.That(p.Get(key),Is.EqualTo(values[i]));Assert.That(def.Label,Does.Contain("EXPERIMENT"));Assert.That(def.Apply,Is.EqualTo(ApplyClass.NextLaunch));}
-            Assert.That(p.Ordered.Count,Is.EqualTo(118));Assert.That(EffectiveConfig.From(p).SimulationKey,Is.EqualTo("166a96e319c7"));
+            Assert.That(p.Ordered.Count,Is.EqualTo(121));Assert.That(EffectiveConfig.From(p).SimulationKey,Is.EqualTo("166a96e319c7"));
         }
         [Test] public void AppliedBeforeSolver_NeverCorrectedAfter()
         {
