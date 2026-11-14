@@ -408,6 +408,18 @@
       "value": 32
     },
     {
+      "key": "shot.paceGammaMax",
+      "value": 2
+    },
+    {
+      "key": "shot.paceNearM",
+      "value": 1.5
+    },
+    {
+      "key": "shot.paceFullM",
+      "value": 6
+    },
+    {
       "key": "rollback.historyMs",
       "value": 250
     },

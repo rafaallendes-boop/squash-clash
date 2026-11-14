@@ -52,7 +52,7 @@ namespace SquashClash.Core.Shot
         public double BeganAtReal,ReleaseEventAtReal,ReleaseCorrectedAtReal,InputReceivedAtReal,ProcessingAtReal,PlanPresentedAtReal,TargetContactAtReal,
             DeltaMs,QuantizationErrorMsSigned,OrderAgeMs,ProjectionObservedAt,LockObservedAt,KInSteps,KOutSteps,AssistMs,ValidMs,LatencyCompMs,
             PlannerCostMs,SolverCostMs,ReconstructionCostMs,PredictionCostMs,ReconciliationCostMs;
-        public float Power,AimX,AimY,ContactX,ContactY,ContactZ,TargetUsedX,TargetUsedY,Speed,VelocityX,VelocityY,VelocityZ,JumpMeters,JumpPixels,JumpBallDiameters;
+        public float Power,AimX,AimY,ContactX,ContactY,ContactZ,TargetUsedX,TargetUsedY,Speed,PaceDistanceM,PaceGamma,RequestedSpeedLinear,RequestedSpeed,VelocityX,VelocityY,VelocityZ,JumpMeters,JumpPixels,JumpBallDiameters;
         public string ToJson()=>JsonUtility.ToJson(this);
     }
 }
