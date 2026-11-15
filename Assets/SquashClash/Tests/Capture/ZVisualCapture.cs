@@ -62,6 +62,64 @@ namespace SquashClash.Capture
             string path=Path.Combine(directory,(++index).ToString("00")+"-"+name+".png");
             File.WriteAllBytes(path,image.EncodeToPNG());UnityEngine.Object.Destroy(image);written.Add(path);
         }
+        // Feel pass: strips. Several frames of one moment side by side, cropped around a world-space box, so short effects
+        // (0.1-0.4 s) can be judged in still images.
+        private readonly List<Texture2D> strip=new List<Texture2D>();
+        private RectInt Region(Vector3 centre,float halfWidthMeters,float below,float above)
+        {
+            var c=camera.WorldToScreenPoint(centre);var side=camera.WorldToScreenPoint(centre+Vector3.right*halfWidthMeters);
+            var low=camera.WorldToScreenPoint(centre+Vector3.down*below);var high=camera.WorldToScreenPoint(centre+Vector3.up*above);
+            float half=Mathf.Abs(side.x-c.x);
+            int x0=Mathf.Clamp((int)((c.x-half)/Scale),0,Width/Scale-2),x1=Mathf.Clamp((int)((c.x+half)/Scale),x0+2,Width/Scale);
+            int y0=Mathf.Clamp((int)(low.y/Scale),0,Height/Scale-2),y1=Mathf.Clamp((int)(high.y/Scale),y0+2,Height/Scale);
+            return new RectInt(x0,y0,x1-x0,y1-y0);
+        }
+        private void Grab(RectInt region)
+        {
+            var small=RenderTexture.GetTemporary(Width/Scale,Height/Scale,0);Graphics.Blit(target,small);
+            var previous=RenderTexture.active;RenderTexture.active=small;
+            var image=new Texture2D(region.width,region.height,TextureFormat.RGB24,false);
+            image.ReadPixels(new Rect(region.x,region.y,region.width,region.height),0,0);image.Apply();
+            RenderTexture.active=previous;RenderTexture.ReleaseTemporary(small);strip.Add(image);
+        }
+        private void SaveStrip(string name)
+        {
+            if(strip.Count==0)return;
+            const int gap=4;int w=strip[0].width,h=strip[0].height;
+            var image=new Texture2D(strip.Count*(w+gap)-gap,h,TextureFormat.RGB24,false);
+            var fill=new Color32[image.width*image.height];for(int i=0;i<fill.Length;i++)fill[i]=new Color32(255,255,255,255);image.SetPixels32(fill);
+            for(int i=0;i<strip.Count;i++){image.SetPixels(i*(w+gap),0,w,h,strip[i].GetPixels());UnityEngine.Object.Destroy(strip[i]);}
+            image.Apply();strip.Clear();
+            string path=Path.Combine(directory,(++index).ToString("00")+"-"+name+".png");
+            File.WriteAllBytes(path,image.EncodeToPNG());UnityEngine.Object.Destroy(image);written.Add(path);
+        }
+        // One practice reception struck by a scripted release at T* + deltaMs: nine frames, 50 ms apart, around the stroke.
+        private IEnumerator StrokeStrip(string name,double deltaMs,float power)
+        {
+            yield return Boot();
+            var court=app.Config.Court;var aim=new Vector2(court.Width*.5f,1.7f);
+            var human=app.Players.Human.position;var region=Region(new Vector3(human.x,1.1f,human.z-.5f),1.9f,1.3f,1.9f);
+            double release=double.NaN;bool queued=false;int since=0;
+            for(int frame=0;frame<60*14&&strip.Count<9;frame++)
+            {
+                Step(2);
+                if(double.IsNaN(release)&&controller.Plan.Exists&&controller.Plan.TStarStep>=0&&app.Host.ClockMap.TrySimToReal(controller.Plan.TStarStep,0,out double t))
+                    release=Math.Max(app.Host.LaunchRealTime,t+deltaMs/1000+app.Host.ActiveConfig.Source.Get("timing.latencyCompMs")/1000);
+                if(!double.IsNaN(release)&&!queued&&app.Host.ObservedRealTime>=release)
+                {
+                    queued=true;
+                    controller.Enqueue(new SquashClash.Core.Shot.ClosedGesture(app.Host.LaunchId,"capture-1",0,Math.Max(app.Host.LaunchRealTime,release-.15),release,true,
+                        SquashClash.Core.Shot.GestureOutcome.Swing,aim,power,controller.Snapshot.Reception,"capture",app.Host.ObservedRealTime));
+                    controller.ProcessPending();
+                }
+                yield return null;
+                if(!double.IsNaN(release)&&app.Host.ObservedRealTime>=release-.15&&since++%3==0)Grab(region);
+            }
+            Assert.That(queued,Is.True,"the scripted release must be queued for "+name);
+            Debug.Log("[SquashClash] capture stroke "+name+" result="+(controller.LastRecord!=null?controller.LastRecord.Result:"none")+" power="+power);
+            SaveStrip(name);
+            yield return Shutdown();
+        }
         [UnityTest] public IEnumerator CaptureAll()
         {
             Application.targetFrameRate=60;
@@ -104,6 +162,22 @@ namespace SquashClash.Capture
             for(int i=0;i<limit&&rally.Phase!=RallyPhase.MatchOver;i++)Step(1);
             Assert.That(rally.Phase,Is.EqualTo(RallyPhase.MatchOver),"the demo match must finish");
             yield return null;yield return null;yield return Shoot("match-over");
+            yield return Shutdown();
+
+            // 4. Feel pass: strips of a Perfect, a Valid and a failed stroke in practice, and of a rally in Demo.
+            yield return StrokeStrip("strip-perfect",0,.95f);
+            yield return StrokeStrip("strip-valid",-90,.5f);
+            yield return StrokeStrip("strip-failed",170,.7f);
+            yield return Boot();
+            rally.Autopilot=true;rally.AutopilotTimingSigmaMs=15;rally.Level=AiLevel.Medium;rally.Seed=5;
+            Assert.That(rally.StartMode(),Is.True,"rally mode must start for the strip");
+            var whole=new RectInt(0,Height/Scale/8,Width/Scale,Height/Scale*3/4);
+            for(int frame=1;frame<=20*7;frame++){Step(2);yield return null;if(frame%20==0)Grab(whole);}
+            SaveStrip("strip-rally-demo");
+            // The pause between points and what the HUD says about the point.
+            for(int frame=0;frame<60*60&&rally.Phase!=RallyPhase.PointOver;frame++){Step(2);if(frame%4==0)yield return null;}
+            for(int frame=1;frame<=48;frame++){Step(2);yield return null;if(frame%12==0)Grab(new RectInt(0,Height/Scale/2,Width/Scale,Height/Scale/2));}
+            SaveStrip("strip-point-over");
             yield return Shutdown();
 
             Assert.That(written.Count,Is.GreaterThanOrEqualTo(8));
