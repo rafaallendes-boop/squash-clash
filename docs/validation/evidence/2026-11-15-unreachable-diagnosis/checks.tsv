@@ -1,0 +1,169 @@
+check	stream	variant	value
+shots	A	gamma1.0	19367
+non-finite	A	gamma1.0	0
+out-of-range(curve in [vMin,vMax], speed<=vCap)	A	gamma1.0	0
+misaligned-rallies	A	gamma1.0	0
+a1: zero-vector shots checked	A	gamma1.0	14129
+a1: max |Input.Speed - curve speed|	A	gamma1.0	0
+a1: count >1e-3	A	gamma1.0	0
+a2: |v_intention - v_actual| zero-vector shots	A	gamma1.0	14129
+a2: max	A	gamma1.0	0
+a2: count >1e-3	A	gamma1.0	0
+a3: forecast(first bounce) vs actual, identical inputs, rival shots	A	gamma1.0	9738
+a3: identical-input max err (m)	A	gamma1.0	2.4617430683875297
+a3: identical-input count >1e-3 m, zero-vector only	A	gamma1.0	0
+a4: AI forecast (clean option at P*) vs actual first bounce: n	A	gamma1.0	9798
+a4: p50 / p95 / max (m)	A	gamma1.0	0.552737484703669 / 1.7533037185097458 / 4.3191794992207688
+b: unreachable endings	A	gamma1.0	36
+b: mirrored	A	gamma1.0	36
+b: plan failed although mirror found reachable candidates (path ii)	A	gamma1.0	0
+b: probe found a stance reaching in time	A	gamma1.0	0
+b: probe stance reaching in time and with a legal contact (contradiction candidate)	A	gamma1.0	0
+b: min best lateness (steps) over unreachable endings	A	gamma1.0	20
+c: unreachable endings with cause != DoubleBounce	A	gamma1.0	0
+c: unreachable endings with terminal surface != Floor	A	gamma1.0	0
+c: unreachable endings whose striker is not the opponent of the last receiver	A	gamma1.0	0
+e: rival option share	A	gamma1.0	Cross|High|Medium = 1479/9798 (15.094917330067361 %), unreachable 0
+e: rival option share	A	gamma1.0	Cross|High|Strong = 523/9798 (5.3378240457236172 %), unreachable 0
+e: rival option share	A	gamma1.0	Cross|Low|Medium = 262/9798 (2.6740151051234946 %), unreachable 0
+e: rival option share	A	gamma1.0	Cross|Low|Strong = 236/9798 (2.4086548275158197 %), unreachable 0
+e: rival option share	A	gamma1.0	Cross|Mid|Medium = 1290/9798 (13.16595223515003 %), unreachable 0
+e: rival option share	A	gamma1.0	Cross|Mid|Strong = 1232/9798 (12.573994692794448 %), unreachable 6
+e: rival option share	A	gamma1.0	Drop|High|Medium = 209/9798 (2.1330883853847724 %), unreachable 0
+e: rival option share	A	gamma1.0	Drop|High|Strong = 150/9798 (1.5309246785058175 %), unreachable 0
+e: rival option share	A	gamma1.0	Drop|Low|Medium = 135/9798 (1.3778322106552359 %), unreachable 0
+e: rival option share	A	gamma1.0	Drop|Low|Strong = 99/9798 (1.0104102878138395 %), unreachable 0
+e: rival option share	A	gamma1.0	Drop|Mid|Medium = 194/9798 (1.9799959175341906 %), unreachable 0
+e: rival option share	A	gamma1.0	Drop|Mid|Strong = 167/9798 (1.7044294754031435 %), unreachable 0
+e: rival option share	A	gamma1.0	Straight|High|Medium = 1156/9798 (11.798326189018168 %), unreachable 0
+e: rival option share	A	gamma1.0	Straight|High|Strong = 364/9798 (3.7150438865074507 %), unreachable 8
+e: rival option share	A	gamma1.0	Straight|Low|Medium = 206/9798 (2.102469891814656 %), unreachable 0
+e: rival option share	A	gamma1.0	Straight|Low|Strong = 200/9798 (2.0412329046744233 %), unreachable 10
+e: rival option share	A	gamma1.0	Straight|Mid|Medium = 993/9798 (10.134721371708512 %), unreachable 0
+e: rival option share	A	gamma1.0	Straight|Mid|Strong = 903/9798 (9.2161665646050217 %), unreachable 9
+shots	A	gamma2.0	17975
+non-finite	A	gamma2.0	0
+out-of-range(curve in [vMin,vMax], speed<=vCap)	A	gamma2.0	0
+misaligned-rallies	A	gamma2.0	0
+a1: zero-vector shots checked	A	gamma2.0	13172
+a1: max |Input.Speed - curve speed|	A	gamma2.0	0
+a1: count >1e-3	A	gamma2.0	0
+a2: |v_intention - v_actual| zero-vector shots	A	gamma2.0	13172
+a2: max	A	gamma2.0	0
+a2: count >1e-3	A	gamma2.0	0
+a3: forecast(first bounce) vs actual, identical inputs, rival shots	A	gamma2.0	9035
+a3: identical-input max err (m)	A	gamma2.0	2.1089727950908852
+a3: identical-input count >1e-3 m, zero-vector only	A	gamma2.0	0
+a4: AI forecast (clean option at P*) vs actual first bounce: n	A	gamma2.0	9084
+a4: p50 / p95 / max (m)	A	gamma2.0	0.56298050112635922 / 1.8063665123166108 / 4.7477379644810229
+b: unreachable endings	A	gamma2.0	215
+b: mirrored	A	gamma2.0	215
+b: plan failed although mirror found reachable candidates (path ii)	A	gamma2.0	0
+b: probe found a stance reaching in time	A	gamma2.0	0
+b: probe stance reaching in time and with a legal contact (contradiction candidate)	A	gamma2.0	0
+b: min best lateness (steps) over unreachable endings	A	gamma2.0	20
+c: unreachable endings with cause != DoubleBounce	A	gamma2.0	0
+c: unreachable endings with terminal surface != Floor	A	gamma2.0	0
+c: unreachable endings whose striker is not the opponent of the last receiver	A	gamma2.0	0
+e: rival option share	A	gamma2.0	Cross|High|Medium = 1397/9084 (15.378687802730076 %), unreachable 0
+e: rival option share	A	gamma2.0	Cross|High|Strong = 504/9084 (5.5482166446499344 %), unreachable 0
+e: rival option share	A	gamma2.0	Cross|Low|Medium = 241/9084 (2.6530162923822105 %), unreachable 0
+e: rival option share	A	gamma2.0	Cross|Low|Strong = 223/9084 (2.4548656979304271 %), unreachable 0
+e: rival option share	A	gamma2.0	Cross|Mid|Medium = 1182/9084 (13.011889035667107 %), unreachable 0
+e: rival option share	A	gamma2.0	Cross|Mid|Strong = 1149/9084 (12.648612945838838 %), unreachable 5
+e: rival option share	A	gamma2.0	Drop|High|Medium = 162/9084 (1.7833553500660502 %), unreachable 0
+e: rival option share	A	gamma2.0	Drop|High|Strong = 138/9084 (1.5191545574636725 %), unreachable 0
+e: rival option share	A	gamma2.0	Drop|Low|Medium = 94/9084 (1.0347864376926463 %), unreachable 0
+e: rival option share	A	gamma2.0	Drop|Low|Strong = 88/9084 (0.968736239542052 %), unreachable 0
+e: rival option share	A	gamma2.0	Drop|Mid|Medium = 162/9084 (1.7833553500660502 %), unreachable 0
+e: rival option share	A	gamma2.0	Drop|Mid|Strong = 137/9084 (1.50814619110524 %), unreachable 0
+e: rival option share	A	gamma2.0	Straight|High|Medium = 1025/9084 (11.283575517393219 %), unreachable 0
+e: rival option share	A	gamma2.0	Straight|High|Strong = 386/9084 (4.24922941435491 %), unreachable 6
+e: rival option share	A	gamma2.0	Straight|Low|Medium = 216/9084 (2.3778071334214004 %), unreachable 0
+e: rival option share	A	gamma2.0	Straight|Low|Strong = 210/9084 (2.3117569352708056 %), unreachable 18
+e: rival option share	A	gamma2.0	Straight|Mid|Medium = 919/9084 (10.116688683399383 %), unreachable 0
+e: rival option share	A	gamma2.0	Straight|Mid|Strong = 851/9084 (9.36811977102598 %), unreachable 6
+shots	B	gamma1.0	19504
+non-finite	B	gamma1.0	0
+out-of-range(curve in [vMin,vMax], speed<=vCap)	B	gamma1.0	0
+misaligned-rallies	B	gamma1.0	0
+a1: zero-vector shots checked	B	gamma1.0	14297
+a1: max |Input.Speed - curve speed|	B	gamma1.0	0
+a1: count >1e-3	B	gamma1.0	0
+a2: |v_intention - v_actual| zero-vector shots	B	gamma1.0	14297
+a2: max	B	gamma1.0	0
+a2: count >1e-3	B	gamma1.0	0
+a3: forecast(first bounce) vs actual, identical inputs, rival shots	B	gamma1.0	9862
+a3: identical-input max err (m)	B	gamma1.0	2.2041243477752177
+a3: identical-input count >1e-3 m, zero-vector only	B	gamma1.0	0
+a4: AI forecast (clean option at P*) vs actual first bounce: n	B	gamma1.0	9879
+a4: p50 / p95 / max (m)	B	gamma1.0	0.52356596710698589 / 1.7094282249588675 / 4.9907128111960963
+b: unreachable endings	B	gamma1.0	60
+b: mirrored	B	gamma1.0	60
+b: plan failed although mirror found reachable candidates (path ii)	B	gamma1.0	0
+b: probe found a stance reaching in time	B	gamma1.0	0
+b: probe stance reaching in time and with a legal contact (contradiction candidate)	B	gamma1.0	0
+b: min best lateness (steps) over unreachable endings	B	gamma1.0	23
+c: unreachable endings with cause != DoubleBounce	B	gamma1.0	0
+c: unreachable endings with terminal surface != Floor	B	gamma1.0	0
+c: unreachable endings whose striker is not the opponent of the last receiver	B	gamma1.0	0
+e: rival option share	B	gamma1.0	Cross|High|Medium = 1530/9879 (15.487397509869419 %), unreachable 0
+e: rival option share	B	gamma1.0	Cross|High|Strong = 445/9879 (4.5045045045045047 %), unreachable 0
+e: rival option share	B	gamma1.0	Cross|Low|Medium = 349/9879 (3.532746229375443 %), unreachable 0
+e: rival option share	B	gamma1.0	Cross|Low|Strong = 296/9879 (2.9962546816479403 %), unreachable 0
+e: rival option share	B	gamma1.0	Cross|Mid|Medium = 1341/9879 (13.57424840570908 %), unreachable 0
+e: rival option share	B	gamma1.0	Cross|Mid|Strong = 1176/9879 (11.904038870331005 %), unreachable 11
+e: rival option share	B	gamma1.0	Drop|High|Medium = 237/9879 (2.3990282417248707 %), unreachable 0
+e: rival option share	B	gamma1.0	Drop|High|Strong = 112/9879 (1.1337179876505719 %), unreachable 0
+e: rival option share	B	gamma1.0	Drop|Low|Medium = 127/9879 (1.2855552181394878 %), unreachable 0
+e: rival option share	B	gamma1.0	Drop|Low|Strong = 52/9879 (0.52636906569490838 %), unreachable 0
+e: rival option share	B	gamma1.0	Drop|Mid|Medium = 180/9879 (1.8220467658669905 %), unreachable 0
+e: rival option share	B	gamma1.0	Drop|Mid|Strong = 138/9879 (1.3969025204980261 %), unreachable 0
+e: rival option share	B	gamma1.0	Straight|High|Medium = 1028/9879 (10.405911529507035 %), unreachable 0
+e: rival option share	B	gamma1.0	Straight|High|Strong = 367/9879 (3.7149509059621417 %), unreachable 5
+e: rival option share	B	gamma1.0	Straight|Low|Medium = 243/9879 (2.4597631339204371 %), unreachable 0
+e: rival option share	B	gamma1.0	Straight|Low|Strong = 276/9879 (2.7938050409960522 %), unreachable 29
+e: rival option share	B	gamma1.0	Straight|Mid|Medium = 1064/9879 (10.770320882680434 %), unreachable 0
+e: rival option share	B	gamma1.0	Straight|Mid|Strong = 918/9879 (9.2924385059216519 %), unreachable 15
+shots	B	gamma2.0	17014
+non-finite	B	gamma2.0	0
+out-of-range(curve in [vMin,vMax], speed<=vCap)	B	gamma2.0	0
+misaligned-rallies	B	gamma2.0	0
+a1: zero-vector shots checked	B	gamma2.0	12437
+a1: max |Input.Speed - curve speed|	B	gamma2.0	0
+a1: count >1e-3	B	gamma2.0	0
+a2: |v_intention - v_actual| zero-vector shots	B	gamma2.0	12437
+a2: max	B	gamma2.0	0
+a2: count >1e-3	B	gamma2.0	0
+a3: forecast(first bounce) vs actual, identical inputs, rival shots	B	gamma2.0	8576
+a3: identical-input max err (m)	B	gamma2.0	1.8354376320513111
+a3: identical-input count >1e-3 m, zero-vector only	B	gamma2.0	0
+a4: AI forecast (clean option at P*) vs actual first bounce: n	B	gamma2.0	8608
+a4: p50 / p95 / max (m)	B	gamma2.0	0.53327768501648232 / 1.7205622511977792 / 3.6252213648882612
+b: unreachable endings	B	gamma2.0	199
+b: mirrored	B	gamma2.0	199
+b: plan failed although mirror found reachable candidates (path ii)	B	gamma2.0	0
+b: probe found a stance reaching in time	B	gamma2.0	0
+b: probe stance reaching in time and with a legal contact (contradiction candidate)	B	gamma2.0	0
+b: min best lateness (steps) over unreachable endings	B	gamma2.0	23
+c: unreachable endings with cause != DoubleBounce	B	gamma2.0	0
+c: unreachable endings with terminal surface != Floor	B	gamma2.0	0
+c: unreachable endings whose striker is not the opponent of the last receiver	B	gamma2.0	0
+e: rival option share	B	gamma2.0	Cross|High|Medium = 1286/8608 (14.939591078066915 %), unreachable 0
+e: rival option share	B	gamma2.0	Cross|High|Strong = 403/8608 (4.6816914498141262 %), unreachable 0
+e: rival option share	B	gamma2.0	Cross|Low|Medium = 307/8608 (3.5664498141263938 %), unreachable 0
+e: rival option share	B	gamma2.0	Cross|Low|Strong = 237/8608 (2.7532527881040894 %), unreachable 0
+e: rival option share	B	gamma2.0	Cross|Mid|Medium = 1218/8608 (14.149628252788103 %), unreachable 0
+e: rival option share	B	gamma2.0	Cross|Mid|Strong = 1028/8608 (11.942379182156134 %), unreachable 5
+e: rival option share	B	gamma2.0	Drop|High|Medium = 198/8608 (2.300185873605948 %), unreachable 0
+e: rival option share	B	gamma2.0	Drop|High|Strong = 100/8608 (1.1617100371747211 %), unreachable 0
+e: rival option share	B	gamma2.0	Drop|Low|Medium = 119/8608 (1.3824349442379182 %), unreachable 0
+e: rival option share	B	gamma2.0	Drop|Low|Strong = 46/8608 (0.53438661710037172 %), unreachable 0
+e: rival option share	B	gamma2.0	Drop|Mid|Medium = 155/8608 (1.8006505576208178 %), unreachable 0
+e: rival option share	B	gamma2.0	Drop|Mid|Strong = 128/8608 (1.486988847583643 %), unreachable 0
+e: rival option share	B	gamma2.0	Straight|High|Medium = 841/8608 (9.7699814126394049 %), unreachable 0
+e: rival option share	B	gamma2.0	Straight|High|Strong = 318/8608 (3.6942379182156135 %), unreachable 5
+e: rival option share	B	gamma2.0	Straight|Low|Medium = 215/8608 (2.4976765799256504 %), unreachable 0
+e: rival option share	B	gamma2.0	Straight|Low|Strong = 240/8608 (2.7881040892193307 %), unreachable 36
+e: rival option share	B	gamma2.0	Straight|Mid|Medium = 957/8608 (11.117565055762082 %), unreachable 0
+e: rival option share	B	gamma2.0	Straight|Mid|Strong = 812/8608 (9.4330855018587361 %), unreachable 11

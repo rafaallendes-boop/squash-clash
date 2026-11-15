@@ -1,0 +1,1001 @@
+rally	firstReceiver	g1Cause	g1Last	g1Shots	g2Cause	g2Last	g2Shots	divergeAtRecord	g2UnreachableAtK	g2UnreachableBeforeDivergence
+0	Human	DoubleBounce	Air	80	DoubleBounce	Unreachable	103	1	103	False
+1	Rival	DoubleBounce	Air	10	DoubleBounce	Unreachable	10	6	10	False
+2	Human	DoubleBounce	Air	12	DoubleBounce	Air	12	1	-1	
+3	Rival	DoubleBounce	Air	17	DoubleBounce	Air	17	1	-1	
+4	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+5	Rival	DoubleBounce	Late	19	DoubleBounce	Late	19	8	-1	
+6	Human	DoubleBounce	Late	14	DoubleBounce	Late	14	1	-1	
+7	Rival	DoubleBounce	Late	15	DoubleBounce	Late	15	1	-1	
+8	Human	DoubleBounce	Air	9	DoubleBounce	Unreachable	9	1	9	False
+9	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	2	-1	
+10	Human	DoubleBounce	Late	41	DoubleBounce	Late	41	1	-1	
+11	Rival	DoubleBounce	Late	14	DoubleBounce	Late	14	6	-1	
+12	Human	DoubleBounce	Air	21	DoubleBounce	Air	21	1	-1	
+13	Rival	DoubleBounce	Late	9	DoubleBounce	Late	9	1	-1	
+14	Human	DoubleBounce	Air	99	DoubleBounce	Late	40	1	-1	
+15	Rival	DoubleBounce	Air	6	DoubleBounce	Unreachable	6	2	6	False
+16	Human	DoubleBounce	Late	18	DoubleBounce	Unreachable	15	1	15	False
+17	Rival	DoubleBounce	Air	13	DoubleBounce	Late	31	1	-1	
+18	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+19	Rival	DoubleBounce	Late	15	DoubleBounce	Late	15	4	-1	
+20	Human	DoubleBounce	Late	8	DoubleBounce	Late	8	1	-1	
+21	Rival	DoubleBounce	Late	11	DoubleBounce	Late	11	1	-1	
+22	Human	DoubleBounce	Air	5	DoubleBounce	Unreachable	5	1	5	False
+23	Rival	DoubleBounce	Air	12	DoubleBounce	Unreachable	12	2	12	False
+24	Human	DoubleBounce	Late	30	DoubleBounce	Air	36	1	-1	
+25	Rival	Out		1	Out		1	-1	-1	
+26	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+27	Rival	DoubleBounce	Late	11	DoubleBounce	Late	20	1	-1	
+28	Human	DoubleBounce	Air	72	DoubleBounce	Air	72	1	-1	
+29	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	-1	-1	
+30	Human	DoubleBounce	Air	11	DoubleBounce	Air	11	1	-1	
+31	Rival	DoubleBounce	Late	3	DoubleBounce	Late	3	1	-1	
+32	Human	DoubleBounce	Late	9	DoubleBounce	Late	9	1	-1	
+33	Rival	DoubleBounce	Air	14	DoubleBounce	Unreachable	4	4	4	False
+34	Human	DoubleBounce	Late	18	DoubleBounce	Late	18	1	-1	
+35	Rival	DoubleBounce	Air	69	DoubleBounce	Late	13	1	-1	
+36	Human	DoubleBounce	Late	16	DoubleBounce	Late	16	1	-1	
+37	Rival	DoubleBounce	Air	8	DoubleBounce	Unreachable	8	1	8	False
+38	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+39	Rival	DoubleBounce	Late	6	DoubleBounce	Late	6	1	-1	
+40	Human	DoubleBounce	Unreachable	62	DoubleBounce	Air	13	1	-1	
+41	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+42	Human	DoubleBounce	Late	40	DoubleBounce	Late	12	1	-1	
+43	Rival	DoubleBounce	Air	35	DoubleBounce	Air	57	3	-1	
+44	Human	DoubleBounce	Late	10	DoubleBounce	Late	10	1	-1	
+45	Rival	DoubleBounce	Late	30	DoubleBounce	Unreachable	7	1	7	False
+46	Human	DoubleBounce	Late	5	DoubleBounce	Late	5	1	-1	
+47	Rival	DoubleBounce	Unreachable	59	DoubleBounce	Unreachable	59	18	59	False
+48	Human	DoubleBounce	Late	15	DoubleBounce	Late	15	1	-1	
+49	Rival	DoubleBounce	Air	65	DoubleBounce	Late	9	6	-1	
+50	Human	DoubleBounce	Air	22	DoubleBounce	Late	8	1	-1	
+51	Rival	DoubleBounce	Late	31	DoubleBounce	Late	31	9	-1	
+52	Human	DoubleBounce	Late	29	DoubleBounce	Late	29	1	-1	
+53	Rival	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+54	Human	DoubleBounce	Air	9	DoubleBounce	Late	12	1	-1	
+55	Rival	DoubleBounce	Late	12	DoubleBounce	Late	12	1	-1	
+56	Human	DoubleBounce	Air	87	DoubleBounce	Air	82	1	-1	
+57	Rival	DoubleBounce	Late	9	DoubleBounce	Late	9	-1	-1	
+58	Human	DoubleBounce	Unreachable	44	DoubleBounce	Unreachable	44	1	44	False
+59	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+60	Human	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+61	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	1	-1	
+62	Human	DoubleBounce	Late	11	DoubleBounce	Late	11	1	-1	
+63	Rival	DoubleBounce	Air	79	DoubleBounce	Air	79	14	-1	
+64	Human	DoubleBounce	Air	12	DoubleBounce	Air	12	1	-1	
+65	Rival	DoubleBounce	Late	3	DoubleBounce	Late	3	1	-1	
+66	Human	DoubleBounce	Late	25	DoubleBounce	Late	25	1	-1	
+67	Rival	DoubleBounce	Air	7	DoubleBounce	Air	7	1	-1	
+68	Human	DoubleBounce	Late	44	DoubleBounce	Air	5	1	-1	
+69	Rival	DoubleBounce	Late	8	DoubleBounce	Late	8	4	-1	
+70	Human	DoubleBounce	Late	8	DoubleBounce	Late	8	1	-1	
+71	Rival	DoubleBounce	Air	15	DoubleBounce	Air	15	11	-1	
+72	Human	DoubleBounce	Late	26	DoubleBounce	Late	26	1	-1	
+73	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	1	-1	
+74	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+75	Rival	DoubleBounce	Late	11	DoubleBounce	Late	11	2	-1	
+76	Human	DoubleBounce	Late	7	DoubleBounce	Late	7	1	-1	
+77	Rival	DoubleBounce	Air	80	DoubleBounce	Late	37	1	-1	
+78	Human	DoubleBounce	Air	32	DoubleBounce	Late	26	1	-1	
+79	Rival	DoubleBounce	Unreachable	37	DoubleBounce	Unreachable	37	8	37	False
+80	Human	DoubleBounce	Late	21	DoubleBounce	Late	4	1	-1	
+81	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	-1	-1	
+82	Human	DoubleBounce	Unreachable	50	DoubleBounce	Unreachable	50	1	50	False
+83	Rival	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+84	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+85	Rival	DoubleBounce	Air	11	DoubleBounce	Air	11	7	-1	
+86	Human	DoubleBounce	Late	10	DoubleBounce	Late	10	1	-1	
+87	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+88	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+89	Rival	DoubleBounce	Unreachable	47	DoubleBounce	Unreachable	47	1	47	False
+90	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	-1	-1	
+91	Rival	DoubleBounce	Air	36	DoubleBounce	Unreachable	76	1	76	False
+92	Human	DoubleBounce	Air	10	DoubleBounce	Air	4	1	-1	
+93	Rival	DoubleBounce	Late	7	DoubleBounce	Late	7	1	-1	
+94	Human	DoubleBounce	Air	16	DoubleBounce	Air	16	1	-1	
+95	Rival	DoubleBounce	Late	3	DoubleBounce	Late	3	1	-1	
+96	Human	DoubleBounce	Unreachable	46	DoubleBounce	Unreachable	46	1	46	False
+97	Rival	DoubleBounce	Late	0	DoubleBounce	Late	0	-1	-1	
+98	Human	DoubleBounce	Air	8	DoubleBounce	Air	70	1	-1	
+99	Rival	DoubleBounce	Air	7	DoubleBounce	Air	7	1	-1	
+100	Human	DoubleBounce	Air	10	DoubleBounce	Late	18	1	-1	
+101	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	-1	-1	
+102	Human	DoubleBounce	Air	16	DoubleBounce	Air	16	1	-1	
+103	Rival	DoubleBounce	Air	7	DoubleBounce	Air	7	5	-1	
+104	Human	DoubleBounce	Air	24	DoubleBounce	Air	24	1	-1	
+105	Rival	DoubleBounce	Air	72	DoubleBounce	Late	21	1	-1	
+106	Human	DoubleBounce	Air	48	DoubleBounce	Unreachable	21	1	21	False
+107	Rival	DoubleBounce	Late	15	DoubleBounce	Unreachable	29	14	29	False
+108	Human	DoubleBounce	Air	12	DoubleBounce	Air	12	1	-1	
+109	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	1	-1	
+110	Human	DoubleBounce	Unreachable	42	DoubleBounce	Unreachable	42	1	42	False
+111	Rival	DoubleBounce	Late	42	DoubleBounce	Unreachable	15	7	15	False
+112	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+113	Rival	DoubleBounce	Air	15	DoubleBounce	Unreachable	18	1	18	False
+114	Human	DoubleBounce	Unreachable	28	DoubleBounce	Unreachable	28	1	28	False
+115	Rival	DoubleBounce	Late	10	DoubleBounce	Late	10	1	-1	
+116	Human	DoubleBounce	Air	12	DoubleBounce	Air	12	1	-1	
+117	Rival	DoubleBounce	Unreachable	39	DoubleBounce	Air	3	1	-1	
+118	Human	DoubleBounce	Late	22	DoubleBounce	Unreachable	14	1	14	False
+119	Rival	DoubleBounce	Air	45	DoubleBounce	Air	45	1	-1	
+120	Human	DoubleBounce	Air	20	DoubleBounce	Unreachable	17	1	17	False
+121	Rival	DoubleBounce	Air	9	DoubleBounce	Late	23	5	-1	
+122	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+123	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+124	Human	DoubleBounce	Unreachable	38	DoubleBounce	Unreachable	38	1	38	False
+125	Rival	DoubleBounce	Late	19	DoubleBounce	Unreachable	11	1	11	False
+126	Human	DoubleBounce	Air	67	DoubleBounce	Late	6	1	-1	
+127	Rival	DoubleBounce	Air	17	DoubleBounce	Late	11	1	-1	
+128	Human	DoubleBounce	Late	22	DoubleBounce	Late	22	1	-1	
+129	Rival	DoubleBounce	Late	6	DoubleBounce	Late	6	1	-1	
+130	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+131	Rival	DoubleBounce	Late	25	DoubleBounce	Late	25	1	-1	
+132	Human	DoubleBounce	Late	37	DoubleBounce	Late	37	1	-1	
+133	Rival	DoubleBounce	Air	64	DoubleBounce	Air	59	10	-1	
+134	Human	DoubleBounce	Air	16	DoubleBounce	Late	10	1	-1	
+135	Rival	DoubleBounce	Unreachable	21	DoubleBounce	Unreachable	21	1	21	False
+136	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+137	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+138	Human	DoubleBounce	Unreachable	34	DoubleBounce	Unreachable	34	1	34	False
+139	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+140	Human	DoubleBounce	Air	40	DoubleBounce	Air	40	1	-1	
+141	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+142	Human	DoubleBounce	Air	18	DoubleBounce	Unreachable	20	1	20	False
+143	Rival	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+144	Human	DoubleBounce	Late	20	DoubleBounce	Late	20	1	-1	
+145	Rival	DoubleBounce	Air	3	DoubleBounce	Late	21	2	-1	
+146	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+147	Rival	DoubleBounce	Late	9	DoubleBounce	Air	55	1	-1	
+148	Human	DoubleBounce	Air	18	DoubleBounce	Air	47	1	-1	
+149	Rival	DoubleBounce	Late	15	DoubleBounce	Late	15	1	-1	
+150	Human	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+151	Rival	DoubleBounce	Late	3	DoubleBounce	Unreachable	38	1	38	False
+152	Human	DoubleBounce	Unreachable	30	DoubleBounce	Air	30	1	-1	
+153	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	-1	-1	
+154	Human	DoubleBounce	Air	59	DoubleBounce	Air	54	1	-1	
+155	Rival	DoubleBounce	Air	9	DoubleBounce	Unreachable	6	5	6	False
+156	Human	DoubleBounce	Unreachable	16	DoubleBounce	Unreachable	16	1	16	False
+157	Rival	DoubleBounce	Late	9	DoubleBounce	Air	27	1	-1	
+158	Human	DoubleBounce	Air	37	DoubleBounce	Unreachable	37	1	37	False
+159	Rival	DoubleBounce	Late	17	DoubleBounce	Late	17	1	-1	
+160	Human	DoubleBounce	Air	13	DoubleBounce	Late	16	1	-1	
+161	Rival	DoubleBounce	Late	13	DoubleBounce	Late	13	-1	-1	
+162	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+163	Rival	DoubleBounce	Unreachable	13	DoubleBounce	Unreachable	13	8	13	False
+164	Human	DoubleBounce	Late	8	DoubleBounce	Late	8	1	-1	
+165	Rival	DoubleBounce	Air	3	DoubleBounce	Late	9	1	-1	
+166	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+167	Rival	DoubleBounce	Air	10	DoubleBounce	Late	13	1	-1	
+168	Human	DoubleBounce	Air	55	DoubleBounce	Air	50	1	-1	
+169	Rival	DoubleBounce	Air	40	DoubleBounce	Air	40	18	-1	
+170	Human	DoubleBounce	Unreachable	12	DoubleBounce	Unreachable	12	1	12	False
+171	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+172	Human	DoubleBounce	Late	28	DoubleBounce	Late	28	1	-1	
+173	Rival	DoubleBounce	Unreachable	23	DoubleBounce	Late	23	1	-1	
+174	Human	DoubleBounce	Air	9	DoubleBounce	Late	12	1	-1	
+175	Rival	DoubleBounce	Air	29	DoubleBounce	Air	29	14	-1	
+176	Human	DoubleBounce	Air	18	DoubleBounce	Air	18	1	-1	
+177	Rival	DoubleBounce	Unreachable	9	DoubleBounce	Unreachable	9	4	9	False
+178	Human	DoubleBounce	Air	38	DoubleBounce	Air	38	1	-1	
+179	Rival	DoubleBounce	Air	30	DoubleBounce	Unreachable	30	1	30	False
+180	Human	DoubleBounce	Late	12	DoubleBounce	Late	12	1	-1	
+181	Rival	DoubleBounce	Late	7	DoubleBounce	Late	22	2	-1	
+182	Human	DoubleBounce	Air	51	DoubleBounce	Unreachable	51	1	51	False
+183	Rival	DoubleBounce	Air	15	DoubleBounce	Air	29	1	-1	
+184	Human	DoubleBounce	Unreachable	8	DoubleBounce	Unreachable	8	1	8	False
+185	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	1	-1	
+186	Human	DoubleBounce	Late	24	DoubleBounce	Unreachable	29	1	29	False
+187	Rival	DoubleBounce	Unreachable	19	DoubleBounce	Air	19	1	-1	
+188	Human	DoubleBounce	Late	21	DoubleBounce	Late	21	1	-1	
+189	Rival	DoubleBounce	Air	25	DoubleBounce	Air	25	2	-1	
+190	Human	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+191	Rival	DoubleBounce	Late	81	DoubleBounce	Late	3	2	-1	
+192	Human	DoubleBounce	Late	24	DoubleBounce	Late	24	1	-1	
+193	Rival	DoubleBounce	Air	26	DoubleBounce	Unreachable	26	1	26	False
+194	Human	DoubleBounce	Late	8	DoubleBounce	Late	8	1	-1	
+195	Rival	DoubleBounce	Late	18	DoubleBounce	Late	18	7	-1	
+196	Human	DoubleBounce	Late	4	DoubleBounce	Air	24	1	-1	
+197	Rival	DoubleBounce	Air	32	DoubleBounce	Air	32	1	-1	
+198	Human	DoubleBounce	Air	54	DoubleBounce	Late	2	1	-1	
+199	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+200	Human	DoubleBounce	Air	25	DoubleBounce	Unreachable	25	1	25	False
+201	Rival	DoubleBounce	Air	37	DoubleBounce	Unreachable	15	7	15	False
+202	Human	DoubleBounce	Late	17	DoubleBounce	Late	17	1	-1	
+203	Rival	DoubleBounce	Air	4	DoubleBounce	Air	21	1	-1	
+204	Human	DoubleBounce	Air	71	DoubleBounce	Late	24	1	-1	
+205	Rival	DoubleBounce	Late	1	DoubleBounce	Air	61	1	-1	
+206	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+207	Rival	DoubleBounce	Late	17	DoubleBounce	Unreachable	22	1	22	False
+208	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+209	Rival	DoubleBounce	Late	14	DoubleBounce	Late	14	4	-1	
+210	Human	DoubleBounce	Air	43	DoubleBounce	Air	38	1	-1	
+211	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+212	Human	DoubleBounce	Air	44	DoubleBounce	Air	44	1	-1	
+213	Rival	DoubleBounce	Late	21	DoubleBounce	Late	21	1	-1	
+214	Human	DoubleBounce	Air	21	DoubleBounce	Unreachable	21	1	21	False
+215	Rival	DoubleBounce	Unreachable	11	DoubleBounce	Unreachable	11	1	11	False
+216	Human	DoubleBounce	Late	13	DoubleBounce	Late	13	1	-1	
+217	Rival	DoubleBounce	Air	40	DoubleBounce	Unreachable	40	8	40	False
+218	Human	DoubleBounce	Air	27	DoubleBounce	Air	27	1	-1	
+219	Rival	DoubleBounce	Late	31	DoubleBounce	Late	31	1	-1	
+220	Human	DoubleBounce	Air	10	DoubleBounce	Air	10	1	-1	
+221	Rival	DoubleBounce	Late	20	DoubleBounce	Unreachable	18	12	18	False
+222	Human	DoubleBounce	Unreachable	10	DoubleBounce	Late	8	1	-1	
+223	Rival	DoubleBounce	Late	10	DoubleBounce	Late	10	6	-1	
+224	Human	DoubleBounce	Air	39	DoubleBounce	Air	34	1	-1	
+225	Rival	DoubleBounce	Air	24	DoubleBounce	Unreachable	24	10	24	False
+226	Human	DoubleBounce	Air	56	DoubleBounce	Air	56	1	-1	
+227	Rival	DoubleBounce	Air	23	DoubleBounce	Unreachable	6	1	6	False
+228	Human	DoubleBounce	Late	19	DoubleBounce	Unreachable	17	1	17	False
+229	Rival	DoubleBounce	Air	25	DoubleBounce	Late	35	14	-1	
+230	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+231	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+232	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+233	Rival	DoubleBounce	Late	27	DoubleBounce	Late	27	4	-1	
+234	Human	DoubleBounce	Late	10	DoubleBounce	Unreachable	5	1	5	False
+235	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+236	Human	DoubleBounce	Air	38	DoubleBounce	Unreachable	57	1	57	False
+237	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	-1	-1	
+238	Human	DoubleBounce	Air	35	DoubleBounce	Air	30	1	-1	
+239	Rival	DoubleBounce	Air	20	DoubleBounce	Unreachable	20	1	20	False
+240	Human	DoubleBounce	Air	36	DoubleBounce	Air	36	1	-1	
+241	Rival	DoubleBounce	Air	13	DoubleBounce	Late	21	1	-1	
+242	Human	DoubleBounce	Late	15	DoubleBounce	Unreachable	13	1	13	False
+243	Rival	DoubleBounce	Air	3	DoubleBounce	Air	3	1	-1	
+244	Human	DoubleBounce	Late	5	DoubleBounce	Late	5	1	-1	
+245	Rival	DoubleBounce	Air	32	DoubleBounce	Air	27	20	-1	
+246	Human	DoubleBounce	Air	19	DoubleBounce	Unreachable	19	1	19	False
+247	Rival	DoubleBounce	Air	33	DoubleBounce	Air	33	6	-1	
+248	Human	DoubleBounce	Air	10	DoubleBounce	Air	10	1	-1	
+249	Rival	DoubleBounce	Late	12	DoubleBounce	Late	12	1	-1	
+250	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+251	Rival	DoubleBounce	Late	2	DoubleBounce	Late	1	1	-1	
+252	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+253	Rival	Out		1	Out		1	-1	-1	
+254	Human	DoubleBounce	Late	10	DoubleBounce	Air	28	1	-1	
+255	Rival	DoubleBounce	Air	7	DoubleBounce	Air	7	5	-1	
+256	Human	DoubleBounce	Late	11	DoubleBounce	Late	11	1	-1	
+257	Rival	DoubleBounce	Late	71	DoubleBounce	Unreachable	50	1	50	False
+258	Human	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+259	Rival	DoubleBounce	Air	28	DoubleBounce	Air	23	1	-1	
+260	Human	DoubleBounce	Air	12	DoubleBounce	Air	12	1	-1	
+261	Rival	DoubleBounce	Late	17	DoubleBounce	Late	17	4	-1	
+262	Human	DoubleBounce	Air	6	DoubleBounce	Late	2	1	-1	
+263	Rival	DoubleBounce	Air	6	DoubleBounce	Unreachable	6	1	6	False
+264	Human	DoubleBounce	Air	30	DoubleBounce	Unreachable	49	1	49	False
+265	Rival	DoubleBounce	Unreachable	1	DoubleBounce	Unreachable	1	-1	1	True
+266	Human	DoubleBounce	Air	27	DoubleBounce	Air	22	1	-1	
+267	Rival	DoubleBounce	Late	33	DoubleBounce	Air	52	1	-1	
+268	Human	DoubleBounce	Air	44	DoubleBounce	Air	44	1	-1	
+269	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+270	Human	DoubleBounce	Air	5	DoubleBounce	Unreachable	5	1	5	False
+271	Rival	DoubleBounce	Air	13	DoubleBounce	Air	31	2	-1	
+272	Human	DoubleBounce	Air	9	DoubleBounce	Unreachable	25	1	25	False
+273	Rival	DoubleBounce	Air	24	DoubleBounce	Air	19	1	-1	
+274	Human	DoubleBounce	Air	11	DoubleBounce	Unreachable	11	1	11	False
+275	Rival	DoubleBounce	Air	25	DoubleBounce	Air	25	1	-1	
+276	Human	DoubleBounce	Air	2	DoubleBounce	Late	4	1	-1	
+277	Rival	DoubleBounce	Late	3	DoubleBounce	Late	3	-1	-1	
+278	Human	DoubleBounce	Late	22	DoubleBounce	Late	22	1	-1	
+279	Rival	DoubleBounce	Air	15	DoubleBounce	Air	17	6	-1	
+280	Human	DoubleBounce	Air	23	DoubleBounce	Unreachable	11	1	11	False
+281	Rival	DoubleBounce	Air	8	DoubleBounce	Late	1	1	-1	
+282	Human	DoubleBounce	Late	12	DoubleBounce	Late	12	1	-1	
+283	Rival	DoubleBounce	Air	53	DoubleBounce	Air	7	1	-1	
+284	Human	DoubleBounce	Late	3	DoubleBounce	Late	3	1	-1	
+285	Rival	DoubleBounce	Air	27	DoubleBounce	Air	27	3	-1	
+286	Human	DoubleBounce	Air	31	DoubleBounce	Air	5	1	-1	
+287	Rival	DoubleBounce	Air	64	DoubleBounce	Unreachable	8	4	8	False
+288	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+289	Rival	DoubleBounce	Late	9	DoubleBounce	Late	9	1	-1	
+290	Human	DoubleBounce	Late	8	DoubleBounce	Air	4	1	-1	
+291	Rival	DoubleBounce	Late	0	DoubleBounce	Late	0	-1	-1	
+292	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+293	Rival	DoubleBounce	Air	11	DoubleBounce	Unreachable	18	8	18	False
+294	Human	DoubleBounce	Air	19	DoubleBounce	Unreachable	7	1	7	False
+295	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+296	Human	DoubleBounce	Air	36	DoubleBounce	Air	36	1	-1	
+297	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+298	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+299	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	2	-1	
+300	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+301	Rival	DoubleBounce	Air	16	DoubleBounce	Unreachable	4	1	4	False
+302	Human	DoubleBounce	Air	43	DoubleBounce	Air	29	1	-1	
+303	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+304	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+305	Rival	DoubleBounce	Late	3	DoubleBounce	Late	3	1	-1	
+306	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+307	Rival	DoubleBounce	Air	24	DoubleBounce	Air	9	1	-1	
+308	Human	DoubleBounce	Air	10	DoubleBounce	Air	10	1	-1	
+309	Rival	DoubleBounce	Late	3	DoubleBounce	Late	3	-1	-1	
+310	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+311	Rival	DoubleBounce	Air	38	DoubleBounce	Late	4	1	-1	
+312	Human	DoubleBounce	Air	61	DoubleBounce	Unreachable	11	1	11	False
+313	Rival	DoubleBounce	Air	15	DoubleBounce	Unreachable	34	1	34	False
+314	Human	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+315	Rival	DoubleBounce	Air	7	DoubleBounce	Air	7	1	-1	
+316	Human	DoubleBounce	Air	18	DoubleBounce	Air	25	1	-1	
+317	Rival	DoubleBounce	Air	29	DoubleBounce	Air	29	1	-1	
+318	Human	DoubleBounce	Air	12	DoubleBounce	Air	12	1	-1	
+319	Rival	DoubleBounce	Late	37	DoubleBounce	Unreachable	8	1	8	False
+320	Human	DoubleBounce	Late	70	Out		24	1	-1	
+321	Rival	DoubleBounce	Air	20	DoubleBounce	Air	20	1	-1	
+322	Human	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+323	Rival	DoubleBounce	Air	19	DoubleBounce	Air	19	4	-1	
+324	Human	DoubleBounce	Air	18	DoubleBounce	Air	18	1	-1	
+325	Rival	DoubleBounce	Late	25	DoubleBounce	Late	25	1	-1	
+326	Human	DoubleBounce	Late	36	DoubleBounce	Late	4	1	-1	
+327	Rival	DoubleBounce	Air	11	DoubleBounce	Unreachable	30	1	30	False
+328	Human	DoubleBounce	Air	19	DoubleBounce	Unreachable	9	1	9	False
+329	Rival	DoubleBounce	Air	8	DoubleBounce	Unreachable	8	1	8	False
+330	Human	DoubleBounce	Late	16	DoubleBounce	Late	16	1	-1	
+331	Rival	DoubleBounce	Late	5	DoubleBounce	Air	15	1	-1	
+332	Human	DoubleBounce	Air	33	DoubleBounce	Air	33	1	-1	
+333	Rival	DoubleBounce	Air	17	DoubleBounce	Late	33	1	-1	
+334	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	-1	-1	
+335	Rival	DoubleBounce	Air	16	DoubleBounce	Air	16	1	-1	
+336	Human	DoubleBounce	Air	7	DoubleBounce	Air	7	1	-1	
+337	Rival	DoubleBounce	Air	37	DoubleBounce	Air	37	1	-1	
+338	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+339	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+340	Human	DoubleBounce	Late	32	DoubleBounce	Late	32	1	-1	
+341	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	-1	-1	
+342	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+343	Rival	DoubleBounce	Air	4	DoubleBounce	Air	4	4	-1	
+344	Human	DoubleBounce	Air	10	DoubleBounce	Air	10	1	-1	
+345	Rival	DoubleBounce	Air	1	DoubleBounce	Air	10	1	-1	
+346	Human	DoubleBounce	Late	20	DoubleBounce	Late	20	1	-1	
+347	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	6	-1	
+348	Human	DoubleBounce	Air	58	DoubleBounce	Unreachable	25	1	25	False
+349	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+350	Human	DoubleBounce	Late	32	DoubleBounce	Unreachable	5	5	5	False
+351	Rival	DoubleBounce	Unreachable	43	DoubleBounce	Air	11	1	-1	
+352	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+353	Rival	DoubleBounce	Air	55	DoubleBounce	Air	26	1	-1	
+354	Human	DoubleBounce	Late	28	DoubleBounce	Late	28	1	-1	
+355	Rival	DoubleBounce	Late	43	DoubleBounce	Unreachable	22	1	22	False
+356	Human	DoubleBounce	Air	11	DoubleBounce	Air	11	1	-1	
+357	Rival	DoubleBounce	Late	29	DoubleBounce	Late	29	10	-1	
+358	Human	DoubleBounce	Late	8	DoubleBounce	Late	8	1	-1	
+359	Rival	DoubleBounce	Air	40	DoubleBounce	Air	40	4	-1	
+360	Human	DoubleBounce	Late	16	DoubleBounce	Late	16	1	-1	
+361	Rival	DoubleBounce	Air	9	DoubleBounce	Late	25	1	-1	
+362	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+363	Rival	DoubleBounce	Air	8	DoubleBounce	Late	101	1	-1	
+364	Human	DoubleBounce	Late	28	DoubleBounce	Late	28	1	-1	
+365	Rival	DoubleBounce	Late	5	DoubleBounce	Late	5	5	-1	
+366	Human	DoubleBounce	Air	39	DoubleBounce	Air	39	1	-1	
+367	Rival	DoubleBounce	Late	93	DoubleBounce	Air	22	1	-1	
+368	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+369	Rival	DoubleBounce	Late	75	DoubleBounce	Unreachable	18	9	18	False
+370	Human	DoubleBounce	Air	7	DoubleBounce	Unreachable	17	1	17	False
+371	Rival	DoubleBounce	Late	1	DoubleBounce	Air	9	1	-1	
+372	Human	DoubleBounce	Air	2	DoubleBounce	Air	9	1	-1	
+373	Rival	DoubleBounce	Air	36	DoubleBounce	Unreachable	24	8	24	False
+374	Human	DoubleBounce	Late	12	DoubleBounce	Late	12	1	-1	
+375	Rival	DoubleBounce	Air	42	DoubleBounce	Late	7	1	-1	
+376	Human	DoubleBounce	Air	2	DoubleBounce	Unreachable	5	1	5	False
+377	Rival	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+378	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+379	Rival	DoubleBounce	Air	20	DoubleBounce	Air	20	1	-1	
+380	Human	DoubleBounce	Air	12	DoubleBounce	Air	12	1	-1	
+381	Rival	DoubleBounce	Air	79	DoubleBounce	Air	18	1	-1	
+382	Human	DoubleBounce	Air	41	DoubleBounce	Air	41	1	-1	
+383	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+384	Human	DoubleBounce	Unreachable	18	DoubleBounce	Unreachable	13	1	13	False
+385	Rival	DoubleBounce	Air	5	DoubleBounce	Unreachable	36	4	36	False
+386	Human	DoubleBounce	Unreachable	34	DoubleBounce	Air	24	1	-1	
+387	Rival	DoubleBounce	Air	32	DoubleBounce	Air	32	1	-1	
+388	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+389	Rival	DoubleBounce	Air	38	DoubleBounce	Air	38	1	-1	
+390	Human	DoubleBounce	Late	54	DoubleBounce	Unreachable	23	1	23	False
+391	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+392	Human	DoubleBounce	Air	35	DoubleBounce	Unreachable	35	1	35	False
+393	Rival	DoubleBounce	Air	16	DoubleBounce	Air	16	4	-1	
+394	Human	DoubleBounce	Air	31	DoubleBounce	Air	16	1	-1	
+395	Rival	DoubleBounce	Late	19	DoubleBounce	Unreachable	16	1	16	False
+396	Human	DoubleBounce	Late	16	DoubleBounce	Late	16	1	-1	
+397	Rival	DoubleBounce	Late	53	DoubleBounce	Unreachable	4	4	4	False
+398	Human	DoubleBounce	Air	18	DoubleBounce	Air	18	1	-1	
+399	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+400	Human	DoubleBounce	Unreachable	30	DoubleBounce	Unreachable	30	1	30	False
+401	Rival	DoubleBounce	Air	28	DoubleBounce	Unreachable	16	10	16	False
+402	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+403	Rival	DoubleBounce	Late	3	DoubleBounce	Late	3	-1	-1	
+404	Human	DoubleBounce	Late	30	DoubleBounce	Unreachable	5	1	5	False
+405	Rival	DoubleBounce	Late	9	DoubleBounce	Unreachable	6	1	6	False
+406	Human	DoubleBounce	Late	16	DoubleBounce	Late	16	1	-1	
+407	Rival	DoubleBounce	Air	12	DoubleBounce	Air	12	1	-1	
+408	Human	DoubleBounce	Air	31	DoubleBounce	Unreachable	37	1	37	False
+409	Rival	DoubleBounce	Air	10	DoubleBounce	Air	10	4	-1	
+410	Human	DoubleBounce	Late	12	DoubleBounce	Late	12	1	-1	
+411	Rival	DoubleBounce	Late	47	DoubleBounce	Unreachable	16	6	16	False
+412	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+413	Rival	DoubleBounce	Late	25	DoubleBounce	Late	25	1	-1	
+414	Human	DoubleBounce	Unreachable	26	DoubleBounce	Unreachable	26	1	26	False
+415	Rival	DoubleBounce	Late	7	DoubleBounce	Late	7	1	-1	
+416	Human	DoubleBounce	Air	16	DoubleBounce	Unreachable	11	1	11	False
+417	Rival	DoubleBounce	Late	9	DoubleBounce	Late	9	1	-1	
+418	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+419	Rival	DoubleBounce	Air	11	DoubleBounce	Air	11	9	-1	
+420	Human	DoubleBounce	Late	33	DoubleBounce	Late	33	1	-1	
+421	Rival	DoubleBounce	Unreachable	23	DoubleBounce	Unreachable	23	8	23	False
+422	Human	DoubleBounce	Late	16	DoubleBounce	Unreachable	33	1	33	False
+423	Rival	DoubleBounce	Air	6	DoubleBounce	Air	6	6	-1	
+424	Human	DoubleBounce	Air	29	DoubleBounce	Air	29	1	-1	
+425	Rival	DoubleBounce	Air	71	DoubleBounce	Unreachable	12	12	12	False
+426	Human	DoubleBounce	Late	6	DoubleBounce	Late	6	1	-1	
+427	Rival	DoubleBounce	Late	9	DoubleBounce	Late	9	4	-1	
+428	Human	DoubleBounce	Unreachable	22	DoubleBounce	Air	12	1	-1	
+429	Rival	DoubleBounce	Air	20	DoubleBounce	Unreachable	8	2	8	False
+430	Human	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+431	Rival	DoubleBounce	Late	5	DoubleBounce	Late	5	1	-1	
+432	Human	DoubleBounce	Late	22	DoubleBounce	Late	22	1	-1	
+433	Rival	DoubleBounce	Air	7	DoubleBounce	Air	7	6	-1	
+434	Human	DoubleBounce	Late	8	DoubleBounce	Late	8	1	-1	
+435	Rival	DoubleBounce	Air	4	DoubleBounce	Unreachable	4	4	4	False
+436	Human	DoubleBounce	Air	19	DoubleBounce	Unreachable	7	1	7	False
+437	Rival	DoubleBounce	Late	7	DoubleBounce	Unreachable	4	4	4	False
+438	Human	DoubleBounce	Air	18	DoubleBounce	Air	18	1	-1	
+439	Rival	DoubleBounce	Late	35	DoubleBounce	Unreachable	8	8	8	False
+440	Human	DoubleBounce	Air	14	DoubleBounce	Late	2	1	-1	
+441	Rival	DoubleBounce	Air	20	DoubleBounce	Unreachable	20	7	20	False
+442	Human	DoubleBounce	Unreachable	18	DoubleBounce	Unreachable	18	1	18	False
+443	Rival	DoubleBounce	Air	16	DoubleBounce	Air	16	1	-1	
+444	Human	DoubleBounce	Late	24	DoubleBounce	Air	36	1	-1	
+445	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+446	Human	DoubleBounce	Late	48	DoubleBounce	Late	68	1	-1	
+447	Rival	DoubleBounce	Air	11	DoubleBounce	Late	7	1	-1	
+448	Human	DoubleBounce	Air	19	DoubleBounce	Late	14	1	-1	
+449	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+450	Human	DoubleBounce	Air	15	DoubleBounce	Unreachable	15	1	15	False
+451	Rival	DoubleBounce	Air	13	DoubleBounce	Air	13	1	-1	
+452	Human	DoubleBounce	Air	21	DoubleBounce	Air	21	1	-1	
+453	Rival	DoubleBounce	Late	5	DoubleBounce	Late	5	-1	-1	
+454	Human	DoubleBounce	Air	26	DoubleBounce	Air	26	1	-1	
+455	Rival	DoubleBounce	Air	16	DoubleBounce	Unreachable	16	1	16	False
+456	Human	DoubleBounce	Unreachable	14	DoubleBounce	Unreachable	14	1	14	False
+457	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	-1	-1	
+458	Human	DoubleBounce	Air	32	DoubleBounce	Air	32	1	-1	
+459	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+460	Human	DoubleBounce	Late	6	DoubleBounce	Air	26	1	-1	
+461	Rival	DoubleBounce	Late	3	DoubleBounce	Late	3	1	-1	
+462	Human	DoubleBounce	Late	21	DoubleBounce	Air	15	1	-1	
+463	Rival	DoubleBounce	Unreachable	11	DoubleBounce	Unreachable	11	1	11	False
+464	Human	DoubleBounce	Air	15	DoubleBounce	Unreachable	21	1	21	False
+465	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	1	-1	
+466	Human	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+467	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+468	Human	DoubleBounce	Air	42	DoubleBounce	Air	42	1	-1	
+469	Rival	Out		1	Out		1	-1	-1	
+470	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+471	Rival	DoubleBounce	Late	23	DoubleBounce	Air	18	6	-1	
+472	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+473	Rival	DoubleBounce	Air	14	DoubleBounce	Air	14	1	-1	
+474	Human	DoubleBounce	Air	30	DoubleBounce	Air	30	1	-1	
+475	Rival	DoubleBounce	Air	78	DoubleBounce	Air	47	1	-1	
+476	Human	DoubleBounce	Late	8	DoubleBounce	Late	8	1	-1	
+477	Rival	DoubleBounce	Unreachable	7	DoubleBounce	Unreachable	7	4	7	False
+478	Human	DoubleBounce	Air	7	DoubleBounce	Unreachable	7	1	7	False
+479	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	-1	-1	
+480	Human	DoubleBounce	Air	13	DoubleBounce	Air	13	1	-1	
+481	Rival	DoubleBounce	Air	19	DoubleBounce	Air	19	2	-1	
+482	Human	DoubleBounce	Air	14	DoubleBounce	Air	14	1	-1	
+483	Rival	DoubleBounce	Air	8	DoubleBounce	Unreachable	8	1	8	False
+484	Human	DoubleBounce	Unreachable	6	DoubleBounce	Unreachable	6	1	6	False
+485	Rival	DoubleBounce	Air	4	DoubleBounce	Air	4	4	-1	
+486	Human	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+487	Rival	DoubleBounce	Air	10	DoubleBounce	Air	10	1	-1	
+488	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+489	Rival	DoubleBounce	Air	6	DoubleBounce	Unreachable	74	1	74	False
+490	Human	DoubleBounce	Air	7	DoubleBounce	Unreachable	7	1	7	False
+491	Rival	DoubleBounce	Unreachable	3	DoubleBounce	Unreachable	3	1	3	False
+492	Human	DoubleBounce	Late	18	DoubleBounce	Late	8	1	-1	
+493	Rival	DoubleBounce	Air	47	DoubleBounce	Air	15	1	-1	
+494	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+495	Rival	DoubleBounce	Late	19	DoubleBounce	Late	19	1	-1	
+496	Human	DoubleBounce	Air	42	DoubleBounce	Air	42	1	-1	
+497	Rival	DoubleBounce	Air	4	DoubleBounce	Unreachable	4	1	4	False
+498	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+499	Rival	DoubleBounce	Late	15	DoubleBounce	Air	10	4	-1	
+500	Human	DoubleBounce	Late	90	Out		2	1	-1	
+501	Rival	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+502	Human	DoubleBounce	Late	22	DoubleBounce	Late	22	1	-1	
+503	Rival	DoubleBounce	Unreachable	25	DoubleBounce	Unreachable	70	2	70	False
+504	Human	DoubleBounce	Late	9	DoubleBounce	Late	9	1	-1	
+505	Rival	DoubleBounce	Air	25	DoubleBounce	Air	25	1	-1	
+506	Human	DoubleBounce	Late	6	DoubleBounce	Air	9	1	-1	
+507	Rival	DoubleBounce	Air	11	DoubleBounce	Air	11	6	-1	
+508	Human	DoubleBounce	Air	5	DoubleBounce	Late	14	1	-1	
+509	Rival	DoubleBounce	Late	3	DoubleBounce	Late	3	1	-1	
+510	Human	DoubleBounce	Late	60	DoubleBounce	Late	60	1	-1	
+511	Rival	DoubleBounce	Late	6	DoubleBounce	Late	6	4	-1	
+512	Human	DoubleBounce	Air	24	DoubleBounce	Air	24	1	-1	
+513	Rival	DoubleBounce	Late	11	DoubleBounce	Late	11	1	-1	
+514	Human	DoubleBounce	Air	42	DoubleBounce	Air	42	1	-1	
+515	Rival	DoubleBounce	Late	41	Out		3	2	-1	
+516	Human	DoubleBounce	Late	14	DoubleBounce	Late	14	1	-1	
+517	Rival	DoubleBounce	Late	57	DoubleBounce	Air	35	18	-1	
+518	Human	DoubleBounce	Late	5	DoubleBounce	Late	5	1	-1	
+519	Rival	DoubleBounce	Late	11	DoubleBounce	Late	11	2	-1	
+520	Human	DoubleBounce	Air	56	DoubleBounce	Air	14	5	-1	
+521	Rival	DoubleBounce	Air	39	DoubleBounce	Late	49	1	-1	
+522	Human	DoubleBounce	Late	40	DoubleBounce	Unreachable	53	1	53	False
+523	Rival	DoubleBounce	Late	11	DoubleBounce	Late	11	4	-1	
+524	Human	DoubleBounce	Air	34	DoubleBounce	Air	34	1	-1	
+525	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+526	Human	DoubleBounce	Air	83	DoubleBounce	Unreachable	23	1	23	False
+527	Rival	DoubleBounce	Late	29	DoubleBounce	Late	29	1	-1	
+528	Human	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+529	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+530	Human	Out		2	Out		2	1	-1	
+531	Rival	DoubleBounce	Air	62	DoubleBounce	Late	1	1	-1	
+532	Human	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+533	Rival	DoubleBounce	Air	13	DoubleBounce	Air	13	1	-1	
+534	Human	DoubleBounce	Late	6	DoubleBounce	Late	6	1	-1	
+535	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	2	-1	
+536	Human	DoubleBounce	Air	26	DoubleBounce	Late	8	1	-1	
+537	Rival	DoubleBounce	Late	17	DoubleBounce	Late	17	1	-1	
+538	Human	DoubleBounce	Late	52	DoubleBounce	Late	52	1	-1	
+539	Rival	Out		29	Out		29	1	-1	
+540	Human	DoubleBounce	Air	36	DoubleBounce	Unreachable	19	1	19	False
+541	Rival	DoubleBounce	Unreachable	1	DoubleBounce	Unreachable	1	-1	1	True
+542	Human	DoubleBounce	Late	44	DoubleBounce	Late	44	1	-1	
+543	Rival	DoubleBounce	Air	11	DoubleBounce	Air	23	6	-1	
+544	Human	DoubleBounce	Late	26	DoubleBounce	Air	38	1	-1	
+545	Rival	DoubleBounce	Air	5	DoubleBounce	Late	1	1	-1	
+546	Human	DoubleBounce	Air	21	DoubleBounce	Air	21	1	-1	
+547	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	9	-1	
+548	Human	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+549	Rival	DoubleBounce	Late	41	DoubleBounce	Unreachable	20	4	20	False
+550	Human	DoubleBounce	Air	10	DoubleBounce	Unreachable	45	1	45	False
+551	Rival	DoubleBounce	Late	53	DoubleBounce	Late	37	4	-1	
+552	Human	DoubleBounce	Air	26	DoubleBounce	Late	9	1	-1	
+553	Rival	DoubleBounce	Air	18	DoubleBounce	Air	18	1	-1	
+554	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+555	Rival	DoubleBounce	Air	3	DoubleBounce	Air	3	-1	-1	
+556	Human	DoubleBounce	Air	61	DoubleBounce	Unreachable	19	1	19	False
+557	Rival	DoubleBounce	Air	19	DoubleBounce	Air	7	4	-1	
+558	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+559	Rival	DoubleBounce	Air	54	DoubleBounce	Unreachable	54	1	54	False
+560	Human	DoubleBounce	Late	34	DoubleBounce	Late	34	1	-1	
+561	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	-1	-1	
+562	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+563	Rival	DoubleBounce	Air	58	DoubleBounce	Unreachable	16	4	16	False
+564	Human	DoubleBounce	Air	18	DoubleBounce	Air	18	1	-1	
+565	Rival	DoubleBounce	Air	79	DoubleBounce	Late	69	1	-1	
+566	Human	DoubleBounce	Late	44	DoubleBounce	Late	44	1	-1	
+567	Rival	DoubleBounce	Air	14	DoubleBounce	Air	14	1	-1	
+568	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+569	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+570	Human	DoubleBounce	Air	20	DoubleBounce	Air	20	1	-1	
+571	Rival	DoubleBounce	Air	15	DoubleBounce	Air	15	1	-1	
+572	Human	DoubleBounce	Air	54	DoubleBounce	Air	22	1	-1	
+573	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	-1	-1	
+574	Human	DoubleBounce	Air	13	DoubleBounce	Air	13	1	-1	
+575	Rival	DoubleBounce	Air	25	DoubleBounce	Air	25	1	-1	
+576	Human	DoubleBounce	Air	40	DoubleBounce	Air	40	1	-1	
+577	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+578	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+579	Rival	DoubleBounce	Late	9	DoubleBounce	Late	9	1	-1	
+580	Human	DoubleBounce	Air	15	DoubleBounce	Air	6	1	-1	
+581	Rival	DoubleBounce	Air	4	DoubleBounce	Air	10	1	-1	
+582	Human	DoubleBounce	Late	8	DoubleBounce	Late	8	1	-1	
+583	Rival	DoubleBounce	Late	13	DoubleBounce	Late	13	-1	-1	
+584	Human	DoubleBounce	Air	53	DoubleBounce	Late	32	1	-1	
+585	Rival	DoubleBounce	Air	3	DoubleBounce	Air	3	2	-1	
+586	Human	DoubleBounce	Air	26	DoubleBounce	Air	18	1	-1	
+587	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+588	Human	DoubleBounce	Air	22	DoubleBounce	Air	22	1	-1	
+589	Rival	DoubleBounce	Air	64	DoubleBounce	Air	64	8	-1	
+590	Human	DoubleBounce	Air	76	DoubleBounce	Air	48	1	-1	
+591	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+592	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+593	Rival	DoubleBounce	Air	23	DoubleBounce	Late	11	1	-1	
+594	Human	DoubleBounce	Air	45	DoubleBounce	Air	2	1	-1	
+595	Rival	DoubleBounce	Air	19	DoubleBounce	Air	19	1	-1	
+596	Human	DoubleBounce	Late	26	DoubleBounce	Late	12	1	-1	
+597	Rival	DoubleBounce	Late	7	DoubleBounce	Late	7	1	-1	
+598	Human	DoubleBounce	Air	18	DoubleBounce	Unreachable	7	1	7	False
+599	Rival	DoubleBounce	Air	7	DoubleBounce	Air	7	-1	-1	
+600	Human	DoubleBounce	Late	4	DoubleBounce	Late	2	1	-1	
+601	Rival	DoubleBounce	Air	11	DoubleBounce	Air	11	8	-1	
+602	Human	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+603	Rival	DoubleBounce	Air	47	DoubleBounce	Air	47	1	-1	
+604	Human	DoubleBounce	Late	8	DoubleBounce	Late	8	1	-1	
+605	Rival	DoubleBounce	Air	43	DoubleBounce	Air	43	4	-1	
+606	Human	DoubleBounce	Air	29	DoubleBounce	Unreachable	29	1	29	False
+607	Rival	DoubleBounce	Late	29	DoubleBounce	Late	29	9	-1	
+608	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+609	Rival	Out		9	Out		9	2	-1	
+610	Human	DoubleBounce	Late	22	DoubleBounce	Late	22	1	-1	
+611	Rival	DoubleBounce	Late	5	DoubleBounce	Late	5	1	-1	
+612	Human	DoubleBounce	Air	8	DoubleBounce	Air	14	1	-1	
+613	Rival	DoubleBounce	Air	11	DoubleBounce	Unreachable	6	1	6	False
+614	Human	DoubleBounce	Air	18	DoubleBounce	Air	10	1	-1	
+615	Rival	DoubleBounce	Air	7	DoubleBounce	Unreachable	4	1	4	False
+616	Human	DoubleBounce	Air	14	DoubleBounce	Air	14	1	-1	
+617	Rival	DoubleBounce	Air	56	DoubleBounce	Air	56	1	-1	
+618	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+619	Rival	DoubleBounce	Air	33	DoubleBounce	Air	33	13	-1	
+620	Human	DoubleBounce	Late	12	DoubleBounce	Unreachable	25	1	25	False
+621	Rival	DoubleBounce	Late	25	DoubleBounce	Late	25	17	-1	
+622	Human	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+623	Rival	DoubleBounce	Air	7	DoubleBounce	Air	7	1	-1	
+624	Human	DoubleBounce	Air	55	DoubleBounce	Air	55	2	-1	
+625	Rival	DoubleBounce	Air	8	DoubleBounce	Air	33	1	-1	
+626	Human	DoubleBounce	Late	20	DoubleBounce	Late	20	1	-1	
+627	Rival	DoubleBounce	Late	9	Out		5	4	-1	
+628	Human	DoubleBounce	Late	24	DoubleBounce	Late	16	1	-1	
+629	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+630	Human	DoubleBounce	Unreachable	14	DoubleBounce	Unreachable	14	1	14	False
+631	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+632	Human	DoubleBounce	Air	7	Out		58	1	-1	
+633	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+634	Human	DoubleBounce	Late	8	DoubleBounce	Air	20	1	-1	
+635	Rival	DoubleBounce	Late	115	DoubleBounce	Late	5	1	-1	
+636	Human	DoubleBounce	Air	33	DoubleBounce	Unreachable	33	1	33	False
+637	Rival	DoubleBounce	Unreachable	11	DoubleBounce	Unreachable	11	9	11	False
+638	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+639	Rival	DoubleBounce	Air	29	DoubleBounce	Air	29	1	-1	
+640	Human	DoubleBounce	Late	6	DoubleBounce	Late	6	1	-1	
+641	Rival	DoubleBounce	Late	19	DoubleBounce	Late	19	6	-1	
+642	Human	DoubleBounce	Air	10	DoubleBounce	Air	10	1	-1	
+643	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	-1	-1	
+644	Human	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+645	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+646	Human	DoubleBounce	Air	28	DoubleBounce	Air	28	1	-1	
+647	Rival	DoubleBounce	Air	3	DoubleBounce	Air	31	1	-1	
+648	Human	DoubleBounce	Late	18	DoubleBounce	Late	18	1	-1	
+649	Rival	DoubleBounce	Late	7	DoubleBounce	Late	7	7	-1	
+650	Human	DoubleBounce	Air	29	DoubleBounce	Unreachable	29	1	29	False
+651	Rival	DoubleBounce	Unreachable	7	DoubleBounce	Unreachable	7	-1	7	True
+652	Human	DoubleBounce	Late	10	DoubleBounce	Late	10	1	-1	
+653	Rival	DoubleBounce	Air	85	DoubleBounce	Air	25	1	-1	
+654	Human	DoubleBounce	Air	30	DoubleBounce	Air	23	1	-1	
+655	Rival	DoubleBounce	Air	14	DoubleBounce	Unreachable	14	1	14	False
+656	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+657	Rival	DoubleBounce	Air	11	DoubleBounce	Air	11	-1	-1	
+658	Human	DoubleBounce	Unreachable	6	DoubleBounce	Unreachable	6	1	6	False
+659	Rival	DoubleBounce	Air	31	DoubleBounce	Air	31	1	-1	
+660	Human	DoubleBounce	Air	24	DoubleBounce	Air	24	1	-1	
+661	Rival	DoubleBounce	Air	27	DoubleBounce	Air	27	1	-1	
+662	Human	DoubleBounce	Air	22	DoubleBounce	Air	22	1	-1	
+663	Rival	DoubleBounce	Air	27	DoubleBounce	Unreachable	24	1	24	False
+664	Human	DoubleBounce	Air	10	DoubleBounce	Air	10	1	-1	
+665	Rival	DoubleBounce	Unreachable	3	DoubleBounce	Unreachable	3	-1	3	True
+666	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+667	Rival	DoubleBounce	Late	3	DoubleBounce	Late	3	-1	-1	
+668	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+669	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+670	Human	DoubleBounce	Late	12	DoubleBounce	Late	12	1	-1	
+671	Rival	DoubleBounce	Air	7	DoubleBounce	Air	7	1	-1	
+672	Human	DoubleBounce	Air	7	DoubleBounce	Air	7	1	-1	
+673	Rival	DoubleBounce	Late	35	DoubleBounce	Late	35	6	-1	
+674	Human	DoubleBounce	Late	2	DoubleBounce	Air	20	1	-1	
+675	Rival	DoubleBounce	Late	1	DoubleBounce	Air	16	1	-1	
+676	Human	DoubleBounce	Late	10	DoubleBounce	Late	10	1	-1	
+677	Rival	DoubleBounce	Late	9	DoubleBounce	Late	9	1	-1	
+678	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+679	Rival	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+680	Human	DoubleBounce	Air	39	DoubleBounce	Air	39	1	-1	
+681	Rival	DoubleBounce	Air	17	DoubleBounce	Air	17	1	-1	
+682	Human	DoubleBounce	Air	22	DoubleBounce	Air	15	1	-1	
+683	Rival	DoubleBounce	Late	17	DoubleBounce	Unreachable	9	4	9	False
+684	Human	DoubleBounce	Late	16	DoubleBounce	Late	16	1	-1	
+685	Rival	DoubleBounce	Air	18	DoubleBounce	Unreachable	18	5	18	False
+686	Human	DoubleBounce	Air	3	DoubleBounce	Air	3	1	-1	
+687	Rival	DoubleBounce	Air	36	DoubleBounce	Air	36	7	-1	
+688	Human	DoubleBounce	Air	16	DoubleBounce	Air	16	1	-1	
+689	Rival	Out		57	DoubleBounce	Air	22	1	-1	
+690	Human	DoubleBounce	Air	14	DoubleBounce	Unreachable	8	1	8	False
+691	Rival	DoubleBounce	Late	5	DoubleBounce	Late	5	1	-1	
+692	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+693	Rival	DoubleBounce	Air	0	DoubleBounce	Air	0	-1	-1	
+694	Human	DoubleBounce	Air	22	DoubleBounce	Air	22	1	-1	
+695	Rival	DoubleBounce	Air	13	DoubleBounce	Air	13	8	-1	
+696	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+697	Rival	DoubleBounce	Late	3	DoubleBounce	Late	3	1	-1	
+698	Human	DoubleBounce	Air	42	DoubleBounce	Unreachable	15	1	15	False
+699	Rival	DoubleBounce	Air	14	DoubleBounce	Unreachable	14	1	14	False
+700	Human	DoubleBounce	Air	25	DoubleBounce	Unreachable	25	1	25	False
+701	Rival	DoubleBounce	Air	32	DoubleBounce	Air	32	1	-1	
+702	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+703	Rival	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+704	Human	DoubleBounce	Late	12	DoubleBounce	Late	12	1	-1	
+705	Rival	DoubleBounce	Air	15	DoubleBounce	Unreachable	12	1	12	False
+706	Human	DoubleBounce	Air	32	DoubleBounce	Air	32	1	-1	
+707	Rival	DoubleBounce	Air	3	DoubleBounce	Air	3	-1	-1	
+708	Human	DoubleBounce	Air	28	DoubleBounce	Air	28	1	-1	
+709	Rival	DoubleBounce	Late	43	Out		35	1	-1	
+710	Human	DoubleBounce	Air	20	DoubleBounce	Air	24	1	-1	
+711	Rival	DoubleBounce	Air	24	DoubleBounce	Late	39	1	-1	
+712	Human	DoubleBounce	Air	14	DoubleBounce	Air	14	1	-1	
+713	Rival	DoubleBounce	Air	29	DoubleBounce	Air	29	1	-1	
+714	Human	DoubleBounce	Air	16	DoubleBounce	Air	16	1	-1	
+715	Rival	DoubleBounce	Air	1	DoubleBounce	Air	28	1	-1	
+716	Human	DoubleBounce	Air	8	DoubleBounce	Air	12	1	-1	
+717	Rival	DoubleBounce	Air	14	DoubleBounce	Air	14	7	-1	
+718	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+719	Rival	DoubleBounce	Late	5	DoubleBounce	Late	5	1	-1	
+720	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+721	Rival	DoubleBounce	Air	23	DoubleBounce	Air	23	1	-1	
+722	Human	DoubleBounce	Air	0	DoubleBounce	Air	0	-1	-1	
+723	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	4	-1	
+724	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+725	Rival	DoubleBounce	Air	20	DoubleBounce	Late	35	1	-1	
+726	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+727	Rival	DoubleBounce	Air	6	DoubleBounce	Unreachable	6	6	6	False
+728	Human	DoubleBounce	Air	45	DoubleBounce	Air	17	1	-1	
+729	Rival	DoubleBounce	Air	24	DoubleBounce	Air	24	10	-1	
+730	Human	DoubleBounce	Air	36	Out		30	1	-1	
+731	Rival	DoubleBounce	Air	7	DoubleBounce	Air	7	1	-1	
+732	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+733	Rival	DoubleBounce	Late	45	DoubleBounce	Unreachable	23	1	23	False
+734	Human	DoubleBounce	Air	24	DoubleBounce	Air	24	1	-1	
+735	Rival	DoubleBounce	Air	27	DoubleBounce	Air	14	1	-1	
+736	Human	DoubleBounce	Late	18	DoubleBounce	Late	18	1	-1	
+737	Rival	DoubleBounce	Late	11	DoubleBounce	Late	11	1	-1	
+738	Human	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+739	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+740	Human	DoubleBounce	Air	30	DoubleBounce	Unreachable	22	1	22	False
+741	Rival	DoubleBounce	Late	29	DoubleBounce	Late	29	12	-1	
+742	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+743	Rival	DoubleBounce	Air	20	DoubleBounce	Air	20	1	-1	
+744	Human	DoubleBounce	Air	30	Out		26	1	-1	
+745	Rival	Out		41	DoubleBounce	Late	65	21	-1	
+746	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+747	Rival	DoubleBounce	Air	3	DoubleBounce	Air	3	-1	-1	
+748	Human	DoubleBounce	Late	28	DoubleBounce	Late	28	1	-1	
+749	Rival	DoubleBounce	Air	10	DoubleBounce	Unreachable	10	7	10	False
+750	Human	DoubleBounce	Air	19	DoubleBounce	Air	19	1	-1	
+751	Rival	DoubleBounce	Air	29	DoubleBounce	Late	21	1	-1	
+752	Human	Out		40	DoubleBounce	Unreachable	33	1	33	False
+753	Rival	DoubleBounce	Air	12	DoubleBounce	Late	7	1	-1	
+754	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+755	Rival	DoubleBounce	Air	62	DoubleBounce	Air	62	10	-1	
+756	Human	DoubleBounce	Late	32	DoubleBounce	Unreachable	9	1	9	False
+757	Rival	DoubleBounce	Air	16	DoubleBounce	Air	16	1	-1	
+758	Human	DoubleBounce	Late	28	Out		22	1	-1	
+759	Rival	DoubleBounce	Late	15	DoubleBounce	Late	15	2	-1	
+760	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+761	Rival	DoubleBounce	Late	79	DoubleBounce	Unreachable	15	2	15	False
+762	Human	DoubleBounce	Air	4	DoubleBounce	Air	9	1	-1	
+763	Rival	DoubleBounce	Late	29	DoubleBounce	Late	29	1	-1	
+764	Human	DoubleBounce	Air	15	DoubleBounce	Air	15	1	-1	
+765	Rival	DoubleBounce	Air	23	Out		19	10	-1	
+766	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+767	Rival	DoubleBounce	Late	3	DoubleBounce	Unreachable	8	1	8	False
+768	Human	DoubleBounce	Late	82	DoubleBounce	Unreachable	14	1	14	False
+769	Rival	DoubleBounce	Air	35	DoubleBounce	Air	6	1	-1	
+770	Human	DoubleBounce	Air	18	DoubleBounce	Air	18	1	-1	
+771	Rival	DoubleBounce	Air	12	DoubleBounce	Air	12	1	-1	
+772	Human	DoubleBounce	Air	22	Out		18	1	-1	
+773	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+774	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+775	Rival	DoubleBounce	Air	23	DoubleBounce	Unreachable	11	1	11	False
+776	Human	DoubleBounce	Air	12	DoubleBounce	Air	12	1	-1	
+777	Rival	DoubleBounce	Air	3	DoubleBounce	Air	3	-1	-1	
+778	Human	DoubleBounce	Air	11	DoubleBounce	Air	11	1	-1	
+779	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+780	Human	DoubleBounce	Late	10	DoubleBounce	Late	10	1	-1	
+781	Rival	DoubleBounce	Late	13	DoubleBounce	Late	13	1	-1	
+782	Human	DoubleBounce	Air	22	DoubleBounce	Unreachable	10	1	10	False
+783	Rival	DoubleBounce	Air	21	DoubleBounce	Air	21	4	-1	
+784	Human	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+785	Rival	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+786	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+787	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+788	Human	DoubleBounce	Air	24	DoubleBounce	Air	62	1	-1	
+789	Rival	DoubleBounce	Unreachable	7	DoubleBounce	Unreachable	7	1	7	False
+790	Human	DoubleBounce	Air	20	DoubleBounce	Air	20	1	-1	
+791	Rival	DoubleBounce	Air	3	DoubleBounce	Air	3	1	-1	
+792	Human	DoubleBounce	Air	7	DoubleBounce	Air	7	1	-1	
+793	Rival	DoubleBounce	Air	17	Out		11	2	-1	
+794	Human	DoubleBounce	Unreachable	8	DoubleBounce	Unreachable	8	1	8	False
+795	Rival	DoubleBounce	Air	1	DoubleBounce	Late	27	1	-1	
+796	Human	DoubleBounce	Air	14	DoubleBounce	Air	14	1	-1	
+797	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	4	-1	
+798	Human	DoubleBounce	Air	10	DoubleBounce	Air	10	1	-1	
+799	Rival	DoubleBounce	Air	4	DoubleBounce	Air	4	4	-1	
+800	Human	DoubleBounce	Air	14	DoubleBounce	Late	8	1	-1	
+801	Rival	DoubleBounce	Air	9	DoubleBounce	Air	69	1	-1	
+802	Human	DoubleBounce	Late	8	Out		2	1	-1	
+803	Rival	DoubleBounce	Late	73	DoubleBounce	Unreachable	3	3	3	False
+804	Human	DoubleBounce	Air	16	DoubleBounce	Air	16	1	-1	
+805	Rival	DoubleBounce	Air	13	DoubleBounce	Late	17	1	-1	
+806	Human	DoubleBounce	Air	3	DoubleBounce	Air	3	1	-1	
+807	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	-1	-1	
+808	Human	Out		24	DoubleBounce	Unreachable	17	1	17	False
+809	Rival	DoubleBounce	Late	11	DoubleBounce	Late	11	1	-1	
+810	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+811	Rival	DoubleBounce	Air	13	DoubleBounce	Air	13	1	-1	
+812	Human	DoubleBounce	Air	21	DoubleBounce	Air	21	1	-1	
+813	Rival	DoubleBounce	Air	0	DoubleBounce	Air	0	-1	-1	
+814	Human	Out		6	Out		6	1	-1	
+815	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+816	Human	DoubleBounce	Air	54	DoubleBounce	Air	18	1	-1	
+817	Rival	DoubleBounce	Air	1	DoubleBounce	Air	27	1	-1	
+818	Human	DoubleBounce	Air	12	DoubleBounce	Air	12	1	-1	
+819	Rival	DoubleBounce	Late	15	DoubleBounce	Late	15	1	-1	
+820	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+821	Rival	Out		3	Out		3	1	-1	
+822	Human	DoubleBounce	Air	64	DoubleBounce	Air	64	1	-1	
+823	Rival	DoubleBounce	Unreachable	1	DoubleBounce	Unreachable	1	-1	1	True
+824	Human	DoubleBounce	Air	10	DoubleBounce	Air	10	1	-1	
+825	Rival	DoubleBounce	Air	42	DoubleBounce	Air	42	1	-1	
+826	Human	DoubleBounce	Late	12	DoubleBounce	Late	12	1	-1	
+827	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+828	Human	DoubleBounce	Air	6	DoubleBounce	Unreachable	47	1	47	False
+829	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	-1	-1	
+830	Human	DoubleBounce	Late	6	DoubleBounce	Late	6	1	-1	
+831	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+832	Human	DoubleBounce	Air	41	DoubleBounce	Air	41	1	-1	
+833	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	4	-1	
+834	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+835	Rival	DoubleBounce	Air	27	DoubleBounce	Air	5	2	-1	
+836	Human	DoubleBounce	Late	12	DoubleBounce	Unreachable	9	1	9	False
+837	Rival	DoubleBounce	Unreachable	49	DoubleBounce	Unreachable	8	1	8	False
+838	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+839	Rival	Out		1	Out		1	-1	-1	
+840	Human	DoubleBounce	Air	13	DoubleBounce	Air	13	1	-1	
+841	Rival	DoubleBounce	Air	40	DoubleBounce	Unreachable	40	1	40	False
+842	Human	DoubleBounce	Air	2	DoubleBounce	Unreachable	43	1	43	False
+843	Rival	DoubleBounce	Late	9	DoubleBounce	Late	9	-1	-1	
+844	Human	DoubleBounce	Air	8	DoubleBounce	Air	10	1	-1	
+845	Rival	DoubleBounce	Late	67	DoubleBounce	Air	19	6	-1	
+846	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+847	Rival	DoubleBounce	Air	10	DoubleBounce	Air	10	1	-1	
+848	Human	DoubleBounce	Late	20	DoubleBounce	Unreachable	17	1	17	False
+849	Rival	DoubleBounce	Air	25	DoubleBounce	Unreachable	8	1	8	False
+850	Human	DoubleBounce	Air	98	DoubleBounce	Unreachable	5	1	5	False
+851	Rival	DoubleBounce	Late	63	DoubleBounce	Unreachable	4	1	4	False
+852	Human	DoubleBounce	Late	12	DoubleBounce	Late	54	1	-1	
+853	Rival	DoubleBounce	Air	34	DoubleBounce	Air	34	1	-1	
+854	Human	DoubleBounce	Air	9	DoubleBounce	Air	9	1	-1	
+855	Rival	DoubleBounce	Air	33	DoubleBounce	Air	33	1	-1	
+856	Human	DoubleBounce	Late	48	DoubleBounce	Air	24	1	-1	
+857	Rival	DoubleBounce	Late	21	DoubleBounce	Late	21	2	-1	
+858	Human	DoubleBounce	Unreachable	44	Out		64	1	-1	
+859	Rival	DoubleBounce	Air	67	DoubleBounce	Air	67	8	-1	
+860	Human	DoubleBounce	Air	6	DoubleBounce	Air	10	1	-1	
+861	Rival	DoubleBounce	Late	3	DoubleBounce	Late	3	1	-1	
+862	Human	DoubleBounce	Air	35	DoubleBounce	Unreachable	13	1	13	False
+863	Rival	DoubleBounce	Air	25	DoubleBounce	Air	25	1	-1	
+864	Human	DoubleBounce	Air	36	DoubleBounce	Air	36	1	-1	
+865	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+866	Human	Out		6	Out		6	1	-1	
+867	Rival	DoubleBounce	Air	30	DoubleBounce	Air	30	5	-1	
+868	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+869	Rival	DoubleBounce	Air	29	DoubleBounce	Air	29	1	-1	
+870	Human	DoubleBounce	Air	24	DoubleBounce	Air	24	1	-1	
+871	Rival	Out		5	DoubleBounce	Late	29	1	-1	
+872	Human	DoubleBounce	Late	70	DoubleBounce	Air	84	1	-1	
+873	Rival	DoubleBounce	Late	47	DoubleBounce	Late	47	4	-1	
+874	Human	DoubleBounce	Late	10	DoubleBounce	Late	10	1	-1	
+875	Rival	DoubleBounce	Air	2	DoubleBounce	Air	2	-1	-1	
+876	Human	DoubleBounce	Air	28	DoubleBounce	Unreachable	31	1	31	False
+877	Rival	DoubleBounce	Unreachable	1	DoubleBounce	Unreachable	1	-1	1	True
+878	Human	DoubleBounce	Late	16	DoubleBounce	Late	16	1	-1	
+879	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+880	Human	DoubleBounce	Air	62	DoubleBounce	Air	62	1	-1	
+881	Rival	DoubleBounce	Air	26	DoubleBounce	Air	26	1	-1	
+882	Human	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+883	Rival	DoubleBounce	Air	25	DoubleBounce	Unreachable	28	6	28	False
+884	Human	DoubleBounce	Late	46	DoubleBounce	Late	46	1	-1	
+885	Rival	Out		1	Out		1	-1	-1	
+886	Human	DoubleBounce	Unreachable	36	DoubleBounce	Late	54	1	-1	
+887	Rival	DoubleBounce	Air	59	DoubleBounce	Air	59	1	-1	
+888	Human	DoubleBounce	Air	25	DoubleBounce	Air	25	1	-1	
+889	Rival	DoubleBounce	Late	15	DoubleBounce	Late	15	1	-1	
+890	Human	DoubleBounce	Air	24	DoubleBounce	Unreachable	5	1	5	False
+891	Rival	DoubleBounce	Air	21	DoubleBounce	Air	21	8	-1	
+892	Human	DoubleBounce	Late	4	DoubleBounce	Late	4	1	-1	
+893	Rival	DoubleBounce	Unreachable	33	DoubleBounce	Air	80	1	-1	
+894	Human	DoubleBounce	Air	6	DoubleBounce	Air	6	1	-1	
+895	Rival	DoubleBounce	Air	22	DoubleBounce	Air	22	6	-1	
+896	Human	DoubleBounce	Late	14	DoubleBounce	Late	14	1	-1	
+897	Rival	DoubleBounce	Air	49	DoubleBounce	Unreachable	24	18	24	False
+898	Human	DoubleBounce	Air	12	DoubleBounce	Air	16	1	-1	
+899	Rival	DoubleBounce	Air	25	DoubleBounce	Air	25	1	-1	
+900	Human	DoubleBounce	Air	30	DoubleBounce	Air	30	1	-1	
+901	Rival	DoubleBounce	Air	73	DoubleBounce	Air	73	21	-1	
+902	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+903	Rival	DoubleBounce	Late	9	DoubleBounce	Late	9	1	-1	
+904	Human	DoubleBounce	Air	20	DoubleBounce	Air	20	1	-1	
+905	Rival	DoubleBounce	Air	6	DoubleBounce	Air	6	6	-1	
+906	Human	DoubleBounce	Late	8	DoubleBounce	Late	8	1	-1	
+907	Rival	DoubleBounce	Unreachable	29	DoubleBounce	Late	95	4	-1	
+908	Human	DoubleBounce	Late	42	DoubleBounce	Air	2	1	-1	
+909	Rival	DoubleBounce	Air	18	Out		11	1	-1	
+910	Human	DoubleBounce	Air	53	DoubleBounce	Unreachable	25	1	25	False
+911	Rival	DoubleBounce	Air	17	DoubleBounce	Air	17	8	-1	
+912	Human	DoubleBounce	Air	30	DoubleBounce	Unreachable	23	1	23	False
+913	Rival	DoubleBounce	Late	5	DoubleBounce	Late	5	1	-1	
+914	Human	DoubleBounce	Air	26	DoubleBounce	Air	26	1	-1	
+915	Rival	DoubleBounce	Late	35	DoubleBounce	Late	35	1	-1	
+916	Human	DoubleBounce	Air	17	DoubleBounce	Air	17	1	-1	
+917	Rival	DoubleBounce	Late	33	DoubleBounce	Unreachable	22	7	22	False
+918	Human	DoubleBounce	Air	16	DoubleBounce	Unreachable	19	1	19	False
+919	Rival	DoubleBounce	Air	9	DoubleBounce	Air	9	2	-1	
+920	Human	DoubleBounce	Air	20	DoubleBounce	Air	20	1	-1	
+921	Rival	DoubleBounce	Unreachable	25	DoubleBounce	Late	43	12	-1	
+922	Human	DoubleBounce	Late	2	DoubleBounce	Late	2	1	-1	
+923	Rival	DoubleBounce	Air	14	DoubleBounce	Air	14	10	-1	
+924	Human	DoubleBounce	Air	49	DoubleBounce	Unreachable	21	1	21	False
+925	Rival	DoubleBounce	Air	16	DoubleBounce	Unreachable	16	4	16	False
+926	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+927	Rival	DoubleBounce	Air	17	DoubleBounce	Late	13	4	-1	
+928	Human	DoubleBounce	Unreachable	24	DoubleBounce	Late	42	1	-1	
+929	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+930	Human	DoubleBounce	Air	13	DoubleBounce	Air	13	1	-1	
+931	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+932	Human	DoubleBounce	Air	8	DoubleBounce	Air	8	1	-1	
+933	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+934	Human	DoubleBounce	Air	16	DoubleBounce	Air	16	1	-1	
+935	Rival	DoubleBounce	Air	19	DoubleBounce	Air	19	8	-1	
+936	Human	DoubleBounce	Late	26	DoubleBounce	Late	26	1	-1	
+937	Rival	DoubleBounce	Air	10	DoubleBounce	Air	10	4	-1	
+938	Human	DoubleBounce	Air	40	DoubleBounce	Unreachable	17	1	17	False
+939	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+940	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+941	Rival	DoubleBounce	Air	13	DoubleBounce	Late	9	1	-1	
+942	Human	DoubleBounce	Air	18	Out		40	1	-1	
+943	Rival	DoubleBounce	Air	19	DoubleBounce	Air	19	-1	-1	
+944	Human	DoubleBounce	Air	9	DoubleBounce	Air	9	1	-1	
+945	Rival	DoubleBounce	Air	42	DoubleBounce	Unreachable	14	7	14	False
+946	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+947	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+948	Human	DoubleBounce	Air	108	DoubleBounce	Unreachable	5	1	5	False
+949	Rival	DoubleBounce	Air	15	DoubleBounce	Late	35	4	-1	
+950	Human	Out		72	Out		72	1	-1	
+951	Rival	DoubleBounce	Air	6	DoubleBounce	Air	6	4	-1	
+952	Human	DoubleBounce	Air	36	DoubleBounce	Unreachable	13	1	13	False
+953	Rival	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+954	Human	DoubleBounce	Air	18	Out		16	1	-1	
+955	Rival	DoubleBounce	Air	105	DoubleBounce	Late	43	2	-1	
+956	Human	DoubleBounce	Air	4	DoubleBounce	Air	4	1	-1	
+957	Rival	DoubleBounce	Late	13	DoubleBounce	Late	13	11	-1	
+958	Human	DoubleBounce	Air	5	DoubleBounce	Air	5	1	-1	
+959	Rival	DoubleBounce	Air	33	DoubleBounce	Unreachable	10	1	10	False
+960	Human	DoubleBounce	Air	7	DoubleBounce	Unreachable	7	1	7	False
+961	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+962	Human	DoubleBounce	Air	104	DoubleBounce	Late	42	1	-1	
+963	Rival	DoubleBounce	Air	11	DoubleBounce	Air	11	1	-1	
+964	Human	DoubleBounce	Late	28	DoubleBounce	Late	28	1	-1	
+965	Rival	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+966	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+967	Rival	DoubleBounce	Air	50	DoubleBounce	Air	50	1	-1	
+968	Human	DoubleBounce	Late	22	Out		12	1	-1	
+969	Rival	DoubleBounce	Late	1	DoubleBounce	Late	1	1	-1	
+970	Human	DoubleBounce	Unreachable	12	DoubleBounce	Air	56	1	-1	
+971	Rival	DoubleBounce	Air	1	DoubleBounce	Air	1	-1	-1	
+972	Human	DoubleBounce	Air	1	DoubleBounce	Air	1	1	-1	
+973	Rival	DoubleBounce	Late	17	DoubleBounce	Late	17	1	-1	
+974	Human	DoubleBounce	Air	49	DoubleBounce	Late	22	1	-1	
+975	Rival	DoubleBounce	Late	13	DoubleBounce	Unreachable	28	3	28	False
+976	Human	DoubleBounce	Late	42	DoubleBounce	Air	62	1	-1	
+977	Rival	DoubleBounce	Air	59	DoubleBounce	Unreachable	81	9	81	False
+978	Human	DoubleBounce	Late	22	DoubleBounce	Late	22	1	-1	
+979	Rival	DoubleBounce	Air	7	DoubleBounce	Air	7	2	-1	
+980	Human	DoubleBounce	Late	16	DoubleBounce	Late	16	1	-1	
+981	Rival	DoubleBounce	Air	46	DoubleBounce	Air	46	1	-1	
+982	Human	DoubleBounce	Late	30	Out		8	1	-1	
+983	Rival	DoubleBounce	Late	23	DoubleBounce	Late	23	1	-1	
+984	Human	DoubleBounce	Unreachable	8	DoubleBounce	Air	6	1	-1	
+985	Rival	DoubleBounce	Unreachable	1	DoubleBounce	Unreachable	1	-1	1	True
+986	Human	DoubleBounce	Air	48	DoubleBounce	Late	16	1	-1	
+987	Rival	DoubleBounce	Air	30	DoubleBounce	Unreachable	22	1	22	False
+988	Human	DoubleBounce	Air	45	DoubleBounce	Air	45	1	-1	
+989	Rival	DoubleBounce	Air	30	Out		5	3	-1	
+990	Human	DoubleBounce	Air	2	DoubleBounce	Air	2	1	-1	
+991	Rival	DoubleBounce	Unreachable	5	DoubleBounce	Unreachable	5	1	5	False
+992	Human	DoubleBounce	Air	30	DoubleBounce	Air	30	1	-1	
+993	Rival	DoubleBounce	Air	61	DoubleBounce	Air	13	1	-1	
+994	Human	DoubleBounce	Late	12	DoubleBounce	Late	12	1	-1	
+995	Rival	DoubleBounce	Air	21	DoubleBounce	Air	21	1	-1	
+996	Human	DoubleBounce	Late	8	DoubleBounce	Late	14	1	-1	
+997	Rival	DoubleBounce	Air	49	DoubleBounce	Late	31	1	-1	
+998	Human	DoubleBounce	Unreachable	4	DoubleBounce	Unreachable	4	1	4	False
+999	Rival	DoubleBounce	Late	7	DoubleBounce	Late	7	2	-1	
