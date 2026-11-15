@@ -909,3 +909,38 @@ Hechos ya verificados por Claude (no se rehacen aquí):
 > Sin embargo, dejemos explícito que el tiempo hasta el segundo bote es un indicador físico, no una demostración completa de letalidad. La efectividad real dependerá también de la posición, desplazamiento, anticipación y capacidad de respuesta del rival, que evaluaremos en First Rally.
 
 Mensaje completo, con sus consideraciones adicionales, en el [registro de aprobaciones](docs/reviews/2026-10-25-first-shot-po-approvals.md). Los números del modelo aproximado son hipótesis; Codex mide de nuevo con P2 real. Regla de parada: solo γ_max 2,0 y 2,5; si ambos fallan, volver a revisar el diseño antes de modificar parámetros. **La implementación no está autorizada todavía**: se avanza después de revisar la PR de diseño. PR de documentación **sin fusionar**; sin cambios de alcance. Aceptación de sensaciones reservada al playtest en iPhone.
+
+
+## Implementación de la potencia según la distancia — autorización del PO y cierres (14 de noviembre de 2026, Chile)
+
+Autorización literal del PO, 14 de noviembre de 2026 (Chile):
+
+> «Utiliza a un sub agente de modelo sonnet para realizar la implementación que se le está solicitando a codex.»
+
+**Operador:** subagente Sonnet dirigido por Claude, no Codex. La revisión posterior de Claude **no es independiente** de la dirección. Rama/worktree `firstshot/shot-pace-distance` desde main `7fdef02ec1682bcae5b3229b6b1a373557bdba25`; ejecuta el encargo de la sección 9 del [diseño](2026-11-14-first-shot-shot-pace-distance-design.md). PR sin fusionar; sin iPhone, build nativa ni instalación.
+
+**Cierres comprobados con Git antes de implementar:**
+
+- **PR #54** («Yes, merge #54»): merge `52c4e9f84b1bf622e71a7a2d8c5db34a20abed0f`, padres `78b2b656b3d3bffee9f43d3ac35c99c22e055b94` y exactamente `f71913ac4ddc644f0103605e58b208953d276fa7` (segundo padre); árbol `326c40827d5538d98ecc4e536d2838646bf79b9d`, idéntico al del segundo padre.
+- **PR #55**, diseño solo documentación («Yes, merge #55»): merge `7fdef02ec1682bcae5b3229b6b1a373557bdba25`, padres `52c4e9f84b1bf622e71a7a2d8c5db34a20abed0f` y exactamente `8f1329f88a90c00ef254f946f7c229b348941863`; árbol `74038f2cb8fdb9a50daab75e0b3876e1aeb6831b`, idéntico al del segundo padre. Fusionar no acepta First Shot.
+
+- **Potencia según la distancia — implementación detenida por la regla de adopción (14 nov 2026, Chile; operador Sonnet dirigido por Claude, revisión no independiente).** Rama `firstshot/shot-pace-distance` desde main `7fdef02`. Curva compartida (humano, rival, pronóstico de la IA) con claves `shot.paceGammaMax` 2,0 / `shot.paceNearM` 1,5 / `shot.paceFullM` 6,0; el saque no pasa por la curva. Defaults `06fed4bd4ac9`/121 claves, P0 efectivo `0a3d3262a79d`, SL5 `8e22575422f2` medidos en Unity; SimulationKey `166a96e319c7` y proyección heredada `0d39e6016bd8` sin cambio. Experimento explícito, dos corridas idénticas byte a byte: γ_max 2,0 y 2,5 fallan **R3a (24/36 = 66,7 % < 75 %)** y S3b; S1, S2, S3a, S5 y R3b se cumplen. **STOP: no se prueban otros valores; hay que revisar el diseño antes de fusionar.** EditMode 732/732, PlayMode 457/457, AutoQA PASS/0/nivel 1, check-release dev/prod OK. [Informe](docs/reviews/2026-11-14-first-shot-shot-pace-distance-implementation.md). PR sin fusionar; no acepta First Shot; S6 y R3d quedan para el playtest.
+
+
+## Potencia según la distancia — decisión del PO tras la parada de adopción (15 nov 2026, Chile)
+
+Decisión literal del PO, que cambia la regla de adopción de la sección 6.4 del diseño:
+
+> * Aprobar γ=2,0 como candidato preferido para playtest, no todavía como comportamiento definitivo.
+> * Mantener documentados R3a y S3b como fallos, sin cambiar retrospectivamente sus resultados.
+> * Pedir un diagnóstico específico del aumento de `Unreachable`, separando golpes, posiciones y jugador receptor.
+> * Si no aparece un defecto crítico, preparar una build DEV para validar la sensación en iPhone antes de autorizar la fusión.
+
+**Significado:** `shot.paceGammaMax = 2,0` queda como candidato para el playtest, no adoptado. R3a sigue **Fail 24/36** y S3b **Fail 23/54**, sin reinterpretarlos. Siguiente paso: diagnóstico de `Unreachable` (36 → 215 en la simulación de rallies), operado por un subagente Sonnet dirigido por Claude (revisión no independiente). Con él sin defecto crítico, build DEV para el iPhone; la instalación requiere autorización propia. **PR #56 sin fusionar**; la fusión espera la validación en iPhone y la aprobación del PO. No acepta First Shot.
+- **Diagnóstico de `Unreachable` de la curva de potencia (15 nov 2026, PR #56):** sin defecto crítico; los 180 `Unreachable` nuevos del Rival son golpes del Bot (P=0,5) a menos de 1,5 m del frontis frenados por la curva (178 de 180 alcanzables, aunque estirados, con el mismo golpe lineal). Dos corridas idénticas byte a byte. [Informe](docs/reviews/2026-11-15-first-shot-unreachable-diagnosis.md); método `docs/validation/2026-11-15-unreachable-diagnosis-method.md`. Sin cambios de producto/defaults/spec; PR #56 sin fusionar; build DEV e iPhone sin decidir.
+
+**Diagnóstico y autorización de fusión (15 nov 2026, Chile).** El [diagnóstico de `Unreachable`](docs/reviews/2026-11-15-first-shot-unreachable-diagnosis.md) no encontró un defecto crítico. Los 180 casos nuevos del rival corresponden a golpes de potencia media a menos de 1,5 m del frontis, que con la curva mueren a unos 4 m mientras el rival espera quieto en z = 5,97 m. Las cinco comprobaciones de defecto dieron No. Autorización literal del PO, que adelanta la fusión a la validación en el iPhone:
+
+> «Perfecto, entonces cuando llegue el diagnostico, realiza la fusión, y implementa la build en dev para yo empezar a jugar.»
+
+La build DEV `0.1.0+43a39a1` sale de este head, con el producto idéntico al del merge. γ 2,0 sigue siendo candidato y no queda adoptado. R3a y S3b siguen en Fail. Fusionar no acepta First Shot.

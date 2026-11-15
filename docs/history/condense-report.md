@@ -1,6 +1,6 @@
 # Informe de condensación de AGENTS.md — 15 nov 2026
 
-Original: 276.945 bytes, 911 líneas, SHA-256 `286508c6…ab21f`, archivado byte a byte en [AGENTS-archive-2026-11-14.md](AGENTS-archive-2026-11-14.md). Nuevo `AGENTS.md`: 8.722 bytes. Rama `docs/condense-agents` desde `main` `7fdef02`. Solo documentación: sin cambios en Assets, ProjectSettings, scripts ni tests; `docs/reviews/2026-10-25-first-shot-po-approvals.md` sin tocar.
+Original: 276.945 bytes, 911 líneas, SHA-256 `286508c6…ab21f` en `7fdef02`; al integrar `main` `70fdd53` (merge de #56) el archivo quedó en 282.005 bytes, 946 líneas, SHA-256 `6207fe50…e276`, archivado byte a byte en [AGENTS-archive-2026-11-15.md](AGENTS-archive-2026-11-15.md). Las 35 líneas nuevas son las entradas de #56 (autorización, parada de adopción, decisión del 15 nov, diagnóstico de `Unreachable` y autorización de fusión), resumidas en §5–§7. Nuevo `AGENTS.md`: 8.722 bytes. Rama `docs/condense-agents` desde `main` `7fdef02`. Solo documentación: sin cambios en Assets, ProjectSettings, scripts ni tests; `docs/reviews/2026-10-25-first-shot-po-approvals.md` sin tocar.
 
 ## Reglas y autorizaciones del original
 

@@ -1,6 +1,6 @@
 # Reglas de trabajo — Squash Clash
 
-Versión condensada del 14–15 nov 2026. Solo contiene lo vigente. El original completo, byte a byte, está en [docs/history/AGENTS-archive-2026-11-14.md](docs/history/AGENTS-archive-2026-11-14.md) (SHA-256 en [docs/history/README.md](docs/history/README.md)); la correspondencia regla por regla, en [docs/history/condense-report.md](docs/history/condense-report.md). Entre paréntesis, la entrada del archivo de la que viene cada regla.
+Versión condensada del 14–15 nov 2026. Solo contiene lo vigente. El original completo, byte a byte, está en [docs/history/AGENTS-archive-2026-11-15.md](docs/history/AGENTS-archive-2026-11-15.md) (SHA-256 en [docs/history/README.md](docs/history/README.md)); la correspondencia regla por regla, en [docs/history/condense-report.md](docs/history/condense-report.md). Entre paréntesis, la entrada del archivo de la que viene cada regla.
 
 ## 1. Fuentes de verdad
 
@@ -40,24 +40,25 @@ Versión condensada del 14–15 nov 2026. Solo contiene lo vigente. El original 
 | Timing, contrato de contacto y reloj (ClockMap/SimClock) | Codex | Encargo del PO, 15 nov |
 | Física P2, solver, M2-4, `DefaultPreset.json`, SimulationKey | Sin dueño asignado; solo con autorización del PO | Encargos del 11–14 nov |
 
-## 5. Hashes (último registrado en `main`)
+## 5. Hashes (vigentes en `main` desde #56)
 
-- Defaults `9041c4aafc77` / 118 claves; P0 efectivo `b6914a349068`; ancla SL5 `e2ffa032a588`. (B4, continuación tras B4-CQ-IMPL-01, 13 nov)
+- Defaults `06fed4bd4ac9` / 121 claves; P0 efectivo `0a3d3262a79d`; ancla SL5 `8e22575422f2`. Medidos en Unity en #56 y observados en el arranque de la build `0.1.0+43a39a1 dev` del 15 nov. (Potencia según la distancia, 14–15 nov)
 - SimulationKey `166a96e319c7`; 41 valores heredados, proyección `0d39e6016bd8`; P0 heredado, proyección `8de3f2ecb217`. (Etapa 5 y S1, 24–25 oct; confirmados el 13 nov)
-- Archivo P0-calib-1 SHA-256 `2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd`. (Etapa 5, 24 oct; instalación del 12 nov)
-- La rama de #56 trae `06fed4bd4ac9`/121, P0 `0a3d3262a79d`, SL5 `8e22575422f2`: no son vigentes mientras no se fusione.
+- Archivo P0-calib-1 SHA-256 `2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd`. (Etapa 5, 24 oct; instalación del 15 nov)
+- Anteriores a #56, ya no vigentes: defaults `9041c4aafc77`/118, P0 `b6914a349068`, SL5 `e2ffa032a588`.
 
 ## 6. Estado actual (15 nov 2026)
 
-- `main` en `7fdef02` (merge de #55). PR #1–#55 fusionadas.
-- **Abiertas:** #56 `firstshot/shot-pace-distance` (Claude con subagente Sonnet): potencia según la distancia; la regla de adopción se detuvo (R3a 24/36 con γ 2,0 y 2,5; S3b); espera decisión del PO, sin fusionar. #32 `codex/sl56-return-rule` (Codex): regla experimental de retorno, desactivada, en conflicto, sin autorización de activar.
-- **Etapas:** First Ball cerrado con desviación H17 (p95 Fail conservado). First Shot: S1 aceptado (30 oct), S2 aprobado con condiciones (5 nov), S3 aceptado con condiciones (11 nov), S4 4.1–4.4, capa causal y H3b fusionados; **First Shot no aceptado**: la aceptación se reserva al playtest integrado. First Rally R1–R6 y pase visual fusionados (#46/#47), sin aceptación física. (12–14 nov)
-- **Observaciones abiertas:** R3 Fail 0/42 (observación abierta, 13 nov); saturación con `pullFullMm` 35, N04/N04b, «aún mecánica», ritmo de rally y preferencia de dirección (S1, 30 oct; S2, 5 nov); condiciones NotEvaluated de S3 (11 nov); temblor en pausa, proyección M2-4, juicio H1 y p95 en iPhone del pase visual (12 nov).
-- **App instalada:** `0.1.0+78b2b65 dev`, build informal del 13 nov, no es prueba oficial.
+- `main` en el merge de esta PR, sobre `70fdd53` (merge de #56). PR #1–#56 fusionadas, salvo #32.
+- **#56, potencia según la distancia:** fusionada por autorización del PO el 15 nov, tras el diagnóstico de `Unreachable` sin defecto crítico. `shot.paceGammaMax = 2,0` es **candidato para el playtest, no adoptado**; R3a (Fail 24/36) y S3b (Fail 23/54) quedan como fallos. Los 180 `Unreachable` nuevos de la simulación son golpes medios a menos de 1,5 m del frontis con el rival quieto en z = 5,97 m: a observar en el playtest. ([Diagnóstico](docs/reviews/2026-11-15-first-shot-unreachable-diagnosis.md))
+- **Abiertas:** #58 `visual/feel-pass` (Fable): segundo pase visual, sin fusionar; el PO pidió probarlo en el iPhone junto con lo último de `main`. #32 `codex/sl56-return-rule` (Codex): regla experimental de retorno, desactivada, en conflicto, sin autorización de activar.
+- **Etapas:** First Ball cerrado con desviación H17 (p95 Fail conservado). First Shot: S1 aceptado (30 oct), S2 aprobado con condiciones (5 nov), S3 aceptado con condiciones (11 nov), S4 4.1–4.4, capa causal, H3b y la curva de potencia fusionados; **First Shot no aceptado**: la aceptación se reserva al playtest integrado. First Rally R1–R6 y pase visual fusionados (#46/#47), sin aceptación física. (12–15 nov)
+- **Observaciones abiertas:** R3 Fail 0/42 antes de la curva; con γ 2,0, R3 24/42 y R3a/S3b en Fail (15 nov); posicionamiento del rival ante golpes cortos desde adelante (15 nov); saturación con `pullFullMm` 35, N04/N04b, «aún mecánica», ritmo de rally y preferencia de dirección (S1, 30 oct; S2, 5 nov); condiciones NotEvaluated de S3 (11 nov); juicio H1 y p95 en iPhone de los pases visuales (12 y 15 nov).
+- **App instalada:** `0.1.0+43a39a1 dev` (curva de potencia), 15 nov; se reemplaza por la build integrada con #58 que pidió el PO.
 
 ## 7. Autorizaciones vigentes
 
-- **En curso:** implementación de la potencia según la distancia en #56, detenida por su regla de parada; el merge no está autorizado. (14 nov)
+- **En curso:** build DEV integrada (`main` + #58) para que el PO juegue, autorizada el 15 nov («Primero 57, luego el pase visual de 58 pasalo a la build para probar todo lo mas actualizado posible»). La fusión de #58 no está autorizada.
 - **No autorizado:** tarea 4.5 de S4 (sesiones físicas); playtest integrado y aceptación de First Shot, First Rally y First Match; First Match más allá del R6 mínimo; activar o validar #32; cambiar `pullFullMm`; promover P0-calib-1; cualquier instalación, build nativa o acceso al iPhone sin pedido expreso; toda fusión sin aprobación explícita del PO. (12 nov, Anexo C y D1–D4; 14 nov)
 
 ## 8. Perfil de firma e instalación
