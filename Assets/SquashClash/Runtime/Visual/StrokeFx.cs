@@ -19,7 +19,7 @@ namespace SquashClash.Runtime.Visual
     {
         public const int Rings=4,MaxQuads=24,StreakPoints=10;
         public const float RingSeconds=.28f,SparkSeconds=.36f,StrongFraction=.8f;
-        public static readonly Color PerfectColor=new Color(1f,.80f,.16f),PerfectGlow=new Color(1f,.96f,.74f),ValidColor=new Color(1f,1f,1f),RivalColor=new Color(1f,.62f,.45f);
+        public static readonly Color PerfectColor=new Color(1f,.80f,.16f),PerfectGlow=new Color(1f,.96f,.74f),ValidColor=new Color(1f,1f,1f),RivalColor=new Color(.55f,1f,.94f);
         private struct Quad { public bool Active;public Vector3 Position,Velocity;public float Age,Life,From,To,Alpha;public Color32 Color; }
         private readonly Quad[] quads=new Quad[MaxQuads];
         private readonly Vector3[] vertices=new Vector3[MaxQuads*4];private readonly Color32[] colors=new Color32[MaxQuads*4];
