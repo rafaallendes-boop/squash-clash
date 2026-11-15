@@ -186,6 +186,75 @@ namespace SquashClash.Experiments.EditMode
             TestContext.WriteLine("UNREACH_DATA=" + outDir);
         }
 
+        // Same shot, other curve (method addendum, section 7): the shot that produced each Unreachable ending, replayed with the
+        // linear speed (gamma 1) and the curve (gamma 2) from the same contact, aim and power, against the same receiver.
+        [Test, Explicit, Category("Experiments"), Timeout(21600000)]
+        public void WriteSameShotCounterfactual()
+        {
+            string root = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
+            string run = Environment.GetEnvironmentVariable("SC_UNREACH_RUN");
+            if(run != "cf01" && run != "cf02") throw new InvalidDataException("Set SC_UNREACH_RUN=cf01 or cf02; outputs are never overwritten.");
+            string presetFile = Path.Combine(Application.dataPath, "SquashClash/Runtime/Resources/DefaultPreset.json");
+            var defaults = PresetCodec.LoadDefault(File.ReadAllText(presetFile));
+            if(defaults.Hash != "06fed4bd4ac9" || defaults.Ordered.Count != 121 || defaults.Get("shot.paceGammaMax") != 2)
+                throw new InvalidDataException("Protected defaults changed.");
+            string outDir = Path.Combine(root, "Logs/experiments/unreachable", run);
+            if(Directory.Exists(outDir)) throw new IOException("Experiment output already exists: " + outDir);
+            if(Git(root, "status --porcelain").Length != 0) throw new InvalidDataException("Run from a clean committed source.");
+            Directory.CreateDirectory(outDir);
+            File.WriteAllText(Path.Combine(outDir, "source.txt"), Git(root, "rev-parse HEAD") + "\n", Utf8);
+            var ctx2 = new RallyContext(EffectiveConfig.From(defaults.With("shot.paceGammaMax", 2.0)), new RallyParams(), new AnalyticBallSimulationFactory(Physics.bounceThreshold));
+            var ctx1 = new RallyContext(EffectiveConfig.From(defaults.With("shot.paceGammaMax", 1.0)), new RallyParams(), new AnalyticBallSimulationFactory(Physics.bounceThreshold));
+            var runs = RunA(ctx2);
+            var summary = new SortedDictionary<string, int>(StringComparer.Ordinal);
+            void Add(string key) { summary.TryGetValue(key, out int n); summary[key] = n + 1; }
+            using(var w = new StreamWriter(Path.Combine(outDir, "counterfactual.tsv"), false, Utf8))
+            {
+                w.WriteLine("rally\tk\treceiver\tstriker\tP\tD\tgamma\tvecZero\tg2Reachable\tg2Reason\tg2Slack\tg2Speed\tg2z1\tg2t1\tg2z2\tg2t2\tg1Reachable\tg1Reason\tg1Slack\tg1Speed\tg1z1\tg1t1\tg1z2\tg1t2\trestSpeed");
+                foreach(var r in runs)
+                {
+                    if(r.Outcome.LastReception != ReceptionResult.Unreachable || r.Recs.Count < 2) continue;
+                    var last = r.Recs[r.Recs.Count - 1]; var prev = r.Recs[r.Recs.Count - 2];
+                    var contact = last.Ball.Position;
+                    var log = r.Outcome.Receptions[r.Outcome.Receptions.Count - 2];
+                    bool vecZero = log.Vectors == null || log.Vectors.All(x => x.DeltaHeight == 0 && x.DeltaSpeedFraction == 0);
+                    var pace = ShotPace.Requested(prev.P, contact, prev.Aim, ctx2.Physics.BallRadius, ctx2.Pace);
+                    string[] res = new string[2]; bool[] reach = new bool[2];
+                    var cells = new List<string>();
+                    for(int g = 0; g < 2; g++)
+                    {
+                        var c = g == 0 ? ctx2 : ctx1;
+                        var sol = RallyContact.SolveIntention(c, contact, prev.Aim, prev.P);
+                        if(!sol.Solved) { cells.AddRange(new[] { "NotSolved", sol.Reason ?? "", "", "", "", "", "", "" }); reach[g] = false; res[g] = "NotSolved"; continue; }
+                        var ball = new BallState { Position = contact, Velocity = sol.Velocity, Step = last.Ball.Step };
+                        var tr = c.Predict(ball);
+                        var rules = new PointRules(c.Court, (float)c.Params.FootprintRadius); rules.Begin(prev.Who, last.Who);
+                        var body = new PlayerBody(last.Who, last.Self, c.Move);
+                        var plan = ReceptionPlanner.Plan(c, tr, rules, body, last.Delay, 1, last.Noise);
+                        double z1 = double.NaN, t1 = double.NaN, z2 = double.NaN, t2 = double.NaN; bool front = false; int floors = 0;
+                        foreach(var e in tr.Contacts)
+                        {
+                            if(e.Surface == SurfaceId.FrontWall) front = true;
+                            if(e.Surface == SurfaceId.Floor && front)
+                            {
+                                floors++; double t = (e.Step - tr.States[0].Step) / (double)c.StepHz;
+                                if(floors == 1) { z1 = e.Point.z; t1 = t; } else { z2 = e.Point.z; t2 = t; break; }
+                            }
+                        }
+                        reach[g] = plan.Reachable; res[g] = plan.Reachable ? "Reachable" : "Unreachable";
+                        cells.AddRange(new[] { res[g], plan.Reason ?? "", F(plan.SlackS), F(sol.Velocity.magnitude), F(z1), F(t1), F(z2), F(t2) });
+                    }
+                    w.WriteLine(r.Index + "\t" + (r.Recs.Count - 1) + "\t" + last.Who + "\t" + prev.Who + "\t" + F(prev.P) + "\t" + F(pace.DistanceM) + "\t" + F(pace.Gamma) + "\t" + vecZero + "\t" + string.Join("\t", cells) + "\t" + F(last.Ball.Velocity.magnitude));
+                    string bucket = last.Who + (vecZero ? "|vecZero" : "|vecNonZero");
+                    Add(bucket + "|g2=" + res[0] + "|g1=" + res[1]);
+                }
+            }
+            var sb = new StringBuilder("key\tcount\n");
+            foreach(var kv in summary) sb.Append(kv.Key + "\t" + kv.Value + "\n");
+            File.WriteAllText(Path.Combine(outDir, "summary.tsv"), sb.ToString(), Utf8);
+            TestContext.WriteLine("UNREACH_CF=" + outDir);
+        }
+
         private static List<RallyRun> RunA(RallyContext ctx)
         {
             var runs = new List<RallyRun>(Rallies); var sink = new List<Rec>();

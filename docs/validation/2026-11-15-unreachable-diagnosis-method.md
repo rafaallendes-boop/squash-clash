@@ -60,3 +60,12 @@ d. **Saque y doble aplicación.** Revisión estática de todos los llamadores de
 e. **Elección degenerada de la IA.** Se comparan las distribuciones de opciones del Rival (línea × altura × potencia) y su tasa de `Unreachable` entre γ=1 y γ=2. **Defecto sospechoso** = una opción cuya cuota crece más de 15 puntos porcentuales y que además es la causa dominante de los `Unreachable`. Se informa también por código que `FondoAi.Utility` no modela el alcance del oponente (no «sabe» nada de la inalcanzabilidad).
 
 Un hallazgo que no cumple esas condiciones se registra como observación, no como defecto. Si aparece algo inesperado (fallo de compilación en el experimento que no sea trivial, no determinismo entre las dos corridas, defecto), se registra y se detiene. No se repiten corridas para obtener otro resultado.
+
+## 7. Adenda predeclarada (antes de ejecutarla): mismo golpe, otra curva
+
+Tras las dos corridas de §2 (idénticas byte a byte) se vio que los rallies del flujo B divergen casi siempre en la primera recepción del Bot (mediana del índice de divergencia = 1), de modo que el emparejamiento por rally solo sirve para agregados. Para separar el efecto de la curva de todo lo demás se añade **una única** comprobación contrafáctica de golpe único, sin variantes de parámetros:
+
+- Se rehace el flujo A con γ=2,0 (semillas idénticas) y, para cada final `Unreachable` que tenga golpe previo, se toman el contacto, la mira y la P realmente usados, la posición del receptor (en reposo, comprobado en los datos), su ruido de postura y el retardo registrados.
+- Se calcula el golpe **sin capa causal** (`RallyContact.SolveIntention`) con γ=2,0 y con γ=1,0, el mismo contacto, la misma mira y la misma P, y se ejecuta `ReceptionPlanner.Plan` para el mismo receptor y las mismas reglas con cada pelota. Se registran alcanzable sí/no, razón, holgura, velocidad, primer y segundo bote.
+- Validación del método: con γ=2,0 el contrafáctico debe dar no alcanzable en los finales cuyo golpe real no llevaba vectores causales; las diferencias se informan.
+- Dos corridas (`SC_UNREACH_RUN=cf01` y `cf02`), byte a byte idénticas. No se cambia nada del producto ni del resto del método; el resultado es una descripción, no un criterio.
