@@ -120,3 +120,30 @@
 .sc-result-card--lost .sc-result-kicker { color: rgb(255, 140, 120); }
 .sc-result-card--lost .sc-result-score { color: rgb(236, 242, 248); }
 .sc-result-last { font-size: 14px; color: rgb(226, 234, 242); margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }
+
+/* First run: start menu over the paused court. */
+.sc-menu-layer {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    align-items: center;
+    justify-content: center;
+    padding-left: 24px; padding-right: 24px; padding-top: 70px; padding-bottom: 56px;
+    background-color: rgba(7, 12, 20, 0.93);
+}
+.sc-menu-art {
+    width: 208px; height: 132px;
+    margin-bottom: 22px;
+    border-radius: 14px;
+    border-width: 3px;
+    border-color: rgb(255, 210, 63);
+    overflow: hidden;
+}
+.sc-menu-title { font-size: 38px; -unity-font-style: bold; letter-spacing: 3px; color: rgb(255, 255, 255); -unity-text-align: middle-center; }
+.sc-menu-tagline { font-size: 15px; color: rgb(190, 204, 218); margin-top: 2px; margin-bottom: 30px; -unity-text-align: middle-center; }
+.sc-menu-label { font-size: 12px; -unity-font-style: bold; letter-spacing: 2px; color: rgb(140, 158, 176); margin-bottom: 8px; }
+.sc-level-row { flex-direction: row; justify-content: center; margin-bottom: 22px; }
+.unity-button.sc-level { width: 96px; height: 48px; font-size: 15px; margin-left: 4px; margin-right: 4px; border-width: 2px; border-color: rgba(255, 255, 255, 0); }
+.unity-button.sc-level--selected { background-color: rgb(24, 52, 92); border-color: rgb(255, 210, 63); color: rgb(255, 232, 140); }
+.unity-button.sc-menu-play { width: 304px; height: 64px; font-size: 24px; letter-spacing: 1px; border-radius: 18px; margin-bottom: 12px; }
+.unity-button.sc-menu-wide { width: 304px; height: 50px; font-size: 16px; margin-bottom: 10px; }
+.sc-menu-build { position: absolute; left: 0; right: 0; bottom: 30px; font-size: 11px; color: rgb(120, 138, 156); -unity-text-align: middle-center; }
