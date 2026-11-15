@@ -27,7 +27,7 @@ Versión condensada del 14–15 nov 2026. Solo contiene lo vigente. El original 
 - AutoQA (`scripts/autoqa.sh mvp`, PASS/0/nivel 1) es obligatorio si el cambio toca timing, gesto o contrato. (10 nov 13:39)
 - En el Mac del PO se pueden ejecutar `scripts/test.sh`, `scripts/check-release.sh` y AutoQA sin pedir permiso por corrida, sin instalar ni tocar el iPhone; copiar `scripts/device.env` sin cambios a un worktree nuevo no exige otro «sí». (10 nov 12:26)
 - Un solo Unity a la vez. (B4 encargo de implementación, 13 nov)
-- Perfiles: dev con `SQUASH_DEV`, prod sin define, ambos Release no Development; defines con `extraScriptingDefines`, sin mutar los persistentes. (Reglas de trabajo, Perfiles)
+- Perfiles: dev con `SQUASH_DEV`, prod sin define, ambos Release no Development; debug Development y Debug; defines con `extraScriptingDefines`, sin mutar los persistentes. (Reglas de trabajo, Perfiles)
 - Documentación en español; código, identificadores y commits en inglés. Citar fuentes oficiales para decisiones técnicas externas. Sin frameworks ni abstracciones fuera de la necesidad inmediata. (Reglas de trabajo)
 - No versionar `scripts/device.env`, credenciales, identificadores del iPhone, logs, cachés ni builds; no exportar claves privadas. (Reglas de trabajo)
 - Visibilidad del remoto: hoy es **público**, confirmado por el PO como intencional («Sí, es intencional; continuar y crear el PR»). No cambiarla por iniciativa propia. Pendiente del PO: el encargo de condensación lo describe como «remoto privado» (ver dudas). (S4, 11 nov)
