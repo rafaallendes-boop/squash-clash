@@ -139,3 +139,15 @@ AutoQA es obligatorio porque el cambio toca el golpe; pasó con los anclajes med
 - **S6** y **R3d** (juicio del PO en el playtest integrado) siguen pendientes.
 - Decisión de diseño antes de seguir: cómo tratar los pares de P ≤ 0,10 de R3a (el suelo del solver desde atrás y `vMin` desde adelante); si S3b y su umbral son la regla correcta. Opciones fuera del alcance de este encargo: otro piso para el desde-atrás, otro `vMin`, o revisar R3a con la ayuda del PO.
 - Datos derivados sanitizados: `docs/validation/evidence/2026-11-14-shot-pace-distance/` (informe, resúmenes por variante, testigos, SHA-256 de ambas corridas, AutoQA y simulación de rallies). Los `trials.tsv` y `pairs.tsv` completos (≈ 70 MB) quedan en `Logs/experiments/pace/` (ignorado), con sus SHA-256 versionados.
+
+
+## Potencia según la distancia — decisión del PO tras la parada de adopción (15 nov 2026, Chile)
+
+Decisión literal del PO, que cambia la regla de adopción de la sección 6.4 del diseño:
+
+> * Aprobar γ=2,0 como candidato preferido para playtest, no todavía como comportamiento definitivo.
+> * Mantener documentados R3a y S3b como fallos, sin cambiar retrospectivamente sus resultados.
+> * Pedir un diagnóstico específico del aumento de `Unreachable`, separando golpes, posiciones y jugador receptor.
+> * Si no aparece un defecto crítico, preparar una build DEV para validar la sensación en iPhone antes de autorizar la fusión.
+
+**Significado:** `shot.paceGammaMax = 2,0` queda como candidato para el playtest, no adoptado. R3a sigue **Fail 24/36** y S3b **Fail 23/54**, sin reinterpretarlos. Siguiente paso: diagnóstico de `Unreachable` (36 → 215 en la simulación de rallies), operado por un subagente Sonnet dirigido por Claude (revisión no independiente). Con él sin defecto crítico, build DEV para el iPhone; la instalación requiere autorización propia. **PR #56 sin fusionar**; la fusión espera la validación en iPhone y la aprobación del PO. No acepta First Shot.

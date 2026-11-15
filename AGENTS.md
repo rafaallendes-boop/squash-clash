@@ -925,3 +925,15 @@ Autorización literal del PO, 14 de noviembre de 2026 (Chile):
 - **PR #55**, diseño solo documentación («Yes, merge #55»): merge `7fdef02ec1682bcae5b3229b6b1a373557bdba25`, padres `52c4e9f84b1bf622e71a7a2d8c5db34a20abed0f` y exactamente `8f1329f88a90c00ef254f946f7c229b348941863`; árbol `74038f2cb8fdb9a50daab75e0b3876e1aeb6831b`, idéntico al del segundo padre. Fusionar no acepta First Shot.
 
 - **Potencia según la distancia — implementación detenida por la regla de adopción (14 nov 2026, Chile; operador Sonnet dirigido por Claude, revisión no independiente).** Rama `firstshot/shot-pace-distance` desde main `7fdef02`. Curva compartida (humano, rival, pronóstico de la IA) con claves `shot.paceGammaMax` 2,0 / `shot.paceNearM` 1,5 / `shot.paceFullM` 6,0; el saque no pasa por la curva. Defaults `06fed4bd4ac9`/121 claves, P0 efectivo `0a3d3262a79d`, SL5 `8e22575422f2` medidos en Unity; SimulationKey `166a96e319c7` y proyección heredada `0d39e6016bd8` sin cambio. Experimento explícito, dos corridas idénticas byte a byte: γ_max 2,0 y 2,5 fallan **R3a (24/36 = 66,7 % < 75 %)** y S3b; S1, S2, S3a, S5 y R3b se cumplen. **STOP: no se prueban otros valores; hay que revisar el diseño antes de fusionar.** EditMode 732/732, PlayMode 457/457, AutoQA PASS/0/nivel 1, check-release dev/prod OK. [Informe](docs/reviews/2026-11-14-first-shot-shot-pace-distance-implementation.md). PR sin fusionar; no acepta First Shot; S6 y R3d quedan para el playtest.
+
+
+## Potencia según la distancia — decisión del PO tras la parada de adopción (15 nov 2026, Chile)
+
+Decisión literal del PO, que cambia la regla de adopción de la sección 6.4 del diseño:
+
+> * Aprobar γ=2,0 como candidato preferido para playtest, no todavía como comportamiento definitivo.
+> * Mantener documentados R3a y S3b como fallos, sin cambiar retrospectivamente sus resultados.
+> * Pedir un diagnóstico específico del aumento de `Unreachable`, separando golpes, posiciones y jugador receptor.
+> * Si no aparece un defecto crítico, preparar una build DEV para validar la sensación en iPhone antes de autorizar la fusión.
+
+**Significado:** `shot.paceGammaMax = 2,0` queda como candidato para el playtest, no adoptado. R3a sigue **Fail 24/36** y S3b **Fail 23/54**, sin reinterpretarlos. Siguiente paso: diagnóstico de `Unreachable` (36 → 215 en la simulación de rallies), operado por un subagente Sonnet dirigido por Claude (revisión no independiente). Con él sin defecto crítico, build DEV para el iPhone; la instalación requiere autorización propia. **PR #56 sin fusionar**; la fusión espera la validación en iPhone y la aprobación del PO. No acepta First Shot.

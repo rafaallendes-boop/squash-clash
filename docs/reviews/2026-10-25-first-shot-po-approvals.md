@@ -2729,3 +2729,15 @@ Autorización literal del PO, 14 de noviembre de 2026 (Chile):
 
 - **PR #54** («Yes, merge #54»): merge `52c4e9f84b1bf622e71a7a2d8c5db34a20abed0f`, padres `78b2b656b3d3bffee9f43d3ac35c99c22e055b94` y exactamente `f71913ac4ddc644f0103605e58b208953d276fa7` (segundo padre); árbol `326c40827d5538d98ecc4e536d2838646bf79b9d`, idéntico al del segundo padre.
 - **PR #55**, diseño solo documentación («Yes, merge #55»): merge `7fdef02ec1682bcae5b3229b6b1a373557bdba25`, padres `52c4e9f84b1bf622e71a7a2d8c5db34a20abed0f` y exactamente `8f1329f88a90c00ef254f946f7c229b348941863`; árbol `74038f2cb8fdb9a50daab75e0b3876e1aeb6831b`, idéntico al del segundo padre. Fusionar no acepta First Shot.
+
+
+## Potencia según la distancia — decisión del PO tras la parada de adopción (15 nov 2026, Chile)
+
+Decisión literal del PO, que cambia la regla de adopción de la sección 6.4 del diseño:
+
+> * Aprobar γ=2,0 como candidato preferido para playtest, no todavía como comportamiento definitivo.
+> * Mantener documentados R3a y S3b como fallos, sin cambiar retrospectivamente sus resultados.
+> * Pedir un diagnóstico específico del aumento de `Unreachable`, separando golpes, posiciones y jugador receptor.
+> * Si no aparece un defecto crítico, preparar una build DEV para validar la sensación en iPhone antes de autorizar la fusión.
+
+**Significado:** `shot.paceGammaMax = 2,0` queda como candidato para el playtest, no adoptado. R3a sigue **Fail 24/36** y S3b **Fail 23/54**, sin reinterpretarlos. Siguiente paso: diagnóstico de `Unreachable` (36 → 215 en la simulación de rallies), operado por un subagente Sonnet dirigido por Claude (revisión no independiente). Con él sin defecto crítico, build DEV para el iPhone; la instalación requiere autorización propia. **PR #56 sin fusionar**; la fusión espera la validación en iPhone y la aprobación del PO. No acepta First Shot.
