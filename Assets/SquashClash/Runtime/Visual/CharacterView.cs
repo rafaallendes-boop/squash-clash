@@ -64,9 +64,9 @@ namespace SquashClash.Runtime.Visual
                 new VisualKit.Ring(.41f,.185f,palette.Accent),new VisualKit.Ring(.50f,.18f,palette.Accent),new VisualKit.Ring(.56f,.10f,palette.Accent),
                 new VisualKit.Ring(.585f,.055f,palette.Skin),new VisualKit.Ring(.64f,.05f,palette.Skin)},12,1.12f,.74f));
             torso=VisualKit.Part("Torso",transform,body,toon).transform;
-            head=VisualKit.Part("Head",transform,Own(VisualKit.Sphere("Figure head",.165f,palette.Skin)),toon).transform;
-            var hair=VisualKit.Part("Hair",head,Own(VisualKit.Sphere("Figure hair",.172f,palette.Hair)),toon).transform;
-            hair.localPosition=new Vector3(0,.035f,.045f);hair.localScale=new Vector3(1,.93f,1);
+            // Feel pass: head and hair are one mesh (one draw call less per figure); the hair never moved on its own.
+            head=VisualKit.Part("Head",transform,Own(Merge("Figure head",VisualKit.Sphere("Figure skull",.165f,palette.Skin),VisualKit.Sphere("Figure hair",.172f,palette.Hair),
+                Matrix4x4.TRS(new Vector3(0,.035f,.045f),Quaternion.identity,new Vector3(1,.93f,1)))),toon).transform;
             var thighMesh=Own(VisualKit.Limb("Figure thigh",.088f,.064f,palette.Shorts,.48f,palette.Skin));
             var shinMesh=Own(VisualKit.Limb("Figure shin",.062f,.046f,palette.Skin,.6f,palette.Socks));
             var upperMesh=Own(VisualKit.Limb("Figure upper arm",.06f,.048f,palette.Accent,.62f,palette.Skin));
@@ -92,6 +92,12 @@ namespace SquashClash.Runtime.Visual
             Animate(0);
         }
         private Mesh Own(Mesh mesh){meshes.Add(mesh);return mesh;}
+        private static Mesh Merge(string name,Mesh first,Mesh second,Matrix4x4 secondPlace)
+        {
+            var mesh=new Mesh{name=name};
+            mesh.CombineMeshes(new[]{new CombineInstance{mesh=first,transform=Matrix4x4.identity},new CombineInstance{mesh=second,transform=secondPlace}},true,true);
+            Destroy(first);Destroy(second);return mesh;
+        }
         // Racket-head centres in figure space (x lateral, y from the floor, -z toward the front wall).
         private static Vector3 RelaxedPose(float s)=>new Vector3(s*.40f,.62f,-.22f);
         private static Vector3 ReadyPose(float s)=>new Vector3(s*.34f,1.22f,-.58f);
