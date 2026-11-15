@@ -2741,3 +2741,9 @@ Decisión literal del PO, que cambia la regla de adopción de la sección 6.4 de
 > * Si no aparece un defecto crítico, preparar una build DEV para validar la sensación en iPhone antes de autorizar la fusión.
 
 **Significado:** `shot.paceGammaMax = 2,0` queda como candidato para el playtest, no adoptado. R3a sigue **Fail 24/36** y S3b **Fail 23/54**, sin reinterpretarlos. Siguiente paso: diagnóstico de `Unreachable` (36 → 215 en la simulación de rallies), operado por un subagente Sonnet dirigido por Claude (revisión no independiente). Con él sin defecto crítico, build DEV para el iPhone; la instalación requiere autorización propia. **PR #56 sin fusionar**; la fusión espera la validación en iPhone y la aprobación del PO. No acepta First Shot.
+
+**Diagnóstico y autorización de fusión (15 nov 2026, Chile).** El [diagnóstico de `Unreachable`](docs/reviews/2026-11-15-first-shot-unreachable-diagnosis.md) no encontró un defecto crítico. Los 180 casos nuevos del rival corresponden a golpes de potencia media a menos de 1,5 m del frontis, que con la curva mueren a unos 4 m mientras el rival espera quieto en z = 5,97 m. Las cinco comprobaciones de defecto dieron No. Autorización literal del PO, que adelanta la fusión a la validación en el iPhone:
+
+> «Perfecto, entonces cuando llegue el diagnostico, realiza la fusión, y implementa la build en dev para yo empezar a jugar.»
+
+La build DEV `0.1.0+43a39a1` sale de este head, con el producto idéntico al del merge. γ 2,0 sigue siendo candidato y no queda adoptado. R3a y S3b siguen en Fail. Fusionar no acepta First Shot.
