@@ -1,0 +1,93 @@
+{
+    "variant": "gamma1.0",
+    "gammaMax": 1.0,
+    "trials": 3402,
+    "solved": 3402,
+    "legal": 2559,
+    "criteria": [
+        {
+            "id": "S1",
+            "rule": "P in [.40,.60], all aims: z2<=6.5 and no back wall before the first bounce",
+            "pass": 482,
+            "den": 609,
+            "passSolved": 482,
+            "denSolved": 810,
+            "passAll": 482,
+            "denAll": 810,
+            "fraction": 0.7914614121510674,
+            "fractionSolved": 0.5950617283950618,
+            "fractionAll": 0.5950617283950618,
+            "threshold": 0.9,
+            "met": false
+        },
+        {
+            "id": "S2",
+            "rule": "P<=.25, drop aims: z2<=2.0",
+            "pass": 212,
+            "den": 324,
+            "passSolved": 212,
+            "denSolved": 324,
+            "passAll": 212,
+            "denAll": 324,
+            "fraction": 0.654320987654321,
+            "fractionSolved": 0.654320987654321,
+            "fractionAll": 0.654320987654321,
+            "threshold": 0.9,
+            "met": false
+        },
+        {
+            "id": "S3a",
+            "rule": "P=1: requested speed bit-identical to vMax",
+            "pass": 162,
+            "den": 162,
+            "passSolved": 0,
+            "denSolved": 162,
+            "passAll": 0,
+            "denAll": 162,
+            "fraction": 1.0,
+            "fractionSolved": 1.0,
+            "fractionAll": 1.0,
+            "threshold": 1.0,
+            "met": true
+        },
+        {
+            "id": "S3b",
+            "rule": "P=1, drop aims: back wall before first bounce or second bounce z>=8 (denominator solved; 90% chosen by the operator)",
+            "pass": 23,
+            "den": 54,
+            "passSolved": 23,
+            "denSolved": 54,
+            "passAll": 23,
+            "denAll": 54,
+            "fraction": 0.42592592592592595,
+            "fractionSolved": 0.42592592592592595,
+            "fractionAll": 0.42592592592592595,
+            "threshold": 0.9,
+            "met": false
+        },
+        {
+            "id": "S4",
+            "rule": "adjacent powers: first bounce increasing (trend, not in the adoption rule)",
+            "pass": 728,
+            "den": 728,
+            "passSolved": 728,
+            "denSolved": 728,
+            "passAll": 728,
+            "denAll": 728,
+            "fraction": 1.0,
+            "fractionSolved": 1.0,
+            "fractionAll": 1.0,
+            "threshold": 1.0,
+            "met": true
+        }
+    ],
+    "notEvaluated": [],
+    "contacts": [
+        "SL5-Tstar-12",
+        "SL5-Tstar",
+        "SL5-Tstar+12",
+        "SL6-Tstar-12",
+        "SL6-Tstar",
+        "SL6-Tstar+12"
+    ]
+}

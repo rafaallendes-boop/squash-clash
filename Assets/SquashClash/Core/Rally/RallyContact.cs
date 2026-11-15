@@ -29,9 +29,14 @@ namespace SquashClash.Core.Rally
         }
         public static CausalShotResult Solve(RallyContext context,CausalReference reference,BodyFrame body,Vector3 point,Vector2 aim,float power)
             =>CausalQuality.Solve(reference,body,point,aim,power,context.Config,context.Factory);
+        // Own intention from a contact point: the same pace curve as the human shot (without the causal layer), then the shared solver.
+        // Equal speed endpoints carry the curve speed unchanged, as CausalQuality.Solve does.
         public static ShotSolution SolveIntention(RallyContext context,Vector3 contactCenter,Vector2 aim,float power)
-            =>ShotSolver.Solve(new ShotRequest(contactCenter,aim,power),context.VMin,context.VMax,context.VCap,context.Physics.Gravity,context.Physics.BallRadius,
+        {
+            var pace=ShotPace.Requested(power,contactCenter,aim,context.Physics.BallRadius,context.Pace);
+            return ShotSolver.Solve(new ShotRequest(contactCenter,aim,power),pace.Speed,pace.Speed,context.VCap,context.Physics.Gravity,context.Physics.BallRadius,
                 context.Court,context.Factory,context.Physics);
+        }
         // What the shared solver and predictor say about one's own intention from a contact point: does it reach the
         // front wall legally and bounce in court? Own shot, shared predictor, observed state only (spec 11.2).
         public static ShotForecast Forecast(RallyContext context,Vector3 contactCenter,Vector2 aim,float power)
