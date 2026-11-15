@@ -93,7 +93,16 @@ namespace SquashClash.Capture
 
             // 2. Jugar: the match header a player sees.
             yield return Boot(false);
+            rally.Autopilot=true;rally.AutopilotTimingSigmaMs=30;rally.Seed=9;
             Click("menu-play");yield return Frames(40);yield return Shoot("match-prod");
+            // 3. Pause card, then the end of the match.
+            Click("rally-pause");yield return Shoot("pause-prod");
+            Click("pause-continue");yield return null;
+            int limit=(int)(1500/StepReal);
+            for(int i=0;i<limit&&rally.Phase!=RallyPhase.MatchOver;i++)Step(1);
+            Assert.That(rally.Phase,Is.EqualTo(RallyPhase.MatchOver),"the demo match must finish");
+            for(int i=0;i<24;i++)yield return null;
+            yield return Shoot("match-over-prod");
             yield return Shutdown();
 
             if(!seen)PlayerPrefs.DeleteKey("sc.firstRun.tutorialSeen");

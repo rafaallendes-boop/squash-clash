@@ -11,6 +11,8 @@ namespace SquashClash.Runtime.Menu
     // mechanic: Jugar is RallyDirector.StartMatch at the chosen AiLevel, exactly what the "Partido" button does.
     // The first Jugar goes through a three-step tutorial (how to aim and strike with M2-4, how to read the timing ring),
     // shown once (PlayerPrefs) and reopened from the menu. Its text describes M24Model and TimingRingView as they are.
+    // During a match the player's Pausa opens a card (Continuar / Salir al menú) and the result card's "Volver al inicio"
+    // comes back here. Pauses made by the dev tools or by the system (ResumeOverlay) do not open the card.
     // The layers exist only while the game is paused (display none otherwise), so they never take a touch during play.
     // Batch mode keeps the previous boot (straight into practice), which is what the tests and AutoQA drive.
     public sealed class FirstRunFlow : MonoBehaviour
@@ -21,7 +23,7 @@ namespace SquashClash.Runtime.Menu
         public static void ResetOpenAtBoot()=>openAtBoot=null;
         private static readonly string[] LevelNames={"easy","medium","hard"},LevelTexts={"Fácil","Media","Difícil"};
         private AppBootstrap app;private RallyDirector rally;private RallyHud hud;
-        private VisualElement root,menu;private Button play,practice;private readonly Button[] levels=new Button[3];
+        private VisualElement root,menu,header,pause;private Button play,practice;private readonly Button[] levels=new Button[3];
         private int shownKey=-1;
         public const int TutorialSteps=3;
         public const string TutorialSeenKey="sc.firstRun.tutorialSeen";
@@ -49,7 +51,8 @@ namespace SquashClash.Runtime.Menu
         {
             if(this.app!=null)return;this.app=app;this.rally=rally;this.hud=hud;
             root=app.GetComponent<UIDocument>().rootVisualElement;
-            BuildMenu();BuildTutorial();SelectLevel(Level);Refresh();
+            header=root.Q("boot-header");
+            BuildMenu();BuildTutorial();BuildPause();SelectLevel(Level);hud.MenuRequested+=OpenMenu;Refresh();
             if(OpenAtBoot)OpenMenu();
         }
         private void BuildMenu()
@@ -172,6 +175,18 @@ namespace SquashClash.Runtime.Menu
             TutorialSeen=true;
             if(tutorialThenPlay&&rally.CanStart)StartMatch();else{Screen=FirstRunScreen.Menu;Refresh();}
         }
+        private void BuildPause()
+        {
+            pause=new VisualElement{name="pause-layer"};pause.AddToClassList("sc-pause-layer");pause.style.display=DisplayStyle.None;root.Add(pause);
+            var card=new VisualElement{name="pause-card",pickingMode=PickingMode.Ignore};card.AddToClassList("sc-result-card");card.AddToClassList("sc-pause-card");pause.Add(card);
+            var title=Text("PAUSA","sc-pause-title");title.name="pause-title";card.Add(title);
+            var resume=Add(card,"pause-continue","Continuar",Continue);resume.AddToClassList("sc-button--primary");resume.AddToClassList("sc-pause-button");
+            Add(card,"pause-menu","Salir al menú",LeaveToMenu).AddToClassList("sc-pause-button");
+        }
+        // The pause card: only while a match is paused by the player's own button.
+        public bool PauseVisible=>app!=null&&Screen==FirstRunScreen.None&&rally.Active&&rally.Phase!=RallyPhase.MatchOver&&app.Clock.Paused&&hud.PausedByPlayer;
+        public void Continue(){if(PauseVisible){hud.TogglePause();Refresh();}}
+        public void LeaveToMenu(){if(PauseVisible)OpenMenu();}
         public void OpenMenu()
         {
             if(app==null)return;
@@ -207,14 +222,22 @@ namespace SquashClash.Runtime.Menu
         {
             if(app==null||menu==null)return;
             bool dev=app.DevTools,can=rally.CanStart;
-            int key=(int)Screen|(dev?8:0)|(can?16:0);
+            bool paused=PauseVisible;
+            int key=(int)Screen|(dev?8:0)|(can?16:0)|(paused?32:0);
             if(key==shownKey)return;shownKey=key;
             menu.style.display=Screen==FirstRunScreen.Menu?DisplayStyle.Flex:DisplayStyle.None;
             tutorial.style.display=Screen==FirstRunScreen.Tutorial?DisplayStyle.Flex:DisplayStyle.None;
+            pause.style.display=paused?DisplayStyle.Flex:DisplayStyle.None;
+            // Like the result card, the pause card and its scrim start under the header, whose button stays usable.
+            if(paused&&header!=null&&!float.IsNaN(header.worldBound.yMax))pause.style.top=header.worldBound.yMax-root.worldBound.yMin+8;
             practice.style.display=dev?DisplayStyle.Flex:DisplayStyle.None;
             play.SetEnabled(can);
         }
         private void Update()=>Refresh();
-        private void OnDestroy(){menu?.RemoveFromHierarchy();tutorial?.RemoveFromHierarchy();}
+        private void OnDestroy()
+        {
+            if(hud!=null)hud.MenuRequested-=OpenMenu;
+            menu?.RemoveFromHierarchy();tutorial?.RemoveFromHierarchy();pause?.RemoveFromHierarchy();
+        }
     }
 }

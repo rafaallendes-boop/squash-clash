@@ -16,7 +16,11 @@ namespace SquashClash.Runtime.Rally
         private Label status,humanPoints,rivalPoints,resultTitle,resultScore,resultKicker,bootTitle,fps;
         public const string DevTitle="Squash Clash — First Ball",PlayerTitle="Squash Clash";
         private VisualElement score,humanServe,rivalServe,result;
-        private Button toggle,match,pause,next,rematch,demo;
+        private Button toggle,match,pause,next,rematch,demo,leave;
+        // First run: true only while the game is paused by the player's own Pausa button (not by the dev tools or the system).
+        public bool PausedByPlayer {get;private set;}
+        // First run: the result card's "Volver al inicio".
+        public event System.Action MenuRequested;
         private int scoreHuman=-1,scoreRival=-1,serveShown=-1,resultShown=-1;
         private string shown;
         private int human=-1,rival=-1,shots=-1,played=-1,buttons=-1;
@@ -70,7 +74,8 @@ namespace SquashClash.Runtime.Rally
             card.Add(Text("PAR a 7 · diferencia de 2","sc-result-note"));
             var actions=new VisualElement{pickingMode=PickingMode.Ignore};actions.AddToClassList("sc-result-buttons");card.Add(actions);
             Add(actions,"match-result-rematch","Revancha",()=>{rally.Rematch();Refresh();}).AddToClassList("sc-button--primary");
-            Add(actions,"match-result-leave","Práctica",()=>{rally.StopMode();Refresh();});
+            Add(actions,"match-result-menu","Volver al inicio",()=>{MenuRequested?.Invoke();Refresh();});
+            leave=Add(actions,"match-result-leave","Práctica",()=>{rally.StopMode();Refresh();});
             // Point banner: over the front wall, only during the pause between points (the ball is dead then).
             banner=new VisualElement{name="rally-banner",pickingMode=PickingMode.Ignore};banner.AddToClassList("sc-banner-layer");banner.style.display=DisplayStyle.None;top.Add(banner);
             bannerCard=new VisualElement{name="rally-banner-card",pickingMode=PickingMode.Ignore};bannerCard.AddToClassList("sc-banner");banner.Add(bannerCard);
@@ -91,7 +96,7 @@ namespace SquashClash.Runtime.Rally
         private static VisualElement Chip(string style){var chip=new VisualElement{pickingMode=PickingMode.Ignore};chip.AddToClassList("sc-chip");chip.AddToClassList(style);return chip;}
         public void ToggleMode(){if(rally.Active)rally.StopMode();else rally.StartMode();Refresh();}
         public void StartMatch(){rally.StartMatch();Refresh();}
-        public void TogglePause(){app.Clock.Paused=!app.Clock.Paused;Refresh();}
+        public void TogglePause(){app.Clock.Paused=!app.Clock.Paused;PausedByPlayer=app.Clock.Paused;Refresh();}
         public void ToggleDemo(){rally.Autopilot=!rally.Autopilot;Refresh();}
         private void Update(){Refresh();Tick(Mathf.Min(Time.unscaledDeltaTime,.05f));}
         private VisualElement header;
@@ -145,6 +150,7 @@ namespace SquashClash.Runtime.Rally
         {
             if(rally==null||toggle==null)return;
             bool active=rally.Active,canStart=active||rally.CanStart,paused=app.Clock!=null&&app.Clock.Paused,auto=rally.Autopilot,dev=app.DevTools;
+            if(!paused)PausedByPlayer=false;
             int key=(active?1:0)|(canStart?2:0)|(paused?4:0)|(auto?8:0)|((int)rally.Phase<<4)|(dev?1<<10:0);
             if(key!=buttons)
             {
@@ -159,6 +165,7 @@ namespace SquashClash.Runtime.Rally
                 match.style.display=active||!dev?DisplayStyle.None:DisplayStyle.Flex;match.SetEnabled(canStart);
                 if(bootTitle!=null)bootTitle.text=dev?DevTitle:PlayerTitle;
                 if(fps!=null)fps.style.display=dev?DisplayStyle.Flex:DisplayStyle.None;
+                leave.style.display=dev?DisplayStyle.Flex:DisplayStyle.None;
                 // "Seguir" skips the pause between points (spec 5.2: the pause can be skipped).
                 next.style.display=active&&rally.Phase==RallyPhase.PointOver?DisplayStyle.Flex:DisplayStyle.None;
                 pause.text=paused?"Reanudar":"Pausa";demo.text=auto?"Demo: sí":"Demo: no";
