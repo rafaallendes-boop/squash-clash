@@ -65,18 +65,20 @@ namespace SquashClash.Capture
         // Feel pass: strips. Several frames of one moment side by side, cropped around a world-space box, so short effects
         // (0.1-0.4 s) can be judged in still images.
         private readonly List<Texture2D> strip=new List<Texture2D>();
+        // Full-resolution pixel box (the stroke strips are not reduced: the effects are a few pixels wide).
         private RectInt Region(Vector3 centre,float halfWidthMeters,float below,float above)
         {
             var c=camera.WorldToScreenPoint(centre);var side=camera.WorldToScreenPoint(centre+Vector3.right*halfWidthMeters);
             var low=camera.WorldToScreenPoint(centre+Vector3.down*below);var high=camera.WorldToScreenPoint(centre+Vector3.up*above);
             float half=Mathf.Abs(side.x-c.x);
-            int x0=Mathf.Clamp((int)((c.x-half)/Scale),0,Width/Scale-2),x1=Mathf.Clamp((int)((c.x+half)/Scale),x0+2,Width/Scale);
-            int y0=Mathf.Clamp((int)(low.y/Scale),0,Height/Scale-2),y1=Mathf.Clamp((int)(high.y/Scale),y0+2,Height/Scale);
+            int x0=Mathf.Clamp((int)(c.x-half),0,Width-2),x1=Mathf.Clamp((int)(c.x+half),x0+2,Width);
+            int y0=Mathf.Clamp((int)low.y,0,Height-2),y1=Mathf.Clamp((int)high.y,y0+2,Height);
             return new RectInt(x0,y0,x1-x0,y1-y0);
         }
-        private void Grab(RectInt region)
+        // region is in pixels of the target reduced by `scale` (1 = full resolution).
+        private void Grab(RectInt region,int scale=Scale)
         {
-            var small=RenderTexture.GetTemporary(Width/Scale,Height/Scale,0);Graphics.Blit(target,small);
+            var small=RenderTexture.GetTemporary(Width/scale,Height/scale,0);Graphics.Blit(target,small);
             var previous=RenderTexture.active;RenderTexture.active=small;
             var image=new Texture2D(region.width,region.height,TextureFormat.RGB24,false);
             image.ReadPixels(new Rect(region.x,region.y,region.width,region.height),0,0);image.Apply();
@@ -93,14 +95,14 @@ namespace SquashClash.Capture
             string path=Path.Combine(directory,(++index).ToString("00")+"-"+name+".png");
             File.WriteAllBytes(path,image.EncodeToPNG());UnityEngine.Object.Destroy(image);written.Add(path);
         }
-        // One practice reception struck by a scripted release at T* + deltaMs: nine frames, 50 ms apart, around the stroke.
+        // One practice reception struck by a scripted release at T* + deltaMs: seven frames, 50 ms apart, around the stroke.
         private IEnumerator StrokeStrip(string name,double deltaMs,float power)
         {
             yield return Boot();
             var court=app.Config.Court;var aim=new Vector2(court.Width*.5f,1.7f);
-            var human=app.Players.Human.position;var region=Region(new Vector3(human.x,1.1f,human.z-.5f),1.9f,1.3f,1.9f);
+            var human=app.Players.Human.position;var region=Region(new Vector3(human.x,1.1f,human.z),1.7f,2.3f,1.5f);
             double release=double.NaN;bool queued=false;int since=0;
-            for(int frame=0;frame<60*14&&strip.Count<9;frame++)
+            for(int frame=0;frame<60*14&&strip.Count<7;frame++)
             {
                 Step(2);
                 if(double.IsNaN(release)&&controller.Plan.Exists&&controller.Plan.TStarStep>=0&&app.Host.ClockMap.TrySimToReal(controller.Plan.TStarStep,0,out double t))
@@ -113,7 +115,7 @@ namespace SquashClash.Capture
                     controller.ProcessPending();
                 }
                 yield return null;
-                if(!double.IsNaN(release)&&app.Host.ObservedRealTime>=release-.15&&since++%3==0)Grab(region);
+                if(!double.IsNaN(release)&&app.Host.ObservedRealTime>=release-.10&&since++%3==0)Grab(region,1);
             }
             Assert.That(queued,Is.True,"the scripted release must be queued for "+name);
             Debug.Log("[SquashClash] capture stroke "+name+" result="+(controller.LastRecord!=null?controller.LastRecord.Result:"none")+" power="+power);
@@ -171,9 +173,20 @@ namespace SquashClash.Capture
             yield return Boot();
             rally.Autopilot=true;rally.AutopilotTimingSigmaMs=15;rally.Level=AiLevel.Medium;rally.Seed=5;
             Assert.That(rally.StartMode(),Is.True,"rally mode must start for the strip");
+            // Whole court every 0.2 s, then each player's stroke at full resolution (six frames, 50 ms apart, from the event).
             var whole=new RectInt(0,Height/Scale/8,Width/Scale,Height/Scale*3/4);
-            for(int frame=1;frame<=20*7;frame++){Step(2);yield return null;if(frame%20==0)Grab(whole);}
+            var rivalFrames=new List<Texture2D>();var humanFrames=new List<Texture2D>();int rivalLeft=-1,humanLeft=-1;RectInt rivalBox=default,humanBox=default;
+            rally.RivalSwing+=(_,contact)=>{if(contact&&rivalLeft<0&&rivalFrames.Count==0){rivalLeft=0;var at=app.Players.Rival.position;rivalBox=Region(new Vector3(at.x,1.1f,at.z),1.9f,2.1f,1.7f);}};
+            controller.PresentationDelivered+=p=>{if(p.HasContact&&humanLeft<0&&humanFrames.Count==0){humanLeft=0;var at=app.Players.Human.position;humanBox=Region(new Vector3(at.x,1.1f,at.z),1.9f,2.1f,1.7f);}};
+            for(int frame=1;frame<=60*30&&(frame<=12*7||rivalFrames.Count<6||humanFrames.Count<6);frame++)
+            {
+                Step(2);yield return null;
+                if(frame%12==0&&frame<=12*7)Grab(whole);
+                if(rivalLeft>=0&&rivalFrames.Count<6&&rivalLeft++%3==0){var keep=new List<Texture2D>(strip);strip.Clear();Grab(rivalBox,1);rivalFrames.Add(strip[0]);strip.Clear();strip.AddRange(keep);}
+                if(humanLeft>=0&&humanFrames.Count<6&&humanLeft++%3==0){var keep=new List<Texture2D>(strip);strip.Clear();Grab(humanBox,1);humanFrames.Add(strip[0]);strip.Clear();strip.AddRange(keep);}
+            }
             SaveStrip("strip-rally-demo");
+            strip.AddRange(rivalFrames);SaveStrip("strip-rival-stroke");strip.AddRange(humanFrames);SaveStrip("strip-human-stroke-demo");
             // The pause between points and what the HUD says about the point.
             for(int frame=0;frame<60*60&&rally.Phase!=RallyPhase.PointOver;frame++){Step(2);if(frame%4==0)yield return null;}
             for(int frame=1;frame<=48;frame++){Step(2);yield return null;if(frame%12==0)Grab(new RectInt(0,Height/Scale/2,Width/Scale,Height/Scale/2));}
