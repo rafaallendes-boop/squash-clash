@@ -82,6 +82,15 @@ namespace SquashClash.Capture
             yield return Shutdown();
             yield return Boot(true);yield return Shoot("menu-dev");yield return Shutdown();
 
+            // 1b. The tutorial, as the first Jugar opens it.
+            PlayerPrefs.DeleteKey("sc.firstRun.tutorialSeen");
+            yield return Boot(false);
+            Click("menu-play");yield return Shoot("tutorial-1-aim");
+            Click("tutorial-next");yield return Shoot("tutorial-2-pull");
+            Click("tutorial-next");yield return Shoot("tutorial-3-timing");
+            yield return Shutdown();
+            PlayerPrefs.SetInt("sc.firstRun.tutorialSeen",1);
+
             // 2. Jugar: the match header a player sees.
             yield return Boot(false);
             Click("menu-play");yield return Frames(40);yield return Shoot("match-prod");

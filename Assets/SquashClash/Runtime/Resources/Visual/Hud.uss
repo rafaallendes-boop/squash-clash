@@ -147,3 +147,26 @@
 .unity-button.sc-menu-play { width: 304px; height: 64px; font-size: 24px; letter-spacing: 1px; border-radius: 18px; margin-bottom: 12px; }
 .unity-button.sc-menu-wide { width: 304px; height: 50px; font-size: 16px; margin-bottom: 10px; }
 .sc-menu-build { position: absolute; left: 0; right: 0; bottom: 30px; font-size: 11px; color: rgb(120, 138, 156); -unity-text-align: middle-center; }
+
+/* First run: three-step tutorial card. */
+.sc-tutorial-card {
+    width: 338px;
+    padding: 20px;
+    align-items: center;
+    background-color: rgb(13, 22, 35);
+    border-radius: 22px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+.sc-tutorial-art { width: 270px; height: 150px; margin-top: 4px; margin-bottom: 16px; border-radius: 14px; background-color: rgb(24, 36, 54); overflow: hidden; }
+.sc-tutorial-title { font-size: 26px; -unity-font-style: bold; color: rgb(255, 255, 255); margin-bottom: 8px; -unity-text-align: middle-center; }
+.sc-tutorial-body { font-size: 16px; color: rgb(226, 234, 242); white-space: normal; -unity-text-align: upper-left; width: 100%; margin-bottom: 12px; }
+.sc-tutorial-results { width: 100%; margin-bottom: 8px; }
+.sc-tutorial-result { flex-direction: row; align-items: flex-start; margin-bottom: 6px; }
+.sc-tutorial-chip { width: 12px; height: 12px; border-radius: 6px; margin-top: 8px; margin-right: 8px; flex-shrink: 0; border-width: 2px; border-color: rgb(140, 158, 176); }
+.sc-tutorial-chip--perfect { background-color: rgb(255, 204, 41); border-color: rgb(255, 204, 41); }
+.sc-tutorial-chip--valid { background-color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); }
+.sc-tutorial-result-text { font-size: 14px; color: rgb(214, 224, 234); white-space: normal; flex-shrink: 1; flex-grow: 1; }
+.sc-tutorial-buttons { flex-direction: row; justify-content: space-between; width: 100%; margin-top: 8px; }
+.unity-button.sc-tutorial-skip { width: 104px; height: 52px; font-size: 15px; margin-left: 0; }
+.unity-button.sc-tutorial-next { width: 176px; height: 52px; font-size: 18px; margin-right: 0; }
