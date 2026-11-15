@@ -73,7 +73,7 @@ Nada más: ni causas, ni hipótesis, ni recomendaciones de corrección.
 - El verificador deriva de la evidencia el código de salida que corresponde, con la precedencia 3 > 4 > 1 > 2 de `docs/autoqa/OPERATIONS.md`. En modo `run`, un `EXIT` distinto es incoherencia y nivel 3.
 - `executionError.kind=dirty-after-run` significa que el árbol de Git quedó distinto tras la corrida. No lo arreglas ni ejecutas `git checkout`: lo informas tal cual. No es elegible para reintento.
 - Si existe `summary.harness.json`, es el resultado del arnés conservado antes de un ERROR del envoltorio. El gate sigue siendo el de `summary.json`, pero el verificador usa también las señales del arnés: un canario PASS o una integridad en rojo ahí exigen nivel 3 y salida 3, un FAIL ahí impide el reintento, y un nivel del envoltorio menor que el del arnés es incoherencia. `attempts.jsonl` se coteja con él.
-- El verificador coteja también el `exitCode` declarado en `summary.json`. Para un gate PASS exige la suite declarada completa (los seis escenarios, cada uno en las repeticiones 1, 2 y 3, todos PASS, y un canario FAIL), integridad y determinismo en `true`, y que cada intento use el hash declarado de su lanzamiento (SL1 `9041c4aafc77`, SL5 `e2ffa032a588`) y la SimulationKey `166a96e319c7`. La evidencia debe estar dentro de `RUN_DIR`, y un SHA-256 declarado ausente o `null` es integridad: nivel 3 y salida 3.
+- El verificador coteja también el `exitCode` declarado en `summary.json`. Para un gate PASS exige la suite declarada completa (los seis escenarios, cada uno en las repeticiones 1, 2 y 3, todos PASS, y un canario FAIL), integridad y determinismo en `true`, y que cada intento use el hash declarado de su lanzamiento (SL1 `06fed4bd4ac9`, SL5 `8e22575422f2`) y la SimulationKey `166a96e319c7`. La evidencia debe estar dentro de `RUN_DIR`, y un SHA-256 declarado ausente o `null` es integridad: nivel 3 y salida 3.
 - Si el verificador falla con una excepción (por ejemplo, un tipo inesperado en los artefactos), igualmente imprime un bloque `autoqa-operator-result` con `checkerError: true`, nivel 3 y sin reintento, y termina con código distinto de 0. Copias ese bloque como cualquier otro; no lo arreglas.
 - Si `summary.harness.json` tiene su propio `executionError` que no es de entorno, la corrida no es elegible para reintento aunque el error del envoltorio sí lo sea.
 - La plantilla del resumen es `docs/autoqa/operator-summary-template.md` de `REPO`, única y compartida con `OPERATIONS.md`. El verificador la rellena; si contiene un marcador que no reconoce o le falta uno de los que conoce, lo marca como incoherencia.
@@ -120,7 +120,7 @@ MVP_SCENARIOS = ("M24-NOPULL-SL1", "M24-REJECTED-SL1", "M24-VALID-EARLY-SL1", "M
                  "M24-PERFECT-EARLY10-SL5", "M24-PERFECT-LATE10-SL5")
 MVP_REPETITIONS = (1, 2, 3)
 MVP_ATTEMPTS = len(MVP_SCENARIOS) * len(MVP_REPETITIONS)
-EXPECTED_HASH = {"SL1": "9041c4aafc77", "SL5": "e2ffa032a588"}
+EXPECTED_HASH = {"SL1": "06fed4bd4ac9", "SL5": "8e22575422f2"}
 CANARY_SL = "SL5"
 SIMULATION_KEY = "166a96e319c7"
 # Marcadores de docs/autoqa/operator-summary-template.md que el verificador sabe rellenar.

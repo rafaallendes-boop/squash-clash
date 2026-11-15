@@ -1,0 +1,9 @@
+key	count
+Human|vecNonZero|g2=Reachable|g1=Reachable	1
+Human|vecNonZero|g2=Unreachable|g1=Reachable	2
+Human|vecNonZero|g2=Unreachable|g1=Unreachable	8
+Human|vecZero|g2=Unreachable|g1=Reachable	1
+Human|vecZero|g2=Unreachable|g1=Unreachable	23
+Rival|vecNonZero|g2=Unreachable|g1=Reachable	22
+Rival|vecZero|g2=Unreachable|g1=Reachable	156
+Rival|vecZero|g2=Unreachable|g1=Unreachable	2

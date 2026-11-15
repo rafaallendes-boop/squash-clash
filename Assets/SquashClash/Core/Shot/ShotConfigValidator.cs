@@ -15,6 +15,8 @@ namespace SquashClash.Core.Shot
             foreach(var pair in new[]{("shot.vMin","shot.vMax"),("shot.vMax","shot.vCap"),("power.minCoverageMs","power.windowMs")})
                 if(candidate.TryGetValue(pair.Item1,out var a)&&candidate.TryGetValue(pair.Item2,out var b)&&a>b)
                 {error=pair.Item1+" must not exceed "+pair.Item2;return false;}
+            if(candidate.TryGetValue("shot.paceNearM",out var near)&&candidate.TryGetValue("shot.paceFullM",out var full)&&near>=full)
+            {error="shot.paceNearM must be below shot.paceFullM";return false;}
             if(candidate.TryGetValue("timing.validLimit",out var mode)&&mode==1&&candidate.TryGetValue("timing.assistMs",out var assist)&&candidate.TryGetValue("timing.validMs",out var valid)&&assist>=valid)
             {error="timing.assistMs must be below timing.validMs in V mode";return false;}
             return true;

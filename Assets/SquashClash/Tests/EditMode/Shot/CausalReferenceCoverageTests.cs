@@ -87,7 +87,7 @@ namespace SquashClash.Core.Tests.Shot
                 var warnings=new List<string>();var actual=PresetCodec.Overlay(p,file,warnings);Assert.That(warnings,Is.Empty);Assert.That(actual.Hash,Is.EqualTo(p0.Hash));Assert.That(File.ReadAllBytes(path),Is.EqualTo(before));
             }
             TestContext.WriteLine("B4_HASH defaults="+p.Hash+" P0="+p0.Hash+" SL5="+sl5.Hash+" keys="+p.Ordered.Count+" inherited="+p.HashOf(ConfigFixtures.FirstBallPrefixes)+" P0inherited="+p0.HashOf(ConfigFixtures.FirstBallPrefixes)+" simulation="+EffectiveConfig.From(p).SimulationKey);
-            Assert.That(p.Ordered.Count,Is.EqualTo(118));Assert.That(p.HashOf(ConfigFixtures.FirstBallPrefixes),Is.EqualTo("0d39e6016bd8"));Assert.That(p0.HashOf(ConfigFixtures.FirstBallPrefixes),Is.EqualTo("8de3f2ecb217"));Assert.That(EffectiveConfig.From(p).SimulationKey,Is.EqualTo("166a96e319c7"));
+            Assert.That(p.Ordered.Count,Is.EqualTo(121));Assert.That(p.HashOf(ConfigFixtures.FirstBallPrefixes),Is.EqualTo("0d39e6016bd8"));Assert.That(p0.HashOf(ConfigFixtures.FirstBallPrefixes),Is.EqualTo("8de3f2ecb217"));Assert.That(EffectiveConfig.From(p).SimulationKey,Is.EqualTo("166a96e319c7"));
         }
     }
 }

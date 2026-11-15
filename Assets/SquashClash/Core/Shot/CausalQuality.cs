@@ -60,17 +60,19 @@ namespace SquashClash.Core.Shot
     [Serializable] public sealed class CausalShotTrace
     {
         public string player,attemptId;public long launchId,contactStep;public int planVersion;
-        public double tempo,latencyCompMs,arcRadius;public float bodyX,bodyZ,reach,aimX,aimY,speed,unclampedAimX,unclampedAimY;public bool aimClamped;
+        public double tempo,latencyCompMs,arcRadius;public float paceDistanceM,paceGamma,requestedSpeedLinear,requestedSpeed;public float bodyX,bodyZ,reach,aimX,aimY,speed,unclampedAimX,unclampedAimY;public bool aimClamped;
         public bool solved;public CausalVector[] vectors;
         public static CausalShotTrace Create(string player,long launchId,string attemptId,long step,CausalReference reference,BodyFrame body,CausalShotResult result)
             =>new CausalShotTrace{player=player,launchId=launchId,attemptId=attemptId,contactStep=step,planVersion=reference.PlanVersion,
                 tempo=reference.Tempo,latencyCompMs=reference.Timing.LatencyCompMs,arcRadius=reference.ArcRadius,bodyX=body.PositionXZ.x,bodyZ=body.PositionXZ.y,
-                reach=body.Reach,aimX=result.Input.Aim.x,aimY=result.Input.Aim.y,speed=result.Input.Speed,unclampedAimX=result.Input.UnclampedAim.x,unclampedAimY=result.Input.UnclampedAim.y,aimClamped=result.Input.Clamped,solved=result.Solution.Solved,vectors=result.Vectors};
+                reach=body.Reach,paceDistanceM=result.Pace.DistanceM,paceGamma=result.Pace.Gamma,requestedSpeedLinear=result.Pace.LinearSpeed,requestedSpeed=result.Pace.Speed,aimX=result.Input.Aim.x,aimY=result.Input.Aim.y,speed=result.Input.Speed,unclampedAimX=result.Input.UnclampedAim.x,unclampedAimY=result.Input.UnclampedAim.y,aimClamped=result.Input.Clamped,solved=result.Solution.Solved,vectors=result.Vectors};
     }
     public readonly struct CausalShotResult
     {
         public readonly CausalVector[] Vectors;public readonly CausalInput Input;public readonly ShotSolution Solution;
-        public CausalShotResult(CausalVector[] vectors,CausalInput input,ShotSolution solution){Vectors=vectors;Input=input;Solution=solution;}
+        // What the shared pace curve requested before the causal layer (design 2026-11-14).
+        public readonly ShotPaceResult Pace;
+        public CausalShotResult(CausalVector[] vectors,CausalInput input,ShotSolution solution,ShotPaceResult pace=default){Vectors=vectors;Input=input;Solution=solution;Pace=pace;}
     }
     public readonly struct CausalInput
     {
@@ -85,13 +87,14 @@ namespace SquashClash.Core.Shot
         public static CausalShotResult Solve(CausalReference reference,BodyFrame body,Vector3 contact,Vector2 aim,float power,EffectiveConfig config,IBallSimulationFactory factory)
         {
             var settings=CausalSettings.From(config.Source);var vectors=Evaluate(reference,body,contact,settings);
-            float requested=(float)config.Source.Get("shot.vMin")+power*((float)config.Source.Get("shot.vMax")-(float)config.Source.Get("shot.vMin"));
+            // Order: pace curve (from the aim requested before this layer) -> causal composition -> legal-front bound -> solver.
+            var pace=ShotPace.Requested(power,contact,aim,config.Physics.BallRadius,config.Source);float requested=pace.Speed;
             var input=BoundToLegalFront(Apply(aim,requested,vectors,settings),aim,config.Court,config.Physics.BallRadius);
             // The existing solver retains its feasibility raising/lowering, cap and verifier unchanged.
             // Equal endpoints convey the already composed total speed without clamping it back to vMin.
             var solution=ShotSolver.Solve(new ShotRequest(contact,input.Aim,power),input.Speed,input.Speed,(float)config.Source.Get("shot.vCap"),
                 config.Physics.Gravity,config.Physics.BallRadius,config.Court,factory,config.Physics);
-            return new CausalShotResult(vectors,input,solution);
+            return new CausalShotResult(vectors,input,solution,pace);
         }
         public static CausalReference Prepare(Trajectory trajectory,ContactPlan plan,ClockMap clock,TimingSettings timing,double presented,double tempo,Func<long,BodyFrame> bodyAt=null)
         {
