@@ -99,6 +99,20 @@ namespace SquashClash.Runtime.Tests
             Assert.That(rally.Active,Is.False);Assert.That(Shown(Find("menu-layer")),Is.False);
             Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("06fed4bd4ac9"));
         }
+        // Performance ceiling: the flow runs every frame and must cost no garbage, with the menu open and during a match.
+        [UnityTest] public IEnumerator Refresh_AllocatesNothing_InTheMenuAndDuringAMatch()
+        {
+            MarkTutorialSeen();yield return Boot(true);MarkTutorialSeen();
+            for(int i=0;i<10;i++)flow.Refresh();
+            long before=System.GC.GetAllocatedBytesForCurrentThread();
+            for(int i=0;i<2000;i++)flow.Refresh();
+            Assert.That(System.GC.GetAllocatedBytesForCurrentThread()-before,Is.EqualTo(0),"bytes for 2000 refreshes with the menu open");
+            Click("menu-play");Refresh();Drive(()=>app.Host.Current.Step>50,2);
+            Assert.That(rally.Active,Is.True);
+            before=System.GC.GetAllocatedBytesForCurrentThread();
+            for(int i=0;i<2000;i++)flow.Refresh();
+            Assert.That(System.GC.GetAllocatedBytesForCurrentThread()-before,Is.EqualTo(0),"bytes for 2000 refreshes during a match");
+        }
         [UnityTest] public IEnumerator Menu_FitsThePortraitScreen_WithFingerSizedButtons()
         {
             yield return Boot(true);yield return null;
