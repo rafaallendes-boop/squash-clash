@@ -1,6 +1,6 @@
 # Informe de condensación de AGENTS.md — 15 nov 2026
 
-Original: 276.945 bytes, 911 líneas, SHA-256 `286508c6…ab21f`, archivado byte a byte en [AGENTS-archive-2026-11-14.md](AGENTS-archive-2026-11-14.md). Nuevo `AGENTS.md`: 8722 bytes. Rama `docs/condense-agents` desde `main` `7fdef02`. Solo documentación: sin cambios en Assets, ProjectSettings, scripts ni tests; `docs/reviews/2026-10-25-first-shot-po-approvals.md` sin tocar.
+Original: 276.945 bytes, 911 líneas, SHA-256 `286508c6…ab21f`, archivado byte a byte en [AGENTS-archive-2026-11-14.md](AGENTS-archive-2026-11-14.md). Nuevo `AGENTS.md`: 8.722 bytes. Rama `docs/condense-agents` desde `main` `7fdef02`. Solo documentación: sin cambios en Assets, ProjectSettings, scripts ni tests; `docs/reviews/2026-10-25-first-shot-po-approvals.md` sin tocar.
 
 ## Reglas y autorizaciones del original
 
