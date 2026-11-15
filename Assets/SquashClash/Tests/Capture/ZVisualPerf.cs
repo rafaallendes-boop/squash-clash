@@ -71,11 +71,26 @@ namespace SquashClash.Capture
                 watch.Stop();figureBytes=GC.CollectionCount(0)!=gcBefore?-2:Math.Max(0,GC.GetTotalMemory(false)-before)/loops;
                 figureMicros=watch.Elapsed.TotalMilliseconds*1000/loops;
             }
+            // Feel-pass views, if present: managed bytes of one Tick each (stroke effects, impact effects, HUD), measured on this thread.
+            long feelBytes=-1;double feelMicros=-1;
+            var ticks=new List<Action<float>>();
+            foreach(var name in new[]{"SquashClash.Runtime.Visual.StrokeFx","SquashClash.Runtime.Visual.ImpactFx","SquashClash.Runtime.Rally.RallyHud"})
+            {
+                var view=Type.GetType(name+", SquashClash.Runtime");var tick=view?.GetMethod("Tick",new[]{typeof(float)});var instance=view!=null?app.GetComponent(view):null;
+                if(tick!=null&&instance!=null)ticks.Add((Action<float>)Delegate.CreateDelegate(typeof(Action<float>),instance,tick));
+            }
+            if(ticks.Count>0)
+            {
+                foreach(var t in ticks)t(1f/240);
+                const int loops=2000;long before=GC.GetAllocatedBytesForCurrentThread();var watch=Stopwatch.StartNew();
+                for(int i=0;i<loops;i++)foreach(var t in ticks)t(1f/240);
+                watch.Stop();feelBytes=(GC.GetAllocatedBytesForCurrentThread()-before)/loops;feelMicros=watch.Elapsed.TotalMilliseconds*1000/loops;
+            }
             string F(double v)=>v.ToString("0.###",CultureInfo.InvariantCulture);
             string json="{\"set\":\""+set+"\",\"seconds\":"+F(seconds)+",\"frames\":"+frames+",\"frameMsP50\":"+F(ms[frames/2])+",\"frameMsP95\":"+F(ms[(int)(frames*.95)])+",\"frameMsP99\":"+F(ms[(int)(frames*.99)])+
                 ",\"batchesAvg\":"+F(batches/(double)frames)+",\"batchesMax\":"+maxBatches+",\"setPassAvg\":"+F(setPass/(double)frames)+",\"trianglesAvg\":"+F(triangles/(double)frames)+
                 ",\"renderers\":"+renderers+",\"gcBytesPerFrameAvg\":"+F(bytes/(double)frames)+",\"gcBytesPerFrameMax\":"+maxBytes+",\"gen0Collections\":"+collections+
-                ",\"figures\":"+figures+",\"figurePoseMicrosPerFrame\":"+F(figureMicros)+",\"figurePoseBytesPerFrame\":"+figureBytes+
+                ",\"feelViews\":"+ticks.Count+",\"feelTickMicrosPerFrame\":"+F(feelMicros)+",\"feelTickBytesPerFrame\":"+feelBytes+",\"figures\":"+figures+",\"figurePoseMicrosPerFrame\":"+F(figureMicros)+",\"figurePoseBytesPerFrame\":"+figureBytes+
                 ",\"pointsPlayed\":"+rally.PointsPlayed+",\"unity\":\""+Application.unityVersion+"\",\"device\":\""+SystemInfo.deviceModel+"\"}";
             File.WriteAllText(Path.Combine(root,"perf-"+set+".json"),json+"\n");
             UnityEngine.Debug.Log("[SquashClash] perf "+json);

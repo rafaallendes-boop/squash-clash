@@ -163,7 +163,8 @@ namespace SquashClash.Capture
             int limit=(int)(1500/StepReal);
             for(int i=0;i<limit&&rally.Phase!=RallyPhase.MatchOver;i++)Step(1);
             Assert.That(rally.Phase,Is.EqualTo(RallyPhase.MatchOver),"the demo match must finish");
-            yield return null;yield return null;yield return Shoot("match-over");
+            for(int i=0;i<24;i++)yield return null; // let the result card finish its entrance
+            yield return Shoot("match-over");
             yield return Shutdown();
 
             // 4. Feel pass: strips of a Perfect, a Valid and a failed stroke in practice, and of a rally in Demo.
