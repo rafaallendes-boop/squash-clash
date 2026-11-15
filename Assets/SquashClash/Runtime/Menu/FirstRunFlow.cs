@@ -1,5 +1,6 @@
 using SquashClash.Core.Rally;
 using SquashClash.Runtime.App;
+using SquashClash.Runtime.Audio;
 using SquashClash.Runtime.Rally;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -23,7 +24,7 @@ namespace SquashClash.Runtime.Menu
         public static void ResetOpenAtBoot()=>openAtBoot=null;
         private static readonly string[] LevelNames={"easy","medium","hard"},LevelTexts={"Fácil","Media","Difícil"};
         private AppBootstrap app;private RallyDirector rally;private RallyHud hud;
-        private VisualElement root,menu,header,pause;private Button play,practice;private readonly Button[] levels=new Button[3];
+        private VisualElement root,menu,header,pause;private Button play,practice,menuSound,pauseSound;private readonly Button[] levels=new Button[3];
         private int shownKey=-1;
         public const int TutorialSteps=3;
         public const string TutorialSeenKey="sc.firstRun.tutorialSeen";
@@ -69,6 +70,7 @@ namespace SquashClash.Runtime.Menu
             }
             play=Add(menu,"menu-play","Jugar",Play);play.AddToClassList("sc-button--primary");play.AddToClassList("sc-menu-play");
             Add(menu,"menu-howto","¿Cómo se juega?",()=>OpenTutorial(false)).AddToClassList("sc-menu-wide");
+            menuSound=Add(menu,"menu-sound","",ToggleSound);menuSound.AddToClassList("sc-menu-wide");
             practice=Add(menu,"menu-practice","Práctica (dev)",ClosePractice);practice.AddToClassList("sc-menu-wide");
             var build=Text("v"+app.Build.Label,"sc-menu-build");build.name="menu-build";menu.Add(build);
         }
@@ -182,7 +184,12 @@ namespace SquashClash.Runtime.Menu
             var title=Text("PAUSA","sc-pause-title");title.name="pause-title";card.Add(title);
             var resume=Add(card,"pause-continue","Continuar",Continue);resume.AddToClassList("sc-button--primary");resume.AddToClassList("sc-pause-button");
             Add(card,"pause-menu","Salir al menú",LeaveToMenu).AddToClassList("sc-pause-button");
+            pauseSound=Add(card,"pause-sound","",ToggleSound);pauseSound.AddToClassList("sc-pause-button");
+            ShowSound();
         }
+        // "Sonido": one switch for the whole game, in the menu and in the pause card.
+        public void ToggleSound(){AudioScape.SoundOn=!AudioScape.SoundOn;ShowSound();}
+        private void ShowSound(){string text=AudioScape.SoundOn?"Sonido: sí":"Sonido: no";if(menuSound!=null)menuSound.text=text;if(pauseSound!=null)pauseSound.text=text;}
         // The pause card: only while a match is paused by the player's own button.
         public bool PauseVisible=>app!=null&&Screen==FirstRunScreen.None&&rally.Active&&rally.Phase!=RallyPhase.MatchOver&&app.Clock.Paused&&hud.PausedByPlayer;
         public void Continue(){if(PauseVisible){hud.TogglePause();Refresh();}}

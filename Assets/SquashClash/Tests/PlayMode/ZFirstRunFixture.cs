@@ -19,7 +19,7 @@ namespace SquashClash.Runtime.Tests
     public abstract class ZFirstRunFixture
     {
         protected const int Width=1206,Height=2622;
-        protected AppBootstrap app;protected ShotController controller;protected RallyDirector rally;protected RallyHud hud;protected FirstRunFlow flow;protected VisualElement root;
+        protected AppBootstrap app;protected ShotController controller;protected RallyDirector rally;protected RallyHud hud;protected FirstRunFlow flow;protected SquashClash.Runtime.Audio.AudioScape scape;protected VisualElement root;
         private UnityEngine.Camera camera;private RenderTexture target,previousCameraTarget,previousPanelTarget;private PanelSettings settings;private float previousAspect,previousVolume;
         protected double StepReal=>1d/app.Config.Physics.StepHz/app.Config.Tempo;
 #if UNITY_EDITOR
@@ -55,7 +55,8 @@ namespace SquashClash.Runtime.Tests
             app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
             controller=app.GetComponent<ShotController>();rally=app.Rally;hud=app.GetComponent<RallyHud>();flow=app.FirstRun;
             Assert.That(flow,Is.Not.Null,"the first-run flow is created with the app");
-            app.Host.enabled=app.enabled=controller.enabled=rally.enabled=hud.enabled=flow.enabled=false;
+            scape=app.Scape;Assert.That(scape,Is.Not.Null,"the sound layer is created with the app");
+            app.Host.enabled=app.enabled=controller.enabled=rally.enabled=hud.enabled=flow.enabled=scape.enabled=false;
             camera=UnityEngine.Camera.main;previousCameraTarget=camera.targetTexture;previousAspect=camera.aspect;
             target=new RenderTexture(Width,Height,24);target.Create();camera.targetTexture=target;camera.aspect=Width/(float)Height;
             var document=app.GetComponent<UIDocument>();settings=document.panelSettings;previousPanelTarget=settings.targetTexture;settings.targetTexture=target;
@@ -67,7 +68,7 @@ namespace SquashClash.Runtime.Tests
             if(camera!=null){camera.targetTexture=previousCameraTarget;camera.aspect=previousAspect;}
             if(target!=null){target.Release();UnityEngine.Object.Destroy(target);}
             yield return PlayModeTestWorld.ClearApp();
-            FirstRunFlow.ResetOpenAtBoot();ClearPrefs();AudioListener.volume=previousVolume;
+            FirstRunFlow.ResetOpenAtBoot();ClearPrefs();AudioListener.volume=previousVolume;SquashClash.Runtime.Audio.AudioScape.SoundOn=true;ClearPrefs();
 #if UNITY_EDITOR
             if(gameView!=null&&selectedSize!=null)selectedSize.SetValue(gameView,previousSize);
             if(sizeGroup!=null&&customIndex>=0)sizeGroup.GetType().GetMethod("RemoveCustomSize").Invoke(sizeGroup,new object[]{customIndex});
@@ -85,7 +86,7 @@ namespace SquashClash.Runtime.Tests
         protected bool Drive(Func<bool> until,double maxRealSeconds=30)
         {
             int limit=(int)(maxRealSeconds/StepReal);
-            for(int i=0;i<limit;i++){if(until())return true;app.Host.Advance(StepReal);controller.ProcessPending();rally.Tick();Refresh();}
+            for(int i=0;i<limit;i++){if(until())return true;app.Host.Advance(StepReal);controller.ProcessPending();rally.Tick();scape.Tick((float)StepReal);Refresh();}
             return until();
         }
         protected static bool Shown(VisualElement element)
