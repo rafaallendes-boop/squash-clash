@@ -6,7 +6,7 @@ namespace SquashClash.Runtime.Audio
 {
     public enum MusicTrack {None,Menu,Match}
     // Device robustness, block B: original music, synthesized by scripts/audio/make_music.py. One loop for the start
-    // menu and its tutorial, and a very quiet one while a rally or match is being played. It only reads state (which
+    // menu and its tutorial, and a quiet one while a rally or match is being played. It only reads state (which
     // screen is open, whether a rally is active, whether the clock is paused): it subscribes to no gameplay event and
     // never touches the contact audio (ShotFeedback) or the court sounds (AudioScape).
     // Silence in pause: the playing loop is paused on the spot, with no fade tail, and picked up where it was.
@@ -15,8 +15,8 @@ namespace SquashClash.Runtime.Audio
     public sealed class MusicPlayer : MonoBehaviour
     {
         public const string MusicKey="sc.music";
-        // Source volume at full fade. The match loop is a bed that sits about 12 dB (RMS) under the player's quietest
-        // contact clip, with its peak at half of that clip or less (a test measures it against the clips).
+        // Source volume at full fade. The match loop is a bed whose average level sits about 16 dB under the peak of the
+        // player's quietest contact clip, with its own peak at half of that peak or less (a test measures it against the clips).
         public const float MenuVolume=.5f,MatchVolume=.24f,FadeSeconds=.6f;
         private const int Off=0,On=1,Held=2;
         private static readonly string[] ClipNames={"music-menu","music-match"};

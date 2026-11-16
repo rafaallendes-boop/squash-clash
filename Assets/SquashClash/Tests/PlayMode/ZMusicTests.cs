@@ -114,15 +114,15 @@ namespace SquashClash.Runtime.Tests
             Click("pause-continue");Refresh();Ticks(.5f);
             Assert.That(music.Wanted,Is.EqualTo(MusicTrack.None));Assert.That(music.Sounding(MusicTrack.Match),Is.False,"off stays off during the match");
         }
-        // The loudest the match loop ever is, against the quietest thing the player's own stroke plays: music is a bed (about 12 dB
-        // under contact in average level), not something that can be mistaken for a hit.
+        // The loudest the match loop ever is, against the quietest thing the player's own stroke plays: music is a bed (its average level about 16 dB
+        // under the contact peak), not something that can be mistaken for a hit.
         [UnityTest] public IEnumerator Mix_TheMatchLoopStaysUnderThePlayersContact()
         {
             var feedback=app.GetComponent<ShotFeedback>();Assert.That(feedback.ClipsLoaded,Is.True);
             float contact=Mathf.Min(Peak(Resources.Load<AudioClip>("Audio/impact-perfect"),out _),Peak(Resources.Load<AudioClip>("Audio/impact-valid"),out _));
             float match=Peak(music.ClipOf(MusicTrack.Match),out float matchRms)*MusicPlayer.MatchVolume;
             Assert.That(match,Is.LessThanOrEqualTo(contact*.5f),"peak at least 6 dB under the quietest contact clip");
-            Assert.That(matchRms*MusicPlayer.MatchVolume,Is.LessThanOrEqualTo(contact*.15f),"average level about 12 dB under it");
+            Assert.That(matchRms*MusicPlayer.MatchVolume,Is.LessThanOrEqualTo(contact*.15f),"average level about 16 dB under it");
             float menu=Peak(music.ClipOf(MusicTrack.Menu),out _)*MusicPlayer.MenuVolume;
             Assert.That(menu,Is.LessThanOrEqualTo(.35f),"the menu loop leaves headroom");Assert.That(menu,Is.GreaterThan(match*2),"the menu loop peaks well above the match loop");
             yield return null;
