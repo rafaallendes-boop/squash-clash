@@ -2778,3 +2778,98 @@ Respuestas del PO en el diálogo de preguntas de Claude:
 > «Si, lanza todo. […] Pero ya que adelantamos con fable, ahora toca volver al modo normal y vamos operando cerrando los hitos paso a paso.»
 
 **Significado:** la autorización de Fable termina. Codex implementa (código y zonas protegidas); Claude revisa de forma independiente, y si dirige un subagente lo declara; subagentes Sonnet para documentos y protocolos y Haiku para el operador de AutoQA, a pedido del PO; el PO aprueba cada fusión y los hitos se cierran paso a paso.
+
+## Cierres pendientes del 16 nov (registro)
+
+- **#63** `codex/product-tweaks` (C1 de Codex) se fusionó con la aprobación del PO («Sí, fusiona»): merge `a1fa915`. Incluye ocultar en prod la línea técnica, recordar la dificultad y dejar la raqueta de «diestro» en la mano derecha.
+- **#32** `codex/sl56-return-rule` se cerró sin fusionar. La reemplazan #56 y la capa causal; la rama se conserva en `10f162f`. Activar la regla sigue sin autorización.
+- **Instalación de `0.1.0+a1fa915 dev`** (16 nov, 18:04Z), con la autorización literal del PO: «Si, utiliza mi PC y renueva el vencimiento del 18 de nov. Autorizo las sesiones y quiero hacer las pruebas. Dime como hacerlas, la idea es que salga lo mas rapido posible».
+  - El perfil, del equipo personal gratuito, se renovó hasta el 2026-11-23T18:03:12Z.
+  - Se hizo un respaldo nuevo antes de instalar. Después, los tres archivos de presets quedaron idénticos byte a byte.
+- **Tarea 4.5, sesión 1:** se hizo el mismo día y se cerró anticipadamente por decisión del PO, después de B1 (V) y B2 (T3 pure). El detalle y las respuestas literales están en la [hoja de sesión](../validation/2026-11-16-first-shot-4-5-session-sheet.md). P0 quedó restaurado (`0a3d3262a79d`, 0 pendientes) y los archivos, idénticos byte a byte.
+
+## Decisiones del PO tras la sesión 1 de 4.5: hacia usuarios reales (16 nov 2026, Chile)
+
+Decisiones literales del PO; cambian la prioridad y la dirección del trabajo.
+
+> «1. Timing: avanzamos con T3 pure como candidato para el playtest con usuarios. […] Por ahora, no quiero continuar comparando ventanas ni realizar más pruebas personales de timing. T3 pure será la configuración candidata para las primeras pruebas externas, sin considerarla todavía una regla definitiva.»
+
+> «2. Priorizamos una experiencia natural de juego. Quiero que los usuarios puedan entrar, aprender los controles y jugar partidos sin estar pendientes de métricas, ventanas de timing o configuraciones técnicas. Las métricas deben recopilarse en segundo plano para analizar posteriormente qué funciona y qué debemos mejorar.»
+
+> «3. Aceleremos el camino hacia usuarios reales. Mi prioridad ahora es conseguir una build suficientemente estable y jugable para que otras personas prueben Squash Clash. No busco un producto perfecto antes de probarlo.»
+
+> «4. First Shot y validaciones pendientes. La sesión 1 queda cerrada. No agendaremos por ahora la sesión 2. Esto no significa aceptar First Shot ni modificar retroactivamente sus criterios. Quiero que registremos formalmente qué queda pendiente y qué riesgos asumimos al avanzar hacia pruebas externas. SL5/SL6 y los problemas de dirección también quedan como observaciones abiertas, sin bloquear automáticamente el playtest salvo que afecten significativamente la experiencia.»
+
+> «5. Próximo encargo. Necesito que revises el estado actual del proyecto y propongas el camino mínimo para llegar a una primera prueba con usuarios […] No quiero abrir nuevas líneas de desarrollo ni agregar funcionalidades que no sean necesarias para este objetivo. […] Mantengamos la disciplina técnica, la trazabilidad y las aprobaciones, pero evitemos que el proceso de validación se convierta en un obstáculo para aprender del mercado.»
+
+**Significado:**
+- **T3 pure** pasa a ser la configuración candidata para las pruebas externas, pero no es una regla adoptada.
+- **Cambiar `DefaultPreset.json`** (`timing.validLimit` de 1 a 0) todavía necesita la autorización explícita del PO sobre la propuesta.
+- **La sesión 2 de 4.5 no se agenda.**
+- **First Shot, First Rally y First Match no se aceptan** y sus criterios no cambian.
+- **La propuesta de Claude** está en [2026-11-16-camino-a-usuarios.md](2026-11-16-camino-a-usuarios.md), con los pendientes y riesgos asumidos en su §8.
+
+## Cierre de First Shot y encargo U1–U3 (16 nov 2026, Chile)
+
+Literal del PO:
+
+> «Deja el encargo a codex. Pero yo lo avanzaría de la siguiente manera: Ya tenemos lo que es first rally y first match, fue lo que avanzamos con Fable. Daría por cerrado first shot. Haría U1, U2 y U3. […] Mejorar SL5 y SL6 que son los golpes de adelante. Seguir probando y jugando. […] cuando vea la app y considere que está lista para mostrarse, pago los 99 usd y avanzamos. […] creo que es mejor ya ir jugando y depurando a probar estatico y tan estructurado. Luego podemos ir viendo lo que es la volea»
+
+**Significado:**
+- **First Shot queda cerrado** por decisión del PO. Sus criterios no se modifican de forma retroactiva.
+  - Lo no cumplido o no medido queda como observación abierta: tarea 4.5 incompleta, H2, H3c, sesión 2, condiciones de S3 y dirección en SL5/SL6. Detalle en la §8 de la [propuesta](2026-11-16-camino-a-usuarios.md).
+- **Encargo a Codex:** U1, U2 y U3. Para U1 se autoriza cambiar `DefaultPreset.json`: `timing.validLimit` pasa de 1 a 0 y los hashes vigentes cambian. T3 pure sigue siendo candidato, no una regla definitiva.
+- **Backlog para el MVP** (§0 de la propuesta): cada ítem con su encargo y la aprobación del PO. SL5/SL6 toca física y M2-4, así que requiere autorización explícita en su encargo.
+- **Sin cambios:** First Rally y First Match siguen sin aceptación física, porque el PO no los cerró. El Developer Program y TestFlight se activan cuando el PO lo decida.
+
+## Autorización de SL5/SL6, problema del vidrio del fondo y golpe de fondo (16 nov 2026, Chile)
+
+Literal del PO:
+
+> «SL5 y SL6 : tienes mi autorización explicita para que lo mejoremos»
+
+> «Barra de cansancio: Vamos conversando de la mecanica nueva»
+
+> «Lo de los puntos que van al fondo, si preisono al 100% y la pelota toca el vidrio de al fondo, es casi punto seguro hoy. Quería ver como arreglarlo.»
+
+> «Además de la volea, agregar lo que es golpe de fondo (bote vidrio, golpe tipico al fondo en squash)»
+
+**Significado:**
+- **Encargo G1 a Codex,** que va después de U1, U3 y U2. Primero hay un diagnóstico predeclarado (fase A) del punto seguro al vidrio del fondo y de SL5/SL6. Después vienen 2 o 3 opciones por problema y el PO elige.
+- **Zonas protegidas:** física, solver y M2-4 se autorizan solo dentro de G1 y después de esa elección.
+- **Barra de cansancio:** queda en conversación de diseño, sin implementar.
+- **Volea y golpe de fondo:** se agregan al backlog del MVP, cada uno con su propio encargo.
+
+## U1 detenido por AutoQA: el PO elige adaptar AutoQA a T3 (16 nov 2026, Chile)
+
+**El bloqueo:** Codex detuvo U1 ([PR #65](https://github.com/rafaallendes-boop/squash-clash/pull/65), solo el informe). El escenario `M24-FAILED-LATE-SL1` (+170 ms) carga los defaults y espera `Failed/Late`. Su oráculo solo modela el límite V (`|Δ| ≤ validMs`), así que con T3 pure calcula `Valid`.
+
+**Decisión literal del PO:**
+
+> «Yo quizás tomaría la segunda opción, la de adaptar AutoQA a T3. Quizás va a ser más largo, pero también eso nos va a aportar más, creo yo.»
+
+**Significado:**
+- **Escenarios V:** quedan fijados en V de forma explícita, sin cambiar sus expectativas.
+- **Cobertura nueva de T3 pure:** el oráculo aprende la regla T3 y se agregan escenarios con la configuración por defecto. Los escenarios y sus resultados esperados se predeclaran antes de ejecutar.
+- **Después** se retoma U1 con las compuertas completas.
+- **Autorización:** esta decisión permite agregar criterios a AutoQA solo para T3. No autoriza cambiar los existentes de V.
+
+## Cansancio v1: diseño aprobado y cambios protegidos autorizados (16 nov 2026, Chile)
+
+**Cómo se llegó:**
+- **v1 (`e1bcef7`):** el PO la revisó y pidió ajustes en intensidad, recuperación, precisión, predicción y criterios.
+- **v2 (`22145e4`):** incorporó esos ajustes. El PO la aprobó conceptualmente, con tres correcciones: la instantánea del brazo es del que golpea, B2 mide el consumo por desplazamiento y la comparación de finales ajustados pasa a ser exploratoria.
+- **v2.1:** incorpora las tres correcciones.
+
+Spec: [`docs/superpowers/specs/2026-11-16-fatigue-design.md`](../superpowers/specs/2026-11-16-fatigue-design.md).
+
+**Autorización literal del PO:**
+
+> «Con esas correcciones, autorizo el diseño funcional y los cambios protegidos necesarios, específicamente: Incorporación de las claves de cansancio en `DefaultPreset.json`. Modificaciones controladas al movimiento del cuerpo y su planificación. Incorporación del vector causal de cansancio en la capa del golpe, sin alterar los contratos protegidos existentes. Mantengamos F1 y F2 como PR independientes, con TDD, regresiones completas, AutoQA y reversibilidad.»
+
+> «Respecto de la prioridad: mantenemos esta funcionalidad después de U1–U3 y G1. No debe bloquear First Rally, First Match ni las primeras pruebas con usuarios.»
+
+**Significado:**
+- **Encargo F1/F2 a Codex**, en la cola después de U1–U3 y G1.
+- **Autorización limitada:** los cambios protegidos se autorizan solo en el alcance de la spec v2.1. No se autoriza alterar los contratos protegidos existentes ni el modo práctica, los escenarios protegidos o AutoQA.
+- **Reversibilidad:** con `fatigue.enabled = 0`, el comportamiento es idéntico al anterior.
