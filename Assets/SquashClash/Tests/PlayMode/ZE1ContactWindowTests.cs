@@ -13,6 +13,7 @@ namespace SquashClash.Runtime.Tests
     {
         private const double ContactHalfWindow=.060;
         private const float WorldTolerance=.005f;
+        private float worstDistance;private int contactSamples;
         private SwingView swing;private StrokeFx fx;private CharacterView human,rival;private bool wasLeft;
         [UnitySetUp] public IEnumerator Setup()
         {
@@ -53,7 +54,8 @@ namespace SquashClash.Runtime.Tests
         {
             var drawn=human.transform.Find("Racket").position;
             var reference=swing.Rig.Find("Racket").position;
-            Assert.That(Vector3.Distance(drawn,reference),Is.LessThanOrEqualTo(WorldTolerance),
+            float distance=Vector3.Distance(drawn,reference);worstDistance=Mathf.Max(worstDistance,distance);contactSamples++;
+            Assert.That(distance,Is.LessThanOrEqualTo(WorldTolerance),
                 $"{(left?"left":"right")}-handed {(backhand?"backhand":"forehand")}, {elapsed*1000:F3} ms after delivery: drawn head must track SwingView within 5 mm");
             Assert.That(human.RacketHand,Is.EqualTo(left?-1:1));
         }
@@ -63,7 +65,7 @@ namespace SquashClash.Runtime.Tests
         [TestCase(true,true)]
         public void HumanRacket_CoincidesThroughoutContactWindow_ForEitherHandAndStroke(bool left,bool backhand)
         {
-            Handedness.Left=left;
+            Handedness.Left=left;worstDistance=0;contactSamples=0;
             // Core's physical Drive is on -x; the cosmetic left hand reverses the visual stroke names only.
             var physicalSide=left==backhand?StrokeSide.Drive:StrokeSide.Backhand;
             // SwingView reaches its contact key 60 ms after delivery. +/-60 ms therefore covers [0,120] ms,
@@ -84,6 +86,34 @@ namespace SquashClash.Runtime.Tests
                     AssertCoincident(elapsed,left,backhand);
                 }
             }
+            TestContext.WriteLine($"E1 contact samples={contactSamples}, worst distance={worstDistance:R} m, left={left}, backhand={backhand}");
+        }
+        [TestCase(false,false)]
+        [TestCase(false,true)]
+        [TestCase(true,false)]
+        [TestCase(true,true)]
+        public void StrokeArc_SweepsInTheVisualStrokeDirection_AndFreezesAndExpires(bool left,bool backhand)
+        {
+            Handedness.Left=left;
+            var physicalSide=left==backhand?StrokeSide.Drive:StrokeSide.Backhand;
+            Deliver(physicalSide,.8f);fx.Tick(.08f);
+            var child=fx.transform.Find("Human stroke arc");
+            Assert.That(child,Is.Not.Null,"a pooled crescent makes the stroke side readable without labels");
+            var arc=child.GetComponent<LineRenderer>();Assert.That(arc.enabled,Is.True);
+            float sign=swing.ShoulderSign;
+            var start=arc.GetPosition(0);var end=arc.GetPosition(arc.positionCount-1);
+            Assert.That((end.x-start.x)*sign,backhand?Is.GreaterThan(.20f):Is.LessThan(-.20f),
+                "backhand opens out toward the contact side; forehand crosses toward the centre");
+            var contact=new Vector3(controller.LastRecord.ContactX,controller.LastRecord.ContactY,controller.LastRecord.ContactZ);
+            for(int i=0;i<arc.positionCount;i++)
+                Assert.That(arc.GetPosition(i).y,Is.LessThan(contact.y-.10f),"the crescent leaves a clear gap around the contact");
+            app.Clock.Paused=true;fx.Tick(.5f);
+            Assert.That(arc.GetPosition(0),Is.EqualTo(start));Assert.That(arc.GetPosition(arc.positionCount-1),Is.EqualTo(end));
+            Assert.That(arc.enabled,Is.True);app.Clock.Paused=false;
+            fx.Tick(.5f);Assert.That(arc.enabled,Is.False);
+            Deliver(physicalSide,.8f);fx.Tick(.08f);
+            Assert.That(fx.transform.Find("Human stroke arc"),Is.EqualTo(child),"reused for every stroke");
+            Assert.That(child.GetComponentsInChildren<Collider>(true),Is.Empty);
         }
     }
 }
