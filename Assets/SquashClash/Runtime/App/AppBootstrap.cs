@@ -55,6 +55,10 @@ namespace SquashClash.Runtime.App
         public SquashClash.Runtime.Shot.PracticeMode Practice=>GetComponent<SquashClash.Runtime.Shot.PracticeMode>();
         public SquashClash.Runtime.Rally.RallyDirector Rally=>GetComponent<SquashClash.Runtime.Rally.RallyDirector>();
         public PlaceholderPlayers Players=>placeholderPlayers;
+        // First run: true when the build carries the developer tools (dev, debug, editor). Prod shows only the player's controls.
+        public bool DevTools {get;set;}
+        public SquashClash.Runtime.Menu.FirstRunFlow FirstRun=>GetComponent<SquashClash.Runtime.Menu.FirstRunFlow>();
+        public SquashClash.Runtime.Audio.AudioScape Scape=>GetComponent<SquashClash.Runtime.Audio.AudioScape>();
         public void LaunchCurrent()
         {
             if(Practice?.TryLaunchCurrent()==true)return;
@@ -214,6 +218,7 @@ namespace SquashClash.Runtime.App
             Metrics=new MetricsLog(Path.Combine(Application.persistentDataPath,"metrics"),Build);FrameStats=new FrameTimeStats();
             thermal=gameObject.AddComponent<ThermalMonitor>();timing=gameObject.AddComponent<FrameTimingSampler>();
             var hasPanel = Type.GetType("SquashClash.DevPanel.DevPanelBootstrap, SquashClash.DevPanel") != null;
+            DevTools = hasPanel;
 #if SQUASH_DEV
             const bool squashDev = true;
 #else
@@ -277,10 +282,13 @@ namespace SquashClash.Runtime.App
             gameObject.AddComponent<SquashClash.Runtime.Shot.PracticeTask>().Initialize(this,shot);
             var practice=gameObject.AddComponent<SquashClash.Runtime.Shot.PracticeMode>();practice.Initialize(this,shot);
             var rally=gameObject.AddComponent<SquashClash.Runtime.Rally.RallyDirector>();rally.Initialize(this,shot,practice,placeholderPlayers);
-            gameObject.AddComponent<SquashClash.Runtime.Rally.RallyHud>().Initialize(this,rally,header);
+            var hud=gameObject.AddComponent<SquashClash.Runtime.Rally.RallyHud>();hud.Initialize(this,rally,header);
             gameObject.AddComponent<SquashClash.Runtime.Visual.ImpactFx>().Initialize(this,cameraRig);
             gameObject.AddComponent<SquashClash.Runtime.Visual.StrokeFx>().Initialize(this,cameraRig);
             if(Config.Source.GetBool("practice.enabled"))LaunchCurrent();
+            // Last: the start menu opens over a court that is already running (and pauses it) on a normal launch.
+            gameObject.AddComponent<SquashClash.Runtime.Audio.AudioScape>().Initialize(this);
+            gameObject.AddComponent<SquashClash.Runtime.Menu.FirstRunFlow>().Initialize(this,rally,hud);
             Debug.Log($"[SquashClash] ball ready backend={Config.Backend} visualColliders=0 localPhysicsScenes={physX.LiveInstances} config={Config.Hash} predictedSteps={Host.Prediction.States.Count-1}");
         }
 
