@@ -2788,3 +2788,11 @@ Aclaración literal del PO tras medir K de SL1:
 > «Autorizo conservar SL1 +170 ms → Failed/Late y agregar SL5 +170 ms → Valid como escenario T3. El oráculo debe incorporar K. Predeclara los escenarios en commit propio antes de AutoQA. Puedes agregar SL1 −100 ms → Valid (T3) si lo ves útil. Los escenarios V no cambian.»
 
 Esta autorización corrige únicamente la expectativa nueva SL1 +170 ms de la continuación; no cambia contrato, física, recetas ni criterios V. U1 sigue autorizado: `timing.validLimit` de 1 a 0 y hashes. Revisión independiente y aprobación de cada fusión mediante el PO; sin instalación.
+
+## U1 — una repetición de RED y corrección de predeclaración (16 nov 2026)
+
+Autorización del PO para continuar, literal:
+
+> «Autorizo una sola repetición del RED de defaults. Antes de lanzarla, verifica que no quede ningún proceso Unity (no basta con que se haya escrito el XML). Corrige la predeclaración T3: reemplaza SL1 −100 ms por SL1 −200 ms → Valid (T3), porque −100 da Valid también con V y no distingue los modos. Hazlo en un commit propio, antes de cualquier AutoQA, y regístralo. Los escenarios V no cambian. Si la repetición vuelve a fallar por el entorno, detente.»
+
+El caso nuevo queda como `T3-VALID-EARLY200-SL1`, −200 ms, Valid/None, contacto no programado. La corrida anterior de defaults conserva NotEvaluated. Sin cambio de contrato, física, escenarios V o autorización de fusión/instalación.
