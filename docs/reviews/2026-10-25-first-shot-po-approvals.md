@@ -2839,3 +2839,17 @@ Literal del PO:
 - **Zonas protegidas:** física, solver y M2-4 se autorizan solo dentro de G1 y después de esa elección.
 - **Barra de cansancio:** queda en conversación de diseño, sin implementar.
 - **Volea y golpe de fondo:** se agregan al backlog del MVP, cada uno con su propio encargo.
+
+## U1 detenido por AutoQA: el PO elige adaptar AutoQA a T3 (16 nov 2026, Chile)
+
+**El bloqueo:** Codex detuvo U1 ([PR #65](https://github.com/rafaallendes-boop/squash-clash/pull/65), solo el informe). El escenario `M24-FAILED-LATE-SL1` (+170 ms) carga los defaults y espera `Failed/Late`. Su oráculo solo modela el límite V (`|Δ| ≤ validMs`), así que con T3 pure calcula `Valid`.
+
+**Decisión literal del PO:**
+
+> «Yo quizás tomaría la segunda opción, la de adaptar AutoQA a T3. Quizás va a ser más largo, pero también eso nos va a aportar más, creo yo.»
+
+**Significado:**
+- **Escenarios V:** quedan fijados en V de forma explícita, sin cambiar sus expectativas.
+- **Cobertura nueva de T3 pure:** el oráculo aprende la regla T3 y se agregan escenarios con la configuración por defecto. Los escenarios y sus resultados esperados se predeclaran antes de ejecutar.
+- **Después** se retoma U1 con las compuertas completas.
+- **Autorización:** esta decisión permite agregar criterios a AutoQA solo para T3. No autoriza cambiar los existentes de V.
