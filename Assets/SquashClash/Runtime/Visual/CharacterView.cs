@@ -53,6 +53,11 @@ namespace SquashClash.Runtime.Visual
         public bool SplitStepping=>hopClock>=0;
         public bool TrailVisible=>trail!=null&&trail.enabled;
         public float StrokePower=>strokePower;
+        // Device robustness read-outs: which of the player's own hands holds the racket (-1 left, +1 right) and how far
+        // the wrist is from the grip. The player faces the front wall and +x is the left wall (AX-1), so the left hand
+        // is the arm on +x (the parts whose names end in "R" are named after the sign of x, not after the player's side).
+        public int RacketHand {get;private set;}=-1;
+        public float GripGap {get;private set;}
         public void Initialize(bool isHuman,Palette palette)
         {
             if(built)return;built=true;human=isHuman;
@@ -216,10 +221,16 @@ namespace SquashClash.Runtime.Visual
                 if(swingClock<0)wind=Mathf.Lerp(wind,prepare?.6f:0,blend);
             }
             float sign=racketSign,power=Mathf.Clamp01(strokePower);
+            // Device robustness, block C: a left-handed player keeps the racket in the left hand whatever side the
+            // contact is on. The player faces the front wall and the left wall is at +x (AX-1), so the left arm is the
+            // one on +x. holds: the side of the arm that holds the racket (with the option off, as before, the side of
+            // the contact). across: the contact is on the other side of the body, so the arm reaches over (a backhand).
+            bool lefty=human&&Handedness.Left;float holds=lefty?1:sign;bool across=lefty&&sign<0;
             bool striking=swingDriven?swingPhase==SwingPhase.Impact||swingPhase==SwingPhase.AirFollowThrough:swingClock>=0;
             bool missed=striking&&strokeKind==StrokeKind.Failed;
             bool winding=swingDriven?swingPhase==SwingPhase.Intention||prepare:prepare;
-            float twist=striking?(missed?58:26+20*power)*sign:winding?-(14+18*wind)*sign:0;
+            // Reaching across, the hitting shoulder turns toward the ball instead of opening away from it.
+            float twist=striking?(across?-(missed?40:48+8*power):missed?58:26+20*power)*sign:winding?-(14+18*wind)*sign:0;
             // The body turns toward where it runs; moving back it turns only side-on.
             float travelYaw=0;
             if(speed>.2f)
@@ -271,14 +282,16 @@ namespace SquashClash.Runtime.Visual
 
             // The racket. For the human it follows SwingView's path and timing; preparation, recovery and the
             // power-shaped follow-through are added on top. The rival keeps its own three poses.
-            int racketArm=sign>0?1:0;
-            shoulderRacket=hip+spine*new Vector3(sign*.205f,.50f,0);
+            int racketArm=holds>0?1:0;RacketHand=racketArm==1?-1:1;
+            shoulderRacket=hip+spine*new Vector3(holds*.205f,.50f,0);
             Vector3 target;float rate;
-            var rest=body==null?(human?ReadyPose(sign):RelaxedPose(sign)):bodyPhase==BodyPhase.Waiting?ReadyPose(sign):RelaxedPose(sign);
-            var back=BackPose(sign)+new Vector3(sign*.05f,.16f,.12f)*wind;
+            var rest=body==null?(human?ReadyPose(holds):RelaxedPose(holds)):bodyPhase==BodyPhase.Waiting?ReadyPose(holds):RelaxedPose(holds);
+            // Reaching across, the racket is taken back close to the far shoulder, where the arm can hold it.
+            var back=across?new Vector3(sign*.30f,1.30f,.30f)+new Vector3(sign*.03f,.10f,.08f)*wind:BackPose(sign)+new Vector3(sign*.05f,.16f,.12f)*wind;
             // After the contact: hard strokes finish high and across the body, soft ones short and low; a miss wraps around.
             float through=strokeClock>=0?Smooth((strokeClock-.06f)/.16f):0;
-            var finish=missed?new Vector3(-sign*.30f,-.34f,.02f):new Vector3(-sign*.22f,.36f,-.14f)*(power-.35f);
+            // (Reaching across, the follow-through opens outward, away from the body.)
+            var finish=missed?new Vector3(-sign*.30f,-.34f,.02f):new Vector3((across?sign:-sign)*.22f,.36f,-.14f)*(power-.35f);
             if(swingDriven&&swingPhase!=SwingPhase.Idle)
             {
                 target=swing.RacketLocalPosition+new Vector3(0,CentreHeight,0);rate=60;
@@ -325,6 +338,7 @@ namespace SquashClash.Runtime.Visual
                     hand+=new Vector3(s*.10f,.10f,.14f)*lunge*(missed?1:power);hint=new Vector3(s*.6f,-.4f,.7f);
                 }
                 var elbow=VisualKit.Joint(shoulder,hand,UpperArm,Forearm,hint,out var wrist);
+                if(i==racketArm)GripGap=(wrist-hand).magnitude;
                 VisualKit.Bone(upper[i],shoulder,elbow);VisualKit.Bone(lower[i],elbow,wrist);
             }
             PaintTrail(dt,striking||swingDriven&&swingPhase==SwingPhase.Intention,missed,power);

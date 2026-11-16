@@ -59,6 +59,7 @@ namespace SquashClash.Runtime.App
         public bool DevTools {get;set;}
         public SquashClash.Runtime.Menu.FirstRunFlow FirstRun=>GetComponent<SquashClash.Runtime.Menu.FirstRunFlow>();
         public SquashClash.Runtime.Audio.AudioScape Scape=>GetComponent<SquashClash.Runtime.Audio.AudioScape>();
+        public SquashClash.Runtime.Audio.MusicPlayer Music=>GetComponent<SquashClash.Runtime.Audio.MusicPlayer>();
         public void LaunchCurrent()
         {
             if(Practice?.TryLaunchCurrent()==true)return;
@@ -238,6 +239,8 @@ namespace SquashClash.Runtime.App
             root.style.flexGrow = 1;
             root.style.alignItems = Align.Center;
             root.style.paddingTop = 60;
+            // Device robustness: from here on the top padding follows the phone's safe area.
+            gameObject.AddComponent<SafeAreaLayout>().Initialize(root);
             root.style.backgroundColor = Color.clear;
             var header = new VisualElement { name = "boot-header", pickingMode = PickingMode.Ignore };
             header.style.alignItems = Align.Center;
@@ -289,6 +292,7 @@ namespace SquashClash.Runtime.App
             // Last: the start menu opens over a court that is already running (and pauses it) on a normal launch.
             gameObject.AddComponent<SquashClash.Runtime.Audio.AudioScape>().Initialize(this);
             gameObject.AddComponent<SquashClash.Runtime.Menu.FirstRunFlow>().Initialize(this,rally,hud);
+            gameObject.AddComponent<SquashClash.Runtime.Audio.MusicPlayer>().Initialize(this);
             Debug.Log($"[SquashClash] ball ready backend={Config.Backend} visualColliders=0 localPhysicsScenes={physX.LiveInstances} config={Config.Hash} predictedSteps={Host.Prediction.States.Count-1}");
         }
 
@@ -322,13 +326,20 @@ namespace SquashClash.Runtime.App
         {
             repeatElapsed=0;discardRepeatResume=true;
             if(paused)FlushFrames();diagnosticsPaused=paused;discardDiagnosticsResume=true;
-            if(paused)GetComponent<ResumeOverlay>().Suspend();
+            if(paused)SuspendForSystem();
+        }
+        // Device robustness: a match pauses into the player's own pause card and a menu already holds the game paused;
+        // everything else (practice, developer pauses, the end of a match) keeps the "Toca para continuar" layer.
+        private void SuspendForSystem()
+        {
+            var flow=FirstRun;
+            if(flow==null||!flow.HoldSystemPause())GetComponent<ResumeOverlay>().Suspend();
         }
         private void OnApplicationFocus(bool focused)
         {
             repeatElapsed=0;discardRepeatResume=true;
             if(!focused)FlushFrames();diagnosticsFocused=focused;discardDiagnosticsResume=true;
-            if(!focused)GetComponent<ResumeOverlay>().Suspend();
+            if(!focused)SuspendForSystem();
         }
         private void OnDestroy()
         {

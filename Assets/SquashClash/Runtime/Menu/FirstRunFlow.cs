@@ -2,6 +2,7 @@ using SquashClash.Core.Rally;
 using SquashClash.Runtime.App;
 using SquashClash.Runtime.Audio;
 using SquashClash.Runtime.Rally;
+using SquashClash.Runtime.Visual;
 using UnityEngine;
 using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Menu
@@ -24,8 +25,12 @@ namespace SquashClash.Runtime.Menu
         public static void ResetOpenAtBoot()=>openAtBoot=null;
         private static readonly string[] LevelNames={"easy","medium","hard"},LevelTexts={"Fácil","Media","Difícil"};
         private AppBootstrap app;private RallyDirector rally;private RallyHud hud;
-        private VisualElement root,menu,header,pause;private Button play,practice,menuSound,pauseSound;private readonly Button[] levels=new Button[3];
+        private VisualElement root,menu,header,pause;private Button play,practice,menuSound,pauseSound,menuMusic,pauseMusic,menuHand;private readonly Button[] levels=new Button[3];
         private int shownKey=-1;
+        private SafeAreaLayout safeArea;private Label build;
+        // Space between the safe area and the menu's content (the header's top edge is the reference at the top).
+        private const float MenuTop=10,MenuBottom=23,BuildBottom=6;
+        private void PlaceBuild(){if(build!=null&&safeArea!=null)build.style.bottom=Mathf.Ceil(safeArea.Bottom+BuildBottom);}
         public const int TutorialSteps=3;
         public const string TutorialSeenKey="sc.firstRun.tutorialSeen";
         // M2-4 (M24Model): the aim is fixed where the finger lands on the front wall; pulling down sets the power;
@@ -53,7 +58,15 @@ namespace SquashClash.Runtime.Menu
             if(this.app!=null)return;this.app=app;this.rally=rally;this.hud=hud;
             root=app.GetComponent<UIDocument>().rootVisualElement;
             header=root.Q("boot-header");
-            BuildMenu();BuildTutorial();BuildPause();SelectLevel(Level);hud.MenuRequested+=OpenMenu;Refresh();
+            BuildMenu();BuildTutorial();BuildPause();SelectLevel(Level);hud.MenuRequested+=OpenMenu;
+            // Device robustness: the layers cover the whole screen; what they show stays inside the safe area.
+            safeArea=app.GetComponent<SafeAreaLayout>();
+            if(safeArea!=null)
+            {
+                safeArea.Fit(menu,MenuTop,MenuBottom);safeArea.Fit(tutorial,MenuTop,MenuBottom);safeArea.Fit(pause,float.NaN,0);
+                safeArea.Changed+=PlaceBuild;PlaceBuild();
+            }
+            Refresh();
             if(OpenAtBoot)OpenMenu();
         }
         private void BuildMenu()
@@ -70,13 +83,22 @@ namespace SquashClash.Runtime.Menu
             }
             play=Add(menu,"menu-play","Jugar",Play);play.AddToClassList("sc-button--primary");play.AddToClassList("sc-menu-play");
             Add(menu,"menu-howto","¿Cómo se juega?",()=>OpenTutorial(false)).AddToClassList("sc-menu-wide");
-            menuSound=Add(menu,"menu-sound","",ToggleSound);menuSound.AddToClassList("sc-menu-wide");
+            // Sound and music: two switches side by side.
+            var audio=Row(menu,"menu-audio","sc-menu-pair");
+            menuSound=Add(audio,"menu-sound","",ToggleSound);menuSound.AddToClassList("sc-menu-half");
+            menuMusic=Add(audio,"menu-music","",ToggleMusic);menuMusic.AddToClassList("sc-menu-half");
+            // Cosmetic: which hand the drawn player holds the racket in.
+            menuHand=Add(menu,"menu-hand","",ToggleHand);menuHand.AddToClassList("sc-menu-wide");
             practice=Add(menu,"menu-practice","Práctica (dev)",ClosePractice);practice.AddToClassList("sc-menu-wide");
-            var build=Text("v"+app.Build.Label,"sc-menu-build");build.name="menu-build";menu.Add(build);
+            build=Text("v"+app.Build.Label,"sc-menu-build");build.name="menu-build";menu.Add(build);
         }
         private static Button Add(VisualElement parent,string name,string text,System.Action action)
         {
             var button=new Button(action){name=name,text=text};button.AddToClassList("sc-button");parent.Add(button);return button;
+        }
+        private static VisualElement Row(VisualElement parent,string name,string style)
+        {
+            var row=new VisualElement{name=name,pickingMode=PickingMode.Ignore};row.AddToClassList(style);parent.Add(row);return row;
         }
         private static Label Text(string text,string style){var label=new Label(text){pickingMode=PickingMode.Ignore};label.AddToClassList(style);return label;}
         // Menu emblem: the front wall with its lines and a ball coming off it. Vector, drawn once per layout.
@@ -184,16 +206,37 @@ namespace SquashClash.Runtime.Menu
             var title=Text("PAUSA","sc-pause-title");title.name="pause-title";card.Add(title);
             var resume=Add(card,"pause-continue","Continuar",Continue);resume.AddToClassList("sc-button--primary");resume.AddToClassList("sc-pause-button");
             Add(card,"pause-menu","Salir al menú",LeaveToMenu).AddToClassList("sc-pause-button");
-            pauseSound=Add(card,"pause-sound","",ToggleSound);pauseSound.AddToClassList("sc-pause-button");
+            var audio=Row(card,"pause-audio","sc-pause-pair");
+            pauseSound=Add(audio,"pause-sound","",ToggleSound);pauseSound.AddToClassList("sc-pause-half");
+            pauseMusic=Add(audio,"pause-music","",ToggleMusic);pauseMusic.AddToClassList("sc-pause-half");
             ShowSound();
         }
-        // "Sonido": one switch for the whole game, in the menu and in the pause card.
+        // "Sonido" (every sound effect of the game) and "Música" (the two loops): one switch each, in the menu and in the pause card.
         public void ToggleSound(){AudioScape.SoundOn=!AudioScape.SoundOn;ShowSound();}
-        private void ShowSound(){string text=AudioScape.SoundOn?"Sonido: sí":"Sonido: no";if(menuSound!=null)menuSound.text=text;if(pauseSound!=null)pauseSound.text=text;}
+        public void ToggleMusic(){MusicPlayer.MusicOn=!MusicPlayer.MusicOn;ShowSound();}
+        // "Mano": only what the figure looks like (Handedness). Chosen in the menu.
+        public void ToggleHand(){Handedness.Left=!Handedness.Left;ShowSound();}
+        private void ShowSound()
+        {
+            string text=AudioScape.SoundOn?"Sonido: sí":"Sonido: no";if(menuSound!=null)menuSound.text=text;if(pauseSound!=null)pauseSound.text=text;
+            text=MusicPlayer.MusicOn?"Música: sí":"Música: no";if(menuMusic!=null)menuMusic.text=text;if(pauseMusic!=null)pauseMusic.text=text;
+            if(menuHand!=null)menuHand.text=Handedness.Left?"Mano: zurdo":"Mano: diestro";
+        }
         // The pause card: only while a match is paused by the player's own button.
         public bool PauseVisible=>app!=null&&Screen==FirstRunScreen.None&&rally.Active&&rally.Phase!=RallyPhase.MatchOver&&app.Clock.Paused&&hud.PausedByPlayer;
         public void Continue(){if(PauseVisible){hud.TogglePause();Refresh();}}
         public void LeaveToMenu(){if(PauseVisible)OpenMenu();}
+        // Device robustness: an interruption (home, call, notification centre, screen lock). True when this flow keeps
+        // the game paused behind a screen of its own, so the system's "Toca para continuar" layer is not added on top.
+        // A match in play pauses itself into the player's pause card and waits there for Continuar.
+        public bool HoldSystemPause()
+        {
+            if(app==null)return false;
+            if(Screen!=FirstRunScreen.None||PauseVisible)return true;
+            if(!rally.Active||rally.Phase==RallyPhase.MatchOver||app.Clock.Paused)return false;
+            hud.TogglePause();Refresh();
+            return true;
+        }
         public void OpenMenu()
         {
             if(app==null)return;
@@ -244,6 +287,7 @@ namespace SquashClash.Runtime.Menu
         private void OnDestroy()
         {
             if(hud!=null)hud.MenuRequested-=OpenMenu;
+            if(safeArea!=null)safeArea.Changed-=PlaceBuild;
             menu?.RemoveFromHierarchy();tutorial?.RemoveFromHierarchy();pause?.RemoveFromHierarchy();
         }
     }
