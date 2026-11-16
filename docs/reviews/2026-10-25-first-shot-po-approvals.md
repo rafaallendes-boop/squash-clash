@@ -2886,3 +2886,9 @@ Spec: [`docs/superpowers/specs/2026-11-16-fatigue-design.md`](../superpowers/spe
 - Se permite una preparación y un remate visuales propios en `CharacterView`, para ambos golpes, conservando la coincidencia con `SwingView` durante la ventana de contacto. No se autoriza modificar `SwingView` ni las zonas excluidas en el literal.
 - Codex predeclara ventana, referencia temporal y tolerancia en el [informe E1](2026-11-16-e1-forehand-backhand.md); debe verificarlas para los cuatro casos de golpe/mano. La propuesta no acredita aún un resultado.
 - AutoQA no es obligatorio mientras se respete ese alcance. Las suites esperan a que el PO libere Unity tras U1–U3. No se autoriza fusión ni instalación.
+
+**Ventana aprobada y Unity liberado por el PO (16 nov):**
+
+> «OK con ±60 ms y 5 mm; Unity Libre»
+
+Se aprueban los valores propuestos en E1: ventana centrada en la llegada a la clave `Contact` de `SwingView` (60 ms tras la entrega), con 5 mm de tolerancia en espacio mundo. Unity queda disponible para ejecutar E1, de forma exclusiva y secuencial. No se autoriza fusión ni instalación.
