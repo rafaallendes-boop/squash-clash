@@ -13,6 +13,47 @@ namespace SquashClash.Runtime.Tests
     {
         [UnityTearDown] public IEnumerator Cleanup()=>Shutdown();
         private void MarkTutorialSeen(){PlayerPrefs.SetInt("sc.firstRun.tutorialSeen",1);}
+        [UnityTest] public IEnumerator SlingStatus_DisplayFollowsTheCompiledDevDefine_WithoutStoppingUpdates()
+        {
+            yield return Boot(false);
+            var status=Find<Label>("sling-status");
+#if SQUASH_DEV
+            Assert.That(status.resolvedStyle.display,Is.EqualTo(DisplayStyle.Flex));
+            Assert.That(Shown(status),Is.True);
+#else
+            Assert.That(status.resolvedStyle.display,Is.EqualTo(DisplayStyle.None),"prod has no technical line");
+            Assert.That(status.worldBound.height,Is.EqualTo(0),"prod reserves no space");
+#endif
+        }
+        [UnityTest] public IEnumerator LevelSelection_IsSaved_AndRestoredOnANewLaunch()
+        {
+            yield return Boot(true);
+            foreach(var name in new[]{"easy","hard","medium"})
+            {
+                Click("menu-level-"+name);
+                var selected=flow.Level;
+                Assert.That(PlayerPrefs.GetInt("sc.firstRun.level",-1),Is.EqualTo((int)selected),"selection is saved");
+                int saved=PlayerPrefs.GetInt("sc.firstRun.level",-1);
+                yield return Shutdown();yield return Boot(true,saved);
+                Assert.That(flow.Level,Is.EqualTo(selected),"a new flow reads the saved choice");
+                Assert.That(Find<Button>("menu-level-"+name).ClassListContains("sc-level--selected"),Is.True);
+                MarkTutorialSeen();Click("menu-play");Refresh();yield return null;
+                Assert.That(rally.Level,Is.EqualTo(selected),"Jugar uses the restored level");
+                flow.OpenMenu();Refresh();
+            }
+        }
+        [UnityTest] public IEnumerator InvalidSavedLevel_FallsBackToMedium()
+        {
+            bool booted=false;
+            foreach(int invalid in new[]{-1,3,int.MinValue,int.MaxValue})
+            {
+                if(booted)yield return Shutdown();
+                yield return Boot(true,invalid);
+                booted=true;
+                Assert.That(flow.Level,Is.EqualTo(AiLevel.Medium));
+                Assert.That(Find<Button>("menu-level-medium").ClassListContains("sc-level--selected"),Is.True);
+            }
+        }
         [UnityTest] public IEnumerator NormalLaunch_OpensTheMenu_WithTheGamePausedAndNoMatch()
         {
             yield return Boot(true);

@@ -41,9 +41,10 @@ namespace SquashClash.Runtime.Tests
         }
 #endif
         // openAtBoot: what a normal launch does (true) or what batch mode does by default (null leaves the default).
-        protected IEnumerator Boot(bool? openAtBoot)
+        protected IEnumerator Boot(bool? openAtBoot,int? savedLevel=null)
         {
             ClearPrefs();previousVolume=AudioListener.volume;
+            if(savedLevel.HasValue)PlayerPrefs.SetInt("sc.firstRun.level",savedLevel.Value);
             if(openAtBoot.HasValue)FirstRunFlow.OpenAtBoot=openAtBoot.Value;else FirstRunFlow.ResetOpenAtBoot();
             yield return PlayModeTestWorld.ClearApp();
 #if UNITY_EDITOR
@@ -74,7 +75,7 @@ namespace SquashClash.Runtime.Tests
             if(sizeGroup!=null&&customIndex>=0)sizeGroup.GetType().GetMethod("RemoveCustomSize").Invoke(sizeGroup,new object[]{customIndex});
 #endif
         }
-        private static void ClearPrefs(){foreach(var key in new[]{"sc.firstRun.tutorialSeen","sc.firstRun.sound"})PlayerPrefs.DeleteKey(key);}
+        private static void ClearPrefs(){foreach(var key in new[]{"sc.firstRun.tutorialSeen","sc.firstRun.sound","sc.firstRun.level"})PlayerPrefs.DeleteKey(key);}
         // An element the screen must have: its absence is a failed assertion, never a null reference.
         protected T Find<T>(string name) where T:VisualElement
         {

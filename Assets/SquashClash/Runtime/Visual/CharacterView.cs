@@ -221,11 +221,9 @@ namespace SquashClash.Runtime.Visual
                 if(swingClock<0)wind=Mathf.Lerp(wind,prepare?.6f:0,blend);
             }
             float sign=racketSign,power=Mathf.Clamp01(strokePower);
-            // Device robustness, block C: a left-handed player keeps the racket in the left hand whatever side the
-            // contact is on. The player faces the front wall and the left wall is at +x (AX-1), so the left arm is the
-            // one on +x. holds: the side of the arm that holds the racket (with the option off, as before, the side of
-            // the contact). across: the contact is on the other side of the body, so the arm reaches over (a backhand).
-            bool lefty=human&&Handedness.Left;float holds=lefty?1:sign;bool across=lefty&&sign<0;
+            // The human keeps the chosen hand on either contact side: left on +x, right on -x (AX-1).
+            // Across the body, that arm reaches over for a backhand. The rival keeps the contact-side hand.
+            float holds=human?(Handedness.Left?1:-1):sign;bool across=human&&holds!=sign;
             bool striking=swingDriven?swingPhase==SwingPhase.Impact||swingPhase==SwingPhase.AirFollowThrough:swingClock>=0;
             bool missed=striking&&strokeKind==StrokeKind.Failed;
             bool winding=swingDriven?swingPhase==SwingPhase.Intention||prepare:prepare;

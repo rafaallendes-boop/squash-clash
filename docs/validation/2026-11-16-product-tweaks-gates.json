@@ -1,0 +1,153 @@
+{
+  "base": "22bb2d521645612b106246101cba3bafa0c58ad5",
+  "targetedGreen": {
+    "command": "scripts/test.sh playmode 'ZFirstRun|ZHandednessTests'",
+    "exitCode": 0,
+    "counts": {
+      "total": 27,
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0
+    },
+    "xmlSha256": "f6adf3a6ae456f20110e66847d1e9742bd89ea8a877488382a355a6e7a0c7b3a"
+  },
+  "fullEditMode": {
+    "command": "scripts/test.sh editmode",
+    "exitCode": 0,
+    "counts": {
+      "total": 737,
+      "passed": 737,
+      "failed": 0,
+      "skipped": 0
+    },
+    "xmlSha256": "7b64cc4cd56d3dd90f44ac974aa9cf4cc2f41e8ea7f3f00d28fee6c4caaba1ad",
+    "sourceCommit": "2e838da"
+  },
+  "fullPlayMode": {
+    "command": "scripts/test.sh playmode",
+    "exitCode": 0,
+    "counts": {
+      "total": 548,
+      "passed": 548,
+      "failed": 0,
+      "skipped": 0
+    },
+    "xmlSha256": "7afdfd142c0fbcfab921896a34b80a0f45399e59c8d069ed8ac72ec664d162bb",
+    "sourceCommit": "cd0b0c3",
+    "failures": []
+  },
+  "autoqa": {
+    "gitHash": "4efed34649932c5fa6a7f25d2dbd0dbb7bb24155",
+    "dirty": false,
+    "gate": "PASS",
+    "counts": {
+      "PASS": 18,
+      "FAIL": 0,
+      "INCONCLUSIVE": 0,
+      "NOT_EVALUATED": 0
+    },
+    "canary": {
+      "expectedFail": true,
+      "observed": "FAIL"
+    },
+    "integrity": {
+      "hashesVerified": true,
+      "presetsUnchanged": true,
+      "guardPassed": true,
+      "evidenceSha256Ok": true
+    },
+    "escalationLevel": 1,
+    "exitCode": 0,
+    "command": "scripts/autoqa.sh mvp",
+    "tests": {
+      "total": 85,
+      "passed": 85,
+      "failed": 0,
+      "skipped": 0
+    },
+    "summarySha256": "33179da4c37291a1500a99fccb95ea695a82ee44df30150028199ab09da79d14",
+    "restorationSha256": "3f01656d6c9117bda8c32bf03aab57885ec8659b45ebaf4f138de808324dc8f5",
+    "statusUnchanged": true
+  },
+  "release": {
+    "command": "scripts/check-release.sh",
+    "exitCode": 0,
+    "result": "RELEASE-CHECK: OK",
+    "profiles": [
+      {
+        "profile": "dev",
+        "metadata": {
+          "version": "0.1.0",
+          "gitHash": "4efed34",
+          "profile": "dev",
+          "builtAtUtc": "2026-11-16T17:45:05.0482490Z",
+          "unityVersion": "6000.3.27f1",
+          "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+          "gitDirty": false
+        },
+        "freshExport": true,
+        "productIl2CppModules": [
+          "g_SquashClash_Core_CodeGenModule",
+          "g_SquashClash_DevPanel_CodeGenModule",
+          "g_SquashClash_Runtime_CodeGenModule"
+        ],
+        "nativeThermalBridge": true,
+        "runtimeThermalBridge": true,
+        "runtimeHapticsBridge": true,
+        "hapticsSymbols": true,
+        "evidenceSha256": "8787526e334cccb4f9eafc144eb8675c0f5cb22916ff2280bb8f8f576483044d",
+        "runtimeCppSha256": "1529781c5b79d4a7081ea2ea8d34f0986996b4f7a5f6fb5186fb836a1c9d2f75",
+        "slingStatusCompiledDisplay": "Flex/None según enabled (condicional original)"
+      },
+      {
+        "profile": "prod",
+        "metadata": {
+          "version": "0.1.0",
+          "gitHash": "4efed34",
+          "profile": "prod",
+          "builtAtUtc": "2026-11-16T17:45:28.7901190Z",
+          "unityVersion": "6000.3.27f1",
+          "projectPhysics": "EnhancedDeterminism=True; fastMotionThreshold=0.01; bounceThreshold=0.1; Unity=6000.3.27f1",
+          "gitDirty": false
+        },
+        "freshExport": true,
+        "productIl2CppModules": [
+          "g_SquashClash_Core_CodeGenModule",
+          "g_SquashClash_Runtime_CodeGenModule"
+        ],
+        "nativeThermalBridge": false,
+        "runtimeThermalBridge": true,
+        "runtimeHapticsBridge": true,
+        "hapticsSymbols": true,
+        "evidenceSha256": "dea27e30be7675060a666c8d0b79b157ab5d6fce8b4f7c8e6241de747fd6cd96",
+        "runtimeCppSha256": "93ba424505d3d8929175ed9616873b89f429fa902427a7b84fa129317ca1ef9c",
+        "slingStatusCompiledDisplay": "None incondicional"
+      }
+    ]
+  },
+  "projectSettingsRestored": true,
+  "estado": "Compuertas completas: EditMode 737/737, PlayMode 548/548, AutoQA PASS/0/1 dirty=false y check-release dev/prod OK. Solo documentación posterior a 4efed34.",
+  "previousFullPlayMode": {
+    "command": "scripts/test.sh playmode",
+    "exitCode": 1,
+    "counts": {
+      "total": 548,
+      "passed": 546,
+      "failed": 2,
+      "skipped": 0
+    },
+    "xmlSha256": "603fed8fa018d29bc51853560d352b3794462285c597b4df34aee1d5657b518c",
+    "sourceCommit": "2e838da",
+    "failures": [
+      {
+        "test": "SquashClash.Runtime.Tests.ReticleVisibilityTests.M24FeedbackAndPlainCancelGuide_ClearProjectedFrontisAtNativeViewport",
+        "message": "  sling-status\n  Expected: True\n  But was:  False\n"
+      },
+      {
+        "test": "SquashClash.Runtime.Tests.ReticleVisibilityTests.SlingFeedbackAndStatus_StayOutsideFrontis_AndTargetMatchesScreenSide",
+        "message": "  sling-status\n  Expected: True\n  But was:  False\n"
+      }
+    ]
+  },
+  "devAssertionsUnchangedAfterPreprocessing": true
+}

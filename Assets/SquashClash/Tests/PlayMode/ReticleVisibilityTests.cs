@@ -157,7 +157,11 @@ namespace SquashClash.Runtime.Tests
             var front=FrontisRect();
             foreach(var name in new[]{"sling-status","shot-overlay","sling-ok","sling-premature"})
             {
-                var e=root.Q(name);Assert.That(e,Is.Not.Null,name);Assert.That(Shown(e),Is.True,name);
+                var e=root.Q(name);Assert.That(e,Is.Not.Null,name);
+#if !SQUASH_DEV
+                if(name=="sling-status"){Assert.That(Shown(e),Is.False,name);continue;}
+#endif
+                Assert.That(Shown(e),Is.True,name);
                 Assert.That(e.worldBound.Overlaps(front),Is.False,name+" must clear the whole frontis");
                 Assert.That(e.worldBound.yMax,Is.LessThanOrEqualTo(bar.worldBound.yMin));
             }
@@ -221,7 +225,11 @@ namespace SquashClash.Runtime.Tests
             Assert.That(preview.ArmSlingBlock("B1"),Is.True);preview.SlingTrials.CompleteAttempt();yield return new WaitForSecondsRealtime(.25f);yield return null;
             foreach(string name in new[]{"shot-overlay","sling-status","sling-ok","sling-premature","sling-failed"})
             {
-                var e=root.Q(name);Assert.That(Shown(e),Is.True,name);Assert.That(e.worldBound.Overlaps(FrontisRect()),Is.False,name);
+                var e=root.Q(name);
+#if !SQUASH_DEV
+                if(name=="sling-status"){Assert.That(e,Is.Not.Null,name);Assert.That(Shown(e),Is.False,name);continue;}
+#endif
+                Assert.That(Shown(e),Is.True,name);Assert.That(e.worldBound.Overlaps(FrontisRect()),Is.False,name);
                 Assert.That(e.worldBound.yMax,Is.LessThanOrEqualTo(bar.worldBound.yMin),name);
             }
             Assert.That(root.Q<Button>("sling-premature").text,Is.EqualTo("Apoyo sin querer"));
