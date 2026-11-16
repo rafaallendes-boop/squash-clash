@@ -26,3 +26,7 @@ Hashes de defaults/P0/SL5 T3 medidos en Unity antes de AutoQA: `430da2faa818` / 
 ## Alcance conservado al detenerse
 
 El catálogo V `mvp.json`, Core, solver, contrato, reloj y el test fallido no difieren de `a1fa915`. Único cambio de producto: `DefaultPreset.json` validLimit de 1 a 0. AutoQA V/T3 aún no ejecutado; no existe PASS de juego para esta entrega. Check-release, build nativa, instalación, acceso al iPhone y fusión no realizados. ProjectSettings restaurado con `git checkout -- ProjectSettings` después de salir completamente Unity; verificación final sin procesos de editor ni auxiliares. U3 y U2 no se inician por esta parada. Revisión independiente de Claude pendiente, coordinada por el PO.
+
+## Decisión posterior del PO
+
+El PO identifica la falla como recurrencia de **CRP-01** (12 nov; mismas cifras y test sin cambios) y la trata como **intermitente ajena a U1, sin causa demostrada y sin corregirla en #65**. Referencia histórica: `docs/reviews/2026-11-12-clockmap-rollback-precision.md`. Autoriza una nueva PlayMode completa; si pasa con el recuento completo, seguir AutoQA V/T3 (PASS/0/nivel 1 cada uno) y check-release. Si reaparece CRP-01 u otra falla, detenerse. Se conserva íntegra la evidencia anterior; no se reclasifica su 557/558 como PASS. Literal en el registro de aprobaciones.

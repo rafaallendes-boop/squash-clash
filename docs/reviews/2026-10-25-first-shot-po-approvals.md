@@ -2796,3 +2796,11 @@ Autorización del PO para continuar, literal:
 > «Autorizo una sola repetición del RED de defaults. Antes de lanzarla, verifica que no quede ningún proceso Unity (no basta con que se haya escrito el XML). Corrige la predeclaración T3: reemplaza SL1 −100 ms por SL1 −200 ms → Valid (T3), porque −100 da Valid también con V y no distingue los modos. Hazlo en un commit propio, antes de cualquier AutoQA, y regístralo. Los escenarios V no cambian. Si la repetición vuelve a fallar por el entorno, detente.»
 
 El caso nuevo queda como `T3-VALID-EARLY200-SL1`, −200 ms, Valid/None, contacto no programado. La corrida anterior de defaults conserva NotEvaluated. Sin cambio de contrato, física, escenarios V o autorización de fusión/instalación.
+
+## U1 — recurrencia CRP-01 y nueva PlayMode autorizada (16 nov 2026)
+
+Decisión literal del PO:
+
+> «La falla de `ReticleVisibilityTests.DevOpen_ProtocolActionsRemainUsable_AndCloseDevBeforeArming` es la recurrencia de CRP-01 (mismas cifras que el 12 nov, 788,198853 frente a 674,663208, con el test sin cambios): la trato como intermitente y ajena a U1, sin causa demostrada y sin corregirla en #65. Regístralo así. Autorizo una nueva PlayMode completa. Si da el recuento completo, sigue con AutoQA `--suite v` y `--suite t3` (PASS/0/nivel 1 cada uno) y check-release. Si CRP-01 u otra falla vuelve a aparecer, detente y repórtalo. U3 y U2 siguen después, en el orden del encargo.»
+
+La clasificación como intermitente ajena a U1 es decisión del PO; no demuestra causa ni corrige el retículo. Se conserva la corrida 557/558 y su evidencia. Se autoriza una nueva PlayMode completa, sin modificar el test. Solo con el recuento completo aprobado se continúa AutoQA V, T3 y check-release secuencialmente. Cualquier recurrencia u otra falla vuelve a detener el trabajo.
