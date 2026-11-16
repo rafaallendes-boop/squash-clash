@@ -184,3 +184,9 @@
 .sc-pause-card { border-color: rgba(255, 255, 255, 0.25); }
 .sc-pause-title { font-size: 26px; -unity-font-style: bold; letter-spacing: 4px; color: rgb(255, 255, 255); margin-bottom: 18px; }
 .unity-button.sc-pause-button { width: 240px; height: 54px; font-size: 18px; margin-bottom: 10px; }
+
+/* Device robustness: sound and music switches side by side, in the menu and in the pause card. */
+.sc-menu-pair { flex-direction: row; justify-content: space-between; width: 304px; margin-bottom: 10px; flex-shrink: 0; }
+.unity-button.sc-menu-half { width: 148px; height: 50px; font-size: 15px; margin-left: 0; margin-right: 0; }
+.sc-pause-pair { flex-direction: row; justify-content: space-between; width: 240px; margin-bottom: 10px; flex-shrink: 0; }
+.unity-button.sc-pause-half { width: 116px; height: 54px; font-size: 15px; margin-left: 0; margin-right: 0; }
