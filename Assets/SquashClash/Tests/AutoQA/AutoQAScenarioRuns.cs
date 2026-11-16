@@ -53,7 +53,7 @@ namespace SquashClash.AutoQA
             if(!s.canary&&(!string.IsNullOrEmpty(filter)&&filter!=s.id||!string.IsNullOrEmpty(rep)&&rep!=repetition.ToString()))yield break;
             var attempt=new Attempt{runId=Path.GetFileName(dir),scenario=new ScenarioRef{id=s.id,repetition=repetition,sha256=EvidenceCollector.ShaText(JsonUtility.ToJson(s)),canary=s.canary},
                 build=new BuildMeta{gitHash=System.Environment.GetEnvironmentVariable("AUTOQA_GIT_HASH"),dirty=System.Environment.GetEnvironmentVariable("AUTOQA_DIRTY")=="true",unity=Application.unityVersion},
-                repro="scripts/autoqa.sh mvp --scenario "+s.id+" --repetition "+repetition,verdict="NOT_EVALUATED"};
+                repro="scripts/autoqa.sh mvp --suite "+(s.useDefaults?"t3":"v")+" --scenario "+s.id+" --repetition "+repetition,verdict="NOT_EVALUATED"};
             attempts.Add(attempt);if(!CanExecute(blocked,s.canary,integrity.guardPassed,error)){attempt.failure="stopped-after-prior-failure";yield break;}
             yield return null;yield return null;yield return null;
             using(var driver=new DeterministicDriver())
