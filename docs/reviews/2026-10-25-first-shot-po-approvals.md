@@ -2873,3 +2873,16 @@ Spec: [`docs/superpowers/specs/2026-11-16-fatigue-design.md`](../superpowers/spe
 - **Encargo F1/F2 a Codex**, en la cola después de U1–U3 y G1.
 - **Autorización limitada:** los cambios protegidos se autorizan solo en el alcance de la spec v2.1. No se autoriza alterar los contratos protegidos existentes ni el modo práctica, los escenarios protegidos o AutoQA.
 - **Reversibilidad:** con `fatigue.enabled = 0`, el comportamiento es idéntico al anterior.
+
+## E1: derecho y revés estéticos (16 nov 2026, Chile)
+
+**Autorización literal del PO:**
+
+> «Se autoriza que CharacterView dibuje su propia preparación y su propio remate para el derecho y el revés, con SwingView intacto (claves, trayectoria, tiempo y fase).
+> Condición: en la ventana de contacto (por ejemplo ±60 ms alrededor del contacto entregado por SwingView; propón el valor y justifícalo), la cabeza de la raqueta dibujada coincide con la de SwingView dentro de una tolerancia pequeña (propón cuál). Agrega un test que lo verifique para el derecho y el revés, del humano diestro y zurdo.
+> El rival es diestro fijo. Sin cambios en BodyFrame, la planificación, el gesto, el reloj, el timing, la física, la IA ni los contratos. AutoQA no es obligatorio si se cumple lo anterior; decláralo. Las suites, cuando Unity quede libre después de U1–U3.»
+
+**Significado:**
+- Se permite una preparación y un remate visuales propios en `CharacterView`, para ambos golpes, conservando la coincidencia con `SwingView` durante la ventana de contacto. No se autoriza modificar `SwingView` ni las zonas excluidas en el literal.
+- Codex predeclara ventana, referencia temporal y tolerancia en el [informe E1](2026-11-16-e1-forehand-backhand.md); debe verificarlas para los cuatro casos de golpe/mano. La propuesta no acredita aún un resultado.
+- AutoQA no es obligatorio mientras se respete ese alcance. Las suites esperan a que el PO libere Unity tras U1–U3. No se autoriza fusión ni instalación.
