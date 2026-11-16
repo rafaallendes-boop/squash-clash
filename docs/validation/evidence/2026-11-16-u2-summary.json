@@ -1,0 +1,25 @@
+{
+  "base": "10bcaecc9d0edb96e5ca8740cb705c28027b469b",
+  "redCodeHead": "d575d69",
+  "red": {
+    "total": "6",
+    "passed": "0",
+    "failed": "6",
+    "skipped": "0",
+    "start-time": "2026-11-16 23:47:45Z",
+    "end-time": "2026-11-16 23:47:45Z",
+    "xmlSha256": "8f9575b3795bd5c5e13c75ccf7458f85bb659ede1be722d3719ebe25ab01eaba"
+  },
+  "operatorIncident": {
+    "guardReportedEditorOrHelperProcesses": 2,
+    "pidsAndCommandsRecorded": false,
+    "guardReturnedNonzero": true,
+    "testStartedDespiteGuard": true,
+    "exclusivityProven": false,
+    "causeDemonstrated": false,
+    "retry": false
+  },
+  "implemented": false,
+  "nativeArchiveOrExportOrUpload": false,
+  "credentialsRequested": false
+}
