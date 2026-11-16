@@ -33,13 +33,15 @@ namespace SquashClash.Runtime.Tests
             Assert.That(root.resolvedStyle.paddingTop,Is.InRange(edge-.06f,edge+1f),"the HUD starts right under the inset, or at a small margin without one");
             Assert.That(Find("boot-header").worldBound.yMin,Is.GreaterThanOrEqualTo(Safe.yMin-.5f));
         }
+        // The mechanism, not a real phone: no 16:9 iPhone has insets. With the player's menu (the developer one has a
+        // button more and would not fit a 16:9 screen that also had a notch and a home indicator).
         [UnityTest] public IEnumerator SafeArea_FollowsAChangeOfInsets()
         {
-            yield return Boot(Phones[0],true);yield return Settle();
+            yield return Boot(Phones[0],true);app.DevTools=false;yield return Settle();
             float before=Find("boot-header").worldBound.yMin;
-            phone=new PhoneScreen("SE with a taller inset",phone.Width,phone.Height,140,90);
+            phone=new PhoneScreen("SE with insets",phone.Width,phone.Height,100,60);
             SafeAreaLayout.Simulate(new Vector2(phone.Width,phone.Height),phone.SafePixels);yield return Settle();
-            Assert.That(Find("boot-header").worldBound.yMin,Is.GreaterThan(before+40),"the header moved down with the inset");
+            Assert.That(Find("boot-header").worldBound.yMin,Is.GreaterThan(before+30),"the header moved down with the inset");
             AssertFits("menu-layer","after the insets changed");
         }
         [UnityTest] public IEnumerator Menu_FitsInsideTheSafeArea([ValueSource(nameof(Phones))] PhoneScreen screen)

@@ -138,8 +138,31 @@ namespace SquashClash.Capture
                 yield return Shoot("result");
                 yield return Shutdown();
             }
+            // Left-handed option: the menu with the choice made, then a stroke on each side of the body, frozen at the contact.
+            bool wasLeft=SquashClash.Runtime.Visual.Handedness.Left;SquashClash.Runtime.Visual.Handedness.Left=true;
+            phone=Phones[Phones.Length-1];index=8;
+            yield return Boot();yield return Shoot("left-handed-menu");
+            rally.Autopilot=true;rally.AutopilotTimingSigmaMs=30;rally.Seed=9;
+            Click("menu-play");
+            var swing=app.GetComponent<SwingView>();bool near=false,across=false;
+            for(int i=0;i<6000&&!(near&&across);i++)
+            {
+                Step(2);yield return null;
+                if(swing.Phase!=SwingPhase.Impact)continue;
+                // +x is the left wall (AX-1): a contact on +x is on the left-hander's own side, one on -x is across the body.
+                bool own=swing.ShoulderSign>0;
+                if(own?near:across)continue;
+                app.Clock.Paused=true;
+                yield return Shoot(own?"left-handed-near":"left-handed-across");
+                app.Clock.Paused=false;
+                if(own)near=true;else across=true;
+            }
+            Assert.That(near&&across,Is.True,"a stroke on each side must be seen");
+            yield return Shutdown();
+            SquashClash.Runtime.Visual.Handedness.Left=wasLeft;
+            if(!wasLeft)PlayerPrefs.DeleteKey(SquashClash.Runtime.Visual.Handedness.Key);
             if(seen)PlayerPrefs.SetInt("sc.firstRun.tutorialSeen",1);else PlayerPrefs.DeleteKey("sc.firstRun.tutorialSeen");
-            Assert.That(written.Count,Is.EqualTo(Phones.Length*8));
+            Assert.That(written.Count,Is.EqualTo(Phones.Length*8+3));
             foreach(var path in written)Assert.That(new FileInfo(path).Length,Is.GreaterThan(2000),path);
             Debug.Log("[SquashClash] device capture set="+set+" files="+written.Count+" dir="+directory);
         }

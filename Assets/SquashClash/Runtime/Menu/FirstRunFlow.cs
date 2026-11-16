@@ -2,6 +2,7 @@ using SquashClash.Core.Rally;
 using SquashClash.Runtime.App;
 using SquashClash.Runtime.Audio;
 using SquashClash.Runtime.Rally;
+using SquashClash.Runtime.Visual;
 using UnityEngine;
 using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Menu
@@ -24,7 +25,7 @@ namespace SquashClash.Runtime.Menu
         public static void ResetOpenAtBoot()=>openAtBoot=null;
         private static readonly string[] LevelNames={"easy","medium","hard"},LevelTexts={"Fácil","Media","Difícil"};
         private AppBootstrap app;private RallyDirector rally;private RallyHud hud;
-        private VisualElement root,menu,header,pause;private Button play,practice,menuSound,pauseSound,menuMusic,pauseMusic;private readonly Button[] levels=new Button[3];
+        private VisualElement root,menu,header,pause;private Button play,practice,menuSound,pauseSound,menuMusic,pauseMusic,menuHand;private readonly Button[] levels=new Button[3];
         private int shownKey=-1;
         private SafeAreaLayout safeArea;private Label build;
         // Space between the safe area and the menu's content (the header's top edge is the reference at the top).
@@ -86,6 +87,8 @@ namespace SquashClash.Runtime.Menu
             var audio=Row(menu,"menu-audio","sc-menu-pair");
             menuSound=Add(audio,"menu-sound","",ToggleSound);menuSound.AddToClassList("sc-menu-half");
             menuMusic=Add(audio,"menu-music","",ToggleMusic);menuMusic.AddToClassList("sc-menu-half");
+            // Cosmetic: which hand the drawn player holds the racket in.
+            menuHand=Add(menu,"menu-hand","",ToggleHand);menuHand.AddToClassList("sc-menu-wide");
             practice=Add(menu,"menu-practice","Práctica (dev)",ClosePractice);practice.AddToClassList("sc-menu-wide");
             build=Text("v"+app.Build.Label,"sc-menu-build");build.name="menu-build";menu.Add(build);
         }
@@ -211,10 +214,13 @@ namespace SquashClash.Runtime.Menu
         // "Sonido" (every sound effect of the game) and "Música" (the two loops): one switch each, in the menu and in the pause card.
         public void ToggleSound(){AudioScape.SoundOn=!AudioScape.SoundOn;ShowSound();}
         public void ToggleMusic(){MusicPlayer.MusicOn=!MusicPlayer.MusicOn;ShowSound();}
+        // "Mano": only what the figure looks like (Handedness). Chosen in the menu.
+        public void ToggleHand(){Handedness.Left=!Handedness.Left;ShowSound();}
         private void ShowSound()
         {
             string text=AudioScape.SoundOn?"Sonido: sí":"Sonido: no";if(menuSound!=null)menuSound.text=text;if(pauseSound!=null)pauseSound.text=text;
             text=MusicPlayer.MusicOn?"Música: sí":"Música: no";if(menuMusic!=null)menuMusic.text=text;if(pauseMusic!=null)pauseMusic.text=text;
+            if(menuHand!=null)menuHand.text=Handedness.Left?"Mano: zurdo":"Mano: diestro";
         }
         // The pause card: only while a match is paused by the player's own button.
         public bool PauseVisible=>app!=null&&Screen==FirstRunScreen.None&&rally.Active&&rally.Phase!=RallyPhase.MatchOver&&app.Clock.Paused&&hud.PausedByPlayer;
