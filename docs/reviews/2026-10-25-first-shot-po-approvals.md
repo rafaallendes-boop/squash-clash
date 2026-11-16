@@ -2853,3 +2853,23 @@ Literal del PO:
 - **Cobertura nueva de T3 pure:** el oráculo aprende la regla T3 y se agregan escenarios con la configuración por defecto. Los escenarios y sus resultados esperados se predeclaran antes de ejecutar.
 - **Después** se retoma U1 con las compuertas completas.
 - **Autorización:** esta decisión permite agregar criterios a AutoQA solo para T3. No autoriza cambiar los existentes de V.
+
+## Cansancio v1: diseño aprobado y cambios protegidos autorizados (16 nov 2026, Chile)
+
+**Cómo se llegó:**
+- **v1 (`e1bcef7`):** el PO la revisó y pidió ajustes en intensidad, recuperación, precisión, predicción y criterios.
+- **v2 (`22145e4`):** incorporó esos ajustes. El PO la aprobó conceptualmente, con tres correcciones: la instantánea del brazo es del que golpea, B2 mide el consumo por desplazamiento y la comparación de finales ajustados pasa a ser exploratoria.
+- **v2.1:** incorpora las tres correcciones.
+
+Spec: [`docs/superpowers/specs/2026-11-16-fatigue-design.md`](../superpowers/specs/2026-11-16-fatigue-design.md).
+
+**Autorización literal del PO:**
+
+> «Con esas correcciones, autorizo el diseño funcional y los cambios protegidos necesarios, específicamente: Incorporación de las claves de cansancio en `DefaultPreset.json`. Modificaciones controladas al movimiento del cuerpo y su planificación. Incorporación del vector causal de cansancio en la capa del golpe, sin alterar los contratos protegidos existentes. Mantengamos F1 y F2 como PR independientes, con TDD, regresiones completas, AutoQA y reversibilidad.»
+
+> «Respecto de la prioridad: mantenemos esta funcionalidad después de U1–U3 y G1. No debe bloquear First Rally, First Match ni las primeras pruebas con usuarios.»
+
+**Significado:**
+- **Encargo F1/F2 a Codex**, en la cola después de U1–U3 y G1.
+- **Autorización limitada:** los cambios protegidos se autorizan solo en el alcance de la spec v2.1. No se autoriza alterar los contratos protegidos existentes ni el modo práctica, los escenarios protegidos o AutoQA.
+- **Reversibilidad:** con `fatigue.enabled = 0`, el comportamiento es idéntico al anterior.
