@@ -19,3 +19,7 @@ El PO autoriza **una sola PlayMode completa nueva**, manteniendo el test y el pr
 ## Resultado de la única corrida autorizada
 
 PlayMode **551/551**, 0 Failed/0 skipped, XML fresco y sin errores CS, sobre `2dca32f`. Se cumplió la condición y, **por decisión del PO**, LocalCancelLimitAndState se registra como intermitente sin causa demostrada, separado de CRP-01. No hay causa nueva atribuida ni corrección de producto/test. Se conserva el 550/551 histórico. XML ignorado `Logs/evidence/u3/playmode-authorized-green-playmode-results.xml`, SHA-256 `b374fca1ae0cbd2d3d9548f9de8398a01ce7f49f9bed8ac4e7735d4bb9fa8781`. ProjectSettings restaurado después de la salida completa de Unity; se continúa check-release.
+
+## Check-release y entrega
+
+`check-release.sh` **OK dev/prod** sobre `bda8bb5`, exportaciones frescas y `gitDirty=false` en ambos; DevPanel solo en dev, puentes nativos esperados presentes. Se conservan las pruebas previas y la clasificación condicional del PO ahora cumplida. No se corrige el retículo ni se atribuye causa. Resumen actualizado con el PlayMode aprobado y el 550/551 histórico separado en `docs/validation/evidence/2026-11-16-u3-summary.json`. Sin build nativa, instalación, acceso al iPhone ni fusión. #66 queda para revisión independiente; U2 continúa después.
