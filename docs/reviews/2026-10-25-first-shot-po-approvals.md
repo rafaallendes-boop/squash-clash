@@ -2906,4 +2906,4 @@ Encargo literal del PO:
 
 > «#65: integra `main` (tras #64) y resuelve el conflicto del registro de aprobaciones conservando ambas entradas. Corre EditMode completo para confirmar compilación y recuento. Reporta el head final; la fusión la apruebo yo.»
 
-Se integra `origin/main` en `10bcaec` sobre la rama de #65, sin fusionar la PR. En el conflicto aditivo del registro se conservan íntegros ambos bloques: cierres/decisiones/diseño de #64 y autorizaciones/continuaciones U1 de #65. No se eliminan ni reinterpretan citas. EditMode completo pendiente tras la integración.
+Se integra `origin/main` en `10bcaec` sobre la rama de #65, sin fusionar la PR. En el conflicto aditivo del registro se conservan íntegros ambos bloques: cierres/decisiones/diseño de #64 y autorizaciones/continuaciones U1 de #65. No se eliminan ni reinterpretan citas. EditMode completo tras la integración: **738/738**, cero omitidos, XML fresco y sin errores CS, sobre `b3c2fad`.

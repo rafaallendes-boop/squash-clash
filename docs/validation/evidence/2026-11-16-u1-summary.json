@@ -120,5 +120,20 @@
       "runtimeHapticsBridge": true,
       "hapticsSymbols": true
     }
+  },
+  "mainIntegration": {
+    "main": "10bcaecc9d0edb96e5ca8740cb705c28027b469b",
+    "mergeHead": "b3c2fad15bd44d4278df1cae332d2b28b4bce535",
+    "editmode": {
+      "total": "738",
+      "passed": "738",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-11-16 23:34:08Z",
+      "end-time": "2026-11-16 23:35:02Z",
+      "xmlSha256": "9d5ac23ab30357c4653527fb8e201a1a486e1c71a1a2dbc612a39f09baf4e77f"
+    },
+    "bothApprovalBlocksPreserved": true,
+    "newAutoqaOrReleaseRuns": false
   }
 }
