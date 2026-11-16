@@ -11,8 +11,42 @@
     },
     "xmlSha256": "f6adf3a6ae456f20110e66847d1e9742bd89ea8a877488382a355a6e7a0c7b3a"
   },
-  "fullEditMode": null,
-  "fullPlayMode": null,
+  "fullEditMode": {
+    "command": "scripts/test.sh editmode",
+    "exitCode": 0,
+    "counts": {
+      "total": 737,
+      "passed": 737,
+      "failed": 0,
+      "skipped": 0
+    },
+    "xmlSha256": "7b64cc4cd56d3dd90f44ac974aa9cf4cc2f41e8ea7f3f00d28fee6c4caaba1ad",
+    "sourceCommit": "2e838da"
+  },
+  "fullPlayMode": {
+    "command": "scripts/test.sh playmode",
+    "exitCode": 1,
+    "counts": {
+      "total": 548,
+      "passed": 546,
+      "failed": 2,
+      "skipped": 0
+    },
+    "xmlSha256": "603fed8fa018d29bc51853560d352b3794462285c597b4df34aee1d5657b518c",
+    "sourceCommit": "2e838da",
+    "failures": [
+      {
+        "test": "SquashClash.Runtime.Tests.ReticleVisibilityTests.M24FeedbackAndPlainCancelGuide_ClearProjectedFrontisAtNativeViewport",
+        "message": "  sling-status\n  Expected: True\n  But was:  False\n"
+      },
+      {
+        "test": "SquashClash.Runtime.Tests.ReticleVisibilityTests.SlingFeedbackAndStatus_StayOutsideFrontis_AndTargetMatchesScreenSide",
+        "message": "  sling-status\n  Expected: True\n  But was:  False\n"
+      }
+    ]
+  },
   "autoqa": null,
-  "release": null
+  "release": null,
+  "projectSettingsRestored": true,
+  "estado": "Detenido: dos pruebas preexistentes requieren sling-status visible en una corrida sin SQUASH_DEV. Sin cambios a esas pruebas ni reintentos; AutoQA, check-release y PR pendientes."
 }

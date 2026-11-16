@@ -1,32 +1,24 @@
 # C1 — Tres ajustes de producto (16 nov 2026)
 
-**Estado: RED registrado y continuación autorizada; implementación y compuertas pendientes.** Rama local `codex/product-tweaks`, desde `main` `22bb2d5`. Se leyó `AGENTS.md`; una sola instancia de Unity y ningún acceso al iPhone.
+**Implementado; detenido en PlayMode completo.** Rama `codex/product-tweaks` desde `main` `22bb2d5`. PR en borrador pendiente; sin fusión ni instalación.
 
-## Alcance y decisión del PO
+**Decisión del PO:** «Ocultar línea M2-4 en prod», «Recordar la dificultad», «Diestro fija la derecha». Tras corregir la preparación de dos pruebas nuevas, autorizó registrar «dificultad inválida → Media» como guarda que ya pasa antes de implementar. **No se fabricó un RED.**
 
-Encargo del 16 nov: «Ocultar línea M2-4 en prod», «Recordar la dificultad», «Diestro fija la derecha». Se mantienen la tarjeta de pausa por interrupción y los interruptores independientes de sonido y música. Sin autorización de fusión, build nativa ni instalación.
+**Cambios.** `GesturePreview.Sling.cs` condiciona únicamente el `display` de `sling-status` por `SQUASH_DEV`: visible como antes en dev; `None`, sin espacio, en prod. El cálculo, las métricas y los registros conservan su ejecución. `FirstRunFlow` guarda la elección en PlayerPrefs (`sc.firstRun.level`) y la lee al inicializar; ausencia o entero inválido → Media. `CharacterView` fija la mano derecha del humano en el brazo −x (AX-1), simétrica a la izquierda +x, y cruza el brazo en el contacto opuesto; el rival conserva su comportamiento.
 
-## Cambios preparados
+**TDD.** Se ampliaron `ZFirstRunMenuTests`, `ZHandednessTests` y su fixture compartida, conservando todas las pruebas y aserciones preexistentes. [Evidencia RED](../validation/2026-11-16-product-tweaks-red.json):
 
-Solo pruebas aditivas en `ZFirstRunMenuTests` y `ZHandednessTests`, y soporte de preferencias de dificultad en `ZFirstRunFixture`. Se conservan todas las aserciones preexistentes. Ningún archivo de producto, Core, física, defaults, reloj, contrato, spec, escenario o criterio fue modificado. No se tocaron presets.
-
-## RED observado y motivo de detención
-
-Primera corrida filtrada con `scripts/test.sh playmode`: XML fresco, **4 ejecutados, 0 aprobados, 4 fallidos, 0 omitidos**, salida **1**. Evidencia resumida: [resultados](../validation/2026-11-16-product-tweaks-red.json). XML y log originales permanecen locales en `Logs/playmode-results.xml` y `Logs/playmode.log`, sin versionar.
-
-| Ajuste / prueba | Resultado |
+| Comprobación | Antes de implementar |
 |---|---|
-| Guardar dificultad | **RED válido por aserción**: al elegir Fácil, PlayerPrefs devuelve −1 en vez de 0. |
-| Diestro fijo | **RED válido por aserción**: se observaron golpes a ambos lados y cambio de mano. |
-| Ocultar línea técnica | **No válido como RED del ajuste**: antes de comprobar `display`, la prueba exige texto «M2-4», pero la fixture muestra «Apuntando · P 0% ». |
-| Dificultad inválida | **No aprobado**: error en TearDown, `Invalid index 36 36 0`, por limpieza duplicada en la nueva prueba. |
+| Persistencia | RED por aserción: elegir Fácil no guarda 0; se obtiene −1. |
+| Mano derecha fija | RED por aserción: tras golpes a ambos lados, se detecta cambio de mano. |
+| Visibilidad sin `SQUASH_DEV` | RED por aserción: se esperaba `None`, se observó `Flex`. |
+| Dificultad inválida | GREEN previo en −1, 3, mínimo y máximo entero; sin error de TearDown. |
 
-Los dos últimos problemas son errores de preparación de las pruebas de Codex. Se registran y se detiene el trabajo conforme a §2 de `AGENTS.md`, sin corregir ni repetir para obtener Pass. No se declara GREEN ni se infiere éxito de las aserciones que no llegaron a ejecutarse.
+La primera corrida (4 fallos) incluyó dos errores de preparación de Codex: exigir el texto «M2-4» y duplicar limpieza. Se registraron y se detuvo el trabajo. Con reanudación autorizada, se quitó esa exigencia y se limpió solo entre arranques, dejando el último al TearDown: segunda corrida **1 RED válido + 1 GREEN previo**, sin errores de preparación. Tras implementar, fixtures FirstRun/Handedness **27/27 GREEN**, salida 0.
 
-**Reanudación autorizada por el PO (16 nov):** «Corrige solo la preparación de tus dos pruebas nuevas». Se retiró la exigencia del texto «M2-4» y la limpieza pasó a ejecutarse solo entre arranques, dejando el último al TearDown. No se cambiaron las aserciones de dificultad inválida ni ninguna prueba preexistente. Nueva corrida filtrada: **2 ejecutados, 1 aprobado, 1 fallido, 0 omitidos**, salida **1**. Visibilidad: **RED válido por aserción**, `display` esperado `None`, observado `Flex`. Dificultad inválida: **GREEN previo a implementar** en los cuatro valores; el producto actual ya arranca siempre en Media. Hay tres RED de producto válidos (uno por ajuste), pero no se puede declarar RED del caso inválido. El PO autorizó continuar: «Registra “dificultad inválida → Media” como guarda que ya pasa antes de implementar, no como RED». No se fabricó un RED. La corrida confirma que ya no hay errores de TearDown.
+**Compuertas** ([evidencia](../validation/2026-11-16-product-tweaks-gates.json)): EditMode completo **737/737**, salida 0; PlayMode completo **546/548**, 2 fallos, 0 omitidos, salida 1. `ProjectSettings` restaurado con `git checkout -- ProjectSettings`. AutoQA limpio PASS/0/nivel 1 y `check-release` dev/prod no ejecutados; PR pendiente. Un solo Unity a la vez; XML frescos y logs locales sin versionar.
 
-## Compuertas y pendiente
+**Detención.** Dos pruebas preexistentes de `ReticleVisibilityTests`, `SlingFeedbackAndStatus_StayOutsideFrontis_AndTargetMatchesScreenSide` (línea 160) y `M24FeedbackAndPlainCancelGuide_ClearProjectedFrontisAtNativeViewport` (línea 224), exigen `sling-status` visible (`Expected: True`, `But was: False`). La corrida no define `SQUASH_DEV`; ocultarlo es el nuevo comportamiento solicitado. Se registra el conflicto y se detiene conforme al encargo del PO, sin cambiar esas aserciones ni reintentar. No se declara GREEN completo ni se abre PR con compuertas incompletas.
 
-`ProjectSettings` restaurado con `git checkout -- ProjectSettings` tras PlayMode. Suites completas EditMode/PlayMode, AutoQA limpio PASS/0/nivel 1 y `scripts/check-release.sh`: **no ejecutados**. No hubo exportación, compilación nativa, instalación ni PR; las compuertas previas a la PR siguen pendientes.
-
-Quedan implementación, GREEN y compuertas, autorizados por el PO tras aceptar la guarda que ya pasa. En el iPhone quedará probar visibilidad dev/prod, dificultad tras cerrar y abrir, y mano derecha en golpes de ambos lados; cualquier instalación requiere autorización propia. Revisión independiente de Claude coordinada por el PO y aprobación de fusión pendientes.
+**Límites y pendiente físico.** Sin cambios en Core, física, defaults, reloj, contrato, M2-4, gesto, potencia, `gesture.slingPreferLeft`, spec, escenarios, criterios ni presets. Se conservan pausa por interrupción y sonido/música independientes. En iPhone falta comprobar visibilidad dev/prod, dificultad tras cerrar y abrir y raqueta derecha al golpear por ambos lados; requiere autorización propia de instalación. La revisión independiente de Claude la coordina el PO; fusión y aceptación pendientes.
