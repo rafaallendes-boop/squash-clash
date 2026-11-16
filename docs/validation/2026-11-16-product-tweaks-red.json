@@ -1,0 +1,61 @@
+{
+  "base": "22bb2d521645612b106246101cba3bafa0c58ad5",
+  "command": "scripts/test.sh playmode 'SlingStatus_DisplayFollowsTheCompiledDevDefine|LevelSelection_IsSaved|InvalidSavedLevel|RightHanded_StrokesOnBothSides'",
+  "exitCode": 1,
+  "counts": {
+    "total": 4,
+    "passed": 0,
+    "failed": 4,
+    "skipped": 0
+  },
+  "cases": [
+    {
+      "test": "InvalidSavedLevel_FallsBackToMedium",
+      "result": "Failed",
+      "redValidoDeProducto": false,
+      "message": "TearDown : Unhandled log message: '[Error] Invalid index 36 36 0'. Use UnityEngine.TestTools.LogAssert.Expect"
+    },
+    {
+      "test": "LevelSelection_IsSaved_AndRestoredOnANewLaunch",
+      "result": "Failed",
+      "redValidoDeProducto": true,
+      "message": "  selection is saved\n  Expected: 0\n  But was:  -1\n"
+    },
+    {
+      "test": "SlingStatus_DisplayFollowsTheCompiledDevDefine_WithoutStoppingUpdates",
+      "result": "Failed",
+      "redValidoDeProducto": false,
+      "message": "  the diagnostic calculation still runs\n  Expected: String starting with \"M2-4\"\n  But was:  \"Apuntando · P 0% \"\n"
+    },
+    {
+      "test": "RightHanded_StrokesOnBothSidesStayInTheRightHand_OnTheSwingViewPath",
+      "result": "Failed",
+      "redValidoDeProducto": true,
+      "message": "  the right hand (-x arm, AX-1) holds the racket on both sides\n  Expected: False\n  But was:  True\n"
+    }
+  ],
+  "estado": "Detenido por errores de preparación de las pruebas; sin implementación ni reintento.",
+  "continuacion": {
+    "autorizacion": "El PO autoriza corregir solo la preparación de las dos pruebas nuevas y retomar C1; detenerse ante otro defecto.",
+    "command": "scripts/test.sh playmode 'SlingStatus_DisplayFollowsTheCompiledDevDefine|InvalidSavedLevel'",
+    "exitCode": 1,
+    "counts": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "skipped": 0
+    },
+    "cases": [
+      {
+        "test": "InvalidSavedLevel_FallsBackToMedium",
+        "result": "Passed",
+        "message": null
+      },
+      {
+        "test": "SlingStatus_DisplayFollowsTheCompiledDevDefine_WithoutStoppingUpdates",
+        "result": "Failed",
+        "message": "  prod has no technical line\n  Expected: None\n  But was:  Flex\n"
+      }
+    ]
+  }
+}

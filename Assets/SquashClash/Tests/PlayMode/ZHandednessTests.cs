@@ -90,6 +90,32 @@ namespace SquashClash.Runtime.Tests
             Assert.That(worstGap,Is.LessThan(.12f),"the left hand stays on the grip, across the body too");
         }
         // Guard: nothing but the drawing reads the choice. The same seeded demo match ends up in the same state.
+        [UnityTest] public IEnumerator RightHanded_StrokesOnBothSidesStayInTheRightHand_OnTheSwingViewPath()
+        {
+            Handedness.Left=false;
+            var swing=app.GetComponent<SwingView>();var fx=app.GetComponent<StrokeFx>();var human=Figure(app.Players.Human);var rival=Figure(app.Players.Rival);
+            yield return null;yield return null;
+            swing.enabled=fx.enabled=human.enabled=rival.enabled=false;
+            yield return StartMatch();
+            int leftSide=0,rightSide=0;float worstPath=0,worstGap=0,closest=float.MaxValue;bool otherHand=false,inImpact=false;
+            float dt=(float)StepReal;
+            Assert.That(Drive(()=>
+            {
+                swing.Tick(dt);fx.Tick(dt);human.Animate(dt);
+                if(human.RacketHand!=1)otherHand=true;
+                if(swing.Phase==SwingPhase.Impact)
+                {
+                    inImpact=true;if(swing.ShoulderSign<0)rightSide++;else leftSide++;
+                    closest=Mathf.Min(closest,Vector3.Distance(human.RacketLocalPosition,swing.RacketLocalPosition+new Vector3(0,.9f,0)));
+                    worstGap=Mathf.Max(worstGap,human.GripGap);
+                }
+                else if(inImpact){inImpact=false;worstPath=Mathf.Max(worstPath,closest);closest=float.MaxValue;}
+                return leftSide>60&&rightSide>60;
+            },400),Is.True,"strokes on both sides must be observed");
+            Assert.That(otherHand,Is.False,"the right hand (-x arm, AX-1) holds the racket on both sides");
+            Assert.That(worstPath,Is.LessThan(.25f),"each stroke follows the swing view's path");
+            Assert.That(worstGap,Is.LessThan(.12f),"the right hand reaches across the body too");
+        }
         [UnityTest] public IEnumerator Handedness_ChangesNothingButTheDrawing()
         {
             long[] steps=new long[2];Vector3[] balls=new Vector3[2];int[] human=new int[2],rival=new int[2],shots=new int[2];long[] launches=new long[2];
