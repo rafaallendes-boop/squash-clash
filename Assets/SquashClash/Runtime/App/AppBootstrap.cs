@@ -238,6 +238,8 @@ namespace SquashClash.Runtime.App
             root.style.flexGrow = 1;
             root.style.alignItems = Align.Center;
             root.style.paddingTop = 60;
+            // Device robustness: from here on the top padding follows the phone's safe area.
+            gameObject.AddComponent<SafeAreaLayout>().Initialize(root);
             root.style.backgroundColor = Color.clear;
             var header = new VisualElement { name = "boot-header", pickingMode = PickingMode.Ignore };
             header.style.alignItems = Align.Center;

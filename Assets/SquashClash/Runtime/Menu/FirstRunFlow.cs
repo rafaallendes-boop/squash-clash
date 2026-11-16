@@ -26,6 +26,10 @@ namespace SquashClash.Runtime.Menu
         private AppBootstrap app;private RallyDirector rally;private RallyHud hud;
         private VisualElement root,menu,header,pause;private Button play,practice,menuSound,pauseSound;private readonly Button[] levels=new Button[3];
         private int shownKey=-1;
+        private SafeAreaLayout safeArea;private Label build;
+        // Space between the safe area and the menu's content (the header's top edge is the reference at the top).
+        private const float MenuTop=10,MenuBottom=23,BuildBottom=6;
+        private void PlaceBuild(){if(build!=null&&safeArea!=null)build.style.bottom=Mathf.Ceil(safeArea.Bottom+BuildBottom);}
         public const int TutorialSteps=3;
         public const string TutorialSeenKey="sc.firstRun.tutorialSeen";
         // M2-4 (M24Model): the aim is fixed where the finger lands on the front wall; pulling down sets the power;
@@ -53,7 +57,15 @@ namespace SquashClash.Runtime.Menu
             if(this.app!=null)return;this.app=app;this.rally=rally;this.hud=hud;
             root=app.GetComponent<UIDocument>().rootVisualElement;
             header=root.Q("boot-header");
-            BuildMenu();BuildTutorial();BuildPause();SelectLevel(Level);hud.MenuRequested+=OpenMenu;Refresh();
+            BuildMenu();BuildTutorial();BuildPause();SelectLevel(Level);hud.MenuRequested+=OpenMenu;
+            // Device robustness: the layers cover the whole screen; what they show stays inside the safe area.
+            safeArea=app.GetComponent<SafeAreaLayout>();
+            if(safeArea!=null)
+            {
+                safeArea.Fit(menu,MenuTop,MenuBottom);safeArea.Fit(tutorial,MenuTop,MenuBottom);safeArea.Fit(pause,float.NaN,0);
+                safeArea.Changed+=PlaceBuild;PlaceBuild();
+            }
+            Refresh();
             if(OpenAtBoot)OpenMenu();
         }
         private void BuildMenu()
@@ -72,7 +84,7 @@ namespace SquashClash.Runtime.Menu
             Add(menu,"menu-howto","¿Cómo se juega?",()=>OpenTutorial(false)).AddToClassList("sc-menu-wide");
             menuSound=Add(menu,"menu-sound","",ToggleSound);menuSound.AddToClassList("sc-menu-wide");
             practice=Add(menu,"menu-practice","Práctica (dev)",ClosePractice);practice.AddToClassList("sc-menu-wide");
-            var build=Text("v"+app.Build.Label,"sc-menu-build");build.name="menu-build";menu.Add(build);
+            build=Text("v"+app.Build.Label,"sc-menu-build");build.name="menu-build";menu.Add(build);
         }
         private static Button Add(VisualElement parent,string name,string text,System.Action action)
         {
@@ -248,3 +260,4 @@ namespace SquashClash.Runtime.Menu
         }
     }
 }
+            if(safeArea!=null)safeArea.Changed-=PlaceBuild;
