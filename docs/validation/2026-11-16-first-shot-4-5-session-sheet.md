@@ -86,3 +86,11 @@ Hashes de los bloques medidos (columna «estable», offset 60.9760989365092 ms):
 | T3-suave | `9a4fde02d141` | `5d5a772f1f48` | `7ea2c0c85dc1` | `677873c500e0` | `450d6d7c55a8` | `b0a997e6c3ea` |
 
 **Calentamiento en V:** SL1 `7d91265db34d`, SL2 `3940490b7e2d`, SL3 `8086000f6d40`, SL4 `4e7cce638f61`, SL5 `c6b8b3bf82bd`, SL6 `43c47fa596f5`.
+
+## Ajuste de procedimiento antes del calentamiento (sesión 1)
+
+El SL se cambia solo desde el panel DEV («Practice launch»). Así, alternar SL1→SL6 en cada recepción obliga a abrir y cerrar el panel 12 veces por bloque. Se fija, **antes del calentamiento**:
+- **Calentamiento:** SL1, SL2, SL3, SL4, SL5, SL6, **una recepción cada uno**.
+- **Bloques B1–B4, T3-suave y H2:** 12 recepciones, **dos seguidas por SL** (SL1, SL1, SL2, SL2 … SL6, SL6). Son los mismos seis lanzamientos con dos repeticiones cada uno, y cambia solo el orden respecto de la hoja.
+- **Qué cuenta:** después de cada cierre del panel (`dev-control`, `devOpen=false`), las primeras N recepciones nuevas: 1 en el calentamiento, 2 en los bloques. Las que se lancen mientras el panel está abierto, o de más, se conservan como extras fuera de cuota.
+- Los hashes no cambian: valen los de la tabla «estable».
