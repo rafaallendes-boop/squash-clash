@@ -66,3 +66,23 @@ Se calculan con [Session45HashExperiment](../../Assets/SquashClash/Tests/Experim
 | T3-suave, estable | `ec2629e91c2b` | `504d13d268f2` | `cda10bd43b16` | `6e2d24ab7b3c` | `13be0e980e84` | `e59115a08347` |
 
 En el calentamiento, SL1 y SL2 se lanzan antes de pasar por SL3, así que usan el valor «desde P0»: `0a3d3262a79d` y `6daa20fa4f6a` con V y offset 0. La tabla completa con las columnas «desde P0», «vuelta 1» y «vuelta 2» se guarda en `Logs/experiments/session45/expected-hashes.tsv`, carpeta ignorada.
+
+## Sesión 1: offset confirmado y tabla que se aplica
+
+**Primer intento de calibración, invalidado:** quedó registrado como «focus-lost» a las 18:18:35Z, antes de confirmar. La app perdió el foco cuando el PO salió a responder las preguntas en el chat. El offset no se aplicó.
+
+**Recalibración:**
+- **Resultado:** media **60,976 ms**, con medias por serie de 55,2, 80,4 y 47,4 ms, IC95 de 18,1 a 103,8 ms y rango de medias de 33,0 ms.
+- **Confirmación:** a las 18:30:33Z, con `meanMs=60.9760989365092`.
+- **Sesgo declarado:** el PO ya había visto los números del intento invalidado.
+- **Comprobación de la tabla:** el primer `shot-plan` después de confirmar tiene hash `7d91265db34d`, que coincide con el valor «desde P0» calculado para V SL1. La tabla queda validada contra el teléfono.
+
+Hashes de los bloques medidos (columna «estable», offset 60.9760989365092 ms):
+
+| Modo | SL1 | SL2 | SL3 | SL4 | SL5 | SL6 |
+|---|---|---|---|---|---|---|
+| V | `21cd1bb43f9f` | `6d4c07a37147` | `8086000f6d40` | `4e7cce638f61` | `c6b8b3bf82bd` | `43c47fa596f5` |
+| T3 | `f8b660c2364a` | `713778ff5c99` | `350b91119ea4` | `f2979b15af78` | `212958cdb927` | `4e6ffbdde63a` |
+| T3-suave | `9a4fde02d141` | `5d5a772f1f48` | `7ea2c0c85dc1` | `677873c500e0` | `450d6d7c55a8` | `b0a997e6c3ea` |
+
+**Calentamiento en V:** SL1 `7d91265db34d`, SL2 `3940490b7e2d`, SL3 `8086000f6d40`, SL4 `4e7cce638f61`, SL5 `c6b8b3bf82bd`, SL6 `43c47fa596f5`.
