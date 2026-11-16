@@ -15,9 +15,9 @@ namespace SquashClash.Runtime.Audio
     public sealed class MusicPlayer : MonoBehaviour
     {
         public const string MusicKey="sc.music";
-        // Source volume at full fade. The match loop peaks at a quarter of the player's quietest contact clip or less
-        // (a test measures it against the clips).
-        public const float MenuVolume=.5f,MatchVolume=.12f,FadeSeconds=.6f;
+        // Source volume at full fade. The match loop is a bed that sits about 12 dB (RMS) under the player's quietest
+        // contact clip, with its peak at half of that clip or less (a test measures it against the clips).
+        public const float MenuVolume=.5f,MatchVolume=.24f,FadeSeconds=.6f;
         private const int Off=0,On=1,Held=2;
         private static readonly string[] ClipNames={"music-menu","music-match"};
         private static readonly float[] FullVolume={MenuVolume,MatchVolume};
