@@ -1,6 +1,6 @@
 # U3 — métricas mínimas para usuarios
 
-16 nov 2026 · Codex · `codex/u3-user-metrics`, base `a1fa915` de `origin/main`, código `5d90951`. **Nueva PlayMode autorizada; PR en borrador y compuertas pendientes.** U1 se entrega por separado en #65; esta rama no incorpora su cambio de defaults.
+16 nov 2026 · Codex · `codex/u3-user-metrics`, base `a1fa915` de `origin/main`, código `5d90951`. **PlayMode autorizada completa en verde; check-release pendiente.** U1 se entrega por separado en #65; esta rama no incorpora su cambio de defaults.
 
 ## Implementación
 
@@ -27,3 +27,5 @@ Duraciones en tiempo real desde el arranque; incluyen pausa/segundo plano, desgl
 [Evidencia curada y hashes](../validation/evidence/2026-11-16-u3-summary.json); logs/XML ignorados en `Logs/evidence/u3/`. ProjectSettings restaurado después del cierre completo de cada PlayMode; ningún editor Unity activo al entregar. Sin build nativa, acceso al iPhone, instalación ni fusión. Revisión independiente de Claude coordinada por el PO. U2 sigue sin iniciar por esta parada.
 
 **Continuación autorizada por el PO:** una sola PlayMode completa nueva, sin código/test modificado. Si pasa completa, se registra LocalCancelLimitAndState como intermitente **sin causa demostrada**, separado de CRP-01, y se ejecuta check-release. Si falla, detenerse. La clasificación aún está condicionada al resultado; la evidencia 550/551 se conserva. Literal en el registro de aprobaciones.
+
+**Resultado de la continuación autorizada:** PlayMode **551/551**, XML fresco y sin errores CS, sobre `2dca32f`. Cumplida la condición, LocalCancelLimitAndState se clasifica como **intermitente sin causa demostrada por decisión del PO**, sin equipararlo a CRP-01 ni corregirlo. La evidencia 550/551 permanece. Check-release dev/prod en curso.

@@ -15,3 +15,7 @@ ProjectSettings restaurado con `git checkout -- ProjectSettings` después de la 
 ## Autorización posterior del PO
 
 El PO autoriza **una sola PlayMode completa nueva**, manteniendo el test y el producto de #66 sin corrección. Si pasa completa, clasificar LocalCancelLimitAndState como intermitente sin causa demostrada, **no CRP-01**, y seguir check-release. Si falla otra vez, detenerse y reportar. El resultado previo 550/551 no se cambia; la clasificación solo se confirmará al cumplirse la condición. Literal en el registro de aprobaciones.
+
+## Resultado de la única corrida autorizada
+
+PlayMode **551/551**, 0 Failed/0 skipped, XML fresco y sin errores CS, sobre `2dca32f`. Se cumplió la condición y, **por decisión del PO**, LocalCancelLimitAndState se registra como intermitente sin causa demostrada, separado de CRP-01. No hay causa nueva atribuida ni corrección de producto/test. Se conserva el 550/551 histórico. XML ignorado `Logs/evidence/u3/playmode-authorized-green-playmode-results.xml`, SHA-256 `b374fca1ae0cbd2d3d9548f9de8398a01ce7f49f9bed8ac4e7735d4bb9fa8781`. ProjectSettings restaurado después de la salida completa de Unity; se continúa check-release.

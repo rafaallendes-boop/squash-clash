@@ -2786,3 +2786,5 @@ Encargo literal del PO:
 > «#66: autorizo una sola PlayMode completa nueva. No es CRP-01; si da el recuento completo, registra la falla de `LocalCancelLimitAndState` como intermitente sin causa demostrada y sigue con check-release. Si vuelve a fallar, detente y repórtalo. U2 sigue después.»
 
 Se conserva la corrida 550/551 y no se corrige el test. La clasificación como intermitente solo se registra si la corrida nueva aprueba el recuento completo; no implica causa demostrada ni equivalencia con CRP-01. Solo entonces se continúa check-release. Ante cualquier falla nueva se detiene, sin otro reintento.
+
+**Resultado de la única corrida autorizada de #66:** PlayMode **551/551**, 0 Failed/0 skipped, XML fresco y sin errores CS, sobre `2dca32f`. Se cumple la condición del PO: la falla previa de LocalCancelLimitAndState se registra como **intermitente sin causa demostrada, separada de CRP-01**; no se corrige el test ni se cambia el resultado anterior 550/551. Se continúa check-release.

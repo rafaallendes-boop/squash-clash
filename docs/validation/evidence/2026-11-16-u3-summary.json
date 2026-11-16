@@ -31,6 +31,16 @@
     },
     "playmode": {
       "total": "551",
+      "passed": "551",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-11-16 23:36:52Z",
+      "end-time": "2026-11-16 23:39:11Z",
+      "xmlSha256": "b374fca1ae0cbd2d3d9548f9de8398a01ce7f49f9bed8ac4e7735d4bb9fa8781",
+      "validationHead": "2dca32f"
+    },
+    "playmodeFirst": {
+      "total": "551",
       "passed": "550",
       "failed": "1",
       "skipped": "0",
@@ -46,8 +56,10 @@
     "expected": true,
     "observed": false,
     "causeDemonstrated": false,
-    "retry": false
+    "retry": false,
+    "classification": "intermittent by PO decision after complete authorized PASS; cause not demonstrated; distinct from CRP-01",
+    "authorizedNewRun": true
   },
   "autoqa": "NotRequired: logging only; gesture/timing/contact unchanged",
-  "releaseCheck": "NotEvaluated: stopped after PlayMode failure"
+  "releaseCheck": "Pending after authorized PlayMode PASS"
 }
