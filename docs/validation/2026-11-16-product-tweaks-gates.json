@@ -1,0 +1,18 @@
+{
+  "base": "22bb2d521645612b106246101cba3bafa0c58ad5",
+  "targetedGreen": {
+    "command": "scripts/test.sh playmode 'ZFirstRun|ZHandednessTests'",
+    "exitCode": 0,
+    "counts": {
+      "total": 27,
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0
+    },
+    "xmlSha256": "f6adf3a6ae456f20110e66847d1e9742bd89ea8a877488382a355a6e7a0c7b3a"
+  },
+  "fullEditMode": null,
+  "fullPlayMode": null,
+  "autoqa": null,
+  "release": null
+}

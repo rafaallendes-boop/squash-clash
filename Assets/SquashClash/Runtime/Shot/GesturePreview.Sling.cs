@@ -265,7 +265,11 @@ namespace SquashClash.Runtime.Shot
         {
             if(slingStatus==null)return;
             bool enabled=Active?Sling!=null||M24!=null:app.Tuning.Applied.GetInt("gesture.control")>=1;
+#if SQUASH_DEV
             slingStatus.style.display=enabled?DisplayStyle.Flex:DisplayStyle.None;
+#else
+            slingStatus.style.display=DisplayStyle.None;
+#endif
             if(!enabled){cancelIndicator?.Hide();return;}
             if(M24!=null)cancelIndicator?.Hide();
             if(M24==null&&Sling?.Active==true&&Sling.Locked)

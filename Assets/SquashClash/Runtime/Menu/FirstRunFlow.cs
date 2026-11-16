@@ -33,6 +33,7 @@ namespace SquashClash.Runtime.Menu
         private void PlaceBuild(){if(build!=null&&safeArea!=null)build.style.bottom=Mathf.Ceil(safeArea.Bottom+BuildBottom);}
         public const int TutorialSteps=3;
         public const string TutorialSeenKey="sc.firstRun.tutorialSeen";
+        public const string LevelKey="sc.firstRun.level";
         // M2-4 (M24Model): the aim is fixed where the finger lands on the front wall; pulling down sets the power;
         // lifting the finger is the stroke, and lifting it back at the anchor height cancels. Timing (TimingRingView,
         // ImpactCue): a ring converges on the fixed triangle at the planned contact; one attempt per ball.
@@ -56,6 +57,8 @@ namespace SquashClash.Runtime.Menu
         public void Initialize(AppBootstrap app,RallyDirector rally,RallyHud hud)
         {
             if(this.app!=null)return;this.app=app;this.rally=rally;this.hud=hud;
+            int savedLevel=PlayerPrefs.GetInt(LevelKey,(int)AiLevel.Medium);
+            Level=savedLevel>=(int)AiLevel.Easy&&savedLevel<=(int)AiLevel.Hard?(AiLevel)savedLevel:AiLevel.Medium;
             root=app.GetComponent<UIDocument>().rootVisualElement;
             header=root.Q("boot-header");
             BuildMenu();BuildTutorial();BuildPause();SelectLevel(Level);hud.MenuRequested+=OpenMenu;
@@ -246,6 +249,7 @@ namespace SquashClash.Runtime.Menu
         public void SelectLevel(AiLevel level)
         {
             Level=level;
+            PlayerPrefs.SetInt(LevelKey,(int)level);PlayerPrefs.Save();
             for(int i=0;i<levels.Length;i++)if(levels[i]!=null)levels[i].EnableInClassList("sc-level--selected",i==(int)level);
         }
         // Jugar: a match against the chosen level, through the same call as the "Partido" button.
