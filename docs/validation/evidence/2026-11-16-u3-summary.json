@@ -1,0 +1,53 @@
+{
+  "base": "a1fa915",
+  "codeHead": "5d90951",
+  "tests": {
+    "eventsRed": {
+      "total": "10",
+      "passed": "0",
+      "failed": "10",
+      "skipped": "0",
+      "start-time": "2026-11-16 23:02:27Z",
+      "end-time": "2026-11-16 23:02:27Z",
+      "xmlSha256": "4e54862b3d58bb69e86a6c78040d3542b1e41525edbe28ba6a784124c7b4abbb"
+    },
+    "flowRed": {
+      "total": "3",
+      "passed": "0",
+      "failed": "3",
+      "skipped": "0",
+      "start-time": "2026-11-16 23:05:27Z",
+      "end-time": "2026-11-16 23:05:29Z",
+      "xmlSha256": "bc9cbb25e0609c5d03b4a5eb3f71ec0abe858c131b87ba1e689d9d8d2d70eb9c"
+    },
+    "editmode": {
+      "total": "747",
+      "passed": "747",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-11-16 23:08:30Z",
+      "end-time": "2026-11-16 23:09:20Z",
+      "xmlSha256": "950dfa46e436f3ee08c5e362398946e44382671b92542d934c77c3c5a42aab06"
+    },
+    "playmode": {
+      "total": "551",
+      "passed": "550",
+      "failed": "1",
+      "skipped": "0",
+      "start-time": "2026-11-16 23:10:01Z",
+      "end-time": "2026-11-16 23:12:25Z",
+      "xmlSha256": "852c6826a547c7bc426789ebd6b0ba6468e28ca6de797eb7804ba82f5c706183"
+    }
+  },
+  "stop": {
+    "test": "ReticleVisibilityTests.LocalCancelLimitAndState_AreVisibleAndNeverCoverFrontis",
+    "line": 186,
+    "assertion": "preview.ArmSlingBlock(\"B0\")",
+    "expected": true,
+    "observed": false,
+    "causeDemonstrated": false,
+    "retry": false
+  },
+  "autoqa": "NotRequired: logging only; gesture/timing/contact unchanged",
+  "releaseCheck": "NotEvaluated: stopped after PlayMode failure"
+}
