@@ -1,6 +1,6 @@
 # First Shot 4.5 — plantilla de registro de las sesiones de validación
 
-Plantilla de la Tarea 4.5 Step 3 (plan, l. 726). **Una copia por sesión**, rellenada durante y después de ella; las celdas `…` se llenan con datos reales y nunca con valores estimados. Protocolo: [propuesta 4.5](../reviews/2026-11-16-first-shot-s4-4-5-protocol.md) (borrador, sin aprobar). Reglas: todas las métricas son **descriptivas**; no hay umbrales; un fallo nunca se registra como cero; ausencia = `NotEvaluated` con motivo (no cuenta como Pass); todos los intentos se conservan; las respuestas del PO se copian **literales** y no se reinterpretan con métricas posteriores. Los resultados no se convierten en umbrales sin decisión del PO.
+Plantilla de la Tarea 4.5 Step 3 (plan, l. 726). **Una copia por sesión**, rellenada durante y después de ella; las celdas `…` se llenan con datos reales y nunca con valores estimados. Protocolo: [propuesta 4.5](../reviews/2026-11-16-first-shot-s4-4-5-protocol.md) (aprobado por el PO el 16 nov 2026). Reglas: todas las métricas son **descriptivas**; no hay umbrales; un fallo nunca se registra como cero; ausencia = `NotEvaluated` con motivo (no cuenta como Pass); todos los intentos se conservan; las respuestas del PO se copian **literales** y no se reinterpretan con métricas posteriores. Los resultados no se convierten en umbrales sin decisión del PO.
 
 ## 0. Identificación de la sesión
 

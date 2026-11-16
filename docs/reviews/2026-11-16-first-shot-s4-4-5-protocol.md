@@ -1,4 +1,6 @@
-# First Shot 4.5 — protocolo de validación propuesto (borrador para el PO)
+# First Shot 4.5 — protocolo de validación (aprobado por el PO el 16 nov 2026)
+
+**Aprobación del PO (16 nov 2026, Chile).** A la pregunta de Claude «¿Apruebas el protocolo con mis recomendaciones y fusiono #61 y #62?», el PO respondió, literal: «Si, fusiona ambas.» Quedan aprobadas las recomendaciones de Claude de la §7 para las 13 decisiones abiertas. **Aprobar el protocolo no autoriza ninguna sesión:** la sesión 1 requiere autorización expresa del PO, y los hashes esperados por condición deben calcularse antes.
 
 **16 nov 2026.** Redactado por un subagente Sonnet dirigido por Claude: **la revisión de Claude no es independiente** y se declara. Autorización del PO (16 nov): «Protocolo ahora, sesión después». **Ninguna sesión, build, instalación ni acceso al iPhone está autorizado.** No modifica spec, plan, escenarios, umbrales ni criterios; no introduce umbrales. Las métricas son descriptivas y nada se vuelve umbral definitivo sin decisión del PO (plan, Tarea 4.5 Step 4, l. 727). Plantilla de registro: [first-shot-validation.md](../validation/first-shot-validation.md). Lo que las fuentes no definen se marca **[INDEFINIDO]**; los valores propuestos por Claude se marcan **[PROPUESTA]**.
 
