@@ -2821,3 +2821,21 @@ Literal del PO:
 - **Encargo a Codex:** U1, U2 y U3. Para U1 se autoriza cambiar `DefaultPreset.json`: `timing.validLimit` pasa de 1 a 0 y los hashes vigentes cambian. T3 pure sigue siendo candidato, no una regla definitiva.
 - **Backlog para el MVP** (§0 de la propuesta): cada ítem con su encargo y la aprobación del PO. SL5/SL6 toca física y M2-4, así que requiere autorización explícita en su encargo.
 - **Sin cambios:** First Rally y First Match siguen sin aceptación física, porque el PO no los cerró. El Developer Program y TestFlight se activan cuando el PO lo decida.
+
+## Autorización de SL5/SL6, problema del vidrio del fondo y golpe de fondo (16 nov 2026, Chile)
+
+Literal del PO:
+
+> «SL5 y SL6 : tienes mi autorización explicita para que lo mejoremos»
+
+> «Barra de cansancio: Vamos conversando de la mecanica nueva»
+
+> «Lo de los puntos que van al fondo, si preisono al 100% y la pelota toca el vidrio de al fondo, es casi punto seguro hoy. Quería ver como arreglarlo.»
+
+> «Además de la volea, agregar lo que es golpe de fondo (bote vidrio, golpe tipico al fondo en squash)»
+
+**Significado:**
+- **Encargo G1 a Codex,** que va después de U1, U3 y U2. Primero hay un diagnóstico predeclarado (fase A) del punto seguro al vidrio del fondo y de SL5/SL6. Después vienen 2 o 3 opciones por problema y el PO elige.
+- **Zonas protegidas:** física, solver y M2-4 se autorizan solo dentro de G1 y después de esa elección.
+- **Barra de cansancio:** queda en conversación de diseño, sin implementar.
+- **Volea y golpe de fondo:** se agregan al backlog del MVP, cada uno con su propio encargo.
