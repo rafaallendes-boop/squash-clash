@@ -101,3 +101,40 @@ El SL se cambia solo desde el panel DEV («Practice launch»). Así, alternar SL
 - **Por qué la tarea va de palabra:** en la Duplicación, la lista del panel avanza 2–3 px por toque, así que la sección de tareas no se alcanzó.
 - **Desviación:** la tarea fija de H3 se da **de palabra**, igual en todos los bloques: «apunta al centro del frontis, a media altura, con potencia media y bote medio». El bloque H2 recibe su rotación de palabra antes de cada recepción.
 - **Qué se pierde y qué no:** no hay `practice-task` ni `task-captured`, así que H2 se analiza con las peticiones anotadas por el operador. Las tareas no entran en el hash.
+
+## Sesión 1: cierre anticipado por decisión del PO (16 nov)
+
+**Decisión del PO tras B1, literal:**
+- Pregunta: «Me pasa que con las pruebas lo veo muy lento , ahí cual sería el objetivo de tenerlas? porque me pasa que con lo que he estado jugando, me parece bien. Queda un par de cosas por mejorar pero haciendo estas pruebas de B1 o B2 no le achunto a la pelota pero si voy jugando si lo hago»
+- Decisión: «Vamos con solo B2 y así comparas. Pero ahí cerramos. Luego seguimos avanzando y cuando probemos con usuarios tendremos mas feedback real que algo sesgado mío.»
+
+**Desviación:** se jugaron el calentamiento, B1 (V) y B2 (T3 pure). No se hicieron B3, B4, T3-suave ni H2. Por eso no hay contrabalanceo del orden ni datos de H2 ni de H3c. La sesión 2 queda sin agendar.
+
+**Incidente de operación antes de B2:** un toque de Claude por Duplicación, con la lista todavía en movimiento, movió `timing.assistMs` de 40 a 46. Pasó con el panel DEV abierto y sin recepciones contadas. Se devolvió el control a su valor y el hash volvió a `21cd1bb43f9f`. B2 empezó en `f8b660c2364a`.
+
+**Resultados.** Se cuentan solo las recepciones que entran por la regla predeclarada. Todos los hashes coinciden con la tabla.
+
+| Bloque | Contadas | Perfect | Valid | Failed | NoOrder | Motivo de los fallos |
+|---|---|---|---|---|---|---|
+| B1 · V | 12 | 0 | 1 | 10 | 1 | 7 `outside-v` (Δ −112 a −156 ms), 3 `before-k-in` |
+| B2 · T3 pure | 9 | 1 | 6 | 1 | 1 | 1 `after-k-out` (Δ +236 ms) |
+
+- **Por qué B2 tiene 9:** en SL2, SL3, SL4 y SL6, la primera recepción tras cambiar el SL salió con el panel DEV abierto. Quedó como extra fuera de cuota. Los extras de B2 fueron 2 Valid, 1 Perfect y 2 NoOrder (incluye SL5).
+- **Lectura:** con el offset de 60,976 ms, el PO suelta temprano en los dos bloques. La media de Δ fue ≈ −106 ms en B1 y ≈ −91 ms en B2, sin contar el golpe tardío. Con V (±100 ms), esos golpes tempranos quedan fuera. Con T3 pure, los mismos tempranos (−117, −159, −169 ms) cuentan como válidos. La diferencia entre bloques se explica sobre todo por la regla, no por un cambio en el Δ. Aun así, B2 fue después de B1 y el aprendizaje no queda separado.
+
+**Respuestas del PO (§5), literales, antes de ver resultados:**
+1. «Si, pero en SL5 y SL6 aún la pelota puede ir alto o lejos. Hay que ver como lograr que la pelota vaya como paralela o cruzada al fondo.»
+2. «Si, lo controlo, eso lo logré jugando»
+3. «El timing de B2 me gustó, está bien»
+4. «Golpe perfecto se nota distinto al normal. Le doy nota 4,5. Para que sea 5 sería con SL5 y SL6 saliendo bien el golpe»
+5. «Si, sentí que iba aprendiendo»
+6. «Cuando fallé, si entendí, y toca seguir practicando»
+7. ¿Diferencia entre B1 y B2? (pregunta agregada) «La diferencia fue el timing totalmente, se nota en la cantidad de acierttos»
+8. ¿Se oye el sonido de cancha? «Si se escucha el sonido de la cancha.»
+
+**Cierre:**
+- Métricas exportadas a `Logs/evidence/` (ignorada).
+- App reiniciada a las 19:17Z. Arrancó con P0-calib-1, `effectiveHash` `0a3d3262a79d` y 0 pendientes.
+- P0-calib-1.json, Po-1.json y last-active.txt idénticos byte a byte al respaldo de la instalación.
+
+**Esto no acepta First Shot ni decide la regla de validez.** Para el PO quedan abiertas dos cosas: si T3 pure (o una ventana V más ancha hacia lo temprano) pasa a ser candidata para el playtest, y la dirección de los golpes en SL5 y SL6.
