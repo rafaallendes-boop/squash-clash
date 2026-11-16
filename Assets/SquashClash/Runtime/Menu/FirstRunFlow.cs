@@ -206,6 +206,17 @@ namespace SquashClash.Runtime.Menu
         public bool PauseVisible=>app!=null&&Screen==FirstRunScreen.None&&rally.Active&&rally.Phase!=RallyPhase.MatchOver&&app.Clock.Paused&&hud.PausedByPlayer;
         public void Continue(){if(PauseVisible){hud.TogglePause();Refresh();}}
         public void LeaveToMenu(){if(PauseVisible)OpenMenu();}
+        // Device robustness: an interruption (home, call, notification centre, screen lock). True when this flow keeps
+        // the game paused behind a screen of its own, so the system's "Toca para continuar" layer is not added on top.
+        // A match in play pauses itself into the player's pause card and waits there for Continuar.
+        public bool HoldSystemPause()
+        {
+            if(app==null)return false;
+            if(Screen!=FirstRunScreen.None||PauseVisible)return true;
+            if(!rally.Active||rally.Phase==RallyPhase.MatchOver||app.Clock.Paused)return false;
+            hud.TogglePause();Refresh();
+            return true;
+        }
         public void OpenMenu()
         {
             if(app==null)return;
@@ -256,8 +267,8 @@ namespace SquashClash.Runtime.Menu
         private void OnDestroy()
         {
             if(hud!=null)hud.MenuRequested-=OpenMenu;
+            if(safeArea!=null)safeArea.Changed-=PlaceBuild;
             menu?.RemoveFromHierarchy();tutorial?.RemoveFromHierarchy();pause?.RemoveFromHierarchy();
         }
     }
 }
-            if(safeArea!=null)safeArea.Changed-=PlaceBuild;

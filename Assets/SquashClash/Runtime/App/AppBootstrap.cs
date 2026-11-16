@@ -324,13 +324,20 @@ namespace SquashClash.Runtime.App
         {
             repeatElapsed=0;discardRepeatResume=true;
             if(paused)FlushFrames();diagnosticsPaused=paused;discardDiagnosticsResume=true;
-            if(paused)GetComponent<ResumeOverlay>().Suspend();
+            if(paused)SuspendForSystem();
+        }
+        // Device robustness: a match pauses into the player's own pause card and a menu already holds the game paused;
+        // everything else (practice, developer pauses, the end of a match) keeps the "Toca para continuar" layer.
+        private void SuspendForSystem()
+        {
+            var flow=FirstRun;
+            if(flow==null||!flow.HoldSystemPause())GetComponent<ResumeOverlay>().Suspend();
         }
         private void OnApplicationFocus(bool focused)
         {
             repeatElapsed=0;discardRepeatResume=true;
             if(!focused)FlushFrames();diagnosticsFocused=focused;discardDiagnosticsResume=true;
-            if(!focused)GetComponent<ResumeOverlay>().Suspend();
+            if(!focused)SuspendForSystem();
         }
         private void OnDestroy()
         {

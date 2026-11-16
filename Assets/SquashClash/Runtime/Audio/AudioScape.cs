@@ -59,6 +59,12 @@ namespace SquashClash.Runtime.Audio
         public ScapeSound LastSound {get;private set;}
         // Court ambience: only while a rally or match is being played and the game is not paused.
         public bool AmbienceWanted=>app!=null&&rally!=null&&rally.Active&&app.Clock!=null&&!app.Clock.Paused;
+        // How many times the ambience loop was asked to start (counted in batch mode too).
+        public int AmbienceStarts {get;private set;}
+        private bool audioReset;
+        // Device robustness: the audio system came back from an interruption or a route change (call, alarm,
+        // headphones): its sources may have been stopped without the game being paused, so the loop is asked for again.
+        public void OnAudioConfigurationChanged(bool deviceWasChanged){audioReset=true;}
         public int Requests(ScapeSound sound)=>counts[(int)sound];
         public AudioClip ClipOf(ScapeSound sound)=>clips[(int)sound];
         public AudioClip AmbienceClip=>ambience!=null?ambience.clip:null;
@@ -78,6 +84,7 @@ namespace SquashClash.Runtime.Audio
             root=app.GetComponent<UIDocument>().rootVisualElement;
             root.RegisterCallback<ClickEvent>(OnUiClick,TrickleDown.TrickleDown);root.RegisterCallback<NavigationSubmitEvent>(OnUiSubmit,TrickleDown.TrickleDown);
             AudioListener.volume=SoundOn?1:0;
+            AudioSettings.OnAudioConfigurationChanged+=OnAudioConfigurationChanged;
         }
         private static AudioSource Source(GameObject holder,bool loop)
         {
@@ -135,12 +142,16 @@ namespace SquashClash.Runtime.Audio
                 rivalPending=false;
                 if(host.ActiveConfig!=null)RequestScaled(ScapeSound.RivalRacket,host.Current.Velocity.magnitude/(float)host.ActiveConfig.Source.Get("shot.vMax"));
             }
-            bool paused=app.Clock==null||app.Clock.Paused,want=AmbienceWanted&&!Application.isBatchMode&&ambience.clip!=null;
+            bool paused=app.Clock==null||app.Clock.Paused,want=AmbienceWanted&&ambience.clip!=null,audible=!Application.isBatchMode;
+            if(audioReset){audioReset=false;ambienceOn=false;}
             if(want!=ambienceOn)
             {
                 ambienceOn=want;
-                if(!want)ambience.Pause();else{ambience.UnPause();if(!ambience.isPlaying)ambience.Play();}
+                if(want)AmbienceStarts++;
+                if(audible){if(!want)ambience.Pause();else{ambience.UnPause();if(!ambience.isPlaying)ambience.Play();}}
             }
+            // A source the system stopped behind the game's back starts again on its own.
+            else if(want&&audible&&!ambience.isPlaying){AmbienceStarts++;ambience.Play();}
             if(paused)return;
             if(jingleIn>=0&&dt>0)
             {
@@ -160,6 +171,7 @@ namespace SquashClash.Runtime.Audio
         private void LateUpdate()=>Tick(Mathf.Min(Time.unscaledDeltaTime,.05f));
         private void OnDestroy()
         {
+            AudioSettings.OnAudioConfigurationChanged-=OnAudioConfigurationChanged;
             if(host!=null)host.ContactRaised-=OnContact;
             if(rally!=null){rally.RivalSwing-=OnRivalSwing;rally.PointEnded-=OnPointEnded;}
             if(root!=null){root.UnregisterCallback<ClickEvent>(OnUiClick,TrickleDown.TrickleDown);root.UnregisterCallback<NavigationSubmitEvent>(OnUiSubmit,TrickleDown.TrickleDown);}
