@@ -10,7 +10,7 @@ namespace SquashClash.Runtime.Tests
     {
         private ParamSet Defaults=>PresetCodec.LoadDefault(Resources.Load<TextAsset>("DefaultPreset").text);
         [TestCase(-320,"Failed","Air",false,false)]
-        [TestCase(-100,"Valid","None",true,false)]
+        [TestCase(-200,"Valid","None",true,false)]
         [TestCase(-10,"Perfect","None",true,true)]
         [TestCase(10,"Perfect","None",true,false)]
         [TestCase(170,"Valid","None",true,false)]
@@ -27,6 +27,7 @@ namespace SquashClash.Runtime.Tests
             var e=Oracle.Expect(new Scenario{kind="swing",releaseOffsetMs=170},Defaults.With("timing.validLimit",0),-268,6);
             Assert.That(e.result,Is.EqualTo("Failed"));Assert.That(e.fail,Is.EqualTo("Late"));
         }
+        [Test] public void AutoQASources_KeepTheAuthorityGuard()=>new AutoQAGuardTests().AutoQASources_RespectAuthorityContract();
         [Test] public void V_ExplicitConfigPreservesApprovedHashes()
         {
             var p=Defaults.With("timing.validLimit",1);

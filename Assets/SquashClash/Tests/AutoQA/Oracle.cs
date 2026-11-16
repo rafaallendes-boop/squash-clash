@@ -7,8 +7,8 @@ namespace SquashClash.AutoQA
     // Spec v0.3 §7.1 and the approved First Shot closure table; no game decision APIs.
     internal static class Oracle
     {
-        internal static Expected Expect(Scenario s,ParamSet config,double kInMs,double kOutMs)=>Expect(s,config);
-        internal static Expected Expect(Scenario s,ParamSet config)
+        internal static Expected Expect(Scenario s,ParamSet config)=>Expect(s,config,double.NaN,double.NaN);
+        internal static Expected Expect(Scenario s,ParamSet config,double kInMs,double kOutMs)
         {
             string closure=s.kind=="rejected"?"Rejected":Closure(false,false,false,s.pullMm>config.Get("power.pullDeadZoneMm"),s.pullMm,s.pullMm,s.durationMs,config);
             var e=new Expected{closure=closure,result="NoOrder",rationale="Non-Swing closures do not consume an attempt or produce contact presentation"};
@@ -16,10 +16,16 @@ namespace SquashClash.AutoQA
             {
                 double delta=s.releaseOffsetMs-config.Get("timing.latencyCompMs");
                 bool perfect=Math.Abs(delta)<=config.Get("timing.assistMs");
-                bool valid=!config.GetBool("timing.validLimit")||Math.Abs(delta)<=config.Get("timing.validMs");
+                bool limited=config.GetBool("timing.validLimit");
+                if(!limited&&(double.IsNaN(kInMs)||double.IsNaN(kOutMs)||double.IsInfinity(kInMs)||double.IsInfinity(kOutMs)||kInMs>kOutMs))
+                    throw new InvalidOperationException("T3 requires an independent finite K window");
+                bool withinK=limited||delta>=kInMs&&delta<=kOutMs;
+                perfect&=withinK;
+                bool valid=withinK&&(!limited||Math.Abs(delta)<=config.Get("timing.validMs"));
                 e.result=perfect?"Perfect":valid?"Valid":"Failed";e.applied=perfect||valid;e.presentations=1;
-                e.fail=e.applied?"None":delta<0?"Air":"Late";e.scheduled=perfect&&delta<=0;e.checkScheduled=perfect;
-                e.rationale="Independent configured A/V windows; geometric K bounds only invalidate margin, never select expectation";
+                e.fail=e.applied?"None":(!limited?delta<kInMs:delta<0)?"Air":"Late";e.scheduled=perfect&&delta<=0;e.checkScheduled=perfect;
+                e.oracle=limited?"timing-window/1":"timing-k/1";
+                e.rationale=limited?"Independent configured A/V windows; unchanged V oracle":"Independent physical K first, then configured A; no production contact decisions";
             }
             if(!string.IsNullOrEmpty(s.deliberateExpectedResult))e.result=s.deliberateExpectedResult;
             return e;

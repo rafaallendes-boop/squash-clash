@@ -40,9 +40,10 @@ Versión condensada del 14–16 nov 2026. Solo contiene lo vigente. El original 
 | Timing, contrato de contacto y reloj (ClockMap/SimClock) | Codex | Encargo del PO, 15 nov |
 | Física P2, solver, M2-4, `DefaultPreset.json`, SimulationKey | Sin dueño asignado; solo con autorización del PO | Encargos del 11–14 nov |
 
-## 5. Hashes (vigentes en `main` desde #56)
+## 5. Hashes (U1 en esta rama; pendiente de fusión)
 
-- Defaults `06fed4bd4ac9` / 121 claves; P0 efectivo `0a3d3262a79d`; ancla SL5 `8e22575422f2`. Medidos en Unity en #56 y observados en el arranque de la build `0.1.0+43a39a1 dev` del 15 nov. (Potencia según la distancia, 14–15 nov)
+- Defaults T3 `430da2faa818` / 121 claves; P0 efectivo `dcc7c8cc0688`; ancla SL5 T3 `e89daab41c3e`. Medidos en Unity al repetir el RED autorizado de U1 el 16 nov (proyección con `validLimit=0`); pendientes de las compuertas de #65. El archivo P0-calib-1 no se modifica.
+- Anteriores a U1, ya no vigentes en esta rama: defaults `06fed4bd4ac9`/121, P0 `0a3d3262a79d`, SL5 `8e22575422f2`. Siguen vigentes en `main` hasta fusionar U1 y como anclas de los escenarios V explícitos.
 - SimulationKey `166a96e319c7`; 41 valores heredados, proyección `0d39e6016bd8`; P0 heredado, proyección `8de3f2ecb217`. (Etapa 5 y S1, 24–25 oct; confirmados el 13 nov)
 - Archivo P0-calib-1 SHA-256 `2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd`. (Etapa 5, 24 oct; instalación del 15 nov)
 - Anteriores a #56, ya no vigentes: defaults `9041c4aafc77`/118, P0 `b6914a349068`, SL5 `e2ffa032a588`.
@@ -58,6 +59,8 @@ Versión condensada del 14–16 nov 2026. Solo contiene lo vigente. El original 
 - **App instalada:** `0.1.0+22bb2d5 dev` (`main` con #58–#60), 16 nov ~14:38Z (11:38 Chile). Compilada con `scripts/build-ios.sh dev`, `codesign --verify --strict` OK, perfil incorporado hasta 2026-11-18T13:50:05Z. Respaldo nuevo de `Documents/presets` antes de instalar; después, P0-calib-1.json, Po-1.json y last-active.txt idénticos byte a byte al respaldo; primera línea de métricas: presetName P0-calib-1, presetFileHash `2f1295f2…e4fd`, effectiveHash `0a3d3262a79d`, pending 0. La evidencia está en `Logs/evidence/` (ignorada, no se versiona). (16 nov)
 
 ## 7. Autorizaciones vigentes
+
+- **U1–U3, 16 nov:** el PO autoriza `timing.validLimit` de 1 a 0 y hashes, ampliar AutoQA con K independiente y escenarios T3 predeclarados, conservando V explícito y sus expectativas/anclas. SL1 +170 ms Failed/Late, SL5 +170 ms Valid y SL1 −200 ms Valid. Una repetición del RED de defaults autorizada y ejecutada con fallo de aserción válido; ningún reintento adicional. Se trabaja en #65; U3 y U2 después, sin fusionar ni instalar. Detalle en el registro de aprobaciones y el informe U1.
 
 - **Concedidas el 16 nov, ya ejecutadas:** fusión de #58–#60 e instalación de la build DEV, con la autorización literal del PO: «Listo, revisa @[Robustez de dispositivos, música y opción zurdo] y @[Primera experiencia Squash Clash]  ya  está ok. Con esto si está todo correcto. Has la fusión y luego la instalación en el celular. y iré a realizar una prueba completa de todo.»
 - **Vigentes desde el 16 nov (decisiones del PO):** Codex implementa los ajustes de producto de §6 como entrega propia; Codex actualiza #32 contra `main`, desactivada; un subagente Sonnet redacta el protocolo y la plantilla de la tarea 4.5. Cambio de modo, literal: «Fable ya se acabaron los créditos. Ahora volvemos al modo normal. Códex también vuelve. A si que también podría tener alguna tarea para desarrollo» y «Si, lanza todo. […] Pero ya que adelantamos con fable, ahora toca volver al modo normal y vamos operando cerrando los hitos paso a paso.» Detalle en el [registro de aprobaciones](docs/reviews/2026-10-25-first-shot-po-approvals.md).
