@@ -2778,3 +2778,33 @@ Respuestas del PO en el diálogo de preguntas de Claude:
 > «Si, lanza todo. […] Pero ya que adelantamos con fable, ahora toca volver al modo normal y vamos operando cerrando los hitos paso a paso.»
 
 **Significado:** la autorización de Fable termina. Codex implementa (código y zonas protegidas); Claude revisa de forma independiente, y si dirige un subagente lo declara; subagentes Sonnet para documentos y protocolos y Haiku para el operador de AutoQA, a pedido del PO; el PO aprueba cada fusión y los hitos se cierran paso a paso.
+
+## Cierres pendientes del 16 nov (registro)
+
+- **#63** `codex/product-tweaks` (C1 de Codex) se fusionó con la aprobación del PO («Sí, fusiona»): merge `a1fa915`. Incluye ocultar en prod la línea técnica, recordar la dificultad y dejar la raqueta de «diestro» en la mano derecha.
+- **#32** `codex/sl56-return-rule` se cerró sin fusionar. La reemplazan #56 y la capa causal; la rama se conserva en `10f162f`. Activar la regla sigue sin autorización.
+- **Instalación de `0.1.0+a1fa915 dev`** (16 nov, 18:04Z), con la autorización literal del PO: «Si, utiliza mi PC y renueva el vencimiento del 18 de nov. Autorizo las sesiones y quiero hacer las pruebas. Dime como hacerlas, la idea es que salga lo mas rapido posible».
+  - El perfil, del equipo personal gratuito, se renovó hasta el 2026-11-23T18:03:12Z.
+  - Se hizo un respaldo nuevo antes de instalar. Después, los tres archivos de presets quedaron idénticos byte a byte.
+- **Tarea 4.5, sesión 1:** se hizo el mismo día y se cerró anticipadamente por decisión del PO, después de B1 (V) y B2 (T3 pure). El detalle y las respuestas literales están en la [hoja de sesión](../validation/2026-11-16-first-shot-4-5-session-sheet.md). P0 quedó restaurado (`0a3d3262a79d`, 0 pendientes) y los archivos, idénticos byte a byte.
+
+## Decisiones del PO tras la sesión 1 de 4.5: hacia usuarios reales (16 nov 2026, Chile)
+
+Decisiones literales del PO; cambian la prioridad y la dirección del trabajo.
+
+> «1. Timing: avanzamos con T3 pure como candidato para el playtest con usuarios. […] Por ahora, no quiero continuar comparando ventanas ni realizar más pruebas personales de timing. T3 pure será la configuración candidata para las primeras pruebas externas, sin considerarla todavía una regla definitiva.»
+
+> «2. Priorizamos una experiencia natural de juego. Quiero que los usuarios puedan entrar, aprender los controles y jugar partidos sin estar pendientes de métricas, ventanas de timing o configuraciones técnicas. Las métricas deben recopilarse en segundo plano para analizar posteriormente qué funciona y qué debemos mejorar.»
+
+> «3. Aceleremos el camino hacia usuarios reales. Mi prioridad ahora es conseguir una build suficientemente estable y jugable para que otras personas prueben Squash Clash. No busco un producto perfecto antes de probarlo.»
+
+> «4. First Shot y validaciones pendientes. La sesión 1 queda cerrada. No agendaremos por ahora la sesión 2. Esto no significa aceptar First Shot ni modificar retroactivamente sus criterios. Quiero que registremos formalmente qué queda pendiente y qué riesgos asumimos al avanzar hacia pruebas externas. SL5/SL6 y los problemas de dirección también quedan como observaciones abiertas, sin bloquear automáticamente el playtest salvo que afecten significativamente la experiencia.»
+
+> «5. Próximo encargo. Necesito que revises el estado actual del proyecto y propongas el camino mínimo para llegar a una primera prueba con usuarios […] No quiero abrir nuevas líneas de desarrollo ni agregar funcionalidades que no sean necesarias para este objetivo. […] Mantengamos la disciplina técnica, la trazabilidad y las aprobaciones, pero evitemos que el proceso de validación se convierta en un obstáculo para aprender del mercado.»
+
+**Significado:**
+- **T3 pure** pasa a ser la configuración candidata para las pruebas externas, pero no es una regla adoptada.
+- **Cambiar `DefaultPreset.json`** (`timing.validLimit` de 1 a 0) todavía necesita la autorización explícita del PO sobre la propuesta.
+- **La sesión 2 de 4.5 no se agenda.**
+- **First Shot, First Rally y First Match no se aceptan** y sus criterios no cambian.
+- **La propuesta de Claude** está en [2026-11-16-camino-a-usuarios.md](2026-11-16-camino-a-usuarios.md), con los pendientes y riesgos asumidos en su §8.
