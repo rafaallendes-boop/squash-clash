@@ -2747,3 +2747,34 @@ Decisión literal del PO, que cambia la regla de adopción de la sección 6.4 de
 > «Perfecto, entonces cuando llegue el diagnostico, realiza la fusión, y implementa la build en dev para yo empezar a jugar.»
 
 La build DEV `0.1.0+43a39a1` sale de este head, con el producto idéntico al del merge. γ 2,0 sigue siendo candidato y no queda adoptado. R3a y S3b siguen en Fail. Fusionar no acepta First Shot.
+
+
+## Fusión de #58–#60 e instalación de la build DEV (16 nov 2026, Chile)
+
+Autorización literal del PO:
+
+> «Listo, revisa @[Robustez de dispositivos, música y opción zurdo] y @[Primera experiencia Squash Clash]  ya  está ok. Con esto si está todo correcto. Has la fusión y luego la instalación en el celular. y iré a realizar una prueba completa de todo.»
+
+**Fusiones** (`gh pr merge --merge --match-head-commit`, en orden de pila; en cada una, segundo padre = head aprobado y árbol del merge = árbol del head): #58 `visual/feel-pass` → merge `8f7ebc7`, head `a401e2a`; #59 `visual/first-run` (base reapuntada a `main`) → merge `27e5360`, head `98befb1`, código `0d58aeb` ([informe](2026-11-15-first-run.md)); #60 `visual/device-robustness` (base reapuntada a `main`) → merge `22bb2d5`, head `f98c955`, código `6c47efc` ([informe](2026-11-16-device-robustness.md)). Las autorizaciones de tarea a Fable constan en esos dos informes y no se repiten aquí.
+
+**Verificación:** se apoyó en las puertas de Fable sobre los heads de código (#59: EditMode 735/735, PlayMode 502/502, AutoQA PASS/0/1; #60: EditMode 737/737, PlayMode 544/544, AutoQA PASS/0/1, check-release OK). Claude no repitió las suites; comprobó que los commits posteriores son solo documentos y capturas, y no halló cambios en Core, física, `DefaultPreset.json`, timing, contrato de contacto, reloj, GesturePreview, ProjectSettings ni Packages. La opción zurda es cosmética. **Fusionar no acepta ninguna etapa.**
+
+**Instalación:** build `0.1.0+22bb2d5 dev` desde `main` `22bb2d5`, firma verificada, perfil hasta 2026-11-18T13:50:05Z (10:50:05 Chile); respaldo nuevo antes de instalar; instalada ~14:38Z (11:38 Chile); tras instalar, P0-calib-1.json, Po-1.json y last-active.txt idénticos byte a byte al respaldo; primera línea de métricas con effectiveHash `0a3d3262a79d` y pending 0. Evidencia local, ignorada.
+
+**Observación del PO tras jugar libremente:** «Ahora estuve jugando y se ve bastante mejor.» Es una observación, no la aceptación de First Shot, First Rally ni First Match.
+
+## Decisiones del PO y vuelta al modo normal (16 nov 2026, Chile)
+
+Respuestas del PO en el diálogo de preguntas de Claude:
+
+- **Ajustes de producto, a implementar por Codex como entrega propia:** ocultar en prod la línea técnica «M2-4 · Tensando · P …» (queda en DEV); recordar la dificultad elegida entre lanzamientos; «Mano: diestro» deja la raqueta en la mano derecha, simétrico a zurdo. Se mantiene como fusionado: una interrupción en partida abre la pausa; «Sonido» y «Música» son interruptores independientes.
+- **#32** (`codex/sl56-return-rule`): Codex la actualiza contra `main`; sigue desactivada; activarla o validarla no está autorizado.
+- **Tarea 4.5 de S4:** un subagente Sonnet redacta ahora el protocolo y la plantilla; no hay sesión física hasta que el PO apruebe el protocolo y la autorice.
+
+**Cambio de modo de trabajo**, literal:
+
+> «Fable ya se acabaron los créditos. Ahora volvemos al modo normal. Códex también vuelve. A si que también podría tener alguna tarea para desarrollo»
+
+> «Si, lanza todo. […] Pero ya que adelantamos con fable, ahora toca volver al modo normal y vamos operando cerrando los hitos paso a paso.»
+
+**Significado:** la autorización de Fable termina. Codex implementa (código y zonas protegidas); Claude revisa de forma independiente, y si dirige un subagente lo declara; subagentes Sonnet para documentos y protocolos y Haiku para el operador de AutoQA, a pedido del PO; el PO aprueba cada fusión y los hitos se cierran paso a paso.
