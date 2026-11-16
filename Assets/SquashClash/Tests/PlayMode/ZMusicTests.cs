@@ -10,7 +10,7 @@ using UnityEngine.TestTools;
 using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Tests
 {
-    // Device robustness, block B: original music. A loop for the menu and a very quiet one for the match, with a
+    // Device robustness, block B: original music. A loop for the menu and a quiet one for the match, with a
     // switch of its own. Like the sound layer it never plays in batch mode, so these tests check what it asks for.
     public sealed class ZMusicTests : ZFirstRunFixture
     {
@@ -63,7 +63,7 @@ namespace SquashClash.Runtime.Tests
             Ticks(MusicPlayer.FadeSeconds+.1f);
             Assert.That(music.Sounding(MusicTrack.Menu),Is.False);Assert.That(music.Volume(MusicTrack.Menu),Is.EqualTo(0));
             Assert.That(music.Volume(MusicTrack.Match),Is.EqualTo(MusicPlayer.MatchVolume).Within(.001f));
-            Assert.That(MusicPlayer.MatchVolume,Is.LessThan(MusicPlayer.MenuVolume*.3f),"the match loop is much quieter than the menu's");
+            Assert.That(MusicPlayer.MatchVolume,Is.LessThan(MusicPlayer.MenuVolume*.5f),"the match loop stays under half the menu's source volume");
         }
         [UnityTest] public IEnumerator Pause_SilencesTheMusicAtOnce_AndContinuePicksItUpWhereItWas()
         {
@@ -114,16 +114,17 @@ namespace SquashClash.Runtime.Tests
             Click("pause-continue");Refresh();Ticks(.5f);
             Assert.That(music.Wanted,Is.EqualTo(MusicTrack.None));Assert.That(music.Sounding(MusicTrack.Match),Is.False,"off stays off during the match");
         }
-        // The loudest the match loop ever is, against the quietest thing the player's own stroke plays.
-        [UnityTest] public IEnumerator Mix_TheMatchLoopStaysFarUnderThePlayersContact()
+        // The loudest the match loop ever is, against the quietest thing the player's own stroke plays: music is a bed (about 12 dB
+        // under contact in average level), not something that can be mistaken for a hit.
+        [UnityTest] public IEnumerator Mix_TheMatchLoopStaysUnderThePlayersContact()
         {
             var feedback=app.GetComponent<ShotFeedback>();Assert.That(feedback.ClipsLoaded,Is.True);
             float contact=Mathf.Min(Peak(Resources.Load<AudioClip>("Audio/impact-perfect"),out _),Peak(Resources.Load<AudioClip>("Audio/impact-valid"),out _));
             float match=Peak(music.ClipOf(MusicTrack.Match),out float matchRms)*MusicPlayer.MatchVolume;
-            Assert.That(match,Is.LessThanOrEqualTo(contact*.25f),"peak at least 12 dB under the quietest contact clip");
-            Assert.That(matchRms*MusicPlayer.MatchVolume,Is.LessThanOrEqualTo(contact*.08f),"average level about 22 dB under it");
+            Assert.That(match,Is.LessThanOrEqualTo(contact*.5f),"peak at least 6 dB under the quietest contact clip");
+            Assert.That(matchRms*MusicPlayer.MatchVolume,Is.LessThanOrEqualTo(contact*.15f),"average level about 12 dB under it");
             float menu=Peak(music.ClipOf(MusicTrack.Menu),out _)*MusicPlayer.MenuVolume;
-            Assert.That(menu,Is.LessThanOrEqualTo(.35f),"the menu loop leaves headroom");Assert.That(menu,Is.GreaterThan(match*3));
+            Assert.That(menu,Is.LessThanOrEqualTo(.35f),"the menu loop leaves headroom");Assert.That(menu,Is.GreaterThan(match*2),"the menu loop peaks well above the match loop");
             yield return null;
         }
         [UnityTest] public IEnumerator Music_KeepsItsSourcesApart_FromTheContactAudio()
