@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Reflection;
 using NUnit.Framework;
 using SquashClash.Core.Shot;
 using SquashClash.Runtime.Shot;
@@ -87,6 +88,121 @@ namespace SquashClash.Runtime.Tests
                 }
             }
             TestContext.WriteLine($"E1 contact samples={contactSamples}, worst distance={worstDistance:R} m, left={left}, backhand={backhand}");
+        }
+        private static object Read(object target,string field)=>target.GetType().GetField(field,BindingFlags.Instance|BindingFlags.NonPublic).GetValue(target);
+        private static void Write(object target,string field,object value)=>target.GetType().GetField(field,BindingFlags.Instance|BindingFlags.NonPublic).SetValue(target,value);
+        private static void Call(object target,string method,params object[] args)=>target.GetType().GetMethod(method,BindingFlags.Instance|BindingFlags.NonPublic).Invoke(target,args);
+        private Vector3 DrawnHead=>human.transform.Find("Racket").position;
+        private Vector3 ReferenceHead=>swing.Rig.Find("Racket").position;
+        private void BeginViewStroke(StrokeSide side,string attempt)
+        {
+            var intent=new SwingIntent(app.Host.LaunchId,attempt,side);
+            // Deliver only the two views' wired listeners, in the real subscription order. No game state is edited.
+            var listeners=(Action<SwingIntent>)Read(controller,"SwingAccepted");
+            foreach(Action<SwingIntent> listener in listeners.GetInvocationList())
+                if(ReferenceEquals(listener.Target,swing)||ReferenceEquals(listener.Target,human))listener(intent);
+        }
+        private ShotPresentation ViewContact(StrokeSide side,string attempt)=>new ShotPresentation(app.Host.LaunchId,attempt,PresentationCategory.Perfect,1,null,0,true,0,
+            controller.Snapshot.Body.IdealContactPoint(side),side.ToString());
+        private void DeliverView(ShotPresentation presentation)
+        {
+            var listeners=(Action<ShotPresentation>)Read(controller,"PresentationDelivered");
+            foreach(Action<ShotPresentation> listener in listeners.GetInvocationList())
+                if(ReferenceEquals(listener.Target,swing)||ReferenceEquals(listener.Target,human))listener(presentation);
+        }
+        private void CheckFrame(double dt,ref Vector3 previousDrawn,ref Vector3 previousReference,bool entry,ref float maxStep,ref float maxExtra)
+        {
+            swing.Tick(dt);human.Animate((float)dt);
+            var drawnDelta=DrawnHead-previousDrawn;var referenceDelta=ReferenceHead-previousReference;
+            float step=drawnDelta.magnitude,extra=(drawnDelta-referenceDelta).magnitude;
+            maxStep=Mathf.Max(maxStep,step);maxExtra=Mathf.Max(maxExtra,extra);
+            if(entry)Assert.That(extra,Is.LessThanOrEqualTo(WorldTolerance),"phase entry must not add a positional snap to SwingView's movement");
+            else Assert.That(step,Is.LessThanOrEqualTo(8*(float)dt+WorldTolerance),"window exit must remain below 8 m/s plus the 5 mm tolerance");
+            previousDrawn=DrawnHead;previousReference=ReferenceHead;
+        }
+        [TestCase(false,false)]
+        [TestCase(false,true)]
+        [TestCase(true,false)]
+        [TestCase(true,true)]
+        public void ContactTransitions_AreContinuousForEveryFrameStep(bool left,bool backhand)
+        {
+            Handedness.Left=left;
+            var side=left==backhand?StrokeSide.Drive:StrokeSide.Backhand;
+            foreach(double frame in new[]{1d/30,1d/60,1d/120,.050})
+            foreach(double intention in new[]{.025,.30})
+            {
+                LaunchWithPhysicalSide(side);string attempt="e1-continuity-"+app.Host.LaunchId;
+                BeginViewStroke(side,attempt);
+                // The first accepted-order draw is outside this test's phase-boundary population.
+                human.Animate(0);var previousDrawn=DrawnHead;var previousReference=ReferenceHead;
+                float maxEntryStep=0,maxExtra=0,maxExitStep=0,unused=0;
+                double elapsed=0;
+                while(elapsed<intention-1e-9)
+                {
+                    double dt=Math.Min(frame,intention-elapsed);
+                    swing.Tick(dt);human.Animate((float)dt);
+                    maxEntryStep=Mathf.Max(maxEntryStep,Vector3.Distance(DrawnHead,previousDrawn));
+                    previousDrawn=DrawnHead;previousReference=ReferenceHead;elapsed+=dt;
+                }
+                DeliverView(ViewContact(side,attempt));Assert.That(swing.Phase,Is.EqualTo(SwingPhase.Impact));
+                // No source motion at the event itself: exposes a teleport independently of frame length.
+                CheckFrame(0,ref previousDrawn,ref previousReference,true,ref maxEntryStep,ref maxExtra);
+                elapsed=0;
+                while(elapsed<.30-1e-9)
+                {
+                    double boundary=elapsed<.12-1e-9?.12:.30;
+                    double dt=Math.Min(frame,boundary-elapsed);
+                    bool entry=elapsed<.12-1e-9;
+                    CheckFrame(dt,ref previousDrawn,ref previousReference,entry,ref maxExitStep,ref unused);elapsed+=dt;
+                    if(Math.Abs(elapsed-.12)<1e-8)
+                        CheckFrame(0,ref previousDrawn,ref previousReference,false,ref maxExitStep,ref unused);
+                }
+                TestContext.WriteLine($"E1 continuity left={left} backhand={backhand} frame={frame:R} intention={intention:R} entryStep={maxEntryStep:R} extra={maxExtra:R} exitStep={maxExitStep:R}");
+            }
+        }
+        [Test] public void UnknownContactAge_DoesNotKeepTheWindowOpenForTheWholeImpact()
+        {
+            Deliver(StrokeSide.Backhand,.8f);human.Animate(0);swing.Tick(.20);
+            Write(human,"contactAge",-1f);human.Animate(.20f);
+            Assert.That(human.TrailVisible,Is.True,"a missing local age must fail closed instead of suppressing the trail for all of Impact");
+        }
+        [Test] public void HumanRacketScale_DoesNotPopAtWindowExit()
+        {
+            Deliver(StrokeSide.Backhand,1);human.Animate(0);
+            var scale=human.transform.Find("Racket").localScale;
+            for(int i=0;i<20;i++)
+            {
+                swing.Tick(.01);fx.Tick(.01f);human.Animate(.01f);
+                Assert.That(Vector3.Distance(human.transform.Find("Racket").localScale,scale),Is.LessThan(1e-6f),"the human head keeps a constant scale through contact and exit");
+            }
+        }
+        [Test] public void RejectedDeliveries_DoNotReactivateTheContactWindow()
+        {
+            LaunchWithPhysicalSide(StrokeSide.Backhand);const string attempt="e1-delivery-filter";
+            BeginViewStroke(StrokeSide.Backhand,attempt);swing.Tick(.15);human.Animate(.15f);
+            var valid=ViewContact(StrokeSide.Backhand,attempt);
+            var wrong=ViewContact(StrokeSide.Backhand,"other-attempt");
+            DeliverView(wrong);Assert.That((float)Read(human,"contactAge"),Is.LessThan(0),"wrong attempt during Intention");
+            DeliverView(valid);human.Animate(0);swing.Tick(.20);human.Animate(.20f);
+            float age=(float)Read(human,"contactAge");Assert.That(age,Is.GreaterThan(.12f));
+            DeliverView(valid);Assert.That((float)Read(human,"contactAge"),Is.EqualTo(age),"duplicate after SwingView has already entered Impact");
+            swing.Tick(1);human.Animate(1);age=(float)Read(human,"contactAge");
+            DeliverView(valid);Assert.That((float)Read(human,"contactAge"),Is.EqualTo(age),"same identity after SwingView has returned to Idle");
+        }
+        [TestCase(StrokeSide.Drive)]
+        [TestCase(StrokeSide.Backhand)]
+        public void RivalPoseAndArc_UseTheDeliveredSideEvenNearTheBodyCentre(StrokeSide side)
+        {
+            // Place the visual body at the current ball x so the legacy dead zone retains the contradictory sign.
+            var player=app.Players.Rival;var position=player.position;position.x=app.Host.RenderPosition.x;player.position=position;
+            float expected=side==StrokeSide.Drive?-1:1;Write(rival,"racketSign",-expected);
+            Call(rival,"OnRivalSwing",side,true);Call(fx,"OnRivalSwing",side,true);fx.Tick(.08f);rival.Animate(.01f);
+            var arc=fx.transform.Find("Rival stroke arc").GetComponent<LineRenderer>();
+            Assert.That(arc.enabled,Is.True);
+            Assert.That(rival.RacketSign,Is.EqualTo(expected),"pose must use the event's side, never the ball-x dead zone");
+            Assert.That(rival.RacketHand,Is.EqualTo(1));
+            var delta=arc.GetPosition(arc.positionCount-1)-arc.GetPosition(0);
+            Assert.That(delta.x*expected,side==StrokeSide.Backhand?Is.GreaterThan(.20f):Is.LessThan(-.20f),"arc must show the same stroke as the fixed-hand figure");
         }
         [TestCase(false,false)]
         [TestCase(false,true)]
