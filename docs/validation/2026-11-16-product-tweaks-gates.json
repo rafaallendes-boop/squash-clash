@@ -25,6 +25,23 @@
   },
   "fullPlayMode": {
     "command": "scripts/test.sh playmode",
+    "exitCode": 0,
+    "counts": {
+      "total": 548,
+      "passed": 548,
+      "failed": 0,
+      "skipped": 0
+    },
+    "xmlSha256": "7afdfd142c0fbcfab921896a34b80a0f45399e59c8d069ed8ac72ec664d162bb",
+    "sourceCommit": "cd0b0c3",
+    "failures": []
+  },
+  "autoqa": null,
+  "release": null,
+  "projectSettingsRestored": true,
+  "estado": "PlayMode completo GREEN tras modificar solo las dos comprobaciones de sling-status autorizadas. AutoQA y check-release pendientes.",
+  "previousFullPlayMode": {
+    "command": "scripts/test.sh playmode",
     "exitCode": 1,
     "counts": {
       "total": 548,
@@ -45,8 +62,5 @@
       }
     ]
   },
-  "autoqa": null,
-  "release": null,
-  "projectSettingsRestored": true,
-  "estado": "Detenido: dos pruebas preexistentes requieren sling-status visible en una corrida sin SQUASH_DEV. Sin cambios a esas pruebas ni reintentos; AutoQA, check-release y PR pendientes."
+  "devAssertionsUnchangedAfterPreprocessing": true
 }
