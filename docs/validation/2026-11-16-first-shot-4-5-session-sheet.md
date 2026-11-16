@@ -94,3 +94,10 @@ El SL se cambia solo desde el panel DEV («Practice launch»). Así, alternar SL
 - **Bloques B1–B4, T3-suave y H2:** 12 recepciones, **dos seguidas por SL** (SL1, SL1, SL2, SL2 … SL6, SL6). Son los mismos seis lanzamientos con dos repeticiones cada uno, y cambia solo el orden respecto de la hoja.
 - **Qué cuenta:** después de cada cierre del panel (`dev-control`, `devOpen=false`), las primeras N recepciones nuevas: 1 en el calentamiento, 2 en los bloques. Las que se lancen mientras el panel está abierto, o de más, se conservan como extras fuera de cuota.
 - Los hashes no cambian: valen los de la tabla «estable».
+
+## Desviación antes de B1 (sesión 1): tarea de palabra
+
+- **Qué pasó:** después del calentamiento se movió sin querer «Outgoing observation limit» (`practice.observeMaxSeconds`). Claude lo devolvió a 4 s por Duplicación del iPhone, a pedido del PO, y el hash volvió a `21cd1bb43f9f`.
+- **Por qué la tarea va de palabra:** en la Duplicación, la lista del panel avanza 2–3 px por toque, así que la sección de tareas no se alcanzó.
+- **Desviación:** la tarea fija de H3 se da **de palabra**, igual en todos los bloques: «apunta al centro del frontis, a media altura, con potencia media y bote medio». El bloque H2 recibe su rotación de palabra antes de cada recepción.
+- **Qué se pierde y qué no:** no hay `practice-task` ni `task-captured`, así que H2 se analiza con las peticiones anotadas por el operador. Las tareas no entran en el hash.
