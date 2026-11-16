@@ -2778,3 +2778,11 @@ Respuestas del PO en el diálogo de preguntas de Claude:
 > «Si, lanza todo. […] Pero ya que adelantamos con fable, ahora toca volver al modo normal y vamos operando cerrando los hitos paso a paso.»
 
 **Significado:** la autorización de Fable termina. Codex implementa (código y zonas protegidas); Claude revisa de forma independiente, y si dirige un subagente lo declara; subagentes Sonnet para documentos y protocolos y Haiku para el operador de AutoQA, a pedido del PO; el PO aprueba cada fusión y los hitos se cierran paso a paso.
+
+## U3 — única PlayMode nueva autorizada (16 nov 2026)
+
+Encargo literal del PO:
+
+> «#66: autorizo una sola PlayMode completa nueva. No es CRP-01; si da el recuento completo, registra la falla de `LocalCancelLimitAndState` como intermitente sin causa demostrada y sigue con check-release. Si vuelve a fallar, detente y repórtalo. U2 sigue después.»
+
+Se conserva la corrida 550/551 y no se corrige el test. La clasificación como intermitente solo se registra si la corrida nueva aprueba el recuento completo; no implica causa demostrada ni equivalencia con CRP-01. Solo entonces se continúa check-release. Ante cualquier falla nueva se detiene, sin otro reintento.

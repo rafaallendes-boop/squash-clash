@@ -11,3 +11,7 @@ Las tres pruebas nuevas ZUserMetricsFlowTests pasan: Interruption_RecordsOnePaus
 Evidencia local ignorada: `Logs/evidence/u3/playmode-first-playmode-results.xml`, SHA-256 `852c6826a547c7bc426789ebd6b0ba6468e28ca6de797eb7804ba82f5c706183`; log `playmode-first-playmode.log`, SHA-256 `666877f51fa4094721482f4c428760d0f43eeaa7310140683155a0f428b61e60`.
 
 ProjectSettings restaurado con `git checkout -- ProjectSettings` después de la terminación completa del exec; ningún editor ni auxiliar Unity activo. Defaults, Core/Shot, Core/Simulation, Runtime/Shot y RallyDirector permanecen sin cambios respecto de main. No se ejecuta AutoQA porque el incremento solo registra eventos sin cambiar gesto/timing/contrato. Check-release pendiente por la parada. No hubo build nativa, acceso al iPhone, instalación o fusión. U2 sin iniciar. U1 #65 conserva por separado sus compuertas completas en verde. Revisión independiente pendiente, coordinada con el PO.
+
+## Autorización posterior del PO
+
+El PO autoriza **una sola PlayMode completa nueva**, manteniendo el test y el producto de #66 sin corrección. Si pasa completa, clasificar LocalCancelLimitAndState como intermitente sin causa demostrada, **no CRP-01**, y seguir check-release. Si falla otra vez, detenerse y reportar. El resultado previo 550/551 no se cambia; la clasificación solo se confirmará al cumplirse la condición. Literal en el registro de aprobaciones.
