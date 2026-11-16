@@ -71,8 +71,9 @@ namespace SquashClash.Runtime.Tests
             Assert.That(strong.Applied,Is.True,strong.Reason);
             fx.Tick(0);Assert.That(fx.Shakes,Is.EqualTo(1));Assert.That(rig.Shaking,Is.True);
             rig.TickShake(.05f);
-            Assert.That(Vector3.Distance(rig.transform.position,pose),Is.InRange(1e-4f,ImpactFx.ShakeMeters*1.5f),"a subtle nudge");
-            Assert.That(rig.transform.rotation,Is.EqualTo(rotation),"the shake translates, it does not rotate");
+            // Feel pass: the nudge exists only in the rendered frame; the pose gameplay reads stays put (see ZCameraFeelTests).
+            Assert.That(rig.RenderOffset.magnitude,Is.InRange(1e-4f,ImpactFx.ShakeMeters*1.5f),"a subtle nudge");
+            Assert.That(rig.transform.position,Is.EqualTo(pose));Assert.That(rig.transform.rotation,Is.EqualTo(rotation),"the shake translates, it does not rotate");
             rig.TickShake(.2f);
             Assert.That(rig.Shaking,Is.False);Assert.That(rig.transform.position,Is.EqualTo(pose));Assert.That(rig.transform.rotation,Is.EqualTo(rotation));
             yield return null;

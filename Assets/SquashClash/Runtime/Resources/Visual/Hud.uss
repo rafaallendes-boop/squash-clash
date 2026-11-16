@@ -91,3 +91,32 @@
 .sc-result-score { font-size: 60px; -unity-font-style: bold; color: rgb(255, 210, 63); margin-top: 4px; margin-bottom: 2px; }
 .sc-result-note { font-size: 13px; color: rgb(190, 204, 218); margin-bottom: 16px; -unity-text-align: middle-center; white-space: normal; }
 .sc-result-buttons { flex-direction: row; justify-content: center; }
+
+/* Feel pass: point banner over the front wall and result card tones. */
+.sc-banner-layer {
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    align-items: center;
+}
+.sc-banner {
+    align-items: center;
+    padding-left: 22px; padding-right: 22px; padding-top: 10px; padding-bottom: 12px;
+    max-width: 92%;
+    background-color: rgba(9, 16, 26, 0.92);
+    border-radius: 18px;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.25);
+}
+.sc-banner--human { border-color: rgb(30, 136, 255); }
+.sc-banner--rival { border-color: rgb(255, 77, 51); }
+.sc-banner-title { font-size: 24px; -unity-font-style: bold; letter-spacing: 2px; color: rgb(255, 255, 255); -unity-text-align: middle-center; }
+.sc-banner--human .sc-banner-title { color: rgb(120, 190, 255); }
+.sc-banner--rival .sc-banner-title { color: rgb(255, 140, 120); }
+.sc-banner-cause { font-size: 15px; color: rgb(226, 234, 242); margin-top: 2px; -unity-text-align: middle-center; white-space: normal; }
+.sc-banner-next { font-size: 13px; -unity-font-style: bold; letter-spacing: 1px; color: rgb(255, 210, 63); margin-top: 6px; -unity-text-align: middle-center; }
+.sc-result-card--won { border-color: rgb(255, 210, 63); }
+.sc-result-card--lost { border-color: rgb(255, 77, 51); }
+.sc-result-card--won .sc-result-kicker { color: rgb(255, 210, 63); }
+.sc-result-card--lost .sc-result-kicker { color: rgb(255, 140, 120); }
+.sc-result-card--lost .sc-result-score { color: rgb(236, 242, 248); }
+.sc-result-last { font-size: 14px; color: rgb(226, 234, 242); margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }

@@ -8,12 +8,14 @@ using UnityEngine;
 namespace SquashClash.Runtime.Visual
 {
     // Art pass: short, cheap effects on ball impacts. A dust puff where the ball bounces on the floor, a ripple where it
-    // meets a wall, and a subtle camera shake only for strong strokes. Pooled quads, no allocation after start, no
+    // meets a wall, and a subtle camera shake plus a brief field-of-view punch only for strong strokes. Pooled quads, no allocation after start, no
     // gameplay state. Racket contacts get no flash here on purpose: that cue belongs to PerfectFlashView (Perfect only).
     public sealed class ImpactFx : MonoBehaviour
     {
         public const int PoolSize=10;
         public const float PuffSeconds=.30f,RippleSeconds=.26f,StrongFraction=.8f,ShakeMeters=.028f,ShakeSeconds=.18f;
+        // Feel pass: strong strokes also push the lens in for an instant (render-only, like the shake).
+        public const float PunchDegrees=-1.6f,PunchSeconds=.22f;
         private struct Slot { public Transform Transform;public MeshRenderer Renderer;public float Age,Life,From,To,Alpha;public bool Active; }
         private readonly Slot[] slots=new Slot[PoolSize];
         private AppBootstrap app;private BallSimulationHost host;private CourtCameraRig rig;
@@ -71,7 +73,7 @@ namespace SquashClash.Runtime.Visual
             {
                 strokePending=false;
                 if(host.ActiveConfig!=null&&rig!=null&&host.Current.Velocity.magnitude>=StrongFraction*(float)host.ActiveConfig.Source.Get("shot.vMax"))
-                {rig.Shake(ShakeMeters,ShakeSeconds);Shakes++;}
+                {rig.Shake(ShakeMeters,ShakeSeconds);rig.Punch(PunchDegrees,PunchSeconds);Shakes++;}
             }
             if(dt<=0||app.Clock==null||app.Clock.Paused)return;
             for(int i=0;i<PoolSize;i++)
