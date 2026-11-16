@@ -6,7 +6,8 @@
     "SquashClash.Runtime",
     "SquashClash.DevPanel",
     "Unity.InputSystem",
-    "Unity.InputSystem.TestFramework"
+    "Unity.InputSystem.TestFramework",
+    "SquashClash.AutoQA"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"

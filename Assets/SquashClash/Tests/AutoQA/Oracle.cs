@@ -1,11 +1,13 @@
 using System;
 using System.Linq;
 using SquashClash.Core.Config;
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("SquashClash.Runtime.Tests")]
 namespace SquashClash.AutoQA
 {
     // Spec v0.3 §7.1 and the approved First Shot closure table; no game decision APIs.
     internal static class Oracle
     {
+        internal static Expected Expect(Scenario s,ParamSet config,double kInMs,double kOutMs)=>Expect(s,config);
         internal static Expected Expect(Scenario s,ParamSet config)
         {
             string closure=s.kind=="rejected"?"Rejected":Closure(false,false,false,s.pullMm>config.Get("power.pullDeadZoneMm"),s.pullMm,s.pullMm,s.durationMs,config);
