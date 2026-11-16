@@ -153,7 +153,9 @@ namespace SquashClash.Runtime.Tests
                     double boundary=elapsed<.12-1e-9?.12:.30;
                     double dt=Math.Min(frame,boundary-elapsed);
                     bool entry=elapsed<.12-1e-9;
-                    CheckFrame(dt,ref previousDrawn,ref previousReference,entry,ref maxExitStep,ref unused);elapsed+=dt;
+                    if(entry)CheckFrame(dt,ref previousDrawn,ref previousReference,true,ref maxEntryStep,ref maxExtra);
+                    else CheckFrame(dt,ref previousDrawn,ref previousReference,false,ref maxExitStep,ref unused);
+                    elapsed+=dt;
                     if(Math.Abs(elapsed-.12)<1e-8)
                         CheckFrame(0,ref previousDrawn,ref previousReference,false,ref maxExitStep,ref unused);
                 }

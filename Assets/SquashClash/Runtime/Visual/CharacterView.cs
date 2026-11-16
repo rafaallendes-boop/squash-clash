@@ -39,7 +39,8 @@ namespace SquashClash.Runtime.Visual
         private float runPhase,move,yaw,crouch=.04f,idle,headYaw,swingClock=-1,racketSign=1,backpedal,wind,strokeClock=-1,strokePower=.5f,hopClock=-1,trailAlpha,footSwing;
         private StrokeKind strokeKind;private int seenHuman,seenRival;
         private Vector3 racketPosition,shoulderRacket,contactExit;
-        private float contactAge=-1;private bool firstContactFrame;
+        private float contactAge=-1;private bool firstContactFrame,awaitingDelivery;
+        private long acceptedLaunch;private string acceptedAttempt;
         private RallyDirector rally;private SwingView swing;private AppBootstrap app;private StrokeFx fx;private GesturePreview preview;private ShotController controller;private BallSimulationHost host;
         private int lookup;private bool subscribed;
         public bool IsHuman=>human;
@@ -123,15 +124,30 @@ namespace SquashClash.Runtime.Visual
                 rally=app.Rally;host=app.Host;if(rally==null||host==null)return;
                 fx=app.GetComponent<StrokeFx>();preview=app.GetComponent<GesturePreview>();controller=app.GetComponent<ShotController>();
                 rally.RivalSwing+=OnRivalSwing;host.ShotApplied+=OnShotApplied;host.Launched+=OnLaunched;
-                if(human&&controller!=null)controller.PresentationDelivered+=OnDelivered;subscribed=true;
+                if(human&&controller!=null){controller.SwingAccepted+=OnAccepted;controller.PresentationDelivered+=OnDelivered;}subscribed=true;
                 if(fx!=null){seenHuman=fx.HumanStrokes;seenRival=fx.RivalStrokes;}
             }
             if(human&&swing==null)swing=app.GetComponent<SwingView>();
         }
-        private void OnLaunched(SquashClash.Core.Config.EffectiveConfig config){contactAge=-1;firstContactFrame=false;}
+        private void OnLaunched(SquashClash.Core.Config.EffectiveConfig config)
+        {contactAge=-1;firstContactFrame=false;awaitingDelivery=false;acceptedAttempt=null;}
+        private void OnAccepted(SwingIntent intent)
+        {
+            // SwingView's listener runs first. Record only the intention that it actually accepted.
+            if(swing==null||intent.LaunchId!=host.LaunchId||string.IsNullOrEmpty(intent.AttemptId)||
+                swing.Phase!=SwingPhase.Intention||swing.StartCountFor(intent.AttemptId)!=1)return;
+            acceptedLaunch=intent.LaunchId;acceptedAttempt=intent.AttemptId;awaitingDelivery=true;contactAge=-1;
+        }
         private void OnDelivered(ShotPresentation presentation)
         {
-            if(presentation.LaunchId!=host.LaunchId||!presentation.HasContact||presentation.Category==PresentationCategory.Failed)return;
+            if(!awaitingDelivery||presentation.LaunchId!=host.LaunchId||presentation.LaunchId!=acceptedLaunch||
+                presentation.AttemptId!=acceptedAttempt||swing==null)return;
+            // At this subscriber, SwingView has already left Intention if it accepted this final delivery.
+            // A duplicate, unrelated identity or delivery after Idle must not restart the local window.
+            if(presentation.Category==PresentationCategory.Failed)
+            {if(swing.Phase==SwingPhase.AirFollowThrough)awaitingDelivery=false;return;}
+            if(!presentation.HasContact||swing.Phase!=SwingPhase.Impact)return;
+            awaitingDelivery=false;
             // This is a local presentation age, never a game clock. The first draw does not consume time: if the
             // delivery occurred after SwingView.Update, the lock may end a frame later, never a frame early.
             contactAge=0;firstContactFrame=true;
@@ -140,10 +156,10 @@ namespace SquashClash.Runtime.Visual
         {
             // The opponent just hit: the human takes a split step. The rival swings.
             if(human){if(contact&&rally!=null&&rally.Active)hopClock=0;return;}
+            racketSign=side==StrokeSide.Drive?-1:1;
             if(host.ActiveConfig!=null)
             {
                 var ball=transform.InverseTransformPoint(host.RenderPosition);
-                if(Mathf.Abs(ball.x)>.1f)racketSign=Mathf.Sign(ball.x);
                 // The racket meets the ball where the contact happened, when that is within reach of the drawn arm.
                 if(contact)racketPosition=new Vector2(ball.x,ball.z).magnitude<1.1f&&ball.y<1.9f?ball:HitPose(racketSign);
             }
@@ -202,7 +218,8 @@ namespace SquashClash.Runtime.Visual
             float hop=hopClock>=0?Mathf.Sin(Mathf.PI*hopClock/SplitStepSeconds):0;
             bool swingDriven=human&&swing!=null;var swingPhase=swingDriven?swing.Phase:SwingPhase.Idle;
             if(contactAge>=0){if(firstContactFrame)firstContactFrame=false;else contactAge+=dt;}
-            bool contactLock=swingDriven&&swingPhase==SwingPhase.Impact&&(contactAge<0||contactAge<=ContactWindowEnd+1e-5f);
+            bool contactLock=swingDriven&&swingPhase==SwingPhase.Impact&&contactAge>=0&&contactAge<=ContactWindowEnd+1e-5f;
+            bool intentionReference=swingDriven&&swingPhase==SwingPhase.Intention;
             if(swingDriven&&!swingHidden&&swing.Rig!=null)
             {
                 // SwingView keeps computing its racket path (the figure follows it); its two boxes are no longer drawn.
@@ -311,8 +328,11 @@ namespace SquashClash.Runtime.Visual
                 rate=60;
                 var reference=transform.InverseTransformPoint(swing.Rig.TransformPoint(swing.RacketLocalPosition));
                 if(contactLock){target=reference;contactExit=reference;}
-                else if(swingPhase==SwingPhase.Intention)target=back;
-                else if(swingPhase==SwingPhase.Impact)target=Vector3.Lerp(contactExit,cleanFollow,Smooth((contactAge-ContactWindowEnd)/.16f));
+                // A delivery may interrupt Intention at any time, including before its Back key is reached.
+                // Keep its head on the source throughout Intention; own preparation stays in aiming/planted Idle
+                // and in the shoulder pose. There is no unmatched offset to snap away at the contact boundary.
+                else if(intentionReference)target=reference;
+                else if(swingPhase==SwingPhase.Impact)target=contactAge<0?reference:Vector3.Lerp(contactExit,cleanFollow,Smooth((contactAge-ContactWindowEnd)/.16f));
                 else target=reference+finish*through;
             }
             else if(!human&&swingClock>=0)
@@ -324,14 +344,14 @@ namespace SquashClash.Runtime.Visual
             }
             else if(prepare){target=Vector3.Lerp(rest,back,human?wind:1);rate=9;}
             else{target=rest;rate=7;}
-            racketPosition=contactLock?target:Vector3.Lerp(racketPosition,target,1-Mathf.Exp(-dt*rate));
+            racketPosition=contactLock||intentionReference?target:Vector3.Lerp(racketPosition,target,1-Mathf.Exp(-dt*rate));
             var reach=racketPosition-shoulderRacket;float length=reach.magnitude;
             var aim=length>1e-4f?reach/length:Vector3.forward;
             // The strings face the camera behind the court, so the racket never shows edge-on at the contact.
             var face=ToCamera-aim*Vector3.Dot(ToCamera,aim);
             racket.localPosition=racketPosition;
             racket.localRotation=Quaternion.LookRotation(aim,face.sqrMagnitude>.02f?face:Vector3.up);
-            float pop=strokeClock>=0&&!missed?1-Smooth(strokeClock/.16f):0;
+            float pop=!human&&strokeClock>=0&&!missed?1-Smooth(strokeClock/.16f):0;
             racket.localScale=RacketScale*(contactLock?1:1+.25f*pop);
 
             for(int i=0;i<2;i++)
@@ -380,7 +400,7 @@ namespace SquashClash.Runtime.Visual
         private void OnDestroy()
         {
             if(subscribed){if(rally!=null)rally.RivalSwing-=OnRivalSwing;if(host!=null){host.ShotApplied-=OnShotApplied;host.Launched-=OnLaunched;}
-                if(human&&controller!=null)controller.PresentationDelivered-=OnDelivered;}
+                if(human&&controller!=null){controller.SwingAccepted-=OnAccepted;controller.PresentationDelivered-=OnDelivered;}}
             if(trailMaterial!=null)Destroy(trailMaterial);
             foreach(var mesh in meshes)if(mesh!=null)Destroy(mesh);
             meshes.Clear();
