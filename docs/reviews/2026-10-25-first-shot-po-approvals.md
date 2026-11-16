@@ -2808,3 +2808,16 @@ Decisiones literales del PO; cambian la prioridad y la dirección del trabajo.
 - **La sesión 2 de 4.5 no se agenda.**
 - **First Shot, First Rally y First Match no se aceptan** y sus criterios no cambian.
 - **La propuesta de Claude** está en [2026-11-16-camino-a-usuarios.md](2026-11-16-camino-a-usuarios.md), con los pendientes y riesgos asumidos en su §8.
+
+## Cierre de First Shot y encargo U1–U3 (16 nov 2026, Chile)
+
+Literal del PO:
+
+> «Deja el encargo a codex. Pero yo lo avanzaría de la siguiente manera: Ya tenemos lo que es first rally y first match, fue lo que avanzamos con Fable. Daría por cerrado first shot. Haría U1, U2 y U3. […] Mejorar SL5 y SL6 que son los golpes de adelante. Seguir probando y jugando. […] cuando vea la app y considere que está lista para mostrarse, pago los 99 usd y avanzamos. […] creo que es mejor ya ir jugando y depurando a probar estatico y tan estructurado. Luego podemos ir viendo lo que es la volea»
+
+**Significado:**
+- **First Shot queda cerrado** por decisión del PO. Sus criterios no se modifican de forma retroactiva.
+  - Lo no cumplido o no medido queda como observación abierta: tarea 4.5 incompleta, H2, H3c, sesión 2, condiciones de S3 y dirección en SL5/SL6. Detalle en la §8 de la [propuesta](2026-11-16-camino-a-usuarios.md).
+- **Encargo a Codex:** U1, U2 y U3. Para U1 se autoriza cambiar `DefaultPreset.json`: `timing.validLimit` pasa de 1 a 0 y los hashes vigentes cambian. T3 pure sigue siendo candidato, no una regla definitiva.
+- **Backlog para el MVP** (§0 de la propuesta): cada ítem con su encargo y la aprobación del PO. SL5/SL6 toca física y M2-4, así que requiere autorización explícita en su encargo.
+- **Sin cambios:** First Rally y First Match siguen sin aceptación física, porque el PO no los cerró. El Developer Program y TestFlight se activan cuando el PO lo decida.

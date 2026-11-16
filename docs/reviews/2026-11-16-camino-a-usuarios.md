@@ -1,6 +1,29 @@
 # Camino mínimo a la primera prueba con usuarios
 
-Propuesta de Claude del 16 nov 2026, a pedido del PO. Las decisiones que la originan están en el [registro de aprobaciones](2026-10-25-first-shot-po-approvals.md#decisiones-del-po-tras-la-sesión-1-de-45-hacia-usuarios-reales-16-nov-2026-chile). Este documento propone; no decide nada. Cada fusión, instalación y cambio de zona protegida sigue necesitando la aprobación explícita del PO.
+Propuesta de Claude del 16 nov 2026, a pedido del PO, ajustada por el PO el mismo día (§0). Las decisiones que la originan están en el [registro de aprobaciones](2026-10-25-first-shot-po-approvals.md#decisiones-del-po-tras-la-sesión-1-de-45-hacia-usuarios-reales-16-nov-2026-chile). Este documento propone; no decide nada. Cada fusión, instalación y cambio de zona protegida sigue necesitando la aprobación explícita del PO.
+
+## 0. Hoja de ruta ajustada por el PO (16 nov), vigente
+
+El PO ajustó la propuesta. Prefiere jugar y depurar a validar de forma estática. Literal:
+
+> «Deja el encargo a codex. Pero yo lo avanzaría de la siguiente manera: Ya tenemos lo que es first rally y first match, fue lo que avanzamos con Fable. Daría por cerrado first shot. Haría U1, U2 y U3. Avanzaría en detalles esteticos, mejoras como para preparar un primer MVP. Mejorar SL5 y SL6 que son los golpes de adelante. Seguir probando y jugando. Avanzaría en las mejoras como por ejemplo diferenciar el golpe de derecho y de reves (estetico). Mejorar la música. La barra de cansancio físico. Los puntos que van al fondo. […] cuando vea la app y considere que está lista para mostrarse, pago los 99 usd y avanzamos. […] creo que es mejor ya ir jugando y depurando a probar estatico y tan estructurado. Luego podemos ir viendo lo que es la volea»
+
+**Orden de trabajo:**
+1. **First Shot se cierra** por decisión del PO. Lo pendiente de la §8 queda como observación abierta.
+2. **Codex hace U1 → U3 → U2** (§4).
+3. **Juego libre del PO** con cada build dev instalada. Lo que encuentre entra al backlog.
+4. **Backlog para el MVP.** Cada ítem lleva su encargo propio y la aprobación del PO:
+   - **SL5 y SL6, golpes desde adelante:** toca física y M2-4, zona protegida, así que necesita autorización explícita del encargo.
+   - **Golpe de derecha y de revés diferenciados:** solo estético, en la figura.
+   - **Música mejorada.**
+   - **Barra de cansancio físico:** es una mecánica nueva. Antes de implementarla, el PO decide en un diseño breve si afecta al juego o solo se muestra.
+   - **«Los puntos que van al fondo»:** falta precisar el alcance con el PO.
+5. **Prueba con otras personas:** cuando el PO considere que la app está lista para mostrarse, paga el Developer Program y se pasa a TestFlight (§5). La ola 0 presencial (§3) queda como opción en cualquier momento.
+6. **Después:** la volea.
+
+**Aclaración sobre TestFlight:**
+- El vencimiento a los 7 días, con instalación solo en el iPhone del PO, viene del **perfil del equipo gratuito**, no de TestFlight.
+- Con el programa pagado, las builds de TestFlight duran 90 días y se pueden invitar otras personas.
 
 ## 1. Dónde estamos (hechos verificados hoy)
 
