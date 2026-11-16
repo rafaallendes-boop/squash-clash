@@ -95,9 +95,9 @@ namespace SquashClash.Runtime.Menu
             practice=Add(menu,"menu-practice","Práctica (dev)",ClosePractice);practice.AddToClassList("sc-menu-wide");
             build=Text("v"+app.Build.Label,"sc-menu-build");build.name="menu-build";menu.Add(build);
         }
-        private static Button Add(VisualElement parent,string name,string text,System.Action action)
+        private Button Add(VisualElement parent,string name,string text,System.Action action)
         {
-            var button=new Button(action){name=name,text=text};button.AddToClassList("sc-button");parent.Add(button);return button;
+            var button=new Button(()=>{app.UserEvents?.Menu(MetricsScreen,name);action();}){name=name,text=text};button.AddToClassList("sc-button");parent.Add(button);return button;
         }
         private static VisualElement Row(VisualElement parent,string name,string style)
         {
@@ -177,6 +177,7 @@ namespace SquashClash.Runtime.Menu
             p.strokeColor=new Color(1,1,1,.38f);Disc(p,c,radius*.84f,false);
             p.strokeColor=gold;p.lineWidth=4;Disc(p,c,radius*.5f,false);
         }
+        private string MetricsScreen=>Screen==FirstRunScreen.Menu?"menu":Screen==FirstRunScreen.Tutorial?"tutorial":PauseVisible?"pause":"game";
         private void ShowStep()
         {
             tutorialStep.text=(TutorialStep+1)+" de "+TutorialSteps;tutorialTitle.text=StepTitles[TutorialStep];tutorialBody.text=StepBodies[TutorialStep];
@@ -189,18 +190,25 @@ namespace SquashClash.Runtime.Menu
         public void OpenTutorial(bool thenPlay)
         {
             if(app==null||Screen!=FirstRunScreen.Menu)return;
-            tutorialThenPlay=thenPlay;TutorialStep=0;Screen=FirstRunScreen.Tutorial;ShowStep();Refresh();
+            tutorialThenPlay=thenPlay;TutorialStep=0;Screen=FirstRunScreen.Tutorial;
+            app.UserEvents?.Menu("tutorial","open");app.UserEvents?.BeginTutorialStep(1);ShowStep();Refresh();
         }
         public void NextStep()
         {
             if(Screen!=FirstRunScreen.Tutorial)return;
-            if(TutorialStep<TutorialSteps-1){TutorialStep++;ShowStep();}else FinishTutorial();
+            app.UserEvents?.EndTutorialStep(true,false);
+            if(TutorialStep<TutorialSteps-1){TutorialStep++;app.UserEvents?.BeginTutorialStep(TutorialStep+1);ShowStep();}else FinishTutorial();
         }
-        public void SkipTutorial(){if(Screen==FirstRunScreen.Tutorial)FinishTutorial();}
+        public void SkipTutorial(){if(Screen==FirstRunScreen.Tutorial){SkipTutorialMetrics();FinishTutorial();}}
+        private void SkipTutorialMetrics()
+        {
+            app.UserEvents?.EndTutorialStep(false,true);
+            for(int i=TutorialStep+1;i<TutorialSteps;i++){app.UserEvents?.BeginTutorialStep(i+1);app.UserEvents?.EndTutorialStep(false,true);}
+        }
         private void FinishTutorial()
         {
             TutorialSeen=true;
-            if(tutorialThenPlay&&rally.CanStart)StartMatch();else{Screen=FirstRunScreen.Menu;Refresh();}
+            if(tutorialThenPlay&&rally.CanStart)StartMatch();else{Screen=FirstRunScreen.Menu;app.UserEvents?.Menu("menu","open");Refresh();}
         }
         private void BuildPause()
         {
@@ -237,12 +245,14 @@ namespace SquashClash.Runtime.Menu
             if(app==null)return false;
             if(Screen!=FirstRunScreen.None||PauseVisible)return true;
             if(!rally.Active||rally.Phase==RallyPhase.MatchOver||app.Clock.Paused)return false;
-            hud.TogglePause();Refresh();
+            hud.TogglePause("interruption");Refresh();
             return true;
         }
         public void OpenMenu()
         {
             if(app==null)return;
+            if(Screen==FirstRunScreen.Tutorial)SkipTutorialMetrics();
+            if(Screen!=FirstRunScreen.Menu)app.UserEvents?.Menu("menu","open");
             if(rally.Active)rally.StopMode();
             app.Clock.Paused=true;Screen=FirstRunScreen.Menu;Refresh();
         }
@@ -263,13 +273,13 @@ namespace SquashClash.Runtime.Menu
         {
             Screen=FirstRunScreen.None;app.Clock.Paused=false;rally.Level=Level;
             if(!rally.StartMatch()){OpenMenu();return;}
-            Refresh();hud.Refresh();
+            app.UserEvents?.Menu("game","open");Refresh();hud.Refresh();
         }
         // Dev only: leave the menu for the practice court and the developer tools.
         public void ClosePractice()
         {
             if(app==null||Screen!=FirstRunScreen.Menu)return;
-            Screen=FirstRunScreen.None;app.Clock.Paused=false;Refresh();
+            Screen=FirstRunScreen.None;app.Clock.Paused=false;app.UserEvents?.Menu("practice","open");Refresh();
         }
         // Called every frame: it touches the UI only when what it shows changed.
         public void Refresh()

@@ -9,3 +9,7 @@ Eventos: app-session (start/background/foreground/end, duración de fase y acumu
 Solo registro, sin UI nueva ni cambios de gesto, timing, contrato, reloj, física o defaults. Duraciones con tiempo real de la app, separado de SimClock. Misma ruta sin defines en dev/prod. AutoQA no corresponde si se mantiene este alcance.
 
 TDD y compuertas pendientes: RED de identidad y eventos en EditMode; integración PlayMode menú → tutorial → partido → fin, omisión/abandono e interrupción; suites completas EditMode/PlayMode y check-release.
+
+RED: EditMode UserMetricsTests **0/10 por aserción**; PlayMode ZUserMetricsFlowTests **0/3 por aserción**, XML frescos y sin errores CS. Evidencia ignorada `Logs/evidence/u3/events-red-*` y `flow-red-*`. ProjectSettings restaurado tras la salida completa de PlayMode. Implementación de registro y conexión a fuentes existentes en curso; las compuertas siguen pendientes.
+
+GREEN EditMode completo: **747/747**, cero omitidos, XML fresco y sin errores CS. Implementación de eventos conectada; PlayMode completo y check-release pendientes. Duraciones reales incluyen pausas/segundo plano; app-session registra por separado cada fase para poder distinguirlas al analizar.

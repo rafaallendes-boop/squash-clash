@@ -9,10 +9,11 @@ namespace SquashClash.Core.Diagnostics
     {
         [Serializable] private sealed class Record
         {
-            public string ts,kind,phase,build,presetName,presetFileHash,effectiveHash,payload;
+            public string ts,kind,phase,build,presetName,presetFileHash,effectiveHash,payload,installId;
             public int pending,seed;public bool metricsValid;public long droppedSinceRestart;
         }
         private readonly string directory,buildLabel;
+        private string installId;
         private string phase="free";
         public string Phase
         {
@@ -34,12 +35,21 @@ namespace SquashClash.Core.Diagnostics
         public void Write(string kind,EffectiveConfig cfg,string presetName,string presetFileHash,int pendingCount,int seed,bool metricsValid,long droppedSinceRestart,string jsonPayload)
         {
             if(cfg==null)throw new ArgumentNullException(nameof(cfg));
-            var record=new Record { ts=DateTime.UtcNow.ToString("O"),kind=kind,phase=phase,build=buildLabel,presetName=presetName,
-                presetFileHash=presetFileHash,effectiveHash=cfg.Hash,pending=pendingCount,seed=seed,metricsValid=metricsValid,
-                droppedSinceRestart=droppedSinceRestart,payload=jsonPayload??"{}" };
-            // Payload is an escaped JSON string. One physical line remains one complete record, even for multiline input.
-            var line=JsonUtility.ToJson(record)+"\n";
-            try { Directory.CreateDirectory(directory);File.AppendAllText(CurrentFilePath,line,new UTF8Encoding(false));LastError=null; }
+            try
+            {
+                Directory.CreateDirectory(directory);
+                if(installId==null)
+                {
+                    string path=Path.Combine(directory,"install-id.txt");
+                    if(File.Exists(path)&&Guid.TryParse(File.ReadAllText(path).Trim(),out var existing))installId=existing.ToString("D");
+                    else {string created=Guid.NewGuid().ToString("D");File.WriteAllText(path,created,new UTF8Encoding(false));installId=created;}
+                }
+                var record=new Record { ts=DateTime.UtcNow.ToString("O"),kind=kind,phase=phase,build=buildLabel,presetName=presetName,
+                    presetFileHash=presetFileHash,effectiveHash=cfg.Hash,pending=pendingCount,seed=seed,metricsValid=metricsValid,
+                    droppedSinceRestart=droppedSinceRestart,payload=jsonPayload??"{}",installId=installId };
+                // Escaped payload keeps one physical line per record; identity is common to all event kinds.
+                File.AppendAllText(CurrentFilePath,JsonUtility.ToJson(record)+"\n",new UTF8Encoding(false));LastError=null;
+            }
             catch(Exception e) when(e is IOException||e is UnauthorizedAccessException||e is System.Security.SecurityException){LastError=e.Message;}
         }
     }
