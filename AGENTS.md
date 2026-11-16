@@ -42,7 +42,7 @@ Versión condensada del 14–16 nov 2026. Solo contiene lo vigente. El original 
 
 ## 5. Hashes (U1 en esta rama; pendiente de fusión)
 
-- Defaults T3 `430da2faa818` / 121 claves; P0 efectivo `dcc7c8cc0688`; ancla SL5 T3 `e89daab41c3e`. Medidos en Unity al repetir el RED autorizado de U1 el 16 nov (proyección con `validLimit=0`); pendientes de las compuertas de #65. El archivo P0-calib-1 no se modifica.
+- Defaults T3 `430da2faa818` / 121 claves; P0 efectivo `dcc7c8cc0688`; ancla SL5 T3 `e89daab41c3e`. Medidos en Unity en U1 y confirmados con los defaults reales; #65: EditMode 738/738, PlayMode 558/558, AutoQA V/T3 PASS/0/1, check-release dev/prod OK. Pendientes de revisión independiente y fusión. El archivo P0-calib-1 no se modifica.
 - Anteriores a U1, ya no vigentes en esta rama: defaults `06fed4bd4ac9`/121, P0 `0a3d3262a79d`, SL5 `8e22575422f2`. Siguen vigentes en `main` hasta fusionar U1 y como anclas de los escenarios V explícitos.
 - SimulationKey `166a96e319c7`; 41 valores heredados, proyección `0d39e6016bd8`; P0 heredado, proyección `8de3f2ecb217`. (Etapa 5 y S1, 24–25 oct; confirmados el 13 nov)
 - Archivo P0-calib-1 SHA-256 `2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd`. (Etapa 5, 24 oct; instalación del 15 nov)

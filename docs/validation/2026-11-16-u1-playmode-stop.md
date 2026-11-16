@@ -30,3 +30,11 @@ El catálogo V `mvp.json`, Core, solver, contrato, reloj y el test fallido no di
 ## Decisión posterior del PO
 
 El PO identifica la falla como recurrencia de **CRP-01** (12 nov; mismas cifras y test sin cambios) y la trata como **intermitente ajena a U1, sin causa demostrada y sin corregirla en #65**. Referencia histórica: `docs/reviews/2026-11-12-clockmap-rollback-precision.md`. Autoriza una nueva PlayMode completa; si pasa con el recuento completo, seguir AutoQA V/T3 (PASS/0/nivel 1 cada uno) y check-release. Si reaparece CRP-01 u otra falla, detenerse. Se conserva íntegra la evidencia anterior; no se reclasifica su 557/558 como PASS. Literal en el registro de aprobaciones.
+
+## Cierre de la continuación autorizada
+
+PlayMode nueva sobre `98a73ba`: **558/558**, 0 Failed/0 skipped, XML fresco, sin errores CS, 2026-11-16 22:47:58Z–22:50:09Z. CRP-01 no reapareció; el fallo anterior y su clasificación permanecen. Se esperó la terminación completa del exec y se restauró ProjectSettings antes de AutoQA. XML conservado en `Logs/evidence/u1/playmode-authorized-green-playmode-results.xml`, SHA-256 `8e9e1e3018ac56bed4ffb5f46f63ed8391101f01307c2f83be79129ff2ae465e`.
+
+AutoQA V `20261116T225123Z-98a73ba-v-6765` y T3 `20261116T225257Z-98a73ba-t3-17437`: **PASS/0/nivel 1 cada uno**, 18 intentos PASS, canario FAIL, arnés 88/88 y todos los flags de integridad true; restauración conservó el estado del árbol. V conserva hashes efectivos originales. T3 observó todos los resultados predeclarados, incluido SL1 −200 Valid y SL5 +170 Valid. Ambas corridas con `dirty=false`.
+
+Check-release dev/prod: OK, exportaciones frescas de `98a73ba`, `gitDirty=false` en ambos perfiles; DevPanel solo dev, puentes nativos/hápticos esperados presentes. Solo exportación Unity; sin compilación nativa, firma, instalación ni acceso al iPhone. Resumen curado de contadores, hashes y procedencia en `docs/validation/evidence/2026-11-16-u1-summary.json`; los logs/XML permanecen ignorados. Revisión independiente y aprobación de fusión pendientes.
