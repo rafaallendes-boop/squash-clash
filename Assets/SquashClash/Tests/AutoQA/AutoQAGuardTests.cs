@@ -22,7 +22,8 @@ namespace SquashClash.AutoQA
             if(Regex.IsMatch(code,@"\bnew\s+ShotRecord\b"))errors.Add("fabricated record");
             if(Regex.IsMatch(code,@"\.\s*("+string.Join("|",PocObservation.KnownFields)+@")\s*(=(?!=)|\+\+|--|\+=|-=)"))errors.Add("record mutation");
             foreach(Match m in Regex.Matches(code,@"\.\s*Set\s*\("))
-                if(!Regex.IsMatch(source.Substring(m.Index),"^\\.\\s*Set\\s*\\(\\s*\"practice.launch\"\\s*,"))errors.Add("non-whitelisted tuning");
+                if(!Regex.IsMatch(source.Substring(m.Index),"^\\.\\s*Set\\s*\\(\\s*\"practice.launch\"\\s*,")&&
+                   !Regex.IsMatch(source.Substring(m.Index),"^\\.\\s*Set\\s*\\(\\s*\"timing.validLimit\"\\s*,\\s*1\\s*\\)"))errors.Add("non-whitelisted tuning");
             return errors;
         }
         [Test] public void AutoQASources_RespectAuthorityContract()
@@ -39,6 +40,9 @@ namespace SquashClash.AutoQA
         public void ProhibitedSource_IsRejected(string source)=>Assert.That(Violations(source),Is.Not.Empty);
         [TestCase("record.Result = \"Perfect\";")][TestCase("controller.LastRecord.Applied = true;")]
         public void RecordWrites_AreRejected(string source)=>Assert.That(Violations(source),Is.Not.Empty);
+        [TestCase("app.Tuning.Set(\"timing.validLimit\",0);")][TestCase("app.Tuning.Set(\"timing.validLimit\",value);")]
+        public void TimingChangesExceptExplicitV_AreRejected(string source)=>Assert.That(Violations(source),Is.Not.Empty);
+        [Test] public void ExplicitVPin_IsAllowed()=>Assert.That(Violations("app.Tuning.Set(\"timing.validLimit\",1);"),Is.Empty);
         [Test] public void AllowedPreparationAndUiQuery_AreAccepted()=>Assert.That(Violations("app.Tuning.Set(\"practice.launch\",4); input.UiBlocker(anchor);"),Is.Empty);
     }
 }
