@@ -3046,3 +3046,17 @@ Se añade únicamente el valor vacío faltante de `kOutMs` y se inspeccionan est
 Pedido literal del PO: «Mientras tanto, sin usar Unity, prepara el commit de diseño y criterios de A2 y detente para la revisión de Claude». La opción elegida previamente fue solver de trayectoria según intención, «más fuerte = más plano».
 
 Se prepara [diseño A2](../superpowers/specs/2026-11-17-g1-a2-flat-drive-design.md) en rama/worktree propios desde `1c9d2c6`, apilado sobre #72, sin implementación ni invocaciones Unity. Incluye transformación compartida Humano/Rival, búsqueda P2 limitada, retícula/predicción, C1–C7 fijados y salvedad explícita C2: la línea base P=0,85 ya tiene cero outs superiores con miras bajas, por lo que no puede bajar estrictamente. Se propone conservar cero allí y reducir los otros tres tramos; queda para revisión, no se simula aprobación del literal imposible. Codex se detiene en A2 después del commit. A1, autorizado por el mismo mensaje, va en otra entrega con sus criterios previos, TDD y gates. Sin fusión ni instalación.
+
+### G1 A2 — diseño aprobado con tres ajustes previos a implementar (17 nov 2026)
+
+Decisión literal del PO:
+
+> «A2 (#73): apruebo el diseño con tres ajustes, que fijas en un commit antes de implementar:
+>
+> 1. Rendimiento: la búsqueda completa se resuelve al soltar. Durante el arrastre, la vista previa usa caché o un límite de frecuencia, nunca 24 trayectorias por cuadro. Nuevo criterio A2-C8: el tiempo de cuadro p95 en PlayMode no empeora respecto de la base, y se reportan el costo por solución y las evaluaciones por cuadro.
+> 2. Tope lateral: la mira efectiva no se desplaza más de Width/20 en x respecto de la pedida, en total. La altura solo baja. Si C1 no se cumple con ese tope, detente y reporta, sin ampliarlo.
+> 3. C2: acepto 0/≤1/≤1/≤2 por receta, sin aumentar otros outs en ese subconjunto.
+>
+> Lo demás, como está en 5b7f67f. Un solo Unity a la vez: primero terminan las puertas de A1. Sin fusionar ni instalar.»
+
+El [diseño](../superpowers/specs/2026-11-17-g1-a2-flat-drive-design.md) incorpora el presupuesto solo al release, caché de preview, tope lateral total por candidato/salida, C2 aprobado y C8 con comparación frente al producto A1 antes de A2. Se fija antes de código o mediciones nuevas y sin Unity en A2. La implementación espera el cierre de las puertas de A1; no se amplía el tope ante fallo de C1. Sin fusionar ni instalar.
