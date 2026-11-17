@@ -29,6 +29,9 @@ namespace SquashClash.Runtime.App
         public TuningState Tuning { get; private set; }
         public PresetStore Presets { get; private set; }
         public MetricsLog Metrics { get; private set; }
+        public UserMetrics UserEvents {get;private set;}
+        private SquashClash.Runtime.Rally.RallyDirector userRally;
+        private SquashClash.Core.Rally.MatchScore userMatch;
         public FrameTimeStats FrameStats { get; private set; }
         public int MetricsSeed { get; private set; }
         public string ActivePresetName { get; private set; }
@@ -217,6 +220,7 @@ namespace SquashClash.Runtime.App
             Tuning=new TuningState(defaultSet,Params);Config=EffectiveConfig.From(Params);
             foreach(var warning in warnings)Debug.LogWarning("[SquashClash] "+warning);
             Metrics=new MetricsLog(Path.Combine(Application.persistentDataPath,"metrics"),Build);FrameStats=new FrameTimeStats();
+            UserEvents=new UserMetrics(WriteUserEvent,()=>Time.realtimeSinceStartupAsDouble);UserEvents.StartSession();
             thermal=gameObject.AddComponent<ThermalMonitor>();timing=gameObject.AddComponent<FrameTimingSampler>();
             var hasPanel = Type.GetType("SquashClash.DevPanel.DevPanelBootstrap, SquashClash.DevPanel") != null;
             DevTools = hasPanel;
@@ -285,6 +289,7 @@ namespace SquashClash.Runtime.App
             gameObject.AddComponent<SquashClash.Runtime.Shot.PracticeTask>().Initialize(this,shot);
             var practice=gameObject.AddComponent<SquashClash.Runtime.Shot.PracticeMode>();practice.Initialize(this,shot);
             var rally=gameObject.AddComponent<SquashClash.Runtime.Rally.RallyDirector>();rally.Initialize(this,shot,practice,placeholderPlayers);
+            userRally=rally;rally.RallyStarted+=OnUserRallyStarted;rally.PointEnded+=OnUserPointEnded;rally.ModeChanged+=OnUserModeChanged;
             var hud=gameObject.AddComponent<SquashClash.Runtime.Rally.RallyHud>();hud.Initialize(this,rally,header);
             gameObject.AddComponent<SquashClash.Runtime.Visual.ImpactFx>().Initialize(this,cameraRig);
             gameObject.AddComponent<SquashClash.Runtime.Visual.StrokeFx>().Initialize(this,cameraRig);
@@ -324,6 +329,7 @@ namespace SquashClash.Runtime.App
         }
         private void OnApplicationPause(bool paused)
         {
+            UserEvents?.SetPaused(paused);
             repeatElapsed=0;discardRepeatResume=true;
             if(paused)FlushFrames();diagnosticsPaused=paused;discardDiagnosticsResume=true;
             if(paused)SuspendForSystem();
@@ -337,13 +343,38 @@ namespace SquashClash.Runtime.App
         }
         private void OnApplicationFocus(bool focused)
         {
+            UserEvents?.SetFocused(focused);
             repeatElapsed=0;discardRepeatResume=true;
             if(!focused)FlushFrames();diagnosticsFocused=focused;discardDiagnosticsResume=true;
             if(!focused)SuspendForSystem();
         }
+        private void WriteUserEvent(string kind,string payload)
+        {
+            var host=Host;var cfg=host?.ActiveConfig??Config;if(Metrics==null||cfg==null)return;
+            var clock=host?.Clock;
+            Metrics.Write(kind,cfg,ActivePresetName,ActivePresetFileHash,Tuning==null?0:Tuning.PendingKeys.Count,MetricsSeed,
+                clock==null||!clock.MetricsInvalid,clock?.DroppedSinceRestart??0,payload);
+        }
+        private void OnUserRallyStarted()
+        {
+            var match=userRally.Match;if(match==null||ReferenceEquals(match,userMatch))return;
+            userMatch=match;UserEvents.BeginMatch(userRally.Level.ToString(),SquashClash.Runtime.Visual.Handedness.Left?"left":"right");
+        }
+        private void OnUserPointEnded(SquashClash.Runtime.Rally.PointResult point)
+        {
+            if(userRally.Match==null)return;
+            UserEvents.UpdateMatchScore(userRally.HumanPoints,userRally.RivalPoints);
+            if(userRally.Match.Finished){UserEvents.EndMatch(false);UserEvents.Menu("result","open");}
+        }
+        private void OnUserModeChanged(bool active)
+        {
+            if(active||userMatch==null)return;
+            UserEvents.UpdateMatchScore(userRally.HumanPoints,userRally.RivalPoints);UserEvents.EndMatch(true);userMatch=null;
+        }
         private void OnDestroy()
         {
-            FlushFrames();
+            FlushFrames();UserEvents?.EndSession();
+            if(userRally!=null){userRally.RallyStarted-=OnUserRallyStarted;userRally.PointEnded-=OnUserPointEnded;userRally.ModeChanged-=OnUserModeChanged;}
             if (Host != null) Host.Launched -= OnLaunched;
             if(Tuning!=null)Tuning.Changed-=OnTuningChanged;
             if (Instance == this) Instance = null;

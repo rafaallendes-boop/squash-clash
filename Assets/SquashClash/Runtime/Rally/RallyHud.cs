@@ -87,9 +87,9 @@ namespace SquashClash.Runtime.Rally
             header=parent;parent.RegisterCallback<GeometryChangedEvent>(_=>PlaceBanner());
             Refresh();
         }
-        private static Button Add(VisualElement row,string name,string text,System.Action action)
+        private Button Add(VisualElement row,string name,string text,System.Action action)
         {
-            var button=new Button(action){name=name,text=text};
+            var button=new Button(()=>{app.UserEvents?.Menu(rally.Phase==RallyPhase.MatchOver?"result":"game",name);action();}){name=name,text=text};
             button.AddToClassList("sc-button");
             row.Add(button);return button;
         }
@@ -97,7 +97,12 @@ namespace SquashClash.Runtime.Rally
         private static VisualElement Chip(string style){var chip=new VisualElement{pickingMode=PickingMode.Ignore};chip.AddToClassList("sc-chip");chip.AddToClassList(style);return chip;}
         public void ToggleMode(){if(rally.Active)rally.StopMode();else rally.StartMode();Refresh();}
         public void StartMatch(){rally.StartMatch();Refresh();}
-        public void TogglePause(){app.Clock.Paused=!app.Clock.Paused;PausedByPlayer=app.Clock.Paused;Refresh();}
+        public void TogglePause()=>TogglePause("player");
+        public void TogglePause(string reason)
+        {
+            app.Clock.Paused=!app.Clock.Paused;PausedByPlayer=app.Clock.Paused;
+            if(PausedByPlayer){app.UserEvents?.Pause(reason);app.UserEvents?.Menu("pause","open");}Refresh();
+        }
         public void ToggleDemo(){rally.Autopilot=!rally.Autopilot;Refresh();}
         private void Update(){Refresh();Tick(Mathf.Min(Time.unscaledDeltaTime,.05f));}
         private VisualElement header;

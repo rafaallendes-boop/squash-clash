@@ -13,11 +13,14 @@ namespace SquashClash.Runtime.Visual
     // (ShotController.PresentationDelivered, with the record already written) and the rival's swing event. From those it
     // draws a contact burst sized by power and coloured by result, and a short streak behind the ball for the best
     // strokes. A failed swing draws nothing here on purpose: the absence of the burst is the cue, and the figure shows the miss.
-    // One dynamic mesh (one draw call) and one line, both off when idle; no allocation after start; frozen with the clock.
+    // One dynamic mesh, one streak and two pooled stroke crescents, all off when idle; frozen with the clock.
     // It never touches the ball, the clock, the camera pose, audio or haptics.
     public sealed class StrokeFx : MonoBehaviour
     {
         public const int Rings=4,MaxQuads=24,StreakPoints=10;
+        private const int ArcPoints=14;private const float ArcSeconds=.28f;
+        private struct Arc {public LineRenderer Line;public Vector3[] Points;public Vector3 Origin;public float Age,Sign;public bool Across;public Color Color;}
+        private readonly Arc[] arcs=new Arc[2];private float rivalSign=-1;
         public const float RingSeconds=.28f,SparkSeconds=.36f,StrongFraction=.8f;
         public static readonly Color PerfectColor=new Color(1f,.80f,.16f),PerfectGlow=new Color(1f,.96f,.74f),ValidColor=new Color(1f,1f,1f),RivalColor=new Color(.55f,1f,.94f);
         private struct Quad { public bool Active;public Vector3 Position,Velocity;public float Age,Life,From,To,Alpha;public Color32 Color; }
@@ -57,6 +60,13 @@ namespace SquashClash.Runtime.Visual
             streak=line.AddComponent<LineRenderer>();streakMaterial=VisualKit.NewFx("Stroke streak",Color.white,false,Texture2D.whiteTexture);
             streak.sharedMaterial=streakMaterial;streak.useWorldSpace=true;streak.positionCount=StreakPoints;streak.numCapVertices=2;
             streak.shadowCastingMode=ShadowCastingMode.Off;streak.receiveShadows=false;streak.enabled=false;
+            for(int i=0;i<arcs.Length;i++)
+            {
+                var arcObject=new GameObject(i==0?"Human stroke arc":"Rival stroke arc");arcObject.transform.SetParent(transform,false);
+                ref var arc=ref arcs[i];arc.Line=arcObject.AddComponent<LineRenderer>();arc.Points=new Vector3[ArcPoints];arc.Age=-1;
+                arc.Line.sharedMaterial=streakMaterial;arc.Line.useWorldSpace=true;arc.Line.positionCount=ArcPoints;arc.Line.numCapVertices=2;
+                arc.Line.shadowCastingMode=ShadowCastingMode.Off;arc.Line.receiveShadows=false;arc.Line.enabled=false;
+            }
             if(controller!=null)controller.PresentationDelivered+=OnDelivered;
             if(rally!=null)rally.RivalSwing+=OnRivalSwing;
             host.Launched+=OnLaunched;
@@ -75,8 +85,12 @@ namespace SquashClash.Runtime.Visual
             }
             texture.SetPixels32(pixels);texture.Apply(true,true);return texture;
         }
-        private void OnLaunched(SquashClash.Core.Config.EffectiveConfig cfg){streakLeft=0;if(streak!=null)streak.enabled=false;}
-        private void OnRivalSwing(StrokeSide side,bool contact){if(contact)rivalPending=true;}
+        private void OnLaunched(SquashClash.Core.Config.EffectiveConfig cfg)
+        {
+            streakLeft=0;if(streak!=null)streak.enabled=false;
+            for(int i=0;i<arcs.Length;i++){arcs[i].Age=-1;if(arcs[i].Line!=null)arcs[i].Line.enabled=false;}
+        }
+        private void OnRivalSwing(StrokeSide side,bool contact){if(contact){rivalPending=true;rivalSign=side==StrokeSide.Drive?-1:1;}}
         private void OnDelivered(ShotPresentation p)
         {
             if(p.LaunchId!=host.LaunchId)return;
@@ -87,6 +101,12 @@ namespace SquashClash.Runtime.Visual
             var kind=p.Category==PresentationCategory.Perfect?StrokeKind.Perfect:StrokeKind.Valid;HumanKind=LastKind=kind;
             var direction=mine?new Vector3(record.VelocityX,record.VelocityY,record.VelocityZ):Vector3.back;
             Burst(kind,p.ContactPosition,direction,power);
+            float sign=-1;
+            if(System.Enum.TryParse<StrokeSide>(p.Side,out var side)&&controller.Snapshot!=null)
+            {
+                var frame=controller.Snapshot.Body;sign=frame.IdealContactPoint(side).x<frame.PositionXZ.x?-1:1;
+            }
+            StartArc(0,p.ContactPosition,sign,sign!=(Handedness.Left?1:-1),kind==StrokeKind.Perfect?PerfectColor:ValidColor,power);
         }
         private float Next(){random^=random<<13;random^=random>>17;random^=random<<5;return (random&0xFFFFFF)/(float)0x1000000;}
         private void Ring(Vector3 position,float from,float to,float alpha,float delay,Color color)
@@ -124,6 +144,25 @@ namespace SquashClash.Runtime.Visual
             }
             dirty=true;
         }
+        private void StartArc(int index,Vector3 position,float sign,bool across,Color color,float power)
+        {
+            ref var arc=ref arcs[index];arc.Origin=position;arc.Sign=sign;arc.Across=across;arc.Color=color;arc.Age=0;
+            arc.Line.widthMultiplier=.04f+.03f*power;arc.Line.enabled=true;PaintArc(ref arc);
+        }
+        private static void PaintArc(ref Arc arc)
+        {
+            float sweep=.1f+.9f*Mathf.Clamp01(arc.Age/.14f);
+            for(int i=0;i<ArcPoints;i++)
+            {
+                float t=i/(float)(ArcPoints-1)*sweep;
+                // A low crescent leaves the contact centre clear: backhand opens out, forehand wraps inward.
+                float x=arc.Sign*Mathf.Lerp(arc.Across?-.40f:.30f,arc.Across?.26f:-.48f,t);
+                arc.Points[i]=arc.Origin+new Vector3(x,-.14f-.18f*Mathf.Sin(Mathf.PI*t),.06f);
+            }
+            arc.Line.SetPositions(arc.Points);var color=arc.Color;
+            arc.Line.startColor=new Color(color.r,color.g,color.b,0);
+            arc.Line.endColor=new Color(color.r,color.g,color.b,.75f*(1-arc.Age/ArcSeconds));
+        }
         private void PaintStreak()
         {
             float a=Mathf.Clamp01(streakLeft/streakLife);
@@ -140,11 +179,17 @@ namespace SquashClash.Runtime.Visual
                 {
                     var velocity=host.Current.Velocity;float strength=Mathf.Clamp01(velocity.magnitude/(float)host.ActiveConfig.Source.Get("shot.vMax"));
                     RivalStrokes++;LastKind=StrokeKind.Rival;LastPower=strength;Burst(StrokeKind.Rival,host.Current.Position,velocity,strength);
+                    StartArc(1,host.Current.Position,rivalSign,rivalSign>0,RivalColor,strength);
                 }
             }
             if(app.Clock==null||app.Clock.Paused)return;
             if(dt>0)
             {
+                for(int i=0;i<arcs.Length;i++)
+                {
+                    ref var arc=ref arcs[i];if(arc.Age<0)continue;arc.Age+=dt;
+                    if(arc.Age>=ArcSeconds){arc.Age=-1;arc.Line.enabled=false;}else PaintArc(ref arc);
+                }
                 for(int i=0;i<MaxQuads;i++)
                 {
                     if(!quads[i].Active)continue;
