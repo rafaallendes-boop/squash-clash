@@ -14,8 +14,8 @@ namespace SquashClash.Runtime.Visual
     // rival's swing event. It owns no gameplay state, colliders, rigs or Animator.
     // Feel pass: the body turns toward where it runs, backpedals with short steps, leans into accelerations, takes a
     // split step when the opponent hits, winds up and follows through in proportion to power, and both players have an
-    // elbow and a racket that shows its face to the camera. The human's racket follows SwingView's path and timing
-    // exactly; SwingView's own two parts are simply not drawn any more.
+    // elbow and a racket that shows its face to the camera. E1 adds hand-specific preparation and follow-through;
+    // the human's drawn head matches SwingView throughout the approved contact window. SwingView is read-only.
     public sealed class CharacterView : MonoBehaviour
     {
         public struct Palette { public Color Shirt,Accent,Shorts,Hair,Skin,Shoes,Socks; }
@@ -24,6 +24,12 @@ namespace SquashClash.Runtime.Visual
         public static Palette RivalPalette=>new Palette{Shirt=new Color(1f,.30f,.20f),Accent=new Color(.17f,.18f,.24f),Shorts=new Color(.96f,.96f,.98f),
             Hair=new Color(.09f,.08f,.08f),Skin=new Color(.82f,.60f,.45f),Shoes=new Color(1f,.82f,.18f),Socks=new Color(.17f,.18f,.24f)};
         public const int TrailPoints=8;
+        public const float ContactHalfWindow=.060f;
+        private const float ContactWindowEnd=SwingView.ReachSeconds+ContactHalfWindow;
+        // A longer ease lowers the geometric speed peak; this is a duration, not a velocity clamp.
+        private const float HumanFollowSeconds=.28f;
+        // Return during SwingView's existing hold, ending 60 ms before its 540 ms Impact ends.
+        private const float HumanReturnStart=.28f,HumanReturnSeconds=.20f;
         public const float SplitStepSeconds=.24f,TrailFadeSeconds=.14f,MaxFootSwing=.26f,MaxStride=1.5f;
         private const float Thigh=.40f,Shin=.40f,UpperArm=.27f,Forearm=.26f,HipHeight=.80f,GripBack=.32f,CentreHeight=.9f;
         private static readonly Vector3 RacketScale=new Vector3(.22f,.03f,.30f),ToCamera=new Vector3(0,.55f,.83f);
@@ -36,7 +42,9 @@ namespace SquashClash.Runtime.Visual
         private Vector2 lastPosition,direction=new Vector2(0,-1),lastVelocity,accelLean;
         private float runPhase,move,yaw,crouch=.04f,idle,headYaw,swingClock=-1,racketSign=1,backpedal,wind,strokeClock=-1,strokePower=.5f,hopClock=-1,trailAlpha,footSwing;
         private StrokeKind strokeKind;private int seenHuman,seenRival;
-        private Vector3 racketPosition,shoulderRacket;
+        private Vector3 racketPosition,shoulderRacket,contactExit;
+        private float contactAge=-1;private bool firstContactFrame,awaitingDelivery;
+        private long acceptedLaunch;private string acceptedAttempt;
         private RallyDirector rally;private SwingView swing;private AppBootstrap app;private StrokeFx fx;private GesturePreview preview;private ShotController controller;private BallSimulationHost host;
         private int lookup;private bool subscribed;
         public bool IsHuman=>human;
@@ -84,7 +92,7 @@ namespace SquashClash.Runtime.Visual
                 shoe[i]=VisualKit.Part("Shoe"+side,transform,shoeMesh,toon).transform;shoe[i].localScale=new Vector3(.068f,.052f,.135f);
                 upper[i]=VisualKit.Part("UpperArm"+side,transform,upperMesh,toon).transform;lower[i]=VisualKit.Part("Forearm"+side,transform,lowerMesh,toon).transform;
             }
-            racket=VisualKit.Part("Racket",transform,Own(VisualKit.Racket("Figure racket",isHuman?new Color(.98f,.86f,.18f):new Color(.30f,.95f,.85f),VisualKit.Ink,new Color(.93f,.96f,1f))),toon).transform;
+            racket=VisualKit.Part("Racket",transform,Own(VisualKit.Racket("Figure racket",isHuman?new Color(.98f,.86f,.18f):new Color(.30f,.95f,.85f),VisualKit.Ink,new Color(.93f,.96f,1f),openFace:true)),toon).transform;
             racket.localScale=RacketScale;
             var shadow=VisualKit.Part("Contact shadow",transform,Own(VisualKit.FloorQuad("Figure shadow")),VisualKit.ContactShadow).transform;
             shadow.localPosition=new Vector3(0,.004f,.03f);shadow.localScale=new Vector3(.95f,1,.68f);
@@ -119,19 +127,43 @@ namespace SquashClash.Runtime.Visual
             {
                 rally=app.Rally;host=app.Host;if(rally==null||host==null)return;
                 fx=app.GetComponent<StrokeFx>();preview=app.GetComponent<GesturePreview>();controller=app.GetComponent<ShotController>();
-                rally.RivalSwing+=OnRivalSwing;host.ShotApplied+=OnShotApplied;subscribed=true;
+                rally.RivalSwing+=OnRivalSwing;host.ShotApplied+=OnShotApplied;host.Launched+=OnLaunched;
+                if(human&&controller!=null){controller.SwingAccepted+=OnAccepted;controller.PresentationDelivered+=OnDelivered;}subscribed=true;
                 if(fx!=null){seenHuman=fx.HumanStrokes;seenRival=fx.RivalStrokes;}
             }
             if(human&&swing==null)swing=app.GetComponent<SwingView>();
+        }
+        private void OnLaunched(SquashClash.Core.Config.EffectiveConfig config)
+        {contactAge=-1;firstContactFrame=false;awaitingDelivery=false;acceptedAttempt=null;}
+        private void OnAccepted(SwingIntent intent)
+        {
+            // SwingView's listener runs first. Record only the intention that it actually accepted.
+            if(swing==null||intent.LaunchId!=host.LaunchId||string.IsNullOrEmpty(intent.AttemptId)||
+                swing.Phase!=SwingPhase.Intention||swing.StartCountFor(intent.AttemptId)!=1)return;
+            acceptedLaunch=intent.LaunchId;acceptedAttempt=intent.AttemptId;awaitingDelivery=true;contactAge=-1;
+        }
+        private void OnDelivered(ShotPresentation presentation)
+        {
+            if(!awaitingDelivery||presentation.LaunchId!=host.LaunchId||presentation.LaunchId!=acceptedLaunch||
+                presentation.AttemptId!=acceptedAttempt||swing==null)return;
+            // At this subscriber, SwingView has already left Intention if it accepted this final delivery.
+            // A duplicate, unrelated identity or delivery after Idle must not restart the local window.
+            if(presentation.Category==PresentationCategory.Failed)
+            {if(swing.Phase==SwingPhase.AirFollowThrough)awaitingDelivery=false;return;}
+            if(!presentation.HasContact||swing.Phase!=SwingPhase.Impact)return;
+            awaitingDelivery=false;
+            // This is a local presentation age, never a game clock. The first draw does not consume time: if the
+            // delivery occurred after SwingView.Update, the lock may end a frame later, never a frame early.
+            contactAge=0;firstContactFrame=true;
         }
         private void OnRivalSwing(StrokeSide side,bool contact)
         {
             // The opponent just hit: the human takes a split step. The rival swings.
             if(human){if(contact&&rally!=null&&rally.Active)hopClock=0;return;}
+            racketSign=side==StrokeSide.Drive?-1:1;
             if(host.ActiveConfig!=null)
             {
                 var ball=transform.InverseTransformPoint(host.RenderPosition);
-                if(Mathf.Abs(ball.x)>.1f)racketSign=Mathf.Sign(ball.x);
                 // The racket meets the ball where the contact happened, when that is within reach of the drawn arm.
                 if(contact)racketPosition=new Vector2(ball.x,ball.z).magnitude<1.1f&&ball.y<1.9f?ball:HitPose(racketSign);
             }
@@ -189,6 +221,9 @@ namespace SquashClash.Runtime.Visual
             if(hopClock>=0){hopClock+=dt;if(hopClock>=SplitStepSeconds)hopClock=-1;}
             float hop=hopClock>=0?Mathf.Sin(Mathf.PI*hopClock/SplitStepSeconds):0;
             bool swingDriven=human&&swing!=null;var swingPhase=swingDriven?swing.Phase:SwingPhase.Idle;
+            if(contactAge>=0){if(firstContactFrame)firstContactFrame=false;else contactAge+=dt;}
+            bool contactLock=swingDriven&&swingPhase==SwingPhase.Impact&&contactAge>=0&&contactAge<=ContactWindowEnd+1e-5f;
+            bool preContactReference=swingDriven&&(swingPhase==SwingPhase.Idle||swingPhase==SwingPhase.Intention);
             if(swingDriven&&!swingHidden&&swing.Rig!=null)
             {
                 // SwingView keeps computing its racket path (the figure follows it); its two boxes are no longer drawn.
@@ -222,13 +257,13 @@ namespace SquashClash.Runtime.Visual
             }
             float sign=racketSign,power=Mathf.Clamp01(strokePower);
             // The human keeps the chosen hand on either contact side: left on +x, right on -x (AX-1).
-            // Across the body, that arm reaches over for a backhand. The rival keeps the contact-side hand.
-            float holds=human?(Handedness.Left?1:-1):sign;bool across=human&&holds!=sign;
+            // Across the body, that arm reaches over for a backhand. The rival is always right-handed.
+            float holds=human&&Handedness.Left?1:-1;bool across=holds!=sign;
             bool striking=swingDriven?swingPhase==SwingPhase.Impact||swingPhase==SwingPhase.AirFollowThrough:swingClock>=0;
             bool missed=striking&&strokeKind==StrokeKind.Failed;
             bool winding=swingDriven?swingPhase==SwingPhase.Intention||prepare:prepare;
             // Reaching across, the hitting shoulder turns toward the ball instead of opening away from it.
-            float twist=striking?(across?-(missed?40:48+8*power):missed?58:26+20*power)*sign:winding?-(14+18*wind)*sign:0;
+            float twist=striking?(across?-(missed?40:48+8*power):missed?58:26+20*power)*sign:winding?-(across?30+18*wind:14+18*wind)*sign:0;
             // The body turns toward where it runs; moving back it turns only side-on.
             float travelYaw=0;
             if(speed>.2f)
@@ -278,8 +313,8 @@ namespace SquashClash.Runtime.Visual
                 shoe[i].localPosition=ankle+new Vector3(0,-.03f,-.05f);
             }
 
-            // The racket. For the human it follows SwingView's path and timing; preparation, recovery and the
-            // power-shaped follow-through are added on top. The rival keeps its own three poses.
+            // Hand-specific preparation and finish are visual only. The contact interval bypasses smoothing
+            // and offsets completely; its target is transformed from the untouched SwingView rig.
             int racketArm=holds>0?1:0;RacketHand=racketArm==1?-1:1;
             shoulderRacket=hip+spine*new Vector3(holds*.205f,.50f,0);
             Vector3 target;float rate;
@@ -289,31 +324,42 @@ namespace SquashClash.Runtime.Visual
             // After the contact: hard strokes finish high and across the body, soft ones short and low; a miss wraps around.
             float through=strokeClock>=0?Smooth((strokeClock-.06f)/.16f):0;
             // (Reaching across, the follow-through opens outward, away from the body.)
+            var cleanFollow=across?new Vector3(sign*(.46f+.10f*power),1.18f+.42f*power,-.42f-.12f*power):
+                FollowPose(sign)+new Vector3(-sign*.22f,.36f,-.14f)*(power-.35f);
             var finish=missed?new Vector3(-sign*.30f,-.34f,.02f):new Vector3((across?sign:-sign)*.22f,.36f,-.14f)*(power-.35f);
-            if(swingDriven&&swingPhase!=SwingPhase.Idle)
+            if(swingDriven)
             {
-                target=swing.RacketLocalPosition+new Vector3(0,CentreHeight,0);rate=60;
-                if(swingPhase==SwingPhase.Intention)target+=new Vector3(sign*.05f,.16f,.12f)*wind;
-                else target+=finish*through;
+                rate=60;
+                var reference=transform.InverseTransformPoint(swing.Rig.TransformPoint(swing.RacketLocalPosition));
+                if(contactLock){target=reference;contactExit=reference;}
+                // Acceptance and delivery can share a frame. Align the resting head as well as Intention,
+                // so there is no unmatched preparation offset at either entry. The torso still winds up.
+                else if(preContactReference)target=reference;
+                else if(swingPhase==SwingPhase.Impact)
+                {
+                    var follow=Vector3.Lerp(contactExit,cleanFollow,Smooth((contactAge-ContactWindowEnd)/HumanFollowSeconds));
+                    target=contactAge<0?reference:Vector3.Lerp(follow,reference,Smooth((contactAge-HumanReturnStart)/HumanReturnSeconds));
+                }
+                else target=reference+finish*through;
             }
             else if(!human&&swingClock>=0)
             {
                 swingClock+=dt;
                 if(swingClock<.07f){target=HitPose(sign);rate=45;}
-                else if(swingClock<.55f){target=FollowPose(sign)+finish*through;rate=16;}
+                else if(swingClock<.55f){target=missed?FollowPose(sign)+finish*through:cleanFollow;rate=16;}
                 else{swingClock=-1;target=rest;rate=7;}
             }
             else if(prepare){target=Vector3.Lerp(rest,back,human?wind:1);rate=9;}
             else{target=rest;rate=7;}
-            racketPosition=Vector3.Lerp(racketPosition,target,1-Mathf.Exp(-dt*rate));
+            racketPosition=contactLock||preContactReference?target:Vector3.Lerp(racketPosition,target,1-Mathf.Exp(-dt*rate));
             var reach=racketPosition-shoulderRacket;float length=reach.magnitude;
             var aim=length>1e-4f?reach/length:Vector3.forward;
             // The strings face the camera behind the court, so the racket never shows edge-on at the contact.
             var face=ToCamera-aim*Vector3.Dot(ToCamera,aim);
             racket.localPosition=racketPosition;
             racket.localRotation=Quaternion.LookRotation(aim,face.sqrMagnitude>.02f?face:Vector3.up);
-            float pop=strokeClock>=0&&!missed?1-Smooth(strokeClock/.16f):0;
-            racket.localScale=RacketScale*(1+.25f*pop);
+            float pop=!human&&strokeClock>=0&&!missed?1-Smooth(strokeClock/.16f):0;
+            racket.localScale=RacketScale*(contactLock?1:1+.25f*pop);
 
             for(int i=0;i<2;i++)
             {
@@ -339,10 +385,12 @@ namespace SquashClash.Runtime.Visual
                 if(i==racketArm)GripGap=(wrist-hand).magnitude;
                 VisualKit.Bone(upper[i],shoulder,elbow);VisualKit.Bone(lower[i],elbow,wrist);
             }
-            PaintTrail(dt,striking||swingDriven&&swingPhase==SwingPhase.Intention,missed,power);
+            PaintTrail(dt,striking||swingDriven&&swingPhase==SwingPhase.Intention,missed,power,contactLock||!human&&swingClock>=0&&swingClock<=.13f);
         }
-        private void PaintTrail(float dt,bool swinging,bool missed,float power)
+        private void PaintTrail(float dt,bool swinging,bool missed,float power,bool clearContact)
         {
+            // No opaque trail over the ball while the head is at contact. The open racket rim remains visible.
+            if(clearContact){trail.enabled=false;trailLive=false;return;}
             if(dt<=0)return;
             trailAlpha=Mathf.MoveTowards(trailAlpha,swinging?1:0,dt/(swinging?.03f:TrailFadeSeconds));
             if(trailAlpha<=0){if(trail.enabled)trail.enabled=false;trailLive=false;return;}
@@ -358,7 +406,8 @@ namespace SquashClash.Runtime.Visual
         }
         private void OnDestroy()
         {
-            if(subscribed){if(rally!=null)rally.RivalSwing-=OnRivalSwing;if(host!=null)host.ShotApplied-=OnShotApplied;}
+            if(subscribed){if(rally!=null)rally.RivalSwing-=OnRivalSwing;if(host!=null){host.ShotApplied-=OnShotApplied;host.Launched-=OnLaunched;}
+                if(human&&controller!=null){controller.SwingAccepted-=OnAccepted;controller.PresentationDelivered-=OnDelivered;}}
             if(trailMaterial!=null)Destroy(trailMaterial);
             foreach(var mesh in meshes)if(mesh!=null)Destroy(mesh);
             meshes.Clear();

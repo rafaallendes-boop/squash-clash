@@ -2907,3 +2907,36 @@ Encargo literal del PO:
 > «#65: integra `main` (tras #64) y resuelve el conflicto del registro de aprobaciones conservando ambas entradas. Corre EditMode completo para confirmar compilación y recuento. Reporta el head final; la fusión la apruebo yo.»
 
 Se integra `origin/main` en `10bcaec` sobre la rama de #65, sin fusionar la PR. En el conflicto aditivo del registro se conservan íntegros ambos bloques: cierres/decisiones/diseño de #64 y autorizaciones/continuaciones U1 de #65. No se eliminan ni reinterpretan citas. EditMode completo tras la integración: **738/738**, cero omitidos, XML fresco y sin errores CS, sobre `b3c2fad`.
+
+## E1: derecho y revés estéticos (16 nov 2026, Chile)
+
+**Autorización literal del PO:**
+
+> «Se autoriza que CharacterView dibuje su propia preparación y su propio remate para el derecho y el revés, con SwingView intacto (claves, trayectoria, tiempo y fase).
+> Condición: en la ventana de contacto (por ejemplo ±60 ms alrededor del contacto entregado por SwingView; propón el valor y justifícalo), la cabeza de la raqueta dibujada coincide con la de SwingView dentro de una tolerancia pequeña (propón cuál). Agrega un test que lo verifique para el derecho y el revés, del humano diestro y zurdo.
+> El rival es diestro fijo. Sin cambios en BodyFrame, la planificación, el gesto, el reloj, el timing, la física, la IA ni los contratos. AutoQA no es obligatorio si se cumple lo anterior; decláralo. Las suites, cuando Unity quede libre después de U1–U3.»
+
+**Significado:**
+- Se permite una preparación y un remate visuales propios en `CharacterView`, para ambos golpes, conservando la coincidencia con `SwingView` durante la ventana de contacto. No se autoriza modificar `SwingView` ni las zonas excluidas en el literal.
+- Codex predeclara ventana, referencia temporal y tolerancia en el [informe E1](2026-11-16-e1-forehand-backhand.md); debe verificarlas para los cuatro casos de golpe/mano. La propuesta no acredita aún un resultado.
+- AutoQA no es obligatorio mientras se respete ese alcance. Las suites esperan a que el PO libere Unity tras U1–U3. No se autoriza fusión ni instalación.
+
+**Ventana aprobada y Unity liberado por el PO (16 nov):**
+
+> «OK con ±60 ms y 5 mm; Unity Libre»
+
+Se aprueban los valores propuestos en E1: ventana centrada en la llegada a la clave `Contact` de `SwingView` (60 ms tras la entrega), con 5 mm de tolerancia en espacio mundo. Unity queda disponible para ejecutar E1, de forma exclusiva y secuencial. No se autoriza fusión ni instalación.
+
+### E1: continuidad desde Idle y expectativas de reposo (16 nov 2026, Chile)
+
+El PO levantó la detención de E1 conservando `8 m/s × dt + 5 mm`, prohibió limitar la velocidad al umbral para hacer pasar el test y encargó corregir la duración/geometría, medir toda la población e incluir Idle → Intention con RED previo. Las zonas excluidas y la exención condicional de AutoQA se mantienen; no se autoriza fusionar ni instalar.
+
+Al comprobar que aceptar y entregar puede ocurrir en el mismo ciclo, Codex pidió una decisión sobre el reposo: alinear la cabeza en Idle con `SwingView` y actualizar las expectativas de posición de `ZHandednessTests`, conservando la mano portadora y todos los umbrales de contacto/continuidad. Respuesta literal del PO:
+
+> «Autorizar reposo alineado y actualizar ese test»
+
+Se identificó además la expectativa de raqueta por encima de 1,15 m durante Idle en `ZCharacterFeelTests`. Codex solicitó reemplazar solo esa aserción por coincidencia con `SwingView`, manteniendo preparación/giro y split step. Respuesta literal del PO:
+
+> «Sí, actualizar esa expectativa de Idle»
+
+Estas dos expectativas de comportamiento se actualizan por la decisión funcional del PO. No se modifican los umbrales de 5 mm ni el de salida, ni criterios de juego, física o timing.
