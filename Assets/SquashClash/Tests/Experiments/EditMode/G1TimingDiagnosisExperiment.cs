@@ -107,7 +107,7 @@ namespace SquashClash.Experiments.EditMode
                             double delta = random.NextGaussian(sigma);
                             var decision = RallyContact.Resolve(ctx, clock, trajectory, plan.Contact, 0, delta);
                             string category = Category(decision);
-                            Assert.That(category, Is.AnyOf("Contact", "Air", "Late"), id + ": sampled release");
+                            Assert.That(category == "Contact" || category == "Air" || category == "Late", Is.True, id + ": sampled release");
                             samples.WriteLine(string.Join("\t", new[] { id, who.ToString(), level.ToString(), sample.ToString(C), N(delta), decision.Result.ToString(), decision.Fail.ToString(), category, decision.ContactStep.ToString(C), decision.Reason ?? "" }));
                         }
                     }
@@ -148,7 +148,7 @@ namespace SquashClash.Experiments.EditMode
                 string category = At(.5);
                 Assert.That(At(.25), Is.EqualTo(category), id + ": nonconstant decision cell");
                 Assert.That(At(.75), Is.EqualTo(category), id + ": nonconstant decision cell");
-                Assert.That(category, Is.AnyOf("Contact", "Air", "Late"), id + ": unexpected decision cell");
+                Assert.That(category == "Contact" || category == "Air" || category == "Late", Is.True, id + ": unexpected decision cell");
                 var row = new Dictionary<string, string>(); intervals.Add(row);
                 Put(row, "id", id, "receiver", who, "difficulty", level, "lowMs", low, "highMs", high, "category", category);
             }
