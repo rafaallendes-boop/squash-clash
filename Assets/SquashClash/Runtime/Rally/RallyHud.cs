@@ -32,9 +32,16 @@ namespace SquashClash.Runtime.Rally
         // Read-outs for the tests: how far the banner has faded in, and how much of a score pulse is left.
         public float BannerOpacity=>bannerAge<0?0:Mathf.Clamp01(bannerAge/BannerInSeconds);
         public float PulseRemaining=>Mathf.Max(pulseHuman,pulseRival);
-        // Energy bars (F2, spec 6): how full each one is drawn right now, 0..1. Scaffold only.
-        public float HumanEnergyShown=>0;
-        public float RivalEnergyShown=>0;
+        // Energy bars (F2, spec 6): how full each one is drawn right now, 0..1. They ease towards the energy and wait in pause.
+        public float HumanEnergyShown=>humanBar.Shown;
+        public float RivalEnergyShown=>rivalBar.Shown;
+        public const float EnergyEaseRate=6f;
+        private sealed class EnergyBar
+        {
+            public VisualElement Track,Fill;public float Shown=1,Target=1,Painted=-1;public int Tone=-1;
+        }
+        private readonly EnergyBar humanBar=new EnergyBar(),rivalBar=new EnergyBar();
+        private bool energyOn;
         private RallyPhase phase=(RallyPhase)(-1);
         public void Initialize(AppBootstrap app,RallyDirector rally,VisualElement parent)
         {
@@ -50,10 +57,10 @@ namespace SquashClash.Runtime.Rally
             box.style.alignItems=Align.Center;box.style.marginTop=6;box.style.maxWidth=Length.Percent(100);box.style.flexShrink=1;parent.Add(box);
             // Score: big digits between the two shirt colours; the yellow dot marks the server during a match.
             score=new VisualElement{name="rally-score",pickingMode=PickingMode.Ignore};score.AddToClassList("sc-score");score.style.display=DisplayStyle.None;box.Add(score);
-            score.Add(Chip("sc-chip--human"));score.Add(Text("TÚ","sc-score-name"));humanServe=Chip("sc-serve");score.Add(humanServe);
+            score.Add(Chip("sc-chip--human"));score.Add(NameColumn("TÚ","human",humanBar));humanServe=Chip("sc-serve");score.Add(humanServe);
             humanPoints=Text("0","sc-score-points");humanPoints.name="rally-score-human";score.Add(humanPoints);score.Add(Text("–","sc-score-dash"));
             rivalPoints=Text("0","sc-score-points");rivalPoints.name="rally-score-rival";score.Add(rivalPoints);
-            rivalServe=Chip("sc-serve");score.Add(rivalServe);score.Add(Text("RIVAL","sc-score-name"));score.Add(Chip("sc-chip--rival"));
+            rivalServe=Chip("sc-serve");score.Add(rivalServe);score.Add(NameColumn("RIVAL","rival",rivalBar));score.Add(Chip("sc-chip--rival"));
             status=new Label{name="rally-status",pickingMode=PickingMode.Ignore};
             status.AddToClassList("sc-status");status.style.whiteSpace=WhiteSpace.NoWrap;status.style.height=22;status.style.display=DisplayStyle.None;
             // One line always: a text longer than the screen is cut with an ellipsis, never wrapped or spilled.
@@ -95,6 +102,49 @@ namespace SquashClash.Runtime.Rally
             var button=new Button(()=>{app.UserEvents?.Menu(rally.Phase==RallyPhase.MatchOver?"result":"game",name);action();}){name=name,text=text};
             button.AddToClassList("sc-button");
             row.Add(button);return button;
+        }
+        // The name with the energy line under it. The bar is a pure drawing: it ignores touches, has no label and no button.
+        private static VisualElement NameColumn(string text,string who,EnergyBar bar)
+        {
+            var column=new VisualElement{name="rally-score-name-"+who,pickingMode=PickingMode.Ignore};column.AddToClassList("sc-energy-col");
+            column.Add(Text(text,"sc-score-name"));
+            bar.Track=new VisualElement{name="rally-energy-"+who,pickingMode=PickingMode.Ignore};bar.Track.AddToClassList("sc-energy");bar.Track.AddToClassList("sc-energy--neutral");
+            bar.Track.style.display=DisplayStyle.None;
+            bar.Fill=new VisualElement{name="rally-energy-"+who+"-fill",pickingMode=PickingMode.Ignore};bar.Fill.AddToClassList("sc-energy-fill");bar.Track.Add(bar.Fill);
+            column.Add(bar.Track);return column;
+        }
+        private static void Paint(EnergyBar bar)
+        {
+            if(Mathf.Approximately(bar.Painted,bar.Shown))return;
+            bar.Painted=bar.Shown;bar.Fill.style.width=Length.Percent(bar.Shown*100);
+        }
+        // Shown only in a rally or a match with fatigue on. Tone and target follow the energy; the drawn width eases in Tick.
+        private void RefreshEnergy(bool active)
+        {
+            var fatigue=rally.FatigueSettings;
+            bool on=active&&fatigue!=null&&fatigue.Enabled&&rally.HumanEnergy!=null&&rally.RivalEnergy!=null;
+            if(on!=energyOn)
+            {
+                energyOn=on;var display=on?DisplayStyle.Flex:DisplayStyle.None;humanBar.Track.style.display=rivalBar.Track.style.display=display;
+                humanBar.Tone=rivalBar.Tone=-1;if(on){humanBar.Painted=rivalBar.Painted=-1;humanBar.Shown=Mathf.Clamp01((float)(rally.HumanEnergy.Energy/100));rivalBar.Shown=Mathf.Clamp01((float)(rally.RivalEnergy.Energy/100));}
+            }
+            if(!on)return;
+            Follow(humanBar,rally.HumanEnergy.Energy,fatigue);Follow(rivalBar,rally.RivalEnergy.Energy,fatigue);
+        }
+        private static void Follow(EnergyBar bar,double energy,FatigueSettings fatigue)
+        {
+            bar.Target=Mathf.Clamp01((float)(energy/100));int tone=fatigue.Tone(energy);
+            if(tone!=bar.Tone)
+            {
+                bar.Tone=tone;bar.Track.EnableInClassList("sc-energy--neutral",tone==0);bar.Track.EnableInClassList("sc-energy--amber",tone==1);bar.Track.EnableInClassList("sc-energy--red",tone==2);
+            }
+            Paint(bar);
+        }
+        private static void Ease(EnergyBar bar,float dt)
+        {
+            if(bar.Shown==bar.Target)return;
+            bar.Shown=Mathf.Abs(bar.Target-bar.Shown)<.0005f?bar.Target:bar.Shown+(bar.Target-bar.Shown)*(1-Mathf.Exp(-EnergyEaseRate*dt));
+            Paint(bar);
         }
         private static Label Text(string text,string style){var label=new Label(text){pickingMode=PickingMode.Ignore};label.AddToClassList(style);return label;}
         private static VisualElement Chip(string style){var chip=new VisualElement{pickingMode=PickingMode.Ignore};chip.AddToClassList("sc-chip");chip.AddToClassList(style);return chip;}
@@ -141,6 +191,7 @@ namespace SquashClash.Runtime.Rally
                 bannerAge=Mathf.Min(BannerInSeconds,bannerAge+dt);float k=Ease(bannerAge/BannerInSeconds);
                 bannerCard.style.opacity=k;bannerCard.style.translate=new Translate(0,(1-k)*-12);
             }
+            if(energyOn){Ease(humanBar,dt);Ease(rivalBar,dt);}
             if(pulseHuman>0){pulseHuman=Mathf.Max(0,pulseHuman-dt);Pulse(humanPoints,pulseHuman);}
             if(pulseRival>0){pulseRival=Mathf.Max(0,pulseRival-dt);Pulse(rivalPoints,pulseRival);}
             if(servePulse>0)
@@ -216,6 +267,7 @@ namespace SquashClash.Runtime.Rally
                     bannerAge=0;bannerCard.style.opacity=0;bannerCard.style.translate=new Translate(0,-12);banner.style.display=DisplayStyle.Flex;
                 }
             }
+            RefreshEnergy(active);
             if(!active)
             {
                 shown=null;phase=(RallyPhase)(-1);scoreHuman=scoreRival=-1;

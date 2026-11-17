@@ -25,7 +25,8 @@ namespace SquashClash.Runtime.Tests
             rally.StartMode();Refresh();yield return null;yield return null;
             foreach(var who in new[]{"human","rival"})
             {
-                var bar=Bar(who);Assert.That(bar.resolvedStyle.height,Is.EqualTo(3).Within(.01f),who);
+                var bar=Bar(who);// 3 pt, snapped by the panel to a whole physical pixel.
+                Assert.That(bar.resolvedStyle.height,Is.EqualTo(3).Within(1f/root.panel.scaledPixelsPerPoint+.01f),who);
                 var all=bar.Query<VisualElement>().ToList().Prepend(bar).Concat(Find("rally-score").Query<VisualElement>().ToList()).ToList();
                 Assert.That(all.All(e=>e.pickingMode==PickingMode.Ignore),Is.True,"everything in the score row ignores touches");
                 Assert.That(bar.Query<Button>().ToList(),Is.Empty);Assert.That(bar.Query<Label>().ToList(),Is.Empty);
