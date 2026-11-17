@@ -92,7 +92,14 @@ namespace SquashClash.Core.Rally
             var option=options[chosen>=0?chosen:fallback];
             var aim=ShotOptions.ClampAim(context,option.Aim+new Vector2((float)random.NextGaussian(difficulty.AimSigma),(float)random.NextGaussian(difficulty.AimSigma)));
             float power=Mathf.Clamp01(option.P+(float)random.NextGaussian(difficulty.PowerSigma));
-            return new AiShot(true,option,aim,power,random.NextGaussian(difficulty.TimingSigmaMs),defensive);
+            double delta=random.NextGaussian(difficulty.TimingSigmaMs);
+            double rate=context.StepHz*context.Tempo;
+            double lower=(own.Contact.KIn.Steps-own.Contact.TStarStep)*1000/rate;
+            double upper=(own.Contact.KOut.Steps-own.Contact.TStarStep)*1000/rate;
+            if(context.Timing.ValidLimitOn)
+            {lower=Math.Max(lower,-context.Timing.ValidMs);upper=Math.Min(upper,context.Timing.ValidMs);}
+            delta=RivalReleaseTiming.Adjust(delta,lower,upper,difficulty.TimingSigmaMs,p.FondoReleaseMarginSigma);
+            return new AiShot(true,option,aim,power,delta,defensive);
         }
         // U(option) = sum(style weight * feature) - risk aversion * estimated risk (spec 11.3 step 2).
         public double Utility(in ShotOption option,in AiObservation observation,in ReceptionPlan own)
