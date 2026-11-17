@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
 using SquashClash.Core.Shot;
@@ -110,14 +111,26 @@ namespace SquashClash.Runtime.Tests
             foreach(Action<ShotPresentation> listener in listeners.GetInvocationList())
                 if(ReferenceEquals(listener.Target,swing)||ReferenceEquals(listener.Target,human))listener(presentation);
         }
-        private void CheckFrame(double dt,ref Vector3 previousDrawn,ref Vector3 previousReference,bool entry,ref float maxStep,ref float maxExtra)
+        private struct TransitionMetrics
+        {
+            public int EntrySamples,ExitSamples;
+            public float EntryStep,EntryExtra,ExitStep,ExitExcess,ExitSpeed;
+        }
+        private void MeasureFrame(double dt,ref Vector3 previousDrawn,ref Vector3 previousReference,bool entry,ref TransitionMetrics metrics)
         {
             swing.Tick(dt);human.Animate((float)dt);
             var drawnDelta=DrawnHead-previousDrawn;var referenceDelta=ReferenceHead-previousReference;
             float step=drawnDelta.magnitude,extra=(drawnDelta-referenceDelta).magnitude;
-            maxStep=Mathf.Max(maxStep,step);maxExtra=Mathf.Max(maxExtra,extra);
-            if(entry)Assert.That(extra,Is.LessThanOrEqualTo(WorldTolerance),"phase entry must not add a positional snap to SwingView's movement");
-            else Assert.That(step,Is.LessThanOrEqualTo(8*(float)dt+WorldTolerance),"window exit must remain below 8 m/s plus the 5 mm tolerance");
+            if(entry)
+            {
+                metrics.EntrySamples++;metrics.EntryStep=Mathf.Max(metrics.EntryStep,step);metrics.EntryExtra=Mathf.Max(metrics.EntryExtra,extra);
+            }
+            else
+            {
+                metrics.ExitSamples++;metrics.ExitStep=Mathf.Max(metrics.ExitStep,step);
+                metrics.ExitExcess=Mathf.Max(metrics.ExitExcess,step-8*(float)dt);
+                if(dt>0)metrics.ExitSpeed=Mathf.Max(metrics.ExitSpeed,step/(float)dt);
+            }
             previousDrawn=DrawnHead;previousReference=ReferenceHead;
         }
         [TestCase(false,false)]
@@ -126,41 +139,43 @@ namespace SquashClash.Runtime.Tests
         [TestCase(true,true)]
         public void ContactTransitions_AreContinuousForEveryFrameStep(bool left,bool backhand)
         {
-            Handedness.Left=left;
+            Handedness.Left=left;var failures=new List<string>();
             var side=left==backhand?StrokeSide.Drive:StrokeSide.Backhand;
             foreach(double frame in new[]{1d/30,1d/60,1d/120,.050})
             foreach(double intention in new[]{.025,.30})
+            foreach(float power in new[]{.1f,1f})
             {
-                LaunchWithPhysicalSide(side);string attempt="e1-continuity-"+app.Host.LaunchId;
-                BeginViewStroke(side,attempt);
-                // The first accepted-order draw is outside this test's phase-boundary population.
-                human.Animate(0);var previousDrawn=DrawnHead;var previousReference=ReferenceHead;
-                float maxEntryStep=0,maxExtra=0,maxExitStep=0,unused=0;
+                LaunchWithPhysicalSide(side);Write(human,"strokePower",power);
+                // Include the real resting drawing before acceptance, rather than starting after its first snap.
+                for(int i=0;i<40;i++)human.Animate(1f/60);
+                var previousDrawn=DrawnHead;var previousReference=ReferenceHead;var metrics=new TransitionMetrics();
+                string attempt="e1-continuity-"+app.Host.LaunchId;BeginViewStroke(side,attempt);
+                Assert.That(swing.Phase,Is.EqualTo(SwingPhase.Intention));
+                // With dt=0, a phase change cannot borrow a large movement allowance from a long frame.
+                MeasureFrame(0,ref previousDrawn,ref previousReference,true,ref metrics);
                 double elapsed=0;
                 while(elapsed<intention-1e-9)
                 {
                     double dt=Math.Min(frame,intention-elapsed);
-                    swing.Tick(dt);human.Animate((float)dt);
-                    maxEntryStep=Mathf.Max(maxEntryStep,Vector3.Distance(DrawnHead,previousDrawn));
-                    previousDrawn=DrawnHead;previousReference=ReferenceHead;elapsed+=dt;
+                    MeasureFrame(dt,ref previousDrawn,ref previousReference,true,ref metrics);elapsed+=dt;
                 }
                 DeliverView(ViewContact(side,attempt));Assert.That(swing.Phase,Is.EqualTo(SwingPhase.Impact));
-                // No source motion at the event itself: exposes a teleport independently of frame length.
-                CheckFrame(0,ref previousDrawn,ref previousReference,true,ref maxEntryStep,ref maxExtra);
+                MeasureFrame(0,ref previousDrawn,ref previousReference,true,ref metrics);
                 elapsed=0;
-                while(elapsed<.30-1e-9)
+                while(elapsed<.50-1e-9)
                 {
-                    double boundary=elapsed<.12-1e-9?.12:.30;
+                    double boundary=elapsed<.12-1e-9?.12:.50;
                     double dt=Math.Min(frame,boundary-elapsed);
-                    bool entry=elapsed<.12-1e-9;
-                    if(entry)CheckFrame(dt,ref previousDrawn,ref previousReference,true,ref maxEntryStep,ref maxExtra);
-                    else CheckFrame(dt,ref previousDrawn,ref previousReference,false,ref maxExitStep,ref unused);
-                    elapsed+=dt;
-                    if(Math.Abs(elapsed-.12)<1e-8)
-                        CheckFrame(0,ref previousDrawn,ref previousReference,false,ref maxExitStep,ref unused);
+                    MeasureFrame(dt,ref previousDrawn,ref previousReference,elapsed<.12-1e-9,ref metrics);elapsed+=dt;
+                    if(Math.Abs(elapsed-.12)<1e-8)MeasureFrame(0,ref previousDrawn,ref previousReference,false,ref metrics);
                 }
-                TestContext.WriteLine($"E1 continuity left={left} backhand={backhand} frame={frame:R} intention={intention:R} entryStep={maxEntryStep:R} extra={maxExtra:R} exitStep={maxExitStep:R}");
+                string identity=$"left={left} backhand={backhand} frame={frame:R} intention={intention:R} power={power:R}";
+                TestContext.WriteLine($"E1 continuity {identity} entrySamples={metrics.EntrySamples} exitSamples={metrics.ExitSamples} entryStep={metrics.EntryStep:R} entryExtra={metrics.EntryExtra:R} exitStep={metrics.ExitStep:R} exitExcess={metrics.ExitExcess:R} exitSpeed={metrics.ExitSpeed:R}");
+                if(metrics.EntryExtra>WorldTolerance||metrics.ExitExcess>WorldTolerance)
+                    failures.Add($"{identity}: entryExtra={metrics.EntryExtra:R} m; exitExcess={metrics.ExitExcess:R} m");
             }
+            // Assert only after collecting every power, preparation duration and frame step for this hand/stroke.
+            Assert.That(failures,Is.Empty,string.Join("\n",failures));
         }
         [Test] public void UnknownContactAge_DoesNotKeepTheWindowOpenForTheWholeImpact()
         {
