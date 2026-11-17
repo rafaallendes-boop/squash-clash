@@ -179,5 +179,104 @@
     "automaticDeviceNamesOrUniqueIds": false,
     "credentialsOrPrivateKeysWritten": false,
     "u3Adds": "random install GUID and game events; PR66 separate"
+  },
+  "postU3Integration": {
+    "main": "3780bf8b4b652c1457a231d78e660d7f10b00c39",
+    "validationHead": "e372ad9f925417261a0b82eb4be953a05f71bdd8",
+    "tests": {
+      "editmode": {
+        "total": "754",
+        "passed": "754",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-11-17 10:53:03Z",
+        "end-time": "2026-11-17 10:54:02Z",
+        "xmlSha256": "646d568ae4031f319face560478bbf1494dfa4f6a2369e2904eb50c794a51f1e"
+      },
+      "playmode": {
+        "total": "581",
+        "passed": "580",
+        "failed": "1",
+        "skipped": "0",
+        "start-time": "2026-11-17 10:54:45Z",
+        "end-time": "2026-11-17 10:59:33Z",
+        "xmlSha256": "9656d9bf10e81bda9fc859c5966dea11ae904a54cf467849ac221b1328dabf47"
+      }
+    },
+    "releaseCheck": "NotRun: stopped after PlayMode failure",
+    "merged": false,
+    "retried": false,
+    "projectSettingsRestored": true,
+    "unityProcessesAfter": 0,
+    "scope": {
+      "previousHead": "d0f71d5076d3044441d569812a33addc5cdfb11e",
+      "integratedMain": "3780bf8b4b652c1457a231d78e660d7f10b00c39",
+      "integrationHead": "e372ad9f925417261a0b82eb4be953a05f71bdd8",
+      "newNonDocumentationPaths": [
+        "Assets/SquashClash/Core/Diagnostics/MetricsLog.cs",
+        "Assets/SquashClash/Core/Diagnostics/UserMetrics.cs",
+        "Assets/SquashClash/Core/Diagnostics/UserMetrics.cs.meta",
+        "Assets/SquashClash/Runtime/App/AppBootstrap.cs",
+        "Assets/SquashClash/Runtime/Menu/FirstRunFlow.cs",
+        "Assets/SquashClash/Runtime/Rally/RallyHud.cs",
+        "Assets/SquashClash/Runtime/Visual/CharacterView.cs",
+        "Assets/SquashClash/Runtime/Visual/StrokeFx.cs",
+        "Assets/SquashClash/Runtime/Visual/VisualKit.cs",
+        "Assets/SquashClash/Tests/Capture/ZE1StrokeCapture.cs",
+        "Assets/SquashClash/Tests/Capture/ZE1StrokeCapture.cs.meta",
+        "Assets/SquashClash/Tests/EditMode/Diagnostics/UserMetricsTests.cs",
+        "Assets/SquashClash/Tests/EditMode/Diagnostics/UserMetricsTests.cs.meta",
+        "Assets/SquashClash/Tests/PlayMode/ZCharacterFeelTests.cs",
+        "Assets/SquashClash/Tests/PlayMode/ZE1ContactWindowTests.cs",
+        "Assets/SquashClash/Tests/PlayMode/ZE1ContactWindowTests.cs.meta",
+        "Assets/SquashClash/Tests/PlayMode/ZE1StrokePoseTests.cs",
+        "Assets/SquashClash/Tests/PlayMode/ZE1StrokePoseTests.cs.meta",
+        "Assets/SquashClash/Tests/PlayMode/ZHandednessTests.cs",
+        "Assets/SquashClash/Tests/PlayMode/ZUserMetricsFlowTests.cs",
+        "Assets/SquashClash/Tests/PlayMode/ZUserMetricsFlowTests.cs.meta"
+      ],
+      "everyNewCodeBlobMatchesMain": true,
+      "u2ImplementationUnchanged": true
+    },
+    "approvalPreservation": {
+      "conflictCount": 1,
+      "allBlocksPreserved": true,
+      "blockSha256": [
+        "ce6582a704ab870e90bd8eb41bed5588633d55dfa7f5b15d2509b02648503006",
+        "b12bc2243a149d50d1ef61e5e6266f062897612dbc82c97caad23ed405506092"
+      ]
+    },
+    "failures": [
+      {
+        "name": "SquashClash.Runtime.Tests.ReticleVisibilityTests.DevOpen_ProtocolActionsRemainUsable_AndCloseDevBeforeArming",
+        "label": null,
+        "message": "  Expected: less than or equal to 674.663208f\n  But was:  788.198853f\n",
+        "stack": "at SquashClash.Runtime.Tests.ReticleVisibilityTests+<DevOpen_ProtocolActionsRemainUsable_AndCloseDevBeforeArming>d__33.MoveNext () [0x001bb] in /Users/rafaallendes/.codex/worktrees/u2-release-lane/Squash Clash/Assets/SquashClash/Tests/PlayMode/ReticleVisibilityTests.cs:213\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@bd7f943e9647/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:44\n",
+        "duration": "0.645520"
+      }
+    ],
+    "causeDemonstrated": false,
+    "processInventories": {
+      "before-editmode": {
+        "file": "Logs/evidence/u2/post-u3-processes-before-editmode.json",
+        "observedAtUtc": "2026-11-17T10:52:50.845704+00:00",
+        "processCount": 0,
+        "sha256": "726ce664e35a963b7ce984ab85bbfe65a5b6ab3d115e053687972388678d701f"
+      },
+      "before-playmode": {
+        "file": "Logs/evidence/u2/post-u3-processes-before-playmode.json",
+        "observedAtUtc": "2026-11-17T10:54:17.480366+00:00",
+        "processCount": 0,
+        "sha256": "5ed47e14a48f422c0d9ecb5ef09064f346954a5341f5e783b7d340852b8ea616"
+      },
+      "after-playmode-stop": {
+        "file": "Logs/evidence/u2/post-u3-processes-after-playmode-stop.json",
+        "observedAtUtc": "2026-11-17T10:59:53.934642+00:00",
+        "processCount": 0,
+        "sha256": "e3da7be40e614f693800d3e40b2fa5a7537b48f159e6305068e76aa1689f1985"
+      }
+    },
+    "failedTestUnchangedSinceU1Main": true,
+    "failedTestFileSha256": "52fb0c30a3745ce47a96da882f89b250351884d0a7d2b2af1f7909fc884b95da"
   }
 }
