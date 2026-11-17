@@ -1,0 +1,70 @@
+{
+  "schema": "f1-fatigue-summary/1",
+  "variant": "soft",
+  "matches": 200,
+  "points": 1893,
+  "identity": [],
+  "criteria": {
+    "B1": {
+      "shortPoints": 312,
+      "humanMedianNetCost": 2.3666479002146303,
+      "rivalMedianNetCost": 1.70656140161163,
+      "pass": true
+    },
+    "B2": {
+      "longPoints": 992,
+      "largerMovementCostMedian": 26.01309084572126,
+      "movementDifferenceMedian": 7.660878169350398,
+      "pass": true
+    },
+    "B3": {
+      "lastPointStartMedian": 80.29191713928768,
+      "matchesBelowOnset": 182,
+      "matches": 200,
+      "pass": false
+    },
+    "B4": {
+      "matchesStartingBelow20": 0,
+      "matches": 200,
+      "zeroEnergyServes": 0,
+      "pass": true
+    },
+    "B5a": {
+      "closePoints": 26,
+      "startEnergyMedian": 77.2557875945974,
+      "pass": true
+    },
+    "B5b": {
+      "exploratory": true,
+      "qualifyingPoints": 0,
+      "pairedPoints": 0,
+      "missingPairs": 0,
+      "fatiguedPlayerWins": 0,
+      "samePlayerBaselineWins": 0,
+      "percentagePointDifference": null
+    },
+    "B6": {
+      "meanRealSeconds": 44.133155891476015,
+      "baselineMeanRealSeconds": 45.08358947746597,
+      "ratio": 0.9789184136177753,
+      "pass": true
+    }
+  },
+  "predeclaredAdjustment": {
+    "key": "fatigue.recoverBetween",
+    "from": 0.35,
+    "to": 0.25,
+    "reason": "B3 last-point energy too high"
+  },
+  "dataSha256": {
+    "Logs/experiments/f1-fatigue/soft/points.tsv": "b7e9681cbeed99cc5d67c347a9c238adce6e08474429936242bf1f3ec3fc8250",
+    "Logs/experiments/f1-fatigue/soft/receptions.tsv": "29273103eb2bb587df9ec35969ab7228bdbbb7b380cd2299cc5dfdd5d4ea2c03",
+    "Logs/experiments/f1-fatigue/soft/matches.tsv": "45d74dc417012e39972319db06a0098f3e2d4b10dc7cca9d77b55185d60b1ef3",
+    "Logs/experiments/f1-fatigue/soft/source.tsv": "83a9434b96a1cc8720c442823bb2aea6a95b6d344a5c308773499ee41feabd1c",
+    "docs/validation/evidence/2026-11-17-f1-baseline/points.tsv": "114da59f8420abdd32cb0235bb51f73c01d923737adcf951d92caf3aa2f8e0c6",
+    "docs/validation/evidence/2026-11-17-f1-baseline/receptions.tsv": "a5368c7c01a8f64d14b209fbbaf978942cd0441637d4fac0dc9c7c0880122a24",
+    "docs/validation/evidence/2026-11-17-f1-baseline/matches.tsv": "f70392425be61b40d859fce99a39a5085531d4b8fde578c2bec6c2f7ad866314",
+    "docs/validation/evidence/2026-11-17-f1-baseline/source.tsv": "7d9bf8d53361dad53c247398b4339edaf62487baeab9800d71c336f91ca9a491"
+  },
+  "dataUnchanged": true
+}
