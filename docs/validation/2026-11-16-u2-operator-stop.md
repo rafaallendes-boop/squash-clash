@@ -15,3 +15,5 @@ Para una reanudación, la comprobación y el inicio de Unity deben ser llamadas 
 ## Reanudación autorizada
 
 El PO autoriza una sola repetición RED tras #66 completo, con inventario PID/comando/proyecto antes de lanzar y aborto obligatorio si existe Unity. #66 quedó publicado en `96321dd`, compuertas 748/748, 561/561 y Release OK; no queda ningún proceso de sus corridas. E1 terminó y declaró Unity libre. Esta nueva autorización no acredita retrospectivamente la exclusividad del primer intento ni borra el incidente. Se integra main `02f3c57` y se conservan intactos los seis tests y los esqueletos.
+
+**Resultado de la repetición única autorizada:** sobre `1c1d075`, XML fresco **0/6**, seis fallos de aserción esperados y sin errores CS. Inventarios previos/posteriores guardados (cero procesos); sin incidente nuevo. Se consume la autorización y se continúa la implementación U2 original. El intento anterior conserva su limitación de exclusividad.

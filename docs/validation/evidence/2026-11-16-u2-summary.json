@@ -21,5 +21,22 @@
   },
   "implemented": false,
   "nativeArchiveOrExportOrUpload": false,
-  "credentialsRequested": false
+  "credentialsRequested": false,
+  "authorizedRedRepeat": {
+    "head": "1c1d07514810a4f25f4a01e03746338cc4fc352a",
+    "tests": {
+      "total": "6",
+      "passed": "0",
+      "failed": "6",
+      "skipped": "0",
+      "start-time": "2026-11-17 00:46:37Z",
+      "end-time": "2026-11-17 00:46:37Z"
+    },
+    "xmlSha256": "62e2964bc4e7d93b1b3d304ecfe5cd6f694d217504c0fb6f4c800a63c3a3a721",
+    "assertionFailuresOnly": true,
+    "compilerErrors": false,
+    "processesBefore": 0,
+    "snapshot": "Logs/evidence/u2/processes-before-authorized-red.json",
+    "incident": false
+  }
 }
