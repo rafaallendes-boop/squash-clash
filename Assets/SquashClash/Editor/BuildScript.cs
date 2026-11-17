@@ -70,8 +70,18 @@ namespace SquashClash.EditorTools
                 // Native .mm inclusion is explicit; assembly constraints alone cannot exclude it.
                 thermal.SetIncludeInBuildDelegate(_ => profile != "prod");
                 BuildReport report;
-                try { report = BuildPipeline.BuildPlayer(options); }
-                finally { thermal.SetIncludeInBuildDelegate(null); }
+                var previousBuildNumber = PlayerSettings.iOS.buildNumber;
+                try
+                {
+                    PlayerSettings.iOS.buildNumber = IosReleaseSettings.GetBuildNumber(root);
+                    report = BuildPipeline.BuildPlayer(options);
+                }
+                finally
+                {
+                    PlayerSettings.iOS.buildNumber = previousBuildNumber;
+                    thermal.SetIncludeInBuildDelegate(null);
+                    AssetDatabase.SaveAssets();
+                }
                 if (report.summary.result != BuildResult.Succeeded)
                     throw new InvalidOperationException($"iOS export failed: {report.summary.result}, errors={report.summary.totalErrors}");
                 Debug.Log($"[SquashClash] iOS export succeeded: {output}");
@@ -83,7 +93,7 @@ namespace SquashClash.EditorTools
             }
         }
 
-        private static string Git(string root, string arguments)
+        internal static string Git(string root, string arguments)
         {
             var start = new System.Diagnostics.ProcessStartInfo("git", arguments)
             {

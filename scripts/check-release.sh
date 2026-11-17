@@ -49,5 +49,6 @@ shutil.copyfile(metadata,root/f'Logs/evidence/buildinfo-{profile}.json')
 (root/f'Logs/evidence/release-{profile}.json').write_text(json.dumps({'profile':profile,'metadata':info,'freshExport':True,'productIl2CppModules':modules,'nativeThermalBridge':bool(native),'runtimeThermalBridge':bool(runtime_native),'runtimeHapticsBridge':bool(haptics_native),'hapticsSymbols':haptics_symbols},indent=2)+'\n')
 print('RELEASE-CHECK: '+profile+' modules='+','.join(modules))
 PY
+    python3 "$ROOT/scripts/verify-ios-export.py" "$ROOT" "$profile"
 done
 printf 'RELEASE-CHECK: OK\n'
