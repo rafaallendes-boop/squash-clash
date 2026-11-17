@@ -12,7 +12,7 @@ Experimento EditMode explícito, separado de la regresión (`FatigueMatchExperim
 
 | Variante | Configuración | Hash de defaults esperado |
 |---|---|---|
-| `f2off` | defaults con `fatigue.enabled = 0` | `5cf3885e7c02` (132 claves) |
+| `f2off` | defaults con `fatigue.enabled = 0` | `3262f9b89156` (132 claves; ver el erratum al final) |
 | `f2all` | defaults tal cual (`enabled = 1`, `recoverBetween` 0,25, `armSpeedMax` 0,04, `positionGainMax` 0,25, resto de F1) | `2ec0c953786a` (132 claves) |
 
 Fijos en ambas: `SimulationKey` `166a96e319c7`, `RallyParams` `927e304bbfec`, `DefaultPreset.json` sin diff respecto de `main`. No se repite `baseline`: se usa la referencia congelada `docs/validation/evidence/2026-11-17-f1-baseline/` (hash 430da2faa818 afirmado en F1, 1.927 puntos). Se agrega al `receptions.tsv` la columna `f_s` (factor del golpeador por recepción golpeada), sin tocar el resto de las columnas.
@@ -34,3 +34,7 @@ El único ajuste que permite la spec §7 (`recoverBetween` 0,35 → 0,25) ya se 
 ## Evidencia y límites
 
 Cada invocación conserva inventario de procesos Unity, XML fresco, logs, head/árbol, versión de Unity, hashes y TSV con SHA-256. Un solo Editor Unity; no se inicia si ya hay alguno. Sin fusión, instalación ni acceso al iPhone. Autonomía experimental vigente (PO, F1/F2): solo código propio de `Tests/Experiments` y scripts de diagnóstico, resumen y empaquetado, conservando cada intento y verificando SHA-256 si ya hay datos; no cubre producto, método, grilla, umbrales ni datos producidos.
+
+## Erratum previo a datos — F2-EXP-01 (17 nov 2026)
+
+La tabla de variantes decía que el hash de defaults de `f2off` era `5cf3885e7c02`. Es un error de transcripción: ese valor es el de la variante `off` de F1, medida antes del único ajuste (`recoverBetween` 0,35 con `enabled = 0`). Con el default ajustado de F1 (0,25) y `enabled = 0` el hash medido en Unity es **`3262f9b89156`** (132 claves), el mismo que ya afirma `ZRallyHudTests` desde F1. La primera invocación de `f2off` se detuvo por esa aserción del propio arnés **antes de crear ningún dato** (intento conservado en `Logs/experiments/f2-fatigue/f2off-runner-attempt1`, sin `points.tsv`). Se corrige solo ese literal en el método y en el arnés. No cambia ningún valor de configuración, hash de producto, muestra, umbral ni regla: `f2all` sigue en `2ec0c953786a`, `SimulationKey` en `166a96e319c7` y `RallyParams` en `927e304bbfec`.
