@@ -50,7 +50,15 @@ namespace SquashClash.Core.Tests.Shot
             Assert.That(p.Get("aids.trailSeconds"),Is.EqualTo(0.15d),"aids.trailSeconds");
             Assert.That(p.Get("aids.ballVisualScale"),Is.EqualTo(1d),"aids.ballVisualScale");
         }
+        [Test] public void Defaults_SelectT3Pure_WithoutSoftEarlyOrLatencyCompensation()
+        {
+            var actual=ConfigFixtures.Default();var candidate=actual.With("timing.validLimit",0);
+            TestContext.WriteLine("U1_HASH defaults="+candidate.Hash+" P0="+candidate.With("launcher.repeatSeconds",3).Hash+" SL5="+candidate.With("practice.launch",4).With("human.z",(double)1.6f).Hash+" keys="+candidate.Ordered.Count);
+            Assert.That(actual.GetInt("timing.validLimit"),Is.Zero);
+            Assert.That(actual.GetInt("timing.earlyPolicy"),Is.Zero);Assert.That(actual.GetInt("timing.aidLevel"),Is.Zero);
+            Assert.That(actual.Get("timing.latencyCompMs"),Is.Zero);
+        }
         [Test] public void SimulationKey_IsUnchanged()=>Assert.That(EffectiveConfig.From(ConfigFixtures.Default()).SimulationKey,Is.EqualTo("166a96e319c7"));
-        [Test] public void NewHash_IsRecorded() {var p=ConfigFixtures.Default();Assert.That(p.Hash,Is.EqualTo("06fed4bd4ac9"));Assert.That(p.Ordered.Count,Is.EqualTo(121));}
+        [Test] public void NewHash_IsRecorded() {var p=ConfigFixtures.Default();Assert.That(p.Hash,Is.EqualTo("430da2faa818"));Assert.That(p.Ordered.Count,Is.EqualTo(121));}
     }
 }

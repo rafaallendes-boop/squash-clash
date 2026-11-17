@@ -17,6 +17,7 @@ namespace SquashClash.AutoQA
         internal ShotController Controller {get;private set;}
         internal Vector2 Anchor {get;private set;}
         internal double Target {get;private set;}
+        internal PhysicsWindow Window {get;private set;}
         internal EnvironmentMeta Environment {get;private set;}
         private TouchInputAdapter input;private Touchscreen screen;private Func<double> previousTime;
         private double now,dt;private PracticeMode practice;private GesturePreview preview;
@@ -25,6 +26,7 @@ namespace SquashClash.AutoQA
             yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
             App=AppBootstrap.Instance;App.GetComponent<ResumeOverlay>().Continue();
             App.Tuning.LoadPreset(PresetCodec.FromSet(App.Tuning.Defaults,"AutoQA defaults",App.Build.Label),new List<string>());
+            if(!scenario.useDefaults)App.Tuning.Set("timing.validLimit",1);
             App.Tuning.Set("practice.launch",scenario.launch);App.LaunchCurrent();
             Controller=App.GetComponent<ShotController>();practice=App.GetComponent<PracticeMode>();
             App.Host.enabled=App.enabled=Controller.enabled=practice.enabled=false;
@@ -32,6 +34,7 @@ namespace SquashClash.AutoQA
             now=App.Host.ObservedRealTime;previousTime=input.ReadRealTime;input.ReadRealTime=()=>now;screen=InputSystem.AddDevice<Touchscreen>();
             Anchor=(Vector2)UnityEngine.Camera.main.WorldToScreenPoint(new Vector3(scenario.aimX,scenario.aimY,0));
             App.Host.ClockMap.TrySimToReal(Controller.Plan.TStarStep,0,out var target);Target=target;
+            Window=PhysicsWindow.Measure(App.Host.Prediction,App.Host.ActiveConfig.Source,(Target-App.Host.LaunchRealTime)*App.Host.ActiveConfig.Physics.StepHz*App.Host.ActiveConfig.Tempo);
             float mm=ScreenMetrics.MmPerPx(Screen.dpi,(float)App.Tuning.Applied.Get("input.fallbackDpi"),out var dpi);
             var safe=Screen.safeArea;
             Environment=new EnvironmentMeta {screen=new[]{Screen.width,Screen.height},safeArea=new[]{safe.x,safe.y,safe.width,safe.height},

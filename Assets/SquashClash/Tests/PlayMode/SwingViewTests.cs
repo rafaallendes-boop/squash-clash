@@ -31,7 +31,7 @@ namespace SquashClash.Runtime.Tests
         {
             yield return PlayModeTestWorld.ClearApp();yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
             app=AppBootstrap.Instance;app.GetComponent<ResumeOverlay>().Continue();app.Clock.Paused=false;
-            app.Tuning.LoadPreset(PresetCodec.FromSet(app.Tuning.Defaults,"S3 C fixture",app.Build.Label),new List<string>());
+            app.Tuning.LoadPreset(PresetCodec.FromSet(app.Tuning.Defaults.With("timing.validLimit",1),"S3 C fixture",app.Build.Label),new List<string>());
             app.Tuning.Set("launcher.repeatSeconds",0);
             bool wired=app.GetComponent<ShotController>()!=null;
             controller=app.GetComponent<ShotController>()??app.gameObject.AddComponent<ShotController>();if(!wired)controller.Initialize(app);

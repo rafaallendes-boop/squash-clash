@@ -15,7 +15,7 @@ namespace SquashClash.Core.Tests.Shot
         }
         [Test] public void ReceptionAndGestureSnapshots_AreImmutableAndSeparate()
         {
-            var p=ConfigFixtures.Default();var cfg=new ShotConfig(p);var changed=p.With("timing.validLimit",0).With("human.x",4).With("power.pullFullMm",40);
+            var p=ConfigFixtures.Default().With("timing.validLimit",1);var cfg=new ShotConfig(p);var changed=p.With("timing.validLimit",0).With("human.x",4).With("power.pullFullMm",40);
             var gesture=cfg.WithGesture(changed);Assert.That(gesture.Reception,Is.SameAs(p));Assert.That(gesture.Gesture,Is.SameAs(changed));
             Assert.That(gesture.Timing.ValidLimitOn,Is.True);Assert.That(gesture.Body.PositionXZ,Is.EqualTo(new Vector2(3.2f,5.5f)));Assert.That(gesture.VMin,Is.EqualTo(6));
             Assert.That(gesture.Reception.Get("power.pullFullMm"),Is.EqualTo(35));Assert.That(gesture.Gesture.Get("power.pullFullMm"),Is.EqualTo(40));

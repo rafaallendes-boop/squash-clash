@@ -182,9 +182,11 @@ namespace SquashClash.Core.Tests.Rally
     // The AI hits through the human's contract (spec 11.3 step 3, 17.A.9).
     public sealed class RallyContactTests
     {
-        private static (RallyContext context,Trajectory trajectory,ContactPlan plan,ClockMap clock) Setup()
+        private static (RallyContext context,Trajectory trajectory,ContactPlan plan,ClockMap clock) Setup(bool explicitV=false)
         {
-            var context=RallyFixtures.Context();var trajectory=context.Predict(context.NeutralLaunch(PlayerId.Rival));
+            var context=RallyFixtures.Context();
+            if(explicitV)context=new RallyContext(Core.Config.EffectiveConfig.From(context.Config.Source.With("timing.validLimit",1)),context.Params,context.Factory);
+            var trajectory=context.Predict(context.NeutralLaunch(PlayerId.Rival));
             var body=RallyFixtures.Body(context,PlayerId.Rival,context.WaitPosition(PlayerId.Rival));
             var plan=ReceptionPlanner.Plan(context,trajectory,RallyFixtures.Rules(context,PlayerId.Human,PlayerId.Rival),body,18,1);
             Assert.That(plan.Reachable,Is.True,plan.Reason);
@@ -205,7 +207,7 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void OutsideV_Fails_LikeTheHuman()
         {
-            var s=Setup();
+            var s=Setup(explicitV:true);
             var air=RallyContact.Resolve(s.context,s.clock,s.trajectory,s.plan,0,-160);var late=RallyContact.Resolve(s.context,s.clock,s.trajectory,s.plan,0,160);
             Assert.That(air.Result,Is.EqualTo(ShotResult.Failed));Assert.That(air.Fail,Is.EqualTo(FailKind.Air));
             Assert.That(late.Result,Is.EqualTo(ShotResult.Failed));Assert.That(late.Fail,Is.EqualTo(FailKind.Late));
