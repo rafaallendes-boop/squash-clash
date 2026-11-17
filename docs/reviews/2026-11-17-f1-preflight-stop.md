@@ -33,3 +33,5 @@ La revisión anterior omitió otras dos aserciones afectadas. Inspección estát
 2. `Assets/SquashClash/Tests/EditMode/Shot/S2DefaultPromotionTests.cs:50` fija el hash completo de P0 efectivo en `dcc7c8cc0688`. También cambia al heredar las once claves, pero el archivo no estaba en la lista de PREFLIGHT-01. Propuesta puntual: actualizar exclusivamente ese literal al valor medido en Unity y probar aparte su proyección histórica; no modificar el archivo P0-calib-1 ni ninguna otra aserción.
 
 Se solicitó decisión del PO sobre ambos puntos; **pendiente**. No se implementa cansancio, modifica tests existentes ni inicia otra corrida. Se aplica la parada exigida por el encargo/spec ante un test que necesite otro tratamiento. No hay fusión ni instalación.
+
+**PREFLIGHT-03 resuelto:** PO autoriza ambos cambios puntuales y otros valores fijos derivados de DefaultPreset bajo la misma condición: solo diferencias fatigue.*, proyección comprobada y lista en informe. P0 se incluye en proyección (dcc7c8cc0688) y AGENTS §5; archivo P0-calib-1 intacto. Se retoma F1.

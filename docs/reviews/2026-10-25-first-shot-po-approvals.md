@@ -3134,3 +3134,12 @@ Decisión literal del PO:
 > «F1-PREFLIGHT-02: el saque automático cuenta como golpe con P de intención = 0 para el consumo por golpe fuerte. No cambia su trayectoria, física ni solver, y el desplazamiento se sigue cobrando. Registra esta aclaración como spec v2.3 y fíjala en el método antes de producir datos.»
 
 Se fija la [spec v2.3](../superpowers/specs/2026-11-16-fatigue-design.md) y la aclaración en el [método B](../validation/2026-11-17-f1-fatigue-method.md) antes de datos. Se retoma F1 con la autonomía experimental ya confirmada, un solo Unity, sin fusionar ni instalar. La propuesta previa de adaptar las aserciones heredadas a proyecciones no se aplica: solo se cambian los literales autorizados.
+
+
+### F1 — PREFLIGHT-03 resuelto y extensión acotada a valores derivados (17 nov 2026)
+
+Decisión literal del PO:
+
+> «Autorizo los dos, en el mismo commit de literales: en S3FeedbackConfigTests.cs:26 agrega solo las 11 claves fatigue.* a la lista esperada, y en S2DefaultPromotionTests.cs:50 actualiza solo el hash completo de P0 al medido en Unity. El resto de ambos tests queda intacto. La prueba de proyección debe incluir P0: excluyendo fatigue.*, P0 efectivo da dcc7c8cc0688; anota el hash nuevo de P0 en AGENTS §5, sin tocar el archivo P0-calib-1. Para cualquier otro valor fijo derivado de DefaultPreset (hash, cantidad o lista de claves) aplica el mismo tratamiento sin detenerte, siempre que solo cambien entradas fatigue.*, la proyección lo demuestre y lo listes en el informe. Si un test exige cualquier otro cambio, detente y reporta.»
+
+Se retoma F1; se conserva la referencia completa de 200 partidos capturada sin cansancio. Cambios de literales/lista en commit propio y prueba de proyección de las cinco configuraciones. Sin fusión ni instalación.
