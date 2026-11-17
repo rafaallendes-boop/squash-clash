@@ -1,0 +1,11 @@
+# G1 A2 — secuencia de primera implementación
+
+Antes del RED, 17 nov 2026. Diseño y criterios invariables: `5b7f67f` + ajustes aprobados `2b686d8`.
+
+Base C8 fijada: `0703a42` de #74, árbol de producto aprobado por puertas, sin modificaciones A2. Cierre documental `91b5bbe`; sus AutoQA V/T3 PASS/0/1 y check-release dev/prod OK ya terminaron. Se incorporan exactamente los dos commits de producto/tests A1 mediante cherry-pick, sin fusionar ramas; Core y Runtime coinciden con esa base byte a byte. No repetir corridas A1. La rama de A2 conserva sus commits de diseño anteriores a toda implementación.
+
+Se prueba primero el núcleo geométrico aislado: 24 solicitudes de C1 (dos recetas × dos columnas × tres potencias × dos alturas), con T* real. RED contra delegación al solver actual, por aserción de testigo, con dos controles de identidad inactiva. Después, primera implementación del algoritmo fijado. Si C1 falla con el tope total Width/20, conservar XML/log y geometría observada y detenerse sin ajustar fórmulas, presupuesto ni tests, antes de integrar la vista o medir C8. El núcleo aislado no se considera entrega de producto ni C5/C7/C8 aprobado.
+
+Detalle de refinamiento que concreta las diferencias finitas del diseño, fijado antes de observar resultados: dos sondeos hacia +x/+y a distancia de un radio, proyectados al dominio; en un borde superior, sondear hacia el interior. Gradiente hacia descenso del coste geométrico, cada componente multiplicada por el límite de paso de su eje; normalizar por el máximo valor absoluto de ambos componentes. Propuesta de un paso de ese gradiente con límites Width/40 y (FrontOut−TinTop)/40; proyectar otra vez al dominio global. Si un sondeo no tiene segundo bote legal, no aporta derivada de coste. Se compara la propuesta y los sondeos con el mejor punto por el mismo orden lexicográfico, sin sustituir un original legal por una falta. Cinco iteraciones, orden x/y/propuesta, sin parada ni evaluaciones adicionales para obtener un Pass. Semillas en orden x original/−/+ y alturas original/mínima/media; la original ocupa la primera de las nueve evaluaciones.
+
+Las medidas de tiempo y caché de C8 se ejecutarán solo si pasa el núcleo. No se declara ninguna mejora visual ni de rendimiento antes de medirla. Sin fusión ni instalación.
