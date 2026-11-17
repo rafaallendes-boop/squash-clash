@@ -1,0 +1,57 @@
+{
+  "design": "5b7f67f",
+  "approvedAdjustments": "2b686d8",
+  "executionMethod": "009342a",
+  "candidate": "4fe66ad",
+  "baselineA1": "0703a42",
+  "stopped": true,
+  "reason": "A2-C1: four of twenty-four witnesses fail the unchanged lateral bounce predicates.",
+  "phases": {
+    "red": {
+      "total": 26,
+      "passed": 8,
+      "failed": 18,
+      "skipped": 0,
+      "witnesses": 24,
+      "witnessesPassed": 6,
+      "controlsPassed": 2,
+      "compilerErrors": false,
+      "preservedFiles": {
+        "Logs/evidence/g1-a2/red/console.log": "e54b9199123c4bd0222a27ac36cd9dde3f263d2241dff363741b08d2060e8744",
+        "Logs/evidence/g1-a2/red/editmode-console.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "Logs/evidence/g1-a2/red/editmode-results.xml": "ef8513af65e0dc6544bbf15536196875b276559e39baea7a6484b633c0f4c897",
+        "Logs/evidence/g1-a2/red/editmode.log": "00e4b71938f67c880a0a1d6c73be538f6a47d691ec4b76f32193630d0d7b662f",
+        "Logs/evidence/g1-a2/red/unity-processes.tsv": "886a17bcbce2328c75d2649b9b41cc512bd5e9d6bbae1ed5ed008bbd1889fc60"
+      },
+      "derivedSha256": "3d9fccf8c08c56d05ee11339fcb89e1a055460c36303189af4f3756e9dd3563d"
+    },
+    "green": {
+      "total": 26,
+      "passed": 22,
+      "failed": 4,
+      "skipped": 0,
+      "witnesses": 24,
+      "witnessesPassed": 20,
+      "controlsPassed": 2,
+      "compilerErrors": false,
+      "preservedFiles": {
+        "Logs/evidence/g1-a2/green/console.log": "2bd3f1237d607423ae871f6932b1d42addc5702a3bc25dc48582208488eaf20b",
+        "Logs/evidence/g1-a2/green/editmode-console.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "Logs/evidence/g1-a2/green/editmode-results.xml": "4128703cdf912f3e74d0ae9a2ab347a310a77edcbc9d127f9dc22e69bc23d6ad",
+        "Logs/evidence/g1-a2/green/editmode.log": "cb2942ef48704039b519d674060646b8483abdae623eab3a6887ba9dd49efb70",
+        "Logs/evidence/g1-a2/green/unity-processes.tsv": "ed7db9d1ec34b7abdc0095e7c4695c80f384eeab638ab541876f4f230dcb9d20"
+      },
+      "derivedSha256": "96a9d57d3c7a8c28a352d16b885a08264c3cbfdbfb3f03b8177add93120907d7"
+    }
+  },
+  "notRunAfterStop": [
+    "full geometry grid",
+    "second deterministic geometry process",
+    "A2 C2/C3/C4",
+    "A2 visual integration/C5",
+    "A2 full EditMode/PlayMode regression",
+    "A2 AutoQA V/T3",
+    "A2 release check",
+    "A2 C8 performance pairs"
+  ]
+}
