@@ -20,3 +20,5 @@ La spec §3 exige cobrar los golpes fuertes por P de intención, incluido el saq
 ## Siguiente paso
 
 Resolver ambos puntos con el PO, registrar la decisión y, si corresponde, fijar la precisión del método en un commit anterior a datos. Luego captura de referencia main, TDD, implementación F1 y puertas completas, con un solo Unity e inventario por lanzamiento. La autonomía confirmada cubre fallos de código experimental/paquetización dentro de sus límites; no cubre estas decisiones de tests, oráculos o producto. F2 espera F1 fusionada por aprobación independiente del PO.
+
+**Resolución del PO (17 nov, antes de datos):** ambos puntos resueltos según la spec v2.3 y el registro. Se autoriza solo actualizar literales de hash/cantidad en los tests listados, no la propuesta de reescribir aserciones. Saque automático P=0 para gasto fuerte. Se retoma F1.

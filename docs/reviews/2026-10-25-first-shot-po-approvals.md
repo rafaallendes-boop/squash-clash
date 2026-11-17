@@ -3123,3 +3123,14 @@ Decisión literal del PO sobre la autorización:
 El PO encarga comenzar F1 después del cierre de G1, leyendo íntegros el handoff y la spec de cansancio v2.2: método B en commit propio antes de ejecución, TDD, suites completas, AutoQA V/T3 y check-release; anclas solo según A2 v2.2 con prueba de proyección. Un solo Unity, sin fusión ni instalación. La autonomía cubre únicamente defectos del código experimental propio que aborten antes de datos y resumen/empaquetado posteriores con SHA-256 de datos intactos, conservando intentos/correcciones; no producto, método, grilla, umbrales o datos.
 
 Método predeclarado en `2708fb4`, rama F1 desde main `766dedd`. La inspección previa detecta tests existentes que fijan hashes completos/121 claves fuera de las cuatro anclas autorizadas y ausencia de P de intención en el saque automático. [Parada F1-PREFLIGHT-01/02](2026-11-17-f1-preflight-stop.md). No se modifica producto ni se ejecuta Unity. Tratamientos propuestos pendientes de decisión del PO; no hay aprobación de F1.
+
+
+### F1 — PREFLIGHT-01/02 resueltos y spec v2.3 (17 nov 2026)
+
+Decisión literal del PO:
+
+> «F1-PREFLIGHT-01: autorizo actualizar solo los valores fijos de hash y de cantidad de claves derivados de DefaultPreset en los tests que listaste, incluidos los literales de hash de AutoQAT3OracleTests, a los valores nuevos medidos en Unity (132 claves). Hazlo en un commit propio, sin cambiar ninguna otra aserción, oráculo ni test. Agrega un test de proyección que demuestre que, excluyendo solo fatigue.*, el preset da exactamente 430da2faa818 (T3), 06fed4bd4ac9 y 8e22575422f2 (V) y e89daab41c3e (SL5 T3). SimulationKey debe seguir en 166a96e319c7; si cambia, detente. F2 no agrega claves; si las necesitara, detente.»
+>
+> «F1-PREFLIGHT-02: el saque automático cuenta como golpe con P de intención = 0 para el consumo por golpe fuerte. No cambia su trayectoria, física ni solver, y el desplazamiento se sigue cobrando. Registra esta aclaración como spec v2.3 y fíjala en el método antes de producir datos.»
+
+Se fija la [spec v2.3](../superpowers/specs/2026-11-16-fatigue-design.md) y la aclaración en el [método B](../validation/2026-11-17-f1-fatigue-method.md) antes de datos. Se retoma F1 con la autonomía experimental ya confirmada, un solo Unity, sin fusionar ni instalar. La propuesta previa de adaptar las aserciones heredadas a proyecciones no se aplica: solo se cambian los literales autorizados.

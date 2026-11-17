@@ -1,6 +1,6 @@
 # F1 — método predeclarado del experimento B
 
-17 nov 2026. Fuente: spec de cansancio v2.2, §§3–5 y 7–8; encargo completo `Logs/handoff/2026-11-16/codex-F1-F2-cansancio.md`. Línea base: main `766dedd`, con A1 de G1; A2 de G1 no se incorpora. Este documento se confirma en un commit propio antes de ejecutar el experimento.
+17 nov 2026. Fuente: spec de cansancio v2.3, §§3–5 y 7–8; encargo completo `Logs/handoff/2026-11-16/codex-F1-F2-cansancio.md`. Línea base: main `766dedd`, con A1 de G1; A2 de G1 no se incorpora. Este documento se confirma en un commit propio antes de ejecutar el experimento.
 
 ## Muestra y ejecución
 
@@ -8,7 +8,7 @@ Experimento EditMode explícito, separado de las suites de regresión: 200 parti
 
 Variantes: (1) main antes de implementar, referencia sin cansancio; (2) F1 con `fatigue.enabled=0`, identidad bit a bit frente a (1); (3) F1 con todos los valores suaves de la spec. La referencia de main usa el preset intacto de 121 claves. Se conservan datos por partido, por punto y por recepción, con ganador, marcador previo, servidor, pasos, golpes y duración. La identidad compara los campos preexistentes del resultado, los registros de recepción y posiciones/velocidades finales de ambos cuerpos mediante una representación binaria canónica y SHA-256 por punto. No incluye los campos nuevos de cansancio. Se conserva el código de captura desde antes de implementar; la comparación se convierte en test de regresión con la referencia congelada.
 
-Con F1 se registran por jugador E inicial, E al cierre antes de recuperación entre puntos y E después, metros acumulados, consumo atribuible al desplazamiento sin truncarlo al llegar a cero, gasto por golpes fuertes y recuperación efectiva quieto/entre puntos; f_r por recepción. El saque automático cuenta como golpe fuerte solo si su intención supera strongFrom; se usa la P real de la intención del saque existente, sin cambiarla. Los golpes de B1/B2 son `PointRules.Shots` (contactos de raqueta, como en main); no se añade el saque al contador existente.
+Con F1 se registran por jugador E inicial, E al cierre antes de recuperación entre puntos y E después, metros acumulados, consumo atribuible al desplazamiento sin truncarlo al llegar a cero, gasto por golpes fuertes y recuperación efectiva quieto/entre puntos; f_r por recepción. Aclaración v2.3 del PO, fijada antes de datos: el saque automático tiene P de intención = 0 para consumo por golpe fuerte; no gasta por ese concepto. No cambia trayectoria, física ni solver; sí se cobra su desplazamiento. Los golpes de B1/B2 son `PointRules.Shots` (contactos de raqueta, como en main); no se añade el saque al contador existente.
 
 ## Cálculo y decisiones
 
@@ -29,3 +29,7 @@ Mediana convencional: valor central, o promedio de los dos centrales. No se excl
 Cada invocación conserva inventario de Unity (PID, comando, proyecto), XML fresco, logs, head/árbol, versión Unity, hashes de defaults/SimulationKey/RallyParams, CSV/TSV y SHA-256. Un solo Editor Unity; no se inicia si ya hay alguno. Sin fusión, instalación ni acceso al iPhone. Tras PlayMode se restaura ProjectSettings.
 
 El PO confirmó el 17 nov la autonomía experimental del encargo: se permite corregir únicamente código propio de Tests/Experiments o scripts si aborta antes de datos, conservando intentos, y resumen/empaquetado después de datos con SHA-256 idénticos. No cubre producto, método, grilla, umbrales ni datos producidos; cualquier otra sorpresa se registra y detiene. No se alteran escenarios ni oráculos de AutoQA. Solo sus cuatro anclas, en commit propio y después de probar la proyección exacta sobre las 121 claves anteriores.
+
+## Aclaración previa a datos — F1-PREFLIGHT-01/02
+
+El PO autoriza únicamente actualizar los valores fijos de hash y cantidad derivados de DefaultPreset de los tests enumerados en el informe previo, incluidos los literales de AutoQAT3OracleTests, a los nuevos hashes medidos en Unity y 132 claves. Van en commit propio, sin cambiar otras aserciones, oráculos ni tests. Se agrega la prueba de proyección que excluye solo fatigue.* y exige T3 430da2faa818, V 06fed4bd4ac9, SL5 V 8e22575422f2 y SL5 T3 e89daab41c3e. SimulationKey sigue en 166a96e319c7; cambio implica parada. F2 no agrega claves; si hicieran falta, parada. Esta decisión sustituye la propuesta de adaptar aserciones a proyecciones del informe previo.

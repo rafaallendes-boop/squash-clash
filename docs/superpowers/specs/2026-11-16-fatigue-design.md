@@ -1,4 +1,4 @@
-# Cansancio, primera versión: diseño (v2.2)
+# Cansancio, primera versión: diseño (v2.3)
 
 16 nov 2026. Diseño conversado entre el PO y Claude. Parte de la spec v0.3: §9.4, «El cansancio es drama, no castigo», y «las mismas reglas para la IA y para el humano».
 
@@ -6,6 +6,8 @@
 - **v2:** incorpora la revisión del PO: el enfoque general se aprueba, con ajustes antes de autorizar la implementación.
 - **v2.1:** tres correcciones del PO: la instantánea del brazo es del que golpea (§4), B2 mide el consumo por desplazamiento y B5b pasa a ser exploratorio (§7). Con ellas, el diseño funcional y los cambios protegidos quedan **autorizados** (§9).
 - **v2.2 (17 nov):** el PO aprueba reformular A2 (§7). Las claves `fatigue.*` cambian por fuerza las cuatro anclas de hash de AutoQA; se autoriza actualizar solo esas anclas, con una comprobación de proyección. AutoQA se corre con `--suite v` y `--suite t3`, y la barra no altera las métricas de botones y pausa de U3 (§6, §8).
+
+- **v2.3 (17 nov):** el PO autoriza actualizar solo literales de hash/cantidad derivados de DefaultPreset en los tests enumerados por F1-PREFLIGHT-01 (incluido AutoQAT3OracleTests), a los valores medidos en Unity y 132 claves, en commit propio. Ninguna otra aserción, oráculo o test cambia. Se exige prueba de proyección excluyendo solo `fatigue.*` a las cuatro anclas históricas y SimulationKey `166a96e319c7`; si cambia, se detiene. F2 no agrega claves. El saque automático tiene P de intención = 0 únicamente para consumo por golpe fuerte, sin cambiar trayectoria, física ni solver; su desplazamiento se cobra.
 
 **Estado:** diseño y cambios protegidos autorizados por el PO (§9). Sin implementar: va en la cola de Codex después de U1–U3 y G1.
 
@@ -53,7 +55,7 @@ Cada jugador tiene `E` entre 0 y 100. Empieza en 100 en cada partido. En el modo
 
 **Consumo, solo mientras el punto está en juego (del saque al cierre):**
 - **Correr:** `fatigue.costPerMeter` × la distancia recorrida por el cuerpo. Es la suma de |ΔPosición| en cada paso de simulación, incluida la vuelta a la T.
-- **Golpear fuerte:** en el paso de contacto, si la P de la intención supera `fatigue.strongFrom`, se gasta `fatigue.strongCost` × (P − strongFrom)/(1 − strongFrom). La P de la intención es la del gesto M2-4 del humano o la elegida por la IA, antes de la curva de ritmo por distancia. El saque cuenta.
+- **Golpear fuerte:** en el paso de contacto, si la P de la intención supera `fatigue.strongFrom`, se gasta `fatigue.strongCost` × (P − strongFrom)/(1 − strongFrom). La P de la intención es la del gesto M2-4 del humano o la elegida por la IA, antes de la curva de ritmo por distancia. El saque cuenta; el saque automático usa **P de intención = 0** para este consumo, sin modificar su trayectoria, física ni solver. Su desplazamiento se cobra normalmente.
 
 **Recuperación:**
 - **Entre puntos:** una sola vez, cuando el punto se cierra, `E += fatigue.recoverBetween × (100 − E)`.
