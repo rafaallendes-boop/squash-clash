@@ -86,7 +86,7 @@ namespace SquashClash.Experiments.EditMode
                             "plan", plan.Reason, "usable", usable, "sigmaMs", sigma, "waitX", body.Position.x, "waitZ", body.Position.y,
                             "stanceX", plan.Stance.x, "stanceZ", plan.Stance.y, "bodyContactX", plan.BodyAtContact.x, "bodyContactZ", plan.BodyAtContact.y,
                             "noiseX", noise.x, "noiseZ", noise.y, "delaySteps", delay, "slackS", plan.SlackS, "postBackContact", old["postBackContact"],
-                            "star", "", "contactSpeed", "", "kInMs", "", "kOutMs", "widthMs", "", "zeroResult", "", "zeroFail", "");
+                            "star", "", "contactSpeed", "", "kInMs", "", "kOutMs", "", "widthMs", "", "zeroResult", "", "zeroFail", "");
                         if (!usable) continue;
                         Assert.That(plan.Contact.TStarStep, Is.EqualTo(long.Parse(old["contactSteps"], C)), id + ": star replay");
                         Assert.That(plan.Contact.PStar.Equals(new Vector3(F(old, "contactX"), F(old, "contactY"), F(old, "contactZ"))), Is.True, id + ": contact position replay");
