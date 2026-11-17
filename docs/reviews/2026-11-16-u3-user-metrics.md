@@ -1,6 +1,6 @@
 # U3 — métricas mínimas para usuarios
 
-16 nov 2026 · Codex · `codex/u3-user-metrics`, base main `a1fa915`, código `5d90951`. **Lista para revisión independiente; sin fusionar.** Rama independiente de U1 (#65).
+16 nov 2026 · Codex · `codex/u3-user-metrics`, base main `a1fa915`, código `5d90951`. **Integración de main en validación; sin fusionar.** U1 #65 ya está en main.
 
 GUID aleatorio persistente en `persistentDataPath/metrics/install-id.txt`, como **installId en cada línea JSONL**. Se usa el sobre existente por registro, sin nueva cabecera. La identidad sobrevive al borrado/retención de logs porque no coincide con su patrón; retención intacta. Sin nombre de dispositivo, IDFA ni datos personales nuevos; misma implementación sin defines en dev/prod.
 
@@ -21,3 +21,5 @@ Duraciones reales incluyen pausas/segundo plano, desglosados por app-session. Si
 Se conserva el fallo previo **550/551**: LocalCancelLimitAndState, línea 186, ArmSlingBlock(B0) False frente a True. Tras el recuento completo autorizado, **por decisión del PO se trata como intermitente sin causa demostrada**, separado de CRP-01. No hubo corrección del test o producto ni otro reintento.
 
 [Evidencia y hashes](../validation/evidence/2026-11-16-u3-summary.json), [historia de la parada/decisión](../validation/2026-11-16-u3-playmode-stop.md). Logs/XML ignorados en `Logs/evidence/u3/`. ProjectSettings restaurado tras PlayMode; ningún Unity activo al entregar. Sin build nativa, iPhone, instalación ni fusión. Revisión independiente de Claude y fusión coordinadas por el PO; U2 sigue después.
+
+**Continuación tras fusionar #65:** main `02f3c57` integrado; ambos bloques de aprobaciones íntegros, hashes T3 ahora efectivos bajo U3. AGENTS §5/§6 actualizados y worktree U1 archivado sin --force, con todos sus ignorados preservados fuera de Git (recibo local en `Logs/evidence/u3/u1-retirement.json`). EditMode/PlayMode/check-release completos nuevos pendientes; los recuentos anteriores conservan su procedencia. E1 consultado antes de usar Unity; cada lanzamiento exige inventario de PID, comando y proyecto, y aborto previo si existe otro proceso Unity. #69 espera el fin de todo #66.

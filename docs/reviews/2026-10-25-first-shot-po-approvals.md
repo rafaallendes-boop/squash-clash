@@ -2779,6 +2779,135 @@ Respuestas del PO en el diálogo de preguntas de Claude:
 
 **Significado:** la autorización de Fable termina. Codex implementa (código y zonas protegidas); Claude revisa de forma independiente, y si dirige un subagente lo declara; subagentes Sonnet para documentos y protocolos y Haiku para el operador de AutoQA, a pedido del PO; el PO aprueba cada fusión y los hitos se cierran paso a paso.
 
+## Cierres pendientes del 16 nov (registro)
+
+- **#63** `codex/product-tweaks` (C1 de Codex) se fusionó con la aprobación del PO («Sí, fusiona»): merge `a1fa915`. Incluye ocultar en prod la línea técnica, recordar la dificultad y dejar la raqueta de «diestro» en la mano derecha.
+- **#32** `codex/sl56-return-rule` se cerró sin fusionar. La reemplazan #56 y la capa causal; la rama se conserva en `10f162f`. Activar la regla sigue sin autorización.
+- **Instalación de `0.1.0+a1fa915 dev`** (16 nov, 18:04Z), con la autorización literal del PO: «Si, utiliza mi PC y renueva el vencimiento del 18 de nov. Autorizo las sesiones y quiero hacer las pruebas. Dime como hacerlas, la idea es que salga lo mas rapido posible».
+  - El perfil, del equipo personal gratuito, se renovó hasta el 2026-11-23T18:03:12Z.
+  - Se hizo un respaldo nuevo antes de instalar. Después, los tres archivos de presets quedaron idénticos byte a byte.
+- **Tarea 4.5, sesión 1:** se hizo el mismo día y se cerró anticipadamente por decisión del PO, después de B1 (V) y B2 (T3 pure). El detalle y las respuestas literales están en la [hoja de sesión](../validation/2026-11-16-first-shot-4-5-session-sheet.md). P0 quedó restaurado (`0a3d3262a79d`, 0 pendientes) y los archivos, idénticos byte a byte.
+
+## Decisiones del PO tras la sesión 1 de 4.5: hacia usuarios reales (16 nov 2026, Chile)
+
+Decisiones literales del PO; cambian la prioridad y la dirección del trabajo.
+
+> «1. Timing: avanzamos con T3 pure como candidato para el playtest con usuarios. […] Por ahora, no quiero continuar comparando ventanas ni realizar más pruebas personales de timing. T3 pure será la configuración candidata para las primeras pruebas externas, sin considerarla todavía una regla definitiva.»
+
+> «2. Priorizamos una experiencia natural de juego. Quiero que los usuarios puedan entrar, aprender los controles y jugar partidos sin estar pendientes de métricas, ventanas de timing o configuraciones técnicas. Las métricas deben recopilarse en segundo plano para analizar posteriormente qué funciona y qué debemos mejorar.»
+
+> «3. Aceleremos el camino hacia usuarios reales. Mi prioridad ahora es conseguir una build suficientemente estable y jugable para que otras personas prueben Squash Clash. No busco un producto perfecto antes de probarlo.»
+
+> «4. First Shot y validaciones pendientes. La sesión 1 queda cerrada. No agendaremos por ahora la sesión 2. Esto no significa aceptar First Shot ni modificar retroactivamente sus criterios. Quiero que registremos formalmente qué queda pendiente y qué riesgos asumimos al avanzar hacia pruebas externas. SL5/SL6 y los problemas de dirección también quedan como observaciones abiertas, sin bloquear automáticamente el playtest salvo que afecten significativamente la experiencia.»
+
+> «5. Próximo encargo. Necesito que revises el estado actual del proyecto y propongas el camino mínimo para llegar a una primera prueba con usuarios […] No quiero abrir nuevas líneas de desarrollo ni agregar funcionalidades que no sean necesarias para este objetivo. […] Mantengamos la disciplina técnica, la trazabilidad y las aprobaciones, pero evitemos que el proceso de validación se convierta en un obstáculo para aprender del mercado.»
+
+**Significado:**
+- **T3 pure** pasa a ser la configuración candidata para las pruebas externas, pero no es una regla adoptada.
+- **Cambiar `DefaultPreset.json`** (`timing.validLimit` de 1 a 0) todavía necesita la autorización explícita del PO sobre la propuesta.
+- **La sesión 2 de 4.5 no se agenda.**
+- **First Shot, First Rally y First Match no se aceptan** y sus criterios no cambian.
+- **La propuesta de Claude** está en [2026-11-16-camino-a-usuarios.md](2026-11-16-camino-a-usuarios.md), con los pendientes y riesgos asumidos en su §8.
+
+## Cierre de First Shot y encargo U1–U3 (16 nov 2026, Chile)
+
+Literal del PO:
+
+> «Deja el encargo a codex. Pero yo lo avanzaría de la siguiente manera: Ya tenemos lo que es first rally y first match, fue lo que avanzamos con Fable. Daría por cerrado first shot. Haría U1, U2 y U3. […] Mejorar SL5 y SL6 que son los golpes de adelante. Seguir probando y jugando. […] cuando vea la app y considere que está lista para mostrarse, pago los 99 usd y avanzamos. […] creo que es mejor ya ir jugando y depurando a probar estatico y tan estructurado. Luego podemos ir viendo lo que es la volea»
+
+**Significado:**
+- **First Shot queda cerrado** por decisión del PO. Sus criterios no se modifican de forma retroactiva.
+  - Lo no cumplido o no medido queda como observación abierta: tarea 4.5 incompleta, H2, H3c, sesión 2, condiciones de S3 y dirección en SL5/SL6. Detalle en la §8 de la [propuesta](2026-11-16-camino-a-usuarios.md).
+- **Encargo a Codex:** U1, U2 y U3. Para U1 se autoriza cambiar `DefaultPreset.json`: `timing.validLimit` pasa de 1 a 0 y los hashes vigentes cambian. T3 pure sigue siendo candidato, no una regla definitiva.
+- **Backlog para el MVP** (§0 de la propuesta): cada ítem con su encargo y la aprobación del PO. SL5/SL6 toca física y M2-4, así que requiere autorización explícita en su encargo.
+- **Sin cambios:** First Rally y First Match siguen sin aceptación física, porque el PO no los cerró. El Developer Program y TestFlight se activan cuando el PO lo decida.
+
+## Autorización de SL5/SL6, problema del vidrio del fondo y golpe de fondo (16 nov 2026, Chile)
+
+Literal del PO:
+
+> «SL5 y SL6 : tienes mi autorización explicita para que lo mejoremos»
+
+> «Barra de cansancio: Vamos conversando de la mecanica nueva»
+
+> «Lo de los puntos que van al fondo, si preisono al 100% y la pelota toca el vidrio de al fondo, es casi punto seguro hoy. Quería ver como arreglarlo.»
+
+> «Además de la volea, agregar lo que es golpe de fondo (bote vidrio, golpe tipico al fondo en squash)»
+
+**Significado:**
+- **Encargo G1 a Codex,** que va después de U1, U3 y U2. Primero hay un diagnóstico predeclarado (fase A) del punto seguro al vidrio del fondo y de SL5/SL6. Después vienen 2 o 3 opciones por problema y el PO elige.
+- **Zonas protegidas:** física, solver y M2-4 se autorizan solo dentro de G1 y después de esa elección.
+- **Barra de cansancio:** queda en conversación de diseño, sin implementar.
+- **Volea y golpe de fondo:** se agregan al backlog del MVP, cada uno con su propio encargo.
+
+## U1 detenido por AutoQA: el PO elige adaptar AutoQA a T3 (16 nov 2026, Chile)
+
+**El bloqueo:** Codex detuvo U1 ([PR #65](https://github.com/rafaallendes-boop/squash-clash/pull/65), solo el informe). El escenario `M24-FAILED-LATE-SL1` (+170 ms) carga los defaults y espera `Failed/Late`. Su oráculo solo modela el límite V (`|Δ| ≤ validMs`), así que con T3 pure calcula `Valid`.
+
+**Decisión literal del PO:**
+
+> «Yo quizás tomaría la segunda opción, la de adaptar AutoQA a T3. Quizás va a ser más largo, pero también eso nos va a aportar más, creo yo.»
+
+**Significado:**
+- **Escenarios V:** quedan fijados en V de forma explícita, sin cambiar sus expectativas.
+- **Cobertura nueva de T3 pure:** el oráculo aprende la regla T3 y se agregan escenarios con la configuración por defecto. Los escenarios y sus resultados esperados se predeclaran antes de ejecutar.
+- **Después** se retoma U1 con las compuertas completas.
+- **Autorización:** esta decisión permite agregar criterios a AutoQA solo para T3. No autoriza cambiar los existentes de V.
+
+## Cansancio v1: diseño aprobado y cambios protegidos autorizados (16 nov 2026, Chile)
+
+**Cómo se llegó:**
+- **v1 (`e1bcef7`):** el PO la revisó y pidió ajustes en intensidad, recuperación, precisión, predicción y criterios.
+- **v2 (`22145e4`):** incorporó esos ajustes. El PO la aprobó conceptualmente, con tres correcciones: la instantánea del brazo es del que golpea, B2 mide el consumo por desplazamiento y la comparación de finales ajustados pasa a ser exploratoria.
+- **v2.1:** incorpora las tres correcciones.
+
+Spec: [`docs/superpowers/specs/2026-11-16-fatigue-design.md`](../superpowers/specs/2026-11-16-fatigue-design.md).
+
+**Autorización literal del PO:**
+
+> «Con esas correcciones, autorizo el diseño funcional y los cambios protegidos necesarios, específicamente: Incorporación de las claves de cansancio en `DefaultPreset.json`. Modificaciones controladas al movimiento del cuerpo y su planificación. Incorporación del vector causal de cansancio en la capa del golpe, sin alterar los contratos protegidos existentes. Mantengamos F1 y F2 como PR independientes, con TDD, regresiones completas, AutoQA y reversibilidad.»
+
+> «Respecto de la prioridad: mantenemos esta funcionalidad después de U1–U3 y G1. No debe bloquear First Rally, First Match ni las primeras pruebas con usuarios.»
+
+**Significado:**
+- **Encargo F1/F2 a Codex**, en la cola después de U1–U3 y G1.
+- **Autorización limitada:** los cambios protegidos se autorizan solo en el alcance de la spec v2.1. No se autoriza alterar los contratos protegidos existentes ni el modo práctica, los escenarios protegidos o AutoQA.
+- **Reversibilidad:** con `fatigue.enabled = 0`, el comportamiento es idéntico al anterior.
+
+## U1 — cobertura AutoQA T3 autorizada (16 nov 2026)
+
+El PO autoriza incorporar K al oráculo T3, conservando los escenarios y expectativas V con V explícito y los hashes efectivos originales. La ampliación y U1 se realizan en #65, con predeclaración en commit propio antes de AutoQA.
+
+Aclaración literal del PO tras medir K de SL1:
+
+> «Autorizo conservar SL1 +170 ms → Failed/Late y agregar SL5 +170 ms → Valid como escenario T3. El oráculo debe incorporar K. Predeclara los escenarios en commit propio antes de AutoQA. Puedes agregar SL1 −100 ms → Valid (T3) si lo ves útil. Los escenarios V no cambian.»
+
+Esta autorización corrige únicamente la expectativa nueva SL1 +170 ms de la continuación; no cambia contrato, física, recetas ni criterios V. U1 sigue autorizado: `timing.validLimit` de 1 a 0 y hashes. Revisión independiente y aprobación de cada fusión mediante el PO; sin instalación.
+
+## U1 — una repetición de RED y corrección de predeclaración (16 nov 2026)
+
+Autorización del PO para continuar, literal:
+
+> «Autorizo una sola repetición del RED de defaults. Antes de lanzarla, verifica que no quede ningún proceso Unity (no basta con que se haya escrito el XML). Corrige la predeclaración T3: reemplaza SL1 −100 ms por SL1 −200 ms → Valid (T3), porque −100 da Valid también con V y no distingue los modos. Hazlo en un commit propio, antes de cualquier AutoQA, y regístralo. Los escenarios V no cambian. Si la repetición vuelve a fallar por el entorno, detente.»
+
+El caso nuevo queda como `T3-VALID-EARLY200-SL1`, −200 ms, Valid/None, contacto no programado. La corrida anterior de defaults conserva NotEvaluated. Sin cambio de contrato, física, escenarios V o autorización de fusión/instalación.
+
+## U1 — recurrencia CRP-01 y nueva PlayMode autorizada (16 nov 2026)
+
+Decisión literal del PO:
+
+> «La falla de `ReticleVisibilityTests.DevOpen_ProtocolActionsRemainUsable_AndCloseDevBeforeArming` es la recurrencia de CRP-01 (mismas cifras que el 12 nov, 788,198853 frente a 674,663208, con el test sin cambios): la trato como intermitente y ajena a U1, sin causa demostrada y sin corregirla en #65. Regístralo así. Autorizo una nueva PlayMode completa. Si da el recuento completo, sigue con AutoQA `--suite v` y `--suite t3` (PASS/0/nivel 1 cada uno) y check-release. Si CRP-01 u otra falla vuelve a aparecer, detente y repórtalo. U3 y U2 siguen después, en el orden del encargo.»
+
+La clasificación como intermitente ajena a U1 es decisión del PO; no demuestra causa ni corrige el retículo. Se conserva la corrida 557/558 y su evidencia. Se autoriza una nueva PlayMode completa, sin modificar el test. Solo con el recuento completo aprobado se continúa AutoQA V, T3 y check-release secuencialmente. Cualquier recurrencia u otra falla vuelve a detener el trabajo.
+
+## U1 — integración de main tras #64 (16 nov 2026)
+
+Encargo literal del PO:
+
+> «#65: integra `main` (tras #64) y resuelve el conflicto del registro de aprobaciones conservando ambas entradas. Corre EditMode completo para confirmar compilación y recuento. Reporta el head final; la fusión la apruebo yo.»
+
+Se integra `origin/main` en `10bcaec` sobre la rama de #65, sin fusionar la PR. En el conflicto aditivo del registro se conservan íntegros ambos bloques: cierres/decisiones/diseño de #64 y autorizaciones/continuaciones U1 de #65. No se eliminan ni reinterpretan citas. EditMode completo tras la integración: **738/738**, cero omitidos, XML fresco y sin errores CS, sobre `b3c2fad`.
+
 ## U3 — única PlayMode nueva autorizada (16 nov 2026)
 
 Encargo literal del PO:
@@ -2788,3 +2917,11 @@ Encargo literal del PO:
 Se conserva la corrida 550/551 y no se corrige el test. La clasificación como intermitente solo se registra si la corrida nueva aprueba el recuento completo; no implica causa demostrada ni equivalencia con CRP-01. Solo entonces se continúa check-release. Ante cualquier falla nueva se detiene, sin otro reintento.
 
 **Resultado de la única corrida autorizada de #66:** PlayMode **551/551**, 0 Failed/0 skipped, XML fresco y sin errores CS, sobre `2dca32f`. Se cumple la condición del PO: la falla previa de LocalCancelLimitAndState se registra como **intermitente sin causa demostrada, separada de CRP-01**; no se corrige el test ni se cambia el resultado anterior 550/551. Se continúa check-release.
+
+## U1 fusionada y continuación U3/U2 coordinada (16 nov 2026)
+
+El PO informa la fusión aprobada de #65, literal: «Fusiona #65 y dejame el mensaje para codex». Merge `02f3c57151a0`, segundo padre `79e9bb9b90fd` y árbol idéntico al head aprobado, comprobados en Git. U1 queda en main; fusionar no acepta otra etapa.
+
+Encargo del PO: actualizar AGENTS §5/§6 con los hashes T3 y main `02f3c57`, retirar el worktree U1 sin --force preservando los ignorados, integrar main en #66 conservando los documentos y ejecutar EditMode, PlayMode y check-release completos por los defaults T3 bajo U3. La fusión de #66 queda reservada al PO.
+
+Para #69 se autoriza **una sola repetición del RED U2**, después de terminar #66 y todo proceso Unity. Antes se guardan PID, comando y proyecto de todos los procesos Unity; si hay alguno, no se lanza el test. Cualquier nuevo incidente detiene el trabajo. Se espera primero a que E1 deje de usar Unity; ninguna corrida de #66/#69 en paralelo. Esta autorización no modifica escenarios, criterios, contratos ni permite instalación.

@@ -2,11 +2,12 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
-if [[ "${1:-}" != mvp ]]; then printf 'Uso: scripts/autoqa.sh mvp [--scenario ID] [--repetition 1|2|3]\n' >&2; exit 4; fi
+if [[ "${1:-}" != mvp ]]; then printf 'Uso: scripts/autoqa.sh mvp [--suite v|t3] [--scenario ID] [--repetition 1|2|3]\n' >&2; exit 4; fi
 shift
-export AUTOQA_SCENARIO='' AUTOQA_REPETITION=''
+export AUTOQA_SCENARIO='' AUTOQA_REPETITION='' AUTOQA_SUITE=v
 while [[ $# -gt 0 ]]; do
     case "$1" in
+        --suite) [[ $# -ge 2 && "$2" =~ ^(v|t3)$ ]] || exit 4; export AUTOQA_SUITE="$2"; shift 2;;
         --scenario) [[ $# -ge 2 ]] || exit 4; export AUTOQA_SCENARIO="$2"; shift 2;;
         --repetition) [[ $# -ge 2 && "$2" =~ ^[123]$ ]] || exit 4; export AUTOQA_REPETITION="$2"; shift 2;;
         *) printf 'Argumento desconocido: %s\n' "$1" >&2; exit 4;;
@@ -15,8 +16,8 @@ done
 export AUTOQA_GIT_HASH="$(git rev-parse HEAD)"
 export AUTOQA_DIRTY=false
 if [[ -n "$(git status --porcelain)" ]]; then export AUTOQA_DIRTY=true; fi
-export AUTOQA_COMMAND="scripts/autoqa.sh mvp${AUTOQA_SCENARIO:+ --scenario $AUTOQA_SCENARIO}${AUTOQA_REPETITION:+ --repetition $AUTOQA_REPETITION}"
-export AUTOQA_RUN_DIR="$ROOT/Logs/autoqa/$(date -u +%Y%m%dT%H%M%SZ)-$(git rev-parse --short HEAD)-$RANDOM"
+export AUTOQA_COMMAND="scripts/autoqa.sh mvp --suite $AUTOQA_SUITE${AUTOQA_SCENARIO:+ --scenario $AUTOQA_SCENARIO}${AUTOQA_REPETITION:+ --repetition $AUTOQA_REPETITION}"
+export AUTOQA_RUN_DIR="$ROOT/Logs/autoqa/$(date -u +%Y%m%dT%H%M%SZ)-$(git rev-parse --short HEAD)-$AUTOQA_SUITE-$RANDOM"
 mkdir -p "$AUTOQA_RUN_DIR"
 export AUTOQA_POC_DIR="$AUTOQA_RUN_DIR/poc" AUTOQA_DRIVER_DIR="$AUTOQA_RUN_DIR/driver"
 UNITY=''

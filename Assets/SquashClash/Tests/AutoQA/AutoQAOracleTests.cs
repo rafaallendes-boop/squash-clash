@@ -5,7 +5,7 @@ namespace SquashClash.AutoQA
 {
     public sealed class AutoQAOracleTests
     {
-        private ParamSet Defaults=>PresetCodec.LoadDefault(Resources.Load<TextAsset>("DefaultPreset").text);
+        private ParamSet Defaults=>PresetCodec.LoadDefault(Resources.Load<TextAsset>("DefaultPreset").text).With("timing.validLimit",1);
         [TestCase(-10,"Perfect",true,true)][TestCase(10,"Perfect",true,false)][TestCase(-70,"Valid",true,false)][TestCase(170,"Failed",false,false)]
         public void TimingTable_ComesFromConfig(double delta,string result,bool applied,bool scheduled)
         {var e=Oracle.Expect(new Scenario{kind="swing",releaseOffsetMs=delta},Defaults);Assert.That(e.result,Is.EqualTo(result));Assert.That(e.applied,Is.EqualTo(applied));Assert.That(e.scheduled,Is.EqualTo(scheduled));if(delta==170)Assert.That(e.fail,Is.EqualTo("Late"));}
