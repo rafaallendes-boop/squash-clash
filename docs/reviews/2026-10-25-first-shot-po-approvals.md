@@ -2908,6 +2908,26 @@ Encargo literal del PO:
 
 Se integra `origin/main` en `10bcaec` sobre la rama de #65, sin fusionar la PR. En el conflicto aditivo del registro se conservan íntegros ambos bloques: cierres/decisiones/diseño de #64 y autorizaciones/continuaciones U1 de #65. No se eliminan ni reinterpretan citas. EditMode completo tras la integración: **738/738**, cero omitidos, XML fresco y sin errores CS, sobre `b3c2fad`.
 
+## U3 — única PlayMode nueva autorizada (16 nov 2026)
+
+Encargo literal del PO:
+
+> «#66: autorizo una sola PlayMode completa nueva. No es CRP-01; si da el recuento completo, registra la falla de `LocalCancelLimitAndState` como intermitente sin causa demostrada y sigue con check-release. Si vuelve a fallar, detente y repórtalo. U2 sigue después.»
+
+Se conserva la corrida 550/551 y no se corrige el test. La clasificación como intermitente solo se registra si la corrida nueva aprueba el recuento completo; no implica causa demostrada ni equivalencia con CRP-01. Solo entonces se continúa check-release. Ante cualquier falla nueva se detiene, sin otro reintento.
+
+**Resultado de la única corrida autorizada de #66:** PlayMode **551/551**, 0 Failed/0 skipped, XML fresco y sin errores CS, sobre `2dca32f`. Se cumple la condición del PO: la falla previa de LocalCancelLimitAndState se registra como **intermitente sin causa demostrada, separada de CRP-01**; no se corrige el test ni se cambia el resultado anterior 550/551. Se continúa check-release.
+
+## U1 fusionada y continuación U3/U2 coordinada (16 nov 2026)
+
+El PO informa la fusión aprobada de #65, literal: «Fusiona #65 y dejame el mensaje para codex». Merge `02f3c57151a0`, segundo padre `79e9bb9b90fd` y árbol idéntico al head aprobado, comprobados en Git. U1 queda en main; fusionar no acepta otra etapa.
+
+Encargo del PO: actualizar AGENTS §5/§6 con los hashes T3 y main `02f3c57`, retirar el worktree U1 sin --force preservando los ignorados, integrar main en #66 conservando los documentos y ejecutar EditMode, PlayMode y check-release completos por los defaults T3 bajo U3. La fusión de #66 queda reservada al PO.
+
+Para #69 se autoriza **una sola repetición del RED U2**, después de terminar #66 y todo proceso Unity. Antes se guardan PID, comando y proyecto de todos los procesos Unity; si hay alguno, no se lanza el test. Cualquier nuevo incidente detiene el trabajo. Se espera primero a que E1 deje de usar Unity; ninguna corrida de #66/#69 en paralelo. Esta autorización no modifica escenarios, criterios, contratos ni permite instalación.
+
+**Resultado de #66 tras U1:** main `02f3c57` integrado en `aa6fb08`, con ambos bloques de aprobaciones conservados. EditMode **748/748**, PlayMode **561/561**, check-release **OK dev/prod**, exportaciones frescas y `gitDirty=false`. ProjectSettings restaurado; Unity sin procesos al terminar. Worktree U1 archivado sin --force y siete entradas ignoradas preservadas fuera de Git. #66 queda para revisión y decisión de fusión del PO; #69 consume después su única repetición RED autorizada.
+
 ## E1: derecho y revés estéticos (16 nov 2026, Chile)
 
 **Autorización literal del PO:**
@@ -2940,3 +2960,11 @@ Se identificó además la expectativa de raqueta por encima de 1,15 m durante Id
 > «Sí, actualizar esa expectativa de Idle»
 
 Estas dos expectativas de comportamiento se actualizan por la decisión funcional del PO. No se modifican los umbrales de 5 mm ni el de salida, ni criterios de juego, física o timing.
+
+## Integración E1 → U3 → U2 para una prueba física (17 nov 2026)
+
+El PO confirma #68 en main `47ec6d1`, literal: «Si, fusionamos E1, quiero después pasar todo y hacer solo 1 prueba». Encarga integrar ese main en #66 conservando ambas entradas del registro, actualizar AGENTS §6 y ejecutar EditMode, PlayMode y check-release completos, con un solo Unity e inventario PID/comando/proyecto guardado. Si aparece cualquier falla o incidente, se registra y se detiene. La fusión de #66 sigue reservada al PO.
+
+Solo después de que #66 esté fusionada se integra main en #69 y se repiten las mismas compuertas. Se registrarán sin corregir código dos observaciones: BUNDLE_ID es obligatorio en release-ios.sh pero no tiene uso funcional posterior ni aparece en release.env.example; compartir Documents en Archivos expone métricas y presets por decisión del PO para las pruebas. No se autoriza build nativa, instalación, acceso al iPhone, archive, firma ni subida.
+
+**Resultado de #66 tras E1:** main `47ec6d1` integrado en `3597a82`; conflicto aditivo resuelto conservando completos ambos bloques (E1 y U3), AGENTS §6 actualizado con #68 fusionada. EditMode **748/748**, PlayMode **581/581**, check-release **OK DEV/PROD**, exportaciones frescas y `gitDirty=false`. Inventarios PID/comando/proyecto guardados antes de cada lanzamiento y al terminar, todos vacíos; ProjectSettings restaurado y árbol limpio. Sin falla ni incidente. Se publica el head para revisión del PO, sin fusionar. #69 tiene las observaciones documentadas sin código y espera la fusión de #66 antes de integrar main/correr sus nuevas compuertas.
