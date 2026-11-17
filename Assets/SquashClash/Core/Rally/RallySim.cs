@@ -201,16 +201,18 @@ namespace SquashClash.Core.Rally
         private void Strike(RallyOutcome outcome)
         {
             hasPending=false;var who=pendingWho;var state=ball.State;
-            var causal=Rules.CanHit(who)?RallyContact.Solve(context,pendingCausal,context.FrameAt(Body(who).Position),state.Position,pendingShot.Aim,pendingShot.P):default;
+            // The arm is the striker's own energy at this contact step, read before this stroke's cost is charged below.
+            var arm=context.Fatigue.Arm(Energy(who).Energy);
+            var causal=Rules.CanHit(who)?RallyContact.Solve(context,pendingCausal,context.FrameAt(Body(who).Position),state.Position,pendingShot.Aim,pendingShot.P,arm):default;
             var solution=causal.Solution;
             if(!solution.Solved)
             {
                 outcome.SystemFaults++;var l=pendingLog;
-                outcome.Receptions.Add(new ReceptionLog(who,ReceptionResult.SystemFault,false,l.Reachable,l.Defensive,l.DeltaMs,l.SlackS,pendingShot.Option,l.ContactStep,solution.Reason??"contact-not-legal",causal,l.FatigueReception));
+                outcome.Receptions.Add(new ReceptionLog(who,ReceptionResult.SystemFault,false,l.Reachable,l.Defensive,l.DeltaMs,l.SlackS,pendingShot.Option,l.ContactStep,solution.Reason??"contact-not-legal",causal,l.FatigueReception,arm.Factor));
                 return;
             }
             var previous=pendingLog;
-            outcome.Receptions.Add(new ReceptionLog(who,previous.Result,previous.Perfect,previous.Reachable,previous.Defensive,previous.DeltaMs,previous.SlackS,pendingShot.Option,previous.ContactStep,previous.Reason,causal,previous.FatigueReception));
+            outcome.Receptions.Add(new ReceptionLog(who,previous.Result,previous.Perfect,previous.Reachable,previous.Defensive,previous.DeltaMs,previous.SlackS,pendingShot.Option,previous.ContactStep,previous.Reason,causal,previous.FatigueReception,arm.Factor));
             // The racket only replaces the velocity of the authoritative state at the contact step.
             ball.Reset(new BallState{Position=state.Position,Velocity=solution.Velocity,Step=state.Step});
             Rules.RacketContact(who);Energy(who).Strike(pendingShot.P);

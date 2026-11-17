@@ -98,8 +98,21 @@ namespace SquashClash.Core.Shot
                 config.Physics.Gravity,config.Physics.BallRadius,config.Court,factory,config.Physics);
             return new CausalShotResult(vectors,input,solution,pace);
         }
-        // The striker's arm (spec 4): scaffold only.
-        public static CausalVector[] ApplyFatigue(CausalVector[] vectors,in FatigueArm arm)=>vectors;
+        // The striker's arm (spec 4): position vectors (stretch, jam) grow by (1+gain); timing and the aim are untouched; one power
+        // vector «fatigue» is added. Nothing to apply returns the very same array, so the off path stays bit for bit identical.
+        public static CausalVector[] ApplyFatigue(CausalVector[] vectors,in FatigueArm arm)
+        {
+            if(vectors==null||!arm.Active)return vectors;
+            float gain=1+arm.PositionGain;var list=new List<CausalVector>(vectors.Length+1);
+            foreach(var vector in vectors)
+            {
+                var v=vector;
+                if(v.Cause=="stretch"||v.Cause=="jam"){v.DeltaHeight*=gain;v.DeltaSpeedFraction*=gain;}
+                list.Add(v);
+            }
+            if(arm.SpeedLoss>0)list.Add(new CausalVector(0f,-arm.SpeedLoss,"fatigue"));
+            return list.ToArray();
+        }
         public static CausalReference Prepare(Trajectory trajectory,ContactPlan plan,ClockMap clock,TimingSettings timing,double presented,double tempo,Func<long,BodyFrame> bodyAt=null)
         {
             if(trajectory==null||clock==null)throw new ArgumentNullException(nameof(trajectory));

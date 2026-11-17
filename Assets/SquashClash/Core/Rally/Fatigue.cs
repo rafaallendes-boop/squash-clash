@@ -20,10 +20,16 @@ namespace SquashClash.Core.Rally
         };
         public double Factor(double energy)=>Enabled?Math.Max(0,Math.Min(1,(Onset-energy)/Onset)):0;
         public const double RedBelow=25;
-        // The striker's arm for one contact (spec 4): scaffold only.
-        public FatigueArm Arm(double strikerEnergy)=>FatigueArm.None;
-        // Energy bar tone (spec 6): 0 neutral, 1 amber, 2 red. Scaffold only.
-        public int Tone(double energy)=>0;
+        // The striker's arm for one contact (spec 4): f_s from the striker's own energy at its contact step, before that stroke's cost.
+        // One function for the human, the rival and RallySim. Off: no arm at all, so the shot stays bit for bit the old one.
+        public FatigueArm Arm(double strikerEnergy)
+        {
+            if(!Enabled)return FatigueArm.None;
+            double f=Factor(strikerEnergy);
+            return new FatigueArm((float)(ArmSpeedMax*f),(float)(PositionGainMax*f),f);
+        }
+        // Energy bar tone (spec 6): 0 neutral (at or above onset), 1 amber, 2 red (strictly below 25).
+        public int Tone(double energy)=>!Enabled||energy>=Onset?0:energy<RedBelow?2:1;
     }
     public readonly struct FatigueEffects
     {
