@@ -28,7 +28,9 @@ namespace SquashClash.Core.Rally
             return ContactContract.Decide(release,plans,clock,trajectory,timing,false);
         }
         public static CausalShotResult Solve(RallyContext context,CausalReference reference,BodyFrame body,Vector3 point,Vector2 aim,float power)
-            =>CausalQuality.Solve(reference,body,point,aim,power,context.Config,context.Factory);
+            =>Solve(context,reference,body,point,aim,power,FatigueArm.None);
+        public static CausalShotResult Solve(RallyContext context,CausalReference reference,BodyFrame body,Vector3 point,Vector2 aim,float power,in FatigueArm arm)
+            =>CausalQuality.Solve(reference,body,point,aim,power,context.Config,context.Factory,arm);
         // Own intention from a contact point: the same pace curve as the human shot (without the causal layer), then the shared solver.
         // Equal speed endpoints carry the curve speed unchanged, as CausalQuality.Solve does.
         public static ShotSolution SolveIntention(RallyContext context,Vector3 contactCenter,Vector2 aim,float power)

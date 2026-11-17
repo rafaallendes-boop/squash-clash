@@ -3161,3 +3161,8 @@ Incidentes propios de empaquetado F1-PACK-01/02: normalizador quitaba el texto d
 **(ii) Cambio de modo del PO, 17 nov, literal:** «Actua como un orquestador y revisor. Despliega distintos sub agentes de modelo sonnet para realizar la implementación y terminemos F1/F2. En caso de que haya que planificar algo, utiliza otro sub agente para que no sea sesgada la opinión.»
 
 Por eso F1-AUTOQA-01 y F2 los implementan subagentes Sonnet dirigidos por Claude. **La revisión de Claude sobre ese trabajo NO es independiente**, y se declara. Resultado de F1-AUTOQA-01 en el [informe de F1](2026-11-17-f1-fatigue-energy.md).
+
+
+### F2 — brazo y barra implementados por subagentes dirigidos por Claude (17 nov 2026)
+
+Bajo el cambio de modo ya registrado en la entrada de F1 («Actua como un orquestador y revisor. Despliega distintos sub agentes de modelo sonnet para realizar la implementación y terminemos F1/F2…», 17 nov), F2 lo implementó un subagente Sonnet dirigido por Claude, con un plan de otro subagente para no sesgar la opinión y las decisiones de revisión de Claude sobre ese plan. **La revisión de Claude sobre este trabajo NO es independiente.** Se mantienen la autonomía experimental del PO para F1/F2 y la regla de parada del método de F2: sin ajuste. Resultado: todas las compuertas B pasan, A1 `f2off` bit a bit, EditMode 803/803, PlayMode 593/593, AutoQA V y T3 PASS/0/1 y check-release OK; sin cambios de hash ni de `DefaultPreset.json`. Incidente F2-EXP-01 (hash esperado de `f2off` mal transcrito, detenido antes de datos) en el [informe de F2](2026-11-17-f2-fatigue-arm-hud.md). Sin fusión ni instalación; revisión independiente y aprobación del PO pendientes.

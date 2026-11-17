@@ -13,7 +13,7 @@ using SquashClash.Core.Simulation;
 using UnityEngine;
 namespace SquashClash.Experiments.EditMode
 {
-    // Method committed before data: docs/validation/2026-11-17-f1-fatigue-method.md.
+    // Method committed before data: docs/validation/2026-11-17-f1-fatigue-method.md (F1) and docs/validation/2026-11-17-f2-fatigue-method.md (F2: SC_EXPERIMENT=f2, variants f2off and f2all).
     public sealed class FatigueMatchExperiment
     {
         private static readonly CultureInfo C=CultureInfo.InvariantCulture;
@@ -21,15 +21,19 @@ namespace SquashClash.Experiments.EditMode
         public void WriteMatches()
         {
             string mode=Environment.GetEnvironmentVariable("SC_F1_VARIANT");
-            Assert.That(new[]{"baseline","off","soft","adjusted"},Does.Contain(mode));
+            bool f2=Environment.GetEnvironmentVariable("SC_EXPERIMENT")=="f2";
+            Assert.That(f2?new[]{"f2off","f2all"}:new[]{"baseline","off","soft","adjusted"},Does.Contain(mode));
             string root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));
-            string dir=Path.Combine(root,"Logs/experiments/f1-fatigue",mode);
+            string dir=Path.Combine(root,f2?"Logs/experiments/f2-fatigue":"Logs/experiments/f1-fatigue",mode);
             Assert.That(Directory.Exists(dir),Is.False,"Never overwrite evidence");
             var preset=PresetCodec.LoadDefault(File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Runtime/Resources/DefaultPreset.json")));
             if(mode=="baseline")Assert.That(preset.Hash,Is.EqualTo("430da2faa818"));
-            else preset=preset.With("fatigue.enabled",mode=="off"?0:1);
+            else preset=preset.With("fatigue.enabled",mode=="off"||mode=="f2off"?0:1);
+            if(mode=="f2off")Assert.That(preset.Hash,Is.EqualTo("3262f9b89156"));
+            if(mode=="f2all")Assert.That(preset.Hash,Is.EqualTo("2ec0c953786a"));
+            if(f2)Assert.That(preset.Ordered.Count,Is.EqualTo(132));
             var ctx=new RallyContext(EffectiveConfig.From(preset),new RallyParams(),new AnalyticBallSimulationFactory(Physics.bounceThreshold));
-            Assert.That(ctx.Config.SimulationKey,Is.EqualTo("166a96e319c7"));
+            Assert.That(ctx.Config.SimulationKey,Is.EqualTo("166a96e319c7"));if(f2)Assert.That(ctx.Params.Hash,Is.EqualTo("927e304bbfec"));
             Directory.CreateDirectory(dir);
             File.WriteAllText(Path.Combine(dir,"source.tsv"),"variant\tdefaults\trallyParams\tsimulationKey\tunity\tkeys\n"+mode+"\t"+preset.Hash+"\t"+ctx.Params.Hash+"\t"+ctx.Config.SimulationKey+"\t"+Application.unityVersion+"\t"+preset.Ordered.Count+"\n");
             using(var points=new StreamWriter(Path.Combine(dir,"points.tsv")))
@@ -37,7 +41,7 @@ namespace SquashClash.Experiments.EditMode
             using(var matches=new StreamWriter(Path.Combine(dir,"matches.tsv")))
             {
                 points.WriteLine("match\tpoint\thumanBefore\trivalBefore\tserver\twinner\tshots\tsteps\trealSeconds\tsignature\tfatigueHuman\tfatigueRival");
-                receptions.WriteLine("match\tpoint\treception\twho\tresult\tstep\tdeltaMs\tf_r");
+                receptions.WriteLine("match\tpoint\treception\twho\tresult\tstep\tdeltaMs\tf_r"+(f2?"\tf_s\tspeed":""));
                 matches.WriteLine("match\thuman\trival\twinner\tpoints\treplays");
                 for(int i=0;i<200;i++)
                 {
@@ -52,7 +56,7 @@ namespace SquashClash.Experiments.EditMode
                             foreach(var r in outcome.Receptions)
                             {
                                 object fr=typeof(ReceptionLog).GetField("FatigueReception")?.GetValue(r)??0d;
-                                receptions.WriteLine(string.Join("\t",new[]{i.ToString(C),point.ToString(C),(k++).ToString(C),r.Who.ToString(),r.Result.ToString(),r.ContactStep.ToString(C),r.DeltaMs.ToString("R",C),Convert.ToString(fr,C)}));
+                                receptions.WriteLine(string.Join("\t",new[]{i.ToString(C),point.ToString(C),(k++).ToString(C),r.Who.ToString(),r.Result.ToString(),r.ContactStep.ToString(C),r.DeltaMs.ToString("R",C),Convert.ToString(fr,C)}.Concat(f2?new[]{r.FatigueStriker.ToString("R",C),r.Input.Speed.ToString("R",C)}:new string[0])));
                             }
                             points.Flush();receptions.Flush();
                             Assert.That(outcome.End,Is.EqualTo(RallyEnd.Point),"nonterminal point: preserve and stop");
@@ -63,7 +67,7 @@ namespace SquashClash.Experiments.EditMode
                         }
                         matches.WriteLine(i+"\t"+score.Human+"\t"+score.Rival+"\t"+score.Winner+"\t"+point+"\t"+replays);matches.Flush();
                     }
-                    TestContext.WriteLine("F1 "+mode+" match="+i);
+                    TestContext.WriteLine((f2?"F2 ":"F1 ")+mode+" match="+i);
                 }
             }
         }
