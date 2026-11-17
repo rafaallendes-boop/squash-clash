@@ -15,9 +15,9 @@ namespace SquashClash.Core.Rally
         public readonly double DeltaMs,SlackS;public readonly ShotLine Line;public readonly ShotHeight Height;public readonly ShotPower Power;
         public readonly long ContactStep;public readonly string Reason;
         public readonly CausalVector[] Vectors;public readonly CausalInput Input;
-        public readonly double FatigueReception;
-        public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason,CausalShotResult causal=default,double fatigueReception=0)
-        {FatigueReception=fatigueReception;Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
+        public readonly double FatigueReception,FatigueStriker;
+        public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason,CausalShotResult causal=default,double fatigueReception=0,double fatigueStriker=0)
+        {FatigueReception=fatigueReception;FatigueStriker=fatigueStriker;Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
     }
     public sealed class RallyOutcome
     {

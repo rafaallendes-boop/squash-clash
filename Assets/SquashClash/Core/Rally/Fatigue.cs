@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SquashClash.Core.Config;
+using SquashClash.Core.Shot;
 namespace SquashClash.Core.Rally
 {
     // Values come only from the effective preset; the same immutable settings serve both players.
@@ -18,6 +19,11 @@ namespace SquashClash.Core.Rally
             ReactionMaxMs=p.Get("fatigue.reactionMaxMs"),ArmSpeedMax=p.Get("fatigue.armSpeedMax"),PositionGainMax=p.Get("fatigue.positionGainMax")
         };
         public double Factor(double energy)=>Enabled?Math.Max(0,Math.Min(1,(Onset-energy)/Onset)):0;
+        public const double RedBelow=25;
+        // The striker's arm for one contact (spec 4): scaffold only.
+        public FatigueArm Arm(double strikerEnergy)=>FatigueArm.None;
+        // Energy bar tone (spec 6): 0 neutral, 1 amber, 2 red. Scaffold only.
+        public int Tone(double energy)=>0;
     }
     public readonly struct FatigueEffects
     {

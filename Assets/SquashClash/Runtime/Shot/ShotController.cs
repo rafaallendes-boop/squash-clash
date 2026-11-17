@@ -21,6 +21,8 @@ namespace SquashClash.Runtime.Shot
         private bool nextRecordsFatigue,recordsFatigue;
         // Only Rally/Match call this, so only their shot events carry f_r; practice, SL and AutoQA keep the main schema.
         public void SetNextReceptionFatigue(double factor){nextReceptionFatigue=factor;nextRecordsFatigue=true;}
+        // Only Rally/Match call this: the striker's arm for the human's next stroke, as (step, authoritative). Scaffold only.
+        public void SetNextStrikerFatigue(Func<long,bool,FatigueArm> provider){}
         // Consumed only by the next launch, then copied into its immutable reference.
         public void SetNextReceptionBody(Func<long,BodyFrame> bodyAt)=>nextCausalBody=bodyAt;
         private readonly Queue<ClosedGesture> orders=new Queue<ClosedGesture>();

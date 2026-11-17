@@ -85,8 +85,10 @@ namespace SquashClash.Core.Shot
     public static class CausalQuality
     {
         public static CausalShotResult Solve(CausalReference reference,BodyFrame body,Vector3 contact,Vector2 aim,float power,EffectiveConfig config,IBallSimulationFactory factory)
+            =>Solve(reference,body,contact,aim,power,config,factory,FatigueArm.None);
+        public static CausalShotResult Solve(CausalReference reference,BodyFrame body,Vector3 contact,Vector2 aim,float power,EffectiveConfig config,IBallSimulationFactory factory,in FatigueArm arm)
         {
-            var settings=CausalSettings.From(config.Source);var vectors=Evaluate(reference,body,contact,settings);
+            var settings=CausalSettings.From(config.Source);var vectors=ApplyFatigue(Evaluate(reference,body,contact,settings),arm);
             // Order: pace curve (from the aim requested before this layer) -> causal composition -> legal-front bound -> solver.
             var pace=ShotPace.Requested(power,contact,aim,config.Physics.BallRadius,config.Source);float requested=pace.Speed;
             var input=BoundToLegalFront(Apply(aim,requested,vectors,settings),aim,config.Court,config.Physics.BallRadius);
@@ -96,6 +98,8 @@ namespace SquashClash.Core.Shot
                 config.Physics.Gravity,config.Physics.BallRadius,config.Court,factory,config.Physics);
             return new CausalShotResult(vectors,input,solution,pace);
         }
+        // The striker's arm (spec 4): scaffold only.
+        public static CausalVector[] ApplyFatigue(CausalVector[] vectors,in FatigueArm arm)=>vectors;
         public static CausalReference Prepare(Trajectory trajectory,ContactPlan plan,ClockMap clock,TimingSettings timing,double presented,double tempo,Func<long,BodyFrame> bodyAt=null)
         {
             if(trajectory==null||clock==null)throw new ArgumentNullException(nameof(trajectory));

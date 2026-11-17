@@ -46,6 +46,7 @@ namespace SquashClash.Runtime.Rally
         private bool resetEnergy=true;
         public FatigueState HumanEnergy {get;private set;}
         public FatigueState RivalEnergy {get;private set;}
+        public FatigueSettings FatigueSettings=>context?.Fatigue;
         public double HumanReceptionFatigue {get;private set;}
         public double RivalReceptionFatigue {get;private set;}
         public RallyParams Params {get;private set;}=new RallyParams();
