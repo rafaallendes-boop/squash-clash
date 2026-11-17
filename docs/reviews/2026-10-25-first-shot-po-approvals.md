@@ -3041,6 +3041,36 @@ Se añade únicamente el valor vacío faltante de `kOutMs` y se inspeccionan est
 
 **Resultado A1-bis:** corrección `fe7633d` (un valor vacío de kOutMs), cuatro llamadas Put revisadas: 13/30/7/6 parejas, sin otra corrección. Dos comprobaciones previas de compilación aprobadas, mismo hash del assembly `45ab13947b6448b0d4cd34ecc6f4419419d66325dbfe07380775662ff4682421`; todos los inventarios previos vacíos. Dos procesos completos sobre ese head limpio: **1/1 cada uno**, 648 planes, 43.080 celdas y 58.200 muestras por proceso; cuatro crudos y cuatro derivados idénticos byte a byte. Método `73d86a2` intacto; controles estadísticos predeclarados aprobados, sin SystemFault/NotEvaluable. Media: 97/103 planes y 81,98 % de contacto esperado con ruido; P=1 con vidrio, 23/25 planes y 76,45 % esperado. No son tasas de puntos ganados por usuarios. [Informe y opciones](2026-11-17-g1-a1bis-timing-results.md), [evidencia e historial](../validation/evidence/2026-11-17-g1-a1bis-timing/README.md). Todos los fallos anteriores se conservan separados, fase A sin repetir y sin cambiar producto/defaults/anclas. Se entrega A1-bis para elección del PO, sin corregir timing; A2 mantiene su parada de diseño antes de implementar. Sin fusión ni instalación.
 
+### G1 A1 — opción 2 mínima y diseño A2 (17 nov 2026)
+
+Decisión literal del PO:
+
+> «Para A1 elijo la opción 2 en su versión mínima: el Rival mantiene su intención en T\*, salvo cuando T\* queda a menos de 1,5σ de un borde de la ventana de contacto. En ese caso desplaza la media de su release lo justo para quedar a 1,5σ de ese borde. Si la ventana mide menos de 3σ, apunta al centro. El sigma de timing no cambia. Antes de implementar, fija en un commit estos criterios, sin cambiarlos después:
+>
+> - en los planes que hoy están a 1,5σ o más de ambos bordes, el release queda idéntico bit a bit;
+> - se mantiene el orden de contacto Fácil < Media < Difícil;
+> - la ruta del Humano queda intacta;
+> - sobre la población de A1-bis, el Rival medio a P=1 llega al menos a 90 % de contacto sobre sus planes;
+> - sin azar nuevo.
+>
+> Puedes guardar el 1,5σ como parámetro de `RallyParams` (cambia solo su hash propio), pero sin tocar `DefaultPreset`, P0, `SimulationKey` ni las anclas de `Scenario.ExpectedHash`. Usa TDD con RED por aserción, suites completas, AutoQA `--suite v` y `--suite t3` PASS/0/1 y check-release OK. Si algún test existente de rally cambia de resultado, detente y reporta. Mientras tanto, sin usar Unity, prepara el commit de diseño y criterios de A2 y detente para la revisión de Claude. Un solo Unity a la vez, sin fusionar ni instalar.»
+
+Se predeclaran [criterios A1](../validation/2026-11-17-g1-a1-release-margin-criteria.md) antes de tests/implementación. #71/#72 siguen abiertas: A1 en rama/worktree/PR propia apilada sobre `1c9d2c6`; A2 en su propia rama sin Unity, solo diseño, con parada de revisión antes de implementar. Ninguna autorización permite cambiar tests existentes para obtener verde ni sustituir los datos congelados. Sin fusión ni instalación.
+
+**Resultado de A1 y nueva parada:** criterios `aa1a9f7`, producto `1dba20d`, experimento `9bf1c5a`. RED 10 tests (2 controles pasan, 8 aserciones fallan), GREEN 10/10, EditMode **764/764**, PlayMode **581/581**; tests existentes y aserciones intactos, incluido rally, ProjectSettings restaurado. Dos procesos científicos completos **1/1 cada uno**, 648 planes y 58.200 muestras por proceso, ocho archivos crudos/derivados idénticos. Media P=1: **93,2646 % sobre 29 planes**, muestra 5.401/5.800; dificultades 84,46 < 89,98 < 95,80 %, 207 planes seguros con 41.400 releases idénticos bit a bit y Humano/RNG comprobados. RallyParams nuevo `927e304bbfec`, proyección antigua `7d50ddaf5d4f`; defaults/SimulationKey/anclas sin cambios.
+
+El empaquetado posterior falla en `summarize-g1-release-margin.py:196–197`: G1-A1-REPORT-01, referencia arrastrada a carpetas schema-red/schema-green inexistentes; A1 usa RED/GREEN en Logs/evidence/g1-a1. Ocurre **después de producir datos**: se detiene sin corregir el script ni repetirlo, sin fabricar carpetas y sin ejecutar AutoQA V/T3 o check-release. Datos/XML/logs conservados; informe y recibo parcial en [estado A1](2026-11-17-g1-a1-release-margin.md). La entrega no está aprobada integralmente. A2 se preparó sin Unity en `5b7f67f`, PR #73, y queda en su parada de revisión. Sin fusión ni instalación.
+
+### G1-A1-REPORT-01 — empaquetado y puertas pendientes autorizados (17 nov 2026)
+
+Decisión literal del PO:
+
+> «A1 (#74): autorizo G1-A1-REPORT-01: corrige solo las rutas de RED/GREEN en `summarize-g1-release-margin.py` y genera el manifiesto. Verifica con SHA-256 que ningún archivo de datos cambió y conserva el intento fallido. Después ejecuta AutoQA `--suite v` y `--suite t3` y check-release dev/prod, sin repetir corridas. Desde ahora, el permiso para el código experimental de G1 también cubre los scripts de resumen y empaquetado cuando fallan después de producir datos, siempre que verifiques por SHA-256 que los datos no cambian. Cualquier otra sorpresa: detente.»
+
+Se conservan el script fallido, el recibo de REPORT-01 y el inventario SHA-256 de todos los archivos de datos crudos/derivados antes de corregir únicamente las rutas RED/GREEN. No se repite Unity científico ni se cambia el método/criterios; solo se genera el manifiesto y se exige igualdad SHA-256 antes/después. Después: AutoQA V, T3 y check-release dev/prod, secuenciales, con inventario de Editor por lanzamiento. La excepción posterior a datos se limita al resumen/empaquetado experimental con datos intactos; cualquier otra sorpresa detiene. A2 solo comienza Unity después de terminar estas puertas de A1. Sin fusionar ni instalar.
+
+**Resultado de la continuación REPORT-01:** `0703a42` corrige únicamente las rutas RED/GREEN del empaquetador. Manifiesto generado; SHA-256 idénticos para los 20 archivos de datos antes/después y tras las puertas, sin repetir las corridas. Intento fallido y recibo preservados. AutoQA **V y T3 PASS/0/1**, 88/88 tests cada uno y 18/18 escenarios-repeticiones; check-release **dev/prod OK**, exportaciones frescas con gitDirty=false. Inventarios vacíos antes de cada Unity, incluidos ambos perfiles; ProjectSettings restaurado y árbol limpio. A1 completa sus puertas sin cambios de tests/expectativas, producto/defaults/anclas adicionales ni otro incidente. [Informe](2026-11-17-g1-a1-release-margin.md), [recibos](../validation/evidence/2026-11-17-g1-a1-release-margin/gates.json). A2 ya puede iniciar la implementación aprobada, con sus tres ajustes fijados en `2b686d8` antes de código; sin fusionar ni instalar.
+
 ### G1 A2 — entrega de diseño sin Unity para revisión (17 nov 2026)
 
 Pedido literal del PO: «Mientras tanto, sin usar Unity, prepara el commit de diseño y criterios de A2 y detente para la revisión de Claude». La opción elegida previamente fue solver de trayectoria según intención, «más fuerte = más plano».

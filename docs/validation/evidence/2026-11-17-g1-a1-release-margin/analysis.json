@@ -1,0 +1,115 @@
+{
+  "criteria": {
+    "identityEligiblePlans": 207,
+    "difficultyRates": [
+      0.8445928141072055,
+      0.8998214110583039,
+      0.958018180632774
+    ],
+    "mediumP1PerPlan": 0.9326463397293664,
+    "humanUnchanged": true
+  },
+  "source": {
+    "assistMs": "40",
+    "bounceThreshold": "0.1",
+    "defaults": "430da2faa818",
+    "earlySoft": "false",
+    "head": "9bf1c5aafd524e7d1a923266b4af45213d037f40",
+    "latencyCompMs": "0",
+    "rallyParams": "927e304bbfec",
+    "rallyProjection": "7d50ddaf5d4f",
+    "simulationKey": "166a96e319c7",
+    "stepHz": "120",
+    "tempo": "0.65",
+    "unity": "6000.3.27f1",
+    "validLimit": "false",
+    "validMs": "100"
+  },
+  "nPlans": 648,
+  "nCells": 43080,
+  "nSamples": 58200,
+  "maxPerPlanSamplingError": 0.0657245568914907,
+  "checks": [
+    {
+      "difficulty": "Easy",
+      "category": "Contact",
+      "nPlans": 93,
+      "expected": 0.9354092457316362,
+      "sampled": 0.9353225806451613,
+      "error": 8.66650864749241e-05,
+      "bound": 0.013077850007941684
+    },
+    {
+      "difficulty": "Easy",
+      "category": "Air",
+      "nPlans": 93,
+      "expected": 0.03306082356484442,
+      "sampled": 0.03752688172043011,
+      "error": 0.004466058155585692,
+      "bound": 0.011225890708176924
+    },
+    {
+      "difficulty": "Easy",
+      "category": "Late",
+      "nPlans": 93,
+      "expected": 0.03152993070351946,
+      "sampled": 0.0271505376344086,
+      "error": 0.004379393069110862,
+      "bound": 0.01107507541628716
+    },
+    {
+      "difficulty": "Medium",
+      "category": "Contact",
+      "nPlans": 97,
+      "expected": 0.9554804674124258,
+      "sampled": 0.9551546391752578,
+      "error": 0.00032582823716797993,
+      "bound": 0.011374661141871644
+    },
+    {
+      "difficulty": "Medium",
+      "category": "Air",
+      "nPlans": 97,
+      "expected": 0.02702355230553452,
+      "sampled": 0.029329896907216494,
+      "error": 0.0023063446016819734,
+      "bound": 0.010469854746663627
+    },
+    {
+      "difficulty": "Medium",
+      "category": "Late",
+      "nPlans": 97,
+      "expected": 0.01749598028203999,
+      "sampled": 0.015515463917525773,
+      "error": 0.0019805163645142173,
+      "bound": 0.00930196476211547
+    },
+    {
+      "difficulty": "Hard",
+      "category": "Contact",
+      "nPlans": 101,
+      "expected": 0.9769888376750072,
+      "sampled": 0.9758910891089109,
+      "error": 0.001097748566096346,
+      "bound": 0.010013852581322737
+    },
+    {
+      "difficulty": "Hard",
+      "category": "Air",
+      "nPlans": 101,
+      "expected": 0.015598693785690773,
+      "sampled": 0.01797029702970297,
+      "error": 0.0023716032440121958,
+      "bound": 0.009227963467956023
+    },
+    {
+      "difficulty": "Hard",
+      "category": "Late",
+      "nPlans": 101,
+      "expected": 0.007412468539302499,
+      "sampled": 0.006138613861386139,
+      "error": 0.0012738546779163598,
+      "bound": 0.007890729340649475
+    }
+  ]
+}

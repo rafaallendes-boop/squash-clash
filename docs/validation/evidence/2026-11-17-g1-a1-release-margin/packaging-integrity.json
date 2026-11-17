@@ -1,0 +1,27 @@
+{
+  "unchanged": true,
+  "files": {
+    "Logs/experiments/g1-release-margin/run01/analysis.json": "3717c4baec43890b4ee459a099c0f941379ed19cb7e816f4f535ac718d340709",
+    "Logs/experiments/g1-release-margin/run01/checks.tsv": "d156c0a25c755f2e88ae6aee5fe0649f35945435f6a0b84937c2d7c0033be687",
+    "Logs/experiments/g1-release-margin/run01/intervals.tsv": "3eedf67b7a9eee57b922f5b1cf05aad9479a4c1a5316f2ad98e1b274b6ea9855",
+    "Logs/experiments/g1-release-margin/run01/plans.tsv": "8230ab1132040044735355110d10cbd4790191d52c2204e1277f355c33435286",
+    "Logs/experiments/g1-release-margin/run01/probabilities.tsv": "27661495cb1bddd399971a5c2509bc47ade9c2647759bf8f39a968f872d2858c",
+    "Logs/experiments/g1-release-margin/run01/samples.tsv": "b3fd8ccc2f49ebe3711906920f6800997538156f95c231b1685abd404b3ce3e7",
+    "Logs/experiments/g1-release-margin/run01/source.tsv": "11a453120102f63cf23273ac7347342ae1a28287188584d52b257bab2edca241",
+    "Logs/experiments/g1-release-margin/run01/tables.tsv": "34a3f738bd3d640da6776bc5750a7daa0fe7c0b95ffac8c72a767d169b076a51",
+    "Logs/experiments/g1-release-margin/run02/analysis.json": "3717c4baec43890b4ee459a099c0f941379ed19cb7e816f4f535ac718d340709",
+    "Logs/experiments/g1-release-margin/run02/checks.tsv": "d156c0a25c755f2e88ae6aee5fe0649f35945435f6a0b84937c2d7c0033be687",
+    "Logs/experiments/g1-release-margin/run02/intervals.tsv": "3eedf67b7a9eee57b922f5b1cf05aad9479a4c1a5316f2ad98e1b274b6ea9855",
+    "Logs/experiments/g1-release-margin/run02/plans.tsv": "8230ab1132040044735355110d10cbd4790191d52c2204e1277f355c33435286",
+    "Logs/experiments/g1-release-margin/run02/probabilities.tsv": "27661495cb1bddd399971a5c2509bc47ade9c2647759bf8f39a968f872d2858c",
+    "Logs/experiments/g1-release-margin/run02/samples.tsv": "b3fd8ccc2f49ebe3711906920f6800997538156f95c231b1685abd404b3ce3e7",
+    "Logs/experiments/g1-release-margin/run02/source.tsv": "11a453120102f63cf23273ac7347342ae1a28287188584d52b257bab2edca241",
+    "Logs/experiments/g1-release-margin/run02/tables.tsv": "34a3f738bd3d640da6776bc5750a7daa0fe7c0b95ffac8c72a767d169b076a51",
+    "docs/validation/evidence/2026-11-17-g1-a1-release-margin/probabilities.tsv": "27661495cb1bddd399971a5c2509bc47ade9c2647759bf8f39a968f872d2858c",
+    "docs/validation/evidence/2026-11-17-g1-a1-release-margin/tables.tsv": "34a3f738bd3d640da6776bc5750a7daa0fe7c0b95ffac8c72a767d169b076a51",
+    "docs/validation/evidence/2026-11-17-g1-a1-release-margin/checks.tsv": "d156c0a25c755f2e88ae6aee5fe0649f35945435f6a0b84937c2d7c0033be687",
+    "docs/validation/evidence/2026-11-17-g1-a1-release-margin/analysis.json": "3717c4baec43890b4ee459a099c0f941379ed19cb7e816f4f535ac718d340709"
+  },
+  "failureReceiptPreserved": true,
+  "scientificProcessesRepeated": false
+}

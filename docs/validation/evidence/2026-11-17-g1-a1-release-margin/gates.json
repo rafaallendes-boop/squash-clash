@@ -1,0 +1,62 @@
+{
+  "sourceHead": "0703a42",
+  "scientificDataUnchanged": true,
+  "scientificRunsRepeated": false,
+  "autoqa": {
+    "autoqa-v": {
+      "runId": "20261117T170144Z-0703a42-v-16462",
+      "gate": "PASS",
+      "exitCode": 0,
+      "escalationLevel": 1,
+      "counts": {
+        "PASS": 18,
+        "FAIL": 0,
+        "INCONCLUSIVE": 0,
+        "NOT_EVALUATED": 0
+      },
+      "dirty": false,
+      "summarySha256": "5ee6c5554f9566e716e7ab33e27cc384885334bfd0139f7b3215208e790242b1",
+      "testsXmlSha256": "2574da49fab8d690292119341b4ca056f6a720e3a385b09b1406af6151f45466",
+      "inventorySha256": "adfc72ea8fc4cddfa7f7c324e4ea6290c248555ddcc41f393e06a60441c352ed"
+    },
+    "autoqa-t3": {
+      "runId": "20261117T170606Z-0703a42-t3-22089",
+      "gate": "PASS",
+      "exitCode": 0,
+      "escalationLevel": 1,
+      "counts": {
+        "PASS": 18,
+        "FAIL": 0,
+        "INCONCLUSIVE": 0,
+        "NOT_EVALUATED": 0
+      },
+      "dirty": false,
+      "summarySha256": "30ab4b8e4da633a5a97bf7dd14bbcc20c2e80650b6b8f1ecb4df9a2d9400b2b8",
+      "testsXmlSha256": "5298fa26864712a6fac2f6b6ffa45f2b489c3f926c7e910ed3119d7b8f8c37bd",
+      "inventorySha256": "470608e5c330f38afcc3a9663e3470a4e2bcda9f87eeae73f7fb7011c35d24f8"
+    }
+  },
+  "release": {
+    "dev": {
+      "freshExport": true,
+      "gitDirty": false,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_DevPanel_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "receiptSha256": "9a52340643048f8b0daa174827c5de6472c6a83d00e5ac2a48f7311f99a490f1",
+      "inventorySha256": "cf2752a6c0dcfab743fa8936a8c35b1503428dbfd61983098b4756183d043d1e"
+    },
+    "prod": {
+      "freshExport": true,
+      "gitDirty": false,
+      "productIl2CppModules": [
+        "g_SquashClash_Core_CodeGenModule",
+        "g_SquashClash_Runtime_CodeGenModule"
+      ],
+      "receiptSha256": "2970d8a43a24f4a4b38b101cc9ab0f4c523a9a10260f9fcf3395b6944a490044",
+      "inventorySha256": "2994d80402cf6fac09625858ea57a6949dd3333687392ff1fa4cd7784cda9724"
+    }
+  }
+}
