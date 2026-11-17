@@ -24,7 +24,7 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void DefaultsAndRanges_AreTheElevenApprovedSoftValues()
         {
             string[] keys={"enabled","costPerMeter","strongFrom","strongCost","recoverBetween","recoverPerS","onset","legsMax","reactionMaxMs","armSpeedMax","positionGainMax"};
-            double[] values={1,.4,.7,1,.35,.5,70,.10,40,.04,.25},min={0,0,.5,0,0,0,10,0,0,0,0},max={1,2,1,5,1,5,100,.4,200,.2,1};
+            double[] values={1,.4,.7,1,.25,.5,70,.10,40,.04,.25},min={0,0,.5,0,0,0,10,0,0,0,0},max={1,2,1,5,1,5,100,.4,200,.2,1};
             var p=ConfigFixtures.Default();Assert.That(p.Ordered.Count(e=>e.Key.StartsWith("fatigue.",StringComparison.Ordinal)),Is.EqualTo(11));
             for(int i=0;i<keys.Length;i++)
             {Assert.That(ParamCatalog.TryGet("fatigue."+keys[i],out var d),Is.True);Assert.That(p.Get(d.Key),Is.EqualTo(values[i]));Assert.That(d.Min,Is.EqualTo(min[i]));Assert.That(d.Max,Is.EqualTo(max[i]));}
