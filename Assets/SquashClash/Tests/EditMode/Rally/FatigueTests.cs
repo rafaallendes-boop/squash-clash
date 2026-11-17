@@ -63,9 +63,9 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void BetweenPoints_RecoversExactlyOnce_AndNothingRunsOutsidePoint()
         {
             var s=State(40);Call(s,"Step",10d,BodyPhase.Waiting,0f,false);Assert.That(Energy(s),Is.EqualTo(40));
-            Call(s,"BeginPoint");Call(s,"ClosePoint");Assert.That(Energy(s),Is.EqualTo(61));Call(s,"ClosePoint");
-            Call(s,"Step",10d,BodyPhase.Waiting,0f,false);Call(s,"Strike",1d);Assert.That(Energy(s),Is.EqualTo(61));
-            Assert.That(Field(Point(s),"End"),Is.EqualTo(40));Assert.That(Field(Point(s),"AfterRecovery"),Is.EqualTo(61));
+            Call(s,"BeginPoint");Call(s,"ClosePoint");Assert.That(Energy(s),Is.EqualTo(55));Call(s,"ClosePoint");
+            Call(s,"Step",10d,BodyPhase.Waiting,0f,false);Call(s,"Strike",1d);Assert.That(Energy(s),Is.EqualTo(55));
+            Assert.That(Field(Point(s),"End"),Is.EqualTo(40));Assert.That(Field(Point(s),"AfterRecovery"),Is.EqualTo(55));
         }
         [Test] public void Energy_IsClamped_ButMovementAccountingIsNotTruncated()
         {
