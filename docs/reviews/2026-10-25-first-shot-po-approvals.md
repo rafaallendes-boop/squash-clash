@@ -3112,3 +3112,52 @@ Decisión literal del PO:
 El PO precisa que la búsqueda se queda sin mover x y que sigue pendiente la mayor parte de A2: integración, retícula, C2–C8 y rendimiento. Se registra este diagnóstico como comunicado/adoptado por el PO, sin una nueva medición ni modificación del resultado: el segundo bote quedó a 1,06313968 m de la pared contraria (límite ≤1 m). El testigo fallido conserva x=3,44985247 en la ruta original y en la revisada. Cerrar G1 no acepta A2 ni sus criterios pendientes; no queda autorización de continuación.
 
 **Ejecución documental:** #73 cerrada sin fusionar, rama local/remota `codex/g1-a2-flat-drive` intacta en `2ee988d`; candidatos `4fe66ad` y `eeb4a83` conservados, además del merge `46c0f54` de main tras #74, sin rebase. Nueva rama documental desde main `95d75a2`, con informes, diseño/método archivados y evidencia derivada copiados de `2ee988d` sin código ni scripts, con cotejo SHA-256. Logs/XML ignorados permanecen en el worktree original. Se corrige el estado actual: #71/#72 están fusionadas en `49c22dc`/`0b85a46`; #74 en `95d75a2`. [Informe de cierre](2026-11-17-g1-close.md). Sin Unity, corridas, fusión ni instalación en este encargo.
+
+
+### F1/F2 — inicio de F1 y autonomía experimental confirmada (17 nov 2026)
+
+Decisión literal del PO sobre la autorización:
+
+> «Confirmo la autonomía experimental que describe ese encargo para F1/F2, con los mismos límites que en G1.»
+
+El PO encarga comenzar F1 después del cierre de G1, leyendo íntegros el handoff y la spec de cansancio v2.2: método B en commit propio antes de ejecución, TDD, suites completas, AutoQA V/T3 y check-release; anclas solo según A2 v2.2 con prueba de proyección. Un solo Unity, sin fusión ni instalación. La autonomía cubre únicamente defectos del código experimental propio que aborten antes de datos y resumen/empaquetado posteriores con SHA-256 de datos intactos, conservando intentos/correcciones; no producto, método, grilla, umbrales o datos.
+
+Método predeclarado en `2708fb4`, rama F1 desde main `766dedd`. La inspección previa detecta tests existentes que fijan hashes completos/121 claves fuera de las cuatro anclas autorizadas y ausencia de P de intención en el saque automático. [Parada F1-PREFLIGHT-01/02](2026-11-17-f1-preflight-stop.md). No se modifica producto ni se ejecuta Unity. Tratamientos propuestos pendientes de decisión del PO; no hay aprobación de F1.
+
+
+### F1 — PREFLIGHT-01/02 resueltos y spec v2.3 (17 nov 2026)
+
+Decisión literal del PO:
+
+> «F1-PREFLIGHT-01: autorizo actualizar solo los valores fijos de hash y de cantidad de claves derivados de DefaultPreset en los tests que listaste, incluidos los literales de hash de AutoQAT3OracleTests, a los valores nuevos medidos en Unity (132 claves). Hazlo en un commit propio, sin cambiar ninguna otra aserción, oráculo ni test. Agrega un test de proyección que demuestre que, excluyendo solo fatigue.*, el preset da exactamente 430da2faa818 (T3), 06fed4bd4ac9 y 8e22575422f2 (V) y e89daab41c3e (SL5 T3). SimulationKey debe seguir en 166a96e319c7; si cambia, detente. F2 no agrega claves; si las necesitara, detente.»
+>
+> «F1-PREFLIGHT-02: el saque automático cuenta como golpe con P de intención = 0 para el consumo por golpe fuerte. No cambia su trayectoria, física ni solver, y el desplazamiento se sigue cobrando. Registra esta aclaración como spec v2.3 y fíjala en el método antes de producir datos.»
+
+Se fija la [spec v2.3](../superpowers/specs/2026-11-16-fatigue-design.md) y la aclaración en el [método B](../validation/2026-11-17-f1-fatigue-method.md) antes de datos. Se retoma F1 con la autonomía experimental ya confirmada, un solo Unity, sin fusionar ni instalar. La propuesta previa de adaptar las aserciones heredadas a proyecciones no se aplica: solo se cambian los literales autorizados.
+
+
+### F1 — PREFLIGHT-03 resuelto y extensión acotada a valores derivados (17 nov 2026)
+
+Decisión literal del PO:
+
+> «Autorizo los dos, en el mismo commit de literales: en S3FeedbackConfigTests.cs:26 agrega solo las 11 claves fatigue.* a la lista esperada, y en S2DefaultPromotionTests.cs:50 actualiza solo el hash completo de P0 al medido en Unity. El resto de ambos tests queda intacto. La prueba de proyección debe incluir P0: excluyendo fatigue.*, P0 efectivo da dcc7c8cc0688; anota el hash nuevo de P0 en AGENTS §5, sin tocar el archivo P0-calib-1. Para cualquier otro valor fijo derivado de DefaultPreset (hash, cantidad o lista de claves) aplica el mismo tratamiento sin detenerte, siempre que solo cambien entradas fatigue.*, la proyección lo demuestre y lo listes en el informe. Si un test exige cualquier otro cambio, detente y reporta.»
+
+Se retoma F1; se conserva la referencia completa de 200 partidos capturada sin cansancio. Cambios de literales/lista en commit propio y prueba de proyección de las cinco configuraciones. Sin fusión ni instalación.
+
+
+### F1 — implementación, único ajuste y parada F1-AUTOQA-01 (17 nov 2026)
+
+Método `2708fb4`, aclaraciones v2.3 `e173ef8`; referencia main 200 partidos/1.927 puntos. TDD, energía/piernas/reacción, métricas e integración implementadas; literales heredados en commits propios `f2b840f` y `5b1329d`. Off conserva los 1.927 puntos bit a bit. Soft falla B3 por energía alta (80,29); se aplica el único ajuste ya permitido y predeclarado, recoverBetween 0,35→0,25, fijado en `d44ab97` antes de datos. Ajustado: 200 partidos/1.844 puntos, todas las compuertas B pasan; B5b sin pares comparables, exploratorio. Datos anteriores intactos por SHA-256. Suites finales EditMode 788/788 y PlayMode 583/583; cinco proyecciones históricas exactas, SimulationKey intacto. Nuevo P0 efectivo f92f406f698a; archivo P0-calib-1 intacto.
+
+**Parada estática F1-AUTOQA-01:** PocObservation.ExactRecord enumera campos exactos y rechaza el nuevo f_r de ShotRecord serializado en práctica. La autorización de valores derivados de DefaultPreset no cubre esa lista/oráculo. No se modifica AutoQA ni se ejecutan AutoQA V/T3 o check-release; quedan NotEvaluated. Se propone conservar el esquema de práctica y emitir f_r solo en Rally/Partido mediante serialización de producto acotada; queda para decisión del PO, no implementada por autonomía experimental. [Informe de una página y evidencia](2026-11-17-f1-fatigue-energy.md). Sin fusión ni instalación.
+
+Incidentes propios de empaquetado F1-PACK-01/02: normalizador quitaba el texto de una clave antes de quitar la sentencia completa de opt-out (falso positivo en memoria); el empaquetador de recibos incluía una prueba deliberada de bloqueo de la guarda entre los inventarios que debían estar vacíos. Corregidos bajo la autonomía confirmada; intentos conservados, TSV crudos idénticos por SHA-256, sin cambios de producto/tests/datos ni repetición científica. La guarda impidió correctamente un segundo lanzamiento artificial mientras PlayMode estaba activo.
+
+
+### F1 — F1-AUTOQA-01 autorizado y cambio de modo de trabajo (17 nov 2026)
+
+**(i) Autorización de F1-AUTOQA-01** (17 nov, transmitida por Claude): corregir solo la serialización para que `f_r` se emita en los eventos `shot` de Rally y Partido, y que en práctica, SL y AutoQA el evento `shot` conserve el esquema exacto de `main`. No se toca `PocObservation`, escenarios, oráculos ni el checker. Registrada en la spec §8 (aclaración a v2.3).
+
+**(ii) Cambio de modo del PO, 17 nov, literal:** «Actua como un orquestador y revisor. Despliega distintos sub agentes de modelo sonnet para realizar la implementación y terminemos F1/F2. En caso de que haya que planificar algo, utiliza otro sub agente para que no sea sesgada la opinión.»
+
+Por eso F1-AUTOQA-01 y F2 los implementan subagentes Sonnet dirigidos por Claude. **La revisión de Claude sobre ese trabajo NO es independiente**, y se declara. Resultado de F1-AUTOQA-01 en el [informe de F1](2026-11-17-f1-fatigue-energy.md).

@@ -15,8 +15,9 @@ namespace SquashClash.Core.Rally
         public readonly double DeltaMs,SlackS;public readonly ShotLine Line;public readonly ShotHeight Height;public readonly ShotPower Power;
         public readonly long ContactStep;public readonly string Reason;
         public readonly CausalVector[] Vectors;public readonly CausalInput Input;
-        public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason,CausalShotResult causal=default)
-        {Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
+        public readonly double FatigueReception;
+        public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason,CausalShotResult causal=default,double fatigueReception=0)
+        {FatigueReception=fatigueReception;Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
     }
     public sealed class RallyOutcome
     {
@@ -28,6 +29,7 @@ namespace SquashClash.Core.Rally
         public PlayerId? Striker;public SurfaceId TerminalSurface;public bool OutAfterBounce;
         // Set when the point started with a serve.
         public PlayerId? Server;public ServiceBox Box;
+        public FatiguePoint HumanFatigue,RivalFatigue;
         public readonly List<ReceptionLog> Receptions=new List<ReceptionLog>();
     }
     public sealed class MatchOutcome
@@ -68,6 +70,9 @@ namespace SquashClash.Core.Rally
         private CausalReference pendingCausal;
         private bool hasPending;private long pendingStep;private AiShot pendingShot;private PlayerId pendingWho;private ReceptionLog pendingLog;
         private int planVersion;private long launchId;
+        public FatigueState HumanEnergy {get;private set;}
+        public FatigueState RivalEnergy {get;private set;}
+        private readonly double[] receptionFatigue=new double[2];
         public PointRules Rules {get;}
         public PlayerBody Human {get;}
         public PlayerBody Rival {get;}
@@ -77,14 +82,19 @@ namespace SquashClash.Core.Rally
         {
             this.context=context??throw new ArgumentNullException(nameof(context));
             brains[0]=human??throw new ArgumentNullException(nameof(human));brains[1]=rival??throw new ArgumentNullException(nameof(rival));
+            HumanEnergy=new FatigueState(context.Fatigue);RivalEnergy=new FatigueState(context.Fatigue);
             ball=context.Factory.Create(context.Physics,context.Court);
             Rules=new PointRules(context.Court,(float)context.Params.FootprintRadius);
             Human=new PlayerBody(PlayerId.Human,context.WaitPosition(PlayerId.Human),context.Move);
             Rival=new PlayerBody(PlayerId.Rival,context.WaitPosition(PlayerId.Rival),context.Move);
         }
         private PlayerBody Body(PlayerId who)=>who==PlayerId.Human?Human:Rival;
+        private FatigueState Energy(PlayerId who)=>who==PlayerId.Human?HumanEnergy:RivalEnergy;
+        private void BeginFatiguePoint()
+        {HumanEnergy.BeginPoint();RivalEnergy.BeginPoint();Human.MovementFactor=Rival.MovementFactor=1;}
         public RallyOutcome Play(PlayerId firstReceiver)
         {
+            BeginFatiguePoint();
             var outcome=new RallyOutcome{FirstReceiver=firstReceiver};
             Human.Teleport(context.WaitPosition(PlayerId.Human));Rival.Teleport(context.WaitPosition(PlayerId.Rival));
             ball.Reset(context.NeutralLaunch(firstReceiver));Rules.Begin(null,firstReceiver);
@@ -93,6 +103,7 @@ namespace SquashClash.Core.Rally
         // A point that starts with the automatic serve from the server's box (spec 8.5).
         public RallyOutcome PlayPoint(PlayerId server,ServiceBox box)
         {
+            BeginFatiguePoint();Energy(server).Strike(0); // Automatic serve intention (spec v2.3).
             var outcome=new RallyOutcome{FirstReceiver=server.Other(),Server=server,Box=box};
             Human.Teleport(context.WaitPosition(PlayerId.Human));Rival.Teleport(context.WaitPosition(PlayerId.Rival));
             Body(server).Teleport(ServePlanner.BoxPosition(context,box));
@@ -103,6 +114,7 @@ namespace SquashClash.Core.Rally
         // A whole game: point-a-rally to the target with the margin, winner serves, boxes alternate.
         public MatchOutcome PlayMatch(PlayerId firstServer)
         {
+            HumanEnergy=new FatigueState(context.Fatigue);RivalEnergy=new FatigueState(context.Fatigue);
             var match=new MatchOutcome();var score=new MatchScore((int)context.Params.MatchTarget,(int)context.Params.MatchMargin,firstServer);
             while(!score.Finished)
             {
@@ -128,13 +140,21 @@ namespace SquashClash.Core.Rally
                 ball.Step(contacts);steps++;
                 foreach(var contact in contacts)Rules.OnBallContact(contact);
                 if(ball.State.Position.y>context.Court.WallHeight)Rules.OnOverTop();
+                var humanBefore=Human.Position;var rivalBefore=Rival.Position;
                 Human.Step();Rival.Step();
+                if(context.Fatigue.Enabled)
+                {
+                    HumanEnergy.Step(Vector2.Distance(humanBefore,Human.Position),Human.Phase,Human.Speed,Human.Reacting);
+                    RivalEnergy.Step(Vector2.Distance(rivalBefore,Rival.Position),Rival.Phase,Rival.Speed,Rival.Reacting);
+                }
             }
             if(Rules.Closed)outcome.End=Rules.Cause==PointEndCause.LaunchFault?RallyEnd.LaunchFault:RallyEnd.Point;
             outcome.Striker=Rules.Striker;outcome.TerminalSurface=Rules.TerminalSurface;outcome.OutAfterBounce=Rules.OutAfterBounce;
             outcome.Cause=Rules.Cause;outcome.Winner=Rules.Winner;outcome.Shots=Rules.Shots;outcome.IgnoredAfterClose=Rules.IgnoredAfterClose;outcome.RejectedContacts=Rules.RejectedContacts;
             outcome.Steps=steps;outcome.SimSeconds=steps/(double)context.StepHz;outcome.RealSeconds=outcome.SimSeconds/context.Tempo;
             if(Rules.Cause==PointEndCause.DoubleBounce&&outcome.Receptions.Count>0)outcome.LastReception=outcome.Receptions[outcome.Receptions.Count-1].Result;
+            HumanEnergy.ClosePoint();RivalEnergy.ClosePoint();
+            outcome.HumanFatigue=HumanEnergy.Point.Copy();outcome.RivalFatigue=RivalEnergy.Point.Copy();
             return outcome;
         }
         private void BeginReception(PlayerId who,RallyOutcome outcome)
@@ -143,7 +163,9 @@ namespace SquashClash.Core.Rally
             // The frozen causal reference belongs to this reception only (RallyDirector clears its trace list per point).
             pendingCausal=null;
             var trajectory=context.Predict(state);
-            int delay=context.Steps(context.Params.ReactionS)+brain.PerceptionSteps;
+            double f=context.Fatigue.Factor(Energy(who).Energy);receptionFatigue[(int)who]=f;
+            var effects=FatigueEffects.For(f,context.Fatigue);body.MovementFactor=effects.MovementFactor;
+            int delay=context.Steps(context.Params.ReactionS)+brain.PerceptionSteps+effects.ExtraSteps;
             var plan=ReceptionPlanner.Plan(context,trajectory,Rules,body,delay,++planVersion,brain.StanceNoise());
             LastPlan=plan;
             body.MoveTo(plan.Stance,delay,BodyPhase.Approaching,BodyPhase.Set);
@@ -151,7 +173,7 @@ namespace SquashClash.Core.Rally
             hasPending=false;
             if(!shot.Swing)
             {
-                outcome.Receptions.Add(new ReceptionLog(who,plan.Reachable?ReceptionResult.NoSwing:ReceptionResult.Unreachable,false,plan.Reachable,false,0,plan.SlackS,default,-1,plan.Reason));
+                outcome.Receptions.Add(new ReceptionLog(who,plan.Reachable?ReceptionResult.NoSwing:ReceptionResult.Unreachable,false,plan.Reachable,false,0,plan.SlackS,default,-1,plan.Reason,fatigueReception:f));
                 return;
             }
             // Real perceived time for this flight: the same clock map type the touch path uses.
@@ -172,7 +194,7 @@ namespace SquashClash.Core.Rally
                 case ShotResult.SystemFault:result=ReceptionResult.SystemFault;outcome.SystemFaults++;break;
                 default:result=ReceptionResult.NotEvaluable;break;
             }
-            var log=new ReceptionLog(who,result,decision.Result==ShotResult.Perfect,plan.Reachable,shot.Defensive,decision.DeltaMs,plan.SlackS,shot.Option,decision.ContactStep,decision.Reason);
+            var log=new ReceptionLog(who,result,decision.Result==ShotResult.Perfect,plan.Reachable,shot.Defensive,decision.DeltaMs,plan.SlackS,shot.Option,decision.ContactStep,decision.Reason,fatigueReception:f);
             if(result!=ReceptionResult.Contact){outcome.Receptions.Add(log);return;}
             hasPending=true;pendingStep=decision.ContactStep;pendingShot=shot;pendingWho=who;pendingLog=log;
         }
@@ -184,14 +206,14 @@ namespace SquashClash.Core.Rally
             if(!solution.Solved)
             {
                 outcome.SystemFaults++;var l=pendingLog;
-                outcome.Receptions.Add(new ReceptionLog(who,ReceptionResult.SystemFault,false,l.Reachable,l.Defensive,l.DeltaMs,l.SlackS,pendingShot.Option,l.ContactStep,solution.Reason??"contact-not-legal",causal));
+                outcome.Receptions.Add(new ReceptionLog(who,ReceptionResult.SystemFault,false,l.Reachable,l.Defensive,l.DeltaMs,l.SlackS,pendingShot.Option,l.ContactStep,solution.Reason??"contact-not-legal",causal,l.FatigueReception));
                 return;
             }
             var previous=pendingLog;
-            outcome.Receptions.Add(new ReceptionLog(who,previous.Result,previous.Perfect,previous.Reachable,previous.Defensive,previous.DeltaMs,previous.SlackS,pendingShot.Option,previous.ContactStep,previous.Reason,causal));
+            outcome.Receptions.Add(new ReceptionLog(who,previous.Result,previous.Perfect,previous.Reachable,previous.Defensive,previous.DeltaMs,previous.SlackS,pendingShot.Option,previous.ContactStep,previous.Reason,causal,previous.FatigueReception));
             // The racket only replaces the velocity of the authoritative state at the contact step.
             ball.Reset(new BallState{Position=state.Position,Velocity=solution.Velocity,Step=state.Step});
-            Rules.RacketContact(who);
+            Rules.RacketContact(who);Energy(who).Strike(pendingShot.P);
             Body(who).MoveTo(context.WaitPosition(who),0,BodyPhase.Recovering,BodyPhase.Waiting);
             BeginReception(who.Other(),outcome);
         }

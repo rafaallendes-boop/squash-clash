@@ -31,7 +31,7 @@ namespace SquashClash.Runtime.Tests
             yield return PlayModeTestWorld.ClearApp();yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
             app=AppBootstrap.Instance;app.GetComponent<ResumeOverlay>().Continue();app.Clock.Paused=false;
             app.Tuning.LoadPreset(PresetCodec.FromSet(app.Tuning.Defaults,"Rally fixture",app.Build.Label),new List<string>());
-            app.Tuning.Set("launcher.repeatSeconds",0);
+            app.Tuning.Set("fatigue.enabled",0);app.Tuning.Set("launcher.repeatSeconds",0);
             controller=app.GetComponent<ShotController>();practice=app.GetComponent<PracticeMode>();rally=app.Rally;
             Assert.That(rally,Is.Not.Null,"the app wires the rally director at startup");
             app.LaunchCurrent();
@@ -161,7 +161,7 @@ namespace SquashClash.Runtime.Tests
             rally.StopMode();
             Assert.That(rally.Active,Is.False);Assert.That(practice.enabled,Is.True);Assert.That(app.Host.LaunchId,Is.EqualTo(launch+1));
             Assert.That(app.Tuning.Applied.Hash,Is.EqualTo(before),"rally never edits the applied tuning");
-            Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("430da2faa818"),"back to the default practice launch");
+            Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("3262f9b89156"),"back to the default practice launch");
             yield return null;
         }
         [UnityTest] public IEnumerator Pause_FreezesBallBodiesAndTheWaitBetweenPoints()

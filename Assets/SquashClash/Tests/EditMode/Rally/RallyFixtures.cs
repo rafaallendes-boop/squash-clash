@@ -9,6 +9,8 @@ namespace SquashClash.Core.Tests.Rally
     {
         internal static RallyContext Context(RallyParams parameters=null)
             =>new RallyContext(EffectiveConfig.From(ConfigFixtures.Default()),parameters??new RallyParams(),new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
+        internal static RallyContext ContextWithoutFatigue()
+            =>new RallyContext(EffectiveConfig.From(ConfigFixtures.Default().With("fatigue.enabled",0)),new RallyParams(),new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
         internal static PointRules Rules(RallyContext context,PlayerId? striker,PlayerId receiver)
         {var rules=new PointRules(context.Court,(float)context.Params.FootprintRadius);rules.Begin(striker,receiver);return rules;}
         internal static PlayerBody Body(RallyContext context,PlayerId id,Vector2 at)=>new PlayerBody(id,at,context.Move);

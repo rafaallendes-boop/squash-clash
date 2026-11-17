@@ -1,0 +1,60 @@
+{
+  "schema": "f1-fatigue-evidence/1",
+  "methodInitialCommit": "2708fb4",
+  "methodV23Commit": "e173ef8",
+  "adjustmentDeclaredCommit": "d44ab97",
+  "variants": {
+    "off": {
+      "head": "41479bcd408a76dbed9cdb945291586c03b9d341",
+      "gitStatusBefore": "",
+      "rawDataSha256": {
+        "points.tsv": "c04b44f89dea0a2a6eee9ea1d50463e117e32cc9a67760bb3cc1e79d9811ceb8",
+        "receptions.tsv": "a5368c7c01a8f64d14b209fbbaf978942cd0441637d4fac0dc9c7c0880122a24",
+        "matches.tsv": "f70392425be61b40d859fce99a39a5085531d4b8fde578c2bec6c2f7ad866314",
+        "source.tsv": "fc1885bdcbb62e6f0c13b3af24ae808834bd552f86021607247fb9b7bfe16aa4"
+      },
+      "runnerSha256": {
+        "unity-processes.tsv": "ce5d09fa4784d8df33a4d7d707d7f233b4c963b72cac20328a0dbf5eb0f0e01b",
+        "results.xml": "a8e7934a3dfbba2a604c9ecfc8868f5d93b86e02b75c829fb911d6a8276579b4",
+        "unity.log": "88917d024595270797c18310c28d881af6fabeb0b1624c5b8fbc391e2b65fb97",
+        "console.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "dataUnchangedAfterPackaging": true
+    },
+    "soft": {
+      "head": "41479bcd408a76dbed9cdb945291586c03b9d341",
+      "gitStatusBefore": "",
+      "rawDataSha256": {
+        "points.tsv": "b7e9681cbeed99cc5d67c347a9c238adce6e08474429936242bf1f3ec3fc8250",
+        "receptions.tsv": "29273103eb2bb587df9ec35969ab7228bdbbb7b380cd2299cc5dfdd5d4ea2c03",
+        "matches.tsv": "45d74dc417012e39972319db06a0098f3e2d4b10dc7cca9d77b55185d60b1ef3",
+        "source.tsv": "83a9434b96a1cc8720c442823bb2aea6a95b6d344a5c308773499ee41feabd1c"
+      },
+      "runnerSha256": {
+        "unity-processes.tsv": "b9ec97a522157de0f099235508eff854ea7231f72b4fd1233e918e987d9f8326",
+        "results.xml": "5e07bec4cd9ebe25257b6abc0f418e7ccf8633564bd4d0a0ff2a093230a663ac",
+        "unity.log": "1ef04740c94693c4de3d14c10eddd37c45ff005be882c541be8c9f47f8fc416c",
+        "console.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "dataUnchangedAfterPackaging": true
+    },
+    "adjusted": {
+      "head": "5b1329da4c461d197329ca866e94ad51b9533018",
+      "gitStatusBefore": "",
+      "rawDataSha256": {
+        "points.tsv": "107944b2d6e48e0d0d19e533616e6808a7f80c903feca6ff7c2c2756fc0d4c0f",
+        "receptions.tsv": "6a18aa9dc407bee9e95b75fafd790dff57570d87cb5efa54fc96ffc3a39afcc0",
+        "matches.tsv": "30b7c72632dacf58cc74a014abfb0306b9b4ad6b730631f90723bdf5d9e66424",
+        "source.tsv": "ff9b11cbd18165b0caf987338763d145dccc89f0458ab4e5721b7fcc2b7e808e"
+      },
+      "runnerSha256": {
+        "unity-processes.tsv": "1f39137d8aeee9400e2c9bd7c3930fccd26d64e9f2bf24283455a4bcc57ff5a2",
+        "results.xml": "3a3935a493370f82cf60937fa44ddb5438ccc2104f933cd6373be5487e314680",
+        "unity.log": "9cdab167a3e67541bece0f49298e302a304b8ea046fc7d7d437cce338f949d8f",
+        "console.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "dataUnchangedAfterPackaging": true
+    }
+  },
+  "priorDataSha256StillIdentical": true
+}

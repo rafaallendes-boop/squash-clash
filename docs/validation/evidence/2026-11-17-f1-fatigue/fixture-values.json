@@ -1,0 +1,192 @@
+{
+  "schema": "f1-fixture-values/1",
+  "base": "766dedd",
+  "initialLiteralCommit": "f2b840f",
+  "adjustedLiteralCommit": "5b1329d",
+  "files": [
+    {
+      "path": "Assets/SquashClash/Tests/AutoQA/Scenario.cs",
+      "hashLiterals": {
+        "430da2faa818": "2ec0c953786a",
+        "06fed4bd4ac9": "e8df60f37d4b",
+        "8e22575422f2": "95a3f24313fe",
+        "e89daab41c3e": "750c407c8a2f"
+      },
+      "count121to132": false,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Rally/MatchTests.cs",
+      "hashLiterals": {},
+      "count121to132": false,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": true,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Rally/RallyFixtures.cs",
+      "hashLiterals": {},
+      "count121to132": false,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": true,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Rally/RallySimTests.cs",
+      "hashLiterals": {},
+      "count121to132": false,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": true,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Rally/RivalReleaseTimingTests.cs",
+      "hashLiterals": {
+        "430da2faa818": "2ec0c953786a"
+      },
+      "count121to132": true,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Shot/CausalQualityTests.cs",
+      "hashLiterals": {},
+      "count121to132": true,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Shot/CausalReferenceCoverageTests.cs",
+      "hashLiterals": {},
+      "count121to132": true,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Shot/ContactContractTests.cs",
+      "hashLiterals": {},
+      "count121to132": true,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Shot/DefaultPresetHashTests.cs",
+      "hashLiterals": {
+        "430da2faa818": "2ec0c953786a"
+      },
+      "count121to132": true,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Shot/M24ProjectionTests.cs",
+      "hashLiterals": {
+        "430da2faa818": "2ec0c953786a"
+      },
+      "count121to132": true,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Shot/S2DefaultPromotionTests.cs",
+      "hashLiterals": {
+        "dcc7c8cc0688": "f92f406f698a"
+      },
+      "count121to132": false,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Shot/S3FeedbackConfigTests.cs",
+      "hashLiterals": {},
+      "count121to132": true,
+      "addedFatigueKeyList": true,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Shot/ShotSolverTests.cs",
+      "hashLiterals": {},
+      "count121to132": true,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/EditMode/Shot/TimingAidConfigTests.cs",
+      "hashLiterals": {
+        "e89daab41c3e": "750c407c8a2f"
+      },
+      "count121to132": true,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/AutoQAT3OracleTests.cs",
+      "hashLiterals": {
+        "06fed4bd4ac9": "e8df60f37d4b",
+        "8e22575422f2": "95a3f24313fe"
+      },
+      "count121to132": false,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/ZCharacterFeelTests.cs",
+      "hashLiterals": {},
+      "count121to132": false,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": true,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/ZFirstRunFixture.cs",
+      "hashLiterals": {},
+      "count121to132": false,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": true,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/ZFirstRunMenuTests.cs",
+      "hashLiterals": {
+        "430da2faa818": "3262f9b89156"
+      },
+      "count121to132": false,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": false,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/ZRallyDirectorTests.cs",
+      "hashLiterals": {
+        "430da2faa818": "3262f9b89156"
+      },
+      "count121to132": false,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": true,
+      "allOtherContentIdentical": true
+    },
+    {
+      "path": "Assets/SquashClash/Tests/PlayMode/ZRallyHudTests.cs",
+      "hashLiterals": {
+        "430da2faa818": "3262f9b89156"
+      },
+      "count121to132": false,
+      "addedFatigueKeyList": false,
+      "explicitFatigueDisabledFixture": true,
+      "allOtherContentIdentical": true
+    }
+  ]
+}

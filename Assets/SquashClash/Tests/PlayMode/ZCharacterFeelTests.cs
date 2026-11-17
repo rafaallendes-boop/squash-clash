@@ -33,7 +33,7 @@ namespace SquashClash.Runtime.Tests
             yield return PlayModeTestWorld.ClearApp();yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
             app=AppBootstrap.Instance;app.GetComponent<ResumeOverlay>().Continue();app.Clock.Paused=false;
             app.Tuning.LoadPreset(PresetCodec.FromSet(app.Tuning.Defaults,"Figure feel fixture",app.Build.Label),new List<string>());
-            app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
+            app.Tuning.Set("fatigue.enabled",0);app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
             controller=app.GetComponent<ShotController>();swing=app.GetComponent<SwingView>();fx=app.GetComponent<StrokeFx>();rally=app.Rally;
             yield return null;yield return null; // the figures find the app, the swing view and the stroke effects
             app.Host.enabled=app.enabled=controller.enabled=swing.enabled=fx.enabled=rally.enabled=false;

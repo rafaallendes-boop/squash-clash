@@ -33,6 +33,7 @@ namespace SquashClash.Runtime.Rally
         private IRallyBrain rivalBrain,humanBrain;
         private ShotRecord resolved;
         private AiShot pendingShot,autoShot;
+        private ContactDecision rivalDecision;
         private CausalReference rivalCausal;
         private Func<long,BodyFrame> rivalCausalBody;
         private readonly List<CausalShotTrace> pointCausal=new List<CausalShotTrace>();
@@ -42,6 +43,11 @@ namespace SquashClash.Runtime.Rally
         private double closedSeenAt=double.NaN,lastObserved,waited,bodyCarry;
         private ReceptionResult? rivalReception;
         private PlayerId? served;private ServiceBox servedBox;
+        private bool resetEnergy=true;
+        public FatigueState HumanEnergy {get;private set;}
+        public FatigueState RivalEnergy {get;private set;}
+        public double HumanReceptionFatigue {get;private set;}
+        public double RivalReceptionFatigue {get;private set;}
         public RallyParams Params {get;private set;}=new RallyParams();
         public AiLevel Level {get;set;}=AiLevel.Medium;
         public long Seed {get;set;}=1;
@@ -104,13 +110,16 @@ namespace SquashClash.Runtime.Rally
             if(relaunchPractice)app.LaunchCurrent();
         }
         // Rematch: same rival, score back to zero, next point starts at once.
-        public void ResetScore(){HumanPoints=RivalPoints=PointsPlayed=0;LastPoint=null;}
+        public void ResetScore(){HumanPoints=RivalPoints=PointsPlayed=0;LastPoint=null;resetEnergy=true;}
         public void Rematch(){if(!Active)return;ResetScore();if(Match!=null)Match=NewMatch();BeginPoint();}
         private void BeginPoint()
         {
             pointCausal.Clear();
             var cfg=EffectiveConfig.From(app.Tuning.ApplyPending());
             context=new RallyContext(cfg,Params,factory);
+            HumanEnergy=new FatigueState(context.Fatigue,resetEnergy?100:HumanEnergy?.Energy??100);
+            RivalEnergy=new FatigueState(context.Fatigue,resetEnergy?100:RivalEnergy?.Energy??100);
+            resetEnergy=false;HumanEnergy.BeginPoint();RivalEnergy.BeginPoint();
             Human=new PlayerBody(PlayerId.Human,Human?.Position??context.WaitPosition(PlayerId.Human),context.Move);
             Rival=new PlayerBody(PlayerId.Rival,Rival?.Position??context.WaitPosition(PlayerId.Rival),context.Move);
             Rival.MoveTo(context.WaitPosition(PlayerId.Rival),0,BodyPhase.Recovering,BodyPhase.Waiting);
@@ -122,19 +131,22 @@ namespace SquashClash.Runtime.Rally
             {
                 // Automatic placement in the box and automatic serve for both players (spec 8.7.5 adaptation).
                 var server=Match.Server;var box=Match.Box;var body=server==PlayerId.Human?Human:Rival;served=server;servedBox=box;
-                committed.BeginServe(server,box);body.Teleport(ServePlanner.BoxPosition(context,box));
+                committed.BeginServe(server,box);(server==PlayerId.Human?HumanEnergy:RivalEnergy).Strike(0);body.Teleport(ServePlanner.BoxPosition(context,box));
                 body.MoveTo(context.WaitPosition(server),0,BodyPhase.Recovering,BodyPhase.Waiting);
                 if(server==PlayerId.Rival)LaunchToHuman(context.Serve(box));else LaunchToRival(context.Serve(box));
             }
             RallyStarted?.Invoke();
         }
-        private void LaunchToHuman(BallState ball)
+        private void LaunchToHuman(BallState ball,double? frozenFatigue=null)
         {
-            var trajectory=context.Predict(ball);int delay=context.Steps(Params.ReactionS);
+            HumanReceptionFatigue=frozenFatigue??context.Fatigue.Factor(HumanEnergy.Energy);
+            var effects=FatigueEffects.For(HumanReceptionFatigue,context.Fatigue);Human.MovementFactor=effects.MovementFactor;
+            var trajectory=context.Predict(ball);int delay=context.Steps(Params.ReactionS)+effects.ExtraSteps;
             HumanPlan=ReceptionPlanner.Plan(context,trajectory,committed,Human,delay,++planVersion);
             Human.MoveTo(HumanPlan.Stance,delay,BodyPhase.Approaching,BodyPhase.Set);
             var positions=Human.PositionsAfter(trajectory.States.Count);
             controller.SetNextReceptionBody(j=>context.FrameAt(positions[(int)(j-ball.Step)]));
+            controller.SetNextReceptionFatigue(HumanReceptionFatigue);
             // The fixed-body contact planner reads the human from the launch configuration, as practice already does.
             var at=HumanPlan.BodyAtContact;
             var source=app.Tuning.ApplyPending().With("human.x",at.x).With("human.z",at.y);
@@ -142,6 +154,7 @@ namespace SquashClash.Runtime.Rally
             try{app.Host.Launch(EffectiveConfig.From(source),ball,context.StepHz*10,StopCondition.SecondFloorBounce);}
             finally{launching=false;}
             flightLaunchId=app.Host.LaunchId;flightStartStep=ball.Step;bodyStep=app.Host.Current.Step;bodyCarry=0;lastObserved=app.Host.ObservedRealTime;
+            HumanEnergy.BeginFlight(bodyStep);RivalEnergy.BeginFlight(bodyStep);
             Phase=RallyPhase.HumanReception;resolved=null;closedSeenAt=double.NaN;hasPending=needDecision=autoQueued=false;autoShot=default;
             Rules=committed.Clone();
             if(Autopilot)
@@ -161,8 +174,9 @@ namespace SquashClash.Runtime.Rally
             try{app.Host.Launch(EffectiveConfig.From(source),ball,context.StepHz*10,StopCondition.SecondFloorBounce);}
             finally{launching=false;}
             flightLaunchId=app.Host.LaunchId;flightStartStep=ball.Step;bodyStep=app.Host.Current.Step;bodyCarry=0;lastObserved=app.Host.ObservedRealTime;
+            HumanEnergy.BeginFlight(bodyStep);RivalEnergy.BeginFlight(bodyStep);
             Phase=RallyPhase.RivalReception;resolved=null;closedSeenAt=double.NaN;hasPending=needDecision=autoQueued=false;autoShot=default;
-            Rules=committed.Clone();PlanRival();PlaceBodies();
+            Rules=committed.Clone();RivalReceptionFatigue=context.Fatigue.Factor(RivalEnergy.Energy);PlanRival();PlaceBodies();
         }
         private AiObservation Observe(PlayerId who,BallState ball)
         {
@@ -204,7 +218,7 @@ namespace SquashClash.Runtime.Rally
         }
         private void StepBodies(double elapsed)
         {
-            var host=app.Host;long now=host.Current.Step;int steps;
+            var host=app.Host;long now=host.Current.Step;long previousStep=bodyStep;bool ballAdvanced=host.IsRunning||now!=bodyStep;int steps;
             if(host.IsRunning||now!=bodyStep){steps=(int)Math.Max(0,Math.Min(now-bodyStep,context.StepHz));bodyCarry=0;}
             else
             {
@@ -213,7 +227,17 @@ namespace SquashClash.Runtime.Rally
                 steps=(int)bodyCarry;bodyCarry-=steps;
             }
             bodyStep=now;
-            for(int i=0;i<steps;i++){Human.Step();Rival.Step();}
+            for(int i=0;i<steps;i++)
+            {
+                var humanBefore=Human.Position;var rivalBefore=Rival.Position;
+                Human.Step();Rival.Step();
+                if(context.Fatigue.Enabled&&ballAdvanced&&(Phase==RallyPhase.HumanReception||Phase==RallyPhase.RivalReception))
+                {
+                    long step=previousStep+i+1;
+                    HumanEnergy.Advance(step,Vector2.Distance(humanBefore,Human.Position),Human.Phase,Human.Speed,Human.Reacting);
+                    RivalEnergy.Advance(step,Vector2.Distance(rivalBefore,Rival.Position),Rival.Phase,Rival.Speed,Rival.Reacting);
+                }
+            }
         }
         private PointRules Evaluate(long upToStep)
         {
@@ -245,6 +269,8 @@ namespace SquashClash.Runtime.Rally
                 long contactStep=resolved.ContactStep;var at=Evaluate(contactStep);
                 if(at.RacketContact(PlayerId.Human))
                 {
+                    RivalReceptionFatigue=context.Fatigue.Factor(RivalEnergy.EnergyAt(contactStep));
+                    HumanEnergy.StrikeAt(contactStep,resolved.Power);
                     committed=at;flightStartStep=contactStep;Phase=RallyPhase.RivalReception;resolved=null;
                     Human.MoveTo(context.WaitPosition(PlayerId.Human),0,BodyPhase.Recovering,BodyPhase.Waiting);
                     PlanRival();TickRival();return;
@@ -281,7 +307,8 @@ namespace SquashClash.Runtime.Rally
         {
             var host=app.Host;var trajectory=host.Prediction;long start=trajectory.States[0].Step;
             int elapsed=(int)Math.Max(0,host.Current.Step-start);
-            int delay=Math.Max(0,context.Steps(Params.ReactionS)+rivalBrain.PerceptionSteps-elapsed);
+            var effects=FatigueEffects.For(RivalReceptionFatigue,context.Fatigue);Rival.MovementFactor=effects.MovementFactor;
+            int delay=Math.Max(0,context.Steps(Params.ReactionS)+rivalBrain.PerceptionSteps+effects.ExtraSteps-elapsed);
             RivalPlan=ReceptionPlanner.Plan(context,trajectory,committed,Rival,delay,++planVersion,rivalBrain.StanceNoise(),elapsed);
             Rival.MoveTo(RivalPlan.Stance,delay,BodyPhase.Approaching,BodyPhase.Set);
             rivalCausal=null;rivalCausalBody=null;
@@ -310,7 +337,7 @@ namespace SquashClash.Runtime.Rally
             var decision=RallyContact.Resolve(context,host.ClockMap,host.Prediction,RivalPlan.Contact,host.ObservedRealTime,pendingShot.DeltaMs);
             // A paused clock cannot place a future instant yet: ask again on the next tick, same single attempt.
             if(decision.Result==ShotResult.NotEvaluable&&decision.Reason=="target-time-unmapped")return;
-            needDecision=false;
+            needDecision=false;rivalDecision=decision;
             if(decision.Result==ShotResult.Perfect||decision.Result==ShotResult.Valid){hasPending=true;pendingStep=decision.ContactStep;return;}
             rivalReception=decision.Result==ShotResult.Failed?(decision.Fail==FailKind.Air?ReceptionResult.Air:ReceptionResult.Late):
                 decision.Result==ShotResult.Unreachable?ReceptionResult.Unreachable:decision.Result==ShotResult.SystemFault?ReceptionResult.SystemFault:ReceptionResult.NotEvaluable;
@@ -333,10 +360,13 @@ namespace SquashClash.Runtime.Rally
                 }
                 if(solution.Solved&&at.RacketContact(PlayerId.Rival))
                 {
+                    double humanFatigue=context.Fatigue.Factor(HumanEnergy.EnergyAt(pendingStep));
+                    RivalEnergy.StrikeAt(pendingStep,pendingShot.P);
+                    WriteRivalShot(pendingStep,causal);
                     committed=at;rivalReception=ReceptionResult.Contact;RivalSwing?.Invoke(RivalPlan.Contact.Side,true);
                     Rival.MoveTo(context.WaitPosition(PlayerId.Rival),0,BodyPhase.Recovering,BodyPhase.Waiting);
                     // The rival's stroke: a new launch from the exact state of its contact step.
-                    LaunchToHuman(new BallState{Position=state.Position,Velocity=solution.Velocity,Step=0});
+                    LaunchToHuman(new BallState{Position=state.Position,Velocity=solution.Velocity,Step=0},humanFatigue);
                     return;
                 }
                 SystemFaults++;rivalReception=ReceptionResult.SystemFault;
@@ -356,6 +386,7 @@ namespace SquashClash.Runtime.Rally
             LastPoint=result;
             Human.MoveTo(context.WaitPosition(PlayerId.Human),0,BodyPhase.Recovering,BodyPhase.Waiting);
             Rival.MoveTo(context.WaitPosition(PlayerId.Rival),0,BodyPhase.Recovering,BodyPhase.Waiting);
+            HumanEnergy.ClosePoint();RivalEnergy.ClosePoint();WriteFatigueMetrics();
             WriteMetrics(result);
             PointEnded?.Invoke(result);
         }
@@ -374,6 +405,23 @@ namespace SquashClash.Runtime.Rally
                 server=served?.ToString()??"",box=served.HasValue?servedBox.ToString():"",causal=pointCausal.ToArray()};
             app.Metrics?.Write("rally-point",app.Host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,
                 !app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(line));
+        }
+        [Serializable] private sealed class FatigueLine
+        {public int point;public FatiguePoint human,rival;}
+        private void WriteFatigueMetrics()
+        {
+            var line=new FatigueLine{point=PointsPlayed,human=HumanEnergy.Point.Copy(),rival=RivalEnergy.Point.Copy()};
+            app.Metrics?.Write("fatigue",app.Host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,
+                !app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(line));
+        }
+        private void WriteRivalShot(long step,CausalShotResult causal)
+        {
+            if(!context.Fatigue.Enabled)return;
+            var record=new ShotRecord{LaunchId=app.Host.LaunchId,ContactStep=step,Result=rivalDecision.Result.ToString(),Fail=rivalDecision.Fail.ToString(),DeltaMs=rivalDecision.DeltaMs,Applied=true,Solved=true,
+                Power=pendingShot.P,AimX=pendingShot.Aim.x,AimY=pendingShot.Aim.y,f_r=RivalReceptionFatigue,Reason="rival-contact",
+                LaunchHash=app.Host.ActiveConfig.Hash,Seed=app.MetricsSeed,Speed=causal.Solution.Speed};
+            app.Metrics?.Write("shot",app.Host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,
+                !app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,record.ToJson());
         }
         private void OnDestroy()
         {

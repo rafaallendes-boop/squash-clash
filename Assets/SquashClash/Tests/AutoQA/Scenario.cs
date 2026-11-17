@@ -8,7 +8,7 @@ namespace SquashClash.AutoQA
         public float aimX=3.2f,aimY=2.2f,pullMm=18.5f;
         public double releaseOffsetMs,durationMs=300;
         public bool canary,useDefaults;
-        public string ExpectedHash=>useDefaults?(launch==4?"e89daab41c3e":"430da2faa818"):(launch==4?"8e22575422f2":"06fed4bd4ac9");
+        public string ExpectedHash=>useDefaults?(launch==4?"750c407c8a2f":"2ec0c953786a"):(launch==4?"95a3f24313fe":"e8df60f37d4b");
     }
     [Serializable] internal sealed class ScenarioCatalog {public Scenario[] scenarios;}
     [Serializable] public sealed class Expected

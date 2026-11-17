@@ -4,6 +4,50 @@
   "createdBuild": "I3",
   "values": [
     {
+      "key": "fatigue.enabled",
+      "value": 1
+    },
+    {
+      "key": "fatigue.costPerMeter",
+      "value": 0.4
+    },
+    {
+      "key": "fatigue.strongFrom",
+      "value": 0.7
+    },
+    {
+      "key": "fatigue.strongCost",
+      "value": 1.0
+    },
+    {
+      "key": "fatigue.recoverBetween",
+      "value": 0.25
+    },
+    {
+      "key": "fatigue.recoverPerS",
+      "value": 0.5
+    },
+    {
+      "key": "fatigue.onset",
+      "value": 70
+    },
+    {
+      "key": "fatigue.legsMax",
+      "value": 0.1
+    },
+    {
+      "key": "fatigue.reactionMaxMs",
+      "value": 40
+    },
+    {
+      "key": "fatigue.armSpeedMax",
+      "value": 0.04
+    },
+    {
+      "key": "fatigue.positionGainMax",
+      "value": 0.25
+    },
+    {
       "key": "timing.aidLevel",
       "value": 0
     },
