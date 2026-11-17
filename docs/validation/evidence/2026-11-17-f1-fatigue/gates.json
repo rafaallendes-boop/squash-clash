@@ -1,0 +1,438 @@
+{
+  "schema": "f1-validation/1",
+  "productAndFixtureSource": "5b1329d",
+  "editmodeFinalStartHead": "5b1329d",
+  "playmodeFinalStartHead": "1ab9367",
+  "subsequentChanges": "Documentation/experimental packaging only; product and regression sources unchanged",
+  "tests": {
+    "red": {
+      "xml": {
+        "id": "2",
+        "testcasecount": "20",
+        "result": "Failed(Child)",
+        "total": "20",
+        "passed": "0",
+        "failed": "20",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-17 19:32:10Z",
+        "end-time": "2026-11-17 19:32:10Z",
+        "duration": "0.0473419"
+      },
+      "assertionFailures": 19,
+      "errors": 1,
+      "files": {
+        "results.xml": "16817548d74c83967df0863a1c50069ecd547feb1fd2314df3b53ed173ce92e1",
+        "unity.log": "5bf167d6c555da2522a97e2b4fc542fbf5c29837714890ea6b308f9f56817ff6"
+      }
+    },
+    "core-green": {
+      "xml": {
+        "id": "2",
+        "testcasecount": "20",
+        "result": "Passed",
+        "total": "20",
+        "passed": "20",
+        "failed": "0",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-17 19:34:01Z",
+        "end-time": "2026-11-17 19:34:01Z",
+        "duration": "0.0806997"
+      },
+      "assertionFailures": 0,
+      "errors": 0,
+      "files": {
+        "results.xml": "e403084cc8209b75cd6d32d30397e8c0d62e29cf27b35d1f8be64a773bbe81cb",
+        "unity.log": "4fdafc005fd61edf319c4b914ab927bad84122a7222a0c89ac8a23ac64f14f2a"
+      }
+    },
+    "integration-red": {
+      "xml": {
+        "id": "2",
+        "testcasecount": "4",
+        "result": "Failed(Child)",
+        "total": "4",
+        "passed": "2",
+        "failed": "2",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-17 19:35:19Z",
+        "end-time": "2026-11-17 19:35:19Z",
+        "duration": "0.0619024"
+      },
+      "assertionFailures": 2,
+      "errors": 0,
+      "files": {
+        "results.xml": "39729a0ddb24b5456ff252b714076f1529c42563629f4aad4206f24ed735bec6",
+        "unity.log": "08293d92f2b3057bcaecae58fcc53dd52b254edf7de091e9a2cbfd28104b2a94"
+      }
+    },
+    "integration-green": {
+      "xml": {
+        "id": "2",
+        "testcasecount": "4",
+        "result": "Passed",
+        "total": "4",
+        "passed": "4",
+        "failed": "0",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-17 19:36:11Z",
+        "end-time": "2026-11-17 19:36:15Z",
+        "duration": "3.4572793"
+      },
+      "assertionFailures": 0,
+      "errors": 0,
+      "files": {
+        "results.xml": "d769d933b2bf1782bf8cdf3aa44845a74010707002a27f7582414f07bfd71afe",
+        "unity.log": "31fccd92d2ad1f9be45f5ade975588d606e2c7a38e61ba704ca2fcf402a8d9da"
+      }
+    },
+    "director-red": {
+      "xml": {
+        "id": "2",
+        "testcasecount": "2",
+        "result": "Failed(Child)",
+        "total": "2",
+        "passed": "0",
+        "failed": "2",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-17 19:37:39Z",
+        "end-time": "2026-11-17 19:37:41Z",
+        "duration": "2.0881889"
+      },
+      "assertionFailures": 2,
+      "errors": 0,
+      "files": {
+        "results.xml": "6fe5ed5234b8a4c695c9d83f628431ec84122a5b17b0e948cd2fd03156785bca",
+        "unity.log": "49172dd63f3e3b7330e7aa9af675cb75cbc906aba1f745e799207352a86cd269"
+      }
+    },
+    "director-green": {
+      "xml": {
+        "id": "2",
+        "testcasecount": "2",
+        "result": "Passed",
+        "total": "2",
+        "passed": "2",
+        "failed": "0",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-17 19:39:29Z",
+        "end-time": "2026-11-17 19:39:30Z",
+        "duration": "1.5888896"
+      },
+      "assertionFailures": 0,
+      "errors": 0,
+      "files": {
+        "results.xml": "785f413f83c5825302b0598d4afefe63131c2bbf02966dc062a2211582998c68",
+        "unity.log": "b1145b6dda2aac91138317eb19b6496f0995a3b0a05682c224af99eb26d05247"
+      }
+    },
+    "editmode-full": {
+      "xml": {
+        "id": "2",
+        "testcasecount": "788",
+        "result": "Passed",
+        "total": "788",
+        "passed": "788",
+        "failed": "0",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-17 19:41:26Z",
+        "end-time": "2026-11-17 19:42:22Z",
+        "duration": "55.6433229"
+      },
+      "assertionFailures": 0,
+      "errors": 0,
+      "files": {
+        "results.xml": "43f25f049ed912c3dd2040ec229d57052564bf89b25274f74c77c2c2ff19d0d2",
+        "unity.log": "cfa8d90ecd3b0a1b9ce34884c818cfeff35a76d295c35475b777af8a5fcf4c01"
+      }
+    },
+    "playmode-full": {
+      "xml": {
+        "id": "2",
+        "testcasecount": "583",
+        "result": "Passed",
+        "total": "583",
+        "passed": "583",
+        "failed": "0",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-17 19:42:46Z",
+        "end-time": "2026-11-17 19:45:07Z",
+        "duration": "141.0916773"
+      },
+      "assertionFailures": 0,
+      "errors": 0,
+      "files": {
+        "results.xml": "a4036d757e47230cd108dcc173291366e291b021860e065d79d174977801b0c4",
+        "unity.log": "857e56d753270ec958034ae1d1e6c597d92cbc51406f42c1a727a490b2f68762"
+      }
+    },
+    "adjustment-red": {
+      "xml": {
+        "id": "2",
+        "testcasecount": "1",
+        "result": "Failed(Child)",
+        "total": "1",
+        "passed": "0",
+        "failed": "1",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-17 19:49:19Z",
+        "end-time": "2026-11-17 19:49:19Z",
+        "duration": "0.0254325"
+      },
+      "assertionFailures": 1,
+      "errors": 0,
+      "files": {
+        "results.xml": "6b80af4462511f7ba897b568f27d7fbe6a4030d86a12cd432a63d7d506dff078",
+        "unity.log": "bf14bf2ce5660c74e7bcd6b5e850109aec2a0128637f51bd5a307b0c142541d5"
+      }
+    },
+    "adjustment-core-green": {
+      "xml": {
+        "id": "2",
+        "testcasecount": "24",
+        "result": "Passed",
+        "total": "24",
+        "passed": "24",
+        "failed": "0",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-17 19:49:40Z",
+        "end-time": "2026-11-17 19:49:42Z",
+        "duration": "1.8389896"
+      },
+      "assertionFailures": 0,
+      "errors": 0,
+      "files": {
+        "results.xml": "d73bc4e80f525d935f608618a9cc94c70eda84149d42827324aff6ddb7e366bf",
+        "unity.log": "14ec8bb804b8bf7dd265870b6fb04ca6e31eb147672ad34e397b5df563a8512d"
+      }
+    },
+    "editmode-final": {
+      "xml": {
+        "id": "2",
+        "testcasecount": "788",
+        "result": "Passed",
+        "total": "788",
+        "passed": "788",
+        "failed": "0",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-17 19:51:29Z",
+        "end-time": "2026-11-17 19:52:24Z",
+        "duration": "55.4217465"
+      },
+      "assertionFailures": 0,
+      "errors": 0,
+      "files": {
+        "results.xml": "481d2ef19d0cd3d471480ad5d8ce047d00318f618ac45e7ea98c141b5080ac3b",
+        "unity.log": "f7242d6fd99b70104dac1cfee25786663da8aaba136d3b8f881fb356eaa4a385"
+      }
+    },
+    "playmode-final": {
+      "xml": {
+        "id": "2",
+        "testcasecount": "583",
+        "result": "Passed",
+        "total": "583",
+        "passed": "583",
+        "failed": "0",
+        "inconclusive": "0",
+        "skipped": "0",
+        "asserts": "0",
+        "engine-version": "3.5.0.0",
+        "clr-version": "4.0.30319.42000",
+        "start-time": "2026-11-17 19:53:04Z",
+        "end-time": "2026-11-17 19:55:22Z",
+        "duration": "138.3973622"
+      },
+      "assertionFailures": 0,
+      "errors": 0,
+      "files": {
+        "results.xml": "a214821ad0968f85128270d5cecf796c654ee6b679f5f4f214bf9a994e089873",
+        "unity.log": "76deb6940d6d8fac9e5c4ba57e9507a6c744d401acf4f60d4a75e6c53678ca01"
+      }
+    }
+  },
+  "unityInventories": {
+    "editmode-full-unity.tsv": {
+      "sha256": "b342d5ab7e91ca329e380f30170d0df02d50aff3aeb12b6292e6c22646d65fcf",
+      "noEditorBeforeRun": true
+    },
+    "playmode-final-unity.tsv": {
+      "sha256": "4c6e538f15efce1ae28828bf6a0c7eab36f31a82b358b4ff968e04ac03ac9c3b",
+      "noEditorBeforeRun": true
+    },
+    "red-unity.tsv": {
+      "sha256": "bf31ffdeb7b5f74988d7668660feb146b95d6ecbb32734d5deb472df5e1e8695",
+      "noEditorBeforeRun": true
+    },
+    "director-red-unity.tsv": {
+      "sha256": "905bad1c686abd73a322a24ab93501a5d2b90d0b648ef007136e2f341657e70e",
+      "noEditorBeforeRun": true
+    },
+    "editmode-final-unity.tsv": {
+      "sha256": "8c34a77548ab2d550a6fe812cebd299d803ebc1795cce7e08b7e46cb9cc88542",
+      "noEditorBeforeRun": true
+    },
+    "adjustment-core-green-unity.tsv": {
+      "sha256": "69f06f765633e19527969673092b1f156c27c1716fabfa94f6b998497d4c63df",
+      "noEditorBeforeRun": true
+    },
+    "playmode-full-unity.tsv": {
+      "sha256": "589913374682dc45438f34366b676d482ba502eb4568a88c701d21bc9600c5e1",
+      "noEditorBeforeRun": true
+    },
+    "integration-green-unity.tsv": {
+      "sha256": "6a98e7152870287caeb02bd2367d484a024cc6bcf67edfaf3fb14ccfd30007c8",
+      "noEditorBeforeRun": true
+    },
+    "core-green-unity.tsv": {
+      "sha256": "cea6c04ba7f6cf96bd26d8c0f91956880d1f7075bf0f622b764294ac7b4b4ed6",
+      "noEditorBeforeRun": true
+    },
+    "integration-red-unity.tsv": {
+      "sha256": "86bfd098b1228cd6e29c89a660b2c4361a7adb6d707862d5cc4c1d96e2a9997c",
+      "noEditorBeforeRun": true
+    },
+    "adjustment-red-unity.tsv": {
+      "sha256": "eb4172c5d8b74021aff2617ccf856345e520bf86ee21ea2e51a506462c9b0163",
+      "noEditorBeforeRun": true
+    },
+    "director-green-unity.tsv": {
+      "sha256": "d7e41e1c2c1e8082b820cd8bbe104e16beeb6c66cc3f074b9e112c2617f45dc8",
+      "noEditorBeforeRun": true
+    }
+  },
+  "autoqaV": {
+    "status": "NotEvaluated",
+    "reason": "F1-AUTOQA-01 static schema incompatibility; not invoked"
+  },
+  "autoqaT3": {
+    "status": "NotEvaluated",
+    "reason": "F1-AUTOQA-01 static schema incompatibility; not invoked"
+  },
+  "checkRelease": {
+    "status": "NotEvaluated",
+    "reason": "Stopped before further gates on F1-AUTOQA-01"
+  },
+  "projectSettingsRestored": true,
+  "experimentalPackagingIncidents": [
+    {
+      "schema": "f1-pack-incident/1",
+      "id": "F1-PACK-01",
+      "phase": "post-data fixture diff packaging",
+      "error": "AssertionError: Unexpected existing-test change: Assets/SquashClash/Tests/PlayMode/ZCharacterFeelTests.cs",
+      "cause": "Normalizer removed fatigue.enabled key text before removing the complete fatigue opt-out fixture statement; produced a false mismatch in memory. No file was changed.",
+      "failedOrder": [
+        "remove hash/count literals",
+        "remove added fatigue keys",
+        "remove complete fixture opt-out statement"
+      ],
+      "correctedOrder": [
+        "remove complete fixture opt-out statement",
+        "remove hash/count literals",
+        "remove added fatigue keys"
+      ],
+      "rawDataSha256Before": {
+        "Logs/experiments/f1-fatigue/off-runner/unity-processes.tsv": "ce5d09fa4784d8df33a4d7d707d7f233b4c963b72cac20328a0dbf5eb0f0e01b",
+        "Logs/experiments/f1-fatigue/baseline/points.tsv": "114da59f8420abdd32cb0235bb51f73c01d923737adcf951d92caf3aa2f8e0c6",
+        "Logs/experiments/f1-fatigue/baseline/receptions.tsv": "a5368c7c01a8f64d14b209fbbaf978942cd0441637d4fac0dc9c7c0880122a24",
+        "Logs/experiments/f1-fatigue/baseline/matches.tsv": "f70392425be61b40d859fce99a39a5085531d4b8fde578c2bec6c2f7ad866314",
+        "Logs/experiments/f1-fatigue/baseline/source.tsv": "7d9bf8d53361dad53c247398b4339edaf62487baeab9800d71c336f91ca9a491",
+        "Logs/experiments/f1-fatigue/adjusted/points.tsv": "107944b2d6e48e0d0d19e533616e6808a7f80c903feca6ff7c2c2756fc0d4c0f",
+        "Logs/experiments/f1-fatigue/adjusted/receptions.tsv": "6a18aa9dc407bee9e95b75fafd790dff57570d87cb5efa54fc96ffc3a39afcc0",
+        "Logs/experiments/f1-fatigue/adjusted/matches.tsv": "30b7c72632dacf58cc74a014abfb0306b9b4ad6b730631f90723bdf5d9e66424",
+        "Logs/experiments/f1-fatigue/adjusted/source.tsv": "ff9b11cbd18165b0caf987338763d145dccc89f0458ab4e5721b7fcc2b7e808e",
+        "Logs/experiments/f1-fatigue/baseline-runner/unity-processes.tsv": "be54416ccc113b7b66cbb8fec723bb0e5478add80f18440e5a1f4d683b6c648b",
+        "Logs/experiments/f1-fatigue/soft/points.tsv": "b7e9681cbeed99cc5d67c347a9c238adce6e08474429936242bf1f3ec3fc8250",
+        "Logs/experiments/f1-fatigue/soft/receptions.tsv": "29273103eb2bb587df9ec35969ab7228bdbbb7b380cd2299cc5dfdd5d4ea2c03",
+        "Logs/experiments/f1-fatigue/soft/matches.tsv": "45d74dc417012e39972319db06a0098f3e2d4b10dc7cca9d77b55185d60b1ef3",
+        "Logs/experiments/f1-fatigue/soft/source.tsv": "83a9434b96a1cc8720c442823bb2aea6a95b6d344a5c308773499ee41feabd1c",
+        "Logs/experiments/f1-fatigue/soft-runner/unity-processes.tsv": "b9ec97a522157de0f099235508eff854ea7231f72b4fd1233e918e987d9f8326",
+        "Logs/experiments/f1-fatigue/adjusted-runner/unity-processes.tsv": "1f39137d8aeee9400e2c9bd7c3930fccd26d64e9f2bf24283455a4bcc57ff5a2",
+        "Logs/experiments/f1-fatigue/off/points.tsv": "c04b44f89dea0a2a6eee9ea1d50463e117e32cc9a67760bb3cc1e79d9811ceb8",
+        "Logs/experiments/f1-fatigue/off/receptions.tsv": "a5368c7c01a8f64d14b209fbbaf978942cd0441637d4fac0dc9c7c0880122a24",
+        "Logs/experiments/f1-fatigue/off/matches.tsv": "f70392425be61b40d859fce99a39a5085531d4b8fde578c2bec6c2f7ad866314",
+        "Logs/experiments/f1-fatigue/off/source.tsv": "fc1885bdcbb62e6f0c13b3af24ae808834bd552f86021607247fb9b7bfe16aa4"
+      },
+      "authorization": "PO experimental summary/packaging autonomy; verify unchanged raw data",
+      "rawDataSha256UnchangedAfterCorrection": true,
+      "correctedScript": "scripts/verify-f1-fixture-diff.py"
+    },
+    {
+      "id": "F1-PACK-02",
+      "phase": "post-data gates packaging",
+      "failedAttempt": "AssertionError while asserting every *-unity.tsv was empty",
+      "cause": "The glob included release-guard-check-unity.tsv, an intentional guard self-check that correctly blocked the fake second launch while PlayMode was running. No second Editor was started.",
+      "correction": "Separate the intentional blocked guard self-check from inventories for actual test invocations. All actual pre-run inventories are empty.",
+      "guardSelfCheckSha256": "c89d3e99c87bd7e1328c130563f28e6943b48734755fb3d052d71567091ad821",
+      "rawDataSha256BeforeAndAfter": {
+        "Logs/experiments/f1-fatigue/off-runner/unity-processes.tsv": "ce5d09fa4784d8df33a4d7d707d7f233b4c963b72cac20328a0dbf5eb0f0e01b",
+        "Logs/experiments/f1-fatigue/baseline/points.tsv": "114da59f8420abdd32cb0235bb51f73c01d923737adcf951d92caf3aa2f8e0c6",
+        "Logs/experiments/f1-fatigue/baseline/receptions.tsv": "a5368c7c01a8f64d14b209fbbaf978942cd0441637d4fac0dc9c7c0880122a24",
+        "Logs/experiments/f1-fatigue/baseline/matches.tsv": "f70392425be61b40d859fce99a39a5085531d4b8fde578c2bec6c2f7ad866314",
+        "Logs/experiments/f1-fatigue/baseline/source.tsv": "7d9bf8d53361dad53c247398b4339edaf62487baeab9800d71c336f91ca9a491",
+        "Logs/experiments/f1-fatigue/adjusted/points.tsv": "107944b2d6e48e0d0d19e533616e6808a7f80c903feca6ff7c2c2756fc0d4c0f",
+        "Logs/experiments/f1-fatigue/adjusted/receptions.tsv": "6a18aa9dc407bee9e95b75fafd790dff57570d87cb5efa54fc96ffc3a39afcc0",
+        "Logs/experiments/f1-fatigue/adjusted/matches.tsv": "30b7c72632dacf58cc74a014abfb0306b9b4ad6b730631f90723bdf5d9e66424",
+        "Logs/experiments/f1-fatigue/adjusted/source.tsv": "ff9b11cbd18165b0caf987338763d145dccc89f0458ab4e5721b7fcc2b7e808e",
+        "Logs/experiments/f1-fatigue/baseline-runner/unity-processes.tsv": "be54416ccc113b7b66cbb8fec723bb0e5478add80f18440e5a1f4d683b6c648b",
+        "Logs/experiments/f1-fatigue/soft/points.tsv": "b7e9681cbeed99cc5d67c347a9c238adce6e08474429936242bf1f3ec3fc8250",
+        "Logs/experiments/f1-fatigue/soft/receptions.tsv": "29273103eb2bb587df9ec35969ab7228bdbbb7b380cd2299cc5dfdd5d4ea2c03",
+        "Logs/experiments/f1-fatigue/soft/matches.tsv": "45d74dc417012e39972319db06a0098f3e2d4b10dc7cca9d77b55185d60b1ef3",
+        "Logs/experiments/f1-fatigue/soft/source.tsv": "83a9434b96a1cc8720c442823bb2aea6a95b6d344a5c308773499ee41feabd1c",
+        "Logs/experiments/f1-fatigue/soft-runner/unity-processes.tsv": "b9ec97a522157de0f099235508eff854ea7231f72b4fd1233e918e987d9f8326",
+        "Logs/experiments/f1-fatigue/adjusted-runner/unity-processes.tsv": "1f39137d8aeee9400e2c9bd7c3930fccd26d64e9f2bf24283455a4bcc57ff5a2",
+        "Logs/experiments/f1-fatigue/off/points.tsv": "c04b44f89dea0a2a6eee9ea1d50463e117e32cc9a67760bb3cc1e79d9811ceb8",
+        "Logs/experiments/f1-fatigue/off/receptions.tsv": "a5368c7c01a8f64d14b209fbbaf978942cd0441637d4fac0dc9c7c0880122a24",
+        "Logs/experiments/f1-fatigue/off/matches.tsv": "f70392425be61b40d859fce99a39a5085531d4b8fde578c2bec6c2f7ad866314",
+        "Logs/experiments/f1-fatigue/off/source.tsv": "fc1885bdcbb62e6f0c13b3af24ae808834bd552f86021607247fb9b7bfe16aa4"
+      },
+      "rawDataUnchanged": true
+    }
+  ],
+  "priorRawDataSha256StillIdentical": true,
+  "merge": false,
+  "install": false
+}
