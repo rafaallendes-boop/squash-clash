@@ -55,5 +55,13 @@ namespace SquashClash.Core.Shot
             PlannerCostMs,SolverCostMs,ReconstructionCostMs,PredictionCostMs,ReconciliationCostMs;
         public float Power,AimX,AimY,ContactX,ContactY,ContactZ,TargetUsedX,TargetUsedY,Speed,PaceDistanceM,PaceGamma,RequestedSpeedLinear,RequestedSpeed,VelocityX,VelocityY,VelocityZ,JumpMeters,JumpPixels,JumpBallDiameters;
         public string ToJson()=>JsonUtility.ToJson(this);
+        // JsonUtility cannot skip a field, so the leading f_r member is removed to keep the pre-F1 schema outside Rally/Match.
+        public string ToJson(bool includeFatigue)
+        {
+            string json=JsonUtility.ToJson(this);
+            if(includeFatigue)return json;
+            const string lead="{\"f_r\":";int comma=json.StartsWith(lead)?json.IndexOf(','):-1;
+            return comma<0?json:"{"+json.Substring(comma+1);
+        }
     }
 }

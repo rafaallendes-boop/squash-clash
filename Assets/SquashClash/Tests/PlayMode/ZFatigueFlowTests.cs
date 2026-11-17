@@ -52,6 +52,8 @@ namespace SquashClash.Runtime.Tests
             Assert.That(typeof(ShotRecord).GetField("f_r"),Is.Not.Null,"shot metrics retain the frozen receiver factor");
             Assert.That(Drive(()=>controller.LastRecord!=null,90),Is.True);
             Assert.That((double)typeof(ShotRecord).GetField("f_r").GetValue(controller.LastRecord),Is.EqualTo(.5));
+            Assert.That(Lines().Where(l=>l.kind=="shot").All(l=>l.payload.Contains("\"f_r\":")),Is.True,"rally shot events carry f_r");
+            Assert.That(Lines().Any(l=>l.kind=="shot"),Is.True);
             rally.StopMode();controller.CloseReception();
             if(controller.LastRecord!=null)Assert.That((double)typeof(ShotRecord).GetField("f_r").GetValue(controller.LastRecord),Is.Zero,"practice does not inherit rally fatigue");
         }

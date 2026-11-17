@@ -18,7 +18,9 @@ namespace SquashClash.Runtime.Shot
         private AppBootstrap app;
         private Func<long,BodyFrame> nextCausalBody,causalBody;
         private double nextReceptionFatigue,receptionFatigue;
-        public void SetNextReceptionFatigue(double factor)=>nextReceptionFatigue=factor;
+        private bool nextRecordsFatigue,recordsFatigue;
+        // Only Rally/Match call this, so only their shot events carry f_r; practice, SL and AutoQA keep the main schema.
+        public void SetNextReceptionFatigue(double factor){nextReceptionFatigue=factor;nextRecordsFatigue=true;}
         // Consumed only by the next launch, then copied into its immutable reference.
         public void SetNextReceptionBody(Func<long,BodyFrame> bodyAt)=>nextCausalBody=bodyAt;
         private readonly Queue<ClosedGesture> orders=new Queue<ClosedGesture>();
@@ -66,7 +68,7 @@ namespace SquashClash.Runtime.Shot
         }
         private void OnLaunched(EffectiveConfig cfg)
         {
-            receptionFatigue=nextReceptionFatigue;nextReceptionFatigue=0;
+            receptionFatigue=nextReceptionFatigue;nextReceptionFatigue=0;recordsFatigue=nextRecordsFatigue;nextRecordsFatigue=false;
             CausalReference=null;LastCausal=default;causalBody=nextCausalBody;nextCausalBody=null;
             Snapshot=new ShotConfig(cfg.Source);ring.BeginReception(Snapshot.Reception.GetInt("timing.aidLevel"));Haptics.Enabled=Snapshot.Reception.GetBool("feedback.haptics");seen.Clear();Presented=new PresentedPlans();AttemptConsumed=WaitingForContact=false;
             LastRecord=LastClosureRecord=pendingContact=null;gate.Reset(app.Host.LaunchId);LastPresentation=null;PresentationCount=0;LastDiscardReason=null;LastSolution=default;closedAt=null;recordVersion=0;
@@ -239,7 +241,7 @@ namespace SquashClash.Runtime.Shot
         private void Discard(ClosedGesture o,string reason)
         {LastDiscardReason=reason;if(Snapshot==null)return;var r=BaseRecord(o);r.Result="Discarded";r.Reason=reason;Write("shot-discarded",r);}
         private void Write(string kind,ShotRecord record)
-        {record.f_r=receptionFatigue;app.Metrics?.Write(kind,app.Host.ActiveConfig,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,record.ToJson());}
+        {record.f_r=recordsFatigue?receptionFatigue:0;app.Metrics?.Write(kind,app.Host.ActiveConfig,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,record.ToJson(recordsFatigue));}
         // Runs even with an empty queue: preparation follows clock availability, never attempt data.
         private void RefreshClockPresentation()
         {
