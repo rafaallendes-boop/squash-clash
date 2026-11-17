@@ -219,7 +219,7 @@ namespace SquashClash.Experiments.EditMode
                 "plan", "Unsolved", "bucket", "e", "route", "unsolved", "postBackContact", false, "postBackWindow", 0,
                 "ruleSamples", 0, "belowMin", 0, "aboveMax", 0, "window", 0, "candidates", 0, "onTimeCandidates", 0, "candidateContactOk", 0, "candidateContactRejected", 0,
                 "lateStarSteps", "", "lateAvailableSteps", "", "bestAvailableSteps", "", "bestRequiredSteps", "", "bestStanceX", "", "bestStanceZ", "", "bestDistance", "",
-                "stanceX", "", "stanceZ", "bodyContactX", "", "bodyContactZ", "arrivalSteps", "", "slackS", "", "contactExists", false,
+                "stanceX", "", "stanceZ", "", "bodyContactX", "", "bodyContactZ", "", "arrivalSteps", "", "slackS", "", "contactExists", false,
                 "contactReason", "", "contactSteps", "", "contactX", "", "contactY", "", "contactZ", "", "contactClearance", "");
             if (!f.Solution.Solved) return;
             var body = new PlayerBody(receiver, wait, ctx.Move);
@@ -300,11 +300,20 @@ namespace SquashClash.Experiments.EditMode
         private float Clearance(Vector3 p) => Mathf.Min(Mathf.Min(p.x, ctx.Court.Width - p.x), Mathf.Min(p.z, ctx.Court.Length - p.z));
         private static bool Finite(Vector3 p) => !(float.IsNaN(p.x) || float.IsInfinity(p.x) || float.IsNaN(p.y) || float.IsInfinity(p.y) || float.IsNaN(p.z) || float.IsInfinity(p.z));
         private static string F(object value) => value == null ? "" : value is float f ? f.ToString("R", C) : value is double d ? d.ToString("R", C) : value is bool b ? (b ? "true" : "false") : Convert.ToString(value, C).Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
-        private static void Put(Dictionary<string, string> row, params object[] values)
-        { for (int i = 0; i < values.Length; i += 2) row[(string)values[i]] = F(values[i + 1]); }
-        private static void WriteRows(string path, List<Dictionary<string, string>> rows)
+        // Schema guards shared only by the G1 experimental reports, never product code.
+        internal static void Put(Dictionary<string, string> row, params object[] values)
+        {
+            if (values.Length % 2 != 0) throw new ArgumentException("Incomplete key/value pair.", nameof(values));
+            for (int i = 0; i < values.Length; i += 2)
+                if (!(values[i] is string key) || string.IsNullOrWhiteSpace(key))
+                    throw new ArgumentException("Empty or invalid column name.", nameof(values));
+            for (int i = 0; i < values.Length; i += 2) row[(string)values[i]] = F(values[i + 1]);
+        }
+        internal static void WriteRows(string path, List<Dictionary<string, string>> rows)
         {
             var keys = rows.SelectMany(r => r.Keys).Distinct().OrderBy(k => k, StringComparer.Ordinal).ToArray();
+            if (keys.Length == 0 || keys.Any(string.IsNullOrWhiteSpace))
+                throw new ArgumentException("Export schema has empty column names.", nameof(rows));
             using (var writer = new StreamWriter(path, false, Utf8))
             { writer.WriteLine(string.Join("\t", keys)); foreach (var row in rows) writer.WriteLine(string.Join("\t", keys.Select(k => row.TryGetValue(k, out var value) ? value : ""))); }
         }

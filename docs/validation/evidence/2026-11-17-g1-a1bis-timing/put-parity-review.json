@@ -1,0 +1,85 @@
+{
+  "sourceSha256": "e010b070d6a1da3c582ad3828c7ec4fb141021614269f5a22c9255d139b361b8",
+  "calls": [
+    {
+      "line": 47,
+      "pairs": 13,
+      "keys": [
+        "\"head\"",
+        "\"defaults\"",
+        "\"simulationKey\"",
+        "\"rallyParams\"",
+        "\"unity\"",
+        "\"tempo\"",
+        "\"stepHz\"",
+        "\"assistMs\"",
+        "\"validMs\"",
+        "\"validLimit\"",
+        "\"earlySoft\"",
+        "\"latencyCompMs\"",
+        "\"bounceThreshold\""
+      ]
+    },
+    {
+      "line": 84,
+      "pairs": 30,
+      "keys": [
+        "\"id\"",
+        "\"receiver\"",
+        "\"difficulty\"",
+        "\"fixture\"",
+        "\"power\"",
+        "\"launchSpeed\"",
+        "\"launchNorm\"",
+        "\"flightCause\"",
+        "\"backInPlay\"",
+        "\"plan\"",
+        "\"usable\"",
+        "\"sigmaMs\"",
+        "\"waitX\"",
+        "\"waitZ\"",
+        "\"stanceX\"",
+        "\"stanceZ\"",
+        "\"bodyContactX\"",
+        "\"bodyContactZ\"",
+        "\"noiseX\"",
+        "\"noiseZ\"",
+        "\"delaySteps\"",
+        "\"slackS\"",
+        "\"postBackContact\"",
+        "\"star\"",
+        "\"contactSpeed\"",
+        "\"kInMs\"",
+        "\"kOutMs\"",
+        "\"widthMs\"",
+        "\"zeroResult\"",
+        "\"zeroFail\""
+      ]
+    },
+    {
+      "line": 99,
+      "pairs": 7,
+      "keys": [
+        "\"star\"",
+        "\"contactSpeed\"",
+        "\"kInMs\"",
+        "\"kOutMs\"",
+        "\"widthMs\"",
+        "\"zeroResult\"",
+        "\"zeroFail\""
+      ]
+    },
+    {
+      "line": 153,
+      "pairs": 6,
+      "keys": [
+        "\"id\"",
+        "\"receiver\"",
+        "\"difficulty\"",
+        "\"lowMs\"",
+        "\"highMs\"",
+        "\"category\""
+      ]
+    }
+  ]
+}

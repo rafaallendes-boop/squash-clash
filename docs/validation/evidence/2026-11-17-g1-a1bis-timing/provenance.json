@@ -1,0 +1,128 @@
+{
+  "measuredHead": "fe7633d7ad1b01630886aaaf145e69ad9ba57423",
+  "methodCommit": "73d86a2",
+  "compilation": {
+    "run01": {
+      "receipt": {
+        "head": "fe7633d7ad1b01630886aaaf145e69ad9ba57423",
+        "status": "compiled",
+        "assemblySha256": "45ab13947b6448b0d4cd34ecc6f4419419d66325dbfe07380775662ff4682421",
+        "sourceSha256": "e010b070d6a1da3c582ad3828c7ec4fb141021614269f5a22c9255d139b361b8"
+      },
+      "files": {
+        "compile.json": {
+          "sha256": "13cd49bad4e5be45253728a7208f014013e1b4ea6fdddb35dd9b5f5de83ad74e",
+          "bytes": 255
+        },
+        "console.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "unity-processes.tsv": {
+          "sha256": "12cc74bd7f2b559e363e5e3508285d1bfab62a33d374c272a6852584bb665660",
+          "bytes": 64
+        },
+        "unity.log": {
+          "sha256": "6b3d729af6d4cabd76508df85dea1e2fa9a03671070b7d24cbc3fc701a84a8f0",
+          "bytes": 30388
+        }
+      }
+    },
+    "run02": {
+      "receipt": {
+        "head": "fe7633d7ad1b01630886aaaf145e69ad9ba57423",
+        "status": "compiled",
+        "assemblySha256": "45ab13947b6448b0d4cd34ecc6f4419419d66325dbfe07380775662ff4682421",
+        "sourceSha256": "e010b070d6a1da3c582ad3828c7ec4fb141021614269f5a22c9255d139b361b8"
+      },
+      "files": {
+        "compile.json": {
+          "sha256": "13cd49bad4e5be45253728a7208f014013e1b4ea6fdddb35dd9b5f5de83ad74e",
+          "bytes": 255
+        },
+        "console.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "unity-processes.tsv": {
+          "sha256": "6bfcefc10359865c6142d8202e051290caf94960a6ed728a4ea61242834b812c",
+          "bytes": 64
+        },
+        "unity.log": {
+          "sha256": "a6e6e74068ef76030cae4f2b44d63a3aa3de6c07c9a491eeb46cdafd192ca133",
+          "bytes": 27987
+        }
+      }
+    }
+  },
+  "failedAttempts": {
+    "attempt-CS-01-run01-runner": {
+      "console.log": {
+        "sha256": "a37c1c1e436570b4d07be72152958fddea58dbbc6f3aa9a85d50736cb3902e6f",
+        "bytes": 67
+      },
+      "unity-processes.tsv": {
+        "sha256": "ed655d5872bd3245004eb51bbc6909bb26c0d5c5c7c5afa2d9a38cc1f2e92bc8",
+        "bytes": 64
+      },
+      "unity.log": {
+        "sha256": "ec6221cd2ef6c5790423564e2770c211b5981025b0ed455632dfc1bff6265383",
+        "bytes": 73696
+      }
+    },
+    "attempt-EXPORT-02-run01-runner": {
+      "console.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "results.xml": {
+        "sha256": "00fc86cb5161788d0b81b45f849c905822fbd8085757e8ce754140cc65765807",
+        "bytes": 5967
+      },
+      "unity-processes.tsv": {
+        "sha256": "ec7c454f28aaa8dc1bc1aa16074a194ca59710c6a232886e12a14c2dc3ea696e",
+        "bytes": 64
+      },
+      "unity.log": {
+        "sha256": "12e3adc06eb54e28912b5b42df47fa9f999140e895073f0f4f4a20b1a09bb9c6",
+        "bytes": 58789
+      }
+    },
+    "attempt-EXPORT-02-run01": {
+      "samples.tsv": {
+        "sha256": "bf3cc344ef99556f469db8884b94c83456580c0fe4362f4810502e1461efef0f",
+        "bytes": 78
+      },
+      "source.tsv": {
+        "sha256": "c51d1031a9f42d63cdc6818323f238dd127b63b35b1fd9ca18ded5a8c73a962c",
+        "bytes": 253
+      }
+    },
+    "compile-before-EXPORT-02-run01-runner": {
+      "compile.json": {
+        "sha256": "586189f2b225ce54aee401bd8c840345ae6ecb8c17e942dc2d05c165c9befe32",
+        "bytes": 255
+      },
+      "console.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "unity-processes.tsv": {
+        "sha256": "b4adcae6bac673e99ae68d4c03181610f3c1b400919fdfdfd6484d2dd2701d2b",
+        "bytes": 64
+      },
+      "unity.log": {
+        "sha256": "09aa74ce530c71f58a8a08ffe3d664b205c2162434df7f399d3cb9c7bc1bced6",
+        "bytes": 30422
+      }
+    }
+  },
+  "staticPutReview": {
+    "sha256": "c74d5dbca59fa99ed841799a9cef7d47b0698568a93ccd09b789ee3ea0974415",
+    "bytes": 1732
+  },
+  "compileCheckScript": {
+    "sha256": "0ead1171951db0cab0ee8c15c0f0ba3d3cb1a5e451ecff2b51c76257df264292",
+    "bytes": 2518
+  }
+}

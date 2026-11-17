@@ -1,0 +1,89 @@
+{
+  "status": "NotEvaluated",
+  "incident": "G1-A1BIS-EXPORT-02",
+  "source": "5cae7bde5aec871f464bb42c14ec05b2b3894a93",
+  "methodUnchanged": "73d86a2",
+  "secondProcessLaunched": false,
+  "compile": {
+    "directory": "compile-run01-runner",
+    "status": "compiled",
+    "files": {
+      "compile.json": {
+        "sha256": "586189f2b225ce54aee401bd8c840345ae6ecb8c17e942dc2d05c165c9befe32",
+        "bytes": 255
+      },
+      "console.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "unity-processes.tsv": {
+        "sha256": "b4adcae6bac673e99ae68d4c03181610f3c1b400919fdfdfd6484d2dd2701d2b",
+        "bytes": 64
+      },
+      "unity.log": {
+        "sha256": "09aa74ce530c71f58a8a08ffe3d664b205c2162434df7f399d3cb9c7bc1bced6",
+        "bytes": 30422
+      }
+    }
+  },
+  "failedAttempts": {
+    "CS-01": {
+      "directory": "attempt-CS-01-run01-runner",
+      "xmlExists": false,
+      "files": {
+        "console.log": {
+          "sha256": "a37c1c1e436570b4d07be72152958fddea58dbbc6f3aa9a85d50736cb3902e6f",
+          "bytes": 67
+        },
+        "unity-processes.tsv": {
+          "sha256": "ed655d5872bd3245004eb51bbc6909bb26c0d5c5c7c5afa2d9a38cc1f2e92bc8",
+          "bytes": 64
+        },
+        "unity.log": {
+          "sha256": "ec6221cd2ef6c5790423564e2770c211b5981025b0ed455632dfc1bff6265383",
+          "bytes": 73696
+        }
+      }
+    },
+    "EXPORT-02": {
+      "directory": "attempt-EXPORT-02-run01-runner",
+      "files": {
+        "console.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "results.xml": {
+          "sha256": "00fc86cb5161788d0b81b45f849c905822fbd8085757e8ce754140cc65765807",
+          "bytes": 5967
+        },
+        "unity-processes.tsv": {
+          "sha256": "ec7c454f28aaa8dc1bc1aa16074a194ca59710c6a232886e12a14c2dc3ea696e",
+          "bytes": 64
+        },
+        "unity.log": {
+          "sha256": "12e3adc06eb54e28912b5b42df47fa9f999140e895073f0f4f4a20b1a09bb9c6",
+          "bytes": 58789
+        }
+      },
+      "partialDirectory": "attempt-EXPORT-02-run01",
+      "partialFiles": {
+        "samples.tsv": {
+          "sha256": "bf3cc344ef99556f469db8884b94c83456580c0fe4362f4810502e1461efef0f",
+          "bytes": 78
+        },
+        "source.tsv": {
+          "sha256": "c51d1031a9f42d63cdc6818323f238dd127b63b35b1fd9ca18ded5a8c73a962c",
+          "bytes": 253
+        }
+      },
+      "samples": 0,
+      "counts": {
+        "result": "Failed(Child)",
+        "total": "1",
+        "passed": "0",
+        "failed": "1",
+        "skipped": "0"
+      }
+    }
+  }
+}
