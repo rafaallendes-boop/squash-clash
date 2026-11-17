@@ -193,8 +193,8 @@ if RUN == 'run02':
     for run in ('run01', 'run02'):
         manifest['runs'][run] = {'files': {name: file_meta(BASE / run / name) for name in (*RAW, 'probabilities.tsv', 'tables.tsv', 'checks.tsv', 'analysis.json')},
                                  'runnerFiles': {p.name: file_meta(p) for p in sorted((BASE / (run + '-runner')).iterdir()) if p.is_file()}}
-    for phase in ('schema-red', 'schema-green'):
-        manifest[phase] = {p.name: file_meta(p) for p in sorted((BASE / (phase + '-runner')).iterdir()) if p.is_file()}
+    for phase in ('red', 'green'):
+        manifest[phase] = {p.name: file_meta(p) for p in sorted((ROOT / 'Logs/evidence/g1-a1' / phase).iterdir()) if p.is_file()}
     (out / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     assert sum(p.stat().st_size for p in out.iterdir()) < 1_000_000
 print(json.dumps(analysis, indent=2))
