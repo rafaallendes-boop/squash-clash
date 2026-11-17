@@ -93,7 +93,7 @@ namespace SquashClash.Core.Rally
         }
         public void StrikeAt(long step,double power)
         {
-            if(!open||!settings.Enabled||struck)return;
+            if(!open||!settings.Enabled||struck||power<=settings.StrongFrom||settings.StrongCost==0)return;
             int offset=checked((int)(step-firstStep));
             if(offset<0||offset>samples.Count)throw new ArgumentOutOfRangeException(nameof(step));
             struck=true;Energy=flightEnergy;Point=flightPoint.Copy();

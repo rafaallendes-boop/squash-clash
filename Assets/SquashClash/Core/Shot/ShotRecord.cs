@@ -41,6 +41,7 @@ namespace SquashClash.Core.Shot
     }
     [Serializable] public sealed class ShotRecord
     {
+        public double f_r;
         public int AidLevel,AidCutoffPlanVersion;
         public bool AidCutoff,Solved;
         public double AidCutoffTarget;
