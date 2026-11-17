@@ -2988,3 +2988,15 @@ El PO confirma #66 fusionada en `3780bf8`, segundo padre `bd387164a14a` y árbol
 Aprobación literal del PO: «Si da verde y lo único nuevo es la integración, el PO ya aprobó la fusión». La aprobación cubre la integración y su documentación, sin cambios de implementación adicionales. Se conservan sin corrección las observaciones BUNDLE_ID/Documents. Sin build nativa, instalación ni acceso al iPhone por Codex; la instalación posterior corresponde a Claude con autorización del PO. Archive, firma y subida no quedan autorizados.
 
 **Resultado de #69 tras #66:** integración `e372ad9`, con todo el código incorporado idéntico a main `3780bf8`, implementación U2 intacta y todas las entradas del registro conservadas. EditMode **754/754**; PlayMode **580/581**, falla en `ReticleVisibilityTests.DevOpen_ProtocolActionsRemainUsable_AndCloseDevBeforeArming` línea 213: **788,198853** frente al límite **674,663208**. Mismo test/cifras de CRP-01 y archivo sin cambios desde U1; causa no demostrada. Conforme al encargo, se detiene **sin reintento, corrección, check-release nuevo ni fusión**. La aprobación condicional no se ejecuta. ProjectSettings restaurado; inventarios previos y final vacíos. XML/logs frescos conservados, sin errores CS ni omitidos.
+
+## Cansancio F1/F2 — reformulación de A2 (17 nov 2026)
+
+Al preparar el envío de F1/F2 se comprobó que A2 («con los mismos hashes de escenario», spec de cansancio v2.1, §7) no se puede cumplir: el arnés de AutoQA carga el `DefaultPreset` completo en cada escenario (V solo fija además `timing.validLimit = 1`), exige `hashMatch` antes de cada intento y las cuatro anclas están fijas en `Scenario.ExpectedHash`. Agregar las claves `fatigue.*` cambia las cuatro. La propia spec decía en §5 que el cambio de hash era esperado. La autorización de F1/F2 dejaba fuera «cambiar AutoQA».
+
+Claude propuso este texto para A2:
+
+> «A2: el modo práctica, los SL y AutoQA `--suite v` y `--suite t3` quedan PASS/0/1 con los mismos escenarios, oráculos, expectativas y checker. Se autoriza actualizar solo las cuatro anclas de `Scenario.ExpectedHash` a los hashes nuevos medidos en Unity, con la condición de que la proyección del hash sobre las 121 claves previas a F1 dé exactamente las anclas actuales.»
+
+Respuesta literal del PO: «Yes, I approve A2».
+
+Alcance: solo F1/F2. Las anclas actuales son V `06fed4bd4ac9` y `8e22575422f2`, T3 `430da2faa818` y `e89daab41c3e`. No cambian escenarios, oráculos, expectativas ni el checker. G1 no queda cubierto: si su fase B cambia hashes, la actualización de anclas se decide junto con la opción que elija el PO. La spec pasa a v2.2 con este cambio, la exigencia de `--suite v` y `--suite t3`, y la condición de que la barra de F2 no altere los eventos de botones y pausa de U3. Sin fusionar.
