@@ -3152,3 +3152,12 @@ Método `2708fb4`, aclaraciones v2.3 `e173ef8`; referencia main 200 partidos/1.9
 **Parada estática F1-AUTOQA-01:** PocObservation.ExactRecord enumera campos exactos y rechaza el nuevo f_r de ShotRecord serializado en práctica. La autorización de valores derivados de DefaultPreset no cubre esa lista/oráculo. No se modifica AutoQA ni se ejecutan AutoQA V/T3 o check-release; quedan NotEvaluated. Se propone conservar el esquema de práctica y emitir f_r solo en Rally/Partido mediante serialización de producto acotada; queda para decisión del PO, no implementada por autonomía experimental. [Informe de una página y evidencia](2026-11-17-f1-fatigue-energy.md). Sin fusión ni instalación.
 
 Incidentes propios de empaquetado F1-PACK-01/02: normalizador quitaba el texto de una clave antes de quitar la sentencia completa de opt-out (falso positivo en memoria); el empaquetador de recibos incluía una prueba deliberada de bloqueo de la guarda entre los inventarios que debían estar vacíos. Corregidos bajo la autonomía confirmada; intentos conservados, TSV crudos idénticos por SHA-256, sin cambios de producto/tests/datos ni repetición científica. La guarda impidió correctamente un segundo lanzamiento artificial mientras PlayMode estaba activo.
+
+
+### F1 — F1-AUTOQA-01 autorizado y cambio de modo de trabajo (17 nov 2026)
+
+**(i) Autorización de F1-AUTOQA-01** (17 nov, transmitida por Claude): corregir solo la serialización para que `f_r` se emita en los eventos `shot` de Rally y Partido, y que en práctica, SL y AutoQA el evento `shot` conserve el esquema exacto de `main`. No se toca `PocObservation`, escenarios, oráculos ni el checker. Registrada en la spec §8 (aclaración a v2.3).
+
+**(ii) Cambio de modo del PO, 17 nov, literal:** «Actua como un orquestador y revisor. Despliega distintos sub agentes de modelo sonnet para realizar la implementación y terminemos F1/F2. En caso de que haya que planificar algo, utiliza otro sub agente para que no sea sesgada la opinión.»
+
+Por eso F1-AUTOQA-01 y F2 los implementan subagentes Sonnet dirigidos por Claude. **La revisión de Claude sobre ese trabajo NO es independiente**, y se declara. Resultado de F1-AUTOQA-01 en el [informe de F1](2026-11-17-f1-fatigue-energy.md).
