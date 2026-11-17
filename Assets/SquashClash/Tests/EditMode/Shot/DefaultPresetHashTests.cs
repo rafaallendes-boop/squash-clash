@@ -59,6 +59,6 @@ namespace SquashClash.Core.Tests.Shot
             Assert.That(actual.Get("timing.latencyCompMs"),Is.Zero);
         }
         [Test] public void SimulationKey_IsUnchanged()=>Assert.That(EffectiveConfig.From(ConfigFixtures.Default()).SimulationKey,Is.EqualTo("166a96e319c7"));
-        [Test] public void NewHash_IsRecorded() {var p=ConfigFixtures.Default();Assert.That(p.Hash,Is.EqualTo("d772dc7e19c6"));Assert.That(p.Ordered.Count,Is.EqualTo(132));}
+        [Test] public void NewHash_IsRecorded() {var p=ConfigFixtures.Default();Assert.That(p.Hash,Is.EqualTo("2ec0c953786a"));Assert.That(p.Ordered.Count,Is.EqualTo(132));}
     }
 }

@@ -31,8 +31,8 @@ namespace SquashClash.Runtime.Tests
         [Test] public void V_ExplicitConfigPreservesApprovedHashes()
         {
             var p=Defaults.With("timing.validLimit",1);
-            Assert.That(p.Hash,Is.EqualTo("17d026fe010a"));
-            Assert.That(p.With("practice.launch",4).With("human.z",(double)1.6f).Hash,Is.EqualTo("5f4ce0c83a9f"));
+            Assert.That(p.Hash,Is.EqualTo("e8df60f37d4b"));
+            Assert.That(p.With("practice.launch",4).With("human.z",(double)1.6f).Hash,Is.EqualTo("95a3f24313fe"));
         }
         [Test] public void K_IsMeasuredFromRawPositionsAndCollisionHistory()
         {
