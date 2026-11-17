@@ -2874,6 +2874,40 @@ Spec: [`docs/superpowers/specs/2026-11-16-fatigue-design.md`](../superpowers/spe
 - **Autorización limitada:** los cambios protegidos se autorizan solo en el alcance de la spec v2.1. No se autoriza alterar los contratos protegidos existentes ni el modo práctica, los escenarios protegidos o AutoQA.
 - **Reversibilidad:** con `fatigue.enabled = 0`, el comportamiento es idéntico al anterior.
 
+## U1 — cobertura AutoQA T3 autorizada (16 nov 2026)
+
+El PO autoriza incorporar K al oráculo T3, conservando los escenarios y expectativas V con V explícito y los hashes efectivos originales. La ampliación y U1 se realizan en #65, con predeclaración en commit propio antes de AutoQA.
+
+Aclaración literal del PO tras medir K de SL1:
+
+> «Autorizo conservar SL1 +170 ms → Failed/Late y agregar SL5 +170 ms → Valid como escenario T3. El oráculo debe incorporar K. Predeclara los escenarios en commit propio antes de AutoQA. Puedes agregar SL1 −100 ms → Valid (T3) si lo ves útil. Los escenarios V no cambian.»
+
+Esta autorización corrige únicamente la expectativa nueva SL1 +170 ms de la continuación; no cambia contrato, física, recetas ni criterios V. U1 sigue autorizado: `timing.validLimit` de 1 a 0 y hashes. Revisión independiente y aprobación de cada fusión mediante el PO; sin instalación.
+
+## U1 — una repetición de RED y corrección de predeclaración (16 nov 2026)
+
+Autorización del PO para continuar, literal:
+
+> «Autorizo una sola repetición del RED de defaults. Antes de lanzarla, verifica que no quede ningún proceso Unity (no basta con que se haya escrito el XML). Corrige la predeclaración T3: reemplaza SL1 −100 ms por SL1 −200 ms → Valid (T3), porque −100 da Valid también con V y no distingue los modos. Hazlo en un commit propio, antes de cualquier AutoQA, y regístralo. Los escenarios V no cambian. Si la repetición vuelve a fallar por el entorno, detente.»
+
+El caso nuevo queda como `T3-VALID-EARLY200-SL1`, −200 ms, Valid/None, contacto no programado. La corrida anterior de defaults conserva NotEvaluated. Sin cambio de contrato, física, escenarios V o autorización de fusión/instalación.
+
+## U1 — recurrencia CRP-01 y nueva PlayMode autorizada (16 nov 2026)
+
+Decisión literal del PO:
+
+> «La falla de `ReticleVisibilityTests.DevOpen_ProtocolActionsRemainUsable_AndCloseDevBeforeArming` es la recurrencia de CRP-01 (mismas cifras que el 12 nov, 788,198853 frente a 674,663208, con el test sin cambios): la trato como intermitente y ajena a U1, sin causa demostrada y sin corregirla en #65. Regístralo así. Autorizo una nueva PlayMode completa. Si da el recuento completo, sigue con AutoQA `--suite v` y `--suite t3` (PASS/0/nivel 1 cada uno) y check-release. Si CRP-01 u otra falla vuelve a aparecer, detente y repórtalo. U3 y U2 siguen después, en el orden del encargo.»
+
+La clasificación como intermitente ajena a U1 es decisión del PO; no demuestra causa ni corrige el retículo. Se conserva la corrida 557/558 y su evidencia. Se autoriza una nueva PlayMode completa, sin modificar el test. Solo con el recuento completo aprobado se continúa AutoQA V, T3 y check-release secuencialmente. Cualquier recurrencia u otra falla vuelve a detener el trabajo.
+
+## U1 — integración de main tras #64 (16 nov 2026)
+
+Encargo literal del PO:
+
+> «#65: integra `main` (tras #64) y resuelve el conflicto del registro de aprobaciones conservando ambas entradas. Corre EditMode completo para confirmar compilación y recuento. Reporta el head final; la fusión la apruebo yo.»
+
+Se integra `origin/main` en `10bcaec` sobre la rama de #65, sin fusionar la PR. En el conflicto aditivo del registro se conservan íntegros ambos bloques: cierres/decisiones/diseño de #64 y autorizaciones/continuaciones U1 de #65. No se eliminan ni reinterpretan citas. EditMode completo tras la integración: **738/738**, cero omitidos, XML fresco y sin errores CS, sobre `b3c2fad`.
+
 ## E1: derecho y revés estéticos (16 nov 2026, Chile)
 
 **Autorización literal del PO:**

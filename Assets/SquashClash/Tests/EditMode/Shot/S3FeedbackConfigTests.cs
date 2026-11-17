@@ -19,7 +19,8 @@ namespace SquashClash.Core.Tests.Shot
         {
             var json=File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Tests/Fixtures/pre-s3-defaults.json"));
             Assert.That(PresetCodec.TryParse(json,out var old,out var error),Is.True,error);Assert.That(old.values.Count,Is.EqualTo(106));
-            var now=ConfigFixtures.Default();Assert.That(now.Ordered.Count,Is.EqualTo(121));
+            // Historical S3 comparison keeps its explicit V baseline; U1 checks the new default separately.
+            var now=ConfigFixtures.Default().With("timing.validLimit",1);Assert.That(now.Ordered.Count,Is.EqualTo(121));
             foreach(var e in old.values)Assert.That(now.Get(e.key),Is.EqualTo(e.value),e.key);
             var added=now.Ordered.Select(e=>e.Key).Except(old.values.Select(e=>e.key)).ToArray();
             Assert.That(added,Is.EqualTo(new[]{"causal.capHeight","causal.capSpeed","causal.jamDistance","causal.jamHeight","causal.jamSpeed","causal.stretchHeight","causal.stretchSpeed","causal.stretchStart","causal.timingHeightPerM","causal.timingSpeedPerM","feedback.haptics","shot.paceFullM","shot.paceGammaMax","shot.paceNearM","timing.aidLevel"}));

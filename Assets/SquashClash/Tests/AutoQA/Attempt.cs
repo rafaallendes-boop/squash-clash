@@ -6,6 +6,7 @@ namespace SquashClash.AutoQA
     {
         public string schema="autoqa-attempt/1",runId,verdict,failure,repro;
         public ScenarioRef scenario;public BuildMeta build;public ConfigMeta config;public EnvironmentMeta environment;
+        public PhysicsWindow window;
         public InputMeta input;public IdMeta ids;public Expected expected;public Observed observed;
         public Invariant[] invariants;public MetricsMeta metrics=new MetricsMeta();public ArtifactRef artifacts;
     }
