@@ -2927,3 +2927,42 @@ Encargo del PO: actualizar AGENTS §5/§6 con los hashes T3 y main `02f3c57`, re
 Para #69 se autoriza **una sola repetición del RED U2**, después de terminar #66 y todo proceso Unity. Antes se guardan PID, comando y proyecto de todos los procesos Unity; si hay alguno, no se lanza el test. Cualquier nuevo incidente detiene el trabajo. Se espera primero a que E1 deje de usar Unity; ninguna corrida de #66/#69 en paralelo. Esta autorización no modifica escenarios, criterios, contratos ni permite instalación.
 
 **Resultado de #66 tras U1:** main `02f3c57` integrado en `aa6fb08`, con ambos bloques de aprobaciones conservados. EditMode **748/748**, PlayMode **561/561**, check-release **OK dev/prod**, exportaciones frescas y `gitDirty=false`. ProjectSettings restaurado; Unity sin procesos al terminar. Worktree U1 archivado sin --force y siete entradas ignoradas preservadas fuera de Git. #66 queda para revisión y decisión de fusión del PO; #69 consume después su única repetición RED autorizada.
+
+## E1: derecho y revés estéticos (16 nov 2026, Chile)
+
+**Autorización literal del PO:**
+
+> «Se autoriza que CharacterView dibuje su propia preparación y su propio remate para el derecho y el revés, con SwingView intacto (claves, trayectoria, tiempo y fase).
+> Condición: en la ventana de contacto (por ejemplo ±60 ms alrededor del contacto entregado por SwingView; propón el valor y justifícalo), la cabeza de la raqueta dibujada coincide con la de SwingView dentro de una tolerancia pequeña (propón cuál). Agrega un test que lo verifique para el derecho y el revés, del humano diestro y zurdo.
+> El rival es diestro fijo. Sin cambios en BodyFrame, la planificación, el gesto, el reloj, el timing, la física, la IA ni los contratos. AutoQA no es obligatorio si se cumple lo anterior; decláralo. Las suites, cuando Unity quede libre después de U1–U3.»
+
+**Significado:**
+- Se permite una preparación y un remate visuales propios en `CharacterView`, para ambos golpes, conservando la coincidencia con `SwingView` durante la ventana de contacto. No se autoriza modificar `SwingView` ni las zonas excluidas en el literal.
+- Codex predeclara ventana, referencia temporal y tolerancia en el [informe E1](2026-11-16-e1-forehand-backhand.md); debe verificarlas para los cuatro casos de golpe/mano. La propuesta no acredita aún un resultado.
+- AutoQA no es obligatorio mientras se respete ese alcance. Las suites esperan a que el PO libere Unity tras U1–U3. No se autoriza fusión ni instalación.
+
+**Ventana aprobada y Unity liberado por el PO (16 nov):**
+
+> «OK con ±60 ms y 5 mm; Unity Libre»
+
+Se aprueban los valores propuestos en E1: ventana centrada en la llegada a la clave `Contact` de `SwingView` (60 ms tras la entrega), con 5 mm de tolerancia en espacio mundo. Unity queda disponible para ejecutar E1, de forma exclusiva y secuencial. No se autoriza fusión ni instalación.
+
+### E1: continuidad desde Idle y expectativas de reposo (16 nov 2026, Chile)
+
+El PO levantó la detención de E1 conservando `8 m/s × dt + 5 mm`, prohibió limitar la velocidad al umbral para hacer pasar el test y encargó corregir la duración/geometría, medir toda la población e incluir Idle → Intention con RED previo. Las zonas excluidas y la exención condicional de AutoQA se mantienen; no se autoriza fusionar ni instalar.
+
+Al comprobar que aceptar y entregar puede ocurrir en el mismo ciclo, Codex pidió una decisión sobre el reposo: alinear la cabeza en Idle con `SwingView` y actualizar las expectativas de posición de `ZHandednessTests`, conservando la mano portadora y todos los umbrales de contacto/continuidad. Respuesta literal del PO:
+
+> «Autorizar reposo alineado y actualizar ese test»
+
+Se identificó además la expectativa de raqueta por encima de 1,15 m durante Idle en `ZCharacterFeelTests`. Codex solicitó reemplazar solo esa aserción por coincidencia con `SwingView`, manteniendo preparación/giro y split step. Respuesta literal del PO:
+
+> «Sí, actualizar esa expectativa de Idle»
+
+Estas dos expectativas de comportamiento se actualizan por la decisión funcional del PO. No se modifican los umbrales de 5 mm ni el de salida, ni criterios de juego, física o timing.
+
+## Integración E1 → U3 → U2 para una prueba física (17 nov 2026)
+
+El PO confirma #68 en main `47ec6d1`, literal: «Si, fusionamos E1, quiero después pasar todo y hacer solo 1 prueba». Encarga integrar ese main en #66 conservando ambas entradas del registro, actualizar AGENTS §6 y ejecutar EditMode, PlayMode y check-release completos, con un solo Unity e inventario PID/comando/proyecto guardado. Si aparece cualquier falla o incidente, se registra y se detiene. La fusión de #66 sigue reservada al PO.
+
+Solo después de que #66 esté fusionada se integra main en #69 y se repiten las mismas compuertas. Se registrarán sin corregir código dos observaciones: BUNDLE_ID es obligatorio en release-ios.sh pero no tiene uso funcional posterior ni aparece en release.env.example; compartir Documents en Archivos expone métricas y presets por decisión del PO para las pruebas. No se autoriza build nativa, instalación, acceso al iPhone, archive, firma ni subida.
