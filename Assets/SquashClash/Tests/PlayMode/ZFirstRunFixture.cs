@@ -53,7 +53,7 @@ namespace SquashClash.Runtime.Tests
             yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
             app=AppBootstrap.Instance;app.GetComponent<ResumeOverlay>().Continue();
             app.Tuning.LoadPreset(PresetCodec.FromSet(app.Tuning.Defaults,"First run fixture",app.Build.Label),new List<string>());
-            app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
+            app.Tuning.Set("fatigue.enabled",0);app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
             controller=app.GetComponent<ShotController>();rally=app.Rally;hud=app.GetComponent<RallyHud>();flow=app.FirstRun;
             Assert.That(flow,Is.Not.Null,"the first-run flow is created with the app");
             scape=app.Scape;Assert.That(scape,Is.Not.Null,"the sound layer is created with the app");

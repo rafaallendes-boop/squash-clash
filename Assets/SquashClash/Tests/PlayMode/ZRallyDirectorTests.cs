@@ -31,7 +31,7 @@ namespace SquashClash.Runtime.Tests
             yield return PlayModeTestWorld.ClearApp();yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
             app=AppBootstrap.Instance;app.GetComponent<ResumeOverlay>().Continue();app.Clock.Paused=false;
             app.Tuning.LoadPreset(PresetCodec.FromSet(app.Tuning.Defaults,"Rally fixture",app.Build.Label),new List<string>());
-            app.Tuning.Set("launcher.repeatSeconds",0);
+            app.Tuning.Set("fatigue.enabled",0);app.Tuning.Set("launcher.repeatSeconds",0);
             controller=app.GetComponent<ShotController>();practice=app.GetComponent<PracticeMode>();rally=app.Rally;
             Assert.That(rally,Is.Not.Null,"the app wires the rally director at startup");
             app.LaunchCurrent();

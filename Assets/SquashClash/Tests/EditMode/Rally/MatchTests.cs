@@ -128,7 +128,7 @@ namespace SquashClash.Core.Tests.Rally
         [TestCase(ServiceBox.Left)]
         public void AutomaticServe_IsValid_AndLandsInTheReceiversQuarter(ServiceBox box)
         {
-            var context=RallyFixtures.Context();var serve=context.Serve(box);float mid=context.Court.Width*.5f;
+            var context=RallyFixtures.ContextWithoutFatigue();var serve=context.Serve(box);float mid=context.Court.Width*.5f;
             Assert.That(ServePlanner.Forecast(context,serve,box,out var bounce),Is.True);
             Assert.That(box==ServiceBox.Right?bounce.x>mid:bounce.x<mid,Is.True);Assert.That(bounce.z,Is.GreaterThan(context.T.y+.5f));
             var at=ServePlanner.BoxPosition(context,box);
@@ -138,7 +138,7 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void ServedPoint_IsPlayedToATerminalEvent()
         {
-            var context=RallyFixtures.Context();
+            var context=RallyFixtures.ContextWithoutFatigue();
             using(var sim=new RallySim(context,RallySimTests.Bot(context,3),RallySimTests.Fondo(context,4)))
             {
                 var outcome=sim.PlayPoint(PlayerId.Human,ServiceBox.Right);
@@ -149,7 +149,7 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test,Timeout(600000)] public void Matches_FinishWithAValidScore()
         {
-            const int Matches=60;var context=RallyFixtures.Context();var outcomes=new List<MatchOutcome>();
+            const int Matches=60;var context=RallyFixtures.ContextWithoutFatigue();var outcomes=new List<MatchOutcome>();
             using(var sim=new RallySim(context,RallySimTests.Bot(context,77),RallySimTests.Fondo(context,78)))
                 for(int i=0;i<Matches;i++)outcomes.Add(sim.PlayMatch(i%2==0?PlayerId.Human:PlayerId.Rival));
             foreach(var match in outcomes)
