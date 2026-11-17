@@ -26,6 +26,8 @@ namespace SquashClash.Runtime.Visual
         public const int TrailPoints=8;
         public const float ContactHalfWindow=.060f;
         private const float ContactWindowEnd=SwingView.ReachSeconds+ContactHalfWindow;
+        // A longer ease lowers the geometric speed peak; this is a duration, not a velocity clamp.
+        private const float HumanFollowSeconds=.28f;
         public const float SplitStepSeconds=.24f,TrailFadeSeconds=.14f,MaxFootSwing=.26f,MaxStride=1.5f;
         private const float Thigh=.40f,Shin=.40f,UpperArm=.27f,Forearm=.26f,HipHeight=.80f,GripBack=.32f,CentreHeight=.9f;
         private static readonly Vector3 RacketScale=new Vector3(.22f,.03f,.30f),ToCamera=new Vector3(0,.55f,.83f);
@@ -332,7 +334,7 @@ namespace SquashClash.Runtime.Visual
                 // Keep its head on the source throughout Intention; own preparation stays in aiming/planted Idle
                 // and in the shoulder pose. There is no unmatched offset to snap away at the contact boundary.
                 else if(intentionReference)target=reference;
-                else if(swingPhase==SwingPhase.Impact)target=contactAge<0?reference:Vector3.Lerp(contactExit,cleanFollow,Smooth((contactAge-ContactWindowEnd)/.16f));
+                else if(swingPhase==SwingPhase.Impact)target=contactAge<0?reference:Vector3.Lerp(contactExit,cleanFollow,Smooth((contactAge-ContactWindowEnd)/HumanFollowSeconds));
                 else target=reference+finish*through;
             }
             else if(!human&&swingClock>=0)
