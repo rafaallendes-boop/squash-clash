@@ -148,6 +148,8 @@ namespace SquashClash.Runtime.Rally
             var positions=Human.PositionsAfter(trajectory.States.Count);
             controller.SetNextReceptionBody(j=>context.FrameAt(positions[(int)(j-ball.Step)]));
             controller.SetNextReceptionFatigue(HumanReceptionFatigue);
+            // The human's arm is read at its exact contact step, inside the authoritative solve, so bodies must be advanced to it.
+            if(context.Fatigue.Enabled)controller.SetNextStrikerFatigue(HumanStrikerArm);
             // The fixed-body contact planner reads the human from the launch configuration, as practice already does.
             var at=HumanPlan.BodyAtContact;
             var source=app.Tuning.ApplyPending().With("human.x",at.x).With("human.z",at.y);
@@ -217,6 +219,21 @@ namespace SquashClash.Runtime.Rally
             else if(Phase==RallyPhase.PointOver)TickPointOver(elapsed);
             if(Active)PlaceBodies();
         }
+        // f_s of the human at its contact step. The preview (contact still ahead) uses the energy as it is now; the authoritative
+        // solve first brings bodies and energy up to that very step, exactly what the next StepBodies would do, only earlier.
+        private FatigueArm HumanStrikerArm(long step,bool authoritative)
+        {
+            if(!authoritative)return context.Fatigue.Arm(HumanEnergy.Energy);
+            AdvanceBodiesTo(step);return context.Fatigue.Arm(HumanEnergy.EnergyAt(step));
+        }
+        // The same whole-step advance StepBodies performs for a moving ball, up to an exact step. A step already taken is a no-op,
+        // and the clamp to one second of steps is the one StepBodies has always had.
+        private void AdvanceBodiesTo(long toStep)
+        {
+            long previousStep=bodyStep;int steps=(int)Math.Max(0,Math.Min(toStep-bodyStep,context.StepHz));
+            if(toStep<=bodyStep)return;
+            bodyCarry=0;bodyStep=toStep;RunBodySteps(steps,previousStep,true);
+        }
         private void StepBodies(double elapsed)
         {
             var host=app.Host;long now=host.Current.Step;long previousStep=bodyStep;bool ballAdvanced=host.IsRunning||now!=bodyStep;int steps;
@@ -227,7 +244,10 @@ namespace SquashClash.Runtime.Rally
                 bodyCarry=Math.Min(bodyCarry+elapsed*context.Tempo*context.StepHz,context.StepHz);
                 steps=(int)bodyCarry;bodyCarry-=steps;
             }
-            bodyStep=now;
+            bodyStep=now;RunBodySteps(steps,previousStep,ballAdvanced);
+        }
+        private void RunBodySteps(int steps,long previousStep,bool ballAdvanced)
+        {
             for(int i=0;i<steps;i++)
             {
                 var humanBefore=Human.Position;var rivalBefore=Rival.Position;
@@ -352,7 +372,8 @@ namespace SquashClash.Runtime.Rally
             {
                 hasPending=false;var at=Evaluate(pendingStep);var state=host.Current;
                 bool have=state.Step==pendingStep||host.TryGetHistoricalState(pendingStep,out state);
-                var causal=have&&at.CanHit(PlayerId.Rival)&&rivalCausal!=null?RallyContact.Solve(context,rivalCausal,rivalCausal.BodyAt(pendingStep),state.Position,pendingShot.Aim,pendingShot.P):default;
+                // The arm is the rival's own energy at its contact step, read before this stroke is charged below.
+                var causal=have&&at.CanHit(PlayerId.Rival)&&rivalCausal!=null?RallyContact.Solve(context,rivalCausal,rivalCausal.BodyAt(pendingStep),state.Position,pendingShot.Aim,pendingShot.P,context.Fatigue.Arm(RivalEnergy.EnergyAt(pendingStep))):default;
                 var solution=causal.Solution;
                 if(causal.Vectors!=null)
                 {

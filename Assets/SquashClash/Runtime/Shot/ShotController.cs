@@ -19,10 +19,13 @@ namespace SquashClash.Runtime.Shot
         private Func<long,BodyFrame> nextCausalBody,causalBody;
         private double nextReceptionFatigue,receptionFatigue;
         private bool nextRecordsFatigue,recordsFatigue;
+        private Func<long,bool,FatigueArm> nextStrikerFatigue,strikerFatigue;
         // Only Rally/Match call this, so only their shot events carry f_r; practice, SL and AutoQA keep the main schema.
         public void SetNextReceptionFatigue(double factor){nextReceptionFatigue=factor;nextRecordsFatigue=true;}
-        // Only Rally/Match call this: the striker's arm for the human's next stroke, as (step, authoritative). Scaffold only.
-        public void SetNextStrikerFatigue(Func<long,bool,FatigueArm> provider){}
+        // Only Rally/Match call this, for the human's next launch: the striker's arm as (contact step, authoritative). Authoritative is the
+        // exact contact (the scheduled callback, or a contact already reached); the preview in between reads the energy as it is now.
+        // Practice, SL and AutoQA never set it, so their Solve is the old one.
+        public void SetNextStrikerFatigue(Func<long,bool,FatigueArm> provider)=>nextStrikerFatigue=provider;
         // Consumed only by the next launch, then copied into its immutable reference.
         public void SetNextReceptionBody(Func<long,BodyFrame> bodyAt)=>nextCausalBody=bodyAt;
         private readonly Queue<ClosedGesture> orders=new Queue<ClosedGesture>();
@@ -70,6 +73,7 @@ namespace SquashClash.Runtime.Shot
         }
         private void OnLaunched(EffectiveConfig cfg)
         {
+            strikerFatigue=nextStrikerFatigue;nextStrikerFatigue=null;
             receptionFatigue=nextReceptionFatigue;nextReceptionFatigue=0;recordsFatigue=nextRecordsFatigue;nextRecordsFatigue=false;
             CausalReference=null;LastCausal=default;causalBody=nextCausalBody;nextCausalBody=null;
             Snapshot=new ShotConfig(cfg.Source);ring.BeginReception(Snapshot.Reception.GetInt("timing.aidLevel"));Haptics.Enabled=Snapshot.Reception.GetBool("feedback.haptics");seen.Clear();Presented=new PresentedPlans();AttemptConsumed=WaitingForContact=false;
@@ -140,7 +144,7 @@ namespace SquashClash.Runtime.Shot
             long offset=decision.ContactStep-authoritative.States[0].Step;
             if(offset<0||offset>=authoritative.States.Count){Fault(record,ShotResult.NotEvaluable,"contact-state-unavailable");return;}
             var contact=authoritative.States[(int)offset];
-            LastSolution=Solve(shot,order,contact,record);FillSolution(record,LastSolution,contact);
+            LastSolution=Solve(shot,order,contact,record,decision.ContactStep<=app.Host.Current.Step);FillSolution(record,LastSolution,contact);
             var reticle=app.GetComponentInChildren<AimReticleView>(true);reticle.gameObject.SetActive(true);
             reticle.SetAim(order.Aim,AimState.Frozen,app.Host.ActiveConfig.Court);reticle.ShowFeasible(LastSolution.TargetUsed,LastSolution.Solved&&LastSolution.TargetLowered);
             if(!LastSolution.Solved){Fault(record,ShotResult.SystemFault,LastSolution.Reason);return;}
@@ -150,7 +154,7 @@ namespace SquashClash.Runtime.Shot
                 WaitingForContact=true;
                 bool accepted=app.Host.ScheduleShot(order.LaunchId,decision.ContactStep,state=>
                 {
-                    LastSolution=Solve(shot,order,state,record);FillSolution(record,LastSolution,state);
+                    LastSolution=Solve(shot,order,state,record,true);FillSolution(record,LastSolution,state);
                     return LastSolution.Solved?LastSolution.Velocity:new Vector3(float.NaN,0,0);
                 },order.ReleaseAt);
                 if(!accepted)Fault(record,ShotResult.SystemFault,"schedule-rejected");
@@ -169,12 +173,13 @@ namespace SquashClash.Runtime.Shot
             foreach(var e in host.Prediction.Contacts)if(e.Step>host.Current.Step)t.Contacts.Add(e);
             t.Exit=host.Prediction.Exit;return t;
         }
-        private ShotSolution Solve(ShotConfig shot,ClosedGesture order,BallState contact,ShotRecord record)
+        private ShotSolution Solve(ShotConfig shot,ClosedGesture order,BallState contact,ShotRecord record,bool authoritative)
         {
             double start=Stopwatch.GetTimestamp();
             var cfg=app.Host.ActiveConfig;
             var body=CausalReference.BodyAt(contact.Step);
-            LastCausal=CausalQuality.Solve(CausalReference,body,contact.Position,order.Aim,order.P,cfg,new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
+            var arm=strikerFatigue!=null?strikerFatigue(contact.Step,authoritative):FatigueArm.None;
+            LastCausal=CausalQuality.Solve(CausalReference,body,contact.Position,order.Aim,order.P,cfg,new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold),arm);
             var trace=CausalShotTrace.Create("Human",order.LaunchId,order.AttemptId,contact.Step,CausalReference,body,LastCausal);
             app.Metrics?.Write("shot-causal",cfg,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(trace));
             var solution=LastCausal.Solution;
