@@ -162,9 +162,9 @@ namespace SquashClash.Runtime.Tests
                 DeliverView(ViewContact(side,attempt));Assert.That(swing.Phase,Is.EqualTo(SwingPhase.Impact));
                 MeasureFrame(0,ref previousDrawn,ref previousReference,true,ref metrics);
                 elapsed=0;
-                while(elapsed<.50-1e-9)
+                while(elapsed<.62-1e-9)
                 {
-                    double boundary=elapsed<.12-1e-9?.12:.50;
+                    double boundary=elapsed<.12-1e-9?.12:.62;
                     double dt=Math.Min(frame,boundary-elapsed);
                     MeasureFrame(dt,ref previousDrawn,ref previousReference,elapsed<.12-1e-9,ref metrics);elapsed+=dt;
                     if(Math.Abs(elapsed-.12)<1e-8)MeasureFrame(0,ref previousDrawn,ref previousReference,false,ref metrics);

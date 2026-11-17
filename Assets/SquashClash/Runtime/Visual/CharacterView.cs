@@ -28,6 +28,8 @@ namespace SquashClash.Runtime.Visual
         private const float ContactWindowEnd=SwingView.ReachSeconds+ContactHalfWindow;
         // A longer ease lowers the geometric speed peak; this is a duration, not a velocity clamp.
         private const float HumanFollowSeconds=.28f;
+        // Return during SwingView's existing hold, ending 60 ms before its 540 ms Impact ends.
+        private const float HumanReturnStart=.28f,HumanReturnSeconds=.20f;
         public const float SplitStepSeconds=.24f,TrailFadeSeconds=.14f,MaxFootSwing=.26f,MaxStride=1.5f;
         private const float Thigh=.40f,Shin=.40f,UpperArm=.27f,Forearm=.26f,HipHeight=.80f,GripBack=.32f,CentreHeight=.9f;
         private static readonly Vector3 RacketScale=new Vector3(.22f,.03f,.30f),ToCamera=new Vector3(0,.55f,.83f);
@@ -221,7 +223,7 @@ namespace SquashClash.Runtime.Visual
             bool swingDriven=human&&swing!=null;var swingPhase=swingDriven?swing.Phase:SwingPhase.Idle;
             if(contactAge>=0){if(firstContactFrame)firstContactFrame=false;else contactAge+=dt;}
             bool contactLock=swingDriven&&swingPhase==SwingPhase.Impact&&contactAge>=0&&contactAge<=ContactWindowEnd+1e-5f;
-            bool intentionReference=swingDriven&&swingPhase==SwingPhase.Intention;
+            bool preContactReference=swingDriven&&(swingPhase==SwingPhase.Idle||swingPhase==SwingPhase.Intention);
             if(swingDriven&&!swingHidden&&swing.Rig!=null)
             {
                 // SwingView keeps computing its racket path (the figure follows it); its two boxes are no longer drawn.
@@ -325,16 +327,19 @@ namespace SquashClash.Runtime.Visual
             var cleanFollow=across?new Vector3(sign*(.46f+.10f*power),1.18f+.42f*power,-.42f-.12f*power):
                 FollowPose(sign)+new Vector3(-sign*.22f,.36f,-.14f)*(power-.35f);
             var finish=missed?new Vector3(-sign*.30f,-.34f,.02f):new Vector3((across?sign:-sign)*.22f,.36f,-.14f)*(power-.35f);
-            if(swingDriven&&swingPhase!=SwingPhase.Idle)
+            if(swingDriven)
             {
                 rate=60;
                 var reference=transform.InverseTransformPoint(swing.Rig.TransformPoint(swing.RacketLocalPosition));
                 if(contactLock){target=reference;contactExit=reference;}
-                // A delivery may interrupt Intention at any time, including before its Back key is reached.
-                // Keep its head on the source throughout Intention; own preparation stays in aiming/planted Idle
-                // and in the shoulder pose. There is no unmatched offset to snap away at the contact boundary.
-                else if(intentionReference)target=reference;
-                else if(swingPhase==SwingPhase.Impact)target=contactAge<0?reference:Vector3.Lerp(contactExit,cleanFollow,Smooth((contactAge-ContactWindowEnd)/HumanFollowSeconds));
+                // Acceptance and delivery can share a frame. Align the resting head as well as Intention,
+                // so there is no unmatched preparation offset at either entry. The torso still winds up.
+                else if(preContactReference)target=reference;
+                else if(swingPhase==SwingPhase.Impact)
+                {
+                    var follow=Vector3.Lerp(contactExit,cleanFollow,Smooth((contactAge-ContactWindowEnd)/HumanFollowSeconds));
+                    target=contactAge<0?reference:Vector3.Lerp(follow,reference,Smooth((contactAge-HumanReturnStart)/HumanReturnSeconds));
+                }
                 else target=reference+finish*through;
             }
             else if(!human&&swingClock>=0)
@@ -346,7 +351,7 @@ namespace SquashClash.Runtime.Visual
             }
             else if(prepare){target=Vector3.Lerp(rest,back,human?wind:1);rate=9;}
             else{target=rest;rate=7;}
-            racketPosition=contactLock||intentionReference?target:Vector3.Lerp(racketPosition,target,1-Mathf.Exp(-dt*rate));
+            racketPosition=contactLock||preContactReference?target:Vector3.Lerp(racketPosition,target,1-Mathf.Exp(-dt*rate));
             var reach=racketPosition-shoulderRacket;float length=reach.magnitude;
             var aim=length>1e-4f?reach/length:Vector3.forward;
             // The strings face the camera behind the court, so the racket never shows edge-on at the contact.

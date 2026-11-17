@@ -2892,3 +2892,17 @@ Spec: [`docs/superpowers/specs/2026-11-16-fatigue-design.md`](../superpowers/spe
 > «OK con ±60 ms y 5 mm; Unity Libre»
 
 Se aprueban los valores propuestos en E1: ventana centrada en la llegada a la clave `Contact` de `SwingView` (60 ms tras la entrega), con 5 mm de tolerancia en espacio mundo. Unity queda disponible para ejecutar E1, de forma exclusiva y secuencial. No se autoriza fusión ni instalación.
+
+### E1: continuidad desde Idle y expectativas de reposo (16 nov 2026, Chile)
+
+El PO levantó la detención de E1 conservando `8 m/s × dt + 5 mm`, prohibió limitar la velocidad al umbral para hacer pasar el test y encargó corregir la duración/geometría, medir toda la población e incluir Idle → Intention con RED previo. Las zonas excluidas y la exención condicional de AutoQA se mantienen; no se autoriza fusionar ni instalar.
+
+Al comprobar que aceptar y entregar puede ocurrir en el mismo ciclo, Codex pidió una decisión sobre el reposo: alinear la cabeza en Idle con `SwingView` y actualizar las expectativas de posición de `ZHandednessTests`, conservando la mano portadora y todos los umbrales de contacto/continuidad. Respuesta literal del PO:
+
+> «Autorizar reposo alineado y actualizar ese test»
+
+Se identificó además la expectativa de raqueta por encima de 1,15 m durante Idle en `ZCharacterFeelTests`. Codex solicitó reemplazar solo esa aserción por coincidencia con `SwingView`, manteniendo preparación/giro y split step. Respuesta literal del PO:
+
+> «Sí, actualizar esa expectativa de Idle»
+
+Estas dos expectativas de comportamiento se actualizan por la decisión funcional del PO. No se modifican los umbrales de 5 mm ni el de salida, ni criterios de juego, física o timing.

@@ -157,18 +157,19 @@ namespace SquashClash.Runtime.Tests
             var figure=Figure(app.Players.Human);
             rally.Autopilot=true;rally.AutopilotTimingSigmaMs=0;rally.Level=AiLevel.Medium;rally.Seed=5;
             Assert.That(rally.StartMode(),Is.True);
-            bool rivalHit=false,split=false;float wound=0,raised=0;
+            bool rivalHit=false,split=false;float wound=0,restingGap=0;int plantedSamples=0;
             rally.RivalSwing+=(_,contact)=>{if(contact)rivalHit=true;};
             for(int i=0;i<(int)(40/StepReal)&&!(split&&wound>.4f);i++)
             {
                 app.Host.Advance(StepReal);controller.ProcessPending();rally.Tick();
                 if(i%4!=0)continue;
                 swing.Tick(Frame);fx.Tick(Frame);figure.Animate(Frame);
-                if(rally.Phase==RallyPhase.HumanReception&&rally.Human.Phase==BodyPhase.Set&&swing.Phase==SwingPhase.Idle){wound=Mathf.Max(wound,figure.WindUp);raised=Mathf.Max(raised,figure.RacketLocalPosition.y);}
+                if(rally.Phase==RallyPhase.HumanReception&&rally.Human.Phase==BodyPhase.Set&&swing.Phase==SwingPhase.Idle){wound=Mathf.Max(wound,figure.WindUp);restingGap=Mathf.Max(restingGap,Vector3.Distance(figure.transform.TransformPoint(figure.RacketLocalPosition),swing.Rig.TransformPoint(swing.RacketLocalPosition)));plantedSamples++;}
                 if(rivalHit&&figure.SplitStepping)split=true;
             }
             Assert.That(wound,Is.GreaterThan(.4f),"planted for the ball, the human winds the racket up before the swing");
-            Assert.That(raised,Is.GreaterThan(1.15f),"racket above the shoulder");
+            Assert.That(plantedSamples,Is.GreaterThan(0),"planted Idle samples were evaluated");
+            Assert.That(restingGap,Is.LessThanOrEqualTo(.005f),"PO-authorized aligned Idle head; the body still prepares");
             Assert.That(split,Is.True,"the human takes a split step when the rival strikes");
         }
     }
