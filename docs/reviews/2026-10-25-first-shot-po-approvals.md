@@ -3040,3 +3040,19 @@ Decisión literal del PO, 17 nov 2026:
 Se añade únicamente el valor vacío faltante de `kOutMs` y se inspeccionan estáticamente todas las llamadas `Put` del diagnóstico (paridad y nombres de clave). La excepción de parada se limita a fallos propios del código experimental anterior a la primera fila científica; no permite reinterpretar resultados ni corregir después de producir datos, aunque estén aún en memoria o en archivos parciales. Se conservan todos los intentos anteriores y sus recibos, sin repetir fase A. Compilación previa y exclusividad de Unity siguen obligatorias; método, grilla, umbrales, producto, datos existentes y parada de diseño A2 intactos. Cada corrección adicional dentro de ese alcance se registrará en el informe; no se autoriza fusión ni instalación.
 
 **Resultado A1-bis:** corrección `fe7633d` (un valor vacío de kOutMs), cuatro llamadas Put revisadas: 13/30/7/6 parejas, sin otra corrección. Dos comprobaciones previas de compilación aprobadas, mismo hash del assembly `45ab13947b6448b0d4cd34ecc6f4419419d66325dbfe07380775662ff4682421`; todos los inventarios previos vacíos. Dos procesos completos sobre ese head limpio: **1/1 cada uno**, 648 planes, 43.080 celdas y 58.200 muestras por proceso; cuatro crudos y cuatro derivados idénticos byte a byte. Método `73d86a2` intacto; controles estadísticos predeclarados aprobados, sin SystemFault/NotEvaluable. Media: 97/103 planes y 81,98 % de contacto esperado con ruido; P=1 con vidrio, 23/25 planes y 76,45 % esperado. No son tasas de puntos ganados por usuarios. [Informe y opciones](2026-11-17-g1-a1bis-timing-results.md), [evidencia e historial](../validation/evidence/2026-11-17-g1-a1bis-timing/README.md). Todos los fallos anteriores se conservan separados, fase A sin repetir y sin cambiar producto/defaults/anclas. Se entrega A1-bis para elección del PO, sin corregir timing; A2 mantiene su parada de diseño antes de implementar. Sin fusión ni instalación.
+
+### G1 A1 — opción 2 mínima y diseño A2 (17 nov 2026)
+
+Decisión literal del PO:
+
+> «Para A1 elijo la opción 2 en su versión mínima: el Rival mantiene su intención en T\*, salvo cuando T\* queda a menos de 1,5σ de un borde de la ventana de contacto. En ese caso desplaza la media de su release lo justo para quedar a 1,5σ de ese borde. Si la ventana mide menos de 3σ, apunta al centro. El sigma de timing no cambia. Antes de implementar, fija en un commit estos criterios, sin cambiarlos después:
+>
+> - en los planes que hoy están a 1,5σ o más de ambos bordes, el release queda idéntico bit a bit;
+> - se mantiene el orden de contacto Fácil < Media < Difícil;
+> - la ruta del Humano queda intacta;
+> - sobre la población de A1-bis, el Rival medio a P=1 llega al menos a 90 % de contacto sobre sus planes;
+> - sin azar nuevo.
+>
+> Puedes guardar el 1,5σ como parámetro de `RallyParams` (cambia solo su hash propio), pero sin tocar `DefaultPreset`, P0, `SimulationKey` ni las anclas de `Scenario.ExpectedHash`. Usa TDD con RED por aserción, suites completas, AutoQA `--suite v` y `--suite t3` PASS/0/1 y check-release OK. Si algún test existente de rally cambia de resultado, detente y reporta. Mientras tanto, sin usar Unity, prepara el commit de diseño y criterios de A2 y detente para la revisión de Claude. Un solo Unity a la vez, sin fusionar ni instalar.»
+
+Se predeclaran [criterios A1](../validation/2026-11-17-g1-a1-release-margin-criteria.md) antes de tests/implementación. #71/#72 siguen abiertas: A1 en rama/worktree/PR propia apilada sobre `1c9d2c6`; A2 en su propia rama sin Unity, solo diseño, con parada de revisión antes de implementar. Ninguna autorización permite cambiar tests existentes para obtener verde ni sustituir los datos congelados. Sin fusión ni instalación.
