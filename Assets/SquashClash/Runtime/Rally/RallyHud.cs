@@ -32,6 +32,9 @@ namespace SquashClash.Runtime.Rally
         // Read-outs for the tests: how far the banner has faded in, and how much of a score pulse is left.
         public float BannerOpacity=>bannerAge<0?0:Mathf.Clamp01(bannerAge/BannerInSeconds);
         public float PulseRemaining=>Mathf.Max(pulseHuman,pulseRival);
+        // Energy bars (F2, spec 6): how full each one is drawn right now, 0..1. Scaffold only.
+        public float HumanEnergyShown=>0;
+        public float RivalEnergyShown=>0;
         private RallyPhase phase=(RallyPhase)(-1);
         public void Initialize(AppBootstrap app,RallyDirector rally,VisualElement parent)
         {
