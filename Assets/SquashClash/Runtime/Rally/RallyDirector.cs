@@ -33,6 +33,7 @@ namespace SquashClash.Runtime.Rally
         private IRallyBrain rivalBrain,humanBrain;
         private ShotRecord resolved;
         private AiShot pendingShot,autoShot;
+        private ContactDecision rivalDecision;
         private CausalReference rivalCausal;
         private Func<long,BodyFrame> rivalCausalBody;
         private readonly List<CausalShotTrace> pointCausal=new List<CausalShotTrace>();
@@ -336,7 +337,7 @@ namespace SquashClash.Runtime.Rally
             var decision=RallyContact.Resolve(context,host.ClockMap,host.Prediction,RivalPlan.Contact,host.ObservedRealTime,pendingShot.DeltaMs);
             // A paused clock cannot place a future instant yet: ask again on the next tick, same single attempt.
             if(decision.Result==ShotResult.NotEvaluable&&decision.Reason=="target-time-unmapped")return;
-            needDecision=false;
+            needDecision=false;rivalDecision=decision;
             if(decision.Result==ShotResult.Perfect||decision.Result==ShotResult.Valid){hasPending=true;pendingStep=decision.ContactStep;return;}
             rivalReception=decision.Result==ShotResult.Failed?(decision.Fail==FailKind.Air?ReceptionResult.Air:ReceptionResult.Late):
                 decision.Result==ShotResult.Unreachable?ReceptionResult.Unreachable:decision.Result==ShotResult.SystemFault?ReceptionResult.SystemFault:ReceptionResult.NotEvaluable;
@@ -416,7 +417,7 @@ namespace SquashClash.Runtime.Rally
         private void WriteRivalShot(long step,CausalShotResult causal)
         {
             if(!context.Fatigue.Enabled)return;
-            var record=new ShotRecord{LaunchId=app.Host.LaunchId,ContactStep=step,Result=ShotResult.Valid.ToString(),Applied=true,Solved=true,
+            var record=new ShotRecord{LaunchId=app.Host.LaunchId,ContactStep=step,Result=rivalDecision.Result.ToString(),Fail=rivalDecision.Fail.ToString(),DeltaMs=rivalDecision.DeltaMs,Applied=true,Solved=true,
                 Power=pendingShot.P,AimX=pendingShot.Aim.x,AimY=pendingShot.Aim.y,f_r=RivalReceptionFatigue,Reason="rival-contact",
                 LaunchHash=app.Host.ActiveConfig.Hash,Seed=app.MetricsSeed,Speed=causal.Solution.Speed};
             app.Metrics?.Write("shot",app.Host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,

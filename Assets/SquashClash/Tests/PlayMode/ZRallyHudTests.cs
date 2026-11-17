@@ -53,7 +53,7 @@ namespace SquashClash.Runtime.Tests
             yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
             app=AppBootstrap.Instance;app.GetComponent<ResumeOverlay>().Continue();app.Clock.Paused=false;
             app.Tuning.LoadPreset(PresetCodec.FromSet(app.Tuning.Defaults,"Rally HUD fixture",app.Build.Label),new List<string>());
-            app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
+            app.Tuning.Set("fatigue.enabled",0);app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
             controller=app.GetComponent<ShotController>();rally=app.Rally;hud=app.GetComponent<RallyHud>();
             app.Host.enabled=app.enabled=controller.enabled=rally.enabled=hud.enabled=false;
             camera=UnityEngine.Camera.main;previousCameraTarget=camera.targetTexture;previousAspect=camera.aspect;
