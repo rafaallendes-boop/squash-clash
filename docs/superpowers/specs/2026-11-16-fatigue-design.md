@@ -9,7 +9,7 @@
 
 - **v2.3 (17 nov):** el PO autoriza actualizar solo literales de hash/cantidad derivados de DefaultPreset en los tests enumerados por F1-PREFLIGHT-01 (incluido AutoQAT3OracleTests), a los valores medidos en Unity y 132 claves, en commit propio. Ninguna otra aserción, oráculo o test cambia. Se exige prueba de proyección excluyendo solo `fatigue.*` a las cuatro anclas históricas y SimulationKey `166a96e319c7`; si cambia, se detiene. F2 no agrega claves. El saque automático tiene P de intención = 0 únicamente para consumo por golpe fuerte, sin cambiar trayectoria, física ni solver; su desplazamiento se cobra.
 
-**Estado:** diseño y cambios protegidos autorizados por el PO (§9). Sin implementar: va en la cola de Codex después de U1–U3 y G1.
+**Estado:** diseño y cambios protegidos autorizados por el PO (§9). F1 implementado en su rama, sin fusionar ni aceptar; F2 espera la fusión de F1.
 
 ## 1. Para qué
 
@@ -118,6 +118,8 @@ Los máximos de la v1 quedan como el **nivel fuerte** de referencia. La implemen
 | `fatigue.positionGainMax` | 0,25 | 0,5 | 0–1 | amplificación del error por mala posición con E = 0 |
 
 Las claves nuevas cambian el hash de los defaults, y eso es esperado.
+
+**Aplicación de la regla §7 en F1 (17 nov):** la tabla conserva los valores iniciales. Tras B3 alto (80,29), el [único ajuste predeclarado](../../validation/2026-11-17-f1-fatigue-adjustment.md) cambia solo `recoverBetween` de 0,35 a 0,25; B3 queda en 70,68. No cambian rangos, método ni umbrales. El candidato F1 usa 0,25; los datos suaves iniciales se conservan.
 
 ## 6. Barra de energía
 
