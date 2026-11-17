@@ -1,0 +1,49 @@
+group	receiver	difficulty	n	bucket_receivable	bucket_a	bucket_b	bucket_c	bucket_d	bucket_e	plan_planned	plan_stretched	plan_unreachable	plan_no-legal-window	plan_Unsolved	legalGlass	legalGlassReceivable	postGlassContact	postGlassWindow	lateSeconds	fixture	power
+receiver+difficulty	Human	Easy	108	99	0	4	0	4	1	78	21	4	5	0	61	59	35	61	0.13333333333333333..0.3416666666666667		
+receiver+difficulty	Human	Hard	108	99	0	4	0	4	1	78	21	4	5	0	61	59	35	61	0.13333333333333333..0.3416666666666667		
+receiver+difficulty	Human	Medium	108	99	0	4	0	4	1	78	21	4	5	0	61	59	35	61	0.13333333333333333..0.3416666666666667		
+receiver+difficulty	Rival	Easy	108	93	0	10	0	4	1	79	14	10	5	0	61	57	34	61	0.125..0.4083333333333333		
+receiver+difficulty	Rival	Hard	108	101	0	2	0	4	1	82	19	2	5	0	61	61	36	61	0.2..0.30833333333333335		
+receiver+difficulty	Rival	Medium	108	97	0	6	0	4	1	79	18	6	5	0	61	59	34	61	0.16666666666666666..0.35		
+receiver+difficulty+fixture	Human	Easy	27	25	0	1	0	1	0	18	7	1	1	0	17	17	10	17	0.20833333333333334..0.20833333333333334	T	
+receiver+difficulty+fixture	Human	Easy	27	24	0	3	0	0	0	21	3	3	0	0	18	16	10	18	0.13333333333333333..0.3416666666666667	backLeft	
+receiver+difficulty+fixture	Human	Easy	27	27	0	0	0	0	0	23	4	0	0	0	18	18	11	18		backRight	
+receiver+difficulty+fixture	Human	Easy	27	23	0	0	0	3	1	16	7	0	4	0	8	8	4	8		middle	
+receiver+difficulty+fixture	Human	Hard	27	25	0	1	0	1	0	18	7	1	1	0	17	17	10	17	0.20833333333333334..0.20833333333333334	T	
+receiver+difficulty+fixture	Human	Hard	27	24	0	3	0	0	0	21	3	3	0	0	18	16	10	18	0.13333333333333333..0.3416666666666667	backLeft	
+receiver+difficulty+fixture	Human	Hard	27	27	0	0	0	0	0	23	4	0	0	0	18	18	11	18		backRight	
+receiver+difficulty+fixture	Human	Hard	27	23	0	0	0	3	1	16	7	0	4	0	8	8	4	8		middle	
+receiver+difficulty+fixture	Human	Medium	27	25	0	1	0	1	0	18	7	1	1	0	17	17	10	17	0.20833333333333334..0.20833333333333334	T	
+receiver+difficulty+fixture	Human	Medium	27	24	0	3	0	0	0	21	3	3	0	0	18	16	10	18	0.13333333333333333..0.3416666666666667	backLeft	
+receiver+difficulty+fixture	Human	Medium	27	27	0	0	0	0	0	23	4	0	0	0	18	18	11	18		backRight	
+receiver+difficulty+fixture	Human	Medium	27	23	0	0	0	3	1	16	7	0	4	0	8	8	4	8		middle	
+receiver+difficulty+fixture	Rival	Easy	27	22	0	4	0	1	0	19	3	4	1	0	17	16	9	17	0.19166666666666668..0.39166666666666666	T	
+receiver+difficulty+fixture	Rival	Easy	27	26	0	1	0	0	0	24	2	1	0	0	18	17	11	18	0.125..0.125	backLeft	
+receiver+difficulty+fixture	Rival	Easy	27	24	0	3	0	0	0	21	3	3	0	0	18	16	10	18	0.2..0.2916666666666667	backRight	
+receiver+difficulty+fixture	Rival	Easy	27	21	0	2	0	3	1	15	6	2	4	0	8	8	4	8	0.39166666666666666..0.4083333333333333	middle	
+receiver+difficulty+fixture	Rival	Hard	27	24	0	2	0	1	0	19	5	2	1	0	17	17	10	17	0.2..0.30833333333333335	T	
+receiver+difficulty+fixture	Rival	Hard	27	27	0	0	0	0	0	25	2	0	0	0	18	18	11	18		backLeft	
+receiver+difficulty+fixture	Rival	Hard	27	27	0	0	0	0	0	22	5	0	0	0	18	18	11	18		backRight	
+receiver+difficulty+fixture	Rival	Hard	27	23	0	0	0	3	1	16	7	0	4	0	8	8	4	8		middle	
+receiver+difficulty+fixture	Rival	Medium	27	22	0	4	0	1	0	19	3	4	1	0	17	16	9	17	0.16666666666666666..0.35	T	
+receiver+difficulty+fixture	Rival	Medium	27	27	0	0	0	0	0	24	3	0	0	0	18	18	11	18		backLeft	
+receiver+difficulty+fixture	Rival	Medium	27	26	0	1	0	0	0	21	5	1	0	0	18	17	10	18	0.2833333333333333..0.2833333333333333	backRight	
+receiver+difficulty+fixture	Rival	Medium	27	22	0	1	0	3	1	15	7	1	4	0	8	8	4	8	0.3416666666666667..0.3416666666666667	middle	
+receiver+difficulty+power	Human	Easy	36	36	0	0	0	0	0	32	4	0	0	0	17	17	6	17			0.7
+receiver+difficulty+power	Human	Easy	36	34	0	1	0	1	0	27	7	1	1	0	19	19	14	19	0.13333333333333333..0.13333333333333333		0.85
+receiver+difficulty+power	Human	Easy	36	29	0	3	0	3	1	19	10	3	4	0	25	23	15	25	0.20833333333333334..0.3416666666666667		1
+receiver+difficulty+power	Human	Hard	36	36	0	0	0	0	0	32	4	0	0	0	17	17	6	17			0.7
+receiver+difficulty+power	Human	Hard	36	34	0	1	0	1	0	27	7	1	1	0	19	19	14	19	0.13333333333333333..0.13333333333333333		0.85
+receiver+difficulty+power	Human	Hard	36	29	0	3	0	3	1	19	10	3	4	0	25	23	15	25	0.20833333333333334..0.3416666666666667		1
+receiver+difficulty+power	Human	Medium	36	36	0	0	0	0	0	32	4	0	0	0	17	17	6	17			0.7
+receiver+difficulty+power	Human	Medium	36	34	0	1	0	1	0	27	7	1	1	0	19	19	14	19	0.13333333333333333..0.13333333333333333		0.85
+receiver+difficulty+power	Human	Medium	36	29	0	3	0	3	1	19	10	3	4	0	25	23	15	25	0.20833333333333334..0.3416666666666667		1
+receiver+difficulty+power	Rival	Easy	36	33	0	3	0	0	0	31	2	3	0	0	17	17	6	17	0.19166666666666668..0.4083333333333333		0.7
+receiver+difficulty+power	Rival	Easy	36	33	0	2	0	1	0	29	4	2	1	0	19	19	14	19	0.2..0.3		0.85
+receiver+difficulty+power	Rival	Easy	36	27	0	5	0	3	1	19	8	5	4	0	25	21	14	25	0.125..0.39166666666666666		1
+receiver+difficulty+power	Rival	Hard	36	36	0	0	0	0	0	31	5	0	0	0	17	17	6	17			0.7
+receiver+difficulty+power	Rival	Hard	36	34	0	1	0	1	0	29	5	1	1	0	19	19	14	19	0.2..0.2		0.85
+receiver+difficulty+power	Rival	Hard	36	31	0	1	0	3	1	22	9	1	4	0	25	25	16	25	0.30833333333333335..0.30833333333333335		1
+receiver+difficulty+power	Rival	Medium	36	34	0	2	0	0	0	31	3	2	0	0	17	17	6	17	0.16666666666666666..0.3416666666666667		0.7
+receiver+difficulty+power	Rival	Medium	36	34	0	1	0	1	0	29	5	1	1	0	19	19	14	19	0.25..0.25		0.85
+receiver+difficulty+power	Rival	Medium	36	29	0	3	0	3	1	19	10	3	4	0	25	23	14	25	0.2833333333333333..0.35		1

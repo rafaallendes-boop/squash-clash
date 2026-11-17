@@ -1,0 +1,111 @@
+{
+  "experimentSource": {
+    "head": "6feeb9442de30bd919f72b94aed149b698179de9",
+    "defaults": "430da2faa818",
+    "simulationKey": "166a96e319c7",
+    "rallyParams": "7d50ddaf5d4f",
+    "unity": "6000.3.27f1",
+    "bounceThreshold": "0.1"
+  },
+  "runs": {
+    "run01": {
+      "xml": {
+        "result": "Passed",
+        "total": "1",
+        "passed": "1",
+        "failed": "0",
+        "skipped": "0"
+      },
+      "files": {
+        "source.tsv": {
+          "sha256": "bf0a47f539755cc03348f30fd970288f37b6cc18b5b3edd54cd786af647989db",
+          "bytes": 158
+        },
+        "states.tsv": {
+          "sha256": "af553ec1e31e046608873a56aee80b4cda77d5a55908b74037681d6ca8df5e08",
+          "bytes": 74639633
+        },
+        "contacts.tsv": {
+          "sha256": "5c3cad81f6a2de58c3f0786abf23d7fd8190a6a00c5f3eb159ed58d1b9a08916",
+          "bytes": 2079304
+        },
+        "shots.tsv": {
+          "sha256": "7b6c9129f46037292b82998152e24c1c2702e0ed8f83e0e400c1dac392305d3a",
+          "bytes": 2306052
+        },
+        "receptions.tsv": {
+          "sha256": "ea27380b2b4240cc83d3f23861bbd3229048ca06fadbee55bb80ab62f1fd18e3",
+          "bytes": 167085
+        }
+      },
+      "runnerFiles": {
+        "console.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "results.xml": {
+          "sha256": "da2f01ff9954a9ee408eafeac08f01067ecb7c77d62e5dc50fe3fb974f7f484e",
+          "bytes": 4061
+        },
+        "unity-processes.tsv": {
+          "sha256": "e4d2fa24a66887ae927759e3318181affd354d4f75422aac4c3f165249e62405",
+          "bytes": 64
+        },
+        "unity.log": {
+          "sha256": "7d94e9d769021a23ca86eb8d531232d7d4b7b7e8620625e2255c1a9c65c1ad1a",
+          "bytes": 835044
+        }
+      }
+    },
+    "run02": {
+      "xml": {
+        "result": "Passed",
+        "total": "1",
+        "passed": "1",
+        "failed": "0",
+        "skipped": "0"
+      },
+      "files": {
+        "source.tsv": {
+          "sha256": "bf0a47f539755cc03348f30fd970288f37b6cc18b5b3edd54cd786af647989db",
+          "bytes": 158
+        },
+        "states.tsv": {
+          "sha256": "af553ec1e31e046608873a56aee80b4cda77d5a55908b74037681d6ca8df5e08",
+          "bytes": 74639633
+        },
+        "contacts.tsv": {
+          "sha256": "5c3cad81f6a2de58c3f0786abf23d7fd8190a6a00c5f3eb159ed58d1b9a08916",
+          "bytes": 2079304
+        },
+        "shots.tsv": {
+          "sha256": "7b6c9129f46037292b82998152e24c1c2702e0ed8f83e0e400c1dac392305d3a",
+          "bytes": 2306052
+        },
+        "receptions.tsv": {
+          "sha256": "ea27380b2b4240cc83d3f23861bbd3229048ca06fadbee55bb80ab62f1fd18e3",
+          "bytes": 167085
+        }
+      },
+      "runnerFiles": {
+        "console.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "results.xml": {
+          "sha256": "6ad85c1302cdd3d20b7543fc9155b7b7b375d6e2c89e7b38bc43b937defd3870",
+          "bytes": 4061
+        },
+        "unity-processes.tsv": {
+          "sha256": "be150efe2866c4a0fa6b887989a5d00b2f7184e1f5930b273938a8d1cce0520e",
+          "bytes": 64
+        },
+        "unity.log": {
+          "sha256": "b6355d0c092f89c61d2591472e32bf90990954a0381eb7f21921630a0b78d9e3",
+          "bytes": 58671
+        }
+      }
+    }
+  },
+  "identical": true
+}
