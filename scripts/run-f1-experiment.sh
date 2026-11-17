@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
-case "${1:-}" in baseline|off|soft|adjusted) ;; *) exit 2;; esac
+case "${1:-}" in baseline|off|soft|adjusted) exp=f1-fatigue;; f2off|f2all) exp=f2-fatigue; export SC_EXPERIMENT=f2;; *) exit 2;; esac
 source "$(dirname "$0")/unity-env.sh"
 export SC_F1_VARIANT="$1"
-evidence="$ROOT/Logs/experiments/f1-fatigue/$1-runner"
+evidence="$ROOT/Logs/experiments/$exp/$1-runner"
 [[ ! -e "$evidence" ]] || { printf 'STOP: evidence exists\n' >&2; exit 1; }
 mkdir -p "$evidence"
 python3 "$ROOT/scripts/f1-unity-inventory.py" "$evidence/unity-processes.tsv"

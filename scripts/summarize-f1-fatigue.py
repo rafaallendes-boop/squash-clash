@@ -4,24 +4,27 @@ import csv,hashlib,json,statistics,sys
 from pathlib import Path
 root=Path(__file__).resolve().parent.parent
 variant=sys.argv[1]
-assert variant in ('off','soft','adjusted')
-data=root/'Logs/experiments/f1-fatigue'/variant
+assert variant in ('off','soft','adjusted','f2off','f2all')
+f2=variant.startswith('f2')
+exp='f2-fatigue' if f2 else 'f1-fatigue'
+data=root/'Logs/experiments'/exp/variant
 baseline=root/'docs/validation/evidence/2026-11-17-f1-baseline'
-output=root/'Logs/experiments/f1-fatigue'/f'{variant}-summary'
+output=root/'Logs/experiments'/exp/f'{variant}-summary'
 assert not output.exists(),'Do not overwrite summaries'
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def rows(path):
     with path.open() as f:return list(csv.DictReader(f,delimiter='\t'))
 manifest=json.loads((baseline/'manifest.json').read_text())
 for name,digest in manifest['files'].items():assert sha(baseline/name)==digest,(name,'baseline changed')
-files=[*data.glob('*.tsv'),*baseline.glob('*.tsv')]
+adjusted_points=root/'docs/validation/evidence/2026-11-17-f1-fatigue/adjusted/points.tsv'
+files=[*data.glob('*.tsv'),*baseline.glob('*.tsv')]+([adjusted_points] if f2 else [])
 before={str(p.relative_to(root)):sha(p) for p in files}
 points=rows(data/'points.tsv');matches=rows(data/'matches.tsv');old=rows(baseline/'points.tsv')
 assert len(matches)==200 and {int(m['match']) for m in matches}==set(range(200))
 assert sum(int(m['points']) for m in matches)==len(points)
 prior={(p['match'],p['point']):p for p in old}
 identity=[]
-if variant=='off':
+if variant in ('off','f2off'):
     assert len(points)==len(old)
     for p in points:
         q=prior[p['match'],p['point']]
@@ -62,24 +65,35 @@ criteria={
  'B5a':{'closePoints':len(close),'startEnergyMedian':close_energy,'pass':check(close_energy>=35) if close_energy is not None else None},
  'B5b':{'exploratory':True,'qualifyingPoints':len(qualifying),'pairedPoints':len(paired),'missingPairs':len(qualifying)-len(paired),'fatiguedPlayerWins':wins,'samePlayerBaselineWins':old_wins,'percentagePointDifference':100*(wins-old_wins)/len(paired) if paired else None},
  'B6':{'meanRealSeconds':seconds,'baselineMeanRealSeconds':old_seconds,'ratio':ratio,'pass':.85<=ratio<=1.15}}
+descriptive={}
+if f2:
+    adj=rows(adjusted_points);prior_adj={(p['match'],p['point']):p for p in adj}
+    same=sum(1 for p in points if (p['match'],p['point']) in prior_adj and prior_adj[p['match'],p['point']]['signature']==p['signature'])
+    recs=rows(data/'receptions.tsv');struck=[r for r in recs if r['result']=='Contact']
+    fs=[float(r['f_s']) for r in struck];sp=[float(r['speed']) for r in struck];tired=[r for r in struck if float(r['f_s'])>0]
+    descriptive={'pointsIdenticalToF1AdjustedSameIndex':same,'pointsCompared':len(points),'f1AdjustedMeanRealSeconds':statistics.mean(float(p['realSeconds']) for p in adj),
+      'strikes':len(struck),'strikesWithFatigueVector':len(tired),'meanFs':statistics.mean(fs) if fs else None,'meanFsWhenPositive':statistics.mean(float(r['f_s']) for r in tired) if tired else None,
+      'meanInputSpeed':statistics.mean(sp) if sp else None,'meanInputSpeedTired':statistics.mean(float(r['speed']) for r in tired) if tired else None}
 # Predeclared one-step adjustment. No tuning is performed by this script.
 high=last>75
 low_signal=last<45 or criteria['B4']['pass'] is False or criteria['B5a']['pass'] is False
 trigger=any(criteria[k]['pass'] is False for k in ('B3','B4','B5a'))
 adjustment=None
-if variant=='soft' and trigger:
+if f2:
+    adjustment={'action':'none','reason':'F2 stop rule: no adjustment; results are kept and reported'} if trigger else None
+elif variant=='soft' and trigger:
     if high and low_signal:adjustment={'action':'report','reason':'contradictory energy signals'}
     elif low_signal:adjustment={'key':'fatigue.recoverBetween','from':.35,'to':.45,'reason':'B3/B4/B5a low-energy failure'}
     elif high:adjustment={'key':'fatigue.recoverBetween','from':.35,'to':.25,'reason':'B3 last-point energy too high'}
     else:adjustment={'action':'report','reason':'B3 fraction below onset failed without high/low median signal'}
 assert {str(p.relative_to(root)):sha(p) for p in files}==before,'Data changed during summary'
 output.mkdir()
-report={'schema':'f1-fatigue-summary/1','variant':variant,'matches':200,'points':len(points),'identity':identity,'criteria':criteria,'predeclaredAdjustment':adjustment,'dataSha256':before,'dataUnchanged':True}
+report={'schema':'f1-fatigue-summary/1','variant':variant,'matches':200,'points':len(points),'identity':identity,'criteria':criteria,'descriptive':descriptive,'predeclaredAdjustment':adjustment,'dataSha256':before,'dataUnchanged':True}
 (output/'summary.json').write_text(json.dumps(report,indent=2)+'\n')
 text=['# F1 — experimento B: '+variant,'','Método predeclarado; 200 partidos. NotEvaluated no cuenta como aprobado.','', '| Criterio | Resultado | Datos |','|---|---|---|']
 for k,v in criteria.items():
     state='Indicador' if k=='B5b' else 'NotEvaluated' if v['pass'] is None else 'Pass' if v['pass'] else 'Fail'
     text.append('| '+k+' | '+state+' | '+json.dumps({a:b for a,b in v.items() if a!='pass'},ensure_ascii=False)+' |')
-text+=['','Ajuste predeclarado propuesto: '+json.dumps(adjustment,ensure_ascii=False),'','Datos intactos por SHA-256.']
+text+=['','Descriptivos sin umbral: '+json.dumps(descriptive,ensure_ascii=False),'','Ajuste predeclarado propuesto: '+json.dumps(adjustment,ensure_ascii=False),'','Datos intactos por SHA-256.']
 (output/'report.md').write_text('\n'.join(text)+'\n')
 print(json.dumps({k:v for k,v in report.items() if k!='dataSha256'},indent=2))
