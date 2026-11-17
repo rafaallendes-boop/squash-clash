@@ -2,6 +2,12 @@
 
 17 de noviembre de 2026, Codex. [Informe de una página](../../../reviews/2026-11-17-g1-back-court-diagnosis.md), [método predeclarado](../../2026-11-17-g1-diagnosis-method.md). No hubo cambios en producto, parámetros, fixtures existentes ni regresión. El experimento nuevo y su invocador se confirmaron en `6feeb9442de30bd919f72b94aed149b698179de9`, después del método `786d54c`; ambos procesos corrieron sobre ese árbol limpio. Base `bedc2d7` (producto de `2b82701`). No hubo defecto crítico demostrado ni repetición por fallo.
 
+## Errata G1-A-EXPORT-01 (17 nov, al preparar A1-bis)
+
+El exportador experimental original dejó una columna sin nombre, con valor `bodyContactZ` en las 648 filas de `receptions.tsv` de cada corrida y de `a1-receptions.tsv`. Se localizó en las parejas incompletas del inicializador de `Receive`; una segunda escritura realinea y repone los campos nombrados. **Según la verificación de Claude comunicada por el PO, los recuentos de fase A no cambian:** las parejas se realinean, los campos nombrados de las 648 filas se reescriben y el resumen lee por nombre. La repetibilidad y el XML Passed originales no detectaban este defecto del exportador; no deben interpretarse como comprobación del esquema.
+
+El PO autoriza corregir únicamente el exportador y agregar validación de cabeceras vacías/parejas incompletas antes de continuar A1-bis. **Los archivos crudos, las tablas y el manifiesto originales se conservan sin cambiar ni regenerar; no se repite fase A.** Esta nota es una errata añadida, no una nueva corrida ni una sustitución de evidencia. La corrección y sus pruebas se entregan en la PR de A1-bis, apilada sobre #71. Detención y autorización: [registro](../../../reviews/2026-10-25-first-shot-po-approvals.md), [incidente](../../../reviews/2026-11-17-g1-a1bis-preflight-stop.md).
+
 ## Recibo de ejecución
 
 | Corrida | Inventario previo (UTC) | Experimento (UTC) | Resultado fresco |
