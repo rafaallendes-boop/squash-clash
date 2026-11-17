@@ -26,7 +26,7 @@ namespace SquashClash.AutoQA
             dir=System.Environment.GetEnvironmentVariable("AUTOQA_RUN_DIR");Assert.That(dir,Is.Not.Null.And.Not.Empty);
             dir=Path.GetFullPath(dir);Assert.That(dir.StartsWith(Path.GetFullPath("Logs/autoqa")+Path.DirectorySeparatorChar),Is.True);
             Directory.CreateDirectory(dir);started=DateTime.UtcNow.ToString("O");
-            catalogText=File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Tests/AutoQA/Scenarios/mvp.json"));
+            catalogText=File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Tests/AutoQA/Scenarios/"+(System.Environment.GetEnvironmentVariable("AUTOQA_SUITE")=="t3"?"t3.json":"mvp.json")));
             catalog=JsonUtility.FromJson<ScenarioCatalog>(catalogText);
             presetsBefore=EvidenceCollector.PresetsSnapshot(Path.Combine(Application.persistentDataPath,"presets"));
             try {new AutoQAGuardTests().AutoQASources_RespectAuthorityContract();}catch(AssertionException){integrity.guardPassed=false;blocked=true;}
@@ -53,7 +53,7 @@ namespace SquashClash.AutoQA
             if(!s.canary&&(!string.IsNullOrEmpty(filter)&&filter!=s.id||!string.IsNullOrEmpty(rep)&&rep!=repetition.ToString()))yield break;
             var attempt=new Attempt{runId=Path.GetFileName(dir),scenario=new ScenarioRef{id=s.id,repetition=repetition,sha256=EvidenceCollector.ShaText(JsonUtility.ToJson(s)),canary=s.canary},
                 build=new BuildMeta{gitHash=System.Environment.GetEnvironmentVariable("AUTOQA_GIT_HASH"),dirty=System.Environment.GetEnvironmentVariable("AUTOQA_DIRTY")=="true",unity=Application.unityVersion},
-                repro="scripts/autoqa.sh mvp --scenario "+s.id+" --repetition "+repetition,verdict="NOT_EVALUATED"};
+                repro="scripts/autoqa.sh mvp --suite "+(s.useDefaults?"t3":"v")+" --scenario "+s.id+" --repetition "+repetition,verdict="NOT_EVALUATED"};
             attempts.Add(attempt);if(!CanExecute(blocked,s.canary,integrity.guardPassed,error)){attempt.failure="stopped-after-prior-failure";yield break;}
             yield return null;yield return null;yield return null;
             using(var driver=new DeterministicDriver())
@@ -65,12 +65,12 @@ namespace SquashClash.AutoQA
                     attempt.config=new ConfigMeta {effectiveHash=cfg.Hash,simulationKey=cfg.SimulationKey,expectedHash=s.ExpectedHash,hashMatch=cfg.Hash==s.ExpectedHash,
                         gestureHash=cfg.Hash,preset=app.ActivePresetName,backend=cfg.Backend,pending=app.Tuning.PendingKeys.Count};
                     integrity.hashesVerified&=attempt.config.hashMatch&&cfg.SimulationKey=="166a96e319c7";
-                    attempt.environment=driver.Environment;attempt.expected=Oracle.Expect(s,app.Tuning.Applied);
+                    attempt.environment=driver.Environment;attempt.window=driver.Window;attempt.expected=Oracle.Expect(s,app.Tuning.Applied,driver.Window?.kInMs??double.NaN,driver.Window?.kOutMs??double.NaN);
                     bool ready=attempt.config.hashMatch&&cfg.SimulationKey=="166a96e319c7"&&cfg.Backend=="P2-Analytic"&&app.Tuning.PendingKeys.Count==0&&app.Tuning.Applied.GetInt("gesture.control")==2&&
                         driver.Environment.screen[0]==1206&&driver.Environment.screen[1]==2622&&driver.Environment.anchorInSafeArea&&!driver.Environment.uiBlockedAtAnchor;
                     var plan=File.ReadAllLines(app.Metrics.CurrentFilePath).Select(JsonUtility.FromJson<MetricLine>).Where(x=>x.kind=="shot-plan").Select(x=>JsonUtility.FromJson<PlanMetric>(x.payload)).Last(x=>x.launchId==app.Host.LaunchId);
                     if(!ready){attempt.verdict="INCONCLUSIVE";attempt.failure="precondition-not-met";}
-                    else if(!Oracle.MarginValid(s,app.Tuning.Applied,(plan.kInReal-plan.targetReal)*1000,(plan.kOutReal-plan.targetReal)*1000)){attempt.failure="scenario-invalid-margin";}
+                    else if(s.useDefaults&&driver.Window==null||!Oracle.MarginValid(s,app.Tuning.Applied,s.useDefaults?driver.Window.kInMs:(plan.kInReal-plan.targetReal)*1000,s.useDefaults?driver.Window.kOutMs:(plan.kOutReal-plan.targetReal)*1000)){attempt.failure="scenario-invalid-margin";}
                     else
                     {
                         var script=ScriptedPlayer.Build(s,driver.Anchor,driver.Target,driver.Environment.mmPerPx);
