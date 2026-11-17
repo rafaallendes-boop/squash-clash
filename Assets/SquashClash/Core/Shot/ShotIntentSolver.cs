@@ -21,7 +21,7 @@ namespace SquashClash.Core.Shot
         private sealed class Candidate
         {
             internal ShotSolution Solution;
-            internal bool FirstFront, Legal, BelowCeiling;
+            internal bool FirstFront, Legal, BelowCeiling, CrossesMiddle;
             internal double Cost = double.PositiveInfinity, Change;
         }
 
@@ -122,7 +122,7 @@ namespace SquashClash.Core.Shot
             rules.Begin(PlayerId.Human, PlayerId.Rival);
             bool firstContact = true;
             float apex = from.y;
-            ContactEvent? second = null;
+            ContactEvent? first = null, second = null;
             using (var simulation = factory.Create(physics, court))
             {
                 simulation.Reset(new BallState { Position = from, Velocity = solution.Velocity });
@@ -134,18 +134,34 @@ namespace SquashClash.Core.Shot
                     {
                         if (rules.Closed) break;
                         if (!hit.Persistent && firstContact) { result.FirstFront = hit.Surface == SurfaceId.FrontWall; firstContact = false; }
-                        if (!hit.Persistent && hit.Surface == SurfaceId.Floor && rules.FloorBounces == 1) second = hit;
+                        if (!hit.Persistent && hit.Surface == SurfaceId.Floor)
+                        {
+                            if (rules.FloorBounces == 0) first = hit;
+                            else if (rules.FloorBounces == 1) second = hit;
+                        }
                         rules.OnBallContact(hit);
                     }
                     if (!rules.Closed) apex = Math.Max(apex, simulation.State.Position.y);
                     if (!rules.Closed && simulation.State.Position.y > court.WallHeight) rules.OnOverTop();
                 }
             }
-            result.Legal = rules.Cause == PointEndCause.DoubleBounce && second.HasValue;
+            result.Legal = rules.Cause == PointEndCause.DoubleBounce && first.HasValue && second.HasValue;
             result.BelowCeiling = apex <= ceiling;
             if (result.Legal)
-                result.Cost = Math.Abs(second.Value.Point.x - xStar) / court.Width + Math.Abs(second.Value.Point.z - zStar) / court.Length
+            {
+                double half = court.Width / 2d;
+                bool cross = (from.x - half) * (xStar - half) < 0;
+                bool right = from.x < half;
+                double x1 = first.Value.Point.x, x2 = second.Value.Point.x;
+                double own1 = right ? x1 : court.Width - x1;
+                double own2 = right ? x2 : court.Width - x2;
+                double opposite2 = right ? court.Width - x2 : x2;
+                // Same bounce geometry as the witness, rather than a point target for x2 alone.
+                double lateral = cross ? opposite2 : own1 + own2;
+                result.CrossesMiddle = !cross || (from.x - half) * (x2 - half) < 0;
+                result.Cost = lateral / court.Width + Math.Abs(second.Value.Point.z - zStar) / court.Length
                     + Math.Abs(apex - ceiling) / court.BackOutLower;
+            }
             return result;
         }
 
@@ -155,6 +171,7 @@ namespace SquashClash.Core.Shot
             c = b.FirstFront.CompareTo(a.FirstFront); if (c != 0) return c;
             c = b.Legal.CompareTo(a.Legal); if (c != 0) return c;
             c = b.BelowCeiling.CompareTo(a.BelowCeiling); if (c != 0) return c;
+            c = b.CrossesMiddle.CompareTo(a.CrossesMiddle); if (c != 0) return c;
             c = a.Cost.CompareTo(b.Cost); if (c != 0) return c;
             c = a.Change.CompareTo(b.Change); if (c != 0) return c;
             c = a.Solution.TargetUsed.x.CompareTo(b.Solution.TargetUsed.x); if (c != 0) return c;
