@@ -3000,3 +3000,13 @@ Claude propuso este texto para A2:
 Respuesta literal del PO: «Yes, I approve A2».
 
 Alcance: solo F1/F2. Las anclas actuales son V `06fed4bd4ac9` y `8e22575422f2`, T3 `430da2faa818` y `e89daab41c3e`. No cambian escenarios, oráculos, expectativas ni el checker. G1 no queda cubierto: si su fase B cambia hashes, la actualización de anclas se decide junto con la opción que elija el PO. La spec pasa a v2.2 con este cambio, la exigencia de `--suite v` y `--suite t3`, y la condición de que la barra de F2 no altere los eventos de botones y pausa de U3. Sin fusionar.
+
+## G1 fase B — A1-bis y diseño A2 autorizados (17 nov 2026)
+
+El PO entrega a Codex `Logs/handoff/2026-11-17/codex-G1-fase-B.md`. El encargo registra la recomendación de Claude: A1-bis, diagnóstico complementario del ruido de timing del Rival sin cambiar producto; para A2, solver según intención, «más fuerte = más plano». Respuesta literal del PO que consta en ese encargo:
+
+> «Sí, ambas».
+
+Alcance: primero A1-bis en `codex/g1-a1bis-timing`, con método predeclarado antes de ejecutar, la población A1, probabilidad analítica y muestreo con `RallyContact.Resolve`, dos procesos deterministas e informe de una página con opciones. Al entregar, se detiene la corrección de A1 hasta elección del PO. Después, A2 en `codex/g1-a2-flat-drive`: diseño/criterios en commit propio y parada para revisión de Claude **antes de implementar**. La autorización de física, solver y M2-4 de este encargo se limita a A2. No agrega claves a DefaultPreset ni permite cambiar las cuatro anclas de Scenario.ExpectedHash; si hacen falta, se detiene y reporta. Suites, AutoQA V/T3 PASS/0/1, check-release y experimento C1–C3 son requisitos de la implementación posterior. Sin fusión ni instalación; ante defecto/sorpresa se registra y detiene.
+
+**Preparación y detención:** #71 continúa abierta; se apila A1-bis sobre su head `3e1e037`, como permite el encargo, sin fusionar #71. En lectura previa se detectó el defecto `G1-A-EXPORT-01`: `receptions.tsv` de ambas corridas de fase A y su copia derivada incluyen una columna sin nombre cuyo valor es `bodyContactZ` en las 648 filas. El inicializador del exportador tiene pares incompletos; la escritura posterior repone los campos nombrados. Se registra en [el informe de detención](2026-11-17-g1-a1bis-preflight-stop.md), sin corregir el exportador ni los datos. **Ninguna corrida Unity nueva; A1-bis no ejecutado y A2 no iniciado.** Continuación pendiente de decisión del PO; no se consume una corrida ni se declara aprobación del diagnóstico nuevo.
