@@ -1,0 +1,77 @@
+{
+  "schema": "f1-fatigue-summary/1",
+  "variant": "f2all",
+  "matches": 200,
+  "points": 1899,
+  "identity": [],
+  "criteria": {
+    "B1": {
+      "shortPoints": 316,
+      "humanMedianNetCost": 2.382605415047518,
+      "rivalMedianNetCost": 1.68443146821172,
+      "pass": true
+    },
+    "B2": {
+      "longPoints": 979,
+      "largerMovementCostMedian": 24.941863845987214,
+      "movementDifferenceMedian": 7.202229865337866,
+      "pass": true
+    },
+    "B3": {
+      "lastPointStartMedian": 72.27405916543555,
+      "matchesBelowOnset": 194,
+      "matches": 200,
+      "pass": true
+    },
+    "B4": {
+      "matchesStartingBelow20": 0,
+      "matches": 200,
+      "zeroEnergyServes": 0,
+      "pass": true
+    },
+    "B5a": {
+      "closePoints": 36,
+      "startEnergyMedian": 68.14604971486247,
+      "pass": true
+    },
+    "B5b": {
+      "exploratory": true,
+      "qualifyingPoints": 3,
+      "pairedPoints": 0,
+      "missingPairs": 3,
+      "fatiguedPlayerWins": 0,
+      "samePlayerBaselineWins": 0,
+      "percentagePointDifference": null
+    },
+    "B6": {
+      "meanRealSeconds": 42.248842170643115,
+      "baselineMeanRealSeconds": 45.08358947746597,
+      "ratio": 0.937122413284334,
+      "pass": true
+    }
+  },
+  "descriptive": {
+    "pointsIdenticalToF1AdjustedSameIndex": 728,
+    "pointsCompared": 1899,
+    "f1AdjustedMeanRealSeconds": 43.64058067745703,
+    "strikes": 38249,
+    "strikesWithFatigueVector": 16824,
+    "meanFs": 0.09421758714564553,
+    "meanFsWhenPositive": 0.21420164590666882,
+    "meanInputSpeed": 17.18430289548877,
+    "meanInputSpeedTired": 16.488030491344507
+  },
+  "predeclaredAdjustment": null,
+  "dataSha256": {
+    "Logs/experiments/f2-fatigue/f2all/points.tsv": "1faf017f8b69b758ab69df8c762b5a444e3ed1b70c40df15155458996371ae01",
+    "Logs/experiments/f2-fatigue/f2all/receptions.tsv": "4c11861259ef6de331869ed7fba4f7628069b57fbb3771b3b80f0ee477556631",
+    "Logs/experiments/f2-fatigue/f2all/matches.tsv": "8148c18ff942ac7ed21284af22a7942cb3072b17def708825f13309b1e9a99a2",
+    "Logs/experiments/f2-fatigue/f2all/source.tsv": "1594ca2f9b434f8fd0dc57a198f10b6f960c47a88b62e06147aecec7c1842079",
+    "docs/validation/evidence/2026-11-17-f1-baseline/points.tsv": "114da59f8420abdd32cb0235bb51f73c01d923737adcf951d92caf3aa2f8e0c6",
+    "docs/validation/evidence/2026-11-17-f1-baseline/receptions.tsv": "a5368c7c01a8f64d14b209fbbaf978942cd0441637d4fac0dc9c7c0880122a24",
+    "docs/validation/evidence/2026-11-17-f1-baseline/matches.tsv": "f70392425be61b40d859fce99a39a5085531d4b8fde578c2bec6c2f7ad866314",
+    "docs/validation/evidence/2026-11-17-f1-baseline/source.tsv": "7d9bf8d53361dad53c247398b4339edaf62487baeab9800d71c336f91ca9a491",
+    "docs/validation/evidence/2026-11-17-f1-fatigue/adjusted/points.tsv": "107944b2d6e48e0d0d19e533616e6808a7f80c903feca6ff7c2c2756fc0d4c0f"
+  },
+  "dataUnchanged": true
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "f2-fatigue-evidence/1",
+  "method": "docs/validation/2026-11-17-f2-fatigue-method.md",
+  "variants": {
+    "f2off": {
+      "head": "8584ab7d859510a9352633d006e6162213acc5ff",
+      "gitStatusBefore": "",
+      "rawDataSha256": {
+        "points.tsv": "c04b44f89dea0a2a6eee9ea1d50463e117e32cc9a67760bb3cc1e79d9811ceb8",
+        "receptions.tsv": "ab07aacb8fbd59ec0da5122971d603474b470dc7eae9020c6756764cb9a0ae31",
+        "matches.tsv": "f70392425be61b40d859fce99a39a5085531d4b8fde578c2bec6c2f7ad866314",
+        "source.tsv": "476bb5b76aa7a324f2547092475864da21f538682ff5d0da5e8d2936f1bb3089"
+      },
+      "runnerSha256": {
+        "unity-processes.tsv": "1536090e18caab769901f452a11a8aecd2cce8adeae517ccd0edc99f989fb61b",
+        "results.xml": "4b9203e3688e6bde1f04405c998f426491c6ec4c05ee4e3e7eef397e6d03faca",
+        "unity.log": "89fc57a4f68499b2d13e195e5ed28a891a8a1adb2ec2382e667c15d1675a627b",
+        "head.txt": "548cd03fcff1438ac6e683ef7fc34415a422a37cd879e3810cd0a5dc3e6fc02b",
+        "status.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "dataUnchangedAfterPackaging": true
+    },
+    "f2all": {
+      "head": "8584ab7d859510a9352633d006e6162213acc5ff",
+      "gitStatusBefore": "",
+      "rawDataSha256": {
+        "points.tsv": "1faf017f8b69b758ab69df8c762b5a444e3ed1b70c40df15155458996371ae01",
+        "receptions.tsv": "4c11861259ef6de331869ed7fba4f7628069b57fbb3771b3b80f0ee477556631",
+        "matches.tsv": "8148c18ff942ac7ed21284af22a7942cb3072b17def708825f13309b1e9a99a2",
+        "source.tsv": "1594ca2f9b434f8fd0dc57a198f10b6f960c47a88b62e06147aecec7c1842079"
+      },
+      "runnerSha256": {
+        "unity-processes.tsv": "43c1a825210941afcf47a126e412ee14d9908d37d085174b8986461cc64045a4",
+        "results.xml": "d6432d413cdad26dacf592f85dd267d6eefc9419e0f2fccbc6845f287435ae69",
+        "unity.log": "d96c43a4aa548e2d5bb89199b190fe2887b131489cbd0bc880c90ca9d7195d56",
+        "head.txt": "548cd03fcff1438ac6e683ef7fc34415a422a37cd879e3810cd0a5dc3e6fc02b",
+        "status.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "dataUnchangedAfterPackaging": true
+    }
+  },
+  "attempts": {
+    "F2-EXP-01": {
+      "what": "first f2off invocation stopped by its own expected-hash assertion before any data (see the method erratum)",
+      "sha256": {
+        "results.xml": "14c365bc468096465fbca2319f8008da8c07ae3db553f42b08d7a96ae2fe73ba",
+        "unity.log": "bb8bf5fe5d8ff48ea7ab1d081a942a9d217403e37b50a13bd41dd9eefc50ba8f",
+        "head.txt": "a8eb39e6b810701426b0a20fa93067c0d4aefda26f326e156bcbc677b7ee070a",
+        "unity-processes.tsv": "cd8eaacf88077daf0a64ccfa57c9e38674d11cbd6f48bfd3a410a31174e6653e"
+      }
+    }
+  }
+}
