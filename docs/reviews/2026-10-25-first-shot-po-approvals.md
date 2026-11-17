@@ -3112,3 +3112,14 @@ Decisión literal del PO:
 El PO precisa que la búsqueda se queda sin mover x y que sigue pendiente la mayor parte de A2: integración, retícula, C2–C8 y rendimiento. Se registra este diagnóstico como comunicado/adoptado por el PO, sin una nueva medición ni modificación del resultado: el segundo bote quedó a 1,06313968 m de la pared contraria (límite ≤1 m). El testigo fallido conserva x=3,44985247 en la ruta original y en la revisada. Cerrar G1 no acepta A2 ni sus criterios pendientes; no queda autorización de continuación.
 
 **Ejecución documental:** #73 cerrada sin fusionar, rama local/remota `codex/g1-a2-flat-drive` intacta en `2ee988d`; candidatos `4fe66ad` y `eeb4a83` conservados, además del merge `46c0f54` de main tras #74, sin rebase. Nueva rama documental desde main `95d75a2`, con informes, diseño/método archivados y evidencia derivada copiados de `2ee988d` sin código ni scripts, con cotejo SHA-256. Logs/XML ignorados permanecen en el worktree original. Se corrige el estado actual: #71/#72 están fusionadas en `49c22dc`/`0b85a46`; #74 en `95d75a2`. [Informe de cierre](2026-11-17-g1-close.md). Sin Unity, corridas, fusión ni instalación en este encargo.
+
+
+### F1/F2 — inicio de F1 y autonomía experimental confirmada (17 nov 2026)
+
+Decisión literal del PO sobre la autorización:
+
+> «Confirmo la autonomía experimental que describe ese encargo para F1/F2, con los mismos límites que en G1.»
+
+El PO encarga comenzar F1 después del cierre de G1, leyendo íntegros el handoff y la spec de cansancio v2.2: método B en commit propio antes de ejecución, TDD, suites completas, AutoQA V/T3 y check-release; anclas solo según A2 v2.2 con prueba de proyección. Un solo Unity, sin fusión ni instalación. La autonomía cubre únicamente defectos del código experimental propio que aborten antes de datos y resumen/empaquetado posteriores con SHA-256 de datos intactos, conservando intentos/correcciones; no producto, método, grilla, umbrales o datos.
+
+Método predeclarado en `2708fb4`, rama F1 desde main `766dedd`. La inspección previa detecta tests existentes que fijan hashes completos/121 claves fuera de las cuatro anclas autorizadas y ausencia de P de intención en el saque automático. [Parada F1-PREFLIGHT-01/02](2026-11-17-f1-preflight-stop.md). No se modifica producto ni se ejecuta Unity. Tratamientos propuestos pendientes de decisión del PO; no hay aprobación de F1.
