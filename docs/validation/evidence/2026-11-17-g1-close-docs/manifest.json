@@ -1,0 +1,31 @@
+{
+  "baselineMain": "95d75a2093ab32703a835c09677643603a270a6b",
+  "sourceA2Branch": "codex/g1-a2-flat-drive",
+  "sourceA2Head": "2ee988d93983bc7cb560df51759814a738073ac0",
+  "pr73": {
+    "state": "closed",
+    "merged": false,
+    "branchPreserved": true
+  },
+  "copiedDocumentCount": 11,
+  "copiedDocumentsSha256": {
+    "docs/reviews/2026-11-17-g1-a2-c1-revision01-stop.md": "fa2eabbc698496f5301ec91d1356fd4b1dba8b50846620ca8c845349f21f0acc",
+    "docs/reviews/2026-11-17-g1-a2-c1-stop.md": "29f2e55623004f8ed5bbaf949c965245d4866608d80f2d4e0dd3302b9a4c1987",
+    "docs/superpowers/specs/2026-11-17-g1-a2-flat-drive-design.md": "7ad1efbcb4a8c258c55356148b8eeec256347d855e97bb18526bd82354345646",
+    "docs/validation/2026-11-17-g1-a2-execution-method.md": "d8d627960dedbfd6cf59855f5928dae66909fea7121a296d3ec1b94a2c444af9",
+    "docs/validation/evidence/2026-11-17-g1-a2-c1-revision01/README.md": "94ca19c3823eb85c9e2de3ded563c4910b4f3e2e5dfae857eb76379a0b945ded",
+    "docs/validation/evidence/2026-11-17-g1-a2-c1-revision01/manifest.json": "ecf60c47b1ad482457fd1c2ef3291ae6c34e7045a2cc12658e05adaa69f059e5",
+    "docs/validation/evidence/2026-11-17-g1-a2-c1-revision01/witnesses.tsv": "ad5cdfb7a520d067d1ecdb8a94d8afe3a261fc91847a3ab2cfdc9b7b35b9f7da",
+    "docs/validation/evidence/2026-11-17-g1-a2-c1-stop/README.md": "b5e6690aadacb58181eb1b769732e6a3046067a8ce254b67652c2ebb27a42ab1",
+    "docs/validation/evidence/2026-11-17-g1-a2-c1-stop/green-witnesses.tsv": "96a9d57d3c7a8c28a352d16b885a08264c3cbfdbfb3f03b8177add93120907d7",
+    "docs/validation/evidence/2026-11-17-g1-a2-c1-stop/manifest.json": "45a860c4299438cabbad6b47d023b8c7babdb18c0d66c63cbd676308b69d65b3",
+    "docs/validation/evidence/2026-11-17-g1-a2-c1-stop/red-witnesses.tsv": "3d9fccf8c08c56d05ee11339fcb89e1a055460c36303189af4f3756e9dd3563d"
+  },
+  "originalIgnoredReceiptsUnchanged": true,
+  "failedCaseOriginalAndRevisedX": "3.44985247",
+  "diagnosis": "PO decision: local search optimum, not the lateral cap; no new scientific run.",
+  "unityInvocations": 0,
+  "testsOrExperimentsRun": false,
+  "a2CodeIncluded": false,
+  "scope": "AGENTS.md and docs only"
+}
