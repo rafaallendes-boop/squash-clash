@@ -151,7 +151,7 @@ namespace SquashClash.Runtime.Tests
             File.AppendAllLines(LogPath("exp-C.log"),lines);
         }
         // D: phase sweep. A fresh fixture per case; delay k frames before Toggle, then the original cadence for the first button only.
-        [UnityTest] public IEnumerator D_PhaseSweep([Range(0,11)] int k)
+        [UnityTest] public IEnumerator D_PhaseSweep([NUnit.Framework.Range(0,11)] int k)
         {
             for(int i=0;i<k;i++)yield return null;
             panel.Toggle();yield return null;yield return null;
