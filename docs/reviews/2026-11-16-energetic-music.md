@@ -56,4 +56,4 @@ Decisión del PO del 17 nov (literal, en el [registro](2026-10-25-first-shot-po-
 
 ## Independencia de la revisión
 
-Claude dirigió este trabajo (subagente Sonnet), por lo que su revisión no es independiente. Falta la revisión de Codex o del PO y la corrida de `scripts/test.sh playmode ZMusicTests` en el Mac cuando Unity esté libre. No se fusiona sin aprobación del PO.
+Claude dirigió este trabajo (subagente Sonnet), por lo que su revisión no es independiente. Falta la revisión independiente y la aprobación del PO. No se fusiona sin aprobación del PO.
