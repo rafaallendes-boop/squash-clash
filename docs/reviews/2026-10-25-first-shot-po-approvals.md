@@ -2907,3 +2907,262 @@ Encargo literal del PO:
 > «#65: integra `main` (tras #64) y resuelve el conflicto del registro de aprobaciones conservando ambas entradas. Corre EditMode completo para confirmar compilación y recuento. Reporta el head final; la fusión la apruebo yo.»
 
 Se integra `origin/main` en `10bcaec` sobre la rama de #65, sin fusionar la PR. En el conflicto aditivo del registro se conservan íntegros ambos bloques: cierres/decisiones/diseño de #64 y autorizaciones/continuaciones U1 de #65. No se eliminan ni reinterpretan citas. EditMode completo tras la integración: **738/738**, cero omitidos, XML fresco y sin errores CS, sobre `b3c2fad`.
+
+## U3 — única PlayMode nueva autorizada (16 nov 2026)
+
+Encargo literal del PO:
+
+> «#66: autorizo una sola PlayMode completa nueva. No es CRP-01; si da el recuento completo, registra la falla de `LocalCancelLimitAndState` como intermitente sin causa demostrada y sigue con check-release. Si vuelve a fallar, detente y repórtalo. U2 sigue después.»
+
+Se conserva la corrida 550/551 y no se corrige el test. La clasificación como intermitente solo se registra si la corrida nueva aprueba el recuento completo; no implica causa demostrada ni equivalencia con CRP-01. Solo entonces se continúa check-release. Ante cualquier falla nueva se detiene, sin otro reintento.
+
+**Resultado de la única corrida autorizada de #66:** PlayMode **551/551**, 0 Failed/0 skipped, XML fresco y sin errores CS, sobre `2dca32f`. Se cumple la condición del PO: la falla previa de LocalCancelLimitAndState se registra como **intermitente sin causa demostrada, separada de CRP-01**; no se corrige el test ni se cambia el resultado anterior 550/551. Se continúa check-release.
+
+## U1 fusionada y continuación U3/U2 coordinada (16 nov 2026)
+
+El PO informa la fusión aprobada de #65, literal: «Fusiona #65 y dejame el mensaje para codex». Merge `02f3c57151a0`, segundo padre `79e9bb9b90fd` y árbol idéntico al head aprobado, comprobados en Git. U1 queda en main; fusionar no acepta otra etapa.
+
+Encargo del PO: actualizar AGENTS §5/§6 con los hashes T3 y main `02f3c57`, retirar el worktree U1 sin --force preservando los ignorados, integrar main en #66 conservando los documentos y ejecutar EditMode, PlayMode y check-release completos por los defaults T3 bajo U3. La fusión de #66 queda reservada al PO.
+
+Para #69 se autoriza **una sola repetición del RED U2**, después de terminar #66 y todo proceso Unity. Antes se guardan PID, comando y proyecto de todos los procesos Unity; si hay alguno, no se lanza el test. Cualquier nuevo incidente detiene el trabajo. Se espera primero a que E1 deje de usar Unity; ninguna corrida de #66/#69 en paralelo. Esta autorización no modifica escenarios, criterios, contratos ni permite instalación.
+
+**Resultado de #66 tras U1:** main `02f3c57` integrado en `aa6fb08`, con ambos bloques de aprobaciones conservados. EditMode **748/748**, PlayMode **561/561**, check-release **OK dev/prod**, exportaciones frescas y `gitDirty=false`. ProjectSettings restaurado; Unity sin procesos al terminar. Worktree U1 archivado sin --force y siete entradas ignoradas preservadas fuera de Git. #66 queda para revisión y decisión de fusión del PO; #69 consume después su única repetición RED autorizada.
+
+## E1: derecho y revés estéticos (16 nov 2026, Chile)
+
+**Autorización literal del PO:**
+
+> «Se autoriza que CharacterView dibuje su propia preparación y su propio remate para el derecho y el revés, con SwingView intacto (claves, trayectoria, tiempo y fase).
+> Condición: en la ventana de contacto (por ejemplo ±60 ms alrededor del contacto entregado por SwingView; propón el valor y justifícalo), la cabeza de la raqueta dibujada coincide con la de SwingView dentro de una tolerancia pequeña (propón cuál). Agrega un test que lo verifique para el derecho y el revés, del humano diestro y zurdo.
+> El rival es diestro fijo. Sin cambios en BodyFrame, la planificación, el gesto, el reloj, el timing, la física, la IA ni los contratos. AutoQA no es obligatorio si se cumple lo anterior; decláralo. Las suites, cuando Unity quede libre después de U1–U3.»
+
+**Significado:**
+- Se permite una preparación y un remate visuales propios en `CharacterView`, para ambos golpes, conservando la coincidencia con `SwingView` durante la ventana de contacto. No se autoriza modificar `SwingView` ni las zonas excluidas en el literal.
+- Codex predeclara ventana, referencia temporal y tolerancia en el [informe E1](2026-11-16-e1-forehand-backhand.md); debe verificarlas para los cuatro casos de golpe/mano. La propuesta no acredita aún un resultado.
+- AutoQA no es obligatorio mientras se respete ese alcance. Las suites esperan a que el PO libere Unity tras U1–U3. No se autoriza fusión ni instalación.
+
+**Ventana aprobada y Unity liberado por el PO (16 nov):**
+
+> «OK con ±60 ms y 5 mm; Unity Libre»
+
+Se aprueban los valores propuestos en E1: ventana centrada en la llegada a la clave `Contact` de `SwingView` (60 ms tras la entrega), con 5 mm de tolerancia en espacio mundo. Unity queda disponible para ejecutar E1, de forma exclusiva y secuencial. No se autoriza fusión ni instalación.
+
+### E1: continuidad desde Idle y expectativas de reposo (16 nov 2026, Chile)
+
+El PO levantó la detención de E1 conservando `8 m/s × dt + 5 mm`, prohibió limitar la velocidad al umbral para hacer pasar el test y encargó corregir la duración/geometría, medir toda la población e incluir Idle → Intention con RED previo. Las zonas excluidas y la exención condicional de AutoQA se mantienen; no se autoriza fusionar ni instalar.
+
+Al comprobar que aceptar y entregar puede ocurrir en el mismo ciclo, Codex pidió una decisión sobre el reposo: alinear la cabeza en Idle con `SwingView` y actualizar las expectativas de posición de `ZHandednessTests`, conservando la mano portadora y todos los umbrales de contacto/continuidad. Respuesta literal del PO:
+
+> «Autorizar reposo alineado y actualizar ese test»
+
+Se identificó además la expectativa de raqueta por encima de 1,15 m durante Idle en `ZCharacterFeelTests`. Codex solicitó reemplazar solo esa aserción por coincidencia con `SwingView`, manteniendo preparación/giro y split step. Respuesta literal del PO:
+
+> «Sí, actualizar esa expectativa de Idle»
+
+Estas dos expectativas de comportamiento se actualizan por la decisión funcional del PO. No se modifican los umbrales de 5 mm ni el de salida, ni criterios de juego, física o timing.
+
+## Integración E1 → U3 → U2 para una prueba física (17 nov 2026)
+
+El PO confirma #68 en main `47ec6d1`, literal: «Si, fusionamos E1, quiero después pasar todo y hacer solo 1 prueba». Encarga integrar ese main en #66 conservando ambas entradas del registro, actualizar AGENTS §6 y ejecutar EditMode, PlayMode y check-release completos, con un solo Unity e inventario PID/comando/proyecto guardado. Si aparece cualquier falla o incidente, se registra y se detiene. La fusión de #66 sigue reservada al PO.
+
+Solo después de que #66 esté fusionada se integra main en #69 y se repiten las mismas compuertas. Se registrarán sin corregir código dos observaciones: BUNDLE_ID es obligatorio en release-ios.sh pero no tiene uso funcional posterior ni aparece en release.env.example; compartir Documents en Archivos expone métricas y presets por decisión del PO para las pruebas. No se autoriza build nativa, instalación, acceso al iPhone, archive, firma ni subida.
+
+**Resultado de #66 tras E1:** main `47ec6d1` integrado en `3597a82`; conflicto aditivo resuelto conservando completos ambos bloques (E1 y U3), AGENTS §6 actualizado con #68 fusionada. EditMode **748/748**, PlayMode **581/581**, check-release **OK DEV/PROD**, exportaciones frescas y `gitDirty=false`. Inventarios PID/comando/proyecto guardados antes de cada lanzamiento y al terminar, todos vacíos; ProjectSettings restaurado y árbol limpio. Sin falla ni incidente. Se publica el head para revisión del PO, sin fusionar. #69 tiene las observaciones documentadas sin código y espera la fusión de #66 antes de integrar main/correr sus nuevas compuertas.
+
+## U2 — única repetición RED autorizada tras completar #66 (16 nov 2026)
+
+El PO autoriza una sola repetición del RED de #69: «Antes de lanzarla, guarda PID, comando y proyecto de todo proceso Unity. Si hay alguno, no lances nada: el chequeo debe devolver el control sin iniciar el test. […] Si se repite cualquier incidente, detente.» #66 terminó primero: integración `aa6fb08`, EditMode 748/748, PlayMode 561/561, check-release dev/prod OK; head documental final `96321dd`. E1 declaró Unity libre. Se integra main `02f3c57` en #69 antes de repetir los seis tests RED sin modificarlos. Inventario y lanzamiento en llamadas separadas; un estado no cero devuelve el control, sin iniciar Unity.
+
+**Resultado U2 tras la autorización:** única repetición RED sobre `1c1d075`: 0/6, seis aserciones, XML fresco y sin errores CS; inventarios previos/posteriores vacíos, sin incidente. Implementación `66e1707`; EditMode 744/744, PlayMode 558/558, check-release DEV/PROD OK y arte/plist/número automático comprobados (build 738). Árbol limpio y ProjectSettings restaurado tras PlayMode, Unity libre al terminar. Se entrega #69 sin fusionar; archive/export nativo, firma y subida no ejecutados, pendientes del equipo pagado/credenciales y autorización correspondiente.
+
+## U2 — observaciones conservadas y dependencia de #66 (17 nov 2026)
+
+El PO confirma E1 #68 en main `47ec6d1` y solicita una sola prueba física una vez integrado todo: «Si, fusionamos E1, quiero después pasar todo y hacer solo 1 prueba». #69 integra main y repite EditMode, PlayMode y check-release **solo cuando #66 esté fusionada**, con un único Unity e inventarios PID/comando/proyecto guardados; ante cualquier falla o incidente se detiene.
+
+Se registran por encargo, **sin cambiar código**, estas dos observaciones: `BUNDLE_ID` es obligatorio en la precondición de `release-ios.sh`, sin referencia posterior dentro del script y ausente de `release.env.example`; las claves plist dejan Documents visible en Archivos, con métricas y presets, decisión del PO para las pruebas. Esto no autoriza build nativa, instalación, acceso al iPhone, archive, firma, subida ni fusión de #69.
+
+## U2 — integración de U3 fusionada y fusión condicional aprobada (17 nov 2026)
+
+El PO confirma #66 fusionada en `3780bf8`, segundo padre `bd387164a14a` y árbol idéntico al head, comprobados en Git. Encarga integrar ese main en #69 conservando todas las entradas del registro, actualizar AGENTS §6 y ejecutar EditMode, PlayMode y check-release completos, de a un Unity y con inventarios PID/comando/proyecto guardados. Ante cualquier falla o incidente se registra y se detiene.
+
+Aprobación literal del PO: «Si da verde y lo único nuevo es la integración, el PO ya aprobó la fusión». La aprobación cubre la integración y su documentación, sin cambios de implementación adicionales. Se conservan sin corrección las observaciones BUNDLE_ID/Documents. Sin build nativa, instalación ni acceso al iPhone por Codex; la instalación posterior corresponde a Claude con autorización del PO. Archive, firma y subida no quedan autorizados.
+
+**Resultado de #69 tras #66:** integración `e372ad9`, con todo el código incorporado idéntico a main `3780bf8`, implementación U2 intacta y todas las entradas del registro conservadas. EditMode **754/754**; PlayMode **580/581**, falla en `ReticleVisibilityTests.DevOpen_ProtocolActionsRemainUsable_AndCloseDevBeforeArming` línea 213: **788,198853** frente al límite **674,663208**. Mismo test/cifras de CRP-01 y archivo sin cambios desde U1; causa no demostrada. Conforme al encargo, se detiene **sin reintento, corrección, check-release nuevo ni fusión**. La aprobación condicional no se ejecuta. ProjectSettings restaurado; inventarios previos y final vacíos. XML/logs frescos conservados, sin errores CS ni omitidos.
+
+## Cansancio F1/F2 — reformulación de A2 (17 nov 2026)
+
+Al preparar el envío de F1/F2 se comprobó que A2 («con los mismos hashes de escenario», spec de cansancio v2.1, §7) no se puede cumplir: el arnés de AutoQA carga el `DefaultPreset` completo en cada escenario (V solo fija además `timing.validLimit = 1`), exige `hashMatch` antes de cada intento y las cuatro anclas están fijas en `Scenario.ExpectedHash`. Agregar las claves `fatigue.*` cambia las cuatro. La propia spec decía en §5 que el cambio de hash era esperado. La autorización de F1/F2 dejaba fuera «cambiar AutoQA».
+
+Claude propuso este texto para A2:
+
+> «A2: el modo práctica, los SL y AutoQA `--suite v` y `--suite t3` quedan PASS/0/1 con los mismos escenarios, oráculos, expectativas y checker. Se autoriza actualizar solo las cuatro anclas de `Scenario.ExpectedHash` a los hashes nuevos medidos en Unity, con la condición de que la proyección del hash sobre las 121 claves previas a F1 dé exactamente las anclas actuales.»
+
+Respuesta literal del PO: «Yes, I approve A2».
+
+Alcance: solo F1/F2. Las anclas actuales son V `06fed4bd4ac9` y `8e22575422f2`, T3 `430da2faa818` y `e89daab41c3e`. No cambian escenarios, oráculos, expectativas ni el checker. G1 no queda cubierto: si su fase B cambia hashes, la actualización de anclas se decide junto con la opción que elija el PO. La spec pasa a v2.2 con este cambio, la exigencia de `--suite v` y `--suite t3`, y la condición de que la barra de F2 no altere los eventos de botones y pausa de U3. Sin fusionar.
+
+## G1 fase B — A1-bis y diseño A2 autorizados (17 nov 2026)
+
+El PO entrega a Codex `Logs/handoff/2026-11-17/codex-G1-fase-B.md`. El encargo registra la recomendación de Claude: A1-bis, diagnóstico complementario del ruido de timing del Rival sin cambiar producto; para A2, solver según intención, «más fuerte = más plano». Respuesta literal del PO que consta en ese encargo:
+
+> «Sí, ambas».
+
+Alcance: primero A1-bis en `codex/g1-a1bis-timing`, con método predeclarado antes de ejecutar, la población A1, probabilidad analítica y muestreo con `RallyContact.Resolve`, dos procesos deterministas e informe de una página con opciones. Al entregar, se detiene la corrección de A1 hasta elección del PO. Después, A2 en `codex/g1-a2-flat-drive`: diseño/criterios en commit propio y parada para revisión de Claude **antes de implementar**. La autorización de física, solver y M2-4 de este encargo se limita a A2. No agrega claves a DefaultPreset ni permite cambiar las cuatro anclas de Scenario.ExpectedHash; si hacen falta, se detiene y reporta. Suites, AutoQA V/T3 PASS/0/1, check-release y experimento C1–C3 son requisitos de la implementación posterior. Sin fusión ni instalación; ante defecto/sorpresa se registra y detiene.
+
+**Preparación y detención:** #71 continúa abierta; se apila A1-bis sobre su head `3e1e037`, como permite el encargo, sin fusionar #71. En lectura previa se detectó el defecto `G1-A-EXPORT-01`: `receptions.tsv` de ambas corridas de fase A y su copia derivada incluyen una columna sin nombre cuyo valor es `bodyContactZ` en las 648 filas. El inicializador del exportador tiene pares incompletos; la escritura posterior repone los campos nombrados. Se registra en [el informe de detención](2026-11-17-g1-a1bis-preflight-stop.md), sin corregir el exportador ni los datos. **Ninguna corrida Unity nueva; A1-bis no ejecutado y A2 no iniciado.** Continuación pendiente de decisión del PO; no se consume una corrida ni se declara aprobación del diagnóstico nuevo.
+
+### G1-A-EXPORT-01 — corrección acotada y continuación autorizadas
+
+Decisión literal del PO, 17 nov 2026:
+
+> «Autorizo G1-A-EXPORT-01: corrige solo el exportador experimental y agrega la validación de esquema (cabeceras vacías y parejas incompletas), conservando las corridas originales de la fase A sin repetirla. Agrega una nota de errata en el README de la evidencia de #71. Claude verificó que las parejas se realinean, que los 648 campos nombrados se reescriben y que el resumen lee por nombre, así que los recuentos de la fase A no cambian. Después continúa A1-bis según el encargo y mantén la parada de diseño de A2. Sin fusionar ni instalar.»
+
+Se levanta la detención únicamente para esa corrección y sus guardas, la nota de errata y A1-bis. La comprobación de que no cambian los recuentos se atribuye a Claude según informa el PO; Codex no la presenta como revisión independiente propia ni repite la fase A. Se preservan datos, tablas y hashes originales; la errata se añade al README. A1-bis conserva método predeclarado, dos procesos propios y entrega con opciones sin corrección de producto. A2 mantiene revisión de diseño antes de implementar; no se autoriza fusión ni instalación.
+
+**Ejecución de la autorización y nueva parada:** método `73d86a2`; pruebas de esquema RED `e498feb` **0/4**, cuatro aserciones válidas y sin CS; corrección `0161ae6`, GREEN **4/4** con XML fresco. Se añade la errata y se cotejan intactos todos los SHA-256 crudos de fase A. A1-bis `e184ce9` se detiene en la primera invocación por `G1-A1BIS-CS-01`: dos `Is.AnyOf` no disponibles en NUnit (`CS0117`, líneas 110 y 151). No hay XML nuevo ni tests científicos ejecutados; **NotEvaluated**, sin resultado de hipótesis, sin reintento ni corrida run02. No se corrigen esas dos líneas; #72 queda borrador. [Informe](2026-11-17-g1-a1bis-timing.md). La parada de A2 sigue vigente; sin fusión ni instalación.
+
+### G1-A1BIS-CS-01 — equivalencia de aserciones y dos procesos autorizados
+
+Decisión literal del PO, 17 nov 2026:
+
+> «Autorizo G1-A1BIS-CS-01: corrige solo las dos aserciones con `Is.AnyOf` (líneas 110 y 151) por una forma equivalente compatible con el NUnit del proyecto, que acepte exactamente `Contact`, `Air` y `Late`. Conserva el intento fallido con su log y su XML, separado de las corridas válidas. Luego ejecuta las dos corridas predeclaradas según el método `73d86a2`, sin cambiarlo. Antes de cada corrida, verifica que compile. Si aparece otro error de compilación o cualquier sorpresa, detente y reporta. A2 mantiene su parada de diseño. Sin fusionar ni instalar.»
+
+Se sustituye cada restricción por la disyunción explícita de esas tres igualdades y `Is.True`, sin cambiar categorías, entradas, lógica medida, método ni tolerancias. El intento de CS-01 se preserva separado en `Logs/experiments/g1-timing/attempt-CS-01-run01-runner`, con cotejo de sus hashes originales. **Ese intento nunca produjo XML**, por fallo de compilación antes del test runner; se conserva y declara la ausencia, sin fabricar ni copiar un XML de otra corrida. Antes de cada proceso científico se ejecutará una comprobación de compilación en proceso Unity exclusivo, con log fresco y hash del assembly experimental; después el invocador vuelve a comprobar que no haya otro Editor antes de lanzar el experimento. No se repite fase A ni se levanta la parada de diseño A2.
+
+**Resultado de esta continuación:** `5cae7bd` cambia solo las dos aserciones del experimento y registra la autorización. Verificación previa de compilación **OK**, sin CS, log fresco, hash del assembly experimental `de33e8677b4f1181f034b41b52d49a99964505b49f86c9e85ac3dea4607293c0`. Ambos inventarios previos vacíos. El primer proceso se detiene con XML fresco **0/1 Failed (Error)** a las 14:29:39 UTC: `G1-A1BIS-EXPORT-02`, lista impar de parejas en `Put` de la fila nueva (líneas 84–89), falta el valor de `kOutMs`. No hay ventanas evaluadas ni muestras, solo dos archivos parciales. Se preservan XML/logs y parciales separados, sin corregir la llamada ni reintentar. Segunda corrida no lanzada, hipótesis **NotEvaluated**, método `73d86a2` sin cambios. [Informe](2026-11-17-g1-a1bis-export-02-stop.md). A2 mantiene su parada de diseño; sin fusión ni instalación.
+
+### G1-A1BIS-EXPORT-02 — corrección y autonomía experimental previa a datos
+
+Decisión literal del PO, 17 nov 2026:
+
+> «Autorizo G1-A1BIS-EXPORT-02: completa el valor vacío de `kOutMs` y revisa la paridad de todas las llamadas `Put` del diagnóstico. Además, solo para el código experimental de G1 (`Tests/Experiments` y los scripts `diagnose-g1*`/`summarize-g1*`), te autorizo a corregir sin detenerte los defectos de tu propio código que hagan abortar el experimento antes de producir datos científicos: errores de compilación, excepciones de la validación de esquema o fallos antes de la primera fila de datos. Conserva cada intento fallido y registra cada corrección en el informe. Esto no cubre cambios al método `73d86a2`, a la grilla, a los umbrales, al producto ni a datos ya producidos. Si un defecto aparece después de producir datos, o si los resultados te sorprenden, detente y reporta como hasta ahora. Luego ejecuta las dos corridas predeclaradas. A2 mantiene su parada de diseño. Sin fusionar ni instalar.»
+
+Se añade únicamente el valor vacío faltante de `kOutMs` y se inspeccionan estáticamente todas las llamadas `Put` del diagnóstico (paridad y nombres de clave). La excepción de parada se limita a fallos propios del código experimental anterior a la primera fila científica; no permite reinterpretar resultados ni corregir después de producir datos, aunque estén aún en memoria o en archivos parciales. Se conservan todos los intentos anteriores y sus recibos, sin repetir fase A. Compilación previa y exclusividad de Unity siguen obligatorias; método, grilla, umbrales, producto, datos existentes y parada de diseño A2 intactos. Cada corrección adicional dentro de ese alcance se registrará en el informe; no se autoriza fusión ni instalación.
+
+**Resultado A1-bis:** corrección `fe7633d` (un valor vacío de kOutMs), cuatro llamadas Put revisadas: 13/30/7/6 parejas, sin otra corrección. Dos comprobaciones previas de compilación aprobadas, mismo hash del assembly `45ab13947b6448b0d4cd34ecc6f4419419d66325dbfe07380775662ff4682421`; todos los inventarios previos vacíos. Dos procesos completos sobre ese head limpio: **1/1 cada uno**, 648 planes, 43.080 celdas y 58.200 muestras por proceso; cuatro crudos y cuatro derivados idénticos byte a byte. Método `73d86a2` intacto; controles estadísticos predeclarados aprobados, sin SystemFault/NotEvaluable. Media: 97/103 planes y 81,98 % de contacto esperado con ruido; P=1 con vidrio, 23/25 planes y 76,45 % esperado. No son tasas de puntos ganados por usuarios. [Informe y opciones](2026-11-17-g1-a1bis-timing-results.md), [evidencia e historial](../validation/evidence/2026-11-17-g1-a1bis-timing/README.md). Todos los fallos anteriores se conservan separados, fase A sin repetir y sin cambiar producto/defaults/anclas. Se entrega A1-bis para elección del PO, sin corregir timing; A2 mantiene su parada de diseño antes de implementar. Sin fusión ni instalación.
+
+### G1 A1 — opción 2 mínima y diseño A2 (17 nov 2026)
+
+Decisión literal del PO:
+
+> «Para A1 elijo la opción 2 en su versión mínima: el Rival mantiene su intención en T\*, salvo cuando T\* queda a menos de 1,5σ de un borde de la ventana de contacto. En ese caso desplaza la media de su release lo justo para quedar a 1,5σ de ese borde. Si la ventana mide menos de 3σ, apunta al centro. El sigma de timing no cambia. Antes de implementar, fija en un commit estos criterios, sin cambiarlos después:
+>
+> - en los planes que hoy están a 1,5σ o más de ambos bordes, el release queda idéntico bit a bit;
+> - se mantiene el orden de contacto Fácil < Media < Difícil;
+> - la ruta del Humano queda intacta;
+> - sobre la población de A1-bis, el Rival medio a P=1 llega al menos a 90 % de contacto sobre sus planes;
+> - sin azar nuevo.
+>
+> Puedes guardar el 1,5σ como parámetro de `RallyParams` (cambia solo su hash propio), pero sin tocar `DefaultPreset`, P0, `SimulationKey` ni las anclas de `Scenario.ExpectedHash`. Usa TDD con RED por aserción, suites completas, AutoQA `--suite v` y `--suite t3` PASS/0/1 y check-release OK. Si algún test existente de rally cambia de resultado, detente y reporta. Mientras tanto, sin usar Unity, prepara el commit de diseño y criterios de A2 y detente para la revisión de Claude. Un solo Unity a la vez, sin fusionar ni instalar.»
+
+Se predeclaran [criterios A1](../validation/2026-11-17-g1-a1-release-margin-criteria.md) antes de tests/implementación. Al predeclarar esos criterios #71/#72 estaban abiertas (ya fusionadas en `49c22dc`/`0b85a46`, respectivamente): A1 se preparó en rama/worktree/PR propia apilada sobre `1c9d2c6`; A2 en su propia rama sin Unity, solo diseño, con parada de revisión antes de implementar. Ninguna autorización permite cambiar tests existentes para obtener verde ni sustituir los datos congelados. Sin fusión ni instalación.
+
+**Resultado de A1 y nueva parada:** criterios `aa1a9f7`, producto `1dba20d`, experimento `9bf1c5a`. RED 10 tests (2 controles pasan, 8 aserciones fallan), GREEN 10/10, EditMode **764/764**, PlayMode **581/581**; tests existentes y aserciones intactos, incluido rally, ProjectSettings restaurado. Dos procesos científicos completos **1/1 cada uno**, 648 planes y 58.200 muestras por proceso, ocho archivos crudos/derivados idénticos. Media P=1: **93,2646 % sobre 29 planes**, muestra 5.401/5.800; dificultades 84,46 < 89,98 < 95,80 %, 207 planes seguros con 41.400 releases idénticos bit a bit y Humano/RNG comprobados. RallyParams nuevo `927e304bbfec`, proyección antigua `7d50ddaf5d4f`; defaults/SimulationKey/anclas sin cambios.
+
+El empaquetado posterior falla en `summarize-g1-release-margin.py:196–197`: G1-A1-REPORT-01, referencia arrastrada a carpetas schema-red/schema-green inexistentes; A1 usa RED/GREEN en Logs/evidence/g1-a1. Ocurre **después de producir datos**: se detiene sin corregir el script ni repetirlo, sin fabricar carpetas y sin ejecutar AutoQA V/T3 o check-release. Datos/XML/logs conservados; informe y recibo parcial en [estado A1](2026-11-17-g1-a1-release-margin.md). La entrega no está aprobada integralmente. A2 se preparó sin Unity en `5b7f67f`, PR #73, y queda en su parada de revisión. Sin fusión ni instalación.
+
+### G1-A1-REPORT-01 — empaquetado y puertas pendientes autorizados (17 nov 2026)
+
+Decisión literal del PO:
+
+> «A1 (#74): autorizo G1-A1-REPORT-01: corrige solo las rutas de RED/GREEN en `summarize-g1-release-margin.py` y genera el manifiesto. Verifica con SHA-256 que ningún archivo de datos cambió y conserva el intento fallido. Después ejecuta AutoQA `--suite v` y `--suite t3` y check-release dev/prod, sin repetir corridas. Desde ahora, el permiso para el código experimental de G1 también cubre los scripts de resumen y empaquetado cuando fallan después de producir datos, siempre que verifiques por SHA-256 que los datos no cambian. Cualquier otra sorpresa: detente.»
+
+Se conservan el script fallido, el recibo de REPORT-01 y el inventario SHA-256 de todos los archivos de datos crudos/derivados antes de corregir únicamente las rutas RED/GREEN. No se repite Unity científico ni se cambia el método/criterios; solo se genera el manifiesto y se exige igualdad SHA-256 antes/después. Después: AutoQA V, T3 y check-release dev/prod, secuenciales, con inventario de Editor por lanzamiento. La excepción posterior a datos se limita al resumen/empaquetado experimental con datos intactos; cualquier otra sorpresa detiene. A2 solo comienza Unity después de terminar estas puertas de A1. Sin fusionar ni instalar.
+
+**Resultado de la continuación REPORT-01:** `0703a42` corrige únicamente las rutas RED/GREEN del empaquetador. Manifiesto generado; SHA-256 idénticos para los 20 archivos de datos antes/después y tras las puertas, sin repetir las corridas. Intento fallido y recibo preservados. AutoQA **V y T3 PASS/0/1**, 88/88 tests cada uno y 18/18 escenarios-repeticiones; check-release **dev/prod OK**, exportaciones frescas con gitDirty=false. Inventarios vacíos antes de cada Unity, incluidos ambos perfiles; ProjectSettings restaurado y árbol limpio. A1 completa sus puertas sin cambios de tests/expectativas, producto/defaults/anclas adicionales ni otro incidente. [Informe](2026-11-17-g1-a1-release-margin.md), [recibos](../validation/evidence/2026-11-17-g1-a1-release-margin/gates.json). A2 ya puede iniciar la implementación aprobada, con sus tres ajustes fijados en `2b686d8` antes de código; sin fusionar ni instalar.
+
+### G1 A2 — entrega de diseño sin Unity para revisión (17 nov 2026)
+
+Pedido literal del PO: «Mientras tanto, sin usar Unity, prepara el commit de diseño y criterios de A2 y detente para la revisión de Claude». La opción elegida previamente fue solver de trayectoria según intención, «más fuerte = más plano».
+
+Se prepara [diseño A2](../superpowers/specs/2026-11-17-g1-a2-flat-drive-design.md) en rama/worktree propios desde `1c9d2c6`, apilado sobre #72, sin implementación ni invocaciones Unity. Incluye transformación compartida Humano/Rival, búsqueda P2 limitada, retícula/predicción, C1–C7 fijados y salvedad explícita C2: la línea base P=0,85 ya tiene cero outs superiores con miras bajas, por lo que no puede bajar estrictamente. Se propone conservar cero allí y reducir los otros tres tramos; queda para revisión, no se simula aprobación del literal imposible. Codex se detiene en A2 después del commit. A1, autorizado por el mismo mensaje, va en otra entrega con sus criterios previos, TDD y gates. Sin fusión ni instalación.
+
+### G1 A2 — diseño aprobado con tres ajustes previos a implementar (17 nov 2026)
+
+Decisión literal del PO:
+
+> «A2 (#73): apruebo el diseño con tres ajustes, que fijas en un commit antes de implementar:
+>
+> 1. Rendimiento: la búsqueda completa se resuelve al soltar. Durante el arrastre, la vista previa usa caché o un límite de frecuencia, nunca 24 trayectorias por cuadro. Nuevo criterio A2-C8: el tiempo de cuadro p95 en PlayMode no empeora respecto de la base, y se reportan el costo por solución y las evaluaciones por cuadro.
+> 2. Tope lateral: la mira efectiva no se desplaza más de Width/20 en x respecto de la pedida, en total. La altura solo baja. Si C1 no se cumple con ese tope, detente y reporta, sin ampliarlo.
+> 3. C2: acepto 0/≤1/≤1/≤2 por receta, sin aumentar otros outs en ese subconjunto.
+>
+> Lo demás, como está en 5b7f67f. Un solo Unity a la vez: primero terminan las puertas de A1. Sin fusionar ni instalar.»
+
+El [diseño](../superpowers/specs/2026-11-17-g1-a2-flat-drive-design.md) incorpora el presupuesto solo al release, caché de preview, tope lateral total por candidato/salida, C2 aprobado y C8 con comparación frente al producto A1 antes de A2. Se fija antes de código o mediciones nuevas y sin Unity en A2. La implementación espera el cierre de las puertas de A1; no se amplía el tope ante fallo de C1. Sin fusionar ni instalar.
+
+**Ejecución A2 y parada por C1:** ajustes fijados en `2b686d8` antes de implementar. Primero finalizaron A1 #74: AutoQA V/T3 PASS/0/1 y check-release dev/prod OK sobre `0703a42`; 20 archivos científicos conservan sus SHA-256, sin repetir corridas. Método/RED A2 `009342a`: 8/26 pasan y 18 fallan por aserción de testigo C1, sin CS. Primera implementación aislada `4fe66ad`: 22/26 pasan, 4 fallan por aserción C1; 20/24 testigos y dos controles inactivos aprobados. Los cuatro fallos corresponden a distancias laterales de los botes; todas las solicitudes respetan el tope total, altura y velocidad, y terminan en doble bote legal. Se detiene sin ampliar Width/20, cambiar criterios/tests, ajustar búsqueda ni reintentar. Núcleo sin integrar a la ruta de producto/vista. No se ejecutan malla completa, segundo proceso, C2–C5/C8, regresiones completas ni puertas A2 después del fallo. [Informe y evidencia](2026-11-17-g1-a2-c1-stop.md). Sin fusión ni instalación.
+
+### G1-A2-C1 — única revisión autorizada y continuación condicional (17 nov 2026)
+
+Decisión literal del PO:
+
+> «A2 (#73): autorizo una sola revisión del diseño por G1-A2-C1. La función de costo debe medir lo mismo que el predicado del testigo. Para la paralela, penaliza la distancia de ambos botes a la pared de su lado. Para el cruzado, penaliza el segundo bote respecto de la pared contraria y exige el cruce de mitad. Conserva la profundidad y el techo de ápice. No cambian el tope lateral Width/20, el presupuesto de 24 evaluaciones, los criterios C1–C8 ni la malla. Fija la revisión en un commit antes de ejecutar y corre C1 una sola vez. Conserva el candidato 4fe66ad y sus datos. Si C1 vuelve a fallar, detente y reporta: no habrá otra revisión. Si pasa, sigue con la malla completa, C2–C8, la integración, las suites, AutoQA V/T3 y check-release. Después de que se fusione #74, integra main en #73 con un merge, sin rebase. Un solo Unity a la vez, sin fusionar ni instalar.»
+
+Se fija únicamente el nuevo término lateral en el paso 6 del diseño: suma normalizada de distancias de ambos botes a la pared propia para paralela; distancia del segundo a la contraria más requisito estricto de cruce para cruzada. Profundidad/techo, resto de búsqueda y criterios intactos. Antes de nuevos datos, SHA-256 de todos los recibos/derivados del primer candidato comprobados idénticos. #74 está fusionada por otro operador en `95d75a2`; se integra main mediante merge `46c0f54`, con segundo padre exacto `95d75a2`, sin rebase ni cambio de producto A1. Conflictos solo documentales resueltos conservando ambas entregas. C1 se ejecutará una vez en carpeta nueva, sin sobrescribir RED/candidato anterior; sus aserciones y malla permanecen intactas.
+
+**Resultado único G1-A2-C1:** revisión del diseño `7653687` fijada antes de ejecutar; implementación `eeb4a83`. Una sola invocación del mismo filtro, con XML fresco: **25/26 pasan, 1/26 falla por aserción C1**, sin CS/omitidos. **23/24 testigos** y dos controles pasan; falla SL6 cruzada P=0,80/y=0,88: segundo bote a **1,06313968 m** de la pared contraria, límite ≤1 m. Los 24 respetan tope lateral, altura/velocidad y 24 evaluaciones; terminan en DoubleBounce legal. C1–C8, malla y tests sin cambios; SHA-256 de toda evidencia del primer candidato `4fe66ad` idénticos. **Se detiene sin otra revisión/corrida**: no se ejecutan malla completa, segundo proceso, C2–C8, integración ni puertas restantes A2. Main ya integrado con merge `46c0f54`, segundo padre `95d75a2`, sin rebase. [Informe y manifiesto](2026-11-17-g1-a2-c1-revision01-stop.md). #73 borrador, sin fusionar ni instalar.
+
+### G1 — cierre con A1 y diferimiento de A2 (17 nov 2026)
+
+Decisión literal del PO:
+
+> «Cerramos G1 con A1 (#74, fusionada). A2 queda diferida como observación abierta: C1 llegó a 23/24 con la única revisión autorizada, y el fallo restante (SL6 cruzada P=0,80, y=0,88) es un óptimo local de la búsqueda, no el tope lateral. No hay más revisiones ni corridas de A2. Cierra #73 sin fusionar y conserva su rama. Abre una PR solo de documentos que lleve a main los informes y la evidencia de A2 (sin código), registre en el registro de aprobaciones y en AGENTS.md el cierre de G1 y la diferición de A2, y corrija la línea que dice “#71/#72 abiertas”. Sin Unity, sin fusionar ni instalar.»
+
+El PO precisa que la búsqueda se queda sin mover x y que sigue pendiente la mayor parte de A2: integración, retícula, C2–C8 y rendimiento. Se registra este diagnóstico como comunicado/adoptado por el PO, sin una nueva medición ni modificación del resultado: el segundo bote quedó a 1,06313968 m de la pared contraria (límite ≤1 m). El testigo fallido conserva x=3,44985247 en la ruta original y en la revisada. Cerrar G1 no acepta A2 ni sus criterios pendientes; no queda autorización de continuación.
+
+**Ejecución documental:** #73 cerrada sin fusionar, rama local/remota `codex/g1-a2-flat-drive` intacta en `2ee988d`; candidatos `4fe66ad` y `eeb4a83` conservados, además del merge `46c0f54` de main tras #74, sin rebase. Nueva rama documental desde main `95d75a2`, con informes, diseño/método archivados y evidencia derivada copiados de `2ee988d` sin código ni scripts, con cotejo SHA-256. Logs/XML ignorados permanecen en el worktree original. Se corrige el estado actual: #71/#72 están fusionadas en `49c22dc`/`0b85a46`; #74 en `95d75a2`. [Informe de cierre](2026-11-17-g1-close.md). Sin Unity, corridas, fusión ni instalación en este encargo.
+
+
+### F1/F2 — inicio de F1 y autonomía experimental confirmada (17 nov 2026)
+
+Decisión literal del PO sobre la autorización:
+
+> «Confirmo la autonomía experimental que describe ese encargo para F1/F2, con los mismos límites que en G1.»
+
+El PO encarga comenzar F1 después del cierre de G1, leyendo íntegros el handoff y la spec de cansancio v2.2: método B en commit propio antes de ejecución, TDD, suites completas, AutoQA V/T3 y check-release; anclas solo según A2 v2.2 con prueba de proyección. Un solo Unity, sin fusión ni instalación. La autonomía cubre únicamente defectos del código experimental propio que aborten antes de datos y resumen/empaquetado posteriores con SHA-256 de datos intactos, conservando intentos/correcciones; no producto, método, grilla, umbrales o datos.
+
+Método predeclarado en `2708fb4`, rama F1 desde main `766dedd`. La inspección previa detecta tests existentes que fijan hashes completos/121 claves fuera de las cuatro anclas autorizadas y ausencia de P de intención en el saque automático. [Parada F1-PREFLIGHT-01/02](2026-11-17-f1-preflight-stop.md). No se modifica producto ni se ejecuta Unity. Tratamientos propuestos pendientes de decisión del PO; no hay aprobación de F1.
+
+
+### F1 — PREFLIGHT-01/02 resueltos y spec v2.3 (17 nov 2026)
+
+Decisión literal del PO:
+
+> «F1-PREFLIGHT-01: autorizo actualizar solo los valores fijos de hash y de cantidad de claves derivados de DefaultPreset en los tests que listaste, incluidos los literales de hash de AutoQAT3OracleTests, a los valores nuevos medidos en Unity (132 claves). Hazlo en un commit propio, sin cambiar ninguna otra aserción, oráculo ni test. Agrega un test de proyección que demuestre que, excluyendo solo fatigue.*, el preset da exactamente 430da2faa818 (T3), 06fed4bd4ac9 y 8e22575422f2 (V) y e89daab41c3e (SL5 T3). SimulationKey debe seguir en 166a96e319c7; si cambia, detente. F2 no agrega claves; si las necesitara, detente.»
+>
+> «F1-PREFLIGHT-02: el saque automático cuenta como golpe con P de intención = 0 para el consumo por golpe fuerte. No cambia su trayectoria, física ni solver, y el desplazamiento se sigue cobrando. Registra esta aclaración como spec v2.3 y fíjala en el método antes de producir datos.»
+
+Se fija la [spec v2.3](../superpowers/specs/2026-11-16-fatigue-design.md) y la aclaración en el [método B](../validation/2026-11-17-f1-fatigue-method.md) antes de datos. Se retoma F1 con la autonomía experimental ya confirmada, un solo Unity, sin fusionar ni instalar. La propuesta previa de adaptar las aserciones heredadas a proyecciones no se aplica: solo se cambian los literales autorizados.
+
+
+### F1 — PREFLIGHT-03 resuelto y extensión acotada a valores derivados (17 nov 2026)
+
+Decisión literal del PO:
+
+> «Autorizo los dos, en el mismo commit de literales: en S3FeedbackConfigTests.cs:26 agrega solo las 11 claves fatigue.* a la lista esperada, y en S2DefaultPromotionTests.cs:50 actualiza solo el hash completo de P0 al medido en Unity. El resto de ambos tests queda intacto. La prueba de proyección debe incluir P0: excluyendo fatigue.*, P0 efectivo da dcc7c8cc0688; anota el hash nuevo de P0 en AGENTS §5, sin tocar el archivo P0-calib-1. Para cualquier otro valor fijo derivado de DefaultPreset (hash, cantidad o lista de claves) aplica el mismo tratamiento sin detenerte, siempre que solo cambien entradas fatigue.*, la proyección lo demuestre y lo listes en el informe. Si un test exige cualquier otro cambio, detente y reporta.»
+
+Se retoma F1; se conserva la referencia completa de 200 partidos capturada sin cansancio. Cambios de literales/lista en commit propio y prueba de proyección de las cinco configuraciones. Sin fusión ni instalación.
+
+
+### F1 — implementación, único ajuste y parada F1-AUTOQA-01 (17 nov 2026)
+
+Método `2708fb4`, aclaraciones v2.3 `e173ef8`; referencia main 200 partidos/1.927 puntos. TDD, energía/piernas/reacción, métricas e integración implementadas; literales heredados en commits propios `f2b840f` y `5b1329d`. Off conserva los 1.927 puntos bit a bit. Soft falla B3 por energía alta (80,29); se aplica el único ajuste ya permitido y predeclarado, recoverBetween 0,35→0,25, fijado en `d44ab97` antes de datos. Ajustado: 200 partidos/1.844 puntos, todas las compuertas B pasan; B5b sin pares comparables, exploratorio. Datos anteriores intactos por SHA-256. Suites finales EditMode 788/788 y PlayMode 583/583; cinco proyecciones históricas exactas, SimulationKey intacto. Nuevo P0 efectivo f92f406f698a; archivo P0-calib-1 intacto.
+
+**Parada estática F1-AUTOQA-01:** PocObservation.ExactRecord enumera campos exactos y rechaza el nuevo f_r de ShotRecord serializado en práctica. La autorización de valores derivados de DefaultPreset no cubre esa lista/oráculo. No se modifica AutoQA ni se ejecutan AutoQA V/T3 o check-release; quedan NotEvaluated. Se propone conservar el esquema de práctica y emitir f_r solo en Rally/Partido mediante serialización de producto acotada; queda para decisión del PO, no implementada por autonomía experimental. [Informe de una página y evidencia](2026-11-17-f1-fatigue-energy.md). Sin fusión ni instalación.
+
+Incidentes propios de empaquetado F1-PACK-01/02: normalizador quitaba el texto de una clave antes de quitar la sentencia completa de opt-out (falso positivo en memoria); el empaquetador de recibos incluía una prueba deliberada de bloqueo de la guarda entre los inventarios que debían estar vacíos. Corregidos bajo la autonomía confirmada; intentos conservados, TSV crudos idénticos por SHA-256, sin cambios de producto/tests/datos ni repetición científica. La guarda impidió correctamente un segundo lanzamiento artificial mientras PlayMode estaba activo.
+
+
+### F1 — F1-AUTOQA-01 autorizado y cambio de modo de trabajo (17 nov 2026)
+
+**(i) Autorización de F1-AUTOQA-01** (17 nov, transmitida por Claude): corregir solo la serialización para que `f_r` se emita en los eventos `shot` de Rally y Partido, y que en práctica, SL y AutoQA el evento `shot` conserve el esquema exacto de `main`. No se toca `PocObservation`, escenarios, oráculos ni el checker. Registrada en la spec §8 (aclaración a v2.3).
+
+**(ii) Cambio de modo del PO, 17 nov, literal:** «Actua como un orquestador y revisor. Despliega distintos sub agentes de modelo sonnet para realizar la implementación y terminemos F1/F2. En caso de que haya que planificar algo, utiliza otro sub agente para que no sea sesgada la opinión.»
+
+Por eso F1-AUTOQA-01 y F2 los implementan subagentes Sonnet dirigidos por Claude. **La revisión de Claude sobre ese trabajo NO es independiente**, y se declara. Resultado de F1-AUTOQA-01 en el [informe de F1](2026-11-17-f1-fatigue-energy.md).
+
+
+### F2 — brazo y barra implementados por subagentes dirigidos por Claude (17 nov 2026)
+
+Bajo el cambio de modo ya registrado en la entrada de F1 («Actua como un orquestador y revisor. Despliega distintos sub agentes de modelo sonnet para realizar la implementación y terminemos F1/F2…», 17 nov), F2 lo implementó un subagente Sonnet dirigido por Claude, con un plan de otro subagente para no sesgar la opinión y las decisiones de revisión de Claude sobre ese plan. **La revisión de Claude sobre este trabajo NO es independiente.** Se mantienen la autonomía experimental del PO para F1/F2 y la regla de parada del método de F2: sin ajuste. Resultado: todas las compuertas B pasan, A1 `f2off` bit a bit, EditMode 803/803, PlayMode 593/593, AutoQA V y T3 PASS/0/1 y check-release OK; sin cambios de hash ni de `DefaultPreset.json`. Incidente F2-EXP-01 (hash esperado de `f2off` mal transcrito, detenido antes de datos) en el [informe de F2](2026-11-17-f2-fatigue-arm-hud.md). Sin fusión ni instalación; revisión independiente y aprobación del PO pendientes.

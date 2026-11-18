@@ -8,6 +8,17 @@ namespace SquashClash.Core.Config
     {
         private static readonly IReadOnlyList<ParamDef> definitions = Array.AsReadOnly(new[]
         {
+            new ParamDef("fatigue.enabled", "enabled", "", "Rally / fatigue", ParamKind.Bool, 0, 1, 1, ApplyClass.NextLaunch),
+            new ParamDef("fatigue.costPerMeter", "costPerMeter", "", "Rally / fatigue", ParamKind.Float, 0, 2, 0.05, ApplyClass.NextLaunch),
+            new ParamDef("fatigue.strongFrom", "strongFrom", "", "Rally / fatigue", ParamKind.Float, 0.5, 1, 0.05, ApplyClass.NextLaunch),
+            new ParamDef("fatigue.strongCost", "strongCost", "", "Rally / fatigue", ParamKind.Float, 0, 5, 0.1, ApplyClass.NextLaunch),
+            new ParamDef("fatigue.recoverBetween", "recoverBetween", "", "Rally / fatigue", ParamKind.Float, 0, 1, 0.05, ApplyClass.NextLaunch),
+            new ParamDef("fatigue.recoverPerS", "recoverPerS", "", "Rally / fatigue", ParamKind.Float, 0, 5, 0.1, ApplyClass.NextLaunch),
+            new ParamDef("fatigue.onset", "onset", "", "Rally / fatigue", ParamKind.Float, 10, 100, 1, ApplyClass.NextLaunch),
+            new ParamDef("fatigue.legsMax", "legsMax", "", "Rally / fatigue", ParamKind.Float, 0, 0.4, 0.01, ApplyClass.NextLaunch),
+            new ParamDef("fatigue.reactionMaxMs", "reactionMaxMs", "", "Rally / fatigue", ParamKind.Float, 0, 200, 5, ApplyClass.NextLaunch),
+            new ParamDef("fatigue.armSpeedMax", "armSpeedMax", "", "Rally / fatigue", ParamKind.Float, 0, 0.2, 0.01, ApplyClass.NextLaunch),
+            new ParamDef("fatigue.positionGainMax", "positionGainMax", "", "Rally / fatigue", ParamKind.Float, 0, 1, 0.05, ApplyClass.NextLaunch),
             new ParamDef("causal.timingHeightPerM", "timingHeightPerM [EXPERIMENT]", "m/m", "First Shot / causal", ParamKind.Float, 0, 3, .01, ApplyClass.NextLaunch),
             new ParamDef("causal.timingSpeedPerM", "timingSpeedPerM [EXPERIMENT]", "1/m", "First Shot / causal", ParamKind.Float, -1, 0, .01, ApplyClass.NextLaunch),
             new ParamDef("causal.stretchStart", "stretchStart [EXPERIMENT]", "R", "First Shot / causal", ParamKind.Float, 0, 0.99, .01, ApplyClass.NextLaunch),

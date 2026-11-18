@@ -120,3 +120,7 @@ scripts/device.env
 # Metadata regenerated and synchronously imported for every build (T1.3).
 /Assets/SquashClash/Runtime/Resources/BuildInfo.json
 /Assets/SquashClash/Runtime/Resources/BuildInfo.json.meta
+
+# App Store Connect credentials remain local.
+scripts/release.env
+*.p8

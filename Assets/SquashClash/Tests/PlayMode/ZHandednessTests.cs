@@ -41,20 +41,21 @@ namespace SquashClash.Runtime.Tests
         }
         // The player faces the front wall and the left wall is at +x (AX-1): the left hand is the arm on +x, whose parts
         // are named "...R" after the sign of x. In this fixture the planned contact is toward the right wall (-x).
-        [UnityTest] public IEnumerator LeftHanded_TheHumanRestsTheRacketInTheLeftHand_AndTheRivalDoesNotChange()
+        [UnityTest] public IEnumerator LeftHanded_TheHumanKeepsTheLeftHand_OnTheAlignedRestingHead_AndTheRivalDoesNotChange()
         {
             var player=app.Players.Human;var human=Figure(player);var rival=Figure(app.Players.Rival);human.enabled=rival.enabled=false;
             for(int i=0;i<40;i++){human.Animate(Frame);rival.Animate(Frame);}
             Assert.That(human.RacketSign,Is.LessThan(0),"fixture: the contact is planned on the player's right");
             Assert.That(app.Config.Court.Width,Is.GreaterThan(player.position.x),"fixture: the left wall is at +x");
             Assert.That(human.RacketHand,Is.EqualTo(1),"right-handed: the hand on the side of the contact, here the right one");
-            Assert.That(human.transform.TransformPoint(human.RacketLocalPosition).x,Is.LessThan(player.position.x-.1f),"toward the right wall");
+            var swing=app.GetComponent<SwingView>();var restingHead=swing.Rig.TransformPoint(swing.RacketLocalPosition);
+            Assert.That(Vector3.Distance(human.transform.TransformPoint(human.RacketLocalPosition),restingHead),Is.LessThanOrEqualTo(.005f),"PO-authorized aligned Idle head, with the chosen hand still holding it");
             var rivalRacket=rival.RacketLocalPosition;int rivalHand=rival.RacketHand;
             Handedness.Left=true;
             for(int i=0;i<40;i++){human.Animate(Frame);rival.Animate(Frame);}
             Assert.That(human.RacketHand,Is.EqualTo(-1),"the left hand holds the racket");
             var grip=human.RacketLocalPosition;
-            Assert.That(human.transform.TransformPoint(grip).x,Is.GreaterThan(player.position.x+.1f),"and it rests on the player's left, toward the left wall");
+            Assert.That(Vector3.Distance(human.transform.TransformPoint(grip),restingHead),Is.LessThanOrEqualTo(.005f),"switching hands keeps the resting head aligned with SwingView");
             Assert.That(Vector3.Distance(Wrist(human.transform,"R"),grip),Is.LessThan(Vector3.Distance(Wrist(human.transform,"L"),grip)),"the wrist of the +x arm is the one at the racket");
             Assert.That(human.GripGap,Is.LessThan(.02f),"the hand reaches the grip");
             Assert.That(rival.RacketHand,Is.EqualTo(rivalHand),"the rival is not the player");

@@ -1,0 +1,43 @@
+{
+  "schema": "f1-baseline/1",
+  "sourceHead": "56da0f5b8da96d1e7c98328d980ca74517ce8144",
+  "productBase": "766dedd",
+  "methodCommit": "e173ef8",
+  "gitStatusBefore": "",
+  "matches": 200,
+  "points": 1927,
+  "shortPoints": 296,
+  "longPoints": 1011,
+  "meanRealSeconds": 45.08358947746597,
+  "testResult": {
+    "id": "2",
+    "testcasecount": "1",
+    "result": "Passed",
+    "total": "1",
+    "passed": "1",
+    "failed": "0",
+    "inconclusive": "0",
+    "skipped": "0",
+    "asserts": "0",
+    "engine-version": "3.5.0.0",
+    "clr-version": "4.0.30319.42000",
+    "start-time": "2026-11-17 19:25:52Z",
+    "end-time": "2026-11-17 19:27:50Z",
+    "duration": "117.6039001"
+  },
+  "files": {
+    "points.tsv": "114da59f8420abdd32cb0235bb51f73c01d923737adcf951d92caf3aa2f8e0c6",
+    "receptions.tsv": "a5368c7c01a8f64d14b209fbbaf978942cd0441637d4fac0dc9c7c0880122a24",
+    "matches.tsv": "f70392425be61b40d859fce99a39a5085531d4b8fde578c2bec6c2f7ad866314",
+    "source.tsv": "7d9bf8d53361dad53c247398b4339edaf62487baeab9800d71c336f91ca9a491"
+  },
+  "runnerSha256": {
+    "head.txt": "177b91755d4e3f957733e2dd4198a0f0b868ab18c33cc547f50a49aedca07b48",
+    "status.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unity-processes.tsv": "be54416ccc113b7b66cbb8fec723bb0e5478add80f18440e5a1f4d683b6c648b",
+    "results.xml": "960555a471089baaddf41abcb660bf4824bfb09047de0ec670397635bcd19d63",
+    "unity.log": "c4cb7db2933568d9c8137de175e6ecfcaf46f7fbcdbfe981c168ffc193f085ae",
+    "console.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "dataUnchangedAfterPackaging": true
+}

@@ -1,0 +1,86 @@
+{
+  "status": "NotEvaluated",
+  "incident": "G1-A1BIS-CS-01",
+  "diagnosticSource": "e184ce9",
+  "originalPhaseAHashesPreserved": true,
+  "runs": {
+    "schema-red": {
+      "files": {
+        "console.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "results.xml": {
+          "sha256": "4c235f0395a7f2558f48a4eef9bc3ba851e97fde84dbed50631fb3d0bb454ff7",
+          "bytes": 10287
+        },
+        "unity-processes.tsv": {
+          "sha256": "5167af7db61e33ed63239c8ad3627c6ff797b49af539edbaffe010ce57ccfb44",
+          "bytes": 64
+        },
+        "unity.log": {
+          "sha256": "3d8767e20cabb6de6016ce22d36a6b8180de99ddb00add5c602db311e1978485",
+          "bytes": 835063
+        }
+      },
+      "xmlExists": true,
+      "counts": {
+        "result": "Failed(Child)",
+        "total": "4",
+        "passed": "0",
+        "failed": "4",
+        "skipped": "0"
+      }
+    },
+    "schema-green": {
+      "files": {
+        "console.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "results.xml": {
+          "sha256": "bfae83eae1960316dc7294f7448c26dabd8a1a7981346978576e19c4a6596b92",
+          "bytes": 5938
+        },
+        "unity-processes.tsv": {
+          "sha256": "099e5594fb9ea4115e332e5f50eed1094ec2aa202545160206bc5a6756b7fcaf",
+          "bytes": 64
+        },
+        "unity.log": {
+          "sha256": "b075a58e696ddff3337dedeea80bb74b61b3b74a796a7fda762821d05ebe3cec",
+          "bytes": 61227
+        }
+      },
+      "xmlExists": true,
+      "counts": {
+        "result": "Passed",
+        "total": "4",
+        "passed": "4",
+        "failed": "0",
+        "skipped": "0"
+      }
+    },
+    "run01": {
+      "files": {
+        "console.log": {
+          "sha256": "a37c1c1e436570b4d07be72152958fddea58dbbc6f3aa9a85d50736cb3902e6f",
+          "bytes": 67
+        },
+        "unity-processes.tsv": {
+          "sha256": "ed655d5872bd3245004eb51bbc6909bb26c0d5c5c7c5afa2d9a38cc1f2e92bc8",
+          "bytes": 64
+        },
+        "unity.log": {
+          "sha256": "ec6221cd2ef6c5790423564e2770c211b5981025b0ed455632dfc1bff6265383",
+          "bytes": 73696
+        }
+      },
+      "xmlExists": false,
+      "counts": {
+        "status": "NotEvaluated",
+        "executedTests": 0,
+        "reason": "CS0117 before test runner; no fresh XML"
+      }
+    }
+  }
+}

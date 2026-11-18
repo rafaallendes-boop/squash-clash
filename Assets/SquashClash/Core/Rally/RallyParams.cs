@@ -39,6 +39,8 @@ namespace SquashClash.Core.Rally
         // Fondo style weights (spec 11.4).
         public double FondoLongWeight=1.2,FondoAwayWeight=.8,FondoTimeWeight=.8,FondoDropWeight=.9,FondoRiskAversion=1.6;
         public double FondoDefenseSlackS=.12,FondoDropMinSlackS=.3;
+        // Keep the release mean inside its own contact window without changing timing sigma.
+        public double FondoReleaseMarginSigma=1.5;
         // Option geometry (spec 11.3).
         public double AimLow=.95,AimMid=1.7,AimHigh=3,DropHeight=.75,PowerDrop=.12,PowerMedium=.5,PowerStrong=.85,CornerInset=.6;
         // Intentions never ask for a launch steeper than this: from the front court a fixed height would send the ball out.

@@ -1,12 +1,17 @@
-# Cansancio, primera versión: diseño (v2)
+# Cansancio, primera versión: diseño (v2.3, con aclaración §8 del 17 nov)
 
 16 nov 2026. Diseño conversado entre el PO y Claude. Parte de la spec v0.3: §9.4, «El cansancio es drama, no castigo», y «las mismas reglas para la IA y para el humano».
 
 - **v1:** commit `e1bcef7`.
 - **v2:** incorpora la revisión del PO: el enfoque general se aprueba, con ajustes antes de autorizar la implementación.
 - **v2.1:** tres correcciones del PO: la instantánea del brazo es del que golpea (§4), B2 mide el consumo por desplazamiento y B5b pasa a ser exploratorio (§7). Con ellas, el diseño funcional y los cambios protegidos quedan **autorizados** (§9).
+- **v2.2 (17 nov):** el PO aprueba reformular A2 (§7). Las claves `fatigue.*` cambian por fuerza las cuatro anclas de hash de AutoQA; se autoriza actualizar solo esas anclas, con una comprobación de proyección. AutoQA se corre con `--suite v` y `--suite t3`, y la barra no altera las métricas de botones y pausa de U3 (§6, §8).
 
-**Estado:** diseño y cambios protegidos autorizados por el PO (§9). Sin implementar: va en la cola de Codex después de U1–U3 y G1.
+- **v2.3 (17 nov):** el PO autoriza actualizar solo literales de hash/cantidad derivados de DefaultPreset en los tests enumerados por F1-PREFLIGHT-01 (incluido AutoQAT3OracleTests), a los valores medidos en Unity y 132 claves, en commit propio. Ninguna otra aserción, oráculo o test cambia. Se exige prueba de proyección excluyendo solo `fatigue.*` a las cuatro anclas históricas y SimulationKey `166a96e319c7`; si cambia, se detiene. F2 no agrega claves. El saque automático tiene P de intención = 0 únicamente para consumo por golpe fuerte, sin cambiar trayectoria, física ni solver; su desplazamiento se cobra.
+
+- **Aclaración a v2.3 (17 nov, F1-AUTOQA-01):** `f_r` solo en Rally/Partido. El evento `shot` de práctica, SL y AutoQA conserva el esquema exacto de `main` (sin el campo); AutoQA, `PocObservation`, escenarios, oráculos y checker no cambian (§8).
+
+**Estado:** diseño y cambios protegidos autorizados por el PO (§9). F1 implementado en su rama, sin fusionar ni aceptar; F2 espera la fusión de F1.
 
 ## 1. Para qué
 
@@ -52,7 +57,7 @@ Cada jugador tiene `E` entre 0 y 100. Empieza en 100 en cada partido. En el modo
 
 **Consumo, solo mientras el punto está en juego (del saque al cierre):**
 - **Correr:** `fatigue.costPerMeter` × la distancia recorrida por el cuerpo. Es la suma de |ΔPosición| en cada paso de simulación, incluida la vuelta a la T.
-- **Golpear fuerte:** en el paso de contacto, si la P de la intención supera `fatigue.strongFrom`, se gasta `fatigue.strongCost` × (P − strongFrom)/(1 − strongFrom). La P de la intención es la del gesto M2-4 del humano o la elegida por la IA, antes de la curva de ritmo por distancia. El saque cuenta.
+- **Golpear fuerte:** en el paso de contacto, si la P de la intención supera `fatigue.strongFrom`, se gasta `fatigue.strongCost` × (P − strongFrom)/(1 − strongFrom). La P de la intención es la del gesto M2-4 del humano o la elegida por la IA, antes de la curva de ritmo por distancia. El saque cuenta; el saque automático usa **P de intención = 0** para este consumo, sin modificar su trayectoria, física ni solver. Su desplazamiento se cobra normalmente.
 
 **Recuperación:**
 - **Entre puntos:** una sola vez, cuando el punto se cierra, `E += fatigue.recoverBetween × (100 − E)`.
@@ -116,6 +121,8 @@ Los máximos de la v1 quedan como el **nivel fuerte** de referencia. La implemen
 
 Las claves nuevas cambian el hash de los defaults, y eso es esperado.
 
+**Aplicación de la regla §7 en F1 (17 nov):** la tabla conserva los valores iniciales. Tras B3 alto (80,29), el [único ajuste predeclarado](../../validation/2026-11-17-f1-fatigue-adjustment.md) cambia solo `recoverBetween` de 0,35 a 0,25; B3 queda en 70,68. No cambian rangos, método ni umbrales. El candidato F1 usa 0,25; los datos suaves iniciales se conservan.
+
 ## 6. Barra de energía
 
 **Ubicación:** discreta, sin filas nuevas en la pantalla vertical. Es una línea fina, de 3 pt, bajo el nombre de cada jugador, dentro del marcador que ya existe.
@@ -126,6 +133,8 @@ Las claves nuevas cambian el hash de los defaults, y eso es esperado.
 - rojo bajo 25.
 
 **Sin números ni parpadeos.** Se anima de forma suave al cambiar.
+
+**Métricas de U3 (v2.2):** la barra no recibe toques (`pickingMode = Ignore`), no agrega botones ni renombra los que existen. U3 registra el nombre de cada botón del HUD y el motivo de cada pausa como eventos de usuario, y esos eventos no cambian.
 
 ```
  TÚ  5          RIVAL  4
@@ -138,7 +147,7 @@ Las claves nuevas cambian el hash de los defaults, y eso es esperado.
 
 **A. Contratos y reversibilidad** (tests; todos obligatorios):
 1. **A1:** con `fatigue.enabled = 0`, los tests existentes de rally y partido pasan **sin cambiar sus expectativas** y los resultados con semillas fijas son idénticos bit a bit a los de `main`. Los tests que midan otra cosa fijan `fatigue.enabled = 0` de forma explícita.
-2. **A2:** el modo práctica, los SL y AutoQA `mvp` quedan idénticos: PASS/0/1, con los mismos hashes de escenario.
+2. **A2 (v2.2):** el modo práctica, los SL y AutoQA `--suite v` y `--suite t3` quedan PASS/0/1 con los mismos escenarios, oráculos, expectativas y checker. Se autoriza actualizar solo las cuatro anclas de `Scenario.ExpectedHash` a los hashes nuevos medidos en Unity, con la condición de que la proyección del hash sobre las 121 claves previas a F1 dé exactamente las anclas actuales (V `06fed4bd4ac9` y `8e22575422f2`; T3 `430da2faa818` y `e89daab41c3e`). La versión anterior pedía «los mismos hashes de escenario», lo que no se puede cumplir al agregar claves a `DefaultPreset.json` (§5).
 3. **A3:** con cansancio activo, la predicción coincide con la ejecución. Para varias instantáneas `f_r` y los tres lugares, `StepsToReach` y `PositionAfter` coinciden paso a paso con el movimiento real.
 4. **A4:** el humano y la IA, con la misma `E`, obtienen el mismo `m`, el mismo `extra` y la misma amplificación.
 5. **A5:** jugador con E = 0, bien ubicado (vectores de posición nulos) y con timing perfecto: la mira queda intacta y la velocidad solo cae `armSpeedMax`. No hay ningún otro vector.
@@ -179,14 +188,15 @@ Son dos PRs pequeñas. Cada una se revierte sola y queda apagable con `fatigue.e
 
 1. **F1, energía y piernas:**
    - modelo de energía (§3), instantánea por recepción, piernas y reacción (§4) en los tres lugares;
-   - métricas: un evento `fatigue` por punto (E inicial y final de cada jugador, metros, gasto por golpes fuertes, recuperación) y `f_r` en cada `shot`;
+   - métricas: un evento `fatigue` por punto (E inicial y final de cada jugador, metros, gasto por golpes fuertes, recuperación) y `f_r` en cada `shot` **de Rally y Partido** (aclaración 17 nov: en práctica, SL y AutoQA el evento `shot` conserva el esquema exacto de `main`, sin `f_r`);
    - criterios A1–A4 y A6, y el experimento B.
 2. **F2, brazo y barra:** el vector causal «fatigue», la amplificación de los vectores de posición, la barra (§6) y los criterios A5 y A7. Repite A1, A2 y A6, y el experimento B con todo activo.
 
 **Compuertas de cada PR:**
 - TDD con RED por aserción;
 - EditMode y PlayMode completos;
-- AutoQA `mvp` PASS/0/1, porque F2 toca la capa causal y el contrato del golpe, y F1 lo corre igual para demostrar A2;
+- AutoQA `scripts/autoqa.sh mvp --suite v` y `--suite t3`, ambos PASS/0/1, porque F2 toca la capa causal y el contrato del golpe, y F1 lo corre igual para demostrar A2;
+- si cambian los hashes, solo se actualizan las cuatro anclas de `Scenario.ExpectedHash`, con la comprobación de proyección de A2, en un commit propio;
 - `check-release.sh` OK;
 - los hashes nuevos en AGENTS §5;
 - un informe de una página.
@@ -200,6 +210,8 @@ Son dos PRs pequeñas. Cada una se revierte sola y queda apagable con `fatigue.e
 - las claves de cansancio en `DefaultPreset.json`;
 - modificaciones controladas del movimiento del cuerpo y su planificación;
 - el vector causal de cansancio en la capa del golpe, sin alterar los contratos protegidos existentes.
+
+**Autorizado por el PO (17 nov), v2.2:** la reformulación de A2 (§7). En AutoQA solo se actualizan las cuatro anclas de `Scenario.ExpectedHash`; escenarios, oráculos, expectativas y checker no cambian.
 
 El texto literal está en el [registro de aprobaciones](../../reviews/2026-10-25-first-shot-po-approvals.md).
 

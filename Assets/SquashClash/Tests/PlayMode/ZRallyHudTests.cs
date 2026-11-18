@@ -53,7 +53,7 @@ namespace SquashClash.Runtime.Tests
             yield return SceneManager.LoadSceneAsync("Main");yield return null;yield return null;
             app=AppBootstrap.Instance;app.GetComponent<ResumeOverlay>().Continue();app.Clock.Paused=false;
             app.Tuning.LoadPreset(PresetCodec.FromSet(app.Tuning.Defaults,"Rally HUD fixture",app.Build.Label),new List<string>());
-            app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
+            app.Tuning.Set("fatigue.enabled",0);app.Tuning.Set("launcher.repeatSeconds",0);app.LaunchCurrent();
             controller=app.GetComponent<ShotController>();rally=app.Rally;hud=app.GetComponent<RallyHud>();
             app.Host.enabled=app.enabled=controller.enabled=rally.enabled=hud.enabled=false;
             camera=UnityEngine.Camera.main;previousCameraTarget=camera.targetTexture;previousAspect=camera.aspect;
@@ -96,7 +96,7 @@ namespace SquashClash.Runtime.Tests
         {
             Assert.That(root.Q<Button>("rally-toggle").text,Is.EqualTo("Rally"));Assert.That(Shown(root.Q("rally-toggle")),Is.True);
             foreach(var name in new[]{"rally-status","rally-pause","rally-rematch","rally-demo"})Assert.That(Shown(root.Q(name)),Is.False,name);
-            Assert.That(rally.Active,Is.False);Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("430da2faa818"));
+            Assert.That(rally.Active,Is.False);Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("3262f9b89156"));
             Assert.That(root.Q<Label>("boot-title").text,Is.EqualTo("Squash Clash — First Ball"));
             yield return null;
         }
@@ -178,7 +178,7 @@ namespace SquashClash.Runtime.Tests
         {
             Click("rally-toggle");Click("rally-toggle");yield return null;
             Assert.That(rally.Active,Is.False);Assert.That(root.Q<Button>("rally-toggle").text,Is.EqualTo("Rally"));
-            Assert.That(Shown(root.Q("rally-status")),Is.False);Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("430da2faa818"));
+            Assert.That(Shown(root.Q("rally-status")),Is.False);Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("3262f9b89156"));
         }
         [UnityTest] public IEnumerator Hud_StaysAboveTheProjectedFrontWall_InsideTheSafeWidth()
         {

@@ -28,7 +28,7 @@ namespace SquashClash.Core.Tests.Rally
 
         [Test] public void Rally_EndsWithATerminalEvent()
         {
-            var context=RallyFixtures.Context();
+            var context=RallyFixtures.ContextWithoutFatigue();
             using(var sim=new RallySim(context,Bot(context,3),Fondo(context,4)))
             {
                 var outcome=sim.Play(PlayerId.Human);
@@ -39,7 +39,7 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void WithoutASwing_TheReceiverLosesOnTheSecondBounce()
         {
-            var context=RallyFixtures.Context();
+            var context=RallyFixtures.ContextWithoutFatigue();
             using(var sim=new RallySim(context,new NeverSwing(),Fondo(context,4)))
             {
                 var outcome=sim.Play(PlayerId.Human);
@@ -51,7 +51,7 @@ namespace SquashClash.Core.Tests.Rally
         // (here the rival never does) must not leave the previous reception's reference reachable.
         [Test] public void CausalReference_DoesNotSurviveIntoAReceptionWithoutASwing()
         {
-            var context=RallyFixtures.Context();
+            var context=RallyFixtures.ContextWithoutFatigue();
             using(var sim=new RallySim(context,Bot(context,1,0),new NeverSwing()))
             {
                 var outcome=sim.Play(PlayerId.Human);
@@ -66,7 +66,7 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void PerfectTiming_ProducesAnExchange()
         {
-            var context=RallyFixtures.Context();
+            var context=RallyFixtures.ContextWithoutFatigue();
             using(var sim=new RallySim(context,Bot(context,1,0),Bot(context,2,0)))
             {
                 var outcome=sim.Play(PlayerId.Human);
@@ -77,7 +77,7 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void Turns_Alternate_AndOnlyTheLastReceptionFails()
         {
-            var context=RallyFixtures.Context();
+            var context=RallyFixtures.ContextWithoutFatigue();
             using(var sim=new RallySim(context,Bot(context,5),Fondo(context,6)))
                 for(int rally=0;rally<20;rally++)
                 {
@@ -93,14 +93,14 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void EachReception_GetsExactlyOneAttempt()
         {
-            var context=RallyFixtures.Context();var human=new Counting(Bot(context,7));var rival=new Counting(Fondo(context,8));int receptions=0;
+            var context=RallyFixtures.ContextWithoutFatigue();var human=new Counting(Bot(context,7));var rival=new Counting(Fondo(context,8));int receptions=0;
             using(var sim=new RallySim(context,human,rival))
                 for(int rally=0;rally<10;rally++)receptions+=sim.Play(PlayerId.Human).Receptions.Count;
             Assert.That(human.Decisions+rival.Decisions,Is.EqualTo(receptions));
         }
         [Test] public void SameSeeds_ReproduceTheSameRallies()
         {
-            var context=RallyFixtures.Context();
+            var context=RallyFixtures.ContextWithoutFatigue();
             List<string> Run(long seed)
             {
                 var list=new List<string>();
@@ -112,7 +112,7 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void Bodies_ApproachAndRecover_DuringTheRally()
         {
-            var context=RallyFixtures.Context();
+            var context=RallyFixtures.ContextWithoutFatigue();
             using(var sim=new RallySim(context,Bot(context,1,0),Bot(context,2,0)))
             {
                 var outcome=sim.Play(PlayerId.Human);Assert.That(outcome.Shots,Is.GreaterThanOrEqualTo(2));
@@ -124,7 +124,7 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void ElapsedSteps_ShortenTheTimeAvailableToThePlanner()
         {
-            var context=RallyFixtures.Context();var trajectory=context.Predict(context.NeutralLaunch(PlayerId.Human));
+            var context=RallyFixtures.ContextWithoutFatigue();var trajectory=context.Predict(context.NeutralLaunch(PlayerId.Human));
             var body=RallyFixtures.Body(context,PlayerId.Human,new Vector2(5.6f,3));var rules=RallyFixtures.Rules(context,PlayerId.Rival,PlayerId.Human);
             var onTime=ReceptionPlanner.Plan(context,trajectory,rules,body,18,1);var late=ReceptionPlanner.Plan(context,trajectory,rules,body,18,1,default,40);
             Assert.That(onTime.Reachable,Is.True);Assert.That(!late.Reachable||late.SlackS<onTime.SlackS,Is.True);
@@ -133,7 +133,7 @@ namespace SquashClash.Core.Tests.Rally
         // R4 headless validation: AI (Fondo, Medium) against the scripted bot, at least 1000 rallies.
         [Test,Timeout(600000)] public void Simulation_OfAThousandRallies_AlwaysTerminates()
         {
-            const int Rallies=1000;var context=RallyFixtures.Context();var outcomes=new List<RallyOutcome>(Rallies);
+            const int Rallies=1000;var context=RallyFixtures.ContextWithoutFatigue();var outcomes=new List<RallyOutcome>(Rallies);
             var watch=System.Diagnostics.Stopwatch.StartNew();
             using(var sim=new RallySim(context,Bot(context,2026),Fondo(context,1111)))
                 for(int rally=0;rally<Rallies;rally++)outcomes.Add(sim.Play(rally%2==0?PlayerId.Human:PlayerId.Rival));

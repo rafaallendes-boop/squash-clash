@@ -1,0 +1,84 @@
+{
+  "authorization": "G1-A2-C1: one design revision, one C1 invocation, no further revision on failure",
+  "designRevision": "7653687",
+  "candidate": "eeb4a83",
+  "preservedFirstCandidate": "4fe66ad",
+  "mainIntegration": {
+    "merge": "46c0f54",
+    "parents": [
+      "1e9654fd99573ce7daaef597977e705a2fa0fbee",
+      "95d75a2093ab32703a835c09677643603a270a6b"
+    ],
+    "rebase": false
+  },
+  "invocations": 1,
+  "tests": {
+    "total": 26,
+    "passed": 25,
+    "failed": 1,
+    "skipped": 0,
+    "compilerErrors": false,
+    "witnesses": 24,
+    "witnessesPassed": 23,
+    "controlsPassed": 2
+  },
+  "all24": {
+    "endCause": "DoubleBounce",
+    "evaluations": 24,
+    "totalLateralCapPassed": true,
+    "heightOnlyLowersPassed": true,
+    "unchangedSpeedPassed": true
+  },
+  "failedWitness": {
+    "fixture": "SL6",
+    "column": "cross",
+    "power": "0.8",
+    "requestedY": "0.88",
+    "cause": "DoubleBounce",
+    "frontY": "0.766000032",
+    "apex": "1.49877977",
+    "firstX": "1.27410722",
+    "firstZ": "8.871708",
+    "secondX": "1.06313968",
+    "secondZ": "8.893886",
+    "targetX": "3.44985247",
+    "targetY": "0.766000032",
+    "evaluations": "24",
+    "reason": "intent-drive",
+    "witness": "False"
+  },
+  "criteriaAndGridUnchanged": true,
+  "originalTestBodyUnchanged": true,
+  "previousEvidenceUnchanged": {
+    "docs/validation/evidence/2026-11-17-g1-a2-c1-stop/red-witnesses.tsv": "3d9fccf8c08c56d05ee11339fcb89e1a055460c36303189af4f3756e9dd3563d",
+    "Logs/evidence/g1-a2/red/console.log": "e54b9199123c4bd0222a27ac36cd9dde3f263d2241dff363741b08d2060e8744",
+    "Logs/evidence/g1-a2/red/editmode-console.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Logs/evidence/g1-a2/red/editmode-results.xml": "ef8513af65e0dc6544bbf15536196875b276559e39baea7a6484b633c0f4c897",
+    "Logs/evidence/g1-a2/red/editmode.log": "00e4b71938f67c880a0a1d6c73be538f6a47d691ec4b76f32193630d0d7b662f",
+    "Logs/evidence/g1-a2/red/unity-processes.tsv": "886a17bcbce2328c75d2649b9b41cc512bd5e9d6bbae1ed5ed008bbd1889fc60",
+    "docs/validation/evidence/2026-11-17-g1-a2-c1-stop/green-witnesses.tsv": "96a9d57d3c7a8c28a352d16b885a08264c3cbfdbfb3f03b8177add93120907d7",
+    "Logs/evidence/g1-a2/green/console.log": "2bd3f1237d607423ae871f6932b1d42addc5702a3bc25dc48582208488eaf20b",
+    "Logs/evidence/g1-a2/green/editmode-console.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Logs/evidence/g1-a2/green/editmode-results.xml": "4128703cdf912f3e74d0ae9a2ab347a310a77edcbc9d127f9dc22e69bc23d6ad",
+    "Logs/evidence/g1-a2/green/editmode.log": "cb2942ef48704039b519d674060646b8483abdae623eab3a6887ba9dd49efb70",
+    "Logs/evidence/g1-a2/green/unity-processes.tsv": "ed7db9d1ec34b7abdc0095e7c4695c80f384eeab638ab541876f4f230dcb9d20"
+  },
+  "newPreservedFiles": {
+    "Logs/evidence/g1-a2/c1-revision01/console.log": "8548ac9c0b2c336eb7d070f0a9275701025d9e513e835d46ea6f8ec377007867",
+    "Logs/evidence/g1-a2/c1-revision01/editmode-console.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Logs/evidence/g1-a2/c1-revision01/editmode-results.xml": "2196e873c163fa848a775a748219dc5bb3a2ab352e10d9c5a2546de4c88224b3",
+    "Logs/evidence/g1-a2/c1-revision01/editmode.log": "1db94ee2301d89bbb7a0efcdfc0fe1e5f5fe8f1b51300212246ea37f3bc682a2",
+    "Logs/evidence/g1-a2/c1-revision01/unity-processes.tsv": "ba554e2315c45f410967962bbaeac5e81f967c1ec6c8fe2fdc45c6bab0336812"
+  },
+  "witnessesSha256": "ad5cdfb7a520d067d1ecdb8a94d8afe3a261fc91847a3ab2cfdc9b7b35b9f7da",
+  "stopped": true,
+  "notRunAfterStop": [
+    "full geometry grid",
+    "second geometry process",
+    "C2-C8",
+    "causal/runtime/visual integration",
+    "full EditMode/PlayMode regression",
+    "AutoQA V/T3",
+    "check-release"
+  ]
+}

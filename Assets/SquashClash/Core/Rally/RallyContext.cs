@@ -11,6 +11,7 @@ namespace SquashClash.Core.Rally
     {
         public EffectiveConfig Config {get;}
         public RallyParams Params {get;}
+        public FatigueSettings Fatigue {get;}
         public CourtDimensions Court {get;}
         public PhysicsParams Physics {get;}
         public LegalSettings Legal {get;}
@@ -28,7 +29,7 @@ namespace SquashClash.Core.Rally
             Config=config??throw new ArgumentNullException(nameof(config));Params=parameters??throw new ArgumentNullException(nameof(parameters));
             Factory=factory??throw new ArgumentNullException(nameof(factory));
             if(config.Backend!="P2-Analytic")throw new InvalidOperationException("First Rally requires the P2-Analytic backend.");
-            Court=config.Court;Physics=config.Physics;var source=config.Source;
+            Court=config.Court;Physics=config.Physics;var source=config.Source;Fatigue=FatigueSettings.From(source);
             Legal=new LegalSettings((float)source.Get("legal.minHeight"),(float)source.Get("legal.maxHeight"),Physics.StepHz,Physics.Gravity,Physics.BallRadius,Court);
             Timing=TimingSettings.From(source);
             VMin=(float)source.Get("shot.vMin");VMax=(float)source.Get("shot.vMax");VCap=(float)source.Get("shot.vCap");Pace=ShotPaceSettings.From(source);

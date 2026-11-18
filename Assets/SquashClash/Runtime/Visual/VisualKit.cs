@@ -146,7 +146,7 @@ namespace SquashClash.Runtime.Visual
         }
         // Racket inside the unit box the swing code scales to (0.22, 0.03, 0.30): head ring centred at the origin on the XZ plane,
         // long axis +Z, handle running back along -Z to the grip.
-        public static Mesh Racket(string name,Color frame,Color grip,Color strings)
+        public static Mesh Racket(string name,Color frame,Color grip,Color strings,bool openFace=false)
         {
             const int sides=20;const float outer=.5f,inner=.36f,half=.5f;
             var v=new List<Vector3>();var n=new List<Vector3>();var c=new List<Color>();var t=new List<int>();
@@ -163,7 +163,7 @@ namespace SquashClash.Runtime.Visual
                 Quad(i0+up,o0+up,o1+up,i1+up,Vector3.up,frame);Quad(i0-up,o0-up,o1-up,i1-up,Vector3.down,frame);
                 Quad(o0-up,o0+up,o1+up,o1-up,(o0+o1).normalized,frame);
                 // Strings: a pale fan, thin enough to read as a mesh of strings at game distance.
-                Quad(Vector3.zero,i0*.999f,i1*.999f,Vector3.zero,Vector3.up,strings);
+                if(!openFace)Quad(Vector3.zero,i0*.999f,i1*.999f,Vector3.zero,Vector3.up,strings);
             }
             // Handle from the head to the grip (0.32 m behind the head centre = -1.07 units of the 0.30 m box).
             const float hx=.085f,z0=-.48f,z1=-.78f,z2=-1.12f;
