@@ -24,7 +24,7 @@ namespace SquashClash.Capture
     public sealed class ZBackhandPoseCapture
     {
         private const int Width=1206,Height=2622,TileWidth=320,TileHeight=450;
-        private string[] Names;private readonly Texture2D[] preps=new Texture2D[4];private float prepAge=-1;private int prepIndex=-1;private int sincePrep;
+        private string[] Names;private readonly Texture2D[] preps=new Texture2D[4];private float prepAge=-1;private int prepIndex=-1;private int sincePrep,sincePrepH;
         private AppBootstrap app;private ShotController controller;private SwingView swing;private StrokeFx fx;private RallyDirector rally;
         private CharacterView human,rival;private UnityEngine.Camera camera;private RenderTexture target;private PanelSettings panel;
         private readonly float[] age={-1,-1,-1,-1};private readonly bool[] done=new bool[4];private readonly Texture2D[] contacts=new Texture2D[4];
@@ -48,8 +48,7 @@ namespace SquashClash.Capture
             var document=app.GetComponent<UIDocument>();panel=document.panelSettings;panel.targetTexture=target;
             var root=document.rootVisualElement;root.Q("dev-bar")?.RemoveFromHierarchy();
             foreach(var id in new[]{"dev-toggle","dev-panel","shot-overlay"}){var e=root.Q(id);if(e!=null)e.style.display=DisplayStyle.None;}
-            controller.SwingAccepted+=i=>{prepAge=0;prepIndex=Handedness.Left==(swing.ShoulderSign<0)?1:0;};
-            controller.PresentationDelivered+=p=>{if(p.HasContact)Begin(Handedness.Left==(swing.ShoulderSign<0)?1:0);};
+                        controller.PresentationDelivered+=p=>{if(p.HasContact)Begin(Handedness.Left==(swing.ShoulderSign<0)?1:0);};
             rally.RivalSwing+=(side,contact)=>{if(contact)Begin(side==StrokeSide.Drive?2:3);};
             rally.Autopilot=true;rally.AutopilotTimingSigmaMs=0;rally.Level=AiLevel.Medium;rally.Seed=9;
             Assert.That(rally.StartMode(),Is.True);
@@ -103,7 +102,7 @@ namespace SquashClash.Capture
                 float dt=(float)StepReal;
                 app.Host.Advance(StepReal);controller.ProcessPending();rally.Tick();
                 swing.Tick(dt);fx.Tick(dt);human.Animate(dt);rival.Animate(dt);
-                if(prepAge>=0){prepAge+=dt;if(prepAge>=.10f){if(swing.Phase==SwingPhase.Intention&&prepIndex>=0&&preps[prepIndex]==null){app.GetComponent<RallyHud>().Refresh();yield return null;preps[prepIndex]=Tile(prepIndex);}prepAge=-1;}}
+                if(human.WindUp>.55f&&!human.Swinging&&++sincePrepH>=8){sincePrepH=0;int hi=Handedness.Left==(human.RacketSign<0)?1:0;if(!done[hi]&&age[hi]<0){app.GetComponent<RallyHud>().Refresh();yield return null;if(preps[hi]!=null)UnityEngine.Object.Destroy(preps[hi]);preps[hi]=Tile(hi);}}
                 if(rival.WindUp>.55f&&!rival.Swinging&&++sincePrep>=8){sincePrep=0;int ri=rival.RacketSign>0?3:2;if(!done[ri]&&age[ri]<0){app.GetComponent<RallyHud>().Refresh();yield return null;if(preps[ri]!=null)UnityEngine.Object.Destroy(preps[ri]);preps[ri]=Tile(ri);}}
                 for(int i=0;i<age.Length;i++)
                 {

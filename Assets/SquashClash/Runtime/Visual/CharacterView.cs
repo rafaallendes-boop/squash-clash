@@ -325,7 +325,7 @@ namespace SquashClash.Runtime.Visual
             // After the contact: hard strokes finish high and across the body, soft ones short and low; a miss wraps around.
             float through=strokeClock>=0?Smooth((strokeClock-.06f)/.16f):0;
             // (Reaching across, the follow-through opens outward, away from the body.)
-            var cleanFollow=across?new Vector3(sign*(.52f+.10f*power),1.30f+.40f*power,-.36f-.12f*power):
+            var cleanFollow=across?new Vector3(sign*(.52f+.10f*power),1.40f+.40f*power,-.36f-.12f*power):
                 FollowPose(sign)+new Vector3(-sign*.22f,.36f,-.14f)*(power-.35f);
             var finish=missed?new Vector3(-sign*.30f,-.34f,.02f):new Vector3((across?sign:-sign)*.22f,.36f,-.14f)*(power-.35f);
             if(swingDriven)
@@ -387,7 +387,7 @@ namespace SquashClash.Runtime.Visual
                     // Backhand balance: the free hand is held in at the chest while the racket is taken back, then opens
                     // backwards along the shoulder line as the racket comes through (torso space, so it follows the turn).
                     hand=Vector3.Lerp(hand,hip+spine*new Vector3(s*.10f,.42f,-.30f),freeTuck);
-                    hand=Vector3.Lerp(hand,hip+spine*new Vector3(s*.58f,.40f,.08f),freeOpen);
+                    hand=Vector3.Lerp(hand,hip+spine*new Vector3(s*.74f,.55f,.10f),freeOpen);
                 }
                 var elbow=VisualKit.Joint(shoulder,hand,UpperArm,Forearm,hint,out var wrist);
                 if(i==racketArm)GripGap=(wrist-hand).magnitude;
