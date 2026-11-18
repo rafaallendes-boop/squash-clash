@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using SquashClash.Core.Config;
+using SquashClash.Core.Court;
 using SquashClash.Core.Rally;
 using SquashClash.Core.Shot;
 using SquashClash.Core.Simulation;
