@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""Musica de Squash Clash: dos bucles originales sintetizados.
+"""Squash Clash music: two original synthesized loops (energetic version, 16 nov 2026).
 
-Original de este proyecto: cada nota se calcula aqui con senos, envolventes y ruido de un generador
-congruencial lineal (LCG) de 32 bits. No usa samples, grabaciones, MIDI ni medios de terceros; solo la
-biblioteca estandar de Python 3. Es determinista: imprime el SHA-256 de cada archivo.
+Original to this project: every note is computed here from sine sums, envelopes and a 32-bit LCG noise source.
+No samples, recordings, MIDI or third-party material; Python 3 standard library only. Deterministic: prints the
+SHA-256 of each file.
 
-Uso:  python3 scripts/audio/make_music.py [directorio_de_salida]
-Salida por defecto: Assets/SquashClash/Runtime/Resources/Audio/music-menu.wav y music-match.wav
-Formato: PCM mono de 16 bits a 22050 Hz; cada muestra se limita a [-1, 1] y se convierte con int(v*32767).
-
-Los dos bucles no tienen costura: cada nota se suma en un bufer circular, de modo que la cola de las
-ultimas notas cae sobre el comienzo. La partitura (acordes, notas y niveles) esta en las funciones de abajo
-y resumida en Assets/SquashClash/Runtime/Resources/Audio/PROVENANCE.md.
+Usage:  python3 scripts/audio/make_music.py [output_dir]
+Default output: Assets/SquashClash/Runtime/Resources/Audio/music-match.wav and music-menu.wav
+  music-match.wav  16.0 s, 150 bpm, E minor, electronic pulse with arpeggios, no percussion
+  music-menu.wav   19.2 s, 125 bpm, B minor, synthwave
+Format: PCM mono 16 bit 22050 Hz; each sample is clamped to [-1, 1] and converted with int(v*32767).
+Loops are seamless: every note is summed into a circular buffer and every periodic gain (pump, filter sweep)
+is periodic over the loop. The score is summarized in Assets/SquashClash/Runtime/Resources/Audio/PROVENANCE.md.
 """
 import hashlib
 import math
@@ -22,174 +22,189 @@ from pathlib import Path
 
 RATE = 22050
 TAU = 2 * math.pi
+sin, cos, exp, pi = math.sin, math.cos, math.exp, math.pi
 
 
 class Lcg:
-    """Ruido blanco en [-1, 1]: x <- (1664525 x + 1013904223) mod 2^32, valor = x / 2^31 - 1."""
-
-    def __init__(self, seed):
-        self.state = seed
+    def __init__(self, seed): self.state = seed
 
     def __call__(self):
         self.state = (1664525 * self.state + 1013904223) & 0xffffffff
         return self.state / 2147483648.0 - 1.0
 
 
-def hz(midi):
-    """Temperamento igual, la4 (nota MIDI 69) = 440 Hz."""
-    return 440.0 * 2 ** ((midi - 69) / 12)
+def hz(m): return 440.0 * 2 ** ((m - 69) / 12)
 
 
 class Loop:
-    """Bufer circular: lo que una nota deja mas alla del final se suma al comienzo."""
-
     def __init__(self, seconds):
-        self.count = int(round(seconds * RATE))
+        self.count = int(round(seconds * RATE)); self.seconds = seconds
         self.data = [0.0] * self.count
 
-    def add(self, start_seconds, seconds, sample):
-        first, data, count = int(round(start_seconds * RATE)), self.data, self.count
+    def add(self, start, seconds, sample):
+        first, data, count = int(round(start * RATE)), self.data, self.count
         for i in range(int(seconds * RATE)):
             data[(first + i) % count] += sample(i / RATE)
 
-    def normalized(self, peak):
+    def mix_in(self, other, gain=1.0):
+        d = self.data
+        for i, v in enumerate(other.data): d[i] += gain * v
+
+    def pump(self, segments, atk=.006):
+        """Sidechain-style gain: segments = [(from_s, to_s, period_s, depth, release_s)]; periodic, no clicks."""
+        d, n = self.data, self.count
+        for a, b, period, depth, rel in segments:
+            e0 = exp(-(period - atk) / rel)
+            for i in range(int(a * RATE), min(n, int(b * RATE))):
+                ph = (i / RATE - a) % period
+                duck = ph / atk if ph < atk else max(0.0, (exp(-(ph - atk) / rel) - e0) / (1 - e0))
+                d[i] *= 1 - depth * duck
+
+    def finish(self, peak, rms_cap, drive=2.0):
+        # Gentle tanh saturation packs the level (lower crest) before normalizing; adds a little grit, no new transients.
+        t0 = max(abs(v) for v in self.data); nd = math.tanh(drive)
+        self.data = [math.tanh(drive * v / t0) / nd for v in self.data]
         top = max(abs(v) for v in self.data)
-        return [v * peak / top for v in self.data]
+        scale = peak / top
+        rms = math.sqrt(sum(v * v for v in self.data) / self.count) * scale
+        if rms > rms_cap: scale *= rms_cap / rms
+        return [max(-1.0, min(1.0, v * scale)) for v in self.data]
 
 
-def tone(frequency, partials):
-    """Suma de armonicos: partials = [(multiplo, nivel), ...]."""
-    return lambda t: sum(level * math.sin(TAU * frequency * k * t) for k, level in partials)
-
-
-def swell(loop, start, hold, frequency, level, attack, release, partials):
-    """Nota sostenida: sube en `attack`, se mantiene hasta `hold` y cae en `release` (medio coseno)."""
-    wave_at = tone(frequency, partials)
+def note(loop, start, dur, midi, level, attack=.01, release=.04, decay=0., tilt=1., nmax=6, detune=(0.,), vib=0., vrate=5.5):
+    """Additive saw-ish voice: partials k^-tilt up to nmax (and below 8 kHz), optional detuned copies and vibrato."""
+    f = hz(midi); comps = []
+    for d in detune:
+        fd = f * (1 + d)
+        for k in range(1, max(1, min(nmax, int(8000 / fd))) + 1): comps.append((TAU * fd * k, k ** -tilt, k))
+    scale = level / len(detune)
 
     def sample(t):
-        if t < attack:
-            gain = .5 - .5 * math.cos(math.pi * t / attack)
-        elif t < hold:
-            gain = 1.0
-        else:
-            gain = .5 + .5 * math.cos(math.pi * min(1.0, (t - hold) / release))
-        return level * gain * wave_at(t)
+        g = .5 - .5 * cos(pi * t / attack) if t < attack else 1.0
+        if decay: g *= exp(-decay * t)
+        if t > dur: g *= .5 + .5 * cos(pi * min(1.0, (t - dur) / release))
+        v = vib * sin(TAU * vrate * t) if vib else 0.0
+        s = 0.0
+        for w, l, k in comps: s += l * sin(w * t + k * v)
+        return scale * g * s
 
-    loop.add(start, hold + release, sample)
-
-
-def pluck(loop, start, frequency, level, decay, partials, attack=.004):
-    """Nota pulsada: ataque corto y caida exponencial."""
-    wave_at = tone(frequency, partials)
-    seconds = min(4.0, 7.0 / decay)
-    loop.add(start, seconds, lambda t: level * min(1.0, t / attack) * math.exp(-decay * t) * wave_at(t))
+    loop.add(start, dur + release, sample)
 
 
-def menu_loop():
-    """Menu: 8 compases de 4/4 a 100 pulsos por minuto (19,2 s). La menor - Fa - Do - Sol, dos veces."""
-    beat, bars = .6, 8
-    loop = Loop(bars * 4 * beat)
-    # Por compas: bajo, y las tres notas del acorde (numeros MIDI).
-    chords = [(45, (57, 60, 64)), (41, (57, 60, 65)), (48, (55, 60, 64)), (43, (55, 59, 62))] * 2
-    soft, round_, bright = [(1, 1), (2, .28), (3, .08)], [(1, 1), (2, .22)], [(1, 1), (2, .40), (3, .15), (4, .05)]
-    # El bajo lleva armonicos fuertes: el parlante de un telefono casi no reproduce su fundamental (87 a 131 Hz).
-    low = [(1, 1), (2, .50), (3, .25)]
-    for bar, (bass, notes) in enumerate(chords):
-        at = bar * 4 * beat
-        # Colchon: el acorde entero, sostenido todo el compas.
-        for note in notes:
-            swell(loop, at, 4 * beat - .1, hz(note), .060, .25, .55, soft)
-        # Bajo: tiempos 1 y 3 y una corchea de entrada al compas siguiente.
-        for offset, length in ((0, 1.4), (2, .9), (3.5, .45)):
-            swell(loop, at + offset * beat, length * beat, hz(bass), .15, .012, .12, low)
-        # Arpegio en corcheas una octava arriba: sube y baja por el acorde; acento en los tiempos.
-        for eighth, step in enumerate((0, 1, 2, 1, 0, 1, 2, 1)):
-            pluck(loop, at + eighth * beat / 2, hz(notes[step] + 12), .075 if eighth % 2 == 0 else .050, 6.0, bright)
-    # Melodia, solo en la segunda vuelta (compases 5 a 8): (tiempo dentro del compas, duracion en tiempos, nota).
-    melody = [
-        [(0, 1, 76), (1, .5, 74), (1.5, .5, 72), (2, 2, 69)],
-        [(0, 1, 69), (1, 1, 72), (2, 2, 77)],
-        [(0, 1, 79), (1, 1, 76), (2, 1, 72), (3, 1, 76)],
-        [(0, 2, 74), (2, 1, 71), (3, 1, 67)],
-    ]
-    for bar, notes in enumerate(melody):
-        for offset, length, note in notes:
-            pluck(loop, (bar + 4) * 4 * beat + offset * beat, hz(note), .10, 2.6 / length ** .5, round_, attack=.015)
-    # Percusion suave: bombo en 1 y 3, escobilla en 2 y 4, platillo cerrado en los contratiempos.
-    noise = Lcg(41)
-    hiss = [noise() for _ in range(RATE)]
-    for bar in range(bars):
-        at = bar * 4 * beat
-        for b in (0, 2):
-            loop.add(at + b * beat, .22, lambda t: .15 * math.exp(-17 * t) * math.sin(TAU * (48 * t + (105 - 48) * (1 - math.exp(-30 * t)) / 30)))
-        for b in (1, 3):
-            state = [0.0]
+def thump(loop, at, level, f0=150., f1=52., sweep=40., decay=15., attack=.005, drive=1.8, length=.3):
+    """Soft low kick: sine sweep f0 -> f1, slow attack, mild saturation. No noise, no click."""
+    nd = math.tanh(drive)
 
-            def brush(t, state=state):
-                x = hiss[int(t * RATE)]
-                state[0] += .45 * (x - state[0])
-                return .045 * min(1.0, t / .003) * math.exp(-34 * t) * state[0]
-
-            loop.add(at + b * beat, .16, brush)
-        for eighth in (1, 3, 5, 7):
-            state = [0.0]
-
-            def hat(t, state=state):
-                x = hiss[int(t * RATE) + 7000]
-                state[0] += .35 * (x - state[0])
-                return .030 * math.exp(-70 * t) * (x - state[0])
-
-            loop.add(at + eighth * beat / 2, .08, hat)
-    return loop.normalized(.60)
+    def sample(t):
+        ph = TAU * (f1 * t + (f0 - f1) * (1 - exp(-sweep * t)) / sweep)
+        return level * min(1.0, t / attack) * exp(-decay * t) * math.tanh(drive * sin(ph)) / nd
+    loop.add(at, length, sample)
 
 
-def match_loop():
-    """Partido: 8 compases de 4/4 a 120 pulsos por minuto (16 s). Sin percusion ni ataques bruscos: nada que
-    se pueda confundir con un golpe o un bote. Un colchon de quintas que late en corcheas y una campana lenta."""
-    beat, bars = .5, 8
-    loop = Loop(bars * 4 * beat)
-    roots = [57, 57, 53, 53, 60, 60, 55, 55]
-    bells = {0: 76, 2: 72, 4: 79, 6: 74}
-    soft = [(1, 1), (2, .25), (3, .06)]
-    for bar, root in enumerate(roots):
-        at = bar * 4 * beat
-        for note, level in ((root, .10), (root + 7, .07), (root + 12, .04)):
-            frequency = hz(note)
-            wave_at = tone(frequency, soft)
+def noise_hit(loop, hiss, off, at, dur, level, decay, lp, hp, attack=.001):
+    """Filtered noise burst (menus only): one-pole low-pass `lp`, minus one-pole low-pass `hp` = band-pass."""
+    s1, s2, n = [0.0], [0.0], len(hiss)
 
-            def pulse(t, wave_at=wave_at, level=level):
-                # Entra y sale en medio coseno; late en corcheas (3+3+2) sin llegar nunca a cero.
-                edge = .5 - .5 * math.cos(math.pi * min(1.0, t / .35, max(0.0, (4 * beat + .35 - t) / .35)))
-                eighth = (t / (beat / 2)) % 8
-                accent = 1.0 if int(eighth) in (0, 3, 6) else .55
-                throb = .55 + .45 * accent * (.5 - .5 * math.cos(TAU * (eighth % 1)))
-                return level * edge * throb * wave_at(t)
-
-            loop.add(at, 4 * beat + .35, pulse)
-        if bar in bells:
-            frequency = hz(bells[bar])
-            loop.add(at + beat, 3.2, lambda t, f=frequency: .055 * min(1.0, t / .05) * math.exp(-1.6 * t) * (math.sin(TAU * f * t) + .2 * math.sin(TAU * 2 * f * t)))
-    return loop.normalized(.50)
+    def sample(t):
+        x = hiss[(int(t * RATE) + off) % n]
+        s1[0] += lp * (x - s1[0]); s2[0] += hp * (s1[0] - s2[0])
+        return level * min(1.0, t / attack) * exp(-decay * t) * (s1[0] - s2[0])
+    loop.add(at, dur, sample)
 
 
-LOOPS = {'music-menu': menu_loop, 'music-match': match_loop}
+def build_hiss(seed=41):
+    r = Lcg(seed); return [r() for _ in range(RATE)]
+
+
+def steps(loop_fn, bar_start, step_len, items):
+    for it in items: loop_fn(bar_start + it[0] * step_len, *it[1:])
+
+
+# ---------------------------------------------------------------- MATCH: electronic pulse with arpeggios (music-match.wav)
+def match_b():
+    """150 bpm, E minor. Em C G D x2, C D. Rolling 16th bass, filter-sweeping 16th arpeggio, echoing bell hook,
+    heavily pumped pad. No percussion at all: the pulse is the bass + the pump."""
+    beat = .4; s16 = beat / 4; bar = 4 * beat; bars = 10
+    main, pad = Loop(bars * bar), Loop(bars * bar)
+    prog = ['Em', 'C', 'G', 'D'] * 2 + ['C', 'D']
+    bass = {'Em': 40, 'C': 36, 'G': 43, 'D': 38}
+    tones = {'Em': (64, 67, 71, 76), 'C': (64, 67, 72, 76), 'G': (62, 67, 71, 74), 'D': (62, 66, 69, 74)}
+    arp = [0, 1, 2, 3, 2, 1, 2, 3, 0, 1, 2, 3, 2, 1, 3, 2]
+    mel = {'Em': [(0, 2, 83), (3, 2, 79), (6, 2, 76), (8, 4, 79)], 'C': [(0, 2, 84), (3, 2, 79), (6, 2, 76), (8, 4, 72)],
+           'G': [(0, 2, 83), (3, 2, 79), (6, 2, 74), (8, 4, 79)], 'D': [(0, 2, 81), (3, 2, 78), (6, 2, 74), (8, 4, 81)]}
+    for b, name in enumerate(prog):
+        at = b * bar; root = bass[name]
+        sweep = .5 - .5 * cos(TAU * (at / (bars * bar)))   # periodic filter sweep 0..1..0
+        nmax = 3 + int(round(6 * sweep))
+        for k in range(4):
+            for i, off in ((1, 12), (2, 0), (3, 12)):
+                note(main, at + k * beat + i * s16, 1.0 * s16, root + off, .17 if i != 2 else .14, attack=.015, release=.02, decay=10, tilt=.6, nmax=8)
+        for i in range(16):
+            lv = .06 if i % 4 == 0 else .045
+            note(main, at + i * s16, 1.2 * s16, tones[name][arp[i]], lv, attack=.015, release=.03, decay=11, tilt=1.0, nmax=nmax, detune=(-.004, .004))
+        for m in tones[name][:3]: note(pad, at, bar - .05, m - 12, .05, attack=.1, release=.2, tilt=1.2, nmax=4, detune=(-.006, .006))
+        if b >= 2 or b == 0:
+            for i, ln, m in mel[name]:
+                for rep, g in ((0, 1.0), (3, .45), (6, .2)):
+                    note(main, at + (i + rep) * s16, ln * s16 + .06, m, .06 * g, attack=.015, release=.10, tilt=.8, nmax=3, detune=(0, .003), vib=.25)
+        if b in (8, 9):
+            for i in range(8):
+                note(main, at + i * 2 * s16, 2 * s16, [72, 76, 79, 84, 79, 76, 79, 83][i], .05, attack=.015, release=.05, tilt=.8, nmax=3, detune=(0, .003))
+    pad.pump([(0, bars * bar, beat / 2, .65, .07)])
+    main.mix_in(pad)
+    return main.finish(.48, .15)
+
+
+# ---------------------------------------------------------------- MENU: synthwave drive (music-menu.wav)
+def menu_a():
+    """125 bpm, B minor. Bm G D A x2, G A. Four-on-floor thump, clap on 2/4, 16th hat, rolling bass, pumped pad, bright arp, melody."""
+    beat = .48; s16 = beat / 4; bar = 4 * beat; bars = 10
+    main, pad = Loop(bars * bar), Loop(bars * bar); hiss = build_hiss()
+    prog = ['Bm', 'G', 'D', 'A'] * 2 + ['G', 'A']
+    bass = {'Bm': 47, 'G': 43, 'D': 50, 'A': 45}
+    tri = {'Bm': (59, 62, 66, 71), 'G': (59, 62, 67, 71), 'D': (62, 66, 69, 74), 'A': (61, 64, 69, 73)}
+    mel = {'Bm': [(0, 4, 78), (4, 2, 74), (6, 2, 78), (8, 4, 81), (12, 4, 78)], 'G': [(0, 4, 79), (4, 2, 76), (6, 2, 79), (8, 4, 83), (12, 4, 79)],
+           'D': [(0, 4, 81), (4, 2, 78), (6, 2, 81), (8, 4, 86), (12, 4, 81)], 'A': [(0, 4, 85), (4, 2, 81), (6, 2, 85), (8, 6, 88), (14, 2, 85)]}
+    for b, name in enumerate(prog):
+        at = b * bar
+        for k in range(4):
+            thump(main, at + k * beat, .22, f0=160, f1=55, decay=14)
+            for i in (1, 2, 3): note(main, at + k * beat + i * s16, s16 * 1.2, bass[name] + (12 if i == 2 else 0), .15, attack=.01, release=.02, decay=9, tilt=.6, nmax=7)
+        for k in (1, 3): 
+            for j, g in ((0, .5), (.011, .6), (.022, 1.0)): noise_hit(main, hiss, 3000 + b * 400 + k * 91, at + k * beat + j, .25, .06 * g, 16 if j == .022 else 70, .55, .09)
+        for i in range(1, 16, 2): noise_hit(main, hiss, 9000 + i * 37, at + i * s16, .06, .018, 90, .6, .18)
+        for i in range(16):
+            note(main, at + i * s16, 1.3 * s16, tri[name][[0, 1, 2, 3, 2, 1, 2, 3, 0, 1, 2, 3, 2, 1, 3, 2][i]], .05, attack=.01, release=.03, decay=11, tilt=1.0, nmax=6, detune=(-.004, .004))
+        for m in tri[name][:3]: note(pad, at, bar - .05, m - 12, .05, attack=.2, release=.25, tilt=1.2, nmax=4, detune=(-.006, .006))
+        if b >= 4:
+            for i, ln, m in mel[name]: note(main, at + i * s16, ln * s16 - .01, m, .07, attack=.015, release=.08, tilt=.9, nmax=4, detune=(0, .003), vib=.3)
+    pad.pump([(0, bars * bar, beat, .55, .14)])
+    main.mix_in(pad)
+    return main.finish(.62, .25)
+
+
+LOOPS = {'music-match': match_b, 'music-menu': menu_a}
+DEFAULT_OUT = Path(__file__).resolve().parents[2] / 'Assets' / 'SquashClash' / 'Runtime' / 'Resources' / 'Audio'
+
+
+def write_wav(path, samples):
+    with wave.open(str(path), 'wb') as f:
+        f.setnchannels(1)
+        f.setsampwidth(2)
+        f.setframerate(RATE)
+        f.writeframes(b''.join(struct.pack('<h', int(max(-1.0, min(1.0, v)) * 32767)) for v in samples))
 
 
 def main():
-    root = Path(__file__).resolve().parents[2]
-    out = Path(sys.argv[1]) if len(sys.argv) > 1 else root / 'Assets/SquashClash/Runtime/Resources/Audio'
+    out = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_OUT
     out.mkdir(parents=True, exist_ok=True)
     for name, make in LOOPS.items():
-        samples = make()
+        s = make()
         path = out / f'{name}.wav'
-        with wave.open(str(path), 'wb') as f:
-            f.setnchannels(1)
-            f.setsampwidth(2)
-            f.setframerate(RATE)
-            f.writeframes(b''.join(struct.pack('<h', int(max(-1.0, min(1.0, v)) * 32767)) for v in samples))
-        peak = max(abs(v) for v in samples)
-        rms = math.sqrt(sum(v * v for v in samples) / len(samples))
-        print(f'{name}.wav {len(samples) / RATE:.2f} s peak={peak:.3f} rms={rms:.3f} sha256={hashlib.sha256(path.read_bytes()).hexdigest()}')
+        write_wav(path, s)
+        peak = max(abs(v) for v in s)
+        rms = math.sqrt(sum(v * v for v in s) / len(s))
+        print(f'{name}.wav {len(s) / RATE:.3f} s peak={peak:.3f} rms={rms:.3f} sha256={hashlib.sha256(path.read_bytes()).hexdigest()}', flush=True)
 
 
 if __name__ == '__main__':
