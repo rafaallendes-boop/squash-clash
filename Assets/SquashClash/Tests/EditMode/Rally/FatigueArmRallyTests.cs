@@ -58,7 +58,7 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void A1_EnabledWithZeroArm_ReplaysTheFrozenF1AdjustedSignatures()
         {
-            var ctx=Context(p=>p.With("fatigue.armSpeedMax",0).With("fatigue.positionGainMax",0));
+            var ctx=Context(p=>p.With("fatigue.armSpeedMax",0).With("fatigue.positionGainMax",0).With("fatigue.costPerMeter",.4).With("fatigue.recoverBetween",.25)); // the frozen F1 evidence was measured with the F1 values
             var rows=File.ReadAllLines(Path.Combine(Application.dataPath,"..","docs/validation/evidence/2026-11-17-f1-fatigue/adjusted/points.tsv")).Skip(1).Select(r=>r.Split('\t')).Where(r=>int.Parse(r[0])<4).ToArray();
             for(int i=0;i<4;i++)
             using(var sim=Sim(ctx,i))
