@@ -35,6 +35,7 @@ namespace SquashClash.Runtime.Tests
         private static Peaks Measure(CharacterView figure,float contactSign,bool leftHand)
         {
             string racketSide=leftHand?"R":"L",freeSide=leftHand?"L":"R";
+            Set(figure,"yaw",0f);Set(figure,"freeOpen",0f);Set(figure,"freeTuck",0f);
             Stroke(figure,contactSign);
             var peaks=new Peaks{ElbowAhead=float.MinValue};var torso=figure.transform.Find("Torso");
             for(int i=0;i<30;i++)

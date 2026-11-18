@@ -40,7 +40,7 @@ namespace SquashClash.Runtime.Visual
         private Transform torso,head,racket;private LineRenderer trail;private Material trailMaterial;
         private bool human,built,hasLast,swingHidden,trailLive;
         private Vector2 lastPosition,direction=new Vector2(0,-1),lastVelocity,accelLean;
-        private float runPhase,move,yaw,crouch=.04f,idle,headYaw,swingClock=-1,racketSign=1,backpedal,wind,strokeClock=-1,strokePower=.5f,hopClock=-1,trailAlpha,footSwing;
+        private float freeTuck,freeOpen,runPhase,move,yaw,crouch=.04f,idle,headYaw,swingClock=-1,racketSign=1,backpedal,wind,strokeClock=-1,strokePower=.5f,hopClock=-1,trailAlpha,footSwing;
         private StrokeKind strokeKind;private int seenHuman,seenRival;
         private Vector3 racketPosition,shoulderRacket,contactExit;
         private float contactAge=-1;private bool firstContactFrame,awaitingDelivery;
@@ -262,8 +262,9 @@ namespace SquashClash.Runtime.Visual
             bool striking=swingDriven?swingPhase==SwingPhase.Impact||swingPhase==SwingPhase.AirFollowThrough:swingClock>=0;
             bool missed=striking&&strokeKind==StrokeKind.Failed;
             bool winding=swingDriven?swingPhase==SwingPhase.Intention||prepare:prepare;
-            // Reaching across, the hitting shoulder turns toward the ball instead of opening away from it.
-            float twist=striking?(across?-(missed?40:48+8*power):missed?58:26+20*power)*sign:winding?-(across?30+18*wind:14+18*wind)*sign:0;
+            // Reaching across, the hitting shoulder turns toward the ball instead of opening away from it: the backhand goes
+            // clearly side-on (the chest faces the contact side), far more than the forehand's open stance.
+            float twist=striking?(across?-(missed?54:62+10*power):missed?58:26+20*power)*sign:winding?-(across?46+24*wind:14+18*wind)*sign:0;
             // The body turns toward where it runs; moving back it turns only side-on.
             float travelYaw=0;
             if(speed>.2f)
@@ -320,11 +321,11 @@ namespace SquashClash.Runtime.Visual
             Vector3 target;float rate;
             var rest=body==null?(human?ReadyPose(holds):RelaxedPose(holds)):bodyPhase==BodyPhase.Waiting?ReadyPose(holds):RelaxedPose(holds);
             // Reaching across, the racket is taken back close to the far shoulder, where the arm can hold it.
-            var back=across?new Vector3(sign*.30f,1.30f,.30f)+new Vector3(sign*.03f,.10f,.08f)*wind:BackPose(sign)+new Vector3(sign*.05f,.16f,.12f)*wind;
+            var back=across?new Vector3(sign*.44f,1.42f,.38f)+new Vector3(sign*.03f,.08f,.08f)*wind:BackPose(sign)+new Vector3(sign*.05f,.16f,.12f)*wind;
             // After the contact: hard strokes finish high and across the body, soft ones short and low; a miss wraps around.
             float through=strokeClock>=0?Smooth((strokeClock-.06f)/.16f):0;
             // (Reaching across, the follow-through opens outward, away from the body.)
-            var cleanFollow=across?new Vector3(sign*(.46f+.10f*power),1.18f+.42f*power,-.42f-.12f*power):
+            var cleanFollow=across?new Vector3(sign*(.52f+.10f*power),1.30f+.40f*power,-.36f-.12f*power):
                 FollowPose(sign)+new Vector3(-sign*.22f,.36f,-.14f)*(power-.35f);
             var finish=missed?new Vector3(-sign*.30f,-.34f,.02f):new Vector3((across?sign:-sign)*.22f,.36f,-.14f)*(power-.35f);
             if(swingDriven)
@@ -361,6 +362,7 @@ namespace SquashClash.Runtime.Visual
             float pop=!human&&strokeClock>=0&&!missed?1-Smooth(strokeClock/.16f):0;
             racket.localScale=RacketScale*(contactLock?1:1+.25f*pop);
 
+            freeTuck=Mathf.Lerp(freeTuck,across&&winding&&!striking?1:0,blend);freeOpen=Mathf.Lerp(freeOpen,across&&striking&&!missed?1:0,blend);
             for(int i=0;i<2;i++)
             {
                 float s=i==0?-1:1;
@@ -369,7 +371,9 @@ namespace SquashClash.Runtime.Visual
                 if(i==racketArm)
                 {
                     var toHead=racketPosition-shoulder;float distance=Mathf.Max(toHead.magnitude,1e-4f);
-                    hand=racketPosition-toHead/distance*GripBack;hint=new Vector3(s*.7f,-.6f,.5f);
+                    hand=racketPosition-toHead/distance*GripBack;
+                    // Reaching across the elbow leads, in front of the chest, and the hand trails it.
+                    hint=across?new Vector3(s*.35f,-.45f,-.8f):new Vector3(s*.7f,-.6f,.5f);
                 }
                 else
                 {
@@ -380,6 +384,10 @@ namespace SquashClash.Runtime.Visual
                     hand=Vector3.Lerp(waiting,Vector3.Lerp(running,balance,backpedal),move);
                     // The free arm counters the stroke.
                     hand+=new Vector3(s*.10f,.10f,.14f)*lunge*(missed?1:power);hint=new Vector3(s*.6f,-.4f,.7f);
+                    // Backhand balance: the free hand is held in at the chest while the racket is taken back, then opens
+                    // backwards along the shoulder line as the racket comes through (torso space, so it follows the turn).
+                    hand=Vector3.Lerp(hand,hip+spine*new Vector3(s*.10f,.42f,-.30f),freeTuck);
+                    hand=Vector3.Lerp(hand,hip+spine*new Vector3(s*.58f,.40f,.08f),freeOpen);
                 }
                 var elbow=VisualKit.Joint(shoulder,hand,UpperArm,Forearm,hint,out var wrist);
                 if(i==racketArm)GripGap=(wrist-hand).magnitude;
