@@ -110,8 +110,11 @@ namespace SquashClash.Runtime.Audio
         public void BallContact(SurfaceId surface,float speed)
         {
             if(app==null||speed<QuietSpeed)return; // rolling and dying bounces stay quiet, as in ImpactFx
-            RequestScaled(surface==SurfaceId.Floor?ScapeSound.BounceFloor:surface==SurfaceId.FrontWall?ScapeSound.FrontWall:ScapeSound.BounceWall,speed/FullSpeed);
+            RequestScaled(SoundFor(surface),speed/FullSpeed);
         }
+        // The back wall is the glass: its own toc, unless the DEV switch sends it back to the side-wall sound.
+        private static ScapeSound SoundFor(SurfaceId surface)=>surface==SurfaceId.Floor?ScapeSound.BounceFloor:surface==SurfaceId.FrontWall?ScapeSound.FrontWall:
+            surface==SurfaceId.BackWall&&GlassSoundOn?ScapeSound.BounceGlass:ScapeSound.BounceWall;
         public void Click(){if(app!=null)Request(ScapeSound.UiClick,BaseVolume[(int)ScapeSound.UiClick],1+(Next()*2-1)*PitchSpread*.5f);}
         private void OnContact(ContactEvent contact)
         {

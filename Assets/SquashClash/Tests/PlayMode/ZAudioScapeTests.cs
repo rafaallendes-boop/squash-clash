@@ -141,7 +141,7 @@ namespace SquashClash.Runtime.Tests
             yield return StartMatch(true);
             Assert.That(Drive(()=>rivalHits>=3&&humanDeliveries>=2,300),Is.True,"the demo rally must produce strokes");
             scape.Tick((float)StepReal);
-            int heard=scape.Requests(ScapeSound.BounceFloor)+scape.Requests(ScapeSound.BounceWall)+scape.Requests(ScapeSound.FrontWall);
+            int heard=scape.Requests(ScapeSound.BounceFloor)+scape.Requests(ScapeSound.BounceWall)+scape.Requests(ScapeSound.FrontWall)+scape.Requests(ScapeSound.BounceGlass);
             Assert.That(heard,Is.EqualTo(contacts),"one request per audible ball contact");
             Assert.That(scape.Requests(ScapeSound.FrontWall),Is.GreaterThan(0));Assert.That(scape.Requests(ScapeSound.BounceFloor),Is.GreaterThan(0));
             Assert.That(scape.Requests(ScapeSound.RivalRacket),Is.EqualTo(rivalHits),"one request per rival contact");

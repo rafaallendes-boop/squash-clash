@@ -15,17 +15,18 @@ Generado originalmente para este proyecto por Claude el 2026-11-05, sin samples 
 
 # Capa de sonido de la primera experiencia (AudioScape, 15 nov 2026)
 
-Generado originalmente para este proyecto por Claude (Fable) el 2026-11-15, sin samples, grabaciones ni medios externos. No se atribuye una licencia CC0 de terceros. Los nueve archivos `scape-*.wav` los escribe `scripts/audio/make_audioscape.py` (solo biblioteca estándar de Python 3) y son reproducibles byte a byte: el script imprime el SHA-256 de cada uno. PCM mono 16 bit a 22050 Hz, muestras limitadas a [−1,1] y convertidas con int(v·32767), little endian. Ruido: LCG de 32 bits (a=1664525, c=1013904223, valor x/2³¹−1) pasado por un paso bajo de un polo. Los clips de contacto del jugador (`impact-perfect`, `impact-valid`, `contact-provisional`, `swish-provisional`) no se modifican ni se usan aquí.
+Generado originalmente para este proyecto por Claude (Fable) el 2026-11-15, sin samples, grabaciones ni medios externos. No se atribuye una licencia CC0 de terceros. Los diez archivos `scape-*.wav` los escribe `scripts/audio/make_audioscape.py` (solo biblioteca estándar de Python 3) y son reproducibles byte a byte: el script imprime el SHA-256 de cada uno. PCM mono 16 bit a 22050 Hz, muestras limitadas a [−1,1] y convertidas con int(v·32767), little endian. Ruido: LCG de 32 bits (a=1664525, c=1013904223, valor x/2³¹−1) pasado por un paso bajo de un polo. Los clips de contacto del jugador (`impact-perfect`, `impact-valid`, `contact-provisional`, `swish-provisional`) no se modifican ni se usan aquí.
 
 | Archivo | Dura | Qué es | Síntesis (t en s; n = ruido filtrado; a(t) = rampa de ataque) |
 |---|---|---|---|
 | `scape-bounce-floor.wav` | 80 ms | Bote en el piso | a·(0,50·sin(φ 150→95 Hz)·e^(−38t) + 0,54·n(semilla 31, 1,8 kHz)·e^(−140t)) |
-| `scape-bounce-wall.wav` | 70 ms | Paredes laterales y trasera | a·(0,42·sin(2π310t)·e^(−60t) + 0,16·sin(2π640t)·e^(−90t) + 0,28·n(32, 3 kHz)·e^(−200t)) |
+| `scape-bounce-wall.wav` | 70 ms | Paredes laterales | a·(0,42·sin(2π310t)·e^(−60t) + 0,16·sin(2π640t)·e^(−90t) + 0,28·n(32, 3 kHz)·e^(−200t)) |
 | `scape-front-wall.wav` | 130 ms | Golpe contra el frontis | a·(0,55·sin(φ 120→80 Hz)·e^(−26t) + 0,22·sin(2π370t)·e^(−55t) + 0,50·n(33, 2,4 kHz)·e^(−110t)) |
 | `scape-rival-step.wav` | 90 ms | Paso del rival | a·(0,35·sin(φ 110→70 Hz)·e^(−55t) + 0,30·n(34, 1,2 kHz)·e^(−90t)) + chirrido 0,10·sin(φ 1,9→2,5 kHz)·sin(πt/0,05) |
 | `scape-rival-racket.wav` | 70 ms | Raqueta del rival | (1−e^(−t/0,002))·(0,38·sin(2π270t)·e^(−45t) + 0,14·sin(2π610t)·e^(−90t)), sin ruido |
 | `scape-point-won.wav` | 420 ms | Punto ganado | dos notas que suben, mi5 (659,25 Hz) y si5 (987,77 Hz) a los 140 ms; seno + 0,25 de su octava, e^(−9t), nivel 0,30 |
 | `scape-point-lost.wav` | 420 ms | Punto perdido | dos notas que bajan, sol4 (392 Hz) y re4 (293,66 Hz); e^(−8t), nivel 0,26 |
+| `scape-bounce-glass.wav` | 45 ms | Vidrio de fondo (18 nov): «toc» seco de vidrio templado, más agudo y brillante que la pared lateral | a·(0,40·sin(2π1250t)·e^(−110t) + 0,24·sin(2π2750t)·e^(−170t) + 0,10·sin(2π4100t)·e^(−260t) + 0,36·n(37, 6,5 kHz)·e^(−300t)); pico 0,689, volumen de fuente 0,19 (pico en juego 0,131 ≤ 0,143); SHA-256 `6bf501d867bf64483534ff95e49edc6353f6204694b36d6d4e3a34b424314f77`. Se apaga con un interruptor solo DEV. |
 | `scape-ui-click.wav` | 30 ms | Clic de botones | 0,30·sin(2π1150t)·e^(−170t) + 0,08·ruido(35)·e^(−600t) |
 | `scape-ambience.wav` | 4 s en bucle | Ambiente de cancha | ruido (semilla 36) con dos pasos bajos de 220 Hz, normalizado a 0,26, más 0,012·sin(2π100t) + 0,006·sin(2π200t); la cola se funde con el comienzo para que el bucle no tenga costura |
 
