@@ -75,6 +75,7 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTearDown] public IEnumerator Cleanup()
         {
+            try{LastTestState=TestContext.CurrentContext.Test.Name+" panelOpen="+(panel!=null&&panel.IsOpen)+" resume="+(app!=null&&app.GetComponent<ResumeOverlay>().IsVisible)+" sampling="+(app!=null&&app.GetComponent<GesturePreview>().Sampling);}catch(Exception){LastTestState="unreadable";}
             if(settings!=null)settings.targetTexture=previousPanelTarget;
             if(camera!=null){camera.targetTexture=previousCameraTarget;camera.aspect=previousAspect;}
             if(target!=null){target.Release();Object.Destroy(target);}
@@ -104,6 +105,17 @@ namespace SquashClash.Runtime.Tests
             bool bad=b.yMax>vp.yMax+1||b.yMin<vp.yMin-1;
             return $"{tag} cycle={cycle} btn={name} f={frame} t={Time.realtimeSinceStartup:F3} dt={Time.unscaledDeltaTime*1000f:F1}ms fc={Time.frameCount} btnY=[{b.yMin:F2},{b.yMax:F2}] vpY=[{vp.yMin:F2},{vp.yMax:F2}] contentH={scroll.contentContainer.layout.height:F2} vpH={scroll.contentViewport.layout.height:F2} scrollY={scroll.scrollOffset.y:F2} labelsH={labels:F1} lens={lens} {(bad?"OUT":"in")}";
         }
+
+        // Diagnostic only: why could DevPanelView.Toggle refuse to close the panel?
+        private static string LastTestState="none";
+        private static bool Flag(Component c,string prop){if(c==null)return false;var p=c.GetType().GetProperty(prop);return p!=null&&(bool)p.GetValue(c);}
+        private void LogCanToggle(string tag,int cycle,string name,string file)
+        {
+            var can=(bool)typeof(DevPanelView).GetMethod("CanToggle",BindingFlags.NonPublic|BindingFlags.Instance).Invoke(panel,null);
+            var preview=app.GetComponent<GesturePreview>();
+            string line=$"{tag} DIAG cycle={cycle} btn={name} panelOpen={panel.IsOpen} canToggle={can} resumeVisible={app.GetComponent<ResumeOverlay>().IsVisible} latency={Flag(panel.GetComponent("LatencyCalibration")??app.GetComponent("LatencyCalibration"),"IsActive")} spike={Flag(panel.GetComponent("SpikeSection"),"IsRunning")} perf={Flag(panel.GetComponent("PerformanceSession"),"IsRunning")} sampling={preview.Sampling} status=\"{preview.Status}\" prevTest={LastTestState} thisTest={TestContext.CurrentContext.Test.Name} clockPaused={app.Clock.Paused}";
+            File.AppendAllLines(LogPath("diag-"+file),new[]{line});
+        }
         private IEnumerator Run(string tag,int cycles,float preWait,string file)
         {
             var preview=app.GetComponent<GesturePreview>();int wouldFail=0,total=0;
@@ -127,6 +139,7 @@ namespace SquashClash.Runtime.Tests
                 lines.Add($"{tag} RESULT cycle={c} btn={name} {(fail?"WOULD_FAIL":"ok")}");
                 File.AppendAllLines(LogPath(file),lines);
                 button.Focus();using(var e=NavigationSubmitEvent.GetPooled())button.SendEvent(e);yield return null;
+                LogCanToggle(tag,c,name,file);
                 Assert.That(panel.IsOpen,Is.False);
             }
             File.AppendAllText(LogPath(file),$"{tag} SUMMARY total={total} wouldFail={wouldFail}\n");
