@@ -11,7 +11,7 @@ Condensado el 18 nov 2026. Solo lo vigente. Original byte a byte en [docs/histor
 ## 2. Roles y modo de trabajo
 
 - **PO (Rafa)**: decide alcance, aceptación, fusiones e instalaciones. (MVP, 15 nov)
-- **Modo product lead (desde el 18 nov):** el PO delegó en Claude las decisiones técnicas de esta tanda; solo trabajan PO y Claude (Codex y Fable fuera). Claude orquesta subagentes Opus/Sonnet/Haiku según estime. Alcance: G1 A2 (golpes al fondo), cansancio, revés, inicio y estética de golpes, volea, sonido propio y triángulo de impacto del vidrio de fondo. La revisión de Claude **no es independiente** y se declara. Cita literal en el registro del 18 nov. (18 nov)
+- **Modo product lead (desde el 18 nov):** el PO delegó en Claude las decisiones técnicas de esta tanda; Fable sin créditos desde el 16 nov; Codex no recibe encargos de esta tanda salvo pedido del PO. Claude orquesta subagentes Opus/Sonnet/Haiku según estime. Alcance: G1 A2 (golpes al fondo), cansancio, revés, inicio y estética de golpes, volea, sonido propio y triángulo de impacto del vidrio de fondo. La revisión de Claude **no es independiente** y se declara. Cita literal en el registro del 18 nov. (18 nov)
 - Informes de una página; citas literales del PO solo si cambian una regla o autorización; fusionar solo con tests en verde y «sí» del PO. (15 nov)
 - Un incremento = una rama/worktree y una PR; commits pequeños. (I2)
 - Al fusionar: head local/remoto exacto, árboles limpios, merge commit con segundo padre = head aprobado, `--match-head-commit`; retirar worktrees sin `--force` preservando ignorados. La fusión no acepta la etapa. (#17, #46/#47)
