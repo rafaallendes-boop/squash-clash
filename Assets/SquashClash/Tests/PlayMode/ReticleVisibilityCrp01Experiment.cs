@@ -136,5 +136,31 @@ namespace SquashClash.Runtime.Tests
         [UnityTest] public IEnumerator A_OriginalCadence_Repeated(){yield return Run("A",25,0,"exp-A.log");}
         // Contrast for H1: let ShotOverlay/DevPanel refresh timers fire before ScrollTo.
         [UnityTest] public IEnumerator B_WaitBeforeScroll_Repeated(){yield return Run("B",25,.35f,"exp-B.log");}
+
+        // C: deterministic H1 check. Original cadence, then wait for ShotOverlay to fill its labels before measuring.
+        [UnityTest] public IEnumerator C_LabelsFillAfterScrollTo_Deterministic()
+        {
+            panel.Toggle();yield return null;yield return null;
+            var button=root.Q<Button>("s1-sampling");var scroll=button.GetFirstAncestorOfType<ScrollView>();
+            var lines=new System.Collections.Generic.List<string>{Sample("C",0,"s1-sampling",-1,button,scroll)};
+            scroll.ScrollTo(button);yield return null;yield return null;lines.Add(Sample("C",0,"s1-sampling",2,button,scroll));
+            for(int i=0;i<30&&root.Q<Label>("shot-preview-power").text.Length==0;i++)yield return null;
+            yield return null;lines.Add(Sample("C",0,"s1-sampling",50,button,scroll));
+            var vp=scroll.contentViewport.worldBound;var b=button.worldBound;
+            lines.Add("C RESULT "+(b.yMax>vp.yMax+1?"WOULD_FAIL":"ok")+$" yMax={b.yMax:F6} limit={vp.yMax+1:F6}");
+            File.AppendAllLines(LogPath("exp-C.log"),lines);
+        }
+        // D: phase sweep. A fresh fixture per case; delay k frames before Toggle, then the original cadence for the first button only.
+        [UnityTest] public IEnumerator D_PhaseSweep([Range(0,11)] int k)
+        {
+            for(int i=0;i<k;i++)yield return null;
+            panel.Toggle();yield return null;yield return null;
+            var button=root.Q<Button>("s1-sampling");var scroll=button.GetFirstAncestorOfType<ScrollView>();
+            var lines=new System.Collections.Generic.List<string>{Sample("D"+k,0,"s1-sampling",-1,button,scroll)};
+            scroll.ScrollTo(button);yield return null;yield return null;
+            var vp=scroll.contentViewport.worldBound;var b=button.worldBound;bool fail=b.yMax>vp.yMax+1||b.yMin<vp.yMin-1;
+            lines.Add(Sample("D"+k,0,"s1-sampling",2,button,scroll));lines.Add($"D RESULT k={k} {(fail?"WOULD_FAIL":"ok")} yMax={b.yMax:F6} limit={vp.yMax+1:F6}");
+            File.AppendAllLines(LogPath("exp-D.log"),lines);
+        }
     }
 }
