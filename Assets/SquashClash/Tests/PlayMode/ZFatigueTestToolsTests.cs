@@ -38,7 +38,7 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator SetTestEnergy_IsOneShot_AndClamped()
         {
-            SetTest(10);rally.AutoRestart=false;rally.StartMatch();yield return null;
+            SetTest(10);rally.StartMatch();yield return null;
             Assert.That(rally.HumanEnergy.Energy,Is.EqualTo(10));
             Assert.That(Drive(()=>rally.Phase==RallyPhase.PointOver,90),Is.True);double after=rally.HumanEnergy.Energy;
             Assert.That(after,Is.GreaterThan(10),"recovery between points applies as usual");
