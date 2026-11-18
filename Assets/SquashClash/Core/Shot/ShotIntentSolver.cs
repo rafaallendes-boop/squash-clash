@@ -22,8 +22,10 @@ namespace SquashClash.Core.Shot
         {
             internal ShotSolution Solution;
             internal bool FirstFront, Legal, BelowCeiling, CrossesMiddle;
-            internal double Cost = double.PositiveInfinity, Change;
+            internal double Cost = double.PositiveInfinity, Change, Apex = double.NaN;
         }
+        // Fixed budget of P2 trajectories per solution, the original included.
+        public const int Budget = 24;
 
         public static ShotSolution Solve(in ShotRequest request, Vector2 requestedAim, float speed, float cap,
             ShotPaceSettings pace, CourtDimensions court, IBallSimulationFactory factory, PhysicsParams physics,
@@ -84,23 +86,51 @@ namespace SquashClash.Core.Shot
                     Consider(Probe(new Vector2(xs[ix], ys[iy])));
                 }
 
+            // Refinement (revision 02): probes are taken once per origin and reused while the origin stands, a stalled
+            // step is halved instead of repeating identical trajectories, and a proposal the linear apex model places
+            // above the ceiling is lowered along the apex level of its origin. Runs until the fixed budget is spent.
             double trustX = court.Width / 40d, trustY = (court.FrontOutLower - court.TinTop) / 40d;
-            for (int i = 0; i < 5; i++)
+            Candidate origin = null, xProbe = null, yProbe = null;
+            Vector2 at = default;
+            double scale = 1;
+            while (true)
             {
-                var origin = best;
-                Vector2 at = Project(origin.Solution.TargetUsed);
-                float dx = at.x + physics.BallRadius <= xHigh ? physics.BallRadius : -physics.BallRadius;
-                float dy = at.y + physics.BallRadius <= yHigh ? physics.BallRadius : -physics.BallRadius;
-                var xProbe = Probe(new Vector2(at.x + dx, at.y));
-                var yProbe = Probe(new Vector2(at.x, at.y + dy));
+                bool fresh = !ReferenceEquals(origin, best);
+                if (evaluations + (fresh ? 3 : 1) > Budget) break;
+                if (fresh)
+                {
+                    origin = best; scale = 1;
+                    at = Project(origin.Solution.TargetUsed);
+                    float dx = at.x + physics.BallRadius <= xHigh ? physics.BallRadius : -physics.BallRadius;
+                    float dy = at.y + physics.BallRadius <= yHigh ? physics.BallRadius : -physics.BallRadius;
+                    xProbe = Probe(new Vector2(at.x + dx, at.y));
+                    yProbe = Probe(new Vector2(at.x, at.y + dy));
+                }
+                else scale *= .5;
+                double ddx = xProbe.Solution.TargetUsed.x - (double)at.x, ddy = yProbe.Solution.TargetUsed.y - (double)at.y;
                 double Derivative(Candidate sample, double difference) => origin.Legal && sample.Legal && difference != 0
                     ? (sample.Cost - origin.Cost) / difference : 0;
-                double gx = Derivative(xProbe, xProbe.Solution.TargetUsed.x - (double)at.x) * trustX;
-                double gy = Derivative(yProbe, yProbe.Solution.TargetUsed.y - (double)at.y) * trustY;
+                double stepX = trustX * scale, stepY = trustY * scale;
+                double gx = Derivative(xProbe, ddx) * stepX;
+                double gy = Derivative(yProbe, ddy) * stepY;
                 double norm = Math.Max(Math.Abs(gx), Math.Abs(gy));
-                var proposal = norm > 0 ? new Vector2((float)(at.x - trustX * gx / norm), (float)(at.y - trustY * gy / norm)) : at;
+                double px = at.x, py = at.y;
+                if (norm > 0) { px -= stepX * gx / norm; py -= stepY * gy / norm; }
+                if (origin.Solution.Solved && xProbe.Solution.Solved && yProbe.Solution.Solved && ddx != 0 && ddy != 0)
+                {
+                    double ax = (xProbe.Apex - origin.Apex) / ddx, ay = (yProbe.Apex - origin.Apex) / ddy;
+                    double predicted = origin.Apex + ax * (px - at.x) + ay * (py - at.y);
+                    if (ay > 0 && predicted > ceiling)
+                    {
+                        double level = origin.BelowCeiling ? origin.Apex : ceiling;
+                        py = Math.Max(at.y - stepY, Math.Min(at.y + stepY, at.y + (level - origin.Apex - ax * (px - at.x)) / ay));
+                    }
+                }
+                var proposal = Project(new Vector2((float)px, (float)py));
+                if (proposal.x == at.x && proposal.y == at.y) break; // No movement left: further trajectories would repeat the origin.
                 var refined = Probe(proposal);
-                Consider(xProbe); Consider(yProbe); Consider(refined);
+                if (fresh) { Consider(xProbe); Consider(yProbe); }
+                Consider(refined);
             }
 
             bool changed = Compare(best, baseline) < 0;
@@ -145,6 +175,7 @@ namespace SquashClash.Core.Shot
                     if (!rules.Closed && simulation.State.Position.y > court.WallHeight) rules.OnOverTop();
                 }
             }
+            result.Apex = apex;
             result.Legal = rules.Cause == PointEndCause.DoubleBounce && first.HasValue && second.HasValue;
             result.BelowCeiling = apex <= ceiling;
             if (result.Legal)
