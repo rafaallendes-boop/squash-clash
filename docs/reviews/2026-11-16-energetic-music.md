@@ -40,11 +40,19 @@ Nota sobre el texto de la propuesta («unos 12 dB bajo el contacto en valor efic
 
 Hashes: `music-match.wav` `5d4214a4…ab00bc`, `music-menu.wav` `a67c2bf3…e1ec7`, idénticos a los candidatos B y A.
 
+## Verificación tras integrar con main (17 nov 2026)
+
+Decisión del PO del 17 nov (literal, en el [registro](2026-10-25-first-shot-po-approvals.md)): «Dale, detenlo y has solo 1 instalación. No tengo problema en esperar». Integración de #67 con `main` (`3393d40`, con G1 A1, F1 y F2) por un subagente Sonnet dirigido por Claude, sin conflictos. Puertas sobre el head de código `b027ad1` (árbol limpio), en el Mac del PO con un solo Unity:
+
+- EditMode 803/803 (`Logs/editmode-results.xml`).
+- PlayMode 593/593 (`Logs/playmode-results.xml`); `ZMusicTests` 9/9 en verde, incluida `Mix_TheMatchLoopStaysUnderThePlayersContact` con los umbrales nuevos y el audio importado como Vorbis. Antes de la integración no se observó el RED; solo la réplica en Python y este GREEN.
+- AutoQA V: PASS, exit 0, nivel 1, 88/88, `20261118T003314Z-b027ad1-v-23734`, dirty false. AutoQA T3: PASS, exit 0, nivel 1, 88/88, `20261118T003335Z-b027ad1-t3-13624`, dirty false.
+- `scripts/check-release.sh`: dev y prod OK.
+
 ## Qué NO está verificado
 
-- Las pruebas de Unity PlayMode no se ejecutaron (Unity está en uso por Codex): el paso RED (umbrales nuevos con 0,12 debería fallar en la aserción de volumen) y el GREEN no se observaron; solo existe la réplica en Python.
-- La importación Vorbis: el re-codificado puede subir el pico y el margen más ajustado es el del valor eficaz, 1,5 dB.
 - Build, instalación y escucha en el iPhone: nadie las ha oído en el dispositivo; la comparación de volumen, energía y convivencia con los golpes se juzga a oído.
+- El RED de los umbrales nuevos con `MatchVolume` 0,12 no se observó en Unity.
 
 ## Independencia de la revisión
 
