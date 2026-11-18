@@ -112,6 +112,8 @@ namespace SquashClash.DevPanel
             sampling.text=$"Eventos {s.Samples} · {F(s.DeliveredHz)} Hz entregados · Δ p50/p95 {F(s.IntervalP50Ms)}/{F(s.IntervalP95Ms)} ms · máx {F(s.MaxGapMs)} ms\nEdad p50/p95/máx {F(s.AgeP50Ms)}/{F(s.AgeP95Ms)}/{F(s.MaxAgeMs)} ms · edad<0 {s.NegativeAges} · dup {s.DuplicateTimes} · desorden {s.OutOfOrder} · máx/frame {s.MaxSamplesPerFrame}";
             status.text=preview.Status+" · serie "+preview.TrialCount+"/10";
         }
+        // Called by DevPanelView.Toggle right after the panel opens, so the multi-line labels are filled before the first layout (CRP-01).
+        public void RefreshNow(){if(app==null)return;elapsed=0;Refresh();}
         private void Update()
         {
             if(app==null)return;

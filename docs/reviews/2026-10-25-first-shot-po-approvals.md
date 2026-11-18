@@ -3175,3 +3175,13 @@ Contexto: Claude informó al PO de que #67 cambia expectativas de `ZMusicTests` 
 Decisión literal del PO, 17 nov: «Dale, detenlo y has solo 1 instalación. No tengo problema en esperar». Se incluye #67 en la única instalación.
 
 La integración de #67 con `main` (`3393d40`, con G1 A1, F1 y F2) la hace un subagente Sonnet dirigido por Claude, en modo orquestador autorizado por el PO el 17 nov (ver entrada de F1). **La revisión de Claude sobre este trabajo NO es independiente.** Sin fusión de la PR ni instalación por esta entrada.
+
+
+### CRP-01 — corrección con la opción 3 (18 nov 2026)
+
+Contexto: el diagnóstico ([informe](2026-11-17-crp01-diagnosis.md)) demostró que CRP-01 es una carrera de layout: `ShotOverlay` llena sus labels multilínea a los 0,1 s de abrir el panel DEV y empuja `s1-sampling` fuera del viewport. Claude presentó tres opciones (1 y 2 solo test, 3 producto DEV).
+
+Decisión literal del PO, 18 nov: «Sí, opción 3». Corrige solo DEV (`ShotOverlay`/`DevPanelView.Toggle`) para que los labels queden llenos al abrir; el test existente queda intacto.
+
+La implementación (#80, `9305a75`) es de un subagente Sonnet dirigido por Claude. **La revisión de Claude sobre este trabajo NO es independiente.** Sin fusión de la PR ni instalación por esta entrada; la PR queda en borrador y la fusión necesita aprobación explícita del PO. Resultados y puertas en el informe del diagnóstico, sección «Corrección (opción 3)».
+
