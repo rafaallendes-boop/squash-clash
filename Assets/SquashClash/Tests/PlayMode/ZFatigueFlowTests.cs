@@ -29,7 +29,7 @@ namespace SquashClash.Runtime.Tests
             Assert.That(human.Point.Meters+rival.Point.Meters,Is.GreaterThan(0));
             var lines=Lines().Where(l=>l.kind=="fatigue").Select(l=>JsonUtility.FromJson<FatigueLine>(l.payload)).ToArray();
             Assert.That(lines,Has.Length.EqualTo(1));Assert.That(lines[0].human.AfterRecovery,Is.EqualTo(human.Energy));
-            Assert.That(human.Point.AfterRecovery,Is.EqualTo(human.Point.End+.25*(100-human.Point.End)).Within(1e-10));
+            Assert.That(human.Point.AfterRecovery,Is.EqualTo(human.Point.End+.08*(100-human.Point.End)).Within(1e-10));
             double h=human.Energy,r=rival.Energy;for(int i=0;i<200;i++){app.Host.Advance(.01);rally.Tick();}
             Assert.That(human.Energy,Is.EqualTo(h));Assert.That(rival.Energy,Is.EqualTo(r));Assert.That(Lines().Count(l=>l.kind=="fatigue"),Is.EqualTo(1));
             rally.Rematch();Assert.That(Energy(PlayerId.Human).Energy,Is.EqualTo(100));Assert.That(Energy(PlayerId.Rival).Energy,Is.EqualTo(100));
