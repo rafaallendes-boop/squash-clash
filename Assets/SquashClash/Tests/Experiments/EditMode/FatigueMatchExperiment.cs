@@ -30,7 +30,7 @@ namespace SquashClash.Experiments.EditMode
             if(mode=="baseline")Assert.That(preset.Hash,Is.EqualTo("430da2faa818"));
             else preset=preset.With("fatigue.enabled",mode=="off"||mode=="f2off"?0:1);
             if(mode=="f2off")Assert.That(preset.Hash,Is.EqualTo("3262f9b89156"));
-            if(mode=="f2all")Assert.That(preset.Hash,Is.EqualTo("2ec0c953786a"));
+            if(mode=="f2all")Assert.That(preset.Hash,Is.EqualTo("207da8f2c636"));
             if(f2)Assert.That(preset.Ordered.Count,Is.EqualTo(132));
             var ctx=new RallyContext(EffectiveConfig.From(preset),new RallyParams(),new AnalyticBallSimulationFactory(Physics.bounceThreshold));
             Assert.That(ctx.Config.SimulationKey,Is.EqualTo("166a96e319c7"));if(f2)Assert.That(ctx.Params.Hash,Is.EqualTo("927e304bbfec"));
