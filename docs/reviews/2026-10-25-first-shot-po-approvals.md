@@ -3102,3 +3102,11 @@ Decisión literal del PO:
 Se fija únicamente el nuevo término lateral en el paso 6 del diseño: suma normalizada de distancias de ambos botes a la pared propia para paralela; distancia del segundo a la contraria más requisito estricto de cruce para cruzada. Profundidad/techo, resto de búsqueda y criterios intactos. Antes de nuevos datos, SHA-256 de todos los recibos/derivados del primer candidato comprobados idénticos. #74 está fusionada por otro operador en `95d75a2`; se integra main mediante merge `46c0f54`, con segundo padre exacto `95d75a2`, sin rebase ni cambio de producto A1. Conflictos solo documentales resueltos conservando ambas entregas. C1 se ejecutará una vez en carpeta nueva, sin sobrescribir RED/candidato anterior; sus aserciones y malla permanecen intactas.
 
 **Resultado único G1-A2-C1:** revisión del diseño `7653687` fijada antes de ejecutar; implementación `eeb4a83`. Una sola invocación del mismo filtro, con XML fresco: **25/26 pasan, 1/26 falla por aserción C1**, sin CS/omitidos. **23/24 testigos** y dos controles pasan; falla SL6 cruzada P=0,80/y=0,88: segundo bote a **1,06313968 m** de la pared contraria, límite ≤1 m. Los 24 respetan tope lateral, altura/velocidad y 24 evaluaciones; terminan en DoubleBounce legal. C1–C8, malla y tests sin cambios; SHA-256 de toda evidencia del primer candidato `4fe66ad` idénticos. **Se detiene sin otra revisión/corrida**: no se ejecutan malla completa, segundo proceso, C2–C8, integración ni puertas restantes A2. Main ya integrado con merge `46c0f54`, segundo padre `95d75a2`, sin rebase. [Informe y manifiesto](2026-11-17-g1-a2-c1-revision01-stop.md). #73 borrador, sin fusionar ni instalar.
+
+### G1-A2 — solo diagnóstico D1 (18 nov 2026)
+
+Decisión literal del PO:
+
+> «Sí, solo D1»
+
+Autoriza únicamente el diagnóstico D1 de G1-A2 (solo lectura de producto) tras la parada de C1 en la revisión 01. No hay revisión 02 ni integración; A2 completa queda diferida hasta después de la primera prueba con usuarios. Ejecutado en `claude/g1-a2-d1` (desde `2ee988d`), dirigido por Claude con un subagente Sonnet: la revisión no es independiente. Resultado: [informe](2026-11-18-g1-a2-d1.md), [método](../validation/2026-11-18-g1-a2-d1-method.md) y [evidencia](../validation/evidence/2026-11-18-g1-a2-d1/manifest.json). Sin fusión ni instalación.

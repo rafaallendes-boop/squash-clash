@@ -1,0 +1,58 @@
+{
+  "experiment": "G1A2D1Experiment.WriteG1A2D1",
+  "method": "docs/validation/2026-11-18-g1-a2-d1-method.md",
+  "productCode": "eeb4a83 (ShotIntentSolver unchanged)",
+  "baseBranchCommit": "2ee988d",
+  "runHead": "4d5a3e8d348ca4081b33f4ad6c62a66688a97607",
+  "defaults": "430da2faa818",
+  "simulationKey": "166a96e319c7",
+  "unity": "6000.3.27f1",
+  "runs": [
+    "run01",
+    "run02"
+  ],
+  "equivalenceGate": "24/24 bit-identical (equivalence.tsv)",
+  "files": {
+    "a-best-index.tsv": {
+      "sha256": "6138f3725bdbd1dd9f3d80f0965cb4af6f734ed8b67108c7940e4d82af0f28a7",
+      "bytes": 2174,
+      "run02Identical": true
+    },
+    "b-sl6-cross-p080-y088-trace.tsv": {
+      "sha256": "79d8545c76b4b11f2b96e8347d428da4b67e205112622e2e033bb86d6245d72d",
+      "bytes": 3586,
+      "run02Identical": true
+    },
+    "c-existence-grid.tsv": {
+      "sha256": "bdd85a8cfc3203e84a85de800842cb0af1aeadec1775f804bbde08227157990f",
+      "bytes": 33110,
+      "run02Identical": true
+    },
+    "c-existence-summary.tsv": {
+      "sha256": "f6a2386648865f94b8430b473d4d1864113cf65943ab05a43f7aa2c091685994",
+      "bytes": 381,
+      "run02Identical": true
+    },
+    "d-lateral-zero.tsv": {
+      "sha256": "4b2e1728f5f489b97591c1a418bdf08b0e46816e575a19f05d12c7c3aac0d87f",
+      "bytes": 3850,
+      "run02Identical": true
+    },
+    "d-summary.tsv": {
+      "sha256": "f3f4cdc1398211514bed468cd5c4553b07fc497631333bed8b4df50648bf363a",
+      "bytes": 67,
+      "run02Identical": true
+    },
+    "equivalence.tsv": {
+      "sha256": "6a30986ce0b5392aa5bb8af505bfdfcbd215fbcba3d18fc2c45d6327934d4e74",
+      "bytes": 1867,
+      "run02Identical": true
+    },
+    "source.tsv": {
+      "sha256": "24fd1d81b074ea63d64cbdfa7ee45c4ceaa9d12c671e0a6c1fe0973a389bc692",
+      "bytes": 143,
+      "run02Identical": true
+    }
+  },
+  "rawLogsNote": "results.xml/unity.log kept untracked in Logs/experiments/g1-a2-d1/run0N-runner"
+}

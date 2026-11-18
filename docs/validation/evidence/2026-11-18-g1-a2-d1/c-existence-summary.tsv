@@ -1,0 +1,3 @@
+request	domainXLow	domainXHigh	domainYLow	domainYHigh	legalLow	points	witnessAnywhere	witnessInSearchDomain	minOppositeWall2Legal	minOppositeWall2InDomain
+SL6|cross|P0.80|y0.88	3.25785255	3.64185238	0.652	0.88	0.5	105	24	18	0.057091757655143738	0.057091757655143738
+SL6|cross|P0.80|y1.08	3.25904322	3.64066172	0.7341582	1.08	0.5	105	17	10	0.050034493207931519	0.071688011288642883
