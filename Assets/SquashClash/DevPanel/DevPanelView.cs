@@ -68,6 +68,7 @@ namespace SquashClash.DevPanel
             panel.style.display=IsOpen?DisplayStyle.None:DisplayStyle.Flex;
             var input=app.GetComponent<SquashClash.Runtime.Input.TouchInputAdapter>();
             if(input!=null)input.BlockedByUi=IsOpen;
+            if(IsOpen)GetComponent<ShotOverlay>()?.RefreshNow();
             Refresh();Place();app.RecordDevControl("dev-toggle",true,"completed");
         }
         private void Refresh()
