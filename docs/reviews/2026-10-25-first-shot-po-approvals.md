@@ -3166,3 +3166,12 @@ Por eso F1-AUTOQA-01 y F2 los implementan subagentes Sonnet dirigidos por Claude
 ### F2 — brazo y barra implementados por subagentes dirigidos por Claude (17 nov 2026)
 
 Bajo el cambio de modo ya registrado en la entrada de F1 («Actua como un orquestador y revisor. Despliega distintos sub agentes de modelo sonnet para realizar la implementación y terminemos F1/F2…», 17 nov), F2 lo implementó un subagente Sonnet dirigido por Claude, con un plan de otro subagente para no sesgar la opinión y las decisiones de revisión de Claude sobre ese plan. **La revisión de Claude sobre este trabajo NO es independiente.** Se mantienen la autonomía experimental del PO para F1/F2 y la regla de parada del método de F2: sin ajuste. Resultado: todas las compuertas B pasan, A1 `f2off` bit a bit, EditMode 803/803, PlayMode 593/593, AutoQA V y T3 PASS/0/1 y check-release OK; sin cambios de hash ni de `DefaultPreset.json`. Incidente F2-EXP-01 (hash esperado de `f2off` mal transcrito, detenido antes de datos) en el [informe de F2](2026-11-17-f2-fatigue-arm-hud.md). Sin fusión ni instalación; revisión independiente y aprobación del PO pendientes.
+
+
+### #67 Música más enérgica — integración con main e instalación única (17 nov 2026)
+
+Contexto: Claude informó al PO de que #67 cambia expectativas de `ZMusicTests` (pico de la música de partido de ≤0,25× a ≤0,5× del golpe más suave, valor eficaz de ≤0,08× a ≤0,15×, `MatchVolume` 0,12→0,24) y que eso requería su aprobación.
+
+Decisión literal del PO, 17 nov: «Dale, detenlo y has solo 1 instalación. No tengo problema en esperar». Se incluye #67 en la única instalación.
+
+La integración de #67 con `main` (`3393d40`, con G1 A1, F1 y F2) la hace un subagente Sonnet dirigido por Claude, en modo orquestador autorizado por el PO el 17 nov (ver entrada de F1). **La revisión de Claude sobre este trabajo NO es independiente.** Sin fusión de la PR ni instalación por esta entrada.
