@@ -68,7 +68,9 @@
 }
 .sc-score-dash { font-size: 20px; color: rgb(120, 138, 156); }
 /* Energy line under each name (F2): 3 px, no touches. Red is deliberately not the rival chip's rgb(255, 77, 51). */
-.sc-energy-col { flex-direction: column; justify-content: center; }
+/* Same fixed width for both columns, so TÚ and RIVAL draw bars of equal length at equal energy. */
+.sc-energy-col { flex-direction: column; justify-content: center; align-items: stretch; flex-shrink: 0; width: 60px; }
+.sc-energy-col > .sc-score-name { -unity-text-align: middle-center; }
 .sc-energy { flex-shrink: 0; height: 3px; margin-top: 1px; margin-left: 6px; margin-right: 6px; border-radius: 1px; overflow: hidden; background-color: rgba(255, 255, 255, 0.12); }
 .sc-energy-fill { flex-shrink: 0; height: 3px; width: 100%; border-radius: 1px; }
 .sc-energy--neutral > .sc-energy-fill { background-color: rgb(160, 176, 192); }

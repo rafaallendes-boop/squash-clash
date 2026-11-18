@@ -44,6 +44,7 @@ namespace SquashClash.Runtime.Rally
         private ReceptionResult? rivalReception;
         private PlayerId? served;private ServiceBox servedBox;
         private bool resetEnergy=true;
+        private double? testEnergy;
         public FatigueState HumanEnergy {get;private set;}
         public FatigueState RivalEnergy {get;private set;}
         public FatigueSettings FatigueSettings=>context?.Fatigue;
@@ -111,6 +112,8 @@ namespace SquashClash.Runtime.Rally
             if(relaunchPractice)app.LaunchCurrent();
         }
         // Rematch: same rival, score back to zero, next point starts at once.
+        // DEV test tool (PO, 18 nov): the next point starts with this energy for both players, once. Stays pending until then, also outside a rally. Unused: no effect.
+        public void SetTestEnergy(double energy){testEnergy=Math.Max(0,Math.Min(100,energy));}
         public void ResetScore(){HumanPoints=RivalPoints=PointsPlayed=0;LastPoint=null;resetEnergy=true;}
         public void Rematch(){if(!Active)return;ResetScore();if(Match!=null)Match=NewMatch();BeginPoint();}
         private void BeginPoint()
@@ -118,9 +121,10 @@ namespace SquashClash.Runtime.Rally
             pointCausal.Clear();
             var cfg=EffectiveConfig.From(app.Tuning.ApplyPending());
             context=new RallyContext(cfg,Params,factory);
-            HumanEnergy=new FatigueState(context.Fatigue,resetEnergy?100:HumanEnergy?.Energy??100);
-            RivalEnergy=new FatigueState(context.Fatigue,resetEnergy?100:RivalEnergy?.Energy??100);
-            resetEnergy=false;HumanEnergy.BeginPoint();RivalEnergy.BeginPoint();
+            double humanStart=testEnergy??(resetEnergy?100:HumanEnergy?.Energy??100),rivalStart=testEnergy??(resetEnergy?100:RivalEnergy?.Energy??100);
+            HumanEnergy=new FatigueState(context.Fatigue,humanStart);
+            RivalEnergy=new FatigueState(context.Fatigue,rivalStart);
+            resetEnergy=false;testEnergy=null;HumanEnergy.BeginPoint();RivalEnergy.BeginPoint();
             Human=new PlayerBody(PlayerId.Human,Human?.Position??context.WaitPosition(PlayerId.Human),context.Move);
             Rival=new PlayerBody(PlayerId.Rival,Rival?.Position??context.WaitPosition(PlayerId.Rival),context.Move);
             Rival.MoveTo(context.WaitPosition(PlayerId.Rival),0,BodyPhase.Recovering,BodyPhase.Waiting);
