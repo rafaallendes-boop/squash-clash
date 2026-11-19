@@ -3,7 +3,7 @@ using SquashClash.Runtime.Audio;
 using UnityEngine.UIElements;
 namespace SquashClash.DevPanel
 {
-    // DEV only (asmdef SQUASH_DEV || UNITY_EDITOR). Switches (default on): back-wall glass "toc" (off: like the side walls) and the player's own drier Perfect contact (off: impact-perfect as before).
+    // DEV only (asmdef SQUASH_DEV || UNITY_EDITOR). Switches (default on): back-wall glass "toc" (off: like the side walls) and the player's own drier Perfect contact (off: impact-perfect as before) and the rival's tired breathing (off: silent as before).
     // Not remembered between launches and not a DefaultPreset key.
     public sealed class AudioDevSection
     {
@@ -19,6 +19,10 @@ namespace SquashClash.DevPanel
             string OwnText()=>"Golpe Perfecto propio: "+(AudioScape.PerfectOwnOn?"sí":"no");
             own=new Button(()=>DevControlLog.Run(app,"audio-perfect-toggle",()=>{AudioScape.PerfectOwnOn=!AudioScape.PerfectOwnOn;own.text=OwnText();})){name="audio-perfect-toggle",text=OwnText()};
             own.style.minHeight=44;own.style.whiteSpace=WhiteSpace.Normal;Root.Add(own);
+            Button breath=null;
+            string BreathText()=>"Resoplido del rival: "+(AudioScape.RivalBreathOn?"sí":"no");
+            breath=new Button(()=>DevControlLog.Run(app,"audio-breath-toggle",()=>{AudioScape.RivalBreathOn=!AudioScape.RivalBreathOn;breath.text=BreathText();})){name="audio-breath-toggle",text=BreathText()};
+            breath.style.minHeight=44;breath.style.whiteSpace=WhiteSpace.Normal;Root.Add(breath);
         }
     }
 }

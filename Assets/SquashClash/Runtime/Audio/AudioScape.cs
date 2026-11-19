@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Audio
 {
-    public enum ScapeSound {BounceFloor,BounceWall,FrontWall,RivalStep,RivalRacket,PointWon,PointLost,UiClick,BounceGlass}
+    public enum ScapeSound {BounceFloor,BounceWall,FrontWall,RivalStep,RivalRacket,PointWon,PointLost,UiClick,BounceGlass,RivalBreath1,RivalBreath2,RivalBreath3}
     // First run, sound layer: what the court sounds like around the player's own stroke. It only listens to events that
     // already exist (ball contacts, the rival's swing, the end of a point, button presses) and asks a fixed pool of
     // sources to play a synthesized clip (scripts/audio/make_audioscape.py). The player's contact audio is not here:
@@ -19,20 +19,22 @@ namespace SquashClash.Runtime.Audio
     // none of the court's while the game is paused, and no allocation after start.
     public sealed class AudioScape : MonoBehaviour
     {
-        public const int Voices=6,Sounds=9;
+        public const int Voices=6,Sounds=12;
         public const string SoundKey="sc.firstRun.sound";
         // PitchSpread: random shift per repeat (+-). PowerPitch: total shift from the softest to the hardest contact.
         public const float PitchSpread=.05f,PowerPitch=.06f,MaxVolume=.35f,StepMeters=.9f,JingleDelay=.18f,QuietSpeed=1.2f,AmbienceVolume=.14f;
         private const float FullSpeed=24f,FullRun=4.8f,TeleportMeters=.5f;
-        private static readonly string[] ClipNames={"scape-bounce-floor","scape-bounce-wall","scape-front-wall","scape-rival-step","scape-rival-racket","scape-point-won","scape-point-lost","scape-ui-click","scape-bounce-glass"};
+        private static readonly string[] ClipNames={"scape-bounce-floor","scape-bounce-wall","scape-front-wall","scape-rival-step","scape-rival-racket","scape-point-won","scape-point-lost","scape-ui-click","scape-bounce-glass","scape-rival-breath-1","scape-rival-breath-2","scape-rival-breath-3"};
         // Source volume at full power; the softest contact plays at 60 % of it.
         // Set against the quietest contact clip (impact-valid, peak 0.29 at full volume): each sound at its loudest
         // peaks at no more than half of that (front wall 0.14, floor 0.12, rival racket 0.11, walls 0.10, steps 0.06).
-        private static readonly float[] BaseVolume={.18f,.21f,.20f,.16f,.33f,.32f,.30f,.30f,.19f};
+        private static readonly float[] BaseVolume={.18f,.21f,.20f,.16f,.33f,.32f,.30f,.30f,.19f,.10f,.10f,.10f};
         private static readonly string[] ClickPrefixes={"menu-","tutorial-","pause-","match-result-","rally-"};
         // DEV switch (default on): the back-wall glass has its own "toc"; off, it sounds like the side walls again. Not remembered.
         public static bool GlassSoundOn=true;
         public static bool PerfectOwnOn=true;
+        // DEV switch (default on): the rival puffs when tired. Off: exactly as before. Not remembered.
+        public static bool RivalBreathOn=true;
         private static bool? soundOn;
         // The "Sonido" switch: mutes the whole game (listener volume), remembered between launches.
         public static bool SoundOn
@@ -55,6 +57,49 @@ namespace SquashClash.Runtime.Audio
             }
         }
         public int TotalRequests {get;private set;}
+        // Rival breath: the tired rival exhales so the player can hear it (the energy bar's own energy and tone decide).
+        // Below the onset (amber or red) after a point ends, after BreathPointDelay; in the red zone also after its own stroke,
+        // at most one breath per BreathCooldown seconds. Dropped, never delayed, while the human swings; never for the human.
+        public const float BreathPointDelay=.55f,BreathStrokeDelay=.3f,BreathCooldown=3f;
+        public int BreathRequests=>counts[(int)ScapeSound.RivalBreath1]+counts[(int)ScapeSound.RivalBreath2]+counts[(int)ScapeSound.RivalBreath3];
+        // Wanted breaths dropped because the human was swinging.
+        public int BreathSuppressed {get;private set;}
+        // Test seam: replaces the real swing state when set.
+        public System.Func<bool> SwingBusyProbe {get;set;}
+        // The human's swing window: the gesture is being drawn, the order was accepted (intention, impact, follow-through) or the contact is awaited.
+        public bool HumanSwingBusy
+        {
+            get
+            {
+                if(SwingBusyProbe!=null)return SwingBusyProbe();
+                if(app==null)return false;
+                if(swingView==null)swingView=app.GetComponent<SquashClash.Runtime.Shot.SwingView>();
+                if(shotController==null)shotController=app.GetComponent<SquashClash.Runtime.Shot.ShotController>();
+                if(gesturePreview==null)gesturePreview=app.GetComponent<SquashClash.Runtime.Shot.GesturePreview>();
+                return swingView!=null&&swingView.Phase!=SquashClash.Runtime.Shot.SwingPhase.Idle||shotController!=null&&shotController.WaitingForContact||gesturePreview!=null&&gesturePreview.Active;
+            }
+        }
+        private SquashClash.Runtime.Shot.SwingView swingView;private SquashClash.Runtime.Shot.ShotController shotController;private SquashClash.Runtime.Shot.GesturePreview gesturePreview;
+        private float breathIn=-1,sinceBreath=99;private bool breathAfterStroke;private int lastBreath=-1;
+        // 0 off or at/above the onset, 1 amber, 2 red: read from the rival's energy exactly as the HUD bar does.
+        private int RivalTone()
+        {
+            var fatigue=rally!=null&&rally.Active?rally.FatigueSettings:null;var energy=rally!=null?rally.RivalEnergy:null;
+            return fatigue==null||!fatigue.Enabled||energy==null?0:fatigue.Tone(energy.Energy);
+        }
+        private bool BreathWanted(bool afterStroke)=>app!=null&&RivalBreathOn&&(afterStroke?RivalTone()==2&&sinceBreath>=BreathCooldown:RivalTone()>0);
+        public void BreathAfterPoint(){if(BreathWanted(false)){breathIn=BreathPointDelay;breathAfterStroke=false;}}
+        public void BreathAfterRivalStroke(){if(BreathWanted(true)&&breathIn<0){breathIn=BreathStrokeDelay;breathAfterStroke=true;}}
+        private void PlayBreath()
+        {
+            if(!BreathWanted(breathAfterStroke)||!SoundOn)return;
+            if(HumanSwingBusy){BreathSuppressed++;return;}
+            // Never the same exhale twice in a row; a little level and pitch variety.
+            int variant=lastBreath<0?(int)(Next()*3):(lastBreath+1+(int)(Next()*2))%3;if(variant>2)variant=2;
+            lastBreath=variant;sinceBreath=0;
+            var sound=(ScapeSound)((int)ScapeSound.RivalBreath1+variant);
+            Request(sound,BaseVolume[(int)sound]*(.8f+.2f*Next()),1+(Next()*2-1)*.04f);
+        }
         // Requests that reached a source (always zero in batch mode).
         public int Played {get;private set;}
         public float LastVolume {get;private set;}
@@ -124,6 +169,7 @@ namespace SquashClash.Runtime.Audio
         private void OnRivalSwing(StrokeSide side,bool contact){if(contact)rivalPending=true;}
         private void OnPointEnded(PointResult point)
         {
+            BreathAfterPoint();
             if(!point.Winner.HasValue)return;
             jingle=point.Winner.Value==PlayerId.Human?ScapeSound.PointWon:ScapeSound.PointLost;jingleIn=JingleDelay;
         }
@@ -145,7 +191,7 @@ namespace SquashClash.Runtime.Audio
             // The rival's stroke is judged once its velocity is in the ball (the director relaunches from the contact state).
             if(rivalPending)
             {
-                rivalPending=false;
+                rivalPending=false;BreathAfterRivalStroke();
                 if(host.ActiveConfig!=null)RequestScaled(ScapeSound.RivalRacket,host.Current.Velocity.magnitude/(float)host.ActiveConfig.Source.Get("shot.vMax"));
             }
             bool paused=app.Clock==null||app.Clock.Paused,want=AmbienceWanted&&ambience.clip!=null,audible=!Application.isBatchMode;
@@ -159,6 +205,8 @@ namespace SquashClash.Runtime.Audio
             // A source the system stopped behind the game's back starts again on its own.
             else if(want&&audible&&!ambience.isPlaying){AmbienceStarts++;ambience.Play();}
             if(paused)return;
+            sinceBreath+=dt;
+            if(breathIn>=0&&dt>0){breathIn-=dt;if(breathIn<=0){breathIn=-1;PlayBreath();}}
             if(jingleIn>=0&&dt>0)
             {
                 jingleIn-=dt;
