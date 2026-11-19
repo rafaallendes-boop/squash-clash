@@ -11,7 +11,7 @@ namespace SquashClash.Runtime.Menu
     // First run: what a player with no context sees between launching the app and playing a match. A start menu
     // (title, Jugar, difficulty, how to play, build label) laid over the court with the game paused. It adds no
     // mechanic: Jugar is RallyDirector.StartMatch at the chosen AiLevel, exactly what the "Partido" button does.
-    // The first Jugar goes through a three-step tutorial (how to aim and strike with M2-4, how to read the timing ring),
+    // The first Jugar goes through a four-step tutorial (how to aim and strike with M2-4, how to read the timing ring, the volley),
     // shown once (PlayerPrefs) and reopened from the menu. Its text describes M24Model and TimingRingView as they are.
     // During a match the player's Pausa opens a card (Continuar / Salir al menú) and the result card's "Volver al inicio"
     // comes back here. Pauses made by the dev tools or by the system (ResumeOverlay) do not open the card.
@@ -31,18 +31,22 @@ namespace SquashClash.Runtime.Menu
         // Space between the safe area and the menu's content (the header's top edge is the reference at the top).
         private const float MenuTop=10,MenuBottom=23,BuildBottom=6;
         private void PlaceBuild(){if(build!=null&&safeArea!=null)build.style.bottom=Mathf.Ceil(safeArea.Bottom+BuildBottom);}
-        public const int TutorialSteps=3;
+        public const int TutorialSteps=4;
+        // The step that lists Perfecto / Válido / Fallido: the timing ring's.
+        private const int TimingStep=2;
         public const string TutorialSeenKey="sc.firstRun.tutorialSeen";
         public const string LevelKey="sc.firstRun.level";
         // M2-4 (M24Model): the aim is fixed where the finger lands on the front wall; pulling down sets the power;
         // lifting the finger is the stroke, and lifting it back at the anchor height cancels. Timing (TimingRingView,
-        // ImpactCue): a ring converges on the fixed triangle at the planned contact; one attempt per ball.
-        private static readonly string[] StepTitles={"Apunta","Carga y suelta","Suelta a tiempo"};
+        // ImpactCue): a ring converges on the fixed triangle at the planned contact; one attempt per ball. Volley (19 nov, PO):
+        // an amber ring before the bounce (ShotController.VolleyTint) can be struck in the air; it costs a little more energy.
+        private static readonly string[] StepTitles={"Apunta","Carga y suelta","Suelta a tiempo","Volea"};
         private static readonly string[] StepBodies=
         {
             "Apoya el dedo en la pared del frente, justo donde quieres mandar la pelota. Ese punto queda fijo mientras no levantes el dedo.",
             "Sin levantar el dedo, tira hacia abajo: mientras más tiras, más fuerte sale el golpe. Suelta para pegar. Si te arrepientes, vuelve a subir el dedo hasta donde lo apoyaste y suelta: no pegas.",
-            "Cuando la pelota viene hacia ti aparece un triángulo donde le vas a pegar y un anillo que se achica. Suelta justo cuando el anillo calce dentro del triángulo. Tienes un solo intento por pelota."
+            "Cuando la pelota viene hacia ti aparece un triángulo donde le vas a pegar y un anillo que se achica. Suelta justo cuando el anillo calce dentro del triángulo. Tienes un solo intento por pelota.",
+            "Si el anillo sale ámbar, puedes pegarle en el aire, antes del bote. Suelta cuando calce, como siempre: volear cansa un poco más."
         };
         private VisualElement tutorial,tutorialArt,tutorialResults;private Label tutorialStep,tutorialTitle,tutorialBody;private Button tutorialNext;
         private bool tutorialThenPlay;
@@ -108,7 +112,7 @@ namespace SquashClash.Runtime.Menu
         private static VisualElement Decor(string name,string style){var e=new VisualElement{name=name,pickingMode=PickingMode.Ignore};e.AddToClassList(style);return e;}
         private static Label Text(string text,string style){var label=new Label(text){pickingMode=PickingMode.Ignore};label.AddToClassList(style);return label;}
         // Plaster, ink and line red, as in Visual/Hud.uss; the tutorial drawings use the same three.
-        private static readonly Color Plaster=new Color(.93f,.945f,.937f),Ink=new Color(.094f,.133f,.173f),LineRed=new Color(.808f,.125f,.176f),Dot=new Color(1f,.82f,.25f);
+        private static readonly Color Plaster=new Color(.93f,.945f,.937f),Ink=new Color(.094f,.133f,.173f),LineRed=new Color(.808f,.125f,.176f),Dot=new Color(1f,.82f,.25f),Amber=new Color(1f,.72f,.16f);
         // Menu emblem: the ball (black, with the two yellow dots of a match ball) streaking in from the left over the wall.
         // Vector, drawn once per layout.
         private static void DrawArt(MeshGenerationContext context)
@@ -152,12 +156,13 @@ namespace SquashClash.Runtime.Menu
         }
         private static void Line(Painter2D p,Vector2 a,Vector2 b){p.BeginPath();p.MoveTo(a);p.LineTo(b);p.Stroke();}
         private static void Disc(Painter2D p,Vector2 c,float radius,bool fill){p.BeginPath();p.Arc(c,radius,0,360);if(fill)p.Fill();else p.Stroke();}
-        // One drawing per step: where the finger lands, the pull, and the ring fitting the triangle.
+        // One drawing per step: where the finger lands, the pull, the ring fitting the triangle, and the volley in the air.
         private void DrawStep(MeshGenerationContext context)
         {
             var r=context.visualElement.contentRect;if(r.width<=0||r.height<=0)return;
             var p=context.painter2D;float w=r.width,h=r.height;p.lineCap=LineCap.Round;p.lineJoin=LineJoin.Round;
             Color gold=Dot,white=Color.white,red=LineRed,finger=new Color(.47f,.75f,1f,.55f);
+            if(TutorialStep==3){DrawVolley(p,w,h);return;}
             if(TutorialStep<2)
             {
                 // The front wall, as on the court: out line, service line and tin.
@@ -186,12 +191,42 @@ namespace SquashClash.Runtime.Menu
             p.strokeColor=new Color(1,1,1,.38f);Disc(p,c,radius*.84f,false);
             p.strokeColor=gold;p.lineWidth=4;Disc(p,c,radius*.5f,false);
         }
+        // The volley: the ball's path towards a bounce that never comes (faint), the amber triangle and ring at the ball in the air,
+        // the burst of the contact around it (VolleyBurstView), and the ball going back to the front wall.
+        private static void DrawVolley(Painter2D p,float w,float h)
+        {
+            Vector2 a=new Vector2(w*.06f,h*.16f),c=new Vector2(w*.56f,h*.20f),b=new Vector2(w*.90f,h*.86f);
+            Vector2 At(float t)=>(1-t)*(1-t)*a+2*t*(1-t)*c+t*t*b;
+            p.strokeColor=new Color(1,1,1,.3f);p.lineWidth=2;Line(p,new Vector2(w*.04f,h*.86f),new Vector2(w*.96f,h*.86f));
+            for(int i=0;i<=16;i++)
+            {
+                float t=i/16f;if(Mathf.Abs(t-.5f)<.1f)continue;
+                p.fillColor=new Color(1,1,1,t<.5f?.55f:.16f);Disc(p,At(t),t<.5f?2.2f:1.8f,true);
+            }
+            // Where it would have bounced.
+            p.strokeColor=new Color(1,1,1,.22f);p.lineWidth=2;Line(p,b+new Vector2(-7,0),b+new Vector2(7,0));Line(p,b+new Vector2(0,-6),b+new Vector2(0,-1));
+            var ball=At(.5f);float radius=h*.2f,cos=radius*.8660254f;
+            // The ball going back to the front wall.
+            p.strokeColor=new Color(1,1,1,.7f);p.lineWidth=3;var back=new Vector2(w*.12f,h*.52f);var from=ball+new Vector2(-radius*.7f,radius*.25f);
+            Line(p,from,back);var dir=(back-from).normalized;var side=new Vector2(-dir.y,dir.x);
+            Line(p,back,back-dir*9+side*6);Line(p,back,back-dir*9-side*6);
+            p.strokeColor=Amber;p.lineWidth=3;p.BeginPath();p.MoveTo(ball+new Vector2(0,-radius));p.LineTo(ball+new Vector2(cos,radius*.5f));p.LineTo(ball+new Vector2(-cos,radius*.5f));p.ClosePath();p.Stroke();
+            p.lineWidth=4;Disc(p,ball,radius*.5f,false);
+            // The burst of the contact: short rays around the ring.
+            p.strokeColor=new Color(Amber.r,Amber.g,Amber.b,.85f);p.lineWidth=3;
+            for(int i=0;i<8;i++)
+            {
+                float angle=(i*45+22.5f)*Mathf.Deg2Rad;var d=new Vector2(Mathf.Cos(angle),Mathf.Sin(angle));
+                Line(p,ball+d*radius*1.1f,ball+d*radius*1.35f);
+            }
+            p.fillColor=Plaster;Disc(p,ball,6,true);
+        }
         private string MetricsScreen=>Screen==FirstRunScreen.Menu?"menu":Screen==FirstRunScreen.Tutorial?"tutorial":PauseVisible?"pause":"game";
         private void ShowStep()
         {
             tutorialStep.text=(TutorialStep+1)+" de "+TutorialSteps;tutorialTitle.text=StepTitles[TutorialStep];tutorialBody.text=StepBodies[TutorialStep];
             bool last=TutorialStep==TutorialSteps-1;
-            tutorialResults.style.display=last?DisplayStyle.Flex:DisplayStyle.None;
+            tutorialResults.style.display=TutorialStep==TimingStep?DisplayStyle.Flex:DisplayStyle.None;
             tutorialNext.text=!last?"Siguiente":tutorialThenPlay?"¡A jugar!":"Listo";
             tutorialArt.MarkDirtyRepaint();
         }

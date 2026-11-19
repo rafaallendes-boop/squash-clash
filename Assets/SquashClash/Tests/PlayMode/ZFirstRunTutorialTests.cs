@@ -6,7 +6,7 @@ using UnityEngine.TestTools;
 using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Tests
 {
-    // First run, block B: the three-step tutorial shown once before the first match and reopened from the menu.
+    // First run, block B: the four-step tutorial (the fourth, the volley, since 19 nov) shown once before the first match and reopened from the menu.
     public sealed class ZFirstRunTutorialTests : ZFirstRunFixture
     {
         [UnitySetUp] public IEnumerator Setup()=>Boot(true);
@@ -19,10 +19,12 @@ namespace SquashClash.Runtime.Tests
             Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.Tutorial));Assert.That(Shown(Find("tutorial-layer")),Is.True);
             Assert.That(Shown(Find("menu-layer")),Is.False);
             Assert.That(rally.Active,Is.False,"the match waits for the tutorial");Assert.That(app.Clock.Paused,Is.True);
-            Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("1 de 3"));
+            Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("1 de 4"));
             Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("Siguiente"));
-            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("2 de 3"));
-            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("3 de 3"));
+            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("2 de 4"));
+            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("3 de 4"));
+            Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("Siguiente"));
+            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("4 de 4"));
             Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("¡A jugar!"));
             Assert.That(Seen,Is.False,"it counts as seen only once finished or skipped");
             Click("tutorial-next");Refresh();yield return null;
@@ -45,8 +47,8 @@ namespace SquashClash.Runtime.Tests
         {
             PlayerPrefs.SetInt("sc.firstRun.tutorialSeen",1);
             Click("menu-howto");Refresh();yield return null;
-            Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.Tutorial));Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("1 de 3"));
-            Click("tutorial-next");Click("tutorial-next");Refresh();
+            Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.Tutorial));Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("1 de 4"));
+            Click("tutorial-next");Click("tutorial-next");Click("tutorial-next");Refresh();
             Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("Listo"));
             Click("tutorial-next");Refresh();yield return null;
             Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.Menu));Assert.That(Shown(Find("menu-layer")),Is.True);
@@ -55,9 +57,9 @@ namespace SquashClash.Runtime.Tests
             Click("menu-howto");Refresh();Click("tutorial-skip");Refresh();yield return null;
             Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.Menu));Assert.That(rally.Active,Is.False);
         }
-        [UnityTest] public IEnumerator Steps_CoverAimingPullingAndTheTimingRing()
+        [UnityTest] public IEnumerator Steps_CoverAimingPullingTheTimingRingAndTheVolley()
         {
-            Assert.That(FirstRunFlow.TutorialSteps,Is.EqualTo(3));
+            Assert.That(FirstRunFlow.TutorialSteps,Is.EqualTo(4));
             Click("menu-howto");Refresh();yield return null;
             var title=Find<Label>("tutorial-title");var body=Find<Label>("tutorial-body");var results=Find("tutorial-results");
             Assert.That(title.text,Is.EqualTo("Apunta"));
@@ -73,6 +75,11 @@ namespace SquashClash.Runtime.Tests
             Assert.That(Find<Label>("tutorial-result-perfect").text,Does.StartWith("Perfecto"));
             Assert.That(Find<Label>("tutorial-result-valid").text,Does.StartWith("Válido"));
             Assert.That(Find<Label>("tutorial-result-failed").text,Does.StartWith("Fallido"));
+            // 19 nov (PO): the volley, last: the amber ring before the bounce.
+            Click("tutorial-next");Refresh();yield return null;
+            Assert.That(title.text,Is.EqualTo("Volea"));
+            Assert.That(body.text,Does.Contain("ámbar").And.Contain("bote").And.Contain("aire"));
+            Assert.That(Shown(results),Is.False,"the result list belongs to the timing step");
         }
         [UnityTest] public IEnumerator EveryStep_FitsThePortraitScreen_WithFingerSizedButtons()
         {

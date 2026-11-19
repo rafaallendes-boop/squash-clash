@@ -57,7 +57,7 @@ namespace SquashClash.Runtime.Tests
         {
             yield return Boot(screen,true);
             Click("menu-howto");
-            for(int step=0;step<3;step++)
+            for(int step=0;step<SquashClash.Runtime.Menu.FirstRunFlow.TutorialSteps;step++)
             {
                 yield return Settle();
                 Assert.That(flow.TutorialStep,Is.EqualTo(step));
