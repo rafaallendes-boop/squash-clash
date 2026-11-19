@@ -76,6 +76,7 @@ namespace SquashClash.Runtime.Camera
         {
             var app = SquashClash.Runtime.App.AppBootstrap.Instance;
             if (app != null && app.Clock != null && app.Clock.Paused) return; // frozen with the game
+            if (SquashClash.Runtime.Visual.PointEndFreeze.Active) return; // point-end freeze: hold the shake pose
             TickShake(Time.unscaledDeltaTime);
         }
         private void OnEnable()
