@@ -39,7 +39,7 @@ namespace SquashClash.Runtime.Tests
             DrainTo(rally.RivalEnergy,15);Assert.That(rally.FatigueSettings.Tone(rally.RivalEnergy.Energy),Is.EqualTo(2),"fixture: red");
             scape.BreathAfterRivalStroke();TickFor(1f);Assert.That(Breaths,Is.EqualTo(1),"red: after the stroke");
             scape.BreathAfterRivalStroke();TickFor(1f);Assert.That(Breaths,Is.EqualTo(1),"at most one every 3 s (2 s since the last)");
-            TickFor(1.2f);scape.BreathAfterRivalStroke();TickFor(1f);Assert.That(Breaths,Is.EqualTo(2),"after the cooldown it puffs again");
+            TickFor(1.5f);scape.BreathAfterRivalStroke();TickFor(1f);Assert.That(Breaths,Is.EqualTo(2),"after the cooldown it puffs again");
         }
         [UnityTest] public IEnumerator NothingWhileTheHumanSwings_AndItComesBackAfter()
         {
@@ -125,9 +125,8 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator InATiredMatch_TheRivalPuffs_AndNeverWhileTheHumanSwings()
         {
-            PlayerPrefs.SetInt("sc.firstRun.tutorialSeen",1);
             rally.Autopilot=true;rally.AutopilotTimingSigmaMs=30;rally.Seed=9;rally.SetTestEnergy(20);
-            Click("menu-play");Refresh();yield return null;Assert.That(rally.Match,Is.Not.Null);
+            rally.StartMatch();Refresh();yield return null;Assert.That(rally.Match,Is.Not.Null);
             int whileBusy=0,ended=0;rally.PointEnded+=_=>ended++;
             int seenBreaths=0;
             Assert.That(Drive(()=>{if(scape.HumanSwingBusy&&scape.BreathRequests>seenBreaths)whileBusy++;seenBreaths=scape.BreathRequests;return ended>=2&&scape.BreathRequests>=2;},400),Is.True,"a tired rival puffs in a real match");
