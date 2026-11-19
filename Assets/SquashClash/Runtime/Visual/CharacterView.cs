@@ -231,9 +231,9 @@ namespace SquashClash.Runtime.Visual
             }
             // Which side holds the racket: the side of the planned contact.
             if(swingDriven&&swingPhase!=SwingPhase.Idle)racketSign=swing.ShoulderSign;
-            else if(human&&controller!=null&&controller.Snapshot!=null&&controller.Plan.Exists)
+            else if(human&&controller!=null&&controller.Snapshot!=null&&controller.ShownPlan.Exists)
             {
-                var frame=controller.Snapshot.Body;racketSign=frame.IdealContactPoint(controller.Plan.Side).x-frame.PositionXZ.x<0?-1:1;
+                var frame=controller.Snapshot.Body;racketSign=frame.IdealContactPoint(controller.ShownPlan.Side).x-frame.PositionXZ.x<0?-1:1;
             }
             bool prepare=false;
             if(human)

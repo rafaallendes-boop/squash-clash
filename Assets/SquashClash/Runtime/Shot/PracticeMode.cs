@@ -30,7 +30,7 @@ namespace SquashClash.Runtime.Shot
         {
             if(app==null||!app.Tuning.Visible.GetBool("practice.enabled"))return false;
             var before=EffectiveConfig.From(app.Tuning.Visible);int index=before.Source.GetInt("practice.launch");
-            var recipe=PracticeLaunchDefinitions.Create(before)[index];
+            var recipe=PracticeLaunchDefinitions.At(before,index);
             if(index!=selected)
             {
                 // Recipe selection positions the fixed body; subsequent explicit human edits apply next launch.
@@ -39,7 +39,18 @@ namespace SquashClash.Runtime.Shot
                 selected=index;
             }
             var cfg=EffectiveConfig.From(app.Tuning.ApplyPending());
+            if(recipe.Volley)controller.SetNextVolley(VolleyFor(cfg));
             app.Host.Launch(cfg,recipe.Initial,cfg.Physics.StepHz*10,StopCondition.SecondFloorBounce);return true;
+        }
+        // VL1: the fixed practice body, the rally's volley limits and reaction delay (one source: RallyParams defaults).
+        private static Func<Trajectory,ContactPlan,VolleyOpportunity> VolleyFor(EffectiveConfig cfg)
+        {
+            var p=new SquashClash.Core.Rally.RallyParams();var body=BodyFrame.From(cfg.Source);
+            var legal=new LegalSettings((float)cfg.Source.Get("legal.minHeight"),(float)cfg.Source.Get("legal.maxHeight"),cfg.Physics.StepHz,cfg.Physics.Gravity,cfg.Physics.BallRadius,cfg.Court);
+            var settings=new VolleySettings(true,(float)p.VolleyMinHeight,(float)p.VolleyMaxHeight,p.VolleyMinSeparationS,p.VolleyMinWindowS);
+            int reaction=(int)Math.Round(p.ReactionS*cfg.Physics.StepHz);
+            return (t,bounce)=>t==null||t.States.Count<2?VolleyOpportunity.None("no-trajectory"):
+                VolleyPlanner.Plan(t,_=>body,cfg.Court,legal,settings,bounce,t.States[0].Step+reaction,cfg.Tempo,1);
         }
         public void Tick(double realSeconds)
         {

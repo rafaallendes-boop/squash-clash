@@ -28,6 +28,11 @@ namespace SquashClash.Runtime.Shot
         private string attempt;
         private bool hasIntent;
         public SwingPhase Phase {get;private set;}
+        // Volley v1 (design 2026-11-18): the accepted order went to the volley; high when its contact is at 1.3 m or more.
+        public bool VolleyPose {get;private set;}
+        public bool HighVolley=>VolleyPose&&volleyHeight>=HighVolleyFrom;
+        public const float HighVolleyFrom=1.3f;
+        private float volleyHeight;
         public StrokeSide Side {get;private set;}
         public Transform Rig {get{EnsureRig();return rig;}}
         public Vector3 RacketLocalPosition=>pos;
@@ -69,6 +74,11 @@ namespace SquashClash.Runtime.Shot
         private Vector3 Idle=>new Vector3(sign*.3f,-.25f,-.1f);
         private Vector3 Back=>new Vector3(sign*.55f,.5f,.5f);
         private Vector3 Follow=>new Vector3(-sign*.3f,.5f,-.55f);
+        // Volley: short backswing (racket above the shoulder when high, open at mid height when low), contact at the planned height, punch follow-through.
+        private float VolleyY=>Mathf.Clamp(volleyHeight-controller.Snapshot.Body.ReferenceHeight,-.3f,.95f);
+        private Vector3 VolleyBack=>HighVolley?new Vector3(sign*.4f,.8f,.2f):new Vector3(sign*.45f,.3f,.25f);
+        private Vector3 VolleyContact(StrokeSide side){var c=Contact(side);return new Vector3(c.x,VolleyY,c.z-.15f);}
+        private Vector3 VolleyFollow=>new Vector3(-sign*.1f,VolleyY+.05f,-.4f);
         private Vector3 Contact(StrokeSide side)
         {var b=controller.Snapshot.Body;var p=b.IdealContactPoint(side);return new Vector3(p.x-b.PositionXZ.x,p.y-b.ReferenceHeight,p.z-b.PositionXZ.y);}
         private void SetSide(StrokeSide side)
@@ -81,7 +91,7 @@ namespace SquashClash.Runtime.Shot
         }
         private void SnapIdle()
         {
-            Phase=SwingPhase.Idle;sequence.Clear();index=0;elapsed=0;hasIntent=false;attempt=null;pos=from=Idle;ApplyPose();
+            Phase=SwingPhase.Idle;sequence.Clear();index=0;elapsed=0;hasIntent=false;attempt=null;VolleyPose=false;pos=from=Idle;ApplyPose();
         }
         private void OnLaunched(SquashClash.Core.Config.EffectiveConfig cfg)
         {starts.Clear();TotalStarts=0;SnapIdle();}
@@ -89,7 +99,8 @@ namespace SquashClash.Runtime.Shot
         {
             if(app==null||intent.LaunchId!=app.Host.LaunchId||string.IsNullOrEmpty(intent.AttemptId)||starts.ContainsKey(intent.AttemptId))return;
             EnsureRig();starts[intent.AttemptId]=1;TotalStarts++;launch=intent.LaunchId;attempt=intent.AttemptId;hasIntent=true;
-            SetSide(intent.Side);Begin(SwingPhase.Intention,new Key(Back,IntentionSeconds));ApplyPose();
+            VolleyPose=intent.Volley;volleyHeight=intent.ContactHeight;
+            SetSide(intent.Side);Begin(SwingPhase.Intention,new Key(VolleyPose?VolleyBack:Back,IntentionSeconds));ApplyPose();
         }
         private bool Mine(long launchId,string attemptId)=>hasIntent&&launchId==launch&&attemptId==attempt&&launchId==app.Host.LaunchId;
         private void OnDelivered(ShotPresentation p)
@@ -98,6 +109,7 @@ namespace SquashClash.Runtime.Shot
             if(p.Category==PresentationCategory.Failed){Begin(SwingPhase.AirFollowThrough,new Key(Follow,AirSeconds),new Key(Follow,HoldSeconds));return;}
             if(!p.HasContact)return;
             if(Enum.TryParse<StrokeSide>(p.Side,out var side))SetSide(side);
+            if(VolleyPose){Begin(SwingPhase.Impact,new Key(VolleyContact(Side),ReachSeconds),new Key(VolleyFollow,FollowSeconds),new Key(VolleyFollow,HoldSeconds));return;}
             Begin(SwingPhase.Impact,new Key(Contact(Side),ReachSeconds),new Key(Follow,FollowSeconds),new Key(Follow,HoldSeconds));
         }
         // Accepted but resolved without a delivery (system fault, history expired, schedule rejected): back to idle, no impact or air.

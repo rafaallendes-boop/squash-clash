@@ -15,11 +15,13 @@ namespace SquashClash.Runtime.Shot
             label=new Label{name="shot-note",pickingMode=PickingMode.Ignore};label.style.position=Position.Absolute;label.style.height=24;label.style.fontSize=14;
             label.style.color=Color.white;label.style.backgroundColor=new Color(.02f,.06f,.08f,.86f);root.Insert(0,label);
         }
-        public void Show(ShotRecord r)
+        public void Show(ShotRecord r)=>Show(r,false);
+        // volley: the order went to the volley opportunity (design 2026-11-18).
+        public void Show(ShotRecord r,bool volley)
         {
             string text=r.Result=="Perfect"?"Perfecto":r.Result=="Valid"?(r.DeltaMs<0?"Adelantado":"Atrasado"):
                 r.Result=="Failed"?(r.Fail=="Air"?"¡Al aire!":"¡Tarde!"):r.Result=="Unreachable"?"No llega":r.Result=="NoOrder"?"Sin golpe":r.Result=="NotEvaluable"?"No evaluable":"Fallo del sistema";
-            ShowText(text);
+            ShowText(volley?"Volea · "+text:text);
         }
         public void ShowText(string text){if(label!=null)label.text=text;}
         public void SetVisible(bool visible){if(label!=null)label.style.display=visible&&!string.IsNullOrEmpty(label.text)?DisplayStyle.Flex:DisplayStyle.None;}
