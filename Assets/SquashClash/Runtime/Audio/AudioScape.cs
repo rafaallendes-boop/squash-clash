@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Audio
 {
-    public enum ScapeSound {BounceFloor,BounceWall,FrontWall,RivalStep,RivalRacket,PointWon,PointLost,UiClick,BounceGlass}
+    public enum ScapeSound {BounceFloor,BounceWall,FrontWall,RivalStep,RivalRacket,PointWon,PointLost,UiClick,BounceGlass,RivalBreath1,RivalBreath2,RivalBreath3}
     // First run, sound layer: what the court sounds like around the player's own stroke. It only listens to events that
     // already exist (ball contacts, the rival's swing, the end of a point, button presses) and asks a fixed pool of
     // sources to play a synthesized clip (scripts/audio/make_audioscape.py). The player's contact audio is not here:
@@ -19,20 +19,22 @@ namespace SquashClash.Runtime.Audio
     // none of the court's while the game is paused, and no allocation after start.
     public sealed class AudioScape : MonoBehaviour
     {
-        public const int Voices=6,Sounds=9;
+        public const int Voices=6,Sounds=12;
         public const string SoundKey="sc.firstRun.sound";
         // PitchSpread: random shift per repeat (+-). PowerPitch: total shift from the softest to the hardest contact.
         public const float PitchSpread=.05f,PowerPitch=.06f,MaxVolume=.35f,StepMeters=.9f,JingleDelay=.18f,QuietSpeed=1.2f,AmbienceVolume=.14f;
         private const float FullSpeed=24f,FullRun=4.8f,TeleportMeters=.5f;
-        private static readonly string[] ClipNames={"scape-bounce-floor","scape-bounce-wall","scape-front-wall","scape-rival-step","scape-rival-racket","scape-point-won","scape-point-lost","scape-ui-click","scape-bounce-glass"};
+        private static readonly string[] ClipNames={"scape-bounce-floor","scape-bounce-wall","scape-front-wall","scape-rival-step","scape-rival-racket","scape-point-won","scape-point-lost","scape-ui-click","scape-bounce-glass","scape-rival-breath-1","scape-rival-breath-2","scape-rival-breath-3"};
         // Source volume at full power; the softest contact plays at 60 % of it.
         // Set against the quietest contact clip (impact-valid, peak 0.29 at full volume): each sound at its loudest
         // peaks at no more than half of that (front wall 0.14, floor 0.12, rival racket 0.11, walls 0.10, steps 0.06).
-        private static readonly float[] BaseVolume={.18f,.21f,.20f,.16f,.33f,.32f,.30f,.30f,.19f};
+        private static readonly float[] BaseVolume={.18f,.21f,.20f,.16f,.33f,.32f,.30f,.30f,.19f,.10f,.10f,.10f};
         private static readonly string[] ClickPrefixes={"menu-","tutorial-","pause-","match-result-","rally-"};
         // DEV switch (default on): the back-wall glass has its own "toc"; off, it sounds like the side walls again. Not remembered.
         public static bool GlassSoundOn=true;
         public static bool PerfectOwnOn=true;
+        // DEV switch (default on): the rival puffs when tired. Off: exactly as before. Not remembered.
+        public static bool RivalBreathOn=true;
         private static bool? soundOn;
         // The "Sonido" switch: mutes the whole game (listener volume), remembered between launches.
         public static bool SoundOn
@@ -55,6 +57,13 @@ namespace SquashClash.Runtime.Audio
             }
         }
         public int TotalRequests {get;private set;}
+        // Rival breath (stub): requests made, and wanted breaths dropped because the human was swinging.
+        public int BreathRequests=>0;
+        public int BreathSuppressed {get;private set;}
+        public System.Func<bool> SwingBusyProbe {get;set;}
+        public bool HumanSwingBusy=>true;
+        public void BreathAfterPoint(){}
+        public void BreathAfterRivalStroke(){}
         // Requests that reached a source (always zero in batch mode).
         public int Played {get;private set;}
         public float LastVolume {get;private set;}
