@@ -1,0 +1,5 @@
+reference	level	wait	matches	points	humanWins	rivalWins	matchesHuman	seconds
+bot30	Medium+coverT	0.5	200	1567	167	1400	0	50.743862
+bot30	Medium+cover3.5	0.5	200	1514	114	1400	0	49.814434
+newcomer	Medium+coverT	0.5	200	1750	349	1401	2	56.3047355
+newcomer	Medium+cover3.5	0.5	200	1853	443	1410	3	58.0313325
