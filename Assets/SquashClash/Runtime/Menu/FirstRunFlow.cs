@@ -74,11 +74,13 @@ namespace SquashClash.Runtime.Menu
         }
         private void BuildMenu()
         {
-            menu=new VisualElement{name="menu-layer"};menu.AddToClassList("sc-menu-layer");menu.style.display=DisplayStyle.None;root.Add(menu);
+            menu=new VisualElement{name="menu-layer"};menu.AddToClassList("sc-menu-layer");menu.AddToClassList("sc-wall");menu.style.display=DisplayStyle.None;root.Add(menu);
             var art=new VisualElement{name="menu-art",pickingMode=PickingMode.Ignore};art.AddToClassList("sc-menu-art");art.generateVisualContent+=DrawArt;menu.Add(art);
             var title=Text("SQUASH CLASH","sc-menu-title");title.name="menu-title";menu.Add(title);
             menu.Add(Text("Apunta, carga y suelta.","sc-menu-tagline"));
-            menu.Add(Text("DIFICULTAD","sc-menu-label"));
+            // Look pass: the menu is the front wall. The service line runs across the screen; the tin closes its bottom edge.
+            menu.Add(Decor("menu-rule","sc-menu-rule"));menu.Add(Decor("menu-tin","sc-menu-tin"));
+            menu.Add(Text("Dificultad","sc-menu-label"));
             var row=new VisualElement{name="menu-levels",pickingMode=PickingMode.Ignore};row.AddToClassList("sc-level-row");menu.Add(row);
             for(int i=0;i<levels.Length;i++)
             {
@@ -103,25 +105,32 @@ namespace SquashClash.Runtime.Menu
         {
             var row=new VisualElement{name=name,pickingMode=PickingMode.Ignore};row.AddToClassList(style);parent.Add(row);return row;
         }
+        private static VisualElement Decor(string name,string style){var e=new VisualElement{name=name,pickingMode=PickingMode.Ignore};e.AddToClassList(style);return e;}
         private static Label Text(string text,string style){var label=new Label(text){pickingMode=PickingMode.Ignore};label.AddToClassList(style);return label;}
-        // Menu emblem: the front wall with its lines and a ball coming off it. Vector, drawn once per layout.
+        // Plaster, ink and line red, as in Visual/Hud.uss; the tutorial drawings use the same three.
+        private static readonly Color Plaster=new Color(.93f,.945f,.937f),Ink=new Color(.094f,.133f,.173f),LineRed=new Color(.808f,.125f,.176f),Dot=new Color(1f,.82f,.25f);
+        // Menu emblem: the ball (black, with the two yellow dots of a match ball) streaking in from the left over the wall.
+        // Vector, drawn once per layout.
         private static void DrawArt(MeshGenerationContext context)
         {
             var r=context.visualElement.contentRect;if(r.width<=0||r.height<=0)return;
-            var p=context.painter2D;float w=r.width,h=r.height;
+            var p=context.painter2D;float w=r.width,h=r.height,radius=h*.32f;var c=new Vector2(w*.72f,h*.5f);
             p.lineCap=LineCap.Round;p.lineJoin=LineJoin.Round;
-            p.fillColor=new Color(.93f,.90f,.82f);p.BeginPath();p.MoveTo(new Vector2(0,0));p.LineTo(new Vector2(w,0));p.LineTo(new Vector2(w,h*.80f));p.LineTo(new Vector2(0,h*.80f));p.ClosePath();p.Fill();
-            p.fillColor=new Color(.80f,.60f,.36f);p.BeginPath();p.MoveTo(new Vector2(0,h*.80f));p.LineTo(new Vector2(w,h*.80f));p.LineTo(new Vector2(w,h));p.LineTo(new Vector2(0,h));p.ClosePath();p.Fill();
-            p.strokeColor=new Color(.84f,.16f,.12f);p.lineWidth=3;
-            foreach(float y in new[]{.10f,.44f,.70f}){p.BeginPath();p.MoveTo(new Vector2(0,h*y));p.LineTo(new Vector2(w,h*y));p.Stroke();}
-            p.strokeColor=new Color(1f,.82f,.25f,.9f);p.lineWidth=4;p.BeginPath();p.MoveTo(new Vector2(w*.24f,h*.30f));
-            p.BezierCurveTo(new Vector2(w*.42f,h*.20f),new Vector2(w*.62f,h*.34f),new Vector2(w*.76f,h*.62f));p.Stroke();
-            p.fillColor=new Color(.10f,.12f,.16f);p.BeginPath();p.Arc(new Vector2(w*.76f,h*.62f),h*.065f,0,360);p.Fill();
-            p.fillColor=new Color(1f,.82f,.25f);p.BeginPath();p.Arc(new Vector2(w*.775f,h*.605f),h*.018f,0,360);p.Fill();
+            // Speed lines: longest through the centre, fading towards the tail.
+            float[] dy={-.42f,0,.42f},from={.30f,.12f,.36f},alpha={.22f,.5f,.22f};
+            for(int i=0;i<3;i++)
+            {
+                p.strokeColor=new Color(Ink.r,Ink.g,Ink.b,alpha[i]);p.lineWidth=i==1?5:3;
+                p.BeginPath();p.MoveTo(new Vector2(w*from[i],c.y+dy[i]*radius*1.6f));p.LineTo(new Vector2(c.x-radius*1.25f,c.y+dy[i]*radius*1.6f));p.Stroke();
+            }
+            p.fillColor=Ink;p.BeginPath();p.Arc(c,radius,0,360);p.Fill();
+            p.fillColor=Dot;float d=radius*.2f;
+            p.BeginPath();p.Arc(c+new Vector2(-radius*.28f,-radius*.38f),d,0,360);p.Fill();
+            p.BeginPath();p.Arc(c+new Vector2(radius*.28f,-radius*.38f),d,0,360);p.Fill();
         }
         private void BuildTutorial()
         {
-            tutorial=new VisualElement{name="tutorial-layer"};tutorial.AddToClassList("sc-menu-layer");tutorial.style.display=DisplayStyle.None;root.Add(tutorial);
+            tutorial=new VisualElement{name="tutorial-layer"};tutorial.AddToClassList("sc-menu-layer");tutorial.AddToClassList("sc-wall");tutorial.style.display=DisplayStyle.None;root.Add(tutorial);
             var card=new VisualElement{name="tutorial-card",pickingMode=PickingMode.Ignore};card.AddToClassList("sc-tutorial-card");tutorial.Add(card);
             tutorialStep=Text("","sc-menu-label");tutorialStep.name="tutorial-step";card.Add(tutorialStep);
             tutorialArt=new VisualElement{name="tutorial-art",pickingMode=PickingMode.Ignore};tutorialArt.AddToClassList("sc-tutorial-art");tutorialArt.generateVisualContent+=DrawStep;card.Add(tutorialArt);
@@ -148,16 +157,16 @@ namespace SquashClash.Runtime.Menu
         {
             var r=context.visualElement.contentRect;if(r.width<=0||r.height<=0)return;
             var p=context.painter2D;float w=r.width,h=r.height;p.lineCap=LineCap.Round;p.lineJoin=LineJoin.Round;
-            Color gold=new Color(1f,.82f,.25f),white=Color.white,red=new Color(.84f,.16f,.12f),finger=new Color(.47f,.75f,1f,.55f);
+            Color gold=Dot,white=Color.white,red=LineRed,finger=new Color(.47f,.75f,1f,.55f);
             if(TutorialStep<2)
             {
                 // The front wall, as on the court: out line, service line and tin.
                 float x0=TutorialStep==0?w*.12f:w*.08f,x1=TutorialStep==0?w*.88f:w*.62f,y0=h*.08f,y1=h*.92f;
-                p.fillColor=new Color(.93f,.90f,.82f);p.BeginPath();p.MoveTo(new Vector2(x0,y0));p.LineTo(new Vector2(x1,y0));p.LineTo(new Vector2(x1,y1));p.LineTo(new Vector2(x0,y1));p.ClosePath();p.Fill();
+                p.fillColor=Plaster;p.BeginPath();p.MoveTo(new Vector2(x0,y0));p.LineTo(new Vector2(x1,y0));p.LineTo(new Vector2(x1,y1));p.LineTo(new Vector2(x0,y1));p.ClosePath();p.Fill();
                 p.strokeColor=red;p.lineWidth=2;
                 foreach(float y in new[]{.16f,.50f,.82f})Line(p,new Vector2(x0,h*y),new Vector2(x1,h*y));
                 var aim=new Vector2(TutorialStep==0?w*.62f:w*.35f,h*.32f);
-                p.strokeColor=new Color(.10f,.12f,.16f);p.lineWidth=3;Disc(p,aim,9,false);
+                p.strokeColor=Ink;p.lineWidth=3;Disc(p,aim,9,false);
                 Line(p,aim+new Vector2(-15,0),aim+new Vector2(15,0));Line(p,aim+new Vector2(0,-15),aim+new Vector2(0,15));
                 if(TutorialStep==0){p.fillColor=finger;Disc(p,aim+new Vector2(4,10),20,true);return;}
                 // The pull: straight down from where the finger landed; the bar is the power.
@@ -213,7 +222,7 @@ namespace SquashClash.Runtime.Menu
         private void BuildPause()
         {
             pause=new VisualElement{name="pause-layer"};pause.AddToClassList("sc-pause-layer");pause.style.display=DisplayStyle.None;root.Add(pause);
-            var card=new VisualElement{name="pause-card",pickingMode=PickingMode.Ignore};card.AddToClassList("sc-result-card");card.AddToClassList("sc-pause-card");pause.Add(card);
+            var card=new VisualElement{name="pause-card",pickingMode=PickingMode.Ignore};card.AddToClassList("sc-result-card");card.AddToClassList("sc-pause-card");card.AddToClassList("sc-wall");pause.Add(card);
             var title=Text("PAUSA","sc-pause-title");title.name="pause-title";card.Add(title);
             var resume=Add(card,"pause-continue","Continuar",Continue);resume.AddToClassList("sc-button--primary");resume.AddToClassList("sc-pause-button");
             Add(card,"pause-menu","Salir al menú",LeaveToMenu).AddToClassList("sc-pause-button");
