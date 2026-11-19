@@ -48,6 +48,10 @@ namespace SquashClash.Experiments.EditMode
         private sealed class Recorder : IRallyBrain
         {
             public readonly List<string> Rows=new List<string>();
+            // Cover counterfactual (WriteCover): set on the human's recorder only. At the start of the human's reception, that is
+            // right after the rival's own stroke, a rival whose own shot is predicted to land short re-targets its recovery to stand
+            // CoverDepth behind that landing spot. Only the ball state just after its own contact and the shared predictor are used.
+            public RallySim Sim;public double CoverDepth,CoverBounceZ=3.5;
             private readonly IRallyBrain inner;private readonly RallyContext ctx;
             public Recorder(IRallyBrain inner,RallyContext ctx){this.inner=inner;this.ctx=ctx;}
             public int PerceptionSteps=>inner.PerceptionSteps;
@@ -56,6 +60,12 @@ namespace SquashClash.Experiments.EditMode
             {
                 var t=ctx.Predict(o.Ball);float bx=float.NaN,bz=float.NaN;
                 foreach(var c in t.Contacts)if(c.Surface==SurfaceId.Floor){bx=c.Point.x;bz=c.Point.z;break;}
+                if(CoverDepth>0&&Sim!=null&&bz<CoverBounceZ)
+                {
+                    var wait=ctx.WaitPosition(PlayerId.Rival);
+                    var cover=ctx.ClampBody(new Vector2(Mathf.Lerp(ctx.T.x,bx,.3f),Mathf.Min(wait.y,bz+(float)CoverDepth)));
+                    Sim.Rival.MoveTo(cover,0,BodyPhase.Recovering,BodyPhase.Waiting);
+                }
                 Rows.Add(string.Join("\t",new[]{F(o.Ball.Position.x),F(o.Ball.Position.z),F(o.Ball.Position.y),F(bx),F(bz),F(o.SelfPosition.x),F(o.SelfPosition.y),F(o.OpponentPosition.x),F(o.OpponentPosition.y),
                     own.Reachable?"1":"0",F(own.SlackS),own.Reason,own.Contact.Exists?F(own.Contact.PStar.z):"",o.Shots.ToString(C)}));
                 return inner.Decide(o,own);
@@ -64,7 +74,24 @@ namespace SquashClash.Experiments.EditMode
         [Test,Explicit,Category("Experiments"),Timeout(14400000)]
         public void WriteBaseline()
         {
-            string run=Environment.GetEnvironmentVariable("SC_RS_RUN")??"probe";
+            var cells=new List<(string reference,AiLevel level,double waitBehind,double scale,double cover)>();
+            // Cells fixed before data: reference x level with the current rival, then the wait-position variants at Medium.
+            // Feasibility (scale): the six Easy noise parameters multiplied, to see whether the targets are reachable with them alone.
+            foreach(var reference in new[]{"bot30","newcomer"})foreach(var level in new[]{AiLevel.Easy,AiLevel.Medium,AiLevel.Hard})cells.Add((reference,level,.5,1,0));
+            cells.Add(("newcomer",AiLevel.Medium,0,1,0));cells.Add(("newcomer",AiLevel.Medium,-.5,1,0));
+            cells.Add(("newcomer",AiLevel.Easy,.5,1.5,0));cells.Add(("newcomer",AiLevel.Easy,.5,2,0));
+            Run(Environment.GetEnvironmentVariable("SC_RS_RUN")??"probe",cells);
+        }
+        // Cover counterfactual for the short-ball positioning (design section 4), fixed before data: depth 1,5 and 2,5 m, bounce under 3,5 m.
+        [Test,Explicit,Category("Experiments"),Timeout(14400000)]
+        public void WriteCover()
+        {
+            var cells=new List<(string reference,AiLevel level,double waitBehind,double scale,double cover)>();
+            foreach(var reference in new[]{"bot30","newcomer"})foreach(var cover in new[]{0,1.5,2.5})cells.Add((reference,AiLevel.Medium,.5,1,cover));
+            Run(Environment.GetEnvironmentVariable("SC_RS_RUN")??"cover-probe",cells);
+        }
+        private static void Run(string run,List<(string reference,AiLevel level,double waitBehind,double scale,double cover)> cells)
+        {
             int matches=int.Parse(Environment.GetEnvironmentVariable("SC_RS_MATCHES")??"200",C);
             string root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));
             string dir=Path.Combine(root,"Logs/experiments/rival-styles-baseline/"+run);
@@ -76,12 +103,6 @@ namespace SquashClash.Experiments.EditMode
             Assert.That(baseCtx.Config.SimulationKey,Is.EqualTo("166a96e319c7"));Assert.That(baseCtx.Params.Hash,Is.EqualTo("5cdbb01e4621"));
             Directory.CreateDirectory(dir);
             File.WriteAllText(Path.Combine(dir,"source.tsv"),"defaults\tkeys\tsimulationKey\trallyParams\tunity\tmatches\n"+preset.Hash+"\t"+preset.Ordered.Count+"\t"+baseCtx.Config.SimulationKey+"\t"+baseCtx.Params.Hash+"\t"+Application.unityVersion+"\t"+matches+"\n",Utf8);
-            // Cells fixed before data: reference x level with the current rival, then the wait-position variants at Medium.
-            // Feasibility (scale): the six Easy noise parameters multiplied, to see whether the targets are reachable with them alone.
-            var cells=new List<(string reference,AiLevel level,double waitBehind,double scale)>();
-            foreach(var reference in new[]{"bot30","newcomer"})foreach(var level in new[]{AiLevel.Easy,AiLevel.Medium,AiLevel.Hard})cells.Add((reference,level,.5,1));
-            cells.Add(("newcomer",AiLevel.Medium,0,1));cells.Add(("newcomer",AiLevel.Medium,-.5,1));
-            cells.Add(("newcomer",AiLevel.Easy,.5,1.5));cells.Add(("newcomer",AiLevel.Easy,.5,2));
             using(var pointsOut=new StreamWriter(Path.Combine(dir,"points.tsv"),false,Utf8))
             using(var recOut=new StreamWriter(Path.Combine(dir,"receptions.tsv"),false,Utf8))
             using(var cellsOut=new StreamWriter(Path.Combine(dir,"cells.tsv"),false,Utf8))
@@ -97,13 +118,14 @@ namespace SquashClash.Experiments.EditMode
                     if(cell.scale!=1){p.EasyPerceptionS*=cell.scale;p.EasyStanceSigma*=cell.scale;p.EasyAimSigma*=cell.scale;p.EasyPowerSigma*=cell.scale;p.EasyTimingSigmaMs*=cell.scale;p.EasyTemperature*=cell.scale;}
                     var ctx=cell.waitBehind==.5&&cell.scale==1?baseCtx:new RallyContext(EffectiveConfig.From(preset),p,factory);
                     var watch=Stopwatch.StartNew();int points=0,hw=0,rw=0,mh=0;
-                    string tag=cell.reference+"\t"+cell.level+(cell.scale==1?"":"x"+F(cell.scale))+"\t"+F(cell.waitBehind);
+                    string tag=cell.reference+"\t"+cell.level+(cell.scale==1?"":"x"+F(cell.scale))+(cell.cover>0?"+cover"+F(cell.cover):"")+"\t"+F(cell.waitBehind);
                     for(int i=0;i<matches;i++)
                     {
                         IRallyBrain human=cell.reference=="bot30"?(IRallyBrain)new BotBrain(ctx,30,20261119+2*i):new NewcomerBot(ctx,90,20261119+2*i);
                         var hr=new Recorder(human,ctx);var rr=new Recorder(new FondoAi(ctx,AiDifficulty.For(ctx.Params,cell.level),20261120+2*i),ctx);
                         using(var sim=new RallySim(ctx,hr,rr))
                         {
+                            hr.Sim=sim;hr.CoverDepth=cell.cover;
                             var score=new MatchScore(7,2,i%2==0?PlayerId.Human:PlayerId.Rival);int point=0,replays=0;
                             while(!score.Finished)
                             {
