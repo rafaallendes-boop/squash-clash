@@ -81,6 +81,11 @@ namespace SquashClash.Capture
             Click("menu-level-hard");yield return Shoot("menu-level-hard");
             yield return Shutdown();
             yield return Boot(true);yield return Shoot("menu-dev");yield return Shutdown();
+            // 1a. The same phone with its real insets (Dynamic Island, home indicator), and the credits.
+            SquashClash.Runtime.App.SafeAreaLayout.Simulate(new Vector2(Width,Height),new Rect(0,102,Width,Height-186-102));
+            yield return Boot(false);yield return Shoot("menu-prod-insets");
+            Click("menu-credits");yield return Shoot("credits-insets");
+            yield return Shutdown();SquashClash.Runtime.App.SafeAreaLayout.StopSimulating();
 
             // 1b. The tutorial, as the first Jugar opens it.
             PlayerPrefs.DeleteKey("sc.firstRun.tutorialSeen");
