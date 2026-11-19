@@ -73,6 +73,30 @@ namespace SquashClash.Runtime.Tests
             Assert.That(backhand.ElbowAhead,Is.GreaterThanOrEqualTo(.20f),"backhand: the elbow is in front of the body while the hand trails");
             yield return null;
         }
+        [UnityTest] public IEnumerator Backhand_PreparationArmsTheRacketHighOnTheOffSide_OutsideTheTorso()
+        {
+            foreach(float sign in new[]{-1f,1f})
+            {
+                var head=CharacterView.BackhandPrepPose(sign,1);
+                Assert.That(head.y,Is.GreaterThanOrEqualTo(1.60f),"the racket head is above the shoulder (about 1.3 m)");
+                Assert.That(head.x*sign,Is.GreaterThanOrEqualTo(.35f),"on the non-dominant side, outside the torso silhouette (radius .19)");
+                Assert.That(head.z,Is.GreaterThan(.2f),"cocked behind the body");
+            }
+            yield return null;
+        }
+        [UnityTest] public IEnumerator Backhand_FinishCrossesToTheHittingArmSide_HighAndOpen_ForRivalAndLeftHandedHuman()
+        {
+            foreach(var (figure,left,sign) in new[]{(Figure(players.Rival),false,1f),(Figure(players.Human),true,-1f)})
+            {
+                Handedness.Left=left;
+                Set(figure,"yaw",0f);Stroke(figure,sign);
+                for(int i=0;i<40;i++)figure.Animate(Frame);
+                var head=figure.RacketLocalPosition;
+                Assert.That(head.x*sign,Is.LessThanOrEqualTo(-.25f),"finish on the hitting-arm side, having crossed the body");
+                Assert.That(head.y,Is.GreaterThanOrEqualTo(1.60f),"and high");
+            }
+            yield return null;
+        }
         [UnityTest] public IEnumerator LeftHandedHuman_DrawsTheMirroredBackhand_OnTheOtherContactSide()
         {
             var human=Figure(players.Human);Handedness.Left=true;
