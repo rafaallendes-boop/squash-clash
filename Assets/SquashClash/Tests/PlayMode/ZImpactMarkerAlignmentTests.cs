@@ -86,7 +86,7 @@ namespace SquashClash.Runtime.Tests
                 if(app.Host.LaunchId!=launch){launch=app.Host.LaunchId;have=false;done=false;replaced=false;}
                 var plan=controller.Plan;
                 if(plan.Exists&&plan.TStarStep>=0&&!done&&!replaced){pStar=plan.PStar;tStar=plan.TStarStep;have=true;lastPlanVersionSeen=plan.Version;
-                    var cue=controller.transform.Find("First Shot timing cue");if(cue!=null)ringVsPlan.Add((cue.position-plan.PStar).magnitude);}
+                    var cue=controller.transform.Find("First Shot timing cue");if(cue!=null)ringVsPlan.Add((cue.position-controller.ShownPlan.PStar).magnitude);} // the cue sits at the shown opportunity: the volley one first (volley v1)
                 if(have&&!done&&app.Host.Current.Step>=tStar)
                 {
                     done=true;if(replaced)return false; // the player's own stroke changed the ball before T*: not a plan error

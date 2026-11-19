@@ -61,7 +61,8 @@ namespace SquashClash.Runtime.Rally
         // Seeds the match's style and the rival's random stream; equal to Seed unless RandomStyles draws a new one per match.
         public long MatchSeed {get;private set;}=1;
         public int RivalVolleys {get;private set;}
-        private static readonly System.Random seeds=new System.Random();
+        // Random styles draw from this counter, so a sequence of matches is reproducible (the start menu keeps it in PlayerPrefs).
+        public int StyleCounter {get;set;}
         public long Seed {get;set;}=1;
         // Lets a scripted bot play the human side through the normal order queue (demo and tests).
         public bool Autopilot {get;set;}
@@ -118,7 +119,7 @@ namespace SquashClash.Runtime.Rally
         }
         private void PickStyle()
         {
-            lock(seeds)MatchSeed=RandomStyles?((long)seeds.Next()<<16)^seeds.Next():Seed;
+            MatchSeed=RandomStyles?(long)(new RallyRng(Seed*1000003L+StyleCounter++).NextBits()>>2):Seed;
             Style=StyleOverride??(RandomStyles?RivalStyle.FromSeed(MatchSeed):RivalStyleId.Fondista);RivalVolleys=0;
         }
         private Vector2 RivalWait()=>rivalBrain is IRallyPositioning p?p.Wait:context.WaitPosition(PlayerId.Rival);
