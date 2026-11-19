@@ -50,7 +50,7 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void RallyParams_ProjectionWithoutStyleFields_IsTheCurrentHash()
         {
             Assert.That(Projection(f=>!f.Name.StartsWith("Style",StringComparison.Ordinal)),Is.EqualTo("5cdbb01e4621"));
-            Assert.That(new RallyParams().Hash,Is.EqualTo("85441c9b1cd7"),"measured in Unity with the style fields");
+            Assert.That(new RallyParams().Hash,Is.EqualTo("5fdcf65f91f7"),"measured in Unity with the style fields");
             TestContext.WriteLine("STYLE_RALLYPARAMS_HASH="+new RallyParams().Hash);
         }
         [TestCase(AiLevel.Easy)][TestCase(AiLevel.Medium)][TestCase(AiLevel.Hard)]
@@ -120,9 +120,10 @@ namespace SquashClash.Core.Tests.Rally
             var fondo=Ai(c,RivalStyleId.Fondista);var shooter=Ai(c,RivalStyleId.Definidor);var all=Ai(c,RivalStyleId.Completo);
             Assert.That(fondo.Recovery(After(shortBall)).y,Is.EqualTo(c.T.y),"Fondista recovers to the T after its own short ball");
             Assert.That(all.Recovery(After(shortBall)).y,Is.EqualTo(c.T.y));
-            Assert.That(shooter.Recovery(After(shortBall)).y,Is.EqualTo(Mathf.Min(shooter.Wait.y,Bounce(shortBall)+1.5f)).Within(1e-5),"Definidor follows in 1,5 m behind the bounce");
+            // Decision of 19 nov (search01): the Definidor keeps its attack and volley weights but no longer bets on position.
+            Assert.That(shooter.Recovery(After(shortBall)).y,Is.EqualTo(c.T.y),"Definidor recovers to the T after its own short ball");
             foreach(var ai in new[]{fondo,shooter,all})Assert.That(ai.Recovery(After(longBall)),Is.EqualTo(ai.Wait));
-            Assert.That(fondo.Wait.y,Is.EqualTo(c.T.y+.5f));Assert.That(shooter.Wait.y,Is.EqualTo(c.T.y-.3f).Within(1e-5));Assert.That(all.Wait.y,Is.EqualTo(c.T.y+.2f).Within(1e-5));
+            Assert.That(fondo.Wait.y,Is.EqualTo(c.T.y+.5f));Assert.That(shooter.Wait.y,Is.EqualTo(c.T.y).Within(1e-5),"Definidor waits on the T");Assert.That(all.Wait.y,Is.EqualTo(c.T.y+.2f).Within(1e-5));
         }
         [Test] public void StyleFromSeed_IsDeterministic_AndCoversTheThreeStyles()
         {

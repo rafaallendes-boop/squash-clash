@@ -58,7 +58,7 @@ namespace SquashClash.Core.Rally
         public double StyleFondoVolleyBias=-1,StyleFondoVolleyMinKS=.1,StyleFondoCoverDepth=-1;
         public double StyleShooterLongWeight=.5,StyleShooterAwayWeight=.8,StyleShooterTimeWeight=.3,StyleShooterDropWeight=1.6,StyleShooterRiskAversion=.6;
         public double StyleShooterDefenseSlackS=.06,StyleShooterDropMinSlackS=.3,StyleShooterDropZoneAhead=1,StyleShooterAttackBase=.8,StyleShooterAttackAhead=.4;
-        public double StyleShooterVolleyBias=.8,StyleShooterVolleyMinKS=.05,StyleShooterVolleySteal=0,StyleShooterWaitBehindT=-.3,StyleShooterCoverDepth=1.5;
+        public double StyleShooterVolleyBias=.8,StyleShooterVolleyMinKS=.05,StyleShooterVolleySteal=0,StyleShooterWaitBehindT=0,StyleShooterCoverDepth=-1;
         public double StyleAllRoundLongWeight=1,StyleAllRoundAwayWeight=.8,StyleAllRoundTimeWeight=.6,StyleAllRoundDropWeight=1.1,StyleAllRoundRiskAversion=1.1;
         public double StyleAllRoundDefenseSlackS=.12,StyleAllRoundDropMinSlackS=.3,StyleAllRoundDropZoneAhead=0,StyleAllRoundAttackBase=0,StyleAllRoundAttackAhead=1;
         public double StyleAllRoundVolleyBias=-.8,StyleAllRoundVolleyMinKS=.08,StyleAllRoundVolleySteal=.6,StyleAllRoundWaitBehindT=.2,StyleAllRoundCoverDepth=-1;
