@@ -4,7 +4,7 @@
    - On the court (header, point banner, shot note) surfaces are dark teal glass, like the back wall, so the court shows through.
    Yellow is the ball's two dots: a Perfect stroke, the server, a won match. Blue and coral stay the players' shirts.
    Type: Rubik (SIL OFL 1.1, Runtime/Visual/Fonts/OFL.txt; static SDF assets baked by Editor/RubikFontAssets.cs). Bold Italic for what moves (wordmark, score, notes, titles, Jugar), Bold for
-   controls and names, Regular for reading. Scale 11 / 12 / 14 / 16 / 18 / 24 / 26 / 28 / 40 / 60. */
+   controls and names, Regular for reading. Scale 11 / 12 / 13 / 14 / 15 / 16 / 17 / 18 / 20 / 24 / 26 / 28 / 34 / 40 / 60 / 72 (menu redesign, 19 nov: wordmark 72, Jugar 34). */
 :root {
     --plaster: rgb(238, 241, 239);
     --plaster-card: rgb(248, 249, 248);
@@ -208,8 +208,9 @@
 .sc-result-card--lost .sc-result-score { color: var(--ink-soft); }
 .sc-result-last { font-size: 14px; color: var(--ink); margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }
 
-/* Start menu: the whole screen is the front wall. Plaster, the ball streaking in, the wordmark, the service line across
-   the screen, the choices, and the tin along the bottom edge. */
+/* Start menu (redesign, 19 nov): the screen is the front wall at scale, read top to bottom as on a court. The out line
+   along the top, the wordmark in the playing area above the service line (where every shot must land), the choices below
+   it in thumb reach, and the tin along the bottom edge. Left aligned on a 24 pt gutter; one loud word, one loud button. */
 .sc-menu-layer {
     position: absolute;
     left: 0; right: 0; top: 0; bottom: 0;
@@ -218,19 +219,64 @@
     padding-left: 24px; padding-right: 24px; padding-top: 70px; padding-bottom: 56px;
     background-color: var(--plaster);
 }
-.sc-menu-art { width: 304px; height: 58px; margin-bottom: 4px; flex-shrink: 0; }
-.sc-menu-title { font-size: 40px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: var(--ink); -unity-text-align: middle-center; }
-.sc-menu-tagline { font-size: 16px; color: var(--ink-soft); margin-top: 0; -unity-text-align: middle-center; }
-.sc-menu-rule { align-self: stretch; flex-shrink: 0; height: 4px; margin-left: -24px; margin-right: -24px; margin-top: 22px; margin-bottom: 20px; background-color: var(--line); }
-.sc-menu-tin { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background-color: var(--line); }
+.sc-menu-layer.sc-menu-home { align-items: stretch; justify-content: flex-start; }
+.sc-menu-outline { flex-shrink: 0; height: 3px; margin-left: -24px; margin-right: -24px; background-color: var(--line); }
+.sc-menu-hero { flex-grow: 1; flex-shrink: 0; justify-content: flex-end; padding-top: 18px; padding-bottom: 16px; }
+/* The ball marks cover the playing area edge to edge, behind the wordmark. */
+.sc-menu-marks { position: absolute; left: -24px; right: -24px; top: 0; bottom: 0; }
+/* Lockup: the wordmark on two lines and the ball squashing on the wall in the room "CLASH" leaves on the second. */
+.sc-menu-wordmark { flex-shrink: 0; }
+.sc-menu-art { position: absolute; right: 0; bottom: 2px; width: 92px; height: 80px; }
+.sc-menu-title {
+    font-size: 72px;
+    -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset");
+    -unity-font-style: normal;
+    color: var(--ink);
+    white-space: normal;
+    -unity-text-align: upper-left;
+    margin-left: -4px;
+    padding-left: 0;
+}
+.sc-menu-tagline { font-size: 17px; color: var(--ink-soft); margin-top: 4px; -unity-text-align: upper-left; }
+.sc-menu-rule { flex-shrink: 0; height: 4px; margin-left: -24px; margin-right: -24px; margin-bottom: 18px; background-color: var(--line); }
+.sc-menu-tin { position: absolute; left: 0; right: 0; bottom: 0; height: 8px; background-color: var(--line); }
+.sc-menu-controls { flex-shrink: 0; margin-bottom: 12px; }
 .sc-menu-label { font-size: 14px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-bottom: 8px; }
-.sc-level-row { flex-direction: row; justify-content: center; margin-bottom: 18px; flex-shrink: 0; }
-.sc-wall .unity-button.sc-level { width: 96px; height: 48px; font-size: 16px; margin-left: 4px; margin-right: 4px; border-radius: 10px; }
-/* The chosen level: ink, with the ball's yellow along its lower edge. */
-.sc-wall .unity-button.sc-level--selected { background-color: var(--ink); border-color: var(--ink); border-bottom-color: var(--dot); border-bottom-width: 4px; color: var(--plaster); }
-.sc-wall .unity-button.sc-menu-play { width: 304px; height: 64px; font-size: 28px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); border-radius: 14px; margin-bottom: 12px; }
-.unity-button.sc-menu-wide { width: 304px; height: 50px; font-size: 16px; margin-bottom: 10px; }
+
+/* Level: one segmented control, three segments inside a single ink outline; the chosen one is ink with the ball's yellow lip. */
+.sc-level-row { flex-direction: row; flex-shrink: 0; margin-bottom: 12px; border-width: 2px; border-color: var(--ink); border-radius: 14px; overflow: hidden; }
+.sc-wall .unity-button.sc-level { flex-grow: 1; flex-basis: 0; width: auto; height: 48px; font-size: 16px; margin: 0; border-width: 0; border-radius: 0; background-color: rgba(0, 0, 0, 0); }
+.sc-wall .unity-button.sc-level--divided { border-left-width: 2px; border-color: var(--ink-line); }
+.sc-wall .unity-button.sc-level--selected { background-color: var(--ink); color: var(--plaster); border-bottom-width: 4px; border-bottom-color: var(--dot); }
+
+/* Jugar: the one red slab, with a darker lip so it reads as something to press. */
+.sc-wall .unity-button.sc-menu-play {
+    width: auto; height: 76px; font-size: 34px;
+    -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset");
+    margin: 0; margin-bottom: 14px;
+    border-radius: 16px; border-width: 0; border-bottom-width: 6px; border-bottom-color: var(--line-press);
+}
+/* Secondary: quiet tinted plates, side by side. */
+.sc-menu-links { flex-direction: row; flex-shrink: 0; margin-bottom: 10px; }
+.sc-wall .unity-button.sc-menu-link { flex-grow: 1; flex-basis: 0; height: 48px; font-size: 15px; margin: 0; border-width: 0; border-radius: 12px; background-color: rgba(24, 34, 44, 0.07); }
+.sc-wall .unity-button.sc-menu-link--first { margin-right: 8px; }
+/* Switches: small pills; an off switch drops its tint and its ink. */
+.sc-menu-switches { flex-direction: row; flex-shrink: 0; margin-bottom: 8px; }
+.sc-wall .unity-button.sc-menu-switch { flex-grow: 1; flex-shrink: 0; height: 46px; font-size: 13px; margin: 0; margin-right: 6px; padding-left: 8px; padding-right: 8px; border-radius: 22px; border-width: 2px; border-color: var(--ink-line); background-color: rgba(0, 0, 0, 0); }
+.sc-wall .unity-button.sc-menu-switch--last { margin-right: 0; }
+.sc-wall .unity-button.sc-toggle--off { color: var(--ink-soft); border-color: rgba(24, 34, 44, 0.1); }
+.sc-wall .unity-button.sc-menu-dev { height: 46px; flex-shrink: 0; font-size: 13px; margin: 0; margin-top: 2px; border-radius: 22px; border-width: 2px; border-color: var(--ink-line); background-color: rgba(0, 0, 0, 0); }
 .sc-menu-build { position: absolute; left: 0; right: 0; bottom: 30px; font-size: 11px; color: var(--ink-soft); -unity-text-align: middle-center; }
+
+/* Credits: the same wall, read like the back of a ticket. A title, the service line, two short sections, and Volver in red. */
+.sc-menu-layer.sc-credits { align-items: stretch; justify-content: flex-start; }
+.sc-credits-title { font-size: 40px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-top: 18px; margin-bottom: 14px; margin-left: -2px; }
+.sc-credits-body { flex-grow: 1; flex-shrink: 1; }
+.sc-credits-section { font-size: 14px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--line-press); margin-bottom: 6px; margin-top: 4px; }
+.sc-credits-lead { font-size: 18px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--ink); white-space: normal; margin-bottom: 6px; }
+.sc-credits-text { font-size: 15px; color: var(--ink); white-space: normal; margin-bottom: 22px; }
+.sc-credits-fine { font-size: 13px; color: var(--ink-soft); white-space: normal; margin-bottom: 6px; }
+.sc-wall .unity-button.sc-credits-back { height: 56px; font-size: 20px; margin: 0; margin-top: 12px; border-radius: 16px; border-width: 0; border-bottom-width: 5px; border-bottom-color: var(--line-press); }
 
 /* Tutorial: the same wall, with a card per step. The drawing sits on ink, like the court seen from the glass. */
 .sc-tutorial-card {
@@ -270,8 +316,6 @@
 .sc-pause-title { font-size: 28px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; letter-spacing: 3px; color: var(--ink); margin-bottom: 18px; }
 .unity-button.sc-pause-button { width: 240px; height: 54px; font-size: 18px; margin-bottom: 10px; }
 
-/* Device robustness: sound and music switches side by side, in the menu and in the pause card. */
-.sc-menu-pair { flex-direction: row; justify-content: space-between; width: 304px; margin-bottom: 10px; flex-shrink: 0; }
-.unity-button.sc-menu-half { width: 148px; height: 50px; font-size: 15px; margin-left: 0; margin-right: 0; }
+/* Device robustness: sound and music switches side by side in the pause card (the menu has its own row above). */
 .sc-pause-pair { flex-direction: row; justify-content: space-between; width: 240px; margin-bottom: 10px; flex-shrink: 0; }
 .unity-button.sc-pause-half { width: 116px; height: 54px; font-size: 15px; margin-left: 0; margin-right: 0; }
