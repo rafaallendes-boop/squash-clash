@@ -1,6 +1,6 @@
 # Estilos del rival, volea del rival y cobertura: informe de entrega
 
-19 nov 2026 · Rama `claude/rival-styles`, base `f068cee` (integración de #84), head `197629f`. Lo implementó un subagente Opus dirigido por Claude (product lead, delegación del PO del 18 nov); **la revisión de Claude no es independiente.** Diseño aprobado: [2026-11-19-rival-styles-design.md](../superpowers/specs/2026-11-19-rival-styles-design.md). Sin push, fusión ni instalación.
+19 nov 2026 · Rama `claude/rival-styles`, base `f068cee` (integración de #84), head `5638c16` (compuertas); este informe va en un commit solo de documentos encima. Lo implementó un subagente Opus dirigido por Claude (product lead, delegación del PO del 18 nov); **la revisión de Claude no es independiente.** Diseño aprobado: [2026-11-19-rival-styles-design.md](../superpowers/specs/2026-11-19-rival-styles-design.md). Sin push, fusión ni instalación.
 
 ## Qué cambia
 
@@ -13,7 +13,7 @@
   - Usa la misma oportunidad que el humano: un solo softmax sobre 36 opciones y un solo intento.
   - El soltar apuntado a la volea se juzga con `OpportunityContract.Select` (`RallyContact.ResolveAimedVolley`).
   - Hay una `CausalReference` por oportunidad, y la volea cuesta `VolleyEnergyCost`.
-- **Cobertura:** si el bote predicho del golpe propio cae antes de 3,5 m, Fondista y Completo vuelven a la T y el Definidor a 1,5 m detrás del bote. Usa solo la pelota recién golpeada y el predictor compartido.
+- **Cobertura:** si el bote predicho del golpe propio cae antes de 3,5 m, los tres estilos vuelven a la T. El Definidor también espera en la T desde `11a8ca9`; antes, en `search01`, esperaba 0,3 m adelante y cubría 1,5 m detrás del bote. Usa solo la pelota recién golpeada y el predictor compartido.
 - **Juego real:**
   - Estilo al azar en cada partido del menú, reproducible mediante el contador `sc.firstRun.rivalMatches`.
   - La revancha conserva el rival; en Rally, o fuera del menú, juega el Fondista.
@@ -21,6 +21,7 @@
   - DEV «Estilo del rival»: Auto, Fondista, Definidor o Completo.
   - `style` en `rally-point`.
 - **Decidido antes de calibrar:** el sesgo de volea del Completo pasa de 0 a −0,8.
+- **Dificultad por estilo** (cambio de método de Claude, `b5985ff`): `RivalAi.For` multiplica los cinco ruidos del nivel por un k propio de cada estilo y nivel (`StyleNoiseK*`). La temperatura no cambia.
 - **Pendiente:** la pose de volea de la figura del rival.
 
 ## Tests editados (consecuencia directa)
@@ -32,21 +33,32 @@
 
 `RallyDirector` agrega `AutopilotLine` y `AutopilotPower`, que solo usa un test.
 
-## Compuertas (`197629f`)
+## Compuertas (`5638c16`)
 
-- **RED por aserción:** EditMode 10 de 12 y PlayMode 3 de 3 contra stubs.
-- **EditMode:** 882/882.
-- **PlayMode:** 668/668.
-- **AutoQA:** v, t3 y volley PASS/0/1, sin dirty (`20261119T193826Z-197629f-v-8821`, `20261119T193845Z-197629f-t3-2828`, `20261119T193903Z-197629f-volley-9130`).
-- **check-release:** dev y prod OK (build 956).
+- **RED por aserción:**
+  - EditMode: 10 de 12 contra stubs, 1 de 12 por el Definidor en la T y 1 de 1 por k por estilo.
+  - PlayMode: 3 de 3 contra stubs.
+- **EditMode:** 883/883.
+- **AutoQA:** v, t3 y volley PASS/0/1, sin dirty (`20261119T213459Z-5638c16-v-2326`, `20261119T213529Z-5638c16-t3-29295`, `20261119T213546Z-5638c16-volley-18218`).
+- **check-release:** dev y prod OK (build 961).
+- **PlayMode 665/668: parada.** No se tocaron ni los tests ni los valores. Los tres fallos vienen de rallies distintos con el rival nuevo:
+  1. `ZHandednessTests.Handedness_ChangesNothingButTheDrawing`.
+  2. `ZMusicTests.Music_KeepsItsSourcesApart_FromTheContactAudio`.
+     - En los dos (1 y 2), la semilla 9 del menú toca Definidor en Medio, con k = 1.
+     - El autopiloto (σ 30, paralelo medio) y el Definidor en la T juegan rallies de ~170 golpes, con un punto cada ~280 s. Los tests esperan 3 puntos en 400 s y 2 en 300 s.
+     - No es un bloqueo; lo confirmó un diagnóstico temporal, ya borrado.
+     - Fallan igual con o sin la `BuildInfo` prod que deja check-release.
+  3. `ZRallyDirectorTests.Autopilot_ExchangesStrokes…`: la figura dibujada queda en (5,50; 6,28) y el cuerpo en (5,49; 6,28).
+     - El test compara justo al cerrar el 4.º punto, cuando rige el congelado de 100 ms de fin de punto (`PointEndFreeze`, de la integración del 19 nov).
+     - Antes pasaba porque el rival estaba quieto en ese instante.
+- En `197629f` (Definidor de `search01`, ruido de hoy) PlayMode dio 668/668.
 
 ## Hashes
 
-- **RallyParams:** `5cdbb01e4621` → **`85441c9b1cd7`**.
+- **RallyParams:** `5cdbb01e4621` → `85441c9b1cd7` (estilos) → `5fdcf65f91f7` (Definidor en la T) → **`0f58580f44ea`** (k por estilo).
   - Sin `Style*`: `5cdbb01e4621`.
-  - Sin `Style*` ni `VolleyEnergyCost`: `6a7b329a7b85`.
   - Sin `Style*` ni `Volley*`: `927e304bbfec`.
-- **Sin cambios:** defaults `207da8f2c636`/132, SimulationKey `166a96e319c7` y anclas de AutoQA.
+- **Sin cambios:** defaults `207da8f2c636`/132, SimulationKey `166a96e319c7`, anclas de AutoQA y `DefaultPreset.json`.
 
 ## Calibración `search01`: detenida en los tres niveles
 
@@ -106,6 +118,35 @@ Evidencia: `docs/validation/evidence/2026-11-19-rival-styles/calibration-search0
   - Los dos arrancan desde el menú con la semilla 9, que toca Definidor, y esperan 3 puntos en 400 s o 2 en 300 s. No hay bloqueo: un diagnóstico temporal, ya borrado, mostró rallies de ~170 golpes y un punto cada ~280 s entre el autopiloto (σ 30, paralelo medio) y el Definidor en la T.
   - Dieron lo mismo con y sin la `BuildInfo` prod que deja check-release.
   - No se tocaron ni los tests ni los valores.
+
+## Calibración final: un k por estilo y nivel (cambio de método de Claude)
+
+Los objetivos no cambian. El cambio de método es decisión de Claude, después de `search02`: los estilos tienen fuerzas intrínsecas distintas, así que un ruido compartido por nivel no puede cumplir la banda de ±8 pp por estilo.
+
+**Elección:** el k de la malla de `search02` más cercano al objetivo, dentro de ±4 pp.
+- Fondista Difícil se midió aparte con k = 2,5 (20,1 %, dentro de la banda), con las semillas de la búsqueda.
+- Definidor Difícil queda en k = 1. Es una **desviación**: con k = 1 da 35,9 %, más fácil que el objetivo, y nunca se baja de 1.
+
+**Confirmación con semillas nuevas** (`confirm-per-style01`, 200 partidos por celda): puntos del novato y de bot30, % [IC 95 %] (k):
+
+| Nivel (objetivo) | Fondista | Definidor | Completo |
+|---|---|---|---|
+| Fácil (60) | 58,5 [56,4–60,5] (1,5) · bot30 46,8 | 60,0 [57,9–61,9] (1,25) · bot30 50,9 | 61,9 [59,9–63,9] (1,5) · bot30 60,0 |
+| Medio (40) | 39,9 [37,9–42,0] (1,75) · bot30 30,8 | 43,6 [41,6–45,6] (1) · bot30 31,2 | 41,7 [39,7–43,8] (1,5) · bot30 27,7 |
+| Difícil (20) | 19,8 [18,0–21,7] (2,5) · bot30 9,5 | **37,8** [35,8–39,9] (1, desviación) · bot30 11,3 | 18,7 [17,0–20,6] (1,25) · bot30 5,8 |
+
+**Resultado:**
+- Las 8 celdas con k elegido quedan dentro de ±4 pp de su objetivo.
+- bot30 en Difícil queda ≤ 45 % en los tres estilos.
+- Fácil > Medio > Difícil en cada estilo, con los IC sin solaparse.
+- **Identidad de los estilos:** Fondista 82–96 % largo; Definidor 41–47 % de ataque y volea en el 5–7 % de sus golpes; Completo con volea en el 0,3–1,5 %.
+- **No se hizo** el control secundario de ~86 % de contacto, por falta de tiempo.
+
+**Observaciones de la calibración:**
+- Con k = 1,5 en Fácil, `d_perc` llega a 120 ms, sobre el rango [EXPERIMENTO] de 0–80 ms de §11.2. Decide Claude si se le pone tope.
+- SF-01 sube con el ruido: entre 11 y 34 por cada ~2.200 puntos en las celdas de Fácil (0,5–1,5 %).
+
+Evidencia: `docs/validation/evidence/2026-11-19-rival-styles/confirm-per-style01/`.
 
 ## Observaciones
 
