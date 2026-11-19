@@ -1,5 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
+using SquashClash.Core.Rally;
 using SquashClash.Runtime.Menu;
 using SquashClash.Runtime.Rally;
 using UnityEngine;
@@ -68,7 +69,8 @@ namespace SquashClash.Runtime.Tests
             hud.Tick(RallyHud.ResultInSeconds);yield return null;yield return null;
             Assert.That(Find("match-result-card").resolvedStyle.opacity,Is.EqualTo(1f).Within(.001f));
             Assert.That(Shown(Find("match-result")),Is.True);Assert.That(Shown(Find("pause-layer")),Is.False);
-            Assert.That(Find<Button>("match-result-rematch").text,Is.EqualTo("Revancha"));
+            // Result card extras: after a loss the rematch button names the score (human first); after a win it stays plain.
+            Assert.That(Find<Button>("match-result-rematch").text,Is.EqualTo(rally.Match.Winner==PlayerId.Human?"Revancha":"Revancha "+rally.Match.Human+"–"+rally.Match.Rival));
             Assert.That(Find<Button>("match-result-menu").text,Is.EqualTo("Volver al inicio"));
             Assert.That(Shown(Find("match-result-leave")),Is.True,"dev keeps the way back to practice");
             app.DevTools=false;Refresh();yield return null;yield return null;
