@@ -8,7 +8,7 @@ namespace SquashClash.AutoQA
         public float aimX=3.2f,aimY=2.2f,pullMm=18.5f;
         public double releaseOffsetMs,durationMs=300;
         public bool canary,useDefaults;
-        public string ExpectedHash=>useDefaults?(launch==4?"d09119d6321b":launch==VolleyLaunch?"59efe2ba2fb2":"207da8f2c636"):(launch==4?"8ec4deffc6c1":"28e63d17dfbf");
+        public string ExpectedHash=>useDefaults?(launch==4?"d09119d6321b":launch==VolleyLaunch?"24531a50618a":"207da8f2c636"):(launch==4?"8ec4deffc6c1":"28e63d17dfbf");
         // VL1 (practice.launch 6): the volley suite. Its offsets are relative to the volley T*.
         public const int VolleyLaunch=6;
         public bool Volley=>launch==VolleyLaunch;

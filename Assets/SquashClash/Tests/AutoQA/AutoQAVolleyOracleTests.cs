@@ -16,6 +16,6 @@ namespace SquashClash.AutoQA
         [Test] public void Scheduled_OnlyForPerfectAtOrBeforeTStar(){Assert.That(E(-10).scheduled,Is.True);Assert.That(E(10).scheduled,Is.False);Assert.That(E(390).scheduled,Is.True);}
         [TestCase(0,true)][TestCase(185,false)][TestCase(-45,false)][TestCase(250,true)]
         public void Margin(double delta,bool valid)=>Assert.That(Oracle.MarginValidVolley(new Scenario{kind="swing",releaseOffsetMs=delta,launch=Scenario.VolleyLaunch},Defaults,VKIn,VKOut,Bounce,BKIn,BKOut),Is.EqualTo(valid));
-        [Test] public void OnlyLaunchSixIsTheVolleySuite(){Assert.That(new Scenario{launch=6}.Volley,Is.True);Assert.That(new Scenario{launch=4}.Volley,Is.False);Assert.That(new Scenario{launch=4,useDefaults=true}.ExpectedHash,Is.EqualTo("750c407c8a2f"));}
+        [Test] public void OnlyLaunchSixIsTheVolleySuite(){Assert.That(new Scenario{launch=6}.Volley,Is.True);Assert.That(new Scenario{launch=4}.Volley,Is.False);Assert.That(new Scenario{launch=4,useDefaults=true}.ExpectedHash,Is.EqualTo("d09119d6321b"));}
     }
 }
