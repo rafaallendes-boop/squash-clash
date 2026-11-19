@@ -76,7 +76,7 @@ namespace SquashClash.Runtime.Rally
             toggle.AddToClassList("sc-button--primary");match.AddToClassList("sc-button--primary");
             // Match result: a card over the court, shown only when the match is over.
             result=new VisualElement{name="match-result",pickingMode=PickingMode.Ignore};result.AddToClassList("sc-result-layer");result.style.display=DisplayStyle.None;top.Add(result);
-            var card=new VisualElement{name="match-result-card"};card.AddToClassList("sc-result-card");result.Add(card);resultCard=card;
+            var card=new VisualElement{name="match-result-card"};card.AddToClassList("sc-result-card");card.AddToClassList("sc-wall");result.Add(card);resultCard=card;
             app.GetComponent<SafeAreaLayout>()?.Fit(result,float.NaN,0);
             resultKicker=Text("FIN DEL PARTIDO","sc-result-kicker");resultKicker.name="match-result-kicker";card.Add(resultKicker);
             resultTitle=Text("","sc-result-title");resultTitle.name="match-result-title";card.Add(resultTitle);
