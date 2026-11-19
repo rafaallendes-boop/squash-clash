@@ -93,10 +93,18 @@ namespace SquashClash.Core.Rally
             HumanEnergy=new FatigueState(context.Fatigue);RivalEnergy=new FatigueState(context.Fatigue);
             ball=context.Factory.Create(context.Physics,context.Court);
             Rules=context.NewRules();
-            Human=new PlayerBody(PlayerId.Human,context.WaitPosition(PlayerId.Human),context.Move);
-            Rival=new PlayerBody(PlayerId.Rival,context.WaitPosition(PlayerId.Rival),context.Move);
+            Human=new PlayerBody(PlayerId.Human,WaitOf(PlayerId.Human),context.Move);
+            Rival=new PlayerBody(PlayerId.Rival,WaitOf(PlayerId.Rival),context.Move);
         }
         private PlayerBody Body(PlayerId who)=>who==PlayerId.Human?Human:Rival;
+        // A brain with its own positioning (a rival style) waits and recovers there; any other brain uses the shared wait position.
+        public Vector2 WaitOf(PlayerId who)=>brains[(int)who] is IRallyPositioning p?p.Wait:context.WaitPosition(who);
+        private Vector2 RecoveryOf(PlayerId who)
+        {
+            if(!(brains[(int)who] is IRallyPositioning p))return context.WaitPosition(who);
+            var self=Body(who);var other=Body(who.Other());
+            return p.Recovery(new AiObservation(ball.State,self.Position,self.Velocity,other.Position,other.Velocity,Rules.Shots,Rules.FloorBounces,Rules.FrontWallReached));
+        }
         private FatigueState Energy(PlayerId who)=>who==PlayerId.Human?HumanEnergy:RivalEnergy;
         private void BeginFatiguePoint()
         {HumanEnergy.BeginPoint();RivalEnergy.BeginPoint();Human.MovementFactor=Rival.MovementFactor=1;}
@@ -104,7 +112,7 @@ namespace SquashClash.Core.Rally
         {
             BeginFatiguePoint();
             var outcome=new RallyOutcome{FirstReceiver=firstReceiver};
-            Human.Teleport(context.WaitPosition(PlayerId.Human));Rival.Teleport(context.WaitPosition(PlayerId.Rival));
+            Human.Teleport(WaitOf(PlayerId.Human));Rival.Teleport(WaitOf(PlayerId.Rival));
             ball.Reset(context.NeutralLaunch(firstReceiver));Rules.Begin(null,firstReceiver);
             return Run(outcome,firstReceiver);
         }
@@ -113,9 +121,9 @@ namespace SquashClash.Core.Rally
         {
             BeginFatiguePoint();Energy(server).Strike(0); // Automatic serve intention (spec v2.3).
             var outcome=new RallyOutcome{FirstReceiver=server.Other(),Server=server,Box=box};
-            Human.Teleport(context.WaitPosition(PlayerId.Human));Rival.Teleport(context.WaitPosition(PlayerId.Rival));
+            Human.Teleport(WaitOf(PlayerId.Human));Rival.Teleport(WaitOf(PlayerId.Rival));
             Body(server).Teleport(ServePlanner.BoxPosition(context,box));
-            Body(server).MoveTo(context.WaitPosition(server),0,BodyPhase.Recovering,BodyPhase.Waiting);
+            Body(server).MoveTo(WaitOf(server),0,BodyPhase.Recovering,BodyPhase.Waiting);
             ball.Reset(context.Serve(box));Rules.BeginServe(server,box);
             return Run(outcome,server.Other());
         }
@@ -191,13 +199,16 @@ namespace SquashClash.Core.Rally
             // Real perceived time for this flight: the same clock map type the touch path uses.
             double now=state.Step/(context.Tempo*context.StepHz);
             var clock=new ClockMap();clock.Begin(++launchId,now,state.Step,context.Tempo,1,context.StepHz);
-            bool useVolley=shot.Volley&&plan.Volley.Exists;var contact=useVolley?plan.Volley.Plan:plan.Contact;
+            bool useVolley=shot.Volley&&plan.Volley.Exists;
+            // A release aimed at the volley is judged like the human's: by the opportunity whose segment holds it (spec 7.1.3 case 14).
+            var decision=useVolley?RallyContact.ResolveAimedVolley(context,clock,trajectory,plan.Contact,plan.Volley,now,shot.DeltaMs,out useVolley)
+                :RallyContact.Resolve(context,clock,trajectory,plan.Contact,now,shot.DeltaMs);
+            var contact=useVolley?plan.Volley.Plan:plan.Contact;
             if(contact.Exists&&contact.TStarStep>=0)
             {
                 var positions=path??body.PositionsAfter(trajectory.States.Count);long first=trajectory.States[0].Step;
                 pendingCausal=CausalQuality.Prepare(trajectory,contact,clock,context.Timing,now,context.Tempo,j=>context.FrameAt(positions[(int)(j-first)]));
             }
-            var decision=RallyContact.Resolve(context,clock,trajectory,contact,now,shot.DeltaMs);
             ReceptionResult result;
             switch(decision.Result)
             {
@@ -231,7 +242,7 @@ namespace SquashClash.Core.Rally
             // A contact before the bounce also costs the volley energy (19 nov); bots never volley by default, so nothing changes for them.
             double volleyCost=context.VolleyEnergyCost(Rules);
             Rules.RacketContact(who);Energy(who).Strike(pendingShot.P);Energy(who).Volley(volleyCost);
-            Body(who).MoveTo(context.WaitPosition(who),0,BodyPhase.Recovering,BodyPhase.Waiting);
+            Body(who).MoveTo(RecoveryOf(who),0,BodyPhase.Recovering,BodyPhase.Waiting);
             BeginReception(who.Other(),outcome);
         }
         public void Dispose()=>ball.Dispose();
