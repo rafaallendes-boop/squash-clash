@@ -2,12 +2,12 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
-if [[ "${1:-}" != mvp ]]; then printf 'Uso: scripts/autoqa.sh mvp [--suite v|t3] [--scenario ID] [--repetition 1|2|3]\n' >&2; exit 4; fi
+if [[ "${1:-}" != mvp ]]; then printf 'Uso: scripts/autoqa.sh mvp [--suite v|t3|volley] [--scenario ID] [--repetition 1|2|3]\n' >&2; exit 4; fi
 shift
 export AUTOQA_SCENARIO='' AUTOQA_REPETITION='' AUTOQA_SUITE=v
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --suite) [[ $# -ge 2 && "$2" =~ ^(v|t3)$ ]] || exit 4; export AUTOQA_SUITE="$2"; shift 2;;
+        --suite) [[ $# -ge 2 && "$2" =~ ^(v|t3|volley)$ ]] || exit 4; export AUTOQA_SUITE="$2"; shift 2;;
         --scenario) [[ $# -ge 2 ]] || exit 4; export AUTOQA_SCENARIO="$2"; shift 2;;
         --repetition) [[ $# -ge 2 && "$2" =~ ^[123]$ ]] || exit 4; export AUTOQA_REPETITION="$2"; shift 2;;
         *) printf 'Argumento desconocido: %s\n' "$1" >&2; exit 4;;
