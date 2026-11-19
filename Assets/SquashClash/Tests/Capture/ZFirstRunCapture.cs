@@ -93,8 +93,22 @@ namespace SquashClash.Capture
 
             // 2. Jugar: the match header a player sees.
             yield return Boot(false);
+            // Energy bars on, so the HUD shows everything a player can meet in a match.
+            app.Tuning.Set("fatigue.enabled",1);
             rally.Autopilot=true;rally.AutopilotTimingSigmaMs=30;rally.Seed=9;
             Click("menu-play");yield return Frames(40);yield return Shoot("match-prod");
+            // 2b. Shot feedback: the first stroke's note under the court, then the point banner over the front wall.
+            int guard=(int)(60/StepReal);
+            for(int i=0;i<guard&&!(controller.LastRecord!=null&&(controller.LastRecord.Result=="Perfect"||controller.LastRecord.Result=="Valid"));i++)Step(1);
+            yield return Frames(3);
+            // The controller is off in this fixture; it is what applies timing.showNotes every frame in the game.
+            controller.GetComponent<ShotNoteView>().SetVisible(app.Tuning.Applied.GetBool("timing.showNotes"));yield return null;
+            var note=root.Q<Label>("shot-note");
+            Debug.Log("[SquashClash] capture shot-note record="+(controller.LastRecord?.Result??"none")+" text='"+note?.text+"' display="+note?.resolvedStyle.display+" bounds="+note?.worldBound+" root="+root.worldBound);
+            yield return Shoot("match-shot-note");
+            for(int i=0;i<guard&&rally.Phase!=RallyPhase.PointOver;i++)Step(1);
+            for(int i=0;i<16;i++)yield return null;
+            yield return Shoot("match-banner");
             // 3. Pause card, then the end of the match.
             Click("rally-pause");yield return Shoot("pause-prod");
             Click("pause-continue");yield return null;
