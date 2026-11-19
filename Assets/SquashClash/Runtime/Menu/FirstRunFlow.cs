@@ -7,14 +7,15 @@ using UnityEngine;
 using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Menu
 {
-    public enum FirstRunScreen {None,Menu,Tutorial}
+    public enum FirstRunScreen {None,Menu,Tutorial,Credits}
     // First run: what a player with no context sees between launching the app and playing a match. A start menu
     // (title, Jugar, difficulty, how to play, build label) laid over the court with the game paused. It adds no
     // mechanic: Jugar is RallyDirector.StartMatch at the chosen AiLevel, exactly what the "Partido" button does.
     // The first Jugar goes through a four-step tutorial (how to aim and strike with M2-4, how to read the timing ring, the volley),
     // shown once (PlayerPrefs) and reopened from the menu. Its text describes M24Model and TimingRingView as they are.
     // During a match the player's Pausa opens a card (Continuar / Salir al menú) and the result card's "Volver al inicio"
-    // comes back here. Pauses made by the dev tools or by the system (ResumeOverlay) do not open the card.
+    // comes back here. A Créditos screen (font licence and audio provenance) opens from the menu and goes back to it.
+    // Pauses made by the dev tools or by the system (ResumeOverlay) do not open the card.
     // The layers exist only while the game is paused (display none otherwise), so they never take a touch during play.
     // Batch mode keeps the previous boot (straight into practice), which is what the tests and AutoQA drive.
     public sealed class FirstRunFlow : MonoBehaviour
@@ -25,7 +26,7 @@ namespace SquashClash.Runtime.Menu
         public static void ResetOpenAtBoot()=>openAtBoot=null;
         private static readonly string[] LevelNames={"easy","medium","hard"},LevelTexts={"Fácil","Media","Difícil"};
         private AppBootstrap app;private RallyDirector rally;private RallyHud hud;
-        private VisualElement root,menu,header,pause;private Button play,practice,menuSound,pauseSound,menuMusic,pauseMusic,menuHand;private readonly Button[] levels=new Button[3];
+        private VisualElement root,menu,header,pause,credits;private Button play,practice,menuSound,pauseSound,menuMusic,pauseMusic,menuHand;private readonly Button[] levels=new Button[3];
         private int shownKey=-1;
         private SafeAreaLayout safeArea;private Label build;
         // Space between the safe area and the menu's content (the header's top edge is the reference at the top).
@@ -65,41 +66,81 @@ namespace SquashClash.Runtime.Menu
             Level=savedLevel>=(int)AiLevel.Easy&&savedLevel<=(int)AiLevel.Hard?(AiLevel)savedLevel:AiLevel.Medium;
             root=app.GetComponent<UIDocument>().rootVisualElement;
             header=root.Q("boot-header");
-            BuildMenu();BuildTutorial();BuildPause();SelectLevel(Level);hud.MenuRequested+=OpenMenu;
+            BuildMenu();BuildTutorial();BuildCredits();BuildPause();SelectLevel(Level);hud.MenuRequested+=OpenMenu;
             // Device robustness: the layers cover the whole screen; what they show stays inside the safe area.
             safeArea=app.GetComponent<SafeAreaLayout>();
             if(safeArea!=null)
             {
-                safeArea.Fit(menu,MenuTop,MenuBottom);safeArea.Fit(tutorial,MenuTop,MenuBottom);safeArea.Fit(pause,float.NaN,0);
+                safeArea.Fit(menu,MenuTop,MenuBottom);safeArea.Fit(tutorial,MenuTop,MenuBottom);safeArea.Fit(credits,MenuTop,MenuBottom);safeArea.Fit(pause,float.NaN,0);
                 safeArea.Changed+=PlaceBuild;PlaceBuild();
             }
             Refresh();
             if(OpenAtBoot)OpenMenu();
         }
+        // Menu redesign (19 nov): the screen is the front wall at scale, read top to bottom as on a court: the out line, the
+        // wordmark in the playing area above the service line, the choices below it within thumb reach, the tin at the bottom.
         private void BuildMenu()
         {
-            menu=new VisualElement{name="menu-layer"};menu.AddToClassList("sc-menu-layer");menu.AddToClassList("sc-wall");menu.style.display=DisplayStyle.None;root.Add(menu);
-            var art=new VisualElement{name="menu-art",pickingMode=PickingMode.Ignore};art.AddToClassList("sc-menu-art");art.generateVisualContent+=DrawArt;menu.Add(art);
-            var title=Text("SQUASH CLASH","sc-menu-title");title.name="menu-title";menu.Add(title);
-            menu.Add(Text("Apunta, carga y suelta.","sc-menu-tagline"));
-            // Look pass: the menu is the front wall. The service line runs across the screen; the tin closes its bottom edge.
+            menu=new VisualElement{name="menu-layer"};menu.AddToClassList("sc-menu-layer");menu.AddToClassList("sc-menu-home");menu.AddToClassList("sc-wall");menu.style.display=DisplayStyle.None;root.Add(menu);
+            menu.Add(Decor("menu-outline","sc-menu-outline"));
+            var hero=Row(menu,"menu-hero","sc-menu-hero");
+            // The wall keeps the marks of every ball that hit it; the wordmark sits just above the service line, and the
+            // ball squashes against the wall right after "CLASH".
+            var marks=Decor("menu-marks","sc-menu-marks");marks.generateVisualContent+=DrawMarks;hero.Add(marks);
+            var wordmark=Row(hero,"menu-wordmark","sc-menu-wordmark");
+            var title=Text("SQUASH CLASH","sc-menu-title");title.name="menu-title";wordmark.Add(title);
+            var art=new VisualElement{name="menu-art",pickingMode=PickingMode.Ignore};art.AddToClassList("sc-menu-art");art.generateVisualContent+=DrawArt;wordmark.Add(art);
+            hero.Add(Text("Apunta, carga y suelta.","sc-menu-tagline"));
             menu.Add(Decor("menu-rule","sc-menu-rule"));menu.Add(Decor("menu-tin","sc-menu-tin"));
-            menu.Add(Text("Dificultad","sc-menu-label"));
-            var row=new VisualElement{name="menu-levels",pickingMode=PickingMode.Ignore};row.AddToClassList("sc-level-row");menu.Add(row);
+            var controls=Row(menu,"menu-controls","sc-menu-controls");
+            controls.Add(Text("Nivel del rival","sc-menu-label"));
+            var row=Row(controls,"menu-levels","sc-level-row");
             for(int i=0;i<levels.Length;i++)
             {
                 var level=(AiLevel)i;levels[i]=Add(row,"menu-level-"+LevelNames[i],LevelTexts[i],()=>SelectLevel(level));levels[i].AddToClassList("sc-level");
+                if(i>0)levels[i].AddToClassList("sc-level--divided");
             }
-            play=Add(menu,"menu-play","Jugar",Play);play.AddToClassList("sc-button--primary");play.AddToClassList("sc-menu-play");
-            Add(menu,"menu-howto","¿Cómo se juega?",()=>OpenTutorial(false)).AddToClassList("sc-menu-wide");
-            // Sound and music: two switches side by side.
-            var audio=Row(menu,"menu-audio","sc-menu-pair");
-            menuSound=Add(audio,"menu-sound","",ToggleSound);menuSound.AddToClassList("sc-menu-half");
-            menuMusic=Add(audio,"menu-music","",ToggleMusic);menuMusic.AddToClassList("sc-menu-half");
-            // Cosmetic: which hand the drawn player holds the racket in.
-            menuHand=Add(menu,"menu-hand","",ToggleHand);menuHand.AddToClassList("sc-menu-wide");
-            practice=Add(menu,"menu-practice","Práctica (dev)",ClosePractice);practice.AddToClassList("sc-menu-wide");
+            play=Add(controls,"menu-play","Jugar",Play);play.AddToClassList("sc-button--primary");play.AddToClassList("sc-menu-play");
+            var links=Row(controls,"menu-links","sc-menu-links");
+            var howto=Add(links,"menu-howto","¿Cómo se juega?",()=>OpenTutorial(false));howto.AddToClassList("sc-menu-link");howto.AddToClassList("sc-menu-link--first");
+            Add(links,"menu-credits","Créditos",OpenCredits).AddToClassList("sc-menu-link");
+            // Sound, music and the hand the drawn player holds the racket in (cosmetic): three switches in a row.
+            var audio=Row(controls,"menu-audio","sc-menu-switches");
+            menuSound=Add(audio,"menu-sound","",ToggleSound);menuSound.AddToClassList("sc-menu-switch");
+            menuMusic=Add(audio,"menu-music","",ToggleMusic);menuMusic.AddToClassList("sc-menu-switch");
+            menuHand=Add(audio,"menu-hand","",ToggleHand);menuHand.AddToClassList("sc-menu-switch");menuHand.AddToClassList("sc-menu-switch--last");
+            practice=Add(controls,"menu-practice","Práctica (dev)",ClosePractice);practice.AddToClassList("sc-menu-dev");
             build=Text("v"+app.Build.Label,"sc-menu-build");build.name="menu-build";menu.Add(build);
+        }
+        // Credits (19 nov), owed before publishing: the font and its licence, as the font's own name table states them, and
+        // where the sound comes from (Resources/Audio/PROVENANCE.md).
+        public const string RubikCopyright="Copyright (c) 2015 by Hubert & Fischer. All rights reserved. Hebrew characters (c) 2016 by Meir Sadan.";
+        private void BuildCredits()
+        {
+            credits=new VisualElement{name="credits-layer"};credits.AddToClassList("sc-menu-layer");credits.AddToClassList("sc-credits");credits.AddToClassList("sc-wall");credits.style.display=DisplayStyle.None;root.Add(credits);
+            credits.Add(Decor("credits-outline","sc-menu-outline"));
+            var title=Text("Créditos","sc-credits-title");title.name="credits-title";credits.Add(title);
+            credits.Add(Decor("credits-rule","sc-menu-rule"));
+            var body=Row(credits,"credits-body","sc-credits-body");
+            body.Add(Text("Tipografía","sc-credits-section"));
+            Named(body,"credits-font","Rubik, de Hubert & Fischer.","sc-credits-lead");
+            Named(body,"credits-font-copyright",RubikCopyright,"sc-credits-fine");
+            Named(body,"credits-font-license","Se usa con la licencia SIL Open Font License 1.1 (scripts.sil.org/OFL).","sc-credits-text");
+            body.Add(Text("Sonido y música","sc-credits-section"));
+            Named(body,"credits-audio","Los efectos y la música se compusieron y generaron con código para Squash Clash en 2026, sin grabaciones, samples ni bibliotecas de sonido externas.","sc-credits-text");
+            var back=Add(credits,"credits-back","Volver",CloseCredits);back.AddToClassList("sc-button--primary");back.AddToClassList("sc-credits-back");
+            credits.Add(Decor("credits-tin","sc-menu-tin"));
+        }
+        private static void Named(VisualElement parent,string name,string text,string style){var label=Text(text,style);label.name=name;parent.Add(label);}
+        public void OpenCredits()
+        {
+            if(app==null||Screen!=FirstRunScreen.Menu)return;
+            Screen=FirstRunScreen.Credits;app.UserEvents?.Menu("credits","open");Refresh();
+        }
+        public void CloseCredits()
+        {
+            if(Screen!=FirstRunScreen.Credits)return;
+            Screen=FirstRunScreen.Menu;app.UserEvents?.Menu("menu","open");Refresh();
         }
         private Button Add(VisualElement parent,string name,string text,System.Action action)
         {
@@ -113,24 +154,55 @@ namespace SquashClash.Runtime.Menu
         private static Label Text(string text,string style){var label=new Label(text){pickingMode=PickingMode.Ignore};label.AddToClassList(style);return label;}
         // Plaster, ink and line red, as in Visual/Hud.uss; the tutorial drawings use the same three.
         private static readonly Color Plaster=new Color(.93f,.945f,.937f),Ink=new Color(.094f,.133f,.173f),LineRed=new Color(.808f,.125f,.176f),Dot=new Color(1f,.82f,.25f),Amber=new Color(1f,.72f,.16f);
-        // Menu emblem: the ball (black, with the two yellow dots of a match ball) streaking in from the left over the wall.
-        // Vector, drawn once per layout.
+        // Menu emblem: the ball (black, with the two yellow dots of a match ball) squashing flat against the front wall, with
+        // the burst of the hit around it. No stroke on the side facing the wordmark, so it never reads as a hyphen after
+        // "CLASH". Vector, drawn once per layout.
         private static void DrawArt(MeshGenerationContext context)
         {
             var r=context.visualElement.contentRect;if(r.width<=0||r.height<=0)return;
-            var p=context.painter2D;float w=r.width,h=r.height,radius=h*.32f;var c=new Vector2(w*.72f,h*.5f);
+            var p=context.painter2D;float w=r.width,h=r.height,radius=Mathf.Min(w,h)*.30f;var c=new Vector2(w*.5f,h*.5f);
             p.lineCap=LineCap.Round;p.lineJoin=LineJoin.Round;
-            // Speed lines: longest through the centre, fading towards the tail.
-            float[] dy={-.42f,0,.42f},from={.30f,.12f,.36f},alpha={.22f,.5f,.22f};
-            for(int i=0;i<3;i++)
+            p.strokeColor=LineRed;p.lineWidth=3.5f;
+            for(int i=0;i<8;i++)
             {
-                p.strokeColor=new Color(Ink.r,Ink.g,Ink.b,alpha[i]);p.lineWidth=i==1?5:3;
-                p.BeginPath();p.MoveTo(new Vector2(w*from[i],c.y+dy[i]*radius*1.6f));p.LineTo(new Vector2(c.x-radius*1.25f,c.y+dy[i]*radius*1.6f));p.Stroke();
+                if(i==4)continue;
+                float angle=i*45*Mathf.Deg2Rad;var d=new Vector2(Mathf.Cos(angle),Mathf.Sin(angle));
+                var from=c+new Vector2(d.x*radius*1.55f,d.y*radius*1.10f);Line(p,from,from+d*radius*.42f);
             }
-            p.fillColor=Ink;p.BeginPath();p.Arc(c,radius,0,360);p.Fill();
-            p.fillColor=Dot;float d=radius*.2f;
-            p.BeginPath();p.Arc(c+new Vector2(-radius*.28f,-radius*.38f),d,0,360);p.Fill();
-            p.BeginPath();p.Arc(c+new Vector2(radius*.28f,-radius*.38f),d,0,360);p.Fill();
+            // The ball itself, squashed: wider than tall, as it is for the instant it touches the wall.
+            p.fillColor=Ink;Oval(p,c,radius*1.22f,radius*.80f);p.Fill();
+            p.fillColor=Dot;float d0=radius*.2f;
+            Disc(p,c+new Vector2(-radius*.38f,-radius*.22f),d0,true);Disc(p,c+new Vector2(radius*.38f,-radius*.22f),d0,true);
+        }
+        private static void Oval(Painter2D p,Vector2 c,float rx,float ry)
+        {
+            const float k=.5522848f;p.BeginPath();p.MoveTo(c+new Vector2(rx,0));
+            p.BezierCurveTo(c+new Vector2(rx,ry*k),c+new Vector2(rx*k,ry),c+new Vector2(0,ry));
+            p.BezierCurveTo(c+new Vector2(-rx*k,ry),c+new Vector2(-rx,ry*k),c+new Vector2(-rx,0));
+            p.BezierCurveTo(c+new Vector2(-rx,-ry*k),c+new Vector2(-rx*k,-ry),c+new Vector2(0,-ry));
+            p.BezierCurveTo(c+new Vector2(rx*k,-ry),c+new Vector2(rx,-ry*k),c+new Vector2(rx,0));p.ClosePath();
+        }
+        // Ball marks on the plaster: a fixed scatter (fractions of the wall above the wordmark), small and faint, a loose
+        // cluster where shots land most. Behind everything, never touched.
+        private static readonly Vector3[] Marks=
+        {
+            new Vector3(.14f,.30f,.6f),new Vector3(.33f,.12f,.4f),new Vector3(.61f,.22f,.7f),new Vector3(.86f,.10f,.35f),new Vector3(.74f,.44f,.9f),
+            new Vector3(.22f,.58f,.8f),new Vector3(.48f,.40f,.6f),new Vector3(.90f,.64f,.75f),new Vector3(.57f,.70f,1f),new Vector3(.08f,.80f,.55f),
+            new Vector3(.38f,.86f,.85f)
+        };
+        // The marks stay above the wordmark and the tagline (two 72 pt lines, the tagline and the hero's padding).
+        private const float WordmarkClear=230;
+        private static void DrawMarks(MeshGenerationContext context)
+        {
+            var r=context.visualElement.contentRect;if(r.width<=0||r.height<=0)return;
+            var p=context.painter2D;float top=r.height*.04f,band=r.height-WordmarkClear-top;
+            // A short wall (a 16:9 phone) has no room above the wordmark: no marks rather than a row of them.
+            if(band<60)return;
+            foreach(var m in Marks)
+            {
+                float size=2.5f+3f*m.z;var c=new Vector2(r.width*m.x,top+band*m.y);
+                p.fillColor=new Color(Ink.r,Ink.g,Ink.b,.05f+.05f*m.z);Oval(p,c,size*1.3f,size*.85f);p.Fill();
+            }
         }
         private void BuildTutorial()
         {
@@ -221,7 +293,7 @@ namespace SquashClash.Runtime.Menu
             }
             p.fillColor=Plaster;Disc(p,ball,6,true);
         }
-        private string MetricsScreen=>Screen==FirstRunScreen.Menu?"menu":Screen==FirstRunScreen.Tutorial?"tutorial":PauseVisible?"pause":"game";
+        private string MetricsScreen=>Screen==FirstRunScreen.Menu?"menu":Screen==FirstRunScreen.Tutorial?"tutorial":Screen==FirstRunScreen.Credits?"credits":PauseVisible?"pause":"game";
         private void ShowStep()
         {
             tutorialStep.text=(TutorialStep+1)+" de "+TutorialSteps;tutorialTitle.text=StepTitles[TutorialStep];tutorialBody.text=StepBodies[TutorialStep];
@@ -273,9 +345,15 @@ namespace SquashClash.Runtime.Menu
         public void ToggleHand(){Handedness.Left=!Handedness.Left;ShowSound();}
         private void ShowSound()
         {
-            string text=AudioScape.SoundOn?"Sonido: sí":"Sonido: no";if(menuSound!=null)menuSound.text=text;if(pauseSound!=null)pauseSound.text=text;
-            text=MusicPlayer.MusicOn?"Música: sí":"Música: no";if(menuMusic!=null)menuMusic.text=text;if(pauseMusic!=null)pauseMusic.text=text;
+            bool sound=AudioScape.SoundOn,music=MusicPlayer.MusicOn;
+            Switch(menuSound,sound,"Sonido: sí","Sonido: no");Switch(pauseSound,sound,"Sonido: sí","Sonido: no");
+            Switch(menuMusic,music,"Música: sí","Música: no");Switch(pauseMusic,music,"Música: sí","Música: no");
             if(menuHand!=null)menuHand.text=Handedness.Left?"Mano: zurdo":"Mano: diestro";
+        }
+        // A switch says its state in words and in look: an off switch is marked (sc-toggle--off).
+        private static void Switch(Button button,bool on,string onText,string offText)
+        {
+            if(button==null)return;button.text=on?onText:offText;button.EnableInClassList("sc-toggle--off",!on);
         }
         // The pause card: only while a match is paused by the player's own button.
         public bool PauseVisible=>app!=null&&Screen==FirstRunScreen.None&&rally.Active&&rally.Phase!=RallyPhase.MatchOver&&app.Clock.Paused&&hud.PausedByPlayer;
@@ -335,6 +413,7 @@ namespace SquashClash.Runtime.Menu
             if(key==shownKey)return;shownKey=key;
             menu.style.display=Screen==FirstRunScreen.Menu?DisplayStyle.Flex:DisplayStyle.None;
             tutorial.style.display=Screen==FirstRunScreen.Tutorial?DisplayStyle.Flex:DisplayStyle.None;
+            credits.style.display=Screen==FirstRunScreen.Credits?DisplayStyle.Flex:DisplayStyle.None;
             pause.style.display=paused?DisplayStyle.Flex:DisplayStyle.None;
             // Like the result card, the pause card and its scrim start under the header, whose button stays usable.
             if(paused&&header!=null&&!float.IsNaN(header.worldBound.yMax))pause.style.top=header.worldBound.yMax-root.worldBound.yMin+8;
@@ -346,7 +425,7 @@ namespace SquashClash.Runtime.Menu
         {
             if(hud!=null)hud.MenuRequested-=OpenMenu;
             if(safeArea!=null)safeArea.Changed-=PlaceBuild;
-            menu?.RemoveFromHierarchy();tutorial?.RemoveFromHierarchy();pause?.RemoveFromHierarchy();
+            menu?.RemoveFromHierarchy();tutorial?.RemoveFromHierarchy();credits?.RemoveFromHierarchy();pause?.RemoveFromHierarchy();
         }
     }
 }
