@@ -109,3 +109,52 @@ Cada frente tiene su interruptor DEV, encendido por defecto.
 - si el estallido de la volea se lee bien, ya que se superpone con el destello del Perfecto;
 - el costo de la volea;
 - la duración real del partido, que la tarjeta muestra.
+
+## Tercera vuelta (19 nov), pedido del PO
+
+El PO pidió tres cosas: estilos de rival (fondista, «one shoter» y «all arround») con volea del rival, un menú principal rediseñado con `/frontend-design` y los puntos que Claude propuso:
+- calibrar la dificultad;
+- la posición del rival ante golpes cortos;
+- el resoplido del rival;
+- los créditos OFL.
+
+Se hicieron en tres ramas desde `f068cee` y se fusionaron sin aplanar, sin conflictos.
+
+| Frente | Rama, head | Modelo | Informe |
+|---|---|---|---|
+| Resoplido del rival cuando se cansa, con interruptor DEV | `claude/rival-breath` `6fa9dc0` | Sonnet | [informe](2026-11-19-rival-breath.md) |
+| Menú principal rediseñado y pantalla de créditos | `claude/menu-redesign` `36e3195` | Opus | [informe](2026-11-19-menu-redesign.md) |
+| Estilos Fondista, Definidor y Completo, volea y cobertura del rival, y calibración por estilo y nivel | `claude/rival-styles` `521a258` | Opus | [informe](2026-11-19-rival-styles.md), [diseño](../superpowers/specs/2026-11-19-rival-styles-design.md) |
+
+**Decisiones de Claude:**
+- **Definidor en la T:** espera en la T y vuelve a ella después de su golpe corto. Sus pesos de ataque y de volea no cambian.
+- **Un factor de ruido por estilo y nivel.** Con un solo factor por nivel ninguna k cumplía la banda de ±8 pp, porque los estilos tienen fuerzas distintas. Las metas, fijadas antes de calibrar, no cambian.
+  - **Confirmación:** se hizo con semillas nuevas. Ocho de las nueve celdas quedan a ±4 pp de su meta.
+  - **Definidor en Difícil:** queda en k=1, la menor dificultad que se calibró. El principiante gana 37,8 % de los puntos frente a una meta de 20 %. Es una desviación registrada.
+- **Tres tests de PlayMode:** su presupuesto de puntos suponía al rival antiguo, y uno de ellos chocaba con el congelado. Ahora fijan al Fondista o apagan el congelado. No cambia ningún umbral (ver el informe de estilos).
+- **Pendientes de decidir:**
+  - en Fácil, `d_perc` llega a 120 ms, sobre el rango de 0–80 ms de §11.2 (marcado EXPERIMENTO);
+  - SF-01 aparece en el 0,5–1,5 % de los puntos en Fácil.
+
+**Hashes:**
+- RallyParams `5cdbb01e4621`→`0f58580f44ea`. La proyección sin los campos `Style*` es exactamente `5cdbb01e4621`.
+- Sin cambios: defaults `207da8f2c636`/132, SimulationKey `166a96e319c7` y las anclas AutoQA.
+- `FondoAi` y `DefaultPreset.json` no cambian.
+
+**Compuertas sobre `ecff541`:**
+
+| Compuerta | Resultado |
+|---|---|
+| EditMode | 883/883 |
+| PlayMode | 689/689 |
+| AutoQA V | PASS/0/1 (`20261119T214753Z-ecff541-v-31255`) |
+| AutoQA T3 | PASS/0/1 (`20261119T214840Z-ecff541-t3-8618`) |
+| AutoQA volea | PASS/0/1 (`20261119T214918Z-ecff541-volley-15597`) |
+| check-release dev/prod | OK, build 975 |
+
+**Para juzgar en el iPhone:**
+- si se distinguen los tres estilos;
+- si la dificultad se siente justa;
+- si se nota la volea del rival, que todavía no tiene pose propia;
+- el resoplido;
+- el menú nuevo.
