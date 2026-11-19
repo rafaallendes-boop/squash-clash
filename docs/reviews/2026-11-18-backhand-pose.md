@@ -18,18 +18,20 @@ Medición con `ZBackhandDiagnosis` (fixture de captura, no regresión): Demo see
 
 La pelota está a ±0,6 m del cuerpo en todos los golpes (el punto de contacto ideal), a su derecha en Drive y a su izquierda en Revés. Conclusión: se elige revés con frecuencia; el problema es visual. La capa de elección no se toca. Con la cámara trasera la figura mide unos 100 px de alto en el teléfono y el brazo que cruza queda oculto por el torso; el giro de hombros era de solo 48–53°, el brazo libre apenas se movía y la preparación ponía la raqueta cerca del hombro contrario.
 
-## Cambios (solo `CharacterView.cs`, dibujo)
+## Cambios (iteración 2, 19 nov, tras ver que la 1 apenas se distinguía)
 
-- Giro de hombros del revés: contacto 62+10·potencia° (antes 48+8·p), preparación 46–70° (antes 30–48°). La derecha no cambia.
-- Preparación: raqueta atrás y alta del lado no dominante; codo guía por delante del pecho; brazo libre recogido al pecho durante la preparación y abierto hacia atrás a lo largo de la línea de hombros al pasar la raqueta (en espacio del torso, sigue el giro).
-- Terminación más alta y extendida (y 1,40+0,40·p).
-- La mano zurda queda espejada por construcción (todo usa `sign` y `s`).
+Alcance ampliado por el product lead: geometría del arco del revés en SwingView e inclinación del torso. Todo acotado al revés (el lado cuyo brazo cruza el cuerpo, que para el zurdo es el contacto a su derecha); la derecha no cambia.
 
-No se tocan SwingView, Core, planificación, gesto, timing, contrato, física ni `DefaultPreset.json`. La cabeza de la raqueta sigue la clave Contact de SwingView igual que en E1; solo cambian torso, codo, brazo libre y la fase posterior al contacto.
+- `SwingView`: preparación (Back) con la cabeza a 1,68 m, sobre el hombro, del lado del contacto y fuera de la silueta del torso; terminación (Follow) alta (1,56 m) y cruzada al lado del brazo que golpea. Mientras espera un revés (plan de contacto de revés), la raqueta ya está armada en alto (visual: nada lo lee). Sin tocar tiempos de claves ni la posición/tiempo de Contact.
+- `CharacterView`: preparación y terminación del figurín (rival y zurdo) con las mismas formas; el remate cruza de izquierda a derecha y acaba alto a la derecha de la cabeza; torso inclinado 9° hacia el lado del contacto; giro de hombros 62–72° al contacto; brazo libre recogido y luego abierto atrás; codo guía.
+- Continuidad E1: la primera versión del remate más alto rompía la salida (exitExcess 11,8 mm frente a 5 mm en 33 ms); se acortó la distancia contacto-remate de SwingView hasta cumplirla. Criterios sin cambios; `ZE1ContactWindowTests` verde.
+- **Cambio de una expectativa de E1 pedido por el product lead:** `ZE1StrokePoseTests` antes exigía que el revés del rival abriera hacia el lado del contacto (x>0,20); ahora exige que acabe del lado del brazo que golpea (x<-0,25). Es la inversión explícita de lo solicitado.
+
+Limitación: cuando aceptación y entrega ocurren en el mismo cuadro, la clave Back nunca se muestra; la preparación visible es la raqueta ya armada en espera, más el arco hasta Contact.
 
 ## Capturas (antes / después)
 
-Tiras de tres cuadros: preparación, contacto, remate (644→968 px). Método de E1 con la fixture `ZBackhandPoseCapture` (seed 9, Medium, cámara sin cambios).
+Tiras de tres cuadros: preparación, contacto, remate (968 px de ancho, tres cuadros de 320). Método de E1 con la fixture `ZBackhandPoseCapture` (seed 9, Medium, cámara sin cambios).
 
 | | Antes | Después |
 |---|---|---|
@@ -44,7 +46,7 @@ Pantallas completas `*-phone.png` en las mismas carpetas. Capturas de editor, no
 
 ## Pruebas
 
-`ZBackhandPoseTests` (PlayMode, dibujo): RED por aserción antes de implementar (3 de 4 fallaron: giro 52,7° frente a ≥62°, brazo libre 0,0 frente a ≥0,15 m detrás de la cadera, espejo zurdo 52,7°); un control (el codo guía) ya pasaba. GREEN 4/4. Compuertas finales: ver mensaje de entrega. AutoQA exento: sin cambios en SwingView, Core, gesto, timing ni contrato.
+`ZBackhandPoseTests` y `ZBackhandSwingViewTests` (PlayMode, dibujo). Iteración 1: RED 3 de 4 (giro 52,7°, brazo libre 0,0). Iteración 2: RED por aserción en 8 casos (cabeza de preparación 1,50 m y 1,40 m frente a ≥1,60; remate x=+0,58 y 1,40 m frente a lado del brazo y ≥1,5; raqueta en espera 0,65 m); preparación alta fuera del torso, terminación alta del lado dominante, espejo zurdo, rival, y raqueta armada en espera; GREEN todos. Compuertas finales: ver mensaje de entrega. AutoQA exento: sin cambios en SwingView, Core, gesto, timing ni contrato.
 
 ## Dudas
 
