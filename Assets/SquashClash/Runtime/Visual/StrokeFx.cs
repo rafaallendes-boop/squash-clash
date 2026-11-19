@@ -237,7 +237,7 @@ namespace SquashClash.Runtime.Visual
             mesh.SetColors(colors,0,colors.Length,UnityEngine.Rendering.MeshUpdateFlags.DontRecalculateBounds);
             if(body.enabled!=any)body.enabled=any;
         }
-        private void LateUpdate()=>Tick(Mathf.Min(Time.unscaledDeltaTime,.05f));
+        private void LateUpdate(){if(PointEndFreeze.Active)return;Tick(Mathf.Min(Time.unscaledDeltaTime,.05f));}
         private void OnDestroy()
         {
             if(controller!=null)controller.PresentationDelivered-=OnDelivered;

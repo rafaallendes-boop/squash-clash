@@ -179,6 +179,7 @@ namespace SquashClash.Runtime.Visual
         }
         private void LateUpdate()
         {
+            if(PointEndFreeze.Active)return; // point-end freeze: hold the drawn pose
             Resolve();
             bool paused=app!=null&&app.Clock!=null&&app.Clock.Paused;
             Animate(paused?0:Mathf.Min(Time.unscaledDeltaTime,.05f));

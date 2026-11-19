@@ -84,7 +84,7 @@ namespace SquashClash.Runtime.Visual
                 Paint(ref slots[i]);
             }
         }
-        private void LateUpdate()=>Tick(Time.unscaledDeltaTime);
+        private void LateUpdate(){if(PointEndFreeze.Active)return;Tick(Time.unscaledDeltaTime);}
         private void OnDestroy()
         {
             if(host!=null){host.ContactRaised-=OnContact;host.ShotApplied-=OnShot;host.Launched-=OnLaunched;}

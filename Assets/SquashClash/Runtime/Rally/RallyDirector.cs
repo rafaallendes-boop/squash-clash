@@ -84,6 +84,8 @@ namespace SquashClash.Runtime.Rally
             this.app=app;this.controller=controller;this.practice=practice;this.players=players;
             factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
             app.Host.Launched+=OnLaunched;controller.ShotResolved+=OnResolved;
+            // View-only hold of the rendered pose for 100 ms inside the pause (PO, 19 nov); touches no simulation state.
+            PointEnded+=_=>SquashClash.Runtime.Visual.PointEndFreeze.Begin(WaitBetweenPoints,()=>Active&&(Phase==RallyPhase.PointOver||Phase==RallyPhase.MatchOver));
         }
         public void SetParams(RallyParams parameters){Params=parameters??throw new ArgumentNullException(nameof(parameters));}
         public bool CanStart=>app!=null&&app.Host.ActiveConfig!=null&&app.Host.ActiveConfig.Backend=="P2-Analytic"&&app.Tuning.Applied.GetBool("practice.enabled");
