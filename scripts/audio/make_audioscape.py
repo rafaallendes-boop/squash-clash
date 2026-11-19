@@ -66,9 +66,14 @@ def bounce_floor():  # bote en el piso: golpe sordo y grave
     return render(.080, lambda t, i: attack(t, .0015) * (.50 * math.sin(phase(t)) * math.exp(-38 * t) + .18 * n[i] * 3 * math.exp(-140 * t)))
 
 
-def bounce_wall():  # paredes laterales y trasera: toque medio, mas seco
+def bounce_wall():  # paredes laterales: toque medio, mas seco
     n = noise(32, RATE, 3000)
     return render(.070, lambda t, i: attack(t, .0010) * (.42 * math.sin(TAU * 310 * t) * math.exp(-60 * t) + .16 * math.sin(TAU * 640 * t) * math.exp(-90 * t) + .14 * n[i] * 2 * math.exp(-200 * t)))
+
+
+def bounce_glass():  # vidrio de fondo: «toc» seco de vidrio templado, mas agudo y brillante que la pared lateral, muy corto
+    n = noise(37, RATE, 6500)
+    return render(.045, lambda t, i: attack(t, .0006) * (.40 * math.sin(TAU * 1250 * t) * math.exp(-110 * t) + .24 * math.sin(TAU * 2750 * t) * math.exp(-170 * t) + .10 * math.sin(TAU * 4100 * t) * math.exp(-260 * t) + .18 * n[i] * 2 * math.exp(-300 * t)))
 
 
 def front_wall():  # frontis: el golpe mas lleno de la cancha
@@ -122,7 +127,7 @@ def ambience():  # ambiente de cancha: aire de sala grave y un zumbido leve; 4 s
 
 CLIPS = (('scape-bounce-floor', bounce_floor), ('scape-bounce-wall', bounce_wall), ('scape-front-wall', front_wall),
          ('scape-rival-step', rival_step), ('scape-rival-racket', rival_racket), ('scape-point-won', point_won),
-         ('scape-point-lost', point_lost), ('scape-ui-click', ui_click), ('scape-ambience', ambience))
+         ('scape-point-lost', point_lost), ('scape-ui-click', ui_click), ('scape-ambience', ambience), ('scape-bounce-glass', bounce_glass))
 
 
 def main():

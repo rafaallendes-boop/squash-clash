@@ -39,18 +39,60 @@ namespace SquashClash.Runtime.Tests
         {
             scape.BallContact(SurfaceId.Floor,6);Assert.That(scape.LastSound,Is.EqualTo(ScapeSound.BounceFloor));Assert.That(scape.Requests(ScapeSound.BounceFloor),Is.EqualTo(1));
             scape.BallContact(SurfaceId.FrontWall,18);Assert.That(scape.LastSound,Is.EqualTo(ScapeSound.FrontWall));Assert.That(scape.Requests(ScapeSound.FrontWall),Is.EqualTo(1));
-            foreach(var wall in new[]{SurfaceId.LeftWall,SurfaceId.RightWall,SurfaceId.BackWall}){scape.BallContact(wall,8);Assert.That(scape.LastSound,Is.EqualTo(ScapeSound.BounceWall),wall.ToString());}
-            Assert.That(scape.Requests(ScapeSound.BounceWall),Is.EqualTo(3));
+            foreach(var wall in new[]{SurfaceId.LeftWall,SurfaceId.RightWall}){scape.BallContact(wall,8);Assert.That(scape.LastSound,Is.EqualTo(ScapeSound.BounceWall),wall.ToString());}
+            Assert.That(scape.Requests(ScapeSound.BounceWall),Is.EqualTo(2));
+            scape.BallContact(SurfaceId.BackWall,8);Assert.That(scape.LastSound,Is.EqualTo(ScapeSound.BounceGlass),"the back-wall glass has its own sound");
+            Assert.That(scape.Requests(ScapeSound.BounceGlass),Is.EqualTo(1));Assert.That(scape.Requests(ScapeSound.BounceWall),Is.EqualTo(2));
             int before=scape.TotalRequests;scape.BallContact(SurfaceId.Floor,AudioScape.QuietSpeed*.5f);
             Assert.That(scape.TotalRequests,Is.EqualTo(before),"a rolling or dying ball makes no sound");
             yield return null;
+        }
+        [UnityTest] public IEnumerator GlassSwitch_Off_SendsTheBackWallBackToTheSideWallSound()
+        {
+            try
+            {
+                AudioScape.GlassSoundOn=false;
+                scape.BallContact(SurfaceId.BackWall,8);Assert.That(scape.LastSound,Is.EqualTo(ScapeSound.BounceWall));
+                Assert.That(scape.Requests(ScapeSound.BounceGlass),Is.EqualTo(0));Assert.That(scape.Requests(ScapeSound.BounceWall),Is.EqualTo(1));
+                AudioScape.GlassSoundOn=true;
+                scape.BallContact(SurfaceId.BackWall,8);Assert.That(scape.LastSound,Is.EqualTo(ScapeSound.BounceGlass));
+            }
+            finally{AudioScape.GlassSoundOn=true;}
+            yield return null;
+        }
+        [UnityTest] public IEnumerator Glass_IsBrighterAndShorterThanTheSideWall()
+        {
+            var glass=scape.ClipOf(ScapeSound.BounceGlass);var wall=scape.ClipOf(ScapeSound.BounceWall);
+            Assert.That(glass.length,Is.LessThan(wall.length),"a short toc");
+            // Brightness: zero crossings per second of the synthesized clip (a plain proxy for pitch).
+            Assert.That(Crossings(glass),Is.GreaterThan(Crossings(wall)*1.5f),"clearly higher and brighter than the side wall");
+            yield return null;
+        }
+        [UnityTest] public IEnumerator DevPanel_GlassToggle_DefaultsOn_AndFlipsTheSwitch()
+        {
+            for(int i=0;i<4;i++){Refresh();yield return null;}
+            var button=root.Q<Button>("audio-glass-toggle");Assert.That(button,Is.Not.Null,"DEV panel has the glass toggle");
+            try
+            {
+                Assert.That(AudioScape.GlassSoundOn,Is.True);Assert.That(button.text,Does.Contain("sí"));
+                Click("audio-glass-toggle");Assert.That(AudioScape.GlassSoundOn,Is.False);Assert.That(button.text,Does.Contain("no"));
+                scape.BallContact(SurfaceId.BackWall,8);Assert.That(scape.LastSound,Is.EqualTo(ScapeSound.BounceWall));
+                Click("audio-glass-toggle");Assert.That(AudioScape.GlassSoundOn,Is.True);
+            }
+            finally{AudioScape.GlassSoundOn=true;}
+        }
+        private static float Crossings(AudioClip clip)
+        {
+            var data=new float[clip.samples*clip.channels];clip.GetData(data,0);int n=0;
+            for(int i=1;i<data.Length;i++)if((data[i-1]<0)!=(data[i]<0))n++;
+            return n/clip.length;
         }
         [UnityTest] public IEnumerator Loudness_GrowsALittleWithPower_AndStaysUnderTheMixCeiling()
         {
             scape.BallContact(SurfaceId.FrontWall,5);float soft=scape.LastVolume;
             scape.BallContact(SurfaceId.FrontWall,26);float hard=scape.LastVolume;
             Assert.That(hard,Is.GreaterThan(soft));Assert.That(hard,Is.LessThanOrEqualTo(soft*2f),"slightly, not a different sound");
-            foreach(var surface in new[]{SurfaceId.Floor,SurfaceId.FrontWall,SurfaceId.LeftWall})
+            foreach(var surface in new[]{SurfaceId.Floor,SurfaceId.FrontWall,SurfaceId.LeftWall,SurfaceId.BackWall})
                 for(float speed=2;speed<=40;speed+=2){scape.BallContact(surface,speed);Assert.That(scape.LastVolume,Is.GreaterThan(0).And.LessThanOrEqualTo(AudioScape.MaxVolume),surface+" "+speed);}
             yield return null;
         }
@@ -99,7 +141,7 @@ namespace SquashClash.Runtime.Tests
             yield return StartMatch(true);
             Assert.That(Drive(()=>rivalHits>=3&&humanDeliveries>=2,300),Is.True,"the demo rally must produce strokes");
             scape.Tick((float)StepReal);
-            int heard=scape.Requests(ScapeSound.BounceFloor)+scape.Requests(ScapeSound.BounceWall)+scape.Requests(ScapeSound.FrontWall);
+            int heard=scape.Requests(ScapeSound.BounceFloor)+scape.Requests(ScapeSound.BounceWall)+scape.Requests(ScapeSound.FrontWall)+scape.Requests(ScapeSound.BounceGlass);
             Assert.That(heard,Is.EqualTo(contacts),"one request per audible ball contact");
             Assert.That(scape.Requests(ScapeSound.FrontWall),Is.GreaterThan(0));Assert.That(scape.Requests(ScapeSound.BounceFloor),Is.GreaterThan(0));
             Assert.That(scape.Requests(ScapeSound.RivalRacket),Is.EqualTo(rivalHits),"one request per rival contact");
