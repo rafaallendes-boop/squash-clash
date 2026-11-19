@@ -315,7 +315,7 @@ namespace SquashClash.Runtime.Menu
         }
         private void StartMatch()
         {
-            Screen=FirstRunScreen.None;app.Clock.Paused=false;rally.Level=Level;
+            Screen=FirstRunScreen.None;app.Clock.Paused=false;rally.Level=Level;rally.RandomStyles=true;
             if(!rally.StartMatch()){OpenMenu();return;}
             app.UserEvents?.Menu("game","open");Refresh();hud.Refresh();
         }
