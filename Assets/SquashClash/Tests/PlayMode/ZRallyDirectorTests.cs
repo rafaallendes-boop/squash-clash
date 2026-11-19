@@ -38,7 +38,7 @@ namespace SquashClash.Runtime.Tests
             // Deterministic drive: no component advances by itself; the test steps host, orders and director.
             app.Host.enabled=app.enabled=controller.enabled=rally.enabled=false;
         }
-        [UnityTearDown] public IEnumerator Cleanup(){yield return PlayModeTestWorld.ClearApp();}
+        [UnityTearDown] public IEnumerator Cleanup(){SquashClash.Runtime.Visual.PointEndFreeze.Reset();yield return PlayModeTestWorld.ClearApp();}
         private bool Drive(System.Func<bool> until,double maxRealSeconds=60)
         {
             int limit=(int)(maxRealSeconds/StepReal);
@@ -118,6 +118,9 @@ namespace SquashClash.Runtime.Tests
         [UnityTest] public IEnumerator Autopilot_ExchangesStrokes_ThroughTheNormalShotPath()
         {
             rally.Autopilot=true;rally.AutopilotTimingSigmaMs=15;rally.Level=AiLevel.Medium;rally.Seed=5;
+            // The drawn-equals-body check below runs right as a point closes: the 100 ms point-end freeze (19 nov) holds the
+            // drawing there by design and is tested on its own (ZPointEndFreezeTests), so it is off here.
+            SquashClash.Runtime.Visual.PointEndFreeze.Enabled=false;
             var parameters=new RallyParams{RestartSeconds=.2,MaxShots=24};rally.SetParams(parameters);
             int most=0,rivalSwings=0,resolved=0;rally.PointEnded+=p=>most=Mathf.Max(most,p.Shots);rally.RivalSwing+=(_,contact)=>{if(contact)rivalSwings++;};
             controller.ShotResolved+=r=>{if(r.Applied)resolved++;};

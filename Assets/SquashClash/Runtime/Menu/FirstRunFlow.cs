@@ -37,6 +37,8 @@ namespace SquashClash.Runtime.Menu
         private const int TimingStep=2;
         public const string TutorialSeenKey="sc.firstRun.tutorialSeen";
         public const string LevelKey="sc.firstRun.level";
+        // Rival styles: how many menu matches this install has started; it seeds the next match's random style.
+        public const string RivalMatchesKey="sc.firstRun.rivalMatches";
         // M2-4 (M24Model): the aim is fixed where the finger lands on the front wall; pulling down sets the power;
         // lifting the finger is the stroke, and lifting it back at the anchor height cancels. Timing (TimingRingView,
         // ImpactCue): a ring converges on the fixed triangle at the planned contact; one attempt per ball. Volley (19 nov, PO):
@@ -393,8 +395,9 @@ namespace SquashClash.Runtime.Menu
         }
         private void StartMatch()
         {
-            Screen=FirstRunScreen.None;app.Clock.Paused=false;rally.Level=Level;
+            Screen=FirstRunScreen.None;app.Clock.Paused=false;rally.Level=Level;rally.RandomStyles=true;rally.StyleCounter=PlayerPrefs.GetInt(RivalMatchesKey,0);
             if(!rally.StartMatch()){OpenMenu();return;}
+            PlayerPrefs.SetInt(RivalMatchesKey,rally.StyleCounter);PlayerPrefs.Save();
             app.UserEvents?.Menu("game","open");Refresh();hud.Refresh();
         }
         // Dev only: leave the menu for the practice court and the developer tools.

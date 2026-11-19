@@ -51,6 +51,23 @@ namespace SquashClash.Core.Rally
         // Volley energy (19 nov): a contact before the bounce costs the striker this many energy points (0-100 scale) on top of the
         // stroke, because the player anticipates. Charged only with fatigue on; RallySim bots never volley by default.
         public double VolleyEnergyCost=2;
+        // Rival styles (design 2026-11-19). A style changes only how the AI chooses (utility weights, risk aversion, volley
+        // willingness, wait W and recovery cover), never physics, rules, reach, windows, errors or information (spec 11.2, 11.5).
+        // Fondista reuses the Fondo* weights above. StyleRivalVolley switches the rival volley off (control); a cover depth < 0 is "to the T".
+        public double StyleRivalVolley=1,StyleCoverBounceZ=3.5;
+        public double StyleFondoVolleyBias=-1,StyleFondoVolleyMinKS=.1,StyleFondoCoverDepth=-1;
+        public double StyleShooterLongWeight=.5,StyleShooterAwayWeight=.8,StyleShooterTimeWeight=.3,StyleShooterDropWeight=1.6,StyleShooterRiskAversion=.6;
+        public double StyleShooterDefenseSlackS=.06,StyleShooterDropMinSlackS=.3,StyleShooterDropZoneAhead=1,StyleShooterAttackBase=.8,StyleShooterAttackAhead=.4;
+        public double StyleShooterVolleyBias=.8,StyleShooterVolleyMinKS=.05,StyleShooterVolleySteal=0,StyleShooterWaitBehindT=0,StyleShooterCoverDepth=-1;
+        public double StyleAllRoundLongWeight=1,StyleAllRoundAwayWeight=.8,StyleAllRoundTimeWeight=.6,StyleAllRoundDropWeight=1.1,StyleAllRoundRiskAversion=1.1;
+        public double StyleAllRoundDefenseSlackS=.12,StyleAllRoundDropMinSlackS=.3,StyleAllRoundDropZoneAhead=0,StyleAllRoundAttackBase=0,StyleAllRoundAttackAhead=1;
+        // Difficulty per style (Claude, 19 nov, after search02): the styles differ in strength, so each (style, level) scales the
+        // level's five execution/perception noises by its own k (temperature unchanged). Chosen from the search02 grid; Definidor Hard
+        // stays at 1 (deviation: easier than the 20 % target, never below the shared noise).
+        public double StyleNoiseKFondoEasy=1.5,StyleNoiseKFondoMedium=1.75,StyleNoiseKFondoHard=2.5;
+        public double StyleNoiseKShooterEasy=1.25,StyleNoiseKShooterMedium=1,StyleNoiseKShooterHard=1;
+        public double StyleNoiseKAllRoundEasy=1.5,StyleNoiseKAllRoundMedium=1.5,StyleNoiseKAllRoundHard=1.25;
+        public double StyleAllRoundVolleyBias=-.8,StyleAllRoundVolleyMinKS=.08,StyleAllRoundVolleySteal=.6,StyleAllRoundWaitBehindT=.2,StyleAllRoundCoverDepth=-1;
         public string Hash
         {
             get

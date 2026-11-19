@@ -23,6 +23,7 @@ namespace SquashClash.Runtime.Rally
         public static string StrokesText(int strokes)=>strokes==1?"1 golpe":strokes+" golpes";
         private AppBootstrap app;
         private RallyDirector rally;
+        private Label rivalName;private string rivalNameShown;
         private Label status,humanPoints,rivalPoints,resultTitle,resultScore,resultKicker,bootTitle,fps,resultDuration,resultLongest;
         private Button resultRematch;
         public const string DevTitle="Squash Clash — First Ball",PlayerTitle="Squash Clash";
@@ -71,7 +72,9 @@ namespace SquashClash.Runtime.Rally
             score.Add(Chip("sc-chip--human"));score.Add(NameColumn("TÚ","human",humanBar));humanServe=Chip("sc-serve");score.Add(humanServe);
             humanPoints=Text("0","sc-score-points");humanPoints.name="rally-score-human";score.Add(humanPoints);score.Add(Text("–","sc-score-dash"));
             rivalPoints=Text("0","sc-score-points");rivalPoints.name="rally-score-rival";score.Add(rivalPoints);
-            rivalServe=Chip("sc-serve");score.Add(rivalServe);score.Add(NameColumn("RIVAL","rival",rivalBar));score.Add(Chip("sc-chip--rival"));
+            rivalServe=Chip("sc-serve");score.Add(rivalServe);var rivalColumn=NameColumn("RIVAL","rival",rivalBar);score.Add(rivalColumn);
+            // The match's rival style under its energy line (design 2026-11-19), small enough for the fixed 60 px column.
+            rivalName=Text("","sc-score-name");rivalName.name="rally-rival-style";rivalName.style.fontSize=9;rivalName.style.unityTextAlign=TextAnchor.MiddleCenter;rivalName.style.marginLeft=0;rivalName.style.display=DisplayStyle.None;rivalColumn.Add(rivalName);score.Add(Chip("sc-chip--rival"));
             status=new Label{name="rally-status",pickingMode=PickingMode.Ignore};
             status.AddToClassList("sc-status");status.style.whiteSpace=WhiteSpace.NoWrap;status.style.height=22;status.style.display=DisplayStyle.None;
             // One line always: a text longer than the screen is cut with an ellipsis, never wrapped or spilled.
@@ -302,6 +305,9 @@ namespace SquashClash.Runtime.Rally
             // A point just won makes its digit pulse; a reset to zero (rematch) does not.
             if(scoreHuman!=rally.HumanPoints){if(scoreHuman>=0&&rally.HumanPoints>scoreHuman)pulseHuman=PulseSeconds;scoreHuman=rally.HumanPoints;humanPoints.text=scoreHuman.ToString();}
             if(scoreRival!=rally.RivalPoints){if(scoreRival>=0&&rally.RivalPoints>scoreRival)pulseRival=PulseSeconds;scoreRival=rally.RivalPoints;rivalPoints.text=scoreRival.ToString();}
+            // The rival's style in a match (design 2026-11-19), under «RIVAL» on the scoreboard.
+            string name=rally.Match!=null?RivalStyle.Name(rally.Style):"";
+            if(name!=rivalNameShown){rivalNameShown=name;rivalName.text=name;rivalName.style.display=name.Length>0?DisplayStyle.Flex:DisplayStyle.None;}
             int serve=rally.Match==null?0:rally.Match.Server==PlayerId.Human?1:2;
             if(serve!=serveShown)
             {
@@ -317,7 +323,7 @@ namespace SquashClash.Runtime.Rally
             var last=rally.LastPoint;var game=rally.Match;
             shown=phase==RallyPhase.MatchOver&&game!=null&&game.Winner.HasValue?RallyText.MatchOver(game.Winner.Value,game.Human,game.Rival)
                 :phase==RallyPhase.PointOver&&last.HasValue?RallyText.Point(last.Value.Winner,last.Value.Cause,last.Value.Reception,last.Value.Shots,human,rival)
-                :game!=null?RallyText.LiveMatch(human,rival,shots,toHit,game.Server,game.Box)
+                :game!=null?(played==0?RallyText.RivalIntro(rally.Style)+" · ":"")+RallyText.LiveMatch(human,rival,shots,toHit,game.Server,game.Box)
                 :RallyText.Live(human,rival,shots,toHit);
             status.text=shown;
         }

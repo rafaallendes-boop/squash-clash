@@ -27,6 +27,24 @@ namespace SquashClash.Core.Rally
             double release=Math.Max(presentedAtReal,target+deltaMs/1000+timing.LatencyCompMs/1000);
             return ContactContract.Decide(release,plans,clock,trajectory,timing,false);
         }
+        // A release aimed at the volley's T* (deltaMs from it), judged by OpportunityContract.Select exactly like the human's: at or
+        // before S against the volley, later against the bounce. usedVolley tells which plan the decision belongs to.
+        public static ContactDecision ResolveAimedVolley(RallyContext context,ClockMap clock,Trajectory trajectory,ContactPlan bounce,in VolleyOpportunity volley,double presentedAtReal,double deltaMs,out bool usedVolley)
+        {
+            if(context==null||clock==null)throw new ArgumentNullException(nameof(context));
+            usedVolley=false;var timing=context.Timing;var v=volley.Plan;
+            if(!volley.Exists)return Resolve(context,clock,trajectory,bounce,presentedAtReal,deltaMs);
+            if(!clock.TrySimToReal(v.TStarStep,0,out double target))
+                return new ContactDecision(ShotResult.NotEvaluable,FailKind.None,0,-1,false,false,v.Version,presentedAtReal,0,0,0,reason:"target-time-unmapped");
+            double release=Math.Max(presentedAtReal,target+deltaMs/1000+timing.LatencyCompMs/1000);
+            usedVolley=OpportunityContract.Select(release,clock,timing,volley)==Opportunity.Volley;
+            var plan=usedVolley?v:bounce;var plans=new PresentedPlans();
+            double planTarget=target;
+            if(!usedVolley&&plan.Exists&&plan.TStarStep>=0&&!clock.TrySimToReal(plan.TStarStep,0,out planTarget))
+                return new ContactDecision(ShotResult.NotEvaluable,FailKind.None,0,-1,false,false,plan.Version,presentedAtReal,0,0,0,reason:"target-time-unmapped");
+            plans.Present(presentedAtReal,plan,planTarget);
+            return ContactContract.Decide(release,plans,clock,trajectory,timing,false);
+        }
         public static CausalShotResult Solve(RallyContext context,CausalReference reference,BodyFrame body,Vector3 point,Vector2 aim,float power)
             =>Solve(context,reference,body,point,aim,power,FatigueArm.None);
         public static CausalShotResult Solve(RallyContext context,CausalReference reference,BodyFrame body,Vector3 point,Vector2 aim,float power,in FatigueArm arm)

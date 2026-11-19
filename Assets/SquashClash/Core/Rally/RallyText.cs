@@ -4,6 +4,8 @@ namespace SquashClash.Core.Rally
     public static class RallyText
     {
         public static string Player(PlayerId who)=>who==PlayerId.Human?"Tú":"Rival";
+        // Rival styles (design 2026-11-19): shown at the start of a match and on the scoreboard.
+        public static string RivalIntro(RivalStyleId style)=>"Rival: "+RivalStyle.Name(style);
         private static string Score(int human,int rival)=>"Tú "+human+" – "+rival+" Rival";
         public static string Live(int human,int rival,int shots,PlayerId toHit)=>Score(human,rival)+" · golpes "+shots+" · turno: "+Player(toHit);
         public static string Point(PlayerId? winner,PointEndCause cause,ReceptionResult? reception,int shots,int human,int rival)

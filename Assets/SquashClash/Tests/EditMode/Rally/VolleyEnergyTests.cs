@@ -30,8 +30,9 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void RallyParams_VolleyEnergyCost_IsTwoPoints_AndOnlyTheRallyParamsHashMoves()
         {
             Assert.That(new RallyParams().VolleyEnergyCost,Is.EqualTo(2.0));
-            Assert.That(Projection(f=>f.Name!="VolleyEnergyCost"),Is.EqualTo("6a7b329a7b85"),"without the new field the hash is the volley v1 one");
-            Assert.That(new RallyParams().Hash,Is.EqualTo("5cdbb01e4621"));
+            // Rival styles (19 nov) add the Style* fields; without them the hashes below are the ones this test always fixed.
+            Assert.That(Projection(f=>f.Name!="VolleyEnergyCost"&&!f.Name.StartsWith("Style",StringComparison.Ordinal)),Is.EqualTo("6a7b329a7b85"),"without the new field the hash is the volley v1 one");
+            Assert.That(Projection(f=>!f.Name.StartsWith("Style",StringComparison.Ordinal)),Is.EqualTo("5cdbb01e4621"));
             var defaults=ConfigFixtures.Default();
             Assert.That(defaults.Hash,Is.EqualTo("207da8f2c636"));Assert.That(defaults.Ordered.Count,Is.EqualTo(132));
             Assert.That(EffectiveConfig.From(defaults).SimulationKey,Is.EqualTo("166a96e319c7"));
