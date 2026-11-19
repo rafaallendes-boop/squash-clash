@@ -24,7 +24,7 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void DefaultsAndRanges_AreTheElevenApprovedSoftValues()
         {
             string[] keys={"enabled","costPerMeter","strongFrom","strongCost","recoverBetween","recoverPerS","onset","legsMax","reactionMaxMs","armSpeedMax","positionGainMax"};
-            double[] values={1,.4,.7,1,.25,.5,70,.10,40,.04,.25},min={0,0,.5,0,0,0,10,0,0,0,0},max={1,2,1,5,1,5,100,.4,200,.2,1};
+            double[] values={1,.3,.7,1,.08,.5,70,.10,40,.04,.25},min={0,0,.5,0,0,0,10,0,0,0,0},max={1,2,1,5,1,5,100,.4,200,.2,1};
             var p=ConfigFixtures.Default();Assert.That(p.Ordered.Count(e=>e.Key.StartsWith("fatigue.",StringComparison.Ordinal)),Is.EqualTo(11));
             for(int i=0;i<keys.Length;i++)
             {Assert.That(ParamCatalog.TryGet("fatigue."+keys[i],out var d),Is.True);Assert.That(p.Get(d.Key),Is.EqualTo(values[i]));Assert.That(d.Min,Is.EqualTo(min[i]));Assert.That(d.Max,Is.EqualTo(max[i]));}
@@ -48,9 +48,9 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void RunningAndStrongIntentions_AreCharged_AndServeZeroCostsNothing()
         {
             var s=State();Call(s,"BeginPoint");Call(s,"Step",10d,BodyPhase.Recovering,1f,false);
-            Assert.That(Energy(s),Is.EqualTo(96).Within(1e-12));Call(s,"Strike",0d);Call(s,"Strike",.7d);Assert.That(Energy(s),Is.EqualTo(96).Within(1e-12));
-            Call(s,"Strike",1d);Assert.That(Energy(s),Is.EqualTo(95).Within(1e-12));
-            Assert.That(Field(Point(s),"Meters"),Is.EqualTo(10));Assert.That(Field(Point(s),"MovementCost"),Is.EqualTo(4));Assert.That(Field(Point(s),"StrongCost"),Is.EqualTo(1));
+            Assert.That(Energy(s),Is.EqualTo(97).Within(1e-12));Call(s,"Strike",0d);Call(s,"Strike",.7d);Assert.That(Energy(s),Is.EqualTo(97).Within(1e-12));
+            Call(s,"Strike",1d);Assert.That(Energy(s),Is.EqualTo(96).Within(1e-12));
+            Assert.That(Field(Point(s),"Meters"),Is.EqualTo(10));Assert.That(Field(Point(s),"MovementCost"),Is.EqualTo(3));Assert.That(Field(Point(s),"StrongCost"),Is.EqualTo(1));
         }
         [TestCase(BodyPhase.Waiting,.049f,false,true)] [TestCase(BodyPhase.Set,0f,false,true)]
         [TestCase(BodyPhase.Approaching,0f,false,false)] [TestCase(BodyPhase.Recovering,0f,false,false)]
@@ -63,14 +63,14 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void BetweenPoints_RecoversExactlyOnce_AndNothingRunsOutsidePoint()
         {
             var s=State(40);Call(s,"Step",10d,BodyPhase.Waiting,0f,false);Assert.That(Energy(s),Is.EqualTo(40));
-            Call(s,"BeginPoint");Call(s,"ClosePoint");Assert.That(Energy(s),Is.EqualTo(55));Call(s,"ClosePoint");
-            Call(s,"Step",10d,BodyPhase.Waiting,0f,false);Call(s,"Strike",1d);Assert.That(Energy(s),Is.EqualTo(55));
-            Assert.That(Field(Point(s),"End"),Is.EqualTo(40));Assert.That(Field(Point(s),"AfterRecovery"),Is.EqualTo(55));
+            Call(s,"BeginPoint");Call(s,"ClosePoint");Assert.That(Energy(s),Is.EqualTo(44.8).Within(1e-12));Call(s,"ClosePoint");
+            Call(s,"Step",10d,BodyPhase.Waiting,0f,false);Call(s,"Strike",1d);Assert.That(Energy(s),Is.EqualTo(44.8).Within(1e-12));
+            Assert.That(Field(Point(s),"End"),Is.EqualTo(40));Assert.That(Field(Point(s),"AfterRecovery"),Is.EqualTo(44.8).Within(1e-12));
         }
         [Test] public void Energy_IsClamped_ButMovementAccountingIsNotTruncated()
         {
             var s=State(1);Call(s,"BeginPoint");Call(s,"Step",1000d,BodyPhase.Approaching,2f,false);
-            Assert.That(Energy(s),Is.Zero);Assert.That(Field(Point(s),"MovementCost"),Is.EqualTo(400));
+            Assert.That(Energy(s),Is.Zero);Assert.That(Field(Point(s),"MovementCost"),Is.EqualTo(300));
             var full=State(100);Call(full,"BeginPoint");Call(full,"Step",0d,BodyPhase.Set,0f,false);Assert.That(Energy(full),Is.EqualTo(100));
         }
         [Test] public void Disabled_IsIdentity_AndDoesNotCalculateEnergy()

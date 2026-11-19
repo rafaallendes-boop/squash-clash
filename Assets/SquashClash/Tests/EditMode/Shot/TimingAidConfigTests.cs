@@ -41,7 +41,7 @@ namespace SquashClash.Core.Tests.Shot
             }
             var sl5=p.With("practice.launch",4).With("human.z",(double)1.6f);
             TestContext.WriteLine("S4_HASH defaults="+p.Hash+" P0="+effective.Hash+" SL5="+sl5.Hash);
-            Assert.That(sl5.Hash,Is.EqualTo("750c407c8a2f"),"SL5 with complete existing scenario preparation");
+            Assert.That(sl5.Hash,Is.EqualTo("d09119d6321b"),"SL5 with complete existing scenario preparation");
         }
     }
 }

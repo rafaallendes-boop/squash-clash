@@ -75,7 +75,7 @@ namespace SquashClash.Runtime.Tests
             yield return Boot(null);
             Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.None));Assert.That(app.Clock.Paused,Is.False);
             Assert.That(Shown(Find("menu-layer")),Is.False);
-            Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("3262f9b89156"));
+            Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("ec3ff68ebdfa"));
             Assert.That(Find<Label>("boot-title").text,Is.EqualTo("Squash Clash — First Ball"));
             Assert.That(Shown(Find("rally-toggle")),Is.True);
         }
@@ -138,7 +138,7 @@ namespace SquashClash.Runtime.Tests
             Click("menu-practice");Refresh();yield return null;
             Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.None));Assert.That(app.Clock.Paused,Is.False);
             Assert.That(rally.Active,Is.False);Assert.That(Shown(Find("menu-layer")),Is.False);
-            Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("3262f9b89156"));
+            Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("ec3ff68ebdfa"));
         }
         // Performance ceiling: the flow runs every frame and must cost no garbage, with the menu open and during a match.
         [UnityTest] public IEnumerator Refresh_AllocatesNothing_InTheMenuAndDuringAMatch()

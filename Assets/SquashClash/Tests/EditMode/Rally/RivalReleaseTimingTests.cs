@@ -35,7 +35,7 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(field,Is.Not.Null);
             Assert.That(field.GetValue(new RallyParams()),Is.EqualTo(1.5));
             var context=RallyFixtures.Context();
-            Assert.That(context.Config.Hash,Is.EqualTo("2ec0c953786a"));
+            Assert.That(context.Config.Hash,Is.EqualTo("207da8f2c636"));
             Assert.That(context.Config.Source.Ordered.Count,Is.EqualTo(132));
             Assert.That(context.Config.SimulationKey,Is.EqualTo("166a96e319c7"));
         }
