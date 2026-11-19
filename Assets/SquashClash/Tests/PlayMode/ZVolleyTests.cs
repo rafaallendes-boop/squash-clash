@@ -71,9 +71,38 @@ namespace SquashClash.Runtime.Tests
             At(app.Host.ObservedRealTime+.3);
             Assert.That(controller.LastRecord.Applied,Is.True,controller.LastRecord.Reason);Assert.That(controller.LastRecord.ContactStep,Is.LessThan(bounce));
             Assert.That(controller.UsedCausalReference,Is.SameAs(controller.VolleyCausalReference));
-            Assert.That(app.GetComponent<ShotNoteView>().Text,Does.StartWith("Volea · "));
+            // 19 nov (PO): no «Volea · » text over the play; the note is the usual result and the volley gets a figure instead.
+            Assert.That(app.GetComponent<ShotNoteView>().Text,Is.EqualTo("Perfecto"));
             Assert.That(app.GetComponent<SwingView>().VolleyPose,Is.True);
             Assert.That(Kinds(),Does.Contain("shot-opportunity-order"));
+        }
+        [Test] public void Vl1_VolleyContact_BurstsTheAmberRingAtTheContact_ThenFades()
+        {
+            LaunchVl1();var burst=app.GetComponent<VolleyBurstView>();Assert.That(burst,Is.Not.Null,"the volley figure exists with the shot views");
+            Assert.That(burst.IsVisible,Is.False);
+            // 20 ms early (inside Perfect): the contact is scheduled ahead, so nothing shows until the contact itself.
+            var order=Submit(Real(controller.Volley.Plan.TStarStep)-.02);Assert.That(order.Result,Is.EqualTo("Perfect"),order.Reason);
+            Assert.That(controller.WaitingForContact,Is.True);Assert.That(burst.ShowCount,Is.Zero,"nothing before the contact itself");
+            At(app.Host.ObservedRealTime+.3);var r=controller.LastRecord;Assert.That(r.Applied,Is.True,r.Reason);
+            Assert.That(burst.ShowCount,Is.EqualTo(1));Assert.That(burst.IsVisible,Is.True);
+            Assert.That(Vector3.Distance(burst.Burst.position,new Vector3(r.ContactX,r.ContactY,r.ContactZ)),Is.LessThan(1e-4f),"at the contact point");
+            Assert.That(burst.Tint,Is.EqualTo(ShotController.VolleyTint));
+            Assert.That(burst.Radius,Is.EqualTo(VolleyBurstView.StartRadius).Within(1e-6f));Assert.That(burst.Alpha,Is.EqualTo(1).Within(1e-6f));
+            app.Clock.Paused=true;burst.Tick(.1);Assert.That(burst.Radius,Is.EqualTo(VolleyBurstView.StartRadius).Within(1e-6f),"a pause freezes the figure");
+            app.Clock.Paused=false;burst.Tick(.1);
+            Assert.That(burst.Radius,Is.GreaterThan(VolleyBurstView.StartRadius));Assert.That(burst.Radius,Is.LessThan(VolleyBurstView.EndRadius));
+            Assert.That(burst.Alpha,Is.LessThan(1));Assert.That(burst.Alpha,Is.GreaterThan(0));
+            burst.Tick(VolleyBurstView.DurationSeconds);Assert.That(burst.IsVisible,Is.False,"gone after a quarter of a second");
+            Assert.That(burst.Burst.gameObject.activeSelf,Is.False);
+            Assert.That(app.GetComponent<ShotNoteView>().Text,Does.Not.Contain("Volea"));
+        }
+        [Test] public void Vl1_BounceContact_HasNoVolleyFigure()
+        {
+            LaunchVl1();var burst=app.GetComponent<VolleyBurstView>();Assert.That(burst,Is.Not.Null);
+            var r=Submit(Real(controller.Plan.TStarStep));Assert.That(controller.LastOpportunity,Is.EqualTo(Opportunity.Bounce));Assert.That(r.Result,Is.EqualTo("Perfect"),r.Reason);
+            At(app.Host.ObservedRealTime+.3);Assert.That(controller.LastRecord.Applied,Is.True,controller.LastRecord.Reason);
+            Assert.That(burst.ShowCount,Is.Zero);Assert.That(burst.IsVisible,Is.False);
+            Assert.That(app.GetComponent<ShotNoteView>().Text,Is.EqualTo("Perfecto"));
         }
         [Test] public void Vl1_ReleaseAfterTheSplit_IsTheBounceOpportunity_NeverAnAccidentalVolley()
         {

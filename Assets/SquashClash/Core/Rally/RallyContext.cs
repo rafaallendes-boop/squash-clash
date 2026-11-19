@@ -52,6 +52,8 @@ namespace SquashClash.Core.Rally
             long first=trajectory.States[0].Step;
             return VolleyPlanner.Plan(trajectory,j=>FrameAt(path[(int)Math.Max(0,Math.Min(path.Length-1,j-first))]),Court,Legal,Volley,bounce,first+delaySteps,Tempo,version);
         }
+        // The extra energy of a racket contact judged by the rules just before it: a contact before the bounce is a volley (19 nov).
+        public double VolleyEnergyCost(PointRules beforeContact)=>beforeContact!=null&&beforeContact.FloorBounces==0?Params.VolleyEnergyCost:0;
         public Vector2 WaitPosition(PlayerId who)=>ClampBody(T+(who==PlayerId.Human
             ?new Vector2(-(float)Params.WaitLateralOffset,(float)Params.HumanWaitBehindT)
             :new Vector2((float)Params.WaitLateralOffset,(float)Params.RivalWaitBehindT)));

@@ -228,7 +228,9 @@ namespace SquashClash.Core.Rally
             outcome.Receptions.Add(new ReceptionLog(who,previous.Result,previous.Perfect,previous.Reachable,previous.Defensive,previous.DeltaMs,previous.SlackS,pendingShot.Option,previous.ContactStep,previous.Reason,causal,previous.FatigueReception,arm.Factor,previous.Volley,previous.VolleyOffered));
             // The racket only replaces the velocity of the authoritative state at the contact step.
             ball.Reset(new BallState{Position=state.Position,Velocity=solution.Velocity,Step=state.Step});
-            Rules.RacketContact(who);Energy(who).Strike(pendingShot.P);
+            // A contact before the bounce also costs the volley energy (19 nov); bots never volley by default, so nothing changes for them.
+            double volleyCost=context.VolleyEnergyCost(Rules);
+            Rules.RacketContact(who);Energy(who).Strike(pendingShot.P);Energy(who).Volley(volleyCost);
             Body(who).MoveTo(context.WaitPosition(who),0,BodyPhase.Recovering,BodyPhase.Waiting);
             BeginReception(who.Other(),outcome);
         }

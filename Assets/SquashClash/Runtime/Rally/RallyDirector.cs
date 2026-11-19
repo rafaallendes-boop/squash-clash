@@ -302,10 +302,12 @@ namespace SquashClash.Runtime.Rally
             if(resolved!=null&&resolved.Applied)
             {
                 long contactStep=resolved.ContactStep;var at=Evaluate(contactStep);
+                // Judged before the racket resets the bounce count: a contact before the bounce is a volley (extra energy, 19 nov).
+                double volleyCost=context.VolleyEnergyCost(at);
                 if(at.RacketContact(PlayerId.Human))
                 {
                     RivalReceptionFatigue=context.Fatigue.Factor(RivalEnergy.EnergyAt(contactStep));
-                    HumanEnergy.StrikeAt(contactStep,resolved.Power);
+                    HumanEnergy.StrikeAt(contactStep,resolved.Power,volleyCost);
                     committed=at;flightStartStep=contactStep;Phase=RallyPhase.RivalReception;resolved=null;
                     Human.MoveTo(context.WaitPosition(PlayerId.Human),0,BodyPhase.Recovering,BodyPhase.Waiting);
                     PlanRival();TickRival();return;
@@ -394,10 +396,12 @@ namespace SquashClash.Runtime.Rally
                     var trace=CausalShotTrace.Create("Rival",host.LaunchId,"",pendingStep,rivalCausal,rivalCausal.BodyAt(pendingStep),causal);pointCausal.Add(trace);
                     app.Metrics?.Write("rally-causal",host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(trace));
                 }
+                // Same rule as the human's (the Fondo rival never volleys in v1, so this is zero today).
+                double rivalVolleyCost=context.VolleyEnergyCost(at);
                 if(solution.Solved&&at.RacketContact(PlayerId.Rival))
                 {
                     double humanFatigue=context.Fatigue.Factor(HumanEnergy.EnergyAt(pendingStep));
-                    RivalEnergy.StrikeAt(pendingStep,pendingShot.P);
+                    RivalEnergy.StrikeAt(pendingStep,pendingShot.P,rivalVolleyCost);
                     WriteRivalShot(pendingStep,causal);
                     committed=at;rivalReception=ReceptionResult.Contact;RivalSwing?.Invoke(RivalPlan.Contact.Side,true);
                     Rival.MoveTo(context.WaitPosition(PlayerId.Rival),0,BodyPhase.Recovering,BodyPhase.Waiting);

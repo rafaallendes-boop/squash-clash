@@ -88,6 +88,7 @@ namespace SquashClash.Capture
             Click("menu-play");yield return Shoot("tutorial-1-aim");
             Click("tutorial-next");yield return Shoot("tutorial-2-pull");
             Click("tutorial-next");yield return Shoot("tutorial-3-timing");
+            Click("tutorial-next");yield return Shoot("tutorial-4-volley");
             yield return Shutdown();
             PlayerPrefs.SetInt("sc.firstRun.tutorialSeen",1);
 

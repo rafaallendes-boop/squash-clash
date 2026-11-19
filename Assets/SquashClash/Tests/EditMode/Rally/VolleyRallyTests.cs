@@ -55,7 +55,8 @@ namespace SquashClash.Core.Tests.Rally
                 canonical.Append(field.Name).Append('=').Append(((double)field.GetValue(new RallyParams())).ToString("R",CultureInfo.InvariantCulture)).Append('\n');
             string projection;using(var sha=SHA256.Create())projection=BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(canonical.ToString())),0,6).Replace("-","").ToLowerInvariant();
             Assert.That(projection,Is.EqualTo("927e304bbfec"));
-            Assert.That(typeof(RallyParams).GetFields().Count(f=>f.Name.StartsWith("Volley",StringComparison.Ordinal)),Is.EqualTo(5));
+            // Six since 19 nov: the five v1 fields plus VolleyEnergyCost (VolleyEnergyTests checks its own projection).
+            Assert.That(typeof(RallyParams).GetFields().Count(f=>f.Name.StartsWith("Volley",StringComparison.Ordinal)),Is.EqualTo(6));
             TestContext.WriteLine("VOLLEY_RALLYPARAMS_HASH="+new RallyParams().Hash+" projection="+projection);
         }
         [Test] public void NobodyVolleys_TheRallyIsIdenticalWithTheVolleyOnOrOff()

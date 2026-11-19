@@ -44,6 +44,8 @@ namespace SquashClash.Core.Rally
     [Serializable] public sealed class FatiguePoint
     {
         public double Start,End,AfterRecovery,Meters,MovementCost,StrongCost,QuietRecovered,BetweenRecovered,Minimum;
+        // Extra energy charged for volley contacts in this point (RallyParams.VolleyEnergyCost each).
+        public double VolleyCost;
         public FatiguePoint Copy()=>(FatiguePoint)MemberwiseClone();
     }
     // Energy advances on simulation steps only. The small flight history also accounts for delayed contacts
@@ -81,6 +83,12 @@ namespace SquashClash.Core.Rally
             double cost=settings.StrongCost*(power-settings.StrongFrom)/(1-settings.StrongFrom);
             Point.StrongCost+=cost;Energy=Clamp(Energy-cost);Point.Minimum=Math.Min(Point.Minimum,Energy);Point.End=Point.AfterRecovery=Energy;
         }
+        // A volley contact: its extra cost, charged at the contact itself after the stroke's own cost. Zero costs nothing.
+        public void Volley(double cost)
+        {
+            if(!open||!settings.Enabled||cost<=0)return;
+            Point.VolleyCost+=cost;Energy=Clamp(Energy-cost);Point.Minimum=Math.Min(Point.Minimum,Energy);Point.End=Point.AfterRecovery=Energy;
+        }
         public void ClosePoint()
         {
             if(!open)return;open=false;
@@ -103,17 +111,21 @@ namespace SquashClash.Core.Rally
             if(offset<0||offset>=energies.Count)throw new ArgumentOutOfRangeException(nameof(step));
             return energies[offset];
         }
-        public void StrikeAt(long step,double power)
+        public void StrikeAt(long step,double power)=>StrikeAt(step,power,0);
+        // The same delayed contact, plus the volley cost at that step when the contact was a volley.
+        public void StrikeAt(long step,double power,double volleyCost)
         {
-            if(!open||!settings.Enabled||struck||power<=settings.StrongFrom||settings.StrongCost==0)return;
+            // Without a volley cost the condition is the old one: a soft stroke replays nothing.
+            bool strong=power>settings.StrongFrom&&settings.StrongCost!=0;
+            if(!open||!settings.Enabled||struck||!strong&&volleyCost<=0)return;
             int offset=checked((int)(step-firstStep));
             if(offset<0||offset>samples.Count)throw new ArgumentOutOfRangeException(nameof(step));
             struck=true;Energy=flightEnergy;Point=flightPoint.Copy();
-            if(offset==0)Strike(power);energies[0]=Energy;
+            if(offset==0){Strike(power);Volley(volleyCost);}energies[0]=Energy;
             for(int i=0;i<samples.Count;i++)
             {
                 var s=samples[i];Step(s.Meters,s.Phase,s.Speed,s.Reacting);
-                if(i+1==offset)Strike(power);energies[i+1]=Energy;
+                if(i+1==offset){Strike(power);Volley(volleyCost);}energies[i+1]=Energy;
             }
         }
         private static double Clamp(double energy)=>Math.Max(0,Math.Min(100,energy));
