@@ -86,16 +86,17 @@ namespace SquashClash.Core.Shot
     {
         public static CausalShotResult Solve(CausalReference reference,BodyFrame body,Vector3 contact,Vector2 aim,float power,EffectiveConfig config,IBallSimulationFactory factory)
             =>Solve(reference,body,contact,aim,power,config,factory,FatigueArm.None);
-        public static CausalShotResult Solve(CausalReference reference,BodyFrame body,Vector3 contact,Vector2 aim,float power,EffectiveConfig config,IBallSimulationFactory factory,in FatigueArm arm)
+        public static CausalShotResult Solve(CausalReference reference,BodyFrame body,Vector3 contact,Vector2 aim,float power,EffectiveConfig config,IBallSimulationFactory factory,in FatigueArm arm,float footprintRadius=ShotIntentSolver.DefaultFootprintRadius)
         {
             var settings=CausalSettings.From(config.Source);var vectors=ApplyFatigue(Evaluate(reference,body,contact,settings),arm);
-            // Order: pace curve (from the aim requested before this layer) -> causal composition -> legal-front bound -> solver.
+            // Order: pace curve (from the aim requested before this layer) -> causal composition -> legal-front bound -> intention (G1 A2) -> solver.
             var pace=ShotPace.Requested(power,contact,aim,config.Physics.BallRadius,config.Source);float requested=pace.Speed;
             var input=BoundToLegalFront(Apply(aim,requested,vectors,settings),aim,config.Court,config.Physics.BallRadius);
-            // The existing solver retains its feasibility raising/lowering, cap and verifier unchanged.
-            // Equal endpoints convey the already composed total speed without clamping it back to vMin.
-            var solution=ShotSolver.Solve(new ShotRequest(contact,input.Aim,power),input.Speed,input.Speed,(float)config.Source.Get("shot.vCap"),
-                config.Physics.Gravity,config.Physics.BallRadius,config.Court,factory,config.Physics);
+            // The existing solver retains its feasibility raising/lowering, cap and verifier unchanged; outside the intention zone
+            // (P<=0.5 or far from the front wall) the intention layer returns it bit for bit. Equal endpoints convey the already
+            // composed total speed without clamping it back to vMin.
+            var solution=ShotIntentSolver.Solve(new ShotRequest(contact,input.Aim,power),aim,input.Speed,(float)config.Source.Get("shot.vCap"),
+                ShotPaceSettings.From(config.Source),config.Court,factory,config.Physics,footprintRadius,out _);
             return new CausalShotResult(vectors,input,solution,pace);
         }
         // The striker's arm (spec 4): position vectors (stretch, jam) grow by (1+gain); timing and the aim are untouched; one power

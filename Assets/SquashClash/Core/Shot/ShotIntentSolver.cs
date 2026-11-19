@@ -14,8 +14,10 @@ namespace SquashClash.Core.Shot
         public ShotIntentInfo(int evaluations, string reason) { Evaluations = evaluations; Reason = reason; }
     }
 
-    // Release-time intention search; the physical front-wall primitive remains unchanged.
-    // This isolated core is not called by drag preview or the live ball.
+    // Release-time intention search shared by the human, the rival, the headless rally and the AI forecast
+    // (CausalQuality.Solve and RallyContact.SolveIntention). The physical front-wall primitive remains unchanged and
+    // there is no second ball authority: this only chooses the effective aim for a velocity the caller applies.
+    // It never runs during the drag; the reticle shows the chosen TargetUsed after release.
     public static class ShotIntentSolver
     {
         private sealed class Candidate
@@ -24,8 +26,10 @@ namespace SquashClash.Core.Shot
             internal bool FirstFront, Legal, BelowCeiling, CrossesMiddle;
             internal double Cost = double.PositiveInfinity, Change, Apex = double.NaN;
         }
-        // Fixed budget of P2 trajectories per solution, the original included.
+        // Fixed budget of P2 trajectories per search, the original included. A causal height lift adds at most two
+        // verification trajectories (the lifted shot and the unmodified causal shot), never more search.
         public const int Budget = 24;
+        public const float DefaultFootprintRadius = .02f;
 
         public static ShotSolution Solve(in ShotRequest request, Vector2 requestedAim, float speed, float cap,
             ShotPaceSettings pace, CourtDimensions court, IBallSimulationFactory factory, PhysicsParams physics,
@@ -34,13 +38,53 @@ namespace SquashClash.Core.Shot
             var original = ShotSolver.Solve(request, speed, speed, cap, physics.Gravity, physics.BallRadius, court, factory, physics);
             info = new ShotIntentInfo(0, "inactive");
             if (!original.Solved) return original;
+            // Option B (deviation from the archived design, decided 18 nov): the causal layer's height lift (timing,
+            // stretch, jam, fatigue) is kept. The search runs on the shot the player intended (requested height, the
+            // composed speed) and the lift is then added to the chosen aim, so a late or tired stroke still rises.
+            float lift = request.AimOnFrontWall.y - requestedAim.y;
+            if (!(lift > 0)) return Search(request, original, requestedAim, pace, court, factory, physics, footprintRadius, out info);
+            if (!Active(request.P, request.ContactCenter, requestedAim, pace, court, physics)) return original;
+            var plainRequest = new ShotRequest(request.ContactCenter, new Vector2(request.AimOnFrontWall.x, requestedAim.y), request.P);
+            var plainOriginal = ShotSolver.Solve(plainRequest, speed, speed, cap, physics.Gravity, physics.BallRadius, court, factory, physics);
+            if (!plainOriginal.Solved) return original;
+            var plain = Search(plainRequest, plainOriginal, requestedAim, pace, court, factory, physics, footprintRadius, out var plainInfo);
+            info = plainInfo;
+            if (plain.Reason != "intent-drive") return original;
+            var target = new Vector2(plain.TargetUsed.x, plain.TargetUsed.y + lift);
+            var lifted = ShotSolver.Solve(new ShotRequest(request.ContactCenter, target, request.P), plain.Speed, plain.Speed, plain.Speed,
+                physics.Gravity, physics.BallRadius, court, factory, physics);
+            info = new ShotIntentInfo(plainInfo.Evaluations + 2, "intent-drive");
+            if (!lifted.Solved || lifted.TargetUsed.x != target.x || lifted.TargetUsed.y != target.y) { info = new ShotIntentInfo(plainInfo.Evaluations + 1, "fallback-causal-lift-unsolved"); return original; }
+            // As in the search, a legal causal shot is never replaced by a fault.
+            var from = request.ContactCenter;
+            bool liftedLegal = Evaluate(lifted, from, requestedAim, 0, 0, 0, court, factory, physics, footprintRadius).Legal;
+            if (!liftedLegal && Evaluate(original, from, requestedAim, 0, 0, 0, court, factory, physics, footprintRadius).Legal)
+            { info = new ShotIntentInfo(plainInfo.Evaluations + 2, "fallback-causal-lift-fault"); return original; }
+            return new ShotSolution(true, lifted.Velocity, lifted.Speed, lifted.TargetUsed, original.SpeedRaised,
+                lifted.TargetUsed.y < request.AimOnFrontWall.y, "intent-drive");
+        }
+
+        // Policy zone: above medium power and near the front wall (existing pace keys), contact below the back out line.
+        public static bool Active(float power, Vector3 from, Vector2 requestedAim, ShotPaceSettings pace, CourtDimensions court, PhysicsParams physics)
+            => Active(power, from, requestedAim, pace, court, physics, out _, out _);
+        private static bool Active(float power, Vector3 from, Vector2 requestedAim, ShotPaceSettings pace, CourtDimensions court, PhysicsParams physics,
+            out double t, out double w)
+        {
+            t = Math.Max(0, Math.Min(1, ((double)power - .5) / .5));
+            float distance = ShotPace.Requested(power, from, requestedAim, physics.BallRadius, pace).DistanceM;
+            double span = (double)pace.FullM - pace.NearM;
+            w = span > 0 ? Math.Max(0, Math.Min(1, ((double)pace.FullM - distance) / span)) : 0;
+            return !(t == 0 || w == 0 || from.y >= court.BackOutLower || from.z <= physics.BallRadius);
+        }
+
+        private static ShotSolution Search(in ShotRequest request, ShotSolution original, Vector2 requestedAim,
+            ShotPaceSettings pace, CourtDimensions court, IBallSimulationFactory factory, PhysicsParams physics,
+            float footprintRadius, out ShotIntentInfo info)
+        {
+            info = new ShotIntentInfo(0, "inactive");
             var input = request;
             var from = input.ContactCenter;
-            double t = Math.Max(0, Math.Min(1, ((double)input.P - .5) / .5));
-            float distance = ShotPace.Requested(input.P, from, requestedAim, physics.BallRadius, pace).DistanceM;
-            double span = (double)pace.FullM - pace.NearM;
-            double w = span > 0 ? Math.Max(0, Math.Min(1, ((double)pace.FullM - distance) / span)) : 0;
-            if (t == 0 || w == 0 || from.y >= court.BackOutLower || from.z <= physics.BallRadius) return original;
+            if (!Active(input.P, from, requestedAim, pace, court, physics, out double t, out double w)) return original;
 
             float alpha = (float)(t * w);
             double xStar = Math.Max(court.Width / 10d, Math.Min(9 * court.Width / 10d,

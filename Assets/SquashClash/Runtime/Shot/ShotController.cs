@@ -146,7 +146,7 @@ namespace SquashClash.Runtime.Shot
             var contact=authoritative.States[(int)offset];
             LastSolution=Solve(shot,order,contact,record,decision.ContactStep<=app.Host.Current.Step);FillSolution(record,LastSolution,contact);
             var reticle=app.GetComponentInChildren<AimReticleView>(true);reticle.gameObject.SetActive(true);
-            reticle.SetAim(order.Aim,AimState.Frozen,app.Host.ActiveConfig.Court);reticle.ShowFeasible(LastSolution.TargetUsed,LastSolution.Solved&&LastSolution.TargetLowered);
+            reticle.SetAim(order.Aim,AimState.Frozen,app.Host.ActiveConfig.Court);ShowEffectiveAim(reticle,LastSolution);
             if(!LastSolution.Solved){Fault(record,ShotResult.SystemFault,LastSolution.Reason);return;}
             pendingContact=record;
             if(decision.ContactStep>app.Host.Current.Step)
@@ -154,7 +154,7 @@ namespace SquashClash.Runtime.Shot
                 WaitingForContact=true;
                 bool accepted=app.Host.ScheduleShot(order.LaunchId,decision.ContactStep,state=>
                 {
-                    LastSolution=Solve(shot,order,state,record,true);FillSolution(record,LastSolution,state);
+                    LastSolution=Solve(shot,order,state,record,true);FillSolution(record,LastSolution,state);ShowEffectiveAim(reticle,LastSolution);
                     return LastSolution.Solved?LastSolution.Velocity:new Vector3(float.NaN,0,0);
                 },order.ReleaseAt);
                 if(!accepted)Fault(record,ShotResult.SystemFault,"schedule-rejected");
@@ -186,6 +186,9 @@ namespace SquashClash.Runtime.Shot
             record.PaceDistanceM=LastCausal.Pace.DistanceM;record.PaceGamma=LastCausal.Pace.Gamma;record.RequestedSpeedLinear=LastCausal.Pace.LinearSpeed;record.RequestedSpeed=LastCausal.Pace.Speed;
             record.SolverCostMs+=(Stopwatch.GetTimestamp()-start)*1000/Stopwatch.Frequency;return solution;
         }
+        // The frozen reticle marks the aim the ball really takes: lowered for feasibility or moved by the drive intention (G1 A2).
+        private static void ShowEffectiveAim(AimReticleView reticle,ShotSolution s)
+            =>reticle.ShowFeasible(s.TargetUsed,s.Solved&&(s.TargetLowered||s.Reason=="intent-drive"));
         private static void FillSolution(ShotRecord r,ShotSolution s,BallState contact)
         {
             r.Solved=s.Solved;r.ContactX=contact.Position.x;r.ContactY=contact.Position.y;r.ContactZ=contact.Position.z;r.SpeedRaised=s.SpeedRaised;r.TargetLowered=s.TargetLowered;
