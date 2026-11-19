@@ -70,3 +70,42 @@ Todas pasaron por un candado global de un solo Unity.
 - **Experimentos explícitos con hashes viejos:** `VolleyRateExperiment`, `G1A2CompleteExperiment` y `FatigueMatchExperiment` afirman hashes anteriores. Fallarían si se vuelven a correr; están fuera de la regresión.
 - **CRP-01:** apareció una vez, intermitente, en la rama del cansancio.
 - **Pendientes del PO:** créditos con la licencia OFL antes de publicar; resoplido del rival (después).
+
+## Segunda vuelta (19 nov), pedido del PO
+
+El PO pidió el top 3 del diseñador de juego y tres cambios de volea. Se hicieron en tres ramas desde `7e8c64c` y se fusionaron sin aplanar. Hubo un solo conflicto, en `DevPanelView`, y se conservaron todas las secciones.
+
+| Frente | Rama, head | Modelo | Informe |
+|---|---|---|---|
+| Tarjeta de resultado (duración m:ss, rally más largo, «Revancha 5–7» solo al perder) y golpe Perfecto propio (más seco, mismo volumen que Válido) | `claude/match-card-perfect-sound` `a81015f` | Sonnet | [informe](2026-11-19-match-card-perfect-sound.md) |
+| Congelado de 100 ms del render al cerrar el punto, dentro de la pausa existente | `claude/point-end-freeze` `1314bcd` | Sonnet | [informe](2026-11-19-point-end-freeze.md) |
+| Volea en el tutorial (paso 4), estallido ámbar en vez de «Volea · » y costo de energía de 2 puntos por volea | `claude/volley-ux` `4ac0256` | Opus | [informe](2026-11-19-volley-ux.md) |
+
+Cada frente tiene su interruptor DEV, encendido por defecto.
+
+**Decisiones de Claude:**
+- **Volumen del Perfecto.** Se toma literal «con el mismo volumen» que el Válido, así que el Perfecto nuevo suena más suave que el de hoy. Si hace falta, se ajusta con una constante de ganancia.
+- **Costo de la volea.** Es `RallyParams.VolleyEnergyCost=2`, sin calibrar. Se aplica a cualquier jugador que volee, pero hoy solo volea el humano.
+- **Seguimiento de la cámara.** No se congela durante el congelado; solo se retiene su temblor.
+
+**Hashes:**
+- RallyParams `6a7b329a7b85`→`5cdbb01e4621`. La proyección sin `VolleyEnergyCost` es exactamente `6a7b329a7b85`.
+- Sin cambios: defaults, P0, SimulationKey y las anclas AutoQA.
+
+**Compuertas sobre `8cceeb9`:**
+
+| Compuerta | Resultado |
+|---|---|
+| EditMode | 870/870 |
+| PlayMode | 665/665 |
+| AutoQA V | PASS/0/1 (`20261119T100523Z-8cceeb9-v-28041`) |
+| AutoQA T3 | PASS/0/1 (`20261119T100538Z-8cceeb9-t3-8419`) |
+| AutoQA volea | PASS/0/1 (`20261119T100553Z-8cceeb9-volley-11087`) |
+| check-release dev/prod | OK, build 946 |
+
+**Para juzgar en el iPhone:**
+- el timbre y el volumen del Perfecto;
+- si se siente el congelado;
+- si el estallido de la volea se lee bien, ya que se superpone con el destello del Perfecto;
+- el costo de la volea;
+- la duración real del partido, que la tarjeta muestra.
