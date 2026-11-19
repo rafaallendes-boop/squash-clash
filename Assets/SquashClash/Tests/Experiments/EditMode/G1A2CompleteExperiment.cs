@@ -176,6 +176,41 @@ namespace SquashClash.Experiments.EditMode
             Assert.That(ctx.Factory.LiveInstances, Is.Zero);
         }
 
+        // Re-anchor (C7, decided 18 nov): the RallySim replays two fatigue regression tests freeze, regenerated with A2.
+        // Same contexts, seeds and match loop as FatigueIntegrationTests.Off_... (fatigue off) and
+        // FatigueArmRallyTests.A1_... (fatigue on, zero arm); same column layout as the frozen F1 points.tsv.
+        [Test, Explicit, Category("Experiments"), Timeout(7200000)]
+        public void WriteFatigueReplayReferences()
+        {
+            var (root, preset, _) = Setup();
+            string dir = Path.Combine(root, "Logs/experiments/g1a2-complete/fatigue-replay");
+            Assert.That(Directory.Exists(dir), Is.False, "Never overwrite evidence.");
+            foreach (var (name, edited) in new[] { ("off", preset.With("fatigue.enabled", 0)),
+                ("arm0", preset.With("fatigue.armSpeedMax", 0).With("fatigue.positionGainMax", 0)) })
+            {
+                var ctx = new RallyContext(EffectiveConfig.From(edited), new RallyParams(), new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
+                Directory.CreateDirectory(Path.Combine(dir, name));
+                File.WriteAllText(Path.Combine(dir, name, "source.tsv"), Source(root, edited, ctx), Utf8);
+                using (var writer = new StreamWriter(Path.Combine(dir, name, "points.tsv"), false, Utf8))
+                {
+                    writer.WriteLine("match\tpoint\thumanBefore\trivalBefore\tserver\twinner\tshots\tsteps\trealSeconds\tsignature");
+                    for (int i = 0; i < 4; i++)
+                        using (var sim = new RallySim(ctx, new BotBrain(ctx, 30, 20261117 + 2 * i), new FondoAi(ctx, AiDifficulty.For(ctx.Params, AiLevel.Medium), 20261118 + 2 * i)))
+                        {
+                            var score = new MatchScore(7, 2, i % 2 == 0 ? PlayerId.Human : PlayerId.Rival); int point = 0;
+                            while (!score.Finished)
+                            {
+                                var o = sim.PlayPoint(score.Server, score.Box);
+                                writer.WriteLine(string.Join("\t", F(i), F(point), F(score.Human), F(score.Rival), score.Server.ToString(), o.Winner?.ToString() ?? "",
+                                    F(o.Shots), F(o.Steps), F(o.RealSeconds), FatigueMatchExperiment.Signature(o, sim)));
+                                score.PointWon(o.Winner.Value); point++;
+                            }
+                        }
+                }
+                Assert.That(ctx.Factory.LiveInstances, Is.Zero);
+            }
+        }
+
         private static string Git(string root, string arguments)
         {
             using (var process = Process.Start(new ProcessStartInfo("git", arguments) { WorkingDirectory = root, UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true, CreateNoWindow = true }))

@@ -7,7 +7,8 @@ set -euo pipefail
 case "${1:-} ${2:-}" in
     "grid run01"|"grid run02") test=WriteGrid; export SC_A2_RUN="$2" ;;
     "rally before"|"rally after") test=WriteRallyPoints; export SC_A2_RALLY="$2" ;;
-    *) printf 'Uso: scripts/diagnose-g1-a2-complete.sh grid run01|run02 | rally before|after\n' >&2; exit 1 ;;
+    "replay fatigue") test=WriteFatigueReplayReferences ;;
+    *) printf 'Uso: scripts/diagnose-g1-a2-complete.sh grid run01|run02 | rally before|after | replay fatigue\n' >&2; exit 1 ;;
 esac
 source "$(dirname "$0")/unity-env.sh"
 evidence="$ROOT/Logs/experiments/g1a2-complete/$1-$2-runner"
