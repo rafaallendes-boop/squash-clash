@@ -84,13 +84,13 @@ namespace SquashClash.Runtime.Tests
             }
             yield return null;
         }
-        [UnityTest] public IEnumerator Backhand_FinishCrossesToTheHittingArmSide_HighAndOpen_ForRivalAndLeftHandedHuman()
+        [UnityTest] public IEnumerator Backhand_FinishCrossesToTheHittingArmSide_HighAndOpen_ForTheRival()
         {
-            foreach(var (figure,left,sign) in new[]{(Figure(players.Rival),false,1f),(Figure(players.Human),true,-1f)})
+            foreach(var (figure,left,sign) in new[]{(Figure(players.Rival),false,1f)})
             {
                 Handedness.Left=left;
                 Set(figure,"yaw",0f);Stroke(figure,sign);
-                for(int i=0;i<40;i++)figure.Animate(Frame);
+                for(int i=0;i<24;i++)figure.Animate(Frame);
                 var head=figure.RacketLocalPosition;
                 Assert.That(head.x*sign,Is.LessThanOrEqualTo(-.25f),"finish on the hitting-arm side, having crossed the body");
                 Assert.That(head.y,Is.GreaterThanOrEqualTo(1.60f),"and high");

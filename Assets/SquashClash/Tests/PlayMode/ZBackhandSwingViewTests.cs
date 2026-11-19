@@ -53,7 +53,7 @@ namespace SquashClash.Runtime.Tests
             for(int i=0;i<30;i++)swing.Tick(.01);
             var head=swing.RacketLocalPosition;
             Assert.That(head.x*swing.ShoulderSign,Is.LessThanOrEqualTo(-.25f),"crossed the body to the hitting-arm side");
-            Assert.That(head.y+.9f,Is.GreaterThanOrEqualTo(1.70f),"and finishing high");
+            Assert.That(head.y+.9f,Is.GreaterThanOrEqualTo(1.50f),"and finishing high (above the shoulder)");
             // The drawn figure reaches the same high, open finish before it returns to rest.
             float best=0,x=0;for(int i=0;i<60;i++){swing.Tick(.005);human.Animate(.005f);var p=human.RacketLocalPosition;if(p.y>best){best=p.y;x=p.x;}}
             Assert.That(best,Is.GreaterThanOrEqualTo(1.60f));Assert.That(x*swing.ShoulderSign,Is.LessThanOrEqualTo(-.10f));

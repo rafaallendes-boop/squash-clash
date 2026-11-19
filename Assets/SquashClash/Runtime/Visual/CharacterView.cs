@@ -116,6 +116,10 @@ namespace SquashClash.Runtime.Visual
         private static Vector3 ReadyPose(float s)=>new Vector3(s*.34f,1.22f,-.58f);
         private static Vector3 BackPose(float s)=>new Vector3(s*.52f,1.38f,.42f);
         private static Vector3 HitPose(float s)=>new Vector3(s*.62f,.95f,-.30f);
+        // Backhand (the racket arm reaches across): armed high behind the contact-side shoulder, finishing high and open on
+        // the hitting-arm side after crossing the body. s is the sign of the contact side.
+        public static Vector3 BackhandPrepPose(float s,float wind)=>new Vector3(s*.50f,1.62f+.06f*wind,.36f+.06f*wind);
+        public static Vector3 BackhandFinishPose(float s,float power)=>new Vector3(-s*(.36f+.06f*power),1.60f+.25f*power,-.34f-.10f*power);
         private static Vector3 FollowPose(float s)=>new Vector3(-s*.28f,1.40f,-.52f);
         private void Resolve()
         {
@@ -283,6 +287,8 @@ namespace SquashClash.Runtime.Visual
             var hip=new Vector3(0,HipHeight-crouch+bob+hop*.055f,0)+carry;
             var turn=Quaternion.Euler(0,yaw,0);
             var lean=Quaternion.AngleAxis(Mathf.Min(speed*2.8f,13)*move*(1-backpedal),Vector3.Cross(Vector3.up,along));
+            // A backhand leans the trunk toward the contact side.
+            lean=Quaternion.AngleAxis(-sign*9*Mathf.Max(freeTuck,freeOpen),Vector3.forward)*lean;
             float push=accelLean.magnitude;
             if(push>.05f)lean=Quaternion.AngleAxis(push,Vector3.Cross(Vector3.up,new Vector3(accelLean.x,0,accelLean.y)/push))*lean;
             if(missed)lean=Quaternion.AngleAxis(9*lunge,Vector3.forward*sign)*lean;
@@ -321,11 +327,11 @@ namespace SquashClash.Runtime.Visual
             Vector3 target;float rate;
             var rest=body==null?(human?ReadyPose(holds):RelaxedPose(holds)):bodyPhase==BodyPhase.Waiting?ReadyPose(holds):RelaxedPose(holds);
             // Reaching across, the racket is taken back close to the far shoulder, where the arm can hold it.
-            var back=across?new Vector3(sign*.44f,1.42f,.38f)+new Vector3(sign*.03f,.08f,.08f)*wind:BackPose(sign)+new Vector3(sign*.05f,.16f,.12f)*wind;
+            var back=across?BackhandPrepPose(sign,wind):BackPose(sign)+new Vector3(sign*.05f,.16f,.12f)*wind;
             // After the contact: hard strokes finish high and across the body, soft ones short and low; a miss wraps around.
             float through=strokeClock>=0?Smooth((strokeClock-.06f)/.16f):0;
             // (Reaching across, the follow-through opens outward, away from the body.)
-            var cleanFollow=across?new Vector3(sign*(.52f+.10f*power),1.40f+.40f*power,-.36f-.12f*power):
+            var cleanFollow=across?BackhandFinishPose(sign,power):
                 FollowPose(sign)+new Vector3(-sign*.22f,.36f,-.14f)*(power-.35f);
             var finish=missed?new Vector3(-sign*.30f,-.34f,.02f):new Vector3((across?sign:-sign)*.22f,.36f,-.14f)*(power-.35f);
             if(swingDriven)

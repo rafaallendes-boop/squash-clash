@@ -67,8 +67,13 @@ namespace SquashClash.Runtime.Shot
         }
         // Racket-head centre in human-local space (x lateral, y relative to the capsule centre, z toward the court; the front wall is at -z).
         private Vector3 Idle=>new Vector3(sign*.3f,-.25f,-.1f);
-        private Vector3 Back=>new Vector3(sign*.55f,.5f,.5f);
-        private Vector3 Follow=>new Vector3(-sign*.3f,.5f,-.55f);
+        // Backhand pose (the drawn racket arm reaches across the body, whichever physical side that is for the chosen hand):
+        // the racket is armed high behind the contact-side shoulder and finishes high and open on the hitting-arm side.
+        private bool Across(StrokeSide side)=>SquashClash.Runtime.Visual.Handedness.Left?side==StrokeSide.Drive:side==StrokeSide.Backhand;
+        private Vector3 Back=>Across(Side)?new Vector3(sign*.56f,.78f,.40f):new Vector3(sign*.55f,.5f,.5f);
+        private Vector3 Follow=>Across(Side)?new Vector3(-sign*.34f,.66f,-.42f):new Vector3(-sign*.3f,.5f,-.55f);
+        private Vector3 Ready(float s)=>new Vector3(s*.52f,.72f,.34f);
+        private float armed;
         private Vector3 Contact(StrokeSide side)
         {var b=controller.Snapshot.Body;var p=b.IdealContactPoint(side);return new Vector3(p.x-b.PositionXZ.x,p.y-b.ReferenceHeight,p.z-b.PositionXZ.y);}
         private void SetSide(StrokeSide side)
@@ -106,8 +111,23 @@ namespace SquashClash.Runtime.Shot
             if(!Mine(r.LaunchId,r.AttemptId)||Phase!=SwingPhase.Intention)return;
             hasIntent=false;Phase=SwingPhase.Idle;Begin(SwingPhase.Idle,new Key(Idle,RecoverSeconds));
         }
+        // While waiting for a stroke whose planned side is drawn as a backhand, the racket is raised and cocked behind the
+        // contact-side shoulder (visual only: nothing reads it; the accepted order starts from wherever the head is).
+        private void ArmForBackhand(float dt)
+        {
+            if(dt<=0||app.Clock.Paused)return;
+            float want=0,s=sign;
+            if(controller.Plan.Exists&&controller.Snapshot!=null&&Across(controller.Plan.Side))
+            {want=1;s=controller.Snapshot.Body.IdealContactPoint(controller.Plan.Side).x-controller.Snapshot.Body.PositionXZ.x<0?-1:1;}
+            float next=Mathf.MoveTowards(armed,want,dt*4);
+            if(next<=0&&armed<=0)return;
+            armed=next;var rest=new Vector3(sign*.3f,-.25f,-.1f);
+            pos=from=Vector3.Lerp(rest,Ready(s),armed*armed*(3-2*armed));ApplyPose();
+        }
         public void Tick(double dt)
         {
+            if(Phase==SwingPhase.Idle&&sequence.Count==0&&!hasIntent)ArmForBackhand((float)dt);
+            else armed=0;
             if(sequence.Count==0||dt<=0||app.Clock.Paused)return; // frozen with the ball while the clock is paused
             float left=(float)dt;
             while(left>0&&index<sequence.Count)
