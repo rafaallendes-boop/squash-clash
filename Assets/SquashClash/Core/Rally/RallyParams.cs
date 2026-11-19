@@ -48,6 +48,9 @@ namespace SquashClash.Core.Rally
         // Volley v1 (design 2026-11-18): on/off, legal heights (spec 7.3.1), separation from the bounce window in real seconds
         // (spec 7.3.2) and the shortest window offered, in simulation seconds (v1 stand-in for q_min_rel).
         public double VolleyEnabled=1,VolleyMinHeight=.6,VolleyMaxHeight=1.9,VolleyMinSeparationS=.25,VolleyMinWindowS=.05;
+        // Volley energy (19 nov): a contact before the bounce costs the striker this many energy points (0-100 scale) on top of the
+        // stroke, because the player anticipates. Charged only with fatigue on; RallySim bots never volley by default.
+        public double VolleyEnergyCost=2;
         public string Hash
         {
             get
