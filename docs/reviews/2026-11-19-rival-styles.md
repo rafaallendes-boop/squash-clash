@@ -154,3 +154,14 @@ Evidencia: `docs/validation/evidence/2026-11-19-rival-styles/confirm-per-style01
   - En el juego real el punto termina limpio: el error se cuenta, la pelota sigue hasta el doble bote y el punto es del otro jugador.
   - Hay un caso en las métricas reales del PO: build `22bb2d5`, punto para el Rival con recepción `SystemFault`.
 - **Siguiente pasada:** que los atributos físicos afecten también a las IA.
+
+## Decisión de Claude sobre la parada de PlayMode (19 nov)
+
+Los tres fallos venían de supuestos de los tests, no del juego.
+
+- **`ZHandednessTests` y `ZMusicTests`:** prueban la mano y la música, no al rival. Ahora fijan al Fondista, el rival contra el que se escribieron, mediante `StyleOverride`. Así el presupuesto de puntos vuelve a valer.
+- **`ZRallyDirectorTests.Autopilot_ExchangesStrokes…`:** compara el dibujo con el cuerpo justo al cerrar el punto. En ese instante el congelado de 100 ms retiene el dibujo, por diseño. Este test apaga el congelado y lo restaura en el TearDown; el congelado tiene sus propios tests (`ZPointEndFreezeTests`).
+
+No cambia ningún umbral, valor esperado ni presupuesto. Con este cambio las tres clases pasan: PlayMode 30/30. Las suites completas se corren en la integración.
+
+**Observación para el iPhone:** contra el autopiloto, un tiro recto con σ 30 ms, el Definidor en Medio juega rallies de unos 170 golpes. Es un artefacto del autopiloto; en el modo Demo se vería igual.
