@@ -11,6 +11,11 @@ namespace SquashClash.Runtime.Rally
     // while the game is paused, and none of it changes the pause between points (that is Core's).
     public sealed class RallyHud : MonoBehaviour
     {
+        public static bool ExtendedCardOn=true;
+        public float MatchSeconds {get;private set;}
+        public static string DurationText(float seconds)=>"";
+        public static string RematchText(bool humanWon,int human,int rival)=>"";
+        public static string StrokesText(int strokes)=>"";
         private AppBootstrap app;
         private RallyDirector rally;
         private Label status,humanPoints,rivalPoints,resultTitle,resultScore,resultKicker,bootTitle,fps;

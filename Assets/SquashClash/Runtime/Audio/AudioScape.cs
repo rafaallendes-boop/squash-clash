@@ -32,6 +32,7 @@ namespace SquashClash.Runtime.Audio
         private static readonly string[] ClickPrefixes={"menu-","tutorial-","pause-","match-result-","rally-"};
         // DEV switch (default on): the back-wall glass has its own "toc"; off, it sounds like the side walls again. Not remembered.
         public static bool GlassSoundOn=true;
+        public static bool PerfectOwnOn=true;
         private static bool? soundOn;
         // The "Sonido" switch: mutes the whole game (listener volume), remembered between launches.
         public static bool SoundOn

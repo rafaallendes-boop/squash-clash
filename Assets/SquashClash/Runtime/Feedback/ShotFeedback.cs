@@ -12,6 +12,7 @@ namespace SquashClash.Runtime.Feedback
         // Total impact requests (Perfect + Valid).
         public int ContactCount=>PerfectCount+ValidCount;
         public string LastClip {get;private set;}
+        public string LastFile=>null;
         public bool ClipsLoaded=>perfect!=null&&valid!=null&&swish!=null&&perfect.loadState==AudioDataLoadState.Loaded&&valid.loadState==AudioDataLoadState.Loaded&&swish.loadState==AudioDataLoadState.Loaded;
         public void Initialize()
         {
