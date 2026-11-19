@@ -39,6 +39,19 @@ namespace SquashClash.Core.Rally
         public MoveSettings Move=>new MoveSettings((float)Params.Accel,(float)Params.MaxSpeed,(float)Params.Brake,(float)Params.ArriveEpsilon,StepHz);
         // The same body template for both players; only the position differs.
         public BodyFrame FrameAt(Vector2 position)=>BodyFrame.From(Config.Source,position);
+        public bool VolleyOn=>Params.VolleyEnabled!=0;
+        public VolleySettings Volley=>new VolleySettings(VolleyOn,(float)Params.VolleyMinHeight,(float)Params.VolleyMaxHeight,Params.VolleyMinSeparationS,Params.VolleyMinWindowS);
+        // The rules of a new point: the volley is legal for both players whenever it is switched on.
+        public PointRules NewRules()=>new PointRules(Court,(float)Params.FootprintRadius,VolleyOn);
+        // The volley opportunity of a reception on the frozen body path (design 2026-11-18). No volley of the serve in v1 (arcade adaptation).
+        public VolleyOpportunity VolleyFor(Trajectory trajectory,PointRules rulesAtStart,Vector2[] path,ContactPlan bounce,int delaySteps,int version)
+        {
+            if(!VolleyOn)return VolleyOpportunity.None("disabled");
+            if(rulesAtStart!=null&&rulesAtStart.Serving)return VolleyOpportunity.None("serve");
+            if(trajectory==null||trajectory.States.Count<2||path==null||path.Length==0)return VolleyOpportunity.None("no-trajectory");
+            long first=trajectory.States[0].Step;
+            return VolleyPlanner.Plan(trajectory,j=>FrameAt(path[(int)Math.Max(0,Math.Min(path.Length-1,j-first))]),Court,Legal,Volley,bounce,first+delaySteps,Tempo,version);
+        }
         public Vector2 WaitPosition(PlayerId who)=>ClampBody(T+(who==PlayerId.Human
             ?new Vector2(-(float)Params.WaitLateralOffset,(float)Params.HumanWaitBehindT)
             :new Vector2((float)Params.WaitLateralOffset,(float)Params.RivalWaitBehindT)));

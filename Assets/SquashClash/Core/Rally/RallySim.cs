@@ -16,8 +16,12 @@ namespace SquashClash.Core.Rally
         public readonly long ContactStep;public readonly string Reason;
         public readonly CausalVector[] Vectors;public readonly CausalInput Input;
         public readonly double FatigueReception,FatigueStriker;
-        public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason,CausalShotResult causal=default,double fatigueReception=0,double fatigueStriker=0)
-        {FatigueReception=fatigueReception;FatigueStriker=fatigueStriker;Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
+        // The release went to the volley opportunity (contact before the bounce when it is a Contact).
+        public readonly bool Volley;
+        // A volley opportunity was offered in this reception (whether or not it was taken).
+        public readonly bool VolleyOffered;
+        public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason,CausalShotResult causal=default,double fatigueReception=0,double fatigueStriker=0,bool volley=false,bool volleyOffered=false)
+        {Volley=volley;VolleyOffered=volleyOffered;FatigueReception=fatigueReception;FatigueStriker=fatigueStriker;Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
     }
     public sealed class RallyOutcome
     {
@@ -42,20 +46,24 @@ namespace SquashClash.Core.Rally
     {
         private readonly RallyContext context;private readonly RallyRng random;private readonly double timingSigmaMs;
         private readonly ShotLine line;private readonly ShotHeight height;private readonly ShotPower power;
-        public BotBrain(RallyContext context,double timingSigmaMs,long seed,ShotLine line=ShotLine.Straight,ShotHeight height=ShotHeight.Mid,ShotPower power=ShotPower.Medium)
-        {this.context=context;this.timingSigmaMs=timingSigmaMs;random=new RallyRng(seed);this.line=line;this.height=height;this.power=power;}
+        private readonly bool takeVolley;
+        // takeVolley: release in every volley opportunity offered (tests and measurement only; the default never volleys).
+        public BotBrain(RallyContext context,double timingSigmaMs,long seed,ShotLine line=ShotLine.Straight,ShotHeight height=ShotHeight.Mid,ShotPower power=ShotPower.Medium,bool takeVolley=false)
+        {this.context=context;this.timingSigmaMs=timingSigmaMs;random=new RallyRng(seed);this.line=line;this.height=height;this.power=power;this.takeVolley=takeVolley;}
         public int PerceptionSteps=>0;
         public Vector2 StanceNoise()=>Vector2.zero;
         public AiShot Decide(in AiObservation observation,in ReceptionPlan own)
         {
-            if(!own.Reachable||!own.Contact.Exists||own.Contact.TStarStep<0)return default;
+            bool volley=takeVolley&&own.Volley.Exists;
+            if(!volley&&(!own.Reachable||!own.Contact.Exists||own.Contact.TStarStep<0))return default;
+            var at=volley?own.Volley.Plan.PStar:own.Contact.PStar;
             // The preferred intention first; if its own forecast is a fault, the nearest one that is not.
-            var options=ShotOptions.Build(context,own.Contact.PStar);
+            var options=ShotOptions.Build(context,at);
             options.Sort((a,b)=>Distance(a).CompareTo(Distance(b)));
             double delta=random.NextGaussian(timingSigmaMs);
             foreach(var option in options)
-                if(RallyContact.Forecast(context,own.Contact.PStar,option.Aim,option.P).Good)return new AiShot(true,option,option.Aim,option.P,delta,false);
-            return new AiShot(true,options[0],options[0].Aim,options[0].P,delta,false);
+                if(RallyContact.Forecast(context,at,option.Aim,option.P).Good)return new AiShot(true,option,option.Aim,option.P,delta,false,volley);
+            return new AiShot(true,options[0],options[0].Aim,options[0].P,delta,false,volley);
         }
         private int Distance(ShotOption o)=>(o.Line==line?0:o.Line==ShotLine.Drop||line==ShotLine.Drop?8:4)+2*Math.Abs((int)o.Height-(int)height)+(o.Power==power?0:1);
     }
@@ -84,7 +92,7 @@ namespace SquashClash.Core.Rally
             brains[0]=human??throw new ArgumentNullException(nameof(human));brains[1]=rival??throw new ArgumentNullException(nameof(rival));
             HumanEnergy=new FatigueState(context.Fatigue);RivalEnergy=new FatigueState(context.Fatigue);
             ball=context.Factory.Create(context.Physics,context.Court);
-            Rules=new PointRules(context.Court,(float)context.Params.FootprintRadius);
+            Rules=context.NewRules();
             Human=new PlayerBody(PlayerId.Human,context.WaitPosition(PlayerId.Human),context.Move);
             Rival=new PlayerBody(PlayerId.Rival,context.WaitPosition(PlayerId.Rival),context.Move);
         }
@@ -167,24 +175,29 @@ namespace SquashClash.Core.Rally
             var effects=FatigueEffects.For(f,context.Fatigue);body.MovementFactor=effects.MovementFactor;
             int delay=context.Steps(context.Params.ReactionS)+brain.PerceptionSteps+effects.ExtraSteps;
             var plan=ReceptionPlanner.Plan(context,trajectory,Rules,body,delay,++planVersion,brain.StanceNoise());
-            LastPlan=plan;
             body.MoveTo(plan.Stance,delay,BodyPhase.Approaching,BodyPhase.Set);
+            // M1: the volley, if any, lies on the path the body already runs towards the bounce plan.
+            var path=context.VolleyOn?body.PositionsAfter(trajectory.States.Count):null;
+            var volley=context.VolleyFor(trajectory,Rules,path,plan.Contact,delay,planVersion);
+            if(volley.Exists)plan=plan.WithVolley(volley);
+            LastPlan=plan;
             var shot=brain.Decide(new AiObservation(state,body.Position,body.Velocity,other.Position,other.Velocity,Rules.Shots,Rules.FloorBounces,Rules.FrontWallReached),plan);
             hasPending=false;
             if(!shot.Swing)
             {
-                outcome.Receptions.Add(new ReceptionLog(who,plan.Reachable?ReceptionResult.NoSwing:ReceptionResult.Unreachable,false,plan.Reachable,false,0,plan.SlackS,default,-1,plan.Reason,fatigueReception:f));
+                outcome.Receptions.Add(new ReceptionLog(who,plan.Reachable?ReceptionResult.NoSwing:ReceptionResult.Unreachable,false,plan.Reachable,false,0,plan.SlackS,default,-1,plan.Reason,fatigueReception:f,volleyOffered:plan.Volley.Exists));
                 return;
             }
             // Real perceived time for this flight: the same clock map type the touch path uses.
             double now=state.Step/(context.Tempo*context.StepHz);
             var clock=new ClockMap();clock.Begin(++launchId,now,state.Step,context.Tempo,1,context.StepHz);
-            if(plan.Contact.Exists&&plan.Contact.TStarStep>=0)
+            bool useVolley=shot.Volley&&plan.Volley.Exists;var contact=useVolley?plan.Volley.Plan:plan.Contact;
+            if(contact.Exists&&contact.TStarStep>=0)
             {
-                var positions=body.PositionsAfter(trajectory.States.Count);long first=trajectory.States[0].Step;
-                pendingCausal=CausalQuality.Prepare(trajectory,plan.Contact,clock,context.Timing,now,context.Tempo,j=>context.FrameAt(positions[(int)(j-first)]));
+                var positions=path??body.PositionsAfter(trajectory.States.Count);long first=trajectory.States[0].Step;
+                pendingCausal=CausalQuality.Prepare(trajectory,contact,clock,context.Timing,now,context.Tempo,j=>context.FrameAt(positions[(int)(j-first)]));
             }
-            var decision=RallyContact.Resolve(context,clock,trajectory,plan.Contact,now,shot.DeltaMs);
+            var decision=RallyContact.Resolve(context,clock,trajectory,contact,now,shot.DeltaMs);
             ReceptionResult result;
             switch(decision.Result)
             {
@@ -194,7 +207,7 @@ namespace SquashClash.Core.Rally
                 case ShotResult.SystemFault:result=ReceptionResult.SystemFault;outcome.SystemFaults++;break;
                 default:result=ReceptionResult.NotEvaluable;break;
             }
-            var log=new ReceptionLog(who,result,decision.Result==ShotResult.Perfect,plan.Reachable,shot.Defensive,decision.DeltaMs,plan.SlackS,shot.Option,decision.ContactStep,decision.Reason,fatigueReception:f);
+            var log=new ReceptionLog(who,result,decision.Result==ShotResult.Perfect,plan.Reachable,shot.Defensive,decision.DeltaMs,plan.SlackS,shot.Option,decision.ContactStep,decision.Reason,fatigueReception:f,volley:useVolley,volleyOffered:plan.Volley.Exists);
             if(result!=ReceptionResult.Contact){outcome.Receptions.Add(log);return;}
             hasPending=true;pendingStep=decision.ContactStep;pendingShot=shot;pendingWho=who;pendingLog=log;
         }
@@ -208,11 +221,11 @@ namespace SquashClash.Core.Rally
             if(!solution.Solved)
             {
                 outcome.SystemFaults++;var l=pendingLog;
-                outcome.Receptions.Add(new ReceptionLog(who,ReceptionResult.SystemFault,false,l.Reachable,l.Defensive,l.DeltaMs,l.SlackS,pendingShot.Option,l.ContactStep,solution.Reason??"contact-not-legal",causal,l.FatigueReception,arm.Factor));
+                outcome.Receptions.Add(new ReceptionLog(who,ReceptionResult.SystemFault,false,l.Reachable,l.Defensive,l.DeltaMs,l.SlackS,pendingShot.Option,l.ContactStep,solution.Reason??"contact-not-legal",causal,l.FatigueReception,arm.Factor,l.Volley,l.VolleyOffered));
                 return;
             }
             var previous=pendingLog;
-            outcome.Receptions.Add(new ReceptionLog(who,previous.Result,previous.Perfect,previous.Reachable,previous.Defensive,previous.DeltaMs,previous.SlackS,pendingShot.Option,previous.ContactStep,previous.Reason,causal,previous.FatigueReception,arm.Factor));
+            outcome.Receptions.Add(new ReceptionLog(who,previous.Result,previous.Perfect,previous.Reachable,previous.Defensive,previous.DeltaMs,previous.SlackS,pendingShot.Option,previous.ContactStep,previous.Reason,causal,previous.FatigueReception,arm.Factor,previous.Volley,previous.VolleyOffered));
             // The racket only replaces the velocity of the authoritative state at the contact step.
             ball.Reset(new BallState{Position=state.Position,Velocity=solution.Velocity,Step=state.Step});
             Rules.RacketContact(who);Energy(who).Strike(pendingShot.P);
