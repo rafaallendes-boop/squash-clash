@@ -53,6 +53,13 @@ namespace SquashClash.Runtime.Tests
                 AssertFits("menu-layer",phone+(dev?" dev":" prod"));
             }
         }
+        // Menu redesign (19 nov): the credits screen, from the 16:9 SE to the Pro Max.
+        [UnityTest] public IEnumerator Credits_FitInsideTheSafeArea([ValueSource(nameof(Phones))] PhoneScreen screen)
+        {
+            yield return Boot(screen,true);app.DevTools=false;yield return Settle();
+            Click("menu-credits");yield return Settle();
+            AssertFits("credits-layer",phone+" credits");
+        }
         [UnityTest] public IEnumerator Tutorial_EveryStepFitsInsideTheSafeArea([ValueSource(nameof(Phones))] PhoneScreen screen)
         {
             yield return Boot(screen,true);

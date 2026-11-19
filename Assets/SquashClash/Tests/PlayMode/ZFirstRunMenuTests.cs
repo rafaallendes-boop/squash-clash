@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using NUnit.Framework;
 using SquashClash.Core.Rally;
 using SquashClash.Runtime.Menu;
@@ -167,6 +168,51 @@ namespace SquashClash.Runtime.Tests
             }
             foreach(var name in new[]{"menu-play","menu-howto","menu-level-easy","menu-level-medium","menu-level-hard"})
                 Assert.That(Find(name).worldBound.height,Is.GreaterThanOrEqualTo(44),name+" is at least 44 pt tall");
+        }
+        // Menu redesign (19 nov): the credits a published game owes, one tap from the menu. The Rubik line is the font's own
+        // copyright (name table, ID 0, also in Visual/Fonts/OFL.txt); the audio line restates Resources/Audio/PROVENANCE.md.
+        public const string RubikCopyright="Copyright (c) 2015 by Hubert & Fischer. All rights reserved. Hebrew characters (c) 2016 by Meir Sadan.";
+        [UnityTest] public IEnumerator Credits_OpenFromTheMenu_NameTheFontLicenceAndTheAudio_AndVolverComesBack()
+        {
+            yield return Boot(true);
+            Assert.That(Find<Button>("menu-credits").text,Is.EqualTo("Créditos"));
+            Click("menu-credits");Refresh();yield return null;
+            Assert.That(flow.Screen.ToString(),Is.EqualTo("Credits"));
+            Assert.That(Shown(Find("credits-layer")),Is.True);Assert.That(Shown(Find("menu-layer")),Is.False);
+            Assert.That(app.Clock.Paused,Is.True,"nothing plays behind the credits");Assert.That(rally.Active,Is.False);
+            Assert.That(Find<Label>("credits-title").text,Is.EqualTo("Créditos"));
+            Assert.That(Find<Label>("credits-font").text,Does.Contain("Rubik"));
+            Assert.That(Find<Label>("credits-font-copyright").text,Is.EqualTo(RubikCopyright));
+            Assert.That(Find<Label>("credits-font-license").text,Does.Contain("SIL Open Font License 1.1"));
+            Assert.That(Find<Label>("credits-audio").text,Does.Contain("sin grabaciones"));
+            Assert.That(Find<Button>("credits-back").text,Is.EqualTo("Volver"));
+            Click("credits-back");Refresh();yield return null;
+            Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.Menu));
+            Assert.That(Shown(Find("menu-layer")),Is.True);Assert.That(Shown(Find("credits-layer")),Is.False);
+            Assert.That(app.Clock.Paused,Is.True);Assert.That(rally.Active,Is.False);
+        }
+        // Every control a player can touch on the menu and the credits is at least 44 x 44 pt (Apple HIG), in dev and prod.
+        [UnityTest] public IEnumerator MenuAndCredits_EveryButtonIsAtLeast44PtBothWays()
+        {
+            yield return Boot(true);
+            foreach(bool dev in new[]{true,false})
+            {
+                app.DevTools=dev;Refresh();yield return null;yield return null;
+                AssertFingerSized("menu-layer",dev?"dev":"prod");
+            }
+            Click("menu-credits");Refresh();yield return null;yield return null;
+            AssertFingerSized("credits-layer","credits");
+        }
+        private void AssertFingerSized(string layer,string context)
+        {
+            int seen=0;
+            foreach(var b in ShownUnder(layer).OfType<Button>())
+            {
+                seen++;
+                Assert.That(b.worldBound.height,Is.GreaterThanOrEqualTo(44),context+": "+b.name+" height");
+                Assert.That(b.worldBound.width,Is.GreaterThanOrEqualTo(44),context+": "+b.name+" width");
+            }
+            Assert.That(seen,Is.GreaterThan(0),context+": "+layer+" has buttons");
         }
     }
 }

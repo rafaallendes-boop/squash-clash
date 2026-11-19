@@ -105,6 +105,46 @@ namespace SquashClash.Runtime.Tests
             Click("rally-pause");Refresh();yield return null;yield return null;
             AssertReadable("pause-card");
         }
+        // Menu redesign (19 nov): one loud action and one loud word. Jugar is clearly the biggest thing a finger can hit
+        // (at least 1.4 times the area of any other menu button) and the wordmark is the biggest type on the menu, at display size.
+        [UnityTest] public IEnumerator Menu_PlayAndTheWordmarkLeadTheHierarchy()
+        {
+            yield return Boot(true);app.DevTools=false;Refresh();yield return null;yield return null;
+            var play=Find<Button>("menu-play").worldBound;float playArea=play.width*play.height;
+            foreach(var b in ShownUnder("menu-layer").OfType<Button>())
+            {
+                if(b.name=="menu-play")continue;
+                Assert.That(playArea,Is.GreaterThanOrEqualTo(1.4f*b.worldBound.width*b.worldBound.height),"Jugar against "+b.name);
+            }
+            float title=Find("menu-title").resolvedStyle.fontSize;
+            Assert.That(title,Is.GreaterThanOrEqualTo(56),"the wordmark is set at display size");
+            foreach(var t in ShownUnder("menu-layer").OfType<TextElement>())
+                if(t.name!="menu-title")Assert.That(t.resolvedStyle.fontSize,Is.LessThan(title),t.name+" is quieter than the wordmark");
+        }
+        // The sound, music and hand switches show their state by look as well as by word: an off switch is marked.
+        [UnityTest] public IEnumerator Menu_OffSwitchesAreMarked()
+        {
+            SquashClash.Runtime.Audio.AudioScape.SoundOn=true;SquashClash.Runtime.Audio.MusicPlayer.MusicOn=true;
+            yield return Boot(true);yield return null;
+            var sound=Find<Button>("menu-sound");
+            Assert.That(sound.ClassListContains("sc-toggle--off"),Is.False,"sound starts on");
+            flow.ToggleSound();
+            Assert.That(sound.ClassListContains("sc-toggle--off"),Is.True,"sound off is marked");
+            Assert.That(Find<Button>("pause-sound").ClassListContains("sc-toggle--off"),Is.True,"in the pause card too");
+            flow.ToggleSound();
+            Assert.That(sound.ClassListContains("sc-toggle--off"),Is.False);
+            var music=Find<Button>("menu-music");flow.ToggleMusic();
+            Assert.That(music.ClassListContains("sc-toggle--off"),Is.True,"music off is marked");flow.ToggleMusic();
+        }
+        [UnityTest] public IEnumerator Credits_DrawWithRubik_AndAreReadable()
+        {
+            yield return Boot(true);yield return null;
+            Click("menu-credits");Refresh();yield return null;yield return null;
+            Assert.That(FontName(Find("credits-title")),Is.EqualTo("Rubik-BoldItalic"));
+            Assert.That(FontName(Find("credits-font-copyright")),Is.EqualTo("Rubik-Regular"));
+            Assert.That(FontName(Find("credits-back")),Is.EqualTo("Rubik-Bold"));
+            AssertReadable("credits-layer");
+        }
         private static float Channel(float c)=>c<=.04045f?c/12.92f:Mathf.Pow((c+.055f)/1.055f,2.4f);
         private static float Luminance(Color c)=>.2126f*Channel(c.r)+.7152f*Channel(c.g)+.0722f*Channel(c.b);
         private static Color Over(Color top,Color under)=>new Color(Mathf.Lerp(under.r,top.r,top.a),Mathf.Lerp(under.g,top.g,top.a),Mathf.Lerp(under.b,top.b,top.a),1);
