@@ -84,7 +84,7 @@ namespace SquashClash.Runtime.Shot
             app.Host.Launched+=OnLaunched;app.Host.ShotApplied+=OnApplied;
             ring=gameObject.AddComponent<TimingRingView>();ring.CutoffActivated+=RecordAidCutoff;notes=gameObject.AddComponent<ShotNoteView>();notes.Initialize(app);
             feedback=gameObject.AddComponent<ShotFeedback>();feedback.Initialize();PresentationDelivered+=feedback.Present;
-            gameObject.AddComponent<SwingView>().Initialize(app,this);gameObject.AddComponent<PerfectFlashView>().Initialize(app,this);
+            gameObject.AddComponent<SwingView>().Initialize(app,this);gameObject.AddComponent<PerfectFlashView>().Initialize(app,this);gameObject.AddComponent<VolleyBurstView>().Initialize(app,this);
             OnLaunched(app.Host.ActiveConfig);
         }
         private void OnLaunched(EffectiveConfig cfg)
@@ -262,7 +262,7 @@ namespace SquashClash.Runtime.Shot
         {pendingContact=null;WaitingForContact=false;record.Result=result.ToString();record.Reason=reason;Finish(record);}
         private void Finish(ShotRecord record)
         {
-            record.Version=++recordVersion;LastRecord=record;Write("shot",record);notes.Show(record,LastOpportunity==Opportunity.Volley);
+            record.Version=++recordVersion;LastRecord=record;Write("shot",record);notes.Show(record);
             Present(record);
             ShotResolved?.Invoke(record);
         }
