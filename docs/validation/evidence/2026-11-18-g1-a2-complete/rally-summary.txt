@@ -1,0 +1,2 @@
+rally-before points 200 shots mean 22.01 median 17.0 p25 8.0 p75 31.0 max 81 wins {'Rival': 149, 'Human': 51} causes {'DoubleBounce': 194, 'Out': 6} backWins 148 {'Rival': 148} strongContacts 944
+rally-after points 200 shots mean 19.35 median 14.0 p25 5.25 p75 28.0 max 82 wins {'Rival': 160, 'Human': 40} causes {'DoubleBounce': 196, 'Out': 4} backWins 159 {'Rival': 159} strongContacts 857

@@ -1,0 +1,16 @@
+{
+ "rawLocation": "Logs/experiments/g1a2-complete (ignored)",
+ "sha256": {
+  "grid-run01/grid.tsv": "e00c318ee5e1663a7a4e7f0b2f7e6e2b306f599aa6ba74f40a6d5416f962bb5a",
+  "grid-run02/grid.tsv": "e00c318ee5e1663a7a4e7f0b2f7e6e2b306f599aa6ba74f40a6d5416f962bb5a",
+  "grid-run01/timing.tsv": "272e7b93b11c8b0ac1d30d74b55ab35b55cfc50021347dc08105b14f60d66c87",
+  "grid-run02/timing.tsv": "4335175796854b32173c1ba4db82f8de60ffae48c46e47edd67aafdea32d46d5",
+  "rally-before/points.tsv": "1556871955d1a416b1f5165cffa6d93520524839ba2da6123a36c0688f8d129a",
+  "rally-after/points.tsv": "5da7a7356d23757be3b27efb70fb9a0af010ddc6d785d8acb976c3c467431e7e",
+  "rally-before/source.tsv": "98c102ebed153b9d6e88cee8f9bb00df1b6a3ef6b29e2c645427a63e2641521f",
+  "rally-after/source.tsv": "4bd7d69381fe76aeb9667b61eaff7f9d4f13c6c92b077a64c42935af87d5c99f",
+  "c1-witnesses.tsv": "13c20f0323ba0c1e9f8c99b3a67f48674df12d6f536e8954fcf2b464663d3260",
+  "grid-summary.tsv": "a017eddd6bbc0cca18d718339c1df851e4492d7f6f89cc7ecfda1af2b7748e8a",
+  "rally-summary.txt": "f2ed9af2d399ea96a8411325ab4dde67c5f37309c1cdf4992ce37b46feb7bab4"
+ }
+}

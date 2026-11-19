@@ -162,6 +162,22 @@ namespace SquashClash.Runtime.Tests
             var r=Submit(Star(),p:0,aim:new Vector2(3.2f,4.4f));Assert.That(r.TargetLowered,Is.True);var reticle=app.GetComponentInChildren<AimReticleView>(true);
             Assert.That(reticle.Aim,Is.EqualTo(new Vector2(3.2f,4.4f)));Assert.That(reticle.FeasibleVisible,Is.True);Assert.That(reticle.FeasibleAim.y,Is.LessThan(reticle.Aim.y));
         }
+        // G1 A2: a hard crossed drive near the front wall; the frozen reticle shows the effective aim the ball takes.
+        [Test] public void IntentDrive_ShowsTheEffectiveAim_AndTheBallFollowsIt()
+        {
+            app.Tuning.Set("practice.launch",5);app.LaunchCurrent();
+            var court=app.Host.ActiveConfig.Court;var from=controller.Plan.PStar;
+            float near=from.x<court.Width/2?.6f:court.Width-.6f,corner=court.Width-near;
+            var aim=new Vector2(from.x+(corner-from.x)*from.z/(from.z+court.Length),.88f);
+            var r=Submit(Star(),p:.8f,aim:aim);Assert.That(r.Applied,Is.True,r.Reason);
+            Assert.That(controller.LastSolution.Reason,Is.EqualTo("intent-drive"));
+            var reticle=app.GetComponentInChildren<AimReticleView>(true);
+            Assert.That(reticle.FeasibleVisible,Is.True);Assert.That(reticle.FeasibleAim,Is.EqualTo(new Vector2(r.TargetUsedX,r.TargetUsedY)));
+            Assert.That(r.TargetUsedX,Is.Not.EqualTo(aim.x),"the intention moved the direction");
+            var front=app.Host.Prediction.Contacts.First();Assert.That(front.Surface,Is.EqualTo(SquashClash.Core.Court.SurfaceId.FrontWall));
+            Assert.That(Vector2.Distance(new Vector2(front.Point.x,front.Point.y),reticle.FeasibleAim),Is.LessThanOrEqualTo(.05));
+            Assert.That(app.Host.PredictionMatchesBitwise,Is.True);
+        }
         [Test] public void PanelChange_MidReception_DoesNotAffectCurrentShot()
         {
             double end=Star()-.15;var body=controller.Snapshot.Body;app.Tuning.Set("timing.validLimit",0);app.Tuning.Set("shot.vMax",10);app.Tuning.Set("human.x",4);

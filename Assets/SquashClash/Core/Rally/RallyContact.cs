@@ -30,14 +30,15 @@ namespace SquashClash.Core.Rally
         public static CausalShotResult Solve(RallyContext context,CausalReference reference,BodyFrame body,Vector3 point,Vector2 aim,float power)
             =>Solve(context,reference,body,point,aim,power,FatigueArm.None);
         public static CausalShotResult Solve(RallyContext context,CausalReference reference,BodyFrame body,Vector3 point,Vector2 aim,float power,in FatigueArm arm)
-            =>CausalQuality.Solve(reference,body,point,aim,power,context.Config,context.Factory,arm);
-        // Own intention from a contact point: the same pace curve as the human shot (without the causal layer), then the shared solver.
+            =>CausalQuality.Solve(reference,body,point,aim,power,context.Config,context.Factory,arm,(float)context.Params.FootprintRadius);
+        // Own intention from a contact point: the same pace curve as the human shot (without the causal layer), then the shared intention and solver.
         // Equal speed endpoints carry the curve speed unchanged, as CausalQuality.Solve does.
         public static ShotSolution SolveIntention(RallyContext context,Vector3 contactCenter,Vector2 aim,float power)
         {
             var pace=ShotPace.Requested(power,contactCenter,aim,context.Physics.BallRadius,context.Pace);
-            return ShotSolver.Solve(new ShotRequest(contactCenter,aim,power),pace.Speed,pace.Speed,context.VCap,context.Physics.Gravity,context.Physics.BallRadius,
-                context.Court,context.Factory,context.Physics);
+            // The same intention layer as the executed shot (G1 A2), without causal vectors.
+            return ShotIntentSolver.Solve(new ShotRequest(contactCenter,aim,power),aim,pace.Speed,context.VCap,context.Pace,
+                context.Court,context.Factory,context.Physics,(float)context.Params.FootprintRadius,out _);
         }
         // What the shared solver and predictor say about one's own intention from a contact point: does it reach the
         // front wall legally and bounce in court? Own shot, shared predictor, observed state only (spec 11.2).
