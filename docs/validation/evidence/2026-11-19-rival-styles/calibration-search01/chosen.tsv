@@ -1,0 +1,4 @@
+level	k	average	verdict
+Easy			no-k (average over target+4 pp at k=1.5)
+Medium			no-k (average over target+4 pp at k=1.25)
+Hard			no-k (average over target+4 pp at k=1)
