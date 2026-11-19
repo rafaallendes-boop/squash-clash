@@ -38,7 +38,7 @@ namespace SquashClash.DevPanel
                 scroll.horizontalScrollerVisibility=ScrollerVisibility.Hidden;panel.Add(scroll);
             }
             parameters=new ParamSection(app,Refresh);presets=new PresetsSection(app,Refresh);diagnostics=new DiagnosticsSection(app);
-            shotSection=new ShotSection(app);paramsScroll.Add(shotSection.Root);paramsScroll.Add(new FatigueTestSection(app).Root);paramsScroll.Add(new AudioDevSection(app).Root);
+            shotSection=new ShotSection(app);paramsScroll.Add(shotSection.Root);paramsScroll.Add(new FatigueTestSection(app).Root);paramsScroll.Add(new AudioDevSection(app).Root);paramsScroll.Add(new VolleyTestSection(app).Root);
             tasks=new TaskSection(app);paramsScroll.Add(tasks.Root);
             paramsScroll.Add(parameters.Root);presetsScroll.Add(presets.Root);diagnosticsScroll.Add(diagnostics.Root);
             void Show(ScrollView selected)

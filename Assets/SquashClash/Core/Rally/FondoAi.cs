@@ -40,7 +40,9 @@ namespace SquashClash.Core.Rally
         public readonly Vector2 Aim;public readonly float P;
         // Release offset from T* in real perceived milliseconds (spec 11.3 step 3).
         public readonly double DeltaMs;
-        public AiShot(bool swing,ShotOption option,Vector2 aim,float p,double deltaMs,bool defensive){Swing=swing;Option=option;Aim=aim;P=p;DeltaMs=deltaMs;Defensive=defensive;}
+        // Release in the volley opportunity of the plan instead of its bounce one (design 2026-11-18).
+        public readonly bool Volley;
+        public AiShot(bool swing,ShotOption option,Vector2 aim,float p,double deltaMs,bool defensive,bool volley=false){Swing=swing;Option=option;Aim=aim;P=p;DeltaMs=deltaMs;Defensive=defensive;Volley=volley;}
     }
     public interface IRallyBrain
     {

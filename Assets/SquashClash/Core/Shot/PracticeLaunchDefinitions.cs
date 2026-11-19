@@ -9,11 +9,24 @@ namespace SquashClash.Core.Shot
     public readonly struct PracticeLaunch
     {
         public readonly string Id;public readonly BallState Initial;public readonly BodyFrame Body;
-        public PracticeLaunch(string id,BallState initial,BodyFrame body){Id=id;Initial=initial;Body=body;}
+        // The recipe offers the volley opportunity too (VL1 only).
+        public readonly bool Volley;
+        public PracticeLaunch(string id,BallState initial,BodyFrame body,bool volley=false){Id=id;Initial=initial;Body=body;Volley=volley;}
     }
     public static class PracticeLaunchDefinitions
     {
         // Frozen initial EXPERIMENTO recipes predeclared in the phase1 report before evaluation.
+        // practice.launch index: SL1-SL6 (0-5) and VL1 (6), the volley recipe of the AutoQA volley suite (design 2026-11-18).
+        public static PracticeLaunch At(EffectiveConfig config,int index)=>index==VolleyIndex?Volley(config):Create(config)[index];
+        public const int VolleyIndex=6;
+        // VL1: a high feed from the front court that passes the fixed body before bouncing deep and comes back after the bounce.
+        public static PracticeLaunch Volley(EffectiveConfig config)
+        {
+            float mid=config.Court.Width*.5f;var position=new Vector3(mid-.6f,1.2f,5);
+            var center=Ballistics.CenterForContact(SurfaceId.FrontWall,new Vector3(position.x,4.2f,0),config.Physics.BallRadius);
+            return new PracticeLaunch("VL1",new BallState{Position=position,Velocity=Ballistics.SolveCenterTo(position,center,15,config.Physics.Gravity)},
+                BodyFrame.From(config.Source,new Vector2(mid-1.2f,8.25f)),true);
+        }
         public static IReadOnlyList<PracticeLaunch> Create(EffectiveConfig config)
         {
             float mid=config.Court.Width*.5f;

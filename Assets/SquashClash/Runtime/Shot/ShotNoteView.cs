@@ -22,11 +22,13 @@ namespace SquashClash.Runtime.Shot
             root=app.GetComponent<UIDocument>().rootVisualElement;safe=app.GetComponent<SafeAreaLayout>();
             label=new Label{name="shot-note",pickingMode=PickingMode.Ignore};label.AddToClassList("sc-shot-note");label.style.position=Position.Absolute;root.Insert(0,label);
         }
-        public void Show(ShotRecord r)
+        public void Show(ShotRecord r)=>Show(r,false);
+        // volley: the order went to the volley opportunity (design 2026-11-18).
+        public void Show(ShotRecord r,bool volley)
         {
             string text=r.Result=="Perfect"?"Perfecto":r.Result=="Valid"?(r.DeltaMs<0?"Adelantado":"Atrasado"):
                 r.Result=="Failed"?(r.Fail=="Air"?"¡Al aire!":"¡Tarde!"):r.Result=="Unreachable"?"No llega":r.Result=="NoOrder"?"Sin golpe":r.Result=="NotEvaluable"?"No evaluable":"Fallo del sistema";
-            Present(text,r.Result=="Perfect"?0:r.Result=="Valid"?1:r.Result=="Failed"?2:3);
+            Present(volley?"Volea · "+text:text,r.Result=="Perfect"?0:r.Result=="Valid"?1:r.Result=="Failed"?2:3);
         }
         public void ShowText(string text)=>Present(text,3);
         private void Present(string text,int kind)

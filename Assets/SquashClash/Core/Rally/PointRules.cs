@@ -125,7 +125,11 @@ namespace SquashClash.Core.Rally
             }
             if(judge.Judge(e.Surface,e.Point)!=LineVerdict.Good)Close(PointEndCause.ServiceFault,Striker,e);
         }
-        public bool CanHit(PlayerId who)=>!Closed&&who==ToHit&&FrontWallReached&&(volleyAllowed?FloorBounces<=1:FloorBounces==1);
+        // v1: no volley of the serve (arcade adaptation, design 2026-11-18).
+        public bool CanHit(PlayerId who)=>!Closed&&who==ToHit&&FrontWallReached&&(volleyAllowed&&!Serving?FloorBounces<=1:FloorBounces==1);
+        // The bounce opportunity only (what the movement planner plans for, M1), whatever the volley setting.
+        public bool CanHitAfterBounce(PlayerId who)=>!Closed&&who==ToHit&&FrontWallReached&&FloorBounces==1;
+        public bool VolleyAllowed=>volleyAllowed;
         public bool RacketContact(PlayerId who)
         {
             if(!CanHit(who)){RejectedContacts++;return false;}

@@ -30,6 +30,28 @@ namespace SquashClash.AutoQA
             if(!string.IsNullOrEmpty(s.deliberateExpectedResult))e.result=s.deliberateExpectedResult;
             return e;
         }
+        // Volley suite (design 2026-11-18): independent physical windows of both opportunities in ms from the volley T*; the release
+        // belongs to the volley up to the midpoint S between volley K-out and bounce K-in, to the bounce after it (spec 7.1.3 case 14).
+        internal static Expected ExpectVolley(Scenario s,ParamSet config,double vKIn,double vKOut,double bounceOffsetMs,double bKIn,double bKOut)
+        {
+            var e=new Expected{closure=Closure(false,false,false,s.pullMm>config.Get("power.pullDeadZoneMm"),s.pullMm,s.pullMm,s.durationMs,config),result="NoOrder"};
+            if(e.closure!="Swing")return e;
+            double delta=s.releaseOffsetMs-config.Get("timing.latencyCompMs"),a=config.Get("timing.assistMs"),split=(vKOut+bounceOffsetMs+bKIn)*.5;
+            bool volley=delta<=split;double d=volley?delta:delta-bounceOffsetMs,kIn=volley?vKIn:bKIn,kOut=volley?vKOut:bKOut;
+            bool within=d>=kIn&&d<=kOut,perfect=within&&Math.Abs(d)<=a;
+            e.result=perfect?"Perfect":within?"Valid":"Failed";e.applied=within;e.presentations=1;e.fail=within?"None":d<kIn?"Air":"Late";
+            e.scheduled=perfect&&d<=0;e.checkScheduled=perfect;e.oracle="volley-k/1";
+            e.rationale=(volley?"volley":"bounce")+" opportunity; S="+split.ToString("R",System.Globalization.CultureInfo.InvariantCulture)+" ms from the volley T*; independent physical K, then configured A";
+            if(!string.IsNullOrEmpty(s.deliberateExpectedResult))e.result=s.deliberateExpectedResult;
+            return e;
+        }
+        internal static bool MarginValidVolley(Scenario s,ParamSet config,double vKIn,double vKOut,double bounceOffsetMs,double bKIn,double bKOut)
+        {
+            double delta=s.releaseOffsetMs-config.Get("timing.latencyCompMs"),a=config.Get("timing.assistMs");
+            double margin=2000/config.Get("physics.stepHz")/config.Get("pace.tempo"),split=(vKOut+bounceOffsetMs+bKIn)*.5;
+            var borders=new[]{-a,a,vKIn,vKOut,split,bounceOffsetMs-a,bounceOffsetMs+a,bounceOffsetMs+bKIn,bounceOffsetMs+bKOut};
+            return borders.All(b=>!double.IsNaN(b)&&!double.IsInfinity(b)&&Math.Abs(delta-b)>=margin);
+        }
         internal static bool MarginValid(Scenario s,ParamSet config,double kInMs,double kOutMs)
         {
             if(s.kind!="swing")return true;

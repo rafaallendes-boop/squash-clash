@@ -18,6 +18,9 @@ namespace SquashClash.AutoQA
         internal Vector2 Anchor {get;private set;}
         internal double Target {get;private set;}
         internal PhysicsWindow Window {get;private set;}
+        // Volley suite only: the bounce window (ms from the bounce T*) and the bounce T* in ms from the volley T*.
+        internal PhysicsWindow BounceWindow {get;private set;}
+        internal double BounceOffsetMs {get;private set;}
         internal EnvironmentMeta Environment {get;private set;}
         private TouchInputAdapter input;private Touchscreen screen;private Func<double> previousTime;
         private double now,dt;private PracticeMode practice;private GesturePreview preview;
@@ -35,6 +38,12 @@ namespace SquashClash.AutoQA
             Anchor=(Vector2)UnityEngine.Camera.main.WorldToScreenPoint(new Vector3(scenario.aimX,scenario.aimY,0));
             App.Host.ClockMap.TrySimToReal(Controller.Plan.TStarStep,0,out var target);Target=target;
             Window=PhysicsWindow.Measure(App.Host.Prediction,App.Host.ActiveConfig.Source,(Target-App.Host.LaunchRealTime)*App.Host.ActiveConfig.Physics.StepHz*App.Host.ActiveConfig.Tempo);
+            if(scenario.Volley)
+            {
+                var rally=new SquashClash.Core.Rally.RallyParams();
+                BounceWindow=Window;App.Host.ClockMap.TrySimToReal(Controller.Volley.Plan.TStarStep,0,out var volley);BounceOffsetMs=(Target-volley)*1000;Target=volley;
+                Window=PhysicsWindow.Measure(App.Host.Prediction,App.Host.ActiveConfig.Source,(Target-App.Host.LaunchRealTime)*App.Host.ActiveConfig.Physics.StepHz*App.Host.ActiveConfig.Tempo,0,rally.VolleyMinHeight,rally.VolleyMaxHeight);
+            }
             float mm=ScreenMetrics.MmPerPx(Screen.dpi,(float)App.Tuning.Applied.Get("input.fallbackDpi"),out var dpi);
             var safe=Screen.safeArea;
             Environment=new EnvironmentMeta {screen=new[]{Screen.width,Screen.height},safeArea=new[]{safe.x,safe.y,safe.width,safe.height},

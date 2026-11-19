@@ -45,6 +45,7 @@ namespace SquashClash.Runtime.Rally
         private PlayerId? served;private ServiceBox servedBox;
         private bool resetEnergy=true;
         private double? testEnergy;
+        private bool? pendingVolley;
         public FatigueState HumanEnergy {get;private set;}
         public FatigueState RivalEnergy {get;private set;}
         public FatigueSettings FatigueSettings=>context?.Fatigue;
@@ -114,12 +115,16 @@ namespace SquashClash.Runtime.Rally
         // Rematch: same rival, score back to zero, next point starts at once.
         // DEV test tool (PO, 18 nov): the next point starts with this energy for both players, once. Stays pending until then, also outside a rally. Unused: no effect.
         public void SetTestEnergy(double energy){testEnergy=Math.Max(0,Math.Min(100,energy));}
+        // DEV only (design 2026-11-18): switch the volley on or off from the NEXT point on.
+        public void SetVolley(bool on){pendingVolley=on;}
+        public bool VolleyNextPoint=>pendingVolley??Params.VolleyEnabled!=0;
         public void ResetScore(){HumanPoints=RivalPoints=PointsPlayed=0;LastPoint=null;resetEnergy=true;}
         public void Rematch(){if(!Active)return;ResetScore();if(Match!=null)Match=NewMatch();BeginPoint();}
         private void BeginPoint()
         {
             pointCausal.Clear();
             var cfg=EffectiveConfig.From(app.Tuning.ApplyPending());
+            if(pendingVolley.HasValue){var p=Params.Clone();p.VolleyEnabled=pendingVolley.Value?1:0;Params=p;pendingVolley=null;}
             context=new RallyContext(cfg,Params,factory);
             double humanStart=testEnergy??(resetEnergy?100:HumanEnergy?.Energy??100),rivalStart=testEnergy??(resetEnergy?100:RivalEnergy?.Energy??100);
             HumanEnergy=new FatigueState(context.Fatigue,humanStart);
@@ -130,7 +135,7 @@ namespace SquashClash.Runtime.Rally
             Rival.MoveTo(context.WaitPosition(PlayerId.Rival),0,BodyPhase.Recovering,BodyPhase.Waiting);
             rivalBrain=new FondoAi(context,AiDifficulty.For(Params,Level),Seed+PointsPlayed*7919L);
             humanBrain=new BotBrain(context,AutopilotTimingSigmaMs,Seed*31+PointsPlayed*104729L);
-            committed=new PointRules(context.Court,(float)Params.FootprintRadius);rivalReception=null;served=null;
+            committed=context.NewRules();rivalReception=null;served=null;
             if(Match==null){committed.Begin(null,PlayerId.Human);LaunchToHuman(context.NeutralLaunch(PlayerId.Human));}
             else
             {
@@ -151,6 +156,8 @@ namespace SquashClash.Runtime.Rally
             Human.MoveTo(HumanPlan.Stance,delay,BodyPhase.Approaching,BodyPhase.Set);
             var positions=Human.PositionsAfter(trajectory.States.Count);
             controller.SetNextReceptionBody(j=>context.FrameAt(positions[(int)(j-ball.Step)]));
+            // Volley v1 (M1): the opportunity on this very body path, offered to the human's next launch only.
+            if(context.VolleyOn){var rules=committed;var ctx=context;int version=planVersion;controller.SetNextVolley((t,bounce)=>ctx.VolleyFor(t,rules,positions,bounce,delay,version));}
             controller.SetNextReceptionFatigue(HumanReceptionFatigue);
             // The human's arm is read at its exact contact step, inside the authoritative solve, so bodies must be advanced to it.
             if(context.Fatigue.Enabled)controller.SetNextStrikerFatigue(HumanStrikerArm);
@@ -202,8 +209,9 @@ namespace SquashClash.Runtime.Rally
             if(Active&&Phase==RallyPhase.HumanReception&&record.LaunchId==flightLaunchId)
             {
                 resolved=record;
-                if(controller.LastCausal.Vectors!=null&&controller.CausalReference!=null)
-                    pointCausal.Add(CausalShotTrace.Create("Human",record.LaunchId,record.AttemptId,record.ContactStep,controller.CausalReference,controller.CausalReference.BodyAt(record.ContactStep),controller.LastCausal));
+                var reference=controller.UsedCausalReference??controller.CausalReference;
+                if(controller.LastCausal.Vectors!=null&&reference!=null)
+                    pointCausal.Add(CausalShotTrace.Create("Human",record.LaunchId,record.AttemptId,record.ContactStep,reference,reference.BodyAt(record.ContactStep),controller.LastCausal));
             }
         }
         private void Update()=>Tick();
