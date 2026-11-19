@@ -52,13 +52,13 @@ namespace SquashClash.Experiments.EditMode
             Assert.That(preset.Hash,Is.EqualTo("207da8f2c636"));Assert.That(preset.Ordered.Count,Is.EqualTo(132));
             return (root,preset,new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
         }
-        private static Cell Play(RallyContext ctx,AiLevel level,RivalStyleId style,string reference,double sigma,int matches,long seeds)
+        private static Cell Play(RallyContext ctx,AiLevel level,RivalStyleId style,string reference,double sigma,int matches,long seeds,AiDifficulty? difficulty=null)
         {
             var cell=new Cell();
             for(int i=0;i<matches;i++)
             {
                 IRallyBrain human=reference=="bot30"?(IRallyBrain)new BotBrain(ctx,30,seeds+2*i):new RivalStylesBaselineExperiment.NewcomerBot(ctx,sigma,seeds+2*i);
-                using(var sim=new RallySim(ctx,human,new RivalAi(ctx,AiDifficulty.For(ctx.Params,level),style,seeds+1+2*i)))
+                using(var sim=new RallySim(ctx,human,new RivalAi(ctx,difficulty??AiDifficulty.For(ctx.Params,level),style,seeds+1+2*i)))
                 {
                     var score=new MatchScore(7,2,i%2==0?PlayerId.Human:PlayerId.Rival);int replays=0;
                     while(!score.Finished)
@@ -121,6 +121,41 @@ namespace SquashClash.Experiments.EditMode
                     }
                     chosen.WriteLine(level+"\t"+(pick>=0?F(Grid[pick]):"")+"\t"+(pick>=0?F(Average(pick)):"")+"\t"+verdict);chosen.Flush();
                     TestContext.WriteLine("level "+level+" k="+(pick>=0?F(Grid[pick]):"-")+" "+verdict);
+                }
+            }
+        }
+        // Claude, 19 nov (after search02): one k per (style, level), read from RallyParams. Fondista Hard first: k=2.5 on the search
+        // seeds, then 2.25 and 2.75 only if 2.5 is outside 20 +- 4 pp; the one in band closest to 20 % is used. Then the confirmation
+        // with NEW seeds for the nine cells (newcomer) and bot30 in every cell (Hard: <= 45 %; Easy and Medium reported only).
+        [Test,Explicit,Category("Experiments"),Timeout(14400000)]
+        public void ConfirmPerStyle()
+        {
+            var (root,preset,factory)=Setup();
+            string dir=Path.Combine(root,"Logs/experiments/rival-styles-calibration/"+(Environment.GetEnvironmentVariable("SC_RS_RUN")??"confirm-per-style"));
+            Assert.That(Directory.Exists(dir),Is.False,"Never overwrite evidence.");Directory.CreateDirectory(dir);
+            var ctx=new RallyContext(EffectiveConfig.From(preset),new RallyParams(),factory);
+            File.WriteAllText(Path.Combine(dir,"source.tsv"),"defaults\trallyParams\tunity\n"+preset.Hash+"\t"+ctx.Params.Hash+"\t"+Application.unityVersion+"\n",Utf8);
+            using(var cells=new StreamWriter(Path.Combine(dir,"cells.tsv"),false,Utf8))
+            {
+                cells.WriteLine("phase\tlevel\tstyle\treference\tk\t"+Cell.Header+"\tseconds");
+                AiDifficulty Scaled(AiLevel level,double k){var d=AiDifficulty.For(ctx.Params,level);return new AiDifficulty(d.PerceptionS*k,d.StanceSigma*k,d.AimSigma*k,d.PowerSigma*k,d.TimingSigmaMs*k,d.Temperature);}
+                Cell Run(string phase,AiLevel level,RivalStyleId style,string reference,double k,long seeds)
+                {
+                    var watch=Stopwatch.StartNew();var cell=Play(ctx,level,style,reference,90,200,seeds,Scaled(level,k));
+                    cells.WriteLine(phase+"\t"+level+"\t"+style+"\t"+reference+"\t"+F(k)+"\t"+cell.Row+"\t"+F(watch.Elapsed.TotalSeconds));cells.Flush();return cell;
+                }
+                double fondoHard=double.NaN,best=double.MaxValue;
+                foreach(var k in new[]{2.5,2.25,2.75})
+                {
+                    double share=Run("fondista-hard",AiLevel.Hard,RivalStyleId.Fondista,"newcomer",k,20261121).Share;
+                    if(Math.Abs(share-.20)<=.04&&Math.Abs(share-.20)<best){best=Math.Abs(share-.20);fondoHard=k;}
+                    if(k==2.5&&!double.IsNaN(fondoHard))break;
+                }
+                File.WriteAllText(Path.Combine(dir,"fondista-hard.tsv"),"k\n"+(double.IsNaN(fondoHard)?"none":F(fondoHard))+"\n",Utf8);
+                foreach(var level in Levels)foreach(var style in Styles)
+                {
+                    double k=style==RivalStyleId.Fondista&&level==AiLevel.Hard?(double.IsNaN(fondoHard)?RivalStyle.NoiseK(ctx.Params,style,level):fondoHard):RivalStyle.NoiseK(ctx.Params,style,level);
+                    Run("confirm",level,style,"newcomer",k,20261219);Run("confirm",level,style,"bot30",k,20261219);
                 }
             }
         }

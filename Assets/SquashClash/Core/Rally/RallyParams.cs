@@ -61,6 +61,12 @@ namespace SquashClash.Core.Rally
         public double StyleShooterVolleyBias=.8,StyleShooterVolleyMinKS=.05,StyleShooterVolleySteal=0,StyleShooterWaitBehindT=0,StyleShooterCoverDepth=-1;
         public double StyleAllRoundLongWeight=1,StyleAllRoundAwayWeight=.8,StyleAllRoundTimeWeight=.6,StyleAllRoundDropWeight=1.1,StyleAllRoundRiskAversion=1.1;
         public double StyleAllRoundDefenseSlackS=.12,StyleAllRoundDropMinSlackS=.3,StyleAllRoundDropZoneAhead=0,StyleAllRoundAttackBase=0,StyleAllRoundAttackAhead=1;
+        // Difficulty per style (Claude, 19 nov, after search02): the styles differ in strength, so each (style, level) scales the
+        // level's five execution/perception noises by its own k (temperature unchanged). Chosen from the search02 grid; Definidor Hard
+        // stays at 1 (deviation: easier than the 20 % target, never below the shared noise).
+        public double StyleNoiseKFondoEasy=1.5,StyleNoiseKFondoMedium=1.75,StyleNoiseKFondoHard=2.5;
+        public double StyleNoiseKShooterEasy=1.25,StyleNoiseKShooterMedium=1,StyleNoiseKShooterHard=1;
+        public double StyleNoiseKAllRoundEasy=1.5,StyleNoiseKAllRoundMedium=1.5,StyleNoiseKAllRoundHard=1.25;
         public double StyleAllRoundVolleyBias=-.8,StyleAllRoundVolleyMinKS=.08,StyleAllRoundVolleySteal=.6,StyleAllRoundWaitBehindT=.2,StyleAllRoundCoverDepth=-1;
         public string Hash
         {

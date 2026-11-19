@@ -50,7 +50,7 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void RallyParams_ProjectionWithoutStyleFields_IsTheCurrentHash()
         {
             Assert.That(Projection(f=>!f.Name.StartsWith("Style",StringComparison.Ordinal)),Is.EqualTo("5cdbb01e4621"));
-            Assert.That(new RallyParams().Hash,Is.EqualTo("5fdcf65f91f7"),"measured in Unity with the style fields");
+            Assert.That(new RallyParams().Hash,Is.EqualTo("0f58580f44ea"),"measured in Unity with the style fields");
             TestContext.WriteLine("STYLE_RALLYPARAMS_HASH="+new RallyParams().Hash);
         }
         [TestCase(AiLevel.Easy)][TestCase(AiLevel.Medium)][TestCase(AiLevel.Hard)]
@@ -124,6 +124,25 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(shooter.Recovery(After(shortBall)).y,Is.EqualTo(c.T.y),"Definidor recovers to the T after its own short ball");
             foreach(var ai in new[]{fondo,shooter,all})Assert.That(ai.Recovery(After(longBall)),Is.EqualTo(ai.Wait));
             Assert.That(fondo.Wait.y,Is.EqualTo(c.T.y+.5f));Assert.That(shooter.Wait.y,Is.EqualTo(c.T.y).Within(1e-5),"Definidor waits on the T");Assert.That(all.Wait.y,Is.EqualTo(c.T.y+.2f).Within(1e-5));
+        }
+        // Claude, 19 nov (after search02): one noise factor per (style, level) on the five execution/perception noises; temperature stays.
+        [Test] public void Difficulty_PerStyle_ScalesTheFiveNoises_AndKeepsTheTemperature()
+        {
+            var p=new RallyParams();
+            var expected=new Dictionary<(RivalStyleId,AiLevel),double>{
+                {(RivalStyleId.Fondista,AiLevel.Easy),1.5},{(RivalStyleId.Fondista,AiLevel.Medium),1.75},{(RivalStyleId.Fondista,AiLevel.Hard),2.5},
+                {(RivalStyleId.Definidor,AiLevel.Easy),1.25},{(RivalStyleId.Definidor,AiLevel.Medium),1},{(RivalStyleId.Definidor,AiLevel.Hard),1},
+                {(RivalStyleId.Completo,AiLevel.Easy),1.5},{(RivalStyleId.Completo,AiLevel.Medium),1.5},{(RivalStyleId.Completo,AiLevel.Hard),1.25}};
+            foreach(var e in expected)
+            {
+                var (style,level)=e.Key;var shared=AiDifficulty.For(p,level);var d=RivalStyle.Difficulty(p,style,level);
+                Assert.That(RivalStyle.NoiseK(p,style,level),Is.EqualTo(e.Value),style+" "+level);
+                Assert.That((d.PerceptionS,d.StanceSigma,d.AimSigma,d.PowerSigma,d.TimingSigmaMs),Is.EqualTo((shared.PerceptionS*e.Value,shared.StanceSigma*e.Value,shared.AimSigma*e.Value,shared.PowerSigma*e.Value,shared.TimingSigmaMs*e.Value)));
+                Assert.That(d.Temperature,Is.EqualTo(shared.Temperature),"temperature is not scaled");
+                Assert.That(RivalStyle.NoiseK(p,style,level),Is.GreaterThanOrEqualTo(1),"never below the shared noise");
+            }
+            foreach(RivalStyleId style in Enum.GetValues(typeof(RivalStyleId)))
+                Assert.That(RivalStyle.Difficulty(p,style,AiLevel.Easy).TimingSigmaMs,Is.GreaterThan(RivalStyle.Difficulty(p,style,AiLevel.Medium).TimingSigmaMs*.99),style+": Easy is not tighter than Medium");
         }
         [Test] public void StyleFromSeed_IsDeterministic_AndCoversTheThreeStyles()
         {

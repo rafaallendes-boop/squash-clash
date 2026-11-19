@@ -39,6 +39,21 @@ namespace SquashClash.Core.Rally
                     p.FondoDefenseSlackS,p.FondoDropMinSlackS,double.NegativeInfinity,0,0,p.StyleFondoVolleyBias,p.StyleFondoVolleyMinKS,0,p.RivalWaitBehindT,p.StyleFondoCoverDepth);
             }
         }
+        // The noise factor of a (style, level): it scales the level's five execution/perception noises, never the temperature.
+        public static double NoiseK(RallyParams p,RivalStyleId id,AiLevel level)
+        {
+            switch(id)
+            {
+                case RivalStyleId.Definidor:return level==AiLevel.Easy?p.StyleNoiseKShooterEasy:level==AiLevel.Hard?p.StyleNoiseKShooterHard:p.StyleNoiseKShooterMedium;
+                case RivalStyleId.Completo:return level==AiLevel.Easy?p.StyleNoiseKAllRoundEasy:level==AiLevel.Hard?p.StyleNoiseKAllRoundHard:p.StyleNoiseKAllRoundMedium;
+                default:return level==AiLevel.Easy?p.StyleNoiseKFondoEasy:level==AiLevel.Hard?p.StyleNoiseKFondoHard:p.StyleNoiseKFondoMedium;
+            }
+        }
+        public static AiDifficulty Difficulty(RallyParams p,RivalStyleId id,AiLevel level)
+        {
+            var d=AiDifficulty.For(p,level);double k=NoiseK(p,id,level);
+            return new AiDifficulty(d.PerceptionS*k,d.StanceSigma*k,d.AimSigma*k,d.PowerSigma*k,d.TimingSigmaMs*k,d.Temperature);
+        }
         public static RivalStyleId FromSeed(long seed)=>(RivalStyleId)(int)(new RallyRng(seed).NextBits()%3);
         public static string Name(RivalStyleId id)=>id==RivalStyleId.Definidor?"Definidor":id==RivalStyleId.Completo?"Completo":"Fondista";
     }
@@ -60,6 +75,9 @@ namespace SquashClash.Core.Rally
         private readonly ShotOption[] all=new ShotOption[36];
         private readonly bool[] atVolley=new bool[36];
         public RivalStyle Style {get;}
+        // The game's rival: the level's shared noise scaled by the (style, level) factor.
+        public static RivalAi For(RallyContext context,AiLevel level,RivalStyleId style,long seed)
+            =>new RivalAi(context,RivalStyle.Difficulty(context.Params,style,level),style,seed);
         public RivalAi(RallyContext context,AiDifficulty difficulty,RivalStyleId style,long seed)
         {this.context=context??throw new ArgumentNullException(nameof(context));this.difficulty=difficulty;Style=RivalStyle.For(context.Params,style);random=new RallyRng(seed);}
         public int PerceptionSteps=>context.Steps(difficulty.PerceptionS);

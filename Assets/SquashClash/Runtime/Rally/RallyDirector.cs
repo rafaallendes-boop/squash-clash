@@ -151,7 +151,7 @@ namespace SquashClash.Runtime.Rally
             HumanEnergy=new FatigueState(context.Fatigue,humanStart);
             RivalEnergy=new FatigueState(context.Fatigue,rivalStart);
             resetEnergy=false;testEnergy=null;HumanEnergy.BeginPoint();RivalEnergy.BeginPoint();
-            rivalBrain=new RivalAi(context,AiDifficulty.For(Params,Level),Style,MatchSeed+PointsPlayed*7919L);
+            rivalBrain=RivalAi.For(context,Level,Style,MatchSeed+PointsPlayed*7919L);
             Human=new PlayerBody(PlayerId.Human,Human?.Position??context.WaitPosition(PlayerId.Human),context.Move);
             Rival=new PlayerBody(PlayerId.Rival,Rival?.Position??RivalWait(),context.Move);
             Rival.MoveTo(RivalWait(),0,BodyPhase.Recovering,BodyPhase.Waiting);
