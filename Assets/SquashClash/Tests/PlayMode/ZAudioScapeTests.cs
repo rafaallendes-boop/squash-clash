@@ -3,6 +3,7 @@ using System.Collections;
 using NUnit.Framework;
 using SquashClash.Core.Court;
 using SquashClash.Core.Rally;
+using SquashClash.Core.Shot;
 using SquashClash.Runtime.Audio;
 using SquashClash.Runtime.Feedback;
 using SquashClash.Runtime.Rally;
@@ -80,6 +81,52 @@ namespace SquashClash.Runtime.Tests
                 Click("audio-glass-toggle");Assert.That(AudioScape.GlassSoundOn,Is.True);
             }
             finally{AudioScape.GlassSoundOn=true;}
+        }
+        // Perfect hit sound: a drier, cleaner contact for the player's own Perfect, at the loudness of the Valid one.
+        private static void Levels(AudioClip clip,out float peak,out float rms)
+        {
+            var data=new float[clip.samples*clip.channels];clip.GetData(data,0);double sum=0;peak=0;
+            foreach(var v in data){peak=Mathf.Max(peak,Mathf.Abs(v));sum+=v*v;}
+            rms=(float)System.Math.Sqrt(sum/data.Length);
+        }
+        [UnityTest] public IEnumerator PerfectOwn_IsDrierAndCleanerThanValid_AtTheSameLoudness()
+        {
+            var own=Resources.Load<AudioClip>("Audio/scape-perfect-own");var valid=Resources.Load<AudioClip>("Audio/impact-valid");
+            Assert.That(own,Is.Not.Null,"the Perfect variant is in Resources/Audio");Assert.That(valid,Is.Not.Null);
+            Levels(own,out var ownPeak,out var ownRms);Levels(valid,out var validPeak,out var validRms);
+            Assert.That(ownPeak,Is.EqualTo(validPeak).Within(validPeak*.05f),"same peak as the Valid clip");
+            Assert.That(ownRms,Is.EqualTo(validRms).Within(validRms*.10f),"same RMS as the Valid clip");
+            Assert.That(own.length,Is.LessThan(valid.length),"drier: a shorter decay");
+            Assert.That(Crossings(own),Is.GreaterThan(Crossings(valid)*1.5f),"cleaner: less low body, more of a sharp click");
+            yield return null;
+        }
+        private ShotPresentation Presentation(PresentationCategory category)=>new ShotPresentation(1,"a",category,1,null,0,category!=PresentationCategory.Failed,0,Vector3.zero,"Forehand");
+        [UnityTest] public IEnumerator PerfectOwn_OnlyTheHumansPerfectUsesIt_AndTheSwitchRestoresToday()
+        {
+            var feedback=controller.GetComponent<ShotFeedback>();Assert.That(feedback,Is.Not.Null);
+            try
+            {
+                Assert.That(AudioScape.PerfectOwnOn,Is.True,"on by default");
+                feedback.Present(Presentation(PresentationCategory.Perfect));Assert.That(feedback.LastFile,Is.EqualTo("scape-perfect-own"));Assert.That(feedback.LastClip,Is.EqualTo("impact-perfect"));
+                feedback.Present(Presentation(PresentationCategory.Valid));Assert.That(feedback.LastFile,Is.EqualTo("impact-valid"));
+                feedback.Present(Presentation(PresentationCategory.Failed));Assert.That(feedback.LastFile,Is.EqualTo("swish-provisional"));
+                AudioScape.PerfectOwnOn=false;
+                feedback.Present(Presentation(PresentationCategory.Perfect));Assert.That(feedback.LastFile,Is.EqualTo("impact-perfect"),"off: today's sound");
+            }
+            finally{AudioScape.PerfectOwnOn=true;}
+            yield return null;
+        }
+        [UnityTest] public IEnumerator DevPanel_PerfectOwnToggle_DefaultsOn_AndFlipsTheSwitch()
+        {
+            for(int i=0;i<4;i++){Refresh();yield return null;}
+            var button=root.Q<Button>("audio-perfect-toggle");Assert.That(button,Is.Not.Null,"DEV panel has the Perfect toggle");
+            try
+            {
+                Assert.That(AudioScape.PerfectOwnOn,Is.True);Assert.That(button.text,Does.Contain("sí"));
+                Click("audio-perfect-toggle");Assert.That(AudioScape.PerfectOwnOn,Is.False);Assert.That(button.text,Does.Contain("no"));
+                Click("audio-perfect-toggle");Assert.That(AudioScape.PerfectOwnOn,Is.True);
+            }
+            finally{AudioScape.PerfectOwnOn=true;}
         }
         private static float Crossings(AudioClip clip)
         {

@@ -9,7 +9,7 @@ Uso:  python3 scripts/audio/make_audioscape.py [directorio_de_salida]
 Salida por defecto: Assets/SquashClash/Runtime/Resources/Audio/scape-*.wav
 Formato: PCM mono de 16 bits a 22050 Hz; cada muestra se limita a [-1, 1] y se convierte con int(v*32767).
 
-No toca impact-perfect, impact-valid, contact-provisional ni swish-provisional (audio de contacto del jugador).
+No toca impact-perfect, impact-valid, contact-provisional ni swish-provisional (audio de contacto del jugador); scape-perfect-own es una variante nueva que ShotFeedback puede usar en lugar de impact-perfect (interruptor DEV).
 Las formulas estan en Assets/SquashClash/Runtime/Resources/Audio/PROVENANCE.md y en las funciones de abajo.
 """
 import hashlib
@@ -76,6 +76,11 @@ def bounce_glass():  # vidrio de fondo: «toc» seco de vidrio templado, mas agu
     return render(.045, lambda t, i: attack(t, .0006) * (.40 * math.sin(TAU * 1250 * t) * math.exp(-110 * t) + .24 * math.sin(TAU * 2750 * t) * math.exp(-170 * t) + .10 * math.sin(TAU * 4100 * t) * math.exp(-260 * t) + .18 * n[i] * 2 * math.exp(-300 * t)))
 
 
+def perfect_own():  # golpe Perfecto propio: mas seco y limpio que impact-valid (caida corta, sin cuerpo grave, ataque nitido), mismo pico y RMS
+    n = noise(41, RATE, 7000)
+    return render(.040, lambda t, i: .405 * attack(t, .0005) * min(1.0, (.040 - t) / .004) * (.55 * math.sin(TAU * 1100 * t) * math.exp(-50 * t) + .25 * math.sin(TAU * 2300 * t) * math.exp(-80 * t) + .20 * n[i] * 2 * math.exp(-600 * t)))
+
+
 def front_wall():  # frontis: el golpe mas lleno de la cancha
     n, phase = noise(33, RATE, 2400), sweep(120, 80, 22)
     return render(.130, lambda t, i: attack(t, .0015) * (.55 * math.sin(phase(t)) * math.exp(-26 * t) + .22 * math.sin(TAU * 370 * t) * math.exp(-55 * t) + .20 * n[i] * 2.5 * math.exp(-110 * t)))
@@ -127,7 +132,7 @@ def ambience():  # ambiente de cancha: aire de sala grave y un zumbido leve; 4 s
 
 CLIPS = (('scape-bounce-floor', bounce_floor), ('scape-bounce-wall', bounce_wall), ('scape-front-wall', front_wall),
          ('scape-rival-step', rival_step), ('scape-rival-racket', rival_racket), ('scape-point-won', point_won),
-         ('scape-point-lost', point_lost), ('scape-ui-click', ui_click), ('scape-ambience', ambience), ('scape-bounce-glass', bounce_glass))
+         ('scape-point-lost', point_lost), ('scape-ui-click', ui_click), ('scape-ambience', ambience), ('scape-bounce-glass', bounce_glass), ('scape-perfect-own', perfect_own))
 
 
 def main():
