@@ -192,3 +192,27 @@ El rival y los bots por defecto no implementan la interfaz, así que quedan idé
 - la regla de elección (el primer valor que cumpla 1 a 3; si ninguno, registrar y detenerse);
 - el costo de 4 puntos × tardanza;
 - el método de medición.
+
+## 8. v2.3, volea en estirada (última iteración; predeclarado antes de medir, 20 nov)
+
+**Regla** (`HumanVolleyMode = 4`):
+- **Cuerpo en movimiento.** El cuerpo ya no tiene que llegar quieto a su postura. Al tocar, corre hacia ella; sin sprint o con sprint, en el mismo orden que v2.2.
+- **Plan de contacto.** En el paso de cada candidato se usa la **posición que el cuerpo tiene en ese paso**, congelada para el plan, como hoy el cuerpo fijo por plan. Valen las mismas exigencias: frontis, cero botes, altura 0,6–1,9, K ≥ 0,05 s, `KIn` ≥ lanzamiento + reacción y T\* ≥ toque. En el contacto el cuerpo puede estar todavía en movimiento, a no más de la velocidad del sprint elegido.
+- **S y S′:**
+  - S′ es el último toque con el que el cuerpo en movimiento, con sprint, todavía tiene algún plan así;
+  - S es lo mismo sin sprint;
+  - se calculan por bisección, como en v2.2.
+- **Costo.** Solo dos:
+  - la capa causal existente (estirado y atorado), que lee el camino real del cuerpo;
+  - el sprint, a 4 × tardanza.
+  - Ningún valor nuevo.
+- **Sin cambios:** la oferta al lanzar (ahora con el cuerpo en movimiento), los anillos y los botones DEV.
+
+**Medición:** una sola corrida de la malla 1,25 · 1,5 · 1,75 · 2,0, contra las metas 1 a 4 de §6, sin cambios.
+
+**Regla de entrega, predeclarada:**
+1. **Si algún valor de v2.3 cumple las metas 1 a 3:** el primero que las cumpla.
+2. **Si no:** entre v2.2 y v2.3, con todos los valores de la malla, va por defecto el de **mayor tasa de volea en el toque del PO** entre los que tengan una distancia de P+V ≤ 15 pp.
+   - Se registra como **desviación de las metas 1 y 2**, con las cifras, y el PO lo juzga en el iPhone.
+   - **Motivo:** la repetición supone que el PO conserva un hábito de toque que formó cuando la volea no existía, y la señal ámbar lo va a cambiar.
+3. **En los dos casos:** se mide y se informa la meta 4 (energía).
