@@ -43,6 +43,55 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(commit.Exists,Is.True,commit.Reason);
             Assert.That(HumanVolley.Lateness(d.S,d.SPrime,d.SPrime),Is.EqualTo(1));Assert.That(HumanVolley.Lateness(d.S,d.SPrime,d.S),Is.EqualTo(0));
         }
+        // VOLLEY-V2-COMMIT-01: a late touch must still see the offered stance (candidates are sampled from launch + reaction, like the offer).
+        [Test] public void LateTouch_StillReachingTheOfferedStance_CommitsToThatSameStance()
+        {
+            foreach(var ctx in new[]{RallyFixtures.Context(new RallyParams{HumanVolleyMode=2}),Sprint(1.5)})
+            {
+                var (t,rules,body,delay)=NeutralReception(ctx);long start=t.States[0].Step;
+                var d=HumanVolley.OfferDetail(ctx,t,rules,body,delay,1);Assert.That(d.Offer.Exists,Is.True,d.Offer.Reason);
+                Assert.That(d.S,Is.GreaterThan(start+delay),"the touch at S comes after launch + reaction");
+                var atS=HumanVolley.Commit(ctx,t,rules,Walk(body,start,d.S),d.S,delay,2);
+                Assert.That(atS.Exists,Is.True,atS.Reason);Assert.That(atS.Stance,Is.EqualTo(d.Intercept.Stance),"the touch at S keeps the offered stance");
+                Assert.That(atS.Plan.TStarStep,Is.EqualTo(d.Intercept.Plan.TStarStep));
+                if(d.SPrime>d.S)
+                {
+                    var atSPrime=HumanVolley.Commit(ctx,t,rules,Walk(body,start,d.SPrime),d.SPrime,delay,2,ctx.HumanVolleySprint);
+                    Assert.That(atSPrime.Exists,Is.True,atSPrime.Reason);Assert.That(atSPrime.Stance,Is.EqualTo(d.Intercept.Stance),"the sprint at S' keeps the offered stance");
+                }
+            }
+        }
+        // The same invariant over real rally receptions: wherever an offer exists, a touch at S (normal body) and at S' (sprint) still commits
+        // to the offered stance, because S and S' are by definition the last touches that reach it.
+        private sealed class InvariantProbe : IRallyBrain
+        {
+            private readonly RallyContext ctx;private readonly IRallyBrain inner;public RallySim Sim;public int Offers,LostAtS,LostAtSPrime;
+            public InvariantProbe(RallyContext ctx,IRallyBrain inner){this.ctx=ctx;this.inner=inner;}
+            public int PerceptionSteps=>inner.PerceptionSteps;public Vector2 StanceNoise()=>inner.StanceNoise();
+            public AiShot Decide(in AiObservation o,in ReceptionPlan own)
+            {
+                var t=ctx.Predict(o.Ball);long start=t.States[0].Step;int delay=ctx.Steps(ctx.Params.ReactionS)+inner.PerceptionSteps;
+                var d=HumanVolley.OfferDetail(ctx,t,Sim.Rules,Sim.Human,delay,1);
+                if(d.Offer.Exists)
+                {
+                    Offers++;
+                    var atS=HumanVolley.Commit(ctx,t,Sim.Rules,Walk(Sim.Human,start,d.S),d.S,delay,2);
+                    if(!atS.Exists||atS.Stance!=d.Intercept.Stance)LostAtS++;
+                    var atSPrime=HumanVolley.Commit(ctx,t,Sim.Rules,Walk(Sim.Human,start,d.SPrime),d.SPrime,delay,2,ctx.HumanVolleySprint);
+                    if(!atSPrime.Exists||atSPrime.Stance!=d.Intercept.Stance)LostAtSPrime++;
+                }
+                return inner.Decide(o,own);
+            }
+        }
+        [Test] public void RallyReceptions_ATouchAtSOrSPrime_AlwaysKeepsTheOfferedStance()
+        {
+            var ctx=RallyFixtures.Context(new RallyParams{HumanVolleyMode=3,HumanVolleySprintMax=1.5});
+            var probe=new InvariantProbe(ctx,new BotBrain(ctx,30,20261122));
+            using(var sim=new RallySim(ctx,probe,RivalAi.For(ctx,AiLevel.Medium,RivalStyleId.Fondista,20261123))){probe.Sim=sim;sim.PlayMatch(PlayerId.Rival);}
+            Assert.That(probe.Offers,Is.GreaterThan(10));
+            Assert.That(probe.LostAtS,Is.Zero,"offers whose own deadline touch lost the offered stance (of "+probe.Offers+")");
+            Assert.That(probe.LostAtSPrime,Is.Zero,"offers whose sprint deadline touch lost the offered stance (of "+probe.Offers+")");
+        }
         [Test] public void V2_HasNoSprint_SplitIsS()
         {
             var ctx=RallyFixtures.Context(new RallyParams{HumanVolleyMode=2,HumanVolleySprintMax=1.5});var (t,rules,body,delay)=NeutralReception(ctx);
