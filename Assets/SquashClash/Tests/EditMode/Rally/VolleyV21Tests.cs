@@ -61,11 +61,11 @@ namespace SquashClash.Core.Tests.Rally
                 }
             }
         }
-        // The same invariant over real rally receptions: wherever an offer exists, a touch at S (normal body) and at S' (sprint) still commits
-        // to the offered stance, because S and S' are by definition the last touches that reach it.
+        // The same invariant over real rally receptions: wherever an offer exists, a touch at S (normal body) still commits to the offered stance
+        // and a touch at S' (sprint) to it or to a stance with a window at least as long, because S and S' are the last touches that reach it.
         private sealed class InvariantProbe : IRallyBrain
         {
-            private readonly RallyContext ctx;private readonly IRallyBrain inner;public RallySim Sim;public int Offers,LostAtS,LostAtSPrime;
+            private readonly RallyContext ctx;private readonly IRallyBrain inner;public RallySim Sim;public int Offers,LostAtS,LostAtSPrime,Better;
             public InvariantProbe(RallyContext ctx,IRallyBrain inner){this.ctx=ctx;this.inner=inner;}
             public int PerceptionSteps=>inner.PerceptionSteps;public Vector2 StanceNoise()=>inner.StanceNoise();
             public AiShot Decide(in AiObservation o,in ReceptionPlan own)
@@ -78,7 +78,9 @@ namespace SquashClash.Core.Tests.Rally
                     var atS=HumanVolley.Commit(ctx,t,Sim.Rules,Walk(Sim.Human,start,d.S),d.S,delay,2);
                     if(!atS.Exists||atS.Stance!=d.Intercept.Stance)LostAtS++;
                     var atSPrime=HumanVolley.Commit(ctx,t,Sim.Rules,Walk(Sim.Human,start,d.SPrime),d.SPrime,delay,2,ctx.HumanVolleySprint);
-                    if(!atSPrime.Exists||atSPrime.Stance!=d.Intercept.Stance)LostAtSPrime++;
+                    if(!atSPrime.Exists)LostAtSPrime++;
+                    // The sprint may also reach a stance with an even longer window than the offer's: never a shorter one.
+                    else if(atSPrime.Stance!=d.Intercept.Stance){Better++;if(atSPrime.Plan.KOut.Steps-atSPrime.Plan.KIn.Steps<d.Intercept.Plan.KOut.Steps-d.Intercept.Plan.KIn.Steps)LostAtSPrime++;}
                 }
                 return inner.Decide(o,own);
             }
@@ -90,7 +92,8 @@ namespace SquashClash.Core.Tests.Rally
             using(var sim=new RallySim(ctx,probe,RivalAi.For(ctx,AiLevel.Medium,RivalStyleId.Fondista,20261123))){probe.Sim=sim;sim.PlayMatch(PlayerId.Rival);}
             Assert.That(probe.Offers,Is.GreaterThan(10));
             Assert.That(probe.LostAtS,Is.Zero,"offers whose own deadline touch lost the offered stance (of "+probe.Offers+")");
-            Assert.That(probe.LostAtSPrime,Is.Zero,"offers whose sprint deadline touch lost the offered stance (of "+probe.Offers+")");
+            Assert.That(probe.LostAtSPrime,Is.Zero,"offers whose sprint deadline touch found no stance at least as good as the offered one (of "+probe.Offers+")");
+            TestContext.WriteLine("V21_INVARIANT offers="+probe.Offers+" betterAtSPrime="+probe.Better);
         }
         [Test] public void V2_HasNoSprint_SplitIsS()
         {

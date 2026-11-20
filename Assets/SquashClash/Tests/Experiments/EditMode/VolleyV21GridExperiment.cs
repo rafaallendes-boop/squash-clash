@@ -58,13 +58,14 @@ namespace SquashClash.Experiments.EditMode
                     if(!commit.Exists){commit=HumanVolley.Commit(ctx,t,Sim.Rules,walk,c,delay,version,ctx.HumanVolleySprint);if(commit.Exists){sprinted="1";lateness=HumanVolley.Lateness(d.S,d.SPrime,c).ToString("0.###",C);}}
                     if(commit.Exists){committed="1";pv=Pv(RallyContact.Resolve(ctx,Clock(),t,commit.Plan,now,dVolley))?"1":"0";}
                 }
-                Rows.Add(string.Join("\t",new[]{Style,serve?"1":"0",offered?"1":"0",d.Offer.Reason??"",bouncePv,F(sMs),F(spMs),F(whiteLead),committed,pv,sprinted,lateness}));
+                Rows.Add(string.Join("\t",new[]{Style,serve?"1":"0",offered?"1":"0",d.Offer.Reason??"",bouncePv,F(sMs),F(spMs),F(whiteLead),committed,pv,sprinted,lateness,
+                    F(offered?Ms(d.Offer.Plan.TStarStep-first):double.NaN),F(bounceExists?Ms(bounce.TStarStep-first):double.NaN),F(touch)}));
             }
         }
         [Test,Explicit,Category("Experiments"),Timeout(7200000)]
         public void MeasureGrid()
         {
-            string root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));string dir=Path.Combine(root,"Logs/experiments/volley-v21-grid");
+            string root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));string dir=Path.Combine(root,"Logs/experiments/volley-v21-grid-r2");
             Assert.That(Directory.Exists(dir),Is.False,"Never overwrite evidence");Directory.CreateDirectory(dir);
             var preset=PresetCodec.LoadDefault(File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Runtime/Resources/DefaultPreset.json")));
             Assert.That(preset.Hash,Is.EqualTo("207da8f2c636"));
@@ -73,7 +74,7 @@ namespace SquashClash.Experiments.EditMode
                 var p=new RallyParams{HumanVolleyMode=3,HumanVolleySprintMax=max};
                 var ctx=new RallyContext(EffectiveConfig.From(preset),p,new AnalyticBallSimulationFactory(Physics.bounceThreshold));
                 Assert.That(ctx.Config.SimulationKey,Is.EqualTo("166a96e319c7"));Assert.That(ctx.HumanVolleySprint,Is.EqualTo((float)max));
-                var all=new StringBuilder("style\tserve\toffered\treason\tbouncePV\tlaunchToSMs\tlaunchToSPrimeMs\twhiteLeadAfterSPrimeMs\tcommitted\tvolleyPV\tsprint\tlateness\n");
+                var all=new StringBuilder("style\tserve\toffered\treason\tbouncePV\tlaunchToSMs\tlaunchToSPrimeMs\twhiteLeadAfterSPrimeMs\tcommitted\tvolleyPV\tsprint\tlateness\tlaunchToVolleyTStarMs\tlaunchToBounceTStarMs\tpoTouchMs\n");
                 foreach(RivalStyleId style in Enum.GetValues(typeof(RivalStyleId)))
                 {
                     int points=0;

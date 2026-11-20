@@ -70,7 +70,7 @@ namespace SquashClash.Experiments.EditMode
         [Test,Explicit,Category("Experiments"),Timeout(3600000)]
         public void MeasureCommitChecks()
         {
-            string root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));string dir=Path.Combine(root,"Logs/experiments/volley-v2-commit");
+            string root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));string dir=Path.Combine(root,"Logs/experiments/volley-v2-commit-r2");
             Assert.That(Directory.Exists(dir),Is.False,"Never overwrite evidence");
             var preset=PresetCodec.LoadDefault(File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Runtime/Resources/DefaultPreset.json")));
             Assert.That(preset.Hash,Is.EqualTo("207da8f2c636"));

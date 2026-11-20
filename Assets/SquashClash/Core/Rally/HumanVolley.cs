@@ -54,7 +54,8 @@ namespace SquashClash.Core.Rally
             if(trajectory==null||trajectory.States.Count<2)return VolleyIntercept.None("no-trajectory");
             long start=trajectory.States[0].Step;var body=bodyNow;
             if(sprint>1){body=bodyNow.Clone();body.Sprint=sprint;}
-            return Intercept(context,trajectory,rulesAtStart,Math.Max(start+delaySteps,bodyStep),start+delaySteps,version,_=>(body,bodyStep));
+            // Candidates from launch + reaction, like the offer (VOLLEY-V2-COMMIT-01); Intercept keeps only those whose T* is still ahead.
+            return Intercept(context,trajectory,rulesAtStart,start+delaySteps,start+delaySteps,version,_=>(body,bodyStep));
         }
         // How late a sprint touch is: 0 at S, 1 at S' (clamped).
         public static double Lateness(long s,long sPrime,long touchStep)=>sPrime<=s?(touchStep>s?1:0):Math.Max(0,Math.Min(1,(touchStep-s)/(double)(sPrime-s)));
