@@ -37,3 +37,12 @@ Fases:
 4. **Prueba física** en el iPhone, sin aceptar etapa.
 
 **Decide el PO:** (1) si hace el golpe o lo difiere tras la prueba con usuarios (el camino a usuarios no lo exige); (2) la opción a/b/c; (3) autorizar tocar el solver (§4, sin dueño) y quién lo implementa (Codex por defecto); (4) si cambian los hashes de RallyParams para la IA; (5) si el boast queda como golpe solo del Definidor o también humano desde el inicio.
+
+## Decisión del PO (20 nov)
+
+Literal: «Arreglemos primero lo otro. El gesto es apuntar a la pared lateral. Solo 1 Gesto. autorizo calcular el golpe. Lo usen todos los jugadores.»
+
+- **Gesto:** opción (a), apuntar a la pared lateral. Es un solo gesto, no uno aparte.
+- **Autorización:** el PO autoriza tocar el cálculo del golpe (solver).
+- **Quién lo usa:** el jugador y el rival.
+- **Cuándo:** después de corregir lo que ya existe (SL5/SL6, el cansancio y la volea).
