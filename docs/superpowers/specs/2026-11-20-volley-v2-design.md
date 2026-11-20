@@ -134,3 +134,37 @@ Por estilo (B, sin saque): Fondista 78 % de oferta y 82 % de P+V; Definidor 57 %
 - **Corrección.** La ventana de elección es **[lanzamiento, S]**: el ámbar se ve desde el lanzamiento, que es exactamente la regla «anillo ámbar visible».
 - **Efecto en los controles.** El toque fijo cae 150 y 300 ms después del lanzamiento. En el toque del PO, un toque anterior al lanzamiento no compromete nada.
 - **Lo que no cambia:** las metas, la parada de 15 pp y la distribución del PO.
+
+## 6. v2.1: volea tardía con sprint (predeclarado antes de medir, 20 nov)
+
+**Por qué.** En el toque del PO, v2 solo volea en el 6,1 % de las recepciones. El PO, literal: «La idea es que no sea solo el 6%… La idea es que se pueda volear aunque te desgaste más.»
+
+**Regla.**
+- **Toque entre S y S′.** El ámbar sigue visible. Si el cuerpo normal ya no llega, la volea se compromete con un **sprint**: un factor de velocidad y aceleración del cuerpo humano de hasta `HumanVolleySprintMax`, que se aplica desde el toque hasta el contacto. S′ es el último toque con el que el sprint todavía llega a la postura de la oferta.
+- **Toque hasta S.** Igual que v2, sin sprint.
+- **Toque después de S′ o sin toque.** El cuerpo sigue M1 y no cambia nada.
+- **Anillo blanco.** Aparece en S′.
+- **Costo.**
+  - La carrera más rápida ya gasta más metros por paso.
+  - Además, al contacto se cobra `HumanVolleySprintCost × tardanza`, con tardanza = (toque − S)/(S′ − S) en (0, 1]. Va por el mismo camino que `VolleyEnergyCost` (`StrikeAt`, o `Volley` en RallySim) y se suma a él.
+  - Valor propuesto: `HumanVolleySprintCost = 4` puntos. Una volea a tope cuesta 2 + 4 = 6 puntos, unos 20 m de carrera.
+- **Solo el humano.** `HumanVolleyMode = 3` es v2.1; 2 es v2 y 1 es v1. Hay botones DEV para v1, v2 y v2.1, y se mantiene el botón de la volea al saque.
+
+**Malla predeclarada de `HumanVolleySprintMax`:** 1,25 · 1,5 · 1,75 · 2,0. Equivale a 6,0 · 7,2 · 8,4 · 9,6 m/s de velocidad máxima, frente a 4,8.
+- Se elige la **primera** que cumpla las metas 1 a 3.
+- Si ninguna las cumple, se registra y se detiene, sin una segunda búsqueda.
+
+**Metas:**
+
+| # | Control | Meta |
+|---|---|---|
+| 1 | Tasa de volea en el toque del PO, sin saque | ≥ 40 % de las recepciones (v2: 6,1 %) |
+| 2 | P+V de la volea en el toque del PO | a ≤ 12 pp del bote de las mismas recepciones |
+| 3 | Anticipación del anillo blanco tras S′ (ofrecidas y no comprometidas) | ≥ 300 ms en ≥ 90 % |
+| 4 | Energía (Medio, novato que volea en cada toque que compromete) | mediana al inicio de los puntos 5, 10 y 15 en v1, v2 y v2.1 (dato, sin umbral) |
+
+**Método.**
+- **Metas 1 a 3:** igual que en §5, contrafactual con las mismas semillas, partidos, novato y distribución del PO.
+- **Meta 4:** `RallySim` real con el cansancio del preset activado. El humano es un bot elegidor (interfaz nueva que solo implementa el bot de experimento), que toca según la distribución del PO y suelta N(0, 90 ms). Se comparan v1 (el bot toma toda volea v1 ofrecida), v2 y v2.1 con el valor elegido; 60 partidos por estilo.
+
+El rival y los bots por defecto no implementan la interfaz, así que quedan idénticos bit a bit.
