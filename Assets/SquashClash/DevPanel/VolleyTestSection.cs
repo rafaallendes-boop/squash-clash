@@ -15,7 +15,8 @@ namespace SquashClash.DevPanel
             Add(app,row,"volley-on","Volea sí",()=>app.Rally.SetVolley(true));Add(app,row,"volley-off","Volea no",()=>app.Rally.SetVolley(false));
             // Volley v2 (design 2026-11-20): chosen by touch (v2) or v1, and the human's return-of-serve volley, to compare.
             var v2=new VisualElement();v2.style.flexDirection=FlexDirection.Row;v2.style.flexShrink=0;Root.Add(v2);
-            Add(app,v2,"volley-v2-on","Volea v2",()=>app.Rally.SetVolleyV2(true));Add(app,v2,"volley-v2-off","Volea v1",()=>app.Rally.SetVolleyV2(false));
+            Add(app,v2,"volley-mode-1","Volea v1",()=>app.Rally.SetVolleyMode(1));Add(app,v2,"volley-mode-2","Volea v2",()=>app.Rally.SetVolleyMode(2));
+            Add(app,v2,"volley-mode-3","Volea v2.2",()=>app.Rally.SetVolleyMode(3));
             var serve=new VisualElement();serve.style.flexDirection=FlexDirection.Row;serve.style.flexShrink=0;Root.Add(serve);
             Add(app,serve,"serve-volley-on","Volea al saque sí",()=>app.Rally.SetServeVolley(true));Add(app,serve,"serve-volley-off","Volea al saque no",()=>app.Rally.SetServeVolley(false));
         }

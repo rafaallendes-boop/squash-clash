@@ -181,7 +181,11 @@ namespace SquashClash.Runtime.Shot
         public void GestureBegan(double eventTimeReal)
         {
             if(volleyCommitter==null||!Volley.Exists||VolleyCommitted||AttemptConsumed||!Available)return;
-            if(!TryVolleyWindow(out double from,out double until)||eventTimeReal<from||eventTimeReal>until){DeclineVolley("touch-outside-amber",eventTimeReal);return;}
+            // Judged in simulation steps, like OpportunityContract.Select: a real time recomputed from S can move in its last bit as the
+            // clock map grows, so the end of the window is S itself (plus a micro-step tolerance).
+            bool inside=TryVolleyWindow(out double from,out _)&&eventTimeReal>=from&&app.Host.ClockMap.TryRealToSim(eventTimeReal,out long touchStep,out double touchFraction)
+                &&touchStep+touchFraction<=Volley.SplitSteps+1e-6;
+            if(!inside){DeclineVolley("touch-outside-amber",eventTimeReal);return;}
             var c=volleyCommitter(app.Host.Prediction,eventTimeReal);
             if(!c.Ok||!c.Plan.Exists||c.Plan.TStarStep<0||!app.Host.ClockMap.TrySimToReal(c.Plan.TStarStep,0,out double target)){DeclineVolley(c.Reason??"commit-unreachable",eventTimeReal);return;}
             CausalReference reference;

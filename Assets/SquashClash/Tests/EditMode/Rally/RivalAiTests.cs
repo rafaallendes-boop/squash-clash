@@ -52,7 +52,7 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(Projection(f=>!f.Name.StartsWith("Style",StringComparison.Ordinal)&&!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)),Is.EqualTo("5cdbb01e4621"));
             // Volley v2 (20 nov) adds the HumanVolley* fields: without them the hash is still 0f58580f44ea (VolleyV2Tests).
             Assert.That(Projection(f=>!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)),Is.EqualTo("0f58580f44ea"),"measured in Unity with the style fields");
-            Assert.That(new RallyParams().Hash,Is.EqualTo("d4dfa92d7276"),"with the volley v2 fields");
+            Assert.That(new RallyParams().Hash,Is.EqualTo("0fe523164363"),"with the volley v2.2 fields");
             TestContext.WriteLine("STYLE_RALLYPARAMS_HASH="+new RallyParams().Hash);
         }
         [TestCase(AiLevel.Easy)][TestCase(AiLevel.Medium)][TestCase(AiLevel.Hard)]

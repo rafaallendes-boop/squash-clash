@@ -81,6 +81,21 @@ namespace SquashClash.Runtime.Tests
             Assert.That(controller.LastRecord.Applied,Is.True,controller.LastRecord.Reason);Assert.That(controller.LastRecord.ContactStep,Is.LessThan(bounce));
             Assert.That(rally.SystemFaults,Is.Zero);
         }
+        // v2.2 (shipped): a touch after S, too late for the normal body, still chooses the volley with the sprint and pays its energy.
+        [Test] public void LateTouchBetweenSAndSPrime_ChoosesTheVolleyWithTheSprint()
+        {
+            StartRally();var d=rally.LastHumanOffer;Assert.That(d.Offer.Exists,Is.True);
+            Assert.That(d.SPrime,Is.GreaterThan(d.S),"the neutral feed has a sprint-only stretch");long bounce=FirstBounceStep();
+            // The touch at S' itself, read from the controller's own window (a recomputed real time can differ in the last bit).
+            Assert.That(controller.TryVolleyWindow(out _,out double until),Is.True);double touch=until;At(touch);controller.GestureBegan(touch);
+            Assert.That(controller.VolleyCommitted,Is.True,controller.VolleyChoice);
+            Assert.That(rally.Human.Sprint,Is.EqualTo(2f),"the body sprints to the stance");Assert.That(rally.HumanSprintCost,Is.EqualTo(4).Within(1e-9),"the latest touch costs the full 4 points");
+            var r=Release(touch,Real(controller.Volley.Plan.TStarStep));
+            Assert.That(controller.LastOpportunity,Is.EqualTo(Opportunity.Volley));Assert.That(r.Result,Is.EqualTo("Perfect"),r.Reason);
+            At(app.Host.ObservedRealTime+.3);
+            Assert.That(controller.LastRecord.Applied,Is.True,controller.LastRecord.Reason);Assert.That(controller.LastRecord.ContactStep,Is.LessThan(bounce));
+            Assert.That(rally.Human.Sprint,Is.EqualTo(1f),"back to normal after the contact");Assert.That(rally.HumanSprintCost,Is.Zero);
+        }
         [Test] public void TouchAfterTheAmberRing_GivesTheVolleyUp_AndPlaysTheBounce()
         {
             StartRally();Assert.That(controller.TryVolleyWindow(out _,out double until),Is.True);

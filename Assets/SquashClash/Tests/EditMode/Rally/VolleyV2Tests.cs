@@ -39,8 +39,10 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void Defaults_AreV2WithTheServeVolley_AndOnlyTheRallyParamsHashMoves()
         {
             var p=new RallyParams();
-            Assert.That(p.HumanVolleyMode,Is.EqualTo(2));Assert.That(p.HumanVolleyMinWindowS,Is.EqualTo(.05));Assert.That(p.HumanVolleyServe,Is.EqualTo(1));
-            Assert.That(typeof(RallyParams).GetFields().Count(f=>f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)),Is.EqualTo(3));
+            // v2.2 ships (design section 8): mode 3, sprint 2.0, 4 points x lateness.
+            Assert.That(p.HumanVolleyMode,Is.EqualTo(3));Assert.That(p.HumanVolleyMinWindowS,Is.EqualTo(.05));Assert.That(p.HumanVolleyServe,Is.EqualTo(1));
+            Assert.That(p.HumanVolleySprintMax,Is.EqualTo(2));Assert.That(p.HumanVolleySprintCost,Is.EqualTo(4));
+            Assert.That(typeof(RallyParams).GetFields().Count(f=>f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)),Is.EqualTo(5));
             Assert.That(Projection(f=>!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)),Is.EqualTo("0f58580f44ea"),"without the v2 fields the hash is the current one");
             Assert.That(RallyFixtures.Context().HumanVolleyV2,Is.True);Assert.That(RallyFixtures.Context().HumanServeVolley,Is.True);
             TestContext.WriteLine("VOLLEY_V2_RALLYPARAMS_HASH="+p.Hash);
@@ -73,7 +75,8 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void Commit_AtTheDeadline_StillReachesTheBall_AfterTStarItCannot()
         {
-            var (ctx,t,rules,body,delay)=NeutralReception();long start=t.States[0].Step;
+            // v2 semantics (S = the normal-body deadline); v2.2's S' needs the sprint and is covered by VolleyV21Tests.
+            var (ctx,t,rules,body,delay)=NeutralReception(RallyFixtures.Context(new RallyParams{HumanVolleyMode=2}));long start=t.States[0].Step;
             var offer=HumanVolley.Offer(ctx,t,rules,body,delay,1);Assert.That(offer.Exists,Is.True,offer.Reason);
             var walk=body.Clone();long s=(long)offer.SplitSteps;for(long c=start;c<s;c++)walk.Step();
             var commit=HumanVolley.Commit(ctx,t,rules,walk,s,delay,2);

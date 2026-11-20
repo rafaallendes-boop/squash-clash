@@ -44,6 +44,10 @@ namespace SquashClash.Core.Rally
         public readonly bool Volley;
         public AiShot(bool swing,ShotOption option,Vector2 aim,float p,double deltaMs,bool defensive,bool volley=false){Swing=swing;Option=option;Aim=aim;P=p;DeltaMs=deltaMs;Defensive=defensive;Volley=volley;}
     }
+    // Volley v2.x, human only and for headless measurement (design 2026-11-20): when a reception offers a v2 volley, the real-time ms after
+    // the launch at which the brain touches (NaN: no touch). RallySim then chooses the stance exactly as RallyDirector does. The rival and the
+    // default bots never implement it, so their rallies are unchanged.
+    public interface IRallyVolleyToucher {double TouchMsAfterLaunch(in ReceptionPlan own,double bounceTStarMsAfterLaunch);}
     public interface IRallyBrain
     {
         // Extra delay before the body reacts (d_perc); zero for a brain that needs none.

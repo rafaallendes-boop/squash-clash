@@ -54,10 +54,11 @@ namespace SquashClash.Core.Rally
         // Volley v2, human only (design 2026-11-20): 2 = the player chooses the volley (touch while the amber ring shows sends the body to an
         // intercept stance), 1 = v1 (M1 path). Shortest volley window offered (simulation seconds) and the human's return-of-serve volley.
         // The rival and RallySim never read these fields.
-        public double HumanVolleyMode=2,HumanVolleyMinWindowS=.05,HumanVolleyServe=1;
-        // Volley v2.1 (design 2026-11-20 section 6, mode 3): a touch after S and up to S' still chooses the volley with a sprint of at most
-        // this speed factor, and costs this many extra energy points at the contact, times its lateness (S..S' as 0..1).
-        public double HumanVolleySprintMax=1,HumanVolleySprintCost=4;/*RED stub*/
+        public double HumanVolleyMode=3,HumanVolleyMinWindowS=.05,HumanVolleyServe=1;
+        // Modes: 1 = v1, 2 = v2, 3 = v2.2 (shipped by the predeclared rule, design section 8), 4 = v2.3 lunge (measured, not shipped).
+        // v2.2: a touch after S and up to S' still chooses the volley with a sprint of at most this speed factor, and costs this many extra
+        // energy points at the contact, times its lateness (S..S' as 0..1).
+        public double HumanVolleySprintMax=2,HumanVolleySprintCost=4;
         // Rival styles (design 2026-11-19). A style changes only how the AI chooses (utility weights, risk aversion, volley
         // willingness, wait W and recovery cover), never physics, rules, reach, windows, errors or information (spec 11.2, 11.5).
         // Fondista reuses the Fondo* weights above. StyleRivalVolley switches the rival volley off (control); a cover depth < 0 is "to the T".

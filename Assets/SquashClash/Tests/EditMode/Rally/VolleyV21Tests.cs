@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using NUnit.Framework;
 using SquashClash.Core.Rally;
 using SquashClash.Core.Shot;
@@ -158,6 +159,30 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(probe.Offers,Is.GreaterThan(10));
             Assert.That(probe.Later,Is.GreaterThan(probe.Offers/4),"the lunge lets later touches commit (of "+probe.Offers+")");
             Assert.That(probe.NoCommitAtSPrime,Is.Zero);Assert.That(probe.CommitAfterSPrime,Is.Zero);
+        }
+        // Headless v2.2: a brain that touches chooses the volley through RallySim exactly as RallyDirector does, and a sprint volley pays more.
+        private sealed class Toucher : IRallyBrain,IRallyVolleyToucher
+        {
+            private readonly BotBrain inner;private readonly double leadMs;
+            public Toucher(RallyContext ctx,long seed,double leadMs){inner=new BotBrain(ctx,30,seed);this.leadMs=leadMs;}
+            public int PerceptionSteps=>inner.PerceptionSteps;public Vector2 StanceNoise()=>inner.StanceNoise();
+            public AiShot Decide(in AiObservation o,in ReceptionPlan own)=>inner.Decide(o,own);
+            public double TouchMsAfterLaunch(in ReceptionPlan own,double bounceTStarMsAfterLaunch)=>bounceTStarMsAfterLaunch-leadMs;
+        }
+        [Test] public void RallySim_ATouchingHuman_VolleysThroughTheSharedRules_AndASprintVolleyCostsMore()
+        {
+            var ctx=RallyFixtures.Context();Assert.That(ctx.HumanVolleySprint,Is.EqualTo(2f));Assert.That(ctx.Fatigue.Enabled,Is.True);
+            int volleys=0,faults=0,rejected=0;double volleyCost=0;
+            for(int i=0;i<3;i++)
+                using(var sim=new RallySim(ctx,new Toucher(ctx,20261128+2*i,850),RivalAi.For(ctx,AiLevel.Medium,RivalStyleId.Fondista,20261129+2*i)))
+                    foreach(var o in sim.PlayMatch(PlayerId.Rival).Points)
+                    {
+                        faults+=o.SystemFaults;rejected+=o.RejectedContacts;volleyCost+=o.HumanFatigue.VolleyCost;
+                        volleys+=o.Receptions.Count(r=>r.Who==PlayerId.Human&&r.Volley&&r.Result==ReceptionResult.Contact&&r.Vectors!=null);
+                    }
+            Assert.That(volleys,Is.GreaterThan(5),"a touching human volleys in three games");
+            Assert.That(faults,Is.Zero);Assert.That(rejected,Is.Zero);
+            Assert.That(volleyCost,Is.GreaterThan(2.0*volleys+1e-9),"some volleys were sprints and paid the extra cost");
         }
         [Test] public void V2_HasNoSprint_SplitIsS()
         {
