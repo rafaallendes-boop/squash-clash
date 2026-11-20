@@ -207,7 +207,7 @@ namespace SquashClash.Runtime.Tests
                 var on=Submit(Star(),p:1f,aim:aim);Assert.That(on.Applied,Is.True,on.Reason);
                 Assert.That(new Vector3(on.ContactX,on.ContactY,on.ContactZ),Is.EqualTo(new Vector3(off.ContactX,off.ContactY,off.ContactZ)));
                 Assert.That(controller.LastSolution.Reason,Is.EqualTo(FrontDeepDrive.ReasonActed));
-                Assert.That(on.TargetUsedY,Is.EqualTo(off.TargetUsedY));Assert.That(on.Speed,Is.EqualTo(off.Speed));
+                Assert.That(on.TargetUsedY,Is.LessThanOrEqualTo(off.TargetUsedY),"the height is kept or lowered, never raised");Assert.That(on.Speed,Is.EqualTo(off.Speed));
                 Assert.That(SideBeforeFirstBounce(app.Host.Prediction),Is.False,"on: bounces before any side wall");
                 var reticle=app.GetComponentInChildren<AimReticleView>(true);
                 Assert.That(reticle.FeasibleVisible,Is.True);Assert.That(reticle.FeasibleAim,Is.EqualTo(new Vector2(on.TargetUsedX,on.TargetUsedY)));

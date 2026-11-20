@@ -34,6 +34,8 @@ namespace SquashClash.Core.Shot
         public const string ReasonActed = "front-deep";
         public const float MinAimHeight = .80f;
         public const int BisectionSteps = 8;
+        // Revision 1 bound (design section 5): one check, 8 + 3 x 9 coarse probes and 4 bisection steps.
+        public const int MaxEvaluations = 40;
 
         // Zone: above medium power, a requested aim high enough for length, contact in front of the short line.
         public static bool Active(float power, Vector3 from, Vector2 requestedAim, CourtDimensions court)

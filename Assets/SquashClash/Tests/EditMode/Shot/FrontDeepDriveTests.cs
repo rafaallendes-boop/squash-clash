@@ -29,6 +29,8 @@ namespace SquashClash.Core.Tests.Shot
         private static readonly Stroke Cross = new Stroke(new Vector3(5.751618f, .270855576f, 4.74478245f), new Vector2(2.396859f, 1.79629183f), new Vector2(2.3972f, 1.92371213f), .8027929f, 22.3851166f);
         // Launch 24: straight from (4.60; 5.09) that already reaches the back cleanly.
         private static readonly Stroke Clean = new Stroke(new Vector3(4.59859943f, .161849082f, 5.085526f), new Vector2(5.84474754f, .9192538f), new Vector2(5.89656925f, .956363142f), 1f, 27.5670586f);
+        // Launch 133: cross from (5.28; 0.77), right at the front wall: no front-wall x reaches the back at that height and speed.
+        private static readonly Stroke VeryFront = new Stroke(new Vector3(5.27878428f, .281767547f, .77081424f), new Vector2(2.35104966f, 1.41037989f), new Vector2(2.36204267f, .9289416f), 1f, 27.07021f);
         // Launch 14: behind the short line (z 5.78), into the side wall.
         private static readonly Stroke Behind = new Stroke(new Vector3(3.729567f, .351921678f, 5.77995062f), new Vector2(5.690976f, 1.50431156f), new Vector2(5.690976f, 1.58444893f), .8630299f, 24.15234f);
 
@@ -92,12 +94,32 @@ namespace SquashClash.Core.Tests.Shot
             Assert.That(flight.sideBeforeBounce, Is.False, "no side wall before the first bounce");
             Assert.That(flight.reachedBack, Is.True, "reaches the back third");
             Assert.That(flight.legal, Is.True);
-            Assert.That(info.Evaluations, Is.LessThanOrEqualTo(2 + FrontDeepDrive.BisectionSteps));
+            Assert.That(info.Evaluations, Is.LessThanOrEqualTo(FrontDeepDrive.MaxEvaluations));
             Assert.That(ctx.Factory.LiveInstances, Is.Zero);
         }
 
         [Test] public void Straight_FromTheFront_IntoTheSideWall_BecomesADeepDrive() => IntoTheSideWall_BecomesDeep(Straight);
         [Test] public void Cross_FromTheFront_IntoTheSideWall_BecomesADeepCross() => IntoTheSideWall_BecomesDeep(Cross);
+
+        // Revision 1: when no x works at the effective height, a lower height (down to the legal low) is tried; speed kept.
+        [Test]
+        public void VeryFront_NoDeepXAtThatHeight_LowersTheHeight_AndKeepsTheSpeed()
+        {
+            var ctx = Context(); var s = VeryFront; var original = Primitive(ctx, s);
+            Assert.That(Flight(ctx, s.From, original.Velocity).sideBeforeBounce, Is.True, "fixture: today it meets a side wall before the bounce");
+            var guarded = Apply(ctx, s, original, out var info);
+            Assert.That(info.Reason, Is.EqualTo(FrontDeepDrive.ReasonActed));
+            Assert.That(guarded.Speed, Is.EqualTo(original.Speed), "the speed is kept");
+            Assert.That(guarded.TargetUsed.y, Is.LessThan(original.TargetUsed.y), "only a lower height works this close");
+            Assert.That(guarded.TargetUsed.y, Is.GreaterThan(ctx.Court.TinTop + ctx.Physics.BallRadius - 1e-6f), "never below the legal low");
+            Assert.That(guarded.TargetLowered, Is.True);
+            float lo = Math.Min(s.From.x, original.TargetUsed.x), hi = Math.Max(s.From.x, original.TargetUsed.x);
+            Assert.That(guarded.TargetUsed.x, Is.InRange(lo, hi), "same direction, closed towards the contact");
+            var flight = Flight(ctx, s.From, guarded.Velocity);
+            Assert.That(flight.sideBeforeBounce, Is.False); Assert.That(flight.reachedBack, Is.True); Assert.That(flight.legal, Is.True);
+            Assert.That(info.Evaluations, Is.LessThanOrEqualTo(FrontDeepDrive.MaxEvaluations));
+            Assert.That(ctx.Factory.LiveInstances, Is.Zero);
+        }
 
         [Test]
         public void AlreadyDeep_IsReturnedBitForBit()
