@@ -1,4 +1,5 @@
 using SquashClash.Runtime.App;
+using SquashClash.Runtime.Visual;
 using UnityEngine.UIElements;
 namespace SquashClash.DevPanel
 {
@@ -19,11 +20,17 @@ namespace SquashClash.DevPanel
             Add(app,v2,"volley-mode-3","Volea v2.2",()=>app.Rally.SetVolleyMode(3));
             var serve=new VisualElement();serve.style.flexDirection=FlexDirection.Row;serve.style.flexShrink=0;Root.Add(serve);
             Add(app,serve,"serve-volley-on","Volea al saque sí",()=>app.Rally.SetServeVolley(true));Add(app,serve,"serve-volley-off","Volea al saque no",()=>app.Rally.SetServeVolley(false));
+            // «Pose de volea del rival» (2026-11-20): cosmetic, default on, takes effect at the rival's next swing.
+            var pose=new VisualElement();pose.style.flexDirection=FlexDirection.Row;pose.style.flexShrink=0;Root.Add(pose);
+            Button toggle=null;
+            toggle=Add(app,pose,"rival-volley-pose","",()=>{RivalVolleyPose.Enabled=!RivalVolleyPose.Enabled;toggle.text=PoseText();});
+            toggle.text=PoseText();
         }
-        private static void Add(AppBootstrap app,VisualElement row,string name,string text,System.Action action)
+        private static string PoseText()=>"Pose de volea del rival: "+(RivalVolleyPose.Enabled?"sí":"no");
+        private static Button Add(AppBootstrap app,VisualElement row,string name,string text,System.Action action)
         {
             var button=new Button(()=>DevControlLog.Run(app,name,action)){name=name,text=text};
-            button.style.minHeight=44;button.style.flexGrow=1;button.style.flexBasis=0;button.style.minWidth=0;button.style.whiteSpace=WhiteSpace.Normal;row.Add(button);
+            button.style.minHeight=44;button.style.flexGrow=1;button.style.flexBasis=0;button.style.minWidth=0;button.style.whiteSpace=WhiteSpace.Normal;row.Add(button);return button;
         }
     }
 }

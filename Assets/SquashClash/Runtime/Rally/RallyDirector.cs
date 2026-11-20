@@ -90,6 +90,17 @@ namespace SquashClash.Runtime.Rally
         public event Action<PointResult> PointEnded;
         // Rival swing: stroke side and whether it makes contact. The human's swing already has ShotController.SwingAccepted.
         public event Action<StrokeSide,bool> RivalSwing;
+        // Visual read-outs for the rival's figure (volley pose, 2026-11-20). They are written only right before RivalSwing is raised and
+        // nothing in the rally reads them: the rival's decisions, timing and positions do not depend on them.
+        public bool RivalSwingVolley {get;private set;}
+        public float RivalSwingHeight {get;private set;}
+        // The rival will volley this reception (its aimed volley exists): the figure arms a short backswing instead of the full one.
+        public bool RivalVolleyIntended=>Active&&Phase==RallyPhase.RivalReception&&pendingShot.Swing&&pendingShot.Volley&&RivalPlan.Volley.Exists;
+        private void RaiseRivalSwing(bool contact)
+        {
+            RivalSwingVolley=rivalUsedVolley;RivalSwingHeight=rivalUsedVolley?RivalPlan.Volley.Plan.PStar.y:0;
+            RivalSwing?.Invoke(rivalUsedVolley?RivalPlan.Volley.Plan.Side:RivalPlan.Contact.Side,contact);
+        }
         public event Action<bool> ModeChanged;
         public void Initialize(AppBootstrap app,ShotController controller,PracticeMode practice,PlaceholderPlayers players)
         {
@@ -449,7 +460,7 @@ namespace SquashClash.Runtime.Rally
             if(decision.Result==ShotResult.Perfect||decision.Result==ShotResult.Valid){hasPending=true;pendingStep=decision.ContactStep;return;}
             rivalReception=decision.Result==ShotResult.Failed?(decision.Fail==FailKind.Air?ReceptionResult.Air:ReceptionResult.Late):
                 decision.Result==ShotResult.Unreachable?ReceptionResult.Unreachable:decision.Result==ShotResult.SystemFault?ReceptionResult.SystemFault:ReceptionResult.NotEvaluable;
-            RivalSwing?.Invoke(rivalUsedVolley?RivalPlan.Volley.Plan.Side:RivalPlan.Contact.Side,false);
+            RaiseRivalSwing(false);
         }
         private void TickRival()
         {
@@ -474,7 +485,7 @@ namespace SquashClash.Runtime.Rally
                     double humanFatigue=context.Fatigue.Factor(HumanEnergy.EnergyAt(pendingStep));
                     RivalEnergy.StrikeAt(pendingStep,pendingShot.P,rivalVolleyCost);
                     WriteRivalShot(pendingStep,causal);
-                    committed=at;rivalReception=ReceptionResult.Contact;RivalSwing?.Invoke(rivalUsedVolley?RivalPlan.Volley.Plan.Side:RivalPlan.Contact.Side,true);
+                    committed=at;rivalReception=ReceptionResult.Contact;RaiseRivalSwing(true);
                     if(rivalUsedVolley)RivalVolleys++;
                     var struck=new BallState{Position=state.Position,Velocity=solution.Velocity,Step=0};
                     // Style recovery: from the ball just struck and the shared predictor only (cover after an own short ball).
