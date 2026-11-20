@@ -133,6 +133,13 @@ namespace SquashClash.Experiments.EditMode
         // The reference bots have no serve choice, so they serve the lob; the rival chooses by its style. Nothing is recalibrated.
         [Test,Explicit,Category("Experiments"),Timeout(14400000)]
         public void ConfirmPerStyleNewServe()=>ConfirmPerStyle("confirm-new-serve",new RallyParams{ServeKindOn=1});
+        // Two-wall shot (design 2026-11-20-boast-predeclaration, M4): the same run, same seeds, with the rival's boast off (identity with
+        // confirm01) and on. A newcomer share that moves more than 3 pp at any difficulty leaves «Dos paredes» off by default; nothing is
+        // recalibrated. Named Boast* so the ConfirmPerStyle filter never picks them up.
+        [Test,Explicit,Category("Experiments"),Timeout(14400000)]
+        public void BoastConfirmOff()=>ConfirmPerStyle("confirm-boast-off",new RallyParams{BoastRival=0});
+        [Test,Explicit,Category("Experiments"),Timeout(14400000)]
+        public void BoastConfirmOn()=>ConfirmPerStyle("confirm-boast-on",new RallyParams{BoastRival=1});
         private static void ConfirmPerStyle(string defaultRun,RallyParams parameters)
         {
             var (root,preset,factory)=Setup();
