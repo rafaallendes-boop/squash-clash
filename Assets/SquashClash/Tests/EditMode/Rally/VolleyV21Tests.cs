@@ -128,6 +128,37 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(probe.CommitAfterSPrime,Is.Zero,"no touch after S' commits: S' is the last one (of "+probe.Offers+")");
             Assert.That(probe.NearerLate,Is.GreaterThan(0),"late touches commit to a nearer, shorter-window stance");
         }
+        // v2.3 (design section 8): with the lunge, the window reaches later than v2.2's (a moving body may make contact), S' stays the last
+        // touch that commits, and a lunge plan freezes the body where it is at the planned contact (not at a stance it has reached).
+        private sealed class V23Probe : IRallyBrain
+        {
+            private readonly RallyContext ctx,v22;private readonly IRallyBrain inner;public RallySim Sim;public int Offers,Later,NoCommitAtSPrime,CommitAfterSPrime;
+            public V23Probe(RallyContext ctx,RallyContext v22,IRallyBrain inner){this.ctx=ctx;this.v22=v22;this.inner=inner;}
+            public int PerceptionSteps=>inner.PerceptionSteps;public Vector2 StanceNoise()=>inner.StanceNoise();
+            public AiShot Decide(in AiObservation o,in ReceptionPlan own)
+            {
+                var t=ctx.Predict(o.Ball);long start=t.States[0].Step;int delay=ctx.Steps(ctx.Params.ReactionS)+inner.PerceptionSteps;
+                var d=HumanVolley.OfferDetail(ctx,t,Sim.Rules,Sim.Human,delay,1);var old=HumanVolley.OfferDetail(v22,t,Sim.Rules,Sim.Human,delay,1);
+                if(d.Offer.Exists&&old.Offer.Exists)
+                {
+                    Offers++;if(d.SPrime>old.SPrime)Later++;float sprint=ctx.HumanVolleySprint;
+                    VolleyIntercept At(long c){var b=Walk(Sim.Human,start,c);var n=HumanVolley.Commit(ctx,t,Sim.Rules,b,c,delay,2);return n.Exists?n:HumanVolley.Commit(ctx,t,Sim.Rules,b,c,delay,2,sprint);}
+                    if(!At(d.SPrime).Exists)NoCommitAtSPrime++;
+                    foreach(var k in new[]{3,10,25})if(At(d.SPrime+k).Exists){CommitAfterSPrime++;break;}
+                }
+                return inner.Decide(o,own);
+            }
+        }
+        [Test] public void V23_LungeExtendsTheWindow_AndSPrimeIsStillTheLastTouch()
+        {
+            var ctx=RallyFixtures.Context(new RallyParams{HumanVolleyMode=4,HumanVolleySprintMax=1.5});var v22=Sprint(1.5);
+            Assert.That(ctx.HumanVolleyLunge,Is.True);Assert.That(v22.HumanVolleyLunge,Is.False);
+            var probe=new V23Probe(ctx,v22,new BotBrain(ctx,30,20261126));
+            using(var sim=new RallySim(ctx,probe,RivalAi.For(ctx,AiLevel.Medium,RivalStyleId.Fondista,20261127))){probe.Sim=sim;sim.PlayMatch(PlayerId.Rival);}
+            Assert.That(probe.Offers,Is.GreaterThan(10));
+            Assert.That(probe.Later,Is.GreaterThan(probe.Offers/4),"the lunge lets later touches commit (of "+probe.Offers+")");
+            Assert.That(probe.NoCommitAtSPrime,Is.Zero);Assert.That(probe.CommitAfterSPrime,Is.Zero);
+        }
         [Test] public void V2_HasNoSprint_SplitIsS()
         {
             var ctx=RallyFixtures.Context(new RallyParams{HumanVolleyMode=2,HumanVolleySprintMax=1.5});var (t,rules,body,delay)=NeutralReception(ctx);

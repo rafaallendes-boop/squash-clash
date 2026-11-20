@@ -66,13 +66,14 @@ namespace SquashClash.Experiments.EditMode
         [Test,Explicit,Category("Experiments"),Timeout(7200000)]
         public void MeasureGrid()
         {
-            string root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));string dir=Path.Combine(root,"Logs/experiments/volley-v22-grid");
+            string root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));string dir=Path.Combine(root,"Logs/experiments/volley-v23-grid");
             Assert.That(Directory.Exists(dir),Is.False,"Never overwrite evidence");Directory.CreateDirectory(dir);
             var preset=PresetCodec.LoadDefault(File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Runtime/Resources/DefaultPreset.json")));
             Assert.That(preset.Hash,Is.EqualTo("207da8f2c636"));
             foreach(var max in new[]{1.25,1.5,1.75,2.0})
             {
-                var p=new RallyParams{HumanVolleyMode=3,HumanVolleySprintMax=max};
+                // v2.3 (design section 8); v2.2 ran this same grid with HumanVolleyMode=3 (evidence v22-grid).
+                var p=new RallyParams{HumanVolleyMode=4,HumanVolleySprintMax=max};
                 var ctx=new RallyContext(EffectiveConfig.From(preset),p,new AnalyticBallSimulationFactory(Physics.bounceThreshold));
                 Assert.That(ctx.Config.SimulationKey,Is.EqualTo("166a96e319c7"));Assert.That(ctx.HumanVolleySprint,Is.EqualTo((float)max));
                 var all=new StringBuilder("style\tserve\toffered\treason\tbouncePV\tlaunchToSMs\tlaunchToSPrimeMs\twhiteLeadAfterSPrimeMs\tcommitted\tvolleyPV\tsprint\tlateness\tlaunchToVolleyTStarMs\tlaunchToBounceTStarMs\tpoTouchMs\n");

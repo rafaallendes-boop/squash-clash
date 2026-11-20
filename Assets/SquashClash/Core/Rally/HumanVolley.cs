@@ -103,7 +103,7 @@ namespace SquashClash.Core.Rally
             var legal=new LegalSettings((float)p.VolleyMinHeight,(float)p.VolleyMaxHeight,l.StepHz,l.Gravity,l.Radius,context.Court,0);
             var frame=context.FrameAt(context.T);var phase=ContactPlanner.PhaseLegal(t,frame,legal);
             long start=t.States[0].Step;int interval=Math.Max(1,context.Steps(p.CandidateIntervalS));
-            double minWindow=p.HumanVolleyMinWindowS*context.StepHz;
+            double minWindow=p.HumanVolleyMinWindowS*context.StepHz;bool lunge=context.HumanVolleyLunge;
             var best=VolleyIntercept.None("no-intercept");double bestK=double.NegativeInfinity;
             for(int i=(int)Math.Max(0,fromStep-start);i<phase.Length;i++)
             {
@@ -111,6 +111,17 @@ namespace SquashClash.Core.Rally
                 for(int s=-1;s<=1;s+=2)
                 {
                     var stance=context.ClampBody(new Vector2(ball.x+s*frame.IdealLateral,ball.z));
+                    if(lunge)
+                    {
+                        // v2.3: the body runs towards the stance and the plan freezes it where it is at this candidate's step.
+                        var (from,departStep)=departure(default);long at=start+i;if(at<departStep)continue;
+                        var runner=from.Clone();runner.MoveTo(stance,(int)Math.Max(0,earliestStep-departStep),BodyPhase.Approaching,BodyPhase.Set);
+                        for(long j=departStep;j<at;j++)runner.Step();
+                        var moving=ContactPlanner.Plan(t,context.FrameAt(runner.Position),context.Court,legal,version);
+                        if(!moving.Exists||moving.TStarStep<0||moving.KIn.Steps<earliestStep||moving.TStarStep<departStep)continue;
+                        double km=moving.KOut.Steps-moving.KIn.Steps;if(km<minWindow||km<=bestK)continue;
+                        bestK=km;best=new VolleyIntercept(moving,stance,"offered");if(any)return best;continue;
+                    }
                     var plan=ContactPlanner.Plan(t,context.FrameAt(stance),context.Court,legal,version);
                     if(!plan.Exists||plan.TStarStep<0||plan.KIn.Steps<earliestStep)continue;
                     double k=plan.KOut.Steps-plan.KIn.Steps;if(k<minWindow||k<=bestK)continue;
