@@ -296,3 +296,19 @@ Se hicieron en tres ramas desde `f068cee` y se fusionaron sin aplanar, sin confl
 - EditMode 924/924 y PlayMode 735/735;
 - AutoQA V, T3 y volea PASS/0/1;
 - check-release OK.
+
+## Séptima vuelta (20 nov): golpe de dos paredes (boast)
+
+Decisión del PO: apuntar a la pared lateral, un solo gesto, cálculo autorizado, para todos los jugadores. Diseño y metas fijados antes de los datos ([predeclaración](../superpowers/specs/2026-11-20-boast-predeclaration.md), con la adenda 1). Implementó un subagente Opus dirigido por Claude: **la revisión de Claude no es independiente**. [Informe propio](2026-11-20-boast.md).
+
+- **Gesto:** tocar la lateral visible (Rally/Partido, nunca en el saque) apunta un boast; los toques a la frontal quedan idénticos bit a bit.
+- **Cálculo:** el boast se verifica con P2 (lateral → frontal sobre la tin); si en el contacto real no hay boast válido, el golpe sale como drive a la frontal por el mismo lado, sin falta.
+- **Rival:** línea `Boast`, más en el Definidor; interruptor DEV «Dos paredes», **encendido** por la regla de M4.
+- **Primera vuelta** (se conserva): M1b 39,2 % y M4 +7,9/+5,7/+1,3 pp, desviaciones; el área del gesto y la falta por boast sin solución eran la causa.
+- **Segunda vuelta:** M1a 98,6 %, M2 y M3 pasan (Medio: Fondista 4,4 %, Completo 7,5 %, Definidor 10,3 %), M4 −0,2/+1,8/−0,0 pp. **M1b sigue en desviación** (39,2 %): el boast cruza a la mitad contraria solo si se apunta cerca del contacto. Un 33 % de los boasts del rival termina como drive.
+- **Hashes:** RallyParams `a82c34b661bf` (con el interruptor apagado `bd05b443b4f9`; proyección sin `Boast*` `992d0570c9de`). Defaults `207da8f2c636`/132 y SimulationKey sin cambio.
+
+**Compuertas sobre `bf64f46`** (el árbol integrado `5991afa` es idéntico al de `ec130c5`):
+- EditMode 956/956 y PlayMode 740/740;
+- AutoQA V, T3 y volea PASS/0/1;
+- check-release OK (build 1051).
