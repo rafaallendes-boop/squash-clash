@@ -55,11 +55,29 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(shots.Where(s => s.Option.Line != ShotLine.Boast).All(s => !s.Side.Exists), Is.True);
             foreach (var b in boasts.Take(20)) Assert.That(RallyContact.ForecastBoast(c, at, b.Option.Side, b.Option.P).Solved, Is.True, "chosen boasts forecast solved");
         }
-        [Test] public void On_TheFondistaBoastsLessThanTheDefinidor()
+        // M3's ordering, measured in play as M3 defines it (share of the rival's strokes from the back quarter), not in one fixed situation:
+        // the style utilities differ, so a single observation can order the styles either way.
+        [Test] public void On_InPlay_TheFondistaBoastsLessFromTheBackQuarterThanTheDefinidor()
         {
-            var c = Context(true); var at = new Vector3(.9f, .8f, 8.6f); var own = OwnPlan(c, at); var o = Observe(c, new Vector2(1.5f, 6.5f));
-            int Count(RivalStyleId style) { var ai = new RivalAi(c, AiDifficulty.For(c.Params, AiLevel.Medium), style, 7); return Enumerable.Range(0, 600).Count(_ => ai.Decide(o, own).Option.Line == ShotLine.Boast); }
-            Assert.That(Count(RivalStyleId.Fondista), Is.LessThan(Count(RivalStyleId.Definidor)));
+            var c = Context(true); float back = (float)(c.Params.BoastBackFraction * c.Court.Length);
+            double Share(RivalStyleId style)
+            {
+                int strokes = 0, boasts = 0;
+                for (int m = 0; m < 6; m++)
+                    using (var sim = new RallySim(c, new BotBrain(c, 30, 300 + 2 * m, ShotLine.Straight, ShotHeight.High, ShotPower.Strong), RivalAi.For(c, AiLevel.Medium, style, 301 + 2 * m)))
+                    {
+                        var score = new MatchScore(7, 2, PlayerId.Human); int guard = 0;
+                        while (!score.Finished && guard++ < 60)
+                        {
+                            var o = sim.PlayPoint(score.Server, score.Box);
+                            foreach (var r in o.Receptions.Where(r => r.Who == PlayerId.Rival && r.Result == ReceptionResult.Contact && r.ContactPoint.z >= back))
+                            { strokes++; if (r.Line == ShotLine.Boast) boasts++; }
+                            if (o.Winner.HasValue) score.PointWon(o.Winner.Value);
+                        }
+                    }
+                return boasts / (double)Math.Max(1, strokes);
+            }
+            Assert.That(Share(RivalStyleId.Fondista), Is.LessThan(Share(RivalStyleId.Definidor)));
         }
         [Test] public void On_RallySim_AppliesRivalBoastsFromTheBackQuarterOnly()
         {
