@@ -1,0 +1,5 @@
+arm	preset	rallyParams	simulationKey	legsMax	reactionMaxMs	onset
+A-off	207da8f2c636	25e6bf7a0a66	166a96e319c7	0.1	40	70
+A-on	207da8f2c636	13f88c8d1db2	166a96e319c7	0.1	40	70
+B32	16a18ced73b3	13f88c8d1db2	166a96e319c7	0.3	80	70
+B43	dba662bf23ec	13f88c8d1db2	166a96e319c7	0.4	120	70
