@@ -17,6 +17,25 @@ for key, expected in [('ITSAppUsesNonExemptEncryption', False),
                       ('UIFileSharingEnabled', True), ('LSSupportsOpeningDocumentsInPlace', True)]:
     if info.get(key) is not expected:
         raise SystemExit('Missing/incorrect plist flag: ' + key)
+manifests = [path for path in export.rglob('PrivacyInfo.xcprivacy')]
+app_manifests = [path for path in manifests if 'Libraries' not in path.parts]
+if not app_manifests:
+    raise SystemExit('Missing PrivacyInfo.xcprivacy in the exported Xcode project')
+privacy_ok = False
+for path in app_manifests:
+    with path.open('rb') as stream:
+        manifest = plistlib.load(stream)
+    declared = {entry['NSPrivacyAccessedAPIType']: entry['NSPrivacyAccessedAPITypeReasons']
+                for entry in manifest.get('NSPrivacyAccessedAPITypes', [])}
+    if (manifest.get('NSPrivacyTracking') is False and manifest.get('NSPrivacyTrackingDomains') == []
+            and manifest.get('NSPrivacyCollectedDataTypes') == []
+            and declared.get('NSPrivacyAccessedAPICategoryUserDefaults') == ['CA92.1']
+            and declared.get('NSPrivacyAccessedAPICategoryFileTimestamp') == ['C617.1']):
+        privacy_ok = True
+if not privacy_ok:
+    raise SystemExit('Exported PrivacyInfo.xcprivacy does not match the app privacy declaration')
+if 'PrivacyInfo.xcprivacy' not in (export / 'Unity-iPhone.xcodeproj/project.pbxproj').read_text():
+    raise SystemExit('PrivacyInfo.xcprivacy is not referenced by the Xcode project')
 count = subprocess.check_output(['git', 'rev-list', '--count', 'HEAD'], cwd=root, text=True).strip()
 if info.get('CFBundleVersion') != count:
     raise SystemExit('CFBundleVersion does not equal the current Git commit count')
@@ -61,6 +80,7 @@ release = json.loads(release_path.read_text())
 release['iosRelease'] = {
     'buildNumber': count,
     'plistFlagsVerified': True,
+    'privacyManifests': sorted(str(path.relative_to(export)) for path in manifests),
     'iconCount': len(images),
     'marketingIcon1024': str(marketing[0].relative_to(export)),
     'marketingIconSha256': hashlib.sha256(marketing[0].read_bytes()).hexdigest(),
