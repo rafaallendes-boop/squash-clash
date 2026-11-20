@@ -20,6 +20,19 @@ namespace SquashClash.Core.Rally
         };
         public double Factor(double energy)=>Enabled?Math.Max(0,Math.Min(1,(Onset-energy)/Onset)):0;
         public const double RedBelow=25;
+        // «Cansancio fuerte» (fatigue feel, section 2), DEV only: the rally's source with legsMax and reactionMaxMs multiplied for BOTH
+        // players, clamped to the catalog maximum. Never applied to DefaultPreset.json or to practice.
+        public const double StrongLegsFactor=3,StrongReactionFactor=2;
+        public static ParamSet Strong(ParamSet source,double legsFactor=StrongLegsFactor,double reactionFactor=StrongReactionFactor)
+        {
+            if(source==null)throw new ArgumentNullException(nameof(source));
+            ParamSet Scale(ParamSet p,string key,double factor)
+            {
+                ParamCatalog.TryGet(key,out var def);
+                return p.With(key,Math.Max(def.Min,Math.Min(def.Max,p.Get(key)*factor)));
+            }
+            return Scale(Scale(source,"fatigue.legsMax",legsFactor),"fatigue.reactionMaxMs",reactionFactor);
+        }
         // The striker's arm for one contact (spec 4): f_s from the striker's own energy at its contact step, before that stroke's cost.
         // One function for the human, the rival and RallySim. Off: no arm at all, so the shot stays bit for bit the old one.
         public FatigueArm Arm(double strikerEnergy)

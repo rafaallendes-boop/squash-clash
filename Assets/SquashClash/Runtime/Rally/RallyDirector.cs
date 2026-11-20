@@ -152,12 +152,23 @@ namespace SquashClash.Runtime.Rally
         public bool VolleyV2NextPoint=>VolleyModeNextPoint>=2;
         public void SetServeVolley(bool on){pendingServeVolley=on;}
         public bool ServeVolleyNextPoint=>pendingServeVolley??Params.HumanVolleyServe!=0;
+        // DEV only (design 2026-11-20-fatigue-feel): the energy-limited sprint (section 1) and «Cansancio fuerte» (section 2), from the NEXT point on.
+        private bool? pendingSprintFatigue,pendingStrongFatigue;
+        public void SetVolleySprintFatigue(bool on){pendingSprintFatigue=on;}
+        public bool VolleySprintFatigueNextPoint=>pendingSprintFatigue??Params.HumanVolleySprintFatigue!=0;
+        // «Cansancio fuerte»: the rally context of BOTH players reads legsMax and reactionMaxMs multiplied (FatigueSettings.Strong); the
+        // tuning, DefaultPreset.json and the practice launch never change.
+        public bool StrongFatigue {get;private set;}
+        public void SetStrongFatigue(bool on){pendingStrongFatigue=on;}
+        public bool StrongFatigueNextPoint=>pendingStrongFatigue??StrongFatigue;
         public void ResetScore(){HumanPoints=RivalPoints=PointsPlayed=0;LastPoint=null;resetEnergy=true;}
         public void Rematch(){if(!Active)return;ResetScore();if(Match!=null)Match=NewMatch();BeginPoint();}
         private void BeginPoint()
         {
             pointCausal.Clear();
-            var cfg=EffectiveConfig.From(app.Tuning.ApplyPending());
+            if(pendingSprintFatigue.HasValue){var p=Params.Clone();p.HumanVolleySprintFatigue=pendingSprintFatigue.Value?1:0;Params=p;pendingSprintFatigue=null;}
+            if(pendingStrongFatigue.HasValue){StrongFatigue=pendingStrongFatigue.Value;pendingStrongFatigue=null;}
+            var source=app.Tuning.ApplyPending();var cfg=EffectiveConfig.From(StrongFatigue?FatigueSettings.Strong(source):source);
             if(pendingVolley.HasValue){var p=Params.Clone();p.VolleyEnabled=pendingVolley.Value?1:0;Params=p;pendingVolley=null;}
             if(pendingVolleyV2.HasValue||pendingVolleyMode.HasValue){var p=Params.Clone();p.HumanVolleyMode=VolleyModeNextPoint;Params=p;pendingVolleyV2=null;pendingVolleyMode=null;}
             if(pendingServeVolley.HasValue){var p=Params.Clone();p.HumanVolleyServe=pendingServeVolley.Value?1:0;Params=p;pendingServeVolley=null;}
@@ -185,13 +196,14 @@ namespace SquashClash.Runtime.Rally
         }
         // Volley v2: the touch chose the volley. The intercept is recomputed from the body as it is now; the body only turns when the
         // controller accepts (Apply), so a refused commit leaves the M1 path untouched.
-        private VolleyCommit CommitHumanVolley(RallyContext ctx,Trajectory t,PointRules rules,int delay,int version,VolleyOfferDetail offer)
+        private VolleyCommit CommitHumanVolley(RallyContext ctx,Trajectory t,PointRules rules,int delay,int version,VolleyOfferDetail offer,double fatigue)
         {
             if(!Active||Phase!=RallyPhase.HumanReception||t==null||t.States.Count<2)return new VolleyCommit(false,default,null,null,"not-reception");
             // v2.2 order: the longest-window stance the normal body reaches; otherwise, up to S', the one it reaches sprinting.
-            long now=bodyStep;var p=HumanVolley.Commit(ctx,t,rules,Human,now,delay,version);float sprint=1;
-            if(!p.Exists&&ctx.HumanVolleySprint>1&&now<=offer.SPrime)
-            {var sp=HumanVolley.Commit(ctx,t,rules,Human,now,delay,version,ctx.HumanVolleySprint);if(sp.Exists){p=sp;sprint=ctx.HumanVolleySprint;}}
+            // The sprint is limited by the human's energy at the reception start (fatigue feel, section 1).
+            long now=bodyStep;var p=HumanVolley.Commit(ctx,t,rules,Human,now,delay,version);float sprint=1;float maxSprint=ctx.HumanVolleySprintAt(fatigue);
+            if(!p.Exists&&maxSprint>1&&now<=offer.SPrime)
+            {var sp=HumanVolley.Commit(ctx,t,rules,Human,now,delay,version,maxSprint);if(sp.Exists){p=sp;sprint=maxSprint;}}
             if(!p.Exists)return new VolleyCommit(false,default,null,null,p.Reason=="no-intercept"?"commit-unreachable":p.Reason);
             double cost=sprint>1?Params.HumanVolleySprintCost*HumanVolley.Lateness(offer.S,offer.SPrime,now):0;
             int remaining=(int)Math.Max(0,t.States[0].Step+delay-now);
@@ -218,9 +230,9 @@ namespace SquashClash.Runtime.Rally
                 if(ctx.HumanVolleyV2)
                 {
                     // Volley v2.x (design 2026-11-20): the offer from the body as it starts this reception (M1 already set), chosen by a touch.
-                    var start=Human.Clone();VolleyOfferDetail offer=VolleyOfferDetail.None("not-planned");
-                    controller.SetNextVolley((t,bounce)=>{offer=HumanVolley.OfferDetail(ctx,t,rules,start,delay,version);LastHumanOffer=offer;return offer.Offer;});
-                    controller.SetNextVolleyCommit((t,touch)=>CommitHumanVolley(ctx,t,rules,delay,version,offer));
+                    var start=Human.Clone();VolleyOfferDetail offer=VolleyOfferDetail.None("not-planned");double fatigue=HumanReceptionFatigue;
+                    controller.SetNextVolley((t,bounce)=>{offer=HumanVolley.OfferDetail(ctx,t,rules,start,delay,version,fatigue);LastHumanOffer=offer;return offer.Offer;});
+                    controller.SetNextVolleyCommit((t,touch)=>CommitHumanVolley(ctx,t,rules,delay,version,offer,fatigue));
                 }
                 else controller.SetNextVolley((t,bounce)=>ctx.VolleyFor(t,rules,positions,bounce,delay,version));
             }

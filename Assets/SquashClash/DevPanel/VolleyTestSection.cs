@@ -19,6 +19,10 @@ namespace SquashClash.DevPanel
             Add(app,v2,"volley-mode-3","Volea v2.2",()=>app.Rally.SetVolleyMode(3));
             var serve=new VisualElement();serve.style.flexDirection=FlexDirection.Row;serve.style.flexShrink=0;Root.Add(serve);
             Add(app,serve,"serve-volley-on","Volea al saque sí",()=>app.Rally.SetServeVolley(true));Add(app,serve,"serve-volley-off","Volea al saque no",()=>app.Rally.SetServeVolley(false));
+            // Fatigue feel (design 2026-11-20): the late-volley sprint limited by the human's energy (default) or always full (v2.2 as shipped).
+            var sprint=new VisualElement();sprint.style.flexDirection=FlexDirection.Row;sprint.style.flexShrink=0;Root.Add(sprint);
+            Add(app,sprint,"volley-sprint-fatigue-on","Sprint según energía sí",()=>app.Rally.SetVolleySprintFatigue(true));
+            Add(app,sprint,"volley-sprint-fatigue-off","Sprint según energía no",()=>app.Rally.SetVolleySprintFatigue(false));
         }
         private static void Add(AppBootstrap app,VisualElement row,string name,string text,System.Action action)
         {

@@ -29,9 +29,10 @@ namespace SquashClash.Core.Rally
         // The offer shown at launch. A touch can only choose it once the amber ring shows, so each candidate must be reachable by a body that
         // follows its M1 path until that moment and only then turns (today: the launch itself); S is the last step a touch still reaches it.
         // v2.1: S' is the last touch a sprint still converts; the amber ring (SplitSteps) lasts until S'.
-        public static VolleyOpportunity Offer(RallyContext context,Trajectory trajectory,PointRules rulesAtStart,PlayerBody bodyAtStart,int delaySteps,int version)
-            =>OfferDetail(context,trajectory,rulesAtStart,bodyAtStart,delaySteps,version).Offer;
-        public static VolleyOfferDetail OfferDetail(RallyContext context,Trajectory trajectory,PointRules rulesAtStart,PlayerBody bodyAtStart,int delaySteps,int version)
+        // fatigue: the human's fatigue factor f at the reception start; it limits the sprint (fatigue feel, section 1). 0: the full sprint.
+        public static VolleyOpportunity Offer(RallyContext context,Trajectory trajectory,PointRules rulesAtStart,PlayerBody bodyAtStart,int delaySteps,int version,double fatigue=0)
+            =>OfferDetail(context,trajectory,rulesAtStart,bodyAtStart,delaySteps,version,fatigue).Offer;
+        public static VolleyOfferDetail OfferDetail(RallyContext context,Trajectory trajectory,PointRules rulesAtStart,PlayerBody bodyAtStart,int delaySteps,int version,double fatigue=0)
         {
             if(context==null||bodyAtStart==null)throw new ArgumentNullException(nameof(context));
             if(trajectory==null||trajectory.States.Count<2)return VolleyOfferDetail.None("no-trajectory");
@@ -42,13 +43,14 @@ namespace SquashClash.Core.Rally
             if(!p.Exists)return VolleyOfferDetail.None(p.Reason);
             long deadline=Deadline(context,bodyAtStart,start,delaySteps,p);
             if(deadline<AmberFromSteps(context,start,p.Plan.TStarStep))return VolleyOfferDetail.None("commit-window");
-            float sprint=context.HumanVolleySprint;
-            if(sprint<=1)return new VolleyOfferDetail(new VolleyOpportunity(p.Plan,deadline,"offered"),p,deadline,deadline);
+            if(context.HumanVolleySprint<=1)return new VolleyOfferDetail(new VolleyOpportunity(p.Plan,deadline,"offered"),p,deadline,deadline);
             // v2.2 (design section 7): S and S' are the last touches at which ANY stance is reachable, without and with the sprint.
+            // Fatigue feel (section 1): the sprint is limited by the reception energy; with none left, S' = S (S itself does not change).
+            float sprint=context.HumanVolleySprintAt(fatigue);
             long last=FirstFloorBounce(trajectory);
             bool Reach(long c,float f)=>Commit(context,trajectory,rulesAtStart,At(c),c,delaySteps,version,f,true).Exists;
             long s=Math.Max(deadline,LastTrue(start,last,c=>Reach(c,1)));
-            long sPrime=Math.Max(s,LastTrue(start,last,c=>Reach(c,sprint)));
+            long sPrime=sprint>1?Math.Max(s,LastTrue(start,last,c=>Reach(c,sprint))):s;
             return new VolleyOfferDetail(new VolleyOpportunity(p.Plan,sPrime,"offered"),p,s,sPrime);
         }
         // The touch at bodyStep: the intercept recomputed from the body as it really is now (the reaction delay still applies), running at

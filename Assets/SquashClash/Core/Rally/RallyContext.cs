@@ -47,6 +47,14 @@ namespace SquashClash.Core.Rally
         // v2.3 (mode 4): the body may still be moving at the volley contact (lunge); the plan freezes its position at that step.
         public bool HumanVolleyLunge=>HumanVolleyV2&&Params.HumanVolleyMode>=4;
         public float HumanVolleySprint=>HumanVolleyV2&&Params.HumanVolleyMode>=3?(float)Math.Max(1,Params.HumanVolleySprintMax):1f;
+        // Fatigue feel (design 2026-11-20-fatigue-feel, section 1): the sprint of a reception whose human fatigue factor is f.
+        // 1 + (max - 1)(1 - f): the full sprint for f = 0 (returned as is, so a fresh human is bit for bit v2.2), none for f = 1.
+        public float HumanVolleySprintAt(double fatigue)
+        {
+            float max=HumanVolleySprint;
+            if(max<=1||Params.HumanVolleySprintFatigue==0||!(fatigue>0))return max;
+            return (float)(1+(max-1)*(1-Math.Min(1,fatigue)));
+        }
         public bool HumanServeVolley=>HumanVolleyV2&&Params.HumanVolleyServe!=0;
         // The rules of a new point: the volley is legal for both players whenever it is switched on; with v2 the human may also volley the
         // return of serve (the rival never may).

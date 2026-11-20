@@ -59,6 +59,9 @@ namespace SquashClash.Core.Rally
         // v2.2: a touch after S and up to S' still chooses the volley with a sprint of at most this speed factor, and costs this many extra
         // energy points at the contact, times its lateness (S..S' as 0..1).
         public double HumanVolleySprintMax=2,HumanVolleySprintCost=4;
+        // Fatigue feel (design 2026-11-20-fatigue-feel, section 1), human only: 1 = the human's energy at the reception start limits the sprint,
+        // 1 + (HumanVolleySprintMax - 1)(1 - f): the full sprint at or above the onset, none at energy 0. 0 = v2.2 as shipped (DEV toggle).
+        public double HumanVolleySprintFatigue=1;
         // Rival styles (design 2026-11-19). A style changes only how the AI chooses (utility weights, risk aversion, volley
         // willingness, wait W and recovery cover), never physics, rules, reach, windows, errors or information (spec 11.2, 11.5).
         // Fondista reuses the Fondo* weights above. StyleRivalVolley switches the rival volley off (control); a cover depth < 0 is "to the T".

@@ -13,11 +13,13 @@
 
 **Regla.** Sprint máximo efectivo de la recepción = `1 + (HumanVolleySprintMax − 1)·(1 − f)`, con f el factor del humano **al empezar la recepción** (el mismo f congelado que ya usan piernas y reacción). Sprint completo en E ≥ 70; nada en E = 0 (en E < 10, menos de 1,15 ×). En f = 0 el código devuelve `HumanVolleySprintMax` sin operar.
 
-- S′ (plazo de compromiso con sprint) y la ventana ámbar se calculan con ese sprint, así que se acortan con el cansancio. En f = 1, S′ = S: es la volea v2 sin sprint.
+- S′ (plazo de compromiso con sprint) y la ventana ámbar se calculan con ese sprint, así que se acortan con el cansancio. En f = 1, S′ = S, con S el de v2.2 (la última postura alcanzable sin sprint), que no cambia.
 - El costo del sprint (4 × tardanza) no cambia.
 - **Campo nuevo de `RallyParams`, solo humano:** `HumanVolleySprintFatigue = 1` (1: la energía limita el sprint; 0: v2.2 tal como está). Botón DEV «Sprint según energía sí/no», desde el próximo punto.
 - Con el cansancio apagado, o con E ≥ 70, el sprint es bit a bit el de hoy (f = 0 da exactamente `HumanVolleySprintMax`).
 - **Hash:** la proyección de `RallyParams` sin el campo nuevo debe ser exactamente `0fe523164363`. Las proyecciones sin `HumanVolley*` siguen en `0f58580f44ea`.
+
+**Corrección antes de medir (20 nov, en el GREEN):** la primera versión, en f = 1, volvía al S de v2 (solo la postura de la oferta), que es más corto: en el saque neutro del test, 28 pasos frente a 75. El test RED ya pedía que S no cambiara; se corrige el código, no la meta.
 
 ## 2. B: «Cansancio fuerte», opción solo DEV (los defaults no cambian)
 
