@@ -25,17 +25,17 @@ namespace SquashClash.Core.Shot
     // Human-only side-wall guard for a deep drive struck in front of the short line (design 2026-11-20-front-deep-drive).
     // Called by the human ShotController only, after CausalQuality.Solve; the rival, RallySim and the AI forecast never call it.
     // From the front, the same front-wall point means a much wider angle than from the back, and the front wall's restitution
-    // opens it further on the way back: the ball meets a side wall before its first bounce. When that happens, and the
-    // straight return from the contact would reach the back, the guard keeps the height and the speed and closes the
-    // front-wall x towards the contact to the widest one that still reaches the back third before any side wall.
-    // It changes only the front-wall x of a velocity the caller applies; physics and the ball authority are untouched.
+    // opens it further on the way back: the ball meets a side wall before its first bounce. When that happens, the
+    // guard keeps the speed and closes the front-wall x towards the contact to the widest one that still reaches the back third
+    // before any side wall; only when no x works at that height (right at the front wall) it tries lower heights.
+    // It changes only the front-wall target of a velocity the caller applies; physics and the ball authority are untouched.
     public static class FrontDeepDrive
     {
         public const string ReasonActed = "front-deep";
         public const float MinAimHeight = .80f;
-        public const int BisectionSteps = 8;
+        public const int CoarseSteps = 8, RefineSteps = 4, FallbackLevels = 3;
         // Revision 1 bound (design section 5): one check, 8 + 3 x 9 coarse probes and 4 bisection steps.
-        public const int MaxEvaluations = 40;
+        public const int MaxEvaluations = 1 + CoarseSteps + FallbackLevels * (CoarseSteps + 1) + RefineSteps;
 
         // Zone: above medium power, a requested aim high enough for length, contact in front of the short line.
         public static bool Active(float power, Vector3 from, Vector2 requestedAim, CourtDimensions court)
@@ -80,24 +80,44 @@ namespace SquashClash.Core.Shot
             if (!solution.Solved || !Active(power, from, requestedAim, court)) return solution;
             int evaluations = 1;
             if (Deep(from, solution.Velocity, court, factory, physics, footprintRadius)) { info = new FrontDeepInfo("already-deep", 1, evaluations); return solution; }
-            float y = solution.TargetUsed.y, speed = solution.Speed, x0 = from.x, x1 = solution.TargetUsed.x;
-            // Same height, frozen speed; a request the primitive can only meet by lowering the target is not a candidate.
-            bool Try(float t, out ShotSolution candidate)
+            float y0 = solution.TargetUsed.y, speed = solution.Speed, x0 = from.x, x1 = solution.TargetUsed.x;
+            float legalLow = Ceiling((double)court.TinTop + physics.BallRadius);
+            // Frozen speed; a request the primitive can only meet by lowering the target is not a candidate.
+            bool Try(float t, float y, out ShotSolution candidate)
             {
                 evaluations++;
                 float x = t >= 1 ? x1 : x0 + (x1 - x0) * t;
                 candidate = ShotSolver.Solve(new ShotRequest(from, new Vector2(x, y), power), speed, speed, speed, physics.Gravity, physics.BallRadius, court, factory, physics);
                 return candidate.Solved && !candidate.TargetLowered && Deep(from, candidate.Velocity, court, factory, physics, footprintRadius);
             }
-            if (!Try(0, out var best)) { info = new FrontDeepInfo("pivot-not-deep", 0, evaluations); return solution; }
-            float low = 0, high = 1;
-            for (int i = 0; i < BisectionSteps; i++)
+            // Coarse scan from the widest fraction down, at the effective height first and then at lower heights only if no x works.
+            for (int level = 0; level <= FallbackLevels; level++)
             {
-                float mid = (low + high) * .5f;
-                if (Try(mid, out var candidate)) { low = mid; best = candidate; } else high = mid;
+                float y = level == 0 ? y0 : (float)(y0 - ((double)y0 - legalLow) * level / FallbackLevels);
+                if (!(y > court.TinTop)) break;
+                for (int k = level == 0 ? CoarseSteps - 1 : CoarseSteps; k >= 0; k--)
+                {
+                    float t = (float)k / CoarseSteps;
+                    if (!Try(t, y, out var best)) continue;
+                    float low = t, high = k < CoarseSteps ? (float)(k + 1) / CoarseSteps : t;
+                    for (int i = 0; i < RefineSteps && high > low; i++)
+                    {
+                        float mid = (low + high) * .5f;
+                        if (Try(mid, y, out var candidate)) { low = mid; best = candidate; } else high = mid;
+                    }
+                    info = new FrontDeepInfo(ReasonActed, low, evaluations);
+                    return new ShotSolution(true, best.Velocity, best.Speed, best.TargetUsed, solution.SpeedRaised,
+                        solution.TargetLowered || best.TargetUsed.y < y0, ReasonActed);
+                }
             }
-            info = new FrontDeepInfo(ReasonActed, low, evaluations);
-            return new ShotSolution(true, best.Velocity, best.Speed, best.TargetUsed, solution.SpeedRaised, solution.TargetLowered, ReasonActed);
+            info = new FrontDeepInfo("no-deep-x", 0, evaluations);
+            return solution;
+        }
+
+        private static float Ceiling(double value)
+        {
+            float rounded = (float)value;
+            return rounded < value ? BitConverter.Int32BitsToSingle(BitConverter.SingleToInt32Bits(rounded) + 1) : rounded;
         }
     }
 }
