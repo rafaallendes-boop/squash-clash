@@ -254,3 +254,45 @@ Se hicieron en tres ramas desde `f068cee` y se fusionaron sin aplanar, sin confl
 - la fila de tres enlaces del menú en un SE de 375 pt;
 - el saque, en curso en `claude/serve-improve`;
 - las dos paredes, después: apuntar a la lateral con un solo gesto, solver autorizado, para todos los jugadores.
+
+## Sexta vuelta (20 nov): saque
+
+**Pedido del PO:** «Luego próxima mejora es mejorar el saque».
+
+**Rama:** `claude/serve-improve`, head `0eba962`, hecha por un subagente Opus. Tiene su [informe](2026-11-20-serve.md) y su [diseño](../superpowers/specs/2026-11-20-serve-design.md). Se fusionó sin conflictos; el código es idéntico al de `434da69`, que es el que pasó las compuertas.
+
+**El saque de hoy:** uno solo, automático e igual para los dos jugadores.
+- Un principiante lo devuelve con un 97,5 % de Perfecto o Válido.
+- El rival lo devuelve el 100 % de las veces.
+
+**El saque nuevo,** detrás del interruptor DEV «Saque nuevo», que queda **apagado por defecto**:
+- **Dos tipos:**
+  - alto, a la esquina del fondo, tocando la lateral;
+  - rápido, a 22 m/s, al centro.
+- **Quién elige:**
+  - el humano, tocando arriba o abajo en la pausa antes de sacar;
+  - el rival, según su estilo.
+- **Con el interruptor encendido:**
+  - el principiante devuelve el 89,7 % de los saques, dentro de la meta de 80–90 %;
+  - el saque no comete faltas;
+  - el rival gana el 10,3 % de los puntos directamente con el saque, frente al 2,5 % de hoy.
+
+**Decisiones de Claude, tomadas después de ver `diag01`:**
+- **M2 se retira:** contradice la volea del saque que pidió el PO.
+- **M1 se mide sobre la mezcla de estilos.**
+- **M3 se juzga por la zona de bote y el toque de la lateral, no por la velocidad.**
+- **Por eso el interruptor queda apagado por defecto.**
+
+**Calibración con el saque nuevo encendido:**
+- el Definidor se mueve −5,1 pp en Medio y −5,5 pp en Difícil, sobre el límite de 5 pp;
+- el resto de las celdas queda entre −4,5 y +1,3 pp;
+- no se recalibró.
+
+**Con el interruptor apagado,** `ConfirmPerStyle` da exactamente lo mismo que `confirm01`.
+
+**Hashes:** RallyParams `992d0570c9de`; la proyección sin los campos nuevos da `13f88c8d1db2`.
+
+**Compuertas sobre `434da69`:**
+- EditMode 924/924 y PlayMode 735/735;
+- AutoQA V, T3 y volea PASS/0/1;
+- check-release OK.
