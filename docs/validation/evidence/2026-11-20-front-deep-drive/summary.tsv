@@ -1,0 +1,9 @@
+set	zone	intent	n	recordedSuccess	rebuiltSuccess	fixSuccess	regressions
+today	front	straight	16	11	11	16	0
+today	front	cross	39	3	3	37	0
+today	back	straight	18	15	15	15	0
+today	back	cross	17	7	7	7	0
+holdout	front	straight	9	4	4	9	0
+holdout	front	cross	23	6	6	22	0
+holdout	back	straight	13	13	13	13	0
+holdout	back	cross	32	19	19	19	0
