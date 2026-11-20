@@ -42,14 +42,14 @@ namespace SquashClash.Runtime.Menu
         // M2-4 (M24Model): the aim is fixed where the finger lands on the front wall; pulling down sets the power;
         // lifting the finger is the stroke, and lifting it back at the anchor height cancels. Timing (TimingRingView,
         // ImpactCue): a ring converges on the fixed triangle at the planned contact; one attempt per ball. Volley (19 nov, PO):
-        // an amber ring before the bounce (ShotController.VolleyTint) can be struck in the air; it costs a little more energy.
+        // an amber ring before the bounce (ShotController.VolleyTint) can be struck in the air; v2 (20 nov): touching while it shows chooses it.
         private static readonly string[] StepTitles={"Apunta","Carga y suelta","Suelta a tiempo","Volea"};
         private static readonly string[] StepBodies=
         {
             "Apoya el dedo en la pared del frente, justo donde quieres mandar la pelota. Ese punto queda fijo mientras no levantes el dedo.",
             "Sin levantar el dedo, tira hacia abajo: mientras más tiras, más fuerte sale el golpe. Suelta para pegar. Si te arrepientes, vuelve a subir el dedo hasta donde lo apoyaste y suelta: no pegas.",
             "Cuando la pelota viene hacia ti aparece un triángulo donde le vas a pegar y un anillo que se achica. Suelta justo cuando el anillo calce dentro del triángulo. Tienes un solo intento por pelota.",
-            "Si el anillo sale ámbar, puedes pegarle en el aire, antes del bote. Suelta cuando calce, como siempre: volear cansa un poco más."
+            "Anillo ámbar visible: toca y voleas. Espera al anillo blanco: golpeas después del bote."
         };
         private VisualElement tutorial,tutorialArt,tutorialResults;private Label tutorialStep,tutorialTitle,tutorialBody;private Button tutorialNext;
         private bool tutorialThenPlay;

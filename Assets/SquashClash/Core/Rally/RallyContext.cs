@@ -41,8 +41,12 @@ namespace SquashClash.Core.Rally
         public BodyFrame FrameAt(Vector2 position)=>BodyFrame.From(Config.Source,position);
         public bool VolleyOn=>Params.VolleyEnabled!=0;
         public VolleySettings Volley=>new VolleySettings(VolleyOn,(float)Params.VolleyMinHeight,(float)Params.VolleyMaxHeight,Params.VolleyMinSeparationS,Params.VolleyMinWindowS);
-        // The rules of a new point: the volley is legal for both players whenever it is switched on.
-        public PointRules NewRules()=>new PointRules(Court,(float)Params.FootprintRadius,VolleyOn);
+        // Volley v2 for the human only (design 2026-11-20); the rival and RallySim keep v1 and never read these.
+        public bool HumanVolleyV2=>VolleyOn&&Params.HumanVolleyMode==2;
+        public bool HumanServeVolley=>HumanVolleyV2&&Params.HumanVolleyServe!=0;
+        // The rules of a new point: the volley is legal for both players whenever it is switched on; with v2 the human may also volley the
+        // return of serve (the rival never may).
+        public PointRules NewRules()=>new PointRules(Court,(float)Params.FootprintRadius,VolleyOn,HumanServeVolley?PlayerId.Human:(PlayerId?)null);
         // The volley opportunity of a reception on the frozen body path (design 2026-11-18). No volley of the serve in v1 (arcade adaptation).
         public VolleyOpportunity VolleyFor(Trajectory trajectory,PointRules rulesAtStart,Vector2[] path,ContactPlan bounce,int delaySteps,int version)
         {

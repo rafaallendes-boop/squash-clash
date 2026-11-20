@@ -139,6 +139,12 @@ namespace SquashClash.Runtime.Rally
         // DEV only (design 2026-11-18): switch the volley on or off from the NEXT point on.
         public void SetVolley(bool on){pendingVolley=on;}
         public bool VolleyNextPoint=>pendingVolley??Params.VolleyEnabled!=0;
+        // DEV only (design 2026-11-20): volley v2 (chosen by touch) or v1, and the human's return-of-serve volley, from the NEXT point on.
+        private bool? pendingVolleyV2,pendingServeVolley;
+        public void SetVolleyV2(bool on){pendingVolleyV2=on;}
+        public bool VolleyV2NextPoint=>pendingVolleyV2??Params.HumanVolleyMode==2;
+        public void SetServeVolley(bool on){pendingServeVolley=on;}
+        public bool ServeVolleyNextPoint=>pendingServeVolley??Params.HumanVolleyServe!=0;
         public void ResetScore(){HumanPoints=RivalPoints=PointsPlayed=0;LastPoint=null;resetEnergy=true;}
         public void Rematch(){if(!Active)return;ResetScore();if(Match!=null)Match=NewMatch();BeginPoint();}
         private void BeginPoint()
@@ -146,6 +152,8 @@ namespace SquashClash.Runtime.Rally
             pointCausal.Clear();
             var cfg=EffectiveConfig.From(app.Tuning.ApplyPending());
             if(pendingVolley.HasValue){var p=Params.Clone();p.VolleyEnabled=pendingVolley.Value?1:0;Params=p;pendingVolley=null;}
+            if(pendingVolleyV2.HasValue){var p=Params.Clone();p.HumanVolleyMode=pendingVolleyV2.Value?2:1;Params=p;pendingVolleyV2=null;}
+            if(pendingServeVolley.HasValue){var p=Params.Clone();p.HumanVolleyServe=pendingServeVolley.Value?1:0;Params=p;pendingServeVolley=null;}
             context=new RallyContext(cfg,Params,factory);
             double humanStart=testEnergy??(resetEnergy?100:HumanEnergy?.Energy??100),rivalStart=testEnergy??(resetEnergy?100:RivalEnergy?.Energy??100);
             HumanEnergy=new FatigueState(context.Fatigue,humanStart);
@@ -168,6 +176,20 @@ namespace SquashClash.Runtime.Rally
             }
             RallyStarted?.Invoke();
         }
+        // Volley v2: the touch chose the volley. The intercept is recomputed from the body as it is now; the body only turns when the
+        // controller accepts (Apply), so a refused commit leaves the M1 path untouched.
+        private VolleyCommit CommitHumanVolley(RallyContext ctx,Trajectory t,PointRules rules,int delay,int version)
+        {
+            if(!Active||Phase!=RallyPhase.HumanReception||t==null||t.States.Count<2)return new VolleyCommit(false,default,null,null,"not-reception");
+            long now=bodyStep;var p=HumanVolley.Commit(ctx,t,rules,Human,now,delay,version);
+            if(!p.Exists)return new VolleyCommit(false,default,null,null,p.Reason=="no-intercept"?"commit-unreachable":p.Reason);
+            int remaining=(int)Math.Max(0,t.States[0].Step+delay-now);
+            var probe=Human.Clone();probe.MoveTo(p.Stance,remaining,BodyPhase.Approaching,BodyPhase.Set);
+            var positions=probe.PositionsAfter((int)Math.Max(1,t.States[t.States.Count-1].Step-now+1));
+            Func<long,BodyFrame> body=j=>ctx.FrameAt(positions[(int)Math.Max(0,Math.Min(positions.Length-1,j-now))]);
+            var stance=p.Stance;
+            return new VolleyCommit(true,p.Plan,body,()=>Human.MoveTo(stance,remaining,BodyPhase.Approaching,BodyPhase.Set),"committed");
+        }
         private void LaunchToHuman(BallState ball,double? frozenFatigue=null)
         {
             HumanReceptionFatigue=frozenFatigue??context.Fatigue.Factor(HumanEnergy.Energy);
@@ -178,7 +200,18 @@ namespace SquashClash.Runtime.Rally
             var positions=Human.PositionsAfter(trajectory.States.Count);
             controller.SetNextReceptionBody(j=>context.FrameAt(positions[(int)(j-ball.Step)]));
             // Volley v1 (M1): the opportunity on this very body path, offered to the human's next launch only.
-            if(context.VolleyOn){var rules=committed;var ctx=context;int version=planVersion;controller.SetNextVolley((t,bounce)=>ctx.VolleyFor(t,rules,positions,bounce,delay,version));}
+            if(context.VolleyOn)
+            {
+                var rules=committed;var ctx=context;int version=planVersion;
+                if(ctx.HumanVolleyV2)
+                {
+                    // Volley v2 (design 2026-11-20): the offer from the body as it starts this reception (M1 already set), chosen by a touch.
+                    var start=Human.Clone();
+                    controller.SetNextVolley((t,bounce)=>HumanVolley.Offer(ctx,t,rules,start,delay,version));
+                    controller.SetNextVolleyCommit((t,touch)=>CommitHumanVolley(ctx,t,rules,delay,version));
+                }
+                else controller.SetNextVolley((t,bounce)=>ctx.VolleyFor(t,rules,positions,bounce,delay,version));
+            }
             controller.SetNextReceptionFatigue(HumanReceptionFatigue);
             // The human's arm is read at its exact contact step, inside the authoritative solve, so bodies must be advanced to it.
             if(context.Fatigue.Enabled)controller.SetNextStrikerFatigue(HumanStrikerArm);

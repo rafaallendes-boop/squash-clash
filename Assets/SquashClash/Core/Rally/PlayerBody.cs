@@ -34,6 +34,8 @@ namespace SquashClash.Core.Rally
         // True during the reaction delay: the new target is known but the body has not turned to it yet.
         public bool Reacting=>pendingDelay>0;
         public float Speed=>Velocity.magnitude;
+        // An independent copy with the same state (pending turn included): stepping it never moves this body.
+        public PlayerBody Clone()=>new PlayerBody(this);
         public PlayerBody(PlayerId id,Vector2 start,MoveSettings settings)
         {Id=id;this.settings=settings;Position=Target=start;Phase=arrivedPhase=BodyPhase.Waiting;}
         private PlayerBody(PlayerBody other)
