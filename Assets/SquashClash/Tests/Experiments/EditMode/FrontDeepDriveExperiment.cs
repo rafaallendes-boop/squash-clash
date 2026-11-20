@@ -100,10 +100,11 @@ namespace SquashClash.Experiments.EditMode
         internal static bool IntendedDeep(float power, Vector2 aim) => power > .5f && aim.y >= .80f;
         internal static bool Front(Vector3 from, CourtDimensions court) => from.z < court.Length - court.ShortLineNearBackEdgeFromBack;
 
-        internal static List<Stroke> Load(string dir, List<string> hashes)
+        internal static List<Stroke> Load(string dir, List<string> hashes) => Load(dir, hashes, Inputs);
+        internal static List<Stroke> Load(string dir, List<string> hashes, string[] prefixes)
         {
             var strokes = new List<Stroke>();
-            foreach (var prefix in Inputs)
+            foreach (var prefix in prefixes)
             {
                 var files = Directory.GetFiles(dir, prefix + "*.jsonl"); Assert.That(files.Length, Is.EqualTo(1), prefix);
                 string path = files[0];
@@ -203,6 +204,61 @@ namespace SquashClash.Experiments.EditMode
                         prim.Class, prim.Success, primitive.TargetUsed.x, primitive.TargetUsed.y, plain.Class, plain.Success,
                         lo, hi, clean.Count, contactIn, double.IsInfinity(best) ? double.NaN : best, slope }.Select(F)));
                 }
+            }
+            Assert.That(ctx.Factory.LiveInstances, Is.Zero);
+        }
+
+        private static readonly string[] Holdout = { "metrics-20261119T232451136-", "metrics-20261120T010202037-" };
+
+        // Phase 2 (after the design commit): the same replay, plus the guard exactly as ShotController applies it, on today's
+        // strokes (M1/M2) and on the 19-20 nov holdout of build d11f3d9 (M5, informative). Solve cost of the guard goes to timing.tsv.
+        [Test, Explicit, Category("Experiments"), Timeout(3600000)]
+        public void WriteFix()
+        {
+            string run = Environment.GetEnvironmentVariable("SC_FDD_RUN");
+            Assert.That(run == "fix01" || run == "fix02", Is.True, "Use a predeclared run ID.");
+            string metrics = Environment.GetEnvironmentVariable("SC_FDD_METRICS");
+            Assert.That(Directory.Exists(metrics), Is.True, "SC_FDD_METRICS must name the PO metrics folder.");
+            string root = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
+            Assert.That(Git(root, "status --porcelain"), Is.Empty, "Commit the experiment before running.");
+            var preset = PresetCodec.LoadDefault(File.ReadAllText(Path.Combine(Application.dataPath, "SquashClash/Runtime/Resources/DefaultPreset.json")));
+            var ctx = new RallyContext(EffectiveConfig.From(preset), new RallyParams(), new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
+            string dir = Path.Combine(root, "Logs/experiments/front-deep-drive/" + run);
+            Assert.That(Directory.Exists(dir), Is.False, "Never overwrite evidence.");
+            Directory.CreateDirectory(dir);
+            var hashes = new List<string>();
+            var sets = new[] { ("today", Load(metrics, hashes, Inputs)), ("holdout", Load(metrics, hashes, Holdout)) };
+            File.WriteAllText(Path.Combine(dir, "source.tsv"), "head\tdefaults\tkeys\tsimulationKey\trallyParams\tunity\n" + Git(root, "rev-parse HEAD").Trim() + "\t" + preset.Hash
+                + "\t" + preset.Ordered.Count + "\t" + ctx.Config.SimulationKey + "\t" + ctx.Params.Hash + "\t" + Application.unityVersion + "\n" + string.Join("\n", hashes) + "\n", Utf8);
+            var court = ctx.Court; var physics = ctx.Physics; float footprint = ShotIntentSolver.DefaultFootprintRadius;
+            using (var w = new StreamWriter(Path.Combine(dir, "fix.tsv"), false, Utf8))
+            using (var timing = new StreamWriter(Path.Combine(dir, "timing.tsv"), false, Utf8))
+            {
+                w.WriteLine("set\tfile\tlaunch\tstep\tP\tcx\tcy\tcz\taimX\taimY\tfront\tcross\tdeep\trecordedClass\trecordedSuccess\trebuiltClass\trebuiltSuccess\t"
+                    + "active\tguardReason\tguardT\tguardEvaluations\tfixTuX\tfixTuY\tfixSpeed\tfixClass\tfixSuccess\tfixSideZ\tfixX1\tfixZ1\tfixX2\tfixZ2\tfixMaxZ");
+                timing.WriteLine("set\tfile\tlaunch\tactive\tguardReason\tevaluations\tms");
+                foreach (var (name, strokes) in sets)
+                    foreach (var s in strokes)
+                    {
+                        var shot = s.Shot; var contact = new Vector3(shot.ContactX, shot.ContactY, shot.ContactZ); var aim = new Vector2(shot.AimX, shot.AimY);
+                        var recorded = Classify(contact, new Vector3(shot.VelocityX, shot.VelocityY, shot.VelocityZ), court, physics, ctx.Factory, footprint);
+                        var (_, _, solution, _) = Rebuild(ctx, s);
+                        var rebuilt = solution.Solved ? Classify(contact, solution.Velocity, court, physics, ctx.Factory, footprint) : new Flight { Class = "unsolved" };
+                        bool active = FrontDeepDrive.Active(shot.Power, contact, aim, court);
+                        var info = new FrontDeepInfo("inactive", 0, 0); var fixedSolution = solution; double ms = 0;
+                        if (active)
+                        {
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            fixedSolution = FrontDeepDrive.Apply(contact, aim, shot.Power, solution, court, ctx.Factory, physics, footprint, out info);
+                            ms = watch.Elapsed.TotalMilliseconds;
+                        }
+                        var fix = fixedSolution.Solved ? Classify(contact, fixedSolution.Velocity, court, physics, ctx.Factory, footprint) : new Flight { Class = "unsolved" };
+                        w.WriteLine(string.Join("\t", new object[] { name, s.File, shot.LaunchId, shot.ContactStep, shot.Power, contact.x, contact.y, contact.z, aim.x, aim.y,
+                            Front(contact, court), IntendedCross(contact, aim, court), IntendedDeep(shot.Power, aim), recorded.Class, recorded.Success, rebuilt.Class, rebuilt.Success,
+                            active, info.Reason, info.T, info.Evaluations, fixedSolution.TargetUsed.x, fixedSolution.TargetUsed.y, fixedSolution.Speed, fix.Class, fix.Success,
+                            fix.SideZ, fix.X1, fix.Z1, fix.X2, fix.Z2, fix.MaxZ }.Select(F)));
+                        timing.WriteLine(string.Join("\t", new object[] { name, s.File, shot.LaunchId, active, info.Reason, info.Evaluations, ms }.Select(F)));
+                    }
             }
             Assert.That(ctx.Factory.LiveInstances, Is.Zero);
         }
