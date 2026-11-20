@@ -75,6 +75,9 @@ namespace SquashClash.Runtime.Shot
         private ShotFeedback feedback;
         public CausalReference CausalReference {get;private set;}
         public CausalShotResult LastCausal {get;private set;}
+        // Front deep drive (design 2026-11-20): DEV switch to compare with and without the human side-wall guard. Default on,
+        // not remembered between launches and not a DefaultPreset key.
+        public static bool FrontDeepDriveOn=true;
         public ShotConfig Snapshot {get;private set;}
         public ContactPlan Plan {get;private set;}
         public PresentedPlans Presented {get;private set;}=new PresentedPlans();
