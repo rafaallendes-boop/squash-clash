@@ -58,6 +58,17 @@ namespace SquashClash.Runtime.Visual
         public float Backpedal=>backpedal;
         public float FootSwing=>footSwing;
         public float WindUp=>wind;
+        // Rival volley pose (2026-11-20): the drawn rival volleyed (short backswing, contact at the planned height, punch follow-through).
+        public bool VolleyPose {get;private set;}
+        public bool HighVolley=>VolleyPose&&volleyHeight>=SwingView.HighVolleyFrom;
+        public float VolleyHeight=>volleyHeight;
+        public bool VolleyArmed {get;private set;}
+        private float volleyHeight,armedHeight;
+        // Short backswing (over the shoulder when high, open at mid height when low), contact at the planned height, short punch after it.
+        private static Vector3 VolleyBackPose(float s,bool high)=>high?new Vector3(s*.40f,1.75f,.20f):new Vector3(s*.45f,1.15f,.25f);
+        private static Vector3 VolleyContactPose(float s,float height)=>new Vector3(s*.62f,Mathf.Clamp(height,.55f,1.95f),-.40f);
+        private static Vector3 VolleyFollowPose(float s,float height)=>new Vector3(-s*.12f,Mathf.Clamp(height,.55f,1.95f)+.05f,-.62f);
+        public const float VolleySwingSeconds=.4f;
         public bool SplitStepping=>hopClock>=0;
         public bool TrailVisible=>trail!=null&&trail.enabled;
         public float StrokePower=>strokePower;
@@ -164,12 +175,19 @@ namespace SquashClash.Runtime.Visual
         {
             // The opponent just hit: the human takes a split step. The rival swings.
             if(human){if(contact&&rally!=null&&rally.Active)hopClock=0;return;}
+            ShowRivalSwing(side,contact,rally!=null&&rally.RivalSwingVolley,rally!=null?rally.RivalSwingHeight:0);
+        }
+        // The rival's swing. A volley (when the DEV pose toggle is on) draws the volley pose; everything else is the ground stroke it always was.
+        public void ShowRivalSwing(StrokeSide side,bool contact,bool volley,float height)
+        {
+            if(human)return;
             racketSign=side==StrokeSide.Drive?-1:1;
-            if(host.ActiveConfig!=null)
+            VolleyPose=volley&&RivalVolleyPose.Enabled;volleyHeight=VolleyPose?height:0;
+            if(host!=null&&host.ActiveConfig!=null)
             {
                 var ball=transform.InverseTransformPoint(host.RenderPosition);
                 // The racket meets the ball where the contact happened, when that is within reach of the drawn arm.
-                if(contact)racketPosition=new Vector2(ball.x,ball.z).magnitude<1.1f&&ball.y<1.9f?ball:HitPose(racketSign);
+                if(contact)racketPosition=new Vector2(ball.x,ball.z).magnitude<1.1f&&ball.y<1.9f?ball:VolleyPose?VolleyContactPose(racketSign,volleyHeight):HitPose(racketSign);
             }
             swingClock=contact?.07f:0;strokeClock=0;strokeKind=contact?StrokeKind.Rival:StrokeKind.Failed;strokePower=.6f;
         }
@@ -259,6 +277,9 @@ namespace SquashClash.Runtime.Visual
                     if(Mathf.Abs(x)>.2f)racketSign=Mathf.Sign(x);
                 }
                 if(swingClock<0)wind=Mathf.Lerp(wind,prepare?.6f:0,blend);
+                // The rival is about to volley: the short backswing instead of the full one (read-only: the plan is not touched).
+                VolleyArmed=prepare&&RivalVolleyPose.Enabled&&rally.RivalVolleyIntended;
+                if(VolleyArmed)armedHeight=rally.RivalPlan.Volley.Plan.PStar.y;
             }
             float sign=racketSign,power=Mathf.Clamp01(strokePower);
             // The human keeps the chosen hand on either contact side: left on +x, right on -x (AX-1).
@@ -329,6 +350,7 @@ namespace SquashClash.Runtime.Visual
             var rest=body==null?(human?ReadyPose(holds):RelaxedPose(holds)):bodyPhase==BodyPhase.Waiting?ReadyPose(holds):RelaxedPose(holds);
             // Reaching across, the racket is taken back close to the far shoulder, where the arm can hold it.
             var back=across?BackhandPrepPose(sign,wind):BackPose(sign)+new Vector3(sign*.05f,.16f,.12f)*wind;
+            if(VolleyArmed)back=VolleyBackPose(sign,armedHeight>=SwingView.HighVolleyFrom);
             // After the contact: hard strokes finish high and across the body, soft ones short and low; a miss wraps around.
             float through=strokeClock>=0?Smooth((strokeClock-.06f)/.16f):0;
             // (Reaching across, the follow-through opens outward, away from the body.)
@@ -353,9 +375,10 @@ namespace SquashClash.Runtime.Visual
             else if(!human&&swingClock>=0)
             {
                 swingClock+=dt;
-                if(swingClock<.07f){target=HitPose(sign);rate=45;}
-                else if(swingClock<.55f){target=missed?FollowPose(sign)+finish*through:cleanFollow;rate=16;}
-                else{swingClock=-1;target=rest;rate=7;}
+                if(swingClock<.07f){target=VolleyPose?VolleyContactPose(sign,volleyHeight):HitPose(sign);rate=45;}
+                else if(VolleyPose&&swingClock<VolleySwingSeconds){target=VolleyFollowPose(sign,volleyHeight);rate=16;}
+                else if(!VolleyPose&&swingClock<.55f){target=missed?FollowPose(sign)+finish*through:cleanFollow;rate=16;}
+                else{swingClock=-1;VolleyPose=false;target=rest;rate=7;}
             }
             else if(prepare){target=Vector3.Lerp(rest,back,human?wind:1);rate=9;}
             else{target=rest;rate=7;}
