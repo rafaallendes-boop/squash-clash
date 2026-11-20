@@ -20,3 +20,12 @@ Decisión del PO, literal: «El gesto es apuntar a la pared lateral. Solo 1 Gest
 - **M5, sin cambios:** `DefaultPreset.json`, defaults `207da8f2c636`/132, SimulationKey `166a96e319c7`, física P2, contrato de contacto y timing intactos; AutoQA V, T3 y volea PASS/0/1 con los mismos escenarios; EditMode y PlayMode completos en verde.
 
 Ante un defecto o una sorpresa: registrar y detenerse. No se cambian estas metas después de ver los datos; si alguna falla, se informa como desviación.
+
+## Adenda 1 (20 nov, tras la primera vuelta, antes de nuevos datos)
+
+Resultado de la primera vuelta (se conserva en [el informe](../../reviews/2026-11-20-boast.md)): M1b 39,2 % y M4 +7,9/+5,7/+1,3 pp, ambas desviaciones; interruptor del rival apagado. Las dos causas están en el diseño, no en las metas:
+
+1. **Área del gesto.** Limitar el apuntado a la mitad delantera de la lateral impide el boast real desde atrás (0/288 cruzan). **Cambio:** se admite toda la lateral visible, entre el suelo y la línea de fuera lateral, en toda la profundidad. Sigue sin admitirse en el saque.
+2. **Boast sin solución.** Hoy cierra el punto como falta del sistema y la pelota no se golpea, lo que debilita al rival (de 40 a 1.152 faltas en Fácil) y frustraría al jugador. **Cambio:** el boast se resuelve en el contacto real; si no hay boast válido, el golpe sale hacia la frontal por el mismo lado con el camino de apuntado frontal que ya existe (no es falta), para el jugador y el rival. La retícula muestra el golpe que de verdad sale.
+
+Las metas M1–M5 **no cambian**. M1b se mide en la grilla de apuntados que el gesto admite ahora; M4 se vuelve a medir con semillas nuevas. El interruptor del rival sigue la regla de M4.
