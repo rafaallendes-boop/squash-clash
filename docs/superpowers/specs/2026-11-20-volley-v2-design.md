@@ -100,3 +100,30 @@ Por estilo (B, sin saque): Fondista 78 % de oferta y 82 % de P+V; Definidor 57 %
 1. ¿El toque inicial como elección de la volea es aceptable? Riesgo: quien toca temprano para el bote compromete una volea sin querer. Alternativa: elegir con un toque y soltar dentro del anillo ámbar.
 2. ¿La devolución del saque como opción DEV basta para esta tanda, o el PO quiere el cambio de reglas en serio?
 3. **Notas para el encargo del saque, sin trabajar:** todas las devoluciones de saque (338/338) pasan al alcance antes del bote y el bote del saque es fácil (P+V 98,2 %, K mediana 393 ms). El saque es blando y alto.
+
+## 5. Fase 2: decisiones del product lead y controles predeclarados (antes de medir)
+
+**Decisiones (20 nov, Claude como product lead, a partir de la respuesta a §4):**
+- Se aprueba B.
+- **Regla que aprende el jugador:** «Anillo ámbar visible: toca y voleas. Espera al anillo blanco: golpeas después del bote.» El paso 4 del tutorial y la línea de novedades dicen exactamente eso.
+- **Ventana de elección:** desde que el anillo ámbar se ve, `max(lanzamiento, T*v − 500 ms)`, hasta el plazo de compromiso S.
+  - Un toque dentro de esa ventana, con la intercepción todavía alcanzable desde el cuerpo real, compromete la volea.
+  - Cualquier otro toque descarta la volea de esa recepción y el golpe va contra el bote.
+- **Volea de la devolución del saque:** solo para el humano, activada por defecto en `RallyParams` y con un botón DEV para apagarla.
+  - Requisito: ningún test, escenario AutoQA, oráculo ni ancla existente cambia de expectativa. Si alguno tuviera que cambiar, queda apagada por defecto y se señala.
+  - Las reglas del saque del rival no cambian.
+- **Háptico:** el impacto más suave (`Discreet`) cuando el anillo ámbar se hace visible.
+- **Botón DEV:** «Volea v2 sí/no» para comparar con v1.
+
+**Controles (`VolleyV2CommitExperiment`, mismas semillas, partidos y novato que §0):**
+1. **Toque fijo:** el toque llega 150 ms y 300 ms reales después de que el anillo ámbar se hace visible.
+2. **Toque del PO repetido:** el toque llega `T*b − d` antes del bote. `d` se muestrea de la distribución medida del PO (92 golpes, build `d11f3d9`).
+   - Deciles: 477, 578, 684, 758, 850, 940, 1051, 1130 y 1383 ms.
+   - Se interpola linealmente entre deciles; las colas (< 10 % y > 90 %) toman el decil extremo.
+   - Si el toque cae antes de que el ámbar se vea o después de S, no hay volea y se juega el bote.
+3. **En cada caso se informa:**
+   - **oferta efectiva:** el toque compromete la volea;
+   - **tasa de volea:** voleas tomadas sobre las recepciones sin saque;
+   - **P+V de la volea:** suelta N(0, 90 ms) en torno a T\*v del plan comprometido, recalculado desde el cuerpo en el instante del toque;
+   - **distancia frente al P+V del bote** de las mismas recepciones.
+4. **Parada:** si en el toque del PO la distancia de P+V frente al bote supera **15 pp**, se registra y se detiene, sin reajustar nada.
