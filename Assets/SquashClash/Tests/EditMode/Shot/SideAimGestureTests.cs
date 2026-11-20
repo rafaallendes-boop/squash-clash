@@ -54,7 +54,15 @@ namespace SquashClash.Core.Tests.Shot
             var m = Model(false); m.Push(S(0, Screen(new Vector3(0, 2, 3)), TouchPhaseKind.Began));
             Assert.That(m.HasAim, Is.False); Assert.That(m.Outcome, Is.EqualTo(GestureOutcome.Rejected)); Assert.That(m.Reason, Is.EqualTo("outside-front-wall"));
         }
-        [TestCase(.3f, 3f)] [TestCase(2f, 6.5f)] [TestCase(4.2f, 3f)]
+        // Addendum 1: the whole visible side wall, floor to side out line, full depth. Round one rejected the back half and the low band.
+        [TestCase(SurfaceId.RightWall, 7.5f, 1f)] [TestCase(SurfaceId.LeftWall, 8.5f, .4f)] [TestCase(SurfaceId.RightWall, 6f, .2f)] [TestCase(SurfaceId.LeftWall, 3f, .3f)]
+        public void Addendum1_BackHalfAndLowSideWallTouches_AreSideAims(SurfaceId wall, float z, float y)
+        {
+            var m = Model(true); m.Push(S(0, Screen(new Vector3(wall == SurfaceId.RightWall ? 0 : 6.4f, y, z)), TouchPhaseKind.Began));
+            Assert.That(m.HasAim, Is.True, m.Reason); Assert.That(m.Side.Wall, Is.EqualTo(wall));
+            Assert.That(m.Side.Z, Is.EqualTo(z).Within(.01)); Assert.That(m.Side.Y, Is.EqualTo(y).Within(.01));
+        }
+        [TestCase(4.2f, 3f)] [TestCase(2.6f, 8.5f)] [TestCase(-.3f, 3f)]
         public void SideWallTouch_OutsideTheVisibleBand_IsRejected(float y, float z)
         {
             var m = Model(true); m.Push(S(0, Screen(new Vector3(0, y, z)), TouchPhaseKind.Began));

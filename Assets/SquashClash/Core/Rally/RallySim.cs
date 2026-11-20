@@ -24,8 +24,10 @@ namespace SquashClash.Core.Rally
         public readonly float VolleySprintFactor;
         // Where the ball was struck (the contact step's centre), set only on a stroke that was applied; the boast's side-wall point.
         public readonly Vector3 ContactPoint;public readonly SideAim Side;
+        // A boast that had no valid point at the contact and went to the front wall instead (addendum 1).
+        public readonly bool BoastFellBack;
         public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason,CausalShotResult causal=default,double fatigueReception=0,double fatigueStriker=0,bool volley=false,bool volleyOffered=false,float volleySprintFactor=1,Vector3 contactPoint=default)
-        {ContactPoint=contactPoint;Side=option.Side;VolleySprintFactor=volleySprintFactor;Volley=volley;VolleyOffered=volleyOffered;FatigueReception=fatigueReception;FatigueStriker=fatigueStriker;Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
+        {BoastFellBack=option.Side.Exists&&causal.FellBack;ContactPoint=contactPoint;Side=option.Side;VolleySprintFactor=volleySprintFactor;Volley=volley;VolleyOffered=volleyOffered;FatigueReception=fatigueReception;FatigueStriker=fatigueStriker;Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
     }
     public sealed class RallyOutcome
     {

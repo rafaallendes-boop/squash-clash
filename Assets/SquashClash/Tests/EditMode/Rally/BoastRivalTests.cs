@@ -79,6 +79,27 @@ namespace SquashClash.Core.Tests.Rally
             }
             Assert.That(Share(RivalStyleId.Fondista), Is.LessThan(Share(RivalStyleId.Definidor)));
         }
+        // Addendum 1: a boast with no valid point at the real contact goes to the front wall instead; never a system fault.
+        [Test] public void On_RallySim_AnUnsolvableRivalBoastFallsBackToTheFrontWall_NeverASystemFault()
+        {
+            var c = Context(true, p => p.BoastWeightShooter = 3); int fallbacks = 0, boastFaults = 0;
+            for (int m = 0; m < 6; m++)
+                using (var sim = new RallySim(c, new BotBrain(c, 30, 500 + 2 * m, ShotLine.Straight, ShotHeight.High, ShotPower.Strong), new RivalAi(c, AiDifficulty.For(c.Params, AiLevel.Easy), RivalStyleId.Definidor, 501 + 2 * m)))
+                {
+                    var score = new MatchScore(7, 2, PlayerId.Human); int guard = 0;
+                    while (!score.Finished && guard++ < 60)
+                    {
+                        var o = sim.PlayPoint(score.Server, score.Box);
+                        foreach (var r in o.Receptions.Where(r => r.Who == PlayerId.Rival && r.Line == ShotLine.Boast))
+                        {
+                            if (r.Result == ReceptionResult.SystemFault) boastFaults++;
+                            if (r.BoastFellBack) { fallbacks++; Assert.That(r.Result, Is.EqualTo(ReceptionResult.Contact)); }
+                        }
+                        if (o.Winner.HasValue) score.PointWon(o.Winner.Value);
+                    }
+                }
+            Assert.That(boastFaults, Is.Zero); Assert.That(fallbacks, Is.GreaterThan(0), "Easy mistimes enough boasts to need the fallback");
+        }
         [Test] public void On_RallySim_AppliesRivalBoastsFromTheBackQuarterOnly()
         {
             var c = Context(true, p => p.BoastWeightShooter = 3); int boasts = 0;

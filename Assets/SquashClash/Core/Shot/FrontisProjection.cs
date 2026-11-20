@@ -40,7 +40,7 @@ namespace SquashClash.Core.Shot
             aim=new Vector2(hit.x,hit.y);reason="accepted";return true;
         }
         // Two-wall shot (design 2026-11-20-boast-predeclaration, section 1): a touch whose ray misses the front wall may still meet a
-        // visible side wall: the front half of the court (0 < z <= Length/2), above the tin height and below the side out line. Same
+        // visible side wall: addendum 1, the whole length of the court (0 < z < Length), between the floor and the side out line. Same
         // captured view and the same admission checks as TryMap; TryMap itself is unchanged.
         public bool TryMapSide(Vector2 point,out SideAim side)
         {
@@ -58,7 +58,7 @@ namespace SquashClash.Core.Shot
             if(!Finite(t)||t<0)return false;
             var hit=near+delta*t;
             if(!Finite(hit.y)||!Finite(hit.z))return false;
-            if(!(hit.z>0&&hit.z<=Court.Length*.5f&&hit.y>Court.TinTop&&hit.y<SideAim.OutEdge(Court,hit.z)))return false;
+            if(!(hit.z>0&&hit.z<Court.Length&&hit.y>0&&hit.y<SideAim.OutEdge(Court,hit.z)))return false;
             side=new SideAim(wall,hit.z,hit.y);return true;
         }
         public bool IsInvalid(Vector2 aim)

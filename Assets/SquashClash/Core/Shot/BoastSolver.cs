@@ -20,6 +20,19 @@ namespace SquashClash.Core.Shot
         public bool Exact => Solved && Used.Equals(Requested) && Speed == RequestedSpeed;
     }
 
+    // Addendum 1 (design 2026-11-20-boast-predeclaration): a boast with no valid point at the real contact goes to the front wall on the
+    // same side, through the existing front-wall aim path. The aim is the straight drive of the rival's options on that side: the
+    // front-wall point on the line to the mirrored near back corner (inset 0.6 m, RallyParams.CornerInset) at the mid height 1.7 m
+    // (RallyParams.AimMid), so a failed boast becomes a plain length down the same wall.
+    public static class BoastFallback
+    {
+        public const float Inset = .6f, Height = 1.7f;
+        public static Vector2 Aim(Vector3 contact, SurfaceId wall, CourtDimensions court)
+        {
+            float corner = wall == SurfaceId.RightWall ? Inset : court.Width - Inset;
+            return new Vector2(contact.x + (corner - contact.x) * contact.z / (contact.z + court.Length), Height);
+        }
+    }
     // The two-wall shot (boast), design 2026-11-20-boast-predeclaration, section 2. Aims the ball centre at a side-wall point with the
     // stroke's speed and VERIFIES with the shared physics (P2) the sequence racket -> that side wall -> front wall, with the front-wall
     // contact clear of the tin and of the out line by a margin, no floor before the front wall, and legal up to the first bounce.

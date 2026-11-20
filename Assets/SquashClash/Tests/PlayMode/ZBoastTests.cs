@@ -86,14 +86,36 @@ namespace SquashClash.Runtime.Tests
             var asked=controller.LastBoast.Requested;
             Assert.That(asked.Exists&&asked.Wall==side.Wall&&asked.Z==side.Z,Is.True,"the side order went to the boast solver: "+asked);
             Assert.That(asked.Y,Is.GreaterThanOrEqualTo(side.Y));
-            Assert.That(controller.LastSolution.Solved,Is.EqualTo(controller.LastBoast.Solved));
-            var reticle=app.GetComponentInChildren<AimReticleView>(true);Assert.That(reticle.Side,Is.EqualTo(side),"the ring on the side wall");
+            // Addendum 1: without a valid boast the stroke falls back to the front wall (UnsolvableSideOrder_... covers that path).
+            Assert.That(controller.LastCausal.FellBack,Is.EqualTo(!controller.LastBoast.Solved));Assert.That(controller.LastSolution.Solved,Is.True);
+            var reticle=app.GetComponentInChildren<AimReticleView>(true);
             if(controller.LastBoast.Solved)
             {
+                Assert.That(reticle.Side,Is.EqualTo(side),"the ring on the side wall");
                 Assert.That(controller.LastSolution.Reason,Does.StartWith("boast"));
                 Assert.That(reticle.FeasibleVisible,Is.True);Assert.That(reticle.FeasibleAim,Is.EqualTo(controller.LastBoast.Front),"the front-wall point is marked");
             }
-            else Assert.That(controller.LastRecord.Reason,Is.EqualTo(BoastSolver.ReasonNone));
+            else Assert.That(reticle.Aim,Is.EqualTo(controller.LastCausal.FallbackAim),"the ring on the front-wall shot that goes out");
+            yield return null;
+        }
+        // Addendum 1: no valid boast at the contact sends the stroke to the front wall on the same side; the reticle shows that shot.
+        [UnityTest] public IEnumerator UnsolvableSideOrder_FallsBackToTheFrontWall_AndTheReticleShowsTheShotThatGoesOut()
+        {
+            yield return Boot(true);
+            Assert.That(app.Host.ClockMap.TrySimToReal(controller.Plan.TStarStep,0,out var star),Is.True);
+            for(int i=0;i<1500&&app.Host.ObservedRealTime+StepReal<star-1e-10;i++)app.Host.Advance(StepReal);
+            double left=star-app.Host.ObservedRealTime;if(left>0)app.Host.Advance(left);now=star;
+            var p=controller.Plan.PStar;var court=app.Host.ActiveConfig.Court;var wall=SideAim.NearWall(p.x,court);
+            var side=new SideAim(wall,p.z+.9f,1.4f);
+            controller.Enqueue(new ClosedGesture(app.Host.LaunchId,Guid.NewGuid().ToString("N"),1,app.Host.LaunchRealTime+.01,star,true,GestureOutcome.Swing,side.UV,.8f,app.Host.ActiveConfig.Source,"fixture",star,side:side));
+            controller.ProcessPending();
+            Assert.That(controller.LastBoast.Solved,Is.False,"no valid boast behind the contact");
+            Assert.That(controller.LastCausal.FellBack,Is.True);Assert.That(controller.LastSolution.Solved,Is.True,controller.LastSolution.Reason);
+            Assert.That(controller.LastRecord.Result,Is.Not.EqualTo("SystemFault"),controller.LastRecord.Reason);
+            var reticle=app.GetComponentInChildren<AimReticleView>(true);
+            Assert.That(reticle.Side.Exists,Is.False,"the ring moves to the front wall");Assert.That(reticle.Aim,Is.EqualTo(controller.LastCausal.FallbackAim));
+            var expected=BoastFallback.Aim(controller.LastRecord.ContactX==0?p:new Vector3(controller.LastRecord.ContactX,controller.LastRecord.ContactY,controller.LastRecord.ContactZ),wall,court);
+            Assert.That(controller.LastCausal.FallbackAim,Is.EqualTo(expected));
             yield return null;
         }
     }
