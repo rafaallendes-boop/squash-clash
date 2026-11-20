@@ -17,23 +17,27 @@ for key, expected in [('ITSAppUsesNonExemptEncryption', False),
                       ('UIFileSharingEnabled', True), ('LSSupportsOpeningDocumentsInPlace', True)]:
     if info.get(key) is not expected:
         raise SystemExit('Missing/incorrect plist flag: ' + key)
-manifests = [path for path in export.rglob('PrivacyInfo.xcprivacy')]
-app_manifests = [path for path in manifests if 'Libraries' not in path.parts]
-if not app_manifests:
-    raise SystemExit('Missing PrivacyInfo.xcprivacy in the exported Xcode project')
-privacy_ok = False
-for path in app_manifests:
-    with path.open('rb') as stream:
-        manifest = plistlib.load(stream)
-    declared = {entry['NSPrivacyAccessedAPIType']: entry['NSPrivacyAccessedAPITypeReasons']
-                for entry in manifest.get('NSPrivacyAccessedAPITypes', [])}
-    if (manifest.get('NSPrivacyTracking') is False and manifest.get('NSPrivacyTrackingDomains') == []
-            and manifest.get('NSPrivacyCollectedDataTypes') == []
-            and declared.get('NSPrivacyAccessedAPICategoryUserDefaults') == ['CA92.1']
-            and declared.get('NSPrivacyAccessedAPICategoryFileTimestamp') == ['C617.1']):
-        privacy_ok = True
-if not privacy_ok:
-    raise SystemExit('Exported PrivacyInfo.xcprivacy does not match the app privacy declaration')
+# Unity 6 merges its engine manifest with Assets/Plugins/iOS/PrivacyInfo.xcprivacy into UnityFramework/PrivacyInfo.xcprivacy.
+manifests = sorted(export.rglob('PrivacyInfo.xcprivacy'))
+merged_path = export / 'UnityFramework' / 'PrivacyInfo.xcprivacy'
+if not merged_path.is_file():
+    raise SystemExit('Missing merged UnityFramework/PrivacyInfo.xcprivacy in the exported Xcode project')
+with merged_path.open('rb') as stream:
+    merged = plistlib.load(stream)
+declared = {}
+for entry in merged.get('NSPrivacyAccessedAPITypes', []):
+    declared.setdefault(entry['NSPrivacyAccessedAPIType'], []).extend(entry['NSPrivacyAccessedAPITypeReasons'])
+if merged.get('NSPrivacyTracking') is not False or merged.get('NSPrivacyTrackingDomains', []) != [] \
+        or merged.get('NSPrivacyCollectedDataTypes', []) != []:
+    raise SystemExit('Merged privacy manifest must declare no tracking and no collected data')
+if 'CA92.1' not in declared.get('NSPrivacyAccessedAPICategoryUserDefaults', []) \
+        or 'C617.1' not in declared.get('NSPrivacyAccessedAPICategoryFileTimestamp', []):
+    raise SystemExit('Merged privacy manifest lacks the UserDefaults/FileTimestamp reasons')
+merge_log = (export / 'UnityFramework' / 'ApplePrivacyManifestsMerge.txt').read_text()
+if 'Assets/Plugins/iOS/PrivacyInfo.xcprivacy' not in merge_log:
+    raise SystemExit('App privacy manifest was not merged by Unity')
+if (export / 'UnityFramework' / 'AppleRequiredReasonCSharpAPIs.txt').read_text().strip():
+    raise SystemExit('Unity found required-reason C# APIs in project code: review the privacy manifest')
 if 'PrivacyInfo.xcprivacy' not in (export / 'Unity-iPhone.xcodeproj/project.pbxproj').read_text():
     raise SystemExit('PrivacyInfo.xcprivacy is not referenced by the Xcode project')
 count = subprocess.check_output(['git', 'rev-list', '--count', 'HEAD'], cwd=root, text=True).strip()

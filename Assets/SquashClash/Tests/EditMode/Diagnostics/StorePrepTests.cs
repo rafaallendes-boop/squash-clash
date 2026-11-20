@@ -27,10 +27,10 @@ namespace SquashClash.Core.Tests
             var types=ValueOf(Manifest(),"NSPrivacyAccessedAPITypes").Elements("dict")
                 .ToDictionary(d=>ValueOf(d,"NSPrivacyAccessedAPIType").Value,
                     d=>string.Join(",",ValueOf(d,"NSPrivacyAccessedAPITypeReasons").Elements("string").Select(s=>s.Value)));
-            // PlayerPrefs (UserDefaults) and file size metadata of the app's own Documents (LogRetention).
-            Assert.That(types.Keys.OrderBy(k=>k),Is.EqualTo(new[]{"NSPrivacyAccessedAPICategoryFileTimestamp","NSPrivacyAccessedAPICategoryUserDefaults"}));
+            // PlayerPrefs (UserDefaults). Unity's own manifest already declares file timestamps (C617.1) and its C# scan of our code finds none;
+            // repeating that category with different reasons would duplicate the entry in the merged manifest.
+            Assert.That(types.Keys,Is.EqualTo(new[]{"NSPrivacyAccessedAPICategoryUserDefaults"}));
             Assert.That(types["NSPrivacyAccessedAPICategoryUserDefaults"],Is.EqualTo("CA92.1"));
-            Assert.That(types["NSPrivacyAccessedAPICategoryFileTimestamp"],Is.EqualTo("C617.1"));
         }
         [Test] public void PrivacyManifest_IsAnIosOnlyPlugin()
         {
