@@ -1,0 +1,13 @@
+sprint 1.25	non-serve	n 4778	offered% 67.5	volleyRate% 24.5	sprintShare% 5.0	volleyPV% 81.7	bouncePVsame% 93.8	gap 12.1	whiteLead>=300% 100.0 (n 2051)	launch->S ms med 1359.0 p10 782.1 p90 2141.0	launch->S' ms med 1397.4 p10 807.7 p90 2179.5	lateness med 0.5
+sprint 1.25	TARGETS 1-3 not met
+sprint 1.25	serve	n 338	offered% 100.0	volleyRate% 40.5	sprintShare% 7.3	volleyPV% 81.0	bouncePVsame% 97.8	gap 16.8	whiteLead>=300% 100.0 (n 201)	launch->S ms med 1320.5 p10 1307.7 p90 1333.3	launch->S' ms med 1346.2 p10 1333.3 p90 1359.0	lateness med 0.5
+sprint 1.50	non-serve	n 4778	offered% 67.5	volleyRate% 26.1	sprintShare% 10.7	volleyPV% 81.6	bouncePVsame% 94.0	gap 12.4	whiteLead>=300% 100.0 (n 1975)	launch->S ms med 1359.0 p10 782.1 p90 2141.0	launch->S' ms med 1423.1 p10 833.3 p90 2192.3	lateness med 0.5
+sprint 1.50	TARGETS 1-3 not met
+sprint 1.50	serve	n 338	offered% 100.0	volleyRate% 45.3	sprintShare% 17.0	volleyPV% 83.7	bouncePVsame% 98.0	gap 14.4	whiteLead>=300% 100.0 (n 185)	launch->S ms med 1320.5 p10 1307.7 p90 1333.3	launch->S' ms med 1359.0 p10 1359.0 p90 1384.6	lateness med 0.5
+sprint 1.75	non-serve	n 4778	offered% 67.5	volleyRate% 27.0	sprintShare% 13.9	volleyPV% 81.6	bouncePVsame% 94.0	gap 12.4	whiteLead>=300% 100.0 (n 1929)	launch->S ms med 1359.0 p10 782.1 p90 2141.0	launch->S' ms med 1448.7 p10 833.3 p90 2217.9	lateness med 0.5
+sprint 1.75	TARGETS 1-3 not met
+sprint 1.75	serve	n 338	offered% 100.0	volleyRate% 47.3	sprintShare% 20.6	volleyPV% 83.8	bouncePVsame% 98.1	gap 14.4	whiteLead>=300% 100.0 (n 178)	launch->S ms med 1320.5 p10 1307.7 p90 1333.3	launch->S' ms med 1384.6 p10 1371.8 p90 1397.4	lateness med 0.6
+sprint 2.00	non-serve	n 4778	offered% 67.5	volleyRate% 28.0	sprintShare% 16.8	volleyPV% 81.6	bouncePVsame% 94.0	gap 12.4	whiteLead>=300% 100.0 (n 1882)	launch->S ms med 1359.0 p10 782.1 p90 2141.0	launch->S' ms med 1461.5 p10 846.2 p90 2230.8	lateness med 0.5
+sprint 2.00	TARGETS 1-3 not met
+sprint 2.00	serve	n 338	offered% 100.0	volleyRate% 47.9	sprintShare% 21.6	volleyPV% 84.0	bouncePVsame% 98.1	gap 14.2	whiteLead>=300% 100.0 (n 176)	launch->S ms med 1320.5 p10 1307.7 p90 1333.3	launch->S' ms med 1397.4 p10 1384.6 p90 1410.3	lateness med 0.5
+FIRST_OK None
