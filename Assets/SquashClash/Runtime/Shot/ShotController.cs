@@ -75,6 +75,9 @@ namespace SquashClash.Runtime.Shot
         private ShotFeedback feedback;
         public CausalReference CausalReference {get;private set;}
         public CausalShotResult LastCausal {get;private set;}
+        // Front deep drive (design 2026-11-20): DEV switch to compare with and without the human side-wall guard. Default on,
+        // not remembered between launches and not a DefaultPreset key.
+        public static bool FrontDeepDriveOn=true;
         public ShotConfig Snapshot {get;private set;}
         public ContactPlan Plan {get;private set;}
         public PresentedPlans Presented {get;private set;}=new PresentedPlans();
@@ -300,16 +303,27 @@ namespace SquashClash.Runtime.Shot
             var cfg=app.Host.ActiveConfig;
             var reference=UsedCausalReference??CausalReference;var body=reference.BodyAt(contact.Step);
             var arm=strikerFatigue!=null?strikerFatigue(contact.Step,authoritative):FatigueArm.None;
-            LastCausal=CausalQuality.Solve(reference,body,contact.Position,order.Aim,order.P,cfg,new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold),arm);
+            var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
+            LastCausal=CausalQuality.Solve(reference,body,contact.Position,order.Aim,order.P,cfg,factory,arm);
             var trace=CausalShotTrace.Create("Human",order.LaunchId,order.AttemptId,contact.Step,reference,body,LastCausal);
             app.Metrics?.Write("shot-causal",cfg,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(trace));
             var solution=LastCausal.Solution;
+            // Front deep drive (design 2026-11-20): human-only side-wall guard after the causal layer and the intention. Off, or
+            // outside its zone, the causal solution is used bit for bit. One metrics line per solve inside the zone.
+            if(FrontDeepDrive.Active(order.P,contact.Position,order.Aim,cfg.Court))
+            {
+                var original=solution;var info=new FrontDeepInfo("switched-off",0,0);
+                if(FrontDeepDriveOn)solution=FrontDeepDrive.Apply(contact.Position,order.Aim,order.P,original,cfg.Court,factory,cfg.Physics,ShotIntentSolver.DefaultFootprintRadius,out info);
+                var deep=new FrontDeepTrace{launchId=order.LaunchId,attemptId=order.AttemptId,contactStep=contact.Step,on=FrontDeepDriveOn,acted=info.Acted,reason=info.Reason,
+                    t=info.T,evaluations=info.Evaluations,originalX=original.TargetUsed.x,chosenX=solution.TargetUsed.x,y=solution.TargetUsed.y};
+                app.Metrics?.Write("front-deep",cfg,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(deep));
+            }
             record.PaceDistanceM=LastCausal.Pace.DistanceM;record.PaceGamma=LastCausal.Pace.Gamma;record.RequestedSpeedLinear=LastCausal.Pace.LinearSpeed;record.RequestedSpeed=LastCausal.Pace.Speed;
             record.SolverCostMs+=(Stopwatch.GetTimestamp()-start)*1000/Stopwatch.Frequency;return solution;
         }
-        // The frozen reticle marks the aim the ball really takes: lowered for feasibility or moved by the drive intention (G1 A2).
+        // The frozen reticle marks the aim the ball really takes: lowered for feasibility, moved by the drive intention (G1 A2) or by the front deep drive guard.
         private static void ShowEffectiveAim(AimReticleView reticle,ShotSolution s)
-            =>reticle.ShowFeasible(s.TargetUsed,s.Solved&&(s.TargetLowered||s.Reason=="intent-drive"));
+            =>reticle.ShowFeasible(s.TargetUsed,s.Solved&&(s.TargetLowered||s.Reason=="intent-drive"||s.Reason==FrontDeepDrive.ReasonActed));
         private static void FillSolution(ShotRecord r,ShotSolution s,BallState contact)
         {
             r.Solved=s.Solved;r.ContactX=contact.Position.x;r.ContactY=contact.Position.y;r.ContactZ=contact.Position.z;r.SpeedRaised=s.SpeedRaised;r.TargetLowered=s.TargetLowered;

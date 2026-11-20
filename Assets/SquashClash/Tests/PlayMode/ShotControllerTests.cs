@@ -178,6 +178,43 @@ namespace SquashClash.Runtime.Tests
             Assert.That(Vector2.Distance(new Vector2(front.Point.x,front.Point.y),reticle.FeasibleAim),Is.LessThanOrEqualTo(.05));
             Assert.That(app.Host.PredictionMatchesBitwise,Is.True);
         }
+        // Front deep drive (design 2026-11-20): the same SL5 stroke into the near side wall, with the DEV switch off and on.
+        private static bool SideBeforeFirstBounce(Trajectory prediction)
+        {
+            bool front=false;
+            foreach(var e in prediction.Contacts)
+            {
+                if(e.Persistent)continue;
+                if(e.Surface==SquashClash.Core.Court.SurfaceId.FrontWall)front=true;
+                else if(e.Surface==SquashClash.Core.Court.SurfaceId.Floor)return false;
+                else if(front&&(e.Surface==SquashClash.Core.Court.SurfaceId.LeftWall||e.Surface==SquashClash.Core.Court.SurfaceId.RightWall))return true;
+            }
+            return false;
+        }
+        [Test] public void FrontDeepDrive_DevSwitch_ComparesTheSameStrokeWithAndWithout()
+        {
+            bool saved=ShotController.FrontDeepDriveOn;
+            try
+            {
+                app.Tuning.Set("practice.launch",4);var court=app.Host.ActiveConfig.Court;
+                ShotController.FrontDeepDriveOn=false;app.LaunchCurrent();
+                var from=controller.Plan.PStar;var aim=new Vector2(from.x<court.Width/2?.3f:court.Width-.3f,1.5f);
+                var off=Submit(Star(),p:1f,aim:aim);Assert.That(off.Applied,Is.True,off.Reason);
+                Assert.That(controller.LastSolution.Reason,Is.Not.EqualTo(FrontDeepDrive.ReasonActed));
+                Assert.That(BitConverter.SingleToInt32Bits(off.VelocityX),Is.EqualTo(BitConverter.SingleToInt32Bits(controller.LastCausal.Solution.Velocity.x)),"off: the causal solution as before");
+                Assert.That(SideBeforeFirstBounce(app.Host.Prediction),Is.True,"fixture: off meets the side wall before the bounce");
+                ShotController.FrontDeepDriveOn=true;app.LaunchCurrent();
+                var on=Submit(Star(),p:1f,aim:aim);Assert.That(on.Applied,Is.True,on.Reason);
+                Assert.That(new Vector3(on.ContactX,on.ContactY,on.ContactZ),Is.EqualTo(new Vector3(off.ContactX,off.ContactY,off.ContactZ)));
+                Assert.That(controller.LastSolution.Reason,Is.EqualTo(FrontDeepDrive.ReasonActed));
+                Assert.That(on.TargetUsedY,Is.LessThanOrEqualTo(off.TargetUsedY),"the height is kept or lowered, never raised");Assert.That(on.Speed,Is.EqualTo(off.Speed));
+                Assert.That(SideBeforeFirstBounce(app.Host.Prediction),Is.False,"on: bounces before any side wall");
+                var reticle=app.GetComponentInChildren<AimReticleView>(true);
+                Assert.That(reticle.FeasibleVisible,Is.True);Assert.That(reticle.FeasibleAim,Is.EqualTo(new Vector2(on.TargetUsedX,on.TargetUsedY)));
+                Assert.That(app.Host.PredictionMatchesBitwise,Is.True);
+            }
+            finally{ShotController.FrontDeepDriveOn=saved;}
+        }
         [Test] public void PanelChange_MidReception_DoesNotAffectCurrentShot()
         {
             double end=Star()-.15;var body=controller.Snapshot.Body;app.Tuning.Set("timing.validLimit",0);app.Tuning.Set("shot.vMax",10);app.Tuning.Set("human.x",4);
