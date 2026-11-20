@@ -26,6 +26,13 @@ namespace SquashClash.Core.Rally
             get=>movementFactor;
             set {if(float.IsNaN(value)||value<=0||value>1)throw new ArgumentOutOfRangeException(nameof(value));movementFactor=value;}
         }
+        // Volley v2.1 (design 2026-11-20 section 6): the human's late-volley sprint multiplies speed and acceleration (never below 1).
+        private float sprint=1;
+        public float Sprint
+        {
+            get=>sprint;
+            set {if(float.IsNaN(value)||value<1)throw new ArgumentOutOfRangeException(nameof(value));sprint=value;}
+        }
         public PlayerId Id {get;}
         public Vector2 Position {get;private set;}
         public Vector2 Velocity {get;private set;}
@@ -40,7 +47,7 @@ namespace SquashClash.Core.Rally
         {Id=id;this.settings=settings;Position=Target=start;Phase=arrivedPhase=BodyPhase.Waiting;}
         private PlayerBody(PlayerBody other)
         {
-            Id=other.Id;settings=other.settings;movementFactor=other.movementFactor;Position=other.Position;Velocity=other.Velocity;Phase=other.Phase;Target=other.Target;
+            Id=other.Id;settings=other.settings;movementFactor=other.movementFactor;sprint=other.sprint;Position=other.Position;Velocity=other.Velocity;Phase=other.Phase;Target=other.Target;
             arrivedPhase=other.arrivedPhase;pendingMoving=other.pendingMoving;pendingArrived=other.pendingArrived;pendingTarget=other.pendingTarget;pendingDelay=other.pendingDelay;
         }
         public Vector2[] PositionsAfter(int count)
@@ -68,8 +75,8 @@ namespace SquashClash.Core.Rally
             var direction=to/distance;float dt=1f/settings.StepHz;
             // Speed along the new heading only: a turn sheds lateral speed (no extra assist either way).
             float speed=Mathf.Max(0,Vector2.Dot(Velocity,direction));
-            float desired=Mathf.Min(settings.MaxSpeed*movementFactor,Mathf.Sqrt(2*settings.Brake*distance));
-            speed=speed<desired?Mathf.Min(desired,speed+settings.Accel*movementFactor*dt):Mathf.Max(desired,speed-settings.Brake*dt);
+            float desired=Mathf.Min(settings.MaxSpeed*movementFactor*sprint,Mathf.Sqrt(2*settings.Brake*distance));
+            speed=speed<desired?Mathf.Min(desired,speed+settings.Accel*movementFactor*sprint*dt):Mathf.Max(desired,speed-settings.Brake*dt);
             float travel=speed*dt;
             if(travel>=distance){Position=Target;Velocity=Vector2.zero;Phase=arrivedPhase;return;}
             Position+=direction*travel;Velocity=direction*speed;

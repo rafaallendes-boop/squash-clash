@@ -67,55 +67,6 @@ namespace SquashClash.Experiments.EditMode
                     double.IsNaN(leadAfterS)?"NaN":leadAfterS.ToString("0.#",C),Case(150),Case(300),Case(po)}));
             }
         }
-        // Data only (20 nov, after the checks): how long the choice window [launch, S] lasts, in real ms, per offered reception.
-        private sealed class WindowProbe : IRallyBrain
-        {
-            private readonly RallyContext ctx;private readonly IRallyBrain inner;
-            public RallySim Sim;public string Style;public readonly List<string> Rows=new List<string>();
-            public WindowProbe(RallyContext ctx,IRallyBrain inner){this.ctx=ctx;this.inner=inner;}
-            public int PerceptionSteps=>inner.PerceptionSteps;
-            public Vector2 StanceNoise()=>inner.StanceNoise();
-            public AiShot Decide(in AiObservation o,in ReceptionPlan own)
-            {
-                var t=ctx.Predict(o.Ball);long first=t.States[0].Step;
-                int delay=ctx.Steps(ctx.Params.ReactionS)+inner.PerceptionSteps+FatigueEffects.For(ctx.Fatigue.Factor(Sim.HumanEnergy.Energy),ctx.Fatigue).ExtraSteps;
-                var offer=HumanVolley.Offer(ctx,t,Sim.Rules,Sim.Human,delay,own.Contact.Version);
-                double ms=offer.Exists?(offer.SplitSteps-first)/(ctx.StepHz*ctx.Tempo)*1000:double.NaN;
-                double bounceMs=own.Contact.Exists&&own.Contact.TStarStep>=0?(own.Contact.TStarStep-first)/(ctx.StepHz*ctx.Tempo)*1000:double.NaN;
-                Rows.Add(Style+"\t"+(Sim.Rules.Serving?"1":"0")+"\t"+(offer.Exists?"1":"0")+"\t"+(double.IsNaN(ms)?"NaN":ms.ToString("0.#",C))+"\t"+(double.IsNaN(bounceMs)?"NaN":bounceMs.ToString("0.#",C)));
-                return inner.Decide(o,own);
-            }
-        }
-        [Test,Explicit,Category("Experiments"),Timeout(3600000)]
-        public void MeasureCommitWindow()
-        {
-            string root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));string dir=Path.Combine(root,"Logs/experiments/volley-v2-window");
-            Assert.That(Directory.Exists(dir),Is.False,"Never overwrite evidence");
-            var preset=PresetCodec.LoadDefault(File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Runtime/Resources/DefaultPreset.json")));
-            Assert.That(preset.Hash,Is.EqualTo("207da8f2c636"));
-            var ctx=new RallyContext(EffectiveConfig.From(preset),new RallyParams(),new AnalyticBallSimulationFactory(Physics.bounceThreshold));
-            var all=new StringBuilder("style\tserve\toffered\tlaunchToSMs\tlaunchToBounceTStarMs\n");
-            foreach(RivalStyleId style in Enum.GetValues(typeof(RivalStyleId)))
-            {
-                int points=0;
-                for(int i=0;points<200;i++)
-                {
-                    long seed=20261120+1000*(int)style+2*i;
-                    var probe=new WindowProbe(ctx,new RivalStylesBaselineExperiment.NewcomerBot(ctx,NewcomerSigmaMs,seed)){Style=style.ToString()};
-                    using(var sim=new RallySim(ctx,probe,RivalAi.For(ctx,AiLevel.Medium,style,seed+1)))
-                    {
-                        probe.Sim=sim;var score=new MatchScore(7,2,i%2==0?PlayerId.Human:PlayerId.Rival);int replays=0;
-                        while(!score.Finished&&points<200)
-                        {
-                            var o=sim.PlayPoint(score.Server,score.Box);points++;
-                            if(o.Winner.HasValue)score.PointWon(o.Winner.Value);else if(++replays>50)break;
-                        }
-                    }
-                    foreach(var r in probe.Rows)all.Append(r).Append('\n');
-                }
-            }
-            Directory.CreateDirectory(dir);File.WriteAllText(Path.Combine(dir,"windows.tsv"),"# rallyParams "+ctx.Params.Hash+"\n"+all);
-        }
         [Test,Explicit,Category("Experiments"),Timeout(3600000)]
         public void MeasureCommitChecks()
         {

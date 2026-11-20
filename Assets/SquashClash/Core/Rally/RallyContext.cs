@@ -42,7 +42,9 @@ namespace SquashClash.Core.Rally
         public bool VolleyOn=>Params.VolleyEnabled!=0;
         public VolleySettings Volley=>new VolleySettings(VolleyOn,(float)Params.VolleyMinHeight,(float)Params.VolleyMaxHeight,Params.VolleyMinSeparationS,Params.VolleyMinWindowS);
         // Volley v2 for the human only (design 2026-11-20); the rival and RallySim keep v1 and never read these.
-        public bool HumanVolleyV2=>VolleyOn&&Params.HumanVolleyMode==2;
+        public bool HumanVolleyV2=>VolleyOn&&Params.HumanVolleyMode>=2;
+        // v2.1 (mode 3): the late-touch sprint factor; 1 means no sprint (v2).
+        public float HumanVolleySprint=>HumanVolleyV2&&Params.HumanVolleyMode>=3?(float)Math.Max(1,Params.HumanVolleySprintMax):1f;
         public bool HumanServeVolley=>HumanVolleyV2&&Params.HumanVolleyServe!=0;
         // The rules of a new point: the volley is legal for both players whenever it is switched on; with v2 the human may also volley the
         // return of serve (the rival never may).
