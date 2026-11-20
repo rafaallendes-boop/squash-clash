@@ -4,7 +4,7 @@
 
 Pedido del PO: «Luego próxima mejora es mejorar el saque» (19 nov) y «Mejorar lo que hay hoy es la prioridad» (20 nov). Hallazgo previo (volea v2): las 338 devoluciones de saque pasan al alcance antes del bote y el bote es fácil (P+V 97–98 %): el saque es blando y alto.
 
-**Revisión 0 (`fd66945`): metas y reglas de decisión fijadas ANTES de medir cualquier cambio.** Revisión 1 (este commit): diagnóstico medido (sección 2) y **parada al final de la fase 1** (sección 5). Las metas de la sección 3 no se tocan.
+**Revisión 0 (`fd66945`): metas y reglas de decisión fijadas ANTES de medir cualquier cambio.** Revisión 1 (`e1039d3`): diagnóstico medido (sección 2) y parada al final de la fase 1 (sección 5). **Revisión 2 (este commit): metas revisadas por Claude DESPUÉS de ver `diag01`** (sección 6) y resultados de la implementación (sección 7). La tabla de la sección 3 queda como se predeclaró.
 
 ## 1. Cómo funciona hoy (código)
 
@@ -105,3 +105,63 @@ No se implementó nada de la fase 2. Opciones para decidir:
 1. **Aceptar el saque de dos tipos con metas revisadas**, decididas por Claude o el PO, no por el subagente: M1 ≈ 89 %, sin M2 y M3 por tiempo y no por velocidad. Luego medir N1–N3 en `RallySim`.
 2. **Atacar la volea al saque, no la forma:** por ejemplo, sin sprint de v2.2 en la devolución de saque, o volviendo a v1 (sin volea al saque) con el interruptor ya existente. Toca la volea v2.2 recién entregada y requiere medir su efecto.
 3. **Ampliar la malla** (velocidades > 22 m/s, salida de la mano más alta, globos más lentos con el frontis más arriba) y repetir la regla. Es probable que no cambie M2.
+
+## 6. Revisión 2: decisión de Claude después de `diag01` (20 nov)
+
+Claude eligió la opción 1, el saque de dos tipos. Como las metas se revisan **después de ver los datos**, el saque nuevo va detrás del interruptor DEV «Saque nuevo», **apagado por defecto**. El saque de hoy sigue siendo el predeterminado; el PO lo enciende para juzgarlo.
+
+| Meta | Revisión |
+|---|---|
+| M1 | Se juzga sobre la mezcla por estilo (estimación ≈ 89 %) y se informa cada estilo. |
+| M2 | **Retirada.** Contradice la decisión explícita del PO de que el humano volee el saque («Quizás agregarlo al saque tb»). La oferta de volea al saque se informa solo como dato. |
+| M3 | Los dos tipos se distinguen por zona de bote y toque de lateral, no por velocidad. La razón de velocidad (1,22×) se informa como dato. |
+| N1 | Sin cambio: faltas de saque de la IA ≤ 3 %. |
+| N2 | Se mide `ConfirmPerStyle` con el saque nuevo, con las semillas de `confirm01`. Si alguna celda se mueve más de 5 pp, el interruptor queda apagado por defecto. No se recalibra. |
+| N3 | Con el interruptor apagado, todo es el saque de hoy bit a bit: `ConfirmPerStyle` idéntico a `confirm01`. |
+
+Diseño implementado:
+
+- **Saques:** las cuatro formas de la sección 2.3 como campos `ServeKind*` de `RallyParams`, sin ruido de ejecución.
+- **Humano:** elige como en la sección 4. El umbral de altura de la mira es 3,0 m.
+- **Rival:** elige por estilo, con su propio generador.
+- **Cerebros sin elección:** sacan globo.
+
+## 7. Resultados (sobre `434da69`)
+
+**Formas** (`new01/shape.tsv`, idénticas a la malla):
+
+| | Globo der. | Globo izq. | Drive der. | Drive izq. |
+|---|---|---|---|---|
+| Frontis | 3,6 m | 3,45 m | 2,55 m | 2,4 m |
+| Lateral antes del bote | z 8,28 m, a 1,28 m de altura | z 8,57 m, a 0,69 m | — | — |
+| Bote | x 6,09, z 9,71 (rincón) | x 0,17, z 9,32 (rincón) | x 3,48, z 8,84 (centro) | x 3,08, z 8,42 (centro) |
+| Al pasar por la T | 2,96 m | 2,67 m | 1,65 m | 1,44 m |
+| Velocidad horizontal | 18 m/s | 18 m/s | 22 m/s | 22 m/s |
+
+**`RallySim` Medio con el saque nuevo** (`new01`, mismas semillas que `diag01`, 200 partidos por estilo):
+
+| | Hoy (`diag01`) | Saque nuevo |
+|---|---|---|
+| M1: P+V del novato al devolver el saque del rival | 97,5 % | **89,7 %** (Fondista 91,1; Completo 89,9; Definidor 88,1) |
+| Globo / drive por separado | — | 94,0 % / 85,3 % |
+| Elección del rival (drive) | — | Fondista 23 %, Completo 50 %, Definidor 75 % |
+| N1: faltas de saque | 0 | **0** (los dos servidores) |
+| Oferta de volea al saque (dato) | 100 % | 100 % |
+| Saque ganador del rival | 2,5 % | 10,3 % |
+| El rival gana en ≤ 2 golpes | 7,9 % | 15,7 % |
+| Desplazamiento del novato (mediana) | 2,09 m | 3,72 m |
+| Devolución del rival al saque del humano | 100 % | 99,9 % (globo); 99,6 % (drive, mezcla 50/50) |
+
+M1 se cumple en el agregado; el Fondista queda 1,1 pp por encima de la banda. El saque nuevo casi no complica al rival: su ventana y su `RivalReleaseTiming` lo cubren.
+
+**N2: calibración** (`confirm-new-serve01` frente a `confirm01`, `calibration-shift.tsv`):
+
+- 6 de 9 celdas del novato bajan;
+- Medio Definidor: 43,6 → 38,5 (**−5,1 pp**);
+- Difícil Definidor: 37,8 → 32,3 (**−5,5 pp**);
+- el resto, entre −4,5 y +1,0 pp;
+- bot30, entre −4,1 y +1,3 pp.
+
+**Hay celdas que se mueven más de 5 pp, así que el interruptor queda apagado por defecto, como se decidió.** No se recalibra.
+
+**N3: identidad con el interruptor apagado.** `confirm-serve-off` es **idéntico** a `confirm01` en `cells.tsv` (sin la columna de segundos) y en `fondista-hard.tsv`.
