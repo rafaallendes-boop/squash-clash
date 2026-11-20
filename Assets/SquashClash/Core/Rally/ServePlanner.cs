@@ -5,6 +5,10 @@ using SquashClash.Core.Simulation;
 using UnityEngine;
 namespace SquashClash.Core.Rally
 {
+    // Serve kinds (design 2026-11-20-serve). Auto: today's single automatic serve (the new serve is off, nothing is chosen).
+    public enum ServeType { Auto, Lob, Drive }
+    // Optional for a brain: which serve it plays from a box when the new serve is on. A brain without it serves the lob.
+    public interface IRallyServer { ServeType ChooseServe(ServiceBox box); }
     // Automatic serve (spec 8.7.5: automatic placement in the box, no foot fault). It searches a small fixed grid for a
     // serve that the serve rules accept, so the same box always gives the same serve.
     public static class ServePlanner
@@ -34,6 +38,11 @@ namespace SquashClash.Core.Rally
                     }
             if(!found)throw new InvalidOperationException("No valid automatic serve for this court and physics.");
             return chosen;
+        }
+        // The fixed serve of a kind from a box (RallyParams ServeKind*), checked against the serve rules like Find.
+        public static BallState Typed(RallyContext context,ServiceBox box,ServeType type)
+        {
+            return Find(context,box);
         }
         // Replays the serve rules over an isolated prediction until the first bounce is judged.
         public static bool Forecast(RallyContext context,BallState serve,ServiceBox box,out Vector3 firstBounce)

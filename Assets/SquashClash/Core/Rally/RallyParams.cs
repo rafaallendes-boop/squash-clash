@@ -32,6 +32,16 @@ namespace SquashClash.Core.Rally
         public double MatchTarget=7,MatchMargin=2,MatchPauseSeconds=2.5;
         // Automatic serve: height of the hand and preferred landing spot in the receiver's quarter.
         public double ServeHandHeight=1.1,ServeLandingDepth=8,ServeLandingFromWall=1.4;
+        // Serve kinds (design 2026-11-20-serve). ServeKindOn: 0 = today's single automatic serve (default; DEV «Saque nuevo» off), 1 = the server
+        // chooses a lob or a drive. Each kind is one fixed serve per box (front-wall aim x, height, horizontal speed), chosen from the diag01 grid
+        // by the predeclared rule (P+V of the newcomer closest to 85 %); every one is checked against the real serve rules.
+        public double ServeKindOn=0;
+        public double ServeKindLobRightAimX=3.6,ServeKindLobRightAimY=3.6,ServeKindLobRightSpeed=18,ServeKindLobLeftAimX=2.8,ServeKindLobLeftAimY=3.45,ServeKindLobLeftSpeed=18;
+        public double ServeKindDriveRightAimX=2.8,ServeKindDriveRightAimY=2.55,ServeKindDriveRightSpeed=22,ServeKindDriveLeftAimX=3.6,ServeKindDriveLeftAimY=2.4,ServeKindDriveLeftSpeed=22;
+        // The human's choice: an aim at or above this front-wall height (m) is the lob, below it the drive.
+        public double ServeKindLobMinAimY=3;
+        // The rival's choice: probability of the drive per style (own random stream, apart from its strokes).
+        public double ServeKindDriveFondo=.25,ServeKindDriveShooter=.75,ServeKindDriveAllRound=.5;
         // AI difficulty (spec 11.5): Easy / Medium / Hard. Only these change with difficulty.
         public double EasyPerceptionS=.08,EasyStanceSigma=.12,EasyAimSigma=.28,EasyPowerSigma=.12,EasyTimingSigmaMs=55,EasyTemperature=1.2;
         public double MediumPerceptionS=.04,MediumStanceSigma=.06,MediumAimSigma=.16,MediumPowerSigma=.08,MediumTimingSigmaMs=38,MediumTemperature=.6;

@@ -35,6 +35,8 @@ namespace SquashClash.Core.Rally
         public PlayerId? Striker;public SurfaceId TerminalSurface;public bool OutAfterBounce;
         // Set when the point started with a serve.
         public PlayerId? Server;public ServiceBox Box;
+        // The serve kind played (Auto while the new serve is off).
+        public ServeType ServeType;
         public FatiguePoint HumanFatigue,RivalFatigue;
         public readonly List<ReceptionLog> Receptions=new List<ReceptionLog>();
     }

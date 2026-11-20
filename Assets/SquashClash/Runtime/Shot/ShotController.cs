@@ -78,6 +78,9 @@ namespace SquashClash.Runtime.Shot
         // Front deep drive (design 2026-11-20): DEV switch to compare with and without the human side-wall guard. Default on,
         // not remembered between launches and not a DefaultPreset key.
         public static bool FrontDeepDriveOn=true;
+        // Serve kinds (design 2026-11-20-serve): set by the director only in the pause before the human's own serve with «Saque nuevo» on. While
+        // set, a touch may begin, the volley choice is skipped and the closed gesture goes here instead of the stroke path (no shot record, no timing).
+        public Func<ClosedGesture,bool> ServeAim {get;set;}
         public ShotConfig Snapshot {get;private set;}
         public ContactPlan Plan {get;private set;}
         public PresentedPlans Presented {get;private set;}=new PresentedPlans();

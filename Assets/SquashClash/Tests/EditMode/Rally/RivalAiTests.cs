@@ -49,12 +49,14 @@ namespace SquashClash.Core.Tests.Rally
 
         [Test] public void RallyParams_ProjectionWithoutStyleFields_IsTheCurrentHash()
         {
-            Assert.That(Projection(f=>!f.Name.StartsWith("Style",StringComparison.Ordinal)&&!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)),Is.EqualTo("5cdbb01e4621"));
+            Assert.That(Projection(f=>!f.Name.StartsWith("Style",StringComparison.Ordinal)&&!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)),Is.EqualTo("5cdbb01e4621"));
             // Volley v2 (20 nov) adds the HumanVolley* fields: without them the hash is still 0f58580f44ea (VolleyV2Tests).
-            Assert.That(Projection(f=>!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)),Is.EqualTo("0f58580f44ea"),"measured in Unity with the style fields");
+            Assert.That(Projection(f=>!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)),Is.EqualTo("0f58580f44ea"),"measured in Unity with the style fields");
             // Fatigue feel (20 nov) adds HumanVolleySprintFatigue: without it the hash is still 0fe523164363 (FatigueFeelTests).
-            Assert.That(Projection(f=>f.Name!="HumanVolleySprintFatigue"),Is.EqualTo("0fe523164363"),"with the volley v2.2 fields");
-            Assert.That(new RallyParams().Hash,Is.EqualTo("13f88c8d1db2"),"measured in Unity with the fatigue feel field");
+            Assert.That(Projection(f=>f.Name!="HumanVolleySprintFatigue"&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)),Is.EqualTo("0fe523164363"),"with the volley v2.2 fields");
+            // Serve (20 nov) adds the ServeKind* fields: without them the hash is still 13f88c8d1db2 (ServeTests).
+            Assert.That(Projection(f=>!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)),Is.EqualTo("13f88c8d1db2"),"with the fatigue feel field");
+            Assert.That(new RallyParams().Hash,Is.EqualTo("992d0570c9de"),"with the serve kind fields");
             TestContext.WriteLine("STYLE_RALLYPARAMS_HASH="+new RallyParams().Hash);
         }
         [TestCase(AiLevel.Easy)][TestCase(AiLevel.Medium)][TestCase(AiLevel.Hard)]

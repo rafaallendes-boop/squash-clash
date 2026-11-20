@@ -66,7 +66,7 @@ namespace SquashClash.Core.Rally
     }
     // The rival with a style (spec 11.3-11.4). FondoAi stays the historical reference; Fondista with the volley and cover off decides
     // exactly like it (same options, same draws in the same order).
-    public sealed class RivalAi : IRallyBrain,IRallyPositioning
+    public sealed class RivalAi : IRallyBrain,IRallyPositioning,IRallyServer
     {
         private readonly RallyContext context;
         private readonly AiDifficulty difficulty;
@@ -98,6 +98,9 @@ namespace SquashClash.Core.Rally
             }
             return wait;
         }
+        // Serve kinds (design 2026-11-20-serve): the style's drive share, drawn from its own stream so its strokes never change.
+        public double ServeDriveShare=>0;
+        public ServeType ChooseServe(ServiceBox box)=>ServeType.Lob;
         public bool VolleyWanted(in ReceptionPlan own)
         {
             if(context.Params.StyleRivalVolley==0||!own.Volley.Exists)return false;
