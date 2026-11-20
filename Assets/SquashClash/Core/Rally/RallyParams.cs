@@ -94,7 +94,7 @@ namespace SquashClash.Core.Rally
         // BoastWallMax of the near side wall; the side-wall point is BoastAheadZ in front of the contact at the low or mid height. Utility
         // weight per style (Fondista least, Definidor most).
         public double BoastRival=0,BoastBackFraction=.75,BoastWallMax=2,BoastAheadZ=1,BoastAimLow=.9,BoastAimMid=1.5;
-        public double BoastWeightFondo=-1,BoastWeightShooter=1,BoastWeightAllRound=0;
+        public double BoastWeightFondo=0,BoastWeightShooter=-.5,BoastWeightAllRound=0;
         public string Hash
         {
             get
