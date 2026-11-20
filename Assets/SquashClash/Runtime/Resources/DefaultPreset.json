@@ -9,7 +9,7 @@
     },
     {
       "key": "fatigue.costPerMeter",
-      "value": 0.4
+      "value": 0.3
     },
     {
       "key": "fatigue.strongFrom",
@@ -21,7 +21,7 @@
     },
     {
       "key": "fatigue.recoverBetween",
-      "value": 0.25
+      "value": 0.08
     },
     {
       "key": "fatigue.recoverPerS",

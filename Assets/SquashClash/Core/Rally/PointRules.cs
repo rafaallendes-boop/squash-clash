@@ -78,6 +78,8 @@ namespace SquashClash.Core.Rally
         private readonly CourtDimensions court;
         private readonly float radius;
         private readonly bool volleyAllowed;
+        // Volley v2 (design 2026-11-20): the one player allowed to volley the serve (the human only), or nobody.
+        private readonly PlayerId? serveVolley;
         private readonly ReturnLineJudge judge;
         public bool Closed {get;private set;}
         public PlayerId? Winner {get;private set;}
@@ -93,9 +95,9 @@ namespace SquashClash.Core.Rally
         public int RejectedContacts {get;private set;}
         public SurfaceId TerminalSurface {get;private set;}
         public Vector3 TerminalPoint {get;private set;}
-        public PointRules(CourtDimensions court,float footprintRadius,bool volleyAllowed=false)
+        public PointRules(CourtDimensions court,float footprintRadius,bool volleyAllowed=false,PlayerId? serveVolley=null)
         {
-            this.court=court??throw new ArgumentNullException(nameof(court));radius=footprintRadius;this.volleyAllowed=volleyAllowed;
+            this.court=court??throw new ArgumentNullException(nameof(court));radius=footprintRadius;this.volleyAllowed=volleyAllowed;this.serveVolley=volleyAllowed?serveVolley:null;
             judge=new ReturnLineJudge(court,footprintRadius);
         }
         public void Begin(PlayerId? striker,PlayerId receiver)
@@ -125,7 +127,13 @@ namespace SquashClash.Core.Rally
             }
             if(judge.Judge(e.Surface,e.Point)!=LineVerdict.Good)Close(PointEndCause.ServiceFault,Striker,e);
         }
-        public bool CanHit(PlayerId who)=>!Closed&&who==ToHit&&FrontWallReached&&(volleyAllowed?FloorBounces<=1:FloorBounces==1);
+        // v1: no volley of the serve (arcade adaptation, design 2026-11-18). v2: only serveVolley may volley the serve, once it is up on the
+        // front wall (the serve is then good: real squash lets the receiver volley the return of serve).
+        public bool CanHit(PlayerId who)=>!Closed&&who==ToHit&&FrontWallReached&&(volleyAllowed&&(!Serving||serveVolley==who)?FloorBounces<=1:FloorBounces==1);
+        public PlayerId? ServeVolley=>serveVolley;
+        // The bounce opportunity only (what the movement planner plans for, M1), whatever the volley setting.
+        public bool CanHitAfterBounce(PlayerId who)=>!Closed&&who==ToHit&&FrontWallReached&&FloorBounces==1;
+        public bool VolleyAllowed=>volleyAllowed;
         public bool RacketContact(PlayerId who)
         {
             if(!CanHit(who)){RejectedContacts++;return false;}
@@ -172,7 +180,7 @@ namespace SquashClash.Core.Rally
         }
         public PointRules Clone()
         {
-            var copy=new PointRules(court,radius,volleyAllowed);
+            var copy=new PointRules(court,radius,volleyAllowed,serveVolley);
             copy.Closed=Closed;copy.Winner=Winner;copy.Cause=Cause;copy.Striker=Striker;copy.ToHit=ToHit;copy.FloorBounces=FloorBounces;
             copy.FrontWallReached=FrontWallReached;copy.OutAfterBounce=OutAfterBounce;copy.Shots=Shots;copy.IgnoredAfterClose=IgnoredAfterClose;
             copy.RejectedContacts=RejectedContacts;copy.Serving=Serving;copy.ServeBox=ServeBox;copy.TerminalSurface=TerminalSurface;copy.TerminalPoint=TerminalPoint;return copy;

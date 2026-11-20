@@ -1,0 +1,95 @@
+{
+  "scenarios": [
+    {
+      "id": "VOL-PERFECT-EARLY14-VL1",
+      "launch": 6,
+      "kind": "swing",
+      "releaseOffsetMs": -14,
+      "pullMm": 18.5,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": false,
+      "deliberateExpectedResult": "",
+      "useDefaults": true
+    },
+    {
+      "id": "VOL-VALID-EARLY100-VL1",
+      "launch": 6,
+      "kind": "swing",
+      "releaseOffsetMs": -100,
+      "pullMm": 18.5,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": false,
+      "deliberateExpectedResult": "",
+      "useDefaults": true
+    },
+    {
+      "id": "VOL-AIR-EARLY220-VL1",
+      "launch": 6,
+      "kind": "swing",
+      "releaseOffsetMs": -220,
+      "pullMm": 18.5,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": false,
+      "deliberateExpectedResult": "",
+      "useDefaults": true
+    },
+    {
+      "id": "VOL-GAP-LATE97-VL1",
+      "launch": 6,
+      "kind": "swing",
+      "releaseOffsetMs": 97,
+      "pullMm": 18.5,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": false,
+      "deliberateExpectedResult": "",
+      "useDefaults": true
+    },
+    {
+      "id": "VOL-GAP-AIR260-VL1",
+      "launch": 6,
+      "kind": "swing",
+      "releaseOffsetMs": 260,
+      "pullMm": 18.5,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": false,
+      "deliberateExpectedResult": "",
+      "useDefaults": true
+    },
+    {
+      "id": "VOL-LETPASS-BOUNCE455-VL1",
+      "launch": 6,
+      "kind": "swing",
+      "releaseOffsetMs": 455,
+      "pullMm": 18.5,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": false,
+      "deliberateExpectedResult": "",
+      "useDefaults": true
+    },
+    {
+      "id": "VOL-CANARY-WRONG-EXPECTATION",
+      "launch": 6,
+      "kind": "swing",
+      "releaseOffsetMs": -14,
+      "pullMm": 18.5,
+      "aimX": 3.2,
+      "aimY": 2.2,
+      "durationMs": 300,
+      "canary": true,
+      "deliberateExpectedResult": "Failed",
+      "useDefaults": true
+    }
+  ]
+}

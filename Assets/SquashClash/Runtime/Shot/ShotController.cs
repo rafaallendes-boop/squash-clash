@@ -12,6 +12,13 @@ using SquashClash.Runtime.Feedback;
 using UnityEngine;
 namespace SquashClash.Runtime.Shot
 {
+    // Volley v2 (design 2026-11-20): the director's answer to a touch while the amber ring shows. Ok: the plan to present, the body path the
+    // causal reference reads, and Apply, which sends the body to the intercept once the controller has accepted the commit.
+    public readonly struct VolleyCommit
+    {
+        public readonly bool Ok;public readonly ContactPlan Plan;public readonly Func<long,BodyFrame> Body;public readonly Action Apply;public readonly string Reason;
+        public VolleyCommit(bool ok,ContactPlan plan,Func<long,BodyFrame> body,Action apply,string reason){Ok=ok;Plan=plan;Body=body;Apply=apply;Reason=reason;}
+    }
     // Receives immutable closures from GesturePreview; never subscribes to another input source.
     public sealed class ShotController : MonoBehaviour
     {
@@ -28,6 +35,33 @@ namespace SquashClash.Runtime.Shot
         public void SetNextStrikerFatigue(Func<long,bool,FatigueArm> provider)=>nextStrikerFatigue=provider;
         // Consumed only by the next launch, then copied into its immutable reference.
         public void SetNextReceptionBody(Func<long,BodyFrame> bodyAt)=>nextCausalBody=bodyAt;
+        // Volley v1 (design 2026-11-18): only Rally/Match and the VL1 practice recipe set it, for the next launch only. Given the
+        // visible prediction and the bounce plan it returns the volley opportunity. Everything else keeps the single bounce plan.
+        public void SetNextVolley(Func<Trajectory,ContactPlan,VolleyOpportunity> planner)=>nextVolley=planner;
+        private Func<Trajectory,ContactPlan,VolleyOpportunity> nextVolley,volleyPlanner;
+        // Volley v2 (design 2026-11-20): only Rally/Match set it, for the next launch only. With it the offered volley is chosen by a touch
+        // while the amber ring shows (GestureBegan); any other touch, and an order without a touch (autopilot), plays the bounce.
+        public void SetNextVolleyCommit(Func<Trajectory,double,VolleyCommit> commit)=>nextVolleyCommit=commit;
+        private Func<Trajectory,double,VolleyCommit> nextVolleyCommit,volleyCommitter;
+        public bool VolleyChoiceByTouch=>volleyCommitter!=null;
+        public bool VolleyCommitted {get;private set;}
+        // Null until the touch decides: "committed", or why the volley was given up (touch-outside-amber, commit-unreachable...).
+        public string VolleyChoice {get;private set;}
+        // The light tick when the amber ring becomes visible (v2 only), once per reception.
+        public int VolleyHapticCount {get;private set;}
+        private bool volleyHapticFired;
+        private Func<long,BodyFrame> receptionBody;
+        private bool volleySwitched;
+        public VolleyOpportunity Volley {get;private set;}
+        public PresentedPlans VolleyPresented {get;private set;}
+        public CausalReference VolleyCausalReference {get;private set;}
+        // The reference of the opportunity the accepted order used (the bounce one unless it was a volley).
+        public CausalReference UsedCausalReference {get;private set;}
+        public Opportunity LastOpportunity {get;private set;}
+        // The volley ring is shown first, until the split instant S; then the bounce ring.
+        public bool VolleyShown=>Volley.Exists&&!volleySwitched;
+        public ContactPlan ShownPlan=>VolleyShown?Volley.Plan:Plan;
+        public static readonly Color VolleyTint=new Color(1f,.72f,.16f);
         private readonly Queue<ClosedGesture> orders=new Queue<ClosedGesture>();
         private readonly HashSet<string> seen=new HashSet<string>();
         private ShotRecord pendingContact;
@@ -41,6 +75,19 @@ namespace SquashClash.Runtime.Shot
         private ShotFeedback feedback;
         public CausalReference CausalReference {get;private set;}
         public CausalShotResult LastCausal {get;private set;}
+        // Front deep drive (design 2026-11-20): DEV switch to compare with and without the human side-wall guard. Default on,
+        // not remembered between launches and not a DefaultPreset key.
+        public static bool FrontDeepDriveOn=true;
+        // Two-wall shot (design 2026-11-20-boast-predeclaration): the director opens the side-wall aim for Rally/Match play. Never while the
+        // human chooses the serve (ServeAim), and never in practice, SL or AutoQA, where no gate is set.
+        public Func<bool> SideAimGate {get;set;}
+        public bool SideAimOpen=>ServeAim==null&&SideAimGate!=null&&SideAimGate();
+        public BoastInfo LastBoast {get;private set;}
+        // Serve kinds (design 2026-11-20-serve): set by the director only in the pause before the human's own serve with «Saque nuevo» on. While
+        // set, a touch may begin, the volley choice is skipped and the closed gesture goes here instead of the stroke path (no shot record, no timing).
+        public Func<ClosedGesture,bool> ServeAim {get;set;}
+        // A released touch with a front-wall aim: a pulled swing, a tap or a touch released without pulling. Cancels choose nothing.
+        private static bool ServeOrder(in ClosedGesture o)=>o.HasRelease&&Finite(o.Aim.x)&&Finite(o.Aim.y)&&(o.Outcome==GestureOutcome.Swing||o.Outcome==GestureOutcome.Tap||o.Outcome==GestureOutcome.AbandonedNoPull);
         public ShotConfig Snapshot {get;private set;}
         public ContactPlan Plan {get;private set;}
         public PresentedPlans Presented {get;private set;}=new PresentedPlans();
@@ -68,7 +115,7 @@ namespace SquashClash.Runtime.Shot
             app.Host.Launched+=OnLaunched;app.Host.ShotApplied+=OnApplied;
             ring=gameObject.AddComponent<TimingRingView>();ring.CutoffActivated+=RecordAidCutoff;notes=gameObject.AddComponent<ShotNoteView>();notes.Initialize(app);
             feedback=gameObject.AddComponent<ShotFeedback>();feedback.Initialize();PresentationDelivered+=feedback.Present;
-            gameObject.AddComponent<SwingView>().Initialize(app,this);gameObject.AddComponent<PerfectFlashView>().Initialize(app,this);
+            gameObject.AddComponent<SwingView>().Initialize(app,this);gameObject.AddComponent<PerfectFlashView>().Initialize(app,this);gameObject.AddComponent<VolleyBurstView>().Initialize(app,this);
             OnLaunched(app.Host.ActiveConfig);
         }
         private void OnLaunched(EffectiveConfig cfg)
@@ -76,13 +123,16 @@ namespace SquashClash.Runtime.Shot
             strikerFatigue=nextStrikerFatigue;nextStrikerFatigue=null;
             receptionFatigue=nextReceptionFatigue;nextReceptionFatigue=0;recordsFatigue=nextRecordsFatigue;nextRecordsFatigue=false;
             CausalReference=null;LastCausal=default;causalBody=nextCausalBody;nextCausalBody=null;
+            volleyPlanner=nextVolley;nextVolley=null;volleyCommitter=nextVolleyCommit;nextVolleyCommit=null;VolleyCommitted=false;VolleyChoice=null;volleyHapticFired=false;receptionBody=causalBody;volleySwitched=false;Volley=default;VolleyPresented=null;VolleyCausalReference=null;UsedCausalReference=null;LastOpportunity=Opportunity.Bounce;
             Snapshot=new ShotConfig(cfg.Source);ring.BeginReception(Snapshot.Reception.GetInt("timing.aidLevel"));Haptics.Enabled=Snapshot.Reception.GetBool("feedback.haptics");seen.Clear();Presented=new PresentedPlans();AttemptConsumed=WaitingForContact=false;
             LastRecord=LastClosureRecord=pendingContact=null;gate.Reset(app.Host.LaunchId);LastPresentation=null;PresentationCount=0;LastDiscardReason=null;LastSolution=default;closedAt=null;recordVersion=0;
             double start=Stopwatch.GetTimestamp();
             var legal=new LegalSettings((float)cfg.Source.Get("legal.minHeight"),(float)cfg.Source.Get("legal.maxHeight"),cfg.Physics.StepHz,cfg.Physics.Gravity,cfg.Physics.BallRadius,cfg.Court);
             Plan=Available?ContactPlanner.Plan(app.Host.Prediction,Snapshot.Body,cfg.Court,legal,1):default;
+            if(Available&&volleyPlanner!=null){Volley=volleyPlanner(app.Host.Prediction,Plan);if(Volley.Exists)VolleyPresented=new PresentedPlans();}
             plannerCost=(Stopwatch.GetTimestamp()-start)*1000/Stopwatch.Frequency;
             CaptureClockContext();PresentCurrentPlan();
+            if(Available&&volleyPlanner!=null)RecordOpportunity();
             app.GetComponentInChildren<AimReticleView>(true)?.ShowFeasible(default,false);
             if(PracticeEnabled&&!Available)notes.ShowText(UnavailableReason);
         }
@@ -101,11 +151,87 @@ namespace SquashClash.Runtime.Shot
                 CausalReference=CausalQuality.Prepare(app.Host.Prediction,Plan,app.Host.ClockMap,Snapshot.Timing,presented,app.Host.ActiveConfig.Tempo,causalBody);
                 causalBody=null;
             }
-            ring.Show(Plan,target,mapped&&!AttemptConsumed,Snapshot.Timing);RecordLaunchTiming();
+            double volleyTarget=0;bool volleyMapped=false;
+            if(Volley.Exists)
+            {
+                volleyMapped=app.Host.ClockMap.TrySimToReal(Volley.Plan.TStarStep,0,out volleyTarget);
+                if(volleyMapped)
+                {
+                    VolleyPresented.Present(presented,Volley.Plan,volleyTarget);
+                    // Its own frozen zone, prepared before any attempt with the same body path (D36 within each opportunity).
+                    if(VolleyCausalReference==null)
+                        try{VolleyCausalReference=CausalQuality.Prepare(app.Host.Prediction,Volley.Plan,app.Host.ClockMap,Snapshot.Timing,presented,app.Host.ActiveConfig.Tempo,receptionBody);}
+                        catch(ArgumentException){DropVolley("causal-zone");}
+                        catch(InvalidOperationException){DropVolley("causal-zone");}
+                }
+            }
+            if(VolleyShown){ring.SetTint(VolleyTint);ring.Show(Volley.Plan,volleyTarget,volleyMapped&&!AttemptConsumed,Snapshot.Timing);}
+            else{ring.SetTint(Color.white);ring.Show(Plan,target,mapped&&!AttemptConsumed,Snapshot.Timing);}
+            RecordLaunchTiming();
+        }
+        private void DropVolley(string reason)
+        {if(AttemptConsumed)return;Volley=VolleyOpportunity.None(reason);VolleyPresented=null;VolleyCausalReference=null;}
+        // At the split instant S the volley ring gives way to the bounce ring (a new opportunity, not a replan).
+        private void TickVolleySwitch()
+        {
+            if(!VolleyShown||!Available||double.IsInfinity(Volley.SplitSteps))return;
+            var split=SimTime.FromSteps(Volley.SplitSteps);
+            if(!app.Host.ClockMap.TrySimToReal(split.Step,split.Fraction,out double at)||app.Host.ObservedRealTime<at)return;
+            volleySwitched=true;ring.BeginOpportunity();ring.SetTint(Color.white);
+            double target=0;bool mapped=Plan.Exists&&Plan.TStarStep>=0&&app.Host.ClockMap.TrySimToReal(Plan.TStarStep,0,out target);
+            ring.Show(Plan,target,mapped&&!AttemptConsumed,Snapshot.Timing);
+        }
+        // The amber ring's window in real time: from the moment it shows (its presentation at the launch) to the split S.
+        public bool TryVolleyWindow(out double from,out double until)
+        {
+            from=until=0;if(!Volley.Exists||!app.Host.ClockMap.TrySimToReal(Volley.Plan.TStarStep,0,out double target))return false;
+            from=app.Host.LaunchRealTime;
+            if(double.IsPositiveInfinity(Volley.SplitSteps)){until=double.PositiveInfinity;return true;}
+            var split=SimTime.FromSteps(Volley.SplitSteps);return app.Host.ClockMap.TrySimToReal(split.Step,split.Fraction,out until);
+        }
+        // Volley v2: the touch-down of a gesture (GesturePreview, after CanBegin). Inside the amber window it chooses the volley; any other
+        // touch gives the volley up for this reception. Without a v2 offer it does nothing.
+        public void GestureBegan(double eventTimeReal)
+        {
+            if(ServeAim!=null||volleyCommitter==null||!Volley.Exists||VolleyCommitted||AttemptConsumed||!Available)return;
+            // Judged in simulation steps, like OpportunityContract.Select: a real time recomputed from S can move in its last bit as the
+            // clock map grows, so the end of the window is S itself (plus a micro-step tolerance).
+            bool inside=TryVolleyWindow(out double from,out _)&&eventTimeReal>=from&&app.Host.ClockMap.TryRealToSim(eventTimeReal,out long touchStep,out double touchFraction)
+                &&touchStep+touchFraction<=Volley.SplitSteps+1e-6;
+            if(!inside){DeclineVolley("touch-outside-amber",eventTimeReal);return;}
+            var c=volleyCommitter(app.Host.Prediction,eventTimeReal);
+            if(!c.Ok||!c.Plan.Exists||c.Plan.TStarStep<0||!app.Host.ClockMap.TrySimToReal(c.Plan.TStarStep,0,out double target)){DeclineVolley(c.Reason??"commit-unreachable",eventTimeReal);return;}
+            CausalReference reference;
+            try{reference=CausalQuality.Prepare(app.Host.Prediction,c.Plan,app.Host.ClockMap,Snapshot.Timing,eventTimeReal,app.Host.ActiveConfig.Tempo,c.Body);}
+            catch(ArgumentException){DeclineVolley("causal-zone",eventTimeReal);return;}
+            catch(InvalidOperationException){DeclineVolley("causal-zone",eventTimeReal);return;}
+            // The chosen volley is now the only opportunity of this reception: no split, every release is judged against it.
+            Volley=new VolleyOpportunity(c.Plan,double.PositiveInfinity,"offered");VolleyCommitted=true;VolleyChoice="committed";
+            VolleyPresented=new PresentedPlans();VolleyPresented.Present(eventTimeReal,c.Plan,target);VolleyCausalReference=reference;
+            c.Apply?.Invoke();
+            ring.SetTint(VolleyTint);ring.Show(c.Plan,target,!AttemptConsumed,Snapshot.Timing);
+            RecordVolleyChoice(eventTimeReal);
+        }
+        private void DeclineVolley(string reason,double eventTimeReal)
+        {
+            if(AttemptConsumed)return;
+            VolleyChoice=reason;Volley=VolleyOpportunity.None(reason);VolleyPresented=null;VolleyCausalReference=null;
+            if(!volleySwitched)
+            {
+                volleySwitched=true;ring.BeginOpportunity();ring.SetTint(Color.white);
+                double target=0;bool mapped=Plan.Exists&&Plan.TStarStep>=0&&app.Host.ClockMap.TrySimToReal(Plan.TStarStep,0,out target);
+                ring.Show(Plan,target,mapped&&!AttemptConsumed,Snapshot.Timing);
+            }
+            RecordVolleyChoice(eventTimeReal);
+        }
+        private void TickVolleyHaptic()
+        {
+            if(volleyCommitter==null||volleyHapticFired||!VolleyShown||!Available||!TryVolleyWindow(out double from,out _)||app.Host.ObservedRealTime<from)return;
+            volleyHapticFired=true;VolleyHapticCount++;Haptics.Impact(HapticStyle.Discreet);
         }
         public bool CanBegin(double eventTime,out string reason)
         {
-            reason=null;if(!PracticeEnabled)return true;
+            reason=null;if(ServeAim!=null||!PracticeEnabled)return true;
             if(!Available){reason="unsupported-backend";return false;}
             if(AttemptConsumed){reason="attempt-consumed";return false;}
             if(double.IsNaN(eventTime)||double.IsInfinity(eventTime)||eventTime<app.Host.LaunchRealTime||closedAt.HasValue&&eventTime>closedAt.Value)
@@ -116,11 +242,12 @@ namespace SquashClash.Runtime.Shot
         public void ProcessPending()
         {
             if(app==null)return;
-            RefreshClockPresentation();
+            RefreshClockPresentation();TickVolleySwitch();TickVolleyHaptic();
             while(orders.Count>0)Process(orders.Dequeue());
         }
         private void Process(ClosedGesture order)
         {
+            if(ServeAim!=null){if(ServeOrder(order))ServeAim(order);return;}
             if(order.LaunchId!=app.Host.LaunchId){Discard(order,"wrong-launch");return;}
             if(!PracticeEnabled)return;
             if(!Available){Discard(order,"unsupported-backend");return;}
@@ -133,10 +260,18 @@ namespace SquashClash.Runtime.Shot
             if(!CanBegin(order.BeganAt,out var reason)){Discard(order,reason);return;}
             // Reserve before any callback or solver. Failed timing / no plan / system failure never reopens it.
             AttemptConsumed=true;var shot=Snapshot.WithGesture(order.Source);
-            SwingAccepted?.Invoke(new SwingIntent(order.LaunchId,order.AttemptId,Plan.Side));
+            // The opportunity whose segment holds the release (spec 7.1.3 case 14); always the bounce one without a volley.
+            // v2: an offered volley that no touch chose is never taken (autopilot orders have no touch).
+            var offered=volleyCommitter!=null&&!VolleyCommitted?VolleyOpportunity.None("not-chosen"):Volley;
+            LastOpportunity=OpportunityContract.Select(order.ReleaseAt,app.Host.ClockMap,shot.Timing,offered);
+            bool volley=LastOpportunity==Opportunity.Volley;var used=volley?Volley.Plan:Plan;UsedCausalReference=volley?VolleyCausalReference:CausalReference;
+            SwingAccepted?.Invoke(new SwingIntent(order.LaunchId,order.AttemptId,used.Side,volley,used.PStar.y));
             var authoritative=AuthoritativeTrajectory();
-            var decision=ContactContract.Decide(order.ReleaseAt,Presented,app.Host.ClockMap,authoritative,shot.Timing,false);
-            var record=BaseRecord(order);FillDecision(record,decision);record.Version=++recordVersion;LastRecord=record;Write("shot-order",record);
+            var decision=OpportunityContract.Decide(order.ReleaseAt,Presented,offered.Exists?VolleyPresented:null,offered,app.Host.ClockMap,authoritative,shot.Timing,false,out _);
+            var record=BaseRecord(order);
+            if(volley){record.KInSteps=used.KIn.Steps;record.KOutSteps=used.KOut.Steps;record.TStarStep=used.TStarStep;record.Side=used.Side.ToString();}
+            FillDecision(record,decision);record.Version=++recordVersion;LastRecord=record;Write("shot-order",record);
+            if(volleyPlanner!=null)RecordOpportunityOrder(order.AttemptId);
             ring.Show(Plan,record.TargetContactAtReal,false,Snapshot.Timing);
             if(decision.Result!=ShotResult.Perfect&&decision.Result!=ShotResult.Valid){Finish(record);return;}
             if(decision.ContactStep<=app.Host.Current.Step&&!app.Host.TryGetHistoricalState(decision.ContactStep,out _))
@@ -146,7 +281,7 @@ namespace SquashClash.Runtime.Shot
             var contact=authoritative.States[(int)offset];
             LastSolution=Solve(shot,order,contact,record,decision.ContactStep<=app.Host.Current.Step);FillSolution(record,LastSolution,contact);
             var reticle=app.GetComponentInChildren<AimReticleView>(true);reticle.gameObject.SetActive(true);
-            reticle.SetAim(order.Aim,AimState.Frozen,app.Host.ActiveConfig.Court);reticle.ShowFeasible(LastSolution.TargetUsed,LastSolution.Solved&&LastSolution.TargetLowered);
+            ShowShot(reticle,order,LastSolution);
             if(!LastSolution.Solved){Fault(record,ShotResult.SystemFault,LastSolution.Reason);return;}
             pendingContact=record;
             if(decision.ContactStep>app.Host.Current.Step)
@@ -154,7 +289,7 @@ namespace SquashClash.Runtime.Shot
                 WaitingForContact=true;
                 bool accepted=app.Host.ScheduleShot(order.LaunchId,decision.ContactStep,state=>
                 {
-                    LastSolution=Solve(shot,order,state,record,true);FillSolution(record,LastSolution,state);
+                    LastSolution=Solve(shot,order,state,record,true);FillSolution(record,LastSolution,state);ShowShot(reticle,order,LastSolution);
                     return LastSolution.Solved?LastSolution.Velocity:new Vector3(float.NaN,0,0);
                 },order.ReleaseAt);
                 if(!accepted)Fault(record,ShotResult.SystemFault,"schedule-rejected");
@@ -177,15 +312,55 @@ namespace SquashClash.Runtime.Shot
         {
             double start=Stopwatch.GetTimestamp();
             var cfg=app.Host.ActiveConfig;
-            var body=CausalReference.BodyAt(contact.Step);
+            var reference=UsedCausalReference??CausalReference;var body=reference.BodyAt(contact.Step);
             var arm=strikerFatigue!=null?strikerFatigue(contact.Step,authoritative):FatigueArm.None;
-            LastCausal=CausalQuality.Solve(CausalReference,body,contact.Position,order.Aim,order.P,cfg,new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold),arm);
-            var trace=CausalShotTrace.Create("Human",order.LaunchId,order.AttemptId,contact.Step,CausalReference,body,LastCausal);
+            var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
+            // A side-wall aim is the two-wall shot: the same causal vectors and arm, the boast solver, and no front deep drive guard.
+            var boast=default(BoastInfo);
+            LastCausal=order.Side.Exists?CausalQuality.SolveBoast(reference,body,contact.Position,order.Side,order.P,cfg,factory,arm,ShotIntentSolver.DefaultFootprintRadius,out boast)
+                :CausalQuality.Solve(reference,body,contact.Position,order.Aim,order.P,cfg,factory,arm);
+            if(order.Side.Exists)
+            {
+                LastBoast=boast;
+                var line=new BoastTrace{launchId=order.LaunchId,attemptId=order.AttemptId,contactStep=contact.Step,authoritative=authoritative,wall=order.Side.Wall.ToString(),aimZ=order.Side.Z,aimY=order.Side.Y,
+                    usedZ=boast.Used.Z,usedY=boast.Used.Y,frontX=boast.Front.x,frontY=boast.Front.y,requestedSpeed=boast.RequestedSpeed,speed=boast.Speed,evaluations=boast.Evaluations,reason=boast.Reason,solved=boast.Solved,
+                    fellBack=LastCausal.FellBack,fallbackX=LastCausal.FallbackAim.x,fallbackY=LastCausal.FallbackAim.y};
+                app.Metrics?.Write("shot-boast",cfg,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(line));
+            }
+            var trace=CausalShotTrace.Create("Human",order.LaunchId,order.AttemptId,contact.Step,reference,body,LastCausal);
             app.Metrics?.Write("shot-causal",cfg,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(trace));
             var solution=LastCausal.Solution;
+            // Front deep drive (design 2026-11-20): human-only side-wall guard after the causal layer and the intention. Off, or
+            // outside its zone, the causal solution is used bit for bit. One metrics line per solve inside the zone.
+            // A boast that fell back is a front-wall shot at its fallback aim, so it takes the whole front-wall path, the guard included.
+            var frontAim=order.Side.Exists?LastCausal.FallbackAim:order.Aim;
+            if((!order.Side.Exists||LastCausal.FellBack)&&FrontDeepDrive.Active(order.P,contact.Position,frontAim,cfg.Court))
+            {
+                var original=solution;var info=new FrontDeepInfo("switched-off",0,0);
+                if(FrontDeepDriveOn)solution=FrontDeepDrive.Apply(contact.Position,frontAim,order.P,original,cfg.Court,factory,cfg.Physics,ShotIntentSolver.DefaultFootprintRadius,out info);
+                var deep=new FrontDeepTrace{launchId=order.LaunchId,attemptId=order.AttemptId,contactStep=contact.Step,on=FrontDeepDriveOn,acted=info.Acted,reason=info.Reason,
+                    t=info.T,evaluations=info.Evaluations,originalX=original.TargetUsed.x,chosenX=solution.TargetUsed.x,y=solution.TargetUsed.y};
+                app.Metrics?.Write("front-deep",cfg,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(deep));
+            }
             record.PaceDistanceM=LastCausal.Pace.DistanceM;record.PaceGamma=LastCausal.Pace.Gamma;record.RequestedSpeedLinear=LastCausal.Pace.LinearSpeed;record.RequestedSpeed=LastCausal.Pace.Speed;
             record.SolverCostMs+=(Stopwatch.GetTimestamp()-start)*1000/Stopwatch.Frequency;return solution;
         }
+        // The frozen reticle marks the aim the ball really takes: lowered for feasibility, moved by the drive intention (G1 A2) or by the front deep drive guard.
+        // A boast marks where it will meet the front wall.
+        private static void ShowEffectiveAim(AimReticleView reticle,ShotSolution s)
+            =>reticle.ShowFeasible(s.TargetUsed,s.Solved&&(s.TargetLowered||s.Reason=="intent-drive"||s.Reason==FrontDeepDrive.ReasonActed||s.Reason==BoastSolver.ReasonExact||s.Reason==BoastSolver.ReasonNearest));
+        // The reticle shows the shot that goes out: the boast on its side wall with its front-wall point, a boast that fell back as a
+        // front-wall aim at its fallback point, every other order as before.
+        private void ShowShot(AimReticleView reticle,ClosedGesture order,ShotSolution s)
+        {
+            var court=app.Host.ActiveConfig.Court;
+            if(!order.Side.Exists)reticle.SetAim(order.Aim,AimState.Frozen,court);
+            else if(LastCausal.FellBack)reticle.SetAim(LastCausal.FallbackAim,AimState.Frozen,court);
+            else reticle.SetSideAim(order.Side,court);
+            ShowEffectiveAim(reticle,s);
+        }
+        [Serializable] private sealed class BoastTrace
+        {public long launchId,contactStep;public string attemptId,wall,reason;public bool authoritative,solved,fellBack;public float aimZ,aimY,usedZ,usedY,frontX,frontY,requestedSpeed,speed,fallbackX,fallbackY;public int evaluations;}
         private static void FillSolution(ShotRecord r,ShotSolution s,BallState contact)
         {
             r.Solved=s.Solved;r.ContactX=contact.Position.x;r.ContactY=contact.Position.y;r.ContactZ=contact.Position.z;r.SpeedRaised=s.SpeedRaised;r.TargetLowered=s.TargetLowered;
@@ -222,7 +397,7 @@ namespace SquashClash.Runtime.Shot
             if(!PracticeEnabled||!Available||closedAt.HasValue)return;
             closedAt=app.Host.ObservedRealTime;ring.Show(Plan,0,false,Snapshot.Timing);
             if(AttemptConsumed)return;
-            var record=new ShotRecord{LaunchId=app.Host.LaunchId,Version=++recordVersion,Result=(Plan.Exists?ShotResult.NoOrder:ShotResult.Unreachable).ToString(),Reason="reception-ended-without-order",
+            var record=new ShotRecord{LaunchId=app.Host.LaunchId,Version=++recordVersion,Result=(Plan.Exists||Volley.Exists?ShotResult.NoOrder:ShotResult.Unreachable).ToString(),Reason="reception-ended-without-order",
                 LaunchHash=Snapshot.Reception.Hash,Preset=app.ActivePresetName,FileHash=app.ActivePresetFileHash,Build=app.Build.Label,Seed=app.MetricsSeed,ProcessingAtReal=app.Host.ObservedRealTime,
                 PlanVersion=Plan.Version,KInSteps=Plan.KIn.Steps,KOutSteps=Plan.KOut.Steps,TStarStep=Plan.TStarStep,PlannerCostMs=plannerCost};
             LastRecord=record;Write("shot",record);notes.Show(record);ShotResolved?.Invoke(record);
@@ -255,7 +430,9 @@ namespace SquashClash.Runtime.Shot
             if(lastTempo!=app.Clock.Tempo||lastSlow!=app.Clock.DebugSlowMotion||lastPaused!=app.Clock.Paused||lastDrops!=app.Clock.DroppedSinceRestart)
             {
                 CaptureClockContext();var p=Plan;
-                Plan=new ContactPlan(p.Exists,p.KIn,p.KOut,p.TStarStep,p.PStar,p.Side,p.Version+1,p.Body,p.Legal,p.Court,p.Reason);PresentCurrentPlan();
+                Plan=new ContactPlan(p.Exists,p.KIn,p.KOut,p.TStarStep,p.PStar,p.Side,p.Version+1,p.Body,p.Legal,p.Court,p.Reason);
+                if(Volley.Exists)Volley=Volley.WithVersion(Volley.Plan.Version+1);
+                PresentCurrentPlan();
             }
         }
         private void LateUpdate()
@@ -281,6 +458,26 @@ namespace SquashClash.Runtime.Shot
         {
             if(!Presented.TryVisibleAt(eventTime,out var plan,out var target,out var presented))return ImpactCuePhase.Hidden.ToString();
             return ImpactCue.Evaluate(eventTime-Snapshot.Timing.LatencyCompMs/1000,presented,target,Snapshot.Timing,plan.Exists,false).Phase.ToString();
+        }
+        // Volley metrics (spec 7.3.5) in their own lines: ShotRecord keeps its schema.
+        [Serializable] private sealed class OpportunityLine
+        {public long launchId;public string attemptId,reason,opportunity,choice;public bool offered;public double kIn,kOut,splitSteps,bounceKIn,heightM,touchAt;public long tStar;public int planVersion,mode;}
+        private void RecordOpportunity()
+        {
+            var v=Volley;var line=new OpportunityLine{launchId=app.Host.LaunchId,offered=v.Exists,reason=v.Reason,kIn=v.Plan.KIn.Steps,kOut=v.Plan.KOut.Steps,tStar=v.Plan.TStarStep,
+                splitSteps=double.IsInfinity(v.SplitSteps)?-1:v.SplitSteps,bounceKIn=Plan.KIn.Steps,heightM=v.Plan.PStar.y,planVersion=v.Plan.Version,mode=volleyCommitter!=null?2:1};
+            app.Metrics?.Write("shot-opportunity",app.Host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(line));
+        }
+        private void RecordVolleyChoice(double touchAt)
+        {
+            var v=Volley;var line=new OpportunityLine{launchId=app.Host.LaunchId,offered=v.Exists,reason=v.Reason,choice=VolleyChoice,touchAt=touchAt,kIn=v.Plan.KIn.Steps,kOut=v.Plan.KOut.Steps,tStar=v.Plan.TStarStep,
+                splitSteps=-1,bounceKIn=Plan.KIn.Steps,heightM=v.Plan.PStar.y,planVersion=v.Plan.Version,mode=2};
+            app.Metrics?.Write("shot-opportunity-choice",app.Host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(line));
+        }
+        private void RecordOpportunityOrder(string attemptId)
+        {
+            var line=new OpportunityLine{launchId=app.Host.LaunchId,attemptId=attemptId,offered=Volley.Exists,reason=Volley.Reason,opportunity=LastOpportunity.ToString(),tStar=LastRecord.TStarStep,kIn=LastRecord.KInSteps,kOut=LastRecord.KOutSteps};
+            app.Metrics?.Write("shot-opportunity-order",app.Host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(line));
         }
         [Serializable] private sealed class AidCutoffLine
         {public long launchId;public int aidLevel,planVersion;public double target,observedAt;}

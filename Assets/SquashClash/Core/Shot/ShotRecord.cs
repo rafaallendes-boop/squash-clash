@@ -33,9 +33,11 @@ namespace SquashClash.Core.Shot
         public readonly Vector2 Aim;
         public readonly float P;
         public readonly ParamSet Source;
+        // Two-wall shot: the side-wall aim of an M2-4 touch (Aim then holds its surface coordinates z, y); default for a front-wall aim.
+        public readonly SideAim Side;
         public ClosedGesture(long launchId,string attemptId,int finger,double began,double release,bool hasRelease,GestureOutcome outcome,
-            Vector2 aim,float power,ParamSet source,string reason=null,double received=0,double projection=0,double locked=0,int o2=0,string predecessor=null,string preset=null,string fileHash=null,string build=null,string launchHash=null,int pending=0,int seed=0)
-        { LaunchId=launchId;AttemptId=attemptId;FingerId=finger;BeganAt=began;ReleaseAt=release;HasRelease=hasRelease;Outcome=outcome;Aim=aim;P=power;Source=source;
+            Vector2 aim,float power,ParamSet source,string reason=null,double received=0,double projection=0,double locked=0,int o2=0,string predecessor=null,string preset=null,string fileHash=null,string build=null,string launchHash=null,int pending=0,int seed=0,SideAim side=default)
+        { Side=side;LaunchId=launchId;AttemptId=attemptId;FingerId=finger;BeganAt=began;ReleaseAt=release;HasRelease=hasRelease;Outcome=outcome;Aim=aim;P=power;Source=source;
           Reason=reason;ReceivedAt=received;ProjectionObservedAt=projection;LockObservedAt=locked;O2Count=o2;PredecessorId=predecessor;
           PresetName=preset;FileHash=fileHash;BuildLabel=build;LaunchHash=launchHash;Pending=pending;Seed=seed; }
     }

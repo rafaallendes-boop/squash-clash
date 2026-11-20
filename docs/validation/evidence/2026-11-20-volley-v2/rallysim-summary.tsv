@@ -1,0 +1,20 @@
+#	non-serve	receptions	4778
+v0reason	non-serve	separation	2193	45.9
+v0reason	non-serve	no-pass	1892	39.6
+v0reason	non-serve	window	553	11.6
+v0reason	non-serve	offered	114	2.4
+v0reason	non-serve	fixed-frame	26	0.5
+separationGapMs	non-serve	n	2193	median	130	p10	121	p90	143	max	247
+noPassExcessM	non-serve	n	1892	noLegalHeight	72	median	0.88	le0.3	388	le0.6	670
+bounce	non-serve	n	4742	PV%	93.9	Kms median	475	lead median	500
+v0	non-serve	offered	114	rate%	2.4	PV%	52.6	Kms median	170	p10	92	lead median	500	bounceLead median(same)	500	leadOK%	100.0	bounceLeadAfterS median	252	p10	194	usedBounceInstead	0
+a0	non-serve	offered	2307	rate%	48.3	PV%	51.4	Kms median	138	p10	90	lead median	500	bounceLead median(same)	500	leadOK%	100.0	bounceLeadAfterS median	255	p10	231	usedBounceInstead	94
+a1	non-serve	offered	2579	rate%	54.0	PV%	48.9	Kms median	130	p10	76	lead median	500	bounceLead median(same)	500	leadOK%	100.0	bounceLeadAfterS median	257	p10	232	usedBounceInstead	114
+b	non-serve	offered	3224	rate%	67.5	PV%	84.7	Kms median	313	p10	271	lead median	500	bounceLead median(same)	500	leadOK%	100.0
+#	serve	receptions	338
+v0reason	serve	serve	338	100.0
+bounce	serve	n	338	PV%	98.2	Kms median	393	lead median	500
+v0	serve	offered 0
+a0	serve	offered	338	rate%	100.0	PV%	39.3	Kms median	111	p10	83	lead median	500	bounceLead median(same)	500	leadOK%	100.0	bounceLeadAfterS median	242	p10	242	usedBounceInstead	16
+a1	serve	offered	338	rate%	100.0	PV%	39.3	Kms median	111	p10	83	lead median	500	bounceLead median(same)	500	leadOK%	100.0	bounceLeadAfterS median	242	p10	242	usedBounceInstead	16
+b	serve	offered	338	rate%	100.0	PV%	79.6	Kms median	295	p10	295	lead median	500	bounceLead median(same)	500	leadOK%	100.0

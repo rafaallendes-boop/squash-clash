@@ -53,11 +53,25 @@ namespace SquashClash.Runtime.Tests
                 AssertFits("menu-layer",phone+(dev?" dev":" prod"));
             }
         }
+        // Menu redesign (19 nov): the credits screen, from the 16:9 SE to the Pro Max.
+        [UnityTest] public IEnumerator Credits_FitInsideTheSafeArea([ValueSource(nameof(Phones))] PhoneScreen screen)
+        {
+            yield return Boot(screen,true);app.DevTools=false;yield return Settle();
+            Click("menu-credits");yield return Settle();
+            AssertFits("credits-layer",phone+" credits");
+        }
+        // Personal records (20 nov): the "Tus récords" screen, and the menu with its third link, from the 16:9 SE to the Pro Max.
+        [UnityTest] public IEnumerator Records_FitInsideTheSafeArea([ValueSource(nameof(Phones))] PhoneScreen screen)
+        {
+            yield return Boot(screen,true);app.DevTools=false;yield return Settle();
+            Click("menu-records");yield return Settle();
+            AssertFits("records-layer",phone+" records");
+        }
         [UnityTest] public IEnumerator Tutorial_EveryStepFitsInsideTheSafeArea([ValueSource(nameof(Phones))] PhoneScreen screen)
         {
             yield return Boot(screen,true);
             Click("menu-howto");
-            for(int step=0;step<3;step++)
+            for(int step=0;step<SquashClash.Runtime.Menu.FirstRunFlow.TutorialSteps;step++)
             {
                 yield return Settle();
                 Assert.That(flow.TutorialStep,Is.EqualTo(step));

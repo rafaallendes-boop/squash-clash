@@ -81,6 +81,11 @@ namespace SquashClash.Capture
             Click("menu-level-hard");yield return Shoot("menu-level-hard");
             yield return Shutdown();
             yield return Boot(true);yield return Shoot("menu-dev");yield return Shutdown();
+            // 1a. The same phone with its real insets (Dynamic Island, home indicator), and the credits.
+            SquashClash.Runtime.App.SafeAreaLayout.Simulate(new Vector2(Width,Height),new Rect(0,102,Width,Height-186-102));
+            yield return Boot(false);yield return Shoot("menu-prod-insets");
+            Click("menu-credits");yield return Shoot("credits-insets");
+            yield return Shutdown();SquashClash.Runtime.App.SafeAreaLayout.StopSimulating();
 
             // 1b. The tutorial, as the first Jugar opens it.
             PlayerPrefs.DeleteKey("sc.firstRun.tutorialSeen");
@@ -88,13 +93,28 @@ namespace SquashClash.Capture
             Click("menu-play");yield return Shoot("tutorial-1-aim");
             Click("tutorial-next");yield return Shoot("tutorial-2-pull");
             Click("tutorial-next");yield return Shoot("tutorial-3-timing");
+            Click("tutorial-next");yield return Shoot("tutorial-4-volley");
             yield return Shutdown();
             PlayerPrefs.SetInt("sc.firstRun.tutorialSeen",1);
 
             // 2. Jugar: the match header a player sees.
             yield return Boot(false);
+            // Energy bars on, so the HUD shows everything a player can meet in a match.
+            app.Tuning.Set("fatigue.enabled",1);
             rally.Autopilot=true;rally.AutopilotTimingSigmaMs=30;rally.Seed=9;
             Click("menu-play");yield return Frames(40);yield return Shoot("match-prod");
+            // 2b. Shot feedback: the first stroke's note under the court, then the point banner over the front wall.
+            int guard=(int)(60/StepReal);
+            for(int i=0;i<guard&&!(controller.LastRecord!=null&&(controller.LastRecord.Result=="Perfect"||controller.LastRecord.Result=="Valid"));i++)Step(1);
+            yield return Frames(3);
+            // The controller is off in this fixture; it is what applies timing.showNotes every frame in the game.
+            controller.GetComponent<ShotNoteView>().SetVisible(app.Tuning.Applied.GetBool("timing.showNotes"));yield return null;
+            var note=root.Q<Label>("shot-note");
+            Debug.Log("[SquashClash] capture shot-note record="+(controller.LastRecord?.Result??"none")+" text='"+note?.text+"' display="+note?.resolvedStyle.display+" bounds="+note?.worldBound+" root="+root.worldBound);
+            yield return Shoot("match-shot-note");
+            for(int i=0;i<guard&&rally.Phase!=RallyPhase.PointOver;i++)Step(1);
+            for(int i=0;i<16;i++)yield return null;
+            yield return Shoot("match-banner");
             // 3. Pause card, then the end of the match.
             Click("rally-pause");yield return Shoot("pause-prod");
             Click("pause-continue");yield return null;
@@ -103,6 +123,14 @@ namespace SquashClash.Capture
             Assert.That(rally.Phase,Is.EqualTo(RallyPhase.MatchOver),"the demo match must finish");
             for(int i=0;i<24;i++)yield return null;
             yield return Shoot("match-over-prod");
+            yield return Shutdown();
+
+            // 4. Personal records: the "Tus récords" screen with some bests, (the card line is covered by ZRecordsFlowTests).
+            yield return Boot(false);
+            PlayerPrefs.SetInt("sc.records.longestRally",23);PlayerPrefs.SetInt("sc.records.bestStreak",5);PlayerPrefs.SetInt("sc.records.streak",2);
+            PlayerPrefs.SetInt("sc.records.wins.easy",3);PlayerPrefs.SetInt("sc.records.wins.medium",2);PlayerPrefs.SetInt("sc.records.bestMargin",6);PlayerPrefs.SetFloat("sc.records.fastestWin",252f);
+            yield return Shoot("menu-prod-records-link");
+            Click("menu-records");yield return Shoot("records");
             yield return Shutdown();
 
             if(!seen)PlayerPrefs.DeleteKey("sc.firstRun.tutorialSeen");

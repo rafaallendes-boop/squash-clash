@@ -53,6 +53,7 @@ namespace SquashClash.Runtime.Ball
         public void ApplyVisualScale(float scale) => transform.localScale = Vector3.one * (radius * 2 * scale);
         private void LateUpdate()
         {
+            if (SquashClash.Runtime.Visual.PointEndFreeze.Active) return; // point-end freeze: hold the drawn pose
             if (host != null && host.ActiveConfig != null) transform.position = host.RenderPosition;
             if (outline == null) return;
             if (view == null) view = UnityEngine.Camera.main;

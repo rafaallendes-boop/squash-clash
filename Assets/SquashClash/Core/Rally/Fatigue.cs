@@ -20,6 +20,19 @@ namespace SquashClash.Core.Rally
         };
         public double Factor(double energy)=>Enabled?Math.Max(0,Math.Min(1,(Onset-energy)/Onset)):0;
         public const double RedBelow=25;
+        // «Cansancio fuerte» (fatigue feel, section 2), DEV only: the rally's source with legsMax and reactionMaxMs multiplied for BOTH
+        // players, clamped to the catalog maximum. Never applied to DefaultPreset.json or to practice.
+        public const double StrongLegsFactor=3,StrongReactionFactor=2;
+        public static ParamSet Strong(ParamSet source,double legsFactor=StrongLegsFactor,double reactionFactor=StrongReactionFactor)
+        {
+            if(source==null)throw new ArgumentNullException(nameof(source));
+            ParamSet Scale(ParamSet p,string key,double factor)
+            {
+                ParamCatalog.TryGet(key,out var def);
+                return p.With(key,Math.Max(def.Min,Math.Min(def.Max,p.Get(key)*factor)));
+            }
+            return Scale(Scale(source,"fatigue.legsMax",legsFactor),"fatigue.reactionMaxMs",reactionFactor);
+        }
         // The striker's arm for one contact (spec 4): f_s from the striker's own energy at its contact step, before that stroke's cost.
         // One function for the human, the rival and RallySim. Off: no arm at all, so the shot stays bit for bit the old one.
         public FatigueArm Arm(double strikerEnergy)
@@ -44,6 +57,8 @@ namespace SquashClash.Core.Rally
     [Serializable] public sealed class FatiguePoint
     {
         public double Start,End,AfterRecovery,Meters,MovementCost,StrongCost,QuietRecovered,BetweenRecovered,Minimum;
+        // Extra energy charged for volley contacts in this point (RallyParams.VolleyEnergyCost each).
+        public double VolleyCost;
         public FatiguePoint Copy()=>(FatiguePoint)MemberwiseClone();
     }
     // Energy advances on simulation steps only. The small flight history also accounts for delayed contacts
@@ -81,6 +96,12 @@ namespace SquashClash.Core.Rally
             double cost=settings.StrongCost*(power-settings.StrongFrom)/(1-settings.StrongFrom);
             Point.StrongCost+=cost;Energy=Clamp(Energy-cost);Point.Minimum=Math.Min(Point.Minimum,Energy);Point.End=Point.AfterRecovery=Energy;
         }
+        // A volley contact: its extra cost, charged at the contact itself after the stroke's own cost. Zero costs nothing.
+        public void Volley(double cost)
+        {
+            if(!open||!settings.Enabled||cost<=0)return;
+            Point.VolleyCost+=cost;Energy=Clamp(Energy-cost);Point.Minimum=Math.Min(Point.Minimum,Energy);Point.End=Point.AfterRecovery=Energy;
+        }
         public void ClosePoint()
         {
             if(!open)return;open=false;
@@ -103,17 +124,21 @@ namespace SquashClash.Core.Rally
             if(offset<0||offset>=energies.Count)throw new ArgumentOutOfRangeException(nameof(step));
             return energies[offset];
         }
-        public void StrikeAt(long step,double power)
+        public void StrikeAt(long step,double power)=>StrikeAt(step,power,0);
+        // The same delayed contact, plus the volley cost at that step when the contact was a volley.
+        public void StrikeAt(long step,double power,double volleyCost)
         {
-            if(!open||!settings.Enabled||struck||power<=settings.StrongFrom||settings.StrongCost==0)return;
+            // Without a volley cost the condition is the old one: a soft stroke replays nothing.
+            bool strong=power>settings.StrongFrom&&settings.StrongCost!=0;
+            if(!open||!settings.Enabled||struck||!strong&&volleyCost<=0)return;
             int offset=checked((int)(step-firstStep));
             if(offset<0||offset>samples.Count)throw new ArgumentOutOfRangeException(nameof(step));
             struck=true;Energy=flightEnergy;Point=flightPoint.Copy();
-            if(offset==0)Strike(power);energies[0]=Energy;
+            if(offset==0){Strike(power);Volley(volleyCost);}energies[0]=Energy;
             for(int i=0;i<samples.Count;i++)
             {
                 var s=samples[i];Step(s.Meters,s.Phase,s.Speed,s.Reacting);
-                if(i+1==offset)Strike(power);energies[i+1]=Energy;
+                if(i+1==offset){Strike(power);Volley(volleyCost);}energies[i+1]=Energy;
             }
         }
         private static double Clamp(double energy)=>Math.Max(0,Math.Min(100,energy));

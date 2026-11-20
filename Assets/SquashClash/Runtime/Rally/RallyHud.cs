@@ -1,5 +1,6 @@
 using SquashClash.Core.Rally;
 using SquashClash.Runtime.App;
+using SquashClash.Runtime.Menu;
 using UnityEngine;
 using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Rally
@@ -11,9 +12,25 @@ namespace SquashClash.Runtime.Rally
     // while the game is paused, and none of it changes the pause between points (that is Core's).
     public sealed class RallyHud : MonoBehaviour
     {
+        // Result card extras (view only). DEV switch, default on; off is the card as it was. Not remembered.
+        public static bool ExtendedCardOn=true;
+        // Real play time of the current match (unscaled, not counted while paused or after match point) and its longest rally in strokes,
+        // both read from what the HUD already sees; nothing is added to Core.
+        public float MatchSeconds {get;private set;}
+        public int LongestRally {get;private set;}
+        private int countedPoints;
+        // Personal records: set by the start menu when it begins a match, cleared when no match is active. A match that
+        // ever ran on autopilot never counts. Nothing here reaches Core: it only reads what the HUD already sees.
+        public bool MenuMatch {get;set;}
+        private bool autopilotSeen;
+        public static string DurationText(float seconds){int s=Mathf.Max(0,(int)seconds);return (s/60)+":"+(s%60).ToString("D2");}
+        public static string RematchText(bool humanWon,int human,int rival)=>humanWon?"Revancha":"Revancha "+human+"–"+rival;
+        public static string StrokesText(int strokes)=>strokes==1?"1 golpe":strokes+" golpes";
         private AppBootstrap app;
         private RallyDirector rally;
-        private Label status,humanPoints,rivalPoints,resultTitle,resultScore,resultKicker,bootTitle,fps;
+        private Label rivalName;private string rivalNameShown;
+        private Label status,humanPoints,rivalPoints,resultTitle,resultScore,resultKicker,bootTitle,fps,resultDuration,resultLongest,resultRecord;
+        private Button resultRematch;
         public const string DevTitle="Squash Clash — First Ball",PlayerTitle="Squash Clash";
         private VisualElement score,humanServe,rivalServe,result;
         private Button toggle,match,pause,next,rematch,demo,leave;
@@ -27,7 +44,7 @@ namespace SquashClash.Runtime.Rally
         private PlayerId toHit;
         public const float PulseSeconds=.45f,BannerInSeconds=.18f,ServePulseSeconds=.6f,ResultInSeconds=.28f;
         private static readonly Color Gold=new Color(1f,.82f,.25f);
-        private VisualElement banner,bannerCard,resultCard;private Label bannerTitle,bannerCause,bannerNext,resultLast;
+        private VisualElement banner,bannerCard,resultCard;private Label bannerTitle,bannerCause,bannerNext,resultLast,serveHint;
         private float bannerAge=-1,pulseHuman,pulseRival,servePulse,resultAge=-1;private int bannerPoint=-1,bannerTone=-1,resultTone=-1;
         // Read-outs for the tests: how far the banner has faded in, and how much of a score pulse is left.
         public float BannerOpacity=>bannerAge<0?0:Mathf.Clamp01(bannerAge/BannerInSeconds);
@@ -60,7 +77,9 @@ namespace SquashClash.Runtime.Rally
             score.Add(Chip("sc-chip--human"));score.Add(NameColumn("TÚ","human",humanBar));humanServe=Chip("sc-serve");score.Add(humanServe);
             humanPoints=Text("0","sc-score-points");humanPoints.name="rally-score-human";score.Add(humanPoints);score.Add(Text("–","sc-score-dash"));
             rivalPoints=Text("0","sc-score-points");rivalPoints.name="rally-score-rival";score.Add(rivalPoints);
-            rivalServe=Chip("sc-serve");score.Add(rivalServe);score.Add(NameColumn("RIVAL","rival",rivalBar));score.Add(Chip("sc-chip--rival"));
+            rivalServe=Chip("sc-serve");score.Add(rivalServe);var rivalColumn=NameColumn("RIVAL","rival",rivalBar);score.Add(rivalColumn);
+            // The match's rival style under its energy line (design 2026-11-19), small enough for the fixed 60 px column.
+            rivalName=Text("","sc-score-name");rivalName.name="rally-rival-style";rivalName.style.fontSize=9;rivalName.style.unityTextAlign=TextAnchor.MiddleCenter;rivalName.style.marginLeft=0;rivalName.style.display=DisplayStyle.None;rivalColumn.Add(rivalName);score.Add(Chip("sc-chip--rival"));
             status=new Label{name="rally-status",pickingMode=PickingMode.Ignore};
             status.AddToClassList("sc-status");status.style.whiteSpace=WhiteSpace.NoWrap;status.style.height=22;status.style.display=DisplayStyle.None;
             // One line always: a text longer than the screen is cut with an ellipsis, never wrapped or spilled.
@@ -76,15 +95,18 @@ namespace SquashClash.Runtime.Rally
             toggle.AddToClassList("sc-button--primary");match.AddToClassList("sc-button--primary");
             // Match result: a card over the court, shown only when the match is over.
             result=new VisualElement{name="match-result",pickingMode=PickingMode.Ignore};result.AddToClassList("sc-result-layer");result.style.display=DisplayStyle.None;top.Add(result);
-            var card=new VisualElement{name="match-result-card"};card.AddToClassList("sc-result-card");result.Add(card);resultCard=card;
+            var card=new VisualElement{name="match-result-card"};card.AddToClassList("sc-result-card");card.AddToClassList("sc-wall");result.Add(card);resultCard=card;
             app.GetComponent<SafeAreaLayout>()?.Fit(result,float.NaN,0);
             resultKicker=Text("FIN DEL PARTIDO","sc-result-kicker");resultKicker.name="match-result-kicker";card.Add(resultKicker);
             resultTitle=Text("","sc-result-title");resultTitle.name="match-result-title";card.Add(resultTitle);
             resultScore=Text("","sc-result-score");resultScore.name="match-result-score";card.Add(resultScore);
             resultLast=Text("","sc-result-last");resultLast.name="match-result-last";card.Add(resultLast);
+            resultDuration=Text("","sc-result-last");resultDuration.name="match-result-duration";card.Add(resultDuration);
+            resultLongest=Text("","sc-result-last");resultLongest.name="match-result-longest";card.Add(resultLongest);
+            resultRecord=Text("","sc-result-record");resultRecord.name="match-result-record";card.Add(resultRecord);
             card.Add(Text("PAR a 7 · diferencia de 2","sc-result-note"));
             var actions=new VisualElement{pickingMode=PickingMode.Ignore};actions.AddToClassList("sc-result-buttons");card.Add(actions);
-            Add(actions,"match-result-rematch","Revancha",()=>{rally.Rematch();Refresh();}).AddToClassList("sc-button--primary");
+            resultRematch=Add(actions,"match-result-rematch","Revancha",()=>{rally.Rematch();Refresh();});resultRematch.AddToClassList("sc-button--primary");
             Add(actions,"match-result-menu","Volver al inicio",()=>{MenuRequested?.Invoke();Refresh();});
             leave=Add(actions,"match-result-leave","Práctica",()=>{rally.StopMode();Refresh();});
             // Point banner: over the front wall, only during the pause between points (the ball is dead then).
@@ -93,6 +115,8 @@ namespace SquashClash.Runtime.Rally
             bannerTitle=Text("","sc-banner-title");bannerTitle.name="rally-banner-title";bannerCard.Add(bannerTitle);
             bannerCause=Text("","sc-banner-cause");bannerCause.name="rally-banner-cause";bannerCard.Add(bannerCause);
             bannerNext=Text("","sc-banner-next");bannerNext.name="rally-banner-next";bannerCard.Add(bannerNext);
+            // Serve kinds (design 2026-11-20-serve): how the human chooses its own serve, only in the pause before it with «Saque nuevo» on.
+            serveHint=Text(RallyText.ServeHint,"sc-banner-next");serveHint.name="rally-banner-serve-hint";serveHint.style.display=DisplayStyle.None;bannerCard.Add(serveHint);
             // The header grows and shrinks with its buttons ("Seguir" appears with the banner): follow it.
             header=parent;parent.RegisterCallback<GeometryChangedEvent>(_=>PlaceBanner());
             Refresh();
@@ -191,6 +215,7 @@ namespace SquashClash.Runtime.Rally
                 bannerAge=Mathf.Min(BannerInSeconds,bannerAge+dt);float k=Ease(bannerAge/BannerInSeconds);
                 bannerCard.style.opacity=k;bannerCard.style.translate=new Translate(0,(1-k)*-12);
             }
+            if(rally.Active&&rally.Match!=null&&rally.Phase!=RallyPhase.MatchOver)MatchSeconds+=dt;
             if(energyOn){Ease(humanBar,dt);Ease(rivalBar,dt);}
             if(pulseHuman>0){pulseHuman=Mathf.Max(0,pulseHuman-dt);Pulse(humanPoints,pulseHuman);}
             if(pulseRival>0){pulseRival=Mathf.Max(0,pulseRival-dt);Pulse(rivalPoints,pulseRival);}
@@ -204,6 +229,13 @@ namespace SquashClash.Runtime.Rally
                 resultAge=Mathf.Min(ResultInSeconds,resultAge+dt);float k=Ease(resultAge/ResultInSeconds),scale=.88f+.12f*k;
                 resultCard.style.opacity=k;resultCard.style.scale=new Scale(new Vector3(scale,scale,1));
             }
+        }
+        // The longest rally is the largest PointResult.Shots seen as each point ends; a new match (rematch or leaving) starts both over.
+        private void TrackMatch(bool active)
+        {
+            if(!active||rally.Match==null||rally.PointsPlayed<countedPoints){MatchSeconds=0;LongestRally=0;countedPoints=0;autopilotSeen=false;if(!active||rally.Match==null){if(!active)MenuMatch=false;return;}}
+            if(rally.Autopilot)autopilotSeen=true;
+            if(rally.PointsPlayed!=countedPoints){countedPoints=rally.PointsPlayed;if(rally.LastPoint.HasValue)LongestRally=Mathf.Max(LongestRally,rally.LastPoint.Value.Shots);}
         }
         // Called every frame: it touches the UI only when what it shows changed, so an idle HUD costs nothing.
         public void Refresh()
@@ -230,6 +262,7 @@ namespace SquashClash.Runtime.Rally
                 next.style.display=active&&rally.Phase==RallyPhase.PointOver?DisplayStyle.Flex:DisplayStyle.None;
                 pause.text=paused?"Reanudar":"Pausa";demo.text=auto?"Demo: sí":"Demo: no";
             }
+            TrackMatch(active);
             // Score, server dot and result card: touched only when their value changes.
             int over=active&&rally.Phase==RallyPhase.MatchOver&&rally.Match!=null&&rally.Match.Winner.HasValue?(rally.Match.Winner.Value==PlayerId.Human?1:2):0;
             if(over!=resultShown)
@@ -246,6 +279,12 @@ namespace SquashClash.Runtime.Rally
                     resultCard.EnableInClassList("sc-result-card--won",over==1);resultCard.EnableInClassList("sc-result-card--lost",over==2);
                     bool hasLast=rally.LastPoint.HasValue;resultLast.style.display=hasLast?DisplayStyle.Flex:DisplayStyle.None;
                     if(hasLast)resultLast.text="Último punto: "+CauseLine(rally.LastPoint.Value);
+                    bool extended=ExtendedCardOn;
+                    resultDuration.style.display=resultLongest.style.display=extended?DisplayStyle.Flex:DisplayStyle.None;
+                    resultDuration.text="Duración: "+DurationText(MatchSeconds);resultLongest.text="Rally más largo: "+StrokesText(LongestRally);
+                    resultRematch.text=extended?RematchText(over==1,rally.Match.Human,rally.Match.Rival):"Revancha";
+                    var broken=MenuMatch&&!autopilotSeen&&!rally.Autopilot?PersonalRecords.Apply(new MatchSummary(over==1,rally.Level,rally.Match.Human,rally.Match.Rival,LongestRally,MatchSeconds)):null;
+                    string recordLine=PersonalRecords.CardLine(broken);resultRecord.text=recordLine;resultRecord.style.display=recordLine.Length>0?DisplayStyle.Flex:DisplayStyle.None;
                     resultAge=0;resultCard.style.opacity=0;
                 }
             }
@@ -262,6 +301,7 @@ namespace SquashClash.Runtime.Rally
                     bannerCause.text=CauseLine(ended)+" · "+ended.Shots+(ended.Shots==1?" golpe":" golpes");
                     bool serves=rally.Match!=null&&!rally.Match.Finished;bannerNext.style.display=serves?DisplayStyle.Flex:DisplayStyle.None;
                     if(serves)bannerNext.text="Saca "+RallyText.Player(rally.Match.Server)+" ("+RallyText.Box(rally.Match.Box)+")";
+                    serveHint.style.display=serves&&rally.Match.Server==PlayerId.Human&&rally.NewServeNextPoint?DisplayStyle.Flex:DisplayStyle.None;
                     if(tone!=bannerTone){bannerTone=tone;Tone(bannerCard,"sc-banner",tone);}
                     PlaceBanner();
                     bannerAge=0;bannerCard.style.opacity=0;bannerCard.style.translate=new Translate(0,-12);banner.style.display=DisplayStyle.Flex;
@@ -277,6 +317,9 @@ namespace SquashClash.Runtime.Rally
             // A point just won makes its digit pulse; a reset to zero (rematch) does not.
             if(scoreHuman!=rally.HumanPoints){if(scoreHuman>=0&&rally.HumanPoints>scoreHuman)pulseHuman=PulseSeconds;scoreHuman=rally.HumanPoints;humanPoints.text=scoreHuman.ToString();}
             if(scoreRival!=rally.RivalPoints){if(scoreRival>=0&&rally.RivalPoints>scoreRival)pulseRival=PulseSeconds;scoreRival=rally.RivalPoints;rivalPoints.text=scoreRival.ToString();}
+            // The rival's style in a match (design 2026-11-19), under «RIVAL» on the scoreboard.
+            string name=rally.Match!=null?RivalStyle.Name(rally.Style):"";
+            if(name!=rivalNameShown){rivalNameShown=name;rivalName.text=name;rivalName.style.display=name.Length>0?DisplayStyle.Flex:DisplayStyle.None;}
             int serve=rally.Match==null?0:rally.Match.Server==PlayerId.Human?1:2;
             if(serve!=serveShown)
             {
@@ -292,7 +335,7 @@ namespace SquashClash.Runtime.Rally
             var last=rally.LastPoint;var game=rally.Match;
             shown=phase==RallyPhase.MatchOver&&game!=null&&game.Winner.HasValue?RallyText.MatchOver(game.Winner.Value,game.Human,game.Rival)
                 :phase==RallyPhase.PointOver&&last.HasValue?RallyText.Point(last.Value.Winner,last.Value.Cause,last.Value.Reception,last.Value.Shots,human,rival)
-                :game!=null?RallyText.LiveMatch(human,rival,shots,toHit,game.Server,game.Box)
+                :game!=null?(played==0?RallyText.RivalIntro(rally.Style)+" · ":"")+RallyText.LiveMatch(human,rival,shots,toHit,game.Server,game.Box)
                 :RallyText.Live(human,rival,shots,toHit);
             status.text=shown;
         }

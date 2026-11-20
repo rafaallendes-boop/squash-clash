@@ -28,8 +28,8 @@ namespace SquashClash.Runtime.Tests
         {
             Assert.That(Events("app-session").Count(r=>r.action=="start"),Is.EqualTo(1));
             Click("menu-level-hard");Handedness.Left=true;rally.Autopilot=true;rally.AutopilotTimingSigmaMs=30;rally.Seed=9;
-            Click("menu-play");Click("tutorial-next");Click("tutorial-next");Click("tutorial-next");Refresh();yield return null;
-            var steps=Events("tutorial-step");Assert.That(steps.Select(r=>r.step),Is.EqualTo(new[]{1,2,3}));Assert.That(steps.All(r=>r.completed&&!r.skipped&&r.durationSeconds>=0),Is.True);
+            Click("menu-play");Click("tutorial-next");Click("tutorial-next");Click("tutorial-next");Click("tutorial-next");Refresh();yield return null;
+            var steps=Events("tutorial-step");Assert.That(steps.Select(r=>r.step),Is.EqualTo(new[]{1,2,3,4}));Assert.That(steps.All(r=>r.completed&&!r.skipped&&r.durationSeconds>=0),Is.True);
             var start=Last("match-start");Assert.That(start.difficulty,Is.EqualTo("Hard"));Assert.That(start.hand,Is.EqualTo("left"));
             Handedness.Left=false;
             Assert.That(Drive(()=>rally.Phase==RallyPhase.MatchOver,1500),Is.True);Refresh();
@@ -44,7 +44,7 @@ namespace SquashClash.Runtime.Tests
         [UnityTest] public IEnumerator TutorialSkipAndMenuExit_RecordSkippedStepsAndAbandonment()
         {
             Click("menu-play");Click("tutorial-next");Click("tutorial-skip");Refresh();yield return null;
-            var steps=Events("tutorial-step");Assert.That(steps,Has.Length.EqualTo(3));Assert.That(steps[0].completed,Is.True);Assert.That(steps.Skip(1).All(r=>r.skipped&&!r.completed),Is.True);
+            var steps=Events("tutorial-step");Assert.That(steps,Has.Length.EqualTo(4));Assert.That(steps[0].completed,Is.True);Assert.That(steps.Skip(1).All(r=>r.skipped&&!r.completed),Is.True);
             Click("rally-pause");Refresh();Assert.That(Last("pause").reason,Is.EqualTo("player"));
             Click("pause-menu");Refresh();var end=Last("match-end");Assert.That(end.abandoned,Is.True);Assert.That(end.result,Is.EqualTo("abandoned"));
             Assert.That(Events("match-end"),Has.Length.EqualTo(1));

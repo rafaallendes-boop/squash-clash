@@ -124,6 +124,9 @@ namespace SquashClash.Runtime.Tests
             {
                 if(run==1){yield return Shutdown();yield return Boot(true);}
                 Handedness.Left=run==1;
+                // The rival these points were written against (19 nov): a random style can draw the Definidor, whose rallies
+                // against the autopilot outlast this budget. Handedness is what is tested, not the rival.
+                rally.StyleOverride=SquashClash.Core.Rally.RivalStyleId.Fondista;
                 yield return StartMatch();
                 Assert.That(Drive(()=>rally.PointsPlayed>=3,400),Is.True);
                 steps[run]=app.Host.Current.Step;balls[run]=app.Host.Current.Position;human[run]=rally.HumanPoints;rival[run]=rally.RivalPoints;

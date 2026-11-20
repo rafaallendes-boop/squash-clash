@@ -15,7 +15,9 @@ namespace SquashClash.Core.Shot
     public readonly struct LegalSettings
     {
         public readonly float MinHeight,MaxHeight,Gravity,Radius;public readonly int StepHz;public readonly CourtDimensions Court;
-        public LegalSettings(float min,float max,int hz=120,float gravity=9.81f,float radius=.02f,CourtDimensions court=null){MinHeight=min;MaxHeight=max;StepHz=hz;Gravity=gravity;Radius=radius;Court=court??CourtDimensions.Standard();}
+        // Floor bounces the ball must have made since the opponent's stroke: 1 after the bounce (default), 0 for a volley.
+        public readonly int Bounces;
+        public LegalSettings(float min,float max,int hz=120,float gravity=9.81f,float radius=.02f,CourtDimensions court=null,int bounces=1){MinHeight=min;MaxHeight=max;StepHz=hz;Gravity=gravity;Radius=radius;Court=court??CourtDimensions.Standard();Bounces=bounces;}
     }
     public readonly struct ContactPlan
     {
@@ -54,6 +56,12 @@ namespace SquashClash.Core.Shot
         public static bool IsLegalAt(Trajectory t,SimTime when,BodyFrame body,LegalSettings legal)
             =>t!=null&&t.States.Count>0&&new Query(t,body,legal,legal.Court??CourtDimensions.Standard()).IsLegal(when);
         public static bool IsLegalStep(Trajectory t,long step,BodyFrame body,LegalSettings legal)=>IsLegalAt(t,new SimTime(step),body,legal);
+        // Per state of the trajectory: front wall reached, the required bounces, no line or out, and a legal height. Reach is not judged.
+        public static bool[] PhaseLegal(Trajectory t,BodyFrame body,LegalSettings legal)
+        {
+            if(t==null||t.States.Count==0)return new bool[0];
+            return new Query(t,body,legal,legal.Court??CourtDimensions.Standard()).PhaseLegal();
+        }
         private readonly struct Curve
         {
             public readonly double X,Y,Z,VX,VY,VZ,G;
@@ -86,6 +94,12 @@ namespace SquashClash.Core.Shot
                     if(events[i]!=null)foreach(var e in events[i])Update(e,ref f,ref bounce,ref bad);
                 }
             }
+            public bool[] PhaseLegal()
+            {
+                var result=new bool[t.States.Count];
+                for(int i=0;i<result.Length;i++){float y=t.States[i].Position.y;result[i]=front[i]&&bounces[i]==legal.Bounces&&!invalid[i]&&y>=legal.MinHeight&&y<=legal.MaxHeight;}
+                return result;
+            }
             private double Offset(ContactEvent e)=>Math.Min(1,Math.Max(0,(double)e.TimeInStep*legal.StepHz));
             private void Update(ContactEvent e,ref bool f,ref int bounce,ref bool bad)
             {
@@ -112,7 +126,7 @@ namespace SquashClash.Core.Shot
                     double offset=Offset(e);if(offset>when.Fraction)break;Update(e,ref f,ref bounce,ref bad);part++;
                     if(offset==when.Fraction)exact=e;
                 }
-                if(!f||bounce!=1||bad)return false;
+                if(!f||bounce!=legal.Bounces||bad)return false;
                 if(exact.HasValue){var e=exact.Value;var p=e.Point+e.Normal*legal.Radius;return Within(p.x,p.y,p.z);}
                 if(when.Fraction==0){var p=t.States[i].Position;return Within(p.x,p.y,p.z);}
                 if(i+1>=t.States.Count)return false;
@@ -137,7 +151,7 @@ namespace SquashClash.Core.Shot
                     for(int part=0;part<=count;part++)
                     {
                         double end=part<count?Offset(list[part]):1;
-                        if(f&&bounce==1&&!bad&&end>start)AddIntervals(Segment(i,part,start),t.States[i].Step+start,(end-start)/legal.StepHz,ranges);
+                        if(f&&bounce==legal.Bounces&&!bad&&end>start)AddIntervals(Segment(i,part,start),t.States[i].Step+start,(end-start)/legal.StepHz,ranges);
                         if(part<count){Update(list[part],ref f,ref bounce,ref bad);start=end;}
                     }
                 }

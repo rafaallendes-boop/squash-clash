@@ -72,7 +72,11 @@ namespace SquashClash.Core.Shot
         public readonly CausalVector[] Vectors;public readonly CausalInput Input;public readonly ShotSolution Solution;
         // What the shared pace curve requested before the causal layer (design 2026-11-14).
         public readonly ShotPaceResult Pace;
-        public CausalShotResult(CausalVector[] vectors,CausalInput input,ShotSolution solution,ShotPaceResult pace=default){Vectors=vectors;Input=input;Solution=solution;Pace=pace;}
+        // Two-wall shot: the boast attempt (default for a front-wall aim) and the front-wall aim used when it had no valid boast.
+        public readonly BoastInfo Boast;public readonly Vector2 FallbackAim;
+        public readonly bool FellBack;
+        public CausalShotResult(CausalVector[] vectors,CausalInput input,ShotSolution solution,ShotPaceResult pace=default,BoastInfo boast=default,Vector2 fallbackAim=default,bool fellBack=false)
+        {Vectors=vectors;Input=input;Solution=solution;Pace=pace;Boast=boast;FallbackAim=fallbackAim;FellBack=fellBack;}
     }
     public readonly struct CausalInput
     {
@@ -86,17 +90,36 @@ namespace SquashClash.Core.Shot
     {
         public static CausalShotResult Solve(CausalReference reference,BodyFrame body,Vector3 contact,Vector2 aim,float power,EffectiveConfig config,IBallSimulationFactory factory)
             =>Solve(reference,body,contact,aim,power,config,factory,FatigueArm.None);
-        public static CausalShotResult Solve(CausalReference reference,BodyFrame body,Vector3 contact,Vector2 aim,float power,EffectiveConfig config,IBallSimulationFactory factory,in FatigueArm arm)
+        public static CausalShotResult Solve(CausalReference reference,BodyFrame body,Vector3 contact,Vector2 aim,float power,EffectiveConfig config,IBallSimulationFactory factory,in FatigueArm arm,float footprintRadius=ShotIntentSolver.DefaultFootprintRadius)
         {
             var settings=CausalSettings.From(config.Source);var vectors=ApplyFatigue(Evaluate(reference,body,contact,settings),arm);
-            // Order: pace curve (from the aim requested before this layer) -> causal composition -> legal-front bound -> solver.
+            // Order: pace curve (from the aim requested before this layer) -> causal composition -> legal-front bound -> intention (G1 A2) -> solver.
             var pace=ShotPace.Requested(power,contact,aim,config.Physics.BallRadius,config.Source);float requested=pace.Speed;
             var input=BoundToLegalFront(Apply(aim,requested,vectors,settings),aim,config.Court,config.Physics.BallRadius);
-            // The existing solver retains its feasibility raising/lowering, cap and verifier unchanged.
-            // Equal endpoints convey the already composed total speed without clamping it back to vMin.
-            var solution=ShotSolver.Solve(new ShotRequest(contact,input.Aim,power),input.Speed,input.Speed,(float)config.Source.Get("shot.vCap"),
-                config.Physics.Gravity,config.Physics.BallRadius,config.Court,factory,config.Physics);
+            // The existing solver retains its feasibility raising/lowering, cap and verifier unchanged; outside the intention zone
+            // (P<=0.5 or far from the front wall) the intention layer returns it bit for bit. Equal endpoints convey the already
+            // composed total speed without clamping it back to vMin.
+            var solution=ShotIntentSolver.Solve(new ShotRequest(contact,input.Aim,power),aim,input.Speed,(float)config.Source.Get("shot.vCap"),
+                ShotPaceSettings.From(config.Source),config.Court,factory,config.Physics,footprintRadius,out _);
             return new CausalShotResult(vectors,input,solution,pace);
+        }
+        // The two-wall shot (design 2026-11-20-boast-predeclaration, section 2), shared by the human and the rival: the same causal vectors and
+        // the striker's arm, composed onto the side-wall point (height) and the boast pace (speed), then the boast solver. No front-wall
+        // bound, no intention search and no front deep drive guard: those belong to front-wall aims. Input.Aim holds the side point (z, y).
+        // Without a valid boast the result is the front-wall solve of BoastFallback.Aim (FellBack, FallbackAim), Boast keeps the attempt.
+        public static CausalShotResult SolveBoast(CausalReference reference,BodyFrame body,Vector3 contact,in SideAim side,float power,EffectiveConfig config,IBallSimulationFactory factory,in FatigueArm arm,float footprintRadius,out BoastInfo boast)
+        {
+            var settings=CausalSettings.From(config.Source);var vectors=ApplyFatigue(Evaluate(reference,body,contact,settings),arm);
+            var paceSettings=ShotPaceSettings.From(config.Source);
+            var pace=ShotPace.Boast(power,contact,side,config.Court,config.Physics.BallRadius,paceSettings);
+            var input=Apply(side.UV,pace.Speed,vectors,settings);
+            var solution=BoastSolver.Solve(contact,side.With(side.Z,input.Aim.y),input.Speed,paceSettings.VMin,(float)config.Source.Get("shot.vCap"),
+                config.Court,factory,config.Physics,footprintRadius,out boast);
+            if(solution.Solved)return new CausalShotResult(vectors,input,solution,pace,boast);
+            // Addendum 1: no valid boast at this contact is not a fault; the stroke goes to the front wall on the same side, front-wall path.
+            var aim=BoastFallback.Aim(contact,side.Wall,config.Court);
+            var front=Solve(reference,body,contact,aim,power,config,factory,arm,footprintRadius);
+            return new CausalShotResult(front.Vectors,front.Input,front.Solution,front.Pace,boast,aim,true);
         }
         // The striker's arm (spec 4): position vectors (stretch, jam) grow by (1+gain); timing and the aim are untouched; one power
         // vector «fatigue» is added. Nothing to apply returns the very same array, so the off path stays bit for bit identical.

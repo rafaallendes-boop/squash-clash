@@ -14,6 +14,7 @@ namespace SquashClash.Runtime.App
         // Gameplay owns where the bodies are; this only draws them (floor x, z in metres).
         public void Place(Vector2 humanXZ, Vector2 rivalXZ)
         {
+            if (SquashClash.Runtime.Visual.PointEndFreeze.Active) return; // point-end freeze: the drawn bodies hold; the next call catches up
             if (human != null) human.transform.localPosition = new Vector3(humanXZ.x, 0.9f, humanXZ.y);
             if (rival != null) rival.transform.localPosition = new Vector3(rivalXZ.x, 0.9f, rivalXZ.y);
         }

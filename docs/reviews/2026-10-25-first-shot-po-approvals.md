@@ -3185,3 +3185,8 @@ Decisión literal del PO, 18 nov: «Sí, opción 3». Corrige solo DEV (`ShotOve
 
 La implementación (#80, `9305a75`) es de un subagente Sonnet dirigido por Claude. **La revisión de Claude sobre este trabajo NO es independiente.** Sin fusión de la PR ni instalación por esta entrada; la PR queda en borrador y la fusión necesita aprobación explícita del PO. Resultados y puertas en el informe del diagnóstico, sección «Corrección (opción 3)».
 
+
+
+---
+
+El registro continúa desde el 18 nov 2026 en [2026-11-18-po-approvals.md](2026-11-18-po-approvals.md).

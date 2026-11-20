@@ -1,0 +1,9 @@
+head bf64f46 dirty=0
+editmode exit=0 RESULT: total=956 passed=956 failed=0 skipped=0
+playmode exit=0 RESULT: total=740 passed=740 failed=0 skipped=0
+autoqa v exit=0 RUN_DIR=/Users/rafaallendes/Projects/SC-boast/Logs/autoqa/20261120T211526Z-bf64f46-v-5253 TESTS={"total": 102, "passed": 102, "failed": 0, "skipped": 0} RESULT=PASS ESCALATION_LEVEL=1 
+autoqa t3 exit=0 RUN_DIR=/Users/rafaallendes/Projects/SC-boast/Logs/autoqa/20261120T211549Z-bf64f46-t3-18340 TESTS={"total": 102, "passed": 102, "failed": 0, "skipped": 0} RESULT=PASS ESCALATION_LEVEL=1 
+autoqa volley exit=0 RUN_DIR=/Users/rafaallendes/Projects/SC-boast/Logs/autoqa/20261120T211611Z-bf64f46-volley-52 TESTS={"total": 102, "passed": 102, "failed": 0, "skipped": 0} RESULT=PASS ESCALATION_LEVEL=1 
+check-release exit=0 RELEASE-CHECK: dev modules=g_SquashClash_Core_CodeGenModule,g_SquashClash_DevPanel_CodeGenModule,g_SquashClash_Runtime_CodeGenModule IOS-EXPORT-CHECK: dev build=1051 icon=1024 launch=1290x2796 flags=OK RELEASE-CHECK: prod modules=g_SquashClash_Core_CodeGenModule,g_SquashClash_Ru
+after dirty=0
+DONE

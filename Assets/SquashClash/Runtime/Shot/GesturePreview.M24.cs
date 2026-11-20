@@ -58,7 +58,7 @@ namespace SquashClash.Runtime.Shot
                 m24Transitions.Add(new M24Transition{kind=M24.Phase,timeReal=sample.TimeReal,observedReal=input.ReadRealTime()});
             Power=new PowerResult(M24.P,0,0,0,0,M24.Conservative,M24.Reason,"pull-distance");
             view.gameObject.SetActive(M24.HasAim);
-            if(M24.HasAim)view.SetAim(M24.Aim,AimState.Frozen,M24.Projection.Court);
+            if(M24.HasAim){if(M24.Side.Exists)view.SetSideAim(M24.Side,M24.Projection.Court);else view.SetAim(M24.Aim,AimState.Frozen,M24.Projection.Court);}
             if(!M24.Active){tracker.CancelBySystem();FinishGesture();}
             if(sample.Phase==TouchPhaseKind.Canceled&&Sampling)FinishSampling(input.ReadRealTime(),false,"touch-canceled");
         }

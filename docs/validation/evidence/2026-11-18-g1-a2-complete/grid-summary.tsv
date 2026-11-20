@@ -1,0 +1,50 @@
+rows	17640
+inactive_rows	14840	inactive_differences	0
+C1_block	24	old_witness	6	new_witness	24
+witness_grid	direct	SL1	588	old	0	new	0
+witness_grid	direct	SL2	588	old	0	new	0
+witness_grid	direct	SL3	588	old	35	new	35
+witness_grid	direct	SL4	588	old	35	new	35
+witness_grid	direct	SL5	588	old	4	new	87
+witness_grid	direct	SL6	588	old	4	new	87
+witness_grid	cap22	SL1	588	old	0	new	0
+witness_grid	cap22	SL2	588	old	0	new	0
+witness_grid	cap22	SL3	588	old	35	new	35
+witness_grid	cap22	SL4	588	old	35	new	35
+witness_grid	cap22	SL5	588	old	0	new	162
+witness_grid	cap22	SL6	588	old	0	new	174
+C2 (direct, y<=TinTop+0.80, 35 per recipe/P): overTop old->new, otherOut old->new, tin old->new, unsolved old->new
+C2	SL5	P=0.85	35	0	0	6	0	0	0	0	0
+C2	SL5	P=0.9	35	2	0	7	0	0	0	0	0
+C2	SL5	P=0.95	35	2	0	7	0	0	0	0	0
+C2	SL5	P=1.0	35	3	0	7	0	0	0	0	0
+C2	SL6	P=0.85	35	0	0	6	0	0	0	0	0
+C2	SL6	P=0.9	35	2	0	7	0	0	0	0	0
+C2	SL6	P=0.95	35	2	0	7	0	0	0	0	0
+C2	SL6	P=1.0	35	3	0	7	0	0	0	0	0
+C3 (direct, straight/cross, y .88/1.08, P .70..1.00): series, pairs ok/total, bad
+C3	SL5	straight	0.4	4/6	k17->18 apex 1.01264811->1.06740665 DoubleBounce/DoubleBounce; k19->20 apex 0.906044066->0.937240243 DoubleBounce/DoubleBounce	z2:	9.269 8.970 8.946 8.943 8.915 8.856 8.622
+C3	SL5	straight	0.6	6/6		z2:	9.591 9.054 8.941 9.227 8.917 9.112 8.842
+C3	SL5	cross	0.4	5/6	k19->20 apex 1.11674428->1.13785267 DoubleBounce/DoubleBounce	z2:	9.232 9.012 8.999 9.066 8.591 8.174 6.227
+C3	SL5	cross	0.6	6/6		z2:	9.303 8.881 8.796 8.875 8.442 8.568 8.691
+C3	SL6	straight	0.4	4/6	k17->18 apex 1.01264787->1.095619 DoubleBounce/DoubleBounce; k19->20 apex 0.906043231->0.941764 DoubleBounce/DoubleBounce	z2:	9.268 8.970 8.946 8.943 8.954 8.856 8.516
+C3	SL6	straight	0.6	6/6		z2:	9.591 9.054 8.917 9.254 9.053 9.112 8.842
+C3	SL6	cross	0.4	6/6		z2:	9.253 8.870 8.793 9.066 8.564 8.797 8.209
+C3	SL6	cross	0.6	6/6		z2:	9.260 8.983 8.814 8.901 8.370 8.325 8.671
+C3_total	43/48
+C6	SL1	direct	rows	1470	active	0	changed	0	causes_old	{'DoubleBounce': 1448, 'Out': 22}	causes_new	{'DoubleBounce': 1448, 'Out': 22}
+C6	SL1	cap22	rows	1470	active	0	changed	0	causes_old	{'DoubleBounce': 1463, 'Out': 7}	causes_new	{'DoubleBounce': 1463, 'Out': 7}
+C6	SL2	direct	rows	1470	active	0	changed	0	causes_old	{'DoubleBounce': 1448, 'Out': 22}	causes_new	{'DoubleBounce': 1448, 'Out': 22}
+C6	SL2	cap22	rows	1470	active	0	changed	0	causes_old	{'DoubleBounce': 1463, 'Out': 7}	causes_new	{'DoubleBounce': 1463, 'Out': 7}
+C6	SL3	direct	rows	1470	active	0	changed	0	causes_old	{'DoubleBounce': 1463, 'Out': 7}	causes_new	{'DoubleBounce': 1463, 'Out': 7}
+C6	SL3	cap22	rows	1470	active	0	changed	0	causes_old	{'DoubleBounce': 1463, 'Out': 7}	causes_new	{'DoubleBounce': 1463, 'Out': 7}
+C6	SL4	direct	rows	1470	active	0	changed	0	causes_old	{'DoubleBounce': 1463, 'Out': 7}	causes_new	{'DoubleBounce': 1463, 'Out': 7}
+C6	SL4	cap22	rows	1470	active	0	changed	0	causes_old	{'DoubleBounce': 1463, 'Out': 7}	causes_new	{'DoubleBounce': 1463, 'Out': 7}
+C6	SL5	direct	rows	1470	active	700	changed	543	causes_old	{'DoubleBounce': 1173, 'Out': 297}	causes_new	{'DoubleBounce': 1306, 'Out': 164}
+C6	SL5	cap22	rows	1470	active	700	changed	700	causes_old	{'DoubleBounce': 1470}	causes_new	{'DoubleBounce': 1470}
+C6	SL6	direct	rows	1470	active	700	changed	542	causes_old	{'DoubleBounce': 1173, 'Out': 297}	causes_new	{'DoubleBounce': 1306, 'Out': 164}
+C6	SL6	cap22	rows	1470	active	700	changed	698	causes_old	{'DoubleBounce': 1470}	causes_new	{'DoubleBounce': 1470}
+reasons_new_active	{'intent-drive': 2483, 'solved': 317}
+timing_active_ms	n	2800	p50	0.284	p95	0.547	max	4.557
+timing_primitive_ms	p50	0.002	p95	0.004	max	0.017
+evaluations_active	{'11': 1307, '12': 58, '13': 26, '14': 6, '15': 4, '16': 16, '17': 2, '20': 1, '22': 112, '23': 100, '24': 1168}

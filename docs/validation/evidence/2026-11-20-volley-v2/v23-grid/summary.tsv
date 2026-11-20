@@ -1,0 +1,13 @@
+sprint 1.25	non-serve	n 4778	offered% 54.2	volleyRate% 51.2	sprintShare% 0.2	volleyPV% 71.6	bouncePVsame% 96.7	gap 25.1	whiteLead>=300% 100.0 (n 146)	launch->S ms med 2076.9 p10 1538.5 p90 2692.3	launch->S' ms med 2076.9 p10 1564.1 p90 2692.3	lateness med 0.5
+sprint 1.25	TARGETS 1-3 not met
+sprint 1.25	serve	n 338	offered% 100.0	volleyRate% 100.0	sprintShare% 0.0	volleyPV% 70.1	bouncePVsame% 97.3	gap 27.2	whiteLead>=300% nan (n 0)	launch->S ms med 1923.1 p10 1923.1 p90 1935.9	launch->S' ms med 1923.1 p10 1923.1 p90 1935.9	lateness med NaN
+sprint 1.50	non-serve	n 4778	offered% 54.2	volleyRate% 51.4	sprintShare% 0.5	volleyPV% 71.4	bouncePVsame% 96.6	gap 25.2	whiteLead>=300% 100.0 (n 137)	launch->S ms med 2076.9 p10 1538.5 p90 2692.3	launch->S' ms med 2076.9 p10 1589.7 p90 2692.3	lateness med 0.6
+sprint 1.50	TARGETS 1-3 not met
+sprint 1.50	serve	n 338	offered% 100.0	volleyRate% 100.0	sprintShare% 0.0	volleyPV% 70.1	bouncePVsame% 97.3	gap 27.2	whiteLead>=300% nan (n 0)	launch->S ms med 1923.1 p10 1923.1 p90 1935.9	launch->S' ms med 1923.1 p10 1923.1 p90 1935.9	lateness med NaN
+sprint 1.75	non-serve	n 4778	offered% 54.2	volleyRate% 51.6	sprintShare% 0.9	volleyPV% 71.4	bouncePVsame% 96.6	gap 25.2	whiteLead>=300% 100.0 (n 127)	launch->S ms med 2076.9 p10 1538.5 p90 2692.3	launch->S' ms med 2076.9 p10 1602.6 p90 2692.3	lateness med 0.6
+sprint 1.75	TARGETS 1-3 not met
+sprint 1.75	serve	n 338	offered% 100.0	volleyRate% 100.0	sprintShare% 0.0	volleyPV% 70.1	bouncePVsame% 97.3	gap 27.2	whiteLead>=300% nan (n 0)	launch->S ms med 1923.1 p10 1923.1 p90 1935.9	launch->S' ms med 1923.1 p10 1923.1 p90 1935.9	lateness med NaN
+sprint 2.00	non-serve	n 4778	offered% 54.2	volleyRate% 51.7	sprintShare% 1.1	volleyPV% 71.3	bouncePVsame% 96.6	gap 25.3	whiteLead>=300% 100.0 (n 122)	launch->S ms med 2076.9 p10 1538.5 p90 2692.3	launch->S' ms med 2076.9 p10 1615.4 p90 2692.3	lateness med 0.5
+sprint 2.00	TARGETS 1-3 not met
+sprint 2.00	serve	n 338	offered% 100.0	volleyRate% 100.0	sprintShare% 0.0	volleyPV% 70.1	bouncePVsame% 97.3	gap 27.2	whiteLead>=300% nan (n 0)	launch->S ms med 1923.1 p10 1923.1 p90 1935.9	launch->S' ms med 1923.1 p10 1923.1 p90 1935.9	lateness med NaN
+FIRST_OK None

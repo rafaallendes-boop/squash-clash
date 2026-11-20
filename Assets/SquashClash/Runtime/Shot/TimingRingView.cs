@@ -16,6 +16,12 @@ namespace SquashClash.Runtime.Shot
         private double target,presented;
         private int aidLevel,planVersion;
         public int AidLevel=>aidLevel;
+        private Color tint=Color.white;
+        // Colour of the cue (white by default; the volley opportunity is tinted).
+        public Color Tint=>tint;
+        public void SetTint(Color color){tint=color;}
+        // A new opportunity of the same reception (the bounce after the volley): the partial-aid cutoff applies to each one.
+        public void BeginOpportunity(){CutoffLatched=false;CutoffTarget=0;CutoffPlanVersion=0;}
         public event System.Action CutoffActivated;
         public void BeginReception(int level)
         {
@@ -94,10 +100,10 @@ namespace SquashClash.Runtime.Shot
         private static float LateRadius(double ms,double duration)=>FitRadius/(1+(OuterRadius/FitRadius-1)*(float)(ms/System.Math.Max(1,duration)));
         private static float Radius(float approach)=>FitRadius+(OuterRadius-FitRadius)*approach;
         private static float WindowRadius(double ms,double duration)=>Radius(duration>0?Mathf.Clamp01((float)(ms/duration)):1);
-        private static void SetStyle(LineRenderer renderer,float alpha,float width)
+        private void SetStyle(LineRenderer renderer,float alpha,float width)
         {
             renderer.enabled=alpha>0;renderer.widthMultiplier=width;
-            renderer.startColor=renderer.endColor=new Color(1,1,1,alpha);
+            renderer.startColor=renderer.endColor=new Color(tint.r,tint.g,tint.b,alpha);
         }
         private static void DrawCircle(LineRenderer renderer,float radius,float offset=0)
         {

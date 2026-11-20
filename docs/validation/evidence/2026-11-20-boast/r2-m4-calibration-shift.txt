@@ -1,0 +1,24 @@
+fondista-hard k off/on: 2.5 2.5
+fondi Hard Fondista newcomer 16.2 16.6 +0.5 faults off 0 on 0 c01 1 boasts 44 fb 16
+confi Easy Fondista newcomer 53.7 53.9 +0.3 faults off 10 on 7 c01 13 boasts 913 fb 399
+confi Easy Fondista bot30 49.5 49.5 +0.0 faults off 13 on 13 c01 34 boasts 0 fb 0
+confi Easy Definidor newcomer 58.6 57.7 -0.9 faults off 9 on 12 c01 16 boasts 1216 fb 435
+confi Easy Definidor bot30 50.2 50.2 +0.0 faults off 29 on 29 c01 14 boasts 0 fb 0
+confi Easy Completo newcomer 59.3 59.4 +0.1 faults off 9 on 7 c01 11 boasts 925 fb 428
+confi Easy Completo bot30 53.6 53.6 +0.0 faults off 19 on 19 c01 24 boasts 0 fb 0
+confi Medium Fondista newcomer 34.3 35.9 +1.6 faults off 1 on 4 c01 1 boasts 399 fb 132
+confi Medium Fondista bot30 26.1 26.1 +0.0 faults off 0 on 0 c01 19 boasts 0 fb 0
+confi Medium Definidor newcomer 41.2 43.0 +1.8 faults off 3 on 4 c01 3 boasts 1059 fb 183
+confi Medium Definidor bot30 27.8 27.8 +0.0 faults off 0 on 0 c01 11 boasts 0 fb 0
+confi Medium Completo newcomer 38.6 40.6 +2.0 faults off 2 on 6 c01 4 boasts 809 fb 270
+confi Medium Completo bot30 21.5 21.5 +0.0 faults off 3 on 3 c01 5 boasts 0 fb 0
+confi Hard Fondista newcomer 18.3 17.9 -0.4 faults off 0 on 0 c01 0 boasts 40 fb 10
+confi Hard Fondista bot30 9.1 9.1 +0.0 faults off 0 on 0 c01 0 boasts 0 fb 0
+confi Hard Definidor newcomer 35.9 36.0 +0.1 faults off 0 on 0 c01 0 boasts 180 fb 13
+confi Hard Definidor bot30 6.5 6.5 +0.0 faults off 0 on 0 c01 0 boasts 0 fb 0
+confi Hard Completo newcomer 19.7 19.9 +0.2 faults off 0 on 0 c01 0 boasts 120 fb 8
+confi Hard Completo bot30 2.7 2.7 +0.0 faults off 0 on 0 c01 0 boasts 0 fb 0
+Easy avg -0.2 max -0.9
+Medium avg +1.8 max +2.0
+Hard avg -0.0 max -0.4
+faults total off 98 on 104 confirm01 156 rival boasts 5705 fallbacks 1894

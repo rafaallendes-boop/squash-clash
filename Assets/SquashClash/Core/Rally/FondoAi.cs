@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SquashClash.Core.Shot;
 using SquashClash.Core.Simulation;
 using UnityEngine;
 namespace SquashClash.Core.Rally
@@ -40,8 +41,16 @@ namespace SquashClash.Core.Rally
         public readonly Vector2 Aim;public readonly float P;
         // Release offset from T* in real perceived milliseconds (spec 11.3 step 3).
         public readonly double DeltaMs;
-        public AiShot(bool swing,ShotOption option,Vector2 aim,float p,double deltaMs,bool defensive){Swing=swing;Option=option;Aim=aim;P=p;DeltaMs=deltaMs;Defensive=defensive;}
+        // Release in the volley opportunity of the plan instead of its bounce one (design 2026-11-18).
+        public readonly bool Volley;
+        // A boast's side-wall point after the execution noise (Aim then holds its surface coordinates z, y); default otherwise.
+        public readonly SideAim Side;
+        public AiShot(bool swing,ShotOption option,Vector2 aim,float p,double deltaMs,bool defensive,bool volley=false,SideAim side=default){Swing=swing;Option=option;Aim=aim;P=p;DeltaMs=deltaMs;Defensive=defensive;Volley=volley;Side=side;}
     }
+    // Volley v2.x, human only and for headless measurement (design 2026-11-20): when a reception offers a v2 volley, the real-time ms after
+    // the launch at which the brain touches (NaN: no touch). RallySim then chooses the stance exactly as RallyDirector does. The rival and the
+    // default bots never implement it, so their rallies are unchanged.
+    public interface IRallyVolleyToucher {double TouchMsAfterLaunch(in ReceptionPlan own,double bounceTStarMsAfterLaunch);}
     public interface IRallyBrain
     {
         // Extra delay before the body reacts (d_perc); zero for a brain that needs none.

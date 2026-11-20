@@ -32,6 +32,16 @@ namespace SquashClash.Core.Rally
         public double MatchTarget=7,MatchMargin=2,MatchPauseSeconds=2.5;
         // Automatic serve: height of the hand and preferred landing spot in the receiver's quarter.
         public double ServeHandHeight=1.1,ServeLandingDepth=8,ServeLandingFromWall=1.4;
+        // Serve kinds (design 2026-11-20-serve). ServeKindOn: 0 = today's single automatic serve (default; DEV «Saque nuevo» off), 1 = the server
+        // chooses a lob or a drive. Each kind is one fixed serve per box (front-wall aim x, height, horizontal speed), chosen from the diag01 grid
+        // by the predeclared rule (P+V of the newcomer closest to 85 %); every one is checked against the real serve rules.
+        public double ServeKindOn=0;
+        public double ServeKindLobRightAimX=3.6,ServeKindLobRightAimY=3.6,ServeKindLobRightSpeed=18,ServeKindLobLeftAimX=2.8,ServeKindLobLeftAimY=3.45,ServeKindLobLeftSpeed=18;
+        public double ServeKindDriveRightAimX=2.8,ServeKindDriveRightAimY=2.55,ServeKindDriveRightSpeed=22,ServeKindDriveLeftAimX=3.6,ServeKindDriveLeftAimY=2.4,ServeKindDriveLeftSpeed=22;
+        // The human's choice: an aim at or above this front-wall height (m) is the lob, below it the drive.
+        public double ServeKindLobMinAimY=3;
+        // The rival's choice: probability of the drive per style (own random stream, apart from its strokes).
+        public double ServeKindDriveFondo=.25,ServeKindDriveShooter=.75,ServeKindDriveAllRound=.5;
         // AI difficulty (spec 11.5): Easy / Medium / Hard. Only these change with difficulty.
         public double EasyPerceptionS=.08,EasyStanceSigma=.12,EasyAimSigma=.28,EasyPowerSigma=.12,EasyTimingSigmaMs=55,EasyTemperature=1.2;
         public double MediumPerceptionS=.04,MediumStanceSigma=.06,MediumAimSigma=.16,MediumPowerSigma=.08,MediumTimingSigmaMs=38,MediumTemperature=.6;
@@ -45,6 +55,47 @@ namespace SquashClash.Core.Rally
         public double AimLow=.95,AimMid=1.7,AimHigh=3,DropHeight=.75,PowerDrop=.12,PowerMedium=.5,PowerStrong=.85,CornerInset=.6;
         // Intentions never ask for a launch steeper than this: from the front court a fixed height would send the ball out.
         public double MaxAimElevationDeg=22;
+        // Volley v1 (design 2026-11-18): on/off, legal heights (spec 7.3.1), separation from the bounce window in real seconds
+        // (spec 7.3.2) and the shortest window offered, in simulation seconds (v1 stand-in for q_min_rel).
+        public double VolleyEnabled=1,VolleyMinHeight=.6,VolleyMaxHeight=1.9,VolleyMinSeparationS=.25,VolleyMinWindowS=.05;
+        // Volley energy (19 nov): a contact before the bounce costs the striker this many energy points (0-100 scale) on top of the
+        // stroke, because the player anticipates. Charged only with fatigue on; RallySim bots never volley by default.
+        public double VolleyEnergyCost=2;
+        // Volley v2, human only (design 2026-11-20): 2 = the player chooses the volley (touch while the amber ring shows sends the body to an
+        // intercept stance), 1 = v1 (M1 path). Shortest volley window offered (simulation seconds) and the human's return-of-serve volley.
+        // The rival and RallySim never read these fields.
+        public double HumanVolleyMode=3,HumanVolleyMinWindowS=.05,HumanVolleyServe=1;
+        // Modes: 1 = v1, 2 = v2, 3 = v2.2 (shipped by the predeclared rule, design section 8), 4 = v2.3 lunge (measured, not shipped).
+        // v2.2: a touch after S and up to S' still chooses the volley with a sprint of at most this speed factor, and costs this many extra
+        // energy points at the contact, times its lateness (S..S' as 0..1).
+        public double HumanVolleySprintMax=2,HumanVolleySprintCost=4;
+        // Fatigue feel (design 2026-11-20-fatigue-feel, section 1), human only: 1 = the human's energy at the reception start limits the sprint,
+        // 1 + (HumanVolleySprintMax - 1)(1 - f): the full sprint at or above the onset, none at energy 0. 0 = v2.2 as shipped (DEV toggle).
+        public double HumanVolleySprintFatigue=1;
+        // Rival styles (design 2026-11-19). A style changes only how the AI chooses (utility weights, risk aversion, volley
+        // willingness, wait W and recovery cover), never physics, rules, reach, windows, errors or information (spec 11.2, 11.5).
+        // Fondista reuses the Fondo* weights above. StyleRivalVolley switches the rival volley off (control); a cover depth < 0 is "to the T".
+        public double StyleRivalVolley=1,StyleCoverBounceZ=3.5;
+        public double StyleFondoVolleyBias=-1,StyleFondoVolleyMinKS=.1,StyleFondoCoverDepth=-1;
+        public double StyleShooterLongWeight=.5,StyleShooterAwayWeight=.8,StyleShooterTimeWeight=.3,StyleShooterDropWeight=1.6,StyleShooterRiskAversion=.6;
+        public double StyleShooterDefenseSlackS=.06,StyleShooterDropMinSlackS=.3,StyleShooterDropZoneAhead=1,StyleShooterAttackBase=.8,StyleShooterAttackAhead=.4;
+        public double StyleShooterVolleyBias=.8,StyleShooterVolleyMinKS=.05,StyleShooterVolleySteal=0,StyleShooterWaitBehindT=0,StyleShooterCoverDepth=-1;
+        public double StyleAllRoundLongWeight=1,StyleAllRoundAwayWeight=.8,StyleAllRoundTimeWeight=.6,StyleAllRoundDropWeight=1.1,StyleAllRoundRiskAversion=1.1;
+        public double StyleAllRoundDefenseSlackS=.12,StyleAllRoundDropMinSlackS=.3,StyleAllRoundDropZoneAhead=0,StyleAllRoundAttackBase=0,StyleAllRoundAttackAhead=1;
+        // Difficulty per style (Claude, 19 nov, after search02): the styles differ in strength, so each (style, level) scales the
+        // level's five execution/perception noises by its own k (temperature unchanged). Chosen from the search02 grid; Definidor Hard
+        // stays at 1 (deviation: easier than the 20 % target, never below the shared noise).
+        public double StyleNoiseKFondoEasy=1.5,StyleNoiseKFondoMedium=1.75,StyleNoiseKFondoHard=2.5;
+        public double StyleNoiseKShooterEasy=1.25,StyleNoiseKShooterMedium=1,StyleNoiseKShooterHard=1;
+        public double StyleNoiseKAllRoundEasy=1.5,StyleNoiseKAllRoundMedium=1.5,StyleNoiseKAllRoundHard=1.25;
+        public double StyleAllRoundVolleyBias=-.8,StyleAllRoundVolleyMinKS=.08,StyleAllRoundVolleySteal=.6,StyleAllRoundWaitBehindT=.2,StyleAllRoundCoverDepth=-1;
+        // Two-wall shot (design 2026-11-20-boast-predeclaration, section 5). BoastRival: the rival may boast (DEV «Dos paredes», on by default
+        // since round two: M4 within 3 pp with new seeds; the human's
+        // gesture is always on). Open from the back quarter (contact z at or beyond BoastBackFraction of the length) with the contact within
+        // BoastWallMax of the near side wall; the side-wall point is BoastAheadZ in front of the contact at the low or mid height. Utility
+        // weight per style (Fondista least, Definidor most).
+        public double BoastRival=1,BoastBackFraction=.75,BoastWallMax=2,BoastAheadZ=1,BoastAimLow=.9,BoastAimMid=1.5;
+        public double BoastWeightFondo=0,BoastWeightShooter=-.5,BoastWeightAllRound=0;
         public string Hash
         {
             get

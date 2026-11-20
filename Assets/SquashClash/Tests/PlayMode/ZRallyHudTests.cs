@@ -96,7 +96,7 @@ namespace SquashClash.Runtime.Tests
         {
             Assert.That(root.Q<Button>("rally-toggle").text,Is.EqualTo("Rally"));Assert.That(Shown(root.Q("rally-toggle")),Is.True);
             foreach(var name in new[]{"rally-status","rally-pause","rally-rematch","rally-demo"})Assert.That(Shown(root.Q(name)),Is.False,name);
-            Assert.That(rally.Active,Is.False);Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("3262f9b89156"));
+            Assert.That(rally.Active,Is.False);Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("ec3ff68ebdfa"));
             Assert.That(root.Q<Label>("boot-title").text,Is.EqualTo("Squash Clash — First Ball"));
             yield return null;
         }
@@ -138,7 +138,7 @@ namespace SquashClash.Runtime.Tests
             Assert.That(Shown(root.Q("rally-match")),Is.True);
             Click("rally-match");yield return null;
             Assert.That(rally.Match,Is.Not.Null);Assert.That(Shown(root.Q("rally-match")),Is.False);
-            Assert.That(root.Q<Label>("rally-status").text,Is.EqualTo("Tú 0 – 0 Rival · saca Tú (der.) · golpes 0 · turno: Rival"));
+            Assert.That(root.Q<Label>("rally-status").text,Is.EqualTo("Rival: Fondista · Tú 0 – 0 Rival · saca Tú (der.) · golpes 0 · turno: Rival"),"the first point also names the rival's style (19 nov)");
             Assert.That(Shown(root.Q("rally-next")),Is.False);
             Assert.That(Drive(()=>rally.Phase==RallyPhase.PointOver,40),Is.True);yield return null;
             Assert.That(Shown(root.Q("rally-next")),Is.True,"the pause between points can be skipped");
@@ -178,7 +178,7 @@ namespace SquashClash.Runtime.Tests
         {
             Click("rally-toggle");Click("rally-toggle");yield return null;
             Assert.That(rally.Active,Is.False);Assert.That(root.Q<Button>("rally-toggle").text,Is.EqualTo("Rally"));
-            Assert.That(Shown(root.Q("rally-status")),Is.False);Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("3262f9b89156"));
+            Assert.That(Shown(root.Q("rally-status")),Is.False);Assert.That(app.Host.ActiveConfig.Hash,Is.EqualTo("ec3ff68ebdfa"));
         }
         [UnityTest] public IEnumerator Hud_StaysAboveTheProjectedFrontWall_InsideTheSafeWidth()
         {

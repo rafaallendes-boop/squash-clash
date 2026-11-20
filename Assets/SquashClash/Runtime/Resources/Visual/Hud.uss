@@ -1,46 +1,82 @@
-/* Art pass: one palette and one type scale for the in-game HUD (rally bar, score and match result). */
+/* Squash Clash look (menu and stroke pass, 18 nov). Two surfaces, both taken from the court:
+   - Off the court (start menu, tutorial, pause, result) everything is a piece of the front wall: plaster, ink text and
+     the court's red lines. The one primary action on each screen is line red.
+   - On the court (header, point banner, shot note) surfaces are dark teal glass, like the back wall, so the court shows through.
+   Yellow is the ball's two dots: a Perfect stroke, the server, a won match. Blue and coral stay the players' shirts.
+   Type: Rubik (SIL OFL 1.1, Runtime/Visual/Fonts/OFL.txt; static SDF assets baked by Editor/RubikFontAssets.cs). Bold Italic for what moves (wordmark, score, notes, titles, Jugar), Bold for
+   controls and names, Regular for reading. Scale 11 / 12 / 13 / 14 / 15 / 16 / 17 / 18 / 20 / 24 / 26 / 28 / 34 / 40 / 60 / 72 (menu redesign, 19 nov: wordmark 72, Jugar 34). */
+:root {
+    --plaster: rgb(238, 241, 239);
+    --plaster-card: rgb(248, 249, 248);
+    --ink: rgb(24, 34, 44);
+    --ink-soft: rgb(84, 94, 104);
+    --ink-line: rgba(24, 34, 44, 0.18);
+    --line: rgb(206, 32, 45);
+    --line-hover: rgb(222, 50, 62);
+    --line-press: rgb(170, 22, 34);
+    --dot: rgb(255, 210, 63);
+    --glass: rgba(12, 33, 39, 0.9);
+    --glass-edge: rgba(168, 228, 226, 0.2);
+    --glass-text: rgb(234, 243, 243);
+    --glass-soft: rgb(160, 190, 194);
+    --human: rgb(30, 136, 255);
+    --rival: rgb(255, 77, 51);
+}
+
+/* Fonts: set on the player's surfaces only (the developer panel keeps the theme font). */
+.sc-header, .sc-menu-layer, .sc-pause-layer, .sc-result-layer, .sc-banner-layer, .sc-shot-note {
+    -unity-font-definition: url("../../Visual/Fonts/Rubik-Regular SDF.asset");
+    -unity-font-style: normal;
+}
+
+/* ---------- On the court: glass ---------- */
 .sc-header {
-    background-color: rgba(9, 16, 26, 0.9);
-    border-radius: 16px;
+    background-color: var(--glass);
+    border-radius: 14px;
     border-width: 1px;
-    border-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--glass-edge);
+    border-top-color: var(--line);
+    border-top-width: 2px;
 }
 .sc-title {
-    font-size: 15px;
-    -unity-font-style: bold;
-    letter-spacing: 1px;
-    color: rgb(244, 247, 250);
+    font-size: 16px;
+    -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset");
+    -unity-font-style: normal;
+    letter-spacing: 0.5px;
+    color: var(--glass-text);
 }
-.sc-meta {
-    font-size: 11px;
-    color: rgb(140, 158, 176);
-}
-.sc-status {
-    font-size: 13px;
-    color: rgb(214, 224, 234);
-}
+.sc-meta { font-size: 11px; color: var(--glass-soft); }
+.sc-status { font-size: 13px; color: var(--glass-text); }
+
+/* Buttons: glass by default (header); the wall surfaces restyle them below. */
 .unity-button.sc-button {
     height: 44px;
     min-width: 52px;
     font-size: 13px;
-    -unity-font-style: bold;
+    -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset");
+    -unity-font-style: normal;
     margin-left: 2px;
     margin-right: 2px;
     margin-top: 0;
     margin-bottom: 0;
     padding-left: 7px;
     padding-right: 7px;
-    border-radius: 12px;
-    border-width: 0;
-    background-color: rgb(30, 44, 64);
-    color: rgb(236, 242, 248);
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.16);
+    background-color: rgba(255, 255, 255, 0.09);
+    color: var(--glass-text);
+    transition-property: background-color;
+    transition-duration: 0.08s;
 }
-.unity-button.sc-button:hover { background-color: rgb(38, 55, 79); }
-.unity-button.sc-button:active { background-color: rgb(58, 82, 114); }
+.unity-button.sc-button:hover { background-color: rgba(255, 255, 255, 0.15); }
+.unity-button.sc-button:active { background-color: rgba(255, 255, 255, 0.24); }
 .unity-button.sc-button:disabled { opacity: 0.45; }
-.unity-button.sc-button--primary { background-color: rgb(255, 210, 63); color: rgb(18, 22, 30); }
-.unity-button.sc-button--primary:hover { background-color: rgb(255, 218, 92); }
-.unity-button.sc-button--primary:active { background-color: rgb(255, 232, 140); }
+.unity-button.sc-button--primary { background-color: var(--line); border-color: var(--line); color: rgb(255, 255, 255); }
+.unity-button.sc-button--primary:hover { background-color: var(--line-hover); }
+.unity-button.sc-button--primary:active { background-color: var(--line-press); }
+
+/* Score: the digits are the loudest thing in the header. */
 .sc-score {
     flex-direction: row;
     align-items: center;
@@ -50,15 +86,17 @@
 }
 .sc-score-name {
     font-size: 12px;
-    -unity-font-style: bold;
+    -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset");
+    -unity-font-style: normal;
     letter-spacing: 1px;
-    color: rgb(190, 204, 218);
+    color: var(--glass-soft);
     margin-left: 6px;
     margin-right: 6px;
 }
 .sc-score-points {
     font-size: 26px;
-    -unity-font-style: bold;
+    -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset");
+    -unity-font-style: normal;
     color: rgb(255, 255, 255);
     min-width: 30px;
     -unity-text-align: middle-center;
@@ -66,44 +104,22 @@
     margin-right: 2px;
     padding: 0;
 }
-.sc-score-dash { font-size: 20px; color: rgb(120, 138, 156); }
+.sc-score-dash { font-size: 20px; color: var(--glass-soft); }
 /* Energy line under each name (F2): 3 px, no touches. Red is deliberately not the rival chip's rgb(255, 77, 51). */
 /* Same fixed width for both columns, so TÚ and RIVAL draw bars of equal length at equal energy. */
 .sc-energy-col { flex-direction: column; justify-content: center; align-items: stretch; flex-shrink: 0; width: 60px; }
 .sc-energy-col > .sc-score-name { -unity-text-align: middle-center; }
-.sc-energy { flex-shrink: 0; height: 3px; margin-top: 1px; margin-left: 6px; margin-right: 6px; border-radius: 1px; overflow: hidden; background-color: rgba(255, 255, 255, 0.12); }
+.sc-energy { flex-shrink: 0; height: 3px; margin-top: 2px; margin-left: 6px; margin-right: 6px; border-radius: 1px; overflow: hidden; background-color: rgba(255, 255, 255, 0.14); }
 .sc-energy-fill { flex-shrink: 0; height: 3px; width: 100%; border-radius: 1px; }
-.sc-energy--neutral > .sc-energy-fill { background-color: rgb(160, 176, 192); }
+.sc-energy--neutral > .sc-energy-fill { background-color: rgb(176, 222, 220); }
 .sc-energy--amber > .sc-energy-fill { background-color: rgb(255, 176, 32); }
 .sc-energy--red > .sc-energy-fill { background-color: rgb(214, 40, 64); }
 .sc-chip { width: 10px; height: 10px; border-radius: 5px; }
-.sc-chip--human { background-color: rgb(30, 136, 255); }
-.sc-chip--rival { background-color: rgb(255, 77, 51); }
-.sc-serve { width: 6px; height: 6px; border-radius: 3px; background-color: rgb(255, 210, 63); margin-left: 3px; margin-right: 3px; }
-.sc-result-layer {
-    position: absolute;
-    left: 0; right: 0; top: 0; bottom: 0;
-    align-items: center;
-    justify-content: center;
-}
-.sc-result-card {
-    width: 300px;
-    padding: 22px;
-    align-items: center;
-    background-color: rgba(11, 19, 30, 0.97);
-    border-radius: 22px;
-    border-width: 2px;
-    border-color: rgb(255, 210, 63);
-}
-.sc-result-kicker { font-size: 12px; -unity-font-style: bold; letter-spacing: 2px; color: rgb(140, 158, 176); }
-.sc-result-title { font-size: 26px; -unity-font-style: bold; color: rgb(255, 255, 255); margin-top: 6px; -unity-text-align: middle-center; white-space: normal; }
-.sc-result-score { font-size: 60px; -unity-font-style: bold; color: rgb(255, 210, 63); margin-top: 4px; margin-bottom: 2px; }
-.sc-result-note { font-size: 13px; color: rgb(190, 204, 218); margin-bottom: 16px; -unity-text-align: middle-center; white-space: normal; }
-.sc-result-buttons { flex-direction: row; flex-wrap: wrap; justify-content: center; }
-/* 46: still 44 or more once its edges snap to whole pixels, at any panel scale and any card position. */
-.sc-result-buttons .unity-button.sc-button { height: 46px; margin-top: 4px; margin-bottom: 4px; padding-left: 12px; padding-right: 12px; }
+.sc-chip--human { background-color: var(--human); }
+.sc-chip--rival { background-color: var(--rival); }
+.sc-serve { width: 6px; height: 6px; border-radius: 3px; background-color: var(--dot); margin-left: 3px; margin-right: 3px; }
 
-/* Feel pass: point banner over the front wall and result card tones. */
+/* Point banner over the front wall: glass, with the winner's shirt colour along its bottom edge. */
 .sc-banner-layer {
     position: absolute;
     left: 0; right: 0; top: 0;
@@ -111,91 +127,200 @@
 }
 .sc-banner {
     align-items: center;
-    padding-left: 22px; padding-right: 22px; padding-top: 10px; padding-bottom: 12px;
+    padding-left: 22px; padding-right: 22px; padding-top: 10px; padding-bottom: 10px;
     max-width: 92%;
-    background-color: rgba(9, 16, 26, 0.92);
-    border-radius: 18px;
-    border-width: 2px;
-    border-color: rgba(255, 255, 255, 0.25);
+    background-color: var(--glass);
+    border-radius: 16px;
+    border-width: 1px;
+    border-color: var(--glass-edge);
+    border-bottom-width: 4px;
+    border-bottom-color: var(--glass-soft);
 }
-.sc-banner--human { border-color: rgb(30, 136, 255); }
-.sc-banner--rival { border-color: rgb(255, 77, 51); }
-.sc-banner-title { font-size: 24px; -unity-font-style: bold; letter-spacing: 2px; color: rgb(255, 255, 255); -unity-text-align: middle-center; }
-.sc-banner--human .sc-banner-title { color: rgb(120, 190, 255); }
-.sc-banner--rival .sc-banner-title { color: rgb(255, 140, 120); }
-.sc-banner-cause { font-size: 15px; color: rgb(226, 234, 242); margin-top: 2px; -unity-text-align: middle-center; white-space: normal; }
-.sc-banner-next { font-size: 13px; -unity-font-style: bold; letter-spacing: 1px; color: rgb(255, 210, 63); margin-top: 6px; -unity-text-align: middle-center; }
-.sc-result-card--won { border-color: rgb(255, 210, 63); }
-.sc-result-card--lost { border-color: rgb(255, 77, 51); }
-.sc-result-card--won .sc-result-kicker { color: rgb(255, 210, 63); }
-.sc-result-card--lost .sc-result-kicker { color: rgb(255, 140, 120); }
-.sc-result-card--lost .sc-result-score { color: rgb(236, 242, 248); }
-.sc-result-last { font-size: 14px; color: rgb(226, 234, 242); margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }
+.sc-banner--human { border-bottom-color: var(--human); }
+.sc-banner--rival { border-bottom-color: var(--rival); }
+.sc-banner-title { font-size: 24px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; letter-spacing: 1px; color: rgb(255, 255, 255); -unity-text-align: middle-center; }
+.sc-banner--human .sc-banner-title { color: rgb(128, 194, 255); }
+.sc-banner--rival .sc-banner-title { color: rgb(255, 150, 130); }
+.sc-banner-cause { font-size: 14px; color: var(--glass-text); margin-top: 2px; -unity-text-align: middle-center; white-space: normal; }
+.sc-banner-next { font-size: 13px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--dot); margin-top: 6px; -unity-text-align: middle-center; }
 
-/* First run: start menu over the paused court. */
+/* Shot note: the judged stroke in a word, under the court. No box: big slanted type with a shadow over the floor. */
+.sc-shot-note {
+    position: absolute;
+    height: 34px;
+    font-size: 24px;
+    -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset");
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    text-shadow: 0px 2px 5px rgba(4, 14, 18, 0.85);
+    background-color: rgba(0, 0, 0, 0);
+    padding: 0;
+    margin: 0;
+}
+.sc-shot-note--perfect { color: var(--dot); }
+.sc-shot-note--valid { color: rgb(255, 255, 255); }
+.sc-shot-note--failed { color: rgb(255, 128, 112); }
+.sc-shot-note--info { font-size: 16px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); color: var(--glass-text); }
+
+/* ---------- Off the court: the front wall ---------- */
+/* Wall buttons: ink outline on plaster; the primary stays line red. */
+.sc-wall .unity-button.sc-button {
+    border-width: 2px;
+    border-color: var(--ink-line);
+    background-color: rgba(24, 34, 44, 0.04);
+    color: var(--ink);
+}
+.sc-wall .unity-button.sc-button:hover { background-color: rgba(24, 34, 44, 0.09); }
+.sc-wall .unity-button.sc-button:active { background-color: rgba(24, 34, 44, 0.16); }
+.sc-wall .unity-button.sc-button--primary { background-color: var(--line); border-color: var(--line); color: rgb(255, 255, 255); }
+.sc-wall .unity-button.sc-button--primary:hover { background-color: var(--line-hover); }
+.sc-wall .unity-button.sc-button--primary:active { background-color: var(--line-press); }
+
+.sc-result-layer {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    align-items: center;
+    justify-content: center;
+}
+/* A card is a piece of the wall with its out line along the top. */
+.sc-result-card {
+    width: 300px;
+    padding: 22px;
+    padding-bottom: 18px;
+    align-items: center;
+    background-color: var(--plaster-card);
+    border-radius: 18px;
+    border-width: 0;
+    border-top-width: 6px;
+    border-color: var(--line);
+}
+.sc-result-kicker { font-size: 12px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; letter-spacing: 3px; color: var(--ink-soft); }
+.sc-result-title { font-size: 28px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-top: 6px; -unity-text-align: middle-center; white-space: normal; }
+.sc-result-score { font-size: 60px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-top: 0; margin-bottom: 0; }
+.sc-result-note { font-size: 13px; color: var(--ink-soft); margin-bottom: 16px; -unity-text-align: middle-center; white-space: normal; }
+.sc-result-buttons { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+/* 46: still 44 or more once its edges snap to whole pixels, at any panel scale and any card position. */
+.sc-result-buttons .unity-button.sc-button { height: 46px; margin-top: 4px; margin-bottom: 4px; padding-left: 14px; padding-right: 14px; font-size: 14px; }
+.sc-result-card--won { border-top-color: var(--dot); }
+.sc-result-card--lost { border-top-color: var(--rival); }
+.sc-result-card--won .sc-result-kicker { color: rgb(138, 96, 0); }
+.sc-result-card--lost .sc-result-kicker { color: var(--line); }
+.sc-result-card--lost .sc-result-score { color: var(--ink-soft); }
+.sc-result-last { font-size: 14px; color: var(--ink); margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }
+/* Personal records (20 nov): one line in line red when the match broke a best. */
+.sc-result-record { font-size: 14px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--line-press); margin-top: 4px; margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }
+
+/* Start menu (redesign, 19 nov): the screen is the front wall at scale, read top to bottom as on a court. The out line
+   along the top, the wordmark in the playing area above the service line (where every shot must land), the choices below
+   it in thumb reach, and the tin along the bottom edge. Left aligned on a 24 pt gutter; one loud word, one loud button. */
 .sc-menu-layer {
     position: absolute;
     left: 0; right: 0; top: 0; bottom: 0;
     align-items: center;
     justify-content: center;
     padding-left: 24px; padding-right: 24px; padding-top: 70px; padding-bottom: 56px;
-    background-color: rgba(7, 12, 20, 0.93);
+    background-color: var(--plaster);
 }
-.sc-menu-art {
-    width: 208px; height: 132px;
-    margin-bottom: 22px;
-    border-radius: 14px;
-    border-width: 3px;
-    border-color: rgb(255, 210, 63);
-    overflow: hidden;
+.sc-menu-layer.sc-menu-home { align-items: stretch; justify-content: flex-start; }
+.sc-menu-outline { flex-shrink: 0; height: 3px; margin-left: -24px; margin-right: -24px; background-color: var(--line); }
+.sc-menu-hero { flex-grow: 1; flex-shrink: 0; justify-content: flex-end; padding-top: 18px; padding-bottom: 16px; }
+/* The ball marks cover the playing area edge to edge, behind the wordmark. */
+.sc-menu-marks { position: absolute; left: -24px; right: -24px; top: 0; bottom: 0; }
+/* Lockup: the wordmark on two lines and the ball squashing on the wall in the room "CLASH" leaves on the second. */
+.sc-menu-wordmark { flex-shrink: 0; }
+.sc-menu-art { position: absolute; right: 0; bottom: 2px; width: 92px; height: 80px; }
+.sc-menu-title {
+    font-size: 72px;
+    -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset");
+    -unity-font-style: normal;
+    color: var(--ink);
+    white-space: normal;
+    -unity-text-align: upper-left;
+    margin-left: -4px;
+    padding-left: 0;
 }
-.sc-menu-title { font-size: 36px; -unity-font-style: bold; letter-spacing: 3px; color: rgb(255, 255, 255); -unity-text-align: middle-center; }
-.sc-menu-tagline { font-size: 15px; color: rgb(190, 204, 218); margin-top: 2px; margin-bottom: 30px; -unity-text-align: middle-center; }
-.sc-menu-label { font-size: 12px; -unity-font-style: bold; letter-spacing: 2px; color: rgb(140, 158, 176); margin-bottom: 8px; }
-.sc-level-row { flex-direction: row; justify-content: center; margin-bottom: 22px; }
-.unity-button.sc-level { width: 96px; height: 48px; font-size: 15px; margin-left: 4px; margin-right: 4px; border-width: 2px; border-color: rgba(255, 255, 255, 0); }
-.unity-button.sc-level--selected { background-color: rgb(24, 52, 92); border-color: rgb(255, 210, 63); color: rgb(255, 232, 140); }
-.unity-button.sc-menu-play { width: 304px; height: 64px; font-size: 24px; letter-spacing: 1px; border-radius: 18px; margin-bottom: 12px; }
-.unity-button.sc-menu-wide { width: 304px; height: 50px; font-size: 16px; margin-bottom: 10px; }
-.sc-menu-build { position: absolute; left: 0; right: 0; bottom: 30px; font-size: 11px; color: rgb(120, 138, 156); -unity-text-align: middle-center; }
+.sc-menu-tagline { font-size: 17px; color: var(--ink-soft); margin-top: 4px; -unity-text-align: upper-left; }
+.sc-menu-rule { flex-shrink: 0; height: 4px; margin-left: -24px; margin-right: -24px; margin-bottom: 18px; background-color: var(--line); }
+.sc-menu-tin { position: absolute; left: 0; right: 0; bottom: 0; height: 8px; background-color: var(--line); }
+.sc-menu-controls { flex-shrink: 0; margin-bottom: 12px; }
+.sc-menu-label { font-size: 14px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-bottom: 8px; }
 
-/* First run: three-step tutorial card. */
+/* Level: one segmented control, three segments inside a single ink outline; the chosen one is ink with the ball's yellow lip. */
+.sc-level-row { flex-direction: row; flex-shrink: 0; margin-bottom: 12px; border-width: 2px; border-color: var(--ink); border-radius: 14px; overflow: hidden; }
+.sc-wall .unity-button.sc-level { flex-grow: 1; flex-basis: 0; width: auto; height: 48px; font-size: 16px; margin: 0; border-width: 0; border-radius: 0; background-color: rgba(0, 0, 0, 0); }
+.sc-wall .unity-button.sc-level--divided { border-left-width: 2px; border-color: var(--ink-line); }
+.sc-wall .unity-button.sc-level--selected { background-color: var(--ink); color: var(--plaster); border-bottom-width: 4px; border-bottom-color: var(--dot); }
+
+/* Jugar: the one red slab, with a darker lip so it reads as something to press. */
+.sc-wall .unity-button.sc-menu-play {
+    width: auto; height: 76px; font-size: 34px;
+    -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset");
+    margin: 0; margin-bottom: 14px;
+    border-radius: 16px; border-width: 0; border-bottom-width: 6px; border-bottom-color: var(--line-press);
+}
+/* Secondary: quiet tinted plates, side by side. */
+.sc-menu-links { flex-direction: row; flex-shrink: 0; margin-bottom: 10px; }
+.sc-wall .unity-button.sc-menu-link { flex-grow: 1; flex-basis: 0; height: 48px; font-size: 15px; margin: 0; border-width: 0; border-radius: 12px; background-color: rgba(24, 34, 44, 0.07); }
+.sc-wall .unity-button.sc-menu-link--first { margin-right: 8px; }
+/* Three plates in the row: "¿Cómo se juega?" is the longest, so it takes twice the room of the other two. */
+.sc-wall .unity-button.sc-menu-link--wide { flex-grow: 2; }
+/* Switches: small pills; an off switch drops its tint and its ink. */
+.sc-menu-switches { flex-direction: row; flex-shrink: 0; margin-bottom: 8px; }
+.sc-wall .unity-button.sc-menu-switch { flex-grow: 1; flex-shrink: 0; height: 46px; font-size: 13px; margin: 0; margin-right: 6px; padding-left: 8px; padding-right: 8px; border-radius: 22px; border-width: 2px; border-color: var(--ink-line); background-color: rgba(0, 0, 0, 0); }
+.sc-wall .unity-button.sc-menu-switch--last { margin-right: 0; }
+.sc-wall .unity-button.sc-toggle--off { color: var(--ink-soft); border-color: rgba(24, 34, 44, 0.1); }
+.sc-wall .unity-button.sc-menu-dev { height: 46px; flex-shrink: 0; font-size: 13px; margin: 0; margin-top: 2px; border-radius: 22px; border-width: 2px; border-color: var(--ink-line); background-color: rgba(0, 0, 0, 0); }
+.sc-menu-build { position: absolute; left: 0; right: 0; bottom: 30px; font-size: 11px; color: var(--ink-soft); -unity-text-align: middle-center; }
+
+/* Credits: the same wall, read like the back of a ticket. A title, the service line, two short sections, and Volver in red. */
+.sc-menu-layer.sc-credits { align-items: stretch; justify-content: flex-start; }
+.sc-credits-title { font-size: 40px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-top: 18px; margin-bottom: 14px; margin-left: -2px; }
+.sc-credits-body { flex-grow: 1; flex-shrink: 1; }
+.sc-credits-section { font-size: 14px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--line-press); margin-bottom: 6px; margin-top: 4px; }
+.sc-credits-lead { font-size: 18px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--ink); white-space: normal; margin-bottom: 6px; }
+.sc-credits-text { font-size: 15px; color: var(--ink); white-space: normal; margin-bottom: 22px; }
+.sc-records-value { font-size: 26px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: var(--ink); white-space: normal; margin-bottom: 16px; }
+.sc-credits-fine { font-size: 13px; color: var(--ink-soft); white-space: normal; margin-bottom: 6px; }
+.sc-wall .unity-button.sc-credits-back { height: 56px; font-size: 20px; margin: 0; margin-top: 12px; border-radius: 16px; border-width: 0; border-bottom-width: 5px; border-bottom-color: var(--line-press); }
+
+/* Tutorial: the same wall, with a card per step. The drawing sits on ink, like the court seen from the glass. */
 .sc-tutorial-card {
     width: 338px;
     padding: 20px;
     align-items: center;
-    background-color: rgb(13, 22, 35);
-    border-radius: 22px;
+    background-color: var(--plaster-card);
+    border-radius: 18px;
     border-width: 1px;
-    border-color: rgba(255, 255, 255, 0.12);
+    border-color: var(--ink-line);
+    border-top-width: 6px;
+    border-top-color: var(--line);
 }
-.sc-tutorial-art { width: 270px; height: 150px; margin-top: 4px; margin-bottom: 16px; border-radius: 14px; background-color: rgb(24, 36, 54); overflow: hidden; }
-.sc-tutorial-title { font-size: 26px; -unity-font-style: bold; color: rgb(255, 255, 255); margin-bottom: 8px; -unity-text-align: middle-center; }
-.sc-tutorial-body { font-size: 16px; color: rgb(226, 234, 242); white-space: normal; -unity-text-align: upper-left; width: 100%; margin-bottom: 12px; }
+.sc-tutorial-card .sc-menu-label { color: var(--line); }
+.sc-tutorial-art { width: 270px; height: 150px; margin-top: 4px; margin-bottom: 16px; border-radius: 12px; background-color: var(--ink); overflow: hidden; }
+.sc-tutorial-title { font-size: 28px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-bottom: 8px; -unity-text-align: middle-center; }
+.sc-tutorial-body { font-size: 16px; color: var(--ink); white-space: normal; -unity-text-align: upper-left; width: 100%; margin-bottom: 12px; }
 .sc-tutorial-results { width: 100%; margin-bottom: 8px; }
 .sc-tutorial-result { flex-direction: row; align-items: flex-start; margin-bottom: 6px; }
-.sc-tutorial-chip { width: 12px; height: 12px; border-radius: 6px; margin-top: 8px; margin-right: 8px; flex-shrink: 0; border-width: 2px; border-color: rgb(140, 158, 176); }
-.sc-tutorial-chip--perfect { background-color: rgb(255, 204, 41); border-color: rgb(255, 204, 41); }
-.sc-tutorial-chip--valid { background-color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); }
-.sc-tutorial-result-text { font-size: 14px; color: rgb(214, 224, 234); white-space: normal; flex-shrink: 1; flex-grow: 1; }
+.sc-tutorial-chip { width: 12px; height: 12px; border-radius: 6px; margin-top: 4px; margin-right: 8px; flex-shrink: 0; border-width: 2px; border-color: var(--ink-soft); }
+.sc-tutorial-chip--perfect { background-color: var(--dot); border-color: rgb(214, 166, 0); }
+.sc-tutorial-chip--valid { background-color: rgb(255, 255, 255); border-color: var(--ink); }
+.sc-tutorial-result-text { font-size: 14px; color: var(--ink); white-space: normal; flex-shrink: 1; flex-grow: 1; }
 .sc-tutorial-buttons { flex-direction: row; justify-content: space-between; width: 100%; margin-top: 8px; }
 .unity-button.sc-tutorial-skip { width: 104px; height: 52px; font-size: 15px; margin-left: 0; }
-.unity-button.sc-tutorial-next { width: 176px; height: 52px; font-size: 18px; margin-right: 0; }
+.sc-wall .unity-button.sc-tutorial-next { width: 176px; height: 52px; font-size: 20px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); margin-right: 0; }
 
-/* First run: pause card over the paused match. */
+/* Pause: the court stays visible behind a light scrim; the card is a piece of the wall. */
 .sc-pause-layer {
     position: absolute;
     left: 0; right: 0; top: 0; bottom: 0;
     align-items: center;
     justify-content: center;
-    background-color: rgba(7, 12, 20, 0.5);
+    background-color: rgba(8, 22, 27, 0.55);
 }
-.sc-pause-card { border-color: rgba(255, 255, 255, 0.25); }
-.sc-pause-title { font-size: 26px; -unity-font-style: bold; letter-spacing: 4px; color: rgb(255, 255, 255); margin-bottom: 18px; }
+.sc-pause-card { border-top-color: var(--line); }
+.sc-pause-title { font-size: 28px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; letter-spacing: 3px; color: var(--ink); margin-bottom: 18px; }
 .unity-button.sc-pause-button { width: 240px; height: 54px; font-size: 18px; margin-bottom: 10px; }
 
-/* Device robustness: sound and music switches side by side, in the menu and in the pause card. */
-.sc-menu-pair { flex-direction: row; justify-content: space-between; width: 304px; margin-bottom: 10px; flex-shrink: 0; }
-.unity-button.sc-menu-half { width: 148px; height: 50px; font-size: 15px; margin-left: 0; margin-right: 0; }
+/* Device robustness: sound and music switches side by side in the pause card (the menu has its own row above). */
 .sc-pause-pair { flex-direction: row; justify-content: space-between; width: 240px; margin-bottom: 10px; flex-shrink: 0; }
 .unity-button.sc-pause-half { width: 116px; height: 54px; font-size: 15px; margin-left: 0; margin-right: 0; }

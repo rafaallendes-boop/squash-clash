@@ -12,8 +12,10 @@ namespace SquashClash.AutoQA
     [Serializable] internal sealed class PhysicsWindow
     {
         public double kInMs,kOutMs,sampleMs;
-        internal static PhysicsWindow Measure(Trajectory incoming,ParamSet config,double targetStep)
+        // required bounces 1 and the configured legal heights by default; the volley suite measures 0 bounces at the volley heights.
+        internal static PhysicsWindow Measure(Trajectory incoming,ParamSet config,double targetStep,int requiredBounces=1,double minHeight=double.NaN,double maxHeight=double.NaN)
         {
+            if(double.IsNaN(minHeight))minHeight=config.Get("legal.minHeight");if(double.IsNaN(maxHeight))maxHeight=config.Get("legal.maxHeight");
             if(incoming==null||incoming.States.Count<2)return null;
             var cfg=EffectiveConfig.From(config);var body=BodyFrame.From(config);var court=cfg.Court;
             int hz=cfg.Physics.StepHz;float radius=cfg.Physics.BallRadius;
@@ -28,7 +30,7 @@ namespace SquashClash.AutoQA
                 {
                     float fraction=(j+.5f)/64;double at=a+(b-a)*fraction;var point=Vector3.LerpUnclamped(from,to,fraction);
                     double dx=(double)point.x-body.PositionXZ.x,dy=(double)point.y-body.ReferenceHeight,dz=(double)point.z-body.PositionXZ.y;
-                    bool legal=front&&bounces==1&&!invalid&&point.y>=config.Get("legal.minHeight")&&point.y<=config.Get("legal.maxHeight")&&dx*dx+dy*dy+dz*dz<=(double)body.Reach*body.Reach;
+                    bool legal=front&&bounces==requiredBounces&&!invalid&&point.y>=minHeight&&point.y<=maxHeight&&dx*dx+dy*dy+dz*dz<=(double)body.Reach*body.Reach;
                     if(legal){if(!active){start=at;active=true;}last=at;}
                     else if(active){ranges.Add((start,last));active=false;}
                 }

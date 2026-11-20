@@ -42,12 +42,12 @@ namespace SquashClash.Runtime.Tests
             }
             yield return null;
         }
-        [UnityTest] public IEnumerator Rival_BackhandOpensOutward_WhileForehandFinishesAcross()
+        [UnityTest] public IEnumerator Rival_BackhandFinishesOnTheHittingArmSide_WhileForehandFinishesAcross()
         {
             var figure=Figure(players.Rival);
             Stroke(figure,1);
             for(int i=0;i<20;i++)figure.Animate(Frame);
-            Assert.That(figure.RacketLocalPosition.x,Is.GreaterThan(.20f),"backhand: from across the body out toward the contact side");
+            Assert.That(figure.RacketLocalPosition.x,Is.LessThan(-.25f),"backhand (PO-requested redesign, 19 nov): across the body and finishing high on the hitting-arm side");
             Stroke(figure,-1);
             for(int i=0;i<20;i++)figure.Animate(Frame);
             Assert.That(figure.RacketLocalPosition.x,Is.GreaterThan(.10f),"forehand: from the right side toward the centre and across");

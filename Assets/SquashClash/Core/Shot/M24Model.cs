@@ -20,6 +20,10 @@ namespace SquashClash.Core.Shot
         public bool Conservative {get;private set;}
         public bool TapCandidate {get;private set;}
         public Vector2 Aim {get;private set;}
+        // Two-wall shot: set before Began; the touch may then become a side-wall aim when it misses the front wall.
+        public bool AllowSide {get;set;}
+        // The side-wall aim of this gesture (Aim then holds its surface coordinates z, y); default for a front-wall aim.
+        public SideAim Side {get;private set;}
         public Vector2 Anchor {get;private set;}
         public float P {get;private set;}
         public float DistanceMm {get;private set;}
@@ -40,8 +44,13 @@ namespace SquashClash.Core.Shot
                 if(began)return;
                 began=Active=true;finger=sample.FingerId;Anchor=sample.PositionPx;BeganAt=sample.TimeReal;
                 if(!Projection.TryMap(Anchor,out var aim,out var reason))
-                {Active=false;Outcome=GestureOutcome.Rejected;Reason=reason;TerminalAt=sample.TimeReal;return;}
-                Aim=aim;HasAim=true;Invalid=Projection.IsInvalid(aim);Reason=Invalid?"invalid-aim":"began-fixed";
+                {
+                    // Two-wall shot: only a touch that misses the front wall, and only while the side aim is allowed.
+                    if(!AllowSide||reason!="outside-front-wall"||!Projection.TryMapSide(Anchor,out var side))
+                    {Active=false;Outcome=GestureOutcome.Rejected;Reason=reason;TerminalAt=sample.TimeReal;return;}
+                    Side=side;Aim=side.UV;HasAim=true;Invalid=false;Reason="began-side";
+                }
+                else{Aim=aim;HasAim=true;Invalid=Projection.IsInvalid(aim);Reason=Invalid?"invalid-aim":"began-fixed";}
             }
             else if(!Active||sample.FingerId!=finger)return;
             if(!Finite(sample.PositionPx.x)||!Finite(sample.PositionPx.y)||double.IsNaN(sample.TimeReal)||double.IsInfinity(sample.TimeReal))

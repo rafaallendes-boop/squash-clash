@@ -4,10 +4,14 @@ namespace SquashClash.Core.Rally
     public static class RallyText
     {
         public static string Player(PlayerId who)=>who==PlayerId.Human?"Tú":"Rival";
+        // Rival styles (design 2026-11-19): shown at the start of a match and on the scoreboard.
+        public static string RivalIntro(RivalStyleId style)=>"Rival: "+RivalStyle.Name(style);
         private static string Score(int human,int rival)=>"Tú "+human+" – "+rival+" Rival";
         public static string Live(int human,int rival,int shots,PlayerId toHit)=>Score(human,rival)+" · golpes "+shots+" · turno: "+Player(toHit);
         public static string Point(PlayerId? winner,PointEndCause cause,ReceptionResult? reception,int shots,int human,int rival)
             =>(winner.HasValue?"Punto "+Player(winner.Value):"Sin punto")+": "+Cause(cause,reception)+" · "+shots+(shots==1?" golpe":" golpes")+" · "+Score(human,rival);
+        // Serve kinds (design 2026-11-20-serve): the touch in the pause before the human's own serve.
+        public const string ServeHint="Toca el frontis: arriba globo, abajo drive";
         public static string Box(ServiceBox box)=>box==ServiceBox.Right?"der.":"izq.";
         // Match line while a point is played: score, who serves and from where, strokes and turn.
         public static string LiveMatch(int human,int rival,int shots,PlayerId toHit,PlayerId server,ServiceBox box)

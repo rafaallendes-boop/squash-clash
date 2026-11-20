@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using SquashClash.Core.Court;
+using SquashClash.Core.Shot;
 using UnityEngine;
 namespace SquashClash.Core.Rally
 {
-    public enum ShotLine { Straight, Cross, Drop }
+    // Boast: the two-wall shot (design 2026-11-20-boast-predeclaration), appended so the existing values keep their numbers.
+    public enum ShotLine { Straight, Cross, Drop, Boast }
     public enum ShotHeight { Low, Mid, High }
     public enum ShotPower { Medium, Strong }
     public readonly struct ShotOption
@@ -12,8 +15,11 @@ namespace SquashClash.Core.Rally
         public readonly Vector2 Aim;public readonly float P;
         // Floor zone the shot is meant to reach (x, z): the "away from the opponent" feature.
         public readonly Vector2 Zone;
-        public ShotOption(ShotLine line,ShotHeight height,ShotPower power,Vector2 aim,float p,Vector2 zone){Line=line;Height=height;Power=power;Aim=aim;P=p;Zone=zone;}
-        public bool Long=>Line!=ShotLine.Drop&&Height!=ShotHeight.Low;
+        // A boast's side-wall point (Aim then holds its surface coordinates z, y); default for every front-wall line.
+        public readonly SideAim Side;
+        public ShotOption(ShotLine line,ShotHeight height,ShotPower power,Vector2 aim,float p,Vector2 zone){Line=line;Height=height;Power=power;Aim=aim;P=p;Zone=zone;Side=default;}
+        public ShotOption(ShotHeight height,ShotPower power,SideAim side,float p,Vector2 zone){Line=ShotLine.Boast;Height=height;Power=power;Aim=side.UV;P=p;Zone=zone;Side=side;}
+        public bool Long=>Line!=ShotLine.Drop&&Line!=ShotLine.Boast&&Height!=ShotHeight.Low;
     }
     // Spec 11.3: {straight, cross, drop} x {low, mid, high} x {medium, strong}, as intentions (aim on the front wall, power).
     public static class ShotOptions
@@ -50,6 +56,31 @@ namespace SquashClash.Core.Rally
                         options.Add(new ShotOption(line,height,power,ClampAim(context,aim),Mathf.Clamp01(strength),zone));
                     }
             return options;
+        }
+        // The two-wall shot (design 2026-11-20-boast-predeclaration, section 5): with the rival's boast on, from the back quarter and near a
+        // side wall, the boast options at the near side wall. Appended after the 18 front-wall options, so with it off nothing changes.
+        public static void AddBoasts(RallyContext context,Vector3 contact,List<ShotOption> options)
+        {
+            var p=context.Params;var court=context.Court;
+            var wall=SideAim.NearWall(contact.x,court);
+            float fromWall=wall==SurfaceId.RightWall?contact.x:court.Width-contact.x;
+            if(contact.z<p.BoastBackFraction*court.Length||fromWall>p.BoastWallMax)return;
+            float inset=(float)p.CornerInset;
+            // The front opposite corner: where a boast dies, away from an opponent at the T or behind it.
+            var zone=new Vector2(wall==SurfaceId.RightWall?court.Width-inset:inset,1.5f);
+            foreach(ShotHeight height in new[]{ShotHeight.Low,ShotHeight.Mid})
+                foreach(ShotPower power in new[]{ShotPower.Medium,ShotPower.Strong})
+                {
+                    var side=ClampSide(context,new SideAim(wall,contact.z-(float)p.BoastAheadZ,(float)(height==ShotHeight.Low?p.BoastAimLow:p.BoastAimMid)));
+                    options.Add(new ShotOption(height,power,side,Mathf.Clamp01((float)(power==ShotPower.Strong?p.PowerStrong:p.PowerMedium)),zone));
+                }
+        }
+        // A boast's side-wall point stays on its wall, inside the court length and between the floor and the side out line.
+        public static SideAim ClampSide(RallyContext context,SideAim side)
+        {
+            var court=context.Court;float r=context.Physics.BallRadius+Margin;
+            float z=Mathf.Clamp(side.Z,r,court.Length-r);
+            return side.With(z,Mathf.Clamp(side.Y,r,SideAim.OutEdge(court,z)-r));
         }
         // The shared solver only accepts aims between the tin and the out line; intentions are clipped to that domain.
         public static Vector2 ClampAim(RallyContext context,Vector2 aim)

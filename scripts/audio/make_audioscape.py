@@ -9,7 +9,7 @@ Uso:  python3 scripts/audio/make_audioscape.py [directorio_de_salida]
 Salida por defecto: Assets/SquashClash/Runtime/Resources/Audio/scape-*.wav
 Formato: PCM mono de 16 bits a 22050 Hz; cada muestra se limita a [-1, 1] y se convierte con int(v*32767).
 
-No toca impact-perfect, impact-valid, contact-provisional ni swish-provisional (audio de contacto del jugador).
+No toca impact-perfect, impact-valid, contact-provisional ni swish-provisional (audio de contacto del jugador); scape-perfect-own es una variante nueva que ShotFeedback puede usar en lugar de impact-perfect (interruptor DEV).
 Las formulas estan en Assets/SquashClash/Runtime/Resources/Audio/PROVENANCE.md y en las funciones de abajo.
 """
 import hashlib
@@ -66,9 +66,19 @@ def bounce_floor():  # bote en el piso: golpe sordo y grave
     return render(.080, lambda t, i: attack(t, .0015) * (.50 * math.sin(phase(t)) * math.exp(-38 * t) + .18 * n[i] * 3 * math.exp(-140 * t)))
 
 
-def bounce_wall():  # paredes laterales y trasera: toque medio, mas seco
+def bounce_wall():  # paredes laterales: toque medio, mas seco
     n = noise(32, RATE, 3000)
     return render(.070, lambda t, i: attack(t, .0010) * (.42 * math.sin(TAU * 310 * t) * math.exp(-60 * t) + .16 * math.sin(TAU * 640 * t) * math.exp(-90 * t) + .14 * n[i] * 2 * math.exp(-200 * t)))
+
+
+def bounce_glass():  # vidrio de fondo: «toc» seco de vidrio templado, mas agudo y brillante que la pared lateral, muy corto
+    n = noise(37, RATE, 6500)
+    return render(.045, lambda t, i: attack(t, .0006) * (.40 * math.sin(TAU * 1250 * t) * math.exp(-110 * t) + .24 * math.sin(TAU * 2750 * t) * math.exp(-170 * t) + .10 * math.sin(TAU * 4100 * t) * math.exp(-260 * t) + .18 * n[i] * 2 * math.exp(-300 * t)))
+
+
+def perfect_own():  # golpe Perfecto propio: mas seco y limpio que impact-valid (caida corta, sin cuerpo grave, ataque nitido), mismo pico y RMS
+    n = noise(41, RATE, 7000)
+    return render(.040, lambda t, i: .405 * attack(t, .0005) * min(1.0, (.040 - t) / .004) * (.55 * math.sin(TAU * 1100 * t) * math.exp(-50 * t) + .25 * math.sin(TAU * 2300 * t) * math.exp(-80 * t) + .20 * n[i] * 2 * math.exp(-600 * t)))
 
 
 def front_wall():  # frontis: el golpe mas lleno de la cancha
@@ -84,6 +94,29 @@ def rival_step():  # paso del rival: pisada sorda con un chirrido corto de zapat
 
 def rival_racket():  # raqueta del rival: grave y redonda, sin ruido de ataque (distinta de los impactos del jugador)
     return render(.070, lambda t, i: (1 - math.exp(-t / .002)) * (.38 * math.sin(TAU * 270 * t) * math.exp(-45 * t) + .14 * math.sin(TAU * 610 * t) * math.exp(-90 * t)))
+
+
+def breath(seed, seconds, low_hz, high_hz, rise, fall, flutter_hz, peak=.60):
+    """Resoplido: ruido blanco en banda (paso bajo `high_hz` menos paso bajo `low_hz`) con subida suave `rise` s, caida exponencial
+    `fall` 1/s y un aleteo lento de amplitud; normalizado a `peak` para que el nivel en juego lo fije solo el volumen de la fuente."""
+    n = noise(seed, int(seconds * RATE) + 1, high_hz)
+    m = noise(seed, int(seconds * RATE) + 1, low_hz)
+    raw = render(seconds, lambda t, i: (n[i] - m[i]) * min(1.0, t / rise) ** 2 * math.exp(-fall * t)
+                 * (1 + .25 * math.sin(TAU * flutter_hz * t)) * min(1.0, (seconds - t) / .030))
+    top = max(abs(v) for v in raw)
+    return [v / top * peak for v in raw]
+
+
+def rival_breath_1():  # resoplido largo, aire sobre todo medio
+    return breath(51, .52, 400, 2600, .10, 4.5, 17)
+
+
+def rival_breath_2():  # resoplido corto y seco, algo mas agudo
+    return breath(52, .34, 650, 3400, .05, 8.0, 23)
+
+
+def rival_breath_3():  # resoplido medio, mas grave y con soplido lento
+    return breath(53, .44, 300, 2000, .14, 5.5, 13)
 
 
 def two_notes(first_hz, second_hz, level, decay):
@@ -122,7 +155,8 @@ def ambience():  # ambiente de cancha: aire de sala grave y un zumbido leve; 4 s
 
 CLIPS = (('scape-bounce-floor', bounce_floor), ('scape-bounce-wall', bounce_wall), ('scape-front-wall', front_wall),
          ('scape-rival-step', rival_step), ('scape-rival-racket', rival_racket), ('scape-point-won', point_won),
-         ('scape-point-lost', point_lost), ('scape-ui-click', ui_click), ('scape-ambience', ambience))
+         ('scape-point-lost', point_lost), ('scape-ui-click', ui_click), ('scape-ambience', ambience), ('scape-bounce-glass', bounce_glass), ('scape-perfect-own', perfect_own),
+         ('scape-rival-breath-1', rival_breath_1), ('scape-rival-breath-2', rival_breath_2), ('scape-rival-breath-3', rival_breath_3))
 
 
 def main():

@@ -134,6 +134,8 @@ namespace SquashClash.Runtime.Tests
             var holder=app.transform.Find("Music");Assert.That(holder,Is.Not.Null,"music sources live on their own child");
             Assert.That(holder.GetComponents<AudioSource>().Length,Is.EqualTo(2));
             int sources=app.GetComponentsInChildren<AudioSource>(true).Length;
+            // The rival these points were written against (19 nov): the music is what is tested, not the rival's style.
+            rally.StyleOverride=SquashClash.Core.Rally.RivalStyleId.Fondista;
             yield return StartMatch();
             Assert.That(Drive(()=>{music.Tick((float)StepReal);return rally.HumanPoints+rally.RivalPoints>=2;},300),Is.True);
             Assert.That(app.GetComponentsInChildren<AudioSource>(true).Length,Is.EqualTo(sources),"no source is created while playing");

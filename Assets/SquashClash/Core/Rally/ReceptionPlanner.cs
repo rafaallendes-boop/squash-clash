@@ -17,11 +17,16 @@ namespace SquashClash.Core.Rally
         // Arrival quality q in [0,1] (spec 9.1): the "position" source for later error layers.
         public readonly float Quality;
         public readonly string Reason;
+        // The volley opportunity on the path to this plan (none unless the caller adds it): seen by the brain, never taken by the planner.
+        public readonly VolleyOpportunity Volley;
         public ReceptionPlan(bool reachable,Vector2 stance,Vector2 bodyAtContact,ContactPlan contact,long arrivalStep,double slack,float quality,string reason)
-        {Reachable=reachable;Stance=stance;BodyAtContact=bodyAtContact;Contact=contact;ArrivalStep=arrivalStep;SlackS=slack;Quality=quality;Reason=reason;}
+            :this(reachable,stance,bodyAtContact,contact,arrivalStep,slack,quality,reason,default){}
+        public ReceptionPlan(bool reachable,Vector2 stance,Vector2 bodyAtContact,ContactPlan contact,long arrivalStep,double slack,float quality,string reason,VolleyOpportunity volley)
+        {Reachable=reachable;Stance=stance;BodyAtContact=bodyAtContact;Contact=contact;ArrivalStep=arrivalStep;SlackS=slack;Quality=quality;Reason=reason;Volley=volley;}
+        public ReceptionPlan WithVolley(VolleyOpportunity volley)=>new ReceptionPlan(Reachable,Stance,BodyAtContact,Contact,ArrivalStep,SlackS,Quality,Reason,volley);
     }
     // Contact planner for a moving character (spec 9.1). It picks where to stand; the existing ContactPlanner,
-    // untouched, then decides K, T* and P* for a body standing there. It never picks a volley and never swings.
+    // untouched, then decides K, T* and P* for a body standing there. It plans the bounce only (M1): it never picks a volley and never swings.
     public static class ReceptionPlanner
     {
         private readonly struct Candidate
@@ -49,7 +54,7 @@ namespace SquashClash.Core.Rally
             {
                 var state=trajectory.States[i];
                 while(next<trajectory.Contacts.Count&&trajectory.Contacts[next].Step<=state.Step)rules.OnBallContact(trajectory.Contacts[next++]);
-                if(rules.Closed||!rules.CanHit(who)||state.Position.y<legal.MinHeight||state.Position.y>legal.MaxHeight)continue;
+                if(rules.Closed||!rules.CanHitAfterBounce(who)||state.Position.y<legal.MinHeight||state.Position.y>legal.MaxHeight)continue;
                 window.Add(new Sample(state.Step,state.Position,Feature(frame,court,state.Position)));
             }
             if(window.Count==0)return None("no-legal-window");
