@@ -20,7 +20,7 @@
 - El export reveló que Unity fusiona los manifiestos; se corrigió el manifiesto y la verificación en un commit aparte.
 
 ## Compuertas
-Ver el resultado final en el mensaje de entrega (cabeza, EditMode, PlayMode, AutoQA v/t3/volley, check-release dev/prod).
+Sobre la cabeza de código `7e4e87d`, árbol limpio: **EditMode 961/961, PlayMode 743/743**, AutoQA v/t3/volley PASS/0/nivel 1 (102/102 cada una), check-release dev/prod OK (build 1061, manifiesto fusionado verificado). `DefaultPreset.json` sin diff respecto de `main`.
 
 ## Decisiones abiertas del PO
 Las del §8 de la ficha: abrir o cerrar Documents (`UIFileSharingEnabled`/`LSSupportsOpeningDocumentsInPlace`) en la build pública; textos y correo; alojamiento de la política; internos o externos primero; retirar módulos Unity sin uso; ID de equipo en el repositorio público.
