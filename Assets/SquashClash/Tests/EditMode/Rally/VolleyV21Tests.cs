@@ -171,7 +171,9 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void RallySim_ATouchingHuman_VolleysThroughTheSharedRules_AndASprintVolleyCostsMore()
         {
-            var ctx=RallyFixtures.Context();Assert.That(ctx.HumanVolleySprint,Is.EqualTo(2f));Assert.That(ctx.Fatigue.Enabled,Is.True);
+            // The v2.2 sprint as shipped (fatigue feel DEV off): with the default energy limit these three matches have no sprint volley at
+            // all, since their energy falls below the onset (FatigueFeelTests covers that rule).
+            var ctx=RallyFixtures.Context(new RallyParams{HumanVolleySprintFatigue=0});Assert.That(ctx.HumanVolleySprint,Is.EqualTo(2f));Assert.That(ctx.Fatigue.Enabled,Is.True);
             int volleys=0,faults=0,rejected=0;double volleyCost=0;
             for(int i=0;i<3;i++)
                 using(var sim=new RallySim(ctx,new Toucher(ctx,20261128+2*i,850),RivalAi.For(ctx,AiLevel.Medium,RivalStyleId.Fondista,20261129+2*i)))

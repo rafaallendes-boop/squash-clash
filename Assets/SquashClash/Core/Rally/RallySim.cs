@@ -20,8 +20,10 @@ namespace SquashClash.Core.Rally
         public readonly bool Volley;
         // A volley opportunity was offered in this reception (whether or not it was taken).
         public readonly bool VolleyOffered;
-        public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason,CausalShotResult causal=default,double fatigueReception=0,double fatigueStriker=0,bool volley=false,bool volleyOffered=false)
-        {Volley=volley;VolleyOffered=volleyOffered;FatigueReception=fatigueReception;FatigueStriker=fatigueStriker;Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
+        // The speed factor of the chosen volley's run (v2.2 sprint; 1 = no sprint), set only for a touching human brain.
+        public readonly float VolleySprintFactor;
+        public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason,CausalShotResult causal=default,double fatigueReception=0,double fatigueStriker=0,bool volley=false,bool volleyOffered=false,float volleySprintFactor=1)
+        {VolleySprintFactor=volleySprintFactor;Volley=volley;VolleyOffered=volleyOffered;FatigueReception=fatigueReception;FatigueStriker=fatigueStriker;Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
     }
     public sealed class RallyOutcome
     {
@@ -82,6 +84,8 @@ namespace SquashClash.Core.Rally
         private bool hasRedirect;private long redirectStep;private Vector2 redirectStance;private int redirectDelay;private float redirectSprint=1;private double pendingSprintCost;
         public FatigueState HumanEnergy {get;private set;}
         public FatigueState RivalEnergy {get;private set;}
+        // Measurement and tests (like the DEV «Energía» buttons): both players' energy from now on; PlayMatch still starts at 100.
+        public void SetEnergy(double human,double rival){HumanEnergy=new FatigueState(context.Fatigue,human);RivalEnergy=new FatigueState(context.Fatigue,rival);}
         private readonly double[] receptionFatigue=new double[2];
         public PointRules Rules {get;}
         public PlayerBody Human {get;}
@@ -194,12 +198,12 @@ namespace SquashClash.Core.Rally
             if(volley.Exists)plan=plan.WithVolley(volley);
             LastPlan=plan;hasRedirect=false;
             // Volley v2.x (design 2026-11-20): only a touching human brain; every other brain takes the unchanged path below.
-            VolleyIntercept chosen=default;Vector2[] chosenPath=null;bool v2Offered=false;
+            VolleyIntercept chosen=default;Vector2[] chosenPath=null;bool v2Offered=false;float chosenSprint=1;
             if(who==PlayerId.Human&&context.HumanVolleyV2&&brain is IRallyVolleyToucher toucher)
-                ChooseHumanVolley(toucher,trajectory,plan,body,delay,out chosen,out chosenPath,out v2Offered);
+                ChooseHumanVolley(toucher,trajectory,plan,body,delay,f,out chosen,out chosenPath,out v2Offered,out chosenSprint);
             var observation=new AiObservation(state,body.Position,body.Velocity,other.Position,other.Velocity,Rules.Shots,Rules.FloorBounces,Rules.FrontWallReached);
             var shot=chosen.Exists?brain.Decide(observation,new ReceptionPlan(true,chosen.Stance,chosen.Stance,chosen.Plan,plan.ArrivalStep,plan.SlackS,plan.Quality,"volley-v2")):brain.Decide(observation,plan);
-            if(chosen.Exists&&!shot.Swing){hasRedirect=false;pendingSprintCost=0;chosen=default;chosenPath=null;}
+            if(chosen.Exists&&!shot.Swing){hasRedirect=false;pendingSprintCost=0;chosen=default;chosenPath=null;chosenSprint=1;}
             bool offeredLog=chosen.Exists||v2Offered||plan.Volley.Exists;
             hasPending=false;
             if(!shot.Swing)
@@ -231,7 +235,7 @@ namespace SquashClash.Core.Rally
                 case ShotResult.SystemFault:result=ReceptionResult.SystemFault;outcome.SystemFaults++;break;
                 default:result=ReceptionResult.NotEvaluable;break;
             }
-            var log=new ReceptionLog(who,result,decision.Result==ShotResult.Perfect,plan.Reachable,shot.Defensive,decision.DeltaMs,plan.SlackS,shot.Option,decision.ContactStep,decision.Reason,fatigueReception:f,volley:useVolley,volleyOffered:offeredLog);
+            var log=new ReceptionLog(who,result,decision.Result==ShotResult.Perfect,plan.Reachable,shot.Defensive,decision.DeltaMs,plan.SlackS,shot.Option,decision.ContactStep,decision.Reason,fatigueReception:f,volley:useVolley,volleyOffered:offeredLog,volleySprintFactor:chosenSprint);
             if(result!=ReceptionResult.Contact){outcome.Receptions.Add(log);return;}
             hasPending=true;pendingStep=decision.ContactStep;pendingShot=shot;pendingWho=who;pendingLog=log;
         }
@@ -245,11 +249,11 @@ namespace SquashClash.Core.Rally
             if(!solution.Solved)
             {
                 outcome.SystemFaults++;var l=pendingLog;
-                outcome.Receptions.Add(new ReceptionLog(who,ReceptionResult.SystemFault,false,l.Reachable,l.Defensive,l.DeltaMs,l.SlackS,pendingShot.Option,l.ContactStep,solution.Reason??"contact-not-legal",causal,l.FatigueReception,arm.Factor,l.Volley,l.VolleyOffered));
+                outcome.Receptions.Add(new ReceptionLog(who,ReceptionResult.SystemFault,false,l.Reachable,l.Defensive,l.DeltaMs,l.SlackS,pendingShot.Option,l.ContactStep,solution.Reason??"contact-not-legal",causal,l.FatigueReception,arm.Factor,l.Volley,l.VolleyOffered,l.VolleySprintFactor));
                 return;
             }
             var previous=pendingLog;
-            outcome.Receptions.Add(new ReceptionLog(who,previous.Result,previous.Perfect,previous.Reachable,previous.Defensive,previous.DeltaMs,previous.SlackS,pendingShot.Option,previous.ContactStep,previous.Reason,causal,previous.FatigueReception,arm.Factor,previous.Volley,previous.VolleyOffered));
+            outcome.Receptions.Add(new ReceptionLog(who,previous.Result,previous.Perfect,previous.Reachable,previous.Defensive,previous.DeltaMs,previous.SlackS,pendingShot.Option,previous.ContactStep,previous.Reason,causal,previous.FatigueReception,arm.Factor,previous.Volley,previous.VolleyOffered,previous.VolleySprintFactor));
             // The racket only replaces the velocity of the authoritative state at the contact step.
             ball.Reset(new BallState{Position=state.Position,Velocity=solution.Velocity,Step=state.Step});
             // A contact before the bounce also costs the volley energy (19 nov); bots never volley by default, so nothing changes for them.
@@ -262,11 +266,12 @@ namespace SquashClash.Core.Rally
         }
         // The v2.x choice of a touching human, exactly as RallyDirector makes it: the offer from the body at the reception start, the touch
         // inside [launch, S'], then the longest-window stance reachable without the sprint, otherwise with it. The body turns at the touch.
-        private void ChooseHumanVolley(IRallyVolleyToucher toucher,Trajectory trajectory,in ReceptionPlan plan,PlayerBody body,int delay,
-            out VolleyIntercept chosen,out Vector2[] chosenPath,out bool offered)
+        // fatigue: the human's factor at this reception start; it limits the sprint (fatigue feel, section 1).
+        private void ChooseHumanVolley(IRallyVolleyToucher toucher,Trajectory trajectory,in ReceptionPlan plan,PlayerBody body,int delay,double fatigue,
+            out VolleyIntercept chosen,out Vector2[] chosenPath,out bool offered,out float sprintUsed)
         {
-            chosen=default;chosenPath=null;
-            var detail=HumanVolley.OfferDetail(context,trajectory,Rules,body,delay,planVersion);offered=detail.Offer.Exists;
+            chosen=default;chosenPath=null;sprintUsed=1;float maxSprint=context.HumanVolleySprintAt(fatigue);
+            var detail=HumanVolley.OfferDetail(context,trajectory,Rules,body,delay,planVersion,fatigue);offered=detail.Offer.Exists;
             if(!offered)return;
             long first=trajectory.States[0].Step;double perMs=context.StepHz*context.Tempo/1000;
             double bounceMs=plan.Contact.Exists&&plan.Contact.TStarStep>=0?(plan.Contact.TStarStep-first)/perMs:double.NaN;
@@ -274,10 +279,10 @@ namespace SquashClash.Core.Rally
             if(double.IsNaN(touch)||touch<0||touch>(detail.SPrime-first)/perMs)return;
             long c=first+(long)Math.Floor(touch*perMs);var walk=body.Clone();for(long k=first;k<c;k++)walk.Step();
             var p=HumanVolley.Commit(context,trajectory,Rules,walk,c,delay,planVersion);float sprint=1;
-            if(!p.Exists&&context.HumanVolleySprint>1&&c<=detail.SPrime)
-            {var sp=HumanVolley.Commit(context,trajectory,Rules,walk,c,delay,planVersion,context.HumanVolleySprint);if(sp.Exists){p=sp;sprint=context.HumanVolleySprint;}}
+            if(!p.Exists&&maxSprint>1&&c<=detail.SPrime)
+            {var sp=HumanVolley.Commit(context,trajectory,Rules,walk,c,delay,planVersion,maxSprint);if(sp.Exists){p=sp;sprint=maxSprint;}}
             if(!p.Exists)return;
-            chosen=p;hasRedirect=true;redirectStep=c;redirectStance=p.Stance;redirectDelay=(int)Math.Max(0,first+delay-c);redirectSprint=sprint;
+            chosen=p;sprintUsed=sprint;hasRedirect=true;redirectStep=c;redirectStance=p.Stance;redirectDelay=(int)Math.Max(0,first+delay-c);redirectSprint=sprint;
             pendingSprintCost=sprint>1?context.Params.HumanVolleySprintCost*HumanVolley.Lateness(detail.S,detail.SPrime,c):0;
             // The causal reference reads the body's real path: M1 until the touch, then towards the stance.
             int n=trajectory.States.Count,until=(int)(c-first);var before=body.PositionsAfter(Math.Min(n,until));

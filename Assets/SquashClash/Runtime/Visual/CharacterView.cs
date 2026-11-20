@@ -72,6 +72,9 @@ namespace SquashClash.Runtime.Visual
         public bool SplitStepping=>hopClock>=0;
         public bool TrailVisible=>trail!=null&&trail.enabled;
         public float StrokePower=>strokePower;
+        // Fatigue feel, section 3: how tired the figure looks (0..1, smoothed); view only.
+        public float Tired=>tired;
+        private float tired;
         // Device robustness read-outs: which of the player's own hands holds the racket (-1 left, +1 right) and how far
         // the wrist is from the grip. The player faces the front wall and +x is the left wall (AX-1), so the left hand
         // is the arm on +x (the parts whose names end in "R" are named after the sign of x, not after the player's side).
@@ -300,12 +303,15 @@ namespace SquashClash.Runtime.Visual
             }
             yaw=Mathf.Lerp(yaw,(striking||winding?travelYaw*.3f:travelYaw)+twist,blend);
             float ready=body!=null&&bodyPhase==BodyPhase.Waiting?1:0;
-            crouch=Mathf.MoveTowards(crouch,body==null?.04f:bodyPhase==BodyPhase.Set?.13f:bodyPhase==BodyPhase.Waiting?.09f:.06f+.03f*backpedal,dt*.6f);
+            // Fatigue feel (section 3), view only: below 25 energy the figure stands lower, leans forward and breathes deeper (DEV toggle).
+            var fatigue=body!=null?rally.FatigueSettings:null;var energy=body==null?null:human?rally.HumanEnergy:rally.RivalEnergy;
+            tired=Mathf.MoveTowards(tired,TiredPose.Amount(TiredPose.Enabled&&fatigue!=null&&fatigue.Enabled&&energy!=null,energy?.Energy??100),dt*1.5f);
+            crouch=Mathf.MoveTowards(crouch,(body==null?.04f:bodyPhase==BodyPhase.Set?.13f:bodyPhase==BodyPhase.Waiting?.09f:.06f+.03f*backpedal)+TiredPose.HipDrop*tired,dt*.6f);
             var along=new Vector3(direction.x,0,direction.y);
             // The stroke carries the body: a short lunge toward the front wall that grows with power; a miss stumbles across.
             float lunge=strokeClock>=0?Mathf.Sin(Mathf.PI*Mathf.Clamp01(strokeClock/.42f)):0;
             var carry=missed?new Vector3(-sign*.09f,-.05f,-.04f)*lunge:new Vector3(sign*.03f,-(.03f+.05f*power),-(.05f+.11f*power))*lunge;
-            float bob=Mathf.Abs(Mathf.Sin(runPhase))*.035f*move*(1-.5f*backpedal)+Mathf.Sin(idle*2.4f)*.008f*(1-move);
+            float bob=Mathf.Abs(Mathf.Sin(runPhase))*.035f*move*(1-.5f*backpedal)+Mathf.Sin(idle*2.4f)*(.008f+TiredPose.BreathAmplitude*tired)*(1-move);
             var hip=new Vector3(0,HipHeight-crouch+bob+hop*.055f,0)+carry;
             var turn=Quaternion.Euler(0,yaw,0);
             var lean=Quaternion.AngleAxis(Mathf.Min(speed*2.8f,13)*move*(1-backpedal),Vector3.Cross(Vector3.up,along));
@@ -314,7 +320,7 @@ namespace SquashClash.Runtime.Visual
             float push=accelLean.magnitude;
             if(push>.05f)lean=Quaternion.AngleAxis(push,Vector3.Cross(Vector3.up,new Vector3(accelLean.x,0,accelLean.y)/push))*lean;
             if(missed)lean=Quaternion.AngleAxis(9*lunge,Vector3.forward*sign)*lean;
-            var spine=lean*Quaternion.Euler(-8-crouch*45-6*lunge*(missed?0:power),yaw,0);
+            var spine=lean*Quaternion.Euler(-8-crouch*45-6*lunge*(missed?0:power)-TiredPose.PitchDeg*tired,yaw,0);
             torso.localPosition=hip;torso.localRotation=spine;
 
             var headAt=hip+spine*new Vector3(0,.745f,0);

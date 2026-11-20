@@ -23,7 +23,7 @@ namespace SquashClash.Experiments.EditMode
             if(u<=.1)return PoDeciles[0];if(u>=.9)return PoDeciles[8];
             double x=u*10-1;int k=(int)Math.Floor(x);return PoDeciles[k]+(PoDeciles[k+1]-PoDeciles[k])*(x-k);
         }
-        private sealed class Bot : IRallyBrain,IRallyVolleyToucher
+        internal sealed class Bot : IRallyBrain,IRallyVolleyToucher
         {
             private readonly RallyContext ctx;private readonly RallyRng random;private readonly bool v1;
             public Bot(RallyContext ctx,long seed,bool v1){this.ctx=ctx;random=new RallyRng(seed);this.v1=v1;}
