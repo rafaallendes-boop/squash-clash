@@ -78,6 +78,8 @@ namespace SquashClash.Core.Rally
         private CausalReference pendingCausal;
         private bool hasPending;private long pendingStep;private AiShot pendingShot;private PlayerId pendingWho;private ReceptionLog pendingLog;
         private int planVersion;private long launchId;
+        // Volley v2.x for a touching human brain (IRallyVolleyToucher): the body turns to the chosen stance at the touch step.
+        private bool hasRedirect;private long redirectStep;private Vector2 redirectStance;private int redirectDelay;private float redirectSprint=1;private double pendingSprintCost;
         public FatigueState HumanEnergy {get;private set;}
         public FatigueState RivalEnergy {get;private set;}
         private readonly double[] receptionFatigue=new double[2];
@@ -143,7 +145,7 @@ namespace SquashClash.Core.Rally
         }
         private RallyOutcome Run(RallyOutcome outcome,PlayerId firstReceiver)
         {
-            hasPending=false;
+            hasPending=false;hasRedirect=false;pendingSprintCost=0;Human.Sprint=1;
             long cap=context.Steps(context.Params.MaxRallySeconds),steps=0;long stall=context.Steps(context.Params.StallSeconds),flight=0;int shots=0;
             BeginReception(firstReceiver,outcome);
             while(!Rules.Closed)
@@ -151,6 +153,8 @@ namespace SquashClash.Core.Rally
                 if(steps>=cap){outcome.End=RallyEnd.StepCap;break;}
                 if(Rules.Shots>=context.Params.MaxShots){outcome.End=RallyEnd.ShotCap;break;}
                 if(hasPending&&ball.State.Step==pendingStep)Strike(outcome);
+                if(hasRedirect&&ball.State.Step==redirectStep)
+                {hasRedirect=false;Human.Sprint=redirectSprint;Human.MoveTo(redirectStance,redirectDelay,BodyPhase.Approaching,BodyPhase.Set);}
                 if(Rules.Shots!=shots){shots=Rules.Shots;flight=0;}
                 if(++flight>stall){outcome.End=RallyEnd.Stalled;break;}
                 ball.Step(contacts);steps++;
@@ -188,25 +192,34 @@ namespace SquashClash.Core.Rally
             var path=context.VolleyOn?body.PositionsAfter(trajectory.States.Count):null;
             var volley=context.VolleyFor(trajectory,Rules,path,plan.Contact,delay,planVersion);
             if(volley.Exists)plan=plan.WithVolley(volley);
-            LastPlan=plan;
-            var shot=brain.Decide(new AiObservation(state,body.Position,body.Velocity,other.Position,other.Velocity,Rules.Shots,Rules.FloorBounces,Rules.FrontWallReached),plan);
+            LastPlan=plan;hasRedirect=false;
+            // Volley v2.x (design 2026-11-20): only a touching human brain; every other brain takes the unchanged path below.
+            VolleyIntercept chosen=default;Vector2[] chosenPath=null;bool v2Offered=false;
+            if(who==PlayerId.Human&&context.HumanVolleyV2&&brain is IRallyVolleyToucher toucher)
+                ChooseHumanVolley(toucher,trajectory,plan,body,delay,out chosen,out chosenPath,out v2Offered);
+            var observation=new AiObservation(state,body.Position,body.Velocity,other.Position,other.Velocity,Rules.Shots,Rules.FloorBounces,Rules.FrontWallReached);
+            var shot=chosen.Exists?brain.Decide(observation,new ReceptionPlan(true,chosen.Stance,chosen.Stance,chosen.Plan,plan.ArrivalStep,plan.SlackS,plan.Quality,"volley-v2")):brain.Decide(observation,plan);
+            if(chosen.Exists&&!shot.Swing){hasRedirect=false;pendingSprintCost=0;chosen=default;chosenPath=null;}
+            bool offeredLog=chosen.Exists||v2Offered||plan.Volley.Exists;
             hasPending=false;
             if(!shot.Swing)
             {
-                outcome.Receptions.Add(new ReceptionLog(who,plan.Reachable?ReceptionResult.NoSwing:ReceptionResult.Unreachable,false,plan.Reachable,false,0,plan.SlackS,default,-1,plan.Reason,fatigueReception:f,volleyOffered:plan.Volley.Exists));
+                outcome.Receptions.Add(new ReceptionLog(who,plan.Reachable?ReceptionResult.NoSwing:ReceptionResult.Unreachable,false,plan.Reachable,false,0,plan.SlackS,default,-1,plan.Reason,fatigueReception:f,volleyOffered:offeredLog));
                 return;
             }
             // Real perceived time for this flight: the same clock map type the touch path uses.
             double now=state.Step/(context.Tempo*context.StepHz);
             var clock=new ClockMap();clock.Begin(++launchId,now,state.Step,context.Tempo,1,context.StepHz);
-            bool useVolley=shot.Volley&&plan.Volley.Exists;
+            bool useVolley=!chosen.Exists&&shot.Volley&&plan.Volley.Exists;
             // A release aimed at the volley is judged like the human's: by the opportunity whose segment holds it (spec 7.1.3 case 14).
-            var decision=useVolley?RallyContact.ResolveAimedVolley(context,clock,trajectory,plan.Contact,plan.Volley,now,shot.DeltaMs,out useVolley)
+            // A chosen v2.x volley is the only opportunity left, judged against its own plan.
+            var decision=chosen.Exists?RallyContact.Resolve(context,clock,trajectory,chosen.Plan,now,shot.DeltaMs):useVolley?RallyContact.ResolveAimedVolley(context,clock,trajectory,plan.Contact,plan.Volley,now,shot.DeltaMs,out useVolley)
                 :RallyContact.Resolve(context,clock,trajectory,plan.Contact,now,shot.DeltaMs);
-            var contact=useVolley?plan.Volley.Plan:plan.Contact;
+            if(chosen.Exists)useVolley=true;
+            var contact=chosen.Exists?chosen.Plan:useVolley?plan.Volley.Plan:plan.Contact;
             if(contact.Exists&&contact.TStarStep>=0)
             {
-                var positions=path??body.PositionsAfter(trajectory.States.Count);long first=trajectory.States[0].Step;
+                var positions=chosenPath??path??body.PositionsAfter(trajectory.States.Count);long first=trajectory.States[0].Step;
                 pendingCausal=CausalQuality.Prepare(trajectory,contact,clock,context.Timing,now,context.Tempo,j=>context.FrameAt(positions[(int)(j-first)]));
             }
             ReceptionResult result;
@@ -218,7 +231,7 @@ namespace SquashClash.Core.Rally
                 case ShotResult.SystemFault:result=ReceptionResult.SystemFault;outcome.SystemFaults++;break;
                 default:result=ReceptionResult.NotEvaluable;break;
             }
-            var log=new ReceptionLog(who,result,decision.Result==ShotResult.Perfect,plan.Reachable,shot.Defensive,decision.DeltaMs,plan.SlackS,shot.Option,decision.ContactStep,decision.Reason,fatigueReception:f,volley:useVolley,volleyOffered:plan.Volley.Exists);
+            var log=new ReceptionLog(who,result,decision.Result==ShotResult.Perfect,plan.Reachable,shot.Defensive,decision.DeltaMs,plan.SlackS,shot.Option,decision.ContactStep,decision.Reason,fatigueReception:f,volley:useVolley,volleyOffered:offeredLog);
             if(result!=ReceptionResult.Contact){outcome.Receptions.Add(log);return;}
             hasPending=true;pendingStep=decision.ContactStep;pendingShot=shot;pendingWho=who;pendingLog=log;
         }
@@ -241,9 +254,36 @@ namespace SquashClash.Core.Rally
             ball.Reset(new BallState{Position=state.Position,Velocity=solution.Velocity,Step=state.Step});
             // A contact before the bounce also costs the volley energy (19 nov); bots never volley by default, so nothing changes for them.
             double volleyCost=context.VolleyEnergyCost(Rules);
+            // v2.x: a sprint volley of a touching human also pays its lateness cost (zero for everybody else).
+            if(who==PlayerId.Human){if(volleyCost>0)volleyCost+=pendingSprintCost;pendingSprintCost=0;Human.Sprint=1;}
             Rules.RacketContact(who);Energy(who).Strike(pendingShot.P);Energy(who).Volley(volleyCost);
             Body(who).MoveTo(RecoveryOf(who),0,BodyPhase.Recovering,BodyPhase.Waiting);
             BeginReception(who.Other(),outcome);
+        }
+        // The v2.x choice of a touching human, exactly as RallyDirector makes it: the offer from the body at the reception start, the touch
+        // inside [launch, S'], then the longest-window stance reachable without the sprint, otherwise with it. The body turns at the touch.
+        private void ChooseHumanVolley(IRallyVolleyToucher toucher,Trajectory trajectory,in ReceptionPlan plan,PlayerBody body,int delay,
+            out VolleyIntercept chosen,out Vector2[] chosenPath,out bool offered)
+        {
+            chosen=default;chosenPath=null;
+            var detail=HumanVolley.OfferDetail(context,trajectory,Rules,body,delay,planVersion);offered=detail.Offer.Exists;
+            if(!offered)return;
+            long first=trajectory.States[0].Step;double perMs=context.StepHz*context.Tempo/1000;
+            double bounceMs=plan.Contact.Exists&&plan.Contact.TStarStep>=0?(plan.Contact.TStarStep-first)/perMs:double.NaN;
+            double touch=toucher.TouchMsAfterLaunch(plan,bounceMs);
+            if(double.IsNaN(touch)||touch<0||touch>(detail.SPrime-first)/perMs)return;
+            long c=first+(long)Math.Floor(touch*perMs);var walk=body.Clone();for(long k=first;k<c;k++)walk.Step();
+            var p=HumanVolley.Commit(context,trajectory,Rules,walk,c,delay,planVersion);float sprint=1;
+            if(!p.Exists&&context.HumanVolleySprint>1&&c<=detail.SPrime)
+            {var sp=HumanVolley.Commit(context,trajectory,Rules,walk,c,delay,planVersion,context.HumanVolleySprint);if(sp.Exists){p=sp;sprint=context.HumanVolleySprint;}}
+            if(!p.Exists)return;
+            chosen=p;hasRedirect=true;redirectStep=c;redirectStance=p.Stance;redirectDelay=(int)Math.Max(0,first+delay-c);redirectSprint=sprint;
+            pendingSprintCost=sprint>1?context.Params.HumanVolleySprintCost*HumanVolley.Lateness(detail.S,detail.SPrime,c):0;
+            // The causal reference reads the body's real path: M1 until the touch, then towards the stance.
+            int n=trajectory.States.Count,until=(int)(c-first);var before=body.PositionsAfter(Math.Min(n,until));
+            var turned=walk.Clone();turned.Sprint=sprint;turned.MoveTo(p.Stance,redirectDelay,BodyPhase.Approaching,BodyPhase.Set);
+            var after=turned.PositionsAfter(Math.Max(0,n-until));chosenPath=new Vector2[n];
+            Array.Copy(before,chosenPath,before.Length);Array.Copy(after,0,chosenPath,before.Length,Math.Min(after.Length,n-before.Length));
         }
         public void Dispose()=>ball.Dispose();
     }

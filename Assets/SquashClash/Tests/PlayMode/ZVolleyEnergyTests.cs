@@ -31,6 +31,8 @@ namespace SquashClash.Runtime.Tests
             rally.StartMode();
             Assert.That(Until(()=>rally.Phase==RallyPhase.HumanReception&&controller.Volley.Exists&&!controller.AttemptConsumed,600),Is.True,"an offered volley within ten minutes of autopilot rally");
             rally.Autopilot=false;long launch=app.Host.LaunchId;var energy=rally.HumanEnergy;
+            // Volley v2 (design 2026-11-20): the touch while the amber ring shows is what chooses the volley.
+            controller.TryVolleyWindow(out double from,out double until);controller.GestureBegan(Math.Max(from,app.Host.ObservedRealTime));
             double before=energy.Energy,volleyBefore=energy.Point.VolleyCost,strongBefore=energy.Point.StrongCost;
             Assert.That(app.Host.ClockMap.TrySimToReal(controller.Volley.Plan.TStarStep,0,out double target),Is.True);
             for(int i=0;i<3000&&app.Host.ObservedRealTime+StepReal<target-1e-10;i++)StepOnce();

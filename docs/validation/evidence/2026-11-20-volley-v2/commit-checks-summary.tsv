@@ -1,0 +1,10 @@
+non-serve	receptions	4778	bouncePV%	93.4	offered%	67.5	bounceLeadAfterS median	500.0	p10	500.0
+non-serve reasons {'offered': 3224, 'no-intercept': 1554}
+non-serve	case 150	volleyRate%	67.5	effectiveOffer%(of offered)	100.0	volleyPV%	85.3	bouncePV same receptions%	94.5	gap pp	9.2
+non-serve	case 300	volleyRate%	64.8	effectiveOffer%(of offered)	96.1	volleyPV%	85.5	bouncePV same receptions%	95.0	gap pp	9.5
+non-serve	case Po	volleyRate%	6.1	effectiveOffer%(of offered)	9.1	volleyPV%	82.9	bouncePV same receptions%	91.8	gap pp	8.9
+serve	receptions	338	bouncePV%	97.3	offered%	100.0	bounceLeadAfterS median	500.0	p10	500.0
+serve reasons {'offered': 338}
+serve	case 150	volleyRate%	100.0	effectiveOffer%(of offered)	100.0	volleyPV%	83.4	bouncePV same receptions%	97.3	gap pp	13.9
+serve	case 300	volleyRate%	100.0	effectiveOffer%(of offered)	100.0	volleyPV%	83.4	bouncePV same receptions%	97.3	gap pp	13.9
+serve	case Po	volleyRate%	21.3	effectiveOffer%(of offered)	21.3	volleyPV%	84.7	bouncePV same receptions%	98.6	gap pp	13.9

@@ -79,6 +79,8 @@ namespace SquashClash.Runtime.Shot
                 if(Active){AuditM24Input(sample,"duplicate-or-secondary-began","m24-input-ignored");return;}
                 if(shotController!=null&&!shotController.CanBegin(sample.TimeReal,out var rejection))
                 {AuditM24Input(sample,rejection,"m24-input-filtered");return;}
+                // Volley v2: the touch-down itself is the player's choice while the amber ring shows (no-op otherwise).
+                shotController?.GestureBegan(sample.TimeReal);
                 Haptics.Prepare();
                 BeginShotHandoff();
                 var source=app.Host.ActiveConfig.Source;

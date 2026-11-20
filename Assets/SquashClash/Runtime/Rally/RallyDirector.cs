@@ -139,6 +139,19 @@ namespace SquashClash.Runtime.Rally
         // DEV only (design 2026-11-18): switch the volley on or off from the NEXT point on.
         public void SetVolley(bool on){pendingVolley=on;}
         public bool VolleyNextPoint=>pendingVolley??Params.VolleyEnabled!=0;
+        // Volley v2.2 (design section 8): the human's offer of this reception (S, S') and the sprint energy its chosen volley will pay.
+        public VolleyOfferDetail LastHumanOffer {get;private set;}
+        public double HumanSprintCost {get;private set;}
+        // DEV only (design 2026-11-20): volley v2 (chosen by touch) or v1, and the human's return-of-serve volley, from the NEXT point on.
+        private bool? pendingVolleyV2,pendingServeVolley;
+        private int? pendingVolleyMode;
+        // 1 = v1, 2 = v2, 3 = v2.2 (default), 4 = v2.3 lunge. SetVolleyV2(true) brings back the default v2.x mode.
+        public void SetVolleyMode(int mode){pendingVolleyMode=Math.Max(1,Math.Min(4,mode));pendingVolleyV2=null;}
+        public void SetVolleyV2(bool on){pendingVolleyV2=on;pendingVolleyMode=null;}
+        public int VolleyModeNextPoint=>pendingVolleyMode??(pendingVolleyV2.HasValue?(pendingVolleyV2.Value?(int)new RallyParams().HumanVolleyMode:1):(int)Params.HumanVolleyMode);
+        public bool VolleyV2NextPoint=>VolleyModeNextPoint>=2;
+        public void SetServeVolley(bool on){pendingServeVolley=on;}
+        public bool ServeVolleyNextPoint=>pendingServeVolley??Params.HumanVolleyServe!=0;
         public void ResetScore(){HumanPoints=RivalPoints=PointsPlayed=0;LastPoint=null;resetEnergy=true;}
         public void Rematch(){if(!Active)return;ResetScore();if(Match!=null)Match=NewMatch();BeginPoint();}
         private void BeginPoint()
@@ -146,6 +159,8 @@ namespace SquashClash.Runtime.Rally
             pointCausal.Clear();
             var cfg=EffectiveConfig.From(app.Tuning.ApplyPending());
             if(pendingVolley.HasValue){var p=Params.Clone();p.VolleyEnabled=pendingVolley.Value?1:0;Params=p;pendingVolley=null;}
+            if(pendingVolleyV2.HasValue||pendingVolleyMode.HasValue){var p=Params.Clone();p.HumanVolleyMode=VolleyModeNextPoint;Params=p;pendingVolleyV2=null;pendingVolleyMode=null;}
+            if(pendingServeVolley.HasValue){var p=Params.Clone();p.HumanVolleyServe=pendingServeVolley.Value?1:0;Params=p;pendingServeVolley=null;}
             context=new RallyContext(cfg,Params,factory);
             double humanStart=testEnergy??(resetEnergy?100:HumanEnergy?.Energy??100),rivalStart=testEnergy??(resetEnergy?100:RivalEnergy?.Energy??100);
             HumanEnergy=new FatigueState(context.Fatigue,humanStart);
@@ -168,8 +183,27 @@ namespace SquashClash.Runtime.Rally
             }
             RallyStarted?.Invoke();
         }
+        // Volley v2: the touch chose the volley. The intercept is recomputed from the body as it is now; the body only turns when the
+        // controller accepts (Apply), so a refused commit leaves the M1 path untouched.
+        private VolleyCommit CommitHumanVolley(RallyContext ctx,Trajectory t,PointRules rules,int delay,int version,VolleyOfferDetail offer)
+        {
+            if(!Active||Phase!=RallyPhase.HumanReception||t==null||t.States.Count<2)return new VolleyCommit(false,default,null,null,"not-reception");
+            // v2.2 order: the longest-window stance the normal body reaches; otherwise, up to S', the one it reaches sprinting.
+            long now=bodyStep;var p=HumanVolley.Commit(ctx,t,rules,Human,now,delay,version);float sprint=1;
+            if(!p.Exists&&ctx.HumanVolleySprint>1&&now<=offer.SPrime)
+            {var sp=HumanVolley.Commit(ctx,t,rules,Human,now,delay,version,ctx.HumanVolleySprint);if(sp.Exists){p=sp;sprint=ctx.HumanVolleySprint;}}
+            if(!p.Exists)return new VolleyCommit(false,default,null,null,p.Reason=="no-intercept"?"commit-unreachable":p.Reason);
+            double cost=sprint>1?Params.HumanVolleySprintCost*HumanVolley.Lateness(offer.S,offer.SPrime,now):0;
+            int remaining=(int)Math.Max(0,t.States[0].Step+delay-now);
+            var probe=Human.Clone();probe.Sprint=sprint;probe.MoveTo(p.Stance,remaining,BodyPhase.Approaching,BodyPhase.Set);
+            var positions=probe.PositionsAfter((int)Math.Max(1,t.States[t.States.Count-1].Step-now+1));
+            Func<long,BodyFrame> body=j=>ctx.FrameAt(positions[(int)Math.Max(0,Math.Min(positions.Length-1,j-now))]);
+            var stance=p.Stance;
+            return new VolleyCommit(true,p.Plan,body,()=>{Human.Sprint=sprint;Human.MoveTo(stance,remaining,BodyPhase.Approaching,BodyPhase.Set);HumanSprintCost=cost;},"committed");
+        }
         private void LaunchToHuman(BallState ball,double? frozenFatigue=null)
         {
+            Human.Sprint=1;HumanSprintCost=0;LastHumanOffer=VolleyOfferDetail.None("not-planned");
             HumanReceptionFatigue=frozenFatigue??context.Fatigue.Factor(HumanEnergy.Energy);
             var effects=FatigueEffects.For(HumanReceptionFatigue,context.Fatigue);Human.MovementFactor=effects.MovementFactor;
             var trajectory=context.Predict(ball);int delay=context.Steps(Params.ReactionS)+effects.ExtraSteps;
@@ -178,7 +212,18 @@ namespace SquashClash.Runtime.Rally
             var positions=Human.PositionsAfter(trajectory.States.Count);
             controller.SetNextReceptionBody(j=>context.FrameAt(positions[(int)(j-ball.Step)]));
             // Volley v1 (M1): the opportunity on this very body path, offered to the human's next launch only.
-            if(context.VolleyOn){var rules=committed;var ctx=context;int version=planVersion;controller.SetNextVolley((t,bounce)=>ctx.VolleyFor(t,rules,positions,bounce,delay,version));}
+            if(context.VolleyOn)
+            {
+                var rules=committed;var ctx=context;int version=planVersion;
+                if(ctx.HumanVolleyV2)
+                {
+                    // Volley v2.x (design 2026-11-20): the offer from the body as it starts this reception (M1 already set), chosen by a touch.
+                    var start=Human.Clone();VolleyOfferDetail offer=VolleyOfferDetail.None("not-planned");
+                    controller.SetNextVolley((t,bounce)=>{offer=HumanVolley.OfferDetail(ctx,t,rules,start,delay,version);LastHumanOffer=offer;return offer.Offer;});
+                    controller.SetNextVolleyCommit((t,touch)=>CommitHumanVolley(ctx,t,rules,delay,version,offer));
+                }
+                else controller.SetNextVolley((t,bounce)=>ctx.VolleyFor(t,rules,positions,bounce,delay,version));
+            }
             controller.SetNextReceptionFatigue(HumanReceptionFatigue);
             // The human's arm is read at its exact contact step, inside the authoritative solve, so bodies must be advanced to it.
             if(context.Fatigue.Enabled)controller.SetNextStrikerFatigue(HumanStrikerArm);
@@ -323,12 +368,14 @@ namespace SquashClash.Runtime.Rally
                 long contactStep=resolved.ContactStep;var at=Evaluate(contactStep);
                 // Judged before the racket resets the bounce count: a contact before the bounce is a volley (extra energy, 19 nov).
                 double volleyCost=context.VolleyEnergyCost(at);
+                // v2.2: a sprint volley also pays its lateness cost, at the same contact (design section 6).
+                if(volleyCost>0)volleyCost+=HumanSprintCost;HumanSprintCost=0;
                 if(at.RacketContact(PlayerId.Human))
                 {
                     RivalReceptionFatigue=context.Fatigue.Factor(RivalEnergy.EnergyAt(contactStep));
                     HumanEnergy.StrikeAt(contactStep,resolved.Power,volleyCost);
                     committed=at;flightStartStep=contactStep;Phase=RallyPhase.RivalReception;resolved=null;
-                    Human.MoveTo(context.WaitPosition(PlayerId.Human),0,BodyPhase.Recovering,BodyPhase.Waiting);
+                    Human.Sprint=1;Human.MoveTo(context.WaitPosition(PlayerId.Human),0,BodyPhase.Recovering,BodyPhase.Waiting);
                     PlanRival();TickRival();return;
                 }
                 // The contract and the rules disagree: a system fault, never a silent contact.
