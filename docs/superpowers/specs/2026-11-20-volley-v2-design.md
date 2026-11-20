@@ -168,3 +168,27 @@ Por estilo (B, sin saque): Fondista 78 % de oferta y 82 % de P+V; Definidor 57 %
 - **Meta 4:** `RallySim` real con el cansancio del preset activado. El humano es un bot elegidor (interfaz nueva que solo implementa el bot de experimento), que toca según la distribución del PO y suelta N(0, 90 ms). Se comparan v1 (el bot toma toda volea v1 ofrecida), v2 y v2.1 con el valor elegido; 60 partidos por estilo.
 
 El rival y los bots por defecto no implementan la interfaz, así que quedan idénticos bit a bit.
+
+## 7. v2.2 (decisión de Claude tras la parada de v2.1; predeclarado antes de medir, 20 nov)
+
+**Es un cambio de diseño, no de metas.** La medición de v2.1 mostró que el toque del PO cae después de S′ en el 82 % de las ofertas. La causa: S′ dependía solo de la postura de la oferta, la de K más largo, que exige una carrera larga.
+
+**Regla v2.2** (`HumanVolleyMode = 3`, que reemplaza a v2.1):
+- **S′** es el último toque con el que **alguna** postura de volea con K ≥ `HumanVolleyMinWindowS` (0,05 s) todavía es alcanzable con el sprint.
+- **S** es lo mismo sin sprint. Se usa solo para la tardanza.
+- **Al tocar, la postura se elige en este orden:**
+  1. la de K más largo que el cuerpo alcanza sin sprint;
+  2. si no hay, la de K más largo que alcanza con el sprint (factor `HumanVolleySprintMax`);
+  3. si no hay ninguna, no hay compromiso y se juega el bote como hoy.
+- **Costo y anillos:**
+  - costo del sprint: `4 × tardanza`, con tardanza = (toque − S)/(S′ − S), y solo si se usó el sprint;
+  - el ámbar se ve hasta S′ y el blanco aparece después.
+- **La oferta al lanzar no cambia:** existe si hay postura alcanzable sin sprint desde el lanzamiento.
+- **Cálculo:** S y S′ se buscan por bisección sobre el paso de toque, entre el lanzamiento y el primer bote. Se supone que el alcance es monótono (sin huecos); la aproximación se declara.
+
+**Sin cambios:**
+- las metas 1 a 4 de §6;
+- la malla 1,25 · 1,5 · 1,75 · 2,0;
+- la regla de elección (el primer valor que cumpla 1 a 3; si ninguno, registrar y detenerse);
+- el costo de 4 puntos × tardanza;
+- el método de medición.
