@@ -158,3 +158,44 @@ Se hicieron en tres ramas desde `f068cee` y se fusionaron sin aplanar, sin confl
 - si se nota la volea del rival, que todavía no tiene pose propia;
 - el resoplido;
 - el menú nuevo.
+
+## Cuarta vuelta (20 nov): volea v2
+
+**Pedido del PO, tras jugar `d11f3d9`:** «no podía volear», «La idea es que sea fácil al igual que los golpes», «que se pueda volear aunque te desgaste más».
+
+**Lo que mostraron sus métricas:** recibió 96 pelotas y no se le ofreció ninguna volea. Las causas: separación 40, la pelota no pasó a su alcance 26, saque 19 y ventana corta 11.
+
+**Rama:** `claude/volley-v2`, head `b7ce112`, hecha por un subagente Opus. Tiene su [informe](2026-11-20-volley-v2.md) y su [diseño](../superpowers/specs/2026-11-20-volley-v2-design.md). Se fusionó sobre `9a23e7d`, con un árbol idéntico al del head.
+
+**Qué cambia:**
+- El jugador elige la volea: un toque mientras se ve el anillo ámbar lo compromete. Si toca tarde, hace un sprint de hasta 2,0 que cuesta 4 puntos de energía por retraso.
+- Una vibración suave avisa cuando se abre la volea.
+- El jugador puede volear el saque del rival.
+- Interruptores DEV: v1, v2 o v2.2, y la volea del saque.
+- Todo es solo para el humano.
+
+**Cómo se llegó a v2.2:**
+- **v2:** con los tiempos reales de toque del PO, solo volearía el 6,1 % de las veces.
+- **v2.1:** solo sprint, 12 %.
+- **v2.2:** puede elegir otra posición más cercana, 28 %. Va por defecto según la regla fijada de antemano.
+- **v2.3:** volea en movimiento, 51 %. Pero el principiante simulado acierta 25 puntos menos que en el golpe después del bote, así que no entra.
+
+**Desviaciones:**
+- Volea con los tiempos de toque del PO: 28,0 % frente a la meta de ≥40 %.
+- Diferencia de aciertos con el golpe después del bote: 12,4 pp frente a la meta de ≤12.
+- El sprint de 2,0 equivale a 9,6 m/s, una velocidad poco realista.
+
+**Riesgo de energía:** el bot que volea en cada toque llega al punto 15 con una mediana de 17,6 de energía, frente a 33,3 en v1, y gana el 7 % de los partidos, frente a 29 %. Lo juzga el PO.
+
+**Sin cambios:**
+- el rival: `ConfirmPerStyle` da igual que `confirm01`;
+- `ContactContract.cs`, DefaultPreset, SimulationKey y VL1.
+
+**Hashes:** RallyParams `0fe523164363`; la proyección sin los campos nuevos da exactamente `0f58580f44ea`.
+
+**Compuertas sobre `4593d2b`:**
+- EditMode 897/897, PlayMode 695/695;
+- AutoQA V, T3 y volea PASS/0/1;
+- check-release dev y prod OK.
+
+**Nota para mejorar el saque:** todas las devoluciones pasan a su alcance y la devolución después del bote sale bien en el 98 % de los casos. El saque se ve blando y alto.
