@@ -59,7 +59,8 @@ namespace SquashClash.Experiments.EditMode
                                 foreach (float az in new[] { cz - .6f, cz - 1f, cz - 1.5f, court.Length * .5f, court.Length * .5f - 1.5f })
                                     foreach (float ay in new[] { .9f, 1.5f, 2.1f })
                                     {
-                                        var aim = new SideAim(wall, az, ay); bool admitted = az <= court.Length * .5f;
+                                        // Round one admitted z <= L/2 only; addendum 1 admits the whole side wall under the out line.
+                                        var aim = new SideAim(wall, az, ay); bool admitted = Environment.GetEnvironmentVariable("SC_BOAST_ADMIT") == "all" ? az < court.Length && ay < SideAim.OutEdge(court, az) : az <= court.Length * .5f;
                                         var pace = ShotPace.Boast(.5f, from, aim, court, ctx.Physics.BallRadius, ctx.Pace);
                                         var s = BoastSolver.Solve(from, aim, pace.Speed, ctx.VMin, ctx.VCap, court, factory, ctx.Physics, (float)ctx.Params.FootprintRadius, out var info);
                                         bool opp = s.Solved && (info.Front.x - court.Width * .5f) * (from.x - court.Width * .5f) < 0;
@@ -123,7 +124,7 @@ namespace SquashClash.Experiments.EditMode
             File.WriteAllText(Path.Combine(dir, "diag.tsv"), text, Utf8); TestContext.WriteLine(text);
         }
 
-        private sealed class Share { public int Strokes, Back, BackBoasts, Boasts, Points, Human, Faults; public double Of => Back == 0 ? 0 : BackBoasts / (double)Back; }
+        private sealed class Share { public int Strokes, Back, BackBoasts, Boasts, Points, Human, Faults, Fallbacks; public double Of => Back == 0 ? 0 : BackBoasts / (double)Back; }
         private static Share Play(RallyContext ctx, AiLevel level, RivalStyleId style, int matches, long seeds)
         {
             var share = new Share(); float back = (float)(ctx.Params.BoastBackFraction * ctx.Court.Length);
@@ -137,7 +138,7 @@ namespace SquashClash.Experiments.EditMode
                         foreach (var r in o.Receptions)
                         {
                             if (r.Who != PlayerId.Rival || r.Result != ReceptionResult.Contact || r.ContactPoint == default) continue;
-                            share.Strokes++; bool boast = r.Line == ShotLine.Boast; if (boast) share.Boasts++;
+                            share.Strokes++; bool boast = r.Line == ShotLine.Boast; if (boast) share.Boasts++; if (r.BoastFellBack) share.Fallbacks++;
                             if (r.ContactPoint.z >= back) { share.Back++; if (boast) share.BackBoasts++; }
                         }
                         if (o.Winner.HasValue) { score.PointWon(o.Winner.Value); share.Points++; if (o.Winner == PlayerId.Human) share.Human++; }
@@ -146,9 +147,9 @@ namespace SquashClash.Experiments.EditMode
                 }
             return share;
         }
-        private const string ShareHeader = "phase\tlevel\tstyle\tweight\tmatches\tstrokes\tbackStrokes\tbackBoasts\tbackShare\tboasts\tpoints\thuman\tsystemFaults\tseconds";
+        private const string ShareHeader = "phase\tlevel\tstyle\tweight\tmatches\tstrokes\tbackStrokes\tbackBoasts\tbackShare\tboasts\tpoints\thuman\tsystemFaults\tseconds\tboastFallbacks";
         private static string Row(string phase, AiLevel level, RivalStyleId style, double weight, int matches, Share s, double seconds)
-            => string.Join("\t", phase, level, style, F(weight), matches, s.Strokes, s.Back, s.BackBoasts, F(s.Of), s.Boasts, s.Points, s.Human, s.Faults, F(seconds));
+            => string.Join("\t", phase, level, style, F(weight), matches, s.Strokes, s.Back, s.BackBoasts, F(s.Of), s.Boasts, s.Points, s.Human, s.Faults, F(seconds), s.Fallbacks);
         private static RallyParams WithWeight(RivalStyleId style, double w)
         {
             var p = new RallyParams { BoastRival = 1 };
@@ -183,9 +184,13 @@ namespace SquashClash.Experiments.EditMode
         // M3 confirm: the RallyParams defaults (with the rival's boast switched on), new seeds, 100 matches per style and level; the M3
         // verdict is read at Medium, Easy and Hard are reported.
         [Test, Explicit, Category("Experiments"), Timeout(14400000)]
-        public void M3Confirm()
+        public void M3Confirm() => M3ConfirmRun("m3-confirm", 20261231);
+        // Addendum 1: the same confirmation with NEW seeds (round one used 20261231).
+        [Test, Explicit, Category("Experiments"), Timeout(14400000)]
+        public void M3ConfirmRound2() => M3ConfirmRun("m3-confirm-r2", 20270131);
+        private static void M3ConfirmRun(string run, long seeds)
         {
-            var (preset, factory) = Setup(); string dir = Dir("m3-confirm");
+            var (preset, factory) = Setup(); string dir = Dir(run);
             var p = new RallyParams { BoastRival = 1 }; var ctx = new RallyContext(EffectiveConfig.From(preset), p, factory);
             File.WriteAllText(Path.Combine(dir, "source.tsv"), "defaults\trallyParams\tdefaultRallyParams\tunity\n" + preset.Hash + "\t" + p.Hash + "\t" + new RallyParams().Hash + "\t" + Application.unityVersion + "\n", Utf8);
             using (var w = new StreamWriter(Path.Combine(dir, "confirm.tsv"), false, Utf8))
@@ -195,7 +200,7 @@ namespace SquashClash.Experiments.EditMode
                     foreach (var style in Styles)
                     {
                         double weight = style == RivalStyleId.Definidor ? p.BoastWeightShooter : style == RivalStyleId.Completo ? p.BoastWeightAllRound : p.BoastWeightFondo;
-                        var watch = Stopwatch.StartNew(); var s = Play(ctx, level, style, 100, 20261231);
+                        var watch = Stopwatch.StartNew(); var s = Play(ctx, level, style, 100, seeds);
                         w.WriteLine(Row("confirm", level, style, weight, 100, s, watch.Elapsed.TotalSeconds)); w.Flush();
                     }
             }
