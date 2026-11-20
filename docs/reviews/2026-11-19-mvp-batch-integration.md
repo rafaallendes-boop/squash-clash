@@ -199,3 +199,58 @@ Se hicieron en tres ramas desde `f068cee` y se fusionaron sin aplanar, sin confl
 - check-release dev y prod OK.
 
 **Nota para mejorar el saque:** todas las devoluciones pasan a su alcance y la devolución después del bote sale bien en el 98 % de los casos. El saque se ve blando y alto.
+
+## Quinta vuelta (20 nov): mejorar lo que ya existe
+
+**Pedido del PO, después de jugar `fb80015`:**
+- SL5/SL6: «adelante quería tirar una pelota al fondo y se iba por las paredes laterales».
+- Energía: «llegó a 0 … el jugador se seguía moviendo igual».
+- Prioridad: «Mejorar lo que hay hoy es la prioridad».
+
+**La volea v2.2 en juego real**, en 5 partidos: el PO voleó en 72 de 152 recepciones. Logró Perfecto o Válido en el 75 % de las voleas, frente al 78 % de los golpes después del bote.
+
+| Frente | Rama, head | Modelo | Informe |
+|---|---|---|---|
+| Golpe al fondo desde adelante: protección contra la pared lateral, solo del humano, con el interruptor DEV «Drive adelante» | `claude/front-deep-drive` `e027ecc` | Opus | [informe](2026-11-20-front-deep-drive.md) |
+| El sprint de la volea depende de la energía; «Cansancio fuerte» como opción DEV; cansancio visible | `claude/fatigue-feel` `bab1af8` | Opus | [informe](2026-11-20-fatigue-feel.md) |
+| Pose de volea del rival, solo visual | `claude/rival-volley-pose` `0ed2af2` | Sonnet | [informe](2026-11-20-rival-volley-pose.md) |
+| Récords personales: línea en la tarjeta y pantalla en el menú | `claude/personal-records` `13b5ba5` | Sonnet | [informe](2026-11-20-personal-records.md) |
+| Análisis del golpe a dos paredes, con la decisión del PO | `claude/two-wall-analysis` `d5df9a4` | Sonnet | [análisis](../superpowers/specs/2026-11-20-two-wall-shot-analysis.md) |
+
+**Resultados medidos:**
+- **Drive adelante,** sobre golpes reales del PO reproducidos en P2:
+  - rectos desde adelante: de 11/16 a 16/16;
+  - cruzados: de 3/39 a 37/39;
+  - control con golpes del 19–20 nov, que no se usaron para el ajuste: 9/9 y 22/23.
+  - **Advertencia:** la medición no es ciega, porque la protección usa la misma prueba de éxito que la métrica.
+- **Sprint según energía:**
+  - con energía bajo 10, 0,0 % de voleas con sprint, frente a 4,0 % con 70 o más;
+  - los aciertos en la volea quedan en 84–86 %.
+  - «Cansancio fuerte», con piernas ×3 y reacción ×2: con energía 5, el humano gana el 14 % de los puntos, frente al 29 % sin la opción. Hacerlo valor por defecto exige el «sí» del PO, cambiar el preset, rehacer las anclas y recalibrar al rival.
+
+**Decisiones de Claude:**
+- **`VolleyV21Tests`:** se fija con `HumanVolleySprintFatigue=0`, porque prueba el sprint en sí. La aserción no cambia.
+- **Agentes secundarios:** los de pose y récords corrieron solo sus filtros, y las suites completas se corrieron en la integración.
+- **Candado de Unity:** ahora espera con `pgrep -x Unity`. Antes, un `unity-run.sh` en espera con la ruta de Unity en su línea de comandos bloqueaba al dueño del candado.
+
+**Sin cambios:**
+- el rival: `ConfirmPerStyle` da igual que `confirm01`, tanto en la rama de cansancio como en la de SL5/SL6;
+- `ContactContract.cs`, DefaultPreset, SimulationKey y las anclas AutoQA.
+
+**Hashes:** RallyParams `13f88c8d1db2`; la proyección sin el campo nuevo da `0fe523164363`.
+
+**Compuertas sobre `12cc652`:**
+
+| Compuerta | Resultado |
+|---|---|
+| EditMode | 912/912 |
+| PlayMode | 731/731 |
+| AutoQA V | PASS/0/1 (`20261120T121620Z-12cc652-v-1359`) |
+| AutoQA T3 | PASS/0/1 (`20261120T121637Z-12cc652-t3-25408`) |
+| AutoQA volea | PASS/0/1 (`20261120T121652Z-12cc652-volley-13963`) |
+| check-release dev/prod | OK, build 1029 |
+
+**Abiertos:**
+- la fila de tres enlaces del menú en un SE de 375 pt;
+- el saque, en curso en `claude/serve-improve`;
+- las dos paredes, después: apuntar a la lateral con un solo gesto, solver autorizado, para todos los jugadores.
