@@ -124,3 +124,6 @@ scripts/device.env
 # App Store Connect credentials remain local.
 scripts/release.env
 *.p8
+*.p12
+*.mobileprovision
+*.cer
