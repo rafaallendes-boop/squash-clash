@@ -18,6 +18,10 @@ namespace SquashClash.DevPanel
             var strong=new VisualElement();strong.style.flexDirection=FlexDirection.Row;strong.style.flexShrink=0;Root.Add(strong);
             Add(app,strong,"fatigue-strong-on","Cansancio fuerte sí",()=>app.Rally.SetStrongFatigue(true));
             Add(app,strong,"fatigue-strong-off","Cansancio fuerte no",()=>app.Rally.SetStrongFatigue(false));
+            // Visible tiredness (section 3), view only: below 25 energy the figures stand lower and heavier. Applies at once.
+            var pose=new VisualElement();pose.style.flexDirection=FlexDirection.Row;pose.style.flexShrink=0;Root.Add(pose);
+            Add(app,pose,"fatigue-pose-on","Cansancio visible sí",()=>SquashClash.Runtime.Visual.TiredPose.Enabled=true);
+            Add(app,pose,"fatigue-pose-off","Cansancio visible no",()=>SquashClash.Runtime.Visual.TiredPose.Enabled=false);
         }
         private static void Add(AppBootstrap app,VisualElement row,string name,string text,double energy)=>Add(app,row,name,text,()=>app.Rally.SetTestEnergy(energy));
         private static void Add(AppBootstrap app,VisualElement row,string name,string text,System.Action action)
