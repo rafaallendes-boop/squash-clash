@@ -140,7 +140,8 @@ namespace SquashClash.Experiments.EditMode
         public void WriteBaseline()
         {
             string run = Environment.GetEnvironmentVariable("SC_FDD_RUN");
-            Assert.That(run == "baseline01" || run == "baseline02", Is.True, "Use a predeclared run ID.");
+            // baseline01 was the first run (kept); baseline02/baseline03 are the final code in two processes.
+            Assert.That(run == "baseline02" || run == "baseline03", Is.True, "Use a predeclared run ID.");
             string metrics = Environment.GetEnvironmentVariable("SC_FDD_METRICS");
             Assert.That(Directory.Exists(metrics), Is.True, "SC_FDD_METRICS must name the PO metrics folder.");
             string root = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
@@ -157,7 +158,7 @@ namespace SquashClash.Experiments.EditMode
             var court = ctx.Court; var physics = ctx.Physics; float footprint = ShotIntentSolver.DefaultFootprintRadius;
             using (var w = new StreamWriter(Path.Combine(dir, "replay.tsv"), false, Utf8))
             {
-                w.WriteLine("file\tlaunch\tstep\tside\tresult\tP\tcx\tcy\tcz\taimX\taimY\tliftedY\tclamped\tlift\tsumLateral\ttuX\ttuY\tspeed\tlowered\tintentReason\tevaluations\texact\t"
+                w.WriteLine("file\tlaunch\tstep\tside\tresult\tP\tcx\tcy\tcz\taimX\taimY\tliftedY\tclamped\tlift\tsumLateral\ttuX\ttuY\tspeed\tlowered\tintentReason\tevaluations\texact\tdeviation\trebuiltClass\t"
                     + "front\tcross\tdeep\tclass\tsuccess\tcause\tsideZ\tx1\tz1\tx2\tz2\tmaxZ\tprimClass\tprimSuccess\tprimTuX\tprimTuY\tplainClass\tplainSuccess\t"
                     + "windowLo\twindowHi\twindowCount\tcontactInWindow\toutsideBy\tslopeIn");
                 foreach (var s in strokes)
@@ -167,6 +168,9 @@ namespace SquashClash.Experiments.EditMode
                     var recorded = new Vector3(shot.VelocityX, shot.VelocityY, shot.VelocityZ);
                     bool exact = solution.Solved && solution.Velocity.x == recorded.x && solution.Velocity.y == recorded.y && solution.Velocity.z == recorded.z && solution.TargetUsed.x == shot.TargetUsedX && solution.TargetUsed.y == shot.TargetUsedY;
                     var flight = Classify(contact, recorded, court, physics, ctx.Factory, footprint);
+                    // Device arithmetic may differ from the editor by a few ULP; the rebuilt flight must still classify the same.
+                    var rebuilt = solution.Solved ? Classify(contact, solution.Velocity, court, physics, ctx.Factory, footprint) : new Flight { Class = "unsolved" };
+                    double deviation = solution.Solved ? (solution.Velocity - recorded).magnitude : double.NaN;
                     // The intention layer's contribution: the primitive on the same composed request (pre-A2 behaviour).
                     var primitive = ShotSolver.Solve(new ShotRequest(contact, input.Aim, shot.Power), input.Speed, input.Speed, ctx.VCap, physics.Gravity, physics.BallRadius, court, ctx.Factory, physics);
                     var prim = primitive.Solved ? Classify(contact, primitive.Velocity, court, physics, ctx.Factory, footprint) : new Flight { Class = "unsolved" };
@@ -194,7 +198,7 @@ namespace SquashClash.Experiments.EditMode
                     float lift = input.Aim.y - aim.y, lateral = s.Trace.vectors.Sum(v => v.DeltaLateral);
                     double slope = ((double)solution.TargetUsed.x - contact.x) / contact.z;
                     w.WriteLine(string.Join("\t", new object[] { s.File, shot.LaunchId, shot.ContactStep, shot.Side, shot.Result, shot.Power, contact.x, contact.y, contact.z, aim.x, aim.y,
-                        input.Aim.y, input.Clamped, lift, lateral, solution.TargetUsed.x, solution.TargetUsed.y, solution.Speed, solution.TargetLowered, info.Reason, info.Evaluations, exact,
+                        input.Aim.y, input.Clamped, lift, lateral, solution.TargetUsed.x, solution.TargetUsed.y, solution.Speed, solution.TargetLowered, info.Reason, info.Evaluations, exact, deviation, rebuilt.Class,
                         Front(contact, court), IntendedCross(contact, aim, court), IntendedDeep(shot.Power, aim), flight.Class, flight.Success, flight.Cause, flight.SideZ, flight.X1, flight.Z1, flight.X2, flight.Z2, flight.MaxZ,
                         prim.Class, prim.Success, primitive.TargetUsed.x, primitive.TargetUsed.y, plain.Class, plain.Success,
                         lo, hi, clean.Count, contactIn, double.IsInfinity(best) ? double.NaN : best, slope }.Select(F)));

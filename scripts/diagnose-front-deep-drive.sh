@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # Experimento explícito «drive profundo desde adelante» (20 nov), aislado de las suites de regresión.
-#   SC_FDD_METRICS=<carpeta de métricas del PO> scripts/diagnose-front-deep-drive.sh baseline baseline01|baseline02
+#   SC_FDD_METRICS=<carpeta de métricas del PO> scripts/diagnose-front-deep-drive.sh baseline baseline02|baseline03
 #   SC_FDD_METRICS=<carpeta de métricas del PO> scripts/diagnose-front-deep-drive.sh fix fix01|fix02
 # Un solo Unity: el llamador usa el candado global. No sobrescribe evidencia ni reintenta.
 set -euo pipefail
 case "${1:-} ${2:-}" in
-    "baseline baseline01"|"baseline baseline02") test=WriteBaseline; export SC_FDD_RUN="$2" ;;
+    "baseline baseline02"|"baseline baseline03") test=WriteBaseline; export SC_FDD_RUN="$2" ;;
     "fix fix01"|"fix fix02") test=WriteFix; export SC_FDD_RUN="$2" ;;
-    *) printf 'Uso: scripts/diagnose-front-deep-drive.sh baseline baseline01|baseline02 | fix fix01|fix02\n' >&2; exit 1 ;;
+    *) printf 'Uso: scripts/diagnose-front-deep-drive.sh baseline baseline02|baseline03 | fix fix01|fix02\n' >&2; exit 1 ;;
 esac
 [[ -d "${SC_FDD_METRICS:-}" ]] || { printf 'Falta SC_FDD_METRICS.\n' >&2; exit 1; }
 source "$(dirname "$0")/unity-env.sh"
