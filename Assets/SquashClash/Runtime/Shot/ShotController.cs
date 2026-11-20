@@ -168,11 +168,11 @@ namespace SquashClash.Runtime.Shot
             double target=0;bool mapped=Plan.Exists&&Plan.TStarStep>=0&&app.Host.ClockMap.TrySimToReal(Plan.TStarStep,0,out target);
             ring.Show(Plan,target,mapped&&!AttemptConsumed,Snapshot.Timing);
         }
-        // The amber ring's window in real time: from the moment it shows (max(launch, T*v - the cue approach)) to the split S.
+        // The amber ring's window in real time: from the moment it shows (its presentation at the launch) to the split S.
         public bool TryVolleyWindow(out double from,out double until)
         {
             from=until=0;if(!Volley.Exists||!app.Host.ClockMap.TrySimToReal(Volley.Plan.TStarStep,0,out double target))return false;
-            from=Math.Max(app.Host.LaunchRealTime,target-ImpactCue.ApproachMs/1000);
+            from=app.Host.LaunchRealTime;
             if(double.IsPositiveInfinity(Volley.SplitSteps)){until=double.PositiveInfinity;return true;}
             var split=SimTime.FromSteps(Volley.SplitSteps);return app.Host.ClockMap.TrySimToReal(split.Step,split.Fraction,out until);
         }

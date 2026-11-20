@@ -129,7 +129,7 @@ namespace SquashClash.Core.Rally
         }
         // v1: no volley of the serve (arcade adaptation, design 2026-11-18). v2: only serveVolley may volley the serve, once it is up on the
         // front wall (the serve is then good: real squash lets the receiver volley the return of serve).
-        public bool CanHit(PlayerId who)=>!Closed&&who==ToHit&&FrontWallReached&&(volleyAllowed&&!Serving?FloorBounces<=1:FloorBounces==1)/*RED stub*/;
+        public bool CanHit(PlayerId who)=>!Closed&&who==ToHit&&FrontWallReached&&(volleyAllowed&&(!Serving||serveVolley==who)?FloorBounces<=1:FloorBounces==1);
         public PlayerId? ServeVolley=>serveVolley;
         // The bounce opportunity only (what the movement planner plans for, M1), whatever the volley setting.
         public bool CanHitAfterBounce(PlayerId who)=>!Closed&&who==ToHit&&FrontWallReached&&FloorBounces==1;

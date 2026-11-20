@@ -127,3 +127,10 @@ Por estilo (B, sin saque): Fondista 78 % de oferta y 82 % de P+V; Definidor 57 %
    - **P+V de la volea:** suelta N(0, 90 ms) en torno a T\*v del plan comprometido, recalculado desde el cuerpo en el instante del toque;
    - **distancia frente al P+V del bote** de las mismas recepciones.
 4. **Parada:** si en el toque del PO la distancia de P+V frente al bote supera **15 pp**, se registra y se detiene, sin reajustar nada.
+
+**Corrección antes de medir los controles (20 nov, durante el GREEN):**
+- **Qué estaba mal.** §5 suponía que el anillo ámbar se ve desde `T*v − 500 ms`. En el código no es así: `ImpactCue` muestra el anillo desde que se presenta, al lanzar, con su radio exterior, y los 500 ms son solo el cierre.
+- **Qué fallaba.** Con la ventana mal definida, el primer GREEN dio `no-intercept` en el saque neutro y en el saque: el cuerpo ya no llega a ninguna postura si sale recién 500 ms antes.
+- **Corrección.** La ventana de elección es **[lanzamiento, S]**: el ámbar se ve desde el lanzamiento, que es exactamente la regla «anillo ámbar visible».
+- **Efecto en los controles.** El toque fijo cae 150 y 300 ms después del lanzamiento. En el toque del PO, un toque anterior al lanzamiento no compromete nada.
+- **Lo que no cambia:** las metas, la parada de 15 pp y la distribución del PO.

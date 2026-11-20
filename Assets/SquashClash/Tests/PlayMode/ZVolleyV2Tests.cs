@@ -58,9 +58,11 @@ namespace SquashClash.Runtime.Tests
             StartRally();var ring=app.GetComponent<TimingRingView>();
             Assert.That(controller.VolleyShown,Is.True);Assert.That(ring.Tint,Is.EqualTo(ShotController.VolleyTint));
             Assert.That(controller.Volley.Plan.TStarStep,Is.LessThan(FirstBounceStep()));
-            Assert.That(controller.TryVolleyWindow(out double from,out double until),Is.True);Assert.That(until,Is.GreaterThanOrEqualTo(from));
-            if(from>app.Host.LaunchRealTime+2*StepReal){At(from-2*StepReal);Assert.That(controller.VolleyHapticCount,Is.Zero,"not before the ring shows");}
+            Assert.That(controller.TryVolleyWindow(out double from,out double until),Is.True);
+            Assert.That(from,Is.EqualTo(app.Host.LaunchRealTime),"the amber ring shows from its presentation");Assert.That(until,Is.GreaterThanOrEqualTo(from));
+            Assert.That(controller.VolleyHapticCount,Is.Zero);
             At(from+StepReal);
+            Assert.That(ring.Visible,Is.True);
             Assert.That(controller.VolleyHapticCount,Is.EqualTo(1));Assert.That(haptics.Discreet,Is.EqualTo(1),"the lightest impact");
             At(from+5*StepReal);Assert.That(controller.VolleyHapticCount,Is.EqualTo(1),"once per reception");
         }
@@ -79,11 +81,10 @@ namespace SquashClash.Runtime.Tests
             Assert.That(controller.LastRecord.Applied,Is.True,controller.LastRecord.Reason);Assert.That(controller.LastRecord.ContactStep,Is.LessThan(bounce));
             Assert.That(rally.SystemFaults,Is.Zero);
         }
-        [Test] public void TouchBeforeTheAmberRingShows_GivesTheVolleyUp_AndPlaysTheBounce()
+        [Test] public void TouchAfterTheAmberRing_GivesTheVolleyUp_AndPlaysTheBounce()
         {
-            StartRally();Assert.That(controller.TryVolleyWindow(out double from,out _),Is.True);
-            Assert.That(from,Is.GreaterThan(app.Host.LaunchRealTime+.02),"the neutral feed shows the amber ring after the launch");
-            var stance=rally.HumanPlan.Stance;double touch=app.Host.LaunchRealTime+.01;At(touch);controller.GestureBegan(touch);
+            StartRally();Assert.That(controller.TryVolleyWindow(out _,out double until),Is.True);
+            var stance=rally.HumanPlan.Stance;double touch=until+2*StepReal;At(touch);controller.GestureBegan(touch);
             Assert.That(controller.VolleyCommitted,Is.False);Assert.That(controller.VolleyChoice,Is.EqualTo("touch-outside-amber"));
             Assert.That(controller.Volley.Exists,Is.False);Assert.That(app.GetComponent<TimingRingView>().Tint,Is.EqualTo(Color.white));
             Assert.That(rally.Human.Target,Is.EqualTo(stance),"the body keeps its path to the bounce");

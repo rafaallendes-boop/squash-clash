@@ -17,16 +17,19 @@ namespace SquashClash.Core.Rally
     // body keeps its M1 path and nothing changes. Pure: reads the isolated prediction and copies of the body, never moves either.
     public static class HumanVolley
     {
-        // The amber ring is visible from max(launch, T*v - the cue approach) on: the first step a touch may choose the volley.
-        public static double AmberFromSteps(RallyContext context,long startStep,long tStarStep)
-            =>Math.Max(startStep,tStarStep-ImpactCue.ApproachMs/1000*context.StepHz*context.Tempo);
-        // The offer shown at launch: the intercept from the body as it starts its reception, with S = the last step a touch still reaches it.
+        // The amber ring shows from its presentation at the launch (ImpactCue keeps it at its outer radius until the last ApproachMs, then it
+        // converges), so a touch may choose the volley from the launch on.
+        public static double AmberFromSteps(RallyContext context,long startStep,long tStarStep)=>startStep;
+        // The offer shown at launch. A touch can only choose it once the amber ring shows, so each candidate must be reachable by a body that
+        // follows its M1 path until that moment and only then turns (today: the launch itself); S is the last step a touch still reaches it.
         public static VolleyOpportunity Offer(RallyContext context,Trajectory trajectory,PointRules rulesAtStart,PlayerBody bodyAtStart,int delaySteps,int version)
         {
             if(context==null||bodyAtStart==null)throw new ArgumentNullException(nameof(context));
             if(trajectory==null||trajectory.States.Count<2)return VolleyOpportunity.None("no-trajectory");
-            long start=trajectory.States[0].Step;
-            var p=Intercept(context,trajectory,rulesAtStart,bodyAtStart,start,delaySteps,start+delaySteps,version);
+            long start=trajectory.States[0].Step;var path=new System.Collections.Generic.List<PlayerBody>();var walk=bodyAtStart.Clone();
+            PlayerBody At(long step){while(path.Count<=step-start){path.Add(walk.Clone());walk.Step();}return path[(int)(step-start)];}
+            var p=Intercept(context,trajectory,rulesAtStart,start+delaySteps,start+delaySteps,version,plan=>
+            {long c=Math.Max(start,(long)Math.Ceiling(AmberFromSteps(context,start,plan.TStarStep)));return (At(c),c);});
             if(!p.Exists)return VolleyOpportunity.None(p.Reason);
             long deadline=Deadline(context,bodyAtStart,start,delaySteps,p);
             if(deadline<AmberFromSteps(context,start,p.Plan.TStarStep))return VolleyOpportunity.None("commit-window");
@@ -37,31 +40,35 @@ namespace SquashClash.Core.Rally
         {
             if(context==null||bodyNow==null)throw new ArgumentNullException(nameof(context));
             if(trajectory==null||trajectory.States.Count<2)return VolleyIntercept.None("no-trajectory");
-            long start=trajectory.States[0].Step;int remaining=(int)Math.Max(0,start+delaySteps-bodyStep);
-            return Intercept(context,trajectory,rulesAtStart,bodyNow,bodyStep,remaining,start+delaySteps,version);
+            long start=trajectory.States[0].Step;
+            return Intercept(context,trajectory,rulesAtStart,Math.Max(start+delaySteps,bodyStep),start+delaySteps,version,_=>(bodyNow,bodyStep));
         }
-        // The stance with the longest fixed-frame volley window among those the body reaches before its T*.
-        public static VolleyIntercept Intercept(RallyContext context,Trajectory t,PointRules rulesAtStart,PlayerBody body,long bodyStep,int delaySteps,long earliestStep,int version)
+        // The stance with the longest fixed-frame volley window among those reachable before its T* by the body departing as departure says
+        // (the reaction delay counted from the reception start still applies to a departure inside it).
+        public static VolleyIntercept Intercept(RallyContext context,Trajectory t,PointRules rulesAtStart,long fromStep,long earliestStep,int version,
+            Func<ContactPlan,(PlayerBody body,long step)> departure)
         {
             if(!context.HumanVolleyV2)return VolleyIntercept.None("disabled");
             if(rulesAtStart!=null&&rulesAtStart.Serving&&rulesAtStart.ServeVolley!=PlayerId.Human)return VolleyIntercept.None("serve");
             var p=context.Params;var l=context.Legal;
             var legal=new LegalSettings((float)p.VolleyMinHeight,(float)p.VolleyMaxHeight,l.StepHz,l.Gravity,l.Radius,context.Court,0);
-            var frame=context.FrameAt(body.Position);var phase=ContactPlanner.PhaseLegal(t,frame,legal);
-            long start=t.States[0].Step,from=Math.Max(earliestStep,bodyStep);int interval=Math.Max(1,context.Steps(p.CandidateIntervalS));
+            var frame=context.FrameAt(context.T);var phase=ContactPlanner.PhaseLegal(t,frame,legal);
+            long start=t.States[0].Step;int interval=Math.Max(1,context.Steps(p.CandidateIntervalS));
             double minWindow=p.HumanVolleyMinWindowS*context.StepHz;
             var best=VolleyIntercept.None("no-intercept");double bestK=double.NegativeInfinity;
-            for(int i=(int)Math.Max(0,from-start);i<phase.Length;i++)
+            for(int i=(int)Math.Max(0,fromStep-start);i<phase.Length;i++)
             {
                 if(!phase[i]||i%interval!=0)continue;var ball=t.States[i].Position;
                 for(int s=-1;s<=1;s+=2)
                 {
                     var stance=context.ClampBody(new Vector2(ball.x+s*frame.IdealLateral,ball.z));
                     var plan=ContactPlanner.Plan(t,context.FrameAt(stance),context.Court,legal,version);
-                    if(!plan.Exists||plan.TStarStep<0||plan.KIn.Steps<earliestStep||plan.TStarStep<bodyStep)continue;
+                    if(!plan.Exists||plan.TStarStep<0||plan.KIn.Steps<earliestStep)continue;
                     double k=plan.KOut.Steps-plan.KIn.Steps;if(k<minWindow||k<=bestK)continue;
-                    int arrival=body.StepsToReach(stance,delaySteps,out _,(int)(plan.TStarStep-bodyStep)+1);
-                    if(arrival==int.MaxValue||bodyStep+arrival>plan.TStarStep)continue;
+                    var (body,step)=departure(plan);if(plan.TStarStep<step)continue;
+                    int remaining=(int)Math.Max(0,earliestStep-step);
+                    int arrival=body.StepsToReach(stance,remaining,out _,(int)(plan.TStarStep-step)+1);
+                    if(arrival==int.MaxValue||step+arrival>plan.TStarStep)continue;
                     bestK=k;best=new VolleyIntercept(plan,stance,"offered");
                 }
             }
