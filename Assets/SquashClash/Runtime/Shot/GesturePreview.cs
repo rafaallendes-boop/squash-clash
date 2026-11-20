@@ -92,6 +92,8 @@ namespace SquashClash.Runtime.Shot
                 scale=ScreenMetrics.MmPerPx(reportedDpi,(float)source.Get("input.fallbackDpi"),out dpiSource);
                 tracker=new GestureTracker((float)source.Get("gesture.tapMaxMm"),(float)source.Get("gesture.tapMaxMs"),(float)source.Get("gesture.cancelRadiusMm"),scale);
                 M24=source.GetInt("gesture.control")==2?CreateM24(source):null;
+                // Two-wall shot: the side-wall aim only where the controller opens it (Rally/Match play, never while choosing the serve).
+                if(M24!=null)M24.AllowSide=shotController!=null&&shotController.SideAimOpen;
                 Sling=source.GetInt("gesture.control")==1?new SlingModel(SlingSettings.From(source),app.Host.ActiveConfig.Court,app.Host.Current.Position.x,SlingInputArea(),scale):null;
                 BeginSlingRecord();
                 Model=new AimModel(AimSettings.From(source),app.Host.ActiveConfig.Court,app.Host.Current.Position.x);

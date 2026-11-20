@@ -200,5 +200,51 @@ namespace SquashClash.Experiments.EditMode
                     }
             }
         }
+
+        // Diagnostic only (no target): what a slow, low boast from the back corner meets, height by height and speed by speed, and what
+        // the rival sees against the plain bot of the regression test.
+        [Test, Explicit, Category("Experiments"), Timeout(3600000)]
+        public void SolverDiagnosis()
+        {
+            var (preset, factory) = Setup(); var ctx = new RallyContext(EffectiveConfig.From(preset), new RallyParams(), factory); var court = ctx.Court;
+            var from = new Vector3(.8f, .7f, 8.4f); var sb = new StringBuilder("speed\tz\ty\tlaunch\tcontacts\n");
+            foreach (float speed in new[] { 10.4f, 12f, 14f, 17f })
+                foreach (float z in new[] { 7.6f, 7.2f })
+                    for (float y = .25f; y <= 3.01f; y += .25f)
+                    {
+                        var side = new SideAim(SurfaceId.RightWall, z, y); var c = side.Center(court, ctx.Physics.BallRadius);
+                        var s = BoastSolver.Solve(from, side, speed, speed, speed, court, factory, ctx.Physics, .02f, out var info);
+                        var list = new List<string>();
+                        if (s.Solved) list.Add("SOLVED " + info.Reason + " used " + info.Used);
+                        else
+                        {
+                            // Replay the plain low-arc launch to this exact point.
+                            double dx = c.x - from.x, dz = c.z - from.z, d2 = dx * dx + dz * dz, h = c.y - from.y, v2 = speed * speed, g = ctx.Physics.Gravity;
+                            double disc = v2 * v2 - g * (g * d2 + 2 * h * v2);
+                            if (disc < 0) list.Add("unreachable");
+                            else
+                            {
+                                double t = Math.Sqrt(2 * (d2 + h * h) / (v2 - g * h + Math.Sqrt(disc)));
+                                var v = new Vector3((float)(dx / t), (float)(h / t + .5 * g * t), (float)(dz / t));
+                                using (var sim = factory.Create(ctx.Physics, court))
+                                {
+                                    sim.Reset(new BallState { Position = from, Velocity = v }); var ev = new List<ContactEvent>();
+                                    for (int i = 0; i < ctx.StepHz * 4 && list.Count < 4; i++) { ev.Clear(); sim.Step(ev); foreach (var e in ev) list.Add(e.Surface + (e.Persistent ? "*" : "") + "(" + F(Math.Round(e.Point.x, 2)) + "," + F(Math.Round(e.Point.y, 2)) + "," + F(Math.Round(e.Point.z, 2)) + ")"); }
+                                }
+                            }
+                        }
+                        sb.Append(F(speed) + "\t" + F(z) + "\t" + F(Math.Round(y, 2)) + "\t" + string.Join(" ", list) + "\n");
+                    }
+            var bctx = new RallyContext(EffectiveConfig.From(preset), new RallyParams { BoastRival = 1, BoastWeightShooter = 3 }, factory);
+            var probe = new Probe(RivalAi.For(bctx, AiLevel.Medium, RivalStyleId.Definidor, 101), bctx);
+            for (int m = 0; m < 6; m++)
+                using (var sim = new RallySim(bctx, new BotBrain(bctx, 30, 100 + 2 * m), probe))
+                {
+                    var score = new MatchScore(7, 2, PlayerId.Human); int guard = 0;
+                    while (!score.Finished && guard++ < 60) { var o = sim.PlayPoint(score.Server, score.Box); if (o.Winner.HasValue) score.PointWon(o.Winner.Value); }
+                }
+            sb.Append("bot30: decisions " + probe.Decisions + " back " + probe.BackQuarter + " withBoasts " + probe.WithBoasts + " defensive " + probe.Defensive + " forecasts " + probe.Forecasts + " solved " + probe.Solved + " good " + probe.Good + " chosen " + probe.ChosenBoasts + "\n");
+            File.WriteAllText(Path.Combine(Dir("solver-diag"), "diag.tsv"), sb.ToString(), Utf8); TestContext.WriteLine(sb.ToString());
+        }
     }
 }

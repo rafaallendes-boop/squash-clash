@@ -99,6 +99,19 @@ namespace SquashClash.Core.Shot
                 ShotPaceSettings.From(config.Source),config.Court,factory,config.Physics,footprintRadius,out _);
             return new CausalShotResult(vectors,input,solution,pace);
         }
+        // The two-wall shot (design 2026-11-20-boast-predeclaration, section 2), shared by the human and the rival: the same causal vectors and
+        // the striker's arm, composed onto the side-wall point (height) and the boast pace (speed), then the boast solver. No front-wall
+        // bound, no intention search and no front deep drive guard: those belong to front-wall aims. Input.Aim holds the side point (z, y).
+        public static CausalShotResult SolveBoast(CausalReference reference,BodyFrame body,Vector3 contact,in SideAim side,float power,EffectiveConfig config,IBallSimulationFactory factory,in FatigueArm arm,float footprintRadius,out BoastInfo boast)
+        {
+            var settings=CausalSettings.From(config.Source);var vectors=ApplyFatigue(Evaluate(reference,body,contact,settings),arm);
+            var paceSettings=ShotPaceSettings.From(config.Source);
+            var pace=ShotPace.Boast(power,contact,side,config.Court,config.Physics.BallRadius,paceSettings);
+            var input=Apply(side.UV,pace.Speed,vectors,settings);
+            var solution=BoastSolver.Solve(contact,side.With(side.Z,input.Aim.y),input.Speed,paceSettings.VMin,(float)config.Source.Get("shot.vCap"),
+                config.Court,factory,config.Physics,footprintRadius,out boast);
+            return new CausalShotResult(vectors,input,solution,pace);
+        }
         // The striker's arm (spec 4): position vectors (stretch, jam) grow by (1+gain); timing and the aim are untouched; one power
         // vector «fatigue» is added. Nothing to apply returns the very same array, so the off path stays bit for bit identical.
         public static CausalVector[] ApplyFatigue(CausalVector[] vectors,in FatigueArm arm)

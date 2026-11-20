@@ -34,14 +34,38 @@ namespace SquashClash.Runtime.Shot
         public Vector2 Aim {get;private set;}
         public bool IsInvalid {get;private set;}
         public Color Tint {get;private set;}
+        // Two-wall shot: the side-wall point of the current aim (default for a front-wall aim).
+        public SideAim Side {get;private set;}
+        private void EnsureLine()
+        {
+            if(line!=null)return;
+            line=gameObject.AddComponent<LineRenderer>();line.useWorldSpace=false;line.widthMultiplier=StrokeMeters;
+            line.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off;line.receiveShadows=false;
+            material=new Material(Resources.Load<Shader>("Legibility"));material.SetColor("_BaseColor",Color.white);line.sharedMaterial=material;
+        }
+        // The frozen ring lies on the side wall at the aimed point; the boast's front-wall point is the feasible cross (ShowFeasible).
+        public void SetSideAim(SideAim side,CourtDimensions court)
+        {
+            EnsureLine();
+            Side=side;Aim=side.UV;State=AimState.Frozen;IsInvalid=false;
+            float x=side.Wall==SurfaceId.RightWall?.035f:court.Width-.035f;
+            transform.SetPositionAndRotation(new Vector3(x,side.Y,side.Z),Quaternion.Euler(0,side.Wall==SurfaceId.RightWall?-90:90,0));
+            Tint=Color.yellow;line.startColor=line.endColor=Tint;
+            Ring(5);
+        }
+        private void Ring(int count)
+        {
+            line.positionCount=count;
+            for(int i=0;i<count;i++)
+            {
+                float angle=i*Mathf.PI*2/(count-1);
+                line.SetPosition(i,new Vector3(Mathf.Cos(angle)*RadiusMeters,Mathf.Sin(angle)*RadiusMeters,0));
+            }
+        }
         public void SetAim(Vector2 aim,AimState state,CourtDimensions court)
         {
-            if(line==null)
-            {
-                line=gameObject.AddComponent<LineRenderer>();line.useWorldSpace=false;line.widthMultiplier=StrokeMeters;
-                line.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off;line.receiveShadows=false;
-                material=new Material(Resources.Load<Shader>("Legibility"));material.SetColor("_BaseColor",Color.white);line.sharedMaterial=material;
-            }
+            EnsureLine();
+            Side=default;transform.rotation=Quaternion.identity;
             Aim=aim;State=state;transform.position=new Vector3(aim.x,aim.y,.035f);
             if(bands==null||tin!=court.TinTop||outLine!=court.FrontOutLower||lineWidth!=court.LineWidth||width!=court.Width)
             {bands=CourtLines.Build(court);tin=court.TinTop;outLine=court.FrontOutLower;lineWidth=court.LineWidth;width=court.Width;}
@@ -49,12 +73,7 @@ namespace SquashClash.Runtime.Shot
             IsInvalid=aim.y<=court.TinTop||aim.y>=court.FrontOutLower||touched.Contains(LineId.Tin)||touched.Contains(LineId.FrontOut);
             Tint=IsInvalid?Color.red:state==AimState.Frozen?Color.yellow:Color.cyan;
             line.startColor=line.endColor=Tint;
-            int count=state==AimState.Frozen?5:33;line.positionCount=count;
-            for(int i=0;i<count;i++)
-            {
-                float angle=i*Mathf.PI*2/(count-1);
-                line.SetPosition(i,new Vector3(Mathf.Cos(angle)*RadiusMeters,Mathf.Sin(angle)*RadiusMeters,0));
-            }
+            Ring(state==AimState.Frozen?5:33);
         }
         private double flashUntil=double.NegativeInfinity;
         public void FlashLock(double now,double seconds){flashUntil=now+seconds;TickFlash(now);}

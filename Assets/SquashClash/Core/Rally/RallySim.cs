@@ -22,8 +22,10 @@ namespace SquashClash.Core.Rally
         public readonly bool VolleyOffered;
         // The speed factor of the chosen volley's run (v2.2 sprint; 1 = no sprint), set only for a touching human brain.
         public readonly float VolleySprintFactor;
-        public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason,CausalShotResult causal=default,double fatigueReception=0,double fatigueStriker=0,bool volley=false,bool volleyOffered=false,float volleySprintFactor=1)
-        {VolleySprintFactor=volleySprintFactor;Volley=volley;VolleyOffered=volleyOffered;FatigueReception=fatigueReception;FatigueStriker=fatigueStriker;Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
+        // Where the ball was struck (the contact step's centre), set only on a stroke that was applied; the boast's side-wall point.
+        public readonly Vector3 ContactPoint;public readonly SideAim Side;
+        public ReceptionLog(PlayerId who,ReceptionResult result,bool perfect,bool reachable,bool defensive,double deltaMs,double slack,ShotOption option,long contactStep,string reason,CausalShotResult causal=default,double fatigueReception=0,double fatigueStriker=0,bool volley=false,bool volleyOffered=false,float volleySprintFactor=1,Vector3 contactPoint=default)
+        {ContactPoint=contactPoint;Side=option.Side;VolleySprintFactor=volleySprintFactor;Volley=volley;VolleyOffered=volleyOffered;FatigueReception=fatigueReception;FatigueStriker=fatigueStriker;Vectors=causal.Vectors;Input=causal.Input;Who=who;Result=result;Perfect=perfect;Reachable=reachable;Defensive=defensive;DeltaMs=deltaMs;SlackS=slack;Line=option.Line;Height=option.Height;Power=option.Power;ContactStep=contactStep;Reason=reason;}
     }
     public sealed class RallyOutcome
     {
@@ -248,7 +250,7 @@ namespace SquashClash.Core.Rally
             hasPending=false;var who=pendingWho;var state=ball.State;
             // The arm is the striker's own energy at this contact step, read before this stroke's cost is charged below.
             var arm=context.Fatigue.Arm(Energy(who).Energy);
-            var causal=Rules.CanHit(who)?RallyContact.Solve(context,pendingCausal,context.FrameAt(Body(who).Position),state.Position,pendingShot.Aim,pendingShot.P,arm):default;
+            var causal=Rules.CanHit(who)?RallyContact.Solve(context,pendingCausal,context.FrameAt(Body(who).Position),state.Position,pendingShot,arm):default;
             var solution=causal.Solution;
             if(!solution.Solved)
             {
@@ -257,7 +259,7 @@ namespace SquashClash.Core.Rally
                 return;
             }
             var previous=pendingLog;
-            outcome.Receptions.Add(new ReceptionLog(who,previous.Result,previous.Perfect,previous.Reachable,previous.Defensive,previous.DeltaMs,previous.SlackS,pendingShot.Option,previous.ContactStep,previous.Reason,causal,previous.FatigueReception,arm.Factor,previous.Volley,previous.VolleyOffered,previous.VolleySprintFactor));
+            outcome.Receptions.Add(new ReceptionLog(who,previous.Result,previous.Perfect,previous.Reachable,previous.Defensive,previous.DeltaMs,previous.SlackS,pendingShot.Option,previous.ContactStep,previous.Reason,causal,previous.FatigueReception,arm.Factor,previous.Volley,previous.VolleyOffered,previous.VolleySprintFactor,state.Position));
             // The racket only replaces the velocity of the authoritative state at the contact step.
             ball.Reset(new BallState{Position=state.Position,Velocity=solution.Velocity,Step=state.Step});
             // A contact before the bounce also costs the volley energy (19 nov); bots never volley by default, so nothing changes for them.

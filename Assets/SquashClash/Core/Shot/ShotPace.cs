@@ -1,5 +1,6 @@
 using System;
 using SquashClash.Core.Config;
+using SquashClash.Core.Court;
 using UnityEngine;
 namespace SquashClash.Core.Shot
 {
@@ -31,6 +32,21 @@ namespace SquashClash.Core.Shot
             double w=span>0?Math.Max(0,Math.Min(1,((double)s.FullM-distance)/span)):0;
             double gamma=1+((double)s.GammaMax-1)*w;
             // Early return keeps the old speed bit for bit: far from the wall, or with the curve switched off (gamma max 1).
+            if(!(gamma>1))return new ShotPaceResult(distance,1,linear,linear);
+            float speed=s.VMin+(float)Math.Pow(power,gamma)*(s.VMax-s.VMin);
+            return new ShotPaceResult(distance,(float)gamma,linear,speed);
+        }
+        // The two-wall shot (design 2026-11-20-boast-predeclaration): the same curve over the path to the side-wall point and on to the
+        // front wall (the side point's depth), so a boast from the back is the linear speed as any long shot.
+        public static ShotPaceResult Boast(float power,Vector3 contact,in SideAim side,CourtDimensions court,float ballRadius,ShotPaceSettings s)
+        {
+            float linear=s.VMin+power*(s.VMax-s.VMin);
+            var center=side.Center(court,ballRadius);
+            double dx=(double)center.x-contact.x,dy=(double)center.y-contact.y,dz=(double)center.z-contact.z;
+            float distance=(float)(Math.Sqrt(dx*dx+dy*dy+dz*dz)+Math.Max(0,(double)center.z-ballRadius));
+            double span=(double)s.FullM-s.NearM;
+            double w=span>0?Math.Max(0,Math.Min(1,((double)s.FullM-distance)/span)):0;
+            double gamma=1+((double)s.GammaMax-1)*w;
             if(!(gamma>1))return new ShotPaceResult(distance,1,linear,linear);
             float speed=s.VMin+(float)Math.Pow(power,gamma)*(s.VMax-s.VMin);
             return new ShotPaceResult(distance,(float)gamma,linear,speed);

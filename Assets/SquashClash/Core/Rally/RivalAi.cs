@@ -21,9 +21,11 @@ namespace SquashClash.Core.Rally
         public readonly double WaitBehindT;
         // Recovery after an own short shot: 0 none, < 0 to the T, > 0 that far behind the predicted bounce.
         public readonly double CoverDepth;
+        // Two-wall shot (design 2026-11-20-boast-predeclaration, section 5): the boast's base utility; read only with the rival's boast on.
+        public readonly double BoastWeight;
         public RivalStyle(RivalStyleId id,double longW,double awayW,double timeW,double dropW,double risk,double defense,double dropSlack,double dropZone,
-            double attackBase,double attackAhead,double volleyBias,double volleyMinK,double volleySteal,double wait,double cover)
-        {Id=id;LongWeight=longW;AwayWeight=awayW;TimeWeight=timeW;DropWeight=dropW;RiskAversion=risk;DefenseSlackS=defense;DropMinSlackS=dropSlack;DropZoneAhead=dropZone;
+            double attackBase,double attackAhead,double volleyBias,double volleyMinK,double volleySteal,double wait,double cover,double boast=0)
+        {BoastWeight=boast;Id=id;LongWeight=longW;AwayWeight=awayW;TimeWeight=timeW;DropWeight=dropW;RiskAversion=risk;DefenseSlackS=defense;DropMinSlackS=dropSlack;DropZoneAhead=dropZone;
          AttackBase=attackBase;AttackAhead=attackAhead;VolleyBias=volleyBias;VolleyMinKS=volleyMinK;VolleySteal=volleySteal;WaitBehindT=wait;CoverDepth=cover;}
         public static RivalStyle For(RallyParams p,RivalStyleId id)
         {
@@ -31,12 +33,12 @@ namespace SquashClash.Core.Rally
             {
                 case RivalStyleId.Definidor:return new RivalStyle(id,p.StyleShooterLongWeight,p.StyleShooterAwayWeight,p.StyleShooterTimeWeight,p.StyleShooterDropWeight,p.StyleShooterRiskAversion,
                     p.StyleShooterDefenseSlackS,p.StyleShooterDropMinSlackS,p.StyleShooterDropZoneAhead,p.StyleShooterAttackBase,p.StyleShooterAttackAhead,
-                    p.StyleShooterVolleyBias,p.StyleShooterVolleyMinKS,p.StyleShooterVolleySteal,p.StyleShooterWaitBehindT,p.StyleShooterCoverDepth);
+                    p.StyleShooterVolleyBias,p.StyleShooterVolleyMinKS,p.StyleShooterVolleySteal,p.StyleShooterWaitBehindT,p.StyleShooterCoverDepth,p.BoastWeightShooter);
                 case RivalStyleId.Completo:return new RivalStyle(id,p.StyleAllRoundLongWeight,p.StyleAllRoundAwayWeight,p.StyleAllRoundTimeWeight,p.StyleAllRoundDropWeight,p.StyleAllRoundRiskAversion,
                     p.StyleAllRoundDefenseSlackS,p.StyleAllRoundDropMinSlackS,p.StyleAllRoundDropZoneAhead,p.StyleAllRoundAttackBase,p.StyleAllRoundAttackAhead,
-                    p.StyleAllRoundVolleyBias,p.StyleAllRoundVolleyMinKS,p.StyleAllRoundVolleySteal,p.StyleAllRoundWaitBehindT,p.StyleAllRoundCoverDepth);
+                    p.StyleAllRoundVolleyBias,p.StyleAllRoundVolleyMinKS,p.StyleAllRoundVolleySteal,p.StyleAllRoundWaitBehindT,p.StyleAllRoundCoverDepth,p.BoastWeightAllRound);
                 default:return new RivalStyle(id,p.FondoLongWeight,p.FondoAwayWeight,p.FondoTimeWeight,p.FondoDropWeight,p.FondoRiskAversion,
-                    p.FondoDefenseSlackS,p.FondoDropMinSlackS,double.NegativeInfinity,0,0,p.StyleFondoVolleyBias,p.StyleFondoVolleyMinKS,0,p.RivalWaitBehindT,p.StyleFondoCoverDepth);
+                    p.FondoDefenseSlackS,p.FondoDropMinSlackS,double.NegativeInfinity,0,0,p.StyleFondoVolleyBias,p.StyleFondoVolleyMinKS,0,p.RivalWaitBehindT,p.StyleFondoCoverDepth,p.BoastWeightFondo);
             }
         }
         // The noise factor of a (style, level): it scales the level's five execution/perception noises, never the temperature.
@@ -71,9 +73,10 @@ namespace SquashClash.Core.Rally
         private readonly RallyContext context;
         private readonly AiDifficulty difficulty;
         private readonly RallyRng random;
-        private readonly double[] weights=new double[36];
-        private readonly ShotOption[] all=new ShotOption[36];
-        private readonly bool[] atVolley=new bool[36];
+        // 18 front-wall options plus at most 4 boasts, for the bounce and the volley contact.
+        private readonly double[] weights=new double[44];
+        private readonly ShotOption[] all=new ShotOption[44];
+        private readonly bool[] atVolley=new bool[44];
         public RivalStyle Style {get;}
         // The game's rival: the level's shared noise scaled by the (style, level) factor.
         public static RivalAi For(RallyContext context,AiLevel level,RivalStyleId style,long seed)
@@ -117,15 +120,17 @@ namespace SquashClash.Core.Rally
             void Add(Vector3 at,bool isVolley,double bonus)
             {
                 var options=ShotOptions.Build(context,at);
+                if(context.BoastOn)ShotOptions.AddBoasts(context,at,options);
                 for(int i=0;i<options.Count;i++)
                 {
-                    var o=options[i];bool allowed=!defensive||(o.Height==ShotHeight.High&&o.Power==ShotPower.Medium&&o.Line!=ShotLine.Drop);
+                    var o=options[i];bool allowed=!defensive||(o.Height==ShotHeight.High&&o.Power==ShotPower.Medium&&o.Line!=ShotLine.Drop)||o.Line==ShotLine.Boast;
                     all[count]=o;atVolley[count]=isVolley;
                     weights[count]=allowed?Utility(o,seen,mine,at)+bonus:double.NegativeInfinity;
                     if(weights[count]>best)best=weights[count];
                     count++;
                 }
             }
+            // A boast stays open under pressure: from the back corner it is the classic way out.
             if(bounce)Add(own.Contact.PStar,false,0);
             if(volley)
             {
@@ -148,11 +153,15 @@ namespace SquashClash.Core.Rally
                 for(int i=0;i<count;i++){if(weights[i]<=0)continue;candidate=i;pick-=weights[i];if(pick<0)break;}
                 if(candidate<0)break;
                 var at=atVolley[candidate]?own.Volley.Plan.PStar:own.Contact.PStar;
-                if(RallyContact.Forecast(context,at,all[candidate].Aim,all[candidate].P).Good){chosen=candidate;break;}
+                var forecast=all[candidate].Side.Exists?RallyContact.ForecastBoast(context,at,all[candidate].Side,all[candidate].P):RallyContact.Forecast(context,at,all[candidate].Aim,all[candidate].P);
+                if(forecast.Good){chosen=candidate;break;}
                 total-=weights[candidate];weights[candidate]=0;
             }
             int index=chosen>=0?chosen:fallback;var option=all[index];bool useVolley=atVolley[index];
-            var aim=ShotOptions.ClampAim(context,option.Aim+new Vector2((float)random.NextGaussian(difficulty.AimSigma),(float)random.NextGaussian(difficulty.AimSigma)));
+            // The same two aim draws for every line; a boast spreads them over its side-wall point (z, y).
+            var noise=new Vector2((float)random.NextGaussian(difficulty.AimSigma),(float)random.NextGaussian(difficulty.AimSigma));
+            var side=option.Side.Exists?ShotOptions.ClampSide(context,option.Side.With(option.Side.Z+noise.x,option.Side.Y+noise.y)):default;
+            var aim=option.Side.Exists?side.UV:ShotOptions.ClampAim(context,option.Aim+noise);
             float power=Mathf.Clamp01(option.P+(float)random.NextGaussian(difficulty.PowerSigma));
             double delta=random.NextGaussian(difficulty.TimingSigmaMs);
             var plan=useVolley?own.Volley.Plan:own.Contact;
@@ -162,7 +171,7 @@ namespace SquashClash.Core.Rally
             if(context.Timing.ValidLimitOn)
             {lower=Math.Max(lower,-context.Timing.ValidMs);upper=Math.Min(upper,context.Timing.ValidMs);}
             delta=RivalReleaseTiming.Adjust(delta,lower,upper,difficulty.TimingSigmaMs,p.FondoReleaseMarginSigma);
-            return new AiShot(true,option,aim,power,delta,defensive,useVolley);
+            return new AiShot(true,option,aim,power,delta,defensive,useVolley,side);
         }
         // FondoAi.Utility plus the style's attack feature and drop zone. For Fondista both are zero/closed, so the value is FondoAi's.
         public double Utility(in ShotOption option,in AiObservation observation,in ReceptionPlan own,Vector3 at)
@@ -171,6 +180,12 @@ namespace SquashClash.Core.Rally
             double need=Math.Min(1,Vector2.Distance(observation.SelfPosition,context.T)/4);
             double ahead=Math.Min(1,Math.Max(0,(context.T.y-at.z)/2));
             double time,risk;
+            if(option.Line==ShotLine.Boast)
+            {
+                // Two-wall shot: away from the opponent (front opposite corner), little time, more risk when low or strong.
+                risk=.35+(option.Height==ShotHeight.Low?.2:0)+(option.Power==ShotPower.Strong?.1:0);
+                return Style.BoastWeight+Style.AwayWeight*away+Style.TimeWeight*.4*need-Style.RiskAversion*risk;
+            }
             if(option.Line==ShotLine.Drop)
             {
                 bool open=(observation.OpponentPosition.y>context.T.y+.5f&&own.SlackS>=Style.DropMinSlackS)||at.z<=context.T.y+Style.DropZoneAhead;

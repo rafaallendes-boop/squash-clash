@@ -40,6 +40,8 @@ namespace SquashClash.Core.Rally
         // The same body template for both players; only the position differs.
         public BodyFrame FrameAt(Vector2 position)=>BodyFrame.From(Config.Source,position);
         public bool VolleyOn=>Params.VolleyEnabled!=0;
+        // Two-wall shot for the rival (DEV «Dos paredes»); the human's side-wall gesture does not read it.
+        public bool BoastOn=>Params.BoastRival!=0;
         public VolleySettings Volley=>new VolleySettings(VolleyOn,(float)Params.VolleyMinHeight,(float)Params.VolleyMaxHeight,Params.VolleyMinSeparationS,Params.VolleyMinWindowS);
         // Volley v2 for the human only (design 2026-11-20); the rival and RallySim keep v1 and never read these.
         public bool HumanVolleyV2=>VolleyOn&&Params.HumanVolleyMode>=2;
