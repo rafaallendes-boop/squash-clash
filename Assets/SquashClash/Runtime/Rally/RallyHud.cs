@@ -1,5 +1,6 @@
 using SquashClash.Core.Rally;
 using SquashClash.Runtime.App;
+using SquashClash.Runtime.Menu;
 using UnityEngine;
 using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Rally
@@ -18,13 +19,17 @@ namespace SquashClash.Runtime.Rally
         public float MatchSeconds {get;private set;}
         public int LongestRally {get;private set;}
         private int countedPoints;
+        // Personal records: set by the start menu when it begins a match, cleared when no match is active. A match that
+        // ever ran on autopilot never counts. Nothing here reaches Core: it only reads what the HUD already sees.
+        public bool MenuMatch {get;set;}
+        private bool autopilotSeen;
         public static string DurationText(float seconds){int s=Mathf.Max(0,(int)seconds);return (s/60)+":"+(s%60).ToString("D2");}
         public static string RematchText(bool humanWon,int human,int rival)=>humanWon?"Revancha":"Revancha "+human+"–"+rival;
         public static string StrokesText(int strokes)=>strokes==1?"1 golpe":strokes+" golpes";
         private AppBootstrap app;
         private RallyDirector rally;
         private Label rivalName;private string rivalNameShown;
-        private Label status,humanPoints,rivalPoints,resultTitle,resultScore,resultKicker,bootTitle,fps,resultDuration,resultLongest;
+        private Label status,humanPoints,rivalPoints,resultTitle,resultScore,resultKicker,bootTitle,fps,resultDuration,resultLongest,resultRecord;
         private Button resultRematch;
         public const string DevTitle="Squash Clash — First Ball",PlayerTitle="Squash Clash";
         private VisualElement score,humanServe,rivalServe,result;
@@ -98,6 +103,7 @@ namespace SquashClash.Runtime.Rally
             resultLast=Text("","sc-result-last");resultLast.name="match-result-last";card.Add(resultLast);
             resultDuration=Text("","sc-result-last");resultDuration.name="match-result-duration";card.Add(resultDuration);
             resultLongest=Text("","sc-result-last");resultLongest.name="match-result-longest";card.Add(resultLongest);
+            resultRecord=Text("","sc-result-record");resultRecord.name="match-result-record";card.Add(resultRecord);
             card.Add(Text("PAR a 7 · diferencia de 2","sc-result-note"));
             var actions=new VisualElement{pickingMode=PickingMode.Ignore};actions.AddToClassList("sc-result-buttons");card.Add(actions);
             resultRematch=Add(actions,"match-result-rematch","Revancha",()=>{rally.Rematch();Refresh();});resultRematch.AddToClassList("sc-button--primary");
@@ -225,7 +231,8 @@ namespace SquashClash.Runtime.Rally
         // The longest rally is the largest PointResult.Shots seen as each point ends; a new match (rematch or leaving) starts both over.
         private void TrackMatch(bool active)
         {
-            if(!active||rally.Match==null||rally.PointsPlayed<countedPoints){MatchSeconds=0;LongestRally=0;countedPoints=0;if(!active||rally.Match==null)return;}
+            if(!active||rally.Match==null||rally.PointsPlayed<countedPoints){MatchSeconds=0;LongestRally=0;countedPoints=0;autopilotSeen=false;if(!active||rally.Match==null){if(!active)MenuMatch=false;return;}}
+            if(rally.Autopilot)autopilotSeen=true;
             if(rally.PointsPlayed!=countedPoints){countedPoints=rally.PointsPlayed;if(rally.LastPoint.HasValue)LongestRally=Mathf.Max(LongestRally,rally.LastPoint.Value.Shots);}
         }
         // Called every frame: it touches the UI only when what it shows changed, so an idle HUD costs nothing.
@@ -274,6 +281,8 @@ namespace SquashClash.Runtime.Rally
                     resultDuration.style.display=resultLongest.style.display=extended?DisplayStyle.Flex:DisplayStyle.None;
                     resultDuration.text="Duración: "+DurationText(MatchSeconds);resultLongest.text="Rally más largo: "+StrokesText(LongestRally);
                     resultRematch.text=extended?RematchText(over==1,rally.Match.Human,rally.Match.Rival):"Revancha";
+                    var broken=MenuMatch&&!autopilotSeen&&!rally.Autopilot?PersonalRecords.Apply(new MatchSummary(over==1,rally.Level,rally.Match.Human,rally.Match.Rival,LongestRally,MatchSeconds)):null;
+                    string recordLine=PersonalRecords.CardLine(broken);resultRecord.text=recordLine;resultRecord.style.display=recordLine.Length>0?DisplayStyle.Flex:DisplayStyle.None;
                     resultAge=0;resultCard.style.opacity=0;
                 }
             }

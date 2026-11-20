@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Menu
 {
-    public enum FirstRunScreen {None,Menu,Tutorial,Credits}
+    public enum FirstRunScreen {None,Menu,Tutorial,Credits,Records}
     // First run: what a player with no context sees between launching the app and playing a match. A start menu
     // (title, Jugar, difficulty, how to play, build label) laid over the court with the game paused. It adds no
     // mechanic: Jugar is RallyDirector.StartMatch at the chosen AiLevel, exactly what the "Partido" button does.
@@ -26,7 +26,7 @@ namespace SquashClash.Runtime.Menu
         public static void ResetOpenAtBoot()=>openAtBoot=null;
         private static readonly string[] LevelNames={"easy","medium","hard"},LevelTexts={"Fácil","Media","Difícil"};
         private AppBootstrap app;private RallyDirector rally;private RallyHud hud;
-        private VisualElement root,menu,header,pause,credits;private Button play,practice,menuSound,pauseSound,menuMusic,pauseMusic,menuHand;private readonly Button[] levels=new Button[3];
+        private VisualElement root,menu,header,pause,credits,records;private Button play,practice,menuSound,pauseSound,menuMusic,pauseMusic,menuHand;private readonly Button[] levels=new Button[3];
         private int shownKey=-1;
         private SafeAreaLayout safeArea;private Label build;
         // Space between the safe area and the menu's content (the header's top edge is the reference at the top).
@@ -68,12 +68,12 @@ namespace SquashClash.Runtime.Menu
             Level=savedLevel>=(int)AiLevel.Easy&&savedLevel<=(int)AiLevel.Hard?(AiLevel)savedLevel:AiLevel.Medium;
             root=app.GetComponent<UIDocument>().rootVisualElement;
             header=root.Q("boot-header");
-            BuildMenu();BuildTutorial();BuildCredits();BuildPause();SelectLevel(Level);hud.MenuRequested+=OpenMenu;
+            BuildMenu();BuildTutorial();BuildCredits();BuildRecords();BuildPause();SelectLevel(Level);hud.MenuRequested+=OpenMenu;
             // Device robustness: the layers cover the whole screen; what they show stays inside the safe area.
             safeArea=app.GetComponent<SafeAreaLayout>();
             if(safeArea!=null)
             {
-                safeArea.Fit(menu,MenuTop,MenuBottom);safeArea.Fit(tutorial,MenuTop,MenuBottom);safeArea.Fit(credits,MenuTop,MenuBottom);safeArea.Fit(pause,float.NaN,0);
+                safeArea.Fit(menu,MenuTop,MenuBottom);safeArea.Fit(tutorial,MenuTop,MenuBottom);safeArea.Fit(credits,MenuTop,MenuBottom);safeArea.Fit(records,MenuTop,MenuBottom);safeArea.Fit(pause,float.NaN,0);
                 safeArea.Changed+=PlaceBuild;PlaceBuild();
             }
             Refresh();
@@ -104,7 +104,8 @@ namespace SquashClash.Runtime.Menu
             }
             play=Add(controls,"menu-play","Jugar",Play);play.AddToClassList("sc-button--primary");play.AddToClassList("sc-menu-play");
             var links=Row(controls,"menu-links","sc-menu-links");
-            var howto=Add(links,"menu-howto","¿Cómo se juega?",()=>OpenTutorial(false));howto.AddToClassList("sc-menu-link");howto.AddToClassList("sc-menu-link--first");
+            var howto=Add(links,"menu-howto","¿Cómo se juega?",()=>OpenTutorial(false));howto.AddToClassList("sc-menu-link");howto.AddToClassList("sc-menu-link--first");howto.AddToClassList("sc-menu-link--wide");
+            var recordsLink=Add(links,"menu-records","Récords",OpenRecords);recordsLink.AddToClassList("sc-menu-link");recordsLink.AddToClassList("sc-menu-link--first");
             Add(links,"menu-credits","Créditos",OpenCredits).AddToClassList("sc-menu-link");
             // Sound, music and the hand the drawn player holds the racket in (cosmetic): three switches in a row.
             var audio=Row(controls,"menu-audio","sc-menu-switches");
@@ -132,6 +133,46 @@ namespace SquashClash.Runtime.Menu
             Named(body,"credits-audio","Los efectos y la música se compusieron y generaron con código para Squash Clash en 2026, sin grabaciones, samples ni bibliotecas de sonido externas.","sc-credits-text");
             var back=Add(credits,"credits-back","Volver",CloseCredits);back.AddToClassList("sc-button--primary");back.AddToClassList("sc-credits-back");
             credits.Add(Decor("credits-tin","sc-menu-tin"));
+        }
+        // Personal records (20 nov): "Tus récords", a plain list of the player's own bests (PersonalRecords), one tap from the menu.
+        private Label recordRally,recordStreak,recordWins,recordMargin,recordFastest;
+        private void BuildRecords()
+        {
+            records=new VisualElement{name="records-layer"};records.AddToClassList("sc-menu-layer");records.AddToClassList("sc-credits");records.AddToClassList("sc-wall");records.style.display=DisplayStyle.None;root.Add(records);
+            records.Add(Decor("records-outline","sc-menu-outline"));
+            var title=Text("Tus récords","sc-credits-title");title.name="records-title";records.Add(title);
+            records.Add(Decor("records-rule","sc-menu-rule"));
+            var body=Row(records,"records-body","sc-credits-body");
+            recordRally=Stat(body,"records-rally","Rally más largo");recordStreak=Stat(body,"records-streak","Racha de victorias");
+            recordWins=Stat(body,"records-wins","Victorias por nivel");recordMargin=Stat(body,"records-margin","Mayor diferencia en una victoria");
+            recordFastest=Stat(body,"records-fastest","Victoria más rápida");
+            var back=Add(records,"records-back","Volver",CloseRecords);back.AddToClassList("sc-button--primary");back.AddToClassList("sc-credits-back");
+            records.Add(Decor("records-tin","sc-menu-tin"));
+        }
+        private static Label Stat(VisualElement body,string name,string caption)
+        {
+            body.Add(Text(caption,"sc-credits-section"));
+            var value=Text("—","sc-records-value");value.name=name+"-value";body.Add(value);return value;
+        }
+        private void ShowRecords()
+        {
+            int rallyBest=PersonalRecords.LongestRally,streakBest=PersonalRecords.BestStreak,margin=PersonalRecords.BestMargin;float fastest=PersonalRecords.FastestWin;
+            recordRally.text=rallyBest>0?RallyHud.StrokesText(rallyBest):"—";
+            recordStreak.text=streakBest>0?"Mejor "+streakBest+" · Actual "+PersonalRecords.Streak:"—";
+            int wins=PersonalRecords.Wins(AiLevel.Easy)+PersonalRecords.Wins(AiLevel.Medium)+PersonalRecords.Wins(AiLevel.Hard);
+            recordWins.text=wins>0?"Fácil "+PersonalRecords.Wins(AiLevel.Easy)+" · Media "+PersonalRecords.Wins(AiLevel.Medium)+" · Difícil "+PersonalRecords.Wins(AiLevel.Hard):"—";
+            recordMargin.text=margin>0?PersonalRecords.PointsText(margin):"—";
+            recordFastest.text=fastest>0?RallyHud.DurationText(fastest):"—";
+        }
+        public void OpenRecords()
+        {
+            if(app==null||Screen!=FirstRunScreen.Menu)return;
+            ShowRecords();Screen=FirstRunScreen.Records;app.UserEvents?.Menu("records","open");Refresh();
+        }
+        public void CloseRecords()
+        {
+            if(Screen!=FirstRunScreen.Records)return;
+            Screen=FirstRunScreen.Menu;app.UserEvents?.Menu("menu","open");Refresh();
         }
         private static void Named(VisualElement parent,string name,string text,string style){var label=Text(text,style);label.name=name;parent.Add(label);}
         public void OpenCredits()
@@ -295,7 +336,7 @@ namespace SquashClash.Runtime.Menu
             }
             p.fillColor=Plaster;Disc(p,ball,6,true);
         }
-        private string MetricsScreen=>Screen==FirstRunScreen.Menu?"menu":Screen==FirstRunScreen.Tutorial?"tutorial":Screen==FirstRunScreen.Credits?"credits":PauseVisible?"pause":"game";
+        private string MetricsScreen=>Screen==FirstRunScreen.Menu?"menu":Screen==FirstRunScreen.Tutorial?"tutorial":Screen==FirstRunScreen.Credits?"credits":Screen==FirstRunScreen.Records?"records":PauseVisible?"pause":"game";
         private void ShowStep()
         {
             tutorialStep.text=(TutorialStep+1)+" de "+TutorialSteps;tutorialTitle.text=StepTitles[TutorialStep];tutorialBody.text=StepBodies[TutorialStep];
@@ -397,6 +438,7 @@ namespace SquashClash.Runtime.Menu
         {
             Screen=FirstRunScreen.None;app.Clock.Paused=false;rally.Level=Level;rally.RandomStyles=true;rally.StyleCounter=PlayerPrefs.GetInt(RivalMatchesKey,0);
             if(!rally.StartMatch()){OpenMenu();return;}
+            hud.MenuMatch=true;
             PlayerPrefs.SetInt(RivalMatchesKey,rally.StyleCounter);PlayerPrefs.Save();
             app.UserEvents?.Menu("game","open");Refresh();hud.Refresh();
         }
@@ -417,6 +459,7 @@ namespace SquashClash.Runtime.Menu
             menu.style.display=Screen==FirstRunScreen.Menu?DisplayStyle.Flex:DisplayStyle.None;
             tutorial.style.display=Screen==FirstRunScreen.Tutorial?DisplayStyle.Flex:DisplayStyle.None;
             credits.style.display=Screen==FirstRunScreen.Credits?DisplayStyle.Flex:DisplayStyle.None;
+            records.style.display=Screen==FirstRunScreen.Records?DisplayStyle.Flex:DisplayStyle.None;
             pause.style.display=paused?DisplayStyle.Flex:DisplayStyle.None;
             // Like the result card, the pause card and its scrim start under the header, whose button stays usable.
             if(paused&&header!=null&&!float.IsNaN(header.worldBound.yMax))pause.style.top=header.worldBound.yMax-root.worldBound.yMin+8;
@@ -428,7 +471,7 @@ namespace SquashClash.Runtime.Menu
         {
             if(hud!=null)hud.MenuRequested-=OpenMenu;
             if(safeArea!=null)safeArea.Changed-=PlaceBuild;
-            menu?.RemoveFromHierarchy();tutorial?.RemoveFromHierarchy();credits?.RemoveFromHierarchy();pause?.RemoveFromHierarchy();
+            menu?.RemoveFromHierarchy();tutorial?.RemoveFromHierarchy();credits?.RemoveFromHierarchy();records?.RemoveFromHierarchy();pause?.RemoveFromHierarchy();
         }
     }
 }

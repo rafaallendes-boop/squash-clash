@@ -60,6 +60,13 @@ namespace SquashClash.Runtime.Tests
             Click("menu-credits");yield return Settle();
             AssertFits("credits-layer",phone+" credits");
         }
+        // Personal records (20 nov): the "Tus récords" screen, and the menu with its third link, from the 16:9 SE to the Pro Max.
+        [UnityTest] public IEnumerator Records_FitInsideTheSafeArea([ValueSource(nameof(Phones))] PhoneScreen screen)
+        {
+            yield return Boot(screen,true);app.DevTools=false;yield return Settle();
+            Click("menu-records");yield return Settle();
+            AssertFits("records-layer",phone+" records");
+        }
         [UnityTest] public IEnumerator Tutorial_EveryStepFitsInsideTheSafeArea([ValueSource(nameof(Phones))] PhoneScreen screen)
         {
             yield return Boot(screen,true);
