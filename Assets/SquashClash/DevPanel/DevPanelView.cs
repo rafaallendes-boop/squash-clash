@@ -52,7 +52,7 @@ namespace SquashClash.DevPanel
                 b.style.marginTop=0;b.style.marginBottom=0;b.style.fontSize=14;b.style.whiteSpace=WhiteSpace.Normal;b.style.color=Color.white;b.style.overflow=Overflow.Hidden;tabs.Add(b);
             }
             Tab("Parámetros",paramsScroll);Tab("Presets",presetsScroll);Tab("Diagnóstico",diagnosticsScroll);Show(paramsScroll);
-            toggle=new Button(Toggle){name="dev-toggle",text="DEV"};toggle.style.position=Position.Absolute;toggle.style.width=58;toggle.style.height=44;
+            toggle=new Button(Toggle){name="dev-toggle",text="DEV"};toggle.style.position=Position.Absolute;toggle.style.width=40;toggle.style.height=28;toggle.style.minHeight=0;toggle.style.fontSize=11;toggle.style.opacity=.5f;toggle.style.paddingLeft=toggle.style.paddingRight=toggle.style.paddingTop=toggle.style.paddingBottom=0;toggle.style.marginLeft=toggle.style.marginRight=toggle.style.marginTop=toggle.style.marginBottom=0;
             // Insert below ResumeOverlay. It remains the last layer and owns resume input.
             int index=root.IndexOf(root.Q("resume-overlay"));root.Insert(index<0?root.childCount:index,panel);
             index=root.IndexOf(root.Q("resume-overlay"));root.Insert(index<0?root.childCount:index,toggle);
@@ -83,7 +83,8 @@ namespace SquashClash.DevPanel
             if(root?.panel==null)return;var safe=Screen.safeArea;
             var top=RuntimePanelUtils.ScreenToPanel(root.panel,new Vector2(safe.xMin,Screen.height-safe.yMax));
             var bottom=RuntimePanelUtils.ScreenToPanel(root.panel,new Vector2(safe.xMax,Screen.height-safe.yMin));
-            toggle.style.top=top.y+6;toggle.style.right=Mathf.Max(0,root.layout.width-bottom.x)+6;
+            // Closed: a small faint corner button below the HUD (bottom-right, where the DEV bar used to sit). Open: top-right, as before.
+            toggle.style.top=IsOpen?top.y+6:bottom.y-28f-6;toggle.style.right=Mathf.Max(0,root.layout.width-bottom.x)+6;
             panel.style.left=top.x+6;panel.style.right=Mathf.Max(0,root.layout.width-bottom.x)+6;
             panel.style.top=(top.y+bottom.y)*.5f;
             float barHeight=root.Q("dev-bar")?.resolvedStyle.height??112;if(float.IsNaN(barHeight))barHeight=112;
@@ -102,3 +103,4 @@ namespace SquashClash.DevPanel
         }
     }
 }
+
