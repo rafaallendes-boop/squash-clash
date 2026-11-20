@@ -49,7 +49,7 @@ namespace SquashClash.Runtime.Menu
             "Apoya el dedo en la pared del frente, justo donde quieres mandar la pelota. Ese punto queda fijo mientras no levantes el dedo.",
             "Sin levantar el dedo, tira hacia abajo: mientras más tiras, más fuerte sale el golpe. Suelta para pegar. Si te arrepientes, vuelve a subir el dedo hasta donde lo apoyaste y suelta: no pegas.",
             "Cuando la pelota viene hacia ti aparece un triángulo donde le vas a pegar y un anillo que se achica. Suelta justo cuando el anillo calce dentro del triángulo. Tienes un solo intento por pelota.",
-            "Anillo ámbar visible: toca y voleas. Espera al anillo blanco: golpeas después del bote."
+            "Anillo ámbar visible: toca y voleas en el aire. Espera al anillo blanco: golpeas después del bote."
         };
         private VisualElement tutorial,tutorialArt,tutorialResults;private Label tutorialStep,tutorialTitle,tutorialBody;private Button tutorialNext;
         private bool tutorialThenPlay;
