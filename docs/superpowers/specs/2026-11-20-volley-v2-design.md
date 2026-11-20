@@ -27,14 +27,76 @@
 
 Regla de elección: se elige la primera de A0, A1 que cumpla 1, 3 y 4; si ninguna cumple 3, se evalúa B. No se ajusta ningún valor después de ver los datos.
 
-## 1. Diagnóstico
+## 1. Diagnóstico (medido después de confirmar §0)
 
-_(Se completa con la medición.)_
+Corrida única de `VolleyV2Experiment.MeasureVolleyV2` (Passed): 600 puntos, 5.116 recepciones del humano (4.778 sin saque, 338 devoluciones de saque), RallyParams `0f58580f44ea`, preset `207da8f2c636`, SimulationKey `166a96e319c7`. V0 reprodujo la oportunidad de la simulación en el 100 % (0 diferencias). Una `SystemFault` del rally de base, ajena a la medición (se registra, no se investigó). Evidencia: `docs/validation/evidence/2026-11-20-volley-v2/` (`rallysim-receptions.tsv`, SHA-256 `024e230f…b2f6`; `rallysim-summary.tsv`; `summarize.py`).
 
-## 2. Propuesta
+| Motivo hoy (V0) | Sin saque (simulación) | Juego real del PO (96) |
+|---|---|---|
+| separación | **45,9 %** | 42 % |
+| no pasa al alcance | **39,6 %** | 27 % |
+| ventana < 0,05 s | 11,6 % | 11 % |
+| saque | (aparte: 100 % de 338) | 20 % |
+| ofrecida | **2,4 %** | 0 % |
 
-_(Se completa con la medición.)_
+- **Separación, la causa principal y estructural.** El hueco real entre `KOut` de la volea y `KIn` del bote tiene mediana **130 ms** (p10 121, p90 143, máximo 247). Es casi constante porque es el tiempo que la pelota pasa por debajo de 0,6 m alrededor del bote. Con un umbral de 250 ms, la regla oculta casi toda volea que termina cerca del bote, es decir, casi todas.
+- **No pasa al alcance (M1).** El cuerpo corre hacia el bote; la pelota pasa a una mediana de 0,88 m fuera del alcance (1,3 m). Solo 388 de 1.892 casos quedan a ≤ 0,3 m. Ampliar el alcance no lo arregla.
+- **Ventana.** Con el cuerpo fijo en el camino M1, K es corto: mediana 170 ms reales en las ofrecidas hoy, frente a 475 ms del bote.
+- **Aviso.** Con oferta, el anillo ámbar ya sale con los 500 ms completos (100 %). «Era muy corto» se explica por la ventana corta y por la rareza (2,4 %), no por la anticipación. Las 16 sueltas `before-k-in` del PO son coherentes con intentos de volea sin oferta.
+
+## 2. Resultado de las variantes y propuesta
+
+Medio, humano en la T, novato σ 90 ms. Bote del mismo novato en las mismas recepciones: **93,9 % Perfect+Valid** (98,2 % en devolución de saque).
+
+| Variante | Oferta sin saque | P+V volea | Distancia al bote | K mediana | Anticipación ≥ bote | Oferta en saque |
+|---|---|---|---|---|---|---|
+| V0 hoy | 2,4 % | 52,6 % | 41 pp | 170 ms | 100 % | 0 % |
+| A0 sin separación | **48,3 %** | 51,4 % | **42,5 pp ✗** | 138 ms | 100 % | 100 % (P+V 39 %) |
+| A1 + ventana 0,03 | 54,0 % | 48,9 % | 45 pp ✗ | 130 ms | 100 % | 100 % |
+| **B volea elegida** | **67,5 %** ✓ | **84,7 %** | **9,2 pp ✓** | 313 ms | 100 % ✓ | **100 % ✓** (P+V 79,6 %) |
+
+Por estilo (B, sin saque): Fondista 78 % de oferta y 82 % de P+V; Definidor 57 % y 83 %; Completo 71 % y 89 %.
+
+**Aplicación de la regla de §0:** A0 y A1 cumplen la oferta y el aviso, pero no la facilidad. Mientras el cuerpo siga el camino al bote, la volea es un tercio de ventana que el bote. Por eso se elige **B**, que cumple las cuatro metas. El margen de la meta 3 es estrecho: 9,2 pp frente a 10.
+
+**Propuesta v2 (solo humano):**
+
+1. **Oferta.** Si existe una postura de intercepción alcanzable antes de T\*v (la de K más largo, `Bounces=0`, altura 0,6–1,9), se ofrece la volea. No hay filtro de separación. La ventana mínima sigue en 0,05 s.
+2. **Elección del jugador (D24).** Mientras el anillo ámbar está visible, el toque inicial del gesto M2-4 elige la volea. El cuerpo va entonces a la postura de intercepción (V3, W elegida) y se pierde el bote. Sin toque, el cuerpo sigue M1 y nada cambia. Al tocar se presenta un plan nuevo de volea, con su `CausalReference` preparada en ese instante, antes de la suelta. La intercepción se recalcula desde el cuerpo real en el momento del toque. Si ya no llega, no se compromete y sigue el bote.
+3. **Aviso.**
+   - El anillo ámbar sale al lanzar, con 500 ms completos.
+   - Un toque háptico ligero (`Haptics.Impact`, el más suave) cuando se abre la volea.
+   - El corte S pasa a ser el **plazo de compromiso**: el último instante en que el toque todavía llega a la intercepción. Así el anillo de bote aparece antes que con el punto medio. Con el punto medio en A0, la anticipación del anillo de bote bajaba a una mediana de 255 ms (p10 231) frente a los 500 de hoy.
+4. **Devolución del saque (encargo del PO).** Se aplica la misma B (oferta 100 %, P+V 79,6 %). Toca las reglas del saque:
+   - `PointRules.CanHit` hoy prohíbe el golpe mientras `Serving`;
+   - hace falta dar el saque por bueno si el frontis fue bueno y el receptor volea antes del bote.
+   Por la condición de parada del PO, va como **opción solo humana y solo DEV**, `HumanServeVolley=0` por defecto, y se señala. Ninguna escena AutoQA usa saques (SL1–SL6 y VL1 son de práctica).
+5. **Sin cambios:**
+   - un intento por recepción;
+   - `ContactContract.Decide`;
+   - `VolleyEnergyCost`;
+   - la volea del saque para el rival;
+   - el rival entero.
+
+**Predicción frente a las metas:** oferta sin saque 67,5 % (≥ 25 %); devolución de saque 100 % (≥ 25 %); P+V 84,7 % frente a 93,9 % del bote (9,2 pp, ≤ 10); anticipación 500 ms en el 100 %. **Advertencia:** B se midió con el compromiso al inicio de la recepción, así que es una cota superior. Con el toque real más tarde, la oferta efectiva y P+V bajan. En la fase 2 se predeclara un punto de control que mide B con el compromiso retrasado 150 y 300 ms reales.
 
 ## 3. Impacto
 
-_(Se completa con la medición.)_
+- **Rival intacto:**
+  - campos nuevos `HumanVolley*` en RallyParams: `HumanVolleyMode` (1 = v2), `HumanVolleyMinWindowS = 0,05` y `HumanServeVolley = 0`;
+  - `RallyContext.VolleyFor` toma `who` y solo el humano lee esos campos.
+  Pruebas de la fase 2:
+  - test de identidad: las oportunidades del rival son iguales campo por campo con y sin los campos;
+  - repetición de `RivalStylesCalibrationExperiment` con resultado idéntico bit a bit;
+  - puntos de `RallySim` con bots que no volean, idénticos a la base.
+- **Hashes y contrato:**
+  - la proyección de RallyParams sin los campos `HumanVolley*` debe dar exactamente `0f58580f44ea`;
+  - sin cambios en `DefaultPreset.json` (`207da8f2c636`), SimulationKey `166a96e319c7` ni los bytes de `ContactContract.cs`;
+  - toca `OpportunityContract` (S = plazo de compromiso), `VolleyPlanner` (intercepción), `ShotController`, `RallyDirector` (mover el cuerpo al tocar), `TimingRingView` y el háptico. Son la zona del contrato, bajo el modo product lead del 18 nov.
+- **AutoQA:** la práctica sigue con las reglas v1 compartidas y el cuerpo fijo. VL1 (`24531a50618a`), su oráculo `volley-window/1` y las suites V/T3/volea no cambian. Si algún paso obligara a cambiarlos: parada.
+
+## 4. Preguntas abiertas
+
+1. ¿El toque inicial como elección de la volea es aceptable? Riesgo: quien toca temprano para el bote compromete una volea sin querer. Alternativa: elegir con un toque y soltar dentro del anillo ámbar.
+2. ¿La devolución del saque como opción DEV basta para esta tanda, o el PO quiere el cambio de reglas en serio?
+3. **Notas para el encargo del saque, sin trabajar:** todas las devoluciones de saque (338/338) pasan al alcance antes del bote y el bote del saque es fácil (P+V 98,2 %, K mediana 393 ms). El saque es blando y alto.
