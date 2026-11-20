@@ -123,14 +123,15 @@ namespace SquashClash.Runtime.Tests
     {
         [UnitySetUp] public IEnumerator Setup()=>Boot(true);
         [UnityTearDown] public IEnumerator Cleanup()=>Shutdown();
-        [UnityTest] public IEnumerator DevPanel_DosParedes_DefaultsOff_AndSwitchesTheRivalFromTheNextPoint()
+        // Round two: on by default (M4 passed with new seeds).
+        [UnityTest] public IEnumerator DevPanel_DosParedes_DefaultsOn_AndSwitchesTheRivalFromTheNextPoint()
         {
             for(int i=0;i<4;i++){Refresh();yield return null;}
             var button=root.Q<Button>("boast-rival-toggle");Assert.That(button,Is.Not.Null,"DEV panel has the «Dos paredes» toggle");
-            Assert.That(rally.RivalBoastNextPoint,Is.False);Assert.That(button.text,Does.Contain("no"));
-            Click("boast-rival-toggle");Assert.That(rally.RivalBoastNextPoint,Is.True);Assert.That(button.text,Does.Contain("sí"));
-            Assert.That(rally.StartMatch(),Is.True);Assert.That(rally.Params.BoastRival,Is.EqualTo(1),"applied at the next point");
-            Click("boast-rival-toggle");Assert.That(rally.RivalBoastNextPoint,Is.False);
+            Assert.That(rally.RivalBoastNextPoint,Is.True);Assert.That(button.text,Does.Contain("sí"));
+            Click("boast-rival-toggle");Assert.That(rally.RivalBoastNextPoint,Is.False);Assert.That(button.text,Does.Contain("no"));
+            Assert.That(rally.StartMatch(),Is.True);Assert.That(rally.Params.BoastRival,Is.EqualTo(0),"applied at the next point");
+            Click("boast-rival-toggle");Assert.That(rally.RivalBoastNextPoint,Is.True);
         }
     }
 }

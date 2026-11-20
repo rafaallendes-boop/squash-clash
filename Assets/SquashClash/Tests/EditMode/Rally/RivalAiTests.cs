@@ -58,7 +58,8 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(Projection(f=>!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)&&!f.Name.StartsWith("Boast",StringComparison.Ordinal)),Is.EqualTo("13f88c8d1db2"),"with the fatigue feel field");
             // Two-wall shot (20 nov) adds the Boast* fields: without them the hash is still 992d0570c9de.
             Assert.That(Projection(f=>!f.Name.StartsWith("Boast",StringComparison.Ordinal)),Is.EqualTo("992d0570c9de"),"with the serve kind fields");
-            Assert.That(new RallyParams().Hash,Is.EqualTo("bd05b443b4f9"),"with the boast fields (rival boast off)");
+            // Round one (rival boast off by default) was bd05b443b4f9; round two turns it on.
+            Assert.That(new RallyParams().Hash,Is.EqualTo("a82c34b661bf"),"with the boast fields (rival boast on)");
             TestContext.WriteLine("STYLE_RALLYPARAMS_HASH="+new RallyParams().Hash);
         }
         [TestCase(AiLevel.Easy)][TestCase(AiLevel.Medium)][TestCase(AiLevel.Hard)]

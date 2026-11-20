@@ -26,9 +26,10 @@ namespace SquashClash.Core.Tests.Rally
         private static List<ShotOption> Options(RallyContext c, Vector3 at)
         { var o = ShotOptions.Build(c, at); if (c.BoastOn) ShotOptions.AddBoasts(c, at, o); return o; }
 
-        [Test] public void Off_ByDefault_TheOptionsAreTodays18()
+        // Round two (addendum 1): M4 passed with new seeds, so the rival's boast is on by default; off keeps today's 18 options.
+        [Test] public void On_ByDefault_AndOff_TheOptionsAreTodays18()
         {
-            Assert.That(new RallyParams().BoastRival, Is.EqualTo(0), "the rival's boast is off by default (M4)");
+            Assert.That(new RallyParams().BoastRival, Is.EqualTo(1), "the rival's boast is on by default (M4, round two)");
             var c = Context(false); var at = new Vector3(.9f, .8f, 8.6f);
             Assert.That(Options(c, at).Count, Is.EqualTo(18)); Assert.That(Options(c, at).Any(o => o.Line == ShotLine.Boast), Is.False);
         }

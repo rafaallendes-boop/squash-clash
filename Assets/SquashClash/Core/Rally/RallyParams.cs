@@ -89,11 +89,12 @@ namespace SquashClash.Core.Rally
         public double StyleNoiseKShooterEasy=1.25,StyleNoiseKShooterMedium=1,StyleNoiseKShooterHard=1;
         public double StyleNoiseKAllRoundEasy=1.5,StyleNoiseKAllRoundMedium=1.5,StyleNoiseKAllRoundHard=1.25;
         public double StyleAllRoundVolleyBias=-.8,StyleAllRoundVolleyMinKS=.08,StyleAllRoundVolleySteal=.6,StyleAllRoundWaitBehindT=.2,StyleAllRoundCoverDepth=-1;
-        // Two-wall shot (design 2026-11-20-boast-predeclaration, section 5). BoastRival: the rival may boast (DEV «Dos paredes»; the human's
+        // Two-wall shot (design 2026-11-20-boast-predeclaration, section 5). BoastRival: the rival may boast (DEV «Dos paredes», on by default
+        // since round two: M4 within 3 pp with new seeds; the human's
         // gesture is always on). Open from the back quarter (contact z at or beyond BoastBackFraction of the length) with the contact within
         // BoastWallMax of the near side wall; the side-wall point is BoastAheadZ in front of the contact at the low or mid height. Utility
         // weight per style (Fondista least, Definidor most).
-        public double BoastRival=0,BoastBackFraction=.75,BoastWallMax=2,BoastAheadZ=1,BoastAimLow=.9,BoastAimMid=1.5;
+        public double BoastRival=1,BoastBackFraction=.75,BoastWallMax=2,BoastAheadZ=1,BoastAimLow=.9,BoastAimMid=1.5;
         public double BoastWeightFondo=0,BoastWeightShooter=-.5,BoastWeightAllRound=0;
         public string Hash
         {
