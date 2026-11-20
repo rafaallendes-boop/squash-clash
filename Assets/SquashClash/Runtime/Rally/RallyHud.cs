@@ -44,7 +44,7 @@ namespace SquashClash.Runtime.Rally
         private PlayerId toHit;
         public const float PulseSeconds=.45f,BannerInSeconds=.18f,ServePulseSeconds=.6f,ResultInSeconds=.28f;
         private static readonly Color Gold=new Color(1f,.82f,.25f);
-        private VisualElement banner,bannerCard,resultCard;private Label bannerTitle,bannerCause,bannerNext,resultLast;
+        private VisualElement banner,bannerCard,resultCard;private Label bannerTitle,bannerCause,bannerNext,resultLast,serveHint;
         private float bannerAge=-1,pulseHuman,pulseRival,servePulse,resultAge=-1;private int bannerPoint=-1,bannerTone=-1,resultTone=-1;
         // Read-outs for the tests: how far the banner has faded in, and how much of a score pulse is left.
         public float BannerOpacity=>bannerAge<0?0:Mathf.Clamp01(bannerAge/BannerInSeconds);
@@ -115,6 +115,8 @@ namespace SquashClash.Runtime.Rally
             bannerTitle=Text("","sc-banner-title");bannerTitle.name="rally-banner-title";bannerCard.Add(bannerTitle);
             bannerCause=Text("","sc-banner-cause");bannerCause.name="rally-banner-cause";bannerCard.Add(bannerCause);
             bannerNext=Text("","sc-banner-next");bannerNext.name="rally-banner-next";bannerCard.Add(bannerNext);
+            // Serve kinds (design 2026-11-20-serve): how the human chooses its own serve, only in the pause before it with «Saque nuevo» on.
+            serveHint=Text(RallyText.ServeHint,"sc-banner-next");serveHint.name="rally-banner-serve-hint";serveHint.style.display=DisplayStyle.None;bannerCard.Add(serveHint);
             // The header grows and shrinks with its buttons ("Seguir" appears with the banner): follow it.
             header=parent;parent.RegisterCallback<GeometryChangedEvent>(_=>PlaceBanner());
             Refresh();
@@ -299,6 +301,7 @@ namespace SquashClash.Runtime.Rally
                     bannerCause.text=CauseLine(ended)+" · "+ended.Shots+(ended.Shots==1?" golpe":" golpes");
                     bool serves=rally.Match!=null&&!rally.Match.Finished;bannerNext.style.display=serves?DisplayStyle.Flex:DisplayStyle.None;
                     if(serves)bannerNext.text="Saca "+RallyText.Player(rally.Match.Server)+" ("+RallyText.Box(rally.Match.Box)+")";
+                    serveHint.style.display=serves&&rally.Match.Server==PlayerId.Human&&rally.NewServeNextPoint?DisplayStyle.Flex:DisplayStyle.None;
                     if(tone!=bannerTone){bannerTone=tone;Tone(bannerCard,"sc-banner",tone);}
                     PlaceBanner();
                     bannerAge=0;bannerCard.style.opacity=0;bannerCard.style.translate=new Translate(0,-12);banner.style.display=DisplayStyle.Flex;

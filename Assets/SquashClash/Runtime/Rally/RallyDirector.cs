@@ -141,7 +141,7 @@ namespace SquashClash.Runtime.Rally
         private void StopMode(bool relaunchPractice)
         {
             if(!Active)return;
-            Active=false;Phase=RallyPhase.Off;hasPending=needDecision=false;practice.enabled=true;ModeChanged?.Invoke(false);
+            Active=false;Phase=RallyPhase.Off;hasPending=needDecision=false;practice.enabled=true;pendingHumanServe=null;RefreshServeAim();ModeChanged?.Invoke(false);
             if(relaunchPractice)app.LaunchCurrent();
         }
         // Rematch: same rival, score back to zero, next point starts at once.
@@ -163,13 +163,26 @@ namespace SquashClash.Runtime.Rally
         public bool VolleyV2NextPoint=>VolleyModeNextPoint>=2;
         public void SetServeVolley(bool on){pendingServeVolley=on;}
         // Serve kinds (design 2026-11-20-serve), DEV «Saque nuevo»: lob and drive from the NEXT point on; off by default (today's serve).
-        public void SetNewServe(bool on){}
-        public bool NewServeNextPoint=>false;
+        public void SetNewServe(bool on){pendingNewServe=on;RefreshServeAim();}
+        public bool NewServeNextPoint=>pendingNewServe??Params.ServeKindOn!=0;
+        private bool? pendingNewServe;private ServeType? pendingHumanServe;
         // The kind of the serve that started the current point (Auto while the new serve is off).
         public ServeType LastServeType {get;private set;}
         // The human's own choice for its next serve, made by a touch on the front wall in the pause before it (null: the lob).
-        public ServeType? PendingHumanServe=>null;
-        public bool ChooseHumanServe(ClosedGesture gesture)=>false;
+        public ServeType? PendingHumanServe=>pendingHumanServe;
+        // The front-wall aim height chooses (lob at or above ServeKindLobMinAimY, drive below) and the serve goes at once.
+        public bool ChooseHumanServe(ClosedGesture gesture)
+        {
+            if(!Active||Phase!=RallyPhase.PointOver||Match==null||Match.Finished||Match.Server!=PlayerId.Human||!NewServeNextPoint)return false;
+            pendingHumanServe=gesture.Aim.y>=Params.ServeKindLobMinAimY?ServeType.Lob:ServeType.Drive;SkipWait();return true;
+        }
+        // Open only in the pause before the human's own serve with «Saque nuevo» on; otherwise every touch keeps its stroke path.
+        private void RefreshServeAim()
+        {
+            if(controller==null)return;
+            bool open=Active&&Phase==RallyPhase.PointOver&&Match!=null&&!Match.Finished&&Match.Server==PlayerId.Human&&NewServeNextPoint;
+            controller.ServeAim=open?ChooseHumanServe:(Func<ClosedGesture,bool>)null;
+        }
         public bool ServeVolleyNextPoint=>pendingServeVolley??Params.HumanVolleyServe!=0;
         // DEV only (design 2026-11-20-fatigue-feel): the energy-limited sprint (section 1) and «Cansancio fuerte» (section 2), from the NEXT point on.
         private bool? pendingSprintFatigue,pendingStrongFatigue;
@@ -191,6 +204,7 @@ namespace SquashClash.Runtime.Rally
             if(pendingVolley.HasValue){var p=Params.Clone();p.VolleyEnabled=pendingVolley.Value?1:0;Params=p;pendingVolley=null;}
             if(pendingVolleyV2.HasValue||pendingVolleyMode.HasValue){var p=Params.Clone();p.HumanVolleyMode=VolleyModeNextPoint;Params=p;pendingVolleyV2=null;pendingVolleyMode=null;}
             if(pendingServeVolley.HasValue){var p=Params.Clone();p.HumanVolleyServe=pendingServeVolley.Value?1:0;Params=p;pendingServeVolley=null;}
+            if(pendingNewServe.HasValue){var p=Params.Clone();p.ServeKindOn=pendingNewServe.Value?1:0;Params=p;pendingNewServe=null;}
             context=new RallyContext(cfg,Params,factory);
             double humanStart=testEnergy??(resetEnergy?100:HumanEnergy?.Energy??100),rivalStart=testEnergy??(resetEnergy?100:RivalEnergy?.Energy??100);
             HumanEnergy=new FatigueState(context.Fatigue,humanStart);
@@ -201,7 +215,8 @@ namespace SquashClash.Runtime.Rally
             Rival=new PlayerBody(PlayerId.Rival,Rival?.Position??RivalWait(),context.Move);
             Rival.MoveTo(RivalWait(),0,BodyPhase.Recovering,BodyPhase.Waiting);
             humanBrain=new BotBrain(context,AutopilotTimingSigmaMs,Seed*31+PointsPlayed*104729L,AutopilotLine,ShotHeight.Mid,AutopilotPower);
-            committed=context.NewRules();rivalReception=null;served=null;
+            committed=context.NewRules();rivalReception=null;served=null;var humanServe=pendingHumanServe;pendingHumanServe=null;LastServeType=ServeType.Auto;
+            if(controller!=null)controller.ServeAim=null;
             if(Match==null){committed.Begin(null,PlayerId.Human);LaunchToHuman(context.NeutralLaunch(PlayerId.Human));}
             else
             {
@@ -209,7 +224,10 @@ namespace SquashClash.Runtime.Rally
                 var server=Match.Server;var box=Match.Box;var body=server==PlayerId.Human?Human:Rival;served=server;servedBox=box;
                 committed.BeginServe(server,box);(server==PlayerId.Human?HumanEnergy:RivalEnergy).Strike(0);body.Teleport(ServePlanner.BoxPosition(context,box));
                 body.MoveTo(server==PlayerId.Rival?RivalWait():context.WaitPosition(server),0,BodyPhase.Recovering,BodyPhase.Waiting);
-                if(server==PlayerId.Rival)LaunchToHuman(context.Serve(box));else LaunchToRival(context.Serve(box));
+                // Serve kinds (design 2026-11-20-serve): the rival by its style, the human by its touch in the pause (the lob without one);
+                // Auto, today's serve, while «Saque nuevo» is off.
+                LastServeType=server==PlayerId.Rival?context.ServeTypeOf(rivalBrain,box):context.ServeKindOn?humanServe??ServeType.Lob:ServeType.Auto;
+                if(server==PlayerId.Rival)LaunchToHuman(context.Serve(box,LastServeType));else LaunchToRival(context.Serve(box,LastServeType));
             }
             RallyStarted?.Invoke();
         }
@@ -528,7 +546,7 @@ namespace SquashClash.Runtime.Rally
             if(Match!=null&&rules.Winner.HasValue)Match.PointWon(rules.Winner.Value);
             if(Match!=null&&Match.Finished)Phase=RallyPhase.MatchOver;
             var result=new PointResult(rules.Winner,rules.Cause,rules.Shots,rules.Cause==PointEndCause.DoubleBounce?reception:null);
-            LastPoint=result;
+            LastPoint=result;RefreshServeAim();
             Human.MoveTo(context.WaitPosition(PlayerId.Human),0,BodyPhase.Recovering,BodyPhase.Waiting);
             Rival.MoveTo(RivalWait(),0,BodyPhase.Recovering,BodyPhase.Waiting);
             HumanEnergy.ClosePoint();RivalEnergy.ClosePoint();WriteFatigueMetrics();
@@ -542,12 +560,12 @@ namespace SquashClash.Runtime.Rally
         }
         private void PlaceBodies(){if(players!=null&&Human!=null)players.Place(Human.Position,Rival.Position);}
         [Serializable] private sealed class PointLine
-        {public string winner,cause,reception,rallyParams,level,server,box,style;public int shots,humanPoints,rivalPoints,systemFaults;public bool autopilot,match,matchOver;public long seed;public CausalShotTrace[] causal;}
+        {public string winner,cause,reception,rallyParams,level,server,box,style,serveType;public int shots,humanPoints,rivalPoints,systemFaults;public bool autopilot,match,matchOver;public long seed;public CausalShotTrace[] causal;}
         private void WriteMetrics(PointResult r)
         {
             var line=new PointLine{winner=r.Winner?.ToString()??"None",cause=r.Cause.ToString(),reception=r.Reception?.ToString()??"",shots=r.Shots,humanPoints=HumanPoints,rivalPoints=RivalPoints,
                 systemFaults=SystemFaults,rallyParams=Params.Hash,level=Level.ToString(),style=RivalStyle.Name(Style),autopilot=Autopilot,seed=Seed,match=Match!=null,matchOver=Match?.Finished??false,
-                server=served?.ToString()??"",box=served.HasValue?servedBox.ToString():"",causal=pointCausal.ToArray()};
+                server=served?.ToString()??"",box=served.HasValue?servedBox.ToString():"",serveType=served.HasValue?LastServeType.ToString():"",causal=pointCausal.ToArray()};
             app.Metrics?.Write("rally-point",app.Host.ActiveConfig,app.ActivePresetName,app.ActivePresetFileHash,app.Tuning.PendingKeys.Count,app.MetricsSeed,
                 !app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(line));
         }

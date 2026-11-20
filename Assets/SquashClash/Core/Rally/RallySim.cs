@@ -132,7 +132,9 @@ namespace SquashClash.Core.Rally
             Human.Teleport(WaitOf(PlayerId.Human));Rival.Teleport(WaitOf(PlayerId.Rival));
             Body(server).Teleport(ServePlanner.BoxPosition(context,box));
             Body(server).MoveTo(WaitOf(server),0,BodyPhase.Recovering,BodyPhase.Waiting);
-            ball.Reset(context.Serve(box));Rules.BeginServe(server,box);
+            // Serve kinds (design 2026-11-20-serve): Auto, today's serve, while the switch is off.
+            outcome.ServeType=context.ServeTypeOf(brains[(int)server],box);
+            ball.Reset(context.Serve(box,outcome.ServeType));Rules.BeginServe(server,box);
             return Run(outcome,server.Other());
         }
         // A whole game: point-a-rally to the target with the margin, winner serves, boxes alternate.

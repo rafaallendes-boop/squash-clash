@@ -128,12 +128,17 @@ namespace SquashClash.Experiments.EditMode
         // seeds, then 2.25 and 2.75 only if 2.5 is outside 20 +- 4 pp; the one in band closest to 20 % is used. Then the confirmation
         // with NEW seeds for the nine cells (newcomer) and bot30 in every cell (Hard: <= 45 %; Easy and Medium reported only).
         [Test,Explicit,Category("Experiments"),Timeout(14400000)]
-        public void ConfirmPerStyle()
+        public void ConfirmPerStyle()=>ConfirmPerStyle("confirm-per-style",new RallyParams());
+        // Serve kinds (design 2026-11-20-serve, revision 2): the same run, same seeds, with «Saque nuevo» on, to measure the calibration shift.
+        // The reference bots have no serve choice, so they serve the lob; the rival chooses by its style. Nothing is recalibrated.
+        [Test,Explicit,Category("Experiments"),Timeout(14400000)]
+        public void ConfirmPerStyleNewServe()=>ConfirmPerStyle("confirm-new-serve",new RallyParams{ServeKindOn=1});
+        private static void ConfirmPerStyle(string defaultRun,RallyParams parameters)
         {
             var (root,preset,factory)=Setup();
-            string dir=Path.Combine(root,"Logs/experiments/rival-styles-calibration/"+(Environment.GetEnvironmentVariable("SC_RS_RUN")??"confirm-per-style"));
+            string dir=Path.Combine(root,"Logs/experiments/rival-styles-calibration/"+(Environment.GetEnvironmentVariable("SC_RS_RUN")??defaultRun));
             Assert.That(Directory.Exists(dir),Is.False,"Never overwrite evidence.");Directory.CreateDirectory(dir);
-            var ctx=new RallyContext(EffectiveConfig.From(preset),new RallyParams(),factory);
+            var ctx=new RallyContext(EffectiveConfig.From(preset),parameters,factory);
             File.WriteAllText(Path.Combine(dir,"source.tsv"),"defaults\trallyParams\tunity\n"+preset.Hash+"\t"+ctx.Params.Hash+"\t"+Application.unityVersion+"\n",Utf8);
             using(var cells=new StreamWriter(Path.Combine(dir,"cells.tsv"),false,Utf8))
             {

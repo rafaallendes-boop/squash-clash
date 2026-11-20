@@ -81,6 +81,8 @@ namespace SquashClash.Runtime.Shot
         // Serve kinds (design 2026-11-20-serve): set by the director only in the pause before the human's own serve with «Saque nuevo» on. While
         // set, a touch may begin, the volley choice is skipped and the closed gesture goes here instead of the stroke path (no shot record, no timing).
         public Func<ClosedGesture,bool> ServeAim {get;set;}
+        // A released touch with a front-wall aim: a pulled swing, a tap or a touch released without pulling. Cancels choose nothing.
+        private static bool ServeOrder(in ClosedGesture o)=>o.HasRelease&&Finite(o.Aim.x)&&Finite(o.Aim.y)&&(o.Outcome==GestureOutcome.Swing||o.Outcome==GestureOutcome.Tap||o.Outcome==GestureOutcome.AbandonedNoPull);
         public ShotConfig Snapshot {get;private set;}
         public ContactPlan Plan {get;private set;}
         public PresentedPlans Presented {get;private set;}=new PresentedPlans();
@@ -186,7 +188,7 @@ namespace SquashClash.Runtime.Shot
         // touch gives the volley up for this reception. Without a v2 offer it does nothing.
         public void GestureBegan(double eventTimeReal)
         {
-            if(volleyCommitter==null||!Volley.Exists||VolleyCommitted||AttemptConsumed||!Available)return;
+            if(ServeAim!=null||volleyCommitter==null||!Volley.Exists||VolleyCommitted||AttemptConsumed||!Available)return;
             // Judged in simulation steps, like OpportunityContract.Select: a real time recomputed from S can move in its last bit as the
             // clock map grows, so the end of the window is S itself (plus a micro-step tolerance).
             bool inside=TryVolleyWindow(out double from,out _)&&eventTimeReal>=from&&app.Host.ClockMap.TryRealToSim(eventTimeReal,out long touchStep,out double touchFraction)
@@ -224,7 +226,7 @@ namespace SquashClash.Runtime.Shot
         }
         public bool CanBegin(double eventTime,out string reason)
         {
-            reason=null;if(!PracticeEnabled)return true;
+            reason=null;if(ServeAim!=null||!PracticeEnabled)return true;
             if(!Available){reason="unsupported-backend";return false;}
             if(AttemptConsumed){reason="attempt-consumed";return false;}
             if(double.IsNaN(eventTime)||double.IsInfinity(eventTime)||eventTime<app.Host.LaunchRealTime||closedAt.HasValue&&eventTime>closedAt.Value)
@@ -240,6 +242,7 @@ namespace SquashClash.Runtime.Shot
         }
         private void Process(ClosedGesture order)
         {
+            if(ServeAim!=null){if(ServeOrder(order))ServeAim(order);return;}
             if(order.LaunchId!=app.Host.LaunchId){Discard(order,"wrong-launch");return;}
             if(!PracticeEnabled)return;
             if(!Available){Discard(order,"unsupported-backend");return;}

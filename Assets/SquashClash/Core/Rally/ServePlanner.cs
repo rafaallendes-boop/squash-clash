@@ -42,7 +42,16 @@ namespace SquashClash.Core.Rally
         // The fixed serve of a kind from a box (RallyParams ServeKind*), checked against the serve rules like Find.
         public static BallState Typed(RallyContext context,ServiceBox box,ServeType type)
         {
-            return Find(context,box);
+            if(type!=ServeType.Lob&&type!=ServeType.Drive)throw new ArgumentOutOfRangeException(nameof(type));
+            var p=context.Params;var at=BoxPosition(context,box);var from=new Vector3(at.x,(float)p.ServeHandHeight,at.y);
+            bool right=box==ServiceBox.Right,lob=type==ServeType.Lob;
+            double x=lob?(right?p.ServeKindLobRightAimX:p.ServeKindLobLeftAimX):(right?p.ServeKindDriveRightAimX:p.ServeKindDriveLeftAimX);
+            double y=lob?(right?p.ServeKindLobRightAimY:p.ServeKindLobLeftAimY):(right?p.ServeKindDriveRightAimY:p.ServeKindDriveLeftAimY);
+            double speed=lob?(right?p.ServeKindLobRightSpeed:p.ServeKindLobLeftSpeed):(right?p.ServeKindDriveRightSpeed:p.ServeKindDriveLeftSpeed);
+            var center=Ballistics.CenterForContact(SurfaceId.FrontWall,new Vector3((float)x,(float)y,0),context.Physics.BallRadius);
+            var serve=new BallState{Position=from,Velocity=Ballistics.SolveCenterTo(from,center,(float)speed,context.Physics.Gravity)};
+            if(!Forecast(context,serve,box,out _))throw new InvalidOperationException("The "+type+" serve from the "+box+" box is not valid for this court and physics.");
+            return serve;
         }
         // Replays the serve rules over an isolated prediction until the first bounce is judged.
         public static bool Forecast(RallyContext context,BallState serve,ServiceBox box,out Vector3 firstBounce)

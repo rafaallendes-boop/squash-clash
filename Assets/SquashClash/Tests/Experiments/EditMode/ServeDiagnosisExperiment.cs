@@ -109,8 +109,11 @@ namespace SquashClash.Experiments.EditMode
             r.PV=pv/(double)samples;r.Perfect=perfect/(double)samples;return r;
         }
         // Records, at the start of every serve reception, what the receiver had and (for the human) the v2.2 offer.
-        private sealed class Probe : IRallyBrain,IRallyPositioning
+        private sealed class Probe : IRallyBrain,IRallyPositioning,IRallyServer
         {
+            // Serve kinds: the inner brain's choice; a human probe without one serves the lob, or a 50/50 mix from its own stream when set.
+            public RallyRng Mix;
+            public ServeType ChooseServe(ServiceBox box)=>inner is IRallyServer s?s.ChooseServe(box):Mix!=null?(Mix.NextDouble()<.5?ServeType.Drive:ServeType.Lob):ServeType.Lob;
             private readonly IRallyBrain inner;private readonly RallyContext ctx;
             public RallySim Sim;public PlayerId Who;
             public bool Seen;public ReceptionPlan Plan;public Vector2 Start;public bool Offer;
@@ -136,11 +139,11 @@ namespace SquashClash.Experiments.EditMode
         internal const string PointHeader="style\tmatch\tpoint\tserver\tbox\twinner\tcause\tshots\treceiverResult\treceiverPerfect\treachable\tslackS\tmoveM\tvolleyOffer\tserveType";
         // One RallySim cell at Medium: per point, who served, the serve return and the end. serveType is read from the outcome when the
         // product records it, otherwise "auto".
-        internal static void PlayCell(RallyContext ctx,RivalStyleId style,int matches,long seeds,StreamWriter points,Func<RallyOutcome,string> serveType=null)
+        internal static void PlayCell(RallyContext ctx,RivalStyleId style,int matches,long seeds,StreamWriter points,Func<RallyOutcome,string> serveType=null,bool humanMix=false)
         {
             for(int m=0;m<matches;m++)
             {
-                var human=new Probe(ctx,new RivalStylesBaselineExperiment.NewcomerBot(ctx,NewcomerSigmaMs,seeds+2*m),PlayerId.Human);
+                var human=new Probe(ctx,new RivalStylesBaselineExperiment.NewcomerBot(ctx,NewcomerSigmaMs,seeds+2*m),PlayerId.Human){Mix=humanMix?new RallyRng(seeds*31+m):null};
                 var rival=new Probe(ctx,RivalAi.For(ctx,AiLevel.Medium,style,seeds+1+2*m),PlayerId.Rival);
                 using(var sim=new RallySim(ctx,human,rival))
                 {
@@ -160,6 +163,34 @@ namespace SquashClash.Experiments.EditMode
                 }
             }
             points.Flush();
+        }
+        // Revision 2 (decided by Claude after diag01): the same RallySim cells as diag01 (same seeds) with «Saque nuevo» on. points.tsv: the
+        // newcomer serves the lob (a brain without a choice); points-mix.tsv: the newcomer serves lob or drive 50/50 (own stream).
+        [Test,Explicit,Category("Experiments"),Timeout(14400000)]
+        public void MeasureNewServe()
+        {
+            var (root,preset,factory)=Setup();
+            string dir=Path.Combine(root,"Logs/experiments/serve/"+(Environment.GetEnvironmentVariable("SC_SERVE_RUN")??"new01"));
+            Assert.That(Directory.Exists(dir),Is.False,"Never overwrite evidence.");Directory.CreateDirectory(dir);
+            var ctx=new RallyContext(EffectiveConfig.From(preset),new RallyParams{ServeKindOn=1},factory);
+            File.WriteAllText(Path.Combine(dir,"source.tsv"),"defaults\trallyParams\tsimulationKey\tunity\n"+preset.Hash+"\t"+ctx.Params.Hash+"\t"+ctx.Config.SimulationKey+"\t"+Application.unityVersion+"\n",Utf8);
+            float waitZ=ctx.WaitPosition(PlayerId.Human).y;
+            using(var w=new StreamWriter(Path.Combine(dir,"shape.tsv"),false,Utf8))
+            {
+                w.WriteLine("box\ttype\t"+Shape.Header+"\treceiver\tstyle\t"+Reception.Header);
+                foreach(ServiceBox box in Enum.GetValues(typeof(ServiceBox)))foreach(var type in new[]{ServeType.Lob,ServeType.Drive})
+                {
+                    var serve=ctx.Serve(box,type);var t=ctx.Predict(serve);var shape=Describe(ctx,serve,t,waitZ);var random=new RallyRng(20261120+(int)box);
+                    w.WriteLine(box+"\t"+type+"\t"+shape.Row+"\tHuman\t-\t"+Receive(ctx,serve,t,PlayerId.Rival,box,PlayerId.Human,RivalStyleId.Fondista,2000,random).Row);
+                    foreach(var style in Styles)w.WriteLine(box+"\t"+type+"\t"+shape.Row+"\tRival\t"+style+"\t"+Receive(ctx,serve,t,PlayerId.Human,box,PlayerId.Rival,style,2000,random).Row);
+                }
+            }
+            foreach(var mix in new[]{false,true})
+                using(var points=new StreamWriter(Path.Combine(dir,mix?"points-mix.tsv":"points.tsv"),false,Utf8))
+                {
+                    points.WriteLine(PointHeader);
+                    foreach(var style in Styles)PlayCell(ctx,style,200,20261120+1000*(int)style,points,o=>o.ServeType.ToString(),mix);
+                }
         }
         [Test,Explicit,Category("Experiments"),Timeout(14400000)]
         public void Diagnose()
