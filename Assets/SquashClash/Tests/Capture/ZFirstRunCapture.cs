@@ -125,6 +125,14 @@ namespace SquashClash.Capture
             yield return Shoot("match-over-prod");
             yield return Shutdown();
 
+            // 4. Personal records: the "Tus récords" screen with some bests, (the card line is covered by ZRecordsFlowTests).
+            yield return Boot(false);
+            PlayerPrefs.SetInt("sc.records.longestRally",23);PlayerPrefs.SetInt("sc.records.bestStreak",5);PlayerPrefs.SetInt("sc.records.streak",2);
+            PlayerPrefs.SetInt("sc.records.wins.easy",3);PlayerPrefs.SetInt("sc.records.wins.medium",2);PlayerPrefs.SetInt("sc.records.bestMargin",6);PlayerPrefs.SetFloat("sc.records.fastestWin",252f);
+            yield return Shoot("menu-prod-records-link");
+            Click("menu-records");yield return Shoot("records");
+            yield return Shutdown();
+
             if(!seen)PlayerPrefs.DeleteKey("sc.firstRun.tutorialSeen");
             Assert.That(written.Count,Is.GreaterThanOrEqualTo(4));
             foreach(var path in written)Assert.That(new FileInfo(path).Length,Is.GreaterThan(2000),path);

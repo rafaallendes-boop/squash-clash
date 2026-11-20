@@ -207,6 +207,8 @@
 .sc-result-card--lost .sc-result-kicker { color: var(--line); }
 .sc-result-card--lost .sc-result-score { color: var(--ink-soft); }
 .sc-result-last { font-size: 14px; color: var(--ink); margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }
+/* Personal records (20 nov): one line in line red when the match broke a best. */
+.sc-result-record { font-size: 14px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--line-press); margin-top: 4px; margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }
 
 /* Start menu (redesign, 19 nov): the screen is the front wall at scale, read top to bottom as on a court. The out line
    along the top, the wordmark in the playing area above the service line (where every shot must land), the choices below
@@ -260,6 +262,8 @@
 .sc-menu-links { flex-direction: row; flex-shrink: 0; margin-bottom: 10px; }
 .sc-wall .unity-button.sc-menu-link { flex-grow: 1; flex-basis: 0; height: 48px; font-size: 15px; margin: 0; border-width: 0; border-radius: 12px; background-color: rgba(24, 34, 44, 0.07); }
 .sc-wall .unity-button.sc-menu-link--first { margin-right: 8px; }
+/* Three plates in the row: "¿Cómo se juega?" is the longest, so it takes twice the room of the other two. */
+.sc-wall .unity-button.sc-menu-link--wide { flex-grow: 2; }
 /* Switches: small pills; an off switch drops its tint and its ink. */
 .sc-menu-switches { flex-direction: row; flex-shrink: 0; margin-bottom: 8px; }
 .sc-wall .unity-button.sc-menu-switch { flex-grow: 1; flex-shrink: 0; height: 46px; font-size: 13px; margin: 0; margin-right: 6px; padding-left: 8px; padding-right: 8px; border-radius: 22px; border-width: 2px; border-color: var(--ink-line); background-color: rgba(0, 0, 0, 0); }
@@ -275,6 +279,7 @@
 .sc-credits-section { font-size: 14px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--line-press); margin-bottom: 6px; margin-top: 4px; }
 .sc-credits-lead { font-size: 18px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--ink); white-space: normal; margin-bottom: 6px; }
 .sc-credits-text { font-size: 15px; color: var(--ink); white-space: normal; margin-bottom: 22px; }
+.sc-records-value { font-size: 26px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: var(--ink); white-space: normal; margin-bottom: 16px; }
 .sc-credits-fine { font-size: 13px; color: var(--ink-soft); white-space: normal; margin-bottom: 6px; }
 .sc-wall .unity-button.sc-credits-back { height: 56px; font-size: 20px; margin: 0; margin-top: 12px; border-radius: 16px; border-width: 0; border-bottom-width: 5px; border-bottom-color: var(--line-press); }
 
