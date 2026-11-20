@@ -66,7 +66,7 @@ namespace SquashClash.Core.Rally
     }
     // The rival with a style (spec 11.3-11.4). FondoAi stays the historical reference; Fondista with the volley and cover off decides
     // exactly like it (same options, same draws in the same order).
-    public sealed class RivalAi : IRallyBrain,IRallyPositioning
+    public sealed class RivalAi : IRallyBrain,IRallyPositioning,IRallyServer
     {
         private readonly RallyContext context;
         private readonly AiDifficulty difficulty;
@@ -79,7 +79,7 @@ namespace SquashClash.Core.Rally
         public static RivalAi For(RallyContext context,AiLevel level,RivalStyleId style,long seed)
             =>new RivalAi(context,RivalStyle.Difficulty(context.Params,style,level),style,seed);
         public RivalAi(RallyContext context,AiDifficulty difficulty,RivalStyleId style,long seed)
-        {this.context=context??throw new ArgumentNullException(nameof(context));this.difficulty=difficulty;Style=RivalStyle.For(context.Params,style);random=new RallyRng(seed);}
+        {this.context=context??throw new ArgumentNullException(nameof(context));this.difficulty=difficulty;Style=RivalStyle.For(context.Params,style);random=new RallyRng(seed);serveRandom=new RallyRng(unchecked(seed*7919L+20261120L));}
         public int PerceptionSteps=>context.Steps(difficulty.PerceptionS);
         public Vector2 StanceNoise()=>new Vector2((float)random.NextGaussian(difficulty.StanceSigma),(float)random.NextGaussian(difficulty.StanceSigma));
         public Vector2 Wait=>context.ClampBody(context.T+new Vector2((float)context.Params.WaitLateralOffset,(float)Style.WaitBehindT));
@@ -98,6 +98,10 @@ namespace SquashClash.Core.Rally
             }
             return wait;
         }
+        // Serve kinds (design 2026-11-20-serve): the style's drive share, drawn from its own stream so its strokes never change.
+        public double ServeDriveShare=>Style.Id==RivalStyleId.Definidor?context.Params.ServeKindDriveShooter:Style.Id==RivalStyleId.Completo?context.Params.ServeKindDriveAllRound:context.Params.ServeKindDriveFondo;
+        public ServeType ChooseServe(ServiceBox box)=>serveRandom.NextDouble()<ServeDriveShare?ServeType.Drive:ServeType.Lob;
+        private readonly RallyRng serveRandom;
         public bool VolleyWanted(in ReceptionPlan own)
         {
             if(context.Params.StyleRivalVolley==0||!own.Volley.Exists)return false;

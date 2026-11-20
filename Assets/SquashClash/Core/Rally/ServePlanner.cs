@@ -5,6 +5,10 @@ using SquashClash.Core.Simulation;
 using UnityEngine;
 namespace SquashClash.Core.Rally
 {
+    // Serve kinds (design 2026-11-20-serve). Auto: today's single automatic serve (the new serve is off, nothing is chosen).
+    public enum ServeType { Auto, Lob, Drive }
+    // Optional for a brain: which serve it plays from a box when the new serve is on. A brain without it serves the lob.
+    public interface IRallyServer { ServeType ChooseServe(ServiceBox box); }
     // Automatic serve (spec 8.7.5: automatic placement in the box, no foot fault). It searches a small fixed grid for a
     // serve that the serve rules accept, so the same box always gives the same serve.
     public static class ServePlanner
@@ -34,6 +38,20 @@ namespace SquashClash.Core.Rally
                     }
             if(!found)throw new InvalidOperationException("No valid automatic serve for this court and physics.");
             return chosen;
+        }
+        // The fixed serve of a kind from a box (RallyParams ServeKind*), checked against the serve rules like Find.
+        public static BallState Typed(RallyContext context,ServiceBox box,ServeType type)
+        {
+            if(type!=ServeType.Lob&&type!=ServeType.Drive)throw new ArgumentOutOfRangeException(nameof(type));
+            var p=context.Params;var at=BoxPosition(context,box);var from=new Vector3(at.x,(float)p.ServeHandHeight,at.y);
+            bool right=box==ServiceBox.Right,lob=type==ServeType.Lob;
+            double x=lob?(right?p.ServeKindLobRightAimX:p.ServeKindLobLeftAimX):(right?p.ServeKindDriveRightAimX:p.ServeKindDriveLeftAimX);
+            double y=lob?(right?p.ServeKindLobRightAimY:p.ServeKindLobLeftAimY):(right?p.ServeKindDriveRightAimY:p.ServeKindDriveLeftAimY);
+            double speed=lob?(right?p.ServeKindLobRightSpeed:p.ServeKindLobLeftSpeed):(right?p.ServeKindDriveRightSpeed:p.ServeKindDriveLeftSpeed);
+            var center=Ballistics.CenterForContact(SurfaceId.FrontWall,new Vector3((float)x,(float)y,0),context.Physics.BallRadius);
+            var serve=new BallState{Position=from,Velocity=Ballistics.SolveCenterTo(from,center,(float)speed,context.Physics.Gravity)};
+            if(!Forecast(context,serve,box,out _))throw new InvalidOperationException("The "+type+" serve from the "+box+" box is not valid for this court and physics.");
+            return serve;
         }
         // Replays the serve rules over an isolated prediction until the first bounce is judged.
         public static bool Forecast(RallyContext context,BallState serve,ServiceBox box,out Vector3 firstBounce)

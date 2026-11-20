@@ -91,6 +91,18 @@ namespace SquashClash.Core.Rally
             if(!serves[(int)box].HasValue)serves[(int)box]=ServePlanner.Find(this,box);
             return serves[(int)box].Value;
         }
+        // Serve kinds (design 2026-11-20-serve): off by default, so every serve is the automatic one above.
+        public bool ServeKindOn=>Params.ServeKindOn!=0;
+        public BallState Serve(ServiceBox box,ServeType type)
+        {
+            if(!ServeKindOn||type==ServeType.Auto)return Serve(box);
+            int i=(int)box*2+(type==ServeType.Drive?1:0);
+            if(!kindServes[i].HasValue)kindServes[i]=ServePlanner.Typed(this,box,type);
+            return kindServes[i].Value;
+        }
+        private readonly BallState?[] kindServes=new BallState?[4];
+        // The kind a server's brain plays: Auto while the new serve is off (nothing is drawn), the brain's choice, or the lob without one.
+        public ServeType ServeTypeOf(object brain,ServiceBox box)=>!ServeKindOn?ServeType.Auto:brain is IRallyServer server?server.ChooseServe(box):ServeType.Lob;
         public BallState NeutralLaunch(PlayerId receiver)
         {
             float side=receiver==PlayerId.Human?-1:1;
