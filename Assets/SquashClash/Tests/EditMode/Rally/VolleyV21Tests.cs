@@ -46,7 +46,8 @@ namespace SquashClash.Core.Tests.Rally
         // VOLLEY-V2-COMMIT-01: a late touch must still see the offered stance (candidates are sampled from launch + reaction, like the offer).
         [Test] public void LateTouch_StillReachingTheOfferedStance_CommitsToThatSameStance()
         {
-            foreach(var ctx in new[]{RallyFixtures.Context(new RallyParams{HumanVolleyMode=2}),Sprint(1.5)})
+            // v2 semantics (offer-stance deadline); v2.2 picks nearer stances late on purpose (V22_ test), so it is not checked here.
+            foreach(var ctx in new[]{RallyFixtures.Context(new RallyParams{HumanVolleyMode=2})})
             {
                 var (t,rules,body,delay)=NeutralReception(ctx);long start=t.States[0].Step;
                 var d=HumanVolley.OfferDetail(ctx,t,rules,body,delay,1);Assert.That(d.Offer.Exists,Is.True,d.Offer.Reason);
@@ -87,13 +88,45 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void RallyReceptions_ATouchAtSOrSPrime_AlwaysKeepsTheOfferedStance()
         {
-            var ctx=RallyFixtures.Context(new RallyParams{HumanVolleyMode=3,HumanVolleySprintMax=1.5});
+            // v2 (offer-stance deadlines); v2.2 is covered by V22_SPrimeIsTheLastTouchAnyStanceIsReachable_AndLateTouchesTakeANearerStance.
+            var ctx=RallyFixtures.Context(new RallyParams{HumanVolleyMode=2});
             var probe=new InvariantProbe(ctx,new BotBrain(ctx,30,20261122));
             using(var sim=new RallySim(ctx,probe,RivalAi.For(ctx,AiLevel.Medium,RivalStyleId.Fondista,20261123))){probe.Sim=sim;sim.PlayMatch(PlayerId.Rival);}
             Assert.That(probe.Offers,Is.GreaterThan(10));
             Assert.That(probe.LostAtS,Is.Zero,"offers whose own deadline touch lost the offered stance (of "+probe.Offers+")");
             Assert.That(probe.LostAtSPrime,Is.Zero,"offers whose sprint deadline touch found no stance at least as good as the offered one (of "+probe.Offers+")");
             TestContext.WriteLine("V21_INVARIANT offers="+probe.Offers+" betterAtSPrime="+probe.Better);
+        }
+        // v2.2 (design section 7): S' is the last touch at which ANY stance is reachable with the sprint. Over a real match: a touch at S' commits,
+        // a touch a little later never does, and some late touches commit to a nearer stance than the offer's (longest-window) one.
+        private sealed class V22Probe : IRallyBrain
+        {
+            private readonly RallyContext ctx;private readonly IRallyBrain inner;public RallySim Sim;public int Offers,NoCommitAtSPrime,CommitAfterSPrime,NearerLate;
+            public V22Probe(RallyContext ctx,IRallyBrain inner){this.ctx=ctx;this.inner=inner;}
+            public int PerceptionSteps=>inner.PerceptionSteps;public Vector2 StanceNoise()=>inner.StanceNoise();
+            public AiShot Decide(in AiObservation o,in ReceptionPlan own)
+            {
+                var t=ctx.Predict(o.Ball);long start=t.States[0].Step;int delay=ctx.Steps(ctx.Params.ReactionS)+inner.PerceptionSteps;
+                var d=HumanVolley.OfferDetail(ctx,t,Sim.Rules,Sim.Human,delay,1);
+                if(d.Offer.Exists)
+                {
+                    Offers++;float sprint=ctx.HumanVolleySprint;
+                    VolleyIntercept At(long c){var b=Walk(Sim.Human,start,c);var n=HumanVolley.Commit(ctx,t,Sim.Rules,b,c,delay,2);return n.Exists?n:HumanVolley.Commit(ctx,t,Sim.Rules,b,c,delay,2,sprint);}
+                    if(!At(d.SPrime).Exists)NoCommitAtSPrime++;
+                    foreach(var k in new[]{3,10,25})if(At(d.SPrime+k).Exists){CommitAfterSPrime++;break;}
+                    var late=At(d.SPrime);if(late.Exists&&late.Stance!=d.Intercept.Stance&&late.Plan.KOut.Steps-late.Plan.KIn.Steps<d.Intercept.Plan.KOut.Steps-d.Intercept.Plan.KIn.Steps)NearerLate++;
+                }
+                return inner.Decide(o,own);
+            }
+        }
+        [Test] public void V22_SPrimeIsTheLastTouchAnyStanceIsReachable_AndLateTouchesTakeANearerStance()
+        {
+            var ctx=Sprint(1.5);var probe=new V22Probe(ctx,new BotBrain(ctx,30,20261124));
+            using(var sim=new RallySim(ctx,probe,RivalAi.For(ctx,AiLevel.Medium,RivalStyleId.Fondista,20261125))){probe.Sim=sim;sim.PlayMatch(PlayerId.Rival);}
+            Assert.That(probe.Offers,Is.GreaterThan(10));
+            Assert.That(probe.NoCommitAtSPrime,Is.Zero,"a touch at S' always commits (of "+probe.Offers+")");
+            Assert.That(probe.CommitAfterSPrime,Is.Zero,"no touch after S' commits: S' is the last one (of "+probe.Offers+")");
+            Assert.That(probe.NearerLate,Is.GreaterThan(0),"late touches commit to a nearer, shorter-window stance");
         }
         [Test] public void V2_HasNoSprint_SplitIsS()
         {

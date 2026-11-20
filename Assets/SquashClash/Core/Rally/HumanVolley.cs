@@ -43,19 +43,38 @@ namespace SquashClash.Core.Rally
             long deadline=Deadline(context,bodyAtStart,start,delaySteps,p);
             if(deadline<AmberFromSteps(context,start,p.Plan.TStarStep))return VolleyOfferDetail.None("commit-window");
             float sprint=context.HumanVolleySprint;
-            long late=sprint>1?Math.Max(deadline,SprintDeadline(context,bodyAtStart,start,delaySteps,p,sprint)):deadline;
-            return new VolleyOfferDetail(new VolleyOpportunity(p.Plan,late,"offered"),p,deadline,late);
+            if(sprint<=1)return new VolleyOfferDetail(new VolleyOpportunity(p.Plan,deadline,"offered"),p,deadline,deadline);
+            // v2.2 (design section 7): S and S' are the last touches at which ANY stance is reachable, without and with the sprint.
+            long last=FirstFloorBounce(trajectory);
+            bool Reach(long c,float f)=>Commit(context,trajectory,rulesAtStart,At(c),c,delaySteps,version,f,true).Exists;
+            long s=Math.Max(deadline,LastTrue(start,last,c=>Reach(c,1)));
+            long sPrime=Math.Max(s,LastTrue(start,last,c=>Reach(c,sprint)));
+            return new VolleyOfferDetail(new VolleyOpportunity(p.Plan,sPrime,"offered"),p,s,sPrime);
         }
         // The touch at bodyStep: the intercept recomputed from the body as it really is now (the reaction delay still applies), running at
         // the given sprint factor from the touch on (1: the normal body).
-        public static VolleyIntercept Commit(RallyContext context,Trajectory trajectory,PointRules rulesAtStart,PlayerBody bodyNow,long bodyStep,int delaySteps,int version,float sprint=1)
+        public static VolleyIntercept Commit(RallyContext context,Trajectory trajectory,PointRules rulesAtStart,PlayerBody bodyNow,long bodyStep,int delaySteps,int version,float sprint=1,bool any=false)
         {
             if(context==null||bodyNow==null)throw new ArgumentNullException(nameof(context));
             if(trajectory==null||trajectory.States.Count<2)return VolleyIntercept.None("no-trajectory");
             long start=trajectory.States[0].Step;var body=bodyNow;
             if(sprint>1){body=bodyNow.Clone();body.Sprint=sprint;}
             // Candidates from launch + reaction, like the offer (VOLLEY-V2-COMMIT-01); Intercept keeps only those whose T* is still ahead.
-            return Intercept(context,trajectory,rulesAtStart,start+delaySteps,start+delaySteps,version,_=>(body,bodyStep));
+            return Intercept(context,trajectory,rulesAtStart,start+delaySteps,start+delaySteps,version,_=>(body,bodyStep),any);
+        }
+        // The step of the first floor bounce: no volley contact, so no volley touch, after it.
+        private static long FirstFloorBounce(Trajectory t)
+        {
+            foreach(var c in t.Contacts)if(c.Surface==SquashClash.Core.Court.SurfaceId.Floor&&!c.Persistent)return c.Step;
+            return t.States[t.States.Count-1].Step;
+        }
+        // The last step in [lo, hi] where the predicate holds, by bisection (assumes it holds on a prefix: reach only shrinks as the touch
+        // comes later). lo - 1 when it does not hold at lo.
+        private static long LastTrue(long lo,long hi,Func<long,bool> holds)
+        {
+            if(!holds(lo))return lo-1;
+            while(lo<hi){long mid=lo+(hi-lo+1)/2;if(holds(mid))lo=mid;else hi=mid-1;}
+            return lo;
         }
         // How late a sprint touch is: 0 at S, 1 at S' (clamped).
         public static double Lateness(long s,long sPrime,long touchStep)=>sPrime<=s?(touchStep>s?1:0):Math.Max(0,Math.Min(1,(touchStep-s)/(double)(sPrime-s)));
@@ -76,7 +95,7 @@ namespace SquashClash.Core.Rally
         // The stance with the longest fixed-frame volley window among those reachable before its T* by the body departing as departure says
         // (the reaction delay counted from the reception start still applies to a departure inside it).
         public static VolleyIntercept Intercept(RallyContext context,Trajectory t,PointRules rulesAtStart,long fromStep,long earliestStep,int version,
-            Func<ContactPlan,(PlayerBody body,long step)> departure)
+            Func<ContactPlan,(PlayerBody body,long step)> departure,bool any=false)
         {
             if(!context.HumanVolleyV2)return VolleyIntercept.None("disabled");
             if(rulesAtStart!=null&&rulesAtStart.Serving&&rulesAtStart.ServeVolley!=PlayerId.Human)return VolleyIntercept.None("serve");
@@ -99,7 +118,7 @@ namespace SquashClash.Core.Rally
                     int remaining=(int)Math.Max(0,earliestStep-step);
                     int arrival=body.StepsToReach(stance,remaining,out _,(int)(plan.TStarStep-step)+1);
                     if(arrival==int.MaxValue||step+arrival>plan.TStarStep)continue;
-                    bestK=k;best=new VolleyIntercept(plan,stance,"offered");
+                    bestK=k;best=new VolleyIntercept(plan,stance,"offered");if(any)return best;
                 }
             }
             return best;

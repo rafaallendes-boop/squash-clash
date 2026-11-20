@@ -11,7 +11,7 @@ using SquashClash.Core.Simulation;
 using UnityEngine;
 namespace SquashClash.Experiments.EditMode
 {
-    // Volley v2.1 grid (design 2026-11-20 section 6, predeclared): HumanVolleySprintMax in {1.25, 1.5, 1.75, 2.0}, first that meets targets
+    // Volley v2.2 grid (design 2026-11-20 sections 6-7, predeclared; v2.1 ran with offer-stance deadlines and is not reproducible now): HumanVolleySprintMax in {1.25, 1.5, 1.75, 2.0}, first that meets targets
     // 1-3 wins. Counterfactual exactly as VolleyV2CommitExperiment (same seeds, games, newcomer, PO touch draws): the product's
     // HumanVolley.OfferDetail and Commit (normal up to S, sprint from S to S'). Also records launch->S and launch->S' for the report.
     public sealed class VolleyV21GridExperiment
@@ -54,7 +54,8 @@ namespace SquashClash.Experiments.EditMode
                 if(offered&&!double.IsNaN(touch)&&touch>=0&&touch<=spMs)
                 {
                     long c=first+(long)Math.Floor(touch/1000*ctx.StepHz*ctx.Tempo);var walk=Sim.Human.Clone();for(long k=first;k<c;k++)walk.Step();
-                    var commit=c<=d.S?HumanVolley.Commit(ctx,t,Sim.Rules,walk,c,delay,version):default;
+                    // v2.2 order: the longest-window stance reachable without the sprint, otherwise with it.
+                    var commit=HumanVolley.Commit(ctx,t,Sim.Rules,walk,c,delay,version);
                     if(!commit.Exists){commit=HumanVolley.Commit(ctx,t,Sim.Rules,walk,c,delay,version,ctx.HumanVolleySprint);if(commit.Exists){sprinted="1";lateness=HumanVolley.Lateness(d.S,d.SPrime,c).ToString("0.###",C);}}
                     if(commit.Exists){committed="1";pv=Pv(RallyContact.Resolve(ctx,Clock(),t,commit.Plan,now,dVolley))?"1":"0";}
                 }
@@ -65,7 +66,7 @@ namespace SquashClash.Experiments.EditMode
         [Test,Explicit,Category("Experiments"),Timeout(7200000)]
         public void MeasureGrid()
         {
-            string root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));string dir=Path.Combine(root,"Logs/experiments/volley-v21-grid-r2");
+            string root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));string dir=Path.Combine(root,"Logs/experiments/volley-v22-grid");
             Assert.That(Directory.Exists(dir),Is.False,"Never overwrite evidence");Directory.CreateDirectory(dir);
             var preset=PresetCodec.LoadDefault(File.ReadAllText(Path.Combine(Application.dataPath,"SquashClash/Runtime/Resources/DefaultPreset.json")));
             Assert.That(preset.Hash,Is.EqualTo("207da8f2c636"));
