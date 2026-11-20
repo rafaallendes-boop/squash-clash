@@ -67,11 +67,15 @@ Es una capa nueva **solo del humano**, aplicada en `ShotController.Solve` despu�
 
 1. **Zona:** P > 0,5, mira pedida y ≥ 0,80 m, contacto delante de la línea corta y solución resuelta. Fuera de la zona devuelve la solución bit a bit.
 2. **Sin cambio si ya sirve:** si la solución actual ya es un éxito (definición de §2, con P2 y las reglas del punto), se devuelve tal cual.
-3. **Pivote:** misma altura efectiva `TargetUsed.y` y velocidad congelada, con x = x del contacto. Si tampoco es un éxito, o el solver no lo resuelve sin bajar el objetivo, se devuelve la original.
-4. **Búsqueda:** bisección de 8 pasos sobre la fracción t ∈ [0, 1] del desvío lateral, x = x_contacto + t·(TargetUsed.x − x_contacto). Se elige el mayor t con éxito, el golpe más abierto que todavía llega limpio en la dirección pedida. Son a lo sumo 10 solicitudes y 20 trayectorias P2 adicionales.
-5. **Resultado:** el motivo es `front-deep` y la retícula muestra la mira efectiva, como con `intent-drive`.
+3. **Barrido grueso en x:** misma altura efectiva `TargetUsed.y` y velocidad congelada, con x = x_contacto + t·(TargetUsed.x − x_contacto) para t = 7/8, 6/8, … 0. Se toma el mayor t con éxito: el golpe más abierto que todavía llega limpio en la dirección pedida. Una solicitud que el solver solo resuelve bajando el objetivo no es candidata. El barrido no supone monotonía.
+4. **Refinamiento:** 4 pasos de bisección entre ese t y el siguiente octavo, con resolución 1/128.
+5. **Solo si ninguna x sirve a esa altura:** pasa sobre todo muy cerca del frontis, donde a velocidad alta la recta se va por arriba del fondo. Se repite el barrido (t = 1 … 0) en tres alturas más bajas, y = y₀ − (y₀ − y_legal)·j/3 con j = 1..3, donde y_legal es la parte superior del tin + el radio, como en el solver. Se toma la primera altura que sirve. Si ninguna sirve, devuelve la original.
+6. **Coste:** a lo sumo 40 solicitudes y 80 trayectorias P2 adicionales.
+7. **Resultado:** el motivo es `front-deep` y la retícula muestra la mira efectiva, como con `intent-drive`.
 
-No cambia la física, los defaults, el contrato de contacto, el reloj, la velocidad ni la altura. Solo cambia la x del frontis.
+*Revisión 1, antes de medir la corrección sobre la reproducción:* la primera versión (pivote en la x del contacto y bisección) no actuaba en el fixture de PlayMode SL5 (contacto z ≈ 1,2 m, P = 1, y = 1,5). Ahí la recta desde el contacto se va por arriba de la pared de fondo, así que el pivote no sirve. Eso coincide con las 7 cruzadas sin x limpia del diagnóstico (z < 2 m). Por eso se cambió a barrido grueso más alturas de respaldo. Las metas de §3 no cambian.
+
+No cambia la física, los defaults, el contrato de contacto, el reloj ni la velocidad. Cambia la x del frontis y, solo en el paso 5, baja la altura.
 
 **Interruptor DEV:** «Drive adelante: sí/no» en el panel DEV, encendido por defecto y sin recordarse entre lanzamientos. No es una clave de `DefaultPreset`. Cada acción escribe una línea de métricas `front-deep` con `on`, `acted`, `t` y la x original y elegida, solo dentro de la zona.
 
@@ -80,4 +84,4 @@ No cambia la física, los defaults, el contrato de contacto, el reloj, la veloci
 - **No es ciego:** el mecanismo usa el mismo predicado de éxito que la métrica, así que M1/M2 miden sobre todo cobertura (si existe una x limpia entre el contacto y la mira). La retención M5 y la clase `side-before-back` dan una lectura adicional.
 - **Muestra pequeña:** 16 paralelas y 39 cruzadas de una sola sesión.
 - **Discontinuidad en la línea corta:** detrás de ella la guardia no actúa.
-- **Cruzadas muy adelante (z < 2 m):** sin x limpia a esa altura y velocidad (7/36), quedan igual.
+- **Cruzadas muy adelante (z < 2 m):** sin x limpia a esa altura y velocidad (7/36). La altura de respaldo puede convertirlas en un golpe casi paralelo y más bajo: se da prioridad a la profundidad sobre la dirección.
