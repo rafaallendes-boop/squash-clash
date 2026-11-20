@@ -31,7 +31,7 @@ namespace SquashClash.Experiments.EditMode
         private static string F(double v)=>v.ToString("R",C);
         private sealed class Cell
         {
-            public int Points,Human,Receptions,Contacts,RivalContacts,RivalLong,RivalAttack,RivalVolleys,Faults;
+            public int Points,Human,Receptions,Contacts,RivalContacts,RivalLong,RivalAttack,RivalVolleys,Faults,RivalBoasts,RivalBoastFallbacks;
             public double Share=>Points==0?0:Human/(double)Points;
             public string Row=>string.Join("\t",new[]{Points,Human,Receptions,Contacts,RivalContacts,RivalLong,RivalAttack,RivalVolleys,Faults}.Select(x=>x.ToString(C)))+"\t"+F(Share);
             public const string Header="points\thuman\thumanReceptions\thumanContacts\trivalContacts\trivalLong\trivalAttack\trivalVolleys\tsystemFaults\tshare";
@@ -70,6 +70,7 @@ namespace SquashClash.Experiments.EditMode
                             if(r.Result!=ReceptionResult.Contact)continue;
                             cell.RivalContacts++;if(r.Line!=ShotLine.Drop&&r.Height!=ShotHeight.Low)cell.RivalLong++;
                             if(r.Line==ShotLine.Drop||r.Height==ShotHeight.Low)cell.RivalAttack++;if(r.Volley)cell.RivalVolleys++;
+                            if(r.Line==ShotLine.Boast)cell.RivalBoasts++;if(r.BoastFellBack)cell.RivalBoastFallbacks++;
                         }
                         if(o.Winner.HasValue){score.PointWon(o.Winner.Value);cell.Points++;if(o.Winner==PlayerId.Human)cell.Human++;}
                         else if(++replays>50)break;
@@ -133,7 +134,20 @@ namespace SquashClash.Experiments.EditMode
         // The reference bots have no serve choice, so they serve the lob; the rival chooses by its style. Nothing is recalibrated.
         [Test,Explicit,Category("Experiments"),Timeout(14400000)]
         public void ConfirmPerStyleNewServe()=>ConfirmPerStyle("confirm-new-serve",new RallyParams{ServeKindOn=1});
-        private static void ConfirmPerStyle(string defaultRun,RallyParams parameters)
+        // Two-wall shot (design 2026-11-20-boast-predeclaration, M4): the same run, same seeds, with the rival's boast off (identity with
+        // confirm01) and on. A newcomer share that moves more than 3 pp at any difficulty leaves «Dos paredes» off by default; nothing is
+        // recalibrated. Named Boast* so the ConfirmPerStyle filter never picks them up.
+        [Test,Explicit,Category("Experiments"),Timeout(14400000)]
+        public void BoastConfirmOff()=>ConfirmPerStyle("confirm-boast-off",new RallyParams{BoastRival=0});
+        [Test,Explicit,Category("Experiments"),Timeout(14400000)]
+        public void BoastConfirmOn()=>ConfirmPerStyle("confirm-boast-on",new RallyParams{BoastRival=1});
+        // Addendum 1 (round two): the same pair with NEW seeds (round one: 20261121 / 20261219). The boast counts are printed apart, so the
+        // cells.tsv columns stay those of confirm01.
+        [Test,Explicit,Category("Experiments"),Timeout(14400000)]
+        public void BoastRound2Off()=>ConfirmPerStyle("confirm-boast-r2-off",new RallyParams{BoastRival=0},20270121,20270219);
+        [Test,Explicit,Category("Experiments"),Timeout(14400000)]
+        public void BoastRound2On()=>ConfirmPerStyle("confirm-boast-r2-on",new RallyParams{BoastRival=1},20270121,20270219);
+        private static void ConfirmPerStyle(string defaultRun,RallyParams parameters,long hardSeeds=20261121,long confirmSeeds=20261219)
         {
             var (root,preset,factory)=Setup();
             string dir=Path.Combine(root,"Logs/experiments/rival-styles-calibration/"+(Environment.GetEnvironmentVariable("SC_RS_RUN")??defaultRun));
@@ -141,18 +155,20 @@ namespace SquashClash.Experiments.EditMode
             var ctx=new RallyContext(EffectiveConfig.From(preset),parameters,factory);
             File.WriteAllText(Path.Combine(dir,"source.tsv"),"defaults\trallyParams\tunity\n"+preset.Hash+"\t"+ctx.Params.Hash+"\t"+Application.unityVersion+"\n",Utf8);
             using(var cells=new StreamWriter(Path.Combine(dir,"cells.tsv"),false,Utf8))
+            using(var boasts=new StreamWriter(Path.Combine(dir,"boasts.tsv"),false,Utf8))
             {
-                cells.WriteLine("phase\tlevel\tstyle\treference\tk\t"+Cell.Header+"\tseconds");
+                cells.WriteLine("phase\tlevel\tstyle\treference\tk\t"+Cell.Header+"\tseconds");boasts.WriteLine("phase\tlevel\tstyle\treference\trivalBoasts\trivalBoastFallbacks");
                 AiDifficulty Scaled(AiLevel level,double k){var d=AiDifficulty.For(ctx.Params,level);return new AiDifficulty(d.PerceptionS*k,d.StanceSigma*k,d.AimSigma*k,d.PowerSigma*k,d.TimingSigmaMs*k,d.Temperature);}
                 Cell Run(string phase,AiLevel level,RivalStyleId style,string reference,double k,long seeds)
                 {
                     var watch=Stopwatch.StartNew();var cell=Play(ctx,level,style,reference,90,200,seeds,Scaled(level,k));
-                    cells.WriteLine(phase+"\t"+level+"\t"+style+"\t"+reference+"\t"+F(k)+"\t"+cell.Row+"\t"+F(watch.Elapsed.TotalSeconds));cells.Flush();return cell;
+                    cells.WriteLine(phase+"\t"+level+"\t"+style+"\t"+reference+"\t"+F(k)+"\t"+cell.Row+"\t"+F(watch.Elapsed.TotalSeconds));cells.Flush();
+                    boasts.WriteLine(phase+"\t"+level+"\t"+style+"\t"+reference+"\t"+cell.RivalBoasts+"\t"+cell.RivalBoastFallbacks);boasts.Flush();return cell;
                 }
                 double fondoHard=double.NaN,best=double.MaxValue;
                 foreach(var k in new[]{2.5,2.25,2.75})
                 {
-                    double share=Run("fondista-hard",AiLevel.Hard,RivalStyleId.Fondista,"newcomer",k,20261121).Share;
+                    double share=Run("fondista-hard",AiLevel.Hard,RivalStyleId.Fondista,"newcomer",k,hardSeeds).Share;
                     if(Math.Abs(share-.20)<=.04&&Math.Abs(share-.20)<best){best=Math.Abs(share-.20);fondoHard=k;}
                     if(k==2.5&&!double.IsNaN(fondoHard))break;
                 }
@@ -160,7 +176,7 @@ namespace SquashClash.Experiments.EditMode
                 foreach(var level in Levels)foreach(var style in Styles)
                 {
                     double k=style==RivalStyleId.Fondista&&level==AiLevel.Hard?(double.IsNaN(fondoHard)?RivalStyle.NoiseK(ctx.Params,style,level):fondoHard):RivalStyle.NoiseK(ctx.Params,style,level);
-                    Run("confirm",level,style,"newcomer",k,20261219);Run("confirm",level,style,"bot30",k,20261219);
+                    Run("confirm",level,style,"newcomer",k,confirmSeeds);Run("confirm",level,style,"bot30",k,confirmSeeds);
                 }
             }
         }

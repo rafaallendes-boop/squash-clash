@@ -107,7 +107,7 @@ namespace SquashClash.Runtime.Rally
             if(this.app!=null)return;
             this.app=app;this.controller=controller;this.practice=practice;this.players=players;
             factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
-            app.Host.Launched+=OnLaunched;controller.ShotResolved+=OnResolved;
+            app.Host.Launched+=OnLaunched;controller.ShotResolved+=OnResolved;controller.SideAimGate=()=>Active;
             // View-only hold of the rendered pose for 100 ms inside the pause (PO, 19 nov); touches no simulation state.
             PointEnded+=_=>SquashClash.Runtime.Visual.PointEndFreeze.Begin(WaitBetweenPoints,()=>Active&&(Phase==RallyPhase.PointOver||Phase==RallyPhase.MatchOver));
         }
@@ -165,6 +165,11 @@ namespace SquashClash.Runtime.Rally
         // Serve kinds (design 2026-11-20-serve), DEV «Saque nuevo»: lob and drive from the NEXT point on; off by default (today's serve).
         public void SetNewServe(bool on){pendingNewServe=on;RefreshServeAim();}
         public bool NewServeNextPoint=>pendingNewServe??Params.ServeKindOn!=0;
+        // Two-wall shot (design 2026-11-20-boast-predeclaration), DEV «Dos paredes»: the rival's boast from the NEXT point on. The human's
+        // side-wall aim is always on in Rally/Match play.
+        public void SetRivalBoast(bool on){pendingRivalBoast=on;}
+        public bool RivalBoastNextPoint=>pendingRivalBoast??Params.BoastRival!=0;
+        private bool? pendingRivalBoast;
         private bool? pendingNewServe;private ServeType? pendingHumanServe;
         // The kind of the serve that started the current point (Auto while the new serve is off).
         public ServeType LastServeType {get;private set;}
@@ -205,6 +210,7 @@ namespace SquashClash.Runtime.Rally
             if(pendingVolleyV2.HasValue||pendingVolleyMode.HasValue){var p=Params.Clone();p.HumanVolleyMode=VolleyModeNextPoint;Params=p;pendingVolleyV2=null;pendingVolleyMode=null;}
             if(pendingServeVolley.HasValue){var p=Params.Clone();p.HumanVolleyServe=pendingServeVolley.Value?1:0;Params=p;pendingServeVolley=null;}
             if(pendingNewServe.HasValue){var p=Params.Clone();p.ServeKindOn=pendingNewServe.Value?1:0;Params=p;pendingNewServe=null;}
+            if(pendingRivalBoast.HasValue){var p=Params.Clone();p.BoastRival=pendingRivalBoast.Value?1:0;Params=p;pendingRivalBoast=null;}
             context=new RallyContext(cfg,Params,factory);
             double humanStart=testEnergy??(resetEnergy?100:HumanEnergy?.Energy??100),rivalStart=testEnergy??(resetEnergy?100:RivalEnergy?.Energy??100);
             HumanEnergy=new FatigueState(context.Fatigue,humanStart);
@@ -509,7 +515,7 @@ namespace SquashClash.Runtime.Rally
                 hasPending=false;var at=Evaluate(pendingStep);var state=host.Current;
                 bool have=state.Step==pendingStep||host.TryGetHistoricalState(pendingStep,out state);
                 // The arm is the rival's own energy at its contact step, read before this stroke is charged below.
-                var causal=have&&at.CanHit(PlayerId.Rival)&&rivalCausal!=null?RallyContact.Solve(context,rivalCausal,rivalCausal.BodyAt(pendingStep),state.Position,pendingShot.Aim,pendingShot.P,context.Fatigue.Arm(RivalEnergy.EnergyAt(pendingStep))):default;
+                var causal=have&&at.CanHit(PlayerId.Rival)&&rivalCausal!=null?RallyContact.Solve(context,rivalCausal,rivalCausal.BodyAt(pendingStep),state.Position,pendingShot,context.Fatigue.Arm(RivalEnergy.EnergyAt(pendingStep))):default;
                 var solution=causal.Solution;
                 if(causal.Vectors!=null)
                 {

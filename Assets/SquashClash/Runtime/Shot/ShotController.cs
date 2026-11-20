@@ -78,6 +78,11 @@ namespace SquashClash.Runtime.Shot
         // Front deep drive (design 2026-11-20): DEV switch to compare with and without the human side-wall guard. Default on,
         // not remembered between launches and not a DefaultPreset key.
         public static bool FrontDeepDriveOn=true;
+        // Two-wall shot (design 2026-11-20-boast-predeclaration): the director opens the side-wall aim for Rally/Match play. Never while the
+        // human chooses the serve (ServeAim), and never in practice, SL or AutoQA, where no gate is set.
+        public Func<bool> SideAimGate {get;set;}
+        public bool SideAimOpen=>ServeAim==null&&SideAimGate!=null&&SideAimGate();
+        public BoastInfo LastBoast {get;private set;}
         // Serve kinds (design 2026-11-20-serve): set by the director only in the pause before the human's own serve with «Saque nuevo» on. While
         // set, a touch may begin, the volley choice is skipped and the closed gesture goes here instead of the stroke path (no shot record, no timing).
         public Func<ClosedGesture,bool> ServeAim {get;set;}
@@ -276,7 +281,7 @@ namespace SquashClash.Runtime.Shot
             var contact=authoritative.States[(int)offset];
             LastSolution=Solve(shot,order,contact,record,decision.ContactStep<=app.Host.Current.Step);FillSolution(record,LastSolution,contact);
             var reticle=app.GetComponentInChildren<AimReticleView>(true);reticle.gameObject.SetActive(true);
-            reticle.SetAim(order.Aim,AimState.Frozen,app.Host.ActiveConfig.Court);ShowEffectiveAim(reticle,LastSolution);
+            ShowShot(reticle,order,LastSolution);
             if(!LastSolution.Solved){Fault(record,ShotResult.SystemFault,LastSolution.Reason);return;}
             pendingContact=record;
             if(decision.ContactStep>app.Host.Current.Step)
@@ -284,7 +289,7 @@ namespace SquashClash.Runtime.Shot
                 WaitingForContact=true;
                 bool accepted=app.Host.ScheduleShot(order.LaunchId,decision.ContactStep,state=>
                 {
-                    LastSolution=Solve(shot,order,state,record,true);FillSolution(record,LastSolution,state);ShowEffectiveAim(reticle,LastSolution);
+                    LastSolution=Solve(shot,order,state,record,true);FillSolution(record,LastSolution,state);ShowShot(reticle,order,LastSolution);
                     return LastSolution.Solved?LastSolution.Velocity:new Vector3(float.NaN,0,0);
                 },order.ReleaseAt);
                 if(!accepted)Fault(record,ShotResult.SystemFault,"schedule-rejected");
@@ -310,16 +315,29 @@ namespace SquashClash.Runtime.Shot
             var reference=UsedCausalReference??CausalReference;var body=reference.BodyAt(contact.Step);
             var arm=strikerFatigue!=null?strikerFatigue(contact.Step,authoritative):FatigueArm.None;
             var factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
-            LastCausal=CausalQuality.Solve(reference,body,contact.Position,order.Aim,order.P,cfg,factory,arm);
+            // A side-wall aim is the two-wall shot: the same causal vectors and arm, the boast solver, and no front deep drive guard.
+            var boast=default(BoastInfo);
+            LastCausal=order.Side.Exists?CausalQuality.SolveBoast(reference,body,contact.Position,order.Side,order.P,cfg,factory,arm,ShotIntentSolver.DefaultFootprintRadius,out boast)
+                :CausalQuality.Solve(reference,body,contact.Position,order.Aim,order.P,cfg,factory,arm);
+            if(order.Side.Exists)
+            {
+                LastBoast=boast;
+                var line=new BoastTrace{launchId=order.LaunchId,attemptId=order.AttemptId,contactStep=contact.Step,authoritative=authoritative,wall=order.Side.Wall.ToString(),aimZ=order.Side.Z,aimY=order.Side.Y,
+                    usedZ=boast.Used.Z,usedY=boast.Used.Y,frontX=boast.Front.x,frontY=boast.Front.y,requestedSpeed=boast.RequestedSpeed,speed=boast.Speed,evaluations=boast.Evaluations,reason=boast.Reason,solved=boast.Solved,
+                    fellBack=LastCausal.FellBack,fallbackX=LastCausal.FallbackAim.x,fallbackY=LastCausal.FallbackAim.y};
+                app.Metrics?.Write("shot-boast",cfg,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(line));
+            }
             var trace=CausalShotTrace.Create("Human",order.LaunchId,order.AttemptId,contact.Step,reference,body,LastCausal);
             app.Metrics?.Write("shot-causal",cfg,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(trace));
             var solution=LastCausal.Solution;
             // Front deep drive (design 2026-11-20): human-only side-wall guard after the causal layer and the intention. Off, or
             // outside its zone, the causal solution is used bit for bit. One metrics line per solve inside the zone.
-            if(FrontDeepDrive.Active(order.P,contact.Position,order.Aim,cfg.Court))
+            // A boast that fell back is a front-wall shot at its fallback aim, so it takes the whole front-wall path, the guard included.
+            var frontAim=order.Side.Exists?LastCausal.FallbackAim:order.Aim;
+            if((!order.Side.Exists||LastCausal.FellBack)&&FrontDeepDrive.Active(order.P,contact.Position,frontAim,cfg.Court))
             {
                 var original=solution;var info=new FrontDeepInfo("switched-off",0,0);
-                if(FrontDeepDriveOn)solution=FrontDeepDrive.Apply(contact.Position,order.Aim,order.P,original,cfg.Court,factory,cfg.Physics,ShotIntentSolver.DefaultFootprintRadius,out info);
+                if(FrontDeepDriveOn)solution=FrontDeepDrive.Apply(contact.Position,frontAim,order.P,original,cfg.Court,factory,cfg.Physics,ShotIntentSolver.DefaultFootprintRadius,out info);
                 var deep=new FrontDeepTrace{launchId=order.LaunchId,attemptId=order.AttemptId,contactStep=contact.Step,on=FrontDeepDriveOn,acted=info.Acted,reason=info.Reason,
                     t=info.T,evaluations=info.Evaluations,originalX=original.TargetUsed.x,chosenX=solution.TargetUsed.x,y=solution.TargetUsed.y};
                 app.Metrics?.Write("front-deep",cfg,record.Preset,record.FileHash,record.Pending,record.Seed,!app.Clock.MetricsInvalid,app.Clock.DroppedSinceRestart,JsonUtility.ToJson(deep));
@@ -328,8 +346,21 @@ namespace SquashClash.Runtime.Shot
             record.SolverCostMs+=(Stopwatch.GetTimestamp()-start)*1000/Stopwatch.Frequency;return solution;
         }
         // The frozen reticle marks the aim the ball really takes: lowered for feasibility, moved by the drive intention (G1 A2) or by the front deep drive guard.
+        // A boast marks where it will meet the front wall.
         private static void ShowEffectiveAim(AimReticleView reticle,ShotSolution s)
-            =>reticle.ShowFeasible(s.TargetUsed,s.Solved&&(s.TargetLowered||s.Reason=="intent-drive"||s.Reason==FrontDeepDrive.ReasonActed));
+            =>reticle.ShowFeasible(s.TargetUsed,s.Solved&&(s.TargetLowered||s.Reason=="intent-drive"||s.Reason==FrontDeepDrive.ReasonActed||s.Reason==BoastSolver.ReasonExact||s.Reason==BoastSolver.ReasonNearest));
+        // The reticle shows the shot that goes out: the boast on its side wall with its front-wall point, a boast that fell back as a
+        // front-wall aim at its fallback point, every other order as before.
+        private void ShowShot(AimReticleView reticle,ClosedGesture order,ShotSolution s)
+        {
+            var court=app.Host.ActiveConfig.Court;
+            if(!order.Side.Exists)reticle.SetAim(order.Aim,AimState.Frozen,court);
+            else if(LastCausal.FellBack)reticle.SetAim(LastCausal.FallbackAim,AimState.Frozen,court);
+            else reticle.SetSideAim(order.Side,court);
+            ShowEffectiveAim(reticle,s);
+        }
+        [Serializable] private sealed class BoastTrace
+        {public long launchId,contactStep;public string attemptId,wall,reason;public bool authoritative,solved,fellBack;public float aimZ,aimY,usedZ,usedY,frontX,frontY,requestedSpeed,speed,fallbackX,fallbackY;public int evaluations;}
         private static void FillSolution(ShotRecord r,ShotSolution s,BallState contact)
         {
             r.Solved=s.Solved;r.ContactX=contact.Position.x;r.ContactY=contact.Position.y;r.ContactZ=contact.Position.z;r.SpeedRaised=s.SpeedRaised;r.TargetLowered=s.TargetLowered;

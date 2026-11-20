@@ -51,7 +51,7 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void RallyParams_ProjectionWithoutVolleyFields_IsTheCurrentHash()
         {
             var canonical=new StringBuilder();
-            foreach(var field in typeof(RallyParams).GetFields(BindingFlags.Public|BindingFlags.Instance).Where(f=>!f.Name.StartsWith("Volley",StringComparison.Ordinal)&&!f.Name.StartsWith("Style",StringComparison.Ordinal)&&!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)).OrderBy(f=>f.Name,StringComparer.Ordinal))
+            foreach(var field in typeof(RallyParams).GetFields(BindingFlags.Public|BindingFlags.Instance).Where(f=>!f.Name.StartsWith("Volley",StringComparison.Ordinal)&&!f.Name.StartsWith("Style",StringComparison.Ordinal)&&!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)&&!f.Name.StartsWith("Boast",StringComparison.Ordinal)).OrderBy(f=>f.Name,StringComparer.Ordinal))
                 canonical.Append(field.Name).Append('=').Append(((double)field.GetValue(new RallyParams())).ToString("R",CultureInfo.InvariantCulture)).Append('\n');
             string projection;using(var sha=SHA256.Create())projection=BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(canonical.ToString())),0,6).Replace("-","").ToLowerInvariant();
             Assert.That(projection,Is.EqualTo("927e304bbfec"));

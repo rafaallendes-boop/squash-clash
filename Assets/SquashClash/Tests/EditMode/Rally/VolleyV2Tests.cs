@@ -44,7 +44,7 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(p.HumanVolleySprintMax,Is.EqualTo(2));Assert.That(p.HumanVolleySprintCost,Is.EqualTo(4));
             // Six since the fatigue feel (20 nov): the five v2.x fields plus HumanVolleySprintFatigue (FatigueFeelTests checks its own projection).
             Assert.That(typeof(RallyParams).GetFields().Count(f=>f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)),Is.EqualTo(6));
-            Assert.That(Projection(f=>!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)),Is.EqualTo("0f58580f44ea"),"without the v2 fields the hash is the current one");
+            Assert.That(Projection(f=>!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)&&!f.Name.StartsWith("Boast",StringComparison.Ordinal)),Is.EqualTo("0f58580f44ea"),"without the v2 fields the hash is the current one");
             Assert.That(RallyFixtures.Context().HumanVolleyV2,Is.True);Assert.That(RallyFixtures.Context().HumanServeVolley,Is.True);
             TestContext.WriteLine("VOLLEY_V2_RALLYPARAMS_HASH="+p.Hash);
         }

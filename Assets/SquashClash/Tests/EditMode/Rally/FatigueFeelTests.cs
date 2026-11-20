@@ -109,7 +109,7 @@ namespace SquashClash.Core.Tests.Rally
         // Control: the projection of RallyParams without the new field is the current hash (passes before and after).
         [Test] public void RallyParams_ProjectionWithoutTheSprintFatigueField_IsTheCurrentHash()
         {
-            Assert.That(RivalAiTests.Projection(f=>f.Name!="HumanVolleySprintFatigue"&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)),Is.EqualTo("0fe523164363"));
+            Assert.That(RivalAiTests.Projection(f=>f.Name!="HumanVolleySprintFatigue"&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)&&!f.Name.StartsWith("Boast",StringComparison.Ordinal)),Is.EqualTo("0fe523164363"));
             TestContext.WriteLine("FATIGUE_FEEL_RALLYPARAMS_HASH="+new RallyParams().Hash);
         }
     }

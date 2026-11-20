@@ -1,0 +1,5 @@
+aims	total	valid(no fallback)	opposite
+aim front half (z<=L/2)	288	288	0
+aim z_c-0.6	144	134	134
+aim z_c-1.0	144	144	96
+aim z_c-1.5	144	144	48

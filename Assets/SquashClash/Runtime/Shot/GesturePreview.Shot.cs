@@ -21,7 +21,7 @@ namespace SquashClash.Runtime.Shot
             double release=M24!=null?M24.ReleaseAt:Sling!=null?Sling.ReleaseAt:tracker.ReleaseTimeReal;
             var aim=M24!=null?M24.Aim:Sling!=null?Sling.Aim:Model.Aim;
             shotController.Enqueue(new ClosedGesture(shotHostLaunch,shotGestureId,primary,began,hasRelease?release:0,hasRelease,Outcome,aim,Power.P,GestureConfig,
-                M24?.Reason??Sling?.Reason??Outcome.ToString(),input.ReadRealTime(),M24?.Projection.ObservedAt??0,M24!=null?m24LockObservedAt:0,o2,m24Predecessor,preset,fileHash,app.Build.Label,shotLaunchHash,pending,seed));
+                M24?.Reason??Sling?.Reason??Outcome.ToString(),input.ReadRealTime(),M24?.Projection.ObservedAt??0,M24!=null?m24LockObservedAt:0,o2,m24Predecessor,preset,fileHash,app.Build.Label,shotLaunchHash,pending,seed,M24?.Side??default));
         }
     }
 }

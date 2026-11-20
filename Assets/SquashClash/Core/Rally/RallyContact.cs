@@ -49,6 +49,22 @@ namespace SquashClash.Core.Rally
             =>Solve(context,reference,body,point,aim,power,FatigueArm.None);
         public static CausalShotResult Solve(RallyContext context,CausalReference reference,BodyFrame body,Vector3 point,Vector2 aim,float power,in FatigueArm arm)
             =>CausalQuality.Solve(reference,body,point,aim,power,context.Config,context.Factory,arm,(float)context.Params.FootprintRadius);
+        // The one execution path for a decided shot: a boast's side-wall point goes to the two-wall solve, everything else to Solve above.
+        public static CausalShotResult Solve(RallyContext context,CausalReference reference,BodyFrame body,Vector3 point,in AiShot shot,in FatigueArm arm)
+            =>shot.Side.Exists?CausalQuality.SolveBoast(reference,body,point,shot.Side,shot.P,context.Config,context.Factory,arm,(float)context.Params.FootprintRadius,out _)
+                :Solve(context,reference,body,point,shot.Aim,shot.P,arm);
+        // Own two-wall intention from a contact point: the same boast pace as the executed shot, without causal vectors.
+        public static ShotSolution SolveBoastIntention(RallyContext context,Vector3 contactCenter,in SideAim side,float power,out BoastInfo info)
+        {
+            var pace=ShotPace.Boast(power,contactCenter,side,context.Court,context.Physics.BallRadius,context.Pace);
+            return BoastSolver.Solve(contactCenter,side,pace.Speed,context.VMin,context.VCap,context.Court,context.Factory,context.Physics,(float)context.Params.FootprintRadius,out info);
+        }
+        // Forecast of an own boast: solved, then the same flight check as Forecast below.
+        public static ShotForecast ForecastBoast(RallyContext context,Vector3 contactCenter,in SideAim side,float power)
+        {
+            var solution=SolveBoastIntention(context,contactCenter,side,power,out _);
+            return solution.Solved?Fly(context,contactCenter,solution.Velocity):new ShotForecast(false,PointEndCause.None,default,0);
+        }
         // Own intention from a contact point: the same pace curve as the human shot (without the causal layer), then the shared intention and solver.
         // Equal speed endpoints carry the curve speed unchanged, as CausalQuality.Solve does.
         public static ShotSolution SolveIntention(RallyContext context,Vector3 contactCenter,Vector2 aim,float power)
@@ -64,10 +80,14 @@ namespace SquashClash.Core.Rally
         {
             var solution=SolveIntention(context,contactCenter,aim,power);
             if(!solution.Solved)return new ShotForecast(false,PointEndCause.None,default,0);
+            return Fly(context,contactCenter,solution.Velocity);
+        }
+        private static ShotForecast Fly(RallyContext context,Vector3 contactCenter,Vector3 velocity)
+        {
             var rules=new PointRules(context.Court,(float)context.Params.FootprintRadius);rules.Begin(PlayerId.Human,PlayerId.Rival);
             using(var simulation=context.Factory.Create(context.Physics,context.Court))
             {
-                simulation.Reset(new BallState{Position=contactCenter,Velocity=solution.Velocity});var events=new List<ContactEvent>(4);
+                simulation.Reset(new BallState{Position=contactCenter,Velocity=velocity});var events=new List<ContactEvent>(4);
                 int limit=context.StepHz*8;
                 for(int step=1;step<=limit;step++)
                 {
