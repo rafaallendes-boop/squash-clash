@@ -11,7 +11,7 @@ namespace SquashClash.Runtime.Menu
     // First run: what a player with no context sees between launching the app and playing a match. A start menu
     // (title, Jugar, difficulty, how to play, build label) laid over the court with the game paused. It adds no
     // mechanic: Jugar is RallyDirector.StartMatch at the chosen AiLevel, exactly what the "Partido" button does.
-    // The first Jugar goes through a four-step tutorial (how to aim and strike with M2-4, how to read the timing ring, the volley),
+    // The first Jugar goes through a five-step tutorial (how to aim and strike with M2-4, how to read the timing ring, the volley, the two-wall shot),
     // shown once (PlayerPrefs) and reopened from the menu. Its text describes M24Model and TimingRingView as they are.
     // During a match the player's Pausa opens a card (Continuar / Salir al menú) and the result card's "Volver al inicio"
     // comes back here. A Créditos screen (font licence and audio provenance) opens from the menu and goes back to it.
@@ -32,7 +32,7 @@ namespace SquashClash.Runtime.Menu
         // Space between the safe area and the menu's content (the header's top edge is the reference at the top).
         private const float MenuTop=10,MenuBottom=23,BuildBottom=6;
         private void PlaceBuild(){if(build!=null&&safeArea!=null)build.style.bottom=Mathf.Ceil(safeArea.Bottom+BuildBottom);}
-        public const int TutorialSteps=4;
+        public const int TutorialSteps=5;
         // The step that lists Perfecto / Válido / Fallido: the timing ring's.
         private const int TimingStep=2;
         public const string TutorialSeenKey="sc.firstRun.tutorialSeen";
@@ -43,13 +43,14 @@ namespace SquashClash.Runtime.Menu
         // lifting the finger is the stroke, and lifting it back at the anchor height cancels. Timing (TimingRingView,
         // ImpactCue): a ring converges on the fixed triangle at the planned contact; one attempt per ball. Volley (19 nov, PO):
         // an amber ring before the bounce (ShotController.VolleyTint) can be struck in the air; v2 (20 nov): touching while it shows chooses it.
-        private static readonly string[] StepTitles={"Apunta","Carga y suelta","Suelta a tiempo","Volea"};
+        private static readonly string[] StepTitles={"Apunta","Carga y suelta","Suelta a tiempo","Volea","Dos paredes"};
         private static readonly string[] StepBodies=
         {
             "Apoya el dedo en la pared del frente, justo donde quieres mandar la pelota. Ese punto queda fijo mientras no levantes el dedo.",
             "Sin levantar el dedo, tira hacia abajo: mientras más tiras, más fuerte sale el golpe. Suelta para pegar. Si te arrepientes, vuelve a subir el dedo hasta donde lo apoyaste y suelta: no pegas.",
             "Cuando la pelota viene hacia ti aparece un triángulo donde le vas a pegar y un anillo que se achica. Suelta justo cuando el anillo calce dentro del triángulo. Tienes un solo intento por pelota.",
-            "Anillo ámbar visible: toca y voleas en el aire. Espera al anillo blanco: golpeas después del bote."
+            "Anillo ámbar visible: toca y voleas en el aire. Espera al anillo blanco: golpeas después del bote.",
+            "En el rally, toca la pared lateral que ves: la pelota pega primero en ella y después en el frente. Si tocas cerca de donde vas a pegar, cruza al otro lado. No vale en el saque."
         };
         private VisualElement tutorial,tutorialArt,tutorialResults;private Label tutorialStep,tutorialTitle,tutorialBody;private Button tutorialNext;
         private bool tutorialThenPlay;
@@ -278,6 +279,7 @@ namespace SquashClash.Runtime.Menu
             var p=context.painter2D;float w=r.width,h=r.height;p.lineCap=LineCap.Round;p.lineJoin=LineJoin.Round;
             Color gold=Dot,white=Color.white,red=LineRed,finger=new Color(.47f,.75f,1f,.55f);
             if(TutorialStep==3){DrawVolley(p,w,h);return;}
+            if(TutorialStep==4){DrawBoast(p,w,h);return;}
             if(TutorialStep<2)
             {
                 // The front wall, as on the court: out line, service line and tin.
@@ -308,6 +310,17 @@ namespace SquashClash.Runtime.Menu
         }
         // The volley: the ball's path towards a bounce that never comes (faint), the amber triangle and ring at the ball in the air,
         // the burst of the contact around it (VolleyBurstView), and the ball going back to the front wall.
+        // The two-wall shot seen from above: the front wall on top, the side wall on the left, the ball going side wall then front wall.
+        private static void DrawBoast(Painter2D p,float w,float h)
+        {
+            float x0=w*.14f,x1=w*.86f,y0=h*.12f,y1=h*.88f;
+            p.strokeColor=Ink;p.lineWidth=5;Line(p,new Vector2(x0,y0),new Vector2(x1,y0));Line(p,new Vector2(x0,y0),new Vector2(x0,y1));
+            p.strokeColor=new Color(1,1,1,.22f);p.lineWidth=2;Line(p,new Vector2(x1,y0),new Vector2(x1,y1));
+            var start=new Vector2(w*.50f,h*.80f);var side=new Vector2(x0,h*.52f);var front=new Vector2(w*.62f,y0);
+            p.strokeColor=Color.white;p.lineWidth=3;Line(p,start,side);Line(p,side,front);
+            var dir=(front-side).normalized;var n=new Vector2(-dir.y,dir.x);Line(p,front,front-dir*10+n*6);Line(p,front,front-dir*10-n*6);
+            p.fillColor=Dot;Disc(p,start,8,true);p.fillColor=new Color(.47f,.75f,1f,.55f);Disc(p,side+new Vector2(6,0),18,true);
+        }
         private static void DrawVolley(Painter2D p,float w,float h)
         {
             Vector2 a=new Vector2(w*.06f,h*.16f),c=new Vector2(w*.56f,h*.20f),b=new Vector2(w*.90f,h*.86f);

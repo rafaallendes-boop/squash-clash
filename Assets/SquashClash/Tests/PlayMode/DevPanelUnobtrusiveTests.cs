@@ -49,5 +49,18 @@ namespace SquashClash.Runtime.Tests
             view.Toggle();yield return null;yield return null;
             Assert.That(view.IsOpen,Is.False);Assert.That(bar.resolvedStyle.visibility,Is.EqualTo(Visibility.Hidden));
         }
+        [UnityTest] public IEnumerator Closed_TechnicalLinesAreHidden_AndOpenShowsThem()
+        {
+            yield return new WaitForSecondsRealtime(.3f);yield return null;
+            var overlay=root.Q("shot-overlay");var status=root.Q("sling-status");
+            Assert.That(overlay.resolvedStyle.visibility,Is.EqualTo(Visibility.Hidden),"P0 / hash line while closed");
+            Assert.That(status.resolvedStyle.visibility,Is.EqualTo(Visibility.Hidden),"M2-4 line while closed");
+            view.Toggle();yield return new WaitForSecondsRealtime(.3f);yield return null;
+            Assert.That(overlay.resolvedStyle.visibility,Is.EqualTo(Visibility.Visible));
+            Assert.That(status.resolvedStyle.visibility,Is.EqualTo(Visibility.Visible));
+            view.Toggle();yield return new WaitForSecondsRealtime(.3f);yield return null;
+            Assert.That(overlay.resolvedStyle.visibility,Is.EqualTo(Visibility.Hidden));
+            Assert.That(status.resolvedStyle.visibility,Is.EqualTo(Visibility.Hidden));
+        }
     }
 }

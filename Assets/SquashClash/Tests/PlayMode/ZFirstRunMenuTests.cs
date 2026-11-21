@@ -20,7 +20,7 @@ namespace SquashClash.Runtime.Tests
             var status=Find<Label>("sling-status");
 #if SQUASH_DEV
             Assert.That(status.resolvedStyle.display,Is.EqualTo(DisplayStyle.Flex));
-            Assert.That(Shown(status),Is.True);
+            Assert.That(Shown(status),Is.False,"2026-11-21: hidden (visibility) while the DEV panel is closed");
 #else
             Assert.That(status.resolvedStyle.display,Is.EqualTo(DisplayStyle.None),"prod has no technical line");
             Assert.That(status.worldBound.height,Is.EqualTo(0),"prod reserves no space");
