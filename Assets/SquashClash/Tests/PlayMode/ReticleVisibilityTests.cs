@@ -100,7 +100,7 @@ namespace SquashClash.Runtime.Tests
         {
             Assert.That(panel.IsOpen,Is.False);var front=FrontisRect();var layer=root.Q("shot-overlay");
             var visible=layer.Query<VisualElement>().ToList().Prepend(layer).Where(Shown).Distinct().ToArray();
-            Assert.That(visible,Is.Not.Empty);
+            Assert.That(visible,Is.Empty,"2026-11-21: with DEV closed no technical line is shown while playing");
             TestContext.WriteLine($"FRONTIS {front} OVERLAY {layer.worldBound}");
             foreach(var e in visible)Assert.That(e.worldBound.Overlaps(front),Is.False,$"{e.name} {e.worldBound} covers projected frontis {front}");
             yield return null;
@@ -142,7 +142,7 @@ namespace SquashClash.Runtime.Tests
         {
             var layer=root.Q("shot-overlay");
             Assert.That(layer.Query<Button>().ToList().Any(Shown),Is.False,"Protocol buttons belong only to open DEV");
-            Assert.That(layer.Query<Label>().ToList().Count(Shown),Is.EqualTo(1),"One compact line when DEV is closed");
+            Assert.That(layer.Query<Label>().ToList().Count(Shown),Is.EqualTo(0),"2026-11-21: the compact line is hidden while playing with DEV closed");
             var safeUi=Rect.MinMaxRect(root.worldBound.xMin,root.worldBound.yMin+186f/Height*root.layout.height,root.worldBound.xMax,root.worldBound.yMax-102f/Height*root.layout.height);
             Assert.That(layer.worldBound.yMax,Is.LessThanOrEqualTo(bar.worldBound.yMin));
             Assert.That(safeUi.Contains(layer.worldBound.min)&&safeUi.Contains(layer.worldBound.max-Vector2.one*.01f),Is.True);

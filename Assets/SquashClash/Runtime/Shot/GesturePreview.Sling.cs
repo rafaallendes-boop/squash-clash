@@ -270,6 +270,9 @@ namespace SquashClash.Runtime.Shot
 #else
             slingStatus.style.display=DisplayStyle.None;
 #endif
+            // Unobtrusive while playing: visible only while the dev bar is shown (panel open / experiment running) or a sling protocol runs.
+            var devBar=root.Q("dev-bar");
+            slingStatus.style.visibility=SlingTrials.AwaitingFeedback||SlingTrials.Running||HasSlingProtocolStatus||SlingArmRejection.Length>0||(devBar!=null&&devBar.style.visibility.value==Visibility.Visible)?Visibility.Visible:Visibility.Hidden;
             if(!enabled){cancelIndicator?.Hide();return;}
             if(M24!=null)cancelIndicator?.Hide();
             if(M24==null&&Sling?.Active==true&&Sling.Locked)

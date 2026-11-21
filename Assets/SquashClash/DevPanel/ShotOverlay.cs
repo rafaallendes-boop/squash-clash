@@ -92,6 +92,8 @@ namespace SquashClash.DevPanel
             bool notice=preview.SlingArmRejection.Length>0;
             feedback.style.display=showProtocol&&trials.AwaitingFeedback?DisplayStyle.Flex:DisplayStyle.None;
             layer.style.display=DisplayStyle.Flex;
+            // Unobtrusive while playing: the technical line shows only with the DEV panel open or while a sling protocol needs it.
+            layer.style.visibility=panel.IsOpen||showProtocol||notice?Visibility.Visible:Visibility.Hidden;
             timer.style.display=showProtocol&&!notice?DisplayStyle.Flex:DisplayStyle.None;timer.text=preview.ProtocolTimingText;
             guide.style.display=notice||showProtocol&&preview.SlingGuidanceText.Length>0?DisplayStyle.Flex:DisplayStyle.None;guide.text=notice?preview.SlingArmRejection:preview.SlingGuidanceText;
             layer.style.height=ProtocolHeight(showProtocol);
