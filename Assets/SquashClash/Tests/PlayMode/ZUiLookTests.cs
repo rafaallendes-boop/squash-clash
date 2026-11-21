@@ -91,6 +91,35 @@ namespace SquashClash.Runtime.Tests
             Assert.That(b.height,Is.GreaterThanOrEqualTo(label.resolvedStyle.fontSize),"not squashed");
             Assert.That(b.yMax,Is.GreaterThan(all.center.y),"under the court, in the lower half");
         }
+        // Shot note in the band (21 nov, PO): the note sits centred in the empty band between the court's bottom edge and the
+        // safe bottom, never over the court. The court is pulled up (camera rect) so a band exists whatever the test screen is.
+        private IEnumerator NoteInBandSetup()
+        {
+            yield return Boot(false);yield return null;
+            UnityEngine.Camera.main.rect=new Rect(0,.3f,1,.7f);yield return null;
+            var note=controller.GetComponent<ShotNoteView>();
+            note.Show(new ShotRecord{Result="Perfect"});note.SetVisible(true);note.Tick(ShotNoteView.PopSeconds);yield return null;yield return null;yield return null;
+        }
+        [UnityTest] public IEnumerator ShotNote_PanelClosed_SitsBelowTheCourt_InTheBand()
+        {
+            yield return NoteInBandSetup();
+            var note=controller.GetComponent<ShotNoteView>();var label=Find<Label>("shot-note");
+            var view=Object.FindFirstObjectByType<SquashClash.DevPanel.DevPanelView>();if(view!=null&&view.IsOpen)view.Toggle();yield return null;yield return null;
+            var all=root.worldBound;float safeBottom=app.GetComponent<SquashClash.Runtime.App.SafeAreaLayout>().Bottom;
+            float courtBottomY=all.yMax-note.CourtBottomEdge();var b=label.worldBound;
+            Assert.That(note.CourtBottomEdge(),Is.GreaterThan(20f),"the court leaves a band");
+            Assert.That(b.yMin,Is.GreaterThanOrEqualTo(courtBottomY-.5f),"entirely under the court's bottom edge");
+            Assert.That(b.yMax,Is.LessThanOrEqualTo(all.yMax-safeBottom+.5f),"above the safe bottom");
+            Assert.That((b.yMin+b.yMax)/2,Is.EqualTo((courtBottomY+all.yMax-safeBottom)/2).Within(2f),"centred in the band");
+        }
+        [UnityTest] public IEnumerator ShotNote_PanelOpen_StaysAboveTheVisibleBar()
+        {
+            yield return NoteInBandSetup();
+            var label=Find<Label>("shot-note");
+            var view=Object.FindFirstObjectByType<SquashClash.DevPanel.DevPanelView>();Assert.That(view,Is.Not.Null);if(!view.IsOpen)view.Toggle();yield return null;yield return null;yield return null;
+            var bar=root.Q("dev-bar");Assert.That(bar.resolvedStyle.visibility,Is.EqualTo(Visibility.Visible),"bar shown while open");
+            Assert.That(label.worldBound.yMax,Is.LessThanOrEqualTo(bar.worldBound.yMin+.5f),"above the bar");
+        }
         // Control (it held before the redesign too): WCAG AA, 4.5:1 for text and 3:1 for large text.
         [UnityTest] public IEnumerator PlayerText_IsReadable_OnTheMenuTutorialHeaderAndPause()
         {
