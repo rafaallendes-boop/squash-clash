@@ -22,6 +22,7 @@ namespace SquashClash.DevPanel
         private static readonly string[] LaunchKeys = { "launcher.x","launcher.y","launcher.z","launcher.yawDeg","launcher.pitchDeg","launcher.speed",
             "human.x","human.z","rival.x","rival.z" };
         private VisualElement actions;
+        private DevPanelView view;
         private IEnumerator Start()
         {
             while (AppBootstrap.Instance == null || AppBootstrap.Instance.Host == null || AppBootstrap.Instance.Host.ActiveConfig == null) yield return null;
@@ -53,7 +54,7 @@ namespace SquashClash.DevPanel
             sessionButton=new Button(()=>ActivateExperiment("performance-session")) {name="performance-session",text="Sesión H17"};
             sessionButton.style.flexGrow=1;sessionButton.style.height=44;sessionButton.style.whiteSpace=WhiteSpace.Normal;tests.Add(sessionButton);
             // Insert below the runtime resume overlay so it blocks all controls.
-            root.Insert(0,bar);gameObject.AddComponent<DevPanelView>().Initialize(app,root);root.RegisterCallback<GeometryChangedEvent>(_=>PlaceInSafeArea());PlaceInSafeArea();
+            root.Insert(0,bar);view=gameObject.AddComponent<DevPanelView>();view.Initialize(app,root);bar.style.visibility=Visibility.Hidden;root.RegisterCallback<GeometryChangedEvent>(_=>PlaceInSafeArea());PlaceInSafeArea();
             gameObject.AddComponent<ShotOverlay>().Initialize(app,root);
         }
         public bool ActivateExperiment(string control)
@@ -106,6 +107,8 @@ namespace SquashClash.DevPanel
         private void Update()
         {
             if(app==null) {if(bar!=null)Destroy(gameObject);return;}
+            // Unobtrusive while playing: visible only with the DEV panel open or while an experiment/session runs (its Cancel lives here).
+            if(bar!=null)bar.style.visibility=(view!=null&&view.IsOpen)||spike.IsRunning||session.IsRunning?Visibility.Visible:Visibility.Hidden;
             bar?.SetEnabled(!spike.IsRunning);
             actions?.SetEnabled(!session.IsRunning);legibility?.SetEnabled(!session.IsRunning);
             bool protect=preview?.ProtectSlingProtocol??false;
