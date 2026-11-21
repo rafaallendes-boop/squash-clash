@@ -10,16 +10,16 @@ namespace SquashClash.Runtime.Shot
     public sealed class ShotNoteView : MonoBehaviour
     {
         public const float PopSeconds=.22f,PopScale=1.3f;
-        // Distance from the safe bottom edge (plus the developer bar, when there is one) to the note's lower edge.
-        private const float Above=55,Side=8;
+        // Side margin, and the gap above the safe bottom edge (plus a visible developer bar) used when the band under the court is too short.
+        private const float Side=8,Fallback=6;
         private static readonly string[] Tones={"perfect","valid","failed","info"};
         private Label label;
-        private VisualElement root,bar;private SafeAreaLayout safe;
+        private VisualElement root,bar;private SafeAreaLayout safe;private AppBootstrap app;private SquashClash.Core.Config.EffectiveConfig courtOf;private SquashClash.Core.Court.CourtDimensions court;
         private int tone=-1;private float popAge=-1;
         public string Text=>label?.text??string.Empty;
         public void Initialize(AppBootstrap app)
         {
-            root=app.GetComponent<UIDocument>().rootVisualElement;safe=app.GetComponent<SafeAreaLayout>();
+            this.app=app;root=app.GetComponent<UIDocument>().rootVisualElement;safe=app.GetComponent<SafeAreaLayout>();
             label=new Label{name="shot-note",pickingMode=PickingMode.Ignore};label.AddToClassList("sc-shot-note");label.style.position=Position.Absolute;root.Insert(0,label);
         }
         // A volley reads the same words: since 19 nov (PO) it gets a figure at the contact (VolleyBurstView), not a «Volea · » prefix.
@@ -53,10 +53,31 @@ namespace SquashClash.Runtime.Shot
             if(root?.panel==null||label==null)return;
             Tick(Time.unscaledDeltaTime);
             if(bar==null)bar=root.Q("dev-bar");
-            float barHeight=bar?.resolvedStyle.height??0;if(float.IsNaN(barHeight))barHeight=0;
+            // A hidden DEV bar (closed panel) takes no room; a visible one is kept clear.
+            float barHeight=0;
+            if(bar!=null&&bar.resolvedStyle.display!=DisplayStyle.None&&bar.resolvedStyle.visibility==Visibility.Visible){barHeight=bar.resolvedStyle.height;if(float.IsNaN(barHeight))barHeight=0;}
             // In panel units from the safe area (SafeAreaLayout), so it sits where it should on any phone and in captures.
             float left=safe!=null?safe.Left:0,right=safe!=null?safe.Right:0,bottom=safe!=null?safe.Bottom:0;
-            label.style.left=left+Side;label.style.right=right+Side;label.style.bottom=bottom+barHeight+Above;
+            label.style.left=left+Side;label.style.right=right+Side;
+            float h=label.resolvedStyle.height;if(float.IsNaN(h)||h<=0)h=34;
+            label.style.bottom=BandBottom(bottom+barHeight,h);
+        }
+        // Where the court's near floor edge falls on screen, as panel units up from the panel's bottom (NaN when it cannot be known).
+        public float CourtBottomEdge()
+        {
+            var cam=UnityEngine.Camera.main;float panelH=root!=null?root.layout.height:float.NaN;
+            if(cam==null||app?.Config==null||float.IsNaN(panelH)||panelH<=0||Screen.height<=0)return float.NaN;
+            if(!ReferenceEquals(courtOf,app.Config)){courtOf=app.Config;court=courtOf.Court;}var c=court;
+            float a=cam.WorldToScreenPoint(new Vector3(0,0,c.Length)).y,b=cam.WorldToScreenPoint(new Vector3(c.Width,0,c.Length)).y;
+            return Mathf.Max(0,Mathf.Min(a,b))/Screen.height*panelH;
+        }
+        // The note is centred in the empty band between the court's bottom edge and the safe bottom (plus a visible DEV bar);
+        // if the band cannot hold it, it sits just above that floor.
+        private float BandBottom(float floor,float h)
+        {
+            float edge=CourtBottomEdge();
+            if(float.IsNaN(edge)||edge-floor<h+2*Fallback)return floor+Fallback;
+            return floor+(edge-floor-h)/2;
         }
         private void OnDestroy()=>label?.RemoveFromHierarchy();
     }
