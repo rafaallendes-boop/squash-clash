@@ -19,12 +19,14 @@ namespace SquashClash.Runtime.Tests
             Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.Tutorial));Assert.That(Shown(Find("tutorial-layer")),Is.True);
             Assert.That(Shown(Find("menu-layer")),Is.False);
             Assert.That(rally.Active,Is.False,"the match waits for the tutorial");Assert.That(app.Clock.Paused,Is.True);
-            Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("1 de 4"));
+            Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("1 de 5"));
             Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("Siguiente"));
-            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("2 de 4"));
-            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("3 de 4"));
+            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("2 de 5"));
+            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("3 de 5"));
             Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("Siguiente"));
-            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("4 de 4"));
+            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("4 de 5"));
+            Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("Siguiente"));
+            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("5 de 5"));
             Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("¡A jugar!"));
             Assert.That(Seen,Is.False,"it counts as seen only once finished or skipped");
             Click("tutorial-next");Refresh();yield return null;
@@ -47,8 +49,8 @@ namespace SquashClash.Runtime.Tests
         {
             PlayerPrefs.SetInt("sc.firstRun.tutorialSeen",1);
             Click("menu-howto");Refresh();yield return null;
-            Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.Tutorial));Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("1 de 4"));
-            Click("tutorial-next");Click("tutorial-next");Click("tutorial-next");Refresh();
+            Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.Tutorial));Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("1 de 5"));
+            Click("tutorial-next");Click("tutorial-next");Click("tutorial-next");Click("tutorial-next");Refresh();
             Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("Listo"));
             Click("tutorial-next");Refresh();yield return null;
             Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.Menu));Assert.That(Shown(Find("menu-layer")),Is.True);
@@ -59,7 +61,7 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator Steps_CoverAimingPullingTheTimingRingAndTheVolley()
         {
-            Assert.That(FirstRunFlow.TutorialSteps,Is.EqualTo(4));
+            Assert.That(FirstRunFlow.TutorialSteps,Is.EqualTo(5));
             Click("menu-howto");Refresh();yield return null;
             var title=Find<Label>("tutorial-title");var body=Find<Label>("tutorial-body");var results=Find("tutorial-results");
             Assert.That(title.text,Is.EqualTo("Apunta"));
@@ -80,6 +82,11 @@ namespace SquashClash.Runtime.Tests
             Assert.That(title.text,Is.EqualTo("Volea"));
             Assert.That(body.text,Does.Contain("ámbar").And.Contain("bote").And.Contain("aire"));
             Assert.That(Shown(results),Is.False,"the result list belongs to the timing step");
+            // 21 nov: the two-wall shot (boast), last: the visible side wall, near where you will hit, not on the serve.
+            Click("tutorial-next");Refresh();yield return null;
+            Assert.That(title.text,Is.EqualTo("Dos paredes"));
+            Assert.That(body.text,Does.Contain("pared lateral").And.Contain("frente").And.Contain("saque"));
+            Assert.That(Shown(results),Is.False);
         }
         [UnityTest] public IEnumerator EveryStep_FitsThePortraitScreen_WithFingerSizedButtons()
         {
