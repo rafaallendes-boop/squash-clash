@@ -52,13 +52,13 @@ Respuesta: **«Datos no recopilados» (Data Not Collected)**; sin seguimiento. B
 > **Qué se guarda en tu dispositivo:** tus ajustes (dificultad, sonido, música, mano), tus récords y registros de juego (puntos, golpes, duración, versión de la app y un identificador aleatorio de la instalación, que no está ligado a tu identidad) y archivos de configuración. Estos datos nunca salen del dispositivo, salvo que tú los copies. Desinstalar la app los borra.
 > **Terceros:** ninguno. No usamos rastreo ni identificadores publicitarios.
 > **Niños:** la app no recopila datos de nadie, incluidos menores.
-> **Cambios y contacto:** si esto cambia, actualizaremos esta página. Contacto: [correo de soporte].
+> **Cambios y contacto:** si esto cambia, actualizaremos esta página. Contacto: rafa.allendes@gmail.com.
 Condición: esta redacción solo es cierta mientras (a) no haya red ni analítica y (b) se decida la apertura de Documents (decisión 1 del §8, que expone presets y métricas en la app Archivos).
 
 Dónde alojarla (opciones, sin decidir): GitHub Pages del repositorio, una página de Notion/Google Sites pública, o un dominio propio. Requisitos: URL pública estable, HTTPS y sin inicio de sesión. La misma página puede servir de URL de soporte si incluye un correo de contacto.
 
 ## 6. URL de soporte
-Apple exige una URL con forma de contacto para la ficha (puede ser la misma página de la política con un correo). TestFlight externo exige además un correo de feedback.
+Apple exige una URL con forma de contacto para la ficha (puede ser la misma página de la política con un correo). TestFlight externo exige además un correo de feedback. **Correo de contacto y de feedback, decidido por el PO (21 nov): rafa.allendes@gmail.com.**
 
 ## 7. Pasos que solo puede hacer el PO (en orden)
 1. Inscribirse en el **Apple Developer Program** (US$99/año) con el Apple ID del equipo de distribución; el equipo personal gratuito actual no sirve para TestFlight ([programa](https://developer.apple.com/programs/)).
@@ -71,7 +71,7 @@ Apple exige una URL con forma de contacto para la ficha (puede ser la misma pág
 ## 8. Decisiones abiertas del PO
 1. **`UIFileSharingEnabled` y `LSSupportsOpeningDocumentsInPlace`:** hoy exponen Documents (presets y métricas, incluidos informes DEV) en la app Archivos, decisión expresa del PO para las pruebas. Para una build pública, proponer **apagarlos** (la política de privacidad es más simple y se evita exponer archivos internos); si se mantienen, la política y el informe de métricas deben decirlo. Cambiarlo toca `IosReleaseSettings`, `verify-ios-export.py` y las pruebas del carril: es un encargo propio.
 2. Nombre, subtítulo, descripción y palabras clave (§1) y si el idioma principal será español o inglés.
-3. Dónde alojar la política y el soporte (§5), y el correo de contacto público.
+3. Dónde alojar la política y el soporte (§5). El correo ya está decidido: rafa.allendes@gmail.com.
 4. Primera ronda: solo internos o ya externos con Beta App Review.
 5. Conservar o retirar los módulos `unityanalytics`/`unitywebrequest*` del `manifest.json`: hoy no se usan, y retirarlos reduce superficie, pero es un cambio de paquetes aparte.
 6. El identificador `appleDeveloperTeamID` del equipo personal figura en `ProjectSettings.asset` y en documentos del repositorio público (no es un secreto, pero identifica la cuenta); decidir si se reemplaza al pasar al equipo de pago.
