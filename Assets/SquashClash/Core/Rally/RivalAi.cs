@@ -115,7 +115,7 @@ namespace SquashClash.Core.Rally
             bool bounce=own.Reachable&&own.Contact.Exists&&own.Contact.TStarStep>=0;
             bool volley=VolleyWanted(own);
             if(!bounce&&!volley)return default;
-            var p=context.Params;bool defensive=own.SlackS<Style.DefenseSlackS;
+            var p=context.Params;bool stretched=own.Reason=="stretched",defensive=stretched||own.SlackS<Style.DefenseSlackS;
             int count=0;double best=double.NegativeInfinity;var seen=observation;var mine=own;
             void Add(Vector3 at,bool isVolley,double bonus)
             {
@@ -123,7 +123,9 @@ namespace SquashClash.Core.Rally
                 if(context.BoastOn)ShotOptions.AddBoasts(context,at,options);
                 for(int i=0;i<options.Count;i++)
                 {
-                    var o=options[i];bool allowed=!defensive||(o.Height==ShotHeight.High&&o.Power==ShotPower.Medium&&o.Line!=ShotLine.Drop)||o.Line==ShotLine.Boast;
+                    var o=options[i];bool allowed=stretched
+                        ?o.Height==ShotHeight.High&&o.Power==ShotPower.Medium&&(o.Line==ShotLine.Straight||o.Line==ShotLine.Cross)
+                        :!defensive||(o.Height==ShotHeight.High&&o.Power==ShotPower.Medium&&o.Line!=ShotLine.Drop)||o.Line==ShotLine.Boast;
                     all[count]=o;atVolley[count]=isVolley;
                     weights[count]=allowed?Utility(o,seen,mine,at)+bonus:double.NegativeInfinity;
                     if(weights[count]>best)best=weights[count];

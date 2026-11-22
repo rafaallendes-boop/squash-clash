@@ -138,6 +138,7 @@ namespace SquashClash.Core.Tests.Rally
             string hash;using(var sha=SHA256.Create())hash=BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(text.ToString()))).Replace("-","").ToLowerInvariant();
             TestContext.WriteLine("PLANNED_BASELINE_SHA256="+hash);
             Assert.That(hash,Is.Not.Empty,"baseline capture; freeze before changing production");
+            Assert.That(hash,Is.EqualTo("53870c765e9e1cc410b87b41d810afc7fbe53ac0ffa42345b9b97192786de4de"),"518f9c3: 1,080 planned decisions, three styles and three levels");
         }
     }
 }
