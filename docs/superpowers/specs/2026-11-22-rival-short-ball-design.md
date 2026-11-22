@@ -6,7 +6,99 @@ Alcance: el definitivo de SC-Lead (22 nov), que reemplaza los puntos 2, 3 y 5 de
 
 > **Estado de la medición.** No se pudo correr Unity. A las 10:43 la build del worker de instalación (`sc-install-518f9c3/Logs/build-dev.log`) terminó con «No valid Unity Editor license found». Por la regla de un solo Unity tampoco correspondía abrirlo mientras ese worker estaba activo. El diagnóstico de §1 sale **del código**, con archivo y línea, más un cálculo cinemático fuera de Unity (§1.6). Las tablas de cruce de §2 quedan **predeclaradas y vacías**: el experimento (Anexo A) y el comando (§2.4) están listos para correr apenas haya Unity con licencia. No se inventan cifras.
 
+## Camino B: decisión de SC-Lead (22 nov, RAL-174). Reemplaza a I2 donde choquen
+
+**Contexto.** La PR #97 de Codex (head `e37fbbb`) implementó I1–I3 con I2 «estirado, sin dos paredes». El gate completo de EditMode quedó en 977/978. Falló el test existente de M3, `BoastRivalTests.On_InPlay_TheFondistaBoastsLessFromTheBackQuarterThanTheDefinidor`, con Fondista 3,99 % y Definidor 1,47 %, cuando exige Fondista < Definidor.
+
+El diagnóstico está en el [comentario de #97](https://github.com/rafaallendes-boop/squash-clash/pull/97#issuecomment-7087023653). Es una consecuencia de I2 tal como lo escribió esta spec, no un defecto de la implementación: el Definidor juega casi todas sus dos paredes cuando llega estirado al fondo, y I2 se las quitaba. SC-Lead eligió el camino B. **No cambian oráculos, umbrales, semillas, pesos ni presets.**
+
+### Regla de producto
+
+- **Estirado adelante**, después de una dejada o un corto: solo globo o recta alta. En el código es {recta, cruzado} × alto × media, sin dos paredes. No existe una opción «globo» propia: esa es la P5 de §6, que sigue siendo propuesta.
+- **Estirado atrás**: además de lo anterior, se permite la dos paredes.
+- **En los dos casos**, toda opción pasa el filtro de I3: nunca ganadora, y el humano tiene que poder alcanzarla según el predictor y el planificador compartidos.
+- Las recepciones `planned`, incluidas las de holgura baja, no cambian.
+
+**Qué es «atrás», sin parámetros nuevos:** la zona donde `ShotOptions.AddBoasts` ya ofrece la dos paredes (`ShotOptions.cs:67`).
+
+- Contacto con z ≥ `BoastBackFraction`·L = 0,75 × 9,75 = 7,31 m, a ≤ `BoastWallMax` (2 m) de una lateral.
+- Fuera de esa zona no se construyen opciones de dos paredes. Por eso «adelante», y también la media cancha, quedan sin dos paredes por construcción, no por una regla nueva de zona.
+
+### Cambio de código en #97 (Codex)
+
+1. **Conjunto estirado en `RivalAi.Decide`:** `allowed = (High && Medium && (Straight || Cross)) || Line == Boast` cuando `own.Reason == "stretched"`. Para el resto se mantiene la regla de `main`.
+2. **`FilterStretched` con el pronóstico de la dos paredes.** Cuando la opción tiene `option.Side.Exists`:
+   - la guarda de falta es `RallyContact.ForecastBoast(context, at, option.Side, option.P).Good`;
+   - la velocidad sale de `RallyContact.SolveBoastIntention(context, at, option.Side, option.P, out _)`.
+
+   Para las demás opciones queda como está (`Forecast` / `SolveIntention` con `option.Aim`). El planificador del humano, la demora `ReactionS` y el respaldo (la opción de menor retraso, con `LastStretchedFallback` marcado) son los mismos. No se añaden parámetros.
+3. **No cambian:** I1, la huella de 1.080 decisiones `planned` (`53870c765e9e1cc410b87b41d810afc7fbe53ac0ffa42345b9b97192786de4de`), los hashes (defaults `207da8f2c636`, RallyParams `a82c34b661bf`, SimulationKey `166a96e319c7`), la física, el solver, el contrato, el reloj, el humano, `FondoAi`, `pullFullMm` y P0-calib-1.
+
+### Plan TDD de B, sobre #97 (RED válido por aserción antes de cada GREEN)
+
+| # | Test | Esperado antes del cambio |
+|---|---|---|
+| B1 | `RivalAi_StretchedFront_NeverBoasts`. Reemplaza a `RivalAi_Stretched_NeverBoasts`, un test nuevo de #97 que no existe en `main`, y el cambio se declara por la decisión RAL-174. Contacto estirado adelante (z ≤ 3 m) cerca de una lateral, dos paredes encendida, tres estilos, 500 decisiones: ninguna `ShotLine.Boast` | guardia: nace verde por construcción y se declara |
+| B2 | `RivalAi_StretchedBack_MayBoast_WhenTheHumanReachesIt`. Mismo contacto de esquina de atrás que el test reemplazado y humano observado en la T. **Precondición afirmada en el test:** al menos una de las 4 dos paredes tiene `ForecastBoast.Good` y el plan del humano es `Reachable`. Definidor y Completo, 500 decisiones: alguna `Boast`. El Fondista queda fuera a propósito: con `BoastWeightFondo` 0 y `LongWeight` 1,2 la dos paredes es rara por diseño, y M3 le pide ≤ 5 % | RED: con I2 de #97 aparecen 0 |
+| B3 | `RivalAi_StretchedBack_NeverPicksABoastTheHumanCannotReach`. Mismo contacto, con el humano observado en la esquina de atrás opuesta, lejos de donde muere la dos paredes. **Precondición afirmada:** existe al menos una opción alcanzable y al menos una dos paredes inalcanzable según `ForecastBoast` + planificador. Tres estilos, 500 decisiones: 0 elecciones inalcanzables y 0 dos paredes inalcanzables | RED: tras permitir la dos paredes (paso 1) y antes de corregir el pronóstico (paso 2), el filtro lee la dos paredes como un golpe directo al frontis. Si nace verde, se declara como guardia y se añade una aserción directa: la trayectoria que pronostica el filtro para una dos paredes toca la lateral antes que el frontis |
+| B4 | Guardias, sin cambiar sus expectativas: `RivalAi_PlannedLowSlack_StillMayBoast`, `RivalAi_NotStretched_DecisionsUnchanged` (misma huella), `RivalAi_Stretched_PicksAnOptionTheOpponentCanReach`, `RivalAi_Stretched_NoReachableOption_PicksLeastLate_AndFlags`, `RivalAi_Stretched_FromFront_IsHighMediumStraightOrCross` y `Hashes_Unchanged` | verdes |
+| B5 | Regresión completa `scripts/test.sh editmode`, incluido el test existente de M3 **sin tocarlo** | 978 o más, todos Passed |
+
+Si alguna precondición de B2 o B3 no se cumple en el escenario predeclarado, se registra y se para. No se buscan parámetros para cumplirla.
+
+### Condiciones de fusión (SC-Lead), medidas con experimentos explícitos fuera de la regresión
+
+**F1 · M3 vuelve.** Se mide con `BoastExperiment.M3ConfirmRound2`: Medio, 100 partidos por estilo, `NewcomerBot` σ 90 y semillas `20270131`, las mismas de la confirmación del 20 nov. Así la referencia de `main` ya está publicada: Fondista 4,4 %, Completo 7,5 % y Definidor 10,3 % (`docs/reviews/2026-11-20-boast.md:85`).
+
+- **Condición de SC-Lead:** en Medio, Fondista < Definidor y 5 % ≤ Definidor ≤ 15 %. Se lee la columna `backShare` de `confirm.tsv`.
+- El resto de M3 (Fondista ≤ 5 % y Completo entre ambos) y los niveles Fácil y Difícil se reportan. Si el resto de M3 falla, también se registra y se para.
+- Además debe pasar el test de regresión de M3 (B5).
+
+```bash
+pgrep -f "[U]nity.app/Contents/MacOS/Unity" && { echo 'STOP: ya hay un Editor Unity'; exit 1; }
+source scripts/unity-env.sh
+out="$ROOT/Logs/experiments/boast/m3-rival-short-b-runner"; [[ -e "$out" ]] && { echo "Ya existe: $out"; exit 1; }; mkdir -p "$out"
+SC_BOAST_RUN=m3-rival-short-b "$UNITY" -batchmode -nographics -projectPath "$ROOT" -runTests -testPlatform EditMode \
+  -assemblyNames SquashClash.EditMode.Experiments \
+  -testFilter "SquashClash.Experiments.EditMode.BoastExperiment.M3ConfirmRound2" \
+  -testResults "$out/results.xml" -logFile "$out/unity.log" > "$out/console.log" 2>&1
+# Resultado en $ROOT/Logs/experiments/boast/m3-rival-short-b/confirm.tsv (el experimento nunca sobrescribe)
+```
+
+**F2 · No sube la tasa de ganadoras del rival cuando llega estirado (R8).** Se mide con el experimento del Anexo A. La única diferencia es una columna nueva `r_z`, la z del contacto del rival, para separar adelante de atrás. Se corre dos veces con las mismas semillas (`20261122`), 3 estilos × 3 niveles × 150 partidos:
+
+- **base:** worktree en `518f9c3` con el archivo del experimento copiado sin cambios y sin versionar, `SC_RSB_RUN=b-base`;
+- **rama:** head de #97, `SC_RSB_RUN=b-head`.
+
+**Definición de R8:** entre las filas con `reason == stretched` y `result == Contact`, la fracción con `won == 1`. `won` incluye los errores del bot humano y se cuenta igual en las dos corridas.
+
+- **Condición:** R8(rama) ≤ R8(base) en el total y en cada estilo, con los tres niveles juntos.
+- Se reportan como datos, sin criterio: por nivel, adelante/atrás (`r_z` ≥ 7,31 m), recuentos absolutos y cuántas de las devoluciones estiradas son dos paredes.
+
+```python
+# python3 -I r8.py <rows.tsv>   (fuera de Unity; leer los dos rows.tsv y comparar)
+import csv, sys, collections
+n, w = collections.Counter(), collections.Counter()
+for r in csv.DictReader(open(sys.argv[1], newline=''), delimiter='\t'):
+    if r['reason'] != 'stretched' or r['result'] != 'Contact': continue
+    for k in ('total', r['style']): n[k] += 1; w[k] += r['won'] == '1'
+for k in sorted(n): print(k, w[k], n[k], f'{w[k] / n[k]:.4f}')
+```
+
+**F3 · Gates de siempre, en serie y con un solo Unity:** `scripts/test.sh playmode` con el recuento completo, `scripts/autoqa.sh mvp` (V/T3/volea PASS/0/1) y `scripts/check-release.sh`. Además, un informe de una página en `docs/reviews/` con F1, F2, los RED y las guardias. R7 se declara si no se mide.
+
+**Orden recomendado de Unity:** B1–B4 dirigidos → B5 → F1 → F2 base → F2 rama → PlayMode → AutoQA → check-release. Cada corrida adquiere y libera su candado.
+
+**Regla de parada.** Si falla B5, F1 o F2, se registra y se para, sin reintentar para obtener Pass y sin tocar umbrales, oráculos, semillas, pesos ni presets. **Decide Rafael.** La fusión y la instalación siguen necesitando el «sí» del PO (AGENTS §7).
+
+**Riesgo para la calibración de B:**
+
+- Frente a #97, B devuelve al Definidor y al Completo las dos paredes estiradas desde atrás que el humano alcanza. El efecto sobre M3 va en la dirección de `main`, pero su tamaño no se sabe hasta medir F1.
+- Frente a `main`, B quita solo las dos paredes estiradas que el humano no alcanzaría. Eso debería bajar algo la cuota de dos paredes del Definidor y hacer al rival un poco más fácil (R7).
+
 ## HOY (22 nov): lo que entra en la build que Rafael prueba de 17:00 a 18:00
+
+> **Superado en I2 por el camino B (arriba).** Lo que sigue queda como registro del alcance de la mañana.
 
 Pedido de SC-PM (11:30): spec cerrada antes de las 12:15, Codex implementa desde ~12:30 y el merge con los gates en verde queda listo hacia las 16:00. **Hoy entra solo «nunca parado / estirado = defensivo»: I1 + I2.** Todo lo demás pasa a después (§«Después»).
 
@@ -74,7 +166,7 @@ La fusión e instalación requieren el «sí» de Rafael (AGENTS §7).
 - La calibración nunca lo midió. El bot de referencia `NewcomerBot` **no juega dejadas** (`RivalStylesBaselineExperiment.cs:36-41`) y `BotBrain` juega recta media por defecto.
 - Incremento mínimo **I-min**, sin valores de preset:
   - (I1) estirada visible cuando no llega;
-  - (I2) estirado = defensivo puro, sin dos paredes;
+  - (I2) estirado = defensivo puro; tras el camino B, la dos paredes solo desde atrás y filtrada por I3;
   - (I3) filtro «nunca winner» cuando llega estirado;
   - (I4) perseguir el bote cuando no hay ventana, condicionado a que la medición lo encuentre.
 - Las palancas de preset (espera en la T, lectura del golpe, llegada en frenada y globo desde adelante) quedan como propuesta en §6, **sin implementar**.
@@ -194,6 +286,7 @@ Por cada recepción del rival que sigue a un golpe del humano (se excluye el res
 | `ret_fw`, `ret_b2z` | la devolución: altura en el frontis y segundo bote |
 | `next` | resultado de la recepción siguiente del humano |
 | `won` | si el punto lo ganó el rival en esa recepción siguiente (winner o error forzado) |
+| `r_z` | z del contacto del rival (`NaN` sin contacto); separa adelante de atrás en R8 (camino B) |
 
 Definiciones de medición (no son umbrales):
 
@@ -250,8 +343,9 @@ Son métricas nuevas, salidas del mismo experimento. **No cambia ningún umbral 
 | Id | Métrica | Tipo | Umbral |
 |---|---|---|---|
 | **R1** | Recepciones de pelota corta (`dejada` o `corto`) con el punto abierto en que el rival queda **parado sin intento**: ni golpe, ni estirada (I1), ni desplazamiento ≥ 0,30 m | invariante del mínimo | **0**, por requisito de SC-Lead («nunca se queda parado»), no como número de calibración |
-| **R2** | Recepciones `stretched` con contacto cuya elección no es {recta, cruzado} × alto × media | invariante del mínimo | **0**, por requisito de SC-Lead |
-| **R3** | Recepciones `stretched` con contacto cuya devolución, según el predictor compartido, deja al humano **sin plan alcanzable** desde su posición observada | invariante del mínimo (definición de «winner» en el planificador) | **0** cuando existe al menos una opción defensiva alcanzable; si no existe, se reporta aparte |
+| **R2** | Recepciones `stretched` con contacto cuya elección no es {recta, cruzado} × alto × media ni, solo desde la zona de dos paredes de atrás, `Boast` (camino B) | invariante del mínimo | **0**, por requisito de SC-Lead |
+| **R3** | Recepciones `stretched` con contacto cuya devolución, según el predictor compartido (`ForecastBoast`/`SolveBoastIntention` para la dos paredes), deja al humano **sin plan alcanzable** desde su posición observada | invariante del mínimo (definición de «winner» en el planificador) | **0** cuando existe al menos una opción defensiva alcanzable; si no existe, se reporta aparte |
+| **R8** | Tasa de ganadoras del rival cuando llega estirado: `stretched` y `Contact` con `won == 1`, sobre `stretched` y `Contact` (camino B, F2) | condición de fusión de SC-Lead | rama ≤ base `518f9c3`, en total y por estilo, con las mismas semillas; no es un umbral numérico |
 | R4 | % «llega» por estilo × nivel × zona × franja de calidad (§2.2) | distribución | **lo fija Rafael**, propuesta para SC-Lead |
 | R5 | p50/p90 de `delay_ms` y de `path_m` ante dejadas | distribución | **lo fija Rafael** |
 | R6 | % winner estirado medido por `won` (incluye errores del bot humano) | distribución | **lo fija Rafael** |
@@ -292,6 +386,8 @@ Una rama y una PR: `codex/rival-short-ball-min`. No cambia valores de preset ni 
 - No cambia `rivalReception`, ni el resultado del punto, ni las métricas, ni `RallySim`.
 
 **I2. Estirado = defensivo puro.**
+
+> **Corregido por el camino B (RAL-174):** desde la zona de dos paredes de atrás, la dos paredes se permite y pasa el filtro de I3. Adelante sigue excluida, por construcción. El texto original, que la excluía siempre, rompía M3 (comentario de #97).
 
 - En `RivalAi.Decide`, si `own.Reason == "stretched"`, el conjunto permitido es {recta, cruzado} × alto × media y **se excluye la dos paredes**. Con holgura baja pero `planned` se conserva la regla de hoy (dos paredes permitida bajo presión).
 - Afecta a la volea solo si la recepción de bote es `stretched`, porque el indicador `defensive` es común a las dos (`RivalAi.cs:118, 143`).
@@ -337,7 +433,7 @@ Orden de commits: 0 → 1-2 → 3-4 → 5-7 → 8-10 → (11) → 12 → 13. Des
 ### 5.3 Riesgo para la calibración de los estilos
 
 - **I1**: ninguno. Es un evento de vista y no cambia la simulación.
-- **I2**: cambia decisiones solo en recepciones `stretched` desde la esquina de atrás con la dos paredes elegible. Puede mover un poco la cuenta de dos paredes y M4 (medido hoy en −0,2/+1,8/−0,0 pp).
+- **I2**: cambia decisiones solo en recepciones `stretched` desde la esquina de atrás con la dos paredes elegible. Puede mover un poco la cuenta de dos paredes y M4 (medido hoy en −0,2/+1,8/−0,0 pp). **Error de esta estimación:** en #97, la versión «sin dos paredes» bajó al Definidor a 1,47 % e invirtió el orden de M3, porque el Definidor juega casi todas sus dos paredes cuando llega estirado. El camino B la reemplaza y mide M3 como condición de fusión (F1).
 - **I3**: cambia decisiones en recepciones `stretched` y la secuencia del RNG a partir de ellas. En promedio el rival devuelve pelotas más alcanzables. Eso debería **subir** un poco las victorias del humano, es decir, el rival se vuelve algo más fácil, en los nueve casilleros.
 - **I4**: solo energía (más metros en puntos perdidos), con un efecto pequeño y en contra del rival.
 - Desvíos abiertos que pueden moverse: Definidor Difícil 37,8 % frente al 20 % objetivo (I3 lo alejaría aún más, en la dirección de «más fácil»), M1b 39,2 % y el 6 % de B4 del cansancio.
@@ -464,7 +560,7 @@ namespace SquashClash.Experiments.EditMode
             float tz=ctx.T.y,tin=ctx.Court.TinTop;
             using(var w=new StreamWriter(Path.Combine(dir,"rows.tsv"),false,Utf8))
             {
-                w.WriteLine("style\tlevel\tmatch\tpoint\tj\tkind\tzone\th_line\th_height\th_power\th_z\tfw_tin\tb1z\tb2z\tavail_ms\tapex2\treason\tslack\tdelay_ms\tfrom_wait\tpath_m\tshort_m\tswing\tresult\tdef\tline\theight\tpower\tvolley\tret_fw\tret_b2z\tnext\twon");
+                w.WriteLine("style\tlevel\tmatch\tpoint\tj\tkind\tzone\th_line\th_height\th_power\th_z\tfw_tin\tb1z\tb2z\tavail_ms\tapex2\treason\tslack\tdelay_ms\tfrom_wait\tpath_m\tshort_m\tswing\tresult\tdef\tline\theight\tpower\tvolley\tret_fw\tret_b2z\tnext\twon\tr_z");
                 foreach(RivalStyleId style in new[]{RivalStyleId.Fondista,RivalStyleId.Definidor,RivalStyleId.Completo})
                 foreach(AiLevel level in new[]{AiLevel.Easy,AiLevel.Medium,AiLevel.Hard})
                 for(int m=0;m<Matches;m++)
@@ -511,7 +607,8 @@ namespace SquashClash.Experiments.EditMode
                                     hl.Line.ToString(),hl.Height.ToString(),hl.Power.ToString(),F(hl.ContactPoint.z),F(fw-tin),F(b1z),F(b2z),F(avail),F(apex),
                                     s.Plan.Reason,F(s.Plan.SlackS),F(s.DelayMs),F(s.FromWait),F(s.PathM),F(s.ShortM),sh.Swing?"1":"0",result,
                                     sh.Defensive?"1":"0",sh.Swing?sh.Option.Line.ToString():"-",sh.Swing?sh.Option.Height.ToString():"-",sh.Swing?sh.Option.Power.ToString():"-",sh.Volley?"1":"0",
-                                    F(retFw),F(retB2),next,won?"1":"0"}));
+                                    F(retFw),F(retB2),next,won?"1":"0",
+                                    result=="Contact"?F(logs[j].ContactPoint.z):"NaN"}));  // r_z (camino B, F2)
                             }
                             if(point.Winner.HasValue)score.PointWon(point.Winner.Value);
                             else if(++replays>50)break;
