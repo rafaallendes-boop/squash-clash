@@ -47,7 +47,7 @@ namespace SquashClash.Runtime.Tests
             {
                 (new ShotRecord{Result="Perfect"},"Perfecto","perfect"),
                 (new ShotRecord{Result="Valid",DeltaMs=-35},"Adelantado","valid"),(new ShotRecord{Result="Valid",DeltaMs=35},"Atrasado","valid"),
-                (new ShotRecord{Result="Failed",Fail="Air"},"¡Al aire!","failed"),(new ShotRecord{Result="Failed",Fail="Late"},"¡Tarde!","failed"),
+                (new ShotRecord{Result="Failed",Fail="Air"},"¡Temprano!","failed"),(new ShotRecord{Result="Failed",Fail="Late"},"¡Tarde!","failed"),
                 (new ShotRecord{Result="Unreachable"},"No llega","info"),(new ShotRecord{Result="NoOrder"},"Sin golpe","info"),
                 (new ShotRecord{Result="NotEvaluable"},"No evaluable","info"),(new ShotRecord{Result="SystemFault"},"Fallo del sistema","info")
             };

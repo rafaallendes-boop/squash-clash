@@ -10,7 +10,7 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(RallyText.Live(0,0,0,PlayerId.Human),Is.EqualTo("Tú 0 – 0 Rival · golpes 0 · turno: Tú"));
             Assert.That(RallyText.Live(2,1,5,PlayerId.Rival),Does.Not.Contain("\n"));
         }
-        [TestCase(PointEndCause.DoubleBounce,ReceptionResult.Air,"doble bote (al aire)")]
+        [TestCase(PointEndCause.DoubleBounce,ReceptionResult.Air,"doble bote (temprano)")]
         [TestCase(PointEndCause.DoubleBounce,ReceptionResult.Late,"doble bote (tarde)")]
         [TestCase(PointEndCause.DoubleBounce,ReceptionResult.Unreachable,"doble bote (no llega)")]
         [TestCase(PointEndCause.DoubleBounce,ReceptionResult.NoSwing,"doble bote (sin golpe)")]
