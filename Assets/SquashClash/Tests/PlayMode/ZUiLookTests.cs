@@ -39,6 +39,30 @@ namespace SquashClash.Runtime.Tests
             };
             foreach(var pair in expected)Assert.That(FontName(Find(pair.Key)),Is.EqualTo(pair.Value),pair.Key);
         }
+        [UnityTest] public IEnumerator ServeGuideUsesTheShotNoteVoiceWithoutABox()
+        {
+            yield return Boot(false);
+            var guide = Find("serve-guide");
+            Assert.That(guide.pickingMode, Is.EqualTo(PickingMode.Ignore));
+            Assert.That(Find("serve-guide-line").pickingMode, Is.EqualTo(PickingMode.Ignore));
+            // IResolvedStyle omits text-shadow in this Unity version; read the same computed value.
+            const System.Reflection.BindingFlags styleFlags = System.Reflection.BindingFlags.Instance |
+                System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic;
+            var styleField = typeof(VisualElement).GetField("m_Style", styleFlags);
+            var shadowProperty = styleField.FieldType.GetProperty("textShadow", styleFlags);
+            TextShadow Shadow(VisualElement element) => (TextShadow)shadowProperty.GetValue(styleField.GetValue(element));
+            foreach (var expected in new[] { (name: "serve-guide-lob", text: "Toca arriba: globo"), (name: "serve-guide-drive", text: "Toca abajo: drive") })
+            {
+                var label = Find<Label>(expected.name);
+                Assert.That(label.text, Is.EqualTo(expected.text));
+                Assert.That(label.pickingMode, Is.EqualTo(PickingMode.Ignore));
+                Assert.That(FontName(label), Is.EqualTo("Rubik-BoldItalic"));
+                Assert.That(label.resolvedStyle.fontSize, Is.EqualTo(20));
+                Assert.That(label.resolvedStyle.backgroundColor.a, Is.Zero);
+                Assert.That(Shadow(label), Is.EqualTo(Shadow(Find("shot-note"))));
+            }
+        }
+
         [UnityTest] public IEnumerator ShotNote_TakesTheToneOfTheResult_AndKeepsItsWords()
         {
             yield return Boot(false);yield return null;

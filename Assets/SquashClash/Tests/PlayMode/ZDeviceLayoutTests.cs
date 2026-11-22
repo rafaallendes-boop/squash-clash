@@ -22,6 +22,47 @@ namespace SquashClash.Runtime.Tests
             Click("menu-play");yield return Settle();
             Assert.That(rally.Match,Is.Not.Null,"the match must start");
         }
+        [UnityTest] public IEnumerator ServeGuideLabelsFitInsideTheSafeFrontWall([ValueSource(nameof(Phones))] PhoneScreen screen)
+        {
+            yield return Boot(screen, false);
+            app.Tuning.Set("fatigue.enabled", 0);
+            app.Clock.Paused = false;
+            rally.SetNewServe(true);
+            rally.Autopilot = true;
+            rally.AutopilotTimingSigmaMs = 0;
+            rally.Level = AiLevel.Easy;
+            rally.Seed = 3;
+            Assert.That(rally.StartMatch(), Is.True);
+            Assert.That(Drive(() => rally.Phase == RallyPhase.PointOver && rally.Match.Server == PlayerId.Human, 900), Is.True);
+            Assert.That(Drive(() => root.Q("serve-guide")?.style.opacity.value >= 1, .25), Is.True);
+            yield return Settle();
+
+            var camera = UnityEngine.Camera.main;
+            var court = app.Host.ActiveConfig.Court;
+            Vector2 Panel(float x, float y)
+            {
+                var p = camera.WorldToScreenPoint(new Vector3(x, y, 0));
+                return new Vector2(p.x / phone.Width * root.layout.width, (1 - p.y / phone.Height) * root.layout.height);
+            }
+            var topAtZero = Panel(0, court.WallHeight);
+            var topAtWidth = Panel(court.Width, court.WallHeight);
+            var bottom = Panel(court.Width, 0);
+            float left = Mathf.Min(topAtZero.x, topAtWidth.x);
+            float right = Mathf.Max(topAtZero.x, topAtWidth.x);
+            AssertFits("serve-guide", phone.ToString());
+            var labels = new[] { Find("serve-guide-lob"), Find("serve-guide-drive") };
+            foreach (var label in labels)
+            {
+                Assert.That(label.worldBound.xMin, Is.GreaterThanOrEqualTo(left - 1));
+                Assert.That(label.worldBound.xMax, Is.LessThanOrEqualTo(right + 1));
+                Assert.That(label.worldBound.yMin, Is.GreaterThanOrEqualTo(topAtZero.y - 1));
+                Assert.That(label.worldBound.yMax, Is.LessThanOrEqualTo(bottom.y + 1));
+            }
+            var line = Find("serve-guide-line").worldBound;
+            Assert.That(labels[0].worldBound.yMax, Is.EqualTo(line.center.y - 7.5f).Within(1));
+            Assert.That(labels[1].worldBound.yMin, Is.EqualTo(line.center.y + 7.5f).Within(1));
+        }
+
         [UnityTest] public IEnumerator SafeArea_IsMeasuredInPanelUnits_AndTheHeaderStartsBelowIt([ValueSource(nameof(Phones))] PhoneScreen screen)
         {
             yield return Boot(screen,true);yield return Settle();

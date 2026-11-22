@@ -88,6 +88,23 @@ namespace SquashClash.Runtime.Tests
             Assert.That(body.text,Does.Contain("pared lateral").And.Contain("frente").And.Contain("saque"));
             Assert.That(Shown(results),Is.False);
         }
+        [UnityTest] public IEnumerator NewServeAddsTheSixthStepWhenTheTutorialOpens()
+        {
+            rally.SetNewServe(true);
+            Click("menu-howto");
+            Assert.That(Find<Label>("tutorial-step").text, Is.EqualTo("1 de 6"));
+            rally.SetNewServe(false);
+            for (int i = 0; i < 5; i++) Click("tutorial-next");
+            Assert.That(Find<Label>("tutorial-step").text, Is.EqualTo("6 de 6"));
+            Assert.That(Find<Label>("tutorial-title").text, Is.EqualTo("Saque"));
+            Assert.That(Find<Label>("tutorial-body").text, Does.Contain("globo").And.Contain("drive"));
+            Assert.That(Find<Button>("tutorial-next").text, Is.EqualTo("Listo"));
+            Click("tutorial-next");
+            Click("menu-howto");
+            Assert.That(Find<Label>("tutorial-step").text, Is.EqualTo("1 de 5"));
+            yield return null;
+        }
+
         [UnityTest] public IEnumerator EveryStep_FitsThePortraitScreen_WithFingerSizedButtons()
         {
             Click("menu-howto");Refresh();

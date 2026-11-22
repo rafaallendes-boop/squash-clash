@@ -48,6 +48,15 @@ namespace SquashClash.Core.Tests.Rally
             float hd=new Vector2(drive.Velocity.x,drive.Velocity.z).magnitude,hl=new Vector2(lob.Velocity.x,lob.Velocity.z).magnitude;
             Assert.That(hd,Is.GreaterThan(hl),"the drive is the faster one");
         }
+        [Test] public void HumanServePauseDefaultsToThreeSeconds()
+        {
+            var pause = typeof(RallyParams).GetField("ServeKindHumanPauseSeconds");
+            Assert.That(pause, Is.Not.Null);
+            Assert.That(pause.GetValue(new RallyParams()), Is.EqualTo(3d));
+            Assert.That(RivalAiTests.Projection(f => !f.Name.StartsWith("ServeKind", StringComparison.Ordinal)),
+                Is.EqualTo("b2311f168c30"));
+        }
+
         [Test] public void Off_EveryKindIsTodaysAutomaticServe_AndNothingIsChosen()
         {
             var ctx=Context(false);var rival=RivalAi.For(ctx,AiLevel.Medium,RivalStyleId.Definidor,3);
