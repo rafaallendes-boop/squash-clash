@@ -6,6 +6,7 @@ using SquashClash.Core.Shot;
 using SquashClash.Core.Simulation;
 using SquashClash.Runtime.App;
 using SquashClash.Runtime.Shot;
+using SquashClash.Runtime.Visual;
 using UnityEngine;
 namespace SquashClash.Runtime.Rally
 {
@@ -85,7 +86,14 @@ namespace SquashClash.Runtime.Rally
         public PointResult? LastPoint {get;private set;}
         // Null in the plain rally (neutral launch, open score). Set in match mode: serve, rotation, game to 7 by 2.
         public MatchScore Match {get;private set;}
-        public double WaitBetweenPoints=>Match!=null?Params.MatchPauseSeconds:Params.RestartSeconds;
+        public double WaitBetweenPoints => HumanServePause ? Params.ServeKindHumanPauseSeconds :
+            Match != null ? Params.MatchPauseSeconds : Params.RestartSeconds;
+        public bool HumanServePause => Active && Phase == RallyPhase.PointOver && Match != null &&
+            !Match.Finished && Match.Server == PlayerId.Human && NewServeNextPoint;
+        public double HumanServePauseElapsed => HumanServePause ? Math.Min(waited, WaitBetweenPoints) : 0;
+        public bool HumanWaitingToServe => HumanServePause && humanInServeBox;
+        private bool humanInServeBox;
+        internal bool PlaceHumanInServeBoxEarly = true;
         public event Action RallyStarted;
         public event Action<PointResult> PointEnded;
         // Rival swing: stroke side and whether it makes contact. The human's swing already has ShotController.SwingAccepted.
@@ -109,7 +117,7 @@ namespace SquashClash.Runtime.Rally
             factory=new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
             app.Host.Launched+=OnLaunched;controller.ShotResolved+=OnResolved;controller.SideAimGate=()=>Active;
             // View-only hold of the rendered pose for 100 ms inside the pause (PO, 19 nov); touches no simulation state.
-            PointEnded+=_=>SquashClash.Runtime.Visual.PointEndFreeze.Begin(WaitBetweenPoints,()=>Active&&(Phase==RallyPhase.PointOver||Phase==RallyPhase.MatchOver));
+            PointEnded+=_=>PointEndFreeze.Begin(WaitBetweenPoints,()=>Active&&(Phase==RallyPhase.PointOver||Phase==RallyPhase.MatchOver));
         }
         public void SetParams(RallyParams parameters){Params=parameters??throw new ArgumentNullException(nameof(parameters));}
         public bool CanStart=>app!=null&&app.Host.ActiveConfig!=null&&app.Host.ActiveConfig.Backend=="P2-Analytic"&&app.Tuning.Applied.GetBool("practice.enabled");
@@ -163,7 +171,16 @@ namespace SquashClash.Runtime.Rally
         public bool VolleyV2NextPoint=>VolleyModeNextPoint>=2;
         public void SetServeVolley(bool on){pendingServeVolley=on;}
         // Serve kinds (design 2026-11-20-serve), DEV «Saque nuevo»: lob and drive from the NEXT point on; off by default (today's serve).
-        public void SetNewServe(bool on){pendingNewServe=on;RefreshServeAim();}
+        public void SetNewServe(bool on)
+        {
+            if (!on && HumanWaitingToServe)
+            {
+                Human.MoveTo(context.WaitPosition(PlayerId.Human), 0, BodyPhase.Recovering, BodyPhase.Waiting);
+                humanInServeBox = false;
+            }
+            pendingNewServe = on;
+            RefreshServeAim();
+        }
         public bool NewServeNextPoint=>pendingNewServe??Params.ServeKindOn!=0;
         // Two-wall shot (design 2026-11-20-boast-predeclaration), DEV «Dos paredes»: the rival's boast from the NEXT point on. The human's
         // side-wall aim is always on in Rally/Match play.
@@ -178,15 +195,17 @@ namespace SquashClash.Runtime.Rally
         // The front-wall aim height chooses (lob at or above ServeKindLobMinAimY, drive below) and the serve goes at once.
         public bool ChooseHumanServe(ClosedGesture gesture)
         {
-            if(!Active||Phase!=RallyPhase.PointOver||Match==null||Match.Finished||Match.Server!=PlayerId.Human||!NewServeNextPoint)return false;
-            pendingHumanServe=gesture.Aim.y>=Params.ServeKindLobMinAimY?ServeType.Lob:ServeType.Drive;SkipWait();return true;
+            if (!HumanServePause) return false;
+            pendingHumanServe = gesture.Aim.y >= Params.ServeKindLobMinAimY ? ServeType.Lob : ServeType.Drive;
+            SkipWait();
+            TickPointOver(0);
+            return true;
         }
         // Open only in the pause before the human's own serve with «Saque nuevo» on; otherwise every touch keeps its stroke path.
         private void RefreshServeAim()
         {
             if(controller==null)return;
-            bool open=Active&&Phase==RallyPhase.PointOver&&Match!=null&&!Match.Finished&&Match.Server==PlayerId.Human&&NewServeNextPoint;
-            controller.ServeAim=open?ChooseHumanServe:(Func<ClosedGesture,bool>)null;
+            controller.ServeAim = HumanServePause ? ChooseHumanServe : (Func<ClosedGesture, bool>)null;
         }
         public bool ServeVolleyNextPoint=>pendingServeVolley??Params.HumanVolleyServe!=0;
         // DEV only (design 2026-11-20-fatigue-feel): the energy-limited sprint (section 1) and «Cansancio fuerte» (section 2), from the NEXT point on.
@@ -546,6 +565,7 @@ namespace SquashClash.Runtime.Rally
         private void EndPoint(ReceptionResult? reception)
         {
             var rules=Rules;Phase=RallyPhase.PointOver;waited=0;hasPending=needDecision=false;
+            humanInServeBox = false;
             if(rules.Winner==PlayerId.Human)HumanPoints++;else if(rules.Winner==PlayerId.Rival)RivalPoints++;
             PointsPlayed++;
             // A point with no winner is replayed from the same box; the game ends once and stays ended.
@@ -561,8 +581,18 @@ namespace SquashClash.Runtime.Rally
         }
         private void TickPointOver(double elapsed)
         {
-            waited+=elapsed;
-            if(AutoRestart&&waited>=WaitBetweenPoints)BeginPoint();
+            waited += elapsed;
+            if (AutoRestart && waited >= WaitBetweenPoints)
+            {
+                BeginPoint();
+                return;
+            }
+            if (HumanServePause && PlaceHumanInServeBoxEarly && !humanInServeBox &&
+                !app.Clock.Paused && !PointEndFreeze.Active)
+            {
+                Human.Teleport(ServePlanner.BoxPosition(context, Match.Box));
+                humanInServeBox = true;
+            }
         }
         private void PlaceBodies(){if(players!=null&&Human!=null)players.Place(Human.Position,Rival.Position);}
         [Serializable] private sealed class PointLine

@@ -40,6 +40,8 @@ namespace SquashClash.Core.Rally
         public double ServeKindDriveRightAimX=2.8,ServeKindDriveRightAimY=2.55,ServeKindDriveRightSpeed=22,ServeKindDriveLeftAimX=3.6,ServeKindDriveLeftAimY=2.4,ServeKindDriveLeftSpeed=22;
         // The human's choice: an aim at or above this front-wall height (m) is the lob, below it the drive.
         public double ServeKindLobMinAimY=3;
+        // Real seconds before a human serve after a point, with serve choice enabled.
+        public double ServeKindHumanPauseSeconds=3;
         // The rival's choice: probability of the drive per style (own random stream, apart from its strokes).
         public double ServeKindDriveFondo=.25,ServeKindDriveShooter=.75,ServeKindDriveAllRound=.5;
         // AI difficulty (spec 11.5): Easy / Medium / Hard. Only these change with difficulty.

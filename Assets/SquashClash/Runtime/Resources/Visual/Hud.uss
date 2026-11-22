@@ -162,6 +162,16 @@
 .sc-shot-note--failed { color: rgb(255, 128, 112); }
 .sc-shot-note--info { font-size: 16px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); color: var(--glass-text); }
 
+.sc-serve-guide {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+}
+.sc-serve-guide-caption {
+    height: auto;
+    font-size: 20px;
+    white-space: normal;
+}
+
 /* ---------- Off the court: the front wall ---------- */
 /* Wall buttons: ink outline on plaster; the primary stays line red. */
 .sc-wall .unity-button.sc-button {
