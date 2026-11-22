@@ -17,3 +17,9 @@ Logs y XML completos: `Logs/evidence/rival-short-min/` (ignorados). Cada corrida
 ## I1 — función pura
 
 `i1-green-resumed`: `scripts/test.sh editmode SquashClash.Core.Tests.Rally.RivalAttemptTests`: **2/2 Passed**, 0 Failed, 0 Skipped. XML fresco y sin errores CS. Se conserva el RED válido anterior (103 frente a −1) y la guardia que nació verde.
+
+## I1 — director
+
+`i1-director-red`: `scripts/test.sh playmode SquashClash.Runtime.Tests.ZRivalShortBallTests`: **2 tests, 1 Passed, 1 Failed, 0 Skipped**, XML fresco. El escenario confirmó `RivalPlan.Reason == "unreachable"`; el evento falló por aserción (esperado 1, obtenido 0). La guardia de recepción con golpe nació verde.
+
+`i1-director-green`: mismo comando y escenario: **2/2 Passed**, 0 Failed, 0 Skipped. Un intento fallido antes de `PointEnded`, cero contactos, resultado `Unreachable` conservado y sin segundo intento. La recepción con golpe sigue emitiendo exactamente un evento. No se modificaron los tests.
