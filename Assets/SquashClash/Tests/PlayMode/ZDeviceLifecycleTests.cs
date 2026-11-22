@@ -74,6 +74,7 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator Interruption_BetweenPoints_KeepsTheScoreAndTheBanner()
         {
+            rally.SetNewServe(false);
             yield return StartMatch();
             Assert.That(Drive(()=>rally.Phase==RallyPhase.PointOver,300),Is.True);
             int human=rally.HumanPoints,rival=rally.RivalPoints,played=rally.PointsPlayed;

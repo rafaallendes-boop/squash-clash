@@ -17,7 +17,7 @@ using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Tests
 {
     // Serve kinds (design 2026-11-20-serve, revision 2): the human chooses with a touch on the front wall in the pause before its serve,
-    // the rival by its style, all behind the DEV «Saque nuevo» switch (off by default). Named Z* to run after the timing fixtures.
+    // the rival by its style, with the DEV «Saque nuevo» switch on by default. Named Z* to run after the timing fixtures.
     public sealed class ZServeTests
     {
         private AppBootstrap app;private ShotController controller;private RallyDirector rally;
@@ -195,8 +195,9 @@ namespace SquashClash.Runtime.Tests
 
         [UnityTest] public IEnumerator Off_TheMatchServeIsTodaysAutomaticServe()
         {
-            Assert.That(rally.NewServeNextPoint,Is.False,"off by default");
-            rally.SetParams(new RallyParams{MatchPauseSeconds=.3});Assert.That(rally.StartMatch(),Is.True);
+            rally.SetParams(new RallyParams{MatchPauseSeconds=.3,ServeKindOn=0});
+            Assert.That(rally.NewServeNextPoint,Is.False,"explicitly use the original serve");
+            Assert.That(rally.StartMatch(),Is.True);
             Assert.That(rally.LastServeType,Is.EqualTo(ServeType.Auto));
             Assert.That(Drive(()=>rally.Phase==RallyPhase.PointOver,40),Is.True);Assert.That(controller.ServeAim,Is.Null,"no serve choice with the switch off");
             yield return null;
@@ -230,13 +231,13 @@ namespace SquashClash.Runtime.Tests
     {
         [UnitySetUp] public IEnumerator Setup()=>Boot(true);
         [UnityTearDown] public IEnumerator Cleanup()=>Shutdown();
-        [UnityTest] public IEnumerator DevPanel_NewServeToggle_DefaultsOff_AndSwitchesTheNextPoint()
+        [UnityTest] public IEnumerator DevPanel_NewServeToggle_DefaultsOn_AndSwitchesTheNextPoint()
         {
             for(int i=0;i<4;i++){Refresh();yield return null;}
             var button=root.Q<Button>("serve-new-toggle");Assert.That(button,Is.Not.Null,"DEV panel has the «Saque nuevo» toggle");
-            Assert.That(rally.NewServeNextPoint,Is.False);Assert.That(button.text,Does.Contain("no"));
-            Click("serve-new-toggle");Assert.That(rally.NewServeNextPoint,Is.True);Assert.That(button.text,Does.Contain("sí"));
-            Click("serve-new-toggle");Assert.That(rally.NewServeNextPoint,Is.False);
+            Assert.That(rally.NewServeNextPoint,Is.True);Assert.That(button.text,Does.Contain("sí"));
+            Click("serve-new-toggle");Assert.That(rally.NewServeNextPoint,Is.False);Assert.That(button.text,Does.Contain("no"));
+            Click("serve-new-toggle");Assert.That(rally.NewServeNextPoint,Is.True);
             Assert.That(root.Q<Label>("rally-banner-serve-hint"),Is.Not.Null,"the pause shows how to choose the serve");
         }
     }

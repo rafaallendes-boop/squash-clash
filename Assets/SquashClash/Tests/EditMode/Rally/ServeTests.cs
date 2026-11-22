@@ -8,7 +8,7 @@ using UnityEngine;
 namespace SquashClash.Core.Tests.Rally
 {
     // Serve kinds (design docs/superpowers/specs/2026-11-20-serve-design.md, revision 2): lob and drive, chosen by the server, behind the
-    // DEV «Saque nuevo» switch (off by default, today's serve bit for bit).
+    // DEV «Saque nuevo» switch. Turning it off restores the original automatic serve bit for bit.
     public sealed class ServeTests
     {
         private static RallyContext Context(bool on){var p=new RallyParams{ServeKindOn=on?1:0};return RallyFixtures.Context(p);}
@@ -63,7 +63,7 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void Off_EveryKindIsTodaysAutomaticServe_AndNothingIsChosen()
         {
             var ctx=Context(false);var rival=RivalAi.For(ctx,AiLevel.Medium,RivalStyleId.Definidor,3);
-            Assert.That(new RallyParams().ServeKindOn,Is.EqualTo(0),"off by default");
+            Assert.That(ctx.ServeKindOn,Is.False,"explicitly use the original serve");
             foreach(ServiceBox box in Enum.GetValues(typeof(ServiceBox)))
             {
                 foreach(ServeType type in Enum.GetValues(typeof(ServeType)))Assert.That(Same(ctx.Serve(box,type),ctx.Serve(box)),Is.True,box+" "+type);

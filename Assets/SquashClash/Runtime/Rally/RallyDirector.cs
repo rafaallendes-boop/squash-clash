@@ -170,7 +170,7 @@ namespace SquashClash.Runtime.Rally
         public int VolleyModeNextPoint=>pendingVolleyMode??(pendingVolleyV2.HasValue?(pendingVolleyV2.Value?(int)new RallyParams().HumanVolleyMode:1):(int)Params.HumanVolleyMode);
         public bool VolleyV2NextPoint=>VolleyModeNextPoint>=2;
         public void SetServeVolley(bool on){pendingServeVolley=on;}
-        // Serve kinds (design 2026-11-20-serve), DEV «Saque nuevo»: lob and drive from the NEXT point on; off by default (today's serve).
+        // DEV «Saque nuevo»: the toggle chooses lob/drive or the original automatic serve from the next point on.
         public void SetNewServe(bool on)
         {
             if (!on && HumanWaitingToServe)

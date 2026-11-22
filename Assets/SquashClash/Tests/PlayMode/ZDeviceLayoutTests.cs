@@ -112,7 +112,7 @@ namespace SquashClash.Runtime.Tests
         {
             yield return Boot(screen,true);
             Click("menu-howto");
-            for(int step=0;step<SquashClash.Runtime.Menu.FirstRunFlow.TutorialSteps;step++)
+            for(int step=0;step<6;step++)
             {
                 yield return Settle();
                 Assert.That(flow.TutorialStep,Is.EqualTo(step));
@@ -123,6 +123,7 @@ namespace SquashClash.Runtime.Tests
         [UnityTest] public IEnumerator Match_HeaderBannerPauseAndResultFitInsideTheSafeArea([ValueSource(nameof(Phones))] PhoneScreen screen)
         {
             yield return Boot(screen,true);
+            rally.SetNewServe(false); // Exercise the ordinary point banner. The serve guide has its own layout test.
             // The developer header carries the most buttons; the player's header must fit as well.
             yield return StartMatch();Drive(()=>app.Host.Current.Step>10,1);yield return Settle();
             AssertFits("boot-header",phone+" dev header");
