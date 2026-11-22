@@ -6,6 +6,63 @@ Alcance: el definitivo de SC-Lead (22 nov), que reemplaza los puntos 2, 3 y 5 de
 
 > **Estado de la medición.** No se pudo correr Unity. A las 10:43 la build del worker de instalación (`sc-install-518f9c3/Logs/build-dev.log`) terminó con «No valid Unity Editor license found». Por la regla de un solo Unity tampoco correspondía abrirlo mientras ese worker estaba activo. El diagnóstico de §1 sale **del código**, con archivo y línea, más un cálculo cinemático fuera de Unity (§1.6). Las tablas de cruce de §2 quedan **predeclaradas y vacías**: el experimento (Anexo A) y el comando (§2.4) están listos para correr apenas haya Unity con licencia. No se inventan cifras.
 
+## HOY (22 nov): lo que entra en la build que Rafael prueba de 17:00 a 18:00
+
+Pedido de SC-PM (11:30): spec cerrada antes de las 12:15, Codex implementa desde ~12:30 y el merge con los gates en verde queda listo hacia las 16:00. **Hoy entra solo «nunca parado / estirado = defensivo»: I1 + I2.** Todo lo demás pasa a después (§«Después»).
+
+**Bloqueante para los gates de hoy:** Unity no tiene licencia válida en este Mac («No valid Unity Editor license found», build del worker de instalación de las 10:43, sin log nuevo a las 11:33). Sin Unity no hay EditMode, PlayMode, AutoQA ni check-release, y por lo tanto no hay merge. **Rafael tiene que reactivar la licencia en Unity Hub antes de las ~12:30.** Además rige la regla de un solo Unity: Codex y el worker de instalación no pueden correr Unity a la vez.
+
+### Qué hace Codex hoy
+
+Rama `codex/rival-short-ball-min` desde `main` `518f9c3`. Hay que respetar el diseño de §5.1 I1 e I2 tal cual. No cambia:
+
+- valores de preset ni campos de `RallyParams`;
+- la física, el solver, el contrato ni el reloj;
+- `pullFullMm` ni P0-calib-1;
+- el humano;
+- `FondoAi`.
+
+1. **I1, nunca parado sin intento (solo vista).** Clase nueva `Core/Rally/RivalAttempt.cs` con `StepFor(context, trajectory, rulesAtStart, Vector2[] path)`, que devuelve el paso de máxima aproximación tras el primer bote (≤ segundo bote) y el lado; si el punto se cierra antes del primer bote no hay intento. `RallyDirector.PlanRival` guarda ese paso cuando `!pendingShot.Swing` y el punto sigue abierto, y `TickRival` emite **una sola vez** `RivalSwing(side, false)` al llegar a ese paso, siempre antes de `EndPoint`. `RallySim` no se toca.
+2. **I2, estirado = defensivo puro.** En `RivalAi.Decide`, si `own.Reason == "stretched"`, solo se permite {recta, cruzado} × alto × media, **sin dos paredes**. La regla de holgura baja con plan `planned` queda igual.
+
+### Plan TDD de hoy (numeración de §5.2; RED válido por aserción antes de cada GREEN)
+
+| Orden | Paso §5.2 | Test | Esperado antes del cambio |
+|---|---|---|---|
+| 1 | 1 | `RivalAttempt_StepFor_IsClosestApproachAfterBounce` | RED: el esqueleto devuelve -1 |
+| 2 | 2 | `RivalAttempt_StepFor_NoneWhenPointClosedBeforeBounce` | RED o guardia, según el esqueleto (declararlo) |
+| 3 | 3 | `Director_UnreachableRivalReception_RaisesOneFailedSwing` (PlayMode) | RED: hoy 0 eventos |
+| 4 | 4 | `Director_ReceptionWithSwing_RaisesNoExtraAttempt` (PlayMode) | guardia: nace verde, se declara |
+| 5 | 5 | `RivalAi_Stretched_NeverBoasts` (tres estilos, 500 decisiones, dos paredes encendida) | RED: hoy aparecen dos paredes |
+| 6 | 6 | `RivalAi_Stretched_FromFront_IsHighMediumStraightOrCross` (tres estilos) | caracterización: nace verde, se declara |
+| 7 | 7 | `RivalAi_PlannedLowSlack_StillMayBoast` | guardia: nace verde |
+| 8 | 12 | `Hashes_Unchanged` (defaults `207da8f2c636`, RallyParams `a82c34b661bf`, SimulationKey `166a96e319c7`) | guardia |
+
+Escenario del paso 3: con `RallyDirector` y una dejada lanzada por el lado del humano, se coloca al rival en la esquina de atrás con `PlayerBody.Teleport` antes del lanzamiento. Ningún test de PlayMode lo hace hoy, así que Codex agrega el acceso mínimo y solo para tests. Si eso no es posible, puede extraer la decisión «emitir intento» a un método puro probado en EditMode y dejar en PlayMode solo la guardia del paso 4. Hay que comprobar que `RivalPlan.Reason == "unreachable"` antes de afirmar el evento. Si no se logra un caso inalcanzable determinista, **se registra y se para**; no se ajustan parámetros para conseguirlo.
+
+**Gates de hoy, en el Mac del PO y en serie (un solo Unity):** `scripts/test.sh editmode` y `scripts/test.sh playmode` con el recuento completo, `scripts/autoqa.sh mvp` (V/T3/volea PASS/0/1) y `scripts/check-release.sh`. Hay que entregar un informe de una página en `docs/reviews/` con estos puntos:
+
+- los RED y las guardias;
+- los hashes sin cambio;
+- el riesgo de I2: solo cambia recepciones `stretched` desde la esquina de atrás con dos paredes elegible, y puede mover la cuenta de dos paredes o M4;
+- R7 no se midió hoy, y eso se declara como desviación.
+
+La fusión e instalación requieren el «sí» de Rafael (AGENTS §7).
+
+**Checklist en iPhone (17:00–18:00):**
+
+- ¿la estirada del rival se lee como «lo intentó»?
+- ¿queda algún momento en que mira la dejada sin moverse?
+- ¿el rival estirado devuelve alto y no un winner?
+
+### Después (no entra hoy; misma PR de docs u otra)
+
+- Diagnóstico completo de §2: experimento del Anexo A, tablas de cruce y R4–R6. Sigue en paralelo cuando haya Unity libre.
+- I3, el filtro «nunca winner»: cambia la secuencia del RNG y necesita la medición R7.
+- I4, perseguir el bote: depende de que el diagnóstico encuentre `no-legal-window`.
+- Los pasos 0, 8–11 y 13 de §5.2.
+- La propuesta de preset P1–P6 (§6), que decide Rafael.
+
 ## 0. Resumen
 
 - El rival **no se queda parado por falta de reacción**: en cada recepción corre hacia su plan (`RallyDirector.cs:471`, `RallySim.cs:202`). Se ve parado por dos ramas del código:
