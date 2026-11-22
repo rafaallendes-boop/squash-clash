@@ -10,9 +10,13 @@ Condensado el 18 nov 2026. Solo lo vigente. Original byte a byte en [docs/histor
 
 ## 2. Roles y modo de trabajo
 
-- **PO (Rafa)**: decide alcance, aceptación, fusiones e instalaciones. (MVP, 15 nov)
-- **Modo product lead (desde el 18 nov):** el PO delegó en Claude las decisiones técnicas de esta tanda; Fable sin créditos desde el 16 nov; Codex no recibe encargos de esta tanda salvo pedido del PO. Claude orquesta subagentes Opus/Sonnet/Haiku según estime. Alcance: G1 A2 (golpes al fondo), cansancio, revés, inicio y estética de golpes, volea, sonido propio y triángulo de impacto del vidrio de fondo. La revisión de Claude **no es independiente** y se declara. Cita literal en el registro del 18 nov. (18 nov)
-- Informes de una página; citas literales del PO solo si cambian una regla o autorización; fusionar solo con tests en verde y «sí» del PO. (15 nov)
+- **PO (Rafa)**: dueño del producto; lo que sigue siendo exclusivo suyo está en §7. (15 y 22 nov)
+- **SC-Lead** (bot de Grok): product lead; elige y prioriza el trabajo. **SC-PM** (bot de Grok): orquesta los encargos en Orca. (22 nov)
+- **Claude**: define la arquitectura y revisa de forma independiente; el front lo hace Claude con `/frontend-design`. Cuando Claude o sus subagentes implementan, la revisión de Claude no es independiente y se declara. (22 nov)
+- **Codex**: implementa, y revisa en solo lectura lo que implementan Claude o sus subagentes (revisión cruzada). (22 nov)
+- El modo «Claude como product lead» (18–21 nov) terminó el 22 nov. Fable sin créditos desde el 16 nov.
+- **Autonomía (22 nov).** Texto literal del PO: «cuando vaya a orca, hagan los merge y demás. No sea necesario solicitar mi permiso para aprobar en el terminal. Puede ir trabajando con autonomía» y «cuando vaya viendo avance podríamos ir haciendo las build mi celular». Efecto: con revisión aprobada y puertas en verde (EditMode, PlayMode, AutoQA si aplica según §3 y check-release) se fusiona a `main` y se instala en el iPhone sin pedir un «sí» cada vez, respetando las reglas de fusión de abajo y el procedimiento de §8.
+- Informes de una página; citas literales del PO solo si cambian una regla o autorización. (15 nov)
 - Un incremento = una rama/worktree y una PR; commits pequeños. (I2)
 - Al fusionar: head local/remoto exacto, árboles limpios, merge commit con segundo padre = head aprobado, `--match-head-commit`; retirar worktrees sin `--force` preservando ignorados. La fusión no acepta la etapa. (#17, #46/#47)
 - Ante un defecto o sorpresa: registrar y detenerse, sin corregir ni reintentar para obtener Pass. (12–13 nov)
@@ -26,7 +30,7 @@ Condensado el 18 nov 2026. Solo lo vigente. Original byte a byte en [docs/histor
 - TDD con `scripts/test.sh editmode|playmode [filtro]`: RED válido por aserción, luego GREEN. No declarar éxito con cero tests, XML viejo ni errores CS. `NotEvaluated`/cancelado/incompleto nunca es aprobado. Experimentos separados de la regresión.
 - Gate oficial de PlayMode: el Mac del PO. En Linux, fallas de `GesturePreviewTests`, `ReticleVisibilityTests` o `ShotRollbackTests` son de entorno si el Mac da el recuento completo. (10 nov)
 - AutoQA (`scripts/autoqa.sh mvp`, PASS/0/nivel 1) obligatorio si el cambio toca timing, gesto o contrato. (10 nov)
-- En el Mac del PO se pueden correr `scripts/test.sh`, `scripts/check-release.sh` y AutoQA sin pedir permiso, sin instalar ni tocar el iPhone; copiar `scripts/device.env` sin cambios a un worktree nuevo no exige otro «sí». (10 nov)
+- En el Mac del PO se pueden correr `scripts/test.sh`, `scripts/check-release.sh` y AutoQA sin pedir permiso; copiar `scripts/device.env` sin cambios a un worktree nuevo no exige otro «sí». Las builds nativas y las instalaciones siguen §2 (autonomía) y §8. (10 y 22 nov)
 - Un solo Unity a la vez; en esperas con `pgrep` usar `[U]nity.app/...`.
 - Perfiles: dev con `SQUASH_DEV`, prod sin define, ambos Release no Development; defines con `extraScriptingDefines` sin mutar los persistentes.
 - Código, identificadores y commits en inglés; documentación en español; fuentes oficiales para decisiones técnicas externas; sin frameworks ni abstracciones fuera de la necesidad inmediata.
@@ -38,8 +42,8 @@ Condensado el 18 nov 2026. Solo lo vigente. Original byte a byte en [docs/histor
 
 | Zona | Dueño |
 |---|---|
-| Timing, contrato de contacto y reloj (ClockMap/SimClock) | Codex; en esta tanda Claude puede tocarla si el entregable lo exige (§2) |
-| Física P2, solver, M2-4, `DefaultPreset.json`, SimulationKey | Sin dueño; en esta tanda decide Claude (§2); todo cambio de hashes se declara en el informe |
+| Timing, contrato de contacto y reloj (ClockMap/SimClock) | Codex (15 nov; la excepción del modo product lead terminó el 22 nov) |
+| Física P2, solver, M2-4, `DefaultPreset.json`, SimulationKey | Sin dueño; solo con autorización del PO (11–14 nov; la excepción del modo product lead terminó el 22 nov); todo cambio de hashes se declara en el informe |
 
 ## 5. Hashes vigentes en `main` (desde #84)
 
@@ -49,9 +53,10 @@ Condensado el 18 nov 2026. Solo lo vigente. Original byte a byte en [docs/histor
 - Archivo P0-calib-1 SHA-256 `2f1295f201e238d9494bee285dd3f46e5bbb0f98b09ccde90fbd268f0874e4fd`.
 - Anteriores a #84, ya no vigentes: defaults `2ec0c953786a`, P0 `f92f406f698a`, SL5 T3 `750c407c8a2f`, V `e8df60f37d4b`, SL5 V `95a3f24313fe`, RallyParams `927e304bbfec`.
 
-## 6. Estado actual (21 nov 2026)
+## 6. Estado actual (22 nov 2026)
 
-- `main` en `a7b3311` (merge de #88, 21 nov, segundo padre `92cc1fa`, árbol idéntico al head), con aprobación del PO («Fusiona e instala»): el aviso del golpe («¡Al aire!», «Perfecto», …) va centrado en la franja vacía bajo la cancha, calculada desde la cámara; una barra DEV oculta ya no lo empuja. Sin cambios de cámara, preset ni juego. Subagente Sonnet dirigido por Claude: revisión no independiente. Sobre `77c1864`: EditMode 961/961, PlayMode 746/746, AutoQA V/T3/volea PASS/0/1, check-release OK. [Informe](docs/reviews/2026-11-21-shot-note-band.md). Antes: #87 (`939d419`, solo AGENTS).
+- `main` en `518f9c3` (merge de #89, 21 nov, segundo padre `a031921`, árbol idéntico al head): solo AGENTS, registra la fusión de #88 y la instalación de `a7b3311`. Código y hashes iguales a `a7b3311`.
+- Antes: `a7b3311` (merge de #88, 21 nov, segundo padre `92cc1fa`, árbol idéntico al head), con aprobación del PO («Fusiona e instala»): el aviso del golpe («¡Al aire!», «Perfecto», …) va centrado en la franja vacía bajo la cancha, calculada desde la cámara; una barra DEV oculta ya no lo empuja. Sin cambios de cámara, preset ni juego. Subagente Sonnet dirigido por Claude: revisión no independiente. Sobre `77c1864`: EditMode 961/961, PlayMode 746/746, AutoQA V/T3/volea PASS/0/1, check-release OK. [Informe](docs/reviews/2026-11-21-shot-note-band.md). Antes: #87 (`939d419`, solo AGENTS).
 - Antes: `fceb3de` (merge de #86, 21 nov, segundo padre `226c703`, árbol idéntico al head), con aprobación del PO («Fusiona»): líneas técnicas DEV ocultas al jugar, paso «Dos paredes» en el tutorial y correo de la ficha. Antes: `5a1d98d` (merge de #85, segundo padre `cc55d1f`), aprobada con «Tienes permiso para fusionar main»: pasada de seguridad y preparación para App Store.
 - Antes: `7fe6a42` (merge de #84, 20 nov, segundo padre `47ed1e5`, árbol idéntico al head), con aprobación del PO («Dale si»). Trae toda la tanda MVP 18–20 nov (siete vueltas, detalle abajo). Antes: #83 (`75b9ce8`); F1 #76, F2 #77, novedades #78, música #67, CRP-01 #80, herramientas de cansancio #82. G1 cerrado con A1 #74. Abierta solo #81 (borrador D1 de G1 A2, no se fusiona); #73 cerrada sin fusionar.
 - Puertas del código de #84 (sobre `bf64f46`, árbol idéntico): EditMode 956/956, PlayMode 740/740, AutoQA V/T3/volea PASS/0/1, check-release OK (build 1051).
@@ -62,6 +67,7 @@ Condensado el 18 nov 2026. Solo lo vigente. Original byte a byte en [docs/histor
 - **Preparación para App Store, fusionada en #85 (21 nov):** escaneo de secretos del historial público sin secretos reales (hallazgo bajo: el ID del equipo personal está en ProjectSettings y en docs desde el primer commit); manifiesto de privacidad de la app (UserDefaults CA92.1, sin seguimiento ni datos; Unity fusiona el del motor) verificado en el export; `submitAnalytics` 0; barra DEV oculta mientras se juega y botón DEV chico; borrador de la ficha en `docs/release/2026-11-21-app-store-ficha.md`. Subagente Sonnet dirigido por Claude: revisión no independiente. Sobre `7e4e87d`: EditMode 961/961, PlayMode 743/743, AutoQA V/T3/volea PASS/0/1, check-release OK (build 1061). [Informe](docs/reviews/2026-11-21-store-prep.md). Decisiones del PO pendientes en el informe (compartir Documents en la build pública, textos de la ficha, alojamiento de la política, probadores, módulos sin uso, ID de equipo).
 - **Segunda parte, fusionada en #86 (21 nov):** a pedido del PO (captura del panel), las líneas técnicas «P0-calib-1 · hash · …» y «M2-4 · …» se ocultan mientras se juega con el panel DEV cerrado (tres aserciones existentes pasan de visible a oculto por ese pedido); quinto paso del tutorial «Dos paredes»; correo de contacto y feedback de la ficha: el del PO. Subagente Sonnet dirigido por Claude: revisión no independiente. Sobre `77d3521`: EditMode 961/961, PlayMode 744/744, AutoQA V/T3/volea PASS/0/1, check-release OK. [Informe](docs/reviews/2026-11-21-hud-onboarding.md). El dibujo del paso nuevo no se vio en el iPhone.
 - App instalada: `0.1.0+a7b3311 dev` (21 nov 15:35Z, CFBundleVersion 1076), `main` con #84–#88. La instaló Claude con autorización del PO («Fusiona e instala»); lanzamiento automático OK. Anterior: `0.1.0+fceb3de dev` (21 nov 10:39Z, CFBundleVersion 1071).
+  - **Instalación de `518f9c3` dev (22 nov), detenida antes de compilar:** respaldo nuevo hecho (6 presets idénticos al cotejo del 21 nov, P0-calib-1 con el SHA de §5, last-active P0-calib-1; métricas 31/32 idénticas, la de `20261121T1535…` creció porque era la sesión abierta en el cotejo anterior). `build-ios.sh dev` falló en la exportación de Unity (13:43Z): licencia Personal sin validez offline (`LicenseGroupOfflineValidityPeriodIsExpired`) y Hub sin sesión. No se llegó a Xcode, el perfil no se renovó y el teléfono no se tocó. La licencia la renueva el PO en Unity Hub. Evidencia en `Logs/evidence/install-518f9c3-20261122/` (ignorada; worktree `sc-install-518f9c3`).
   - Presets (6): idénticos byte a byte; P0-calib-1 con el SHA de §5 y last-active P0-calib-1.
   - Métricas: 31 de 32 idénticas. Al abrirse la app creó una nueva y la rotación de 32 borró en el teléfono la más antigua (`metrics-20261116T143801…`), que queda en el respaldo.
   - Evidencia en `Logs/evidence/install-a7b3311-20261121/` (ignorada; worktree SC-store).
@@ -73,14 +79,15 @@ Condensado el 18 nov 2026. Solo lo vigente. Original byte a byte en [docs/histor
 
 ## 7. Autorizaciones vigentes
 
-- **18 nov (modo product lead):** Claude toma decisiones técnicas de la tanda, incluidas zonas protegidas si el entregable lo requiere, y orquesta subagentes. Se mantienen tests en verde, un solo Unity, no tocar criterios/umbrales para pasar. **Fusión a `main` e instalación requieren «sí» explícito del PO.**
+- **22 nov (autonomía, §2):** fusión a `main` e instalación en el iPhone sin «sí» por cada vez, con revisión aprobada, puertas en verde, reglas de fusión de §2 y procedimiento de §8. Se mantienen un solo Unity y no tocar criterios ni umbrales para pasar. El modo product lead del 18 nov terminó.
 - Cansancio: spec v2.3; F1/F2 fusionadas; el ajuste B ya se agotó en `recoverBetween` 0,35→0,25. Cambios en `fatigue.*` o hashes se declaran. (17 nov)
-- G1: A2 diferida; sin corridas ni implementación A2 previas al 18 nov; el encargo del 18 nov lo reabre dentro del modo product lead. Diagnóstico del PO: óptimo local de búsqueda, no el tope lateral. (17–18 nov)
+- G1: A2 diferida; sin corridas ni implementación A2 previas al 18 nov; el encargo del 18 nov lo reabrió dentro del modo product lead (terminado el 22 nov). Diagnóstico del PO: óptimo local de búsqueda, no el tope lateral. (17–18 nov)
 - T3 pure como candidato a pruebas de usuarios; `timing.validLimit` 0 (U1). (16 nov)
-- **No autorizado sin pedido expreso:** instalación, build nativa o acceso al iPhone; fusión sin aprobación del PO; sesión 2 de 4.5; activar #32; cambiar `pullFullMm`; promover P0-calib-1; aceptar First Rally/First Match.
+- **Exclusivo del PO (no se hace sin su pedido expreso):** aceptar etapas (First Rally y First Match); cambiar `pullFullMm`; promover P0-calib-1; activar #32; cambiar umbrales o criterios; el pago de Apple y TestFlight; la ficha de App Store; la sesión 2 de 4.5. Fusiones, builds e instalaciones ya no están en esta lista: siguen §2 y §8. (22 nov)
 
 ## 8. Firma e instalación
 
-- Perfil vigente hasta **2026-11-23T18:03:12Z** (15:03:12 Chile); equipo personal gratuito: vence cada 7 días, no sirve para TestFlight. Renueva el PO.
-- Antes de instalar: comprobar vigencia y que toda la sesión, restauración incluida, termine antes del vencimiento. No cambiar Xcode ni herramientas sin autorización.
-- Cada instalación requiere autorización propia, respaldo nuevo de presets/métricas y cotejo byte a byte antes y después (`scripts/install-ios.sh dev|prod`).
+- Perfil en la caché de Xcode vigente hasta **2026-11-23T18:03:12Z** (15:03:12 Chile; creado el 16 nov, comprobado el 22 nov); equipo personal gratuito: vence cada 7 días, no sirve para TestFlight. La app instalada (1076) deja de abrirse a esa hora si no se reinstala con un perfil nuevo.
+- Renovación: se intenta con la firma automática de `scripts/build-ios.sh` (`-allowProvisioningUpdates`). Si pide que el PO inicie sesión con su Apple ID, acepte algo en Xcode o confíe en el dispositivo, se detiene y se le pide ese paso. La licencia de Unity del Hub también la renueva el PO. (22 nov)
+- Antes de instalar: comprobar vigencia del perfil incorporado y que toda la sesión, restauración incluida, termine antes del vencimiento. No cambiar Xcode ni herramientas sin autorización.
+- Cada instalación: respaldo nuevo de presets y métricas, cotejo byte a byte antes y después (`scripts/install-ios.sh dev|prod`), lanzamiento y evidencia en `Logs/evidence/install-<sha>-<fecha>/`. Desde el 22 nov no requiere un «sí» propio si viene de `main` con las puertas de §2 en verde.
