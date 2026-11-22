@@ -6,9 +6,9 @@ Base `518f9c3`, rama `feat/rival-short-min`, PR #97. Spec de #92 leída con `git
 
 RAL-174, camino A: «la PR #97 queda solo con I1, el intento visible». I2–I3 se conservan en `feat/rival-short-i2i3`, sin PR. En #97 se retiran mediante commits nuevos, sin reescribir historial ni forzar el push. Se restaura `RivalAi.cs` byte a byte desde `518f9c3` y se retiran únicamente el test nuevo `RivalShortBallTests.cs` y su meta; ningún test existente cambia. Los contenidos originales de I2–I3 se conservan exactamente desde `e37fbbb`, incluidos los cambios de `67d2f33` y `5d77420`.
 
-Se correrán de nuevo EditMode completo, PlayMode completo, AutoQA V/T3/volea y check-release, con un candado por corrida. Cualquier fallo de M3 u otro test existente exige registrar y detenerse. Solo se retira el borrador de #97 si todas las puertas están verdes. No hay autorización de fusión ni instalación. Lo que sigue hasta las nuevas corridas de I1 es el historial de I1–I3, no el alcance actual de #97.
+Se corrieron de nuevo EditMode completo, PlayMode completo, AutoQA V/T3/volea y check-release, con un candado por corrida; todos quedaron verdes (tabla al final). Cualquier fallo de M3 u otro test existente habría exigido registrar y detenerse. Se autoriza retirar el borrador de #97 con estas puertas verdes. No hay autorización de fusión ni instalación. Lo que sigue hasta las nuevas corridas de I1 es el historial de I1–I3, no el alcance actual de #97.
 
-## Autorización vigente
+## Autorización de la fase I1–I3 (histórica)
 
 SC-PM, 22 nov 19:15 −03: «Mi condición anterior fue demasiado estricta y la retiro». Los errores de compilación, del parche nuevo y las suposiciones equivocadas de los tests nuevos se corrigen dentro de TDD, con expectativas derivadas de la spec. La regla de parada queda limitada a necesitar cambios en tests existentes, spec, escenarios, umbrales, tolerancias, oráculos, presets o criterios; fallos de entorno; o comportamiento inesperado del producto ya presente en main. Se conserva el candado de Unity y no se autoriza fusión ni instalación.
 
@@ -66,3 +66,22 @@ Sobre código `5d77420`, `editmode-full`: `scripts/test.sh editmode`: **978 test
 El criterio exige **Fondista < Definidor**; esta rama invierte ese orden. No se interpreta como fallo de entorno ni se cambia la comparación, las semillas, los partidos, pesos, tolerancias, presets o criterios. Conforme al brief (parada si cambia un test existente de calibración) y la autorización vigente, se registra y se detiene, sin reintentar para obtener Pass. No se hicieron más cambios de código para recuperar M3.
 
 Logs y XML: `Logs/evidence/rival-short-min/editmode-full/` (ignorados). El candado adquirido fue liberado inmediatamente al terminar Unity. PlayMode completo, AutoQA V/T3/volea y check-release no se ejecutan tras esta parada; el PlayMode dirigido de I1 permanece 2/2 Passed. R7 y Anexo A no medidos: estos porcentajes M3 no son un Δ respecto de main. La PR #97 sigue en borrador.
+
+## Gates completos del camino A — solo I1
+
+Sobre `028718278a626f00630178d51f7a2b1a6a70830b`, árbol limpio al iniciar. Cada comando adquirió su propio candado con el bucle indicado y lo liberó al terminar, incluso entre suites. `check-release` esperó al otro worker; nunca se abrió un segundo Unity.
+
+| Comando | Resultado | Evidencia local ignorada |
+|---|---|---|
+| `scripts/test.sh editmode` | **963/963 Passed**, 0 Failed, 0 Skipped; salida 0 | `Logs/evidence/rival-short-min/i1-only-editmode-full/` |
+| `scripts/test.sh playmode` | **748/748 Passed**, 0 Failed, 0 Skipped; salida 0 | `Logs/evidence/rival-short-min/i1-only-playmode-full/` |
+| `scripts/autoqa.sh mvp --suite v` | **102/102 tests**, 18 casos PASS; **PASS/0/nivel 1** | `Logs/autoqa/20261122T230826Z-0287182-v-27853/` |
+| `scripts/autoqa.sh mvp --suite t3` | **102/102 tests**, 18 casos PASS; **PASS/0/nivel 1** | `Logs/autoqa/20261122T230913Z-0287182-t3-21029/` |
+| `scripts/autoqa.sh mvp --suite volley` | **102/102 tests**, 18 casos PASS; **PASS/0/nivel 1** | `Logs/autoqa/20261122T230954Z-0287182-volley-9043/` |
+| `scripts/check-release.sh` | **RELEASE-CHECK: OK**, dev y prod, build 1087, salida 0 | `Logs/evidence/rival-short-min/i1-only-release/` |
+
+XML frescos, sin errores CS ni pruebas omitidas/canceladas. M3 (`On_InPlay_TheFondistaBoastsLessFromTheBackQuarterThanTheDefinidor`) **Passed** sin modificar el test. Las guardias existentes verifican defaults `207da8f2c636`, RallyParams `a82c34b661bf` y SimulationKey `166a96e319c7`.
+
+En cada suite AutoQA: 0 FAIL, 0 INCONCLUSIVE, 0 NOT_EVALUATED; `dirty=false`; integridad de hashes, presets, guardia y SHA-256 en true; restauración `statusUnchanged=true`. El canario negativo falló como se esperaba. Exportaciones dev/prod frescas: solo Core/Runtime y DevPanel adicional en dev; flags iOS OK y puentes nativos verificados. El árbol volvió a quedar limpio tras las limpiezas automáticas del export.
+
+Resumen agregado ignorado: `Logs/evidence/rival-short-min/i1-only-gates-summary.json`. Los commits posteriores a `0287182` solo documentan resultados; código y tests son idénticos. La rama diferida `feat/rival-short-i2i3` está publicada en `406f392`: sus tres archivos de I2–I3 son idénticos a `e37fbbb`, conservando `67d2f33` y `5d77420` como ancestros. Su diferencia sobre `352ebd2` es solo `RivalAi.cs`, `RivalShortBallTests.cs` y el meta. Sin PR para esa rama, sin push forzado y sin reescribir historial.
