@@ -45,3 +45,18 @@ Se corrigió la suposición de altura fija del test nuevo: la búsqueda ahora re
 `i3-green`: `scripts/test.sh editmode SquashClash.Core.Tests.Rally.RivalShortBallTests`: **15/15 Passed**, 0 Failed, 0 Skipped. R2 = 0 en los casos probados; R3 = 0/100 elecciones inalcanzables por estilo cuando existe una opción alcanzable. En el caso sin ninguna alcanzable, las 50 elecciones tienen retraso mínimo y `LastStretchedFallback == true`. La huella de las 1.080 decisiones `planned` coincide con la previa a I2/I3 y los tres hashes siguen iguales.
 
 La protección R3 se aplica a las intenciones nominales antes del sorteo y de los ruidos de ejecución, según §5.1 I3. No garantiza que el bot humano no cometa errores (R6). El retraso del respaldo es `ArrivalStep − TStarStep` si hay contacto, o respecto del final de la trayectoria de bote si no hay contacto. No se añade ningún parámetro.
+
+## Gate completo de EditMode — parada por M3 existente
+
+Sobre código `5d77420`, `editmode-full`: `scripts/test.sh editmode`: **978 tests, 977 Passed, 1 Failed, 0 Skipped**, salida 1, XML fresco. Ningún error de compilación. Los 17 tests nuevos de EditMode y la huella congelada pasaron.
+
+Único fallo: `SquashClash.Core.Tests.Rally.BoastRivalTests.On_InPlay_TheFondistaBoastsLessFromTheBackQuarterThanTheDefinidor`, línea 81 del test existente. Comparación M3 vigente, sobre seis partidos por estilo contra el bot de golpes largos:
+
+| Estilo | Fracción de dos paredes entre contactos desde el cuarto de fondo | Porcentaje |
+|---|---|---|
+| Fondista | `0.039906103286384977` | 3,9906103286384977 % |
+| Definidor | `0.014705882352941176` | 1,4705882352941176 % |
+
+El criterio exige **Fondista < Definidor**; esta rama invierte ese orden. No se interpreta como fallo de entorno ni se cambia la comparación, las semillas, los partidos, pesos, tolerancias, presets o criterios. Conforme al brief (parada si cambia un test existente de calibración) y la autorización vigente, se registra y se detiene, sin reintentar para obtener Pass. No se hicieron más cambios de código para recuperar M3.
+
+Logs y XML: `Logs/evidence/rival-short-min/editmode-full/` (ignorados). El candado adquirido fue liberado inmediatamente al terminar Unity. PlayMode completo, AutoQA V/T3/volea y check-release no se ejecutan tras esta parada; el PlayMode dirigido de I1 permanece 2/2 Passed. R7 y Anexo A no medidos: estos porcentajes M3 no son un Δ respecto de main. La PR #97 sigue en borrador.
