@@ -1,3 +1,5 @@
+using SquashClash.Core.Config;
+using SquashClash.Core.Court;
 using SquashClash.Core.Rally;
 using SquashClash.Runtime.App;
 using SquashClash.Runtime.Menu;
@@ -44,7 +46,13 @@ namespace SquashClash.Runtime.Rally
         private PlayerId toHit;
         public const float PulseSeconds=.45f,BannerInSeconds=.18f,ServePulseSeconds=.6f,ResultInSeconds=.28f;
         private static readonly Color Gold=new Color(1f,.82f,.25f);
-        private VisualElement banner,bannerCard,resultCard;private Label bannerTitle,bannerCause,bannerNext,resultLast,serveHint;
+        private VisualElement banner,bannerCard,resultCard;private Label bannerTitle,bannerCause,bannerNext,resultLast;
+        private const float ServeGuideLineHeight = 3, ServeGuideLabelGap = 6;
+        private VisualElement serveGuide, serveGuideLine;
+        private Label serveGuideLob, serveGuideDrive;
+        private SafeAreaLayout serveGuideSafeArea;
+        private EffectiveConfig serveGuideConfig;
+        private CourtDimensions serveGuideCourt;
         private float bannerAge=-1,pulseHuman,pulseRival,servePulse,resultAge=-1;private int bannerPoint=-1,bannerTone=-1,resultTone=-1;
         // Read-outs for the tests: how far the banner has faded in, and how much of a score pulse is left.
         public float BannerOpacity=>bannerAge<0?0:Mathf.Clamp01(bannerAge/BannerInSeconds);
@@ -115,11 +123,106 @@ namespace SquashClash.Runtime.Rally
             bannerTitle=Text("","sc-banner-title");bannerTitle.name="rally-banner-title";bannerCard.Add(bannerTitle);
             bannerCause=Text("","sc-banner-cause");bannerCause.name="rally-banner-cause";bannerCard.Add(bannerCause);
             bannerNext=Text("","sc-banner-next");bannerNext.name="rally-banner-next";bannerCard.Add(bannerNext);
-            // Serve kinds (design 2026-11-20-serve): how the human chooses its own serve, only in the pause before it with «Saque nuevo» on.
-            serveHint=Text(RallyText.ServeHint,"sc-banner-next");serveHint.name="rally-banner-serve-hint";serveHint.style.display=DisplayStyle.None;bannerCard.Add(serveHint);
+            var serveHint=Text(RallyText.ServeHint,"sc-banner-next");serveHint.name="rally-banner-serve-hint";serveHint.style.display=DisplayStyle.None;bannerCard.Add(serveHint);
+            BuildServeGuide(top);
             // The header grows and shrinks with its buttons ("Seguir" appears with the banner): follow it.
             header=parent;parent.RegisterCallback<GeometryChangedEvent>(_=>PlaceBanner());
             Refresh();
+        }
+        private void BuildServeGuide(VisualElement root)
+        {
+            serveGuideSafeArea = app.GetComponent<SafeAreaLayout>();
+            serveGuide = new VisualElement { name = "serve-guide", pickingMode = PickingMode.Ignore };
+            serveGuide.AddToClassList("sc-serve-guide");
+            serveGuide.style.display = DisplayStyle.None;
+            root.Add(serveGuide);
+            serveGuideLine = new VisualElement { name = "serve-guide-line", pickingMode = PickingMode.Ignore };
+            serveGuideLine.style.position = Position.Absolute;
+            serveGuideLine.style.height = ServeGuideLineHeight;
+            serveGuideLine.generateVisualContent += DrawServeGuideLine;
+            serveGuide.Add(serveGuideLine);
+            serveGuideLob = Text("Toca arriba: globo", "sc-shot-note");
+            serveGuideLob.name = "serve-guide-lob";
+            serveGuideLob.AddToClassList("sc-serve-guide-caption");
+            serveGuide.Add(serveGuideLob);
+            serveGuideDrive = Text("Toca abajo: drive", "sc-shot-note");
+            serveGuideDrive.name = "serve-guide-drive";
+            serveGuideDrive.AddToClassList("sc-serve-guide-caption");
+            serveGuide.Add(serveGuideDrive);
+            rally.RallyStarted += () => serveGuide.style.display = DisplayStyle.None;
+        }
+        private static void DrawServeGuideLine(MeshGenerationContext context)
+        {
+            float width = context.visualElement.contentRect.width;
+            if (width <= 0) return;
+            var painter = context.painter2D;
+            void Stroke(float y, float thickness, Color color)
+            {
+                painter.strokeColor = color;
+                painter.lineWidth = thickness;
+                painter.BeginPath();
+                painter.MoveTo(new Vector2(0, y));
+                painter.LineTo(new Vector2(width, y));
+                painter.Stroke();
+            }
+            const float center = ServeGuideLineHeight / 2;
+            Stroke(center + 2, 7, new Color32(4, 14, 18, 64));
+            Stroke(center + 2, 5, new Color32(4, 14, 18, 140));
+            Stroke(center, ServeGuideLineHeight, new Color32(255, 255, 255, 217));
+        }
+        private void RefreshServeGuide(bool show)
+        {
+            if (!show)
+            {
+                serveGuide.style.display = DisplayStyle.None;
+                return;
+            }
+            var camera = UnityEngine.Camera.main;
+            var config = app.Host.ActiveConfig;
+            var panel = serveGuide.parent.layout;
+            if (camera == null || config == null || !(panel.width > 0 && panel.height > 0)) return;
+            if (!ReferenceEquals(serveGuideConfig, config))
+            {
+                serveGuideConfig = config;
+                serveGuideCourt = config.Court;
+            }
+            var viewport = camera.rect;
+            Vector2 ToPanel(float x, float y)
+            {
+                var point = camera.WorldToViewportPoint(new Vector3(x, y, 0));
+                return new Vector2((viewport.x + point.x * viewport.width) * panel.width,
+                    (1 - viewport.y - point.y * viewport.height) * panel.height);
+            }
+            float threshold = (float)rally.Params.ServeKindLobMinAimY;
+            float courtWidth = serveGuideCourt.Width;
+            var wallTopLeft = ToPanel(0, serveGuideCourt.WallHeight);
+            var wallTopRight = ToPanel(courtWidth, serveGuideCourt.WallHeight);
+            var wallBottomLeft = ToPanel(0, 0);
+            var wallBottomRight = ToPanel(courtWidth, 0);
+            var left = ToPanel(0, threshold);
+            var right = ToPanel(courtWidth, threshold);
+            float center = (left.x + right.x) / 2;
+            float lineY = (left.y + right.y) / 2;
+            float elapsed = (float)rally.HumanServePauseElapsed;
+            float duration = (float)rally.WaitBetweenPoints;
+            float remaining = duration > 0 ? Mathf.Clamp01((duration - elapsed) / duration) : 0;
+            float width = (right.x - left.x) * remaining;
+            serveGuideLine.style.left = center - width / 2;
+            serveGuideLine.style.width = width;
+            serveGuideLine.style.top = lineY - ServeGuideLineHeight / 2;
+            float captionLeft = Mathf.Max(serveGuideSafeArea.Left, Mathf.Max(wallTopLeft.x, wallBottomLeft.x));
+            float captionRight = Mathf.Min(panel.width - serveGuideSafeArea.Right, Mathf.Min(wallTopRight.x, wallBottomRight.x));
+            serveGuideLob.style.left = serveGuideDrive.style.left = captionLeft;
+            serveGuideLob.style.width = serveGuideDrive.style.width = Mathf.Max(0, captionRight - captionLeft);
+            const float offset = ServeGuideLineHeight / 2 + ServeGuideLabelGap;
+            float captionTop = Mathf.Max(serveGuideSafeArea.Top, wallTopLeft.y);
+            float captionBottom = Mathf.Min(panel.height - serveGuideSafeArea.Bottom, wallBottomRight.y);
+            serveGuideLob.style.bottom = panel.height - (lineY - offset);
+            serveGuideLob.style.maxHeight = Mathf.Max(0, lineY - offset - captionTop);
+            serveGuideDrive.style.top = lineY + offset;
+            serveGuideDrive.style.maxHeight = Mathf.Max(0, captionBottom - lineY - offset);
+            serveGuide.style.opacity = Mathf.Clamp01(elapsed / BannerInSeconds);
+            serveGuide.style.display = DisplayStyle.Flex;
         }
         private Button Add(VisualElement row,string name,string text,System.Action action)
         {
@@ -293,7 +396,7 @@ namespace SquashClash.Runtime.Rally
             if(point!=bannerPoint)
             {
                 bannerPoint=point;
-                if(point<0){bannerAge=-1;banner.style.display=DisplayStyle.None;}
+                if(point<0){bannerAge=-1;}
                 else
                 {
                     var ended=rally.LastPoint.Value;int tone=!ended.Winner.HasValue?0:ended.Winner.Value==PlayerId.Human?1:2;
@@ -301,12 +404,14 @@ namespace SquashClash.Runtime.Rally
                     bannerCause.text=CauseLine(ended)+" · "+ended.Shots+(ended.Shots==1?" golpe":" golpes");
                     bool serves=rally.Match!=null&&!rally.Match.Finished;bannerNext.style.display=serves?DisplayStyle.Flex:DisplayStyle.None;
                     if(serves)bannerNext.text="Saca "+RallyText.Player(rally.Match.Server)+" ("+RallyText.Box(rally.Match.Box)+")";
-                    serveHint.style.display=serves&&rally.Match.Server==PlayerId.Human&&rally.NewServeNextPoint?DisplayStyle.Flex:DisplayStyle.None;
                     if(tone!=bannerTone){bannerTone=tone;Tone(bannerCard,"sc-banner",tone);}
                     PlaceBanner();
-                    bannerAge=0;bannerCard.style.opacity=0;bannerCard.style.translate=new Translate(0,-12);banner.style.display=DisplayStyle.Flex;
+                    bannerAge=0;bannerCard.style.opacity=0;bannerCard.style.translate=new Translate(0,-12);
                 }
             }
+            bool showServeGuide = rally.HumanServePause;
+            banner.style.display = point >= 0 && !showServeGuide ? DisplayStyle.Flex : DisplayStyle.None;
+            RefreshServeGuide(showServeGuide);
             RefreshEnergy(active);
             if(!active)
             {
