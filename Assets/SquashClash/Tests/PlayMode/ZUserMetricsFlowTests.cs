@@ -41,6 +41,17 @@ namespace SquashClash.Runtime.Tests
             Assert.That(lines.Count(r=>r.kind=="rally-point"),Is.EqualTo(rally.PointsPlayed));
             Click("match-result-menu");Refresh();Assert.That(Events("match-end"),Has.Length.EqualTo(1));
         }
+        [UnityTest] public IEnumerator NewServeRecordsTheSixthTutorialStep()
+        {
+            rally.SetNewServe(true);
+            Click("menu-howto");
+            for (int i = 0; i < 6; i++) Click("tutorial-next");
+            var steps = Events("tutorial-step");
+            Assert.That(steps.Select(step => step.step), Is.EqualTo(new[] { 1, 2, 3, 4, 5, 6 }));
+            Assert.That(steps[5].completed, Is.True);
+            yield return null;
+        }
+
         [UnityTest] public IEnumerator TutorialSkipAndMenuExit_RecordSkippedStepsAndAbandonment()
         {
             Click("menu-play");Click("tutorial-next");Click("tutorial-skip");Refresh();yield return null;
