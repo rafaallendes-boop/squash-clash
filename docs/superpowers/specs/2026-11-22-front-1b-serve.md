@@ -1,6 +1,8 @@
 # Front 1b — Saque nuevo: parado en el cuadro, con aviso de dónde tocar (RAL-177)
 
-22 nov 2026 · Base `origin/main` `518f9c3`. Spec de Claude (arquitecto, modo product lead); revisión no independiente. **Esta spec no enciende «Saque nuevo».** Todo lo que sigue vive detrás del interruptor, que sigue apagado por defecto. Encenderlo es otra PR y espera el «sí» del PO sobre la desviación del Definidor (−5,1/−5,5 pp, [informe del 20 nov](../../reviews/2026-11-20-serve.md)).
+22 nov 2026 · Base `origin/main` `518f9c3`. Spec de Claude (arquitecto, modo product lead); revisión no independiente. **El incremento 1 no enciende «Saque nuevo».** Todo vive detrás del interruptor, que sigue apagado por defecto. El encendido es el último incremento (§7), en una PR aparte.
+
+Pregunta resuelta el 22 nov: el PO aceptó sin recalibrar la desviación del Definidor (−5,1/−5,5 pp) y la baja del novato en la devolución (P+V de 97,5 % a 89,7 %). Datos en el [informe del 20 nov](../../reviews/2026-11-20-serve.md). Cita literal en §7.
 
 ## 0. El saque nuevo tal como existe
 
@@ -34,11 +36,12 @@ Solo con el interruptor encendido y solo en la pausa antes de un saque **del jug
 4. **El frontis queda libre.** En esta pausa, el aviso entre puntos se muestra en la franja bajo la cancha, la de la nota del golpe, en lugar de encima del frontis. La nota del golpe se oculta mientras tanto, porque su texto ya está en la causa del aviso. Si la franja no alcanza, se cae la línea «Saca Tú (…)», porque el cuerpo en el cuadro ya lo dice. El título y la causa no se cortan.
 5. **Onboarding.** El tutorial suma un sexto paso, «Saque», con su dibujo (el frontis con la línea de 3,0 m, globo arriba y drive abajo). Texto propuesto: «Cuando sacas tú, toca el frontis: arriba de la línea sale globo, abajo sale drive. Si no tocas, sale globo.»
    - El paso solo se incluye si `rally.NewServeNextPoint` es verdadero cuando se abre el tutorial. **Con el interruptor apagado el tutorial queda igual, con 5 pasos.**
-   - Hay tensión con la regla de la semana («ningún ítem suma un paso antes de jugar»). El paso aparecerá recién cuando se encienda el interruptor, así que esa decisión pertenece a la PR del encendido.
+   - Hay tensión con la regla de la semana («ningún ítem suma un paso antes de jugar»). El paso aparecerá recién con el incremento 2. Se acepta porque es parte del alcance pedido por el PO para el saque («el onboarding suma un paso de saque», SC-PM, 22 nov).
 
 ## 2. Fuera de alcance
 
-- Encender el interruptor por defecto: es otra PR y requiere el «sí» del PO.
+- Encender el interruptor por defecto: no va en este incremento, sino en el incremento 2 (§7).
+- Recalibrar los estilos o tocar umbrales, en cualquiera de los dos incrementos.
 - Cambiar las formas del saque, `ServeKindLobMinAimY`, la calibración o las reglas.
 - Una pausa antes del primer saque del partido. Ese saque sigue siendo globo automático, y sobre ese vuelo va la placa «vs» del ítem 4.
 - Mover al rival a su lugar de recepción durante la pausa. Sigue moviéndose en `BeginPoint`.
@@ -131,3 +134,26 @@ Pasada de `/frontend-design`.
   - y los dos son lenguaje de *menú*, no de cancha.
 
   También se descartó pintar dos zonas rellenas de color sobre el frontis: tapan la pared que el jugador está apuntando.
+
+## 7. Incrementos
+
+Hay dos PRs, en este orden. Cada una tiene su rama y necesita el «sí» del PO para fusionarse.
+
+**Incremento 1: el cuadro de saque, el aviso y el onboarding.** Es todo lo de §1 a §6, con el interruptor apagado por defecto.
+
+**Incremento 2 (el último): encender el saque nuevo por defecto.** Empieza después de fusionar el incremento 1.
+
+- **Cambio.** `RallyParams.ServeKindOn` pasa de 0 a 1. Es un valor por defecto de `RallyParams`; `DefaultPreset.json` no cambia (informe del 20 nov). El interruptor DEV «Saque nuevo» sigue existiendo y arranca en «sí».
+- **Sin recalibración.** No se tocan pesos, umbrales, `ServeKindLobMinAimY`, las formas del saque ni la calibración de los estilos. La desviación ya está medida y aceptada.
+- **Registro.** En [docs/reviews/2026-11-18-po-approvals.md](../../reviews/2026-11-18-po-approvals.md) va una entrada del 22 nov con la cita literal del PO, tomada del chat de SC-Lead: «Está bien la decisión. Igual hay que probar después con los usuarios reales. A si que todo bien.» La entrada dice qué cubre: el saque nuevo encendido por defecto sin recalibrar, con el Definidor en −5,1/−5,5 pp en Medio/Difícil y el novato devolviendo el saque del rival con P+V de 97,5 % a 89,7 %. Anota también que **se revisa con los primeros usuarios reales de TestFlight**, como observación abierta. Lo mismo se resume en AGENTS §6 y §7.
+- **Hashes.** El hash completo de RallyParams cambia y se declara en el informe. Toda proyección que excluye `ServeKind*` queda igual.
+- **Tests.**
+  - Las aserciones de «apagado por defecto» pasan a «encendido por defecto» por esta aprobación. Se declaran una por una, como en #86: por ejemplo `ZServeTests.cs:43` (`Off_TheMatchServeIsTodaysAutomaticServe`) y `:82`.
+  - Las pruebas del saque de hoy siguen existiendo con el interruptor apagado en el test.
+  - Primero va el RED por aserción: una prueba nueva verifica que `new RallyParams().ServeKindOn == 1`.
+- **Compuertas.**
+  - EditMode y PlayMode completos.
+  - AutoQA V/T3/volea PASS/0/1. AutoQA usa la práctica y no los partidos, así que debe salir idéntico.
+  - `check-release` OK.
+  - Una corrida de confirmación por estilo con el saque encendido, para mostrar que reproduce `confirm-new-serve01`: es la misma medición, no una recalibración.
+- **iPhone.** Lo que dice §5, pero sin tocar el panel DEV. Se instala solo con una autorización propia.
