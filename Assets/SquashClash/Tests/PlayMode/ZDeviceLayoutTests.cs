@@ -44,16 +44,18 @@ namespace SquashClash.Runtime.Tests
                 var p = camera.WorldToScreenPoint(new Vector3(x, y, 0));
                 return new Vector2(p.x / phone.Width * root.layout.width, (1 - p.y / phone.Height) * root.layout.height);
             }
-            var left = Panel(0, court.WallHeight);
-            var right = Panel(court.Width, court.WallHeight);
+            var topAtZero = Panel(0, court.WallHeight);
+            var topAtWidth = Panel(court.Width, court.WallHeight);
             var bottom = Panel(court.Width, 0);
+            float left = Mathf.Min(topAtZero.x, topAtWidth.x);
+            float right = Mathf.Max(topAtZero.x, topAtWidth.x);
             AssertFits("serve-guide", phone.ToString());
             var labels = new[] { Find("serve-guide-lob"), Find("serve-guide-drive") };
             foreach (var label in labels)
             {
-                Assert.That(label.worldBound.xMin, Is.GreaterThanOrEqualTo(left.x - 1));
-                Assert.That(label.worldBound.xMax, Is.LessThanOrEqualTo(right.x + 1));
-                Assert.That(label.worldBound.yMin, Is.GreaterThanOrEqualTo(left.y - 1));
+                Assert.That(label.worldBound.xMin, Is.GreaterThanOrEqualTo(left - 1));
+                Assert.That(label.worldBound.xMax, Is.LessThanOrEqualTo(right + 1));
+                Assert.That(label.worldBound.yMin, Is.GreaterThanOrEqualTo(topAtZero.y - 1));
                 Assert.That(label.worldBound.yMax, Is.LessThanOrEqualTo(bottom.y + 1));
             }
             var line = Find("serve-guide-line").worldBound;

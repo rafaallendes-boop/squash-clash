@@ -79,8 +79,16 @@ namespace SquashClash.Runtime.Tests
             Assert.That(Drive(() => app.Host.ObservedRealTime >= pointEnd + 2.97, 3), Is.True);
             Assert.That(app.Host.LaunchId, Is.EqualTo(launch));
             Assert.That(rally.Human.Position, Is.EqualTo(box), "the server stays still until the serve");
-            Assert.That(Drive(() => app.Host.LaunchId == launch + 1, .1), Is.True);
-            Assert.That(app.Host.ObservedRealTime - pointEnd, Is.EqualTo(3d).Within(StepReal + 1e-8));
+            // Launch resets ObservedRealTime. Record the elapsed time before the step that launches.
+            double elapsedBeforeLaunch = 0;
+            Assert.That(Drive(() =>
+            {
+                if (app.Host.LaunchId != launch) return true;
+                elapsedBeforeLaunch = app.Host.ObservedRealTime - pointEnd;
+                return false;
+            }, .1), Is.True);
+            Assert.That(app.Host.LaunchId, Is.EqualTo(launch + 1));
+            Assert.That(elapsedBeforeLaunch + StepReal, Is.EqualTo(3d).Within(StepReal + 1e-8));
             Assert.That(rally.LastServeType, Is.EqualTo(ServeType.Lob));
             yield return null;
         }
@@ -131,11 +139,14 @@ namespace SquashClash.Runtime.Tests
             Assert.That(line, Is.Not.Null);
             var camera = UnityEngine.Camera.main;
             var court = app.Host.ActiveConfig.Court;
-            var left = camera.WorldToScreenPoint(new Vector3(0, 3, 0));
-            var right = camera.WorldToScreenPoint(new Vector3(court.Width, 3, 0));
-            float fullWidth = (right.x - left.x) * root.layout.width / Screen.width;
-            Assert.That(line.worldBound.center.y, Is.EqualTo((1f - left.y / Screen.height) * root.layout.height).Within(1));
+            var atZero = camera.WorldToScreenPoint(new Vector3(0, 3, 0));
+            var atWidth = camera.WorldToScreenPoint(new Vector3(court.Width, 3, 0));
+            float panelPerPixel = root.layout.width / Screen.width;
+            float fullWidth = Mathf.Abs(atWidth.x - atZero.x) * panelPerPixel;
+            float center = (atZero.x + atWidth.x) / 2 * panelPerPixel;
+            Assert.That(line.worldBound.center.y, Is.EqualTo((1f - atZero.y / Screen.height) * root.layout.height).Within(1));
             Assert.That(line.worldBound.width, Is.EqualTo(fullWidth).Within(1));
+            Assert.That(line.worldBound.center.x, Is.EqualTo(center).Within(1));
             double start = app.Host.ObservedRealTime;
             Assert.That(Drive(() => app.Host.ObservedRealTime >= start + 1, 1.1), Is.True);
             hud.Refresh();
@@ -143,6 +154,7 @@ namespace SquashClash.Runtime.Tests
             yield return null;
             float remaining = (float)(3 - (app.Host.ObservedRealTime - start)) / 3f;
             Assert.That(line.worldBound.width, Is.EqualTo(fullWidth * remaining).Within(1 + fullWidth * StepReal / 3));
+            Assert.That(line.worldBound.center.x, Is.EqualTo(center).Within(1));
             var input = app.GetComponent<TouchInputAdapter>();
             var low = camera.WorldToScreenPoint(new Vector3(3.2f, 2.7f, 0));
             Assert.That(input.UiBlocker(low), Is.False);
