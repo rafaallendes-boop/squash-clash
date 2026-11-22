@@ -27,6 +27,9 @@ namespace SquashClash.Core.Tests.Rally
         }
         private static bool Same(BallState a,BallState b)=>a.Position==b.Position&&a.Velocity==b.Velocity&&a.Step==b.Step;
 
+        [Test] public void NewServeIsEnabledByDefault()
+            => Assert.That(new RallyParams().ServeKindOn, Is.EqualTo(1d));
+
         [TestCase(ServiceBox.Right)][TestCase(ServiceBox.Left)]
         public void Lob_IsHighOnTheFrontWall_TouchesTheSideWall_AndDiesInTheBackCorner(ServiceBox box)
         {
