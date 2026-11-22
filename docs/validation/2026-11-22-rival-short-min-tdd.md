@@ -35,3 +35,13 @@ Logs y XML completos: `Logs/evidence/rival-short-min/` (ignorados). Cada corrida
 - Huella de 1.080 decisiones `planned` (3 estilos × 3 niveles × 3 contactos × 2 holguras × 20): `53870c765e9e1cc410b87b41d810afc7fbe53ac0ffa42345b9b97192786de4de`. Capturada con `RivalAi`, planificador, solver y parámetros idénticos a `518f9c3`, antes de I2/I3. Se congela como aserción adicional del test nuevo según §5.2, paso 10.
 
 `i2-green`: filtro de I2, caracterizaciones desde adelante, guardias `planned`, huella y hashes: **11/11 Passed**, 0 Failed, 0 Skipped. Se mantiene R2 en 0; las tres guardias bajo presión siguen permitiendo dos paredes. Sin cambios en tests existentes.
+
+## I3 — RED válido del filtro
+
+Se corrigió la suposición de altura fija del test nuevo: la búsqueda ahora recorre la ventana legal de alturas y contactos adelante de la T, conservando al oponente en la T, el predictor como oráculo y la expectativa 0. Es el escenario de §5.2, paso 8; no cambia ningún escenario predeclarado del experimento ni test existente.
+
+`i3-filter-red`: **4 tests, 0 Passed, 4 Failed, 0 Skipped**, XML fresco y sin errores CS. El caso encontrado es `(x=0,6; y=0,05; z=1,1)`: recta no alcanzable, cruzado alcanzable. Cada estilo eligió **62/100** opciones inalcanzables frente a 0 exigido. El respaldo volvió a fallar por 46 pasos de retraso frente al mínimo 27. Ambos son RED válidos antes de implementar I3.
+
+`i3-green`: `scripts/test.sh editmode SquashClash.Core.Tests.Rally.RivalShortBallTests`: **15/15 Passed**, 0 Failed, 0 Skipped. R2 = 0 en los casos probados; R3 = 0/100 elecciones inalcanzables por estilo cuando existe una opción alcanzable. En el caso sin ninguna alcanzable, las 50 elecciones tienen retraso mínimo y `LastStretchedFallback == true`. La huella de las 1.080 decisiones `planned` coincide con la previa a I2/I3 y los tres hashes siguen iguales.
+
+La protección R3 se aplica a las intenciones nominales antes del sorteo y de los ruidos de ejecución, según §5.1 I3. No garantiza que el bot humano no cometa errores (R6). El retraso del respaldo es `ArrivalStep − TStarStep` si hay contacto, o respecto del final de la trayectoria de bote si no hay contacto. No se añade ningún parámetro.

@@ -43,10 +43,15 @@ namespace SquashClash.Core.Tests.Rally
         public void RivalAi_Stretched_PicksAnOptionTheOpponentCanReach(RivalStyleId style)
         {
             var c=RallyFixtures.Context();int mixed=0,violations=0;
-            foreach(float z in new[]{.8f,1,1.25f,1.5f,1.75f,2,2.25f,2.5f,2.75f,3,3.5f,4.5f})
-            foreach(float x in new[]{.6f,1.6f,3.2f,4.8f,5.8f})
+            // Spec section 5.2, step 8: a legal front contact and the opponent at T, with one return of each class.
+            // The first fixture incorrectly assumed height .8 m would contain such a case.
+            var points=from h in Enumerable.Range(0,11)
+                from d in Enumerable.Range(8,(int)(c.T.y*10)-7)
+                from x in new[]{.6f,1.6f,3.2f,4.8f,5.8f}
+                select new Vector3(x,Mathf.Lerp(c.Legal.MinHeight,c.Legal.MaxHeight,h/10f),d/10f);
+            foreach(var at in points)
             {
-                var at=new Vector3(x,.8f,z);var options=Defensive(c,at);
+                var options=Defensive(c,at);
                 if(options.Count!=2)continue;
                 var reachable=options.Select(s=>ReturnPlan(c,at,s,c.T).Reachable).ToArray();
                 if(!reachable.Any(v=>v)||reachable.All(v=>v))continue;

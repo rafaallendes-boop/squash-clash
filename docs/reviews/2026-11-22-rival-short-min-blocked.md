@@ -1,37 +1,29 @@
-# Rival frente al golpe corto — I-min detenido
+# Rival frente al golpe corto — incremento mínimo I1–I3
 
-22 nov 2026 · RAL-174 · Codex · base `origin/main` `518f9c3` · rama `feat/rival-short-min` · PR #97.
+22 nov 2026 · RAL-174 · Codex · base `518f9c3` · rama `feat/rival-short-min` · PR #97.
 
-**Estado: incompleto, no compila y no es apto para la build.** Hay un RED válido de la función pura de I1. Su primera implementación falló al compilar; se detuvo sin corregir ni reintentar, conforme a la condición expresa de SC-PM. I1 en el director e I2–I3 siguen pendientes.
+**Estado: I1–I3 implementados; gates completos en curso.** PR en borrador, sin fusión ni instalación. Spec de #92 (`d320c13`) leída con `git show`; el encargo explícito incluye I3 aunque la adenda HOY lo difiere.
 
-## Alcance y autorización
+## Cambio
 
-Spec leída con `git show origin/docs/rival-corto-arq:docs/superpowers/specs/2026-11-22-rival-short-ball-design.md`, head `d320c13` de #92. El pedido de esta sesión incluye «incremento mínimo I-min (I1 a I3)», aunque la adenda HOY difiere I3. I4 y P1–P6 quedan fuera.
+- I1: una aproximación máxima después del primer bote, hasta el segundo, sobre el camino congelado del rival. Sin intento si el punto cerró antes del primer bote. El director emite una sola estirada fallida antes de terminar el punto, sin cambiar su resultado ni las métricas.
+- I2: `stretched` solo permite recta/cruzado × alto × media, sin dos paredes. La presión con plan `planned` conserva las opciones anteriores.
+- I3: el predictor y planificador compartidos filtran las intenciones no alcanzables por el humano desde su posición observada. Sin ninguna alcanzable, se elige el menor retraso y se marca `LastStretchedFallback`.
 
-SC-PM, 22 nov 17:58 −03 (hora indicada en su mensaje), autorizó: «Corrige solo las referencias que impiden compilar» y «Repite el RED una sola vez». Condición literal: «Si vuelve a fallar algo que no sea una aserción esperada, regístralo y detente». Se calificó únicamente `UnityEngine.Physics.bounceThreshold` en el test nuevo de PlayMode; ninguna aserción, escenario, umbral ni test existente fue modificado.
+## TDD y autorización
 
-## Resultados exactos
+SC-PM, 22 nov 19:15 −03: «Mi condición anterior fue demasiado estricta y la retiro». Autoriza corregir e iterar sobre compilación, parche y suposiciones de tests nuevos. Se mantienen las paradas ante cambios necesarios en criterios protegidos, entorno o comportamiento inesperado ya presente en main. Registro y resultados detallados: [evidencia TDD](../validation/2026-11-22-rival-short-min-tdd.md).
 
-| Corrida | Total / Passed / Failed / Skipped | Resultado |
-|---|---|---|
-| RED inicial, 15:39 | 0 / 0 / 0 / 0 | CS0234 en el test nuevo; sin XML |
-| Único RED autorizado, 17:56 | 2 / 1 / 1 / 0 | XML fresco y sin errores CS; aserción esperada: paso 103 frente a −1 |
-| Primer GREEN de I1, 17:57 | 0 / 0 / 0 / 0 | CS1529 en código nuevo; XML anterior rechazado |
+- I1 puro: RED 103 frente a −1; GREEN **2/2**. Guardia de cierre anterior al bote: verde desde el esqueleto.
+- I1 director: RED 1 evento frente a 0, con plan `unreachable` confirmado; GREEN **2/2**. Recepción con golpe: guardia verde.
+- I2: RED **65/144/112** dos paredes en 500 decisiones por estilo, frente a 0; GREEN **11/11**, incluidas guardias `planned`.
+- I3: RED **62/100** elecciones inalcanzables por estilo, frente a 0; respaldo 46 pasos frente a 27. GREEN **15/15** con 0 violaciones en los casos mixtos y respaldo marcado.
+- La búsqueda inicial del test nuevo suponía altura 0,8 m y no encontró el caso mixto; se corrigió buscando dentro de la ventana legal de la spec, conservando al humano en la T y la expectativa 0. Los dos errores de compilación previos y su autorización constan en la evidencia; nunca se contaron como RED o GREEN.
 
-Comando en las tres: `scripts/test.sh editmode SquashClash.Core.Tests.Rally.RivalAttemptTests`. Salida 1 en las tres, con motivos distintos. La guardia `NoneWhenPointClosedBeforeBounce` nació verde en el RED autorizado.
+## Límites y riesgo
 
-Bloqueo actual:
+Huella de 1.080 decisiones `planned` idéntica a la previa a I2/I3: `53870c765e9e1cc410b87b41d810afc7fbe53ac0ffa42345b9b97192786de4de`. Hashes verificados en los tests: defaults `207da8f2c636`, RallyParams `a82c34b661bf`, SimulationKey `166a96e319c7`.
 
-```text
-Assets/SquashClash/Core/Rally/RivalAttempt.cs(34,1): error CS1529: A using clause must precede all other elements defined in the namespace except extern alias declarations
-```
+I2 puede mover la cuenta de dos paredes; I3 cambia elecciones y la secuencia RNG desde una recepción estirada. R7 y las distribuciones del Anexo A aún no medidos; R1–R3 se afirman solo para los fixtures verificados. Quedan para el iPhone la lectura visual y el p95.
 
-El parche de Codex dejó `using System;` al final del archivo. Se conserva sin corregir. El XML copiado en la carpeta de este GREEN es el XML anterior, **no evidencia de una ejecución nueva**. Evidencia local ignorada: `Logs/evidence/rival-short-min/compile-blocker/`, `i1-red-authorized-console.txt`, `editmode-results.xml`, `editmode.log`, `i1-green-console.txt` e `i1-green/`.
-
-Cada corrida adquirió el candado y lo liberó mediante `trap` al terminar. `device.env` fue copiado sin cambios y no se versionó; la ruta original faltaba y se cotejaron byte a byte las copias de los worktrees de instalación y del otro incremento.
-
-## Puertas y límites
-
-R1/R2/R3 globales **no evaluados**; no se afirman valores 0. EditMode completo, PlayMode, AutoQA V/T3/volea y check-release pendientes. Ningún test existente de calibración se cambió ni ejecutó; no hay cifras nuevas ni ajustes. Huella `planned`, R7 y Anexo A en main/rama no medidos.
-
-Sin cambios en preset, RallyParams, física, solver, contrato, reloj, humano, FondoAi, `pullFullMm` o calibración. Hashes esperados, aún sin verificación ejecutada: defaults `207da8f2c636`, RallyParams `a82c34b661bf`, SimulationKey `166a96e319c7`. No hubo fusión, build nativa, instalación ni acceso al iPhone. La PR permanece en borrador.
+I4 y P1–P6 fuera. Sin cambios en tests existentes, parámetros de preset, física, solver, contrato, reloj, humano, FondoAi, `pullFullMm` ni calibración. Todas las corridas toman y liberan su propio candado de Unity.

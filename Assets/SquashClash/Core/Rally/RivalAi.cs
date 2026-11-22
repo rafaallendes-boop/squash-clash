@@ -78,6 +78,8 @@ namespace SquashClash.Core.Rally
         private readonly ShotOption[] all=new ShotOption[44];
         private readonly bool[] atVolley=new bool[44];
         public RivalStyle Style {get;}
+        // Observable diagnostic for R3: no legal defensive intention gave the opponent a reachable bounce plan.
+        public bool LastStretchedFallback {get;private set;}
         // The game's rival: the level's shared noise scaled by the (style, level) factor.
         public static RivalAi For(RallyContext context,AiLevel level,RivalStyleId style,long seed)
             =>new RivalAi(context,RivalStyle.Difficulty(context.Params,style,level),style,seed);
@@ -112,6 +114,7 @@ namespace SquashClash.Core.Rally
         }
         public AiShot Decide(in AiObservation observation,in ReceptionPlan own)
         {
+            LastStretchedFallback=false;
             bool bounce=own.Reachable&&own.Contact.Exists&&own.Contact.TStarStep>=0;
             bool volley=VolleyWanted(own);
             if(!bounce&&!volley)return default;
@@ -132,7 +135,7 @@ namespace SquashClash.Core.Rally
                     count++;
                 }
             }
-            // A boast stays open under pressure: from the back corner it is the classic way out.
+            // A planned low-slack reception still allows the back-corner boast; stretched receptions use pure defence.
             if(bounce)Add(own.Contact.PStar,false,0);
             if(volley)
             {
@@ -144,12 +147,14 @@ namespace SquashClash.Core.Rally
                 }
                 Add(v.PStar,true,bonus);
             }
+            int forced=stretched?FilterStretched(count,observation,own,out best):-1;
+            LastStretchedFallback=forced>=0;
             double total=0,temperature=Math.Max(1e-3,difficulty.Temperature);
             for(int i=0;i<count;i++){weights[i]=double.IsNegativeInfinity(weights[i])?0:Math.Exp((weights[i]-best)/temperature);total+=weights[i];}
             // Same draw as FondoAi: an option the AI itself predicts as a fault is dropped and the draw repeats.
-            int chosen=-1,fallback=0;
+            int chosen=forced,fallback=0;
             for(int i=1;i<count;i++)if(weights[i]>weights[fallback])fallback=i;
-            for(int attempt=0;attempt<count&&total>0;attempt++)
+            for(int attempt=0;chosen<0&&attempt<count&&total>0;attempt++)
             {
                 double pick=random.NextDouble()*total;int candidate=-1;
                 for(int i=0;i<count;i++){if(weights[i]<=0)continue;candidate=i;pick-=weights[i];if(pick<0)break;}
@@ -174,6 +179,34 @@ namespace SquashClash.Core.Rally
             {lower=Math.Max(lower,-context.Timing.ValidMs);upper=Math.Min(upper,context.Timing.ValidMs);}
             delta=RivalReleaseTiming.Adjust(delta,lower,upper,difficulty.TimingSigmaMs,p.FondoReleaseMarginSigma);
             return new AiShot(true,option,aim,power,delta,defensive,useVolley,side);
+        }
+        // Only stretched receptions are filtered. The ordinary policy and its random draws stay untouched.
+        private int FilterStretched(int count,in AiObservation observation,in ReceptionPlan own,out double best)
+        {
+            best=double.NegativeInfinity;int firstAllowed=-1,leastLate=-1;long smallestDelay=long.MaxValue;bool reachable=false;
+            for(int i=0;i<count;i++)
+            {
+                if(double.IsNegativeInfinity(weights[i]))continue;
+                if(firstAllowed<0)firstAllowed=i;
+                var option=all[i];var at=atVolley[i]?own.Volley.Plan.PStar:own.Contact.PStar;
+                if(RallyContact.Forecast(context,at,option.Aim,option.P).Good)
+                {
+                    // Forecast supplies the fault guard; the same intention supplies the full shared prediction.
+                    var solution=RallyContact.SolveIntention(context,at,option.Aim,option.P);
+                    var trajectory=context.Predict(new BallState{Position=at,Velocity=solution.Velocity});
+                    var rules=context.NewRules();rules.Begin(PlayerId.Rival,PlayerId.Human);
+                    var opponent=new PlayerBody(PlayerId.Human,observation.OpponentPosition,context.Move);
+                    var plan=ReceptionPlanner.Plan(context,trajectory,rules,opponent,context.Steps(context.Params.ReactionS),1);
+                    // With no contact window, lateness is measured against the end of that predicted bounce flight.
+                    long until=plan.Contact.Exists&&plan.Contact.TStarStep>=0?plan.Contact.TStarStep:trajectory.States[trajectory.States.Count-1].Step;
+                    long delay=plan.ArrivalStep-until;
+                    if(leastLate<0||delay<smallestDelay){leastLate=i;smallestDelay=delay;}
+                    if(plan.Reachable){reachable=true;if(weights[i]>best)best=weights[i];continue;}
+                }
+                weights[i]=double.NegativeInfinity;
+            }
+            // No safe option: retain a defensive intention and flag the exception instead of drawing a winner at random.
+            return reachable?-1:leastLate>=0?leastLate:firstAllowed;
         }
         // FondoAi.Utility plus the style's attack feature and drop zone. For Fondista both are zero/closed, so the value is FondoAi's.
         public double Utility(in ShotOption option,in AiObservation observation,in ReceptionPlan own,Vector3 at)
