@@ -1,6 +1,12 @@
-# Evidencia TDD — rival ante el corto, I1–I3
+# Evidencia TDD — rival ante el corto; camino A, solo I1 en #97
 
 Base `518f9c3`, rama `feat/rival-short-min`, PR #97. Spec de #92 leída con `git show`, head `d320c13`.
+
+## Alcance vigente — decisión de SC-Lead, 22 nov
+
+RAL-174, camino A: «la PR #97 queda solo con I1, el intento visible». I2–I3 se conservan en `feat/rival-short-i2i3`, sin PR. En #97 se retiran mediante commits nuevos, sin reescribir historial ni forzar el push. Se restaura `RivalAi.cs` byte a byte desde `518f9c3` y se retiran únicamente el test nuevo `RivalShortBallTests.cs` y su meta; ningún test existente cambia. Los contenidos originales de I2–I3 se conservan exactamente desde `e37fbbb`, incluidos los cambios de `67d2f33` y `5d77420`.
+
+Se correrán de nuevo EditMode completo, PlayMode completo, AutoQA V/T3/volea y check-release, con un candado por corrida. Cualquier fallo de M3 u otro test existente exige registrar y detenerse. Solo se retira el borrador de #97 si todas las puertas están verdes. No hay autorización de fusión ni instalación. Lo que sigue hasta las nuevas corridas de I1 es el historial de I1–I3, no el alcance actual de #97.
 
 ## Autorización vigente
 
