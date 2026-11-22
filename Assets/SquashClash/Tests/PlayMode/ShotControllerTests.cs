@@ -365,6 +365,16 @@ namespace SquashClash.Runtime.Tests
             Assert.That(controller.LastRecord.ReleaseEventAtReal,Is.EqualTo(end));Assert.That(controller.AttemptConsumed,Is.True);
             Assert.That(controller.LastRecord.Applied,Is.EqualTo(kind=="late-began"));
         }
+        [TestCase("early", "before-k-in", "¡Temprano!")]
+        [TestCase("outside-v", "outside-v", "¡Temprano!")]
+        [TestCase("no-plan", "no-plan", "No llega")]
+        public void EarlyOrUnreachableRelease_ShowsItsPlayerNote(string kind, string reason, string expectedNote)
+        {
+            M2S2_N09_EndedDecidesCategoryAndConsumption_WithoutRescue(kind);
+            if (kind != "no-plan")
+                Assert.That(controller.LastRecord.Reason, Is.EqualTo(reason));
+            Assert.That(controller.GetComponent<ShotNoteView>().Text, Is.EqualTo(expectedNote));
+        }
         [Test] public void WrongPredeclaredHash_BlockArmRejectedWithVisibleRemedy()
         {
             var before=app.Host.Current;long launch=app.Host.LaunchId;
