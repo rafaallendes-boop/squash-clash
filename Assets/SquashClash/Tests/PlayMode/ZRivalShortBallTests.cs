@@ -37,7 +37,7 @@ namespace SquashClash.Runtime.Tests
             var flags=BindingFlags.Instance|BindingFlags.NonPublic;
             var rules=(PointRules)typeof(RallyDirector).GetField("committed",flags).GetValue(rally);
             rules.Begin(PlayerId.Human,PlayerId.Rival);
-            var c=new RallyContext(app.Host.ActiveConfig,rally.Params,new AnalyticBallSimulationFactory(Physics.bounceThreshold));
+            var c=new RallyContext(app.Host.ActiveConfig,rally.Params,new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
             var from=new Vector3(1.2f,.6f,2.2f);
             var center=Ballistics.CenterForContact(Core.Court.SurfaceId.FrontWall,new Vector3(.8f,.75f,0),c.Physics.BallRadius);
             var ball=new BallState{Position=from,Velocity=Ballistics.SolveCenterTo(from,center,5,c.Physics.Gravity)};

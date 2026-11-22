@@ -1,31 +1,37 @@
 # Rival frente al golpe corto — I-min detenido
 
-22 nov 2026 · RAL-174 · Codex · base `origin/main` `518f9c3` · rama `feat/rival-short-min`.
+22 nov 2026 · RAL-174 · Codex · base `origin/main` `518f9c3` · rama `feat/rival-short-min` · PR #97.
 
-**Estado: incompleto; no apto para fusionar ni para la build.** Se detuvo la primera corrida por un error de compilación en un test nuevo. No hay RED válido ni implementación del comportamiento. No se corrigió ni se reintentó, conforme a AGENTS §2 («Ante un defecto o sorpresa: registrar y detenerse, sin corregir ni reintentar para obtener Pass»).
+**Estado: incompleto, no compila y no es apto para la build.** Hay un RED válido de la función pura de I1. Su primera implementación falló al compilar; se detuvo sin corregir ni reintentar, conforme a la condición expresa de SC-PM. I1 en el director e I2–I3 siguen pendientes.
 
-## Alcance y preparación
+## Alcance y autorización
 
-Spec leída con `git show origin/docs/rival-corto-arq:docs/superpowers/specs/2026-11-22-rival-short-ball-design.md`, head `d320c13` de la PR #92. El pedido explícito de esta sesión incluye «incremento mínimo I-min (I1 a I3)», aunque la adenda HOY de la spec difiere I3. I4 y P1–P6 quedan fuera.
+Spec leída con `git show origin/docs/rival-corto-arq:docs/superpowers/specs/2026-11-22-rival-short-ball-design.md`, head `d320c13` de #92. El pedido de esta sesión incluye «incremento mínimo I-min (I1 a I3)», aunque la adenda HOY difiere I3. I4 y P1–P6 quedan fuera.
 
-Se agregaron tests preparatorios de aproximación y cierre anterior al bote (I1), evento único antes de terminar el punto y guardia de recepción con golpe (PlayMode), defensa sin dos paredes y guardia `planned` (I2), alcanzabilidad y respaldo de menor retraso (I3), captura de huella de decisiones `planned` y hashes. `RivalAttempt.StepFor` es únicamente el esqueleto que devuelve −1 previsto para el primer RED. Las guardias aún no se ejecutaron; la huella aún no se capturó ni congeló.
+SC-PM, 22 nov 17:58 −03 (hora indicada en su mensaje), autorizó: «Corrige solo las referencias que impiden compilar» y «Repite el RED una sola vez». Condición literal: «Si vuelve a fallar algo que no sea una aserción esperada, regístralo y detente». Se calificó únicamente `UnityEngine.Physics.bounceThreshold` en el test nuevo de PlayMode; ninguna aserción, escenario, umbral ni test existente fue modificado.
 
-## Evidencia y bloqueo
+## Resultados exactos
 
-Comando: `scripts/test.sh editmode SquashClash.Core.Tests.Rally.RivalAttemptTests`.
+| Corrida | Total / Passed / Failed / Skipped | Resultado |
+|---|---|---|
+| RED inicial, 15:39 | 0 / 0 / 0 / 0 | CS0234 en el test nuevo; sin XML |
+| Único RED autorizado, 17:56 | 2 / 1 / 1 / 0 | XML fresco y sin errores CS; aserción esperada: paso 103 frente a −1 |
+| Primer GREEN de I1, 17:57 | 0 / 0 / 0 / 0 | CS1529 en código nuevo; XML anterior rechazado |
 
-Resultado exacto: **total=0 passed=0 failed=0 skipped=0**, salida 1; Unity no generó XML. Log:
+Comando en las tres: `scripts/test.sh editmode SquashClash.Core.Tests.Rally.RivalAttemptTests`. Salida 1 en las tres, con motivos distintos. La guardia `NoneWhenPointClosedBeforeBounce` nació verde en el RED autorizado.
+
+Bloqueo actual:
 
 ```text
-Assets/SquashClash/Tests/PlayMode/ZRivalShortBallTests.cs(40,105): error CS0234: The type or namespace name 'bounceThreshold' does not exist in the namespace 'SquashClash.Runtime.Physics' (are you missing an assembly reference?)
+Assets/SquashClash/Core/Rally/RivalAttempt.cs(34,1): error CS1529: A using clause must precede all other elements defined in the namespace except extern alias declarations
 ```
 
-El identificador `Physics` del test nuevo se resolvió al namespace del producto. El fallo es del test escrito por Codex. No es una falla por aserción y no demuestra RED. Evidencia local ignorada: `Logs/editmode.log`, `Logs/editmode-console.log` y `Logs/evidence/rival-short-min/i1-red-console.txt`.
+El parche de Codex dejó `using System;` al final del archivo. Se conserva sin corregir. El XML copiado en la carpeta de este GREEN es el XML anterior, **no evidencia de una ejecución nueva**. Evidencia local ignorada: `Logs/evidence/rival-short-min/compile-blocker/`, `i1-red-authorized-console.txt`, `editmode-results.xml`, `editmode.log`, `i1-green-console.txt` e `i1-green/`.
 
-El candado se adquirió antes de lanzar Unity y se liberó mediante `trap` al terminar. La ruta de origen indicada para `device.env` no existía: se usó una copia del worktree de instalación, cotejada byte a byte con la del otro incremento y con la copia de destino; no se versionó.
+Cada corrida adquirió el candado y lo liberó mediante `trap` al terminar. `device.env` fue copiado sin cambios y no se versionó; la ruta original faltaba y se cotejaron byte a byte las copias de los worktrees de instalación y del otro incremento.
 
-## Puertas pendientes
+## Puertas y límites
 
-R1/R2/R3 **no evaluados**; no se afirman valores 0. EditMode completo, PlayMode, AutoQA V/T3/volea y check-release no ejecutados después del bloqueo. Ningún test existente de calibración se cambió ni ejecutó; no hay cifras nuevas ni ajustes. R7 y Anexo A en main/rama no medidos; no se publicaron tablas vacías como resultados.
+R1/R2/R3 globales **no evaluados**; no se afirman valores 0. EditMode completo, PlayMode, AutoQA V/T3/volea y check-release pendientes. Ningún test existente de calibración se cambió ni ejecutó; no hay cifras nuevas ni ajustes. Huella `planned`, R7 y Anexo A en main/rama no medidos.
 
-No hay cambios en valores de preset, RallyParams, física, solver, contrato, reloj, humano, FondoAi, `pullFullMm` ni calibración. Los hashes esperados en las guardias siguen siendo defaults `207da8f2c636`, RallyParams `a82c34b661bf` y SimulationKey `166a96e319c7`, **sin verificación de ejecución**. No hubo fusión, build nativa, instalación ni acceso al iPhone. El reloj ya marcaba 15:28 de Chile al inicio; la revisión de las ~15:00 no pudo cumplirse.
+Sin cambios en preset, RallyParams, física, solver, contrato, reloj, humano, FondoAi, `pullFullMm` o calibración. Hashes esperados, aún sin verificación ejecutada: defaults `207da8f2c636`, RallyParams `a82c34b661bf`, SimulationKey `166a96e319c7`. No hubo fusión, build nativa, instalación ni acceso al iPhone. La PR permanece en borrador.
