@@ -48,4 +48,8 @@ Efecto: (1) cuando Claude implementa código, usa un modelo Sonnet; la arquitect
 
 ## 22 nov 2026 — Delegación de los presets P1–P6 de #92
 
-Delegación del PO transmitida por SC-PM, que la da por verificada (sin cita literal en el encargo): las propuestas de preset P1 a P6 de la PR #92 (rival ante el golpe corto: espera, percepción, `ReactionS`, llegada en frenada, globo desde adelante y cobertura) las decide SC-Lead. Es una excepción acotada a la reserva de AGENTS §4. `pullFullMm`, P0-calib-1 y la aceptación de etapas siguen siendo de Rafael.
+Texto literal del PO (22 nov, chat de SC-Lead; SC-PM verificó el texto en esa transcripción):
+
+«Te doy el consentimiento para que puedas tomar la decisión. Iré adelantando lo de testflight quizás. Voy a ir viendo. Entonces vamos bien»
+
+Efecto: las propuestas de preset P1 a P6 de la PR #92 (rival ante el golpe corto: espera, percepción, `ReactionS`, llegada en frenada, globo desde adelante y cobertura) las decide SC-Lead. Es una excepción acotada a la reserva de AGENTS §4. `pullFullMm`, P0-calib-1 y la aceptación de etapas siguen siendo de Rafael.
