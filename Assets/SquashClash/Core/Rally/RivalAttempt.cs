@@ -1,3 +1,4 @@
+using System;
 using SquashClash.Core.Shot;
 using SquashClash.Core.Simulation;
 using UnityEngine;
@@ -31,4 +32,3 @@ namespace SquashClash.Core.Rally
         }
     }
 }
-using System;
