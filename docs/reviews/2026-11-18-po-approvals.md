@@ -8,7 +8,7 @@ Historial anterior: [2026-10-25-first-shot-po-approvals.md](2026-10-25-first-sho
 - Modo product lead (18 nov): terminado el 22 nov.
 - Fusión de PR: con tests en verde y revisión aprobada (22 nov); la fusión no acepta la etapa.
 - Corridas de `scripts/test.sh`, `scripts/check-release.sh` y AutoQA en el Mac del PO sin permiso por corrida (10 nov).
-- Cada instalación en el iPhone: respaldo y cotejo; desde el 22 nov sin autorización propia si viene de `main` con las puertas en verde (última instalada: `0.1.0+a7b3311 dev`, 21 nov).
+- Cada instalación en el iPhone: respaldo y cotejo; desde el 22 nov sin autorización propia si viene de `main` con las puertas en verde (última instalada: `0.1.0+518f9c3 dev`, CFBundleVersion 1078, 22 nov).
 - Cansancio v1 (spec v2.3): F1/F2 fusionadas; sin más ajustes B (17 nov).
 - U1–U3 ejecutadas: `timing.validLimit` 0, AutoQA con T3 y K independiente (16–17 nov).
 - G1: A1 #74 fusionada; A2 diferida el 17 nov, y reabierta dentro del encargo del 18 nov.

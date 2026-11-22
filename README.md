@@ -26,7 +26,7 @@ scripts/autoqa.sh mvp
 
 **AutoQA.** `scripts/autoqa.sh mvp` es obligatorio cuando el cambio toca timing, gesto o contrato, cualquiera de los tres. Detalle en [docs/autoqa/README.md](docs/autoqa/README.md).
 
-**Perfil de firma vigente:** perfil del equipo personal gratuito (dura 7 días), creado el 2026-11-16T18:03:12Z; vence el **2026-11-23T18:03:12Z (15:03:12 America/Santiago del 23 de noviembre de 2026)**. Lo comprobó Claude en la caché de Xcode el 22 de noviembre. La app instalada (`0.1.0+a7b3311 dev`, CFBundleVersion 1076) deja de abrirse a esa hora si no se reinstala con un perfil nuevo. El estado y la renovación del perfil están en [AGENTS.md](AGENTS.md) §8. Comprobar la vigencia efectiva antes de toda instalación.
+**Perfil de firma vigente:** perfil del equipo personal gratuito (dura 7 días), creado el 2026-11-22T14:03:33Z; vence el **2026-11-29T14:03:33Z (11:03:33 America/Santiago del 29 de noviembre de 2026)**. Es el perfil incorporado en la app instalada (`0.1.0+518f9c3 dev`, CFBundleVersion 1078); la app deja de abrirse a esa hora si no se reinstala con un perfil nuevo. Mientras no se pague el programa de Apple, se renueva cada semana con Rafael. El estado y la renovación del perfil están en [AGENTS.md](AGENTS.md) §8. Comprobar la vigencia efectiva antes de toda instalación.
 
 `scripts/spike.sh baseline|speculative|offset05|solver12|no-ed` ejecuta la campaña de física del editor separada de la regresión. Salida 0 exige informe completo y limpieza de recursos; los veredictos físicos pueden ser Fail y se reportan como datos.
 
