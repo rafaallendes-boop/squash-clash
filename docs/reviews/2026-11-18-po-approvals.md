@@ -5,6 +5,7 @@ Historial anterior: [2026-10-25-first-shot-po-approvals.md](2026-10-25-first-sho
 ## Resumen de autorizaciones vigentes (al 22 nov)
 
 - Autonomía (22 nov): con revisión aprobada y puertas en verde se fusiona a `main` y se instala en el iPhone sin «sí» por cada vez (reglas de fusión y §8 de AGENTS). Roles: SC-Lead prioriza, SC-PM orquesta en Orca, Claude arquitectura, revisión independiente y front, Codex implementación y revisión cruzada en solo lectura.
+- Modelos (22 nov): Claude implementa código con Sonnet; arquitectura y revisión con Opus. Si se agota el límite de créditos de 5 horas de cualquier agente, se detiene todo hasta que se renueve, sin cambiar de modelo ni forzar nada.
 - Modo product lead (18 nov): terminado el 22 nov.
 - Fusión de PR: con tests en verde y revisión aprobada (22 nov); la fusión no acepta la etapa.
 - Corridas de `scripts/test.sh`, `scripts/check-release.sh` y AutoQA en el Mac del PO sin permiso por corrida (10 nov).
@@ -34,3 +35,11 @@ Texto literal del PO (transmitido por SC-PM en el encargo del 22 nov):
 «cuando vaya a orca, hagan los merge y demás. No sea necesario solicitar mi permiso para aprobar en el terminal. Puede ir trabajando con autonomía» y «cuando vaya viendo avance podríamos ir haciendo las build mi celular»
 
 Efecto: con revisión aprobada y puertas en verde (EditMode, PlayMode, AutoQA si aplica y check-release) se fusiona a `main` y se instala en el iPhone sin pedir un «sí» cada vez, respetando las reglas de fusión (head exacto, merge commit con segundo padre igual al head aprobado) y el procedimiento de instalación de AGENTS §8. Roles: SC-Lead (bot de Grok) es el product lead y elige y prioriza; SC-PM (bot de Grok) orquesta en Orca; Claude define la arquitectura, revisa de forma independiente y hace el front con `/frontend-design`; Codex implementa y revisa en solo lectura lo que implementan Claude o sus subagentes. Termina el modo product lead del 18 nov. Sigue siendo exclusivo del PO: aceptar etapas (First Rally y First Match), cambiar `pullFullMm`, promover P0-calib-1, activar #32, cambiar umbrales o criterios, el pago de Apple y TestFlight, y la ficha de App Store.
+
+## 22 nov 2026 — Modelos y límite de créditos
+
+Texto literal del PO (transmitido por SC-PM):
+
+«Otras reglas, cuando Claude le toca implementar código lo hace con modelo sonnet. Por otro lado, si se acaban los créditos de 5 horas. Nos detenemos hasta que vuelvan.»
+
+Efecto: (1) cuando Claude implementa código, usa un modelo Sonnet; la arquitectura y la revisión siguen con Opus (precisión de SC-PM en el encargo). (2) Si se agota el límite de créditos de 5 horas de cualquier agente, se detiene todo hasta que se renueve: no se cambia de modelo ni se fuerza nada, y el trabajo queda registrado tal como esté.
