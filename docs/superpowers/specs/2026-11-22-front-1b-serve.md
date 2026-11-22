@@ -1,16 +1,23 @@
 # Front 1b — Saque nuevo: parado en el cuadro, con aviso de dónde tocar (RAL-177)
 
-22 nov 2026 · Base `origin/main` `518f9c3`. Spec de Claude (arquitecto, modo product lead); revisión no independiente. **El incremento 1 no enciende «Saque nuevo».** Todo vive detrás del interruptor, que sigue apagado por defecto. El encendido es el último incremento (§7), en una PR aparte.
+22 nov 2026 · Base `origin/main` `518f9c3`. Roles y autorizaciones según AGENTS de `main` `1208e02` (con #90). Spec de Claude como arquitecto; quién implementa y quién revisa cada parte está en «Plan de hoy». **El incremento 1 no enciende «Saque nuevo».** Todo vive detrás del interruptor, que sigue apagado por defecto. El encendido es el último incremento (§7), en una PR aparte.
 
 Pregunta resuelta el 22 nov: el PO aceptó sin recalibrar la desviación del Definidor (−5,1/−5,5 pp) y la baja del novato en la devolución (P+V de 97,5 % a 89,7 %). Datos en el [informe del 20 nov](../../reviews/2026-11-20-serve.md). Cita literal en §7.
 
 ## Plan de hoy (22 nov, build para el PO entre 17:00 y 18:00)
 
-Codex implementa desde las ~12:30, con fusión y compuertas en verde a las ~16:00. El orden: tres PRs, una por incremento, una tras otra (un solo Unity a la vez).
+La implementación empieza a las ~12:30, con fusión y puertas en verde a las ~16:00. Son tres PRs, una por incremento, una tras otra (un solo Unity a la vez).
 
-1. Front 1, «¡Temprano!» ([spec](2026-11-22-front-1-temprano.md)). Es lo más corto y va primero.
-2. Front 1b, incremento 1: §1 a §6 de esta spec, con el interruptor apagado.
-3. Front 1b, incremento 2: el encendido por defecto (§7).
+Los responsables siguen AGENTS §2 y §4. El front lo hace Claude con `/frontend-design` y, cuando implementa código, con un modelo Sonnet. Codex implementa lo demás y revisa en solo lectura lo que implementa Claude. Cuando Claude implementa, su revisión de esa parte no es independiente y se declara.
+
+1. **Front 1, «¡Temprano!»** ([spec](2026-11-22-front-1-temprano.md)). Es solo texto en la vista, o sea front. Lo implementa Claude (Sonnet) y lo revisa Codex. Es lo más corto y va primero.
+2. **Front 1b, incremento 1**: §1 a §6 de esta spec, con el interruptor apagado. Es mixto: una rama y una PR, en dos tramos seguidos.
+   - **Tramo de juego, Codex:** `RallyParams.ServeKindHumanPauseSeconds`, la pausa en `WaitBetweenPoints` y la colocación en el cuadro en `EndPoint` (§1.1 y §1.2), con los tests de los criterios 1 a 4 y 8. Lo revisa Claude de forma independiente. Va primero, porque el aviso lee la pausa que define este tramo.
+   - **Tramo de front, Claude (Sonnet) con `/frontend-design`:** el aviso `serve-guide`, el aviso entre puntos oculto, el paso 6 del tutorial y sus estilos (§1.3 a §1.5 y §6), con los tests de los criterios 5 a 7. Lo revisa Codex en solo lectura; la revisión de Claude de este tramo no es independiente.
+   - Ninguno de los dos tramos toca el contrato de contacto ni el reloj (zona de Codex, AGENTS §4), ni `DefaultPreset.json` ni SimulationKey (reserva del PO, AGENTS §4 y §7).
+3. **Front 1b, incremento 2**: el encendido por defecto (§7). No es front: lo implementa Codex y lo revisa Claude.
+
+Cada PR se fusiona sin pedir un «sí» cada vez, con la revisión aprobada, las puertas en verde (EditMode, PlayMode, AutoQA cuando aplica y check-release) y las reglas de fusión de AGENTS §2. La build de hoy se instala en la ventana de 17:00 a 18:00 que SC-PM coordina con Rafael. Esa ventana es la autorización de esa instalación (AGENTS §8).
 
 Lo que queda para después está en §8. Ninguna de esas piezas bloquea la build de hoy.
 
@@ -25,7 +32,11 @@ Funciona solo con «Saque nuevo: sí» en el panel DEV (`RallyParams.ServeKindOn
   - drive: frontis entre 2,4 y 2,55 m, a 22 m/s.
 - **El rival** elige su saque según su estilo.
 - **La pausa** es `MatchPauseSeconds`, 2,5 s (`RallyParams.cs:32`).
-- **El cuerpo** se teletransporta al cuadro recién en `BeginPoint` (`RallyDirector.cs:228-229`). Durante la pausa el jugador sigue donde terminó el punto.
+- **El cuerpo durante la pausa.**
+  - Al cerrar el punto, `EndPoint` manda a los dos cuerpos de vuelta a su posición de espera (`RallyDirector.cs:556-557`; el jugador va a `context.WaitPosition(PlayerId.Human)`).
+  - `StepBodies` (`:370-381`) los sigue avanzando con la pelota muerta, al mismo ritmo. Si el punto terminó lejos de esa posición, el jugador camina durante la pausa.
+  - El congelado de fin de punto (`PointEndFreeze`) es solo de la vista: dura 0,1 s de tiempo real y no detiene la simulación (`PointEndFreeze.cs:5-11`).
+  - Recién en `BeginPoint`, quien saca se teletransporta al cuadro (`:228-229`).
 - **El aviso de hoy** es una línea amarilla de 13 px dentro del aviso entre puntos: «Toca el frontis: arriba globo, abajo drive» (`RallyText.ServeHint`, `RallyHud.cs:119,304`).
 - **Un problema de vista**, en las capturas `docs/visual/2026-11-16-device-robustness/*-06-banner.png`: el aviso entre puntos queda justo encima del frontis, que es donde hay que tocar.
 
@@ -33,7 +44,11 @@ Funciona solo con «Saque nuevo: sí» en el panel DEV (`RallyParams.ServeKindOn
 
 Solo con el interruptor encendido y solo en la pausa antes de un saque **del jugador**, después de un punto. El primer saque del partido y los saques del rival no cambian.
 
-1. **Parado en el cuadro.** Cuando termina el congelado de fin de punto (`PointEndFreeze`, 0,1 s), el cuerpo del jugador aparece quieto, de cara al frontis, en `ServePlanner.BoxPosition(context, Match.Box)`, con `BodyPhase.Waiting`. `BeginPoint` lo vuelve a poner en el mismo lugar, así que el estado al empezar el punto es idéntico al de hoy.
+1. **Parado en el cuadro.** En `EndPoint`, cuando el próximo saque es del jugador (`Match.Server==Human`, el partido sin terminar y `NewServeNextPoint`), el cuerpo del jugador no recibe la orden de volver a `WaitPosition`.
+   - En su lugar, se teletransporta a `ServePlanner.BoxPosition(context, Match.Box)` y queda quieto, con `BodyPhase.Waiting`, durante toda la pausa. Es el cuadro del próximo saque, porque `Match.PointWon` ya corrió.
+   - La colocación es parte del estado de juego y no depende del tiempo real ni del congelado. En pantalla, el cuerpo aparece en el cuadro al terminar el congelado de 0,1 s, porque hasta entonces la vista mantiene la última pose.
+   - `BeginPoint` lo vuelve a poner en el mismo lugar, así que el estado al empezar el punto es idéntico al de hoy (criterio 4).
+   - El rival sigue volviendo a su espera como hoy.
 2. **Unos 3 s para sacar.** Hay un campo nuevo, `RallyParams.ServeKindHumanPauseSeconds = 3`, que se usa en `WaitBetweenPoints` solo en esta pausa. La pausa antes del saque del rival sigue en 2,5 s.
    - El prefijo `ServeKind*` mantiene las proyecciones de hash de los tests. El hash completo de RallyParams cambia (`a82c34b661bf` → nuevo), aunque el interruptor esté apagado. Se declara en el informe.
    - Lo demás no cambia: el toque saca al instante, «Seguir» saca el globo y sin toque sale el globo.
@@ -50,6 +65,18 @@ Solo con el interruptor encendido y solo en la pausa antes de un saque **del jug
    - El paso solo se incluye si `rally.NewServeNextPoint` es verdadero cuando se abre el tutorial. **Con el interruptor apagado el tutorial queda igual, con 5 pasos.**
    - Hay tensión con la regla de la semana («ningún ítem suma un paso antes de jugar»). El paso aparecerá recién con el incremento 2. Se acepta porque es parte del alcance pedido por el PO para el saque («el onboarding suma un paso de saque», SC-PM, 22 nov).
 
+**Qué cambia y qué no.**
+
+| | Interruptor apagado | Encendido, en la pausa antes del saque del jugador |
+|---|---|---|
+| Cuerpo del jugador en la pausa | Vuelve caminando a `WaitPosition` (`EndPoint` y `StepBodies`), como hoy | Se coloca en el cuadro en `EndPoint` y queda quieto |
+| Largo de la pausa | 2,5 s | 3,0 s |
+| Aviso de saque | Ninguno | `serve-guide` |
+| `rally-banner` | Como hoy | Oculto |
+| Tutorial | 5 pasos | 6 pasos |
+| Estado al empezar el punto | Como hoy | Idéntico al de la colocación apagada |
+| Rival, primer saque del partido y pausa antes del saque del rival | Como hoy | Como hoy |
+
 ## 2. Fuera de alcance
 
 - Encender el interruptor por defecto: no va en este incremento, sino en el incremento 2 (§7).
@@ -63,10 +90,10 @@ Solo con el interruptor encendido y solo en la pausa antes de un saque **del jug
 
 Con el interruptor **encendido**:
 
-1. En la pausa antes del saque del jugador, cuando termina `PointEndFreeze`, `Human.Position` es igual a `BoxPosition(context, Match.Box)` y el cuerpo queda quieto.
+1. En la pausa antes del saque del jugador, desde `EndPoint` hasta `BeginPoint`, `Human.Position` es igual a `BoxPosition(context, Match.Box)` en cada paso de cuerpo y el cuerpo no se mueve. No depende de `PointEndFreeze`: con el congelado apagado (`PointEndFreeze.Enabled=false`) el resultado es el mismo.
 2. `WaitBetweenPoints` es 3,0 s antes del saque del jugador y 2,5 s antes del saque del rival.
 3. Sin toque, el globo sale a los 3,0 s. Con un toque bajo la línea sale el drive en el mismo cuadro en que se suelta, como en `ZServeTests.On_ALowTouch…`.
-4. Al empezar el punto, el estado es idéntico con colocación temprana y sin ella: pelota, posición del cuerpo, energía y paso de lanzamiento. Se verifica con un interruptor de test.
+4. Al empezar el punto, el estado es idéntico con colocación temprana y sin ella: pelota, posición del cuerpo, energía y paso de lanzamiento. Se verifica con un interruptor de test. La energía no cambia en la pausa en ninguno de los dos casos, porque solo se gasta en las fases de recepción (`RunBodySteps`, `:382`).
 5. El aviso `serve-guide` solo es visible en esta pausa.
    - Su línea está a ±1 px de la proyección de cámara de `(x, ServeKindLobMinAimY, 0)`.
    - El largo dibujado de la línea es el tiempo restante dividido por 3,0, con un margen de un cuadro.
@@ -78,7 +105,9 @@ Con el interruptor **encendido**:
 Con el interruptor **apagado**:
 
 8. Todo es idéntico a hoy:
-   - la pausa es de 2,5 s y el cuerpo no se mueve durante ella;
+   - la pausa es de 2,5 s;
+   - el cuerpo del jugador hace el regreso de hoy: `EndPoint` lo manda a `WaitPosition` y `StepBodies` lo avanza durante la pausa. Si el punto terminó lejos, camina. Su posición en cada paso de la pausa es la misma que en la base `518f9c3`;
+   - el cuerpo llega al cuadro recién en `BeginPoint`, con el teletransporte de hoy;
    - no hay aviso de saque;
    - el aviso entre puntos sale en su lugar de siempre;
    - el tutorial tiene 5 pasos;
@@ -89,13 +118,17 @@ Además:
 
 9. EditMode y PlayMode completos en verde en el Mac del PO, y `check-release` OK. AutoQA (PASS/0/1) es obligatorio: cambian la pausa y la capa sobre el frontis donde se toca.
 
-## 4. Tests RED primero (Codex, TDD)
+## 4. Tests RED primero (TDD)
+
+Cada tramo escribe los tests de sus criterios (ver «Plan de hoy»): el de juego, los criterios 1 a 4 y 8; el de front, los criterios 5 a 7.
+
 
 - **EditMode, `RallyParams`:**
   - el valor por defecto de `ServeKindHumanPauseSeconds` es 3;
   - toda proyección existente que excluye `ServeKind*` queda igual;
   - el hash completo nuevo se fija en el test y se declara.
 - **PlayMode, `ZServeTests`:** los criterios 1 a 6 y 8.
+  - Para el 8, un test de caracterización con el interruptor apagado (`Off_TheHumanWalksBackToWaitInThePause`): termina un punto con el jugador lejos de `WaitPosition`, comprueba que su distancia a `WaitPosition` baja durante la pausa y que no está en el cuadro hasta `BeginPoint`. No es RED: se escribe antes del cambio, pasa en la base y tiene que seguir pasando después.
   - Usar `Drive(...)` y los toques de `Touch(...)` que ya existen en ese archivo.
   - Para el 4, comparar el estado al empezar el punto con la colocación temprana encendida y apagada (interruptor de test).
 - **PlayMode, `ZDeviceLayoutTests`:** las etiquetas del aviso quedan dentro del rectángulo del frontis y del área segura en todos los perfiles.
@@ -105,7 +138,7 @@ Además:
 ## 5. Sin iPhone y con iPhone
 
 - **Sin iPhone, en el Editor:** todo §3, con el interruptor encendido desde el test o desde el panel DEV.
-- **Con iPhone, en la próxima instalación autorizada y con «Saque nuevo: sí» en el panel DEV:**
+- **Con iPhone, en la ventana de instalación que SC-PM coordina con Rafael (AGENTS §8) y con «Saque nuevo: sí» en el panel DEV:**
   - si 3 s alcanzan y no aburren;
   - si se entiende dónde tocar sin leer dos veces;
   - si la línea que se acorta se lee como tiempo;
@@ -113,7 +146,7 @@ Además:
   - cómo se ve el cuerpo apareciendo en el cuadro;
   - el paso 6 del tutorial.
 
-  Es la primera vez que el PO juzgaría el saque nuevo en el teléfono: el informe del 20 nov lo deja como riesgo.
+  El PO ya probó el saque nuevo en `518f9c3` con el interruptor DEV y dijo: «Los saques están buenos. Podríamos hacer esa mejora y dejarlo encendido» (RAL-177). No se dio cuenta de que había que tocar en la pausa. Lo pendiente de mirar en el teléfono es lo nuevo: la colocación en el cuadro, el aviso y el paso del tutorial.
 
 ## 6. Dirección visual
 
@@ -146,7 +179,7 @@ Pasada de `/frontend-design`.
 
 ## 7. Incrementos
 
-Hay dos PRs, en este orden. Cada una tiene su rama y necesita el «sí» del PO para fusionarse.
+Hay dos PRs, en este orden, cada una con su rama. Quién implementa y quién revisa cada una está en «Plan de hoy». Cada una se fusiona con la revisión aprobada, las puertas en verde y las reglas de fusión de AGENTS §2, sin pedir un «sí» cada vez.
 
 **Incremento 1: el cuadro de saque, el aviso y el onboarding.** Es todo lo de §1 a §6, con el interruptor apagado por defecto.
 
@@ -165,7 +198,7 @@ Hay dos PRs, en este orden. Cada una tiene su rama y necesita el «sí» del PO 
   - AutoQA V/T3/volea PASS/0/1. AutoQA usa la práctica y no los partidos, así que debe salir idéntico.
   - `check-release` OK.
   - Una corrida de confirmación por estilo con el saque encendido, para mostrar que reproduce `confirm-new-serve01`: es la misma medición, no una recalibración. **No bloquea la build de hoy.** Si no alcanza antes de las 16:00, se corre después de la fusión y se informa. El encendido no cambia ningún parámetro respecto de la corrida que ya se midió.
-- **iPhone.** Lo que dice §5, pero sin tocar el panel DEV. Se instala solo con una autorización propia.
+- **iPhone.** Lo que dice §5, pero sin tocar el panel DEV. Se instala en la ventana que SC-PM coordina con Rafael antes de la build: esa ventana es la autorización de esa instalación (AGENTS §8). Revisarlo con los usuarios de TestFlight no autoriza nada de Apple ni de TestFlight, que siguen siendo exclusivos del PO (AGENTS §7).
 
 ## 8. Después (no entra hoy)
 

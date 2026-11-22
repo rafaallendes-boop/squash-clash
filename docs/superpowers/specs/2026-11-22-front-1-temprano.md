@@ -1,6 +1,6 @@
 # Front 1 — «¡Al aire!» pasa a «¡Temprano!»
 
-22 nov 2026 · Base `origin/main` `518f9c3`. Spec de Claude (arquitecto, modo product lead); revisión no independiente. Meta de la semana: el primer tester de TestFlight juega un partido completo y siente squash real. Este ítem no agrega ningún paso antes de jugar.
+22 nov 2026 · Base `origin/main` `518f9c3`. Roles y autorizaciones según AGENTS de `main` `1208e02` (con #90). Spec de Claude como arquitecto. Es front (solo texto en la vista): lo implementa Claude con un modelo Sonnet y lo revisa Codex en solo lectura. La revisión de Claude de esa implementación no es independiente y se declara. Se fusiona con la revisión aprobada, las puertas en verde y las reglas de fusión de AGENTS §2, sin pedir un «sí» cada vez. Meta de la semana: el primer tester de TestFlight juega un partido completo y siente squash real. Este ítem no agrega ningún paso antes de jugar.
 
 ## 0. Confirmación previa: «Al aire» cubre solo el golpe adelantado
 
@@ -35,7 +35,7 @@ El mismo error aparece con otra palabra en el aviso entre puntos, «Tú: doble b
 3. Ningún `.cs` de `Runtime/` o `Core/` contiene el literal «Al aire» ni «al aire».
 4. EditMode y PlayMode completos en verde en el Mac del PO, y `check-release` OK. AutoQA no es obligatorio porque no se toca timing, gesto ni contrato. Se corre igual si el implementador toca algo más.
 
-## 4. Tests RED primero (Codex, TDD)
+## 4. Tests RED primero (TDD)
 
 Se cambian tres aserciones existentes a pedido del PO, con el precedente de #86. Cada una debe fallar por aserción antes de tocar el código:
 
@@ -53,7 +53,7 @@ Comandos: `scripts/test.sh editmode RallyText`, `scripts/test.sh playmode ZUiLoo
 ## 5. Sin iPhone y con iPhone
 
 - **Sin iPhone, en el Editor:** todo lo de §3.
-- **Con iPhone, en la próxima instalación autorizada:** que «¡Temprano!» se lea completa bajo la cancha durante el pop (escala 1,3) sin cortarse en el teléfono del PO. Es una palabra un carácter más larga que antes: unos 190 px escalados frente a unos 300 px útiles. No requiere una instalación propia.
+- **Con iPhone, en la ventana de instalación que SC-PM coordina con Rafael (AGENTS §8):** que «¡Temprano!» se lea completa bajo la cancha durante el pop (escala 1,3) sin cortarse en el teléfono del PO. Es una palabra un carácter más larga que antes: unos 190 px escalados frente a unos 300 px útiles. No requiere una instalación propia.
 
 ## 6. Dirección visual
 
