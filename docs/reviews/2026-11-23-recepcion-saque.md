@@ -15,7 +15,7 @@ Niveles: uso las etiquetas del menú, **Fácil, Media y Difícil**, que en el c�
   - Margen = `DeltaMs` − (`KInSteps` − `TStarStep`) × ms/paso para los tempranos, y lo mismo con `KOutSteps` para los tardíos.
   - ms/paso = 1000/(120 × 0,65) ≈ 12,82 ms, comprobado contra los golpes aplicados.
 - **S (simulación existente).** `RallySim new01` de [2026-11-20-serve](2026-11-20-serve.md): novato σ 90 ms que no toca, solo en Media. Cito `new01-points-summary.tsv`, la fuente del 89,7 %; ese TSV publica n y porcentaje, no el numerador.
-- **S′ (simulación nueva).** Rama desechable `exp/recepcion-saque`, que **no se fusiona**. Prueba `ServeReceptionOptionsExperiment.MeasureOptions` con las semillas y el bucle de `ServeDiagnosisExperiment.PlayCell`.
+- **S′ (simulación nueva).** Rama desechable `exp/recepcion-saque` (`40e46aa`; el arnés no cambió desde `7fcac96`, solo el analizador), que **no se fusiona**. Prueba `ServeReceptionOptionsExperiment.MeasureOptions` con las semillas y el bucle de `ServeDiagnosisExperiment.PlayCell`.
   - Dos novatos: «std», con σ 90 y sin toques, que es el modelo de M1; y «toca», el bot v2.2 de `VolleyEnergyExperiment` con la anticipación muestreada del PO.
   - Dimensiones: 200 partidos por estilo en Media y en Fácil (std), y 60 por estilo en Media (toca).
   - Corrió con el lock de Unity entre las 18:02 y las 18:52 Z, en dos tramos. Las dos pasaron (1/1).
