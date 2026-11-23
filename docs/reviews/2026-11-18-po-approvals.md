@@ -16,6 +16,7 @@ Historial anterior: [2026-10-25-first-shot-po-approvals.md](2026-10-25-first-sho
 - T3 pure es candidata para pruebas de usuarios, no regla adoptada (16 nov).
 - First Shot cerrado (16 nov); la sesión 2 de 4.5 no se agenda.
 - Exclusivo del PO: aceptar First Rally/First Match, cambiar `pullFullMm`, promover P0-calib-1, activar #32, cambiar umbrales o criterios, pago de Apple y TestFlight, ficha de App Store, y la reserva de AGENTS §4 (física, solver, M2-4, defaults, SimulationKey), salvo la delegación de P1–P6 de #92 a SC-Lead (22 nov).
+- Spec del rival ante el golpe corto, #92 (23 nov): Claude decide con SC-Lead, sin esperar al PO. Los umbrales y criterios siguen siendo del PO.
 - Remoto público, intencional (11 nov).
 
 ## 18 nov 2026 — Modo product lead
@@ -73,3 +74,15 @@ El PO autorizó el cambio el 22 de noviembre de 2026 a las 23:03 (Chile, UTC−0
 > «Sí, autorizo corregir la precisión del borde en ShotSolver para el saque nuevo»
 
 La autorización de AGENTS §4 cubre igualar la precisión de los límites de pared de `ShotSolver` a la que usa P2. [PR #100](https://github.com/rafaallendes-boop/squash-clash/pull/100).
+
+## 23 nov 2026 — Spec del rival ante el golpe corto (#92)
+
+El PO autorizó el 23 de noviembre de 2026 a las 08:43 (Chile, UTC−03), en el chat de SC-PM. Lo transmitió SC-PM en el encargo a Claude.
+
+> «para la spec del rival. Toma la mejor decisión con el project lead y no se traben por mi, así pueden seguir»
+
+Efecto:
+
+- Las decisiones de la spec de la PR #92 las toma Claude con SC-Lead, sin esperar al PO. Esto incluye incorporar el criterio de producto de SC-Lead de RAL-174 (camino B) y atender la revisión de Codex.
+- La fusión sigue la autonomía del 22 nov (AGENTS §2/§7), sin «sí» por cada vez.
+- No cambia lo exclusivo del PO: si M3 no vuelve con I2–I3, la decisión de umbrales es de Rafael. No se cambian umbrales, oráculos ni tolerancias existentes. `pullFullMm`, P0-calib-1 y la aceptación de etapas siguen siendo suyos.
