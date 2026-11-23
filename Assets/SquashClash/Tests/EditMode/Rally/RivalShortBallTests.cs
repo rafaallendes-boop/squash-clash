@@ -91,6 +91,7 @@ namespace SquashClash.Core.Tests.Rally
                 for(int i=0;i<50;i++)
                 {
                     var shot=ai.Decide(o,own);
+                    Assert.That(shot.Option.Line,Is.Not.EqualTo(ShotLine.Boast),"E1 never boasts");
                     Assert.That(late[shot.Option.Line],Is.EqualTo(best),"no reachable option: choose the least late");
                 }
                 var flag=typeof(RivalAi).GetProperty("LastStretchedFallback");
@@ -127,26 +128,72 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(boasts,Is.GreaterThan(0),"B2: reachable back-corner boasts stay available, "+style);
         }
         [TestCase(RivalStyleId.Fondista)][TestCase(RivalStyleId.Definidor)][TestCase(RivalStyleId.Completo)]
-        public void RivalAi_StretchedBack_NeverPicksABoastTheHumanCannotReach(RivalStyleId style)
+        public void RivalAi_StretchedBack_NeverPicksAnUnreachableOption(RivalStyleId style)
+        {
+            var c=RallyFixtures.Context();int negativeBoasts=0,emptyCells=0,decisions=0;
+            foreach(float x in new[]{.5f,.9f,1.5f})
+            foreach(float y in new[]{.3f,.8f})
+            foreach(float z in new[]{7.6f,8.6f,9.3f})
+            foreach(var observed in new[]{c.T,new Vector2(c.Court.Width,c.Court.Length),new Vector2(c.Court.Width,0),Vector2.zero})
+            {
+                var at=new Vector3(x,y,z);var opponent=c.ClampBody(observed);
+                var options=Allowed(c,at);
+                var reach=options.ToDictionary(s=>(s.Line,s.Height,s.Power),s=>BackReachable(c,at,s,opponent));
+                bool any=reach.Values.Any(v=>v);
+                negativeBoasts+=options.Count(s=>s.Line==ShotLine.Boast&&RallyContact.ForecastBoast(c,at,s.Side,s.P).Good&&!reach[(s.Line,s.Height,s.Power)]);
+                if(!any)emptyCells++;
+                var ai=Ai(c,style);var own=Own(c,at);var o=Observe(c,opponent);
+                for(int i=0;i<100;i++)
+                {
+                    var shot=ai.Decide(o,own);decisions++;
+                    Assert.That(shot.Swing,Is.True,"B3b never stopped: "+at+" / "+opponent);
+                    if(any)Assert.That(reach.TryGetValue((shot.Option.Line,shot.Option.Height,shot.Option.Power),out bool ok)&&ok,
+                        Is.True,"B3b reachable alternative exists: "+at+" / "+opponent+" / "+shot.Option.Line);
+                    else
+                    {
+                        Assert.That(shot.Option.Line,Is.Not.EqualTo(ShotLine.Boast),"E1 never boasts");
+                        Assert.That(ai.LastStretchedFallback,Is.True,"E1 is observable");
+                    }
+                }
+            }
+            TestContext.WriteLine($"B3b style={style} decisions={decisions} negativeBoasts={negativeBoasts} emptyCells={emptyCells}");
+            if(negativeBoasts==0)TestContext.WriteLine("la grilla no ejercita el rechazo de dos paredes");
+        }
+        private static List<ShotOption> Allowed(RallyContext c,Vector3 at)
+        {
+            var options=ShotOptions.Build(c,at);if(c.BoastOn)ShotOptions.AddBoasts(c,at,options);
+            return options.Where(s=>s.Line==ShotLine.Boast||
+                (s.Height==ShotHeight.High&&s.Power==ShotPower.Medium&&(s.Line==ShotLine.Straight||s.Line==ShotLine.Cross))).ToList();
+        }
+        [TestCase(false)][TestCase(true)]
+        public void RivalAi_EvaluateStretched_MatchesThePlannerPerOption(bool oppositeCorner)
         {
             var c=RallyFixtures.Context();var at=new Vector3(.9f,.8f,8.6f);
-            var opponent=c.ClampBody(new Vector2(c.Court.Width,c.Court.Length));var options=BackOptions(c,at);
-            var reach=options.ToDictionary(s=>(s.Line,s.Height,s.Power),s=>BackReachable(c,at,s,opponent));
-            foreach(var b in options.Where(s=>s.Line==ShotLine.Boast))
-                TestContext.WriteLine($"B3_BOAST {b.Height}/{b.Power} good={RallyContact.ForecastBoast(c,at,b.Side,b.P).Good} reachable={reach[(b.Line,b.Height,b.Power)]}");
-            Assert.That(reach.Values.Any(v=>v),Is.True,"B3 predeclared opposite back corner: at least one reachable option");
-            Assert.That(reach.Any(kv=>kv.Key.Line==ShotLine.Boast&&!kv.Value),Is.True,"B3: at least one inadmissible boast under forecast plus human planner");
-            var ai=Ai(c,style);var own=Own(c,at);var o=Observe(c,opponent);int violations=0,badBoasts=0;
-            for(int i=0;i<500;i++)
+            var opponent=oppositeCorner?c.ClampBody(new Vector2(c.Court.Width,c.Court.Length)):c.T;
+            var options=Allowed(c,at);var actual=Ai(c,RivalStyleId.Definidor).EvaluateStretched(Observe(c,opponent),Own(c,at));
+            Assert.That(actual.Length,Is.EqualTo(options.Count));
+            for(int i=0;i<options.Count;i++)
             {
-                var s=ai.Decide(o,own);
-                if(!reach.TryGetValue((s.Option.Line,s.Option.Height,s.Option.Power),out bool ok)||!ok)
-                {violations++;if(s.Option.Line==ShotLine.Boast)badBoasts++;}
+                var option=options[i];var label=$"B3d {i} {option.Line}/{option.Height}/{option.Power}, corner={oppositeCorner}";
+                bool good=(option.Side.Exists?RallyContact.ForecastBoast(c,at,option.Side,option.P):RallyContact.Forecast(c,at,option.Aim,option.P)).Good;
+                bool reachable=false;long delay=long.MaxValue;
+                if(good)
+                {
+                    var solution=option.Side.Exists?RallyContact.SolveBoastIntention(c,at,option.Side,option.P,out _):RallyContact.SolveIntention(c,at,option.Aim,option.P);
+                    Assert.That(solution.Solved,Is.True,label);
+                    var trajectory=c.Predict(new BallState{Position=at,Velocity=solution.Velocity});
+                    var rules=c.NewRules();rules.Begin(PlayerId.Rival,PlayerId.Human);
+                    var plan=ReceptionPlanner.Plan(c,trajectory,rules,new PlayerBody(PlayerId.Human,opponent,c.Move),c.Steps(c.Params.ReactionS),1);
+                    long until=plan.Contact.Exists&&plan.Contact.TStarStep>=0?plan.Contact.TStarStep:trajectory.States.Last().Step;
+                    reachable=plan.Reachable;delay=plan.ArrivalStep-until;
+                }
+                Assert.That(actual[i].Good,Is.EqualTo(good),label+" Good");
+                Assert.That(actual[i].Reachable,Is.EqualTo(reachable),label+" Reachable");
+                Assert.That(actual[i].Delay,Is.EqualTo(delay),label+" Delay");
+                Assert.That(actual[i].IsBoast,Is.EqualTo(option.Line==ShotLine.Boast),label+" IsBoast");
             }
-            Assert.That(violations,Is.Zero,"B3: no unreachable intention when a reachable option exists");
-            Assert.That(badBoasts,Is.Zero,"B3: no unreachable boast");
         }
-        [Test] public void RivalAi_StretchedBack_BoastPredictionHitsSideBeforeFront()
+        [Test] public void RivalAi_StretchedBack_FilterPredictsTheBoastPath()
         {
             var c=RallyFixtures.Context();var at=new Vector3(.9f,.8f,8.6f);
             var boast=BackOptions(c,at).First(s=>s.Line==ShotLine.Boast&&RallyContact.ForecastBoast(c,at,s.Side,s.P).Good);

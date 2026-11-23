@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SquashClash.Core.Court;
 using SquashClash.Core.Shot;
 using SquashClash.Core.Simulation;
@@ -179,6 +180,38 @@ namespace SquashClash.Core.Rally
             {lower=Math.Max(lower,-context.Timing.ValidMs);upper=Math.Min(upper,context.Timing.ValidMs);}
             delta=RivalReleaseTiming.Adjust(delta,lower,upper,difficulty.TimingSigmaMs,p.FondoReleaseMarginSigma);
             return new AiShot(true,option,aim,power,delta,defensive,useVolley,side);
+        }
+        // Public evaluation seam for B3d. This prototype retains the old direct forecast until its RED is recorded.
+        public StretchedEvaluation[] EvaluateStretched(in AiObservation observation,in ReceptionPlan own)
+        {
+            var result=new List<StretchedEvaluation>(12);var opponentPosition=observation.OpponentPosition;
+            void Add(Vector3 at)
+            {
+                var options=ShotOptions.Build(context,at);
+                if(context.BoastOn)ShotOptions.AddBoasts(context,at,options);
+                foreach(var option in options)
+                {
+                    bool allowed=option.Line==ShotLine.Boast||
+                        (option.Height==ShotHeight.High&&option.Power==ShotPower.Medium&&(option.Line==ShotLine.Straight||option.Line==ShotLine.Cross));
+                    if(!allowed)continue;
+                    var forecast=RallyContact.Forecast(context,at,option.Aim,option.P);
+                    bool reachable=false;long delay=long.MaxValue;
+                    if(forecast.Good)
+                    {
+                        var solution=StretchedIntention(at,option);
+                        var trajectory=context.Predict(new BallState{Position=at,Velocity=solution.Velocity});
+                        var rules=context.NewRules();rules.Begin(PlayerId.Rival,PlayerId.Human);
+                        var opponent=new PlayerBody(PlayerId.Human,opponentPosition,context.Move);
+                        var plan=ReceptionPlanner.Plan(context,trajectory,rules,opponent,context.Steps(context.Params.ReactionS),1);
+                        long until=plan.Contact.Exists&&plan.Contact.TStarStep>=0?plan.Contact.TStarStep:trajectory.States[trajectory.States.Count-1].Step;
+                        reachable=plan.Reachable;delay=plan.ArrivalStep-until;
+                    }
+                    result.Add(new StretchedEvaluation(forecast.Good,reachable,delay,option.Line==ShotLine.Boast));
+                }
+            }
+            if(own.Reachable&&own.Contact.Exists&&own.Contact.TStarStep>=0)Add(own.Contact.PStar);
+            if(VolleyWanted(own))Add(own.Volley.Plan.PStar);
+            return result.ToArray();
         }
         // Only stretched receptions are filtered. The ordinary policy and its random draws stay untouched.
         private int FilterStretched(int count,in AiObservation observation,in ReceptionPlan own,out double best)
