@@ -78,3 +78,96 @@ Tras esperar el candado, `b-r2-required-green`: **6/6 Passed, 0 Failed, 0 Skippe
 - Hashes comprobados: defaults `207da8f2c636`, RallyParams `1063d0f6cf66`, SimulationKey `166a96e319c7`, sin cambios.
 
 XML, log, fuente y estado en `Logs/evidence/rival-short-min/b-r2-required-green/` y `b-r2-directed-green/`. El candado propio se libera al acabar cada corrida. B5 y las mediciones/gates completos todavía pendientes; estos dirigidos no los sustituyen.
+
+
+## Candidato exacto medido y B5
+
+Código medido **`ae9829c7289ac8229a996e05a5fd15f5b2ec3530`**, confirmado igual al head remoto de #101 y con árbol limpio antes de cada gate/medición. Base única incorporada para F2: **`0a49b6a3ff8ae481ad48f13ed8990faae19374e1`**. Los commits posteriores solo documentan estos resultados; no se presentan como otra medición.
+
+`b-r2-ae9829c-editmode`: **996/996 Passed, 0 Failed, 0 Skipped, salida 0**, XML fresco, duración 326,6683828 s. El test existente `BoastRivalTests.On_InPlay_TheFondistaBoastsLessFromTheBackQuarterThanTheDefinidor` pasa sin modificarlo. Corrida 2026-11-23T17:19:43Z–17:25:19Z.
+
+## Prioridad de instalación respetada
+
+Al recibir la prioridad de `/Users/rafaallendes/sc-specs/INSTALL-EN-CURSO`, F1 aún esperaba el candado: no había adquirido ni abierto Unity. Se cancela solo ese waiter (salida 143 por cancelación solicitada), sin retirar el candado ajeno. No es una corrida F1 ni un fallo de M3. Registro: `b-r2-ae9829c-f1/deferred.txt`.
+
+El wrapper comprueba el marcador antes de cada intento. Si aparece justo después de adquirir, libera solo su propio candado antes de abrir Unity. Una vez adquirido también comprueba que no haya otro Unity activo. Durante la pausa solo se auditan fuentes y se preparan informes. Marcador observado ausente a las **17:39:31Z**; F1 empieza a las **17:39:32Z**, con head local/remoto `ae9829c` y árbol limpio.
+
+## F1: M3 vuelve
+
+Experimento original `BoastExperiment.M3ConfirmRound2` **sin editar**, 100 partidos por estilo/nivel, `NewcomerBot` σ90, semillas `20270131`. `b-r2-ae9829c-f1-after-install`: **1/1 Passed**, XML fresco, duración 318,4724328 s. Cero SystemFault en nueve celdas.
+
+| Nivel | Fondista | Definidor | Completo |
+|---|---|---|---|
+| Medio | 178/3819 = 4,6609059963 % | 441/4343 = 10,1542712411 % | 361/4156 = 8,6862367661 % |
+| Fácil | 447/3187 = 14,0257295262 % | 554/3023 = 18,3261660602 % | 477/2781 = 17,1521035599 % |
+| Difícil | 12/3671 = 0,3268864070 % | 79/5151 = 1,5336827800 % | 48/4208 = 1,1406844106 % |
+
+**F1 cumple:** en Medio, Fondista < Definidor, Fondista ≤5 %, Definidor entre 5 y 15 % y Completo entre ambos. No se aplican las bandas de Medio a Fácil/Difícil. Confirmación en `Logs/experiments/boast/b-r2-ae9829c-f1-after-install/confirm.tsv`; evaluación en la evidencia del mismo label, runner en `Logs/experiments/rival-short-ball/`.
+
+## F2: base única repetida y candidato
+
+Se mide otra vez `0a49b6a`; no se sustituye por las cifras antiguas de `230b758`. Checkout detached, archivos seguidos intactos, añadiendo solo el mismo observador del Anexo A y su .meta, idénticos a los del candidato. Después se retiran solo esos dos archivos propios y se vuelve a `feat/rival-short-i2i3`, limpio en `ae9829c`, confirmado igual al remoto antes de medirlo.
+
+- Base `b-r2-main-0a49b6a-run01`: **1/1 Passed**, XML fresco, 176,5216603 s.
+- Base `b-r2-main-0a49b6a-run02`: **1/1 Passed**, XML fresco, 157,9930825 s. **rows.tsv, points.tsv y source.tsv idénticos byte a byte**. **42.986 filas**, fb NA en todas (la base no tiene la propiedad).
+- Candidato `b-r2-ae9829c-run01`: **1/1 Passed**, XML fresco, 217,5168565 s. Corrida 17:54:44Z–17:58:36Z. **42.957 filas**, **13.012 puntos**, **9.216 ganados por el rival**.
+- Método fijo: 3 estilos ×3 niveles ×150 partidos, semillas `20261122`, mezcla y parámetros sin cambios. Configuración idéntica base/candidato: defaults `207da8f2c636`, RallyParams `1063d0f6cf66`, Unity `6000.3.27f1`.
+- Cero extraMissingLogs, roleMismatches y SystemFault en las filas de las tres corridas; sin descartar filas para alinear índices.
+
+### R8: **NO cumple**
+
+Comparación de fracciones enteras, sin tolerancias ni redondeo para el veredicto. Los cuatro grupos tienen denominadores positivos en ambas corridas.
+
+| Grupo | Base 0a49b6a | Candidato ae9829c | F2 |
+|---|---|---|---|
+| total | 1436/10632 = 13,5063957863 % | 1437/10607 = 13,5476572075 % | **SUBE** |
+| Fondista | 607/3921 = 15,4807447080 % | 601/3886 = 15,4657745754 % | No sube |
+| Definidor | 414/3527 = 11,7380209810 % | 422/3535 = 11,9377652051 % | **SUBE** |
+| Completo | 415/3184 = 13,0339195980 % | 414/3186 = 12,9943502825 % | No sube |
+
+Sube el total **+0,0412614212 pp** y Definidor **+0,1997442241 pp**. La condición requiere no subir en los cuatro grupos; falla en dos.
+
+### R3b: ambas cuentas E1 cumplen ≤5 %
+
+El denominador de E1/puntos incluye **todos** los puntos ganados por el rival en points.tsv, no solo las recepciones estiradas.
+
+| Grupo | E1/contactos estirados | E1 ganadora/puntos del rival |
+|---|---|---|
+| total | 5/10607 = 0,0471386820 % | 2/9216 = 0,0217013889 % |
+| Fondista | 3/3886 = 0,0772002059 % | 1/3081 = 0,0324569945 % |
+| Definidor | 1/3535 = 0,0282885431 % | 0/3117 = 0,0000000000 % |
+| Completo | 1/3186 = 0,0313873195 % | 1/3018 = 0,0331345262 % |
+
+### Datos descriptivos sin criterio adicional
+
+| R8 por nivel | Base | Candidato |
+|---|---|---|
+| Fácil | 544/4195 = 12,9678188319 % | 543/4173 = 13,0122214234 % |
+| Medio | 541/3988 = 13,5656970913 % | 542/3985 = 13,6010037641 % |
+| Difícil | 351/2449 = 14,3323805635 % | 352/2449 = 14,3732135566 % |
+
+| R8 por contacto rival | Base | Candidato |
+|---|---|---|
+| Delante/media: r_z <7,31 m | 1264/6588 = 19,1863995143 % | 1264/6617 = 19,1023122261 % |
+| Atrás: r_z ≥7,31 m | 172/4044 = 4,2532146390 % | 173/3990 = 4,3358395990 % |
+
+Dos paredes entre contactos estirados, según la columna de intención del Anexo A: **728/10632** base, **713/10607** candidato.
+
+Distribución ret_fw, metros, cuantiles lineales; ninguna muestra faltante en estos grupos:
+
+| Fuente/zona | n | mín | p25 | p50 | p75 | p95 | máx |
+|---|---|---|---|---|---|---|---|
+| Base delante/media | 6588 | 0,504 | 0,768 | 1,0425 | 1,461 | 3,12565 | 4,352 |
+| Base atrás | 4044 | 0,602 | 3,05375 | 3,342 | 3,563 | 4,0607 | 4,55 |
+| Candidato delante/media | 6617 | 0,504 | 0,768 | 1,045 | 1,465 | 3,1344 | 4,352 |
+| Candidato atrás | 3990 | 0,59 | 3,052 | 3,344 | 3,557 | 4,05055 | 4,55 |
+
+Tablas descriptivas completas generadas sin Unity en los directorios de las corridas: cross.tsv y stretched.tsv. JSON con R8/E1/distribuciones en `Logs/evidence/rival-short-min/b-r2-ae9829c-run01/r8-e1-evaluation.json`. No se reclasifica won ni se excluyen errores del bot humano.
+
+## Parada obligatoria y entrega
+
+El evaluador devuelve **F2 false, E1 true** y salida 1; no inicia la siguiente corrida. **Se detiene por F2**, sin modificar código, tests, escenarios, semillas, oráculos, tolerancias, umbrales, pesos ni presets para obtener Pass. El determinismo de la base sí está demostrado. **La segunda corrida del candidato no se inicia por la parada**, por lo que su repetición queda no evaluada. No se reintenta para obtener otro R8.
+
+**PlayMode, AutoQA V/T3/volea y check-release no evaluados en esta tarea por la parada F2.** No se reutilizan gates de otra rama/SHA. R7 no medido. La PR #101 permanece en borrador. No se fusiona, construye nativamente, instala ni accede al iPhone desde este trabajo.
+
+Cada corrida liberó su propio candado; no se retiró ninguno ajeno. La copia local de device.env se cotejó con el SHA-256 guardado y **se borró al terminar**, sin editarla ni versionarla; la fuente queda intacta. Constancia ignorada: `b-r2-install-priority/device-env-copy-proof.json`. Los commits del informe posteriores a `ae9829c` no cambian el código medido ni se presentan como gates de un SHA nuevo.
