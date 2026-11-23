@@ -22,7 +22,7 @@ namespace SquashClash.Runtime.Tests
     // One clock drives VsPlate.Now and TouchInputAdapter.ReadRealTime, so the plate's age is real time and never the HUD's clipped dt.
     public sealed class ZVsPlateTests : ZFirstRunFixture
     {
-        private double clock;
+        private double clock;private bool booted;
         private TouchInputAdapter input;private GesturePreview preview;private Touchscreen screen;
         private readonly List<TouchSample> received=new List<TouchSample>();private readonly List<(TouchSample sample,string reason)> filtered=new List<(TouchSample,string)>();
         [Serializable] private sealed class Line {public string kind,payload;}
@@ -30,8 +30,10 @@ namespace SquashClash.Runtime.Tests
         [UnityTearDown] public IEnumerator Cleanup()
         {
             if(screen!=null){InputSystem.RemoveDevice(screen);screen=null;}
-            VsPlate.Reset();RallyHud.VsPlateOn=true;yield return Shutdown();
+            VsPlate.Reset();RallyHud.VsPlateOn=true;if(booted)yield return Shutdown();booted=false;
         }
+        // A test that boots twice shuts the first world down itself; the fixture's Shutdown must not run on a world that is not there.
+        private IEnumerator Reboot(){if(booted)yield return Shutdown();booted=false;yield return Boot(true);booted=true;}
         // ---------- helpers ----------
         private void Install()
         {
@@ -63,7 +65,7 @@ namespace SquashClash.Runtime.Tests
         // ---------- criterion 1: shown in the first frame of RivalReception ----------
         [UnityTest] public IEnumerator Plate_IsShownInTheFirstFrameOfRivalReception_WithTuVsRivalAndTheStyle()
         {
-            yield return Boot(true);Install();Play();
+            yield return Reboot();Install();Play();
             Assert.That(rally.Match,Is.Not.Null);Assert.That(rally.Phase,Is.EqualTo(RallyPhase.RivalReception));Assert.That(rally.PointsPlayed,Is.EqualTo(0));
             Assert.That(Shown(Find("vs-plate-layer")),Is.True);Assert.That(PlateShown,Is.True,"visible in the same frame the serve leaves");
             Assert.That(Find<Label>("vs-plate-you").text,Is.EqualTo("TÚ"));Assert.That(Find<Label>("vs-plate-mid").text,Is.EqualTo("vs"));
@@ -74,15 +76,15 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator Plate_ShowsEachOfTheThreeStyles([Values(RivalStyleId.Fondista,RivalStyleId.Definidor,RivalStyleId.Completo)] RivalStyleId style)
         {
-            yield return Boot(true);Install();rally.StyleOverride=style;Play();
+            yield return Reboot();Install();rally.StyleOverride=style;Play();
             Assert.That(rally.Style,Is.EqualTo(style));Assert.That(Find<Label>("vs-plate-style").text,Is.EqualTo(RivalStyle.Name(style)));
         }
 
         // ---------- criterion 2: it adds no time ----------
-        private sealed class Trace {public readonly List<int> LaunchSteps=new List<int>();public double PlayToFirstLaunch=-1;public readonly List<string> Points=new List<string>();public int ShownLines;}
+        private sealed class Trace {public readonly List<long> LaunchSteps=new List<long>();public double PlayToFirstLaunch=-1;public readonly List<string> Points=new List<string>();public int ShownLines;}
         private IEnumerator Run(bool plateOn,Trace trace)
         {
-            yield return Shutdown();yield return Boot(true);Install();RallyHud.VsPlateOn=plateOn;
+            yield return Reboot();Install();RallyHud.VsPlateOn=plateOn;
             PlayerPrefs.SetInt("sc.firstRun.tutorialSeen",1);PlayerPrefs.SetInt("sc.firstRun.rivalMatches",5);
             rally.Seed=7;rally.Autopilot=true;rally.AutopilotTimingSigmaMs=0;
             double playAt=clock;bool launched=false;
@@ -107,7 +109,7 @@ namespace SquashClash.Runtime.Tests
         // ---------- criterion 3: closes by time and by phase ----------
         [UnityTest] public IEnumerator Plate_ClosesInTheSameFrameWhenTheClockJumpsOneAndAHalfSecondsAtOnce()
         {
-            yield return Boot(true);Install();Play();
+            yield return Reboot();Install();Play();
             Assert.That(PlateShown,Is.True);
             clock+=1.5;Refresh();
             Assert.That(PlateShown,Is.False,"age is Now()-shownAt, not a sum of the HUD's clipped dt");Assert.That(Shown(Find("vs-plate-layer")),Is.False);
@@ -115,14 +117,14 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator Plate_StaysWhileTheClockHasNotRunOutAndFadesOutAtTheEnd()
         {
-            yield return Boot(true);Install();double t0=clock;Play();
+            yield return Reboot();Install();double t0=clock;Play();
             clock=t0+(RallyText.VsInSeconds+RallyText.VsHoldSeconds)*.5;Refresh();Assert.That(PlateShown,Is.True);Assert.That(Find("vs-plate").resolvedStyle.opacity,Is.EqualTo(1f).Within(.01f),"the hold does not fade");
             clock=t0+RallyText.VsInSeconds+RallyText.VsHoldSeconds+RallyText.VsOutSeconds*.5;Refresh();Assert.That(PlateShown,Is.True);
             Assert.That(Find("vs-plate").resolvedStyle.opacity,Is.InRange(.01f,.99f),"half way through the fade-out");
         }
         [UnityTest] public IEnumerator Plate_ClosesInTheFrameHumanReceptionStarts()
         {
-            yield return Boot(true);Install();Play(true);
+            yield return Reboot();Install();Play(true);
             Assert.That(PlateShown,Is.True);
             bool reached=false;
             for(int i=0;i<4000;i++)
@@ -139,7 +141,7 @@ namespace SquashClash.Runtime.Tests
         // ---------- criterion 4: no phantom touch, with the real adapter, the real UiBlocker and the real panel ----------
         [UnityTest] public IEnumerator Touch_OnThePlateHidesItAndNeverOpensAGesture_EvenWhenTheFingerOutlivesTheServe()
         {
-            yield return Boot(true);Install();AddTouchscreen();Play();
+            yield return Reboot();Install();AddTouchscreen();Play();
             Assert.That(input.UiBlocker,Is.Not.Null,"GesturePreview's own filter, not a stub");Assert.That(PlateShown,Is.True);
             var layer=Find("vs-plate-layer");Assert.That(layer.pickingMode,Is.EqualTo(PickingMode.Position));
             var panelPoint=RuntimePanelUtils.ScreenToPanel(root.panel,new Vector2(Middle.x,Screen.height-Middle.y));
@@ -171,7 +173,7 @@ namespace SquashClash.Runtime.Tests
         // ---------- criterion 5: pause ----------
         [UnityTest] public IEnumerator Pause_WithThePlateShown_PausesHidesItAndWritesPause_AndThePauseButtonsStillWork()
         {
-            yield return Boot(true);Install();Play();
+            yield return Reboot();Install();Play();
             Assert.That(PlateShown,Is.True);
             Click("rally-pause");Refresh();
             Assert.That(app.Clock.Paused,Is.True);Assert.That(PlateShown,Is.False);Assert.That(Shown(Find("vs-plate-layer")),Is.False);
@@ -184,7 +186,7 @@ namespace SquashClash.Runtime.Tests
         // ---------- criterion 6: where it does not appear ----------
         [UnityTest] public IEnumerator Plate_DoesNotAppearInTheRematch_TheDevMatchOrPractice()
         {
-            yield return Boot(true);Install();Play();
+            yield return Reboot();Install();Play();
             clock+=1.5;Refresh();Assert.That(VsActions(),Is.EqualTo(new[]{"shown","timeout"}));
             rally.Rematch();hud.Refresh();Refresh();
             Assert.That(rally.Phase,Is.EqualTo(RallyPhase.RivalReception));Assert.That(Shown(Find("vs-plate-layer")),Is.False,"same rival: no plate in the rematch");
@@ -196,14 +198,14 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator Plate_SwitchedOff_StartsTheMatchAsToday()
         {
-            yield return Boot(true);Install();RallyHud.VsPlateOn=false;Play();
+            yield return Reboot();Install();RallyHud.VsPlateOn=false;Play();
             Assert.That(rally.Match,Is.Not.Null);Assert.That(Shown(Find("vs-plate-layer")),Is.False);Assert.That(VsActions(),Is.Empty);
         }
 
         // ---------- criterion 7: metrics, exactly one `shown` and one closing line with the right reason ----------
         private IEnumerator CloseBy(string reason)
         {
-            yield return Shutdown();yield return Boot(true);Install();AddTouchscreen();
+            yield return Reboot();Install();AddTouchscreen();
             Play(reason=="phase");
             Assert.That(PlateShown,Is.True,reason);
             switch(reason)
