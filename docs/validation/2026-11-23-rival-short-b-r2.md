@@ -34,3 +34,15 @@ Si falla B5, F1 o F2, falta muestra, o alguna cuenta E1 supera el 5 %, se regist
 `scripts/device.env` no existe en este worktree. `scripts/unity-env.sh` exige exactamente ese archivo y retorna 1 si falta; no admite una ruta externa. El encargo vigente dice «no toques ni copies scripts/device.env», que prevalece sobre el permiso general de copia de AGENTS §3 y la excepción del encargo anterior. No se crea, copia, enlaza ni modifica el archivo, ni se cambia el resolver para eludir esa instrucción.
 
 Se solicitó aclarar cómo se proporcionará el archivo (SC-PM sin intervención de Codex o un mecanismo externo autorizado de solo lectura). Sin respuesta al registrar este punto. No se ha abierto Unity ni tomado/suelto el candado en esta revisión. EditMode, PlayMode, F1, F2, E1, AutoQA y check-release **no evaluados**. El bloqueo se registra sin reintentar para producir Pass; la PR permanece en borrador.
+
+## Corrección de entorno de SC-PM e intento de continuación
+
+Leído completo `/Users/rafaallendes/sc-specs/impl-101-env.txt`. SC-PM retira la prohibición de copiar y autoriza copiar sin modificar desde `/Users/rafaallendes/orca/squash-clash/scripts/device.env`, sin versionar el archivo y borrándolo al terminar. Se mantienen las condiciones de parada de r2.
+
+El primer intento de copia retorna código **1**, antes de cualquier Unity:
+
+```text
+cp: /Users/rafaallendes/orca/squash-clash/scripts/device.env: No such file or directory
+```
+
+La fuente indicada no existe; no se creó el destino. No se buscó otra fuente ni se cambió el resolver para eludir la falla. **Parada por entorno**, según el encargo y la autorización de iteración: no es RED por aserción ni GREEN. No hubo apertura de Unity, adquisición/liberación de candado ni nuevos resultados de tests o mediciones. La PR #101 continúa en borrador y no se fusiona. Para continuar falta que se proporcione la fuente autorizada (o se indique su ubicación correcta).
