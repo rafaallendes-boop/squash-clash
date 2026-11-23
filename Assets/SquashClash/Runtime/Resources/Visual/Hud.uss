@@ -21,10 +21,11 @@
     --glass-soft: rgb(160, 190, 194);
     --human: rgb(30, 136, 255);
     --rival: rgb(255, 77, 51);
+    --volley: rgb(255, 184, 41);
 }
 
 /* Fonts: set on the player's surfaces only (the developer panel keeps the theme font). */
-.sc-header, .sc-menu-layer, .sc-pause-layer, .sc-result-layer, .sc-banner-layer, .sc-shot-note {
+.sc-header, .sc-menu-layer, .sc-pause-layer, .sc-result-layer, .sc-banner-layer, .sc-shot-note, .sc-serve-guide-hint {
     -unity-font-definition: url("../../Visual/Fonts/Rubik-Regular SDF.asset");
     -unity-font-style: normal;
 }
@@ -142,6 +143,19 @@
 .sc-banner--human .sc-banner-title { color: rgb(128, 194, 255); }
 .sc-banner--rival .sc-banner-title { color: rgb(255, 150, 130); }
 .sc-banner-cause { font-size: 14px; color: var(--glass-text); margin-top: 2px; -unity-text-align: middle-center; white-space: normal; }
+/* First-match hints: one more row inside the banner glass, under «Saca …», and a glass pill in the band under the court for the serve guide. */
+.sc-banner-hint {
+    flex-direction: row; align-items: center;
+    margin-top: 8px; padding-top: 8px;
+    border-top-width: 1px; border-top-color: var(--glass-edge);
+    max-width: 280px;
+}
+.sc-hint-text { font-size: 14px; color: var(--glass-text); white-space: normal; flex-shrink: 1; -unity-text-align: middle-left; margin-left: 8px; }
+/* Miniatures: the same shape the player sees on the court. */
+.sc-hint-icon { width: 14px; height: 14px; flex-shrink: 0; }
+.sc-hint-icon--ring { border-width: 2px; border-color: var(--volley); border-radius: 7px; }
+.sc-hint-icon--corner { border-left-width: 2px; border-top-width: 2px; border-left-color: var(--glass-text); border-top-color: var(--glass-text); }
+.sc-hint-icon--bar { height: 3px; border-radius: 1px; background-color: rgb(255, 255, 255); }
 .sc-banner-next { font-size: 13px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--dot); margin-top: 6px; -unity-text-align: middle-center; }
 
 /* Shot note: the judged stroke in a word, under the court. No box: big slanted type with a shadow over the floor. */
@@ -165,6 +179,14 @@
 .sc-serve-guide {
     position: absolute;
     left: 0; right: 0; top: 0; bottom: 0;
+}
+.sc-serve-guide-hint {
+    position: absolute;
+    flex-direction: row; align-items: center;
+    padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 8px;
+    max-width: 280px;
+    background-color: var(--glass);
+    border-radius: 14px; border-width: 1px; border-color: var(--glass-edge);
 }
 .sc-serve-guide-caption {
     height: auto;

@@ -75,7 +75,7 @@ namespace SquashClash.Runtime.Tests
             if(sizeGroup!=null&&customIndex>=0)sizeGroup.GetType().GetMethod("RemoveCustomSize").Invoke(sizeGroup,new object[]{customIndex});
 #endif
         }
-        private static void ClearPrefs(){foreach(var key in new[]{"sc.firstRun.tutorialSeen","sc.firstRun.sound","sc.firstRun.level","sc.firstRun.rivalMatches"})PlayerPrefs.DeleteKey(key);foreach(var key in SquashClash.Runtime.Menu.PersonalRecords.AllKeys())PlayerPrefs.DeleteKey(key);}
+        private static void ClearPrefs(){foreach(var key in new[]{"sc.firstRun.tutorialSeen","sc.firstRun.sound","sc.firstRun.level","sc.firstRun.rivalMatches"})PlayerPrefs.DeleteKey(key);foreach(var key in SquashClash.Runtime.Menu.PersonalRecords.AllKeys())PlayerPrefs.DeleteKey(key);foreach(var key in SquashClash.Runtime.Menu.FirstMatchHints.AllKeys())PlayerPrefs.DeleteKey(key);}
         // An element the screen must have: its absence is a failed assertion, never a null reference.
         protected T Find<T>(string name) where T:VisualElement
         {
