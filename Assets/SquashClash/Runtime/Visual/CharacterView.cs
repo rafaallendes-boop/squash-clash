@@ -246,7 +246,15 @@ namespace SquashClash.Runtime.Visual
             if(strokeClock>=0){strokeClock+=dt;if(strokeClock>.9f)strokeClock=-1;}
             if(hopClock>=0){hopClock+=dt;if(hopClock>=SplitStepSeconds)hopClock=-1;}
             float hop=hopClock>=0?Mathf.Sin(Mathf.PI*hopClock/SplitStepSeconds):0;
-            bool swingDriven=human&&swing!=null;var swingPhase=swingDriven?swing.Phase:SwingPhase.Idle;
+            bool waitingToServe = human && rally != null && rally.HumanWaitingToServe;
+            if (waitingToServe)
+            {
+                move = backpedal = 0;
+                accelLean = Vector2.zero;
+                strokeClock = hopClock = -1;
+                hop = 0;
+            }
+            bool swingDriven=human&&swing!=null&&!waitingToServe;var swingPhase=swingDriven?swing.Phase:SwingPhase.Idle;
             if(contactAge>=0){if(firstContactFrame)firstContactFrame=false;else contactAge+=dt;}
             bool contactLock=swingDriven&&swingPhase==SwingPhase.Impact&&contactAge>=0&&contactAge<=ContactWindowEnd+1e-5f;
             bool preContactReference=swingDriven&&(swingPhase==SwingPhase.Idle||swingPhase==SwingPhase.Intention);
@@ -262,7 +270,7 @@ namespace SquashClash.Runtime.Visual
                 var frame=controller.Snapshot.Body;racketSign=frame.IdealContactPoint(controller.ShownPlan.Side).x-frame.PositionXZ.x<0?-1:1;
             }
             bool prepare=false;
-            if(human)
+            if(human&&!waitingToServe)
             {
                 // Wind-up follows the pull of the finger while it aims; in Demo the body prepares when it plants.
                 bool aiming=preview!=null&&preview.M24!=null&&preview.M24.Active&&preview.M24.HasAim;
@@ -270,7 +278,7 @@ namespace SquashClash.Runtime.Visual
                 prepare=swingPhase==SwingPhase.Idle&&(aiming||planted);
                 if(swingPhase==SwingPhase.Idle)wind=Mathf.Lerp(wind,aiming?.5f+.5f*Mathf.Clamp01(preview.M24.P):planted?.8f:0,blend);
             }
-            else
+            else if(!human)
             {
                 prepare=body!=null&&swingClock<0&&rally.Phase==RallyPhase.RivalReception&&
                     (bodyPhase==BodyPhase.Set||bodyPhase==BodyPhase.Approaching&&Vector2.Distance(body.Position,body.Target)<1.1f);
@@ -301,7 +309,7 @@ namespace SquashClash.Runtime.Visual
                 float theta=Mathf.Atan2(-velocity.x,-velocity.y)*Mathf.Rad2Deg,a=Mathf.Abs(theta);
                 travelYaw=Mathf.Sign(theta)*(a<=90?Mathf.Min(a*.85f,62):(180-a)*.69f)*move*(bodyPhase==BodyPhase.Set?.35f:1);
             }
-            yaw=Mathf.Lerp(yaw,(striking||winding?travelYaw*.3f:travelYaw)+twist,blend);
+            yaw=waitingToServe?0:Mathf.Lerp(yaw,(striking||winding?travelYaw*.3f:travelYaw)+twist,blend);
             float ready=body!=null&&bodyPhase==BodyPhase.Waiting?1:0;
             // Fatigue feel (section 3), view only: below 25 energy the figure stands lower, leans forward and breathes deeper (DEV toggle).
             var fatigue=body!=null?rally.FatigueSettings:null;var energy=body==null?null:human?rally.HumanEnergy:rally.RivalEnergy;
@@ -325,12 +333,12 @@ namespace SquashClash.Runtime.Visual
 
             var headAt=hip+spine*new Vector3(0,.745f,0);
             float look=0;
-            if(host!=null&&host.ActiveConfig!=null)
+            if(!waitingToServe&&host!=null&&host.ActiveConfig!=null)
             {
                 var to=transform.InverseTransformPoint(host.RenderPosition)-headAt;
                 look=Mathf.Clamp(Mathf.Atan2(-to.x,-to.z)*Mathf.Rad2Deg,-70,70);
             }
-            headYaw=Mathf.Lerp(headYaw,look,1-Mathf.Exp(-dt*10));
+            headYaw=waitingToServe?0:Mathf.Lerp(headYaw,look,1-Mathf.Exp(-dt*10));
             head.localPosition=headAt;head.localRotation=Quaternion.Euler(missed?-4+16*lunge:-4,headYaw,0);
 
             // Legs: the stride is bounded (it gets quicker, not longer, at top speed) and shortens going back.

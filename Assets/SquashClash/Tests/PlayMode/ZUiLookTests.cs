@@ -39,6 +39,30 @@ namespace SquashClash.Runtime.Tests
             };
             foreach(var pair in expected)Assert.That(FontName(Find(pair.Key)),Is.EqualTo(pair.Value),pair.Key);
         }
+        [UnityTest] public IEnumerator ServeGuideUsesTheShotNoteVoiceWithoutABox()
+        {
+            yield return Boot(false);
+            var guide = Find("serve-guide");
+            Assert.That(guide.pickingMode, Is.EqualTo(PickingMode.Ignore));
+            Assert.That(Find("serve-guide-line").pickingMode, Is.EqualTo(PickingMode.Ignore));
+            // IResolvedStyle omits text-shadow in this Unity version; read the same computed value.
+            const System.Reflection.BindingFlags styleFlags = System.Reflection.BindingFlags.Instance |
+                System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic;
+            var styleField = typeof(VisualElement).GetField("m_Style", styleFlags);
+            var shadowProperty = styleField.FieldType.GetProperty("textShadow", styleFlags);
+            TextShadow Shadow(VisualElement element) => (TextShadow)shadowProperty.GetValue(styleField.GetValue(element));
+            foreach (var expected in new[] { (name: "serve-guide-lob", text: "Toca arriba: globo"), (name: "serve-guide-drive", text: "Toca abajo: drive") })
+            {
+                var label = Find<Label>(expected.name);
+                Assert.That(label.text, Is.EqualTo(expected.text));
+                Assert.That(label.pickingMode, Is.EqualTo(PickingMode.Ignore));
+                Assert.That(FontName(label), Is.EqualTo("Rubik-BoldItalic"));
+                Assert.That(label.resolvedStyle.fontSize, Is.EqualTo(20));
+                Assert.That(label.resolvedStyle.backgroundColor.a, Is.Zero);
+                Assert.That(Shadow(label), Is.EqualTo(Shadow(Find("shot-note"))));
+            }
+        }
+
         [UnityTest] public IEnumerator ShotNote_TakesTheToneOfTheResult_AndKeepsItsWords()
         {
             yield return Boot(false);yield return null;
@@ -47,7 +71,7 @@ namespace SquashClash.Runtime.Tests
             {
                 (new ShotRecord{Result="Perfect"},"Perfecto","perfect"),
                 (new ShotRecord{Result="Valid",DeltaMs=-35},"Adelantado","valid"),(new ShotRecord{Result="Valid",DeltaMs=35},"Atrasado","valid"),
-                (new ShotRecord{Result="Failed",Fail="Air"},"¡Al aire!","failed"),(new ShotRecord{Result="Failed",Fail="Late"},"¡Tarde!","failed"),
+                (new ShotRecord{Result="Failed",Fail="Air"},"¡Temprano!","failed"),(new ShotRecord{Result="Failed",Fail="Late"},"¡Tarde!","failed"),
                 (new ShotRecord{Result="Unreachable"},"No llega","info"),(new ShotRecord{Result="NoOrder"},"Sin golpe","info"),
                 (new ShotRecord{Result="NotEvaluable"},"No evaluable","info"),(new ShotRecord{Result="SystemFault"},"Fallo del sistema","info")
             };
@@ -126,7 +150,7 @@ namespace SquashClash.Runtime.Tests
             yield return Boot(true);yield return null;yield return null;
             AssertReadable("menu-layer");
             Click("menu-howto");Refresh();
-            for(int step=0;step<SquashClash.Runtime.Menu.FirstRunFlow.TutorialSteps;step++){yield return null;yield return null;AssertReadable("tutorial-layer");Click("tutorial-next");Refresh();}
+            for(int step=0;step<6;step++){yield return null;yield return null;AssertReadable("tutorial-layer");Click("tutorial-next");Refresh();}
             yield return null;
             app.DevTools=false;Refresh();
             yield return StartMatch();Drive(()=>app.Host.Current.Step>10,1);yield return null;yield return null;

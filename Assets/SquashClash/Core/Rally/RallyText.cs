@@ -34,7 +34,7 @@ namespace SquashClash.Core.Rally
         {
             switch(result)
             {
-                case ReceptionResult.Air:return "al aire";
+                case ReceptionResult.Air:return "temprano";
                 case ReceptionResult.Late:return "tarde";
                 case ReceptionResult.Unreachable:return "no llega";
                 case ReceptionResult.NoSwing:return "sin golpe";

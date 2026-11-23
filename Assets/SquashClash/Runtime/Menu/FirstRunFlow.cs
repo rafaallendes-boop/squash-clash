@@ -43,17 +43,19 @@ namespace SquashClash.Runtime.Menu
         // lifting the finger is the stroke, and lifting it back at the anchor height cancels. Timing (TimingRingView,
         // ImpactCue): a ring converges on the fixed triangle at the planned contact; one attempt per ball. Volley (19 nov, PO):
         // an amber ring before the bounce (ShotController.VolleyTint) can be struck in the air; v2 (20 nov): touching while it shows chooses it.
-        private static readonly string[] StepTitles={"Apunta","Carga y suelta","Suelta a tiempo","Volea","Dos paredes"};
+        private static readonly string[] StepTitles={"Apunta","Carga y suelta","Suelta a tiempo","Volea","Dos paredes","Saque"};
         private static readonly string[] StepBodies=
         {
             "Apoya el dedo en la pared del frente, justo donde quieres mandar la pelota. Ese punto queda fijo mientras no levantes el dedo.",
             "Sin levantar el dedo, tira hacia abajo: mientras más tiras, más fuerte sale el golpe. Suelta para pegar. Si te arrepientes, vuelve a subir el dedo hasta donde lo apoyaste y suelta: no pegas.",
             "Cuando la pelota viene hacia ti aparece un triángulo donde le vas a pegar y un anillo que se achica. Suelta justo cuando el anillo calce dentro del triángulo. Tienes un solo intento por pelota.",
             "Anillo ámbar visible: toca y voleas en el aire. Espera al anillo blanco: golpeas después del bote.",
-            "En el rally, toca la pared lateral que ves: la pelota pega primero en ella y después en el frente. Si tocas cerca de donde vas a pegar, cruza al otro lado. No vale en el saque."
+            "En el rally, toca la pared lateral que ves: la pelota pega primero en ella y después en el frente. Si tocas cerca de donde vas a pegar, cruza al otro lado. No vale en el saque.",
+            "Cuando sacas tú, toca el frontis: arriba de la línea sale globo, abajo sale drive. Si no tocas, sale globo."
         };
         private VisualElement tutorial,tutorialArt,tutorialResults;private Label tutorialStep,tutorialTitle,tutorialBody;private Button tutorialNext;
         private bool tutorialThenPlay;
+        private int tutorialStepCount = TutorialSteps;
         public int TutorialStep {get;private set;}
         public static bool TutorialSeen
         {
@@ -280,6 +282,7 @@ namespace SquashClash.Runtime.Menu
             Color gold=Dot,white=Color.white,red=LineRed,finger=new Color(.47f,.75f,1f,.55f);
             if(TutorialStep==3){DrawVolley(p,w,h);return;}
             if(TutorialStep==4){DrawBoast(p,w,h);return;}
+            if(TutorialStep==TutorialSteps){DrawServe(p,w,h);return;}
             if(TutorialStep<2)
             {
                 // The front wall, as on the court: out line, service line and tin.
@@ -308,8 +311,41 @@ namespace SquashClash.Runtime.Menu
             p.strokeColor=new Color(1,1,1,.38f);Disc(p,c,radius*.84f,false);
             p.strokeColor=gold;p.lineWidth=4;Disc(p,c,radius*.5f,false);
         }
-        // The volley: the ball's path towards a bounce that never comes (faint), the amber triangle and ring at the ball in the air,
-        // the burst of the contact around it (VolleyBurstView), and the ball going back to the front wall.
+        private void DrawServe(Painter2D painter, float width, float height)
+        {
+            var court = app.Config.Court;
+            float left = width * .14f, right = width * .86f, top = height * .09f, bottom = height * .91f;
+            float decision = Mathf.Lerp(bottom, top, (float)rally.Params.ServeKindLobMinAimY / court.WallHeight);
+            float service = Mathf.Lerp(bottom, top, court.ServiceLower / court.WallHeight);
+            painter.fillColor = Color.Lerp(Ink, Plaster, .3f);
+            painter.BeginPath();
+            painter.MoveTo(new Vector2(left, top));
+            painter.LineTo(new Vector2(right, top));
+            painter.LineTo(new Vector2(right, bottom));
+            painter.LineTo(new Vector2(left, bottom));
+            painter.ClosePath();
+            painter.Fill();
+
+            painter.strokeColor = LineRed;
+            painter.lineWidth = 2;
+            Line(painter, new Vector2(left, service), new Vector2(right, service));
+            painter.strokeColor = new Color(1, 1, 1, .85f);
+            painter.lineWidth = 3;
+            Line(painter, new Vector2(left, decision), new Vector2(right, decision));
+
+            var lob = new Vector2(width * .68f, Mathf.Lerp(top, decision, .52f));
+            var drive = new Vector2(width * .68f, Mathf.Lerp(decision, service, .52f));
+            painter.strokeColor = Plaster;
+            painter.lineWidth = 2;
+            painter.BeginPath();
+            painter.MoveTo(new Vector2(width * .30f, decision - 8));
+            painter.BezierCurveTo(new Vector2(width * .35f, top), new Vector2(width * .53f, top), lob);
+            painter.Stroke();
+            Line(painter, new Vector2(width * .30f, drive.y + 7), drive);
+            painter.fillColor = Dot;
+            Disc(painter, lob, 4, true);
+            Disc(painter, drive, 4, true);
+        }
         // The two-wall shot seen from above: the front wall on top, the side wall on the left, the ball going side wall then front wall.
         private static void DrawBoast(Painter2D p,float w,float h)
         {
@@ -321,6 +357,7 @@ namespace SquashClash.Runtime.Menu
             var dir=(front-side).normalized;var n=new Vector2(-dir.y,dir.x);Line(p,front,front-dir*10+n*6);Line(p,front,front-dir*10-n*6);
             p.fillColor=Dot;Disc(p,start,8,true);p.fillColor=new Color(.47f,.75f,1f,.55f);Disc(p,side+new Vector2(6,0),18,true);
         }
+        // The shot and the amber cue before the bounce.
         private static void DrawVolley(Painter2D p,float w,float h)
         {
             Vector2 a=new Vector2(w*.06f,h*.16f),c=new Vector2(w*.56f,h*.20f),b=new Vector2(w*.90f,h*.86f);
@@ -352,8 +389,8 @@ namespace SquashClash.Runtime.Menu
         private string MetricsScreen=>Screen==FirstRunScreen.Menu?"menu":Screen==FirstRunScreen.Tutorial?"tutorial":Screen==FirstRunScreen.Credits?"credits":Screen==FirstRunScreen.Records?"records":PauseVisible?"pause":"game";
         private void ShowStep()
         {
-            tutorialStep.text=(TutorialStep+1)+" de "+TutorialSteps;tutorialTitle.text=StepTitles[TutorialStep];tutorialBody.text=StepBodies[TutorialStep];
-            bool last=TutorialStep==TutorialSteps-1;
+            tutorialStep.text=(TutorialStep+1)+" de "+tutorialStepCount;tutorialTitle.text=StepTitles[TutorialStep];tutorialBody.text=StepBodies[TutorialStep];
+            bool last=TutorialStep==tutorialStepCount-1;
             tutorialResults.style.display=TutorialStep==TimingStep?DisplayStyle.Flex:DisplayStyle.None;
             tutorialNext.text=!last?"Siguiente":tutorialThenPlay?"¡A jugar!":"Listo";
             tutorialArt.MarkDirtyRepaint();
@@ -362,6 +399,7 @@ namespace SquashClash.Runtime.Menu
         public void OpenTutorial(bool thenPlay)
         {
             if(app==null||Screen!=FirstRunScreen.Menu)return;
+            tutorialStepCount = rally.NewServeNextPoint ? StepTitles.Length : TutorialSteps;
             tutorialThenPlay=thenPlay;TutorialStep=0;Screen=FirstRunScreen.Tutorial;
             app.UserEvents?.Menu("tutorial","open");app.UserEvents?.BeginTutorialStep(1);ShowStep();Refresh();
         }
@@ -369,13 +407,13 @@ namespace SquashClash.Runtime.Menu
         {
             if(Screen!=FirstRunScreen.Tutorial)return;
             app.UserEvents?.EndTutorialStep(true,false);
-            if(TutorialStep<TutorialSteps-1){TutorialStep++;app.UserEvents?.BeginTutorialStep(TutorialStep+1);ShowStep();}else FinishTutorial();
+            if(TutorialStep<tutorialStepCount-1){TutorialStep++;app.UserEvents?.BeginTutorialStep(TutorialStep+1);ShowStep();}else FinishTutorial();
         }
         public void SkipTutorial(){if(Screen==FirstRunScreen.Tutorial){SkipTutorialMetrics();FinishTutorial();}}
         private void SkipTutorialMetrics()
         {
             app.UserEvents?.EndTutorialStep(false,true);
-            for(int i=TutorialStep+1;i<TutorialSteps;i++){app.UserEvents?.BeginTutorialStep(i+1);app.UserEvents?.EndTutorialStep(false,true);}
+            for(int i=TutorialStep+1;i<tutorialStepCount;i++){app.UserEvents?.BeginTutorialStep(i+1);app.UserEvents?.EndTutorialStep(false,true);}
         }
         private void FinishTutorial()
         {

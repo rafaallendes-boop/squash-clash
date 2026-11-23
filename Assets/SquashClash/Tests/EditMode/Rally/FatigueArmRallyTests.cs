@@ -12,8 +12,8 @@ namespace SquashClash.Core.Tests.Rally
     // F2: A7 (the arm is the striker's), A6 and A1 in RallySim.
     public sealed class FatigueArmRallyTests
     {
-        private static RallyContext Context(System.Func<ParamSet,ParamSet> edit=null)
-            =>new RallyContext(EffectiveConfig.From(edit==null?ConfigFixtures.Default():edit(ConfigFixtures.Default())),new RallyParams(),new AnalyticBallSimulationFactory(Physics.bounceThreshold));
+        private static RallyContext Context(System.Func<ParamSet,ParamSet> edit=null,RallyParams parameters=null)
+            =>new RallyContext(EffectiveConfig.From(edit==null?ConfigFixtures.Default():edit(ConfigFixtures.Default())),parameters??new RallyParams(),new AnalyticBallSimulationFactory(Physics.bounceThreshold));
         private static RallySim Sim(RallyContext ctx,int i=0)=>new RallySim(ctx,new BotBrain(ctx,30,20261117+2*i),new FondoAi(ctx,AiDifficulty.For(ctx.Params,AiLevel.Medium),20261118+2*i));
         private static void Tire(FatigueState energy,int strikes){energy.BeginPoint();for(int i=0;i<strikes;i++)energy.Strike(1);}
         private static ReceptionLog FirstStrike(RallyOutcome o,PlayerId who)=>o.Receptions.First(r=>r.Who==who&&r.Result==ReceptionResult.Contact&&r.Vectors!=null);
@@ -58,7 +58,9 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void A1_EnabledWithZeroArm_ReplaysTheFrozenF1AdjustedSignatures()
         {
-            var ctx=Context(p=>p.With("fatigue.armSpeedMax",0).With("fatigue.positionGainMax",0).With("fatigue.costPerMeter",.4).With("fatigue.recoverBetween",.25)); // the frozen reference (F1 values, re-anchored with A2 on 18 nov) was measured with the F1 values
+            // The frozen 18 Nov reference used the F1 values and the original serve.
+            var ctx=Context(p=>p.With("fatigue.armSpeedMax",0).With("fatigue.positionGainMax",0).With("fatigue.costPerMeter",.4).With("fatigue.recoverBetween",.25),
+                new RallyParams{ServeKindOn=0});
             var rows=File.ReadAllLines(Path.Combine(Application.dataPath,"..","docs/validation/evidence/2026-11-18-g1-a2-complete/fatigue-replay/arm0/points.tsv")).Skip(1).Select(r=>r.Split('\t')).Where(r=>int.Parse(r[0])<4).ToArray();
             for(int i=0;i<4;i++)
             using(var sim=Sim(ctx,i))

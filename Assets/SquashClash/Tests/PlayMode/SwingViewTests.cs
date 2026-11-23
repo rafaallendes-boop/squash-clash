@@ -188,7 +188,7 @@ namespace SquashClash.Runtime.Tests
             app.LaunchCurrent();var e=Submit(Star()-.07);Assert.That(e.Result,Is.EqualTo("Valid"));Finish(e);Assert.That(note.Text,Is.EqualTo("Adelantado"));
             // The default launch has K_out within one assist window of T*, so a late Valid cannot be produced end to end; the late text is checked on the record mapping.
             note.Show(new ShotRecord{Result="Valid",DeltaMs=35});Assert.That(note.Text,Is.EqualTo("Atrasado"));note.Show(new ShotRecord{Result="Valid",DeltaMs=-35});Assert.That(note.Text,Is.EqualTo("Adelantado"));
-            app.LaunchCurrent();var air=Submit(Star()-.15);Assert.That(air.Fail,Is.EqualTo("Air"));Assert.That(note.Text,Is.EqualTo("¡Al aire!"));
+            app.LaunchCurrent();var air=Submit(Star()-.15);Assert.That(air.Fail,Is.EqualTo("Air"));Assert.That(note.Text,Is.EqualTo("¡Temprano!"));
             app.LaunchCurrent();var late=Submit(Star()+.15);Assert.That(late.Fail,Is.EqualTo("Late"));Assert.That(note.Text,Is.EqualTo("¡Tarde!"));
             var label=app.GetComponent<UIDocument>().rootVisualElement.Q("shot-note");
             controller.enabled=true;app.Tuning.Set("timing.showNotes",1);controller.SendMessage("LateUpdate");Assert.That(label.style.display.value,Is.EqualTo(DisplayStyle.Flex));

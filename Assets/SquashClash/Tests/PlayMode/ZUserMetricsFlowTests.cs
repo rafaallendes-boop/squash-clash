@@ -28,8 +28,8 @@ namespace SquashClash.Runtime.Tests
         {
             Assert.That(Events("app-session").Count(r=>r.action=="start"),Is.EqualTo(1));
             Click("menu-level-hard");Handedness.Left=true;rally.Autopilot=true;rally.AutopilotTimingSigmaMs=30;rally.Seed=9;
-            Click("menu-play");Click("tutorial-next");Click("tutorial-next");Click("tutorial-next");Click("tutorial-next");Click("tutorial-next");Refresh();yield return null;
-            var steps=Events("tutorial-step");Assert.That(steps.Select(r=>r.step),Is.EqualTo(new[]{1,2,3,4,5}));Assert.That(steps.All(r=>r.completed&&!r.skipped&&r.durationSeconds>=0),Is.True);
+            Click("menu-play");for(int i=0;i<6;i++)Click("tutorial-next");Refresh();yield return null;
+            var steps=Events("tutorial-step");Assert.That(steps.Select(r=>r.step),Is.EqualTo(new[]{1,2,3,4,5,6}));Assert.That(steps.All(r=>r.completed&&!r.skipped&&r.durationSeconds>=0),Is.True);
             var start=Last("match-start");Assert.That(start.difficulty,Is.EqualTo("Hard"));Assert.That(start.hand,Is.EqualTo("left"));
             Handedness.Left=false;
             Assert.That(Drive(()=>rally.Phase==RallyPhase.MatchOver,1500),Is.True);Refresh();
@@ -41,10 +41,21 @@ namespace SquashClash.Runtime.Tests
             Assert.That(lines.Count(r=>r.kind=="rally-point"),Is.EqualTo(rally.PointsPlayed));
             Click("match-result-menu");Refresh();Assert.That(Events("match-end"),Has.Length.EqualTo(1));
         }
+        [UnityTest] public IEnumerator NewServeRecordsTheSixthTutorialStep()
+        {
+            rally.SetNewServe(true);
+            Click("menu-howto");
+            for (int i = 0; i < 6; i++) Click("tutorial-next");
+            var steps = Events("tutorial-step");
+            Assert.That(steps.Select(step => step.step), Is.EqualTo(new[] { 1, 2, 3, 4, 5, 6 }));
+            Assert.That(steps[5].completed, Is.True);
+            yield return null;
+        }
+
         [UnityTest] public IEnumerator TutorialSkipAndMenuExit_RecordSkippedStepsAndAbandonment()
         {
             Click("menu-play");Click("tutorial-next");Click("tutorial-skip");Refresh();yield return null;
-            var steps=Events("tutorial-step");Assert.That(steps,Has.Length.EqualTo(5));Assert.That(steps[0].completed,Is.True);Assert.That(steps.Skip(1).All(r=>r.skipped&&!r.completed),Is.True);
+            var steps=Events("tutorial-step");Assert.That(steps,Has.Length.EqualTo(6));Assert.That(steps[0].completed,Is.True);Assert.That(steps.Skip(1).All(r=>r.skipped&&!r.completed),Is.True);
             Click("rally-pause");Refresh();Assert.That(Last("pause").reason,Is.EqualTo("player"));
             Click("pause-menu");Refresh();var end=Last("match-end");Assert.That(end.abandoned,Is.True);Assert.That(end.result,Is.EqualTo("abandoned"));
             Assert.That(Events("match-end"),Has.Length.EqualTo(1));
