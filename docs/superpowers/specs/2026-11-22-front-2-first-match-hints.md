@@ -1,6 +1,6 @@
 # Front 2 — Pistas de los primeros partidos (saque, volea y dos paredes)
 
-22 nov 2026, revisión 3 del 23 nov. Base `origin/main` `230b758`, que ya trae el saque nuevo encendido por defecto (#100). Spec de Claude como arquitecto. Roles, fusión e instalación según AGENTS §2, §7 y §8 de esa base.
+22 nov 2026, revisión 4 del 23 nov, con las decisiones de producto de SC-Lead (§7). Base `origin/main` `230b758`, que ya trae el saque nuevo encendido por defecto (#100). Spec de Claude como arquitecto. Roles, fusión e instalación según AGENTS §2, §7 y §8 de esa base.
 
 Hay como máximo **4 pistas**, y cada una se ve una sola vez por instalación. Viajan en lo que ya se ve entre puntos, el aviso o la guía de saque, y no agregan pasos ni tiempo antes de jugar ni entre puntos. La prioridad es el saque nuevo: es lo que el PO no entendió al probarlo, según el encargo de SC-Lead.
 
@@ -11,8 +11,10 @@ Hay como máximo **4 pistas**, y cada una se ve una sola vez por instalación. V
    - la ventana y la persistencia;
    - las lecturas `LastServeChosen` y `LastStrokeBoast`, esta última si no llegó antes con la spec 3;
    - las métricas;
-   - los criterios 1 a 9 y 11.
+   - los criterios 1 a 9, 11 y 13.
 2. **Visual.** Lo implementa Claude con `/frontend-design` y Sonnet, y lo revisa Codex. Incluye la fila del aviso, la pista de la guía de saque, los estilos, los textos, el botón DEV y los criterios 10 y 12.
+
+**Bloque separable: H0 en el aviso** (decisión 3 de SC-Lead, §7). Comprende las filas y los criterios marcados **[H0-aviso]**, y entra **completo** en esta PR. Si meterlo pone en riesgo la build de las 17, esta PR sale con el resto del alcance y el bloque va completo en la PR siguiente, con sus tests RED, **nunca a la mitad**. Sin el bloque, H0 sale solo en la guía y todo lo demás de esta spec vale igual.
 
 Se fusiona con la revisión aprobada, las puertas en verde y las reglas de AGENTS §2, sin pedir un «sí» por fusión. Se instala solo en la ventana que SC-PM coordina con Rafael (AGENTS §8).
 
@@ -52,19 +54,24 @@ Reemplaza a `sc.hints.match`, que ya no se usa.
 - **Cuándo se cierra.** `sc.hints.window` se escribe en 1 cuando un partido de la ventana termina de forma normal (`MatchOver`, gane o pierda) o cuando las 4 pistas quedan vistas o retiradas.
 - **Abandonar no la cierra.** Ni volver al menú desde la pausa (`StopMode`) ni cerrar la app (`UserEvents.EndSession` desde `AppBootstrap.OnDestroy`) cierran la ventana.
 - **Respuesta para quien abandona pronto.** El siguiente partido desde el menú sigue en la ventana. Las pistas que no llegó a ver siguen sin ver y se arman si su disparador vuelve a ocurrir (§1.3).
-- **Limitación conocida, sin decidir.** Quien abandona sin ganar un punto no llega a ninguna `HumanServePause`, así que no recibe H0 antes de abandonar. Cambiarlo es una decisión de producto abierta (§7).
-- **Límite.** Son 4 pistas por instalación, cada una una sola vez. La ventana solo puede cerrarse antes. No se agrega un tope de intentos; queda como decisión abierta.
+- **Quien abandona sin ganar un punto.** No llega a ninguna `HumanServePause`. Por la decisión 3 de SC-Lead, H0 sale también en el aviso de la pausa ordinaria antes del primer saque del rival **[H0-aviso]**, así que la ve quien pierde al menos un punto.
+  - Sigue sin verla quien abandona en 0–0 antes de cualquier pausa: es una limitación conocida.
+- **Límite.** Son 4 pistas por instalación, cada una una sola vez. La ventana solo puede cerrarse antes.
+- **Sin tope de intentos abandonados**, por la decisión 2 de SC-Lead. Queda como limitación conocida y se revisa con las métricas de las pistas (§1.5).
 
 ### 1.2 Pistas
 
 | Id | Disparador (hechos del juego, sin umbrales nuevos) | Dónde se ve | Texto | Clave |
 |---|---|---|---|---|
-| H0 Saque | Empieza una `HumanServePause` en un partido de la ventana. | Guía de saque: `serve-guide-hint` | «Sacas tú: toca el frontis antes de que se acabe la línea. Si no tocas, sale globo.» | `sc.hints.serve` |
+| H0 Saque, en la guía | Empieza una `HumanServePause` en un partido de la ventana. | Guía de saque: `serve-guide-hint` | «Sacas tú: toca el frontis antes de que se acabe la línea. Si no tocas, sale globo.» | `sc.hints.serve` |
+| H0 Saque, en el aviso **[H0-aviso]** | Empieza la pausa ordinaria antes del **primer saque del rival** en un partido de la ventana: `PointOver`, partido sin terminar, `Match.Server == Rival` y el rival todavía no sacó en este partido. Lo lleva el adaptador desde `RallyStarted`, sin estado nuevo en el juego. | Aviso: `rally-banner-hint` | «Cuando saques tú: toca el frontis antes de que se acabe la línea. Si no tocas, sale globo.» | `sc.hints.serve`, la misma |
 | H1 Volea | En una recepción del jugador, `VolleyShown` fue verdadero en algún cuadro y la recepción terminó sin volea aplicada: hubo un golpe con `LastOpportunity != Volley`, un fallo o ningún golpe. | Aviso: `rally-banner-hint` | «Anillo ámbar: toca y volea antes del bote.» | `sc.hints.volley` |
 | H2 Dos paredes | `ShotResolved` de un golpe aplicado del jugador (`Perfect` o `Valid`), con `SideAimOpen` verdadero y `LastStrokeBoast` falso, sin ningún dos paredes en el partido. | Aviso | «Toca la pared lateral para jugar un dos paredes.» | `sc.hints.boast` |
 | H3 Cruce | `ShotResolved` del primer golpe del partido con `LastStrokeBoast` verdadero. | Aviso | «Lateral cerca de ti: la pelota cruza al otro lado.» | `sc.hints.boastCross` |
 
-- **Textos.** Salen del tutorial aprobado (`FirstRunFlow.cs:52-54`), acortados. El PO puede cambiarlos sin tocar la lógica.
+- **H0 es una sola pista con dos formas**, con la misma clave. Cuenta como vista una sola vez: la primera forma que llega a su oráculo deja `sc.hints.serve` en 1, y después no sale ninguna de las dos.
+- **Textos.** Van los de esta spec (decisión 4 de SC-Lead). Salen del tutorial aprobado (`FirstRunFlow.cs:52-54`), acortados. Rafael los ajusta después del playtest, sin tocar la lógica.
+- **H2 va sin condición de profundidad** (decisión 5, §7).
 - **H0 y el tutorial.** H0 enseña lo que el sexto paso ya dice, pero en el momento en que hace falta. Haber visto el tutorial no retira H0.
 
 ### 1.3 Estados, turnos y convivencia con la guía de saque
@@ -90,7 +97,7 @@ Reemplaza a `sc.hints.match`, que ya no se usa.
 
 **Pausa ordinaria.** Es `PointOver` sin `HumanServePause` y sin `MatchOver`, con el aviso visible.
 
-- Muestra como máximo una pista armada de H1 a H3, en ese orden de prioridad.
+- Muestra como máximo una pista armada, en este orden de prioridad: H0 en el aviso **[H0-aviso]**, H1, H2 y H3.
 - Las demás siguen armadas hasta la pausa ordinaria siguiente del mismo partido.
 
 **Pausa del saque del jugador** (`HumanServePause`, 3 s).
@@ -101,7 +108,7 @@ Reemplaza a `sc.hints.match`, que ya no se usa.
 
 **Paso a vista.** Es la única transición que exige visibilidad. Se escribe la clave en 1, la línea `hint` con `action=seen` y `PlayerPrefs.Save()` en ese mismo cuadro. Hay dos oráculos distintos, uno por contenedor.
 
-- **En el aviso (H1 a H3), el oráculo es `BannerOpacity == 1`.**
+- **En el aviso (H1 a H3, y H0 en el aviso), el oráculo es `BannerOpacity == 1`.**
   - En ese cuadro tienen que estar visibles el aviso (`rally-banner`) y la fila de la pista, con un layout resuelto de alto mayor que 0.
   - La opacidad la sigue acumulando `RallyHud.Tick` con el `dt` recortado a 0,05 s (`RallyHud.cs:290,316-323`), sin cambios en la animación ni en sus pruebas.
   - **No se usa tiempo real para el aviso.** Tras un cuadro largo pueden haber pasado 0,18 s reales con la opacidad todavía por debajo de 1, y entonces la pista **no** está vista.
@@ -114,7 +121,8 @@ Reemplaza a `sc.hints.match`, que ya no se usa.
 **Si la pausa se termina antes de su oráculo**, sea por «Seguir», por fin del plazo o por un toque de saque, la pista no queda vista y sigue armada:
 
 - H1 a H3, hasta la próxima pausa ordinaria **del mismo partido**. Si el partido termina antes, vuelven a sin ver.
-- H0, hasta el fin de la pausa. Como su disparador es la propia `HumanServePause`, en la próxima vuelve a armarse, en este partido o en uno siguiente de la ventana.
+- H0 en la guía, hasta el fin de la pausa. Como su disparador es la propia `HumanServePause`, en la próxima vuelve a armarse, en este partido o en uno siguiente de la ventana.
+- H0 en el aviso **[H0-aviso]**, hasta el fin de esa pausa. Su disparador ocurre una sola vez por partido, así que después solo puede salir en la guía, en la próxima `HumanServePause`, o en el aviso de un partido siguiente de la ventana.
 
 **Fuera de `PointOver`** no se muestra ninguna pista, ni en `MatchOver`, donde está la tarjeta.
 
@@ -142,7 +150,8 @@ Reemplaza a `sc.hints.match`, que ya no se usa.
 - Una línea `hint` con estos campos:
   - `matchId`;
   - `id` (`serve`, `volley`, `boast` o `boastCross`);
-  - `action`: `seen` o `retired`.
+  - `action`: `seen` o `retired`;
+  - `where`: `banner` o `guide`, en qué contenedor se vio. Va vacío con `retired`.
 - Se escribe una sola vez por pista y por instalación, en el mismo cuadro en que se persiste la clave.
 - Las líneas actuales (`match-start`, `match-end`, `menu` y las demás) no cambian. Lo nuevo es aditivo.
 
@@ -173,15 +182,17 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
 
 ## 2. Fuera de alcance
 
-- Cambiar el primer saque del partido (el globo automático en 0–0), las pausas, `ServeKindLobMinAimY` o cualquier parámetro del juego. No se recalibra nada.
+- Cambiar el primer saque del partido: el 0–0 sigue con el globo automático (decisión 1 de SC-Lead). Tampoco se cambian las pausas, `ServeKindLobMinAimY` o cualquier parámetro del juego. No se recalibra nada.
 - Pistas de cansancio, de timing u otras. Un segundo pase de pistas, o volver a verlas desde el menú.
 - Cambiar el tutorial o agregarle pasos.
-- **Propuesta que necesita la autorización del PO**, porque crea un umbral nuevo (AGENTS §7): que H2 salga solo cuando el jugador golpeó desde el cuarto trasero (`z ≥ X m`).
+- **Condición de profundidad para H2.** Sería que H2 salga solo cuando el jugador golpeó desde el cuarto trasero (`z ≥ X m`).
+  - Crea un umbral nuevo, así que es decisión de Rafael (AGENTS §7) y **queda pendiente**; SC-Lead se la planteará con datos.
+  - Mientras tanto H2 va **sin** condición de profundidad y no se agrega ningún umbral.
 
 ## 3. Criterio de aceptación
 
-1. **H0.** En un partido de la ventana, en la primera `HumanServePause`, `serve-guide-hint` se ve con el texto de H0.
-   - Cuando la guía suma 0,18 s visibles en el reloj de prueba, `sc.hints.serve` queda en 1 y se escribe una sola línea `hint` con `id=serve` y `action=seen`. Esto incluye el caso de un solo cuadro de 0,18 s.
+1. **H0 en la guía.** En un partido de la ventana en que el jugador gana el primer punto, con H0 sin ver, `serve-guide-hint` se ve con el texto de H0 en la primera `HumanServePause`.
+   - Cuando la guía suma 0,18 s visibles en el reloj de prueba, `sc.hints.serve` queda en 1 y se escribe una sola línea `hint` con `id=serve`, `action=seen` y `where=guide`. Esto incluye el caso de un solo cuadro de 0,18 s.
    - Un toque arriba y otro abajo dan `serve-choice` con `chosen=true` y `Lob` o `Drive`. Sin toque, `chosen=false` y `Lob`.
    - La pausa sigue durando `ServeKindHumanPauseSeconds`.
 2. **H1 en el aviso.** Después de un punto con el anillo ámbar visto y sin volea aplicada, la pausa ordinaria siguiente muestra H1 en `rally-banner-hint`.
@@ -193,6 +204,7 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
    - **Retiro.** Con H2 sin ver o armada, un dos paredes aplicado deja `sc.hints.boast` en 2, escribe `hint` con `action=retired` y deja H3 armada. Todo ocurre en el cuadro del `ShotResolved`, con `Phase != PointOver`, y en ese cuadro `rally-banner-hint` y `serve-guide-hint` siguen ocultos, como pide el criterio 8.
 4. **Prioridad, arrastre y visibilidad.**
    - Con H1 y H2 armadas en el mismo punto, sale H1, y H2 sale en la pausa ordinaria siguiente del mismo partido.
+   - **[H0-aviso]** El orden de prioridad completo en una pausa ordinaria es H0 en el aviso, H1, H2 y H3.
    - Una pista armada antes de una `HumanServePause` no se ve ni pasa a vista ahí, y sale en la pausa ordinaria siguiente.
    - **Ninguna clave de pista pasa a 1 (vista) mientras su contenedor está oculto.** El retiro (clave 2) y el cierre de la ventana (`sc.hints.window`) no dependen de la visibilidad (§1.3).
 5. **La pausa se acaba antes del oráculo.**
@@ -205,6 +217,7 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
    - (b) Se abandona con H1 armada y sin ver. En el partido siguiente, H1 **no** sale en la primera pausa ordinaria si su disparador no se repitió. Cuando se repite, H1 se arma y sale en la pausa ordinaria siguiente.
    - (c) Lo mismo que en (b), pero con un reinicio de la escena entre los dos partidos y las mismas `PlayerPrefs`. Lo armado no se restaura.
    - (d) H0 vuelve a armarse en la primera `HumanServePause` del partido siguiente, porque su disparador es esa pausa.
+   - (e) **[H0-aviso]** Se inicia, el rival gana el primer punto, H0 se ve en el aviso y se abandona en 0–1. `sc.hints.serve` vale 1, y en el partido siguiente H0 no sale en ninguna de sus formas.
 7. **Cierre de la ventana.**
    - Tras un partido de la ventana que termina normalmente, `sc.hints.window` vale 1 y el siguiente partido desde el menú no muestra pistas.
    - La revancha, el «Partido» DEV, la práctica y un partido con piloto automático nunca muestran pistas.
@@ -217,7 +230,8 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
      - la ventana forzada por el test.
    - Con las pistas encendidas o apagadas, la secuencia de `PointResult`, el paso de inicio de cada punto y cada `WaitBetweenPoints` son idénticos, con igualdad exacta.
 10. **Layout y convivencia con la nota.**
-    - Con la pista más larga, el aviso cabe en el área segura en todos los perfiles de `ZDeviceLayoutTests`, con el texto en dos líneas como máximo y sin elipsis.
+    - Con la pista más larga de H1 a H3, el aviso cabe en el área segura en todos los perfiles de `ZDeviceLayoutTests`, con el texto en dos líneas como máximo y sin elipsis.
+    - **[H0-aviso]** Con H0 en el aviso, el aviso cabe en el área segura en todos los perfiles, con el texto en tres líneas como máximo, igual que su forma en la guía, y sin elipsis.
     - `serve-guide-hint` cabe en el área segura, en tres líneas como máximo y sin elipsis, y no se cruza con la línea ni con los rótulos de la guía.
     - **Con una nota previa visible.** Por ejemplo «¡Temprano!», con `timing.showNotes` encendido. `serve-guide-hint` y `shot-note` no se cruzan en ningún perfil. La nota conserva su texto, su `display` y su posición iguales a los de la corrida con las pistas apagadas.
     - Con `timing.showNotes` apagado, H0 ocupa la franja bajo la cancha.
@@ -231,6 +245,13 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
     - EditMode y PlayMode completos en verde en el Mac del PO.
     - AutoQA `scripts/autoqa.sh mvp` PASS/0/nivel 1, obligatorio porque los disparadores leen la ruta de resolución del golpe. Hay que mostrar que no cambia ninguna decisión.
     - `check-release` OK.
+13. **[H0-aviso] H0 en el aviso.** En un partido de la ventana en que el rival gana el primer punto, con H0 sin ver:
+    - la pausa ordinaria antes del primer saque del rival muestra en `rally-banner-hint` el texto «Cuando saques tú: …» de §1.2;
+    - con `BannerOpacity == 1`, `sc.hints.serve` queda en 1 y se escribe una sola línea `hint` con `id=serve`, `action=seen` y `where=banner`;
+    - en la `HumanServePause` siguiente, `serve-guide-hint` **no** aparece, porque la clave es compartida, y la guía de saque sigue igual que hoy;
+    - si se toca «Seguir» antes de opacidad 1, H0 no queda vista y sale en la guía en la próxima `HumanServePause`. En este partido no vuelve a salir en el aviso, porque el rival ya sacó;
+    - si ya estaba vista en la guía, la pausa antes del primer saque del rival no la muestra;
+    - con H1 también armada en esa pausa, sale H0 y H1 espera a la pausa ordinaria siguiente.
 
 ## 4. Tests RED primero (TDD) y reglas de prueba
 
@@ -243,13 +264,14 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
   - el arrastre dentro del partido y el descarte al terminarlo;
   - que no se rearma sin repetir el disparador;
   - la `HumanServePause` con H0 sola;
+  - **[H0-aviso]** H0 con dos formas y una sola clave, su disparador una vez por partido y su prioridad en la pausa ordinaria;
   - el retiro de H2 sin visibilidad;
   - los dos oráculos de vista;
   - que una pista vista o retirada no vuelve;
   - que nunca hay más de 4.
-- **EditMode, `Diagnostics/UserMetricsTests`.** `hint` (con `seen` y `retired`) y `serve-choice` con sus campos, emitidos una sola vez, y las líneas actuales idénticas.
+- **EditMode, `Diagnostics/UserMetricsTests`.** `hint` (con `seen` y `retired`, y `where`) y `serve-choice` con sus campos, emitidos una sola vez, y las líneas actuales idénticas.
 - **PlayMode, `ZFirstMatchHintsTests`**, sobre `ZFirstRunFixture`.
-  - Cubre los criterios 1 a 9 y 11, y la parte de la nota del criterio 10.
+  - Cubre los criterios 1 a 9, 11 y 13, y la parte de la nota del criterio 10. Los casos marcados **[H0-aviso]** van con su bloque separable (plan, al inicio).
   - Las escenas de volea v2 (`ZVolleyV2Tests`), dos paredes (`ZBoastTests`) y saque (`ZServeTests`) sirven de base.
   - El criterio 8 se comprueba con piloto automático y la ventana forzada por un punto de prueba interno, que solo usan los tests nuevos.
   - El criterio 5 reemplaza `FirstMatchHints.Now` y avanza el tiempo en un solo cuadro largo.
@@ -284,8 +306,11 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
 
 **Recorrido B: pistas en juego.** Es un partido nuevo desde el menú, sin volver a reiniciar las pistas.
 
-1. Se juega hasta ganar un punto. Resultado observable: en la pausa del saque, H0 se lee en los 3 s, no tapa el frontis y no se cruza con la nota del golpe anterior.
-2. Se toca arriba o abajo de la línea, según lo que diga la pista. Resultado observable: sale el saque elegido y `serve-choice` trae `chosen=true` con el `kind` tocado.
+1. Se juega. H0 sale una sola vez, en la forma que llegue primero.
+   - **[H0-aviso]** Si el rival gana el primer punto, H0 sale en el aviso de esa pausa. Resultado observable: se lee en la pausa real de 2,5 s y la persona entiende dónde va a tocar cuando saque. Es el problema del playtest de Rafael.
+   - Si el jugador gana el primer punto, H0 sale en la guía. Resultado observable: se lee en los 3 s, no tapa el frontis y no se cruza con la nota del golpe anterior.
+   - Las métricas muestran una sola línea `hint` con `id=serve`, con `where=banner` o `where=guide`.
+2. En la primera pausa del saque propio, se toca arriba o abajo de la línea. Resultado observable: sale el saque elegido y `serve-choice` trae `chosen=true` con el `kind` tocado.
 3. Se sigue jugando para ver H1 a H3 cuando aparezcan. Resultado observable: cada pista se lee en la pausa real de 2,5 s, y el aro ámbar del aviso se reconoce como el anillo de la cancha.
 
 **Al cerrar la ventana**, las métricas copiadas traen las líneas `hint` y `serve-choice` del recorrido B y ninguna del recorrido A.
@@ -314,6 +339,7 @@ Pasada de `/frontend-design`.
 - **La miniatura.**
   - H1 lleva un aro de 14 px con borde de 2 px `--volley`: el anillo ámbar de la cancha, en chico.
   - H2 y H3 llevan una esquina de 14 px con borde izquierdo y superior de 2 px `--glass-text`, que es la planta de la lateral y el frontis.
+  - **[H0-aviso]** H0 en el aviso lleva el mismo trazo blanco de 14 × 3 px que su forma en la guía, la línea de la guía en chico. Así, cuando la guía aparezca, se reconoce la misma línea.
 
 **La guía de saque, para H0.** El frontis queda libre, porque es donde el jugador tiene que tocar.
 
@@ -341,12 +367,22 @@ Pasada de `/frontend-design`.
 
 **Revisión contra lo genérico.** Se descartó un *coach mark* con flecha y botón «Entendido»: suma un paso, tapa la cancha y en la pausa del saque taparía justo el frontis. Se descartó también el ícono de bombilla o «i». Cada miniatura usa la misma forma que el jugador ve en la cancha.
 
-## 7. Decisiones de producto abiertas
+## 7. Decisiones de producto
 
-Quedan anotadas. Esta spec no las toma.
+Las respondió SC-Lead (product lead) el 23 nov, con los criterios de producto que Rafael le delegó. Texto literal:
 
-1. Si el primer saque del partido (0–0, globo automático sin pausa) también debe dejar elegir o llevar un aviso previo. Es un cambio de juego.
-2. Si la ventana necesita un tope de intentos abandonados. Hoy solo la acotan las 4 pistas, una vez cada una.
-3. Si se adelanta H0 en el aviso de una pausa en que saca el rival, para quien abandona sin haber ganado un punto (la limitación de §1.1).
-4. El texto final de las pistas: el PO puede ajustarlo sin tocar la lógica.
-5. La profundidad para H2 (§2), que necesita un umbral nuevo y por eso es del PO (AGENTS §7).
+1. **Primer saque del partido.** «No. El 0–0 sigue con el globo automático. Hoy no cambiamos el juego.» Efecto: queda fuera de alcance (§2).
+2. **Tope de intentos abandonados.** «Sin tope por ahora. Queda como limitación conocida y lo vemos con las métricas de las pistas.» Efecto: §1.1. Las líneas `hint` y `serve-choice` (§1.4, §1.5) son las que se revisan.
+3. **Adelantar H0.** «Sí, se adelanta. H0 sale también en la pausa ordinaria antes del primer saque del rival, en modo aviso («Cuando saques tú: toca el frontis antes de que se acabe la línea…»). Así la ve quien abandona sin ganar un punto. Viene directo del playtest de Rafael: no entendió dónde tocar. Cuenta como vista una sola vez, la primera que salga. Si meterla pone en riesgo la build de las 17, entra el alcance actual y esto va en la PR siguiente, nunca a la mitad.»
+   - Efecto: H0 en el aviso, en §1.2, §1.3, el criterio 13 y lo marcado **[H0-aviso]**.
+   - Es un bloque separable que entra completo o va completo en la PR siguiente (plan, al inicio).
+   - El texto sigue el de la forma en la guía.
+4. **Textos.** «Van los textos de la spec. Rafael los ajusta después del playtest.» Efecto: §1.2.
+5. **Profundidad para H2.** «Es de Rafael. H2 va sin condición de profundidad y se lo planteo después con datos.»
+   - Efecto: H2 va **sin** condición de profundidad y no se agrega ningún umbral (§2).
+   - La condición sigue siendo una **decisión pendiente del PO**, porque crea un umbral nuevo (AGENTS §7).
+
+**Limitaciones conocidas que quedan:**
+
+- quien abandona en 0–0 antes de cualquier pausa no ve ninguna pista;
+- la ventana no tiene tope de intentos.
