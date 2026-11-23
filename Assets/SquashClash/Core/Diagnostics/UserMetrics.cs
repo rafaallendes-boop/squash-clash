@@ -10,6 +10,8 @@ namespace SquashClash.Core.Diagnostics
         [Serializable] private sealed class TutorialLine {public int step;public double durationSeconds;public bool completed,skipped;}
         [Serializable] private sealed class MatchLine {public string matchId,difficulty,hand,result;public int humanPoints,rivalPoints;public double durationSeconds;public bool abandoned;}
         [Serializable] private sealed class PauseLine {public string reason;}
+        [Serializable] private sealed class HintLine {public string matchId,id,action,where;}
+        [Serializable] private sealed class ServeChoiceLine {public string matchId,kind;public bool chosen,hintSeen;}
         private readonly Action<string,string> write;private readonly Func<double> readTime;
         private bool sessionOpen,background,paused,focused=true,matchOpen;
         private double sessionAt,phaseAt,stepAt,matchAt;private int step,human,rival;
@@ -55,7 +57,8 @@ namespace SquashClash.Core.Diagnostics
             Emit("match-end",Match(abandoned?"abandoned":human>rival?"win":human<rival?"loss":"draw",abandoned,Math.Max(0,readTime()-matchAt)));
         }
         public void Pause(string reason)=>Emit("pause",new PauseLine{reason=reason});
-        public void Hint(string id,string action,string where){}
-        public void ServeChoice(bool chosen,string kind,bool hintSeen){}
+        // First-match hints (spec front 2, sections 1.4 and 1.5). Additive lines: the current ones do not change. «where» is empty for a retired hint.
+        public void Hint(string id,string action,string where)=>Emit("hint",new HintLine{matchId=matchId,id=id,action=action,where=where??""});
+        public void ServeChoice(bool chosen,string kind,bool hintSeen)=>Emit("serve-choice",new ServeChoiceLine{matchId=matchId,chosen=chosen,kind=kind,hintSeen=hintSeen});
     }
 }
