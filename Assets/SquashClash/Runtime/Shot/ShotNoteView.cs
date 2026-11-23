@@ -26,7 +26,7 @@ namespace SquashClash.Runtime.Shot
         public void Show(ShotRecord r)
         {
             string text=r.Result=="Perfect"?"Perfecto":r.Result=="Valid"?(r.DeltaMs<0?"Adelantado":"Atrasado"):
-                r.Result=="Failed"?(r.Fail=="Air"?"¡Al aire!":"¡Tarde!"):r.Result=="Unreachable"?"No llega":r.Result=="NoOrder"?"Sin golpe":r.Result=="NotEvaluable"?"No evaluable":"Fallo del sistema";
+                r.Result=="Failed"?(r.Fail=="Air"?"¡Temprano!":"¡Tarde!"):r.Result=="Unreachable"?"No llega":r.Result=="NoOrder"?"Sin golpe":r.Result=="NotEvaluable"?"No evaluable":"Fallo del sistema";
             Present(text,r.Result=="Perfect"?0:r.Result=="Valid"?1:r.Result=="Failed"?2:3);
         }
         public void ShowText(string text)=>Present(text,3);

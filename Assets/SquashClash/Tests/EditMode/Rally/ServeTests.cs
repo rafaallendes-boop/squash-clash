@@ -8,7 +8,7 @@ using UnityEngine;
 namespace SquashClash.Core.Tests.Rally
 {
     // Serve kinds (design docs/superpowers/specs/2026-11-20-serve-design.md, revision 2): lob and drive, chosen by the server, behind the
-    // DEV «Saque nuevo» switch (off by default, today's serve bit for bit).
+    // DEV «Saque nuevo» switch. Turning it off restores the original automatic serve bit for bit.
     public sealed class ServeTests
     {
         private static RallyContext Context(bool on){var p=new RallyParams{ServeKindOn=on?1:0};return RallyFixtures.Context(p);}
@@ -26,6 +26,9 @@ namespace SquashClash.Core.Tests.Rally
             return f;
         }
         private static bool Same(BallState a,BallState b)=>a.Position==b.Position&&a.Velocity==b.Velocity&&a.Step==b.Step;
+
+        [Test] public void NewServeIsEnabledByDefault()
+            => Assert.That(new RallyParams().ServeKindOn, Is.EqualTo(1d));
 
         [TestCase(ServiceBox.Right)][TestCase(ServiceBox.Left)]
         public void Lob_IsHighOnTheFrontWall_TouchesTheSideWall_AndDiesInTheBackCorner(ServiceBox box)
@@ -48,10 +51,19 @@ namespace SquashClash.Core.Tests.Rally
             float hd=new Vector2(drive.Velocity.x,drive.Velocity.z).magnitude,hl=new Vector2(lob.Velocity.x,lob.Velocity.z).magnitude;
             Assert.That(hd,Is.GreaterThan(hl),"the drive is the faster one");
         }
+        [Test] public void HumanServePauseDefaultsToThreeSeconds()
+        {
+            var pause = typeof(RallyParams).GetField("ServeKindHumanPauseSeconds");
+            Assert.That(pause, Is.Not.Null);
+            Assert.That(pause.GetValue(new RallyParams()), Is.EqualTo(3d));
+            Assert.That(RivalAiTests.Projection(f => !f.Name.StartsWith("ServeKind", StringComparison.Ordinal)),
+                Is.EqualTo("b2311f168c30"));
+        }
+
         [Test] public void Off_EveryKindIsTodaysAutomaticServe_AndNothingIsChosen()
         {
             var ctx=Context(false);var rival=RivalAi.For(ctx,AiLevel.Medium,RivalStyleId.Definidor,3);
-            Assert.That(new RallyParams().ServeKindOn,Is.EqualTo(0),"off by default");
+            Assert.That(ctx.ServeKindOn,Is.False,"explicitly use the original serve");
             foreach(ServiceBox box in Enum.GetValues(typeof(ServiceBox)))
             {
                 foreach(ServeType type in Enum.GetValues(typeof(ServeType)))Assert.That(Same(ctx.Serve(box,type),ctx.Serve(box)),Is.True,box+" "+type);
