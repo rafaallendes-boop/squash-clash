@@ -94,5 +94,23 @@ namespace SquashClash.Core.Tests.Shot
         {clock.Begin(1,1,0,1,1,100);Assert.That(Decide(.5).Result,Is.EqualTo(ShotResult.NotEvaluable));}
         [Test] public void NewTimingKeys_AreRecordedWithApprovedDefaults()
         {var p=ConfigFixtures.Default();Assert.That(p.Ordered.Count,Is.EqualTo(132));Assert.That(TimingSettings.From(p).AssistMs,Is.EqualTo(40));Assert.That(TimingSettings.From(p).ValidLimitOn,Is.False);Assert.That(TimingSettings.From(p).ValidMs,Is.EqualTo(100));Assert.That(TimingSettings.From(p).EarlySoft,Is.False);Assert.That(TimingSettings.From(p).LatencyCompMs,Is.Zero);}
+        [TestCase(25,1.0)] [TestCase(50,.65)]
+        public void ServeEarlyAllowance_AcceptsExactRealBoundaryAtLegalKIn(double allowance,double tempo)
+        {
+            clock.Begin(1,0,0,tempo,1,100);settings=new TimingSettings(40,false,100);
+            SetPlan(100.25,200,102,1,target:102/(100*tempo));
+            double kin=100.25/(100*tempo),release=kin-allowance/1000;
+            var d=ContactContract.Decide(release,plans,clock,trajectory,settings,false,allowance);
+            IsContact(d,ShotResult.Valid,101);Assert.That(d.EarlyGeometry,Is.True);
+            Assert.That(d.ReleaseCorrectedAtReal,Is.EqualTo(release));
+            Assert.That(d.QuantizationErrorMsSigned,Is.EqualTo(.75/(100*tempo)*1000).Within(1e-8));
+            Assert.That(ContactContract.Decide(release-.000001,plans,clock,trajectory,settings,false,allowance).Fail,Is.EqualTo(FailKind.Air));
+        }
+        [Test] public void ServeEarlyAllowance_LatencyCompensationIsAppliedOnce()
+        {
+            settings=new TimingSettings(40,false,100,false,70);SetPlan(100,200,102,1);
+            var d=ContactContract.Decide(1.045,plans,clock,trajectory,settings,false,25);
+            IsContact(d,ShotResult.Valid,100);Assert.That(d.ReleaseCorrectedAtReal,Is.EqualTo(.975).Within(1e-12));
+        }
     }
 }

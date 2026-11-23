@@ -58,7 +58,7 @@ namespace SquashClash.Core.Shot
     }
     public static class ContactContract
     {
-        public static ContactDecision Decide(double releaseTimeReal, PresentedPlans plans, ClockMap clock, Trajectory authoritative, TimingSettings s, bool attemptConsumed)
+        public static ContactDecision Decide(double releaseTimeReal, PresentedPlans plans, ClockMap clock, Trajectory authoritative, TimingSettings s, bool attemptConsumed, double earlyAllowanceMs=0)
         {
             double corrected=releaseTimeReal-s.LatencyCompMs/1000;
             ContactPlan plan=default;double target=0,presented=0,delta=0;
@@ -75,7 +75,11 @@ namespace SquashClash.Core.Shot
             if(plan.TStarStep<0) return Reject(ShotResult.NotEvaluable,reason:"no-legal-quantized-step");
             double position=step+fraction;
             bool early=position<plan.KIn.Steps;
-            if(early&&!s.EarlySoft) return Reject(ShotResult.Failed,FailKind.Air,"before-k-in");
+            if(early&&!s.EarlySoft)
+            {
+                if(!(earlyAllowanceMs>0)||!clock.TrySimToReal(plan.KIn.Step,plan.KIn.Fraction,out double kinReal)||corrected<kinReal-Math.Min(50,earlyAllowanceMs)/1000)
+                    return Reject(ShotResult.Failed,FailKind.Air,"before-k-in");
+            }
             if(position>plan.KOut.Steps) return Reject(ShotResult.Failed,FailKind.Late,"after-k-out");
             if(!early&&!ContactPlanner.IsLegalAt(authoritative,new SimTime(step,fraction),plan.Body,plan.Legal))
             {
