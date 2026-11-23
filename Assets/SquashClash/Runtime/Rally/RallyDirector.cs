@@ -192,7 +192,9 @@ namespace SquashClash.Runtime.Rally
         // The kind of the serve that started the current point (Auto while the new serve is off).
         public ServeType LastServeType {get;private set;}
         public bool LastServeChosen {get;private set;}
+        // True when the serve that started the point came from the pause before the human's own serve (a touch chose it, or the pause ran out).
         public bool LastServeFromPause {get;private set;}
+        private bool nextPointFromHumanPause;
         // The human's own choice for its next serve, made by a touch on the front wall in the pause before it (null: the lob).
         public ServeType? PendingHumanServe=>pendingHumanServe;
         // The front-wall aim height chooses (lob at or above ServeKindLobMinAimY, drive below) and the serve goes at once.
@@ -243,7 +245,7 @@ namespace SquashClash.Runtime.Rally
             Rival=new PlayerBody(PlayerId.Rival,Rival?.Position??RivalWait(),context.Move);
             Rival.MoveTo(RivalWait(),0,BodyPhase.Recovering,BodyPhase.Waiting);
             humanBrain=new BotBrain(context,AutopilotTimingSigmaMs,Seed*31+PointsPlayed*104729L,AutopilotLine,ShotHeight.Mid,AutopilotPower);
-            committed=context.NewRules();rivalReception=null;served=null;var humanServe=pendingHumanServe;pendingHumanServe=null;LastServeType=ServeType.Auto;
+            committed=context.NewRules();rivalReception=null;served=null;var humanServe=pendingHumanServe;pendingHumanServe=null;LastServeType=ServeType.Auto;LastServeChosen=false;LastServeFromPause=nextPointFromHumanPause;nextPointFromHumanPause=false;
             if(controller!=null)controller.ServeAim=null;
             if(Match==null){committed.Begin(null,PlayerId.Human);LaunchToHuman(context.NeutralLaunch(PlayerId.Human));}
             else
@@ -255,6 +257,7 @@ namespace SquashClash.Runtime.Rally
                 // Serve kinds (design 2026-11-20-serve): the rival by its style, the human by its touch in the pause (the lob without one);
                 // Auto, today's serve, while «Saque nuevo» is off.
                 LastServeType=server==PlayerId.Rival?context.ServeTypeOf(rivalBrain,box):context.ServeKindOn?humanServe??ServeType.Lob:ServeType.Auto;
+                LastServeChosen=server==PlayerId.Human&&context.ServeKindOn&&humanServe.HasValue;
                 if(server==PlayerId.Rival)LaunchToHuman(context.Serve(box,LastServeType));else LaunchToRival(context.Serve(box,LastServeType));
             }
             RallyStarted?.Invoke();
@@ -594,6 +597,7 @@ namespace SquashClash.Runtime.Rally
             waited += elapsed;
             if (AutoRestart && waited >= WaitBetweenPoints)
             {
+                nextPointFromHumanPause = HumanServePause;
                 BeginPoint();
                 return;
             }

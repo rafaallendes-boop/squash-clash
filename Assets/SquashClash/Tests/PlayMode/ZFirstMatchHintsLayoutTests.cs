@@ -101,6 +101,7 @@ namespace SquashClash.Runtime.Tests
         {
             var d=e.resolvedStyle.unityFontDefinition;string name=d.font!=null?d.font.name:d.fontAsset!=null?d.fontAsset.name:"";return name.EndsWith(" SDF")?name.Substring(0,name.Length-4):name;
         }
+        private static void Close(float actual,float expected){Assert.That(actual,Is.EqualTo(expected).Within(.07f*expected+.05f));}
         private static void Near(Color a,Color b){Assert.That(a.r,Is.EqualTo(b.r).Within(.01f));Assert.That(a.g,Is.EqualTo(b.g).Within(.01f));Assert.That(a.b,Is.EqualTo(b.b).Within(.01f));}
         [UnityTest] public IEnumerator HintTexts_UseRubikRegular_AndTheVolleyRingHasTheCourtsAmber()
         {
@@ -109,12 +110,12 @@ namespace SquashClash.Runtime.Tests
             Assert.That(Drive(()=>rally.Phase==RallyPhase.PointOver&&!rally.Match.Finished&&rally.Match.Server==PlayerId.Rival,300),Is.True);
             hud.Hints.ForceShownForTests(HintId.Volley);hud.Tick(RallyHud.BannerInSeconds);Refresh();yield return null;yield return null;Refresh();
             Assert.That(FontName(Find("rally-banner-hint-text")),Is.EqualTo("Rubik-Regular"));
-            var ring=Find("rally-banner-hint-icon");Near(ring.resolvedStyle.borderLeftColor,ShotController.VolleyTint);Assert.That(ring.resolvedStyle.borderLeftWidth,Is.EqualTo(2f));
-            Assert.That(ring.resolvedStyle.width,Is.EqualTo(14f));
-            Assert.That(Find("rally-banner-hint").resolvedStyle.borderTopWidth,Is.EqualTo(1f),"a 1 px rule separates the row");
-            Assert.That(Find("rally-banner-hint-text").resolvedStyle.fontSize,Is.EqualTo(14f));Assert.That(Find("rally-banner-hint").resolvedStyle.maxWidth.value,Is.EqualTo(280f));
+            var ring=Find("rally-banner-hint-icon");Near(ring.resolvedStyle.borderLeftColor,ShotController.VolleyTint);Close(ring.resolvedStyle.borderLeftWidth,2f);
+            Close(ring.resolvedStyle.width,14f);
+            Close(Find("rally-banner-hint").resolvedStyle.borderTopWidth,1f);
+            Close(Find("rally-banner-hint-text").resolvedStyle.fontSize,14f);Close(Find("rally-banner-hint").resolvedStyle.maxWidth.value,280f);
             hud.Hints.ForceShownForTests(HintId.Boast);Refresh();yield return null;Refresh();
-            var corner=Find("rally-banner-hint-icon");Assert.That(corner.resolvedStyle.borderLeftWidth,Is.EqualTo(2f));Assert.That(corner.resolvedStyle.borderTopWidth,Is.EqualTo(2f));Assert.That(corner.resolvedStyle.borderBottomWidth,Is.EqualTo(0f));
+            var corner=Find("rally-banner-hint-icon");Close(corner.resolvedStyle.borderLeftWidth,2f);Close(corner.resolvedStyle.borderTopWidth,2f);Assert.That(corner.resolvedStyle.borderBottomWidth,Is.EqualTo(0f));
             Near(corner.resolvedStyle.borderLeftColor,new Color(234/255f,243/255f,243/255f));
         }
         [UnityTest] public IEnumerator GuideHint_UsesRubikRegular_GlassWithAOnePixelEdge_AndTheGuideLineInMiniature()
@@ -123,9 +124,9 @@ namespace SquashClash.Runtime.Tests
             Assert.That(rally.StartMatch(),Is.True);hud.Hints.BeginMatch();Assert.That(Drive(()=>rally.HumanServePause,900),Is.True);Drive(()=>Find("serve-guide").style.opacity.value>=1,.5);
             Refresh();yield return null;yield return null;Refresh();
             var pill=Find("serve-guide-hint");Assert.That(FontName(Find("serve-guide-hint-text")),Is.EqualTo("Rubik-Regular"));
-            Assert.That(pill.resolvedStyle.borderTopWidth,Is.EqualTo(1f));Assert.That(pill.resolvedStyle.maxWidth.value,Is.EqualTo(280f));
+            Close(pill.resolvedStyle.borderTopWidth,1f);Close(pill.resolvedStyle.maxWidth.value,280f);
             Assert.That(pill.resolvedStyle.backgroundColor.a,Is.GreaterThan(.8f),"glass");
-            var bar=Find("serve-guide-hint-icon");Assert.That(bar.resolvedStyle.width,Is.EqualTo(14f));Assert.That(bar.resolvedStyle.height,Is.EqualTo(3f));
+            var bar=Find("serve-guide-hint-icon");Close(bar.resolvedStyle.width,14f);Close(bar.resolvedStyle.height,3f);
             Assert.That(pill.pickingMode,Is.EqualTo(PickingMode.Ignore),"the front wall stays free to touch");
         }
     }

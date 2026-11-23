@@ -489,7 +489,7 @@ namespace SquashClash.Runtime.Menu
         {
             Screen=FirstRunScreen.None;app.Clock.Paused=false;rally.Level=Level;rally.RandomStyles=true;rally.StyleCounter=PlayerPrefs.GetInt(RivalMatchesKey,0);
             if(!rally.StartMatch()){OpenMenu();return;}
-            hud.MenuMatch=true;
+            hud.MenuMatch=true;hud.Hints?.BeginMatch();
             PlayerPrefs.SetInt(RivalMatchesKey,rally.StyleCounter);PlayerPrefs.Save();
             app.UserEvents?.Menu("game","open");Refresh();hud.Refresh();
         }

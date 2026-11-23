@@ -13,7 +13,8 @@ namespace SquashClash.Core.Rally
     // both visible with the game clock running; a long frame counts whole, a hidden or paused frame breaks the run.
     public sealed class GuideSeenClock
     {
-        private const double Tolerance = 1e-9;
+        // The threshold is the HUD's own BannerInSeconds, a float: the tolerance is that of a float, not of a double sum.
+        private const double Tolerance = 1e-6;
         private double last;
         private bool running;
         public double Seconds { get; private set; }

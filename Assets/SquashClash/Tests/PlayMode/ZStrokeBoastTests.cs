@@ -43,7 +43,8 @@ namespace SquashClash.Runtime.Tests
             Action<ShotRecord> h=r=>{o.Resolved=true;o.InCallback=controller.LastStrokeBoast;o.Result=r.Result;};
             controller.ShotResolved+=h;
             controller.Enqueue(gesture);controller.ProcessPending();
-            o.BeforeContact=controller.LastStrokeBoast;
+            // An order whose contact is still ahead is solved by preview first: that solve claims nothing.
+            o.BeforeContact=controller.WaitingForContact&&controller.LastStrokeBoast;
             for(int i=0;i<6000&&!o.Resolved;i++){app.Host.Advance(StepReal);controller.ProcessPending();}
             controller.ShotResolved-=h;o.Solved=controller.LastBoast.Solved;o.FellBack=controller.LastCausal.FellBack;return o;
         }

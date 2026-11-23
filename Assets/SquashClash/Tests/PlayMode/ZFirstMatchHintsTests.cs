@@ -334,16 +334,17 @@ namespace SquashClash.Runtime.Tests
         {
             StartHints(true);bool everShown=false;int checkedFrames=0;
             hud.Hints.ArmForTests(HintId.Volley);hud.Hints.ArmForTests(HintId.Boast);
-            Assert.That(Drive(()=>
+            // One simulation step per iteration; real frames are given to the layout while a pause is on, so the rows can really show.
+            for(int guard=0;guard<400000&&rally.Phase!=RallyPhase.MatchOver;guard++)
             {
-                hud.Tick((float)StepReal);
+                app.Host.Advance(StepReal);controller.ProcessPending();rally.Tick();Refresh();hud.Tick((float)StepReal);
                 bool shown=Shown(Find("rally-banner-hint"))||Shown(Find("serve-guide-hint"));
                 if(shown)everShown=true;
                 if(rally.Phase!=RallyPhase.PointOver){checkedFrames++;Assert.That(shown,Is.False,"a hint row is visible in "+rally.Phase);}
-                return rally.Phase==RallyPhase.MatchOver;
-            },1500),Is.True);
+                else if(guard%6==0)yield return null;
+            }
+            Assert.That(rally.Phase,Is.EqualTo(RallyPhase.MatchOver));
             Assert.That(checkedFrames,Is.GreaterThan(100));Assert.That(everShown,Is.True,"the check is not vacuous: the rows do show in a pause");
-            yield return null;
         }
 
         // ---------- criterion 9: no added time ----------
@@ -408,7 +409,7 @@ namespace SquashClash.Runtime.Tests
             StartHints(false);Assert.That(ReachRivalFirstPause(),Is.True);yield return Settle();Assert.That(hud.Hints.Shown,Is.EqualTo(HintId.Serve));
             hud.Tick(.05f);Refresh();Click("rally-next");Refresh();Assert.That(PlayerPrefs.HasKey("sc.hints.serve"),Is.False);Assert.That(Events("hint"),Is.Empty);
             Assert.That(Drive(()=>Ordinary&&rally.PointsPlayed>=2,600),Is.True,"the human never swings: the rival keeps winning");yield return Settle();
-            Assert.That(hud.Hints.Shown,Is.Null,"the rival already served: H0 does not come back to the banner");
+            Assert.That(hud.Hints.Shown,Is.Not.EqualTo(HintId.Serve),"the rival already served: H0 does not come back to the banner (the ring that showed with no stroke arms H1)");
             rally.Autopilot=true;Assert.That(ReachGuide(),Is.True);yield return ShowGuide();Assert.That(hud.Hints.Shown,Is.EqualTo(HintId.Serve),"but the guide shows it");Assert.That(GuideHint.text,Is.EqualTo(GuideText));
         }
         [UnityTest] public IEnumerator H0InTheBanner_IfItWasSeenInTheGuide_TheRivalsFirstServePauseShowsNothing()

@@ -17,6 +17,11 @@ namespace SquashClash.Runtime.Shot
         private VisualElement root,bar;private SafeAreaLayout safe;private AppBootstrap app;private SquashClash.Core.Config.EffectiveConfig courtOf;private SquashClash.Core.Court.CourtDimensions court;
         private int tone=-1;private float popAge=-1;
         public string Text=>label?.text??string.Empty;
+        // Where the note sits this frame, in panel units up from the panel's bottom, so the serve hint can stack on it. Read-only.
+        public bool Occupied=>label!=null&&!string.IsNullOrEmpty(label.text)&&label.style.display.value!=DisplayStyle.None;
+        public float NoteBottom {get;private set;}
+        public float NoteHeight {get;private set;}
+        public float Floor {get;private set;}
         public void Initialize(AppBootstrap app)
         {
             this.app=app;root=app.GetComponent<UIDocument>().rootVisualElement;safe=app.GetComponent<SafeAreaLayout>();
@@ -60,7 +65,8 @@ namespace SquashClash.Runtime.Shot
             float left=safe!=null?safe.Left:0,right=safe!=null?safe.Right:0,bottom=safe!=null?safe.Bottom:0;
             label.style.left=left+Side;label.style.right=right+Side;
             float h=label.resolvedStyle.height;if(float.IsNaN(h)||h<=0)h=34;
-            label.style.bottom=BandBottom(bottom+barHeight,h);
+            Floor=bottom+barHeight;NoteHeight=h;NoteBottom=BandBottom(Floor,h);
+            label.style.bottom=NoteBottom;
         }
         // Where the court's near floor edge falls on screen, as panel units up from the panel's bottom (NaN when it cannot be known).
         public float CourtBottomEdge()
