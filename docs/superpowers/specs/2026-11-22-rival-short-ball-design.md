@@ -14,7 +14,7 @@ Autorización del PO para esta spec (23 nov, 08:43 −03, chat de SC-PM): «para
 |---|---|---|
 | I1, intento visible cuando no llega | PR #97, head `2f83824156a073f86a7f3037967b8e36cfdd6f2f`, merge `d26de5ffe57f35579c0620edabec4ef44353356f` | **Entregado en `main`**, solo I1 |
 | I2–I3 originales (I2 «sin dos paredes») | `406f392`, rama `feat/rival-short-i2i3` | Guardados fuera de #97. Son antecedente: con ellos EditMode quedó en 977/978 en `5d77420` porque falló M3 (Fondista 3,99 %, Definidor 1,47 %), según el [comentario de #97](https://github.com/rafaallendes-boop/squash-clash/pull/97#issuecomment-7087023653) |
-| I2–I3 del camino B | PR #101 (borrador), rama `feat/rival-short-i2i3`, head `704f8f349f3f2f8b5ea0069ff34278a995a546d8` al escribir esto, con `main` `230b758` incorporado (merge `2bf90f6`) | **Candidato.** Detenido por la precondición de B3 (resuelta abajo, en «Cambio de la spec en B3») |
+| I2–I3 del camino B | PR #101 (borrador), rama `feat/rival-short-i2i3`, head `704f8f349f3f2f8b5ea0069ff34278a995a546d8` al escribir esto, con `main` `230b758` incorporado (merge `2bf90f6`) | **Candidato.** Detenido por la precondición de B3, que falló y sigue registrada como tal. El bloqueo se levanta solo con B3c y B3d en verde (ver «B3: estado y plan») |
 | Mediciones de `main` `230b758` | PR #101, evidencia propia de Codex | Antecedente de la base. Las reporta Codex y yo no las verifiqué: R8 13,5064 % (1436/10632), M3 en Medio Fondista 4,7195 %, Definidor 10,3464 %, Completo 8,8750 % |
 
 ## Camino B: criterio de producto de SC-Lead (RAL-174)
@@ -86,21 +86,53 @@ Los tests de esta tabla son nuevos de #101 y no existen en `main`. Cuando uno ca
 | B1b | `RivalAi_Stretched_FromFront_IsHighMediumStraightOrCross`, el test de #101, que se conserva por P-1. Tres estilos: toda elección es {recta, cruzado} × alto × media | caracterización: nace verde con el I2 guardado y se declara |
 | B2 | `RivalAi_StretchedBack_MayBoast_WhenTheHumanReachesIt`. Contacto de esquina de atrás `(.9, .8, 8.6)` y humano observado en la T. **Precondición afirmada:** al menos una de las 4 dos paredes tiene `ForecastBoast.Good` y el plan del humano es `Reachable`. Definidor y Completo, 500 decisiones: alguna `Boast`. El Fondista queda fuera: con `BoastWeightFondo` 0 y `LongWeight` 1,2 la dos paredes es rara por diseño, y M3 le pide ≤ 5 % | RED: el I2 guardado da 0. Ya visto en #101 |
 | B3a | `RivalAi_StretchedBack_FilterPredictsTheBoastPath`. Para una dos paredes, la trayectoria que pronostica el filtro toca la lateral antes que el frontis | RED: el filtro guardado la lee como golpe directo. Ya visto en #101 |
-| B3b | `RivalAi_StretchedBack_NeverPicksAnUnreachableOption`. Grilla predeclarada (abajo), tres estilos, 100 decisiones por casilla. Cuando existe una opción alcanzable, se exigen 0 elecciones inalcanzables y 0 dos paredes inalcanzables. Cuando no existe, la elección no es una dos paredes y `LastStretchedFallback` queda marcado | RED si el filtro deja pasar una dos paredes inalcanzable; si no, guardia declarada (abajo) |
+| B3b | `RivalAi_StretchedBack_NeverPicksAnUnreachableOption`, sobre la grilla de abajo. **Solo cobertura adicional**: sin un caso negativo de dos paredes, no acredita el rechazo | RED si deja pasar algo inalcanzable; si no, se declara como cobertura que no ejercita el rechazo |
+| B3c | `StretchedFilter_Apply_RejectsUnreachable_IncludingBoast`, con los cuatro casos sintéticos de abajo. Es la **evidencia no vacía** de la rama de rechazo | RED: un esqueleto de `Apply` que devuelve −1 sin tocar los pesos falla el caso 1 |
+| B3d | `RivalAi_EvaluateStretched_MatchesThePlannerPerOption`: por cada opción, `Good`, `Reachable` y el retraso coinciden con un cálculo independiente (abajo) | RED: con el pronóstico de `406f392`, las filas de dos paredes no coinciden |
 | B4 | Guardias sin cambio de expectativa: `RivalAi_PlannedLowSlack_StillMayBoast`, `RivalAi_NotStretched_DecisionsUnchanged` (misma huella), `RivalAi_Stretched_NoReachableOption_PicksLeastLate_AndFlags` (E1: ahora también afirma que la elección no es una dos paredes; se conserva su escenario y se añade un caso de atrás, con dos paredes candidatas) y `Hashes_Unchanged` con los hashes de la base | verdes |
 | B4b | `RivalAi_Stretched_PicksAnOptionTheOpponentCanReach` se conserva con su caso de adelante («recta inalcanzable y cruzado alcanzable», `(0,6; 0,05; 1,1)`), que vuelve a valer por P-1 | verde |
 | B5 | Regresión completa `scripts/test.sh editmode`, con el test existente de M3 **sin tocar** | todos Passed |
 
-**Cambio de la spec en B3, a raíz de la parada de #101.** En el escenario único del 22 nov (humano en la esquina de atrás opuesta), las cuatro dos paredes resultaron `Good` y alcanzables, así que la precondición de B3 no se cumplía y Codex se detuvo, como mandaba la spec. Esa precondición era una necesidad de construcción del test, no un criterio de producto: el criterio de producto se mide en juego con F2/R8. Por eso B3 se divide en dos:
+**Detalle de B3b, B3c y B3d:**
 
-- **B3a** prueba el mecanismo directamente.
-- **B3b** prueba la propiedad sobre una grilla fijada aquí, antes de los datos:
+- **B3b, grilla fijada el 23 nov:**
   - contactos con x ∈ {0,5; 0,9; 1,5} m desde la lateral derecha, y ∈ {0,3; 0,8} m y z ∈ {7,6; 8,6; 9,3} m;
-  - humano observado en `ClampBody` de la T, (W, L), (W, 0) y (0, 0).
+  - humano observado en `ClampBody` de la T, (W, L), (W, 0) y (0, 0);
+  - tres estilos y 100 decisiones por casilla;
+  - cuando existe una opción alcanzable, 0 elecciones inalcanzables; cuando no existe, la elección no es una dos paredes y `LastStretchedFallback` queda marcado.
+- **B3c, casos sintéticos de `StretchedFilter.Apply`:**
+  1. recta alcanzable y dos paredes inalcanzable con más utilidad: la dos paredes queda en −∞ y se devuelve −1;
+  2. dos paredes alcanzable y recta inalcanzable: la recta queda en −∞;
+  3. nada alcanzable y la dos paredes es la de menor retraso: se devuelve la de menor retraso que no es dos paredes;
+  4. opción alcanzable pero no `Good`: queda excluida.
+- **B3d:** contacto `(.9, .8, 8.6)`, con el humano en la T y en `ClampBody(W, L)`, los dos escenarios ya fijados. El cálculo independiente usa, en el test, el pronóstico propio de cada opción (dos paredes o frontis), `context.Predict` y `ReceptionPlanner.Plan`.
 
-  Si en toda la grilla no aparece ninguna dos paredes inalcanzable, B3b se declara guardia y el informe lo reporta como dato («dos paredes estiradas de atrás alcanzables en toda la grilla»). **No es parada.** La grilla no se cambia después de ver datos.
+**B3: estado y plan (ronda 3 de la revisión de Codex).**
 
-La parada por precondición se mantiene solo en B2.
+- **El resultado anterior se conserva tal cual.**
+  - El B3 del 22 nov exigía una opción alcanzable y una dos paredes inalcanzable en el contacto `(.9, .8, 8.6)`, con el humano en `ClampBody(W, L)`.
+  - En #101 (`704f8f3`, `docs/validation/2026-11-23-rival-short-b.md`) esa **precondición falló**: las cuatro dos paredes salieron `Good` y alcanzables.
+  - La propiedad «I3 rechaza una dos paredes inalcanzable» queda **no evaluada en ese escenario**. Rediseñar el test no convierte esa ausencia en aprobación.
+- **Qué se exige ahora:** evidencia no vacía de la rama de rechazo, sin buscar posiciones, contactos ni parámetros para obtenerla. Se arma con dos tests que encadenan el mecanismo:
+  - **B3c** prueba que la decisión descarta lo marcado como inalcanzable, con entradas sintéticas.
+  - **B3d** prueba que las marcas reales salen del planificador del humano sobre la trayectoria correcta.
+
+  Un filtro que pronostique bien pero ignore `Reachable` falla B3c. Uno que calcule la alcanzabilidad por otro camino falla B3d.
+- **Cambio de código que lo hace verificable**, sin cambiar el comportamiento salvo E1 sin dos paredes. `FilterStretched` se parte en dos piezas públicas de Core, como `RivalAttempt`:
+  1. `RivalAi.EvaluateStretched(observation, own)`, que devuelve por opción `Good`, `Reachable`, el retraso del humano y si es dos paredes. Usa `ForecastBoast`/`SolveBoastIntention` para la dos paredes, `Forecast`/`SolveIntention` para el resto, `context.Predict` y `ReceptionPlanner.Plan` con `new PlayerBody(PlayerId.Human, observation.OpponentPosition, context.Move)` y `context.Steps(ReactionS)`.
+  2. `StretchedFilter.Apply(weights, evaluations, count, out best)`, la regla pura:
+     - pone −∞ a lo que no es `Good` o no es `Reachable`;
+     - devuelve −1 si queda alguna opción alcanzable;
+     - si no, devuelve la de menor retraso que no sea dos paredes (E1).
+
+  `FilterStretched` es exactamente `Apply(weights, EvaluateStretched(...))`.
+- **Se conserva B3b** (grilla), solo como cobertura adicional. Si la grilla no produce ninguna dos paredes inalcanzable, el informe lo dice así: «la grilla no ejercita el rechazo de dos paredes». **No cuenta como evidencia del rechazo.**
+- **Bloqueo de B3.** Se levanta solo cuando B3c y B3d tienen RED válido por aserción y luego GREEN. Si alguno no logra un RED válido, se registra y se para, como siempre.
+- **Hueco residual, declarado.** No hay todavía un caso **en juego** donde el planificador real declare inalcanzable una dos paredes. La rama queda cubierta por la composición B3c + B3d, no por un caso negativo de punta a punta.
+  - Para golpes de frontis sí hay un negativo real en juego: B4b, con la recta inalcanzable y el cruzado alcanzable.
+  - F2 (R8) es una tasa agregada y no reemplaza esta propiedad individual.
+
+Si la precondición de B2 no se cumple en su escenario fijado, se registra y se para. No se buscan parámetros, posiciones ni contactos para cumplirla.
 
 ### Condiciones de fusión de I2–I3 (SC-Lead), medidas fuera de la regresión
 
@@ -199,7 +231,8 @@ Se aplican las reglas de fusión de §2. La instalación sigue la ventana coordi
 
 ## HOY (22 nov): lo que entra en la build que Rafael prueba de 17:00 a 18:00
 
-> **Superado en I2 por el camino B (arriba).** Lo que sigue queda como registro del alcance de la mañana.
+> **Sección histórica (22 nov), no normativa.** Sus ramas, SHA, hashes (RallyParams `a82c34b661bf`) y su I2 son los de ese día. Lo vigente está en «Estado al 23 nov» y «Camino B».
+
 
 Pedido de SC-PM (11:30): spec cerrada antes de las 12:15, Codex implementa desde ~12:30 y el merge con los gates en verde queda listo hacia las 16:00. **Hoy entra solo «nunca parado / estirado = defensivo»: I1 + I2.** Todo lo demás pasa a después (§«Después»).
 
@@ -362,7 +395,7 @@ Sumando la demora de §1.1, una dejada a la esquina con contacto en z = 1,5 exig
 
 Experimento explícito `RivalShortBallDiagnosisExperiment` (Anexo A), fuera de la regresión y de AutoQA (`[Explicit, Category("Experiments")]`). Configuración:
 
-- Defaults del preset sin cambios (`207da8f2c636`/132), `new RallyParams()` (`a82c34b661bf`) y `RallySim` con P2-Analytic. Ningún parámetro se toca.
+- Defaults del preset sin cambios (`207da8f2c636`/132), `new RallyParams()` de la base que se mida (hoy `1063d0f6cf66`, AGENTS §5; el 22 nov era `a82c34b661bf`) y `RallySim` con P2-Analytic. Ningún parámetro se toca. `source.tsv` registra el hash efectivo de cada corrida.
 - Rival `RivalAi.For(ctx, nivel, estilo, semilla)`, el mismo constructor del juego, envuelto en un registrador que reenvía `IRallyPositioning` e `IRallyServer` para conservar la espera y la recuperación del estilo.
 - Humano: `ShortMixBot`, con σ de tiempo 90 ms como `NewcomerBot`. Mezcla fija predeclarada: 40 % dejada (alto bajo/medio/alto uniforme, potencia media 70 % / fuerte 30 %), 15 % recta baja (media/fuerte 50/50) y 45 % largo como `NewcomerBot`. La mezcla busca muestras de dejadas desde todas las zonas; no representa a un usuario real.
 - 3 estilos × 3 niveles × 150 partidos (`PlayMatch`), semillas base 20261122. Dos corridas con las mismas semillas deben dar `rows.tsv` idéntico byte a byte (determinismo).
@@ -449,7 +482,7 @@ Son métricas nuevas, salidas del mismo experimento. **No cambia ningún umbral 
 | **R1** | Recepciones de pelota corta (`dejada` o `corto`) con el punto abierto en que el rival queda **parado sin intento**: ni golpe, ni estirada (I1), ni desplazamiento ≥ 0,30 m | invariante del mínimo | **0**, por requisito de SC-Lead («nunca se queda parado»), no como número de calibración |
 | **R2** | Recepciones `stretched` con contacto cuya elección no es {recta, cruzado} × alto × media ni, solo desde la zona de dos paredes de atrás, una `Boast` que pasó I3 (camino B, P-1) | invariante del mínimo | **0**, por requisito de SC-Lead |
 | **R3** | Recepciones `stretched` con contacto cuya devolución, según el predictor compartido (`ForecastBoast`/`SolveBoastIntention` para la dos paredes), deja al humano **sin plan alcanzable** desde su posición observada | invariante del mínimo (definición de «winner» en el planificador) | **0** cuando existe al menos una opción defensiva alcanzable; si no existe, se reporta aparte |
-| **R8** | Tasa de ganadoras del rival cuando llega estirado: `stretched` y `Contact` con `won == 1`, sobre `stretched` y `Contact` (camino B, F2) | condición de fusión de SC-Lead | rama ≤ base `518f9c3`, en total y por estilo, con las mismas semillas; no es un umbral numérico |
+| **R8** | Tasa de ganadoras del rival cuando llega estirado: `stretched` y `Contact` con `won == 1`, sobre `stretched` y `Contact` (camino B, F2) | condición de fusión de SC-Lead | candidato ≤ base, en total y por estilo, con las mismas semillas y los cuatro denominadores; la base es el commit de `main` que el candidato tiene incorporado (hoy `230b758`, F2); no es un umbral numérico |
 | R3b | Recepciones `stretched` con contacto resueltas por E1 (`LastStretchedFallback`, columna `fb`): E1/estirados y E1/puntos del rival | dato y criterio de producto de SC-Lead (P-3) | no es umbral de la spec; si cualquiera supera el 5 %, se lleva a SC-Lead antes de fusionar. No cuenta como cumplimiento de R3 |
 | R4 | % «llega» por estilo × nivel × zona × franja de calidad (§2.2) | distribución | **lo fija Rafael**, propuesta para SC-Lead |
 | R5 | p50/p90 de `delay_ms` y de `path_m` ante dejadas | distribución | **lo fija Rafael** |
@@ -465,7 +498,7 @@ R1–R3 se verifican en EditMode con `RallySim`, sin iPhone. R4–R6 son la base
 - [ ] EditMode: tests nuevos de I1–I4 (§5) y regresión completa `scripts/test.sh editmode`.
 - [ ] PlayMode: el director emite la estirada en una recepción `unreachable` y no la emite en una con golpe; regresión completa `scripts/test.sh playmode`.
 - [ ] Experimento §2 antes (diagnóstico) y después (R1–R3 en 0; R4–R7 reportadas).
-- [ ] Hashes sin cambio: defaults `207da8f2c636`, RallyParams `a82c34b661bf`, SimulationKey `166a96e319c7`.
+- [ ] Hashes sin cambio respecto de la base (hoy, AGENTS §5): defaults `207da8f2c636`, RallyParams `1063d0f6cf66`, SimulationKey `166a96e319c7`.
 - [ ] AutoQA `scripts/autoqa.sh mvp` (V/T3/volea PASS/0/1). No toca timing, gesto ni contrato, pero I2/I3 cambian decisiones del rival y conviene la guardia.
 - [ ] `scripts/check-release.sh`.
 
@@ -529,9 +562,9 @@ Una rama y una PR: `codex/rival-short-ball-min`. No cambia valores de preset ni 
 | 7 | `RivalAi_PlannedLowSlack_StillMayBoast`: holgura 0,05 y `planned` en la esquina de atrás; aparece alguna dos paredes. Es la guardia de que I2 no amplía su alcance | ídem | — |
 | 8 | `RivalAi_Stretched_PicksAnOptionTheOpponentCanReach`: contacto estirado adelante y oponente en la T. Construir el caso con una opción defensiva que el planificador del oponente da por inalcanzable y otra alcanzable. Afirmar que nunca se elige la inalcanzable. RED: hoy se sortea | ídem | I3 |
 | 9 | `RivalAi_Stretched_NoReachableOption_PicksLeastLate_AndFlags` | ídem | rama de respaldo de I3 |
-| 10 | `RivalAi_NotStretched_DecisionsUnchanged`: 3 estilos × 3 niveles × N observaciones `planned`; las decisiones son idénticas bit a bit a las de `518f9c3`, con huella guardada en el test. Garantiza que I2/I3 solo actúan en `stretched` | ídem | — |
+| 10 | `RivalAi_NotStretched_DecisionsUnchanged`: 3 estilos × 3 niveles × N observaciones `planned`; las decisiones son idénticas bit a bit a las de la base, con huella guardada en el test (capturada en `518f9c3` y reportada igual en #101 sobre `230b758`). Garantiza que I2/I3 solo actúan en `stretched` | ídem | — |
 | 11 | *(solo si el paso 0 encuentra casos)* `RivalAttempt_ChaseStance_TowardsFirstBounce` y `RallySim_NoLegalWindow_RivalMoves`: el cuerpo recorre ≥ 0,30 m. RED: hoy 0 m | `RivalAttemptTests.cs`, `RallySimTests.cs` | I4 |
-| 12 | `Hashes_Unchanged`: defaults `207da8f2c636`, RallyParams `a82c34b661bf` y SimulationKey `166a96e319c7`. Guardia | test de hashes existente o uno nuevo | — |
+| 12 | `Hashes_Unchanged`: los hashes de la base del candidato (hoy defaults `207da8f2c636`, RallyParams `1063d0f6cf66` y SimulationKey `166a96e319c7`, AGENTS §5). El valor del 22 nov, RallyParams `a82c34b661bf`, quedó superado por el saque nuevo (#99/#100). Guardia | test de hashes existente o uno nuevo | — |
 | 13 | Experimento «después» con las mismas semillas: R1 = R2 = R3 = 0, más R4–R7 reportadas | experimento | — |
 
 Orden de commits: 0 → 1-2 → 3-4 → 5-7 → 8-10 → (11) → 12 → 13. Después, las regresiones completas de EditMode y PlayMode, AutoQA y check-release, y un informe de una página en `docs/reviews/`.
@@ -562,7 +595,7 @@ Estas palancas son valores de `RallyParams`. Tocan la calibración de los estilo
 
 ## Anexo A. Experimento `RivalShortBallDiagnosisExperiment` (listo para correr; no compilado)
 
-Está escrito contra las API de `518f9c3` leídas para esta spec, pero **no se compiló** porque Unity no estaba disponible. Si no compila, Codex lo corrige sin cambiar el método de §2.1 y lo declara.
+Se escribió contra las API de `518f9c3` y no se compiló entonces, porque Unity no estaba disponible. Codex lo corrió después sobre `main` `230b758` en #101. Si no compila, Codex lo corrige sin cambiar el método de §2.1 y lo declara.
 
 ```csharp
 using System;
