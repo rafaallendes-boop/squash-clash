@@ -191,6 +191,8 @@ namespace SquashClash.Runtime.Rally
         private bool? pendingNewServe;private ServeType? pendingHumanServe;
         // The kind of the serve that started the current point (Auto while the new serve is off).
         public ServeType LastServeType {get;private set;}
+        public bool LastServeChosen {get;private set;}
+        public bool LastServeFromPause {get;private set;}
         // The human's own choice for its next serve, made by a touch on the front wall in the pause before it (null: the lob).
         public ServeType? PendingHumanServe=>pendingHumanServe;
         // The front-wall aim height chooses (lob at or above ServeKindLobMinAimY, drive below) and the serve goes at once.

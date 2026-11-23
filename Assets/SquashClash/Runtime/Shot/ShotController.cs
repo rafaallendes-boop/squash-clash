@@ -83,6 +83,7 @@ namespace SquashClash.Runtime.Shot
         public Func<bool> SideAimGate {get;set;}
         public bool SideAimOpen=>ServeAim==null&&SideAimGate!=null&&SideAimGate();
         public BoastInfo LastBoast {get;private set;}
+        public bool LastStrokeBoast {get;private set;}
         // Serve kinds (design 2026-11-20-serve): set by the director only in the pause before the human's own serve with «Saque nuevo» on. While
         // set, a touch may begin, the volley choice is skipped and the closed gesture goes here instead of the stroke path (no shot record, no timing).
         public Func<ClosedGesture,bool> ServeAim {get;set;}

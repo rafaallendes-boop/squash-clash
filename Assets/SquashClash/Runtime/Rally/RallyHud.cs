@@ -24,6 +24,8 @@ namespace SquashClash.Runtime.Rally
         // Personal records: set by the start menu when it begins a match, cleared when no match is active. A match that
         // ever ran on autopilot never counts. Nothing here reaches Core: it only reads what the HUD already sees.
         public bool MenuMatch {get;set;}
+        // First-match hints (spec front 2): the adapter that decides which hint the pause shows and remembers the ones already seen.
+        public FirstMatchHints Hints {get;private set;}
         private bool autopilotSeen;
         public static string DurationText(float seconds){int s=Mathf.Max(0,(int)seconds);return (s/60)+":"+(s%60).ToString("D2");}
         public static string RematchText(bool humanWon,int human,int rival)=>humanWon?"Revancha":"Revancha "+human+"–"+rival;
@@ -70,7 +72,7 @@ namespace SquashClash.Runtime.Rally
         private RallyPhase phase=(RallyPhase)(-1);
         public void Initialize(AppBootstrap app,RallyDirector rally,VisualElement parent)
         {
-            this.app=app;this.rally=rally;
+            this.app=app;this.rally=rally;Hints=new FirstMatchHints(app,rally,app.GetComponent<SquashClash.Runtime.Shot.ShotController>());
             // Art pass: palette and type scale live in one style sheet; the elements and their names are the same.
             var sheet=Resources.Load<StyleSheet>("Visual/Hud");
             var top=parent.parent??parent;if(sheet!=null)top.styleSheets.Add(sheet);
