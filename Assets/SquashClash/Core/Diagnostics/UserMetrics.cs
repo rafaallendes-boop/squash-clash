@@ -55,5 +55,7 @@ namespace SquashClash.Core.Diagnostics
             Emit("match-end",Match(abandoned?"abandoned":human>rival?"win":human<rival?"loss":"draw",abandoned,Math.Max(0,readTime()-matchAt)));
         }
         public void Pause(string reason)=>Emit("pause",new PauseLine{reason=reason});
+        public void Hint(string id,string action,string where){}
+        public void ServeChoice(bool chosen,string kind,bool hintSeen){}
     }
 }
