@@ -52,13 +52,13 @@ namespace SquashClash.Experiments.EditMode
             Assert.That(preset.Hash,Is.EqualTo("207da8f2c636"));Assert.That(preset.Ordered.Count,Is.EqualTo(132));
             return (root,preset,new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold));
         }
-        private static Cell Play(RallyContext ctx,AiLevel level,RivalStyleId style,string reference,double sigma,int matches,long seeds,AiDifficulty? difficulty=null)
+        private static Cell Play(RallyContext ctx,AiLevel level,RivalStyleId style,string reference,double sigma,int matches,long seeds,AiDifficulty? difficulty=null,double earlyAllowanceMs=0)
         {
             var cell=new Cell();
             for(int i=0;i<matches;i++)
             {
                 IRallyBrain human=reference=="bot30"?(IRallyBrain)new BotBrain(ctx,30,seeds+2*i):new RivalStylesBaselineExperiment.NewcomerBot(ctx,sigma,seeds+2*i);
-                using(var sim=new RallySim(ctx,human,new RivalAi(ctx,difficulty??AiDifficulty.For(ctx.Params,level),style,seeds+1+2*i)))
+                using(var sim=new RallySim(ctx,human,new RivalAi(ctx,difficulty??AiDifficulty.For(ctx.Params,level),style,seeds+1+2*i),earlyAllowanceMs))
                 {
                     var score=new MatchScore(7,2,i%2==0?PlayerId.Human:PlayerId.Rival);int replays=0;
                     while(!score.Finished)
@@ -130,6 +130,16 @@ namespace SquashClash.Experiments.EditMode
         // with NEW seeds for the nine cells (newcomer) and bot30 in every cell (Hard: <= 45 %; Easy and Medium reported only).
         [Test,Explicit,Category("Experiments"),Timeout(14400000)]
         public void ConfirmPerStyle()=>ConfirmPerStyle("confirm-per-style",new RallyParams());
+        [Test,Explicit,Category("Experiments"),Timeout(14400000)]
+        public void ConfirmBoundedServeMargin()
+        {
+            double margin=double.Parse(Environment.GetEnvironmentVariable("SC_MARGIN_MS")??"0",C);
+            Assert.That(new[]{0.0,25,50},Does.Contain(margin));
+            ConfirmPerStyle("bounded-"+margin,new RallyParams(),earlyAllowanceMs:margin);
+            string root=Path.GetFullPath(Path.Combine(Application.dataPath,".."));
+            string run=Environment.GetEnvironmentVariable("SC_RS_RUN")??"bounded-"+margin;
+            File.AppendAllText(Path.Combine(root,"Logs/experiments/rival-styles-calibration",run,"source.tsv"),"earlyAllowanceMs\t"+F(margin)+"\n",Utf8);
+        }
         // Serve kinds (design 2026-11-20-serve, revision 2): the same run, same seeds, with «Saque nuevo» on, to measure the calibration shift.
         // The reference bots have no serve choice, so they serve the lob; the rival chooses by its style. Nothing is recalibrated.
         [Test,Explicit,Category("Experiments"),Timeout(14400000)]
@@ -147,7 +157,7 @@ namespace SquashClash.Experiments.EditMode
         public void BoastRound2Off()=>ConfirmPerStyle("confirm-boast-r2-off",new RallyParams{BoastRival=0},20270121,20270219);
         [Test,Explicit,Category("Experiments"),Timeout(14400000)]
         public void BoastRound2On()=>ConfirmPerStyle("confirm-boast-r2-on",new RallyParams{BoastRival=1},20270121,20270219);
-        private static void ConfirmPerStyle(string defaultRun,RallyParams parameters,long hardSeeds=20261121,long confirmSeeds=20261219)
+        private static void ConfirmPerStyle(string defaultRun,RallyParams parameters,long hardSeeds=20261121,long confirmSeeds=20261219,double earlyAllowanceMs=0)
         {
             var (root,preset,factory)=Setup();
             string dir=Path.Combine(root,"Logs/experiments/rival-styles-calibration/"+(Environment.GetEnvironmentVariable("SC_RS_RUN")??defaultRun));
@@ -161,9 +171,9 @@ namespace SquashClash.Experiments.EditMode
                 AiDifficulty Scaled(AiLevel level,double k){var d=AiDifficulty.For(ctx.Params,level);return new AiDifficulty(d.PerceptionS*k,d.StanceSigma*k,d.AimSigma*k,d.PowerSigma*k,d.TimingSigmaMs*k,d.Temperature);}
                 Cell Run(string phase,AiLevel level,RivalStyleId style,string reference,double k,long seeds)
                 {
-                    var watch=Stopwatch.StartNew();var cell=Play(ctx,level,style,reference,90,200,seeds,Scaled(level,k));
+                    var watch=Stopwatch.StartNew();var cell=Play(ctx,level,style,reference,90,200,seeds,Scaled(level,k),earlyAllowanceMs);
                     cells.WriteLine(phase+"\t"+level+"\t"+style+"\t"+reference+"\t"+F(k)+"\t"+cell.Row+"\t"+F(watch.Elapsed.TotalSeconds));cells.Flush();
-                    boasts.WriteLine(phase+"\t"+level+"\t"+style+"\t"+reference+"\t"+cell.RivalBoasts+"\t"+cell.RivalBoastFallbacks);boasts.Flush();return cell;
+                    boasts.WriteLine(phase+"\t"+level+"\t"+style+"\t"+reference+"\t"+cell.RivalBoasts+"\t"+cell.RivalBoastFallbacks);boasts.Flush();UnityEngine.Debug.Log("N2 "+phase+" "+level+" "+style+" "+reference+" margin="+earlyAllowanceMs+" points="+cell.Points+" human="+cell.Human);return cell;
                 }
                 double fondoHard=double.NaN,best=double.MaxValue;
                 foreach(var k in new[]{2.5,2.25,2.75})
