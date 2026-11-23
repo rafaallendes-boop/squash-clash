@@ -155,7 +155,7 @@ namespace SquashClash.Runtime.Rally
             serveGuideLob.name = "serve-guide-lob";
             serveGuideLob.AddToClassList("sc-serve-guide-caption");
             serveGuide.Add(serveGuideLob);
-            serveGuideDrive = Text("Toca abajo: drive", "sc-shot-note");
+            serveGuideDrive = Text("Toca abajo: saque rápido", "sc-shot-note");
             serveGuideDrive.name = "serve-guide-drive";
             serveGuideDrive.AddToClassList("sc-serve-guide-caption");
             serveGuide.Add(serveGuideDrive);

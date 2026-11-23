@@ -51,7 +51,7 @@ namespace SquashClash.Runtime.Tests
             var styleField = typeof(VisualElement).GetField("m_Style", styleFlags);
             var shadowProperty = styleField.FieldType.GetProperty("textShadow", styleFlags);
             TextShadow Shadow(VisualElement element) => (TextShadow)shadowProperty.GetValue(styleField.GetValue(element));
-            foreach (var expected in new[] { (name: "serve-guide-lob", text: "Toca arriba: globo"), (name: "serve-guide-drive", text: "Toca abajo: drive") })
+            foreach (var expected in new[] { (name: "serve-guide-lob", text: "Toca arriba: globo"), (name: "serve-guide-drive", text: "Toca abajo: saque rápido") })
             {
                 var label = Find<Label>(expected.name);
                 Assert.That(label.text, Is.EqualTo(expected.text));
