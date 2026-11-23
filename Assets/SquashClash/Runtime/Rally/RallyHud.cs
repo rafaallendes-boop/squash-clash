@@ -16,6 +16,8 @@ namespace SquashClash.Runtime.Rally
     {
         // Result card extras (view only). DEV switch, default on; off is the card as it was. Not remembered.
         public static bool ExtendedCardOn=true;
+        // «vs» plate over the first serve (front 4). DEV switch, default on; off is the match start as it was. Not remembered.
+        public static bool VsPlateOn=true;
         // Real play time of the current match (unscaled, not counted while paused or after match point) and its longest rally in strokes,
         // both read from what the HUD already sees; nothing is added to Core.
         public float MatchSeconds {get;private set;}
