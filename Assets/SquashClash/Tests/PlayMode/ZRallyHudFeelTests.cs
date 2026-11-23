@@ -109,6 +109,7 @@ namespace SquashClash.Runtime.Tests
 
         [UnityTest] public IEnumerator InAMatch_TheBannerSaysWhoServesNext_AndTheScorePulses()
         {
+            rally.SetNewServe(false);
             Click("rally-match");hud.Refresh();yield return null;
             Assert.That(hud.PulseRemaining,Is.Zero);
             Assert.That(Drive(()=>rally.Phase==RallyPhase.PointOver,60),Is.True);hud.Refresh();

@@ -39,11 +39,12 @@ namespace SquashClash.Core.Tests.Rally
         private static RivalAi Ai(RallyContext c,RivalStyleId style,AiLevel level=AiLevel.Medium,long seed=7)=>new RivalAi(c,AiDifficulty.For(c.Params,level),style,seed);
         private static double Share(List<AiShot> s,Func<AiShot,bool> f)=>s.Count(f)/(double)s.Count;
         private static bool Attack(AiShot s)=>s.Option.Line==ShotLine.Drop||s.Option.Height==ShotHeight.Low;
-        internal static string Projection(Func<FieldInfo,bool> keep)
+        internal static string Projection(Func<FieldInfo,bool> keep,RallyParams parameters=null)
         {
             var canonical=new StringBuilder();
+            parameters??=new RallyParams();
             foreach(var field in typeof(RallyParams).GetFields(BindingFlags.Public|BindingFlags.Instance).Where(keep).OrderBy(f=>f.Name,StringComparer.Ordinal))
-                canonical.Append(field.Name).Append('=').Append(((double)field.GetValue(new RallyParams())).ToString("R",CultureInfo.InvariantCulture)).Append('\n');
+                canonical.Append(field.Name).Append('=').Append(((double)field.GetValue(parameters)).ToString("R",CultureInfo.InvariantCulture)).Append('\n');
             using(var sha=SHA256.Create())return BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(canonical.ToString())),0,6).Replace("-","").ToLowerInvariant();
         }
 
@@ -57,9 +58,9 @@ namespace SquashClash.Core.Tests.Rally
             // Serve (20 nov) adds the ServeKind* fields: without them the hash is still 13f88c8d1db2 (ServeTests).
             Assert.That(Projection(f=>!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)&&!f.Name.StartsWith("Boast",StringComparison.Ordinal)),Is.EqualTo("13f88c8d1db2"),"with the fatigue feel field");
             // Two-wall shot (20 nov) adds the Boast* fields: without them the hash is still 992d0570c9de.
-            Assert.That(Projection(f=>f.Name!="ServeKindHumanPauseSeconds"&&!f.Name.StartsWith("Boast",StringComparison.Ordinal)),Is.EqualTo("992d0570c9de"),"with the serve kind fields");
-            // Round one (rival boast off by default) was bd05b443b4f9; round two turns it on.
-            Assert.That(new RallyParams().Hash,Is.EqualTo("32683515d986"),"with the human serve pause and rival boast on");
+            Assert.That(Projection(f=>f.Name!="ServeKindHumanPauseSeconds"&&!f.Name.StartsWith("Boast",StringComparison.Ordinal),new RallyParams{ServeKindOn=0}),Is.EqualTo("992d0570c9de"),"historical serve kind fields, switch off");
+            Assert.That(new RallyParams{ServeKindOn=0}.Hash,Is.EqualTo("32683515d986"),"serve UX with the switch off");
+            Assert.That(new RallyParams().Hash,Is.EqualTo("1063d0f6cf66"),"new serve and rival boast on by default");
             TestContext.WriteLine("STYLE_RALLYPARAMS_HASH="+new RallyParams().Hash);
         }
         [TestCase(AiLevel.Easy)][TestCase(AiLevel.Medium)][TestCase(AiLevel.Hard)]
@@ -81,7 +82,7 @@ namespace SquashClash.Core.Tests.Rally
         }
         [Test] public void Fondista_WithVolleyAndCoverOff_ReplaysTheFrozenRallySimSignatures()
         {
-            var ctx=new RallyContext(EffectiveConfig.From(ConfigFixtures.Default().With("fatigue.enabled",0)),new RallyParams{StyleRivalVolley=0,StyleFondoCoverDepth=0},new AnalyticBallSimulationFactory(Physics.bounceThreshold));
+            var ctx=new RallyContext(EffectiveConfig.From(ConfigFixtures.Default().With("fatigue.enabled",0)),new RallyParams{StyleRivalVolley=0,StyleFondoCoverDepth=0,ServeKindOn=0},new AnalyticBallSimulationFactory(Physics.bounceThreshold));
             var rows=File.ReadAllLines(Path.Combine(Application.dataPath,"..","docs/validation/evidence/2026-11-18-g1-a2-complete/fatigue-replay/off/points.tsv")).Skip(1).Select(r=>r.Split('\t')).Where(r=>int.Parse(r[0])<2).ToArray();
             for(int i=0;i<2;i++)
             using(var sim=new RallySim(ctx,new BotBrain(ctx,30,20261117+2*i),new RivalAi(ctx,AiDifficulty.For(ctx.Params,AiLevel.Medium),RivalStyleId.Fondista,20261118+2*i)))

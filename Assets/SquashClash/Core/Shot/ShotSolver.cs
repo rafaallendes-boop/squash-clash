@@ -33,8 +33,10 @@ namespace SquashClash.Core.Shot
                 !Finite(aim.x)||!Finite(aim.y)||!Finite(r.P)||r.P<0||r.P>1||!Finite(vMin)||!Finite(vMax)||!Finite(vCap)||
                 vMin<=0||vMin>vMax||vMax>vCap||!Finite(gravity)||gravity<=0||radius<=0||gravity!=physics.Gravity||radius!=physics.BallRadius)
                 return Fail("invalid-request-or-physics");
-            if(from.x<radius||from.x>court.Width-radius||from.y<radius||from.z<radius||from.z>court.Length-radius||
-                aim.x<radius||aim.x>court.Width-radius||aim.y<=court.TinTop||aim.y>=court.FrontOutLower)
+            // Match the float coordinates where P2 places the ball center at a wall.
+            float maxX=(float)(court.Width-radius),maxZ=(float)(court.Length-radius);
+            if(from.x<radius||from.x>maxX||from.y<radius||from.z<radius||from.z>maxZ||
+                aim.x<radius||aim.x>maxX||aim.y<=court.TinTop||aim.y>=court.FrontOutLower)
                 return Fail("target-or-contact-outside-court");
             double dx=(double)aim.x-from.x,dz=(double)radius-from.z,d=Math.Sqrt(dx*dx+dz*dz);
             if(d==0) return Fail("zero-horizontal-distance");

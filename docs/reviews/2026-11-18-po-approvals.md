@@ -53,3 +53,23 @@ Texto literal del PO (22 nov, chat de SC-Lead; SC-PM verificó el texto en esa t
 «Te doy el consentimiento para que puedas tomar la decisión. Iré adelantando lo de testflight quizás. Voy a ir viendo. Entonces vamos bien»
 
 Efecto: las propuestas de preset P1 a P6 de la PR #92 (rival ante el golpe corto: espera, percepción, `ReactionS`, llegada en frenada, globo desde adelante y cobertura) las decide SC-Lead. Es una excepción acotada a la reserva de AGENTS §4. `pullFullMm`, P0-calib-1 y la aceptación de etapas siguen siendo de Rafael.
+
+## 22 nov 2026 — Saque nuevo encendido por defecto (RAL-177)
+
+El PO dijo tras probar los saques en `518f9c3`:
+
+> «Los saques están buenos. Podríamos hacer esa mejora y dejarlo encendido»
+
+Sobre encenderlo con la desviación medida, el PO dijo en el chat de SC-Lead:
+
+> «Está bien la decisión. Igual hay que probar después con los usuarios reales. A si que todo bien.»
+
+Se aprueba encender «Saque nuevo» por defecto sin recalibrar. Se acepta la desviación del Definidor de −5,1 pp en Medio y −5,5 pp en Difícil, y la caída de P+V del novato al devolver el saque del rival, de 97,5 % a 89,7 %. **Observación abierta:** revisar ambas cifras y la devolución del saque con los primeros usuarios reales de TestFlight. [Medición del 20 nov](2026-11-20-serve.md).
+
+## 22 nov 2026 — Precisión del borde en ShotSolver (RAL-177)
+
+El PO autorizó el cambio el 22 de noviembre de 2026 a las 23:03 (Chile, UTC−03), en el chat de SC-PM.
+
+> «Sí, autorizo corregir la precisión del borde en ShotSolver para el saque nuevo»
+
+La autorización de AGENTS §4 cubre igualar la precisión de los límites de pared de `ShotSolver` a la que usa P2. [PR #100](https://github.com/rafaallendes-boop/squash-clash/pull/100).

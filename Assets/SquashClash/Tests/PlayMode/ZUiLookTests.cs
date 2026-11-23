@@ -150,7 +150,7 @@ namespace SquashClash.Runtime.Tests
             yield return Boot(true);yield return null;yield return null;
             AssertReadable("menu-layer");
             Click("menu-howto");Refresh();
-            for(int step=0;step<SquashClash.Runtime.Menu.FirstRunFlow.TutorialSteps;step++){yield return null;yield return null;AssertReadable("tutorial-layer");Click("tutorial-next");Refresh();}
+            for(int step=0;step<6;step++){yield return null;yield return null;AssertReadable("tutorial-layer");Click("tutorial-next");Refresh();}
             yield return null;
             app.DevTools=false;Refresh();
             yield return StartMatch();Drive(()=>app.Host.Current.Step>10,1);yield return null;yield return null;

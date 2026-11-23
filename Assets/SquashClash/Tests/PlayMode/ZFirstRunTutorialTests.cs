@@ -6,7 +6,7 @@ using UnityEngine.TestTools;
 using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Tests
 {
-    // First run, block B: the four-step tutorial (the fourth, the volley, since 19 nov) shown once before the first match and reopened from the menu.
+    // The tutorial shown once before the first match and reopened from the menu.
     public sealed class ZFirstRunTutorialTests : ZFirstRunFixture
     {
         [UnitySetUp] public IEnumerator Setup()=>Boot(true);
@@ -19,14 +19,17 @@ namespace SquashClash.Runtime.Tests
             Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.Tutorial));Assert.That(Shown(Find("tutorial-layer")),Is.True);
             Assert.That(Shown(Find("menu-layer")),Is.False);
             Assert.That(rally.Active,Is.False,"the match waits for the tutorial");Assert.That(app.Clock.Paused,Is.True);
-            Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("1 de 5"));
+            Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("1 de 6"));
             Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("Siguiente"));
-            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("2 de 5"));
-            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("3 de 5"));
+            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("2 de 6"));
+            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("3 de 6"));
             Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("Siguiente"));
-            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("4 de 5"));
+            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("4 de 6"));
             Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("Siguiente"));
-            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("5 de 5"));
+            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("5 de 6"));
+            Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("Siguiente"));
+            Click("tutorial-next");Refresh();Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("6 de 6"));
+            Assert.That(Find<Label>("tutorial-title").text,Is.EqualTo("Saque"));
             Assert.That(Find<Button>("tutorial-next").text,Is.EqualTo("¡A jugar!"));
             Assert.That(Seen,Is.False,"it counts as seen only once finished or skipped");
             Click("tutorial-next");Refresh();yield return null;
@@ -47,6 +50,7 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator HowToPlay_ReopensTheTutorial_AndReturnsToTheMenu()
         {
+            rally.SetNewServe(false);
             PlayerPrefs.SetInt("sc.firstRun.tutorialSeen",1);
             Click("menu-howto");Refresh();yield return null;
             Assert.That(flow.Screen,Is.EqualTo(FirstRunScreen.Tutorial));Assert.That(Find<Label>("tutorial-step").text,Is.EqualTo("1 de 5"));
@@ -107,8 +111,9 @@ namespace SquashClash.Runtime.Tests
 
         [UnityTest] public IEnumerator EveryStep_FitsThePortraitScreen_WithFingerSizedButtons()
         {
+            const int steps=6;
             Click("menu-howto");Refresh();
-            for(int step=0;step<FirstRunFlow.TutorialSteps;step++)
+            for(int step=0;step<steps;step++)
             {
                 yield return null;yield return null;
                 var card=Find("tutorial-card").worldBound;
@@ -121,7 +126,7 @@ namespace SquashClash.Runtime.Tests
                 Assert.That(text.yMax,Is.LessThanOrEqualTo(Find("tutorial-next").worldBound.yMin+.5f),"step "+step+": the text does not run under the buttons");
                 Assert.That(text.xMin,Is.GreaterThanOrEqualTo(card.xMin));Assert.That(text.xMax,Is.LessThanOrEqualTo(card.xMax));
                 foreach(var name in new[]{"tutorial-next","tutorial-skip"})Assert.That(Find(name).worldBound.height,Is.GreaterThanOrEqualTo(44),name);
-                if(step<FirstRunFlow.TutorialSteps-1){Click("tutorial-next");Refresh();}
+                if(step<steps-1){Click("tutorial-next");Refresh();}
             }
         }
     }
