@@ -24,6 +24,8 @@ namespace SquashClash.Runtime.Rally
         // Personal records: set by the start menu when it begins a match, cleared when no match is active. A match that
         // ever ran on autopilot never counts. Nothing here reaches Core: it only reads what the HUD already sees.
         public bool MenuMatch {get;set;}
+        // First-match hints (spec front 2): the adapter that decides which hint the pause shows and remembers the ones already seen.
+        public FirstMatchHints Hints {get;private set;}
         private bool autopilotSeen;
         public static string DurationText(float seconds){int s=Mathf.Max(0,(int)seconds);return (s/60)+":"+(s%60).ToString("D2");}
         public static string RematchText(bool humanWon,int human,int rival)=>humanWon?"Revancha":"Revancha "+human+"–"+rival;
@@ -51,6 +53,11 @@ namespace SquashClash.Runtime.Rally
         private VisualElement serveGuide, serveGuideLine;
         private Label serveGuideLob, serveGuideDrive;
         private SafeAreaLayout serveGuideSafeArea;
+        // First-match hints: the row inside the banner and the pill in the serve guide. What each shows is kept to touch the UI only on a change.
+        private VisualElement bannerHint,bannerHintIcon,guideHint,guideHintIcon;private Label bannerHintText,guideHintText;
+        private HintId? bannerHintShown,guideHintShown;
+        private SquashClash.Runtime.Shot.ShotNoteView noteView;
+        private const float GuideHintMaxWidth=280,GuideHintGap=8,GuideHintMargin=8;
         private EffectiveConfig serveGuideConfig;
         private CourtDimensions serveGuideCourt;
         private float bannerAge=-1,pulseHuman,pulseRival,servePulse,resultAge=-1;private int bannerPoint=-1,bannerTone=-1,resultTone=-1;
@@ -70,7 +77,7 @@ namespace SquashClash.Runtime.Rally
         private RallyPhase phase=(RallyPhase)(-1);
         public void Initialize(AppBootstrap app,RallyDirector rally,VisualElement parent)
         {
-            this.app=app;this.rally=rally;
+            this.app=app;this.rally=rally;Hints=new FirstMatchHints(app,rally,app.GetComponent<SquashClash.Runtime.Shot.ShotController>());
             // Art pass: palette and type scale live in one style sheet; the elements and their names are the same.
             var sheet=Resources.Load<StyleSheet>("Visual/Hud");
             var top=parent.parent??parent;if(sheet!=null)top.styleSheets.Add(sheet);
@@ -124,6 +131,9 @@ namespace SquashClash.Runtime.Rally
             bannerCause=Text("","sc-banner-cause");bannerCause.name="rally-banner-cause";bannerCard.Add(bannerCause);
             bannerNext=Text("","sc-banner-next");bannerNext.name="rally-banner-next";bannerCard.Add(bannerNext);
             var serveHint=Text(RallyText.ServeHint,"sc-banner-next");serveHint.name="rally-banner-serve-hint";serveHint.style.display=DisplayStyle.None;bannerCard.Add(serveHint);
+            bannerHint=new VisualElement{name="rally-banner-hint",pickingMode=PickingMode.Ignore};bannerHint.AddToClassList("sc-banner-hint");bannerHint.style.display=DisplayStyle.None;
+            bannerHintIcon=new VisualElement{name="rally-banner-hint-icon",pickingMode=PickingMode.Ignore};bannerHintIcon.AddToClassList("sc-hint-icon");bannerHint.Add(bannerHintIcon);
+            bannerHintText=Text("","sc-hint-text");bannerHintText.name="rally-banner-hint-text";bannerHint.Add(bannerHintText);bannerCard.Add(bannerHint);
             BuildServeGuide(top);
             // The header grows and shrinks with its buttons ("Seguir" appears with the banner): follow it.
             header=parent;parent.RegisterCallback<GeometryChangedEvent>(_=>PlaceBanner());
@@ -149,6 +159,16 @@ namespace SquashClash.Runtime.Rally
             serveGuideDrive.name = "serve-guide-drive";
             serveGuideDrive.AddToClassList("sc-serve-guide-caption");
             serveGuide.Add(serveGuideDrive);
+            guideHint = new VisualElement { name = "serve-guide-hint", pickingMode = PickingMode.Ignore };
+            guideHint.AddToClassList("sc-serve-guide-hint");
+            guideHint.style.display = DisplayStyle.None;
+            guideHintIcon = new VisualElement { name = "serve-guide-hint-icon", pickingMode = PickingMode.Ignore };
+            guideHintIcon.AddToClassList("sc-hint-icon");
+            guideHint.Add(guideHintIcon);
+            guideHintText = Text("", "sc-hint-text");
+            guideHintText.name = "serve-guide-hint-text";
+            guideHint.Add(guideHintText);
+            serveGuide.Add(guideHint);
             rally.RallyStarted += () => serveGuide.style.display = DisplayStyle.None;
         }
         private static void DrawServeGuideLine(MeshGenerationContext context)
@@ -226,7 +246,64 @@ namespace SquashClash.Runtime.Rally
             serveGuideDrive.style.maxHeight = Mathf.Max(0, captionBottom - lineY - offset);
             serveGuide.style.opacity = Mathf.Clamp01(elapsed / BannerInSeconds);
             serveGuide.style.display = DisplayStyle.Flex;
+            if (guideHintShown.HasValue) PlaceGuideHint(panel.width, panel.height, Mathf.Max(bottomAtZero.y, bottomAtWidth.y));
         }
+        // The serve hint sits in the band under the court. With the previous stroke's note visible it stacks on it, 8 px above, and the note
+        // does not move; otherwise it is centred in the band like the note. If the band is too short it may rise over the near floor, never
+        // over the front wall and never out of the safe area.
+        private void PlaceGuideHint(float panelWidth, float panelHeight, float wallBottomY)
+        {
+            float available = panelWidth - serveGuideSafeArea.Left - serveGuideSafeArea.Right - 2 * GuideHintMargin;
+            float width = Mathf.Max(0, Mathf.Min(GuideHintMaxWidth, available));
+            guideHint.style.width = width;
+            guideHint.style.left = serveGuideSafeArea.Left + GuideHintMargin + (available - width) / 2;
+            float height = guideHint.layout.height;
+            if (float.IsNaN(height) || height <= 0) height = 72;
+            if (noteView == null) noteView = app.GetComponent<SquashClash.Runtime.Shot.ShotController>()?.GetComponent<SquashClash.Runtime.Shot.ShotNoteView>();
+            float floor = noteView != null && noteView.Floor > 0 ? noteView.Floor : serveGuideSafeArea.Bottom;
+            float bottom;
+            if (noteView != null && noteView.Occupied) bottom = noteView.NoteBottom + noteView.NoteHeight + GuideHintGap;
+            else
+            {
+                float edge = noteView != null ? noteView.CourtBottomEdge() : float.NaN;
+                bottom = float.IsNaN(edge) || edge - floor < height + 12 ? floor + 6 : floor + (edge - floor - height) / 2;
+            }
+            bottom = Mathf.Max(floor, Mathf.Min(bottom, panelHeight - wallBottomY - height));
+            guideHint.style.bottom = bottom;
+        }
+        private static void SetHintRow(VisualElement row, VisualElement icon, Label text, HintId? id, HintWhere where, ref HintId? shown)
+        {
+            if (id == shown) return;
+            shown = id;
+            row.style.display = id.HasValue ? DisplayStyle.Flex : DisplayStyle.None;
+            if (!id.HasValue) return;
+            text.text = SquashClash.Runtime.Menu.FirstMatchHints.Text(id.Value, where);
+            icon.EnableInClassList("sc-hint-icon--bar", id.Value == HintId.Serve);
+            icon.EnableInClassList("sc-hint-icon--ring", id.Value == HintId.Volley);
+            icon.EnableInClassList("sc-hint-icon--corner", id.Value == HintId.Boast || id.Value == HintId.BoastCross);
+        }
+        // What the pause shows, drawn in the row of the container that is visible (only ever in a pause between points).
+        private void RefreshHints(bool bannerOn, bool guideOn)
+        {
+            var id = Hints.Shown;
+            var where = Hints.ShownWhere;
+            SetHintRow(bannerHint, bannerHintIcon, bannerHintText, bannerOn && id.HasValue && where == HintWhere.Banner ? id : null, HintWhere.Banner, ref bannerHintShown);
+            SetHintRow(guideHint, guideHintIcon, guideHintText, guideOn && id.HasValue && where == HintWhere.Guide ? id : null, HintWhere.Guide, ref guideHintShown);
+        }
+        // The two oracles of «seen»: tells the adapter what was really on screen this frame.
+        private void ReportHints()
+        {
+            if (Hints == null || !Hints.Shown.HasValue) return;
+            if (Hints.ShownWhere == HintWhere.Banner)
+                Hints.ReportBanner(banner.style.display.value == DisplayStyle.Flex, bannerHint.style.display.value == DisplayStyle.Flex, bannerHint.layout.height, BannerOpacity);
+            else
+            {
+                float h = guideHint.layout.height;
+                bool visible = serveGuide.style.display.value == DisplayStyle.Flex && serveGuide.style.opacity.value > 0 && guideHint.style.display.value == DisplayStyle.Flex && !float.IsNaN(h) && h > 0;
+                Hints.ReportGuide(visible);
+            }
+        }
+        private void OnDestroy() => Hints?.Dispose();
         private Button Add(VisualElement row,string name,string text,System.Action action)
         {
             var button=new Button(()=>{app.UserEvents?.Menu(rally.Phase==RallyPhase.MatchOver?"result":"game",name);action();}){name=name,text=text};
@@ -321,6 +398,7 @@ namespace SquashClash.Runtime.Rally
                 bannerAge=Mathf.Min(BannerInSeconds,bannerAge+dt);float k=Ease(bannerAge/BannerInSeconds);
                 bannerCard.style.opacity=k;bannerCard.style.translate=new Translate(0,(1-k)*-12);
             }
+            ReportHints();
             if(rally.Active&&rally.Match!=null&&rally.Phase!=RallyPhase.MatchOver)MatchSeconds+=dt;
             if(energyOn){Ease(humanBar,dt);Ease(rivalBar,dt);}
             if(pulseHuman>0){pulseHuman=Mathf.Max(0,pulseHuman-dt);Pulse(humanPoints,pulseHuman);}
@@ -414,7 +492,10 @@ namespace SquashClash.Runtime.Rally
             }
             bool showServeGuide = rally.HumanServePause;
             banner.style.display = point >= 0 && !showServeGuide ? DisplayStyle.Flex : DisplayStyle.None;
+            Hints.Observe();
+            RefreshHints(point >= 0 && !showServeGuide, showServeGuide);
             RefreshServeGuide(showServeGuide);
+            ReportHints();
             RefreshEnergy(active);
             if(!active)
             {
