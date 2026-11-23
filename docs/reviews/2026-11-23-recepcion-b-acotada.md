@@ -2,7 +2,7 @@
 
 23 nov 2026. Base `90ddc7e275f23e0b8774c57e7db93f106eef5f90`. Encargo: `/Users/rafaallendes/sc-specs/impl-recepcion-b-acotada.txt`, incluida la aprobación del PO del 23 nov, 16:33, para medir 25/50 ms y después implementar el menor valor que mejore claramente el novato que toca sin romper N2. No fusionar.
 
-**Estado: detenido por defecto; medición sin iniciar.** No se eligió una tolerancia. No se implementaron cambios de juego ni de anillos en la rama de esta PR. La preparación del experimento queda aislada en `exp/serve-reception-margin`, worktree `sc-exp-recepcion-b`, y no se debe fusionar.
+**Estado: reanudado por instrucción explícita; medición pendiente del lock de Unity.** `/Users/rafaallendes/sc-specs/continua-106.txt` autoriza corregir el defecto nuevo sin tocar el test, confirma la volea opcional del saque en los tres niveles y deja los anillos para otra PR con Claude. No se eligió una tolerancia. La preparación del experimento queda aislada en `exp/serve-reception-margin`, worktree `sc-exp-recepcion-b`, y no se debe fusionar.
 
 ## Evidencia y defecto
 
@@ -17,6 +17,8 @@ Falla `ServeEarlyAllowance_LatencyCompensationIsAppliedOnce`: una liberación de
 
 Se aplica AGENTS.md §2: «Ante un defecto o sorpresa: registrar y detenerse, sin corregir ni reintentar para obtener Pass». Evidencia preservada; `device.env` eliminado al terminar y lock liberado.
 
+**Continuación autorizada:** se reprodujo el fallo (3 tests: 2 aprobados, 1 fallido), sin cambiar la prueba ni su aserción. Se corrigió la comparación inclusiva expresando el borde corregido en el reloj original del evento: `release >= (KInReal − marginMs/1000) + latencyMs/1000`. La liberación corregida sigue calculándose una sola vez; no se agrega un epsilon. `ContactContractTests`: **33/33**, XML fresco `Logs/evidence/reception-b-preparation/resume-green-results.xml` (ignorado, worktree experimental). Commit experimental `b4cccbd`; protocolo previo a datos en `docs/validation/2026-11-23-recepcion-b-protocolo.md` de esa rama. La copia temporal de `device.env` se retirará al terminar esta continuación.
+
 ## Mediciones y puertas pendientes
 
 | Medida solicitada | Base | 25 ms | 50 ms |
@@ -28,6 +30,6 @@ Se aplica AGENTS.md §2: «Ante un defecto o sorpresa: registrar y detenerse, si
 
 No se ejecutaron las suites completas EditMode/PlayMode, AutoQA ni check-release. Los resultados de esta preparación no autorizan seleccionar valor, implementar ni fusionar. No cambian física, solver, `DefaultPreset.json`, SimulationKey, RallyParams ni sus hashes en la rama de la PR.
 
-**Arquitectura (Claude Opus, solo lectura): apta con condiciones.** Recomienda un margen explícito fuera de `TimingSettings`, con valor en `RallyParams`, y fijar la recepción en `RallyDirector.LaunchToHuman` desde `committed`, antes del lanzamiento. No leer `Rules.Serving` al soltar: se apaga al primer bote. El borde inclusivo KIn−m sigue pendiente de definición por Codex, dueño del contrato; no se corrigió ni reintentó. El alcance de la volea comprometida debe coincidir entre medición e implementación; Claude deja su confirmación a SC-Lead. Estas condiciones no levantan la parada ni constituyen una revisión aprobada del prototipo. Resultado de arquitectura: tarea `task_95798afb7538`, dispatch `ctx_c20be7b3fe18`.
+**Arquitectura (Claude Opus, solo lectura): apta con condiciones.** Recomienda un margen explícito fuera de `TimingSettings`, con valor en `RallyParams`, y fijar la recepción en `RallyDirector.LaunchToHuman` desde `committed`, antes del lanzamiento. No leer `Rules.Serving` al soltar: se apaga al primer bote. La continuación explícita resuelve el borde inclusivo y confirma el alcance sobre el golpe temprano del humano al recibir el saque, incluida la volea opcional. Falta revisar la implementación final. Resultado de arquitectura: tarea `task_95798afb7538`, dispatch `ctx_c20be7b3fe18`.
 
 **Textos:** ninguno nuevo o modificado en el producto. Los anillos y «Espera el bote» siguen pendientes; corresponden a Claude Sonnet con `/frontend-design`, según AGENTS.md.
