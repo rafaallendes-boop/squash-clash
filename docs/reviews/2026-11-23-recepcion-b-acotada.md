@@ -1,35 +1,31 @@
-# Recepción del saque B acotada: parada durante preparación
+# Recepción del saque B acotada · PR #106
 
-23 nov 2026. Base `90ddc7e275f23e0b8774c57e7db93f106eef5f90`. Encargo: `/Users/rafaallendes/sc-specs/impl-recepcion-b-acotada.txt`, incluida la aprobación del PO del 23 nov, 16:33, para medir 25/50 ms y después implementar el menor valor que mejore claramente el novato que toca sin romper N2. No fusionar.
+Base `90ddc7e`. Medición terminada, rama desechable `exp/serve-reception-margin` (`b4cccbd`, no se fusiona). **Elegido: 50 ms**, solo golpe temprano del humano al recibir el saque del rival, incluida la volea elegida, opcional en los tres niveles. Los anillos y «Espera el bote» pertenecen a otra PR con Claude.
 
-**Estado: reanudado por instrucción explícita; medición pendiente del lock de Unity.** `/Users/rafaallendes/sc-specs/continua-106.txt` autoriza corregir el defecto nuevo sin tocar el test, confirma la volea opcional del saque en los tres niveles y deja los anillos para otra PR con Claude. No se eligió una tolerancia. La preparación del experimento queda aislada en `exp/serve-reception-margin`, worktree `sc-exp-recepcion-b`, y no se debe fusionar.
+**Regla de elección:** 25 mejora claramente el novato que toca, pero no cumple N2 frente a `confirm01` (máximo 5,54 pp). 50 es el menor valor medido que mejora esa devolución y cumple N2 (máximo 3,62 pp ≤5). La comparación incremental contra la base actual da 1,40/3,38 pp: es descriptiva y no sustituye la referencia oficial. El protocolo experimental había llamado N2 a esa comparación incremental; se corrige esa interpretación, conservando datos, escenarios, referencia oficial y umbral. No se recalibra: Fondista Hard conserva k=2,5 en las tres variantes.
 
-## Evidencia y defecto
+## Medición
 
-Se añadió una entrada de margen explícito al contrato, inicialmente sin comportamiento, y tres pruebas de borde. Se ejecutaron con `scripts/test.sh`, lock `/Users/rafaallendes/sc-unity.lock` y una sola instancia de Unity. `scripts/device.env` se copió sin cambios del origen autorizado; SHA-256 `0b0c94db19e06f7de8a864991ed819fc984f16160f3a35b483d9aff9167cec2f`.
+7020 partidos: std σ90 ms, 200 por estilo/nivel/variante (600 por nivel); toca, 60 (180 por nivel). Tres estilos, Fácil/Medio/Difícil, mismas semillas y bots de #105; std saca globo como M1 original y toca conserva su mezcla humana 50/50. Recepción = primer golpe aplicado al saque rival. Fuente: [tabla completa](../validation/evidence/2026-11-23-recepcion-b-acotada/reception-summary.tsv), [configuración](../validation/evidence/2026-11-23-recepcion-b-acotada/options-source.tsv).
 
-| Ejecución | Resultado fresco | Fuente local ignorada, en worktree experimental |
-|---|---|---|
-| RED `scripts/test.sh editmode ServeEarlyAllowance` | 3 tests, 0 aprobados, 3 fallidos por aserción: esperaba `Valid`, obtuvo `Failed` | `Logs/evidence/reception-b-preparation/red-results.xml`, `red.log` |
-| Primera ejecución posterior, `scripts/test.sh editmode ContactContractTests` | 33 tests, 32 aprobados, 1 fallido por aserción; **no es GREEN** | `Logs/evidence/reception-b-preparation/first-green-results.xml`, `first-green.log` |
+| Margen ms | Nivel | Std: P+V (n saques) | Toca: P+V (n saques) | Volea/saque, toca |
+|---|---|---|---|---|
+| 0 | Fácil | 89.82 % (2789/3105) | 79.40 % (844/1063) | 41.11 % (437/1063) |
+| 0 | Medio | 89.70 % (3456/3853) | 81.21 % (951/1171) | 37.92 % (444/1171) |
+| 0 | Difícil | 90.59 % (3562/3932) | 80.15 % (941/1174) | 38.16 % (448/1174) |
+| 25 | Fácil | 93.48 % (2896/3098) | 83.32 % (894/1073) | 44.27 % (475/1073) |
+| 25 | Medio | 93.80 % (3615/3854) | 84.77 % (996/1175) | 40.17 % (472/1175) |
+| 25 | Difícil | 94.67 % (3711/3920) | 82.28 % (966/1174) | 39.78 % (467/1174) |
+| 50 | Fácil | 96.46 % (2943/3051) | 86.27 % (917/1063) | 45.16 % (480/1063) |
+| 50 | Medio | 96.83 % (3728/3850) | 86.63 % (1017/1174) | 41.14 % (483/1174) |
+| 50 | Difícil | 97.19 % (3808/3918) | 84.92 % (997/1174) | 41.31 % (485/1174) |
 
-Falla `ServeEarlyAllowance_LatencyCompensationIsAppliedOnce`: una liberación de 1,045 s menos 70 ms de compensación debería estar en el borde de 25 ms anterior a K-in (1 s). El prototipo la rechaza como temprana. La aritmética de doble precisión da `0.974999999999999867`, frente al borde `0.974999999999999978` (diferencia de −1,11 × 10⁻¹³ ms). Es evidencia de un defecto en la comparación del borde del prototipo, no de que el caso pase. No se cambió la prueba ni se corrigió el contrato después de detectarlo.
+Con 50 ms, mejora de toca: +6,87/+5,41/+4,77 pp; intervalos pareados 95 % positivos en los tres niveles ([detalle](../validation/evidence/2026-11-23-recepcion-b-acotada/touch-return-bootstrap.tsv)). La volea por saque sube en los tres. Puntos y partidos completos están en la tabla de evidencia. **M1 oficial en Medio: 89,70 →96,83 %, fuera de 80–90; desviación abierta, criterio sin cambiar y ninguna etapa aceptada.**
 
-Se aplica AGENTS.md §2: «Ante un defecto o sorpresa: registrar y detenerse, sin corregir ni reintentar para obtener Pass». Evidencia preservada; `device.env` eliminado al terminar y lock liberado.
+**N2:** `ConfirmPerStyle` completo, 200 partidos por celda y modelo, semillas originales; 1/1 en cada variante. [Comparación oficial por estilo/nivel, con n](../validation/evidence/2026-11-23-recepcion-b-acotada/n2-vs-confirm01.tsv), [comparación incremental](../validation/evidence/2026-11-23-recepcion-b-acotada/n2-vs-current-base.tsv). La base actual también conserva una desviación histórica (máximo 5,93 pp); no se declara como nuevo Pass.
 
-**Continuación autorizada:** se reprodujo el fallo (3 tests: 2 aprobados, 1 fallido), sin cambiar la prueba ni su aserción. Se corrigió la comparación inclusiva expresando el borde corregido en el reloj original del evento: `release >= (KInReal − marginMs/1000) + latencyMs/1000`. La liberación corregida sigue calculándose una sola vez; no se agrega un epsilon. `ContactContractTests`: **33/33**, XML fresco `Logs/evidence/reception-b-preparation/resume-green-results.xml` (ignorado, worktree experimental). Commit experimental `b4cccbd`; protocolo previo a datos en `docs/validation/2026-11-23-recepcion-b-protocolo.md` de esa rama. La copia temporal de `device.env` se retirará al terminar esta continuación.
+## Implementación y validación
 
-## Mediciones y puertas pendientes
+El borde inclusivo con latencia se corrigió sin editar el test original: compensación una vez, comparación en el reloj del evento y sin epsilon. TDD del contrato: RED 11 fallos por aserción y GREEN 43/43. La integración de 50 ms y las puertas completas se ejecutan a continuación; resultados pendientes. Arquitectura y borde revisados en solo lectura por Claude Opus. El supervisor de medición no dejó DONE; se recuperaron resultados con los dos recibos exec exit0, sin repetir simulaciones.
 
-| Medida solicitada | Base | 25 ms | 50 ms |
-|---|---|---|---|
-| M1 oficial, novato std | Sin medir (n=0) | Sin medir (n=0) | Sin medir (n=0) |
-| Devolución del novato que toca | Sin medir (n=0) | Sin medir (n=0) | Sin medir (n=0) |
-| Puntos, partidos y volea al saque por nivel | Sin medir (n=0) | Sin medir (n=0) | Sin medir (n=0) |
-| N2, `ConfirmPerStyle` | No evaluado | No evaluado | No evaluado |
-
-No se ejecutaron las suites completas EditMode/PlayMode, AutoQA ni check-release. Los resultados de esta preparación no autorizan seleccionar valor, implementar ni fusionar. No cambian física, solver, `DefaultPreset.json`, SimulationKey, RallyParams ni sus hashes en la rama de la PR.
-
-**Arquitectura (Claude Opus, solo lectura): apta con condiciones.** Recomienda un margen explícito fuera de `TimingSettings`, con valor en `RallyParams`, y fijar la recepción en `RallyDirector.LaunchToHuman` desde `committed`, antes del lanzamiento. No leer `Rules.Serving` al soltar: se apaga al primer bote. La continuación explícita resuelve el borde inclusivo y confirma el alcance sobre el golpe temprano del humano al recibir el saque, incluida la volea opcional. Falta revisar la implementación final. Resultado de arquitectura: tarea `task_95798afb7538`, dispatch `ctx_c20be7b3fe18`.
-
-**Textos:** ninguno nuevo o modificado en el producto. Los anillos y «Espera el bote» siguen pendientes; corresponden a Claude Sonnet con `/frontend-design`, según AGENTS.md.
+RallyParams esperado: `1063d0f6cf66` → `97f5b3d7627f`; proyección sin HumanServeEarlyMs `1063d0f6cf66`. Defaults `207da8f2c636` y SimulationKey `166a96e319c7` sin cambios. Textos: ninguno nuevo/modificado en producto. Sin fusión ni instalación.
