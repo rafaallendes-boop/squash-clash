@@ -46,3 +46,9 @@ cp: /Users/rafaallendes/orca/squash-clash/scripts/device.env: No such file or di
 ```
 
 La fuente indicada no existe; no se creó el destino. No se buscó otra fuente ni se cambió el resolver para eludir la falla. **Parada por entorno**, según el encargo y la autorización de iteración: no es RED por aserción ni GREEN. No hubo apertura de Unity, adquisición/liberación de candado ni nuevos resultados de tests o mediciones. La PR #101 continúa en borrador y no se fusiona. Para continuar falta que se proporcione la fuente autorizada (o se indique su ubicación correcta).
+
+## Entorno autorizado y prioridad de #102
+
+Leído completo `/Users/rafaallendes/sc-specs/device-env-ok.txt`. Autorización literal del PO, 23 nov 13:36, recibida vía SC-Lead: «Sí, autorizo que los trabajadores copien sin cambios scripts/device.env desde sc-install-518f9c3 y lo borren al terminar.» Se copió desde `/Users/rafaallendes/orca/workspaces/squash-clash/sc-install-518f9c3/scripts/device.env`; SHA-256 origen/destino coincidentes. Archivo ignorado por Git, sin editar ni versionar; se retirará al terminar.
+
+El encargo posterior da prioridad de Unity a la PR #102 para la build de hoy: no se adquiere el candado hasta observar `gh pr view 102 --json isDraft` con false. Primera consulta de esta reanudación: true. Durante la espera solo se prepara trabajo que no usa Unity; los esqueletos B3c/B3d permanecen sin GREEN hasta registrar su RED válido.
