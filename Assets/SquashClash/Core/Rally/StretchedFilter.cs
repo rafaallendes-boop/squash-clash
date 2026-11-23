@@ -10,8 +10,21 @@ namespace SquashClash.Core.Rally
     }
     public static class StretchedFilter
     {
-        // RED skeleton required by B3c. No filtering has been implemented yet.
+        // Safe nominal intentions keep their utilities. E1 is the least-late non-boast, with ties in input order.
         public static int Apply(double[] weights,StretchedEvaluation[] evaluations,int count,out double best)
-        {best=double.NegativeInfinity;return -1;}
+        {
+            best=double.NegativeInfinity;int leastLate=-1;long smallestDelay=long.MaxValue;bool reachable=false;
+            for(int i=0;i<count;i++)
+            {
+                if(double.IsNegativeInfinity(weights[i]))continue;
+                var evaluation=evaluations[i];
+                if(!evaluation.IsBoast&&(leastLate<0||evaluation.Delay<smallestDelay))
+                {leastLate=i;smallestDelay=evaluation.Delay;}
+                if(evaluation.Good&&evaluation.Reachable)
+                {reachable=true;if(weights[i]>best)best=weights[i];}
+                else weights[i]=double.NegativeInfinity;
+            }
+            return reachable?-1:leastLate;
+        }
     }
 }

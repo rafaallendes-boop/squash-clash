@@ -54,3 +54,27 @@ Leído completo `/Users/rafaallendes/sc-specs/device-env-ok.txt`. Autorización 
 El encargo posterior da prioridad de Unity a la PR #102 para la build de hoy: no se adquiere el candado hasta observar `gh pr view 102 --json isDraft` con false. Primera consulta de esta reanudación: true. Durante la espera solo se prepara trabajo que no usa Unity; los esqueletos B3c/B3d permanecen sin GREEN hasta registrar su RED válido.
 
 Resúmenes reproducibles preparados en `docs/validation/2026-11-22-rival-short-ball/`: `summarize.py` genera las tablas descriptivas de §2.2/§2.3; `evaluate.py` calcula F1, F2 y ambas cuentas E1 con comparaciones de fracciones enteras, sin tolerancias nuevas. Verificación descriptiva sobre la evidencia antigua: 42.986 filas, 10.632 contactos estirados y F1 de main `230b758` cumple, como ya estaba registrado. No son resultados del candidato.
+
+## B3c/B3d: RED válido después de la prioridad
+
+Primera observación de #102 con `isDraft: false`: **2026-11-23T16:48:49Z**. Solo después se adquirió el candado para `scripts/test.sh editmode 'StretchedFilterTests;RivalAi_EvaluateStretched_MatchesThePlannerPerOption'`. Corrida de 16:48:49Z a 16:49:01Z, head `1d06fe7`, árbol limpio al inicio.
+
+`b-r2-required-red`: **6 tests, 0 Passed, 6 Failed, 0 Skipped**, XML fresco, sin errores CS. B3c falla sus cuatro casos porque los pesos rechazados quedan intactos (100, 1, 100 y 100, respectivamente), frente a −∞. B3d falla ambos escenarios en la primera dos paredes (Low/Medium): `Good` false frente a true en el cálculo independiente. Son fallos de aserción esperados, no errores de compilación ni de precondición.
+
+Evidencia ignorada: `Logs/evidence/rival-short-min/b-r2-priority/observations.txt` y `b-r2-required-red/` (XML, log, fuente, estado y horarios). El candado propio se liberó al terminar; no se libera el de otro worker.
+
+Después del RED se implementan `StretchedFilter.Apply` y la evaluación por trayectoria correcta. `FilterStretched` compone exactamente ambas piezas; las opciones estiradas se guardan en el mismo orden compacto en Decide y EvaluateStretched. E1 elige el menor retraso no dos paredes con empate por orden; planned conserva su recorrido y sus sorteos. GREEN dirigido en espera del candado normal de Unity, sin declarar resultado todavía.
+
+## GREEN y guardias dirigidas
+
+Tras esperar el candado, `b-r2-required-green`: **6/6 Passed, 0 Failed, 0 Skipped, salida 0**, XML fresco y sin errores CS. Corrida de 2026-11-23T17:06:54Z a 17:07:05Z; árbol de trabajo con el cambio de implementación posterior al RED. No se cambió ninguna aserción de B3c/B3d entre ambas corridas.
+
+`b-r2-directed-green`: **28/28 Passed, 0 Failed, 0 Skipped, salida 0**, XML fresco. Duración de tests 207,1583186 s. B1/B1b/B2/B3a/B3b/B3c/B3d y las guardias B4/B4b pasan.
+
+- B3b: 72 casillas y 7.200 decisiones por estilo, **21.600 decisiones en total**. **20 evaluaciones de dos paredes Good pero inalcanzables por estilo**, cero elecciones inalcanzables cuando hay alternativa segura. Esta vez la grilla sí ejercita el rechazo; no se buscaron posiciones fuera de la grilla predeclarada ni se alteraron parámetros. El resultado anterior de la esquina `(.9,.8,8.6)` sigue siendo el mismo y no se borra.
+- Cero casillas traseras sin ninguna opción alcanzable. La casilla B4 añadida `(.5,.3,7.6)` da **6/6 alcanzables**, E1 false; es guardia trasera, **no un caso real de E1 trasero**. E1 con dos paredes de menor retraso queda probado por B3c, caso 3; el escenario delantero conservado prueba E1 real y la marca. No se inventa un escenario trasero inalcanzable.
+- B4b conserva el negativo real de frontis `(.60,.05,1.10)`: recta inalcanzable, cruzado alcanzable, tres estilos, ninguna elección inalcanzable.
+- Huella de las 1.080 decisiones planned: `53870c765e9e1cc410b87b41d810afc7fbe53ac0ffa42345b9b97192786de4de`, idéntica.
+- Hashes comprobados: defaults `207da8f2c636`, RallyParams `1063d0f6cf66`, SimulationKey `166a96e319c7`, sin cambios.
+
+XML, log, fuente y estado en `Logs/evidence/rival-short-min/b-r2-required-green/` y `b-r2-directed-green/`. El candado propio se libera al acabar cada corrida. B5 y las mediciones/gates completos todavía pendientes; estos dirigidos no los sustituyen.

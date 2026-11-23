@@ -128,15 +128,16 @@ namespace SquashClash.Core.Rally
                 for(int i=0;i<options.Count;i++)
                 {
                     var o=options[i];bool allowed=stretched
-                        ?o.Height==ShotHeight.High&&o.Power==ShotPower.Medium&&(o.Line==ShotLine.Straight||o.Line==ShotLine.Cross)
+                        ?StretchedOption(o)
                         :!defensive||(o.Height==ShotHeight.High&&o.Power==ShotPower.Medium&&o.Line!=ShotLine.Drop)||o.Line==ShotLine.Boast;
+                    if(stretched&&!allowed)continue;
                     all[count]=o;atVolley[count]=isVolley;
                     weights[count]=allowed?Utility(o,seen,mine,at)+bonus:double.NegativeInfinity;
                     if(weights[count]>best)best=weights[count];
                     count++;
                 }
             }
-            // A planned low-slack reception still allows the back-corner boast; stretched receptions use pure defence.
+            // Stretched options also pass the opponent's nominal bounce planner; planned receptions keep their policy.
             if(bounce)Add(own.Contact.PStar,false,0);
             if(volley)
             {
@@ -181,7 +182,9 @@ namespace SquashClash.Core.Rally
             delta=RivalReleaseTiming.Adjust(delta,lower,upper,difficulty.TimingSigmaMs,p.FondoReleaseMarginSigma);
             return new AiShot(true,option,aim,power,delta,defensive,useVolley,side);
         }
-        // Public evaluation seam for B3d. This prototype retains the old direct forecast until its RED is recorded.
+        private static bool StretchedOption(ShotOption option)=>option.Line==ShotLine.Boast||
+            (option.Height==ShotHeight.High&&option.Power==ShotPower.Medium&&(option.Line==ShotLine.Straight||option.Line==ShotLine.Cross));
+        // The same allowed order as Decide, bounce before volley; the human starts at the observed position, without fatigue.
         public StretchedEvaluation[] EvaluateStretched(in AiObservation observation,in ReceptionPlan own)
         {
             var result=new List<StretchedEvaluation>(12);var opponentPosition=observation.OpponentPosition;
@@ -191,10 +194,8 @@ namespace SquashClash.Core.Rally
                 if(context.BoastOn)ShotOptions.AddBoasts(context,at,options);
                 foreach(var option in options)
                 {
-                    bool allowed=option.Line==ShotLine.Boast||
-                        (option.Height==ShotHeight.High&&option.Power==ShotPower.Medium&&(option.Line==ShotLine.Straight||option.Line==ShotLine.Cross));
-                    if(!allowed)continue;
-                    var forecast=RallyContact.Forecast(context,at,option.Aim,option.P);
+                    if(!StretchedOption(option))continue;
+                    var forecast=option.Side.Exists?RallyContact.ForecastBoast(context,at,option.Side,option.P):RallyContact.Forecast(context,at,option.Aim,option.P);
                     bool reachable=false;long delay=long.MaxValue;
                     if(forecast.Good)
                     {
@@ -215,35 +216,10 @@ namespace SquashClash.Core.Rally
         }
         // Only stretched receptions are filtered. The ordinary policy and its random draws stay untouched.
         private int FilterStretched(int count,in AiObservation observation,in ReceptionPlan own,out double best)
-        {
-            best=double.NegativeInfinity;int firstAllowed=-1,leastLate=-1;long smallestDelay=long.MaxValue;bool reachable=false;
-            for(int i=0;i<count;i++)
-            {
-                if(double.IsNegativeInfinity(weights[i]))continue;
-                if(firstAllowed<0)firstAllowed=i;
-                var option=all[i];var at=atVolley[i]?own.Volley.Plan.PStar:own.Contact.PStar;
-                if(RallyContact.Forecast(context,at,option.Aim,option.P).Good)
-                {
-                    // Forecast supplies the fault guard; the same intention supplies the full shared prediction.
-                    var solution=StretchedIntention(at,option);
-                    var trajectory=context.Predict(new BallState{Position=at,Velocity=solution.Velocity});
-                    var rules=context.NewRules();rules.Begin(PlayerId.Rival,PlayerId.Human);
-                    var opponent=new PlayerBody(PlayerId.Human,observation.OpponentPosition,context.Move);
-                    var plan=ReceptionPlanner.Plan(context,trajectory,rules,opponent,context.Steps(context.Params.ReactionS),1);
-                    // With no contact window, lateness is measured against the end of that predicted bounce flight.
-                    long until=plan.Contact.Exists&&plan.Contact.TStarStep>=0?plan.Contact.TStarStep:trajectory.States[trajectory.States.Count-1].Step;
-                    long delay=plan.ArrivalStep-until;
-                    if(leastLate<0||delay<smallestDelay){leastLate=i;smallestDelay=delay;}
-                    if(plan.Reachable){reachable=true;if(weights[i]>best)best=weights[i];continue;}
-                }
-                weights[i]=double.NegativeInfinity;
-            }
-            // No safe option: retain a defensive intention and flag the exception instead of drawing a winner at random.
-            return reachable?-1:leastLate>=0?leastLate:firstAllowed;
-        }
-        // Existing direct intention, extracted without a policy change before the path-B RED.
+            =>StretchedFilter.Apply(weights,EvaluateStretched(observation,own),count,out best);
+        // A side-wall intention must follow the boast solver before predicting the human's reception.
         private ShotSolution StretchedIntention(Vector3 at,ShotOption option)
-            =>RallyContact.SolveIntention(context,at,option.Aim,option.P);
+            =>option.Side.Exists?RallyContact.SolveBoastIntention(context,at,option.Side,option.P,out _):RallyContact.SolveIntention(context,at,option.Aim,option.P);
         // FondoAi.Utility plus the style's attack feature and drop zone. For Fondista both are zero/closed, so the value is FondoAi's.
         public double Utility(in ShotOption option,in AiObservation observation,in ReceptionPlan own,Vector3 at)
         {
