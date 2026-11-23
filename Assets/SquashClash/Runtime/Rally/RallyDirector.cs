@@ -34,6 +34,7 @@ namespace SquashClash.Runtime.Rally
         private IRallyBrain rivalBrain,humanBrain;
         private ShotRecord resolved;
         private AiShot pendingShot,autoShot;
+        private RivalAttempt rivalAttempt=new RivalAttempt(-1,default);
         private ContactDecision rivalDecision;
         private CausalReference rivalCausal,rivalCausalVolley;private bool rivalUsedVolley;
         private Func<long,BodyFrame> rivalCausalBody;
@@ -496,6 +497,7 @@ namespace SquashClash.Runtime.Rally
             if(context.VolleyOn){var volley=context.VolleyFor(trajectory,committed,past,RivalPlan.Contact,delay+elapsed,planVersion);if(volley.Exists)RivalPlan=RivalPlan.WithVolley(volley);}
             if((RivalPlan.Contact.Exists&&RivalPlan.Contact.TStarStep>=0)||RivalPlan.Volley.Exists)rivalCausalBody=j=>context.FrameAt(past[(int)(j-start)]);
             pendingShot=rivalBrain.Decide(Observe(PlayerId.Rival,trajectory.States[0]),RivalPlan);
+            rivalAttempt=!pendingShot.Swing&&!committed.Closed?RivalAttempt.StepFor(context,trajectory,committed,past):new RivalAttempt(-1,default);
             hasPending=false;needDecision=pendingShot.Swing;
             rivalReception=pendingShot.Swing?(ReceptionResult?)null:RivalPlan.Reachable?ReceptionResult.NoSwing:ReceptionResult.Unreachable;
             if(needDecision)DecideRival();
@@ -528,6 +530,12 @@ namespace SquashClash.Runtime.Rally
         private void TickRival()
         {
             var host=app.Host;
+            if(rivalAttempt.Step>=0&&host.Current.Step>=rivalAttempt.Step)
+            {
+                var side=rivalAttempt.Side;rivalAttempt=new RivalAttempt(-1,default);
+                RivalSwingVolley=false;RivalSwingHeight=0;
+                RivalSwing?.Invoke(side,false);
+            }
             if(needDecision)DecideRival();
             if(hasPending&&host.Current.Step>=pendingStep)
             {
