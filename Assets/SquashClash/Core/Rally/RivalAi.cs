@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SquashClash.Core.Court;
 using SquashClash.Core.Shot;
 using SquashClash.Core.Simulation;
@@ -78,6 +79,8 @@ namespace SquashClash.Core.Rally
         private readonly ShotOption[] all=new ShotOption[44];
         private readonly bool[] atVolley=new bool[44];
         public RivalStyle Style {get;}
+        // Observable diagnostic for R3: no legal defensive intention gave the opponent a reachable bounce plan.
+        public bool LastStretchedFallback {get;private set;}
         // The game's rival: the level's shared noise scaled by the (style, level) factor.
         public static RivalAi For(RallyContext context,AiLevel level,RivalStyleId style,long seed)
             =>new RivalAi(context,RivalStyle.Difficulty(context.Params,style,level),style,seed);
@@ -112,10 +115,11 @@ namespace SquashClash.Core.Rally
         }
         public AiShot Decide(in AiObservation observation,in ReceptionPlan own)
         {
+            LastStretchedFallback=false;
             bool bounce=own.Reachable&&own.Contact.Exists&&own.Contact.TStarStep>=0;
             bool volley=VolleyWanted(own);
             if(!bounce&&!volley)return default;
-            var p=context.Params;bool defensive=own.SlackS<Style.DefenseSlackS;
+            var p=context.Params;bool stretched=own.Reason=="stretched",defensive=stretched||own.SlackS<Style.DefenseSlackS;
             int count=0;double best=double.NegativeInfinity;var seen=observation;var mine=own;
             void Add(Vector3 at,bool isVolley,double bonus)
             {
@@ -123,14 +127,17 @@ namespace SquashClash.Core.Rally
                 if(context.BoastOn)ShotOptions.AddBoasts(context,at,options);
                 for(int i=0;i<options.Count;i++)
                 {
-                    var o=options[i];bool allowed=!defensive||(o.Height==ShotHeight.High&&o.Power==ShotPower.Medium&&o.Line!=ShotLine.Drop)||o.Line==ShotLine.Boast;
+                    var o=options[i];bool allowed=stretched
+                        ?StretchedOption(o)
+                        :!defensive||(o.Height==ShotHeight.High&&o.Power==ShotPower.Medium&&o.Line!=ShotLine.Drop)||o.Line==ShotLine.Boast;
+                    if(stretched&&!allowed)continue;
                     all[count]=o;atVolley[count]=isVolley;
                     weights[count]=allowed?Utility(o,seen,mine,at)+bonus:double.NegativeInfinity;
                     if(weights[count]>best)best=weights[count];
                     count++;
                 }
             }
-            // A boast stays open under pressure: from the back corner it is the classic way out.
+            // Stretched options also pass the opponent's nominal bounce planner; planned receptions keep their policy.
             if(bounce)Add(own.Contact.PStar,false,0);
             if(volley)
             {
@@ -142,12 +149,14 @@ namespace SquashClash.Core.Rally
                 }
                 Add(v.PStar,true,bonus);
             }
+            int forced=stretched?FilterStretched(count,observation,own,out best):-1;
+            LastStretchedFallback=forced>=0;
             double total=0,temperature=Math.Max(1e-3,difficulty.Temperature);
             for(int i=0;i<count;i++){weights[i]=double.IsNegativeInfinity(weights[i])?0:Math.Exp((weights[i]-best)/temperature);total+=weights[i];}
             // Same draw as FondoAi: an option the AI itself predicts as a fault is dropped and the draw repeats.
-            int chosen=-1,fallback=0;
+            int chosen=forced,fallback=0;
             for(int i=1;i<count;i++)if(weights[i]>weights[fallback])fallback=i;
-            for(int attempt=0;attempt<count&&total>0;attempt++)
+            for(int attempt=0;chosen<0&&attempt<count&&total>0;attempt++)
             {
                 double pick=random.NextDouble()*total;int candidate=-1;
                 for(int i=0;i<count;i++){if(weights[i]<=0)continue;candidate=i;pick-=weights[i];if(pick<0)break;}
@@ -173,6 +182,44 @@ namespace SquashClash.Core.Rally
             delta=RivalReleaseTiming.Adjust(delta,lower,upper,difficulty.TimingSigmaMs,p.FondoReleaseMarginSigma);
             return new AiShot(true,option,aim,power,delta,defensive,useVolley,side);
         }
+        private static bool StretchedOption(ShotOption option)=>option.Line==ShotLine.Boast||
+            (option.Height==ShotHeight.High&&option.Power==ShotPower.Medium&&(option.Line==ShotLine.Straight||option.Line==ShotLine.Cross));
+        // The same allowed order as Decide, bounce before volley; the human starts at the observed position, without fatigue.
+        public StretchedEvaluation[] EvaluateStretched(in AiObservation observation,in ReceptionPlan own)
+        {
+            var result=new List<StretchedEvaluation>(12);var opponentPosition=observation.OpponentPosition;
+            void Add(Vector3 at)
+            {
+                var options=ShotOptions.Build(context,at);
+                if(context.BoastOn)ShotOptions.AddBoasts(context,at,options);
+                foreach(var option in options)
+                {
+                    if(!StretchedOption(option))continue;
+                    var forecast=option.Side.Exists?RallyContact.ForecastBoast(context,at,option.Side,option.P):RallyContact.Forecast(context,at,option.Aim,option.P);
+                    bool reachable=false;long delay=long.MaxValue;
+                    if(forecast.Good)
+                    {
+                        var solution=StretchedIntention(at,option);
+                        var trajectory=context.Predict(new BallState{Position=at,Velocity=solution.Velocity});
+                        var rules=context.NewRules();rules.Begin(PlayerId.Rival,PlayerId.Human);
+                        var opponent=new PlayerBody(PlayerId.Human,opponentPosition,context.Move);
+                        var plan=ReceptionPlanner.Plan(context,trajectory,rules,opponent,context.Steps(context.Params.ReactionS),1);
+                        long until=plan.Contact.Exists&&plan.Contact.TStarStep>=0?plan.Contact.TStarStep:trajectory.States[trajectory.States.Count-1].Step;
+                        reachable=plan.Reachable;delay=plan.ArrivalStep-until;
+                    }
+                    result.Add(new StretchedEvaluation(forecast.Good,reachable,delay,option.Line==ShotLine.Boast));
+                }
+            }
+            if(own.Reachable&&own.Contact.Exists&&own.Contact.TStarStep>=0)Add(own.Contact.PStar);
+            if(VolleyWanted(own))Add(own.Volley.Plan.PStar);
+            return result.ToArray();
+        }
+        // Only stretched receptions are filtered. The ordinary policy and its random draws stay untouched.
+        private int FilterStretched(int count,in AiObservation observation,in ReceptionPlan own,out double best)
+            =>StretchedFilter.Apply(weights,EvaluateStretched(observation,own),count,out best);
+        // A side-wall intention must follow the boast solver before predicting the human's reception.
+        private ShotSolution StretchedIntention(Vector3 at,ShotOption option)
+            =>option.Side.Exists?RallyContact.SolveBoastIntention(context,at,option.Side,option.P,out _):RallyContact.SolveIntention(context,at,option.Aim,option.P);
         // FondoAi.Utility plus the style's attack feature and drop zone. For Fondista both are zero/closed, so the value is FondoAi's.
         public double Utility(in ShotOption option,in AiObservation observation,in ReceptionPlan own,Vector3 at)
         {
