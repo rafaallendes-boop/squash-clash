@@ -1,6 +1,6 @@
 # Front 2 — Pistas de los primeros partidos (saque, volea y dos paredes)
 
-22 nov 2026, revisión 4 del 23 nov, con las decisiones de producto de SC-Lead (§7). Base `origin/main` `230b758`, que ya trae el saque nuevo encendido por defecto (#100). Spec de Claude como arquitecto. Roles, fusión e instalación según AGENTS §2, §7 y §8 de esa base.
+22 nov 2026, revisión 5 del 23 nov, con las decisiones de producto de SC-Lead (§7) y la regla de textos (§1.8). Base `origin/main` `230b758`, que ya trae el saque nuevo encendido por defecto (#100). Spec de Claude como arquitecto. Roles, fusión e instalación según AGENTS §2, §7 y §8 de esa base.
 
 Hay como máximo **4 pistas**, y cada una se ve una sola vez por instalación. Viajan en lo que ya se ve entre puntos, el aviso o la guía de saque, y no agregan pasos ni tiempo antes de jugar ni entre puntos. La prioridad es el saque nuevo: es lo que el PO no entendió al probarlo, según el encargo de SC-Lead.
 
@@ -16,7 +16,7 @@ Hay como máximo **4 pistas**, y cada una se ve una sola vez por instalación. V
 
 **Bloque separable: H0 en el aviso** (decisión 3 de SC-Lead, §7). Comprende las filas y los criterios marcados **[H0-aviso]**, y entra **completo** en esta PR. Si meterlo pone en riesgo la build de las 17, esta PR sale con el resto del alcance y el bloque va completo en la PR siguiente, con sus tests RED, **nunca a la mitad**. Sin el bloque, H0 sale solo en la guía y todo lo demás de esta spec vale igual.
 
-Se fusiona con la revisión aprobada, las puertas en verde y las reglas de AGENTS §2, sin pedir un «sí» por fusión. Se instala solo en la ventana que SC-PM coordina con Rafael (AGENTS §8).
+Se fusiona con la revisión aprobada, las puertas en verde y las reglas de AGENTS §2, sin pedir un «sí» por fusión. **La revisión de textos (§1.8) es parte obligatoria de esa revisión**, tanto en esta PR de spec como en la de implementación. Se instala solo en la ventana que SC-PM coordina con Rafael (AGENTS §8).
 
 ## 0. Lo que ya existe en `main` `230b758`
 
@@ -63,14 +63,14 @@ Reemplaza a `sc.hints.match`, que ya no se usa.
 
 | Id | Disparador (hechos del juego, sin umbrales nuevos) | Dónde se ve | Texto | Clave |
 |---|---|---|---|---|
-| H0 Saque, en la guía | Empieza una `HumanServePause` en un partido de la ventana. | Guía de saque: `serve-guide-hint` | «Sacas tú: toca el frontis antes de que se acabe la línea. Si no tocas, sale globo.» | `sc.hints.serve` |
-| H0 Saque, en el aviso **[H0-aviso]** | Empieza la pausa ordinaria antes del **primer saque del rival** en un partido de la ventana: `PointOver`, partido sin terminar, `Match.Server == Rival` y el rival todavía no sacó en este partido. Lo lleva el adaptador desde `RallyStarted`, sin estado nuevo en el juego. | Aviso: `rally-banner-hint` | «Cuando saques tú: toca el frontis antes de que se acabe la línea. Si no tocas, sale globo.» | `sc.hints.serve`, la misma |
+| H0 Saque, en la guía | Empieza una `HumanServePause` en un partido de la ventana. | Guía de saque: `serve-guide-hint` | «Sacas tú: toca el frontis antes de que se acabe la línea. Si no tocas, sale un globo.» | `sc.hints.serve` |
+| H0 Saque, en el aviso **[H0-aviso]** | Empieza la pausa ordinaria antes del **primer saque del rival** en un partido de la ventana: `PointOver`, partido sin terminar, `Match.Server == Rival` y el rival todavía no sacó en este partido. Lo lleva el adaptador desde `RallyStarted`, sin estado nuevo en el juego. | Aviso: `rally-banner-hint` | «Cuando saques tú: toca el frontis antes de que se acabe la línea. Si no tocas, sale un globo.» | `sc.hints.serve`, la misma |
 | H1 Volea | En una recepción del jugador, `VolleyShown` fue verdadero en algún cuadro y la recepción terminó sin volea aplicada: hubo un golpe con `LastOpportunity != Volley`, un fallo o ningún golpe. | Aviso: `rally-banner-hint` | «Anillo ámbar: toca y volea antes del bote.» | `sc.hints.volley` |
 | H2 Dos paredes | `ShotResolved` de un golpe aplicado del jugador (`Perfect` o `Valid`), con `SideAimOpen` verdadero y `LastStrokeBoast` falso, sin ningún dos paredes en el partido. | Aviso | «Toca la pared lateral para jugar un dos paredes.» | `sc.hints.boast` |
-| H3 Cruce | `ShotResolved` del primer golpe del partido con `LastStrokeBoast` verdadero. | Aviso | «Lateral cerca de ti: la pelota cruza al otro lado.» | `sc.hints.boastCross` |
+| H3 Cruce | `ShotResolved` del primer golpe del partido con `LastStrokeBoast` verdadero. | Aviso | «Pared lateral cerca de ti: la pelota cruza al otro lado.» | `sc.hints.boastCross` |
 
 - **H0 es una sola pista con dos formas**, con la misma clave. Cuenta como vista una sola vez: la primera forma que llega a su oráculo deja `sc.hints.serve` en 1, y después no sale ninguna de las dos.
-- **Textos.** Van los de esta spec (decisión 4 de SC-Lead). Salen del tutorial aprobado (`FirstRunFlow.cs:52-54`), acortados. Rafael los ajusta después del playtest, sin tocar la lógica.
+- **Textos.** Van los de esta spec (decisión 4 de SC-Lead), revisados con la regla de textos (§1.8). Salen del tutorial aprobado (`FirstRunFlow.cs:52-54`), acortados. Rafael los ajusta después del playtest, sin tocar la lógica.
 - **H2 va sin condición de profundidad** (decisión 5, §7).
 - **H0 y el tutorial.** H0 enseña lo que el sexto paso ya dice, pero en el momento en que hace falta. Haber visto el tutorial no retira H0.
 
@@ -180,6 +180,31 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
   - Tiene `Enabled`, un interruptor DEV estático: encendido por defecto, no se recuerda y, apagado, no escribe ni muestra nada. Es el mismo modelo que `PersonalRecords.Enabled` (`PersonalRecords.cs:21`).
 - **Botón DEV «Reiniciar pistas».** Va en el panel DEV y solo existe con `SQUASH_DEV`. Borra únicamente las claves de `FirstMatchHints.AllKeys()` y nada más de `PlayerPrefs`, presets ni métricas.
 
+### 1.8 Textos
+
+**Regla de textos.** Es un pedido de Rafael del 23 nov a las 10:40, vía SC-Lead: «revisen bien también los textos que sea llevado al squash y en español neutro».
+
+- Todo texto visible al jugador usa términos reales de squash: frontis, pared lateral, dos paredes, globo, recta, volea, dejada y saque.
+- Español neutro, sin chilenismos ni voseo, y trato de tú.
+- **La revisión de textos es parte obligatoria del review antes de fusionar.** El revisor lista cada texto nuevo o cambiado y, para cada uno, da OK o propone una corrección. Se incluye una sección «Textos» en el veredicto.
+- Si hay dudas de vocabulario, no se inventa: se anotan en la PR como pregunta para SC-Lead.
+
+**Revisión del autor**, revisión 5. Estos son todos los textos nuevos que ve el jugador:
+
+| Texto | Revisión |
+|---|---|
+| H0 en la guía: «Sacas tú: toca el frontis antes de que se acabe la línea. Si no tocas, sale un globo.» | Términos «frontis» y «globo». Cambio: «sale globo» pasa a «sale un globo», para un español neutro más claro. «La línea» es la línea de la guía que se acorta; queda como pregunta para SC-Lead (abajo). |
+| H0 en el aviso: «Cuando saques tú: toca el frontis antes de que se acabe la línea. Si no tocas, sale un globo.» | El mismo cambio y la misma pregunta. «Cuando saques tú» es tuteo neutro. |
+| H1: «Anillo ámbar: toca y volea antes del bote.» | OK. «Volea» y «bote» son términos de squash; tuteo neutro. |
+| H2: «Toca la pared lateral para jugar un dos paredes.» | OK. Usa «pared lateral» y «dos paredes». |
+| H3: «Pared lateral cerca de ti: la pelota cruza al otro lado.» | Cambio: antes decía «Lateral cerca de ti: …». Ahora usa el término completo, «pared lateral», y conserva la forma corta para no pasar de dos líneas en el aviso (criterio 10). |
+| Botón DEV «Reiniciar pistas» | Solo existe en DEV y el jugador no lo ve. OK. |
+
+**Preguntas de vocabulario para SC-Lead**, anotadas también en la PR:
+
+1. En H0, «antes de que se acabe la línea» se refiere a la línea de la guía que se acorta con el tiempo. ¿Puede confundirse con las líneas reales del frontis, como la de saque? Si es así, ¿qué palabra se usa?
+2. La guía de saque que ya está en `main` dice «Toca abajo: drive» (`RallyHud.cs:148`), y la regla nombra «recta». Ese texto no es de esta spec y no se toca aquí: ¿se cambia a «recta» en otra PR?
+
 ## 2. Fuera de alcance
 
 - Cambiar el primer saque del partido: el 0–0 sigue con el globo automático (decisión 1 de SC-Lead). Tampoco se cambian las pausas, `ServeKindLobMinAimY` o cualquier parámetro del juego. No se recalibra nada.
@@ -280,6 +305,7 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
 **Reglas de prueba, fijadas antes de implementar.**
 
 - **Los tests existentes no se editan** y tienen que pasar con las pistas **encendidas**, que es el valor por defecto.
+- **Textos.** La revisión de textos de §1.8 va en el review de la PR de implementación. Un test existente que lea un texto no se edita para cambiarle el texto.
 - **Un solo cambio de fixture, declarado de antemano.** `ZFirstRunFixture.ClearPrefs` (`ZFirstRunFixture.cs:78`) también borra `FirstMatchHints.AllKeys()`, igual que ya hace con `PersonalRecords.AllKeys()`.
 - **Si un test existente falla con las pistas encendidas**, es un defecto. Se registra y se detiene, según AGENTS §2. No se apaga `FirstMatchHints.Enabled`, no se cambia una aserción, una pausa ni un texto para pasar, y no se agrega `SetNewServe(false)` (AGENTS §3).
 - **Las pistas apagadas solo se usan en dos lugares**, los dos declarados de antemano y ambos en tests nuevos:
@@ -357,7 +383,7 @@ Pasada de `/frontend-design`.
    │ ━  Sacas tú: toca el     │  ← franja bajo la cancha
    │    frontis antes de que  │
    │    se acabe la línea.    │
-   │    Si no tocas, sale     │
+   │    Si no tocas, sale un  │
    │    globo.                │
    ╰──────────────────────────╯
             ¡Temprano!            ← nota del golpe anterior, sin cambios
@@ -375,7 +401,7 @@ Las respondió SC-Lead (product lead) el 23 nov, con los criterios de producto q
    - Efecto: H0 en el aviso, en §1.2, §1.3, el criterio 13 y lo marcado **[H0-aviso]**.
    - Es un bloque separable que entra completo o va completo en la PR siguiente (plan, al inicio).
    - El texto sigue el de la forma en la guía.
-4. **Textos.** «Van los textos de la spec. Rafael los ajusta después del playtest.» Efecto: §1.2.
+4. **Textos.** «Van los textos de la spec. Rafael los ajusta después del playtest.» Efecto: §1.2, revisados con la regla de textos de §1.8.
 5. **Profundidad para H2: resuelta.**
    - Primera respuesta de SC-Lead: «Es de Rafael. H2 va sin condición de profundidad y se lo planteo después con datos.»
    - Actualización del 23 nov a las 10:40: SC-Lead cita a Rafael, que dijo ese día a las 10:40: «Un jugador puede tirarla en cualquier minuto del partido, como ataque o defensa».
