@@ -48,6 +48,7 @@ namespace SquashClash.Experiments.EditMode
         {
             public PlayerId Who;public BallState Ball;public ReceptionPlan Plan;public AiShot Shot;
             public double DelayMs,FromWait,PathM,ShortM;public Vector2 OpponentAtStart;
+            public string Fb="NA";
         }
 
         // Wraps a brain and keeps the rival's positioning and serve (RallySim reads them through the interfaces).
@@ -65,6 +66,8 @@ namespace SquashClash.Experiments.EditMode
             {
                 var shot=inner.Decide(o,own);
                 var s=new Seen{Who=who,Ball=o.Ball,Plan=own,Shot=shot,OpponentAtStart=o.OpponentPosition};
+                // Reflection keeps this observer compatible with the incorporated main base.
+                var fb=inner.GetType().GetProperty("LastStretchedFallback");if(fb!=null)s.Fb=(bool)fb.GetValue(inner)?"1":"0";
                 if(who==PlayerId.Rival)
                 {
                     var body=Sim.Rival;var energy=Sim.RivalEnergy.Energy;
@@ -101,8 +104,10 @@ namespace SquashClash.Experiments.EditMode
             float tz=ctx.T.y,tin=ctx.Court.TinTop;
             int extraMissingLogs=0,roleMismatches=0;
             using(var w=new StreamWriter(Path.Combine(dir,"rows.tsv"),false,Utf8))
+            using(var pw=new StreamWriter(Path.Combine(dir,"points.tsv"),false,Utf8))
             {
-                w.WriteLine("style\tlevel\tmatch\tpoint\tj\tkind\tzone\th_line\th_height\th_power\th_z\tfw_tin\tb1z\tb2z\tavail_ms\tapex2\treason\tslack\tdelay_ms\tfrom_wait\tpath_m\tshort_m\tswing\tresult\tdef\tline\theight\tpower\tvolley\tret_fw\tret_b2z\tnext\twon\tr_z");
+                pw.WriteLine("style\tlevel\tmatch\tpoint\twinner");
+                w.WriteLine("style\tlevel\tmatch\tpoint\tj\tkind\tzone\th_line\th_height\th_power\th_z\tfw_tin\tb1z\tb2z\tavail_ms\tapex2\treason\tslack\tdelay_ms\tfrom_wait\tpath_m\tshort_m\tswing\tresult\tdef\tline\theight\tpower\tvolley\tret_fw\tret_b2z\tnext\twon\tr_z\tfb");
                 foreach(RivalStyleId style in new[]{RivalStyleId.Fondista,RivalStyleId.Definidor,RivalStyleId.Completo})
                 foreach(AiLevel level in new[]{AiLevel.Easy,AiLevel.Medium,AiLevel.Hard})
                 for(int m=0;m<Matches;m++)
@@ -152,8 +157,9 @@ namespace SquashClash.Experiments.EditMode
                                     s.Plan.Reason,F(s.Plan.SlackS),F(s.DelayMs),F(s.FromWait),F(s.PathM),F(s.ShortM),sh.Swing?"1":"0",result,
                                     sh.Defensive?"1":"0",sh.Swing?sh.Option.Line.ToString():"-",sh.Swing?sh.Option.Height.ToString():"-",sh.Swing?sh.Option.Power.ToString():"-",sh.Volley?"1":"0",
                                     F(retFw),F(retB2),next,won?"1":"0",
-                                    result=="Contact"?F(logs[j].ContactPoint.z):"NaN"}));  // r_z (camino B, F2)
+                                    result=="Contact"?F(logs[j].ContactPoint.z):"NA",s.Fb}));  // r_z, fb (camino B, F2)
                             }
+                            pw.WriteLine(string.Join("\t",RivalStyle.Name(style),level.ToString(),m.ToString(C),pt.ToString(C),point.Winner.HasValue?point.Winner.Value.ToString():"none"));
                             if(point.Winner.HasValue)score.PointWon(point.Winner.Value);
                             else if(++replays>50)break;
                         }
