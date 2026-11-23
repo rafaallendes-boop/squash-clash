@@ -491,7 +491,7 @@ namespace SquashClash.Runtime.Menu
             if(!rally.StartMatch()){OpenMenu();return;}
             hud.MenuMatch=true;hud.Hints?.BeginMatch();
             PlayerPrefs.SetInt(RivalMatchesKey,rally.StyleCounter);PlayerPrefs.Save();
-            app.UserEvents?.Menu("game","open");Refresh();hud.Refresh();
+            app.UserEvents?.Menu("game","open");hud.ShowVsPlate();Refresh();hud.Refresh();
         }
         // Dev only: leave the menu for the practice court and the developer tools.
         public void ClosePractice()
