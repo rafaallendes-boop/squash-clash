@@ -185,9 +185,7 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
 - Cambiar el primer saque del partido: el 0–0 sigue con el globo automático (decisión 1 de SC-Lead). Tampoco se cambian las pausas, `ServeKindLobMinAimY` o cualquier parámetro del juego. No se recalibra nada.
 - Pistas de cansancio, de timing u otras. Un segundo pase de pistas, o volver a verlas desde el menú.
 - Cambiar el tutorial o agregarle pasos.
-- **Condición de profundidad para H2.** Sería que H2 salga solo cuando el jugador golpeó desde el cuarto trasero (`z ≥ X m`).
-  - Crea un umbral nuevo, así que es decisión de Rafael (AGENTS §7) y **queda pendiente**; SC-Lead se la planteará con datos.
-  - Mientras tanto H2 va **sin** condición de profundidad y no se agrega ningún umbral.
+- **Condición de profundidad para H2, descartada.** La propuesta era que H2 saliera solo tras un golpe desde el cuarto trasero (`z ≥ X m`). Rafael la descartó (decisión 5, §7), así que H2 va sin condición de profundidad y no hay umbral nuevo.
 
 ## 3. Criterio de aceptación
 
@@ -378,9 +376,10 @@ Las respondió SC-Lead (product lead) el 23 nov, con los criterios de producto q
    - Es un bloque separable que entra completo o va completo en la PR siguiente (plan, al inicio).
    - El texto sigue el de la forma en la guía.
 4. **Textos.** «Van los textos de la spec. Rafael los ajusta después del playtest.» Efecto: §1.2.
-5. **Profundidad para H2.** «Es de Rafael. H2 va sin condición de profundidad y se lo planteo después con datos.»
-   - Efecto: H2 va **sin** condición de profundidad y no se agrega ningún umbral (§2).
-   - La condición sigue siendo una **decisión pendiente del PO**, porque crea un umbral nuevo (AGENTS §7).
+5. **Profundidad para H2: resuelta.**
+   - Primera respuesta de SC-Lead: «Es de Rafael. H2 va sin condición de profundidad y se lo planteo después con datos.»
+   - Actualización del 23 nov a las 10:40: SC-Lead cita a Rafael, que dijo ese día a las 10:40: «Un jugador puede tirarla en cualquier minuto del partido, como ataque o defensa».
+   - Efecto: H2 va **sin** condición de profundidad, se descarta la propuesta `z ≥ X m` y no hay umbral nuevo (§2). Ya no queda como decisión pendiente.
 
 **Limitaciones conocidas que quedan:**
 
