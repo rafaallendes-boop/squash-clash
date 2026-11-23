@@ -86,3 +86,13 @@ Efecto:
 - Las decisiones de la spec de la PR #92 las toma Claude con SC-Lead, sin esperar al PO. Esto incluye incorporar el criterio de producto de SC-Lead de RAL-174 (camino B) y atender la revisión de Codex.
 - La fusión sigue la autonomía del 22 nov (AGENTS §2/§7), sin «sí» por cada vez.
 - No cambia lo exclusivo del PO: si M3 no vuelve con I2–I3, la decisión de umbrales es de Rafael. No se cambian umbrales, oráculos ni tolerancias existentes. `pullFullMm`, P0-calib-1 y la aceptación de etapas siguen siendo suyos.
+
+## 23 nov 2026 — Margen temprano acotado en la recepción del saque (#106)
+
+Texto literal del PO (Rafael, 16:33, chat de SC-PM), transmitido en `/Users/rafaallendes/sc-specs/impl-recepcion-b-acotada.txt`:
+
+> «Sí, confirmo hasta 50 ms solo en mi recepción del saque y los anillos con «Espera el bote»».
+
+Se autoriza medir 25 y 50 ms frente a la base, solo para el golpe temprano del humano al recibir el saque. La regla de SC-Lead (16:32), incorporada al encargo, elige el menor valor que mejore claramente la devolución del novato que toca sin romper N2; si ninguno pasa dentro de 50 ms, se detiene el trabajo. Se mantienen los umbrales, criterios y oráculos vigentes, y se informan M1 oficial, la señal secundaria, puntos, partidos y volea por nivel con n y fuente.
+
+La continuación explícita de SC-PM en `/Users/rafaallendes/sc-specs/continua-106.txt` autoriza corregir el defecto del prototipo sin cambiar `ServeEarlyAllowance_LatencyCompensationIsAppliedOnce` ni su aserción; fija el borde inclusivo, con compensación de latencia una sola vez. Confirma que el margen incluye el golpe temprano de la recepción y conserva la volea opcional del saque en Fácil, Medio y Difícil. Los anillos y «Espera el bote» van en otra PR con Claude. La PR #106 lleva la medición, el margen elegido y las puertas completas; **no se fusiona** en este encargo. [Informe](2026-11-23-recepcion-b-acotada.md).
