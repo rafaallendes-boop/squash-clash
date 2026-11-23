@@ -1,0 +1,31 @@
+# Recepción del saque B acotada: parada durante preparación
+
+23 nov 2026. Base `90ddc7e275f23e0b8774c57e7db93f106eef5f90`. Encargo: `/Users/rafaallendes/sc-specs/impl-recepcion-b-acotada.txt`, incluida la aprobación del PO del 23 nov, 16:33, para medir 25/50 ms y después implementar el menor valor que mejore claramente el novato que toca sin romper N2. No fusionar.
+
+**Estado: detenido por defecto; medición sin iniciar.** No se eligió una tolerancia. No se implementaron cambios de juego ni de anillos en la rama de esta PR. La preparación del experimento queda aislada en `exp/serve-reception-margin`, worktree `sc-exp-recepcion-b`, y no se debe fusionar.
+
+## Evidencia y defecto
+
+Se añadió una entrada de margen explícito al contrato, inicialmente sin comportamiento, y tres pruebas de borde. Se ejecutaron con `scripts/test.sh`, lock `/Users/rafaallendes/sc-unity.lock` y una sola instancia de Unity. `scripts/device.env` se copió sin cambios del origen autorizado; SHA-256 `0b0c94db19e06f7de8a864991ed819fc984f16160f3a35b483d9aff9167cec2f`.
+
+| Ejecución | Resultado fresco | Fuente local ignorada, en worktree experimental |
+|---|---|---|
+| RED `scripts/test.sh editmode ServeEarlyAllowance` | 3 tests, 0 aprobados, 3 fallidos por aserción: esperaba `Valid`, obtuvo `Failed` | `Logs/evidence/reception-b-preparation/red-results.xml`, `red.log` |
+| Primera ejecución posterior, `scripts/test.sh editmode ContactContractTests` | 33 tests, 32 aprobados, 1 fallido por aserción; **no es GREEN** | `Logs/evidence/reception-b-preparation/first-green-results.xml`, `first-green.log` |
+
+Falla `ServeEarlyAllowance_LatencyCompensationIsAppliedOnce`: una liberación de 1,045 s menos 70 ms de compensación debería estar en el borde de 25 ms anterior a K-in (1 s). El prototipo la rechaza como temprana. La aritmética de doble precisión da `0.974999999999999867`, frente al borde `0.974999999999999978` (diferencia de −1,11 × 10⁻¹³ ms). Es evidencia de un defecto en la comparación del borde del prototipo, no de que el caso pase. No se cambió la prueba ni se corrigió el contrato después de detectarlo.
+
+Se aplica AGENTS.md §2: «Ante un defecto o sorpresa: registrar y detenerse, sin corregir ni reintentar para obtener Pass». Evidencia preservada; `device.env` eliminado al terminar y lock liberado.
+
+## Mediciones y puertas pendientes
+
+| Medida solicitada | Base | 25 ms | 50 ms |
+|---|---|---|---|
+| M1 oficial, novato std | Sin medir (n=0) | Sin medir (n=0) | Sin medir (n=0) |
+| Devolución del novato que toca | Sin medir (n=0) | Sin medir (n=0) | Sin medir (n=0) |
+| Puntos, partidos y volea al saque por nivel | Sin medir (n=0) | Sin medir (n=0) | Sin medir (n=0) |
+| N2, `ConfirmPerStyle` | No evaluado | No evaluado | No evaluado |
+
+No se ejecutaron las suites completas EditMode/PlayMode, AutoQA ni check-release. Los resultados de esta preparación no autorizan seleccionar valor, implementar ni fusionar. No cambian física, solver, `DefaultPreset.json`, SimulationKey, RallyParams ni sus hashes en la rama de la PR.
+
+**Textos:** ninguno nuevo o modificado en el producto. Los anillos y «Espera el bote» siguen pendientes; corresponden a Claude Sonnet con `/frontend-design`, según AGENTS.md. Se encargó a Claude Opus un análisis de arquitectura en solo lectura; no constituye revisión aprobada del prototipo ni de esta entrega.
