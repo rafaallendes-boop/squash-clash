@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using NUnit.Framework;
+using SquashClash.Core.Court;
 using SquashClash.Core.Rally;
 using SquashClash.Core.Shot;
 using SquashClash.Core.Simulation;
@@ -16,7 +18,7 @@ namespace SquashClash.Core.Tests.Rally
         {
             var c=RallyFixtures.Context();
             Assert.That(c.Config.Hash,Is.EqualTo("207da8f2c636"));
-            Assert.That(c.Params.Hash,Is.EqualTo("a82c34b661bf"));
+            Assert.That(c.Params.Hash,Is.EqualTo("1063d0f6cf66"),"approved main 230b758, including the new serve defaults");
             Assert.That(c.Config.SimulationKey,Is.EqualTo("166a96e319c7"));
         }
         private static ReceptionPlan Own(RallyContext c,Vector3 at,string reason="stretched",double slack=0)
@@ -30,7 +32,7 @@ namespace SquashClash.Core.Tests.Rally
         private static RivalAi Ai(RallyContext c,RivalStyleId style)=>new RivalAi(c,AiDifficulty.For(c.Params,AiLevel.Medium),style,7);
         private static ReceptionPlan ReturnPlan(RallyContext c,Vector3 at,ShotOption option,Vector2 opponent)
         {
-            var solution=RallyContact.SolveIntention(c,at,option.Aim,option.P);
+            var solution=option.Side.Exists?RallyContact.SolveBoastIntention(c,at,option.Side,option.P,out _):RallyContact.SolveIntention(c,at,option.Aim,option.P);
             Assert.That(solution.Solved,Is.True,"defensive intention must solve");
             var trajectory=c.Predict(new BallState{Position=at,Velocity=solution.Velocity});
             return ReceptionPlanner.Plan(c,trajectory,RallyFixtures.Rules(c,PlayerId.Rival,PlayerId.Human),
@@ -98,12 +100,67 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(found,Is.True,"a deterministic no-reachable-option case is required");
         }
         [TestCase(RivalStyleId.Fondista)][TestCase(RivalStyleId.Definidor)][TestCase(RivalStyleId.Completo)]
-        public void RivalAi_Stretched_NeverBoasts(RivalStyleId style)
+        public void RivalAi_StretchedFront_NeverBoasts(RivalStyleId style)
         {
             var c=RallyFixtures.Context();Assert.That(c.BoastOn,Is.True);
-            var own=Own(c,new Vector3(.9f,.8f,8.6f));var ai=Ai(c,style);var o=Observe(c,new Vector2(1.5f,6.5f));int violations=0;
+            var own=Own(c,new Vector3(.9f,.8f,1.5f));var ai=Ai(c,style);var o=Observe(c,new Vector2(1.5f,6.5f));int violations=0;
             for(int i=0;i<500;i++)if(ai.Decide(o,own).Option.Line==ShotLine.Boast)violations++;
             Assert.That(violations,Is.Zero,"R2: stretched boast count, "+style);
+        }
+        private static List<ShotOption> BackOptions(RallyContext c,Vector3 at)
+        {
+            var options=Defensive(c,at);var boasts=new List<ShotOption>();ShotOptions.AddBoasts(c,at,boasts);
+            options.AddRange(boasts);return options;
+        }
+        private static bool BackReachable(RallyContext c,Vector3 at,ShotOption option,Vector2 opponent)
+        {
+            var forecast=option.Side.Exists?RallyContact.ForecastBoast(c,at,option.Side,option.P):RallyContact.Forecast(c,at,option.Aim,option.P);
+            return forecast.Good&&ReturnPlan(c,at,option,opponent).Reachable;
+        }
+        [TestCase(RivalStyleId.Definidor)][TestCase(RivalStyleId.Completo)]
+        public void RivalAi_StretchedBack_MayBoast_WhenTheHumanReachesIt(RivalStyleId style)
+        {
+            var c=RallyFixtures.Context();var at=new Vector3(.9f,.8f,8.6f);var options=BackOptions(c,at);
+            Assert.That(options.Any(s=>s.Line==ShotLine.Boast&&BackReachable(c,at,s,c.T)),Is.True,"B2 predeclared back-corner/T fixture must offer a Good, Reachable boast");
+            var ai=Ai(c,style);var own=Own(c,at);var o=Observe(c,c.T);int boasts=0;
+            for(int i=0;i<500;i++)if(ai.Decide(o,own).Option.Line==ShotLine.Boast)boasts++;
+            Assert.That(boasts,Is.GreaterThan(0),"B2: reachable back-corner boasts stay available, "+style);
+        }
+        [TestCase(RivalStyleId.Fondista)][TestCase(RivalStyleId.Definidor)][TestCase(RivalStyleId.Completo)]
+        public void RivalAi_StretchedBack_NeverPicksABoastTheHumanCannotReach(RivalStyleId style)
+        {
+            var c=RallyFixtures.Context();var at=new Vector3(.9f,.8f,8.6f);
+            var opponent=c.ClampBody(new Vector2(c.Court.Width,c.Court.Length));var options=BackOptions(c,at);
+            var reach=options.ToDictionary(s=>(s.Line,s.Height,s.Power),s=>BackReachable(c,at,s,opponent));
+            foreach(var b in options.Where(s=>s.Line==ShotLine.Boast))
+                TestContext.WriteLine($"B3_BOAST {b.Height}/{b.Power} good={RallyContact.ForecastBoast(c,at,b.Side,b.P).Good} reachable={reach[(b.Line,b.Height,b.Power)]}");
+            Assert.That(reach.Values.Any(v=>v),Is.True,"B3 predeclared opposite back corner: at least one reachable option");
+            Assert.That(reach.Any(kv=>kv.Key.Line==ShotLine.Boast&&!kv.Value),Is.True,"B3: at least one inadmissible boast under forecast plus human planner");
+            var ai=Ai(c,style);var own=Own(c,at);var o=Observe(c,opponent);int violations=0,badBoasts=0;
+            for(int i=0;i<500;i++)
+            {
+                var s=ai.Decide(o,own);
+                if(!reach.TryGetValue((s.Option.Line,s.Option.Height,s.Option.Power),out bool ok)||!ok)
+                {violations++;if(s.Option.Line==ShotLine.Boast)badBoasts++;}
+            }
+            Assert.That(violations,Is.Zero,"B3: no unreachable intention when a reachable option exists");
+            Assert.That(badBoasts,Is.Zero,"B3: no unreachable boast");
+        }
+        [Test] public void RivalAi_StretchedBack_BoastPredictionHitsSideBeforeFront()
+        {
+            var c=RallyFixtures.Context();var at=new Vector3(.9f,.8f,8.6f);
+            var boast=BackOptions(c,at).First(s=>s.Line==ShotLine.Boast&&RallyContact.ForecastBoast(c,at,s.Side,s.P).Good);
+            var ai=Ai(c,RivalStyleId.Definidor);
+            // The intention method used by FilterStretched, not a separate implementation of the filter's trajectory.
+            var method=typeof(RivalAi).GetMethod("StretchedIntention",BindingFlags.Instance|BindingFlags.NonPublic);
+            Assert.That(method,Is.Not.Null);
+            var solution=(ShotSolution)method.Invoke(ai,new object[]{at,boast});
+            Assert.That(solution.Solved,Is.True,"B3: a Good boast must use the side-wall intention");
+            var trajectory=c.Predict(new BallState{Position=at,Velocity=solution.Velocity});
+            var walls=trajectory.Contacts.Where(e=>e.Surface==SurfaceId.LeftWall||e.Surface==SurfaceId.RightWall||e.Surface==SurfaceId.FrontWall).Take(2).ToArray();
+            Assert.That(walls.Length,Is.EqualTo(2));
+            Assert.That(walls[0].Surface,Is.EqualTo(boast.Side.Wall));
+            Assert.That(walls[1].Surface,Is.EqualTo(SurfaceId.FrontWall));
         }
         [TestCase(RivalStyleId.Fondista)][TestCase(RivalStyleId.Definidor)][TestCase(RivalStyleId.Completo)]
         public void RivalAi_Stretched_FromFront_IsHighMediumStraightOrCross(RivalStyleId style)

@@ -192,7 +192,7 @@ namespace SquashClash.Core.Rally
                 if(RallyContact.Forecast(context,at,option.Aim,option.P).Good)
                 {
                     // Forecast supplies the fault guard; the same intention supplies the full shared prediction.
-                    var solution=RallyContact.SolveIntention(context,at,option.Aim,option.P);
+                    var solution=StretchedIntention(at,option);
                     var trajectory=context.Predict(new BallState{Position=at,Velocity=solution.Velocity});
                     var rules=context.NewRules();rules.Begin(PlayerId.Rival,PlayerId.Human);
                     var opponent=new PlayerBody(PlayerId.Human,observation.OpponentPosition,context.Move);
@@ -208,6 +208,9 @@ namespace SquashClash.Core.Rally
             // No safe option: retain a defensive intention and flag the exception instead of drawing a winner at random.
             return reachable?-1:leastLate>=0?leastLate:firstAllowed;
         }
+        // Existing direct intention, extracted without a policy change before the path-B RED.
+        private ShotSolution StretchedIntention(Vector3 at,ShotOption option)
+            =>RallyContact.SolveIntention(context,at,option.Aim,option.P);
         // FondoAi.Utility plus the style's attack feature and drop zone. For Fondista both are zero/closed, so the value is FondoAi's.
         public double Utility(in ShotOption option,in AiObservation observation,in ReceptionPlan own,Vector3 at)
         {
