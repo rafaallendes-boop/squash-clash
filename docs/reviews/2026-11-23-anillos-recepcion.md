@@ -32,10 +32,10 @@ TDD con `scripts/test.sh`: RED por aserción (halo y trazo ausentes, `ServeRecep
 | AutoQA `mvp` v / t3 / volea | PASS / 0 / nivel 1 en las tres (102/102) |
 | check-release | OK (build 1151, dev y prod) |
 
-## Defecto: 17 fallos de PlayMode
+## Defecto: 17 fallos de PlayMode (15 + 2)
 
-1. **14 fallos de `TimingAidTests` (causa identificada, es mío).** `FullAid_BoundariesMatchUnchangedContract` (13 casos) y `AidPartial_HidesRingLast150ms` comprueban que *todos* los `LineRenderer` del cue estén habilitados mientras el anillo es visible. El halo nuevo («Volley halo») está deshabilitado con el anillo blanco y rompe esa invariante. No se modificó la prueba. Corrección propuesta, sin aplicar: crear el halo solo cuando el anillo es ámbar por primera vez, de modo que un anillo solo blanco siga teniendo únicamente líneas habilitadas.
-2. **3 fallos sin atribuir:** `GesturePreviewTests.Main_WiresAimAndPowerWithoutChangingBallAuthority` (`DistinctSamples` 3, esperado ≥ 4), `ReticleVisibilityTests.LocalCancelLimitAndState_AreVisibleAndNeverCoverFrontis` y una tercera de `TimingAidTests` ya contada arriba. Las dos primeras no tocan los anillos; AGENTS §3 las cita como posibles fallos de entorno. No se midió una línea base en `main`, así que no se afirma que sean previas.
+1. **15 fallos de `TimingAidTests` (causa identificada, es mío).** `FullAid_BoundariesMatchUnchangedContract` (14 casos) y `AidPartial_HidesRingLast150ms` comprueban que *todos* los `LineRenderer` del cue estén habilitados mientras el anillo es visible. El halo nuevo («Volley halo») está deshabilitado con el anillo blanco y rompe esa invariante. No se modificó la prueba. Corrección propuesta, sin aplicar: crear el halo solo cuando el anillo es ámbar por primera vez, de modo que un anillo solo blanco siga teniendo únicamente líneas habilitadas.
+2. **2 fallos sin atribuir:** `GesturePreviewTests.Main_WiresAimAndPowerWithoutChangingBallAuthority` (`DistinctSamples` 3, esperado ≥ 4) y `ReticleVisibilityTests.LocalCancelLimitAndState_AreVisibleAndNeverCoverFrontis`. No tocan los anillos; AGENTS §3 las cita como posibles fallos de entorno. No se midió una línea base en `main`, así que no se afirma que sean previas.
 
 No se reintentó ni se corrigió después de detectarlo. Evidencia local, ignorada por git: `Logs/playmode-results.xml`, `Logs/playmode.log`, `Logs/autoqa/20261123T2216*-1b71881-*`.
 
