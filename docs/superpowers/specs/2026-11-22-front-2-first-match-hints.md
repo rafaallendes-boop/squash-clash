@@ -1,6 +1,6 @@
 # Front 2 — Pistas de los primeros partidos (saque, volea y dos paredes)
 
-22 nov 2026, revisión 2 del 23 nov. Base `origin/main` `230b758`, que ya trae el saque nuevo encendido por defecto (#100). Spec de Claude como arquitecto. Roles, fusión e instalación según AGENTS §2, §7 y §8 de esa base.
+22 nov 2026, revisión 3 del 23 nov. Base `origin/main` `230b758`, que ya trae el saque nuevo encendido por defecto (#100). Spec de Claude como arquitecto. Roles, fusión e instalación según AGENTS §2, §7 y §8 de esa base.
 
 Hay como máximo **4 pistas**, y cada una se ve una sola vez por instalación. Viajan en lo que ya se ve entre puntos, el aviso o la guía de saque, y no agregan pasos ni tiempo antes de jugar ni entre puntos. La prioridad es el saque nuevo: es lo que el PO no entendió al probarlo, según el encargo de SC-Lead.
 
@@ -51,7 +51,8 @@ Reemplaza a `sc.hints.match`, que ya no se usa.
 - **Quedan fuera** la revancha, el «Partido» DEV, la práctica y cualquier partido en que el piloto automático estuvo encendido.
 - **Cuándo se cierra.** `sc.hints.window` se escribe en 1 cuando un partido de la ventana termina de forma normal (`MatchOver`, gane o pierda) o cuando las 4 pistas quedan vistas o retiradas.
 - **Abandonar no la cierra.** Ni volver al menú desde la pausa (`StopMode`) ni cerrar la app (`UserEvents.EndSession` desde `AppBootstrap.OnDestroy`) cierran la ventana.
-- **Respuesta para quien abandona pronto.** El siguiente partido desde el menú sigue en la ventana, con todas las pistas que no llegó a ver.
+- **Respuesta para quien abandona pronto.** El siguiente partido desde el menú sigue en la ventana. Las pistas que no llegó a ver siguen sin ver y se arman si su disparador vuelve a ocurrir (§1.3).
+- **Limitación conocida, sin decidir.** Quien abandona sin ganar un punto no llega a ninguna `HumanServePause`, así que no recibe H0 antes de abandonar. Cambiarlo es una decisión de producto abierta (§7).
 - **Límite.** Son 4 pistas por instalación, cada una una sola vez. La ventana solo puede cerrarse antes. No se agrega un tope de intentos; queda como decisión abierta.
 
 ### 1.2 Pistas
@@ -66,25 +67,64 @@ Reemplaza a `sc.hints.match`, que ya no se usa.
 - **Textos.** Salen del tutorial aprobado (`FirstRunFlow.cs:52-54`), acortados. El PO puede cambiarlos sin tocar la lógica.
 - **H0 y el tutorial.** H0 enseña lo que el sexto paso ya dice, pero en el momento en que hace falta. Haber visto el tutorial no retira H0.
 
-### 1.3 Turnos y convivencia con la guía de saque
+### 1.3 Estados, turnos y convivencia con la guía de saque
 
-- **Armar.** Un disparador **arma** su pista. La pista armada vive solo en memoria, hasta su pausa elegible.
-- **Pausa ordinaria.** Es `PointOver` sin `HumanServePause` y sin `MatchOver`, con el aviso visible. Muestra como máximo una pista de H1 a H3, en ese orden de prioridad. Si hay más armadas, esperan a la pausa ordinaria siguiente del mismo partido.
-- **Pausa del saque del jugador** (`HumanServePause`, 3 s). Solo puede mostrar H0, dentro de la guía.
-  - H1 a H3 esperan: el aviso está oculto, así que ahí no se muestran ni se marcan como vistas.
-  - La pausa no se alarga para hacer caber la pista.
-- **Cuándo una pista queda vista.** Se escribe su clave en 1 y se llama a `PlayerPrefs.Save()` en ese mismo cuadro.
-  - **En el aviso**, cuando `BannerOpacity` llega a 1. En ese cuadro deben estar visibles tanto el aviso (`rally-banner`) como la fila de la pista, con un layout resuelto de alto mayor que 0.
-  - **En la guía**, cuando `serve-guide` y `serve-guide-hint` llevan 0,18 s visibles, con un layout resuelto de alto mayor que 0. Es el mismo `BannerInSeconds`; no hay un número nuevo.
-  - Ese tiempo es real y sin escala. Se mide con un reloj reemplazable, `FirstMatchHints.Now`, como `PointEndFreeze.Now`, y no se suma el `dt` recortado a 0,05 s de `RallyHud.Update` (`:290`).
-  - Con el reloj del juego en pausa (`app.Clock.Paused`), el plazo no avanza.
-- **«Seguir» o un toque de saque antes de 0,18 s.** La pista no queda vista y sigue armada:
-  - H1 a H3 vuelven en la próxima pausa ordinaria del mismo partido;
-  - H0 vuelve en la próxima `HumanServePause`, de este partido o de uno siguiente de la ventana.
-- **No sale ninguna pista** en `MatchOver`, donde está la tarjeta, ni fuera de `PointOver`.
-- **Al terminar o abandonar un partido**, las pistas armadas se descartan sin marcarse.
-- **H2 armada y dos paredes antes de verla.** Si el jugador hace su primer dos paredes del partido antes de que H2 salga, H2 se **retira**: su clave pasa a 2, cuenta como resuelta y no vuelve. Ese mismo golpe arma H3.
-- **Una pista vista o retirada** no se vuelve a armar.
+**Estados de cada pista.** Son cuatro. Dos se guardan y dos viven solo en memoria:
+
+| Estado | Dónde vive | Cómo se llega | Depende de que se vea |
+|---|---|---|---|
+| **Sin ver** | ausencia de la clave | estado inicial | — |
+| **Armada** | solo en memoria, dentro del partido | su disparador ocurre en un partido de la ventana | no |
+| **Vista** | clave = 1 | la pista estuvo visible según la regla de abajo | **sí, y es la única transición que depende** |
+| **Retirada** | clave = 2 | solo H2, ver abajo | no |
+
+- **Armar.** Un disparador arma su pista solo si está sin ver. Las vistas y las retiradas no se vuelven a armar.
+- **Lo armado no se guarda.** Al terminar, abandonar o cerrar la app, toda pista armada vuelve a sin ver.
+  - **No se restaura** en el partido siguiente ni tras un reinicio de la escena o de la app.
+  - Solo vuelve a armarse si **su disparador ocurre de nuevo** en un partido de la ventana.
+  - Conservar la ventana abierta (§1.1) no es conservar una pista armada.
+- **Retiro de H2.** Si el jugador hace su primer dos paredes del partido mientras H2 está sin ver o armada, H2 pasa a retirada: clave = 2, línea `hint` con `action=retired` y `PlayerPrefs.Save()`.
+  - Ocurre en el cuadro del `ShotResolved` de ese golpe, en plena fase de juego.
+  - **No requiere que nada sea visible.** Ese mismo golpe arma H3.
+- **Cierre de la ventana** (`sc.hints.window = 1`, §1.1). Tampoco depende de la visibilidad: se escribe al llegar a `MatchOver` o cuando las 4 pistas quedan vistas o retiradas.
+
+**Pausa ordinaria.** Es `PointOver` sin `HumanServePause` y sin `MatchOver`, con el aviso visible.
+
+- Muestra como máximo una pista armada de H1 a H3, en ese orden de prioridad.
+- Las demás siguen armadas hasta la pausa ordinaria siguiente del mismo partido.
+
+**Pausa del saque del jugador** (`HumanServePause`, 3 s).
+
+- Solo puede mostrar H0, dentro de la guía.
+- H1 a H3 siguen armadas: el aviso está oculto, así que ahí no se muestran ni pasan a vistas.
+- La pausa no se alarga para hacer caber la pista.
+
+**Paso a vista.** Es la única transición que exige visibilidad. Se escribe la clave en 1, la línea `hint` con `action=seen` y `PlayerPrefs.Save()` en ese mismo cuadro. Hay dos oráculos distintos, uno por contenedor.
+
+- **En el aviso (H1 a H3), el oráculo es `BannerOpacity == 1`.**
+  - En ese cuadro tienen que estar visibles el aviso (`rally-banner`) y la fila de la pista, con un layout resuelto de alto mayor que 0.
+  - La opacidad la sigue acumulando `RallyHud.Tick` con el `dt` recortado a 0,05 s (`RallyHud.cs:290,316-323`), sin cambios en la animación ni en sus pruebas.
+  - **No se usa tiempo real para el aviso.** Tras un cuadro largo pueden haber pasado 0,18 s reales con la opacidad todavía por debajo de 1, y entonces la pista **no** está vista.
+- **En la guía (H0), el oráculo es el tiempo real visible.** La guía no tiene animación de entrada.
+  - Se suman las diferencias de `FirstMatchHints.Now` entre cuadros consecutivos en los que `serve-guide` y `serve-guide-hint` están visibles, con un layout de alto mayor que 0, y el reloj del juego no está en pausa.
+  - Se marca vista al llegar a 0,18 s. Es el mismo `BannerInSeconds`; no hay un número nuevo.
+  - Un cuadro largo cuenta entero, porque es tiempo real, y no se suma el `dt` recortado.
+  - `FirstMatchHints.Now` es real, sin escala y reemplazable, como `PointEndFreeze.Now`.
+
+**Si la pausa se termina antes de su oráculo**, sea por «Seguir», por fin del plazo o por un toque de saque, la pista no queda vista y sigue armada:
+
+- H1 a H3, hasta la próxima pausa ordinaria **del mismo partido**. Si el partido termina antes, vuelven a sin ver.
+- H0, hasta el fin de la pausa. Como su disparador es la propia `HumanServePause`, en la próxima vuelve a armarse, en este partido o en uno siguiente de la ventana.
+
+**Fuera de `PointOver`** no se muestra ninguna pista, ni en `MatchOver`, donde está la tarjeta.
+
+**Convivencia de H0 con la nota del golpe.** La nota `shot-note` (`ShotNoteView`) conserva el texto del último golpe, por ejemplo «¡Temprano!», y sigue visible durante la pausa del saque si `timing.showNotes` está encendido (`ShotController.cs:441`). No hay exclusión por fase.
+
+- La nota no cambia: ni su texto, ni su visibilidad, ni su pop, ni su posición.
+- **H0 se acomoda a la nota.**
+  - Con la nota visible, `serve-guide-hint` va justo encima de ella, con 8 px de separación, sin cruzarse con ella ni con la guía.
+  - Con la nota oculta o vacía, H0 se centra en la franja bajo la cancha, igual que la nota (`ShotNoteView.BandBottom`).
+  - Si la franja no alcanza, H0 puede subir sobre el piso cercano de la cancha, pero nunca sobre el frontis ni fuera del área segura.
 
 ### 1.4 Evidencia de que entendió el saque siguiente
 
@@ -141,24 +181,30 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
 ## 3. Criterio de aceptación
 
 1. **H0.** En un partido de la ventana, en la primera `HumanServePause`, `serve-guide-hint` se ve con el texto de H0.
-   - Con la guía visible durante 0,18 s del reloj de prueba, `sc.hints.serve` queda en 1 y se escribe una sola línea `hint` con `id=serve` y `action=seen`.
+   - Cuando la guía suma 0,18 s visibles en el reloj de prueba, `sc.hints.serve` queda en 1 y se escribe una sola línea `hint` con `id=serve` y `action=seen`. Esto incluye el caso de un solo cuadro de 0,18 s.
    - Un toque arriba y otro abajo dan `serve-choice` con `chosen=true` y `Lob` o `Drive`. Sin toque, `chosen=false` y `Lob`.
    - La pausa sigue durando `ServeKindHumanPauseSeconds`.
-2. **H1.** Después de un punto con el anillo ámbar visto y sin volea aplicada, la pausa ordinaria siguiente muestra H1 en `rally-banner-hint`. `sc.hints.volley` pasa a 1 solo en el cuadro en que `BannerOpacity` llega a 1, con el aviso y la fila visibles.
-3. **H2 y H3, de integración.**
-   - Un golpe aplicado al frontis sin dos paredes previo arma H2.
-   - El primer dos paredes aplicado arma H3.
+2. **H1 en el aviso.** Después de un punto con el anillo ámbar visto y sin volea aplicada, la pausa ordinaria siguiente muestra H1 en `rally-banner-hint`.
+   - `sc.hints.volley` pasa a 1 en el cuadro en que `BannerOpacity` llega a 1, con el aviso y la fila visibles, y no antes.
+3. **H2 y H3: transiciones sin mostrar nada en juego.**
+   - Un golpe aplicado al frontis, sin dos paredes antes, deja H2 armada. Se verifica en memoria (`HintPicker`) sin escribir ninguna clave.
+   - El primer dos paredes aplicado deja H3 armada.
    - Un dos paredes que cae al drive de respaldo (`FellBack`) no arma H3 y cuenta como golpe al frontis.
-   - Con H2 armada y sin mostrar, un dos paredes aplicado deja `sc.hints.boast` en 2, escribe `hint` con `action=retired` y arma H3.
-4. **Prioridad y arrastre.**
-   - Con H1 y H2 armadas en el mismo punto, sale H1 y H2 sale en la pausa ordinaria siguiente.
-   - Una pista armada antes de una `HumanServePause` no se ve ni se marca ahí, y sale en la pausa ordinaria siguiente.
-   - Ninguna clave cambia mientras su contenedor está oculto.
-5. **«Seguir» o un toque de saque antes de 0,18 s.** La pista no queda vista y vuelve como dice §1.3. Si el jugador toca después de 0,18 s, sí queda vista.
-6. **Abandono temprano.** Se prueba este recorrido: inicio desde el menú, abandono en 0–0 sin ninguna pausa, y nuevo inicio desde el menú.
-   - Tras el abandono no existe ninguna clave `sc.hints.*`, y el segundo partido está en la ventana y muestra la primera pista que corresponda.
-   - Lo mismo vale cuando el partido termina con `EndSession`, como al cerrar la app.
-   - Una pista armada y no vista al abandonar vuelve a armarse en el partido siguiente.
+   - **Retiro.** Con H2 sin ver o armada, un dos paredes aplicado deja `sc.hints.boast` en 2, escribe `hint` con `action=retired` y deja H3 armada. Todo ocurre en el cuadro del `ShotResolved`, con `Phase != PointOver`, y en ese cuadro `rally-banner-hint` y `serve-guide-hint` siguen ocultos, como pide el criterio 8.
+4. **Prioridad, arrastre y visibilidad.**
+   - Con H1 y H2 armadas en el mismo punto, sale H1, y H2 sale en la pausa ordinaria siguiente del mismo partido.
+   - Una pista armada antes de una `HumanServePause` no se ve ni pasa a vista ahí, y sale en la pausa ordinaria siguiente.
+   - **Ninguna clave de pista pasa a 1 (vista) mientras su contenedor está oculto.** El retiro (clave 2) y el cierre de la ventana (`sc.hints.window`) no dependen de la visibilidad (§1.3).
+5. **La pausa se acaba antes del oráculo.**
+   - **Aviso, con un cuadro largo.** El reloj de prueba avanza 0,18 s reales en un cuadro, y `Update` recorta el `dt` a 0,05 s, así que `BannerOpacity` queda por debajo de 1. Si en ese momento se toca «Seguir», `sc.hints.volley` no cambia y no se escribe ninguna línea `hint`. H1 sigue armada y sale en la pausa ordinaria siguiente del mismo partido.
+   - **Aviso, con la opacidad completa.** Con `BannerOpacity == 1` antes de «Seguir», la pista queda vista.
+   - **Guía.** Un toque de saque o «Seguir» con menos de 0,18 s visibles no marca H0, y H0 vuelve en la `HumanServePause` siguiente. Con 0,18 s o más, sí la marca.
+   - La animación del aviso y sus pruebas existentes no cambian.
+6. **Abandono temprano, con y sin repetición del disparador.**
+   - (a) Se inicia desde el menú y se abandona en 0–0 sin ninguna pausa, primero con `StopMode` y en otra corrida con `EndSession`. No existe ninguna clave `sc.hints.*`, y el partido siguiente desde el menú está en la ventana.
+   - (b) Se abandona con H1 armada y sin ver. En el partido siguiente, H1 **no** sale en la primera pausa ordinaria si su disparador no se repitió. Cuando se repite, H1 se arma y sale en la pausa ordinaria siguiente.
+   - (c) Lo mismo que en (b), pero con un reinicio de la escena entre los dos partidos y las mismas `PlayerPrefs`. Lo armado no se restaura.
+   - (d) H0 vuelve a armarse en la primera `HumanServePause` del partido siguiente, porque su disparador es esa pausa.
 7. **Cierre de la ventana.**
    - Tras un partido de la ventana que termina normalmente, `sc.hints.window` vale 1 y el siguiente partido desde el menú no muestra pistas.
    - La revancha, el «Partido» DEV, la práctica y un partido con piloto automático nunca muestran pistas.
@@ -170,10 +216,17 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
      - piloto automático con el mismo `AutopilotTimingSigmaMs`;
      - la ventana forzada por el test.
    - Con las pistas encendidas o apagadas, la secuencia de `PointResult`, el paso de inicio de cada punto y cada `WaitBetweenPoints` son idénticos, con igualdad exacta.
-10. **Layout.**
+10. **Layout y convivencia con la nota.**
     - Con la pista más larga, el aviso cabe en el área segura en todos los perfiles de `ZDeviceLayoutTests`, con el texto en dos líneas como máximo y sin elipsis.
     - `serve-guide-hint` cabe en el área segura, en tres líneas como máximo y sin elipsis, y no se cruza con la línea ni con los rótulos de la guía.
-11. **Persistencia.** Al reiniciar la escena con las mismas `PlayerPrefs`, ninguna pista vista o retirada vuelve, y la ventana conserva su estado. El botón DEV borra solo `FirstMatchHints.AllKeys()`.
+    - **Con una nota previa visible.** Por ejemplo «¡Temprano!», con `timing.showNotes` encendido. `serve-guide-hint` y `shot-note` no se cruzan en ningún perfil. La nota conserva su texto, su `display` y su posición iguales a los de la corrida con las pistas apagadas.
+    - Con `timing.showNotes` apagado, H0 ocupa la franja bajo la cancha.
+11. **Persistencia.** Al reiniciar la escena con las mismas `PlayerPrefs`:
+    - ninguna pista vista o retirada vuelve;
+    - la ventana conserva su estado;
+    - lo armado no se restaura, como en el criterio 6c.
+
+    El botón DEV borra solo `FirstMatchHints.AllKeys()`.
 12. **Puertas.**
     - EditMode y PlayMode completos en verde en el Mac del PO.
     - AutoQA `scripts/autoqa.sh mvp` PASS/0/nivel 1, obligatorio porque los disparadores leen la ruta de resolución del golpe. Hay que mostrar que no cambia ninguna decisión.
@@ -183,22 +236,23 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
 
 **Tests nuevos.**
 
-- **EditMode, `Rally/HintPickerTests`.** Cubre §1.1 a §1.3:
+- **EditMode, `Rally/HintPickerTests`.** Cubre la máquina de estados de §1.3 sin Unity:
   - la ventana;
   - cada disparador;
-  - la prioridad;
-  - una pista por pausa;
-  - el arrastre;
+  - la prioridad y una pista por pausa;
+  - el arrastre dentro del partido y el descarte al terminarlo;
+  - que no se rearma sin repetir el disparador;
   - la `HumanServePause` con H0 sola;
-  - el retiro de H2;
-  - «Seguir» antes de 0,18 s;
+  - el retiro de H2 sin visibilidad;
+  - los dos oráculos de vista;
   - que una pista vista o retirada no vuelve;
   - que nunca hay más de 4.
-- **EditMode, `Diagnostics/UserMetricsTests`.** `hint` y `serve-choice` con sus campos, emitidos una sola vez, y las líneas actuales idénticas.
+- **EditMode, `Diagnostics/UserMetricsTests`.** `hint` (con `seen` y `retired`) y `serve-choice` con sus campos, emitidos una sola vez, y las líneas actuales idénticas.
 - **PlayMode, `ZFirstMatchHintsTests`**, sobre `ZFirstRunFixture`.
-  - Cubre los criterios 1 a 9 y 11.
+  - Cubre los criterios 1 a 9 y 11, y la parte de la nota del criterio 10.
   - Las escenas de volea v2 (`ZVolleyV2Tests`), dos paredes (`ZBoastTests`) y saque (`ZServeTests`) sirven de base.
   - El criterio 8 se comprueba con piloto automático y la ventana forzada por un punto de prueba interno, que solo usan los tests nuevos.
+  - El criterio 5 reemplaza `FirstMatchHints.Now` y avanza el tiempo en un solo cuadro largo.
 - **PlayMode, `ZBoastTests`.** Los casos de `LastStrokeBoast` de §1.6, si esta PR introduce la marca.
 - **PlayMode, `ZDeviceLayoutTests`.** El criterio 10.
 - **PlayMode, `ZUiLookTests`.** El aro de H1 tiene el color de `ShotController.VolleyTint`, y las pistas usan Rubik Regular.
@@ -208,22 +262,33 @@ La spec 3 (PR #91) define esta marca y la necesita con el mismo contrato. Si la 
 - **Los tests existentes no se editan** y tienen que pasar con las pistas **encendidas**, que es el valor por defecto.
 - **Un solo cambio de fixture, declarado de antemano.** `ZFirstRunFixture.ClearPrefs` (`ZFirstRunFixture.cs:78`) también borra `FirstMatchHints.AllKeys()`, igual que ya hace con `PersonalRecords.AllKeys()`.
 - **Si un test existente falla con las pistas encendidas**, es un defecto. Se registra y se detiene, según AGENTS §2. No se apaga `FirstMatchHints.Enabled`, no se cambia una aserción, una pausa ni un texto para pasar, y no se agrega `SetNewServe(false)` (AGENTS §3).
-- **El comportamiento apagado** tiene un solo test, también fijado de antemano: `Off_NothingIsWrittenOrShown`. La ruta encendida queda cubierta por los tests nuevos, y los existentes conservan todas sus aserciones.
+- **Las pistas apagadas solo se usan en dos lugares**, los dos declarados de antemano y ambos en tests nuevos:
+  1. `Off_NothingIsWrittenOrShown`: apagadas, no se escribe ni se muestra nada;
+  2. la corrida de referencia del criterio 9, `NoAddedTime_OnMatchesOff`, que compara encendidas con apagadas, y la referencia de la nota del criterio 10.
+
+  Fuera de esos dos, ningún test apaga las pistas.
 
 ## 5. Sin iPhone y con iPhone
 
 **Se implementa en su propia PR.**
 
-**Sin iPhone, en el Editor:** todo §3. Eso incluye la lógica, la persistencia, la integración, el layout en los perfiles de dispositivo y las puertas.
+**Sin iPhone, en el Editor:** todo §3. Eso incluye la máquina de estados, la persistencia, la integración, el layout en los perfiles de dispositivo y las puertas.
 
-**Con iPhone, en la ventana que SC-PM coordina con Rafael (AGENTS §8).** Dentro de esa ventana se hacen el respaldo y el cotejo de presets y métricas que pide §8, como en cualquier instalación.
+**Con iPhone, en la ventana que SC-PM coordina con Rafael (AGENTS §8).** Dentro de esa ventana se hacen el respaldo y el cotejo de presets y métricas que pide §8, como en cualquier instalación. Son dos recorridos separados, en este orden.
+
+**Recorrido A: abandono temprano**, en un intento nuevo en 0–0.
 
 1. En el panel DEV, «Reiniciar pistas». No se borra la app ni todas las `PlayerPrefs`, porque hay presets que preservar.
-2. Se toca «Jugar» y se gana un punto. Resultado observable: en la pausa del saque, la pista se lee en los 3 s y no tapa el frontis.
-3. Se toca arriba o abajo de la línea, según lo que diga la pista. Resultado observable: sale el saque elegido y la métrica `serve-choice` trae `chosen=true` con el `kind` tocado.
-4. Se sigue jugando, para ver H1 a H3 cuando aparezcan. Resultado observable: cada pista se lee en la pausa real de 2,5 s, y el aro ámbar del aviso se reconoce como el anillo de la cancha.
-5. Se abandona en 0–0 desde la pausa y se vuelve a tocar «Jugar». Resultado observable: las pistas pendientes siguen saliendo.
-6. Al cerrar la ventana, las métricas copiadas traen las líneas `hint` y `serve-choice`.
+2. Se toca «Jugar» y se abandona desde la pausa en 0–0, antes de cualquier pausa entre puntos.
+3. Resultado observable: no apareció ninguna pista y las métricas no traen líneas `hint`. El partido siguiente sigue en la ventana.
+
+**Recorrido B: pistas en juego.** Es un partido nuevo desde el menú, sin volver a reiniciar las pistas.
+
+1. Se juega hasta ganar un punto. Resultado observable: en la pausa del saque, H0 se lee en los 3 s, no tapa el frontis y no se cruza con la nota del golpe anterior.
+2. Se toca arriba o abajo de la línea, según lo que diga la pista. Resultado observable: sale el saque elegido y `serve-choice` trae `chosen=true` con el `kind` tocado.
+3. Se sigue jugando para ver H1 a H3 cuando aparezcan. Resultado observable: cada pista se lee en la pausa real de 2,5 s, y el aro ámbar del aviso se reconoce como el anillo de la cancha.
+
+**Al cerrar la ventana**, las métricas copiadas traen las líneas `hint` y `serve-choice` del recorrido B y ninguna del recorrido A.
 
 **Protocolo de observación con personas reales**, en la prueba de usuarios. Habilitar TestFlight sigue siendo exclusivo del PO (AGENTS §7).
 
@@ -252,7 +317,7 @@ Pasada de `/frontend-design`.
 
 **La guía de saque, para H0.** El frontis queda libre, porque es donde el jugador tiene que tocar.
 
-- `serve-guide-hint` va en la franja vacía bajo la cancha, la misma de `ShotNoteView.CourtBottomEdge` (#88). Durante la pausa del saque ahí no hay notas de golpe.
+- `serve-guide-hint` va en la franja bajo la cancha, la de `ShotNoteView.CourtBottomEdge` (#88). Esa franja puede tener todavía la nota del golpe anterior, así que H0 se apila sobre ella con 8 px de separación y no la mueve ni la oculta (§1.3).
 - Es una pastilla de vidrio `--glass` con borde de 1 px `--glass-edge`, Rubik Regular 14 `--glass-text` y `max-width: 280px`.
 - Su miniatura es un trazo blanco de 14 × 3 px, la línea de la guía en chico, que conecta la pista con la línea que se acorta arriba.
 - Entra y sale con la guía, sin movimiento propio.
@@ -271,6 +336,17 @@ Pasada de `/frontend-design`.
    │    Si no tocas, sale     │
    │    globo.                │
    ╰──────────────────────────╯
+            ¡Temprano!            ← nota del golpe anterior, sin cambios
 ```
 
 **Revisión contra lo genérico.** Se descartó un *coach mark* con flecha y botón «Entendido»: suma un paso, tapa la cancha y en la pausa del saque taparía justo el frontis. Se descartó también el ícono de bombilla o «i». Cada miniatura usa la misma forma que el jugador ve en la cancha.
+
+## 7. Decisiones de producto abiertas
+
+Quedan anotadas. Esta spec no las toma.
+
+1. Si el primer saque del partido (0–0, globo automático sin pausa) también debe dejar elegir o llevar un aviso previo. Es un cambio de juego.
+2. Si la ventana necesita un tope de intentos abandonados. Hoy solo la acotan las 4 pistas, una vez cada una.
+3. Si se adelanta H0 en el aviso de una pausa en que saca el rival, para quien abandona sin haber ganado un punto (la limitación de §1.1).
+4. El texto final de las pistas: el PO puede ajustarlo sin tocar la lógica.
+5. La profundidad para H2 (§2), que necesita un umbral nuevo y por eso es del PO (AGENTS §7).
