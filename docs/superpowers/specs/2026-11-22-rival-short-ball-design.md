@@ -23,46 +23,58 @@ Autorización del PO para esta spec (23 nov, 08:43 −03, chat de SC-PM): «para
 
 ### Regla de producto y su traducción al código
 
+SC-Lead respondió el 23 nov a las preguntas P-1, P-2 y P-3 (RAL-174), con la delegación del PO de las 08:43. Las respuestas se incorporan tal cual y se citan en «Respuestas de SC-Lead» (abajo).
+
 | Caso | Criterio de SC-Lead | Conjunto permitido en `RivalAi.Decide` (`own.Reason == "stretched"`) |
 |---|---|---|
-| Estirado **adelante** (tras una dejada o un corto) y en la media cancha | solo globo o recta alta, sin dos paredes | **recta × alto × media**, una sola opción de frontis (más su variante de volea, si la hay) |
-| Estirado **atrás** | además, dos paredes, solo si pasa el filtro de I3 | recta × alto × media, **más** las dos paredes que pasan I3 |
-| Toda recepción estirada | nunca ganadora; el humano tiene que alcanzarla | filtro de I3 sobre todo el conjunto |
+| Estirado **adelante** (tras una dejada o un corto) y en la media cancha | globo o recta alta, sin dos paredes. El cruzado alto cuenta como globo (P-1) | **{recta, cruzado} × alto × media** |
+| Estirado **atrás** | lo mismo, más la dos paredes si pasa el filtro de I3 | {recta, cruzado} × alto × media, **más** las dos paredes que pasan I3 |
+| Toda recepción estirada | nunca ganadora; el humano tiene que alcanzarla | filtro de I3 sobre todo el conjunto; sin ninguna opción alcanzable, E1 (abajo) |
 | Recepciones `planned`, incluidas las de holgura baja | sin cambio | la regla de `main` |
 
-Cómo se traduce el criterio:
+Cómo se traduce:
 
-- **Se excluye el cruzado** en los dos casos. RAL-174 nombra «globo o recta alta» y no menciona el cruzado. Cualquier ampliación la decide SC-Lead (pregunta P-1 al final).
-- **«Alta» no es todavía un globo.** Desde adelante, el tope de elevación de 22° (`ShotOptions.cs:54-55`, §1.4) deja la opción `High` en unos ~1 m en el frontis, cerca de `AimLow` 0,95. El nombre del enum no acredita una recta alta ni un globo, y esta spec no los presenta así. Es la opción más alta que existe hoy. El globo real es la P5 de §6, que decide SC-Lead y no entra en este mínimo (pregunta P-2). Para que se vea lo que se devuelve, el informe reporta, sin criterio, la distribución de `ret_fw` (altura en el frontis) de las devoluciones estiradas, adelante y atrás.
+- **«Alta» desde adelante es una recta alta provisoria (P-2).** El tope de elevación de 22° (`ShotOptions.cs:54-55`, §1.4) deja la opción `High` de adelante en unos ~1 m en el frontis. SC-Lead la acepta como recta alta provisoria para fusionar el mínimo, porque es lo más alto que existe hoy. **No es un globo de verdad.** El globo real (P5 de §6) va como cambio aparte y medido, lo decide SC-Lead con esos datos y **no bloquea #101**. El informe reporta, como dato y sin criterio, la distribución de `ret_fw` de las devoluciones estiradas, adelante y atrás, para alimentar esa decisión.
 - **Qué es «atrás», sin parámetros nuevos:** la zona donde `ShotOptions.AddBoasts` ya ofrece la dos paredes (`ShotOptions.cs:67`). Es decir, contacto con z ≥ `BoastBackFraction`·L = 0,75 × 9,75 = 7,31 m y a ≤ `BoastWallMax` (2 m) de una lateral. Fuera de esa zona no se construyen dos paredes, así que adelante y la media cancha quedan sin ellas por construcción.
 
-### Caso sin ninguna opción alcanzable (excepción E1, elevada a SC-Lead)
+### Caso sin ninguna opción alcanzable (excepción E1, resuelta por SC-Lead en P-3)
 
-El I3 guardado en `406f392` tiene un respaldo: si **ninguna** opción permitida es alcanzable, elige la de menor retraso del humano y marca `LastStretchedFallback`. Esa devolución puede ser una pelota que el propio planificador declara inalcanzable. Por eso **no cumple «nunca ganadora»** y esta spec no la presenta como cumplimiento.
+Si **ninguna** opción permitida es alcanzable para el humano, el rival **pega igual** (opción (a) de P-3). Elige la opción permitida que el humano tenga más cerca de alcanzar.
 
-- **Lo que sí resuelve RAL-174:** la dos paredes solo se juega si pasa I3. Por lo tanto el respaldo **nunca elige una dos paredes**; elige entre las opciones de frontis permitidas.
-- **Lo que no resuelve:** qué hacer adelante, o atrás, cuando la recta alta tampoco es alcanzable. Hay tres salidas y cada una choca con un requisito:
-  1. jugarla igual, que choca con «nunca ganadora»;
-  2. no pegar, que choca con «nunca parado»;
-  3. abrir otra opción, que choca con «solo globo o recta alta».
+- **«Más cerca de alcanzar», sin parámetros nuevos:** el menor retraso del humano según el planificador compartido, como ya calcula `406f392`: `ArrivalStep − TStarStep` si hay contacto, o respecto del final de la trayectoria de bote si no lo hay. SC-Lead nombra «la de más tiempo, o la más alta» como ejemplos de esa cercanía, no como criterios aparte; esta spec usa una sola medida, el retraso. Un empate se resuelve por el orden actual de las opciones.
+- **Nunca es una dos paredes**, porque RAL-174 solo admite la dos paredes si pasa I3. Se elige entre {recta, cruzado} × alto × media.
+- Se marca con `LastStretchedFallback` y se cuenta como **R3b**. Si sale ganadora, se acepta como un golpe de suerte estirado, pero tiene que ser raro.
+- **«Nunca parado» manda.** La (b), no pegar, queda descartada. La (c), abrir otra opción, rompe la regla del golpe y también queda descartada.
+- **Criterio de producto de SC-Lead, no un umbral de esta spec:** E1 se lleva a SC-Lead **antes de fusionar** si supera el 5 % en cualquiera de estas dos cuentas, medidas en el candidato con el Anexo A (F2):
+  - **E1/estirados**: filas con `reason == stretched`, `result == Contact` y `fb == 1`, sobre las filas con `reason == stretched` y `result == Contact`;
+  - **E1/puntos del rival**: filas con `fb == 1` y `won == 1`, sobre los puntos ganados por el rival en `points.tsv`.
 
-  Es una decisión de producto (pregunta P-3). Mientras SC-Lead no la tome, el candidato conserva el respaldo marcado y el informe lo cuenta aparte como **R3b**: los casos, la tasa y la zona, sacados de la columna `fb` del Anexo A.
-- **La fusión de I2–I3 espera la respuesta de SC-Lead sobre E1**, aunque F1 y F2 pasen.
+  Se informan por estilo y en total, con denominadores. No es parada para Rafael: es una consulta a SC-Lead antes de fusionar.
 
 ### Cambio de código en el candidato (#101, Codex)
 
-1. **Conjunto estirado:** `allowed = (High && Medium && Line == Straight) || Line == Boast` cuando `own.Reason == "stretched"`. Las dos paredes solo existen en la zona de atrás. Para el resto se mantiene la regla de `main`.
+1. **Conjunto estirado:** `allowed = (High && Medium && (Line == Straight || Line == Cross)) || Line == Boast` cuando `own.Reason == "stretched"`. Las dos paredes solo existen en la zona de atrás. Para el resto se mantiene la regla de `main`.
 2. **El filtro de I3 usa el pronóstico de la dos paredes.** Cuando `option.Side.Exists`:
    - la guarda de falta es `RallyContact.ForecastBoast(context, at, option.Side, option.P).Good`;
    - la velocidad sale de `RallyContact.SolveBoastIntention(context, at, option.Side, option.P, out _)`.
 
    Para las demás opciones se usa `Forecast` / `SolveIntention` con `option.Aim`. El planificador del humano y la demora `ReactionS` son los de `406f392`.
-3. **Respaldo (E1):** se mantiene el de menor retraso, **restringido a opciones que no son dos paredes**, y se marca con `LastStretchedFallback`. No se añaden parámetros.
+3. **E1:** el de menor retraso, **restringido a opciones que no son dos paredes**, marcado con `LastStretchedFallback`. No se añaden parámetros.
 4. **No cambian:**
    - I1;
    - la huella de las 1.080 decisiones `planned` (`53870c765e9e1cc410b87b41d810afc7fbe53ac0ffa42345b9b97192786de4de`, comprobada en #101);
    - los hashes de la base: defaults `207da8f2c636`, RallyParams `1063d0f6cf66`, SimulationKey `166a96e319c7` (AGENTS §5);
    - la física, el solver, el contrato, el reloj, el humano, `FondoAi`, `pullFullMm` y P0-calib-1.
+
+### Respuestas de SC-Lead a P-1, P-2 y P-3 (23 nov, RAL-174; texto literal)
+
+> **P-1.** Sí. El cruzado alto cuenta como globo. El globo cruzado es justamente la salida defensiva clásica cuando te estiran adelante. El conjunto estirado queda en recta alta y cruzado alto, adelante y atrás, más la dos paredes solo atrás. Todo pasa por el filtro I3.
+>
+> **P-2.** Para fusionar el mínimo I2–I3, el alto actual de adelante (~1 m en el frontis) se acepta como recta alta provisoria, porque es lo más alto que existe hoy. No es un globo de verdad: el globo real (P5) va como siguiente cambio aparte, medido, y lo decide SC-Lead con esos datos. No bloquea #101.
+>
+> **P-3, la E1.** Opción (a): pega igual la opción permitida que el humano tenga más cerca de alcanzar (la de más tiempo, o la más alta). «Nunca parado» manda, así que la (b) queda descartada; la (c) rompe la regla del golpe. Si sale ganadora, en squash real pasa (un golpe de suerte estirado), pero tiene que ser raro. Se reporta como R3b. Es criterio de producto de SC-Lead, no un umbral de la spec: si E1 pasa del 5 % de los golpes estirados o de los puntos ganados por el rival, se lleva a SC-Lead antes de fusionar.
+>
+> Con esto, #101 puede salir de borrador cuando F1, F2 y los gates estén verdes.
 
 ### Plan TDD de B, sobre el candidato (RED válido por aserción antes de cada GREEN)
 
@@ -71,12 +83,12 @@ Los tests de esta tabla son nuevos de #101 y no existen en `main`. Cuando uno ca
 | # | Test | Esperado antes del cambio |
 |---|---|---|
 | B1 | `RivalAi_StretchedFront_NeverBoasts`. Contacto estirado adelante (z ≤ 3 m) cerca de una lateral, dos paredes encendida, tres estilos, 500 decisiones: ninguna `ShotLine.Boast` | guardia: nace verde por construcción y se declara |
-| B1b | `RivalAi_Stretched_FromFront_IsHighMediumStraight`. Reemplaza a `…IsHighMediumStraightOrCross`, porque se excluye el cruzado. Tres estilos: toda elección es recta × alto × media | RED: el I2 guardado permite el cruzado |
+| B1b | `RivalAi_Stretched_FromFront_IsHighMediumStraightOrCross`, el test de #101, que se conserva por P-1. Tres estilos: toda elección es {recta, cruzado} × alto × media | caracterización: nace verde con el I2 guardado y se declara |
 | B2 | `RivalAi_StretchedBack_MayBoast_WhenTheHumanReachesIt`. Contacto de esquina de atrás `(.9, .8, 8.6)` y humano observado en la T. **Precondición afirmada:** al menos una de las 4 dos paredes tiene `ForecastBoast.Good` y el plan del humano es `Reachable`. Definidor y Completo, 500 decisiones: alguna `Boast`. El Fondista queda fuera: con `BoastWeightFondo` 0 y `LongWeight` 1,2 la dos paredes es rara por diseño, y M3 le pide ≤ 5 % | RED: el I2 guardado da 0. Ya visto en #101 |
 | B3a | `RivalAi_StretchedBack_FilterPredictsTheBoastPath`. Para una dos paredes, la trayectoria que pronostica el filtro toca la lateral antes que el frontis | RED: el filtro guardado la lee como golpe directo. Ya visto en #101 |
 | B3b | `RivalAi_StretchedBack_NeverPicksAnUnreachableOption`. Grilla predeclarada (abajo), tres estilos, 100 decisiones por casilla. Cuando existe una opción alcanzable, se exigen 0 elecciones inalcanzables y 0 dos paredes inalcanzables. Cuando no existe, la elección no es una dos paredes y `LastStretchedFallback` queda marcado | RED si el filtro deja pasar una dos paredes inalcanzable; si no, guardia declarada (abajo) |
-| B4 | Guardias sin cambio de expectativa: `RivalAi_PlannedLowSlack_StillMayBoast`, `RivalAi_NotStretched_DecisionsUnchanged` (misma huella), `RivalAi_Stretched_NoReachableOption_PicksLeastLate_AndFlags` (ahora también afirma que no es una dos paredes) y `Hashes_Unchanged` con los hashes de la base | verdes |
-| B4b | `RivalAi_Stretched_PicksAnOptionTheOpponentCanReach` se traslada a la zona de atrás: compara recta y dos paredes. Su caso de adelante, «recta inalcanzable y cruzado alcanzable», deja de existir porque el cruzado ya no está permitido; desde adelante, una recta inalcanzable cae en E1 | declarado |
+| B4 | Guardias sin cambio de expectativa: `RivalAi_PlannedLowSlack_StillMayBoast`, `RivalAi_NotStretched_DecisionsUnchanged` (misma huella), `RivalAi_Stretched_NoReachableOption_PicksLeastLate_AndFlags` (E1: ahora también afirma que la elección no es una dos paredes; se conserva su escenario y se añade un caso de atrás, con dos paredes candidatas) y `Hashes_Unchanged` con los hashes de la base | verdes |
+| B4b | `RivalAi_Stretched_PicksAnOptionTheOpponentCanReach` se conserva con su caso de adelante («recta inalcanzable y cruzado alcanzable», `(0,6; 0,05; 1,1)`), que vuelve a valer por P-1 | verde |
 | B5 | Regresión completa `scripts/test.sh editmode`, con el test existente de M3 **sin tocar** | todos Passed |
 
 **Cambio de la spec en B3, a raíz de la parada de #101.** En el escenario único del 22 nov (humano en la esquina de atrás opuesta), las cuatro dos paredes resultaron `Good` y alcanzables, así que la precondición de B3 no se cumplía y Codex se detuvo, como mandaba la spec. Esa precondición era una necesidad de construcción del test, no un criterio de producto: el criterio de producto se mide en juego con F2/R8. Por eso B3 se divide en dos:
@@ -121,7 +133,7 @@ SC_BOAST_RUN="$run" "$UNITY" -batchmode -nographics -projectPath "$ROOT" -runTes
   - por nivel;
   - adelante/atrás (`r_z` ≥ 7,31 m);
   - cuántas devoluciones estiradas son dos paredes;
-  - R3b (`fb == 1`);
+  - R3b: E1/estirados y E1/puntos del rival, por estilo y en total, con denominadores (criterio de SC-Lead del 5 %, sección E1);
   - la distribución de `ret_fw`.
 
 ```python
@@ -143,20 +155,37 @@ for k in GROUPS:
 print('F2', 'cumple' if ok else 'NO cumple o no evaluable: se para')
 ```
 
+```python
+# python3 -I e1.py <rows-candidato.tsv> <points-candidato.tsv>   (R3b; criterio de SC-Lead: > 5 % se lleva a SC-Lead)
+import csv, sys
+GROUPS = ('total', 'Fondista', 'Definidor', 'Completo')
+st = dict.fromkeys(GROUPS, 0); fb = dict.fromkeys(GROUPS, 0); fbw = dict.fromkeys(GROUPS, 0); pts = dict.fromkeys(GROUPS, 0)
+for r in csv.DictReader(open(sys.argv[1], newline=''), delimiter='\t'):
+    if r['reason'] != 'stretched' or r['result'] != 'Contact': continue
+    for k in ('total', r['style']): st[k] += 1; fb[k] += r['fb'] == '1'; fbw[k] += r['fb'] == '1' and r['won'] == '1'
+for r in csv.DictReader(open(sys.argv[2], newline=''), delimiter='\t'):
+    if r['winner'] != 'Rival': continue
+    for k in ('total', r['style']): pts[k] += 1
+for k in GROUPS:
+    a = f'{fb[k]}/{st[k]} = {fb[k] / st[k]:.4%}' if st[k] else 'SIN MUESTRA'
+    b = f'{fbw[k]}/{pts[k]} = {fbw[k] / pts[k]:.4%}' if pts[k] else 'SIN MUESTRA'
+    print(k, 'E1/estirados', a, '| E1/puntos del rival', b)
+```
+
 **F3 · Gates de siempre, en serie y con un solo Unity:**
 
 - `scripts/test.sh playmode` con el recuento completo;
 - `scripts/autoqa.sh mvp` (V/T3/volea PASS/0/1);
 - `scripts/check-release.sh`;
-- un informe de una página en `docs/reviews/` con F1, F2, R3b, los RED y las guardias. R7 se declara si no se mide.
+- un informe de una página en `docs/reviews/` con F1, F2, R3b (las dos cuentas de E1), la distribución de `ret_fw`, los RED y las guardias. R7 se declara si no se mide.
 
 **Orden recomendado de Unity:** B dirigidos → B5 → F1 → F2 candidato (la base de `230b758` ya existe en #101) → PlayMode → AutoQA → check-release. Cada corrida adquiere y libera su candado.
 
-**Fusión (AGENTS §2 y §7, autonomía del 22 nov).** SC-PM fusiona sin pedir un «sí» del PO, con cuatro condiciones:
+**Fusión (AGENTS §2 y §7, autonomía del 22 nov).** Con las respuestas de SC-Lead del 23 nov, #101 puede salir de borrador cuando F1, F2 y los gates estén en verde. SC-PM fusiona sin pedir un «sí» del PO, con estas condiciones:
 
 - revisión aprobada;
 - F1 y F2 cumplidas;
-- E1 respondida por SC-Lead;
+- E1 ≤ 5 % en las dos cuentas (E1/estirados y E1/puntos del rival); si alguna lo supera, SC-Lead decide **antes** de fusionar;
 - gates en verde.
 
 Se aplican las reglas de fusión de §2. La instalación sigue la ventana coordinada de §8.
@@ -166,7 +195,7 @@ Se aplican las reglas de fusión de §2. La instalación sigue la ventana coordi
 **Riesgo para la calibración de B:**
 
 - Frente al I2 guardado, B devuelve al Definidor y al Completo las dos paredes estiradas desde atrás que el humano alcanza. El efecto sobre M3 va en la dirección de `main`, pero su tamaño solo se sabe midiendo F1.
-- Frente a `main`, B quita las dos paredes estiradas inalcanzables y el cruzado estirado. El rival queda algo más fácil (R7), y el respaldo E1 puede ser más frecuente adelante.
+- Frente a `main`, B quita las dos paredes estiradas inalcanzables, las opciones bajas y fuertes estiradas y las dejadas estiradas, y filtra lo inalcanzable. El rival queda algo más fácil (R7).
 
 ## HOY (22 nov): lo que entra en la build que Rafael prueba de 17:00 a 18:00
 
@@ -238,7 +267,7 @@ La fusión e instalación requerían entonces el «sí» de Rafael. Desde el 22 
 - La calibración nunca lo midió. El bot de referencia `NewcomerBot` **no juega dejadas** (`RivalStylesBaselineExperiment.cs:36-41`) y `BotBrain` juega recta media por defecto.
 - Incremento mínimo **I-min**, sin valores de preset:
   - (I1) estirada visible cuando no llega;
-  - (I2) estirado = defensivo puro; tras el camino B, recta alta media y, solo desde atrás, la dos paredes filtrada por I3;
+  - (I2) estirado = defensivo puro; tras el camino B, recta o cruzado alto medio y, solo desde atrás, la dos paredes filtrada por I3;
   - (I3) filtro «nunca winner» cuando llega estirado;
   - (I4) perseguir el bote cuando no hay ventana, condicionado a que la medición lo encuentre.
 - Las palancas de preset (espera en la T, lectura del golpe, llegada en frenada y globo desde adelante) quedan como propuesta en §6, **sin implementar**.
@@ -361,6 +390,8 @@ Por cada recepción del rival que sigue a un golpe del humano (se excluye el res
 | `r_z` | z del contacto del rival (`NA` sin contacto); separa adelante de atrás en R8 (camino B) |
 | `fb` | `1` si la elección salió del respaldo E1 (`LastStretchedFallback`); `NA` en una base sin esa propiedad (camino B, R3b) |
 
+Además, `points.tsv` registra una línea por punto (`style`, `level`, `match`, `point`, `winner`). Es el denominador de «E1/puntos del rival» (camino B).
+
 Definiciones de medición (no son umbrales):
 
 - **Parado** = `swing == false` y `path_m < 0,30`.
@@ -416,10 +447,10 @@ Son métricas nuevas, salidas del mismo experimento. **No cambia ningún umbral 
 | Id | Métrica | Tipo | Umbral |
 |---|---|---|---|
 | **R1** | Recepciones de pelota corta (`dejada` o `corto`) con el punto abierto en que el rival queda **parado sin intento**: ni golpe, ni estirada (I1), ni desplazamiento ≥ 0,30 m | invariante del mínimo | **0**, por requisito de SC-Lead («nunca se queda parado»), no como número de calibración |
-| **R2** | Recepciones `stretched` con contacto cuya elección no es recta × alto × media ni, solo desde la zona de dos paredes de atrás, una `Boast` que pasó I3 (camino B; el cruzado queda excluido) | invariante del mínimo | **0**, por requisito de SC-Lead |
+| **R2** | Recepciones `stretched` con contacto cuya elección no es {recta, cruzado} × alto × media ni, solo desde la zona de dos paredes de atrás, una `Boast` que pasó I3 (camino B, P-1) | invariante del mínimo | **0**, por requisito de SC-Lead |
 | **R3** | Recepciones `stretched` con contacto cuya devolución, según el predictor compartido (`ForecastBoast`/`SolveBoastIntention` para la dos paredes), deja al humano **sin plan alcanzable** desde su posición observada | invariante del mínimo (definición de «winner» en el planificador) | **0** cuando existe al menos una opción defensiva alcanzable; si no existe, se reporta aparte |
 | **R8** | Tasa de ganadoras del rival cuando llega estirado: `stretched` y `Contact` con `won == 1`, sobre `stretched` y `Contact` (camino B, F2) | condición de fusión de SC-Lead | rama ≤ base `518f9c3`, en total y por estilo, con las mismas semillas; no es un umbral numérico |
-| R3b | Recepciones `stretched` con contacto resueltas por el respaldo E1 (`LastStretchedFallback`, columna `fb`) | dato; excepción elevada a SC-Lead | sin umbral; no cuenta como cumplimiento de R3 |
+| R3b | Recepciones `stretched` con contacto resueltas por E1 (`LastStretchedFallback`, columna `fb`): E1/estirados y E1/puntos del rival | dato y criterio de producto de SC-Lead (P-3) | no es umbral de la spec; si cualquiera supera el 5 %, se lleva a SC-Lead antes de fusionar. No cuenta como cumplimiento de R3 |
 | R4 | % «llega» por estilo × nivel × zona × franja de calidad (§2.2) | distribución | **lo fija Rafael**, propuesta para SC-Lead |
 | R5 | p50/p90 de `delay_ms` y de `path_m` ante dejadas | distribución | **lo fija Rafael** |
 | R6 | % winner estirado medido por `won` (incluye errores del bot humano) | distribución | **lo fija Rafael** |
@@ -449,7 +480,7 @@ R1–R3 se verifican en EditMode con `RallySim`, sin iPhone. R4–R6 son la base
 
 Una rama y una PR: `codex/rival-short-ball-min`. No cambia valores de preset ni campos de `RallyParams`, ni la física, el solver, el contrato, el reloj, `pullFullMm`, P0-calib-1 o el humano (ni su planificador ni su cuerpo). Toca solo `RivalAi`, una clase nueva en Core, el director y `RallySim` (este último para mantener la paridad de medición).
 
-> **Fusión (actualizado el 23 nov).** Rige la autonomía de AGENTS §2/§7. SC-PM fusiona con revisión aprobada y gates en verde. Para I2–I3 se suman F1, F2 y la respuesta de SC-Lead sobre E1 (sección «Camino B»). La instalación sigue la ventana coordinada de §8.
+> **Fusión (actualizado el 23 nov).** Rige la autonomía de AGENTS §2/§7. SC-PM fusiona con revisión aprobada y gates en verde. Para I2–I3 se suman F1, F2 y la cuenta de E1 (≤ 5 %, o decisión de SC-Lead si lo supera; sección «Camino B»). La instalación sigue la ventana coordinada de §8.
 
 ### 5.1 Diseño
 
@@ -461,7 +492,7 @@ Una rama y una PR: `codex/rival-short-ball-min`. No cambia valores de preset ni 
 
 **I2. Estirado = defensivo puro.**
 
-> **Corregido por el camino B (RAL-174), 23 nov:** el conjunto estirado es recta × alto × media, sin cruzado. Desde la zona de dos paredes de atrás, además, la dos paredes que pasa I3. Adelante no hay dos paredes, por construcción. El texto original, que la excluía siempre, rompía M3 (comentario de #97).
+> **Corregido por el camino B (RAL-174), 23 nov:** el conjunto estirado es {recta, cruzado} × alto × media (P-1). Desde la zona de dos paredes de atrás, además, la dos paredes que pasa I3. Adelante no hay dos paredes, por construcción. El texto original, que la excluía siempre, rompía M3 (comentario de #97).
 
 - En `RivalAi.Decide`, si `own.Reason == "stretched"`, el conjunto permitido es {recta, cruzado} × alto × media y **se excluye la dos paredes**. Con holgura baja pero `planned` se conserva la regla de hoy (dos paredes permitida bajo presión).
 - Afecta a la volea solo si la recepción de bote es `stretched`, porque el indicador `defensive` es común a las dos (`RivalAi.cs:118, 143`).
@@ -473,7 +504,7 @@ Una rama y una PR: `codex/rival-short-ball-min`. No cambia valores de preset ni 
   1. `RallyContact.Forecast` para la trayectoria resultante.
   2. `ReceptionPlanner.Plan` con un cuerpo nuevo (`new PlayerBody(PlayerId.Human, observation.OpponentPosition, context.Move)`) y la demora `context.Steps(ReactionS)`.
 - Las opciones cuyo plan del oponente no sea `Reachable` reciben peso 0 antes del sorteo. Si ninguna queda alcanzable, se elige la de menor retraso del oponente. Este caso se marca y se reporta (R3).
-  - **Actualizado el 23 nov:** ese respaldo **no cumple** «nunca ganadora». Es la excepción E1, elevada a SC-Lead (sección «Camino B»). Nunca elige una dos paredes y se cuenta como R3b.
+  - **Actualizado el 23 nov:** ese respaldo es la excepción E1, que resolvió SC-Lead en P-3 (sección «Camino B»): pega igual, nunca con una dos paredes, y se cuenta como R3b, con la consulta a SC-Lead si supera el 5 %.
 - Usa solo información observable (posición del oponente) y el predictor compartido, sin intención del oponente (`RivalAi.cs:93`), y no añade parámetros.
 - Riesgo declarado: cambia el número de sorteos del RNG en esas recepciones, así que desde ahí la secuencia de la misma semilla ya no es idéntica (§5.3).
 
@@ -639,7 +670,9 @@ namespace SquashClash.Experiments.EditMode
             File.WriteAllText(Path.Combine(dir,"source.tsv"),"defaults\trallyParams\tunity\n"+preset.Hash+"\t"+ctx.Params.Hash+"\t"+Application.unityVersion+"\n",Utf8);
             float tz=ctx.T.y,tin=ctx.Court.TinTop;
             using(var w=new StreamWriter(Path.Combine(dir,"rows.tsv"),false,Utf8))
+            using(var pw=new StreamWriter(Path.Combine(dir,"points.tsv"),false,Utf8))  // one line per point (camino B, E1/puntos del rival)
             {
+                pw.WriteLine("style\tlevel\tmatch\tpoint\twinner");
                 w.WriteLine("style\tlevel\tmatch\tpoint\tj\tkind\tzone\th_line\th_height\th_power\th_z\tfw_tin\tb1z\tb2z\tavail_ms\tapex2\treason\tslack\tdelay_ms\tfrom_wait\tpath_m\tshort_m\tswing\tresult\tdef\tline\theight\tpower\tvolley\tret_fw\tret_b2z\tnext\twon\tr_z\tfb");
                 foreach(RivalStyleId style in new[]{RivalStyleId.Fondista,RivalStyleId.Definidor,RivalStyleId.Completo})
                 foreach(AiLevel level in new[]{AiLevel.Easy,AiLevel.Medium,AiLevel.Hard})
@@ -690,6 +723,7 @@ namespace SquashClash.Experiments.EditMode
                                     F(retFw),F(retB2),next,won?"1":"0",
                                     result=="Contact"?F(logs[j].ContactPoint.z):"NA",s.Fb}));  // r_z, fb (camino B, F2)
                             }
+                            pw.WriteLine(string.Join("\t",RivalStyle.Name(style),level.ToString(),m.ToString(C),pt.ToString(C),point.Winner.HasValue?point.Winner.Value.ToString():"none"));
                             if(point.Winner.HasValue)score.PointWon(point.Winner.Value);
                             else if(++replays>50)break;
                         }
