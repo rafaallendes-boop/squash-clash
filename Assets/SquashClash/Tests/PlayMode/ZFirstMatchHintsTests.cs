@@ -371,6 +371,41 @@ namespace SquashClash.Runtime.Tests
             Assert.That(on.Points,Is.EqualTo(off.Points),"PointResult sequence");Assert.That(on.Waits,Is.EqualTo(off.Waits),"each WaitBetweenPoints, exactly");Assert.That(on.Starts,Is.EqualTo(off.Starts),"start step of each point");
             yield return null;
         }
+        // Criterion 9, stricter (PR #103 round 2): the step of the ball at RallyStarted is local to each launch (every serve starts at 0), so it
+        // cannot show a later start. This counter is the harness' own: simulation steps advanced since the start of the run, continuous across
+        // points, so a point that begins later shows up even if WaitBetweenPoints keeps its value. Same inputs in both runs, exact equality.
+        private sealed class SteppedTrace
+        {
+            public readonly List<string> Points=new List<string>(),Starts=new List<string>(),Ends=new List<string>();public bool HintShown;
+        }
+        private SteppedTrace RunStepped(bool on)
+        {
+            FirstMatchHints.Enabled=on;rally.StopMode();var trace=new SteppedTrace();long steps=0;
+            rally.Autopilot=true;rally.AutopilotTimingSigmaMs=25;rally.Level=AiLevel.Easy;rally.Seed=5;rally.RandomStyles=false;rally.StyleOverride=RivalStyleId.Fondista;
+            rally.SetParams(new RallyParams{ServeKindOn=1});
+            Action<PointResult> ended=r=>{trace.Points.Add(r.Winner+"/"+r.Cause+"/"+r.Shots+"/"+r.Reception);trace.Ends.Add(steps+"/"+rally.WaitBetweenPoints.ToString("R"));};
+            Action started=()=>trace.Starts.Add(steps+"/"+rally.LastServeType+"/"+rally.Match.Server);
+            rally.PointEnded+=ended;rally.RallyStarted+=started;
+            Assert.That(rally.StartMatch(),Is.True);hud.Hints.BeginMatch();
+            while(steps<400000&&rally.PointsPlayed<6&&rally.Phase!=RallyPhase.MatchOver)
+            {
+                app.Host.Advance(StepReal);controller.ProcessPending();rally.Tick();scape.Tick((float)StepReal);Refresh();steps++;
+                if(hud.Hints.Shown.HasValue)trace.HintShown=true;
+            }
+            rally.PointEnded-=ended;rally.RallyStarted-=started;
+            return trace;
+        }
+        [UnityTest] public IEnumerator NoAddedTime_EachPointStartsAtTheSameContinuousStep_OnAndOff()
+        {
+            flow.ClosePractice();
+            var on=RunStepped(true);var off=RunStepped(false);
+            Assert.That(on.Points.Count,Is.GreaterThanOrEqualTo(5),"enough points to compare");Assert.That(on.Starts.Count,Is.GreaterThanOrEqualTo(5));
+            Assert.That(on.HintShown,Is.True,"the run with the hints on really showed one: the comparison is not vacuous");Assert.That(off.HintShown,Is.False);
+            Assert.That(on.Points,Is.EqualTo(off.Points),"PointResult (winner, cause, shots, reception)");
+            Assert.That(on.Ends,Is.EqualTo(off.Ends),"the step at which each point ended and its WaitBetweenPoints");
+            Assert.That(on.Starts,Is.EqualTo(off.Starts),"the continuous step at which each point began, and its serve");
+            yield return null;
+        }
         [UnityTest] public IEnumerator Off_NothingIsWrittenOrShown()
         {
             FirstMatchHints.Enabled=false;StartHints(true);

@@ -84,6 +84,45 @@ namespace SquashClash.Runtime.Tests
             Assert.That(o.Resolved,Is.True);Assert.That(o.Result,Is.Not.EqualTo("Perfect").And.Not.EqualTo("Valid"),"released a second early: not applied");Assert.That(o.InCallback,Is.False);
             yield return null;
         }
+        // Round 2 of PR #103: an accepted order whose contact is still AHEAD. The release is a little early (inside the valid window), so the stroke
+        // is accepted and scheduled; the preview solve runs now and must claim nothing. The contact then applies it and the mark is true inside ShotResolved.
+        private struct Scheduled {public bool Waiting,ResolvedBefore,MarkBefore,Resolved,InCallback,Solved,FellBack;public string Result;}
+        private Scheduled AttemptAhead(float dz,double lead)
+        {
+            app.LaunchCurrent();
+            Assert.That(controller.Plan.Exists,Is.True);Assert.That(app.Host.ClockMap.TrySimToReal(controller.Plan.TStarStep,0,out var star),Is.True);
+            double at=star-lead;
+            for(int i=0;i<6000&&app.Host.ObservedRealTime+StepReal<at-1e-10;i++)app.Host.Advance(StepReal);
+            double left=at-app.Host.ObservedRealTime;if(left>0)app.Host.Advance(left);
+            var p=controller.Plan.PStar;var side=Boast(p,dz).Value;var o=new Scheduled();
+            Action<ShotRecord> h=r=>{o.Resolved=true;o.InCallback=controller.LastStrokeBoast;o.Result=r.Result;};
+            controller.ShotResolved+=h;
+            controller.Enqueue(new ClosedGesture(app.Host.LaunchId,Guid.NewGuid().ToString("N"),1,app.Host.LaunchRealTime+.01,at,true,GestureOutcome.Swing,side.UV,.8f,app.Host.ActiveConfig.Source,"fixture",at,side:side));
+            controller.ProcessPending();
+            o.Waiting=controller.WaitingForContact;o.ResolvedBefore=o.Resolved;o.MarkBefore=controller.LastStrokeBoast;
+            for(int i=0;i<6000&&!o.Resolved;i++){app.Host.Advance(StepReal);controller.ProcessPending();}
+            controller.ShotResolved-=h;o.Solved=controller.LastBoast.Solved;o.FellBack=controller.LastCausal.FellBack;return o;
+        }
+        [UnityTest] public IEnumerator APreviewSolveBeforeTheContact_ClaimsNothing_AndTheContactClaimsItInsideShotResolved()
+        {
+            int scheduled=0,positives=0;
+            foreach(double lead in new[]{.05,.07,.09})
+                foreach(float dz in new[]{-.8f,-.5f,-1.1f,-1.4f,-.3f,-1.7f})
+                {
+                    var o=AttemptAhead(dz,lead);
+                    if(!o.Waiting)continue;
+                    scheduled++;
+                    Assert.That(o.ResolvedBefore,Is.False,"no ShotResolved callback while the contact is still ahead (lead="+lead+", dz="+dz+")");
+                    Assert.That(o.MarkBefore,Is.False,"the preview solve claims nothing (lead="+lead+", dz="+dz+", solved="+o.Solved+")");
+                    Assert.That(o.Resolved,Is.True,"the contact arrives and the stroke resolves");
+                    bool expected=o.Solved&&!o.FellBack&&(o.Result=="Perfect"||o.Result=="Valid");
+                    Assert.That(o.InCallback,Is.EqualTo(expected),"inside ShotResolved (lead="+lead+", dz="+dz+", result="+o.Result+")");
+                    if(expected)positives++;
+                }
+            Assert.That(scheduled,Is.GreaterThan(0),"at least one accepted order had a future contact: the probe is not vacuous");
+            Assert.That(positives,Is.GreaterThan(0),"at least one of them was a solved, applied two-wall shot that claimed the mark at the contact");
+            yield return null;
+        }
         [UnityTest] public IEnumerator TheMarkIsClearedByTheNextLaunch()
         {
             bool seen=false;
