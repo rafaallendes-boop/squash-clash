@@ -16,6 +16,15 @@
 - Ajustes de mis tests nuevos tras el primer GREEN, sin tocar criterios: esperar un cuadro para que UI Toolkit resuelva el layout, y el toque de «dedo nuevo» sobre el frontis (fuera del frontis el modelo lo rechaza al instante).
 - Corrección de diseño por el test de layout: «Definidor» y «Completo» a 34 px no cabían con los márgenes por defecto de `Label`; se pusieron márgenes y relleno en 0 y relleno lateral 10/4. La spec no cambia (34 px).
 
+## Revisión cruzada de Codex: criterio 2 completo
+
+Codex (head `e065ace`) pidió cambios: la prueba de «no suma tiempo» se detenía a los tres puntos y comparaba `Take(3)`, y `LaunchSteps` leía `Host.Current.Step`, que se reinicia con cada vuelo. Se corrigió solo el test, sin tocar criterio ni tolerancias (igualdad exacta):
+
+- Las dos corridas (placa encendida y apagada) siguen hasta `MatchOver`; se afirma que **ambas** terminaron y que hubo más de tres puntos.
+- Se compara **toda** la secuencia de `PointResult` del partido y el paso final.
+- Cada lanzamiento se mide con un contador continuo del observador (pasos desde «Jugar»), no con `Host.Current.Step`: un lanzamiento demorado ahora se detecta.
+- **RED por mutación** (el cambio es de cobertura, no hay defecto de producción): con una mutación temporal que hace que la placa gaste un paso de simulación extra, el test falla por aserción: «every launch … at the same continuous step», índice 1, esperado 202, fue 201 (242 lanzamientos en el partido). Mutación revertida; el árbol de producción no cambia.
+
 ## Puertas
 
 Código de la placa idéntico en todas las corridas (`589d278`; `583f964` solo añade el informe). Las puertas de AutoQA y `check-release` y la tabla final están en la descripción de la PR.

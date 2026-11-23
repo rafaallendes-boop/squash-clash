@@ -84,17 +84,21 @@ namespace SquashClash.Runtime.Tests
         }
 
         // ---------- criterion 2: it adds no time ----------
-        private sealed class Trace {public readonly List<long> LaunchSteps=new List<long>();public double PlayToFirstLaunch=-1;public readonly List<string> Points=new List<string>();public int ShownLines;}
+        // LaunchAt is the observer's own continuous step count (Step() calls since «Jugar») when each launch happens: Host.Current.Step restarts with every flight and cannot tell a delayed launch.
+        private sealed class Trace {public readonly List<long> LaunchAt=new List<long>();public double PlayToFirstLaunch=-1;public readonly List<string> Points=new List<string>();public int ShownLines;public bool MatchOver;public long Steps;}
         private IEnumerator Run(bool plateOn,Trace trace)
         {
             yield return Reboot();Install();RallyHud.VsPlateOn=plateOn;
             PlayerPrefs.SetInt("sc.firstRun.tutorialSeen",1);PlayerPrefs.SetInt("sc.firstRun.rivalMatches",5);
             rally.Seed=7;rally.Autopilot=true;rally.AutopilotTimingSigmaMs=0;
-            double playAt=clock;bool launched=false;
-            app.Host.Launched+=_=>{trace.LaunchSteps.Add(app.Host.Current.Step);if(!launched){launched=true;trace.PlayToFirstLaunch=clock-playAt;}};
+            double playAt=clock;bool launched=false;long steps=0;
+            app.Host.Launched+=_=>{trace.LaunchAt.Add(steps);if(!launched){launched=true;trace.PlayToFirstLaunch=clock-playAt;}};
             rally.PointEnded+=p=>trace.Points.Add(p.Winner+"|"+p.Cause+"|"+p.Shots+"|"+p.Reception);
             Click("menu-play");Refresh();
-            for(int i=0;i<40000&&trace.Points.Count<3;i++)Step();
+            // The whole match: until MatchOver, as the spec's PointResult sequence of «el partido» asks (the first run's tutorial and rival-match flags are the same in both).
+            int limit=(int)(1500/StepReal);
+            for(int i=0;i<limit&&rally.Phase!=RallyPhase.MatchOver;i++){Step();steps++;}
+            trace.Steps=steps;trace.MatchOver=rally.Phase==RallyPhase.MatchOver;
             trace.ShownLines=Menu("vs").Count(p=>p.action=="shown");
         }
         [UnityTest] public IEnumerator Plate_AddsNoTime_SameLaunchStepSameElapsedTimeSamePoints()
@@ -102,11 +106,12 @@ namespace SquashClash.Runtime.Tests
             var on=new Trace();var off=new Trace();
             yield return Run(true,on);yield return Run(false,off);
             Assert.That(on.ShownLines,Is.EqualTo(1),"the plate really ran in the first run");Assert.That(off.ShownLines,Is.EqualTo(0),"and not in the reference run");
-            Assert.That(on.Points.Count,Is.GreaterThanOrEqualTo(3));Assert.That(off.Points.Count,Is.GreaterThanOrEqualTo(3));
-            Assert.That(on.LaunchSteps.Count,Is.GreaterThan(0));
-            Assert.That(on.LaunchSteps,Is.EqualTo(off.LaunchSteps),"every launch, the first serve included, at the same simulation step");
+            Assert.That(on.MatchOver,Is.True,"the run with the plate played the whole match");Assert.That(off.MatchOver,Is.True,"and so did the reference run");
+            Assert.That(on.Points.Count,Is.GreaterThan(3),"a whole match, not the first three points");Assert.That(on.LaunchAt.Count,Is.GreaterThan(0));
+            Assert.That(on.LaunchAt,Is.EqualTo(off.LaunchAt),"every launch, the first serve included, at the same continuous step of the observer");
+            Assert.That(on.Steps,Is.EqualTo(off.Steps),"and the match ends at the same step");
             Assert.That(on.PlayToFirstLaunch,Is.EqualTo(off.PlayToFirstLaunch),"same real time from «Jugar» to the serve");Assert.That(on.PlayToFirstLaunch,Is.GreaterThanOrEqualTo(0));
-            Assert.That(on.Points.Take(3),Is.EqualTo(off.Points.Take(3)),"same PointResult sequence");
+            Assert.That(on.Points,Is.EqualTo(off.Points),"same PointResult sequence of the whole match, exact");
         }
 
         // ---------- criterion 3: closes by time and by phase ----------
