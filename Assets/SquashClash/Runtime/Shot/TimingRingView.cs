@@ -52,7 +52,6 @@ namespace SquashClash.Runtime.Shot
             {
                 ring=new GameObject("First Shot timing cue").transform;ring.SetParent(transform,false);
                 material=new Material(Resources.Load<Shader>("Legibility"));material.SetColor("_BaseColor",Color.white);
-                halo=CreateLine("Volley halo",CircleSegments);
                 line=CreateLine("Converging ring",CircleSegments);
                 triangle=CreateLine("Fixed triangle",TriangleVertices);
                 validBand=CreateLine("Valid band",CircleSegments);
@@ -77,7 +76,7 @@ namespace SquashClash.Runtime.Shot
             {CutoffLatched=true;CutoffTarget=target;CutoffPlanVersion=planVersion;CutoffActivated?.Invoke();}
             if(ring==null)return;
             if(aidLevel==2||CutoffLatched||state.Phase==ImpactCuePhase.Hidden||state.Phase==ImpactCuePhase.Closed)
-            {halo.enabled=line.enabled=triangle.enabled=validBand.enabled=perfectBand.enabled=lateValidBand.enabled=latePerfectBand.enabled=false;return;}
+            {if(halo!=null)halo.enabled=false;line.enabled=triangle.enabled=validBand.enabled=perfectBand.enabled=lateValidBand.enabled=latePerfectBand.enabled=false;return;}
             const float alpha=1;
             var camera=UnityEngine.Camera.main;
             float width=FallbackWidth;
@@ -88,7 +87,9 @@ namespace SquashClash.Runtime.Shot
                 if(screen.z>0)width=Vector3.Distance(camera.ScreenToWorldPoint(screen),
                     camera.ScreenToWorldPoint(screen+new Vector3(StrokePixels,0,0)));
             }
-            SetStyle(line,alpha,width*(Amber?AmberStrokeFactor:1));SetStyle(halo,Amber?alpha*HaloAlpha:0,width*HaloStrokeFactor);SetStyle(triangle,alpha,width);
+            // The halo exists only once the ring has been amber: a white-only cue keeps exactly the lines it always had.
+            if(Amber&&halo==null){halo=CreateLine("Volley halo",CircleSegments);halo.sortingOrder=-1;}
+            SetStyle(line,alpha,width*(Amber?AmberStrokeFactor:1));if(halo!=null)SetStyle(halo,Amber?alpha*HaloAlpha:0,width*HaloStrokeFactor);SetStyle(triangle,alpha,width);
             SetStyle(validBand,timing.ValidLimitOn?alpha*ValidAlpha:0,width);
             SetStyle(perfectBand,alpha*PerfectAlpha,width);
             SetStyle(lateValidBand,timing.ValidLimitOn?alpha*ValidAlpha:0,width);
@@ -98,7 +99,7 @@ namespace SquashClash.Runtime.Shot
             if(!state.AtOrAfterIdeal&&radius<=FitRadius)radius=FitRadius+FitRadius*1.1920929e-7f;
             double duration=System.Math.Max(0,target-System.Math.Max(presented,target-ImpactCue.ApproachMs/1000))*1000;
             if(state.AtOrAfterIdeal)radius=LateRadius(System.Math.Max(0,state.DeltaMs),duration);
-            DrawCircle(line,radius);DrawCircle(halo,radius);
+            DrawCircle(line,radius);if(halo!=null)DrawCircle(halo,radius);
             DrawCircle(lateValidBand,LateRadius(timing.ValidMs,duration));
             DrawCircle(latePerfectBand,LateRadius(timing.AssistMs,duration));
             DrawCircle(validBand,WindowRadius(timing.ValidMs,duration));
