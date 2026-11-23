@@ -73,7 +73,7 @@ namespace SquashClash.Core.Tests.Rally
         private static long Lateness(RallyContext c,Vector3 at,ShotOption option,Vector2 opponent)
         {
             var plan=ReturnPlan(c,at,option,opponent);
-            var solution=RallyContact.SolveIntention(c,at,option.Aim,option.P);
+            var solution=option.Side.Exists?RallyContact.SolveBoastIntention(c,at,option.Side,option.P,out _):RallyContact.SolveIntention(c,at,option.Aim,option.P);
             var trajectory=c.Predict(new BallState{Position=at,Velocity=solution.Velocity});
             long until=plan.Contact.Exists&&plan.Contact.TStarStep>=0?plan.Contact.TStarStep:trajectory.States.Last().Step;
             return plan.ArrivalStep-until;
@@ -99,6 +99,37 @@ namespace SquashClash.Core.Tests.Rally
                 Assert.That(flag.GetValue(ai),Is.True);break;
             }
             Assert.That(found,Is.True,"a deterministic no-reachable-option case is required");
+        }
+        [Test] public void RivalAi_StretchedBack_UsesReachableOptionsOrNonBoastLeastLate()
+        {
+            // First contact and opposite corner from B3b's predeclared grid; no parameter search.
+            var c=RallyFixtures.Context();var at=new Vector3(.5f,.3f,7.6f);
+            var opponent=c.ClampBody(new Vector2(c.Court.Width,c.Court.Length));var options=Allowed(c,at);
+            Assert.That(options.Any(s=>s.Line==ShotLine.Boast),Is.True,"B4 back case includes boast candidates");
+            var reachable=options.Select(s=>BackReachable(c,at,s,opponent)).ToArray();
+            var delay=options.Select(s=>(s.Side.Exists?RallyContact.ForecastBoast(c,at,s.Side,s.P):RallyContact.Forecast(c,at,s.Aim,s.P)).Good
+                ?Lateness(c,at,s,opponent):long.MaxValue).ToArray();
+            bool any=reachable.Any(v=>v);
+            int leastLate=Enumerable.Range(0,options.Count).Where(i=>options[i].Line!=ShotLine.Boast).OrderBy(i=>delay[i]).First();
+            TestContext.WriteLine($"B4_BACK reachable={reachable.Count(v=>v)} candidates={options.Count} E1={!any}");
+            var ai=Ai(c,RivalStyleId.Completo);var own=Own(c,at);var o=Observe(c,opponent);
+            for(int i=0;i<50;i++)
+            {
+                var shot=ai.Decide(o,own);
+                int chosen=options.FindIndex(s=>s.Line==shot.Option.Line&&s.Height==shot.Option.Height&&s.Power==shot.Option.Power);
+                Assert.That(chosen,Is.GreaterThanOrEqualTo(0));
+                if(any)
+                {
+                    Assert.That(reachable[chosen],Is.True,"B4 back: reachable alternative exists");
+                    Assert.That(ai.LastStretchedFallback,Is.False);
+                }
+                else
+                {
+                    Assert.That(shot.Option.Line,Is.Not.EqualTo(ShotLine.Boast),"B4 back E1 never boasts");
+                    Assert.That(chosen,Is.EqualTo(leastLate),"B4 back E1 least delay, then original order");
+                    Assert.That(ai.LastStretchedFallback,Is.True);
+                }
+            }
         }
         [TestCase(RivalStyleId.Fondista)][TestCase(RivalStyleId.Definidor)][TestCase(RivalStyleId.Completo)]
         public void RivalAi_StretchedFront_NeverBoasts(RivalStyleId style)
