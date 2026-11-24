@@ -50,6 +50,8 @@ namespace SquashClash.Runtime.Ball
             transform.localScale = Vector3.one * (radius * 2);
             transform.position = host.RenderPosition;
         }
+        public bool Hidden { get; private set; }
+        public void SetHidden(bool hidden){}
         public void ApplyVisualScale(float scale) => transform.localScale = Vector3.one * (radius * 2 * scale);
         private void LateUpdate()
         {

@@ -94,6 +94,13 @@ namespace SquashClash.Runtime.Rally
         public double HumanServePauseElapsed => HumanServePause ? Math.Min(waited, WaitBetweenPoints) : 0;
         public bool HumanWaitingToServe => HumanServePause && humanInServeBox;
         private bool humanInServeBox;
+        // Rival serve ritual (view only): the pause before the rival's serve, its elapsed time, the box where the figure is drawn.
+        public bool RivalServePause => Active && Phase == RallyPhase.PointOver && Match != null && !Match.Finished && Match.Server == PlayerId.Rival;
+        public double PauseElapsed => Active && Phase == RallyPhase.PointOver ? Math.Min(waited, WaitBetweenPoints) : 0;
+        public Vector2 RivalServeBox => ServePlanner.BoxPosition(context, Match.Box);
+        private bool rivalDrawnInBox;
+        public bool RivalWaitingToServe => false;
+        public bool RivalServeRitualBall(out Vector3 ball){ball=default;return false;}
         internal bool PlaceHumanInServeBoxEarly = true;
         public event Action RallyStarted;
         public event Action<PointResult> PointEnded;

@@ -23,6 +23,7 @@ namespace SquashClash.Runtime.Ball
         private readonly List<WallMark> marks = new List<WallMark>(6);
         private MaterialPropertyBlock block;
 
+        public System.Func<Vector3?> StandIn { get; set; }
         public void Initialize(BallSimulationHost host, TuningState tuning, BallView view)
         {
             this.host = host; this.tuning = tuning; this.view = view;
