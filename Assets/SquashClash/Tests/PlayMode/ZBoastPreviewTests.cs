@@ -74,6 +74,11 @@ namespace SquashClash.Runtime.Tests
             Assert.That(reticle.FeasibleVisible,Is.False,"the frozen cross appears only when the stroke is solved");
             Assert.That(view.DashCount,Is.GreaterThan(4));Assert.That(view.Tint,Is.Not.EqualTo(Color.white));
             Assert.That(view.HalfHeight,Is.GreaterThan(.12f),"a zone larger than the cross arms, not a point");
+            // Discreet (SC-Lead, 24 nov): it must not play for the player. Thinner than the cross (0.035 m) and translucent.
+            Assert.That(view.StrokeWidth,Is.LessThan(.035f),"thinner than the cross stroke");
+            Assert.That(view.Tint.a,Is.LessThanOrEqualTo(.5f),"translucent");
+            Assert.That(view.DashRenderers.Count,Is.EqualTo(view.DashCount));
+            foreach(var d in view.DashRenderers){Assert.That(d.widthMultiplier,Is.EqualTo(view.StrokeWidth));for(int c=0;c<4;c++)Assert.That(d.startColor[c],Is.EqualTo(view.Tint[c]).Within(1.5f/255),"the renderer stores 8-bit colour");}
             Send(at,Phase.Ended,.3,12);view.Tick();
             Assert.That(view.Visible,Is.False,"released: the zone goes, the stroke's own reticle takes over");
             yield return null;
@@ -91,7 +96,7 @@ namespace SquashClash.Runtime.Tests
         {
             yield return Boot();var at=SideTouch();
             Send(at,Phase.Began,0);Send(at,Phase.Moved,.1,8);view.Tick();
-            Assert.That(view.SolveCount,Is.EqualTo(1));
+            Assert.That(view.SolveCount,Is.EqualTo(1),$"m24 active={preview.M24?.Active} aim={preview.M24?.HasAim} side={preview.M24?.Side} p={preview.M24?.P} phase={preview.M24?.Phase} consumed={controller.AttemptConsumed} visible={view.Visible}");
             for(int i=1;i<=20;i++){now=start+.1+i*.05;view.Tick();}
             Assert.That(view.SolveCount,Is.EqualTo(1),"finger still for a second: no recompute");
             // Pulling a little more every 20 ms for 0.2 s: at most one solve per interval.

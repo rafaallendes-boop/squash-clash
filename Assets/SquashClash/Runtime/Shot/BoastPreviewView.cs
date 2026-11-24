@@ -14,11 +14,15 @@ namespace SquashClash.Runtime.Shot
     public sealed class BoastPreviewView : MonoBehaviour
     {
         // View-only geometry (metres on the front wall) and colour. Larger than the cross arms (0.12 m) and not white like the cross.
+        // Discreet (SC-Lead, 24 nov): a hint, not a target that plays for the player, so thinner than the cross stroke (0.035 m) and
+        // translucent (the Legibility shader blends alpha).
         public const int Dashes=12;
-        private const float HalfWidthMeters=.30f,HalfHeightMeters=.36f,StrokeMeters=.045f,WallOffset=.03f;
-        private static readonly Color ZoneTint=new Color(.45f,.82f,1f);
+        private const float HalfWidthMeters=.30f,HalfHeightMeters=.36f,StrokeMeters=.022f,WallOffset=.03f;
+        private static readonly Color ZoneTint=new Color(.45f,.82f,1f,.45f);
         public int DashCount=>Dashes;
         public float HalfHeight=>HalfHeightMeters;
+        public float StrokeWidth=>StrokeMeters;
+        public System.Collections.Generic.IReadOnlyList<LineRenderer> DashRenderers=>dashes;
         public Color Tint=>ZoneTint;
         public Func<double> Now=()=>Time.realtimeSinceStartupAsDouble;
         public bool Visible {get;private set;}
