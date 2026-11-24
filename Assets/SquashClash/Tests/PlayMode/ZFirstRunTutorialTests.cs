@@ -89,7 +89,7 @@ namespace SquashClash.Runtime.Tests
             // 21 nov: the two-wall shot (boast), last: the visible side wall, near where you will hit, not on the serve.
             Click("tutorial-next");Refresh();yield return null;
             Assert.That(title.text,Is.EqualTo("Dos paredes"));
-            Assert.That(body.text,Does.Contain("pared lateral").And.Contain("frente").And.Contain("saque"));
+            Assert.That(body.text,Does.Contain("pared lateral").And.Contain("frente").And.Contain("saque").And.Contain("Tócala bajo").And.Contain("frontis").And.Contain("más o menos"));
             Assert.That(Shown(results),Is.False);
         }
         [UnityTest] public IEnumerator NewServeAddsTheSixthStepWhenTheTutorialOpens()
