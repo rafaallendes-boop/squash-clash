@@ -50,8 +50,8 @@ namespace SquashClash.Runtime.Tests
                 double t=i*.01;if(Math.Abs(t-.25)<1e-6||Math.Abs(t-.75)<1e-6)continue;
                 Assert.That(On(2.5,start+t,out var ball),Is.True);Assert.That(ball.y,Is.GreaterThan(Radius),"t="+t);Assert.That(ball.y,Is.LessThanOrEqualTo(Hand+1e-5f));
             }
-            On(2.5,start+.2,out var low);On(2.5,start+.3,out var low2);On(2.5,start+.0,out var hi);On(2.5,start+.1,out var hi2);
-            Assert.That(Math.Abs(low.y-low2.y),Is.GreaterThan(Math.Abs(hi.y-hi2.y)),"faster near the floor than near the hand");
+            On(2.5,start+.25,out var floor);On(2.5,start+.27,out var floor2);On(2.5,start,out var hand);On(2.5,start+.02,out var hand2);
+            Assert.That(Math.Abs(floor2.y-floor.y),Is.GreaterThan(Math.Abs(hand2.y-hand.y)),"faster near the floor than near the hand");
         }
         [Test] public void DribbleSpot_IsOnTheFreeHandSideAndTowardTheFrontWall()
         {
@@ -156,12 +156,15 @@ namespace SquashClash.Runtime.Tests
 
         // ---- the simulation does not know about it ----
         [Serializable] private sealed class Line {public string kind,payload;}
+        // Fields that differ between ANY two boots (random match id, wall-clock offsets of the boot frames, planner cost), not between ritual on and off.
+        private static string Mask(string payload)=>System.Text.RegularExpressions.Regex.Replace(payload,"\"(matchId|[A-Za-z]*CostMs|[A-Za-z]*Real[A-Za-z]*)\":(\"[^\"]*\"|[-0-9.eE+]+)","\"$1\":-");
         private IEnumerator Run(bool ritual,List<string> trace,List<string> metrics,int[] counts,bool[] flags)
         {
             yield return Boot();
             RivalServeRitual.Enabled=ritual;
             var view=UnityEngine.Object.FindFirstObjectByType<RivalServeRitualView>();Assert.That(view,Is.Not.Null);
             int contacts=0;app.Host.ContactRaised+=_=>contacts++;
+            int before=File.ReadAllLines(app.Metrics.CurrentFilePath).Length;
             StartMatch();
             bool sawRivalPause=false;int after=-1,pauseSteps=0;
             for(int i=0;i<500000;i++)
@@ -178,7 +181,7 @@ namespace SquashClash.Runtime.Tests
             }
             Assert.That(after,Is.GreaterThan(40),"a rival serve started and ran 40 steps");
             counts[0]=pauseSteps;counts[1]=contacts;
-            metrics.AddRange(File.ReadAllLines(app.Metrics.CurrentFilePath).Select(JsonUtility.FromJson<Line>).Select(l=>l.kind+"|"+l.payload));
+            metrics.AddRange(File.ReadAllLines(app.Metrics.CurrentFilePath).Skip(before).Select(JsonUtility.FromJson<Line>).Select(l=>l.kind+"|"+Mask(l.payload)));
         }
         [UnityTest] public IEnumerator Simulation_IsIdentical_WithTheRitualOnAndOff()
         {

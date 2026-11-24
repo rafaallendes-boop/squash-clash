@@ -12,6 +12,20 @@ namespace SquashClash.Runtime.Visual
         public static void Reset(){Enabled=true;}
         public static double Start(double pause)=>pause-Lead;
         public static bool Fits(double pause)=>pause-Lead>=PointEndFreeze.Seconds-1e-9;
-        public static bool Sample(double pause,double elapsed,Vector2 box,float handHeight,float radius,out Vector3 ball){ball=default;return false;}
+        // The drawn ball at `elapsed` seconds into a pause of `pause` seconds; false when there is no ritual (disabled, pause too short, outside the window).
+        public static bool Sample(double pause,double elapsed,Vector2 box,float handHeight,float radius,out Vector3 ball)
+        {
+            ball=default;
+            if(!Enabled||!Fits(pause)||elapsed<Start(pause)||elapsed>pause)return false;
+            double t=elapsed-Start(pause);float x=box.x+SideOffset,z=box.y-FrontOffset;
+            if(t<Bounces*BounceSeconds)
+            {
+                float u=(float)((t%BounceSeconds)/BounceSeconds),s=Mathf.Abs(2*u-1),q=1-s;
+                ball=new Vector3(x,radius+(handHeight-radius)*(1-q*q),z);return true;
+            }
+            t-=Bounces*BounceSeconds;
+            if(t<MoveSeconds){float k=(float)(t/MoveSeconds);k=k*k*(3-2*k);ball=new Vector3(Mathf.Lerp(x,box.x,k),handHeight,Mathf.Lerp(z,box.y,k));return true;}
+            ball=new Vector3(box.x,handHeight,box.y);return true;
+        }
     }
 }

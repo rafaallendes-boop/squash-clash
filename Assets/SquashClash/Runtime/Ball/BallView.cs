@@ -10,7 +10,7 @@ namespace SquashClash.Runtime.Ball
         private float radius;
         // Halo quad size in ball diameters: it fades from the ball's edge to nothing a little over one radius further out.
         public const float OutlineScale = 2.3f;
-        private Mesh outlineMesh; private Material outlineMaterial; private Transform outline; private UnityEngine.Camera view;
+        private MeshRenderer haloRenderer; private Mesh outlineMesh; private Material outlineMaterial; private Transform outline; private UnityEngine.Camera view;
         public void Initialize(BallSimulationHost host, float radius)
         {
             this.host = host;
@@ -45,13 +45,18 @@ namespace SquashClash.Runtime.Ball
                 outlineMesh = SquashClash.Runtime.Visual.VisualKit.BillboardQuad("Ball halo");
                 outlineMaterial = SquashClash.Runtime.Visual.VisualKit.NewFx("Ball halo", new Color(.012f,.012f,.016f,.55f), false);
                 outline = SquashClash.Runtime.Visual.VisualKit.Part("Halo", transform, outlineMesh, outlineMaterial).transform;
-                outline.localScale = Vector3.one * OutlineScale;
+                outline.localScale = Vector3.one * OutlineScale; haloRenderer = outline.GetComponent<MeshRenderer>();
             }
             transform.localScale = Vector3.one * (radius * 2);
             transform.position = host.RenderPosition;
         }
         public bool Hidden { get; private set; }
-        public void SetHidden(bool hidden){}
+        public void SetHidden(bool hidden)
+        {
+            Hidden=hidden;
+            var ball=GetComponent<MeshRenderer>();if(ball!=null)ball.forceRenderingOff=hidden;
+            if(haloRenderer!=null)haloRenderer.forceRenderingOff=hidden;
+        }
         public void ApplyVisualScale(float scale) => transform.localScale = Vector3.one * (radius * 2 * scale);
         private void LateUpdate()
         {
