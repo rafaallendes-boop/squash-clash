@@ -96,3 +96,15 @@ Texto literal del PO (Rafael, 16:33, chat de SC-PM), transmitido en `/Users/rafa
 Se autoriza medir 25 y 50 ms frente a la base, solo para el golpe temprano del humano al recibir el saque. La regla de SC-Lead (16:32), incorporada al encargo, elige el menor valor que mejore claramente la devolución del novato que toca sin romper N2; si ninguno pasa dentro de 50 ms, se detiene el trabajo. Se mantienen los umbrales, criterios y oráculos vigentes, y se informan M1 oficial, la señal secundaria, puntos, partidos y volea por nivel con n y fuente.
 
 La continuación explícita de SC-PM en `/Users/rafaallendes/sc-specs/continua-106.txt` autoriza corregir el defecto del prototipo sin cambiar `ServeEarlyAllowance_LatencyCompensationIsAppliedOnce` ni su aserción; fija el borde inclusivo, con compensación de latencia una sola vez. Confirma que el margen incluye el golpe temprano de la recepción y conserva la volea opcional del saque en Fácil, Medio y Difícil. Los anillos y «Espera el bote» van en otra PR con Claude. La PR #106 lleva la medición, el margen elegido y las puertas completas; **no se fusiona** en este encargo. [Informe](2026-11-23-recepcion-b-acotada.md).
+
+## 24 nov 2026 — Margen de 25 ms en la recepción del saque (#106)
+
+Textos literales del PO (Rafael, chat de SC-PM), transmitidos por SC-PM:
+
+> 23 nov 22:14, sobre corregir solo la jugada del fixture inválido sin tocar la aserción: «Si, pero has todo con Claude.»
+>
+> 24 nov 07:20: «Sí, acepto que M1 quede fuera de banda solo en la build de prueba con 50 ms.»
+>
+> 24 nov 09:38: «Vamos con 25 ms como me propones».
+
+La propuesta del 09:38 consistía en aplicar el protocolo fijado antes de medir (`docs/validation/2026-11-23-recepcion-b-protocolo.md`, `b4cccbd`), cuya regla de elección da 25 ms: N2 frente a la base actual medida, con un máximo de 1,40 pp, y una mejora clara del novato que toca. El valor por defecto pasa a 25 ms con la medición existente, sin volver a medir y sin cambiar umbrales ni criterios. **La aceptación de M1 de las 07:20 se refiere a 50 ms y no se extiende a 25 ms:** con 25 ms, M1 en Medio es 93,80 % (3615/3854), fuera de 80–90, y queda pendiente del PO. Antes de una build que no sea de prueba conviene registrar esa decisión en AGENTS §7. [Informe](2026-11-23-recepcion-b-acotada.md).
