@@ -24,7 +24,7 @@ namespace SquashClash.Runtime.Tests
         private const string GuideText="Sacas tú: toca el frontis antes de que se acabe la barra. Si no tocas, sale un globo.";
         private const string BannerServeText="Cuando saques tú, toca el frontis durante la pausa: arriba sale un globo; abajo, un saque rápido.";
         private const string VolleyText="Anillo ámbar: toca y volea en el aire. Anillo blanco: espera el bote y golpea.";
-        private const string BoastText="Toca la pared lateral para jugar un dos paredes. Tócala bajo: si tocas alto, la pelota pega alto en el frontis y puede quedar larga.";
+        private const string BoastText="Dos paredes: toca bajo en la pared lateral, o puede quedar larga.";
         private const string CrossText="Pared lateral cerca de ti: la pelota cruza al otro lado.";
         private static readonly string[] AllHintKeys={"sc.hints.serve","sc.hints.volley","sc.hints.boast","sc.hints.boastCross","sc.hints.window"};
         private double clock;

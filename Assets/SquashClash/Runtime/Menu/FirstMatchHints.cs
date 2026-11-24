@@ -45,7 +45,7 @@ namespace SquashClash.Runtime.Menu
                         ? "Sacas tú: toca el frontis antes de que se acabe la barra. Si no tocas, sale un globo."
                         : "Cuando saques tú, toca el frontis durante la pausa: arriba sale un globo; abajo, un saque rápido.";
                 case HintId.Volley: return SquashClash.Runtime.Shot.ReceptionRule.Full;
-                case HintId.Boast: return "Toca la pared lateral para jugar un dos paredes. Tócala bajo: si tocas alto, la pelota pega alto en el frontis y puede quedar larga.";
+                case HintId.Boast: return "Dos paredes: toca bajo en la pared lateral, o puede quedar larga.";
                 default: return "Pared lateral cerca de ti: la pelota cruza al otro lado.";
             }
         }
