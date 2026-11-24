@@ -16,6 +16,8 @@ namespace SquashClash.Runtime.Rally
     {
         // Result card extras (view only). DEV switch, default on; off is the card as it was. Not remembered.
         public static bool ExtendedCardOn=true;
+        // «vs» plate over the first serve (front 4). DEV switch, default on; off is the match start as it was. Not remembered.
+        public static bool VsPlateOn=true;
         // Real play time of the current match (unscaled, not counted while paused or after match point) and its longest rally in strokes,
         // both read from what the HUD already sees; nothing is added to Core.
         public float MatchSeconds {get;private set;}
@@ -57,6 +59,7 @@ namespace SquashClash.Runtime.Rally
         private VisualElement bannerHint,bannerHintIcon,guideHint,guideHintIcon;private Label bannerHintText,guideHintText;
         private HintId? bannerHintShown,guideHintShown;
         private SquashClash.Runtime.Shot.ShotNoteView noteView;
+        private VsPlateView vsPlate;
         private const float GuideHintMaxWidth=280,GuideHintGap=8,GuideHintMargin=8;
         private EffectiveConfig serveGuideConfig;
         private CourtDimensions serveGuideCourt;
@@ -135,6 +138,7 @@ namespace SquashClash.Runtime.Rally
             bannerHintIcon=new VisualElement{name="rally-banner-hint-icon",pickingMode=PickingMode.Ignore};bannerHintIcon.AddToClassList("sc-hint-icon");bannerHint.Add(bannerHintIcon);
             bannerHintText=Text("","sc-hint-text");bannerHintText.name="rally-banner-hint-text";bannerHint.Add(bannerHintText);bannerCard.Add(bannerHint);
             BuildServeGuide(top);
+            vsPlate=new VsPlateView(app,rally,top,parent);
             // The header grows and shrinks with its buttons ("Seguir" appears with the banner): follow it.
             header=parent;parent.RegisterCallback<GeometryChangedEvent>(_=>PlaceBanner());
             Refresh();
@@ -357,14 +361,23 @@ namespace SquashClash.Runtime.Rally
         private static VisualElement Chip(string style){var chip=new VisualElement{pickingMode=PickingMode.Ignore};chip.AddToClassList("sc-chip");chip.AddToClassList(style);return chip;}
         public void ToggleMode(){if(rally.Active)rally.StopMode();else rally.StartMode();Refresh();}
         public void StartMatch(){rally.StartMatch();Refresh();}
+        // «vs» plate (front 4): called by the start menu in the very frame its match begins, never by the DEV «Partido», the rematch or practice.
+        // It shows only if that frame is the first serve's flight (RivalReception); everything after that is VsPlateView.Update.
+        public void ShowVsPlate()
+        {
+            if(!VsPlateOn||vsPlate==null||!MenuMatch||!rally.Active||rally.Match==null||rally.Phase!=RallyPhase.RivalReception||app.Clock==null||app.Clock.Paused)return;
+            vsPlate.Show(rally.Style);
+        }
         public void TogglePause()=>TogglePause("player");
         public void TogglePause(string reason)
         {
             app.Clock.Paused=!app.Clock.Paused;PausedByPlayer=app.Clock.Paused;
-            if(PausedByPlayer){app.UserEvents?.Pause(reason);app.UserEvents?.Menu("pause","open");}Refresh();
+            if(PausedByPlayer){vsPlate?.Close("pause");app.UserEvents?.Pause(reason);app.UserEvents?.Menu("pause","open");}Refresh();
         }
         public void ToggleDemo(){rally.Autopilot=!rally.Autopilot;Refresh();}
         private void Update(){Refresh();Tick(Mathf.Min(Time.unscaledDeltaTime,.05f));}
+        // The director may have moved on in this frame after Update ran: the plate is checked again before the frame is drawn.
+        private void LateUpdate()=>vsPlate?.Update();
         private VisualElement header;
         private void PlaceBanner()
         {
@@ -495,6 +508,7 @@ namespace SquashClash.Runtime.Rally
             Hints.Observe();
             RefreshHints(point >= 0 && !showServeGuide, showServeGuide);
             RefreshServeGuide(showServeGuide);
+            vsPlate.Update();
             ReportHints();
             RefreshEnergy(active);
             if(!active)

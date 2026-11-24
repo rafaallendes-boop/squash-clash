@@ -6,6 +6,10 @@ namespace SquashClash.Core.Rally
         public static string Player(PlayerId who)=>who==PlayerId.Human?"Tú":"Rival";
         // Rival styles (design 2026-11-19): shown at the start of a match and on the scoreboard.
         public static string RivalIntro(RivalStyleId style)=>"Rival: "+RivalStyle.Name(style);
+        // «vs» plate (front 4, 22 nov rev 2): the first serve's flight is introduced in at most 1.5 s (in 0.18, the banner's own fade-in; hold 1.10; out 0.20).
+        // Under «RIVAL» goes the style's own name: no invented names.
+        public const double VsInSeconds=.18,VsHoldSeconds=1.10,VsOutSeconds=.20;
+        public static string VsStyle(RivalStyleId style)=>RivalStyle.Name(style);
         private static string Score(int human,int rival)=>"Tú "+human+" – "+rival+" Rival";
         public static string Live(int human,int rival,int shots,PlayerId toHit)=>Score(human,rival)+" · golpes "+shots+" · turno: "+Player(toHit);
         public static string Point(PlayerId? winner,PointEndCause cause,ReceptionResult? reception,int shots,int human,int rival)

@@ -39,6 +39,32 @@ namespace SquashClash.Runtime.Tests
             };
             foreach(var pair in expected)Assert.That(FontName(Find(pair.Key)),Is.EqualTo(pair.Value),pair.Key);
         }
+        // «vs» plate (front 4, section 6): Rubik Bold Italic for the names, the court's own red for the centre line, the shirt colours on the halves.
+        [UnityTest] public IEnumerator VsPlate_UsesRubikBoldItalic_AndTheCentreLineIsTheCourtsRed()
+        {
+            yield return Boot(true);
+            double clock=100;SquashClash.Runtime.Rally.VsPlate.Now=()=>clock;
+            try
+            {
+                rally.StyleOverride=SquashClash.Core.Rally.RivalStyleId.Completo;
+                yield return StartMatch();clock+=.4;Refresh();yield return null;yield return null;Refresh();
+                Assert.That(Shown(Find("vs-plate")),Is.True);
+                void Near(Color a,Color b){Assert.That(a.r,Is.EqualTo(b.r).Within(.01f));Assert.That(a.g,Is.EqualTo(b.g).Within(.01f));Assert.That(a.b,Is.EqualTo(b.b).Within(.01f));}
+                var expected=new (string name,string font,float size)[]
+                {
+                    ("vs-plate-you","Rubik-BoldItalic",34),("vs-plate-mid","Rubik-BoldItalic",20),("vs-plate-rival","Rubik-Bold",13),("vs-plate-style","Rubik-BoldItalic",34)
+                };
+                foreach(var e in expected){Assert.That(FontName(Find(e.name)),Is.EqualTo(e.font),e.name);Assert.That(Find(e.name).resolvedStyle.fontSize,Is.EqualTo(e.size).Within(.5f),e.name);}
+                Near(Find("vs-plate-line").resolvedStyle.backgroundColor,new Color(206/255f,32/255f,45/255f));Assert.That(Find("vs-plate-line").resolvedStyle.width,Is.EqualTo(3f).Within(.5f));
+                Near(Find("vs-plate-you").resolvedStyle.color,new Color(128/255f,194/255f,255/255f));Near(Find("vs-plate-style").resolvedStyle.color,new Color(255/255f,150/255f,130/255f));
+                Near(Find("vs-plate-mid").resolvedStyle.color,Color.white);Near(Find("vs-plate-rival").resolvedStyle.color,new Color(160/255f,190/255f,194/255f));
+                var left=Find("vs-plate-left");var right=Find("vs-plate-right");
+                Assert.That(left.resolvedStyle.borderBottomWidth,Is.EqualTo(4f).Within(.5f));Assert.That(right.resolvedStyle.borderBottomWidth,Is.EqualTo(4f).Within(.5f));
+                Near(left.resolvedStyle.borderBottomColor,new Color(30/255f,136/255f,255/255f));Near(right.resolvedStyle.borderBottomColor,new Color(255/255f,77/255f,51/255f));
+                Assert.That(left.resolvedStyle.backgroundColor.a,Is.GreaterThan(.8f),"glass");Assert.That(right.resolvedStyle.backgroundColor.a,Is.GreaterThan(.8f),"glass");
+            }
+            finally{SquashClash.Runtime.Rally.VsPlate.Reset();}
+        }
         [UnityTest] public IEnumerator ServeGuideUsesTheShotNoteVoiceWithoutABox()
         {
             yield return Boot(false);

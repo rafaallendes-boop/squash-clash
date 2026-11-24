@@ -67,7 +67,7 @@ namespace SquashClash.Runtime.Shot
             if(root.panel==null)return false;
             var panelPoint=RuntimePanelUtils.ScreenToPanel(root.panel,new Vector2(point.x,Screen.height-point.y));
             for(var picked=root.panel.Pick(panelPoint);picked!=null;picked=picked.parent)
-                if(picked.name=="dev-bar"||picked.name=="dev-toggle"||picked.name=="dev-panel"||picked.name=="resume-overlay"||picked is Button)return true;
+                if(picked.name=="dev-bar"||picked.name=="dev-toggle"||picked.name=="dev-panel"||picked.name=="resume-overlay"||picked.name=="vs-plate-layer"||picked is Button)return true;
             return false;
         }
         private bool ContextChanged()=>app.Clock.Paused||resume.IsVisible||

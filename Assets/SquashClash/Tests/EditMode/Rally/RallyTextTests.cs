@@ -35,5 +35,17 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(RallyText.Point(null,PointEndCause.LaunchFault,null,0,1,0),Is.EqualTo("Sin punto: lanzamiento nulo · 0 golpes · Tú 1 – 0 Rival"));
             Assert.That(RallyText.Point(null,PointEndCause.None,null,200,1,0),Is.EqualTo("Sin punto: tope de golpes · 200 golpes · Tú 1 – 0 Rival"));
         }
+        // «vs» plate (front 4, spec section 4): under «RIVAL» goes the style's own name, with no invented names.
+        [TestCase(RivalStyleId.Fondista,"Fondista")]
+        [TestCase(RivalStyleId.Definidor,"Definidor")]
+        [TestCase(RivalStyleId.Completo,"Completo")]
+        public void VsStyle_IsTheStyleName(RivalStyleId style,string expected)=>Assert.That(RallyText.VsStyle(style),Is.EqualTo(expected));
+        [Test] public void VsPlate_DurationsAreTheSpecsAndNeverPassOneAndAHalfSeconds()
+        {
+            Assert.That(RallyText.VsInSeconds,Is.EqualTo(.18).Within(1e-9),"same as the banner's fade-in");
+            Assert.That(RallyText.VsHoldSeconds,Is.EqualTo(1.10).Within(1e-9));
+            Assert.That(RallyText.VsOutSeconds,Is.EqualTo(.20).Within(1e-9));
+            Assert.That(RallyText.VsInSeconds+RallyText.VsHoldSeconds+RallyText.VsOutSeconds,Is.LessThanOrEqualTo(1.5));
+        }
     }
 }

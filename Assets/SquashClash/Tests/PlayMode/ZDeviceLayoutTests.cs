@@ -147,6 +147,32 @@ namespace SquashClash.Runtime.Tests
             AssertFits("match-result",phone+" result");
             Assert.That(Find("match-result-card").worldBound.yMin,Is.GreaterThanOrEqualTo(header.worldBound.yMax),"the result card does not cover the header");
         }
+        // «vs» plate (front 4, criterion 8): inside the safe area on every phone, under the header, with no text cut or crossing the centre line.
+        [UnityTest] public IEnumerator VsPlate_FitsInsideTheSafeArea_AndDoesNotCoverTheHeader([ValueSource(nameof(Phones))] PhoneScreen screen,[Values(RivalStyleId.Fondista,RivalStyleId.Definidor,RivalStyleId.Completo)] RivalStyleId style)
+        {
+            yield return Boot(screen,true);
+            double clock=100;VsPlate.Now=()=>clock;
+            try
+            {
+                rally.Seed=9;rally.Autopilot=false;rally.StyleOverride=style;
+                PlayerPrefs.SetInt("sc.firstRun.tutorialSeen",1);Click("menu-play");yield return Settle();
+                Assert.That(rally.Style,Is.EqualTo(style));Assert.That(rally.Phase,Is.EqualTo(RallyPhase.RivalReception));
+                clock+=RallyText.VsInSeconds+.25;yield return Settle();
+                var plate=Find("vs-plate");var header=Find("boot-header");
+                AssertFits("vs-plate",phone+" "+style);
+                Assert.That(Find<Label>("vs-plate-style").text,Is.EqualTo(RivalStyle.Name(style)));
+                Assert.That(plate.worldBound.yMin,Is.GreaterThanOrEqualTo(header.worldBound.yMax),phone+": the plate does not cover the header");
+                var safe=Safe;var box=plate.worldBound;
+                Assert.That(box.xMin,Is.GreaterThanOrEqualTo(safe.xMin-.5f));Assert.That(box.xMax,Is.LessThanOrEqualTo(safe.xMax+.5f));Assert.That(box.yMax,Is.LessThanOrEqualTo(safe.yMax+.5f),"not under the home indicator");
+                Assert.That(box.height,Is.EqualTo(64f).Within(1f),"64 px tall");
+                var line=Find("vs-plate-line").worldBound;
+                foreach(var name in new[]{"vs-plate-you","vs-plate-mid","vs-plate-rival","vs-plate-style"})
+                    Assert.That(Find(name).worldBound.Overlaps(line),Is.False,phone+": "+name+" crosses the centre line");
+                Assert.That(Find("vs-plate-you").worldBound.Overlaps(Find("vs-plate-mid").worldBound),Is.False,phone+": TÚ and vs overlap");
+                Assert.That(Find("vs-plate-rival").worldBound.Overlaps(Find("vs-plate-style").worldBound),Is.False,phone+": RIVAL and the style overlap");
+            }
+            finally{VsPlate.Reset();}
+        }
         // Performance ceiling: the layout is checked every frame and must cost no garbage while nothing changes.
         [UnityTest] public IEnumerator Apply_AllocatesNothing_WhileNothingChanges()
         {
