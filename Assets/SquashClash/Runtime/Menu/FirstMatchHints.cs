@@ -35,7 +35,7 @@ namespace SquashClash.Runtime.Menu
             ForceWindowForTests = false;
         }
         // Texts decided by SC-Lead (23 nov, vocab-93) under the text rule: real squash terms, neutral Spanish, «tú».
-        // 24 nov (design 2026-11-24-two-wall-preview-hint): the boast hint adds the advice to touch low on the side wall.
+        // 24 nov (design 2026-11-24-two-wall-preview-hint): the boast hint warns that a high side-wall touch can leave the ball long.
         public static string Text(HintId id, HintWhere where)
         {
             switch (id)
@@ -45,7 +45,7 @@ namespace SquashClash.Runtime.Menu
                         ? "Sacas tú: toca el frontis antes de que se acabe la barra. Si no tocas, sale un globo."
                         : "Cuando saques tú, toca el frontis durante la pausa: arriba sale un globo; abajo, un saque rápido.";
                 case HintId.Volley: return SquashClash.Runtime.Shot.ReceptionRule.Full;
-                case HintId.Boast: return "Dos paredes: toca bajo en la pared lateral, o puede quedar larga.";
+                case HintId.Boast: return "Dos paredes: si tocas alto en la lateral, puede quedar larga.";
                 default: return "Pared lateral cerca de ti: la pelota cruza al otro lado.";
             }
         }
