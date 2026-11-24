@@ -58,8 +58,10 @@ namespace SquashClash.Core.Shot
     }
     public static class ContactContract
     {
-        public static ContactDecision Decide(double releaseTimeReal, PresentedPlans plans, ClockMap clock, Trajectory authoritative, TimingSettings s, bool attemptConsumed)
+        public static ContactDecision Decide(double releaseTimeReal, PresentedPlans plans, ClockMap clock, Trajectory authoritative, TimingSettings s, bool attemptConsumed, double earlyAllowanceMs=0)
         {
+            if(double.IsNaN(earlyAllowanceMs)||double.IsInfinity(earlyAllowanceMs)||earlyAllowanceMs<0||earlyAllowanceMs>50)
+                throw new ArgumentOutOfRangeException(nameof(earlyAllowanceMs));
             double corrected=releaseTimeReal-s.LatencyCompMs/1000;
             ContactPlan plan=default;double target=0,presented=0,delta=0;
             ContactDecision Reject(ShotResult result, FailKind fail=FailKind.None, string reason=null) =>
@@ -75,7 +77,14 @@ namespace SquashClash.Core.Shot
             if(plan.TStarStep<0) return Reject(ShotResult.NotEvaluable,reason:"no-legal-quantized-step");
             double position=step+fraction;
             bool early=position<plan.KIn.Steps;
-            if(early&&!s.EarlySoft) return Reject(ShotResult.Failed,FailKind.Air,"before-k-in");
+            if(early&&!s.EarlySoft)
+            {
+                // Express the inclusive corrected boundary back in the event clock. Comparing two separately subtracted
+                // timestamps would reject an exact boundary through cancellation (e.g. 1.045 - .070 vs 1 - .025).
+                // Latency is still subtracted exactly once above; no epsilon widens the requested margin.
+                if(!(earlyAllowanceMs>0)||!clock.TrySimToReal(plan.KIn.Step,plan.KIn.Fraction,out double kinReal)||releaseTimeReal<(kinReal-earlyAllowanceMs/1000)+s.LatencyCompMs/1000)
+                    return Reject(ShotResult.Failed,FailKind.Air,"before-k-in");
+            }
             if(position>plan.KOut.Steps) return Reject(ShotResult.Failed,FailKind.Late,"after-k-out");
             if(!early&&!ContactPlanner.IsLegalAt(authoritative,new SimTime(step,fraction),plan.Body,plan.Legal))
             {

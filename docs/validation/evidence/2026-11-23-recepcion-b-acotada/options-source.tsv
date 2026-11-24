@@ -1,0 +1,5 @@
+variant	defaults	rallyParams	simulationKey	allowanceMs	unity	stdMatches	touchMatches	levels	humans
+base	207da8f2c636	1063d0f6cf66	166a96e319c7	0	6000.3.27f1	200	60	Easy,Medium,Hard	std,touch
+early25	207da8f2c636	1063d0f6cf66	166a96e319c7	25	6000.3.27f1	200	60	Easy,Medium,Hard	std,touch
+early50	207da8f2c636	1063d0f6cf66	166a96e319c7	50	6000.3.27f1	200	60	Easy,Medium,Hard	std,touch
+elapsed	3669.396

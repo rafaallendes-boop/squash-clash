@@ -56,7 +56,7 @@ namespace SquashClash.Core.Tests.Rally
             var pause = typeof(RallyParams).GetField("ServeKindHumanPauseSeconds");
             Assert.That(pause, Is.Not.Null);
             Assert.That(pause.GetValue(new RallyParams()), Is.EqualTo(3d));
-            Assert.That(RivalAiTests.Projection(f => !f.Name.StartsWith("ServeKind", StringComparison.Ordinal)),
+            Assert.That(RivalAiTests.Projection(f => f.Name != "HumanServeEarlyMs" && !f.Name.StartsWith("ServeKind", StringComparison.Ordinal)),
                 Is.EqualTo("b2311f168c30"));
         }
 

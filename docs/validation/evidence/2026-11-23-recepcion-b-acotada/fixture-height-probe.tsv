@@ -1,0 +1,8 @@
+minHeight	planExists	planReason	serve	firstFloorStep	maxCenterYAfterBounce1	kInStep	kInFraction	observedStepAtBounce	observedReal	kInReal	kInMinusObservedMs	release	result	reason	early	scheduled	applied	phaseAfter	allowanceAfter	allowanceNextLaunch	error
+0.3	False	unreachable	Drive	128	0.2989	0	0.0000	True	3.59879	1.95776	-1641.03	3.59880	-	-	-	-	-	-	-	-	no-valid-release
+0.28	True		Drive	128	0.2989	139	0.2726	True	3.83605	3.98057	144.52	3.96807	Valid	applied	True	False	True	HumanReception	0	0	servingAtRelease=False
+0.25	True		Drive	128	0.2989	137	0.7061	True	4.06358	4.18801	124.44	4.17551	Valid	applied	True	False	True	HumanReception	0	0	servingAtRelease=False
+0.2	True		Drive	128	0.2989	135	0.2689	True	4.28281	4.37600	93.19	4.36350	Valid	applied	True	False	True	HumanReception	0	0	servingAtRelease=False
+0.15	True		Drive	128	0.2989	133	0.0080	True	4.49853	4.56273	64.20	4.55023	Valid	applied	True	False	True	HumanReception	0	0	servingAtRelease=False
+0.1	True		Drive	128	0.2989	130	0.8900	True	4.72507	4.76212	37.05	4.74962	Valid	applied	True	False	True	HumanReception	0	0	servingAtRelease=False
+0.05	True		Drive	128	0.2989	140	0.6325	True	4.94456	5.10651	161.96	5.09401	Valid	applied	True	False	True	HumanReception	0	0	servingAtRelease=False

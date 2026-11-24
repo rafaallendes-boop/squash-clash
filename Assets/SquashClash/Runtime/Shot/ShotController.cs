@@ -25,6 +25,9 @@ namespace SquashClash.Runtime.Shot
         private AppBootstrap app;
         private Func<long,BodyFrame> nextCausalBody,causalBody;
         private double nextReceptionFatigue,receptionFatigue;
+        public double ServeReceptionEarlyMs {get;private set;}
+        private double nextServeReceptionEarlyMs;
+        public void SetNextServeReceptionEarlyMs(double margin)=>nextServeReceptionEarlyMs=margin;
         private bool nextRecordsFatigue,recordsFatigue;
         private Func<long,bool,FatigueArm> nextStrikerFatigue,strikerFatigue;
         // Only Rally/Match call this, so only their shot events carry f_r; practice, SL and AutoQA keep the main schema.
@@ -128,6 +131,7 @@ namespace SquashClash.Runtime.Shot
         }
         private void OnLaunched(EffectiveConfig cfg)
         {
+            ServeReceptionEarlyMs=nextServeReceptionEarlyMs;nextServeReceptionEarlyMs=0;
             ServeReception=nextServe;nextServe=false;
             strikerFatigue=nextStrikerFatigue;nextStrikerFatigue=null;
             receptionFatigue=nextReceptionFatigue;nextReceptionFatigue=0;recordsFatigue=nextRecordsFatigue;nextRecordsFatigue=false;
@@ -276,7 +280,7 @@ namespace SquashClash.Runtime.Shot
             bool volley=LastOpportunity==Opportunity.Volley;var used=volley?Volley.Plan:Plan;UsedCausalReference=volley?VolleyCausalReference:CausalReference;
             SwingAccepted?.Invoke(new SwingIntent(order.LaunchId,order.AttemptId,used.Side,volley,used.PStar.y));
             var authoritative=AuthoritativeTrajectory();
-            var decision=OpportunityContract.Decide(order.ReleaseAt,Presented,offered.Exists?VolleyPresented:null,offered,app.Host.ClockMap,authoritative,shot.Timing,false,out _);
+            var decision=OpportunityContract.Decide(order.ReleaseAt,Presented,offered.Exists?VolleyPresented:null,offered,app.Host.ClockMap,authoritative,shot.Timing,false,out _,ServeReceptionEarlyMs);
             var record=BaseRecord(order);
             if(volley){record.KInSteps=used.KIn.Steps;record.KOutSteps=used.KOut.Steps;record.TStarStep=used.TStarStep;record.Side=used.Side.ToString();}
             FillDecision(record,decision);record.Version=++recordVersion;LastRecord=record;Write("shot-order",record);

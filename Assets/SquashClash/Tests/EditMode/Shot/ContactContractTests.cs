@@ -94,5 +94,55 @@ namespace SquashClash.Core.Tests.Shot
         {clock.Begin(1,1,0,1,1,100);Assert.That(Decide(.5).Result,Is.EqualTo(ShotResult.NotEvaluable));}
         [Test] public void NewTimingKeys_AreRecordedWithApprovedDefaults()
         {var p=ConfigFixtures.Default();Assert.That(p.Ordered.Count,Is.EqualTo(132));Assert.That(TimingSettings.From(p).AssistMs,Is.EqualTo(40));Assert.That(TimingSettings.From(p).ValidLimitOn,Is.False);Assert.That(TimingSettings.From(p).ValidMs,Is.EqualTo(100));Assert.That(TimingSettings.From(p).EarlySoft,Is.False);Assert.That(TimingSettings.From(p).LatencyCompMs,Is.Zero);}
+        [TestCase(25,1.0)] [TestCase(50,.65)]
+        public void ServeEarlyAllowance_AcceptsExactRealBoundaryAtLegalKIn(double allowance,double tempo)
+        {
+            clock.Begin(1,0,0,tempo,1,100);settings=new TimingSettings(40,false,100);
+            SetPlan(100.25,200,102,1,target:102/(100*tempo));
+            double kin=100.25/(100*tempo),release=kin-allowance/1000;
+            var d=ContactContract.Decide(release,plans,clock,trajectory,settings,false,allowance);
+            IsContact(d,ShotResult.Valid,101);Assert.That(d.EarlyGeometry,Is.True);
+            Assert.That(d.ReleaseCorrectedAtReal,Is.EqualTo(release));
+            Assert.That(d.QuantizationErrorMsSigned,Is.EqualTo(.75/(100*tempo)*1000).Within(1e-8));
+            Assert.That(ContactContract.Decide(release-.000001,plans,clock,trajectory,settings,false,allowance).Fail,Is.EqualTo(FailKind.Air));
+        }
+        [Test] public void ServeEarlyAllowance_LatencyCompensationIsAppliedOnce()
+        {
+            settings=new TimingSettings(40,false,100,false,70);SetPlan(100,200,102,1);
+            var d=ContactContract.Decide(1.045,plans,clock,trajectory,settings,false,25);
+            IsContact(d,ShotResult.Valid,100);Assert.That(d.ReleaseCorrectedAtReal,Is.EqualTo(.975).Within(1e-12));
+        }
+        [TestCase(25d,70d)] [TestCase(50d,70d)] [TestCase(25d,-70d)]
+        public void ServeEarlyAllowance_LatencyBoundaryIsInclusive_ButThePreviousEventIsRejected(double margin,double latency)
+        {
+            settings=new TimingSettings(40,false,100,false,latency);SetPlan(100,200,102,1);
+            double edge=(1-margin/1000)+latency/1000;
+            var d=ContactContract.Decide(edge,plans,clock,trajectory,settings,false,margin);
+            IsContact(d,ShotResult.Valid,100);Assert.That(d.Scheduled,Is.False);
+            double before=BitConverter.Int64BitsToDouble(BitConverter.DoubleToInt64Bits(edge)-1);
+            Assert.That(ContactContract.Decide(before,plans,clock,trajectory,settings,false,margin).Reason,Is.EqualTo("before-k-in"));
+        }
+        [TestCase(-1d)] [TestCase(51d)] [TestCase(double.NaN)] [TestCase(double.PositiveInfinity)]
+        public void ServeEarlyAllowance_RejectsAnOutOfRangeMargin(double margin)
+        {Assert.Throws<ArgumentOutOfRangeException>(()=>ContactContract.Decide(.99,plans,clock,trajectory,settings,false,margin));}
+        [Test] public void ServeEarlyAllowance_PreservesTheValidLimit_AndTheLateBoundary()
+        {
+            Assert.That(ContactContract.Decide(.98,plans,clock,trajectory,settings,false,25).Reason,Is.EqualTo("outside-v"));
+            Assert.That(ContactContract.Decide(2.01,plans,clock,trajectory,settings,false,25).Reason,Is.EqualTo("after-k-out"));
+            IsContact(ContactContract.Decide(1.5,plans,clock,trajectory,settings,false,25),ShotResult.Perfect,150);
+        }
+        [Test] public void ServeEarlyAllowance_WithoutAMappedKIn_RejectsConservatively()
+        {
+            clock.Mark(.9,90,0,1,1,true);
+            Assert.That(clock.TrySimToReal(plan.KIn.Step,plan.KIn.Fraction,out _),Is.False);
+            var d=ContactContract.Decide(.89,plans,clock,trajectory,settings,false,25);
+            Assert.That(d.Result,Is.EqualTo(ShotResult.Failed));Assert.That(d.Reason,Is.EqualTo("before-k-in"));
+        }
+        [Test] public void ServeEarlyAllowance_LeavesTheExistingGlobalSoftPolicyUnchanged()
+        {
+            settings=new TimingSettings(40,false,100,true);
+            var d=ContactContract.Decide(.9,plans,clock,trajectory,settings,false,25);
+            IsContact(d,ShotResult.Valid,100);Assert.That(d.EarlyGeometry,Is.True);
+        }
     }
 }

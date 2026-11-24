@@ -28,6 +28,9 @@ namespace SquashClash.Core.Rally
         {
             Config=config??throw new ArgumentNullException(nameof(config));Params=parameters??throw new ArgumentNullException(nameof(parameters));
             Factory=factory??throw new ArgumentNullException(nameof(factory));
+            HumanServeEarlyMs=parameters.HumanServeEarlyMs;
+            if(double.IsNaN(HumanServeEarlyMs)||double.IsInfinity(HumanServeEarlyMs)||HumanServeEarlyMs<0||HumanServeEarlyMs>50)
+                throw new ArgumentOutOfRangeException(nameof(parameters.HumanServeEarlyMs));
             if(config.Backend!="P2-Analytic")throw new InvalidOperationException("First Rally requires the P2-Analytic backend.");
             Court=config.Court;Physics=config.Physics;var source=config.Source;Fatigue=FatigueSettings.From(source);
             Legal=new LegalSettings((float)source.Get("legal.minHeight"),(float)source.Get("legal.maxHeight"),Physics.StepHz,Physics.Gravity,Physics.BallRadius,Court);
@@ -35,6 +38,10 @@ namespace SquashClash.Core.Rally
             VMin=(float)source.Get("shot.vMin");VMax=(float)source.Get("shot.vMax");VCap=(float)source.Get("shot.vCap");Pace=ShotPaceSettings.From(source);
             T=new Vector2(Court.Width*.5f,Court.Length-Court.ShortLineNearBackEdgeFromBack-Court.LineWidth*.5f);
         }
+        public double HumanServeEarlyMs {get;}
+        // Read only the rules at launch. The controller freezes this value through the bounce and rollback.
+        public double ServeReceptionEarlyMs(PlayerId receiver,PointRules rules)
+            =>receiver==PlayerId.Human&&rules!=null&&!rules.Closed&&rules.Serving&&rules.Striker==PlayerId.Rival?HumanServeEarlyMs:0;
         public int Steps(double simSeconds)=>(int)Math.Round(simSeconds*StepHz);
         public MoveSettings Move=>new MoveSettings((float)Params.Accel,(float)Params.MaxSpeed,(float)Params.Brake,(float)Params.ArriveEpsilon,StepHz);
         // The same body template for both players; only the position differs.

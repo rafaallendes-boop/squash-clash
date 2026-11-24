@@ -1,0 +1,10 @@
+worktree	path	sha256
+sc-exp-recepcion-b	Logs/evidence/options01/head.txt	688e47356417a1fa25ace0b46aacd4e635bdf5dc1c5f179d716b1063038391b0
+sc-exp-recepcion-b	Logs/evidence/options01/results.xml	988b5244372314dd544a1d867cc2fefb5b447fdebf8feb670e0c02585e82c1c1
+sc-exp-recepcion-b	Logs/evidence/n2-base01/head.txt	688e47356417a1fa25ace0b46aacd4e635bdf5dc1c5f179d716b1063038391b0
+sc-exp-recepcion-b	Logs/evidence/n2-base01/results.xml	1c8a4f3168294c07d37b9a29989179df4fef4d71c08e9943cd1171ad500b6e78
+sc-exp-recepcion-b	Logs/evidence/n2-early2501/head.txt	688e47356417a1fa25ace0b46aacd4e635bdf5dc1c5f179d716b1063038391b0
+sc-exp-recepcion-b	Logs/evidence/n2-early2501/results.xml	f3f4968e4fc5f4354f5dbb41d93fe31fecddde7df846c17736de464b537647b6
+sc-exp-recepcion-b	Logs/evidence/n2-early5001/head.txt	688e47356417a1fa25ace0b46aacd4e635bdf5dc1c5f179d716b1063038391b0
+sc-exp-recepcion-b	Logs/evidence/n2-early5001/results.xml	3b3614569fa615e35fdad5b3a7445259902d9de07d9744351af1d257713515f5
+sc-exp-recepcion-b	Logs/experiments/serve-margin/options01/points.tsv	39d7ba467a7f8d77ddb4294a00ff2ad33146fca1cd547348aee872f3fa534c68
