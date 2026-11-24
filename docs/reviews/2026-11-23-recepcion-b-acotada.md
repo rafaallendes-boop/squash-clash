@@ -11,7 +11,7 @@ Texto literal del PO (Rafael, 24 nov 09:38, chat de SC-PM): «Vamos con 25 ms co
 - Frente a la referencia de la spec del saque, `confirm01`, 25 ms queda fuera solo en Definidor Fácil (−5,54 pp). Esa celda mejora respecto de la base (−5,93 pp), y la base ya excede en tres celdas ([comparación con `confirm01`](../validation/evidence/2026-11-23-recepcion-b-acotada/n2-vs-confirm01.tsv)). Es la desviación histórica del saque nuevo, aceptada el 22 nov; 25 ms la reduce en vez de crearla. Se deja visible y no se declara un Pass nuevo.
 - La primera versión de este informe había elegido 50 ms con la lectura de `confirm01`. Esa lectura queda superada por la decisión del PO. Se usan los mismos datos, sin volver a medir y sin cambiar umbrales, escenarios ni criterios. No se recalibra: Fondista Hard conserva k=2,5.
 
-**M1 oficial con 25 ms (std, Medio): 93,80 % (3615/3854), fuera de la banda 80–90.** La aceptación del PO del 24 nov 07:20 («Sí, acepto que M1 quede fuera de banda solo en la build de prueba con 50 ms») se refiere a 50 ms. **Con 25 ms, M1 fuera de banda no está aceptado:** queda como desviación abierta y pendiente del PO. No cambia el criterio y no se acepta ninguna etapa.
+**M1 oficial con 25 ms (std, Medio): 93,80 % (3615/3854), fuera de la banda 80–90.** La aceptación del PO del 24 nov 07:20 («Sí, acepto que M1 quede fuera de banda solo en la build de prueba con 50 ms») se refería a 50 ms. Texto literal del PO (24 nov 12:07, directa en el chat de SC-PM), en respuesta a «¿Aceptas que M1 quede fuera de banda (93,80 %) solo en la build de prueba con 25 ms, igual que lo aceptaste con 50 ms?»: «Acepto la prueba que me mandó el lead». **Con eso, M1 al 93,80 % con 25 ms queda aceptado SOLO para la build de prueba.** Para builds que no sean de prueba sigue pendiente (nota al final). No cambia el criterio y no se acepta ninguna etapa.
 
 ## Medición
 
@@ -29,7 +29,7 @@ Texto literal del PO (Rafael, 24 nov 09:38, chat de SC-PM): «Vamos con 25 ms co
 | 50 | Medio | 96.83 % (3728/3850) | 86.63 % (1017/1174) | 41.14 % (483/1174) |
 | 50 | Difícil | 97.19 % (3808/3918) | 84.92 % (997/1174) | 41.31 % (485/1174) |
 
-Mejora de toca con 25 ms (elegido): +3,92/+3,55/+2,13 pp; con 50 ms, +6,87/+5,41/+4,77 pp. Los intervalos pareados al 95 % son positivos en los tres niveles con ambos valores ([detalle](../validation/evidence/2026-11-23-recepcion-b-acotada/touch-return-bootstrap.tsv)). La volea por saque sube en los tres. Puntos y partidos completos están en la tabla de evidencia. **M1 oficial en Medio: 89,70 % → 93,80 % con 25 ms (96,83 % con 50 ms). Queda fuera de 80–90: es una desviación abierta y no aceptada con 25 ms; el criterio no cambia y no se acepta ninguna etapa.**
+Mejora de toca con 25 ms (elegido): +3,92/+3,55/+2,13 pp; con 50 ms, +6,87/+5,41/+4,77 pp. Los intervalos pareados al 95 % son positivos en los tres niveles con ambos valores ([detalle](../validation/evidence/2026-11-23-recepcion-b-acotada/touch-return-bootstrap.tsv)). La volea por saque sube en los tres. Puntos y partidos completos están en la tabla de evidencia. **M1 oficial en Medio: 89,70 % → 93,80 % con 25 ms (96,83 % con 50 ms). Queda fuera de 80–90: con 25 ms, aceptado por el PO solo para la build de prueba (24 nov 12:07); el criterio no cambia y no se acepta ninguna etapa.**
 
 **N2:** `ConfirmPerStyle` completo, 200 partidos por celda y modelo, semillas originales; 1/1 en cada variante. [Comparación oficial por estilo/nivel, con n](../validation/evidence/2026-11-23-recepcion-b-acotada/n2-vs-confirm01.tsv), [comparación incremental](../validation/evidence/2026-11-23-recepcion-b-acotada/n2-vs-current-base.tsv). La base actual también conserva una desviación histórica (máximo 5,93 pp); no se declara como nuevo Pass.
 
@@ -49,15 +49,24 @@ PlayMode de integración queda **2/3**, no GREEN. Captura diagnóstica aislada, 
 
 Con aprobación del PO (23 nov 22:14: «Si, pero has todo con Claude.»), cambió una sola línea del armado de `RivalServe_AfterFirstBounce_KeepsAllowanceUntilTheOrder_ThenResetsOnTheNextFlight`: `legal.minHeight` del preset del fixture pasa de 0,30 a 0,25, porque el pico tras el bote es 0,2989 m. Con eso el plan existe y K-in queda 124,4 ms después del bote. El valor de producto sigue en 0,05, y las aserciones no cambian. [Barrido](../validation/evidence/2026-11-23-recepcion-b-acotada/fixture-height-probe.tsv). La revisión de Claude de ese commit no es independiente: la revisión cruzada le corresponde a Codex.
 
-## Puertas finales
+## Puertas finales con `main` incorporado
 
-Sobre `4e5ef77` (25 ms; Mac del PO, lock de Unity, árbol limpio antes y después). El commit siguiente solo cambia este informe.
+Sobre `9f73c7f`: merge normal de `origin/main` en `cc7a533` (#107 anillos de recepción y «Espera el bote», #108 pruebas de `Screen.dpi` herméticas). Dos conflictos triviales en `RallyDirector.cs` y `ShotController.cs`: cada lado añadía una línea independiente en el mismo sitio (margen del saque de esta rama y `SetNextReceptionServe` de #107); se conservaron ambas sin otro cambio. Mac del PO, lock de Unity, nohup, árbol limpio antes y después. El commit siguiente solo cambia documentación.
 
-- EditMode **1027/1027**. PlayMode **817/817**, con las tres pruebas de `ZServeReceptionMarginTests` aprobadas. Las dos pruebas de `Screen.dpi` también pasaron, pero no se dan por resueltas: siguen pendientes de `fix/hermetic-dpi-tests`.
+- EditMode **1027/1027**. PlayMode **827/827** (incluye las pruebas de anillos de #107 y las de dpi de #108), sin errores CS y con XML de esta corrida.
+- AutoQA V, T3 y volea: **PASS, nivel 1**, 102/102 cada una, 18 PASS, 0 FAIL/INCONCLUSIVE/NOT_EVALUATED, canario FAIL esperado, determinismo idéntico y `dirty=false`.
+- check-release **OK** (build 1172, dev y prod).
+- `device.env` se copió sin cambios desde `sc-install-518f9c3` (SHA-256 idéntico, ignorado por git) y se borró al terminar.
+
+## Historial: puertas sobre `4e5ef77`, antes de incorporar `main`
+
+Sobre `4e5ef77` (25 ms; Mac del PO, lock de Unity, árbol limpio antes y después). El commit siguiente solo cambiaba este informe.
+
+- EditMode **1027/1027**. PlayMode **817/817**, con las tres pruebas de `ZServeReceptionMarginTests` aprobadas. Las dos pruebas de `Screen.dpi` también pasaron; su corrección hermética (254 dpi fijos en `GesturePreviewTests` y `ReticleVisibilityTests`) llegó después con #108 (`8f8b3e9`), ya en `main` e incorporada en esta rama.
 - AutoQA V, T3 y volea: **PASS, nivel 1**, 102/102 cada una, 18 PASS, 0 FAIL/INCONCLUSIVE/NOT_EVALUATED, canario FAIL esperado, determinismo idéntico y `dirty=false`.
 - check-release **OK** (build 1160, dev y prod).
 - `device.env` se copió sin cambios desde `sc-install-518f9c3` (SHA-256 idéntico, ignorado por git) y se borró al terminar.
 
 ## Nota para el PO (observación 3 de la revisión)
 
-Al fusionar, 25 ms queda como valor por defecto de `main` y de toda build futura, no solo de la build de prueba. Antes de una build que no sea de prueba (TestFlight o pública) conviene decidir explícitamente M1 con 25 ms y dejarlo en AGENTS §7. Esta PR no edita §7: la decisión es del PO.
+Al fusionar, 25 ms queda como valor por defecto de `main` y de toda build futura, no solo de la build de prueba. Antes de una build que no sea de prueba (TestFlight o pública) conviene decidir explícitamente M1 con 25 ms y dejarlo en AGENTS §7. Esta PR no edita §7: la decisión es del PO. La aceptación del 24 nov 12:07 cubre solo la build de prueba.
