@@ -101,7 +101,7 @@ namespace SquashClash.Runtime.Tests
         }
         [Test] public void TheCaptionViewExists_AndIsHiddenBeforeAnyReception()
         {
-            Assert.That(caption,Is.Not.Null,"added by the controller");Assert.That(caption.IsShown,Is.False);Assert.That(caption.Text,Is.EqualTo("Espera el bote"));
+            Assert.That(caption,Is.Not.Null,"added by the controller");Assert.That(caption.IsShown,Is.False);Assert.That(caption.Text,Is.EqualTo("Anillo blanco: espera el bote y golpea."));
         }
         [Test] public void ServeReception_IsTrueOnlyForTheRivalsServe()
         {
@@ -116,7 +116,7 @@ namespace SquashClash.Runtime.Tests
                 At(app.Host.ObservedRealTime+StepReal);
                 if(!ring.Visible){Assert.That(caption.IsShown,Is.False,"no ring, no caption");continue;}
                 if(ring.Tint==ShotController.VolleyTint){sawAmber=true;Assert.That(caption.IsShown,Is.False,"the amber ring carries no text");}
-                else{sawWhite=true;Assert.That(caption.IsShown,Is.True,"the white ring carries «Espera el bote»");Assert.That(caption.Text,Is.EqualTo("Espera el bote"));}
+                else{sawWhite=true;Assert.That(caption.IsShown,Is.True,"the white ring carries «Espera el bote»");Assert.That(caption.Text,Is.EqualTo("Anillo blanco: espera el bote y golpea."));}
             }
             Assert.That(sawWhite,Is.True,"the white ring showed at some point of the reception");
         }

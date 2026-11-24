@@ -451,6 +451,8 @@ namespace SquashClash.Runtime.Shot
                 PresentCurrentPlan();
             }
         }
+        // Presentation only: feeds the ring the amber offer's window (stub).
+        public void UpdateRingClosing(){}
         private void LateUpdate()
         {
             ProcessPending();if(app==null)return;

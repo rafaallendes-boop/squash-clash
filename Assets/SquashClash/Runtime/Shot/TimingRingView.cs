@@ -35,6 +35,8 @@ namespace SquashClash.Runtime.Shot
             aidLevel=level;CutoffLatched=false;CutoffTarget=0;CutoffPlanVersion=0;
             shown=false;if(ring!=null)Tick(Time.realtimeSinceStartupAsDouble);
         }
+        // Presentation only: the real-time window of the uncommitted amber offer (stub).
+        public void SetClosingWindow(double fromReal,double untilReal){}
         public bool CutoffLatched {get;private set;}
         public double CutoffTarget {get;private set;}
         public int CutoffPlanVersion {get;private set;}
