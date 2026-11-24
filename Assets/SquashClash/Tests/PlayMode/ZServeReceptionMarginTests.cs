@@ -59,7 +59,8 @@ namespace SquashClash.Runtime.Tests
         [Test] public void RivalServe_AfterFirstBounce_KeepsAllowanceUntilTheOrder_ThenResetsOnTheNextFlight()
         {
             // Keep K-in after the step that reports the bounce, so this specifically exercises Serving=false at release.
-            app.Tuning.Set("legal.minHeight",.3);
+            // .25 stays below the real post-bounce peak (.2989 m); .3 left the plan unreachable.
+            app.Tuning.Set("legal.minHeight",.25);
             RivalServe();Assert.That(controller.ServeReceptionEarlyMs,Is.EqualTo(25));
             // Observe the actual first bounce, then read the currently presented bounce plan.
             Assert.That(Drive(()=>rally.Phase==RallyPhase.HumanReception&&!rally.Rules.Serving&&rally.Rules.FloorBounces==1),Is.True);
