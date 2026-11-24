@@ -44,7 +44,26 @@ TDD con `scripts/test.sh`: RED por aserción (halo y trazo ausentes, `ServeRecep
 
 Evidencia local, ignorada por git, en `Logs/evidence/rings-ca0e754/`: `playmode-after-fix.xml`, `editmode-results.xml`, `baseline-90ddc7e-two-tests.xml`; AutoQA en `Logs/autoqa/20261123T2338*-ca0e754-*`.
 
+## Diagnóstico de los 2 fallos previos (encargo de SC-PM, solo diagnóstico)
+
+**Conclusión: no es del código del producto ni de esta rama. Es el DPI que reporta este Mac sin pantalla, al que las dos pruebas están acopladas.** Se ejecutaron en `90ddc7e` y en la rama (`b5968e4`) con resultados idénticos (12 pruebas: 4 aprobadas, 8 falladas, en ambas).
+
+**Evidencia:**
+
+1. Unity reporta `Screen.dpi = 72` en esta ejecución (`DIAG screen.dpi=72`). `ScreenMetrics.MmPerPx` solo acepta un DPI reportado entre 150 y 700; si no, usa `input.fallbackDpi`, cuyo valor por defecto aquí resulta 460 (la ejecución sin override se comporta igual que la de 460). Además, `system_profiler SPDisplaysDataType` no lista ninguna pantalla conectada a este Mac (solo el chip): no hay densidad real que reportar.
+2. `GesturePreviewTests.Main_WiresAimAndPower…`: copia diagnóstica con `input.fallbackDpi` distinto (resto idéntico). Con 160, 254 y 326: `DistinctSamples` 4, pasa. Con 460 (y sin override): 3 (`few-samples`), falla. A 460 mm/px el primer movimiento de 40 px queda dentro del radio de toque y el arrastre empieza una muestra más tarde.
+3. `ReticleVisibilityTests.LocalCancelLimit…`: usa `MmPerPx(Screen.dpi, 460)` fijo. Copia diagnóstica con DPI constante: pasa con 254; falla con 0 (= real), 160, 326 y 460. Es decir, el diseño de la prueba solo se cumple en una ventana estrecha de densidades.
+4. El mismo comportamiento en `90ddc7e` y en la rama descarta una regresión de esta PR.
+
+**Atribución y límites:** es del entorno de este Mac en esta ejecución (sin pantalla, `Screen.dpi` 72) **y** de la prueba, que depende de `Screen.dpi` en vez de fijarlo. No se verificó que el Mac del PO con pantalla reporte ~254; es la inferencia por la que ahí pasan (AGENTS §6: PlayMode 746/746). Las copias diagnósticas eran temporales, no se commitearon y no se modificó ninguna prueba original, umbral ni criterio.
+
+**Propuesta de arreglo (sin aplicar, requiere dueño):**
+- Corto plazo: correr el gate oficial de PlayMode con la pantalla conectada y comprobar `Screen.dpi` en el log antes de dar un resultado por válido.
+- De fondo: hacer las dos pruebas herméticas. Un gancho de prueba para el DPI reportado en `GesturePreview` (como `InputAreaOverride`) y que ambas pruebas lo fijen (254), en lugar de leer `Screen.dpi`. La segunda debería además revisarse por qué solo cumple en torno a 254. Cambia pruebas protegidas y un gancho en Runtime: decisión de SC-PM/PO.
+
+Evidencia local, ignorada: `Logs/evidence/dpi-diagnosis/{branch,main}.xml`.
+
 ## Pendiente
 
-- Diagnóstico y dueño de los 2 fallos previos de PlayMode (hoy el gate oficial de PlayMode no cierra en verde con o sin esta PR).
+- Decisión sobre el arreglo de los 2 fallos previos de PlayMode (ver diagnóstico) y volver a correr el gate con pantalla conectada.
 - Revisión independiente de Codex (incluida «Textos») y revisión visual en captura o iPhone; el aspecto todavía no se vio en pantalla.
