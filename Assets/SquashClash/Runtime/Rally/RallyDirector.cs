@@ -94,6 +94,17 @@ namespace SquashClash.Runtime.Rally
         public double HumanServePauseElapsed => HumanServePause ? Math.Min(waited, WaitBetweenPoints) : 0;
         public bool HumanWaitingToServe => HumanServePause && humanInServeBox;
         private bool humanInServeBox;
+        // Rival serve ritual (view only): the pause before the rival's serve, its elapsed time, the box where the figure is drawn.
+        public bool RivalServePause => Active && Phase == RallyPhase.PointOver && Match != null && !Match.Finished && Match.Server == PlayerId.Rival;
+        public double PauseElapsed => Active && Phase == RallyPhase.PointOver ? Math.Min(waited, WaitBetweenPoints) : 0;
+        public Vector2 RivalServeBox => ServePlanner.BoxPosition(context, Match.Box);
+        private bool rivalDrawnInBox;
+        public bool RivalWaitingToServe => RivalServePause && rivalDrawnInBox;
+        public bool RivalServeRitualBall(out Vector3 ball)
+        {
+            ball=default;if(!RivalServePause||context==null)return false;
+            return RivalServeRitual.Sample(WaitBetweenPoints,PauseElapsed,RivalServeBox,(float)Params.ServeHandHeight,context.Physics.BallRadius,out ball);
+        }
         internal bool PlaceHumanInServeBoxEarly = true;
         public event Action RallyStarted;
         public event Action<PointResult> PointEnded;
@@ -226,6 +237,7 @@ namespace SquashClash.Runtime.Rally
         public void Rematch(){if(!Active)return;ResetScore();if(Match!=null)Match=NewMatch();BeginPoint();}
         private void BeginPoint()
         {
+            rivalDrawnInBox=false;
             pointCausal.Clear();
             if(pendingSprintFatigue.HasValue){var p=Params.Clone();p.HumanVolleySprintFatigue=pendingSprintFatigue.Value?1:0;Params=p;pendingSprintFatigue=null;}
             if(pendingStrongFatigue.HasValue){StrongFatigue=pendingStrongFatigue.Value;pendingStrongFatigue=null;}
@@ -579,7 +591,7 @@ namespace SquashClash.Runtime.Rally
         private void EndPoint(ReceptionResult? reception)
         {
             var rules=Rules;Phase=RallyPhase.PointOver;waited=0;hasPending=needDecision=false;
-            humanInServeBox = false;
+            humanInServeBox = false;rivalDrawnInBox = false;
             if(rules.Winner==PlayerId.Human)HumanPoints++;else if(rules.Winner==PlayerId.Rival)RivalPoints++;
             PointsPlayed++;
             // A point with no winner is replayed from the same box; the game ends once and stays ended.
@@ -608,8 +620,12 @@ namespace SquashClash.Runtime.Rally
                 Human.Teleport(ServePlanner.BoxPosition(context, Match.Box));
                 humanInServeBox = true;
             }
+            // Rival ritual: the rival FIGURE is drawn in its box (the simulated body keeps its own path); nothing moves.
+            if (RivalServePause && RivalServeRitual.Enabled && RivalServeRitual.Fits(WaitBetweenPoints) &&
+                !app.Clock.Paused && !PointEndFreeze.Active)
+                rivalDrawnInBox = true;
         }
-        private void PlaceBodies(){if(players!=null&&Human!=null)players.Place(Human.Position,Rival.Position);}
+        private void PlaceBodies(){if(players!=null&&Human!=null)players.Place(Human.Position,RivalWaitingToServe?RivalServeBox:Rival.Position);}
         [Serializable] private sealed class PointLine
         {public string winner,cause,reception,rallyParams,level,server,box,style,serveType;public int shots,humanPoints,rivalPoints,systemFaults;public bool autopilot,match,matchOver;public long seed;public CausalShotTrace[] causal;}
         private void WriteMetrics(PointResult r)

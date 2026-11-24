@@ -246,7 +246,7 @@ namespace SquashClash.Runtime.Visual
             if(strokeClock>=0){strokeClock+=dt;if(strokeClock>.9f)strokeClock=-1;}
             if(hopClock>=0){hopClock+=dt;if(hopClock>=SplitStepSeconds)hopClock=-1;}
             float hop=hopClock>=0?Mathf.Sin(Mathf.PI*hopClock/SplitStepSeconds):0;
-            bool waitingToServe = human && rally != null && rally.HumanWaitingToServe;
+            bool waitingToServe = rally != null && (human ? rally.HumanWaitingToServe : rally.RivalWaitingToServe);
             if (waitingToServe)
             {
                 move = backpedal = 0;

@@ -280,7 +280,7 @@ namespace SquashClash.Runtime.App
             GetComponent<ResumeOverlay>().Initialize(Host.Clock);
             ballView.Initialize(Host, Config.Physics.BallRadius);
             Host.Launch(Config);
-            gameObject.AddComponent<LegibilityAids>().Initialize(Host, Tuning, ballView);
+            var aids=gameObject.AddComponent<LegibilityAids>();aids.Initialize(Host, Tuning, ballView);
             var input=gameObject.AddComponent<SquashClash.Runtime.Input.TouchInputAdapter>();
             var reticle=new GameObject("First Shot aim").AddComponent<SquashClash.Runtime.Shot.AimReticleView>();
             reticle.transform.SetParent(transform,false);
@@ -290,6 +290,7 @@ namespace SquashClash.Runtime.App
             gameObject.AddComponent<SquashClash.Runtime.Shot.PracticeTask>().Initialize(this,shot);
             var practice=gameObject.AddComponent<SquashClash.Runtime.Shot.PracticeMode>();practice.Initialize(this,shot);
             var rally=gameObject.AddComponent<SquashClash.Runtime.Rally.RallyDirector>();rally.Initialize(this,shot,practice,placeholderPlayers);
+            gameObject.AddComponent<SquashClash.Runtime.Visual.RivalServeRitualView>().Initialize(this,rally,ballView,aids);
             userRally=rally;rally.RallyStarted+=OnUserRallyStarted;rally.PointEnded+=OnUserPointEnded;rally.ModeChanged+=OnUserModeChanged;
             var hud=gameObject.AddComponent<SquashClash.Runtime.Rally.RallyHud>();hud.Initialize(this,rally,header);
             gameObject.AddComponent<SquashClash.Runtime.Visual.ImpactFx>().Initialize(this,cameraRig);

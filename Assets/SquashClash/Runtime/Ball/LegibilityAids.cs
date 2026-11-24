@@ -23,6 +23,7 @@ namespace SquashClash.Runtime.Ball
         private readonly List<WallMark> marks = new List<WallMark>(6);
         private MaterialPropertyBlock block;
 
+        public System.Func<Vector3?> StandIn { get; set; }
         public void Initialize(BallSimulationHost host, TuningState tuning, BallView view)
         {
             this.host = host; this.tuning = tuning; this.view = view;
@@ -82,12 +83,7 @@ namespace SquashClash.Runtime.Ball
         }
         public void Tick(Vector3 ballRenderPosition, float realSeconds)
         {
-            shadow.transform.position = new Vector3(ballRenderPosition.x, .001f, ballRenderPosition.z);
-            // Experimental visual cue: smaller and lighter at height, retaining a visible minimum.
-            float height = Mathf.Max(0, ballRenderPosition.y - host.ActiveConfig.Physics.BallRadius);
-            float proximity = 1 / (1 + height * .4f);
-            shadow.transform.localScale = Vector3.one * (.085f + .085f * proximity);
-            block.SetColor("_BaseColor", new Color(0, 0, 0, BallShadowLook.Alpha(height))); shadow.SetPropertyBlock(block);
+            PlaceShadow(ballRenderPosition);
             // Own the trail's ages: Unity's automatic TrailRenderer clock cannot pause with SimClock.
             float ageSeconds = host.Clock.Paused ? 0 : Mathf.Max(0, realSeconds);
             for (int i = trailPoints.Count - 1; i >= 0; i--)
@@ -106,6 +102,15 @@ namespace SquashClash.Runtime.Ball
                 if (mark.Age >= 1.5f) { RemoveMark(i); continue; }
                 PaintMark(mark.Renderer, mark.Age); marks[i] = mark;
             }
+        }
+        private void PlaceShadow(Vector3 ballRenderPosition)
+        {
+            shadow.transform.position = new Vector3(ballRenderPosition.x, .001f, ballRenderPosition.z);
+            // Experimental visual cue: smaller and lighter at height, retaining a visible minimum.
+            float height = Mathf.Max(0, ballRenderPosition.y - host.ActiveConfig.Physics.BallRadius);
+            float proximity = 1 / (1 + height * .4f);
+            shadow.transform.localScale = Vector3.one * (.085f + .085f * proximity);
+            block.SetColor("_BaseColor", new Color(0, 0, 0, BallShadowLook.Alpha(height))); shadow.SetPropertyBlock(block);
         }
         private void ClearTrail() { trailPoints.Clear(); trail.positionCount = 0; }
         public void RecordContact(ContactEvent contact)
@@ -133,7 +138,15 @@ namespace SquashClash.Runtime.Ball
             var renderer = marks[index].Renderer; renderer.gameObject.SetActive(false); Destroy(renderer.gameObject); marks.RemoveAt(index);
         }
         private void ClearMarks() { while (marks.Count > 0) RemoveMark(marks.Count - 1); }
-        private void LateUpdate() { if (host != null) Tick(host.RenderPosition, Time.unscaledDeltaTime); }
+        private void LateUpdate()
+        {
+            if (host == null) return;
+            // Rival serve ritual: the shadow follows the drawn ritual ball and the real ball's trail is not drawn meanwhile.
+            var standIn = StandIn?.Invoke();
+            if (standIn.HasValue) { PlaceShadow(standIn.Value); trail.forceRenderingOff = true; return; }
+            trail.forceRenderingOff = false;
+            Tick(host.RenderPosition, Time.unscaledDeltaTime);
+        }
         private Material NewMaterial(string name, Color color)
         {
             var material = new Material(Resources.Load<Shader>("Legibility")) { name = name };
