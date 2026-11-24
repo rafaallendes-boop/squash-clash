@@ -305,6 +305,7 @@ namespace SquashClash.Runtime.Rally
                 else controller.SetNextVolley((t,bounce)=>ctx.VolleyFor(t,rules,positions,bounce,delay,version));
             }
             controller.SetNextReceptionFatigue(HumanReceptionFatigue);
+            controller.SetNextServeReceptionEarlyMs(context.ServeReceptionEarlyMs(PlayerId.Human,committed));
             // The human's arm is read at its exact contact step, inside the authoritative solve, so bodies must be advanced to it.
             if(context.Fatigue.Enabled)controller.SetNextStrikerFatigue(HumanStrikerArm);
             // The fixed-body contact planner reads the human from the launch configuration, as practice already does.

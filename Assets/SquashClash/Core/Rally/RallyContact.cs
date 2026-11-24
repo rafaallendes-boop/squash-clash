@@ -16,7 +16,7 @@ namespace SquashClash.Core.Rally
     public static class RallyContact
     {
         // deltaMs is the release offset from the T* the player was shown, in real perceived milliseconds.
-        public static ContactDecision Resolve(RallyContext context,ClockMap clock,Trajectory trajectory,ContactPlan plan,double presentedAtReal,double deltaMs)
+        public static ContactDecision Resolve(RallyContext context,ClockMap clock,Trajectory trajectory,ContactPlan plan,double presentedAtReal,double deltaMs,double earlyAllowanceMs=0)
         {
             if(context==null||clock==null)throw new ArgumentNullException(nameof(context));
             var timing=context.Timing;double target=0;
@@ -25,15 +25,15 @@ namespace SquashClash.Core.Rally
             var plans=new PresentedPlans();plans.Present(presentedAtReal,plan,target);
             // The contract subtracts the device offset from every release; a synthetic release adds it back.
             double release=Math.Max(presentedAtReal,target+deltaMs/1000+timing.LatencyCompMs/1000);
-            return ContactContract.Decide(release,plans,clock,trajectory,timing,false);
+            return ContactContract.Decide(release,plans,clock,trajectory,timing,false,earlyAllowanceMs);
         }
         // A release aimed at the volley's T* (deltaMs from it), judged by OpportunityContract.Select exactly like the human's: at or
         // before S against the volley, later against the bounce. usedVolley tells which plan the decision belongs to.
-        public static ContactDecision ResolveAimedVolley(RallyContext context,ClockMap clock,Trajectory trajectory,ContactPlan bounce,in VolleyOpportunity volley,double presentedAtReal,double deltaMs,out bool usedVolley)
+        public static ContactDecision ResolveAimedVolley(RallyContext context,ClockMap clock,Trajectory trajectory,ContactPlan bounce,in VolleyOpportunity volley,double presentedAtReal,double deltaMs,out bool usedVolley,double earlyAllowanceMs=0)
         {
             if(context==null||clock==null)throw new ArgumentNullException(nameof(context));
             usedVolley=false;var timing=context.Timing;var v=volley.Plan;
-            if(!volley.Exists)return Resolve(context,clock,trajectory,bounce,presentedAtReal,deltaMs);
+            if(!volley.Exists)return Resolve(context,clock,trajectory,bounce,presentedAtReal,deltaMs,earlyAllowanceMs);
             if(!clock.TrySimToReal(v.TStarStep,0,out double target))
                 return new ContactDecision(ShotResult.NotEvaluable,FailKind.None,0,-1,false,false,v.Version,presentedAtReal,0,0,0,reason:"target-time-unmapped");
             double release=Math.Max(presentedAtReal,target+deltaMs/1000+timing.LatencyCompMs/1000);
@@ -43,7 +43,7 @@ namespace SquashClash.Core.Rally
             if(!usedVolley&&plan.Exists&&plan.TStarStep>=0&&!clock.TrySimToReal(plan.TStarStep,0,out planTarget))
                 return new ContactDecision(ShotResult.NotEvaluable,FailKind.None,0,-1,false,false,plan.Version,presentedAtReal,0,0,0,reason:"target-time-unmapped");
             plans.Present(presentedAtReal,plan,planTarget);
-            return ContactContract.Decide(release,plans,clock,trajectory,timing,false);
+            return ContactContract.Decide(release,plans,clock,trajectory,timing,false,earlyAllowanceMs);
         }
         public static CausalShotResult Solve(RallyContext context,CausalReference reference,BodyFrame body,Vector3 point,Vector2 aim,float power)
             =>Solve(context,reference,body,point,aim,power,FatigueArm.None);

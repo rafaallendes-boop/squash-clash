@@ -225,8 +225,9 @@ namespace SquashClash.Core.Rally
             bool useVolley=!chosen.Exists&&shot.Volley&&plan.Volley.Exists;
             // A release aimed at the volley is judged like the human's: by the opportunity whose segment holds it (spec 7.1.3 case 14).
             // A chosen v2.x volley is the only opportunity left, judged against its own plan.
-            var decision=chosen.Exists?RallyContact.Resolve(context,clock,trajectory,chosen.Plan,now,shot.DeltaMs):useVolley?RallyContact.ResolveAimedVolley(context,clock,trajectory,plan.Contact,plan.Volley,now,shot.DeltaMs,out useVolley)
-                :RallyContact.Resolve(context,clock,trajectory,plan.Contact,now,shot.DeltaMs);
+            double earlyAllowance=context.ServeReceptionEarlyMs(who,Rules);
+            var decision=chosen.Exists?RallyContact.Resolve(context,clock,trajectory,chosen.Plan,now,shot.DeltaMs,earlyAllowance):useVolley?RallyContact.ResolveAimedVolley(context,clock,trajectory,plan.Contact,plan.Volley,now,shot.DeltaMs,out useVolley,earlyAllowance)
+                :RallyContact.Resolve(context,clock,trajectory,plan.Contact,now,shot.DeltaMs,earlyAllowance);
             if(chosen.Exists)useVolley=true;
             var contact=chosen.Exists?chosen.Plan:useVolley?plan.Volley.Plan:plan.Contact;
             if(contact.Exists&&contact.TStarStep>=0)

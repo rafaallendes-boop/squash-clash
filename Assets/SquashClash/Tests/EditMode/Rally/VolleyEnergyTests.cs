@@ -31,12 +31,12 @@ namespace SquashClash.Core.Tests.Rally
         {
             Assert.That(new RallyParams().VolleyEnergyCost,Is.EqualTo(2.0));
             // Rival styles (19 nov) add the Style* fields; without them the hashes below are the ones this test always fixed.
-            Assert.That(Projection(f=>f.Name!="VolleyEnergyCost"&&!f.Name.StartsWith("Style",StringComparison.Ordinal)&&!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)&&!f.Name.StartsWith("Boast",StringComparison.Ordinal)),Is.EqualTo("6a7b329a7b85"),"without the new field the hash is the volley v1 one");
-            Assert.That(Projection(f=>!f.Name.StartsWith("Style",StringComparison.Ordinal)&&!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)&&!f.Name.StartsWith("Boast",StringComparison.Ordinal)),Is.EqualTo("5cdbb01e4621"));
+            Assert.That(Projection(f=>f.Name!="HumanServeEarlyMs"&&f.Name!="VolleyEnergyCost"&&!f.Name.StartsWith("Style",StringComparison.Ordinal)&&!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)&&!f.Name.StartsWith("Boast",StringComparison.Ordinal)),Is.EqualTo("6a7b329a7b85"),"without the new field the hash is the volley v1 one");
+            Assert.That(Projection(f=>f.Name!="HumanServeEarlyMs"&&!f.Name.StartsWith("Style",StringComparison.Ordinal)&&!f.Name.StartsWith("HumanVolley",StringComparison.Ordinal)&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)&&!f.Name.StartsWith("Boast",StringComparison.Ordinal)),Is.EqualTo("5cdbb01e4621"));
             var defaults=ConfigFixtures.Default();
             Assert.That(defaults.Hash,Is.EqualTo("207da8f2c636"));Assert.That(defaults.Ordered.Count,Is.EqualTo(132));
             Assert.That(EffectiveConfig.From(defaults).SimulationKey,Is.EqualTo("166a96e319c7"));
-            TestContext.WriteLine("VOLLEY_ENERGY_RALLYPARAMS_HASH="+new RallyParams().Hash+" projection="+Projection(f=>f.Name!="VolleyEnergyCost")+" defaults="+defaults.Hash);
+            TestContext.WriteLine("VOLLEY_ENERGY_RALLYPARAMS_HASH="+new RallyParams().Hash+" projection="+Projection(f=>f.Name!="HumanServeEarlyMs"&&f.Name!="VolleyEnergyCost")+" defaults="+defaults.Hash);
         }
         [Test] public void Volley_ChargesItsCostOnTopOfTheStroke_AndRecordsIt()
         {

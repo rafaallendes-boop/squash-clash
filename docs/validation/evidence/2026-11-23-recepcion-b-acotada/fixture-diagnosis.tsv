@@ -1,0 +1,16 @@
+field	observed
+planExists	False
+planReason	unreachable
+serve	Drive
+kInStep	0
+kInFraction	0.0
+tStarStep	0
+kInReal	2.2345443791519273
+launchReal	2.2345443791519273
+observedReal	3.8755700201775625
+minHeight	0.30000001192092896
+maxHeightAfterFirstBounce	0.29889389872550964
+requiredBounces	1
+firstFloorStep	128
+rawEvidenceSha256	e5fa0b7fdd62e0e8ca78384c4c6e2e8091635290ae42757510ca545a87b8ea84
+rawEvidencePath	Logs/evidence/serve-reception-margin/diagnosis-r3.json
