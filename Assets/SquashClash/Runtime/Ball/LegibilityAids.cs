@@ -87,7 +87,7 @@ namespace SquashClash.Runtime.Ball
             float height = Mathf.Max(0, ballRenderPosition.y - host.ActiveConfig.Physics.BallRadius);
             float proximity = 1 / (1 + height * .4f);
             shadow.transform.localScale = Vector3.one * (.085f + .085f * proximity);
-            block.SetColor("_BaseColor", new Color(0, 0, 0, .22f + .40f * proximity)); shadow.SetPropertyBlock(block);
+            block.SetColor("_BaseColor", new Color(0, 0, 0, BallShadowLook.Alpha(height))); shadow.SetPropertyBlock(block);
             // Own the trail's ages: Unity's automatic TrailRenderer clock cannot pause with SimClock.
             float ageSeconds = host.Clock.Paused ? 0 : Mathf.Max(0, realSeconds);
             for (int i = trailPoints.Count - 1; i >= 0; i--)
