@@ -51,7 +51,12 @@ Con aprobación del PO (23 nov 22:14: «Si, pero has todo con Claude.»), cambi�
 
 ## Puertas finales
 
-Se corren sobre el commit que trae este informe y se registran en el commit siguiente, que solo cambia documentación.
+Sobre `4e5ef77` (25 ms; Mac del PO, lock de Unity, árbol limpio antes y después). El commit siguiente solo cambia este informe.
+
+- EditMode **1027/1027**. PlayMode **817/817**, con las tres pruebas de `ZServeReceptionMarginTests` aprobadas. Las dos pruebas de `Screen.dpi` también pasaron, pero no se dan por resueltas: siguen pendientes de `fix/hermetic-dpi-tests`.
+- AutoQA V, T3 y volea: **PASS, nivel 1**, 102/102 cada una, 18 PASS, 0 FAIL/INCONCLUSIVE/NOT_EVALUATED, canario FAIL esperado, determinismo idéntico y `dirty=false`.
+- check-release **OK** (build 1160, dev y prod).
+- `device.env` se copió sin cambios desde `sc-install-518f9c3` (SHA-256 idéntico, ignorado por git) y se borró al terminar.
 
 ## Nota para el PO (observación 3 de la revisión)
 
