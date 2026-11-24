@@ -188,7 +188,8 @@ namespace SquashClash.Runtime.Tests
             {var e=root.Q(name);Assert.That(Shown(e),Is.True,name);Assert.That(e.worldBound.Overlaps(FrontisRect()),Is.False,name);}
             Assert.That(root.Q("sling-protocol-guide").worldBound.yMax,Is.LessThanOrEqualTo(root.Q("shot-overlay").worldBound.yMax),"Guide must fit its visible background");
             root.Q<Label>("build-label").text="Editor · D2 sintético";
-            float mm=SquashClash.Runtime.Input.ScreenMetrics.MmPerPx(Screen.dpi,460,out _);
+            // Hermetic density: 254 dpi instead of the host Screen.dpi (PO approval, 24 nov).
+            float mm=SquashClash.Runtime.Input.ScreenMetrics.MmPerPx(254,460,out _);
             float y=camera.WorldToScreenPoint(new Vector3(3.2f,2.2f,0)).y-12/mm;
             var model=new SquashClash.Core.Shot.SlingModel(SquashClash.Core.Shot.SlingSettings.From(app.Tuning.Applied),app.Config.Court,3.2f,SafeArea,mm);
             System.Action<double,float,SquashClash.Core.Shot.TouchPhaseKind> send=(t,py,phase)=>model.Push(new SquashClash.Core.Shot.TouchSample(1,phase,new Vector2(Width/2,py),t,0));

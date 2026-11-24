@@ -37,7 +37,8 @@ namespace SquashClash.Runtime.Tests
         {now=start+dt;InputSystem.QueueStateEvent(screen,new TouchState{touchId=id,phase=phase,position=new Vector2(x,y)},now);InputSystem.Update();}
         [UnityTest] public IEnumerator Main_WiresAimAndPowerWithoutChangingBallAuthority()
         {
-            RequirePreview();var before=app.Host.Current;var prediction=app.Host.Prediction;Send(Phase.Began,0);Send(Phase.Moved,.02,240);
+            // Hermetic density: 254 dpi instead of the host Screen.dpi (PO approval, 24 nov).
+            RequirePreview();preview.ReportedDpiOverride=254;var before=app.Host.Current;var prediction=app.Host.Prediction;Send(Phase.Began,0);Send(Phase.Moved,.02,240);
             Assert.That(preview.Active,Is.True);Assert.That(preview.Model.Aim.x,Is.LessThan(before.Position.x));
             Send(Phase.Moved,.04,280);Send(Phase.Moved,.06,320);Send(Phase.Ended,.08,360);
             Assert.That(preview.Active,Is.False);Assert.That(preview.Outcome,Is.EqualTo(GestureOutcome.Swing));Assert.That(preview.Power.DistinctSamples,Is.GreaterThanOrEqualTo(4));

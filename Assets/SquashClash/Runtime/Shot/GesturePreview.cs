@@ -50,6 +50,8 @@ namespace SquashClash.Runtime.Shot
         public int WindowSampleCount=>powerWindow.Count;
         public float MmPerPx=>scale;
         public DpiSource DensitySource=>dpiSource;
+        /// <summary>Test hook: when set, replaces Screen.dpi as the reported density captured at gesture begin. Never set in production.</summary>
+        public float? ReportedDpiOverride {get;set;}
 
         public void Initialize(AppBootstrap app,TouchInputAdapter input,AimReticleView view)
         {
@@ -88,7 +90,7 @@ namespace SquashClash.Runtime.Shot
                     if(IsGestureKey(def.Key))source=source.With(def.Key,app.Tuning.Applied.Get(def.Key));
                 GestureConfig=source;primary=sample.FingerId;gestureLaunch=launchSerial;
                 beganTempo=app.Clock.Tempo;beganSlowMotion=app.Clock.DebugSlowMotion;
-                reportedDpi=Screen.dpi;screenWidth=Screen.width;screenHeight=Screen.height;
+                reportedDpi=ReportedDpiOverride??Screen.dpi;screenWidth=Screen.width;screenHeight=Screen.height;
                 scale=ScreenMetrics.MmPerPx(reportedDpi,(float)source.Get("input.fallbackDpi"),out dpiSource);
                 tracker=new GestureTracker((float)source.Get("gesture.tapMaxMm"),(float)source.Get("gesture.tapMaxMs"),(float)source.Get("gesture.cancelRadiusMm"),scale);
                 M24=source.GetInt("gesture.control")==2?CreateM24(source):null;
