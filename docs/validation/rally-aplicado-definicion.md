@@ -30,9 +30,9 @@ Se agrupan los eventos en **puntos**: cada `rally-point` cierra el punto formado
 
 Por cada `LaunchId` se toma el **registro `shot` del humano**, es decir, el `shot` cuyo `Reason` **no** es `rival-contact` (ese valor es el golpe del rival, `RallyDirector.cs`). Si hubiera más de uno para el mismo `LaunchId`, vale el último. En los dos archivos revisados nunca hubo más de uno.
 
-### 1.3 Qué se excluye: la devolución del saque del rival
+### 1.3 Qué se excluye: la recepción del saque del rival
 
-En un punto con `server = Rival`, el **primer lanzamiento** (el `LaunchId` más bajo entre los eventos `shot`, `shot-opportunity`, `shot-order` y `shot-opportunity-choice` del punto) es la **recepción del saque**. No es rally: pertenece a la métrica de devolución del saque (11/11 en la build 1174, 4/13 en la 1150). Se excluye del rally aunque sea un golpe del humano.
+En un punto con `server = Rival`, el **primer lanzamiento** (el `LaunchId` más bajo entre los eventos `shot`, `shot-opportunity`, `shot-order` y `shot-opportunity-choice` del punto) es la **recepción del saque**. No es rally: pertenece a la métrica de recepción del saque (11/11 en la build 1174, 4/13 en la 1150; los informes la llaman «devolución del saque», y en este documento se usa siempre «recepción»). Se excluye del rally aunque sea un golpe del humano.
 
 En un punto con `server = Human` no se excluye ningún lanzamiento: el saque propio no genera un `shot` del humano (en el archivo de la 1174, el `LaunchId` 3 solo tiene el `rival-contact`, línea 32) y todos los `shot` del humano son respuesta a un golpe del rival.
 
@@ -49,7 +49,7 @@ En un punto con `server = Human` no se excluye ningún lanzamiento: el saque pro
 - **Qué hay en el denominador y no en el numerador:**
   - `Reason = before-k-in` (`Result` `Failed`, `Fail` `Air`): el humano soltó antes de la ventana y no hubo margen. Entra en A y B. (No apareció en el rally de la 1174; sí 3 en el de la 1150.)
   - `Reason = after-k-out` (`Failed`, `Fail` `Late`): soltó después de cerrada la ventana. Entra en A y B.
-- **`NoOrder`** (`Reason = reception-ended-without-order`): había plan de golpe o volea, la recepción se cerró y el humano no completó ninguna orden. **`Unreachable`** (mismo `Reason`): no había plan ni volea, es decir, la pelota no era alcanzable. Los dos los emite `ShotController.CloseReception` cuando no se consumió ningún intento. **Solo entran en A.** Un `NoOrder` no es un intento fallido: el log no dice si el jugador quiso golpear, porque la intención no se registra.
+- **`NoOrder`** (`Reason = reception-ended-without-order`): había plan de golpe o volea, la recepción se cerró y el humano no completó ninguna orden. **`Unreachable`** (mismo `Reason`): no había plan ni volea, es decir, la pelota no era alcanzable. Normalmente los emite `ShotController.CloseReception` cuando no se consumió ningún intento, con ese `Reason`. `ContactContract.Decide` también puede devolver `NoOrder` (`Reason = no-ended`) y `Unreachable` (con el `Reason` del plan, o `no-opportunity`); la variante B excluye por `Result`, no por `Reason`, así que esos casos se tratan igual y **el recuento no cambia**. En los datos revisados todos llevan `reception-ended-without-order`. **Solo entran en A.** Un `NoOrder` no es un intento fallido: el log no dice si el jugador quiso golpear, porque la intención no se registra.
 - **Qué no es rally en ninguna variante:** la recepción del saque del rival (§1.3), el golpe del rival (`rival-contact`), los golpes de partidos con `autopilot` y los puntos fuera de `match`. Los dos archivos revisados solo tienen puntos con `autopilot = false` y `match = true`.
 - **Alcance de los datos:** se limita a eventos posteriores a un `match-start`. El archivo de la 1174 empieza con unos 3 minutos de juego libre que no entran.
 
@@ -65,6 +65,8 @@ Archivo `metrics-20261124T175940193-7c1ea13776bc4d29bbe08cc0aaf81b49.jsonl` (SHA
 | Variante B («con intento») | 25 | 24 | 24 `applied` + 1 `after-k-out` |
 
 Por partido: partido 1, A 16/21 y B 16/16; partido 2, A 8/16 y B 8/9.
+
+**Nota de datos: los 12 casos fueron deliberados.** Rafael aclaró (24 nov, 15:35) que las 9 recepciones sin golpe y las 3 inalcanzables de la 1174 fueron a propósito, para perder el punto y probar la volea de saque. El log no lo registra (la intención no se registra). Por eso el porcentaje que las incluye (24/37, variante A) **no mide el rendimiento del jugador en el peloteo**. Esta nota describe los datos; no cambia la definición ni ninguna cifra.
 
 **El 24/25 que se informó es la variante B.** La variante A da 24/37 (64,9 %); ambas están en la tabla del informe de métricas de la 1174. Ese informe llama al 24/25 «misma definición, con intento», pero la reconstrucción del 22/28 (§2.2) es la A, así que «misma definición» solo vale si se entiende «misma, salvo que se dejan fuera las recepciones sin intento».
 
@@ -100,7 +102,7 @@ L182  shot  LaunchId 16  Reason applied  Result Valid  Applied true   <- segundo
 ```
 Ambos son aplicados, pero solo el de la línea 182 entra en el 24/25.
 
-**3. Golpe del rival (se excluye).** Línea 172, el rival responde a la devolución de la línea 169:
+**3. Golpe del rival (se excluye).** Línea 172, el rival responde al golpe del humano de la línea 169:
 ```
 shot  LaunchId 15  Reason rival-contact  Result Valid  Applied true
 ```
