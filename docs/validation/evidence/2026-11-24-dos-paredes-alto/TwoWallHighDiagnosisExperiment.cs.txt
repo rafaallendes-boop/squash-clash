@@ -1,0 +1,125 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using NUnit.Framework;
+using SquashClash.Core.Config;
+using SquashClash.Core.Court;
+using SquashClash.Core.Rally;
+using SquashClash.Core.Shot;
+using SquashClash.Core.Simulation;
+using UnityEngine;
+namespace SquashClash.Experiments.EditMode
+{
+    // Diagnosis only (24 nov 2026, «dos paredes a veces sale alto»). Explicit, outside regression and AutoQA. Not versioned as code.
+    // Uses DefaultPreset (P0-calib-1 inherits every physics.*, shot.* and causal.* value) and the production BoastSolver and P2, unchanged.
+    //  A. Replay: the logged contact position and velocity of each iPhone boast through P2; contacts, first bounce, apex after it.
+    //  B. Sensitivity at each logged contact: the same side depth and speed, side height swept; front-wall height and bounce.
+    //  C. Grid: contacts x side depth x tap height x power through the boast pace, no causal vectors (ideal timing).
+    public sealed class TwoWallHighDiagnosisExperiment
+    {
+        private static readonly CultureInfo C = CultureInfo.InvariantCulture;
+        private static string F(double v) => v.ToString("0.###", C);
+        private static float P(string s) => float.Parse(s, C);
+
+        private struct Flight { public bool Valid; public string Seq; public float SideZ, SideY, FrontX, FrontY, ApexAfterFront, BounceX, BounceZ, BounceT, ApexAfterBounce, BackY, Bounce2Z; public bool Back; }
+
+        private static Flight Fly(Vector3 from, Vector3 v, RallyContext ctx)
+        {
+            var f = new Flight { SideY = float.NaN, FrontY = float.NaN, BounceZ = float.NaN, BackY = float.NaN, Bounce2Z = float.NaN, ApexAfterFront = float.NaN, ApexAfterBounce = float.NaN };
+            var seq = new List<string>(); int stage = 0; float apex = float.MinValue, apex2 = float.MinValue; int floors = 0;
+            using (var sim = ctx.Factory.Create(ctx.Physics, ctx.Court))
+            {
+                sim.Reset(new BallState { Position = from, Velocity = v });
+                var contacts = new List<ContactEvent>(4);
+                for (int step = 1; step <= ctx.Physics.StepHz * 8 && floors < 2; step++)
+                {
+                    contacts.Clear(); sim.Step(contacts);
+                    foreach (var h in contacts)
+                    {
+                        if (h.Persistent) { floors = 2; break; }
+                        seq.Add(h.Surface.ToString().Replace("Wall", ""));
+                        if ((h.Surface == SurfaceId.LeftWall || h.Surface == SurfaceId.RightWall) && stage == 0) { f.SideZ = h.Point.z; f.SideY = h.Point.y; stage = 1; }
+                        else if (h.Surface == SurfaceId.FrontWall && float.IsNaN(f.FrontY)) { f.FrontX = h.Point.x; f.FrontY = h.Point.y; stage = 2; }
+                        else if (h.Surface == SurfaceId.BackWall && floors < 2 && !f.Back) { f.Back = true; f.BackY = h.Point.y; }
+                        else if (h.Surface == SurfaceId.Floor)
+                        {
+                            floors++;
+                            if (floors == 1) { f.BounceX = h.Point.x; f.BounceZ = h.Point.z; f.BounceT = step / (float)ctx.Physics.StepHz; }
+                            else f.Bounce2Z = h.Point.z;
+                        }
+                    }
+                    float y = sim.State.Position.y;
+                    if (stage == 2 && floors == 0) apex = Math.Max(apex, y);
+                    if (floors == 1) apex2 = Math.Max(apex2, y);
+                }
+            }
+            f.Seq = string.Join(">", seq.Take(7)); f.ApexAfterFront = apex; f.ApexAfterBounce = apex2;
+            return f;
+        }
+        private static string Row(Flight f) => string.Join("\t", f.Seq, F(f.SideZ), F(f.SideY), F(f.FrontX), F(f.FrontY), F(f.ApexAfterFront), F(f.BounceX), F(f.BounceZ), F(f.BounceT), F(f.ApexAfterBounce), f.Back, F(f.BackY), F(f.Bounce2Z));
+        private const string FlightHeader = "seq\tsideZ\tsideY\tfrontX\tfrontY\tapexAfterFront\tbounceX\tbounceZ\tbounceT\tapexAfterBounce\tbackWall\tbackY\tbounce2Z";
+
+        [Test, Explicit, Category("Experiments"), Timeout(3600000)]
+        public void Run()
+        {
+            var preset = PresetCodec.LoadDefault(File.ReadAllText(Path.Combine(Application.dataPath, "SquashClash/Runtime/Resources/DefaultPreset.json")));
+            Assert.That(preset.Hash, Is.EqualTo("207da8f2c636")); Assert.That(preset.Ordered.Count, Is.EqualTo(132));
+            var factory = new AnalyticBallSimulationFactory(UnityEngine.Physics.bounceThreshold);
+            var ctx = new RallyContext(EffectiveConfig.From(preset), new RallyParams(), factory); var court = ctx.Court; float r = ctx.Physics.BallRadius; float fp = (float)ctx.Params.FootprintRadius;
+            string input = Environment.GetEnvironmentVariable("SC_TWH_INPUT"); Assert.That(File.Exists(input), "SC_TWH_INPUT");
+            string root = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
+            string dir = Path.Combine(root, "Logs/experiments/two-wall-high/" + (Environment.GetEnvironmentVariable("SC_TWH_RUN") ?? "run01"));
+            Assert.That(Directory.Exists(dir), Is.False, "Never overwrite evidence."); Directory.CreateDirectory(dir);
+            var utf8 = new UTF8Encoding(false);
+            var lines = File.ReadAllLines(input).Skip(1).Where(l => l.Trim().Length > 0).Select(l => l.Split('\t')).ToList();
+
+            using (var a = new StreamWriter(Path.Combine(dir, "a-replay.tsv"), false, utf8))
+            using (var b = new StreamWriter(Path.Combine(dir, "b-sensitivity.tsv"), false, utf8))
+            {
+                a.WriteLine("id\tlogFrontX\tlogFrontY\t" + FlightHeader);
+                b.WriteLine("id\tcase\tsideZ\tsideYRequested\tspeed\tsolved\treason\tusedY\t" + FlightHeader);
+                foreach (var c in lines)
+                {
+                    var from = new Vector3(P(c[1]), P(c[2]), P(c[3])); var v = new Vector3(P(c[4]), P(c[5]), P(c[6]));
+                    a.WriteLine(c[0] + "\t" + c[14] + "\t" + c[15] + "\t" + Row(Fly(from, v, ctx)));
+                    if (c[13] != "1") continue;
+                    var wall = (SurfaceId)Enum.Parse(typeof(SurfaceId), c[7]); float z = P(c[8]), usedY = P(c[9]), tapY = P(c[10]), speed = P(c[11]);
+                    void Probe(string label, float y, float s)
+                    {
+                        var side = new SideAim(wall, z, y);
+                        var sol = BoastSolver.Solve(from, side, s, ctx.VMin, ctx.VCap, court, factory, ctx.Physics, fp, out var info);
+                        var fl = sol.Solved ? Fly(from, sol.Velocity, ctx) : new Flight { Seq = "-", SideZ = float.NaN, SideY = float.NaN, FrontX = float.NaN, FrontY = float.NaN, ApexAfterFront = float.NaN, BounceX = float.NaN, BounceZ = float.NaN, BounceT = float.NaN, ApexAfterBounce = float.NaN, BackY = float.NaN, Bounce2Z = float.NaN };
+                        b.WriteLine(string.Join("\t", c[0], label, F(z), F(y), F(s), sol.Solved, info.Reason, F(info.Used.Y), Row(fl)));
+                    }
+                    Probe("logged-used", usedY, speed);
+                    Probe("tap-no-causal", tapY, speed);
+                    for (float y = .6f; y <= 2.61f; y += .2f) Probe("sweep", y, speed);
+                    foreach (float k in new[] { .5f, .75f }) Probe("speedx" + F(k), usedY, Math.Max(ctx.VMin, speed * k));
+                }
+            }
+            // C. Grid with ideal timing: contacts near the left wall (mirror symmetric), back quarter and mid court; the side point ahead of the contact.
+            using (var g = new StreamWriter(Path.Combine(dir, "c-grid.tsv"), false, utf8))
+            {
+                g.WriteLine("cx\tcy\tcz\tsideZ\ttapY\tpower\tpaceSpeed\tsolved\treason\tusedY\t" + FlightHeader);
+                foreach (float off in new[] { .5f, 1.2f, 2.5f })
+                    foreach (float cz in new[] { 4.5f, 6.5f, 8.5f })
+                        foreach (float ahead in new[] { .6f, 1.5f, 3f, 5f })
+                            foreach (float tapY in new[] { .6f, .9f, 1.2f, 1.5f, 1.8f, 2.1f, 2.4f })
+                                foreach (float pw in new[] { .3f, .5f, .75f, 1f })
+                                {
+                                    float sz = cz - ahead; if (sz < .2f) continue;
+                                    if (tapY >= SideAim.OutEdge(court, sz)) continue;
+                                    var from = new Vector3(court.Width - off, .5f, cz); var side = new SideAim(SurfaceId.LeftWall, sz, tapY);
+                                    var pace = ShotPace.Boast(pw, from, side, court, r, ctx.Pace);
+                                    var sol = BoastSolver.Solve(from, side, pace.Speed, ctx.VMin, ctx.VCap, court, factory, ctx.Physics, fp, out var info);
+                                    var fl = sol.Solved ? Fly(from, sol.Velocity, ctx) : default;
+                                    g.WriteLine(string.Join("\t", F(from.x), F(from.y), F(cz), F(sz), F(tapY), F(pw), F(pace.Speed), sol.Solved, info.Reason, F(info.Used.Y), sol.Solved ? Row(fl) : "-"));
+                                }
+            }
+            TestContext.WriteLine("written " + dir);
+        }
+    }
+}
