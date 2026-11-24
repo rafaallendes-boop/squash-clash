@@ -32,7 +32,7 @@ namespace SquashClash.Runtime.Shot
         private Func<long,bool,FatigueArm> nextStrikerFatigue,strikerFatigue;
         // Only Rally/Match call this, so only their shot events carry f_r; practice, SL and AutoQA keep the main schema.
         public void SetNextReceptionFatigue(double factor){nextReceptionFatigue=factor;nextRecordsFatigue=true;}
-        // Presentation only: this reception is the rival's serve (the caption «Espera el bote» is shown only then).
+        // Presentation only: this reception is the rival's serve (the caption on the white ring is shown only then).
         public void SetNextReceptionServe(bool serve){nextServe=serve;}
         public bool ServeReception {get;private set;}
         private bool nextServe;
@@ -451,12 +451,16 @@ namespace SquashClash.Runtime.Shot
                 PresentCurrentPlan();
             }
         }
-        // Presentation only: feeds the ring the amber offer's window (stub).
-        public void UpdateRingClosing(){}
+        // Presentation only (24 nov): while the amber offer is shown and not chosen, the ring closes over its tap window; otherwise no closing.
+        public void UpdateRingClosing()
+        {
+            if(app!=null&&VolleyShown&&!VolleyCommitted&&TryVolleyWindow(out double from,out double until))ring.SetClosingWindow(from,until);
+            else ring.SetClosingWindow(0,0);
+        }
         private void LateUpdate()
         {
             ProcessPending();if(app==null)return;
-            ring.Tick(Time.realtimeSinceStartupAsDouble);notes.SetVisible(app.Tuning.Applied.GetBool("timing.showNotes"));
+            UpdateRingClosing();ring.Tick(Time.realtimeSinceStartupAsDouble);notes.SetVisible(app.Tuning.Applied.GetBool("timing.showNotes"));
         }
         [Serializable] private sealed class LaunchTiming
         {public long launchId;public int planVersion,aidLevel;public string hash;public bool hasPlan,hasFront,hasBounce;public double launchReal,frontReal,bounceReal,kInReal,kOutReal,targetReal,plannerCostMs;}

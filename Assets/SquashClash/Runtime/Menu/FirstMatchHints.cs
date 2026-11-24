@@ -43,7 +43,7 @@ namespace SquashClash.Runtime.Menu
                     return where == HintWhere.Guide
                         ? "Sacas tú: toca el frontis antes de que se acabe la barra. Si no tocas, sale un globo."
                         : "Cuando saques tú, toca el frontis durante la pausa: arriba sale un globo; abajo, un saque rápido.";
-                case HintId.Volley: return "Anillo ámbar: toca y volea antes del bote.";
+                case HintId.Volley: return SquashClash.Runtime.Shot.ReceptionRule.Full;
                 case HintId.Boast: return "Toca la pared lateral para jugar un dos paredes.";
                 default: return "Pared lateral cerca de ti: la pelota cruza al otro lado.";
             }

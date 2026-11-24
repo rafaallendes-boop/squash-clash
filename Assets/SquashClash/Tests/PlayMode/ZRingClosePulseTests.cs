@@ -132,9 +132,13 @@ namespace SquashClash.Runtime.Tests
         }
         private float Radius=>GameObjectLine().GetPosition(0).magnitude;
         private LineRenderer GameObjectLine()=>ring.GetComponentsInChildren<LineRenderer>(true).Single(r=>r.name=="Converging ring");
+        private void StartRally()
+        {
+            Assert.That(rally.StartMode(),Is.True);Assert.That(controller.Volley.Exists,Is.True,controller.Volley.Reason);
+        }
         [Test] public void A5_TheUnchosenAmberRingNeverGrowsInsideItsWindow_AndAChosenOneFollowsTheImpactCue()
         {
-            StartRivalServe();var radii=new List<float>();bool chose=false;float afterChoice=-1,cueAfter=-1;
+            StartRally();var radii=new List<float>();bool chose=false;float afterChoice=-1,cueAfter=-1;
             for(int i=0;i<900&&!controller.AttemptConsumed;i++)
             {
                 Frame();
