@@ -50,7 +50,7 @@ namespace SquashClash.Runtime.Menu
             "Sin levantar el dedo, tira hacia abajo: mientras más tiras, más fuerte sale el golpe. Suelta para pegar. Si te arrepientes, vuelve a subir el dedo hasta donde lo apoyaste y suelta: no pegas.",
             "Cuando la pelota viene hacia ti aparece un triángulo donde le vas a pegar y un anillo que se achica. Suelta justo cuando el anillo calce dentro del triángulo. Tienes un solo intento por pelota.",
             SquashClash.Runtime.Shot.ReceptionRule.Full,
-            "En el rally, toca la pared lateral que ves: la pelota pega primero en ella y después en el frontis, la pared del frente. Si tocas cerca de donde vas a pegar, cruza al otro lado. Tócala bajo: si tocas alto, pega alto en el frontis y puede quedar larga. Mientras tiras, una marca punteada te muestra más o menos dónde va a pegar. No vale en el saque.",
+            "Toca la pared lateral: la pelota pega ahí y luego en el frontis (frente). Tócala bajo: si no, pega alto y puede quedar larga. Una marca muestra más o menos dónde. No en el saque.",
             "Cuando sacas tú, toca el frontis: arriba de la línea sale globo, abajo sale drive. Si no tocas, sale globo."
         };
         private VisualElement tutorial,tutorialArt,tutorialResults;private Label tutorialStep,tutorialTitle,tutorialBody;private Button tutorialNext;
