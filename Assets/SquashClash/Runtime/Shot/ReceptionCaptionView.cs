@@ -3,12 +3,12 @@ using UnityEngine;
 using UnityEngine.UIElements;
 namespace SquashClash.Runtime.Shot
 {
-    // «Espera el bote», on the white (bounce) ring of the human's reception of the rival's serve (PO, 23 nov). Pure view: it reads the
+    // The white-ring half of the rule («Anillo blanco: espera el bote y golpea.», ReceptionRule.White), on the white (bounce) ring of the human's reception of the rival's serve (PO, 23 nov). Pure view: it reads the
     // ring and the controller and never touches a clock, a timing window, a contact or the ball. Its look lives in Visual/Hud.uss
     // (.sc-ring-caption): a small glass pill above the ring's outer circle, kept inside the panel.
     public sealed class ReceptionCaptionView : MonoBehaviour
     {
-        public const string BounceText="Espera el bote";
+        public const string BounceText=ReceptionRule.White;
         private const float Gap=.05f,Side=8,FallbackHalfWidth=60;
         private ShotController controller;private TimingRingView ring;private VisualElement root;private Label label;
         public string Text=>BounceText;
