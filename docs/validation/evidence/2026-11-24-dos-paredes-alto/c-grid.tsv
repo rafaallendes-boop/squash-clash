@@ -1,0 +1,925 @@
+cx	cy	cz	sideZ	tapY	power	paceSpeed	solved	reason	usedY	seq	sideZ	sideY	frontX	frontY	apexAfterFront	bounceX	bounceZ	bounceT	apexAfterBounce	backWall	backY	bounce2Z
+5.9	0.5	4.5	3.9	0.6	0.3	10.605	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.9	0.9	4.214	0.982	0.98	3.662	0.912	1.058	0.255	False	NaN	1.508
+5.9	0.5	4.5	3.9	0.6	0.5	14.941	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.9	0.9	4.222	2.256	2.258	2.817	3.133	1.242	0.473	False	NaN	4.248
+5.9	0.5	4.5	3.9	0.6	0.75	21.14	True	boast	0.6	Left>Front>Floor>Floor	3.9	0.6	4.119	0.719	0.715	3.006	2.23	0.683	0.165	False	NaN	4.063
+5.9	0.5	4.5	3.9	0.6	1	28	True	boast	0.6	Left>Front>Floor>Floor	3.9	0.6	4.119	0.947	0.947	2.114	4.061	0.717	0.208	False	NaN	6.933
+5.9	0.5	4.5	3.9	0.9	0.3	10.719	True	boast	0.9	Left>Front>Floor>Floor	3.9	0.9	4.215	1.037	1.035	3.63	0.979	1.067	0.262	False	NaN	1.584
+5.9	0.5	4.5	3.9	0.9	0.5	15.068	True	boast	0.9	Left>Front>Floor>Floor	3.9	0.9	4.222	2.277	2.281	2.787	3.194	1.242	0.478	False	NaN	4.331
+5.9	0.5	4.5	3.9	0.9	0.75	21.229	True	boast	0.9	Left>Front>Floor>Right>Floor	3.9	0.9	4.225	2.885	3.154	0.661	6.614	1.417	0.654	False	NaN	8.832
+5.9	0.5	4.5	3.9	0.9	1	28	True	boast-nearest	0.6	Left>Front>Floor>Floor	3.9	0.6	4.119	0.947	0.947	2.114	4.061	0.717	0.208	False	NaN	6.933
+5.9	0.5	4.5	3.9	1.2	0.3	10.943	True	boast	1.2	Left>Front>Floor>Floor	3.9	1.2	4.329	2.582	2.574	3.445	1.781	1.492	0.549	False	NaN	1.794
+5.9	0.5	4.5	3.9	1.2	0.5	15.313	True	boast	1.2	Left>Front>Floor>Floor	3.9	1.2	4.337	4.181	4.309	2.088	4.41	1.7	0.889	False	NaN	4.788
+5.9	0.5	4.5	3.9	1.2	0.75	21.399	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	3.9	0.9	4.225	2.894	3.177	0.59	6.723	1.417	0.655	False	NaN	8.928
+5.9	0.5	4.5	3.9	1.2	1	28	True	boast-nearest	0.6	Left>Front>Floor>Floor	3.9	0.6	4.119	0.947	0.947	2.114	4.061	0.717	0.208	False	NaN	6.933
+5.9	0.5	4.5	3.9	1.5	0.3	11.245	True	boast	1.5	Left>Front>Floor>Floor	3.9	1.5	4.408	3.792	3.791	3.496	1.963	1.792	0.791	False	NaN	1.963
+5.9	0.5	4.5	3.9	1.5	0.5	15.637	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.9	1.2	4.337	4.246	4.411	1.912	4.638	1.725	0.909	False	NaN	5.075
+5.9	0.5	4.5	3.9	1.5	0.75	21.618	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	3.9	0.9	4.226	2.906	3.207	0.497	6.865	1.425	0.647	False	NaN	9.055
+5.9	0.5	4.5	3.9	1.5	1	28	True	boast-nearest	0.6	Left>Front>Floor>Floor	3.9	0.6	4.119	0.947	0.947	2.114	4.061	0.717	0.208	False	NaN	6.933
+5.9	0.5	4.5	3.9	1.8	0.3	11.606	True	boast-nearest	1.5	Left>Front>Floor>Floor	3.9	1.5	4.409	4.073	4.072	3.511	2.198	1.825	0.843	False	NaN	2.198
+5.9	0.5	4.5	3.9	1.8	0.5	16.014	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.9	1.2	4.337	4.317	4.53	1.701	4.91	1.75	0.933	False	NaN	5.419
+5.9	0.5	4.5	3.9	1.8	0.75	21.869	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	3.9	0.9	4.226	2.92	3.241	0.389	7.029	1.433	0.63	False	NaN	9.205
+5.9	0.5	4.5	3.9	1.8	1	28	True	boast-nearest	0.6	Left>Front>Floor>Floor	3.9	0.6	4.119	0.947	0.947	2.114	4.061	0.717	0.208	False	NaN	6.933
+5.9	0.5	4.5	3.9	2.1	0.3	12.018	True	boast-nearest	1.5	Left>Front>Floor>Floor	3.9	1.5	4.41	4.359	4.358	3.516	2.444	1.85	0.899	False	NaN	2.444
+5.9	0.5	4.5	3.9	2.1	0.5	16.431	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.9	1.2	4.338	4.39	4.663	1.462	5.221	1.775	0.96	False	NaN	5.808
+5.9	0.5	4.5	3.9	2.1	0.75	22.14	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	3.9	0.9	4.226	2.934	3.278	0.272	7.209	1.442	0.605	False	NaN	9.371
+5.9	0.5	4.5	3.9	2.1	1	28	True	boast-nearest	0.6	Left>Front>Floor>Floor	3.9	0.6	4.119	0.947	0.947	2.114	4.061	0.717	0.208	False	NaN	6.933
+5.9	0.5	4.5	3.9	2.4	0.3	12.477	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.9	1.2	4.332	3.351	3.351	3.279	2.681	1.575	0.695	False	NaN	2.681
+5.9	0.5	4.5	3.9	2.4	0.5	16.881	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.9	1.2	4.338	4.463	4.809	1.197	5.568	1.8	0.99	False	NaN	6.241
+5.9	0.5	4.5	3.9	2.4	0.75	22.426	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	3.9	0.9	4.226	2.948	3.317	0.147	7.4	1.45	0.574	False	NaN	9.551
+5.9	0.5	4.5	3.9	2.4	1	28	True	boast-nearest	0.9	Left>Front>Floor>Back>Floor	3.5	0.9	5.313	2.119	2.287	3.756	9.728	1.083	0.041	True	0.021	9.131
+5.9	0.5	4.5	3	0.6	0.3	10.487	True	boast-nearest	0.9	Left>Front>Floor>Floor	3	0.9	5.799	0.856	0.856	5.799	1.962	0.925	0.189	False	NaN	3.056
+5.9	0.5	4.5	3	0.6	0.5	14.809	True	boast-nearest	0.9	Left>Front>Floor>Floor	3	0.9	5.799	1.284	1.284	5.799	3.434	0.867	0.276	False	NaN	5.517
+5.9	0.5	4.5	3	0.6	0.75	21.047	True	boast	0.6	Left>Front>Floor>Floor	3	0.6	5.798	0.609	0.609	5.798	3.452	0.592	0.139	False	NaN	6.079
+5.9	0.5	4.5	3	0.6	1	28	True	boast	0.6	Left>Front>Floor>Floor	3	0.6	5.798	0.692	0.692	5.798	4.897	0.558	0.156	False	NaN	8.761
+5.9	0.5	4.5	3	0.9	0.3	10.544	True	boast	0.9	Left>Front>Floor>Floor	3	0.9	5.799	0.865	0.865	5.799	1.984	0.925	0.191	False	NaN	3.09
+5.9	0.5	4.5	3	0.9	0.5	14.873	True	boast	0.9	Left>Front>Floor>Floor	3	0.9	5.799	1.287	1.287	5.799	3.454	0.867	0.277	False	NaN	5.552
+5.9	0.5	4.5	3	0.9	0.75	21.092	True	boast	0.9	Left>Front>Floor>Floor	3	0.9	5.8	1.494	1.494	5.8	5.301	0.8	0.319	False	NaN	8.9
+5.9	0.5	4.5	3	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	3	0.9	5.8	1.581	1.581	5.8	7.251	0.758	0.335	True	0.335	8.279
+5.9	0.5	4.5	3	1.2	0.3	10.665	True	boast	1.2	Left>Front>Floor>Floor	3	1.2	5.802	1.66	1.66	5.802	2.608	1.117	0.352	False	NaN	3.653
+5.9	0.5	4.5	3	1.2	0.5	15.009	True	boast	1.2	Left>Front>Floor>Floor	3	1.2	5.803	2.139	2.138	5.803	4.241	1.033	0.449	False	NaN	6.381
+5.9	0.5	4.5	3	1.2	0.75	21.188	True	boast	1.2	Left>Front>Floor>Back>Floor	3	1.2	5.803	2.368	2.437	5.259	7.526	1.083	0.509	True	0.501	8.669
+5.9	0.5	4.5	3	1.2	1	28	True	boast	1.2	Left>Front>Back>Floor>Floor	3	1.2	5.803	2.464	2.797	4.651	7.164	1.383	0.321	True	1.371	5.019
+5.9	0.5	4.5	3	1.5	0.3	10.846	True	boast	1.5	Left>Front>Floor>Floor	3	1.5	5.806	2.416	2.415	5.806	2.941	1.275	0.505	False	NaN	3.694
+5.9	0.5	4.5	3	1.5	0.5	15.208	True	boast	1.5	Left>Front>Floor>Floor	3	1.5	5.807	2.97	3.026	5.323	5.377	1.292	0.629	False	NaN	7.274
+5.9	0.5	4.5	3	1.5	0.75	21.326	True	boast	1.5	Left>Front>Back>Floor>Floor	3	1.5	5.808	3.23	3.877	4.174	8.973	1.583	0.463	True	0.948	7.832
+5.9	0.5	4.5	3	1.5	1	28	True	boast-nearest	1.2	Left>Front>Back>Floor>Floor	3	1.2	5.803	2.464	2.797	4.651	7.164	1.383	0.321	True	1.371	5.019
+5.9	0.5	4.5	3	1.8	0.3	11.081	True	boast	1.8	Left>Front>Floor>Floor	3	1.8	5.81	3.137	3.136	5.81	3.116	1.417	0.651	False	NaN	3.462
+5.9	0.5	4.5	3	1.8	0.5	15.462	True	boast	1.8	Left>Front>Floor>Floor	3	1.8	5.812	3.783	4.071	4.817	6.468	1.583	0.84	False	NaN	7.916
+5.9	0.5	4.5	3	1.8	0.75	21.5	True	boast-nearest	1.5	Left>Front>Back>Floor>Floor	3	1.5	5.808	3.234	3.905	4.143	8.838	1.6	0.475	True	1.096	7.681
+5.9	0.5	4.5	3	1.8	1	28	True	boast-nearest	1.2	Left>Front>Back>Floor>Floor	3	1.2	5.803	2.464	2.797	4.651	7.164	1.383	0.321	True	1.371	5.019
+5.9	0.5	4.5	3	2.1	0.3	11.364	True	boast	2.1	Left>Front>Floor>Floor	3	2.1	5.814	3.831	3.831	5.814	3.203	1.55	0.792	False	NaN	3.203
+5.9	0.5	4.5	3	2.1	0.5	15.762	True	boast-nearest	1.8	Left>Front>Floor>Floor	3	1.8	5.812	3.807	4.141	4.744	6.753	1.6	0.854	False	NaN	8.284
+5.9	0.5	4.5	3	2.1	0.75	21.703	True	boast-nearest	1.5	Left>Front>Back>Floor>Floor	3	1.5	5.808	3.239	3.938	4.108	8.679	1.617	0.489	True	1.265	7.504
+5.9	0.5	4.5	3	2.1	1	28	True	boast-nearest	1.2	Left>Front>Back>Floor>Floor	3	1.2	5.803	2.464	2.797	4.651	7.164	1.383	0.321	True	1.371	5.019
+5.9	0.5	4.5	3	2.4	0.3	11.694	True	boast-nearest	2.1	Left>Front>Floor>Floor	3	2.1	5.814	3.924	3.927	5.677	3.44	1.567	0.811	False	NaN	3.44
+5.9	0.5	4.5	3	2.4	0.5	16.103	True	boast-nearest	1.8	Left>Front>Floor>Floor	3	1.8	5.812	3.833	4.222	4.661	7.082	1.625	0.871	False	NaN	8.708
+5.9	0.5	4.5	3	2.4	0.75	21.928	True	boast-nearest	1.5	Left>Front>Back>Floor>Floor	3	1.5	5.808	3.244	3.975	4.071	8.501	1.633	0.506	True	1.446	7.306
+5.9	0.5	4.5	3	2.4	1	28	True	boast-nearest	1.2	Left>Front>Back>Floor>Floor	3	1.2	5.803	2.464	2.797	4.651	7.164	1.383	0.321	True	1.371	5.019
+5.9	0.5	4.5	1.5	0.6	0.3	10.442	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	6.243	0.756	0.756	6.243	2.031	0.85	0.169	False	NaN	3.264
+5.9	0.5	4.5	1.5	0.6	0.5	14.757	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	6.243	0.932	0.932	6.243	3.24	0.758	0.205	False	NaN	5.423
+5.9	0.5	4.5	1.5	0.6	0.75	21.01	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	6.243	1.017	1.017	6.243	4.844	0.675	0.222	False	NaN	8.405
+5.9	0.5	4.5	1.5	0.6	1	28	True	boast	0.6	Left>Front>Floor>Floor	1.5	0.6	6.243	0.605	0.605	6.243	5.005	0.517	0.138	False	NaN	9.034
+5.9	0.5	4.5	1.5	0.9	0.3	10.471	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	6.243	0.758	0.758	6.243	2.04	0.85	0.169	False	NaN	3.28
+5.9	0.5	4.5	1.5	0.9	0.5	14.791	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	6.243	0.933	0.933	6.243	3.248	0.75	0.205	False	NaN	5.439
+5.9	0.5	4.5	1.5	0.9	0.75	21.034	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	6.243	1.017	1.017	6.243	4.85	0.675	0.222	False	NaN	8.416
+5.9	0.5	4.5	1.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	1.5	0.9	6.243	1.052	1.052	6.243	6.578	0.633	0.229	True	0.217	8.369
+5.9	0.5	4.5	1.5	1.2	0.3	10.535	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	6.243	1.188	1.188	6.243	2.497	0.958	0.257	False	NaN	3.812
+5.9	0.5	4.5	1.5	1.2	0.5	14.863	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	6.243	1.375	1.375	6.243	3.88	0.858	0.294	False	NaN	6.293
+5.9	0.5	4.5	1.5	1.2	0.75	21.085	True	boast	1.2	Left>Front>Floor>Back>Floor	1.5	1.2	6.243	1.462	1.462	6.243	5.728	0.775	0.312	True	0.022	9.642
+5.9	0.5	4.5	1.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Back>Floor	1.5	1.2	6.243	1.499	1.498	6.243	7.726	0.725	0.291	True	0.291	8.218
+5.9	0.5	4.5	1.5	1.5	0.3	10.634	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	6.243	1.614	1.614	6.243	2.829	1.058	0.343	False	NaN	4.108
+5.9	0.5	4.5	1.5	1.5	0.5	14.974	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	6.243	1.814	1.814	6.243	4.357	0.942	0.383	False	NaN	6.856
+5.9	0.5	4.5	1.5	1.5	0.75	21.163	True	boast	1.5	Left>Front>Floor>Back>Floor	1.5	1.5	6.243	1.906	1.906	6.243	6.393	0.858	0.402	True	0.279	8.766
+5.9	0.5	4.5	1.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Back>Floor	1.5	1.5	6.243	1.944	1.944	6.243	8.582	0.808	0.255	True	0.255	8.406
+5.9	0.5	4.5	1.5	1.8	0.3	10.768	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	6.243	2.036	2.035	6.243	3.076	1.142	0.428	False	NaN	4.248
+5.9	0.5	4.5	1.5	1.8	0.5	15.122	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	6.243	2.251	2.251	6.243	4.724	1.025	0.472	False	NaN	7.21
+5.9	0.5	4.5	1.5	1.8	0.75	21.266	True	boast	1.8	Left>Front>Floor>Back>Floor	1.5	1.8	6.243	2.348	2.388	6.059	7.855	1.025	0.489	True	0.49	8.537
+5.9	0.5	4.5	1.5	1.8	1	28	True	boast	1.8	Left>Front>Back>Floor>Floor	1.5	1.8	6.243	2.388	2.594	5.849	6.859	1.317	0.276	True	1.221	4.525
+5.9	0.5	4.5	1.5	2.1	0.3	10.935	True	boast	2.1	Left>Front>Floor>Floor	1.5	2.1	6.243	2.454	2.454	6.243	3.263	1.225	0.513	False	NaN	4.277
+5.9	0.5	4.5	1.5	2.1	0.5	15.305	True	boast	2.1	Left>Front>Floor>Floor	1.5	2.1	6.244	2.687	2.705	6.116	5.437	1.158	0.564	False	NaN	7.838
+5.9	0.5	4.5	1.5	2.1	0.75	21.393	True	boast	2.1	Left>Front>Back>Floor>Floor	1.5	2.1	6.244	2.79	3.092	5.717	9.447	1.308	0.276	True	0.272	8.012
+5.9	0.5	4.5	1.5	2.1	1	28	True	boast-nearest	1.8	Left>Front>Back>Floor>Floor	1.5	1.8	6.243	2.388	2.594	5.849	6.859	1.317	0.276	True	1.221	4.525
+5.9	0.5	4.5	1.5	2.4	0.3	11.137	True	boast	2.4	Left>Front>Floor>Floor	1.5	2.4	6.244	2.869	2.869	6.244	3.409	1.3	0.597	False	NaN	4.228
+5.9	0.5	4.5	1.5	2.4	0.5	15.522	True	boast	2.4	Left>Front>Floor>Floor	1.5	2.4	6.244	3.121	3.247	5.92	6.38	1.342	0.674	False	NaN	8.635
+5.9	0.5	4.5	1.5	2.4	0.75	21.541	True	boast	2.4	Left>Front>Back>Floor>Floor	1.5	2.4	6.244	3.23	3.998	5.414	7.877	1.667	0.534	True	1.933	6.55
+5.9	0.5	4.5	1.5	2.4	1	28	True	boast-nearest	1.8	Left>Front>Back>Floor>Floor	1.5	1.8	6.243	2.388	2.594	5.849	6.859	1.317	0.276	True	1.221	4.525
+5.9	0.5	6.5	5.9	0.6	0.3	12.6	True	boast-nearest	0.9	Left>Front>Floor>Floor	5.9	0.9	3.105	0.925	0.904	2.539	0.91	1.175	0.275	False	NaN	1.784
+5.9	0.5	6.5	5.9	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	5.9	0.9	3.112	2.714	2.713	1.449	3.734	1.417	0.566	False	NaN	5.204
+5.9	0.5	6.5	5.9	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	5.9	0.9	3.115	3.628	3.771	0.303	7.076	1.583	0.671	False	NaN	9.076
+5.9	0.5	6.5	5.9	0.6	1	28	True	boast	0.6	Left>Front>Floor>Right>Floor	5.9	0.6	2.954	0.91	0.908	1.228	3.483	0.775	0.202	False	NaN	6.299
+5.9	0.5	6.5	5.9	0.9	0.3	12.6	True	boast	0.9	Left>Front>Floor>Floor	5.9	0.9	3.105	0.925	0.904	2.539	0.91	1.175	0.275	False	NaN	1.784
+5.9	0.5	6.5	5.9	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Floor	5.9	0.9	3.112	2.714	2.713	1.449	3.734	1.417	0.566	False	NaN	5.204
+5.9	0.5	6.5	5.9	0.9	0.75	22.5	True	boast	0.9	Left>Front>Right>Floor>Floor	5.9	0.9	3.115	3.628	3.771	0.303	7.076	1.583	0.671	False	NaN	9.076
+5.9	0.5	6.5	5.9	0.9	1	28	True	boast-nearest	0.6	Left>Front>Floor>Right>Floor	5.9	0.6	2.954	0.91	0.908	1.228	3.483	0.775	0.202	False	NaN	6.299
+5.9	0.5	6.5	5.9	1.2	0.3	12.6	True	boast	1.2	Left>Front>Floor>Floor	5.9	1.2	3.277	2.894	2.88	2.177	1.975	1.683	0.637	False	NaN	2.209
+5.9	0.5	6.5	5.9	1.2	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	5.9	0.9	3.112	2.714	2.713	1.449	3.734	1.417	0.566	False	NaN	5.204
+5.9	0.5	6.5	5.9	1.2	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	5.9	0.9	3.115	3.628	3.771	0.303	7.076	1.583	0.671	False	NaN	9.076
+5.9	0.5	6.5	5.9	1.2	1	28	True	boast-nearest	0.6	Left>Front>Floor>Right>Floor	5.9	0.6	2.954	0.91	0.908	1.228	3.483	0.775	0.202	False	NaN	6.299
+5.9	0.5	6.5	5.9	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	5.9	1.5	3.397	4.088	4.081	2.236	1.983	1.983	0.896	False	NaN	1.983
+5.9	0.5	6.5	5.9	1.5	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	5.9	0.9	3.112	2.714	2.713	1.449	3.734	1.417	0.566	False	NaN	5.204
+5.9	0.5	6.5	5.9	1.5	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	5.9	0.9	3.115	3.628	3.771	0.303	7.076	1.583	0.671	False	NaN	9.076
+5.9	0.5	6.5	5.9	1.5	1	28	True	boast-nearest	0.6	Left>Front>Floor>Right>Floor	5.9	0.6	2.954	0.91	0.908	1.228	3.483	0.775	0.202	False	NaN	6.299
+5.9	0.5	6.5	5.9	1.8	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	5.9	1.5	3.397	4.088	4.081	2.236	1.983	1.983	0.896	False	NaN	1.983
+5.9	0.5	6.5	5.9	1.8	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	5.9	0.9	3.112	2.714	2.713	1.449	3.734	1.417	0.566	False	NaN	5.204
+5.9	0.5	6.5	5.9	1.8	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	5.9	0.9	3.115	3.628	3.771	0.303	7.076	1.583	0.671	False	NaN	9.076
+5.9	0.5	6.5	5.9	1.8	1	28	True	boast-nearest	0.6	Left>Front>Floor>Right>Floor	5.9	0.6	2.954	0.91	0.908	1.228	3.483	0.775	0.202	False	NaN	6.299
+5.9	0.5	6.5	5.9	2.1	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	5.9	1.5	3.397	4.088	4.081	2.236	1.983	1.983	0.896	False	NaN	1.983
+5.9	0.5	6.5	5.9	2.1	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	5.9	0.9	3.112	2.714	2.713	1.449	3.734	1.417	0.566	False	NaN	5.204
+5.9	0.5	6.5	5.9	2.1	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	5.9	0.9	3.115	3.628	3.771	0.303	7.076	1.583	0.671	False	NaN	9.076
+5.9	0.5	6.5	5.9	2.1	1	28	True	boast-nearest	0.6	Left>Front>Floor>Right>Floor	5.9	0.6	2.954	0.91	0.908	1.228	3.483	0.775	0.202	False	NaN	6.299
+5.9	0.5	6.5	5.9	2.4	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	5.9	1.5	3.397	4.088	4.081	2.236	1.983	1.983	0.896	False	NaN	1.983
+5.9	0.5	6.5	5.9	2.4	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	5.9	0.9	3.112	2.714	2.713	1.449	3.734	1.417	0.566	False	NaN	5.204
+5.9	0.5	6.5	5.9	2.4	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	5.9	0.9	3.115	3.628	3.771	0.303	7.076	1.583	0.671	False	NaN	9.076
+5.9	0.5	6.5	5.9	2.4	1	28	True	boast-nearest	0.9	Left>Front>Back>Floor>Floor	5.5	0.9	4.701	2.69	2.768	3.436	9.623	1.2	0.186	True	0.088	7.989
+5.9	0.5	6.5	5	0.6	0.3	12.6	True	boast-nearest	0.9	Left>Front>Floor>Floor	5	0.9	5.409	0.816	0.815	5.402	2.301	1.017	0.181	False	NaN	3.744
+5.9	0.5	6.5	5	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	5	0.9	5.41	1.463	1.463	5.41	4.219	1	0.312	False	NaN	6.869
+5.9	0.5	6.5	5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Back>Floor	5	0.9	5.41	1.794	1.794	5.41	6.205	0.942	0.379	True	0.209	8.897
+5.9	0.5	6.5	5	0.6	1	28	True	boast	0.6	Left>Front>Floor>Floor	5	0.6	5.407	0.668	0.668	5.407	4.811	0.633	0.151	False	NaN	8.616
+5.9	0.5	6.5	5	0.9	0.3	12.6	True	boast	0.9	Left>Front>Floor>Floor	5	0.9	5.409	0.816	0.815	5.402	2.301	1.017	0.181	False	NaN	3.744
+5.9	0.5	6.5	5	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Floor	5	0.9	5.41	1.463	1.463	5.41	4.219	1	0.312	False	NaN	6.869
+5.9	0.5	6.5	5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Back>Floor	5	0.9	5.41	1.794	1.794	5.41	6.205	0.942	0.379	True	0.209	8.897
+5.9	0.5	6.5	5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	5	0.9	5.41	1.949	1.949	5.41	8.057	0.9	0.343	True	0.343	8.298
+5.9	0.5	6.5	5	1.2	0.3	12.6	True	boast	1.2	Left>Front>Floor>Floor	5	1.2	5.415	1.918	1.918	5.415	3.347	1.275	0.404	False	NaN	4.855
+5.9	0.5	6.5	5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	5	1.2	5.416	2.663	2.663	5.416	5.382	1.217	0.555	False	NaN	8.138
+5.9	0.5	6.5	5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Back>Floor	5	1.2	5.416	3.038	3.055	5.089	8.248	1.208	0.562	True	0.562	8.565
+5.9	0.5	6.5	5	1.2	1	28	True	boast	1.2	Left>Front>Back>Floor>Floor	5	1.2	5.416	3.212	3.378	4.488	7.298	1.458	0.379	True	1.518	5.072
+5.9	0.5	6.5	5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	5	1.5	5.422	2.922	2.922	5.422	3.809	1.483	0.608	False	NaN	4.948
+5.9	0.5	6.5	5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	5	1.5	5.423	3.813	3.826	5.124	6.326	1.45	0.791	False	NaN	8.712
+5.9	0.5	6.5	5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Back>Floor>Floor	5	1.5	5.424	4.254	4.681	3.926	8.393	1.733	0.606	True	1.693	7.198
+5.9	0.5	6.5	5	1.5	1	28	True	boast-nearest	1.2	Left>Front>Back>Floor>Floor	5	1.2	5.416	3.212	3.378	4.488	7.298	1.458	0.379	True	1.518	5.072
+5.9	0.5	6.5	5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	5	1.8	5.429	3.821	3.821	5.429	3.971	1.667	0.79	False	NaN	4.55
+5.9	0.5	6.5	5	1.8	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Floor	5	1.5	5.423	3.813	3.826	5.124	6.326	1.45	0.791	False	NaN	8.712
+5.9	0.5	6.5	5	1.8	0.75	22.5	True	boast-nearest	1.5	Left>Front>Back>Floor>Floor	5	1.5	5.424	4.254	4.681	3.926	8.393	1.733	0.606	True	1.693	7.198
+5.9	0.5	6.5	5	1.8	1	28	True	boast-nearest	1.2	Left>Front>Back>Floor>Floor	5	1.2	5.416	3.212	3.378	4.488	7.298	1.458	0.379	True	1.518	5.072
+5.9	0.5	6.5	5	2.1	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	5	1.8	5.429	3.821	3.821	5.429	3.971	1.667	0.79	False	NaN	4.55
+5.9	0.5	6.5	5	2.1	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Floor	5	1.5	5.423	3.813	3.826	5.124	6.326	1.45	0.791	False	NaN	8.712
+5.9	0.5	6.5	5	2.1	0.75	22.5	True	boast-nearest	1.5	Left>Front>Back>Floor>Floor	5	1.5	5.424	4.254	4.681	3.926	8.393	1.733	0.606	True	1.693	7.198
+5.9	0.5	6.5	5	2.1	1	28	True	boast-nearest	1.2	Left>Front>Back>Floor>Floor	5	1.2	5.416	3.212	3.378	4.488	7.298	1.458	0.379	True	1.518	5.072
+5.9	0.5	6.5	5	2.4	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	5	1.8	5.429	3.821	3.821	5.429	3.971	1.667	0.79	False	NaN	4.55
+5.9	0.5	6.5	5	2.4	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Floor	5	1.5	5.423	3.813	3.826	5.124	6.326	1.45	0.791	False	NaN	8.712
+5.9	0.5	6.5	5	2.4	0.75	22.5	True	boast-nearest	1.5	Left>Front>Back>Floor>Floor	5	1.5	5.424	4.254	4.681	3.926	8.393	1.733	0.606	True	1.693	7.198
+5.9	0.5	6.5	5	2.4	1	28	True	boast-nearest	1.2	Left>Front>Back>Floor>Floor	5	1.2	5.416	3.212	3.378	4.488	7.298	1.458	0.379	True	1.518	5.072
+5.9	0.5	6.5	3.5	0.6	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.5	1.2	6.058	1.172	1.172	6.058	3.01	1.05	0.253	False	NaN	4.799
+5.9	0.5	6.5	3.5	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.5	0.9	6.058	0.935	0.935	6.058	3.747	0.842	0.205	False	NaN	6.385
+5.9	0.5	6.5	3.5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.5	0.9	6.058	1.121	1.121	6.058	5.453	0.783	0.243	False	NaN	9.48
+5.9	0.5	6.5	3.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Back>Floor	3.5	0.9	6.058	1.208	1.207	6.058	7.054	0.742	0.26	True	0.26	8.245
+5.9	0.5	6.5	3.5	0.9	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.5	1.2	6.058	1.172	1.172	6.058	3.01	1.05	0.253	False	NaN	4.799
+5.9	0.5	6.5	3.5	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Floor	3.5	0.9	6.058	0.935	0.935	6.058	3.747	0.842	0.205	False	NaN	6.385
+5.9	0.5	6.5	3.5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Floor	3.5	0.9	6.058	1.121	1.121	6.058	5.453	0.783	0.243	False	NaN	9.48
+5.9	0.5	6.5	3.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	3.5	0.9	6.058	1.208	1.207	6.058	7.054	0.742	0.26	True	0.26	8.245
+5.9	0.5	6.5	3.5	1.2	0.3	12.6	True	boast	1.2	Left>Front>Floor>Floor	3.5	1.2	6.058	1.172	1.172	6.058	3.01	1.05	0.253	False	NaN	4.799
+5.9	0.5	6.5	3.5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	3.5	1.2	6.058	1.563	1.563	6.058	4.756	0.975	0.333	False	NaN	7.809
+5.9	0.5	6.5	3.5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Back>Floor	3.5	1.2	6.058	1.759	1.759	6.058	6.716	0.908	0.372	True	0.342	8.503
+5.9	0.5	6.5	3.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Back>Floor	3.5	1.2	6.058	1.85	1.85	6.058	8.592	0.867	0.24	True	0.24	8.399
+5.9	0.5	6.5	3.5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	6.058	1.758	1.758	6.058	3.567	1.183	0.372	False	NaN	5.397
+5.9	0.5	6.5	3.5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	6.058	2.183	2.183	6.058	5.462	1.092	0.458	False	NaN	8.666
+5.9	0.5	6.5	3.5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Floor>Back>Floor	3.5	1.5	6.058	2.393	2.392	6.058	7.63	1.017	0.488	True	0.488	8.375
+5.9	0.5	6.5	3.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Back>Floor	3.5	1.5	6.059	2.489	2.489	6.059	9.719	0.967	0.023	True	0.023	9.578
+5.9	0.5	6.5	3.5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	3.5	1.8	6.059	2.326	2.326	6.059	3.936	1.3	0.487	False	NaN	5.655
+5.9	0.5	6.5	3.5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	3.5	1.8	6.059	2.794	2.794	6.059	5.96	1.2	0.582	False	NaN	9.135
+5.9	0.5	6.5	3.5	1.8	0.75	22.5	True	boast	1.8	Left>Front>Floor>Back>Floor	3.5	1.8	6.059	3.021	3.022	6.022	8.461	1.133	0.475	True	0.475	8.518
+5.9	0.5	6.5	3.5	1.8	1	28	True	boast	1.8	Left>Front>Back>Floor>Floor	3.5	1.8	6.059	3.125	3.202	5.783	7.035	1.375	0.333	True	1.387	4.569
+5.9	0.5	6.5	3.5	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	3.5	2.1	6.059	2.874	2.874	6.059	4.173	1.408	0.598	False	NaN	5.675
+5.9	0.5	6.5	3.5	2.1	0.5	17	True	boast	2.1	Left>Front>Floor>Floor	3.5	2.1	6.059	3.396	3.396	6.059	6.302	1.292	0.704	False	NaN	9.312
+5.9	0.5	6.5	3.5	2.1	0.75	22.5	True	boast	2.1	Left>Front>Back>Floor>Floor	3.5	2.1	6.06	3.645	3.793	5.645	8.904	1.45	0.388	True	0.795	7.263
+5.9	0.5	6.5	3.5	2.1	1	28	True	boast-nearest	1.8	Left>Front>Back>Floor>Floor	3.5	1.8	6.059	3.125	3.202	5.783	7.035	1.375	0.333	True	1.387	4.569
+5.9	0.5	6.5	3.5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	3.5	2.4	6.059	3.401	3.4	6.059	4.308	1.508	0.705	False	NaN	5.52
+5.9	0.5	6.5	3.5	2.4	0.5	17	True	boast	2.4	Left>Front>Floor>Back>Floor	3.5	2.4	6.06	3.989	4.018	5.87	7.101	1.467	0.829	True	0.149	9.645
+5.9	0.5	6.5	3.5	2.4	0.75	22.5	True	boast-nearest	2.1	Left>Front>Back>Floor>Floor	3.5	2.1	6.06	3.645	3.793	5.645	8.904	1.45	0.388	True	0.795	7.263
+5.9	0.5	6.5	3.5	2.4	1	28	True	boast-nearest	1.8	Left>Front>Back>Floor>Floor	3.5	1.8	6.059	3.125	3.202	5.783	7.035	1.375	0.333	True	1.387	4.569
+5.9	0.5	6.5	1.5	0.6	0.3	12.6	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	6.299	0.697	0.697	6.299	2.436	0.908	0.157	False	NaN	4.08
+5.9	0.5	6.5	1.5	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	6.299	0.847	0.847	6.299	3.677	0.808	0.187	False	NaN	6.321
+5.9	0.5	6.5	1.5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	6.299	0.922	0.922	6.299	5.102	0.725	0.203	False	NaN	8.97
+5.9	0.5	6.5	1.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Back>Floor	1.5	0.9	6.299	0.956	0.956	6.299	6.478	0.675	0.21	True	0.195	8.389
+5.9	0.5	6.5	1.5	0.9	0.3	12.6	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	6.299	0.697	0.697	6.299	2.436	0.908	0.157	False	NaN	4.08
+5.9	0.5	6.5	1.5	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	6.299	0.847	0.847	6.299	3.677	0.808	0.187	False	NaN	6.321
+5.9	0.5	6.5	1.5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	6.299	0.922	0.922	6.299	5.102	0.725	0.203	False	NaN	8.97
+5.9	0.5	6.5	1.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	1.5	0.9	6.299	0.956	0.956	6.299	6.478	0.675	0.21	True	0.195	8.389
+5.9	0.5	6.5	1.5	1.2	0.3	12.6	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	6.299	1.075	1.075	6.299	2.985	1.017	0.234	False	NaN	4.828
+5.9	0.5	6.5	1.5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	6.299	1.232	1.232	6.299	4.395	0.9	0.265	False	NaN	7.384
+5.9	0.5	6.5	1.5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Back>Floor	1.5	1.2	6.299	1.309	1.309	6.299	6.039	0.817	0.281	True	0.162	8.835
+5.9	0.5	6.5	1.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Back>Floor	1.5	1.2	6.299	1.344	1.344	6.299	7.637	0.758	0.267	True	0.267	8.194
+5.9	0.5	6.5	1.5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	6.299	1.45	1.45	6.299	3.402	1.1	0.309	False	NaN	5.327
+5.9	0.5	6.5	1.5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	6.299	1.615	1.615	6.299	4.965	0.975	0.343	False	NaN	8.166
+5.9	0.5	6.5	1.5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Floor>Back>Floor	1.5	1.5	6.299	1.695	1.695	6.299	6.797	0.892	0.359	True	0.342	8.447
+5.9	0.5	6.5	1.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Back>Floor	1.5	1.5	6.299	1.731	1.731	6.299	8.581	0.833	0.225	True	0.225	8.384
+5.9	0.5	6.5	1.5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	6.299	1.822	1.821	6.299	3.727	1.183	0.385	False	NaN	5.652
+5.9	0.5	6.5	1.5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	6.299	1.997	1.997	6.299	5.426	1.05	0.42	False	NaN	8.742
+5.9	0.5	6.5	1.5	1.8	0.75	22.5	True	boast	1.8	Left>Front>Floor>Back>Floor	1.5	1.8	6.3	2.08	2.08	6.3	7.419	0.958	0.434	True	0.434	8.347
+5.9	0.5	6.5	1.5	1.8	1	28	True	boast	1.8	Left>Front>Floor>Back>Floor	1.5	1.8	6.3	2.118	2.118	6.3	9.362	0.9	0.107	True	0.107	8.886
+5.9	0.5	6.5	1.5	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	1.5	2.1	6.299	2.19	2.19	6.299	3.979	1.258	0.459	False	NaN	5.843
+5.9	0.5	6.5	1.5	2.1	0.5	17	True	boast	2.1	Left>Front>Floor>Floor	1.5	2.1	6.3	2.378	2.378	6.3	5.799	1.117	0.497	False	NaN	9.154
+5.9	0.5	6.5	1.5	2.1	0.75	22.5	True	boast	2.1	Left>Front>Floor>Back>Floor	1.5	2.1	6.3	2.465	2.465	6.3	7.932	1.025	0.468	True	0.468	8.368
+5.9	0.5	6.5	1.5	2.1	1	28	True	boast	2.1	Left>Front>Back>Floor>Floor	1.5	2.1	6.3	2.505	2.505	6.3	9.334	0.992	0.109	True	0.158	7.598
+5.9	0.5	6.5	1.5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	1.5	2.4	6.299	2.555	2.555	6.299	4.171	1.325	0.533	False	NaN	5.923
+5.9	0.5	6.5	1.5	2.4	0.5	17	True	boast	2.4	Left>Front>Floor>Floor	1.5	2.4	6.3	2.757	2.757	6.3	6.1	1.183	0.574	False	NaN	9.428
+5.9	0.5	6.5	1.5	2.4	0.75	22.5	True	boast	2.4	Left>Front>Floor>Back>Floor	1.5	2.4	6.3	2.849	2.849	6.3	8.352	1.083	0.462	True	0.462	8.454
+5.9	0.5	6.5	1.5	2.4	1	28	True	boast	2.4	Left>Front>Back>Floor>Floor	1.5	2.4	6.3	2.89	2.897	6.253	8.179	1.167	0.212	True	0.698	5.927
+5.9	0.5	8.5	7.9	0.6	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	7.9	1.2	2.222	1.271	1.255	1.725	0.716	1.633	0.512	False	NaN	1.233
+5.9	0.5	8.5	7.9	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	7.9	0.9	2	2.429	2.422	0.498	3.03	1.5	0.522	False	NaN	4.487
+5.9	0.5	8.5	7.9	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	7.9	0.9	2.005	4.045	4.078	0.686	6.616	1.7	0.778	False	NaN	8.52
+5.9	0.5	8.5	7.9	0.6	1	28	True	boast	0.6	Left>Front>Floor>Right>Floor	7.9	0.6	1.788	0.726	0.719	0.459	2.632	0.8	0.168	False	NaN	4.924
+5.9	0.5	8.5	7.9	0.9	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	7.9	1.2	2.222	1.271	1.255	1.725	0.716	1.633	0.512	False	NaN	1.233
+5.9	0.5	8.5	7.9	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Right>Floor	7.9	0.9	2	2.429	2.422	0.498	3.03	1.5	0.522	False	NaN	4.487
+5.9	0.5	8.5	7.9	0.9	0.75	22.5	True	boast	0.9	Left>Front>Right>Floor>Floor	7.9	0.9	2.005	4.045	4.078	0.686	6.616	1.7	0.778	False	NaN	8.52
+5.9	0.5	8.5	7.9	0.9	1	28	True	boast-nearest	0.6	Left>Front>Floor>Right>Floor	7.9	0.6	1.788	0.726	0.719	0.459	2.632	0.8	0.168	False	NaN	4.924
+5.9	0.5	8.5	7.9	1.2	0.3	12.6	True	boast	1.2	Left>Front>Floor>Floor	7.9	1.2	2.222	1.271	1.255	1.725	0.716	1.633	0.512	False	NaN	1.233
+5.9	0.5	8.5	7.9	1.2	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	7.9	0.9	2	2.429	2.422	0.498	3.03	1.5	0.522	False	NaN	4.487
+5.9	0.5	8.5	7.9	1.2	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	7.9	0.9	2.005	4.045	4.078	0.686	6.616	1.7	0.778	False	NaN	8.52
+5.9	0.5	8.5	7.9	1.2	1	28	True	boast-nearest	0.6	Left>Front>Floor>Right>Floor	7.9	0.6	1.788	0.726	0.719	0.459	2.632	0.8	0.168	False	NaN	4.924
+5.9	0.5	8.5	7.9	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	7.9	1.5	2.382	1.915	1.882	1.846	0.746	1.933	0.768	False	NaN	0.746
+5.9	0.5	8.5	7.9	1.5	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	7.9	0.9	2	2.429	2.422	0.498	3.03	1.5	0.522	False	NaN	4.487
+5.9	0.5	8.5	7.9	1.5	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	7.9	0.9	2.005	4.045	4.078	0.686	6.616	1.7	0.778	False	NaN	8.52
+5.9	0.5	8.5	7.9	1.5	1	28	True	boast-nearest	0.6	Left>Front>Floor>Right>Floor	7.9	0.6	1.788	0.726	0.719	0.459	2.632	0.8	0.168	False	NaN	4.924
+5.9	0.5	8.5	7.9	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	7.9	1.8	2.488	1.169	1.129	2.249	0.329	2.108	0.93	False	NaN	0.329
+5.9	0.5	8.5	7.9	1.8	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	7.9	0.9	2	2.429	2.422	0.498	3.03	1.5	0.522	False	NaN	4.487
+5.9	0.5	8.5	7.9	1.8	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	7.9	0.9	2.005	4.045	4.078	0.686	6.616	1.7	0.778	False	NaN	8.52
+5.9	0.5	8.5	7.9	1.8	1	28	True	boast-nearest	0.6	Left>Front>Floor>Right>Floor	7.9	0.6	1.788	0.726	0.719	0.459	2.632	0.8	0.168	False	NaN	4.924
+5.9	0.5	8.5	7.9	2.1	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	7.9	1.8	2.488	1.169	1.129	2.249	0.329	2.108	0.93	False	NaN	0.329
+5.9	0.5	8.5	7.9	2.1	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	7.9	0.9	2	2.429	2.422	0.498	3.03	1.5	0.522	False	NaN	4.487
+5.9	0.5	8.5	7.9	2.1	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	7.9	0.9	2.005	4.045	4.078	0.686	6.616	1.7	0.778	False	NaN	8.52
+5.9	0.5	8.5	7.9	2.1	1	28	True	boast-nearest	0.6	Left>Front>Floor>Right>Floor	7.9	0.6	1.788	0.726	0.719	0.459	2.632	0.8	0.168	False	NaN	4.924
+5.9	0.5	8.5	7.9	2.4	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	7.9	1.8	2.488	1.169	1.129	2.249	0.329	2.108	0.93	False	NaN	0.329
+5.9	0.5	8.5	7.9	2.4	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	7.9	0.9	2	2.429	2.422	0.498	3.03	1.5	0.522	False	NaN	4.487
+5.9	0.5	8.5	7.9	2.4	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	7.9	0.9	2.005	4.045	4.078	0.686	6.616	1.7	0.778	False	NaN	8.52
+5.9	0.5	8.5	7.9	2.4	1	28	True	boast-nearest	0.9	Left>Front>Back>Floor>Floor	7.5	0.9	4.088	3.167	3.196	3.14	9.552	1.308	0.236	True	0.148	7.794
+5.9	0.5	8.5	7	0.6	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	7	1.2	5.027	1.482	1.482	4.865	2.658	1.358	0.319	False	NaN	4.145
+5.9	0.5	8.5	7	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	7	0.9	5.02	1.344	1.343	5.02	4.042	1.117	0.288	False	NaN	6.625
+5.9	0.5	8.5	7	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Back>Floor	7	0.9	5.021	1.958	1.958	5.021	6.483	1.075	0.412	True	0.31	8.713
+5.9	0.5	8.5	7	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Back>Floor	7	0.9	5.021	2.244	2.244	5.021	8.65	1.033	0.285	True	0.285	8.459
+5.9	0.5	8.5	7	0.9	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	7	1.2	5.027	1.482	1.482	4.865	2.658	1.358	0.319	False	NaN	4.145
+5.9	0.5	8.5	7	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Floor	7	0.9	5.02	1.344	1.343	5.02	4.042	1.117	0.288	False	NaN	6.625
+5.9	0.5	8.5	7	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Back>Floor	7	0.9	5.021	1.958	1.958	5.021	6.483	1.075	0.412	True	0.31	8.713
+5.9	0.5	8.5	7	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	7	0.9	5.021	2.244	2.244	5.021	8.65	1.033	0.285	True	0.285	8.459
+5.9	0.5	8.5	7	1.2	0.3	12.6	True	boast	1.2	Left>Front>Floor>Floor	7	1.2	5.027	1.482	1.482	4.865	2.658	1.358	0.319	False	NaN	4.145
+5.9	0.5	8.5	7	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	7	1.2	5.028	2.862	2.862	5.028	5.581	1.392	0.596	False	NaN	8.36
+5.9	0.5	8.5	7	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Back>Floor	7	1.2	5.029	3.557	3.557	5.029	8.28	1.325	0.633	True	0.634	8.543
+5.9	0.5	8.5	7	1.2	1	28	True	boast	1.2	Left>Front>Back>Floor>Floor	7	1.2	5.03	3.879	3.941	4.385	7.449	1.525	0.437	True	1.619	5.167
+5.9	0.5	8.5	7	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	7	1.5	5.037	2.64	2.639	4.975	3.562	1.658	0.551	False	NaN	4.751
+5.9	0.5	8.5	7	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	7	1.5	5.039	4.288	4.288	5.039	6.33	1.617	0.884	False	NaN	8.667
+5.9	0.5	8.5	7	1.5	0.75	22.5	True	boast-nearest	1.2	Left>Front>Floor>Back>Floor	7	1.2	5.029	3.557	3.557	5.029	8.28	1.325	0.633	True	0.634	8.543
+5.9	0.5	8.5	7	1.5	1	28	True	boast-nearest	1.2	Left>Front>Back>Floor>Floor	7	1.2	5.03	3.879	3.941	4.385	7.449	1.525	0.437	True	1.619	5.167
+5.9	0.5	8.5	7	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	7	1.8	5.047	3.605	3.605	5.009	3.829	1.875	0.746	False	NaN	4.475
+5.9	0.5	8.5	7	1.8	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Floor	7	1.5	5.039	4.288	4.288	5.039	6.33	1.617	0.884	False	NaN	8.667
+5.9	0.5	8.5	7	1.8	0.75	22.5	True	boast-nearest	1.2	Left>Front>Floor>Back>Floor	7	1.2	5.029	3.557	3.557	5.029	8.28	1.325	0.633	True	0.634	8.543
+5.9	0.5	8.5	7	1.8	1	28	True	boast-nearest	1.2	Left>Front>Back>Floor>Floor	7	1.2	5.03	3.879	3.941	4.385	7.449	1.525	0.437	True	1.619	5.167
+5.9	0.5	8.5	7	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	7	2.1	5.056	4.366	4.366	4.891	3.731	2.05	0.901	False	NaN	3.775
+5.9	0.5	8.5	7	2.1	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Floor	7	1.5	5.039	4.288	4.288	5.039	6.33	1.617	0.884	False	NaN	8.667
+5.9	0.5	8.5	7	2.1	0.75	22.5	True	boast-nearest	1.2	Left>Front>Floor>Back>Floor	7	1.2	5.029	3.557	3.557	5.029	8.28	1.325	0.633	True	0.634	8.543
+5.9	0.5	8.5	7	2.1	1	28	True	boast-nearest	1.2	Left>Front>Back>Floor>Floor	7	1.2	5.03	3.879	3.941	4.385	7.449	1.525	0.437	True	1.619	5.167
+5.9	0.5	8.5	7	2.4	0.3	12.6	True	boast-nearest	2.1	Left>Front>Floor>Floor	7	2.1	5.056	4.366	4.366	4.891	3.731	2.05	0.901	False	NaN	3.775
+5.9	0.5	8.5	7	2.4	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Floor	7	1.5	5.039	4.288	4.288	5.039	6.33	1.617	0.884	False	NaN	8.667
+5.9	0.5	8.5	7	2.4	0.75	22.5	True	boast-nearest	1.2	Left>Front>Floor>Back>Floor	7	1.2	5.029	3.557	3.557	5.029	8.28	1.325	0.633	True	0.634	8.543
+5.9	0.5	8.5	7	2.4	1	28	True	boast-nearest	1.2	Left>Front>Back>Floor>Floor	7	1.2	5.03	3.879	3.941	4.385	7.449	1.525	0.437	True	1.619	5.167
+5.9	0.5	8.5	5.5	0.6	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	5.5	1.2	5.873	0.729	0.728	5.868	2.341	1.125	0.164	False	NaN	3.897
+5.9	0.5	8.5	5.5	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	5.5	0.9	5.873	0.736	0.736	5.873	3.318	0.917	0.165	False	NaN	5.725
+5.9	0.5	8.5	5.5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Floor	5.5	0.9	5.873	1.124	1.124	5.873	5.461	0.875	0.244	False	NaN	9.493
+5.9	0.5	8.5	5.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Back>Floor	5.5	0.9	5.873	1.305	1.305	5.873	7.336	0.833	0.275	True	0.275	8.211
+5.9	0.5	8.5	5.5	0.9	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	5.5	1.2	5.873	0.729	0.728	5.868	2.341	1.125	0.164	False	NaN	3.897
+5.9	0.5	8.5	5.5	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Floor	5.5	0.9	5.873	0.736	0.736	5.873	3.318	0.917	0.165	False	NaN	5.725
+5.9	0.5	8.5	5.5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Floor	5.5	0.9	5.873	1.124	1.124	5.873	5.461	0.875	0.244	False	NaN	9.493
+5.9	0.5	8.5	5.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	5.5	0.9	5.873	1.305	1.305	5.873	7.336	0.833	0.275	True	0.275	8.211
+5.9	0.5	8.5	5.5	1.2	0.3	12.6	True	boast	1.2	Left>Front>Floor>Floor	5.5	1.2	5.873	0.729	0.728	5.868	2.341	1.125	0.164	False	NaN	3.897
+5.9	0.5	8.5	5.5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	5.5	1.2	5.873	1.544	1.544	5.873	4.726	1.108	0.329	False	NaN	7.768
+5.9	0.5	8.5	5.5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Back>Floor	5.5	1.2	5.873	1.952	1.952	5.873	7.078	1.042	0.411	True	0.408	8.405
+5.9	0.5	8.5	5.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Back>Floor	5.5	1.2	5.873	2.14	2.14	5.873	9.248	0.992	0.135	True	0.136	8.782
+5.9	0.5	8.5	5.5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	5.5	1.5	5.873	1.449	1.449	5.873	3.235	1.317	0.309	False	NaN	5.01
+5.9	0.5	8.5	5.5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	5.5	1.5	5.874	2.334	2.333	5.874	5.648	1.25	0.488	False	NaN	8.901
+5.9	0.5	8.5	5.5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Floor>Back>Floor	5.5	1.5	5.874	2.77	2.77	5.874	8.213	1.175	0.479	True	0.479	8.426
+5.9	0.5	8.5	5.5	1.5	1	28	True	boast	1.5	Left>Front>Back>Floor>Floor	5.5	1.5	5.874	2.97	2.97	5.874	8.683	1.192	0.193	True	0.495	6.527
+5.9	0.5	8.5	5.5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	5.5	1.8	5.874	2.13	2.13	5.874	3.766	1.467	0.447	False	NaN	5.485
+5.9	0.5	8.5	5.5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	5.5	1.8	5.874	3.105	3.105	5.874	6.284	1.375	0.645	False	NaN	9.507
+5.9	0.5	8.5	5.5	1.8	0.75	22.5	True	boast	1.8	Left>Front>Floor>Back>Floor	5.5	1.8	5.874	3.578	3.577	5.874	9.026	1.292	0.37	True	0.351	8.472
+5.9	0.5	8.5	5.5	1.8	1	28	True	boast	1.8	Left>Front>Back>Floor>Floor	5.5	1.8	5.875	3.793	3.804	5.756	7.241	1.425	0.39	True	1.495	4.675
+5.9	0.5	8.5	5.5	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	5.5	2.1	5.874	2.77	2.77	5.874	4.096	1.592	0.577	False	NaN	5.612
+5.9	0.5	8.5	5.5	2.1	0.5	17	True	boast	2.1	Left>Front>Floor>Back>Floor	5.5	2.1	5.875	3.858	3.857	5.875	6.718	1.492	0.797	True	0.031	9.722
+5.9	0.5	8.5	5.5	2.1	0.75	22.5	True	boast	2.1	Left>Front>Back>Floor>Floor	5.5	2.1	5.875	4.376	4.4	5.683	9.223	1.5	0.445	True	0.562	7.575
+5.9	0.5	8.5	5.5	2.1	1	28	True	boast-nearest	1.8	Left>Front>Back>Floor>Floor	5.5	1.8	5.875	3.793	3.804	5.756	7.241	1.425	0.39	True	1.495	4.675
+5.9	0.5	8.5	5.5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	5.5	2.4	5.875	3.366	3.366	5.875	4.286	1.717	0.698	False	NaN	5.506
+5.9	0.5	8.5	5.5	2.4	0.5	17	True	boast-nearest	2.1	Left>Front>Floor>Back>Floor	5.5	2.1	5.875	3.858	3.857	5.875	6.718	1.492	0.797	True	0.031	9.722
+5.9	0.5	8.5	5.5	2.4	0.75	22.5	True	boast-nearest	2.1	Left>Front>Back>Floor>Floor	5.5	2.1	5.875	4.376	4.4	5.683	9.223	1.5	0.445	True	0.562	7.575
+5.9	0.5	8.5	5.5	2.4	1	28	True	boast-nearest	1.8	Left>Front>Back>Floor>Floor	5.5	1.8	5.875	3.793	3.804	5.756	7.241	1.425	0.39	True	1.495	4.675
+5.9	0.5	8.5	3.5	0.6	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.5	1.2	6.191	0.653	0.653	6.191	2.317	1.083	0.148	False	NaN	3.889
+5.9	0.5	8.5	3.5	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.5	0.9	6.191	0.645	0.645	6.191	3.201	0.875	0.147	False	NaN	5.573
+5.9	0.5	8.5	3.5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.5	0.9	6.191	0.878	0.877	6.191	4.976	0.808	0.194	False	NaN	8.765
+5.9	0.5	8.5	3.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Back>Floor	3.5	0.9	6.191	0.985	0.985	6.191	6.577	0.758	0.215	True	0.205	8.352
+5.9	0.5	8.5	3.5	0.9	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.5	1.2	6.191	0.653	0.653	6.191	2.317	1.083	0.148	False	NaN	3.889
+5.9	0.5	8.5	3.5	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Floor	3.5	0.9	6.191	0.645	0.645	6.191	3.201	0.875	0.147	False	NaN	5.573
+5.9	0.5	8.5	3.5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Floor	3.5	0.9	6.191	0.878	0.877	6.191	4.976	0.808	0.194	False	NaN	8.765
+5.9	0.5	8.5	3.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	3.5	0.9	6.191	0.985	0.985	6.191	6.577	0.758	0.215	True	0.205	8.352
+5.9	0.5	8.5	3.5	1.2	0.3	12.6	True	boast	1.2	Left>Front>Floor>Floor	3.5	1.2	6.191	0.653	0.653	6.191	2.317	1.083	0.148	False	NaN	3.889
+5.9	0.5	8.5	3.5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	3.5	1.2	6.191	1.142	1.142	6.191	4.229	1	0.247	False	NaN	7.139
+5.9	0.5	8.5	3.5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Back>Floor	3.5	1.2	6.191	1.381	1.381	6.191	6.205	0.925	0.295	True	0.207	8.71
+5.9	0.5	8.5	3.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Back>Floor	3.5	1.2	6.191	1.491	1.49	6.191	8.048	0.867	0.258	True	0.259	8.235
+5.9	0.5	8.5	3.5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	6.191	1.119	1.119	6.191	2.985	1.208	0.242	False	NaN	4.793
+5.9	0.5	8.5	3.5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	6.191	1.634	1.633	6.191	4.993	1.108	0.347	False	NaN	8.206
+5.9	0.5	8.5	3.5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Floor>Back>Floor	3.5	1.5	6.191	1.882	1.881	6.191	7.164	1.017	0.397	True	0.397	8.363
+5.9	0.5	8.5	3.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Back>Floor	3.5	1.5	6.191	1.995	1.995	6.191	9.216	0.958	0.133	True	0.133	8.747
+5.9	0.5	8.5	3.5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	3.5	1.8	6.191	1.575	1.575	6.191	3.463	1.317	0.335	False	NaN	5.345
+5.9	0.5	8.5	3.5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	3.5	1.8	6.191	2.121	2.121	6.191	5.593	1.2	0.445	False	NaN	8.963
+5.9	0.5	8.5	3.5	1.8	0.75	22.5	True	boast	1.8	Left>Front>Floor>Back>Floor	3.5	1.8	6.191	2.38	2.38	6.191	7.939	1.1	0.449	True	0.449	8.355
+5.9	0.5	8.5	3.5	1.8	1	28	True	boast	1.8	Left>Front>Back>Floor>Floor	3.5	1.8	6.191	2.497	2.497	6.191	9.101	1.083	0.114	True	0.231	7.285
+5.9	0.5	8.5	3.5	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	3.5	2.1	6.191	2.02	2.02	6.191	3.821	1.417	0.425	False	NaN	5.675
+5.9	0.5	8.5	3.5	2.1	0.5	17	True	boast	2.1	Left>Front>Floor>Floor	3.5	2.1	6.191	2.605	2.605	6.191	6.071	1.283	0.543	False	NaN	9.493
+5.9	0.5	8.5	3.5	2.1	0.75	22.5	True	boast	2.1	Left>Front>Floor>Back>Floor	3.5	2.1	6.191	2.877	2.876	6.191	8.572	1.175	0.407	True	0.407	8.502
+5.9	0.5	8.5	3.5	2.1	1	28	True	boast	2.1	Left>Front>Back>Floor>Floor	3.5	2.1	6.191	2.999	2.999	6.191	8.277	1.208	0.209	True	0.652	5.976
+5.9	0.5	8.5	3.5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	3.5	2.4	6.191	2.454	2.454	6.191	4.088	1.5	0.513	False	NaN	5.843
+5.9	0.5	8.5	3.5	2.4	0.5	17	True	boast	2.4	Left>Front>Floor>Back>Floor	3.5	2.4	6.191	3.083	3.083	6.191	6.452	1.358	0.64	True	0.099	9.625
+5.9	0.5	8.5	3.5	2.4	0.75	22.5	True	boast	2.4	Left>Front>Floor>Back>Floor	3.5	2.4	6.191	3.371	3.37	6.191	9.088	1.25	0.311	True	0.298	8.527
+5.9	0.5	8.5	3.5	2.4	1	28	True	boast	2.4	Left>Front>Back>Floor>Floor	3.5	2.4	6.191	3.499	3.498	6.191	7.743	1.308	0.303	True	1.056	5.202
+5.2	0.5	4.5	3.9	0.6	0.3	11.339	True	boast-nearest	1.8	Left>Front>Floor>Right>Floor	3.9	1.8	0.599	0.963	0.92	0.073	0.238	1.608	0.555	False	NaN	0.444
+5.2	0.5	4.5	3.9	0.6	0.5	15.736	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	3.9	1.5	0.142	2.348	2.32	1.337	0.689	1.642	0.535	False	NaN	0.694
+5.2	0.5	4.5	3.9	0.6	0.75	21.685	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	3.5	0.9	2.944	1.446	1.445	0.099	2.478	0.983	0.186	False	NaN	3.33
+5.2	0.5	4.5	3.9	0.6	1	28	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	3.5	0.9	2.95	1.788	1.839	1.716	4.018	1.133	0.345	False	NaN	5.262
+5.2	0.5	4.5	3.9	0.9	0.3	11.419	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	3.9	1.8	0.601	1.109	1.099	0.042	0.276	1.617	0.462	False	NaN	0.276
+5.2	0.5	4.5	3.9	0.9	0.5	15.819	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	3.9	1.5	0.143	2.412	2.391	1.384	0.706	1.65	0.544	False	NaN	0.706
+5.2	0.5	4.5	3.9	0.9	0.75	21.741	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	3.5	0.9	2.944	1.45	1.449	0.114	2.495	0.983	0.187	False	NaN	3.35
+5.2	0.5	4.5	3.9	0.9	1	28	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	3.5	0.9	2.95	1.788	1.839	1.716	4.018	1.133	0.345	False	NaN	5.262
+5.2	0.5	4.5	3.9	1.2	0.3	11.587	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	3.9	1.8	0.606	1.408	1.403	0.161	0.355	1.65	0.488	False	NaN	0.355
+5.2	0.5	4.5	3.9	1.2	0.5	15.994	True	boast-nearest	1.2	Left>Front>Floor>Right>Floor	3.5	1.2	3.118	2.002	2.001	0.838	2.001	1.217	0.428	False	NaN	2.946
+5.2	0.5	4.5	3.9	1.2	0.75	21.856	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3.5	1.2	3.135	2.781	2.886	1.305	4.204	1.442	0.522	False	NaN	5.009
+5.2	0.5	4.5	3.9	1.2	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3.5	1.2	3.143	3.12	3.697	3.343	5.942	1.6	0.761	False	NaN	7.055
+5.2	0.5	4.5	3.9	1.5	0.3	11.834	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	3.9	1.8	0.613	1.818	1.811	0.333	0.469	1.692	0.528	False	NaN	0.469
+5.2	0.5	4.5	3.9	1.5	0.5	16.246	True	boast	1.5	Left>Front>Right>Floor>Floor	3.9	1.5	0.15	2.722	2.708	1.616	0.778	1.692	0.591	False	NaN	0.778
+5.2	0.5	4.5	3.9	1.5	0.75	22.021	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3.5	1.2	3.136	2.794	2.907	1.36	4.256	1.45	0.529	False	NaN	5.065
+5.2	0.5	4.5	3.9	1.5	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3.5	1.2	3.143	3.12	3.697	3.343	5.942	1.6	0.761	False	NaN	7.055
+5.2	0.5	4.5	3.9	1.8	0.3	12.149	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	3.9	1.8	0.62	2.299	2.298	0.549	0.609	1.742	0.579	False	NaN	0.609
+5.2	0.5	4.5	3.9	1.8	0.5	16.561	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	3.9	1.5	0.155	2.935	2.928	1.782	0.819	1.717	0.625	False	NaN	0.819
+5.2	0.5	4.5	3.9	1.8	0.75	22.223	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3.5	1.2	3.136	2.809	2.934	1.428	4.319	1.458	0.538	False	NaN	5.134
+5.2	0.5	4.5	3.9	1.8	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3.5	1.2	3.143	3.12	3.697	3.343	5.942	1.6	0.761	False	NaN	7.055
+5.2	0.5	4.5	3.9	2.1	0.3	12.524	True	boast	2.1	Left>Front>Floor>Floor	3.9	2.1	0.907	0.759	0.72	0.591	0.155	1.75	0.737	False	NaN	0.167
+5.2	0.5	4.5	3.9	2.1	0.5	16.927	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	3.9	1.5	0.16	3.165	3.16	1.97	0.852	1.75	0.664	False	NaN	0.852
+5.2	0.5	4.5	3.9	2.1	0.75	22.454	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3.5	1.2	3.137	2.827	2.963	1.505	4.39	1.467	0.548	False	NaN	5.211
+5.2	0.5	4.5	3.9	2.1	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3.5	1.2	3.143	3.12	3.697	3.343	5.942	1.6	0.761	False	NaN	7.055
+5.2	0.5	4.5	3.9	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	3.9	2.4	1.122	1.064	1.021	0.751	0.184	1.917	0.881	False	NaN	0.184
+5.2	0.5	4.5	3.9	2.4	0.5	17	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	3.9	1.5	0.161	3.21	3.192	2.007	0.857	1.75	0.672	False	NaN	0.857
+5.2	0.5	4.5	3.9	2.4	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3.5	1.2	3.137	2.83	2.969	1.52	4.404	1.467	0.55	False	NaN	5.227
+5.2	0.5	4.5	3.9	2.4	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3.5	1.2	3.143	3.12	3.697	3.343	5.942	1.6	0.761	False	NaN	7.055
+5.2	0.5	4.5	3	0.6	0.3	10.906	True	boast-nearest	1.2	Left>Front>Floor>Floor	3	1.2	4.704	1.013	1.011	4.095	1.053	1.008	0.248	False	NaN	1.714
+5.2	0.5	4.5	3	0.6	0.5	15.273	True	boast-nearest	0.9	Left>Front>Floor>Floor	3	0.9	4.687	0.978	0.977	3.781	1.866	0.85	0.219	False	NaN	3.138
+5.2	0.5	4.5	3	0.6	0.75	21.371	True	boast-nearest	0.9	Left>Front>Floor>Floor	3	0.9	4.69	1.333	1.338	2.921	3.784	0.883	0.287	False	NaN	6.053
+5.2	0.5	4.5	3	0.6	1	28	True	boast	0.6	Left>Front>Floor>Floor	3	0.6	4.676	0.595	0.594	3.352	2.785	0.558	0.138	False	NaN	5.21
+5.2	0.5	4.5	3	0.9	0.3	10.957	True	boast-nearest	1.2	Left>Front>Floor>Floor	3	1.2	4.705	1.029	1.022	4.084	1.078	1.008	0.25	False	NaN	1.744
+5.2	0.5	4.5	3	0.9	0.5	15.329	True	boast	0.9	Left>Front>Floor>Floor	3	0.9	4.687	0.984	0.981	3.774	1.884	0.85	0.22	False	NaN	3.165
+5.2	0.5	4.5	3	0.9	0.75	21.409	True	boast	0.9	Left>Front>Floor>Floor	3	0.9	4.69	1.335	1.339	2.915	3.796	0.883	0.287	False	NaN	6.072
+5.2	0.5	4.5	3	0.9	1	28	True	boast	0.9	Left>Front>Floor>Floor	3	0.9	4.691	1.485	1.546	1.771	6.058	0.925	0.329	False	NaN	9.51
+5.2	0.5	4.5	3	1.2	0.3	11.068	True	boast	1.2	Left>Front>Floor>Floor	3	1.2	4.705	1.063	1.057	4.063	1.13	1.017	0.255	False	NaN	1.809
+5.2	0.5	4.5	3	1.2	0.5	15.448	True	boast	1.2	Left>Front>Floor>Floor	3	1.2	4.715	1.84	1.84	3.378	2.971	1.1	0.389	False	NaN	4.293
+5.2	0.5	4.5	3	1.2	0.75	21.491	True	boast	1.2	Left>Front>Floor>Floor	3	1.2	4.72	2.21	2.316	1.95	5.607	1.175	0.485	False	NaN	8.134
+5.2	0.5	4.5	3	1.2	1	28	True	boast	1.2	Left>Front>Right>Floor>Back>Floor	3	1.2	4.722	2.369	2.768	0.088	9.114	1.3	0.322	True	0.304	8.88
+5.2	0.5	4.5	3	1.5	0.3	11.236	True	boast	1.5	Left>Front>Floor>Floor	3	1.5	4.737	1.832	1.831	3.878	1.698	1.233	0.396	False	NaN	2.193
+5.2	0.5	4.5	3	1.5	0.5	15.627	True	boast	1.5	Left>Front>Floor>Floor	3	1.5	4.75	2.679	2.707	3.004	3.8	1.317	0.564	False	NaN	4.975
+5.2	0.5	4.5	3	1.5	0.75	21.612	True	boast	1.5	Left>Front>Floor>Right>Floor	3	1.5	4.756	3.076	3.464	0.784	7.296	1.475	0.718	False	NaN	9.656
+5.2	0.5	4.5	3	1.5	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	3	1.2	4.722	2.369	2.768	0.088	9.114	1.3	0.322	True	0.304	8.88
+5.2	0.5	4.5	3	1.8	0.3	11.457	True	boast	1.8	Left>Front>Floor>Floor	3	1.8	4.772	2.573	2.573	3.831	2.102	1.417	0.54	False	NaN	2.292
+5.2	0.5	4.5	3	1.8	0.5	15.859	True	boast	1.8	Left>Front>Floor>Floor	3	1.8	4.786	3.502	3.611	2.545	4.499	1.525	0.747	False	NaN	5.42
+5.2	0.5	4.5	3	1.8	0.75	21.767	True	boast	1.8	Left>Front>Right>Floor>Back>Floor	3	1.8	4.793	3.93	4.82	0.305	8.822	1.8	0.839	True	0.818	9.332
+5.2	0.5	4.5	3	1.8	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	3	1.2	4.722	2.369	2.768	0.088	9.114	1.3	0.322	True	0.304	8.88
+5.2	0.5	4.5	3	2.1	0.3	11.728	True	boast	2.1	Left>Front>Floor>Floor	3	2.1	4.805	3.292	3.29	3.843	2.385	1.575	0.683	False	NaN	2.385
+5.2	0.5	4.5	3	2.1	0.5	16.138	True	boast	2.1	Left>Front>Floor>Floor	3	2.1	4.819	4.31	4.562	2.051	5.104	1.733	0.94	False	NaN	5.684
+5.2	0.5	4.5	3	2.1	0.75	21.951	True	boast-nearest	1.8	Left>Front>Right>Floor>Back>Floor	3	1.8	4.793	3.938	4.862	0.369	8.972	1.817	0.851	True	0.851	9.293
+5.2	0.5	4.5	3	2.1	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	3	1.2	4.722	2.369	2.768	0.088	9.114	1.3	0.322	True	0.304	8.88
+5.2	0.5	4.5	3	2.4	0.3	12.047	True	boast	2.4	Left>Front>Floor>Floor	3	2.4	4.834	3.996	3.996	3.859	2.59	1.717	0.825	False	NaN	2.59
+5.2	0.5	4.5	3	2.4	0.5	16.46	True	boast-nearest	2.1	Left>Front>Floor>Floor	3	2.1	4.82	4.351	4.649	1.875	5.341	1.75	0.957	False	NaN	5.989
+5.2	0.5	4.5	3	2.4	0.75	22.159	True	boast-nearest	1.8	Left>Front>Right>Floor>Back>Floor	3	1.8	4.793	3.947	4.911	0.443	9.14	1.825	0.826	True	0.809	9.241
+5.2	0.5	4.5	3	2.4	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	3	1.2	4.722	2.369	2.768	0.088	9.114	1.3	0.322	True	0.304	8.88
+5.2	0.5	4.5	1.5	0.6	0.3	10.668	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	6.015	0.708	0.707	5.952	1.676	0.85	0.16	False	NaN	2.697
+5.2	0.5	4.5	1.5	0.6	0.5	15.011	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	6.015	0.907	0.907	6.015	2.836	0.775	0.2	False	NaN	4.675
+5.2	0.5	4.5	1.5	0.6	0.75	21.189	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	6.016	1.003	1.003	6.016	4.232	0.692	0.219	False	NaN	7.254
+5.2	0.5	4.5	1.5	0.6	1	28	True	boast	0.6	Left>Front>Floor>Floor	1.5	0.6	6.015	0.597	0.597	6.015	4.329	0.525	0.137	False	NaN	7.755
+5.2	0.5	4.5	1.5	0.9	0.3	10.697	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	6.015	0.71	0.709	5.955	1.687	0.85	0.16	False	NaN	2.714
+5.2	0.5	4.5	1.5	0.9	0.5	15.043	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	6.015	0.908	0.908	6.015	2.843	0.767	0.2	False	NaN	4.689
+5.2	0.5	4.5	1.5	0.9	0.75	21.212	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	6.016	1.003	1.003	6.016	4.237	0.692	0.219	False	NaN	7.263
+5.2	0.5	4.5	1.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	1.5	0.9	6.016	1.044	1.044	6.016	5.714	0.642	0.227	True	0.075	9.119
+5.2	0.5	4.5	1.5	1.2	0.3	10.76	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	6.015	1.14	1.14	6.015	2.186	0.983	0.247	False	NaN	3.258
+5.2	0.5	4.5	1.5	1.2	0.5	15.114	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	6.016	1.35	1.35	6.016	3.42	0.875	0.289	False	NaN	5.439
+5.2	0.5	4.5	1.5	1.2	0.75	21.261	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	6.016	1.448	1.448	6.016	5.03	0.792	0.309	False	NaN	8.42
+5.2	0.5	4.5	1.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Back>Floor	1.5	1.2	6.016	1.49	1.49	6.016	6.741	0.733	0.318	True	0.303	8.416
+5.2	0.5	4.5	1.5	1.5	0.3	10.859	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	6.016	1.565	1.565	6.016	2.499	1.075	0.333	False	NaN	3.52
+5.2	0.5	4.5	1.5	1.5	0.5	15.222	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	6.017	1.789	1.789	6.017	3.865	0.958	0.378	False	NaN	5.94
+5.2	0.5	4.5	1.5	1.5	0.75	21.336	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	6.017	1.892	1.899	5.769	5.996	0.908	0.4	False	NaN	9.597
+5.2	0.5	4.5	1.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Back>Floor	1.5	1.5	6.018	1.935	1.986	5.37	8.855	0.925	0.239	True	0.239	8.647
+5.2	0.5	4.5	1.5	1.8	0.3	10.992	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	6.017	1.987	1.987	6.017	2.74	1.167	0.418	False	NaN	3.647
+5.2	0.5	4.5	1.5	1.8	0.5	15.366	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	6.018	2.227	2.229	5.862	4.356	1.058	0.467	False	NaN	6.407
+5.2	0.5	4.5	1.5	1.8	0.75	21.435	True	boast	1.8	Left>Front>Floor>Back>Floor	1.5	1.8	6.019	2.335	2.427	5.194	7.463	1.1	0.507	True	0.485	8.729
+5.2	0.5	4.5	1.5	1.8	1	28	True	boast	1.8	Left>Front>Back>Floor>Floor	1.5	1.8	6.019	2.38	2.687	4.519	7.909	1.317	0.276	True	1.037	5.956
+5.2	0.5	4.5	1.5	2.1	0.3	11.158	True	boast	2.1	Left>Front>Floor>Floor	1.5	2.1	6.018	2.407	2.406	6.018	2.93	1.25	0.503	False	NaN	3.68
+5.2	0.5	4.5	1.5	2.1	0.5	15.545	True	boast	2.1	Left>Front>Floor>Floor	1.5	2.1	6.02	2.663	2.697	5.507	5.041	1.2	0.562	False	NaN	7.013
+5.2	0.5	4.5	1.5	2.1	0.75	21.556	True	boast	2.1	Left>Front>Floor>Back>Floor	1.5	2.1	6.02	2.776	3.089	4.548	9.041	1.308	0.414	True	0.39	8.697
+5.2	0.5	4.5	1.5	2.1	1	28	True	boast-nearest	1.8	Left>Front>Back>Floor>Floor	1.5	1.8	6.019	2.38	2.687	4.519	7.909	1.317	0.276	True	1.037	5.956
+5.2	0.5	4.5	1.5	2.4	0.3	11.36	True	boast	2.4	Left>Front>Floor>Floor	1.5	2.4	6.019	2.824	2.824	6.019	3.084	1.325	0.588	False	NaN	3.647
+5.2	0.5	4.5	1.5	2.4	0.5	15.758	True	boast	2.4	Left>Front>Floor>Floor	1.5	2.4	6.021	3.097	3.217	5.143	5.749	1.35	0.667	False	NaN	7.594
+5.2	0.5	4.5	1.5	2.4	0.75	21.699	True	boast	2.4	Left>Front>Back>Floor>Floor	1.5	2.4	6.022	3.216	3.892	3.899	9.076	1.575	0.466	True	0.853	7.971
+5.2	0.5	4.5	1.5	2.4	1	28	True	boast-nearest	1.8	Left>Front>Back>Floor>Floor	1.5	1.8	6.019	2.38	2.687	4.519	7.909	1.317	0.276	True	1.037	5.956
+5.2	0.5	6.5	5.9	0.6	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	5.5	1.8	1.709	1.032	1.026	1.19	0.431	1.542	0.519	False	NaN	0.827
+5.2	0.5	6.5	5.9	0.6	0.5	17	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.25	1.627	1.608	0.347	1.426	1.308	0.3	False	NaN	2.001
+5.2	0.5	6.5	5.9	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	5.5	0.9	0.971	1.224	1.222	0.904	1.643	1.075	0.236	False	NaN	2.487
+5.2	0.5	6.5	5.9	0.6	1	28	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	5.5	0.9	0.979	1.892	1.892	2.244	2.868	1.183	0.388	False	NaN	4.077
+5.2	0.5	6.5	5.9	0.9	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	5.5	1.8	1.709	1.032	1.026	1.19	0.431	1.542	0.519	False	NaN	0.827
+5.2	0.5	6.5	5.9	0.9	0.5	17	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.25	1.627	1.608	0.347	1.426	1.308	0.3	False	NaN	2.001
+5.2	0.5	6.5	5.9	0.9	0.75	22.5	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	5.5	0.9	0.971	1.224	1.222	0.904	1.643	1.075	0.236	False	NaN	2.487
+5.2	0.5	6.5	5.9	0.9	1	28	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	5.5	0.9	0.979	1.892	1.892	2.244	2.868	1.183	0.388	False	NaN	4.077
+5.2	0.5	6.5	5.9	1.2	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	5.5	1.8	1.709	1.032	1.026	1.19	0.431	1.542	0.519	False	NaN	0.827
+5.2	0.5	6.5	5.9	1.2	0.5	17	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.25	1.627	1.608	0.347	1.426	1.308	0.3	False	NaN	2.001
+5.2	0.5	6.5	5.9	1.2	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.273	3.127	3.129	2.051	3.325	1.542	0.628	False	NaN	3.988
+5.2	0.5	6.5	5.9	1.2	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.283	3.814	4.038	3.736	4.902	1.65	0.834	False	NaN	5.963
+5.2	0.5	6.5	5.9	1.5	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	5.5	1.8	1.709	1.032	1.026	1.19	0.431	1.542	0.519	False	NaN	0.827
+5.2	0.5	6.5	5.9	1.5	0.5	17	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	5.5	1.5	1.531	3.323	3.314	0.801	2.498	1.683	0.613	False	NaN	2.694
+5.2	0.5	6.5	5.9	1.5	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.273	3.127	3.129	2.051	3.325	1.542	0.628	False	NaN	3.988
+5.2	0.5	6.5	5.9	1.5	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.283	3.814	4.038	3.736	4.902	1.65	0.834	False	NaN	5.963
+5.2	0.5	6.5	5.9	1.8	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	5.5	1.8	1.709	1.032	1.026	1.19	0.431	1.542	0.519	False	NaN	0.827
+5.2	0.5	6.5	5.9	1.8	0.5	17	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	5.5	1.5	1.531	3.323	3.314	0.801	2.498	1.683	0.613	False	NaN	2.694
+5.2	0.5	6.5	5.9	1.8	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.273	3.127	3.129	2.051	3.325	1.542	0.628	False	NaN	3.988
+5.2	0.5	6.5	5.9	1.8	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.283	3.814	4.038	3.736	4.902	1.65	0.834	False	NaN	5.963
+5.2	0.5	6.5	5.9	2.1	0.3	12.6	True	boast-nearest	2.1	Left>Front>Floor>Floor	5.5	2.1	1.88	1.72	1.704	1.154	0.609	1.742	0.674	False	NaN	0.717
+5.2	0.5	6.5	5.9	2.1	0.5	17	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	5.5	1.5	1.531	3.323	3.314	0.801	2.498	1.683	0.613	False	NaN	2.694
+5.2	0.5	6.5	5.9	2.1	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.273	3.127	3.129	2.051	3.325	1.542	0.628	False	NaN	3.988
+5.2	0.5	6.5	5.9	2.1	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.283	3.814	4.038	3.736	4.902	1.65	0.834	False	NaN	5.963
+5.2	0.5	6.5	5.9	2.4	0.3	12.6	True	boast-nearest	2.4	Left>Front>Floor>Floor	5.5	2.4	2.009	2.048	2.04	1.282	0.614	1.883	0.803	False	NaN	0.614
+5.2	0.5	6.5	5.9	2.4	0.5	17	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	5.5	1.5	1.531	3.323	3.314	0.801	2.498	1.683	0.613	False	NaN	2.694
+5.2	0.5	6.5	5.9	2.4	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.273	3.127	3.129	2.051	3.325	1.542	0.628	False	NaN	3.988
+5.2	0.5	6.5	5.9	2.4	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	5.5	1.2	1.283	3.814	4.038	3.736	4.902	1.65	0.834	False	NaN	5.963
+5.2	0.5	6.5	5	0.6	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	5	1.2	3.588	0.599	0.58	3.183	0.652	1.042	0.214	False	NaN	1.553
+5.2	0.5	6.5	5	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	5	0.9	3.552	0.767	0.759	2.771	1.507	0.9	0.191	False	NaN	2.954
+5.2	0.5	6.5	5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Floor	5	0.9	3.556	1.401	1.401	1.838	3.684	0.975	0.3	False	NaN	6.161
+5.2	0.5	6.5	5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	5	0.9	3.558	1.696	1.71	0.84	5.792	1.017	0.362	False	NaN	9.088
+5.2	0.5	6.5	5	0.9	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	5	1.2	3.588	0.599	0.58	3.183	0.652	1.042	0.214	False	NaN	1.553
+5.2	0.5	6.5	5	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Floor	5	0.9	3.552	0.767	0.759	2.771	1.507	0.9	0.191	False	NaN	2.954
+5.2	0.5	6.5	5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Floor	5	0.9	3.556	1.401	1.401	1.838	3.684	0.975	0.3	False	NaN	6.161
+5.2	0.5	6.5	5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Right>Floor	5	0.9	3.558	1.696	1.71	0.84	5.792	1.017	0.362	False	NaN	9.088
+5.2	0.5	6.5	5	1.2	0.3	12.6	True	boast	1.2	Left>Front>Floor>Floor	5	1.2	3.588	0.599	0.58	3.183	0.652	1.042	0.214	False	NaN	1.553
+5.2	0.5	6.5	5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	5	1.2	3.6	1.965	1.964	2.179	3.093	1.225	0.416	False	NaN	4.704
+5.2	0.5	6.5	5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Right>Floor	5	1.2	3.606	2.647	2.683	0.905	5.81	1.308	0.559	False	NaN	8.508
+5.2	0.5	6.5	5	1.2	1	28	True	boast	1.2	Left>Front>Right>Floor>Back>Floor	5	1.2	3.609	2.962	3.175	0.542	8.845	1.417	0.478	True	0.469	8.843
+5.2	0.5	6.5	5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	5	1.5	3.644	1.58	1.576	2.798	1.445	1.317	0.382	False	NaN	2.237
+5.2	0.5	6.5	5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	5	1.5	3.659	3.114	3.115	1.895	4.116	1.483	0.647	False	NaN	5.51
+5.2	0.5	6.5	5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Right>Floor>Floor	5	1.5	3.667	3.866	4.062	0.093	7.523	1.617	0.699	False	NaN	9.566
+5.2	0.5	6.5	5	1.5	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	5	1.2	3.609	2.962	3.175	0.542	8.845	1.417	0.478	True	0.469	8.843
+5.2	0.5	6.5	5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	5	1.8	3.702	2.449	2.448	2.641	1.916	1.533	0.543	False	NaN	2.412
+5.2	0.5	6.5	5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	5	1.8	3.72	4.207	4.228	1.661	4.782	1.708	0.872	False	NaN	5.763
+5.2	0.5	6.5	5	1.8	0.75	22.5	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	5	1.5	3.667	3.866	4.062	0.093	7.523	1.617	0.699	False	NaN	9.566
+5.2	0.5	6.5	5	1.8	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	5	1.2	3.609	2.962	3.175	0.542	8.845	1.417	0.478	True	0.469	8.843
+5.2	0.5	6.5	5	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	5	2.1	3.755	3.197	3.19	2.599	2.149	1.717	0.69	False	NaN	2.267
+5.2	0.5	6.5	5	2.1	0.5	17	True	boast-nearest	1.8	Left>Front>Floor>Floor	5	1.8	3.72	4.207	4.228	1.661	4.782	1.708	0.872	False	NaN	5.763
+5.2	0.5	6.5	5	2.1	0.75	22.5	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	5	1.5	3.667	3.866	4.062	0.093	7.523	1.617	0.699	False	NaN	9.566
+5.2	0.5	6.5	5	2.1	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	5	1.2	3.609	2.962	3.175	0.542	8.845	1.417	0.478	True	0.469	8.843
+5.2	0.5	6.5	5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	5	2.4	3.801	3.814	3.805	2.606	2.206	1.867	0.817	False	NaN	2.206
+5.2	0.5	6.5	5	2.4	0.5	17	True	boast-nearest	1.8	Left>Front>Floor>Floor	5	1.8	3.72	4.207	4.228	1.661	4.782	1.708	0.872	False	NaN	5.763
+5.2	0.5	6.5	5	2.4	0.75	22.5	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	5	1.5	3.667	3.866	4.062	0.093	7.523	1.617	0.699	False	NaN	9.566
+5.2	0.5	6.5	5	2.4	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	5	1.2	3.609	2.962	3.175	0.542	8.845	1.417	0.478	True	0.469	8.843
+5.2	0.5	6.5	3.5	0.6	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.5	1.2	5.523	0.98	0.98	5.422	2.277	1.05	0.215	False	NaN	3.672
+5.2	0.5	6.5	3.5	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.5	0.9	5.523	0.835	0.835	5.523	3.086	0.858	0.185	False	NaN	5.207
+5.2	0.5	6.5	3.5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.5	0.9	5.523	1.065	1.064	5.523	4.634	0.8	0.231	False	NaN	7.968
+5.2	0.5	6.5	3.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Back>Floor	3.5	0.9	5.523	1.171	1.171	5.523	6.059	0.758	0.253	True	0.164	8.751
+5.2	0.5	6.5	3.5	0.9	0.3	12.6	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.5	1.2	5.523	0.98	0.98	5.422	2.277	1.05	0.215	False	NaN	3.672
+5.2	0.5	6.5	3.5	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Floor	3.5	0.9	5.523	0.835	0.835	5.523	3.086	0.858	0.185	False	NaN	5.207
+5.2	0.5	6.5	3.5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Floor	3.5	0.9	5.523	1.065	1.064	5.523	4.634	0.8	0.231	False	NaN	7.968
+5.2	0.5	6.5	3.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	3.5	0.9	5.523	1.171	1.171	5.523	6.059	0.758	0.253	True	0.164	8.751
+5.2	0.5	6.5	3.5	1.2	0.3	12.6	True	boast	1.2	Left>Front>Floor>Floor	3.5	1.2	5.523	0.98	0.98	5.422	2.277	1.05	0.215	False	NaN	3.672
+5.2	0.5	6.5	3.5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	3.5	1.2	5.524	1.462	1.462	5.524	4.021	1	0.312	False	NaN	6.493
+5.2	0.5	6.5	3.5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Floor	3.5	1.2	5.525	1.702	1.702	5.525	5.78	0.933	0.361	False	NaN	9.646
+5.2	0.5	6.5	3.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Back>Floor	3.5	1.2	5.525	1.813	1.813	5.525	7.443	0.883	0.377	True	0.377	8.292
+5.2	0.5	6.5	3.5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	5.525	1.56	1.56	5.525	2.945	1.208	0.332	False	NaN	4.372
+5.2	0.5	6.5	3.5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	5.527	2.08	2.08	5.527	4.681	1.117	0.437	False	NaN	7.264
+5.2	0.5	6.5	3.5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Floor>Back>Floor	3.5	1.5	5.527	2.335	2.335	5.527	6.624	1.042	0.489	True	0.37	8.749
+5.2	0.5	6.5	3.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Back>Floor	3.5	1.5	5.528	2.452	2.463	5.158	9.083	1.042	0.219	True	0.219	8.733
+5.2	0.5	6.5	3.5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	3.5	1.8	5.527	2.12	2.12	5.527	3.312	1.325	0.445	False	NaN	4.629
+5.2	0.5	6.5	3.5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	3.5	1.8	5.53	2.688	2.688	5.53	5.162	1.225	0.56	False	NaN	7.701
+5.2	0.5	6.5	3.5	1.8	0.75	22.5	True	boast	1.8	Left>Front>Floor>Back>Floor	3.5	1.8	5.531	2.963	2.99	4.977	7.987	1.217	0.603	True	0.603	8.587
+5.2	0.5	6.5	3.5	1.8	1	28	True	boast	1.8	Left>Front>Back>Floor>Floor	3.5	1.8	5.531	3.087	3.243	4.31	7.981	1.392	0.334	True	1.157	5.937
+5.2	0.5	6.5	3.5	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	3.5	2.1	5.53	2.66	2.66	5.53	3.557	1.442	0.555	False	NaN	4.674
+5.2	0.5	6.5	3.5	2.1	0.5	17	True	boast	2.1	Left>Front>Floor>Floor	3.5	2.1	5.533	3.288	3.29	5.362	5.641	1.342	0.682	False	NaN	8.023
+5.2	0.5	6.5	3.5	2.1	0.75	22.5	True	boast	2.1	Left>Front>Floor>Back>Floor	3.5	2.1	5.535	3.586	3.74	4.317	9.492	1.425	0.343	True	0.181	8.44
+5.2	0.5	6.5	3.5	2.1	1	28	True	boast-nearest	1.8	Left>Front>Back>Floor>Floor	3.5	1.8	5.531	3.087	3.243	4.31	7.981	1.392	0.334	True	1.157	5.937
+5.2	0.5	6.5	3.5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	3.5	2.4	5.534	3.177	3.177	5.534	3.712	1.542	0.659	False	NaN	4.563
+5.2	0.5	6.5	3.5	2.4	0.5	17	True	boast	2.4	Left>Front>Floor>Floor	3.5	2.4	5.537	3.877	3.902	4.998	6.226	1.492	0.806	False	NaN	8.37
+5.2	0.5	6.5	3.5	2.4	0.75	22.5	True	boast	2.4	Left>Front>Back>Floor>Floor	3.5	2.4	5.539	4.203	4.603	3.669	8.828	1.7	0.575	True	1.227	7.706
+5.2	0.5	6.5	3.5	2.4	1	28	True	boast-nearest	1.8	Left>Front>Back>Floor>Floor	3.5	1.8	5.531	3.087	3.243	4.31	7.981	1.392	0.334	True	1.157	5.937
+5.2	0.5	6.5	1.5	0.6	0.3	12.6	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	6.173	0.674	0.674	6.173	2.238	0.925	0.152	False	NaN	3.721
+5.2	0.5	6.5	1.5	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	6.173	0.835	0.835	6.173	3.411	0.817	0.185	False	NaN	5.825
+5.2	0.5	6.5	1.5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	6.173	0.915	0.915	6.173	4.75	0.733	0.201	False	NaN	8.305
+5.2	0.5	6.5	1.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Back>Floor	1.5	0.9	6.173	0.952	0.952	6.173	6.039	0.683	0.209	True	0.146	8.675
+5.2	0.5	6.5	1.5	0.9	0.3	12.6	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	6.173	0.674	0.674	6.173	2.238	0.925	0.152	False	NaN	3.721
+5.2	0.5	6.5	1.5	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	6.173	0.835	0.835	6.173	3.411	0.817	0.185	False	NaN	5.825
+5.2	0.5	6.5	1.5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	6.173	0.915	0.915	6.173	4.75	0.733	0.201	False	NaN	8.305
+5.2	0.5	6.5	1.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	1.5	0.9	6.173	0.952	0.952	6.173	6.039	0.683	0.209	True	0.146	8.675
+5.2	0.5	6.5	1.5	1.2	0.3	12.6	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	6.173	1.051	1.051	6.173	2.758	1.025	0.229	False	NaN	4.415
+5.2	0.5	6.5	1.5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	6.173	1.22	1.219	6.173	4.087	0.908	0.263	False	NaN	6.808
+5.2	0.5	6.5	1.5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	6.173	1.302	1.302	6.173	5.63	0.825	0.28	False	NaN	9.676
+5.2	0.5	6.5	1.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Back>Floor	1.5	1.2	6.173	1.34	1.34	6.173	7.127	0.767	0.287	True	0.287	8.256
+5.2	0.5	6.5	1.5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	6.173	1.426	1.426	6.173	3.153	1.117	0.305	False	NaN	4.871
+5.2	0.5	6.5	1.5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	6.173	1.603	1.603	6.173	4.625	0.983	0.34	False	NaN	7.529
+5.2	0.5	6.5	1.5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Floor>Back>Floor	1.5	1.5	6.173	1.688	1.688	6.173	6.344	0.9	0.358	True	0.258	8.718
+5.2	0.5	6.5	1.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Back>Floor	1.5	1.5	6.173	1.727	1.727	6.173	8.017	0.842	0.306	True	0.306	8.264
+5.2	0.5	6.5	1.5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	6.173	1.797	1.797	6.173	3.461	1.192	0.38	False	NaN	5.166
+5.2	0.5	6.5	1.5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	6.173	1.985	1.985	6.173	5.062	1.058	0.418	False	NaN	8.061
+5.2	0.5	6.5	1.5	1.8	0.75	22.5	True	boast	1.8	Left>Front>Floor>Back>Floor	1.5	1.8	6.173	2.073	2.073	6.173	6.935	0.967	0.436	True	0.417	8.489
+5.2	0.5	6.5	1.5	1.8	1	28	True	boast	1.8	Left>Front>Floor>Back>Floor	1.5	1.8	6.173	2.114	2.113	6.173	8.759	0.908	0.243	True	0.243	8.487
+5.2	0.5	6.5	1.5	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	1.5	2.1	6.173	2.164	2.164	6.173	3.701	1.267	0.454	False	NaN	5.335
+5.2	0.5	6.5	1.5	2.1	0.5	17	True	boast	2.1	Left>Front>Floor>Floor	1.5	2.1	6.173	2.365	2.365	6.173	5.419	1.125	0.495	False	NaN	8.441
+5.2	0.5	6.5	1.5	2.1	0.75	22.5	True	boast	2.1	Left>Front>Floor>Back>Floor	1.5	2.1	6.173	2.458	2.458	6.173	7.425	1.033	0.513	True	0.513	8.423
+5.2	0.5	6.5	1.5	2.1	1	28	True	boast	2.1	Left>Front>Floor>Back>Floor	1.5	2.1	6.173	2.5	2.5	6.173	9.379	0.975	0.123	True	0.123	8.923
+5.2	0.5	6.5	1.5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	1.5	2.4	6.173	2.528	2.528	6.173	3.887	1.342	0.528	False	NaN	5.403
+5.2	0.5	6.5	1.5	2.4	0.5	17	True	boast	2.4	Left>Front>Floor>Floor	1.5	2.4	6.173	2.744	2.744	6.173	5.709	1.192	0.572	False	NaN	8.696
+5.2	0.5	6.5	1.5	2.4	0.75	22.5	True	boast	2.4	Left>Front>Floor>Back>Floor	1.5	2.4	6.174	2.842	2.842	6.167	7.85	1.092	0.564	True	0.564	8.437
+5.2	0.5	6.5	1.5	2.4	1	28	True	boast	2.4	Left>Front>Back>Floor>Floor	1.5	2.4	6.174	2.886	2.914	5.902	8.414	1.2	0.224	True	0.675	6.304
+5.2	0.5	8.5	7.9	0.6	0.3	12.6	False	boast-no-valid	0.6	-
+5.2	0.5	8.5	7.9	0.6	0.5	17	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	7.5	1.8	0.067	4.113	4.104	1.505	1.92	2.042	0.887	False	NaN	1.92
+5.2	0.5	8.5	7.9	0.6	0.75	22.5	False	boast-no-valid	0.6	-
+5.2	0.5	8.5	7.9	0.6	1	28	False	boast-no-valid	0.6	-
+5.2	0.5	8.5	7.9	0.9	0.3	12.6	False	boast-no-valid	0.9	-
+5.2	0.5	8.5	7.9	0.9	0.5	17	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	7.5	1.8	0.067	4.113	4.104	1.505	1.92	2.042	0.887	False	NaN	1.92
+5.2	0.5	8.5	7.9	0.9	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	7.1	0.9	1.987	1.178	1.177	0.454	2.63	1.033	0.259	False	NaN	4.548
+5.2	0.5	8.5	7.9	0.9	1	28	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	7.1	0.9	1.991	1.801	1.8	0.565	4.998	1.142	0.33	False	NaN	7.507
+5.2	0.5	8.5	7.9	1.2	0.3	12.6	False	boast-no-valid	1.2	-
+5.2	0.5	8.5	7.9	1.2	0.5	17	True	boast-nearest	1.2	Left>Front>Floor>Right>Floor	7.1	1.2	2.072	1.455	1.439	0.885	1.91	1.275	0.351	False	NaN	3.431
+5.2	0.5	8.5	7.9	1.2	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	7.1	1.2	2.083	2.894	2.894	0.457	5.123	1.458	0.525	False	NaN	7.022
+5.2	0.5	8.5	7.9	1.2	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	7.1	1.2	2.088	3.556	3.66	1.576	7.895	1.575	0.731	True	0.651	9.111
+5.2	0.5	8.5	7.9	1.5	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	7.1	1.8	2.26	0.647	0.619	1.969	0.384	1.483	0.418	False	NaN	1.058
+5.2	0.5	8.5	7.9	1.5	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Right>Floor	7.1	1.5	2.182	2.967	2.966	0.383	3.249	1.608	0.629	False	NaN	4.467
+5.2	0.5	8.5	7.9	1.5	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	7.1	1.2	2.083	2.894	2.894	0.457	5.123	1.458	0.525	False	NaN	7.022
+5.2	0.5	8.5	7.9	1.5	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	7.1	1.2	2.088	3.556	3.66	1.576	7.895	1.575	0.731	True	0.651	9.111
+5.2	0.5	8.5	7.9	1.8	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	7.1	1.8	2.26	0.647	0.619	1.969	0.384	1.483	0.418	False	NaN	1.058
+5.2	0.5	8.5	7.9	1.8	0.5	17	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	7.5	1.8	0.067	4.113	4.104	1.505	1.92	2.042	0.887	False	NaN	1.92
+5.2	0.5	8.5	7.9	1.8	0.75	22.5	False	boast-no-valid	1.8	-
+5.2	0.5	8.5	7.9	1.8	1	28	False	boast-no-valid	1.8	-
+5.2	0.5	8.5	7.9	2.1	0.3	12.6	True	boast-nearest	2.1	Left>Front>Floor>Floor	7.1	2.1	2.353	1.299	1.272	1.853	0.647	1.675	0.566	False	NaN	1.049
+5.2	0.5	8.5	7.9	2.1	0.5	17	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	7.5	1.8	0.067	4.113	4.104	1.505	1.92	2.042	0.887	False	NaN	1.92
+5.2	0.5	8.5	7.9	2.1	0.75	22.5	False	boast-no-valid	2.1	-
+5.2	0.5	8.5	7.9	2.1	1	28	False	boast-no-valid	2.1	-
+5.2	0.5	8.5	7.9	2.4	0.3	12.6	True	boast-nearest	2.4	Left>Front>Floor>Floor	7.1	2.4	2.431	1.665	1.632	1.883	0.702	1.825	0.691	False	NaN	0.794
+5.2	0.5	8.5	7.9	2.4	0.5	17	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	7.5	1.8	0.067	4.113	4.104	1.505	1.92	2.042	0.887	False	NaN	1.92
+5.2	0.5	8.5	7.9	2.4	0.75	22.5	False	boast-no-valid	2.4	-
+5.2	0.5	8.5	7.9	2.4	1	28	False	boast-no-valid	2.4	-
+5.2	0.5	8.5	7	0.6	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	7	1.8	2.626	0.982	0.946	2.186	0.643	1.483	0.421	False	NaN	1.357
+5.2	0.5	8.5	7	0.6	0.5	17	True	boast-nearest	1.2	Left>Front>Floor>Floor	7	1.2	2.483	1.53	1.527	1.331	2.205	1.267	0.353	False	NaN	3.818
+5.2	0.5	8.5	7	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	7	0.9	2.422	1.207	1.2	0.998	2.942	1.025	0.27	False	NaN	5.318
+5.2	0.5	8.5	7	0.6	1	28	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	7	0.9	2.424	1.762	1.761	0.078	5.368	1.092	0.297	False	NaN	8.102
+5.2	0.5	8.5	7	0.9	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	7	1.8	2.626	0.982	0.946	2.186	0.643	1.483	0.421	False	NaN	1.357
+5.2	0.5	8.5	7	0.9	0.5	17	True	boast-nearest	1.2	Left>Front>Floor>Floor	7	1.2	2.483	1.53	1.527	1.331	2.205	1.267	0.353	False	NaN	3.818
+5.2	0.5	8.5	7	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Right>Floor	7	0.9	2.422	1.207	1.2	0.998	2.942	1.025	0.27	False	NaN	5.318
+5.2	0.5	8.5	7	0.9	1	28	True	boast	0.9	Left>Front>Right>Floor>Floor	7	0.9	2.424	1.762	1.761	0.078	5.368	1.092	0.297	False	NaN	8.102
+5.2	0.5	8.5	7	1.2	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	7	1.8	2.626	0.982	0.946	2.186	0.643	1.483	0.421	False	NaN	1.357
+5.2	0.5	8.5	7	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	7	1.2	2.483	1.53	1.527	1.331	2.205	1.267	0.353	False	NaN	3.818
+5.2	0.5	8.5	7	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Right>Floor	7	1.2	2.492	2.811	2.812	0.063	5.424	1.408	0.482	False	NaN	7.666
+5.2	0.5	8.5	7	1.2	1	28	True	boast	1.2	Left>Front>Right>Floor>Back>Floor	7	1.2	2.496	3.402	3.497	0.984	8.421	1.525	0.655	True	0.655	8.864
+5.2	0.5	8.5	7	1.5	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	7	1.8	2.626	0.982	0.946	2.186	0.643	1.483	0.421	False	NaN	1.357
+5.2	0.5	8.5	7	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	7	1.5	2.567	2.954	2.95	0.945	3.527	1.583	0.621	False	NaN	4.962
+5.2	0.5	8.5	7	1.5	0.75	22.5	True	boast	1.5	Left>Front>Right>Floor>Floor	7	1.5	2.578	4.365	4.421	0.438	7.121	1.742	0.815	False	NaN	9.079
+5.2	0.5	8.5	7	1.5	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	7	1.2	2.496	3.402	3.497	0.984	8.421	1.525	0.655	True	0.655	8.864
+5.2	0.5	8.5	7	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	7	1.8	2.626	0.982	0.946	2.186	0.643	1.483	0.421	False	NaN	1.357
+5.2	0.5	8.5	7	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	7	1.8	2.651	4.277	4.276	0.858	4.328	1.842	0.883	False	NaN	5.278
+5.2	0.5	8.5	7	1.8	0.75	22.5	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	7	1.5	2.578	4.365	4.421	0.438	7.121	1.742	0.815	False	NaN	9.079
+5.2	0.5	8.5	7	1.8	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	7	1.2	2.496	3.402	3.497	0.984	8.421	1.525	0.655	True	0.655	8.864
+5.2	0.5	8.5	7	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	7	2.1	2.701	1.664	1.635	2.065	0.921	1.675	0.566	False	NaN	1.358
+5.2	0.5	8.5	7	2.1	0.5	17	True	boast-nearest	1.8	Left>Front>Floor>Floor	7	1.8	2.651	4.277	4.276	0.858	4.328	1.842	0.883	False	NaN	5.278
+5.2	0.5	8.5	7	2.1	0.75	22.5	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	7	1.5	2.578	4.365	4.421	0.438	7.121	1.742	0.815	False	NaN	9.079
+5.2	0.5	8.5	7	2.1	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	7	1.2	2.496	3.402	3.497	0.984	8.421	1.525	0.655	True	0.655	8.864
+5.2	0.5	8.5	7	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	7	2.4	2.766	2.105	2.07	2.073	0.989	1.825	0.692	False	NaN	1.109
+5.2	0.5	8.5	7	2.4	0.5	17	True	boast-nearest	1.8	Left>Front>Floor>Floor	7	1.8	2.651	4.277	4.276	0.858	4.328	1.842	0.883	False	NaN	5.278
+5.2	0.5	8.5	7	2.4	0.75	22.5	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	7	1.5	2.578	4.365	4.421	0.438	7.121	1.742	0.815	False	NaN	9.079
+5.2	0.5	8.5	7	2.4	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Back>Floor	7	1.2	2.496	3.402	3.497	0.984	8.421	1.525	0.655	True	0.655	8.864
+5.2	0.5	8.5	5.5	0.6	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	5.5	1.5	5.034	0.998	0.995	4.774	1.794	1.2	0.233	False	NaN	3.155
+5.2	0.5	8.5	5.5	0.6	0.5	17	True	boast-nearest	1.2	Left>Front>Floor>Floor	5.5	1.2	5.033	1.314	1.314	5.033	3.81	1.125	0.282	False	NaN	6.207
+5.2	0.5	8.5	5.5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Floor	5.5	0.9	5.031	0.996	0.996	5.031	4.481	0.9	0.218	False	NaN	7.731
+5.2	0.5	8.5	5.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Back>Floor	5.5	0.9	5.031	1.223	1.223	5.031	6.192	0.858	0.264	True	0.194	8.657
+5.2	0.5	8.5	5.5	0.9	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	5.5	1.5	5.034	0.998	0.995	4.774	1.794	1.2	0.233	False	NaN	3.155
+5.2	0.5	8.5	5.5	0.9	0.5	17	True	boast-nearest	1.2	Left>Front>Floor>Floor	5.5	1.2	5.033	1.314	1.314	5.033	3.81	1.125	0.282	False	NaN	6.207
+5.2	0.5	8.5	5.5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Floor	5.5	0.9	5.031	0.996	0.996	5.031	4.481	0.9	0.218	False	NaN	7.731
+5.2	0.5	8.5	5.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	5.5	0.9	5.031	1.223	1.223	5.031	6.192	0.858	0.264	True	0.194	8.657
+5.2	0.5	8.5	5.5	1.2	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	5.5	1.5	5.034	0.998	0.995	4.774	1.794	1.2	0.233	False	NaN	3.155
+5.2	0.5	8.5	5.5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	5.5	1.2	5.033	1.314	1.314	5.033	3.81	1.125	0.282	False	NaN	6.207
+5.2	0.5	8.5	5.5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Back>Floor	5.5	1.2	5.033	1.823	1.822	5.033	5.982	1.067	0.385	True	0.092	9.303
+5.2	0.5	8.5	5.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Back>Floor	5.5	1.2	5.034	2.058	2.057	5.034	7.933	1.017	0.382	True	0.382	8.306
+5.2	0.5	8.5	5.5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	5.5	1.5	5.034	0.998	0.995	4.774	1.794	1.2	0.233	False	NaN	3.155
+5.2	0.5	8.5	5.5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	5.5	1.5	5.036	2.099	2.099	5.036	4.702	1.275	0.441	False	NaN	7.289
+5.2	0.5	8.5	5.5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Floor>Back>Floor	5.5	1.5	5.038	2.639	2.639	5.038	7.044	1.2	0.55	True	0.515	8.595
+5.2	0.5	8.5	5.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Back>Floor	5.5	1.5	5.038	2.886	2.886	4.985	9.272	1.15	0.184	True	0.183	8.776
+5.2	0.5	8.5	5.5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	5.5	1.8	5.038	1.662	1.659	4.737	2.525	1.392	0.36	False	NaN	3.868
+5.2	0.5	8.5	5.5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	5.5	1.8	5.041	2.865	2.864	5.041	5.329	1.408	0.596	False	NaN	7.88
+5.2	0.5	8.5	5.5	1.8	0.75	22.5	True	boast	1.8	Left>Front>Floor>Back>Floor	5.5	1.8	5.043	3.445	3.445	4.933	7.932	1.333	0.693	True	0.693	8.553
+5.2	0.5	8.5	5.5	1.8	1	28	True	boast	1.8	Left>Front>Back>Floor>Floor	5.5	1.8	5.044	3.708	3.77	4.152	8.066	1.475	0.39	True	1.241	5.961
+5.2	0.5	8.5	5.5	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	5.5	2.1	5.042	2.282	2.279	4.745	3.002	1.55	0.482	False	NaN	4.184
+5.2	0.5	8.5	5.5	2.1	0.5	17	True	boast	2.1	Left>Front>Floor>Floor	5.5	2.1	5.047	3.611	3.611	5.047	5.773	1.525	0.747	False	NaN	8.14
+5.2	0.5	8.5	5.5	2.1	0.75	22.5	True	boast	2.1	Left>Front>Floor>Back>Floor	5.5	2.1	5.049	4.24	4.279	4.307	9.243	1.525	0.502	True	0.37	8.397
+5.2	0.5	8.5	5.5	2.1	1	28	True	boast-nearest	1.8	Left>Front>Back>Floor>Floor	5.5	1.8	5.044	3.708	3.77	4.152	8.066	1.475	0.39	True	1.241	5.961
+5.2	0.5	8.5	5.5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	5.5	2.4	5.047	2.856	2.855	4.76	3.293	1.692	0.597	False	NaN	4.227
+5.2	0.5	8.5	5.5	2.4	0.5	17	True	boast	2.4	Left>Front>Floor>Floor	5.5	2.4	5.053	4.337	4.337	5.053	6.08	1.633	0.894	False	NaN	8.155
+5.2	0.5	8.5	5.5	2.4	0.75	22.5	True	boast-nearest	2.1	Left>Front>Floor>Back>Floor	5.5	2.1	5.049	4.24	4.279	4.307	9.243	1.525	0.502	True	0.37	8.397
+5.2	0.5	8.5	5.5	2.4	1	28	True	boast-nearest	1.8	Left>Front>Back>Floor>Floor	5.5	1.8	5.044	3.708	3.77	4.152	8.066	1.475	0.39	True	1.241	5.961
+5.2	0.5	8.5	3.5	0.6	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	3.5	1.5	5.893	1.024	1.023	5.872	2.611	1.208	0.223	False	NaN	4.207
+5.2	0.5	8.5	3.5	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.5	0.9	5.893	0.598	0.598	5.893	2.876	0.883	0.137	False	NaN	4.994
+5.2	0.5	8.5	3.5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.5	0.9	5.893	0.851	0.851	5.893	4.577	0.817	0.188	False	NaN	8.028
+5.2	0.5	8.5	3.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Back>Floor	3.5	0.9	5.893	0.968	0.968	5.893	6.09	0.767	0.212	True	0.156	8.639
+5.2	0.5	8.5	3.5	0.9	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	3.5	1.5	5.893	1.024	1.023	5.872	2.611	1.208	0.223	False	NaN	4.207
+5.2	0.5	8.5	3.5	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Floor	3.5	0.9	5.893	0.598	0.598	5.893	2.876	0.883	0.137	False	NaN	4.994
+5.2	0.5	8.5	3.5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Floor	3.5	0.9	5.893	0.851	0.851	5.893	4.577	0.817	0.188	False	NaN	8.028
+5.2	0.5	8.5	3.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Back>Floor	3.5	0.9	5.893	0.968	0.968	5.893	6.09	0.767	0.212	True	0.156	8.639
+5.2	0.5	8.5	3.5	1.2	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	3.5	1.5	5.893	1.024	1.023	5.872	2.611	1.208	0.223	False	NaN	4.207
+5.2	0.5	8.5	3.5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	3.5	1.2	5.893	1.094	1.093	5.893	3.867	1.017	0.237	False	NaN	6.49
+5.2	0.5	8.5	3.5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Back>Floor	3.5	1.2	5.893	1.354	1.354	5.893	5.743	0.933	0.29	True	0.05	9.351
+5.2	0.5	8.5	3.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Back>Floor	3.5	1.2	5.893	1.473	1.473	5.893	7.479	0.875	0.303	True	0.303	8.226
+5.2	0.5	8.5	3.5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	5.893	1.024	1.023	5.872	2.611	1.208	0.223	False	NaN	4.207
+5.2	0.5	8.5	3.5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	5.893	1.585	1.584	5.893	4.598	1.117	0.337	False	NaN	7.493
+5.2	0.5	8.5	3.5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Floor>Back>Floor	3.5	1.5	5.893	1.854	1.854	5.893	6.652	1.025	0.391	True	0.344	8.566
+5.2	0.5	8.5	3.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Back>Floor	3.5	1.5	5.893	1.977	1.977	5.893	8.584	0.967	0.26	True	0.26	8.41
+5.2	0.5	8.5	3.5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	3.5	1.8	5.893	1.476	1.476	5.893	3.135	1.333	0.315	False	NaN	4.798
+5.2	0.5	8.5	3.5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	3.5	1.8	5.893	2.071	2.071	5.893	5.172	1.208	0.435	False	NaN	8.202
+5.2	0.5	8.5	3.5	1.8	0.75	22.5	True	boast	1.8	Left>Front>Floor>Back>Floor	3.5	1.8	5.893	2.353	2.352	5.893	7.39	1.108	0.492	True	0.492	8.409
+5.2	0.5	8.5	3.5	1.8	1	28	True	boast	1.8	Left>Front>Floor>Back>Floor	3.5	1.8	5.894	2.48	2.48	5.894	9.492	1.05	0.089	True	0.089	9.053
+5.2	0.5	8.5	3.5	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	3.5	2.1	5.893	1.918	1.918	5.893	3.483	1.425	0.404	False	NaN	5.114
+5.2	0.5	8.5	3.5	2.1	0.5	17	True	boast	2.1	Left>Front>Floor>Floor	3.5	2.1	5.893	2.554	2.554	5.893	5.632	1.292	0.533	False	NaN	8.698
+5.2	0.5	8.5	3.5	2.1	0.75	22.5	True	boast	2.1	Left>Front>Floor>Back>Floor	3.5	2.1	5.894	2.849	2.848	5.894	7.996	1.192	0.541	True	0.541	8.428
+5.2	0.5	8.5	3.5	2.1	1	28	True	boast	2.1	Left>Front>Back>Floor>Floor	3.5	2.1	5.894	2.981	2.981	5.894	9.138	1.167	0.182	True	0.311	7.133
+5.2	0.5	8.5	3.5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	3.5	2.4	5.893	2.348	2.348	5.893	3.745	1.517	0.491	False	NaN	5.275
+5.2	0.5	8.5	3.5	2.4	0.5	17	True	boast	2.4	Left>Front>Floor>Floor	3.5	2.4	5.894	3.031	3.031	5.894	6.001	1.375	0.63	False	NaN	9.027
+5.2	0.5	8.5	3.5	2.4	0.75	22.5	True	boast	2.4	Left>Front>Floor>Back>Floor	3.5	2.4	5.894	3.342	3.342	5.894	8.495	1.258	0.519	True	0.519	8.54
+5.2	0.5	8.5	3.5	2.4	1	28	True	boast	2.4	Left>Front>Back>Floor>Floor	3.5	2.4	5.895	3.481	3.481	5.873	8.488	1.275	0.281	True	0.749	6.218
+3.9	0.5	4.5	3.9	0.6	0.3	12.6	False	boast-no-valid	0.6	-
+3.9	0.5	4.5	3.9	0.6	0.5	17	False	boast-no-valid	0.6	-
+3.9	0.5	4.5	3.9	0.6	0.75	22.5	False	boast-no-valid	0.6	-
+3.9	0.5	4.5	3.9	0.6	1	28	False	boast-no-valid	0.6	-
+3.9	0.5	4.5	3.9	0.9	0.3	12.6	False	boast-no-valid	0.9	-
+3.9	0.5	4.5	3.9	0.9	0.5	17	False	boast-no-valid	0.9	-
+3.9	0.5	4.5	3.9	0.9	0.75	22.5	False	boast-no-valid	0.9	-
+3.9	0.5	4.5	3.9	0.9	1	28	False	boast-no-valid	0.9	-
+3.9	0.5	4.5	3.9	1.2	0.3	12.6	False	boast-no-valid	1.2	-
+3.9	0.5	4.5	3.9	1.2	0.5	17	False	boast-no-valid	1.2	-
+3.9	0.5	4.5	3.9	1.2	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3.1	1.2	0.346	0.899	0.886	1.438	0.443	1.042	0.19	False	NaN	0.703
+3.9	0.5	4.5	3.9	1.2	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3.1	1.2	0.394	1.575	1.565	3.204	0.441	1.133	0.326	False	NaN	0.61
+3.9	0.5	4.5	3.9	1.5	0.3	12.6	False	boast-no-valid	1.5	-
+3.9	0.5	4.5	3.9	1.5	0.5	17	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	3.1	1.8	1.134	1.694	1.686	0.749	0.783	1.325	0.316	False	NaN	1.057
+3.9	0.5	4.5	3.9	1.5	0.75	22.5	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	3.1	1.5	0.818	2.004	1.999	2.446	0.858	1.317	0.391	False	NaN	1.112
+3.9	0.5	4.5	3.9	1.5	1	28	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	3.1	1.5	0.868	2.63	2.636	4.143	0.813	1.35	0.548	False	NaN	1.013
+3.9	0.5	4.5	3.9	1.8	0.3	12.6	False	boast-no-valid	1.8	-
+3.9	0.5	4.5	3.9	1.8	0.5	17	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	3.1	1.8	1.134	1.694	1.686	0.749	0.783	1.325	0.316	False	NaN	1.057
+3.9	0.5	4.5	3.9	1.8	0.75	22.5	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	3.1	1.8	1.237	3.059	3.059	3.111	1.25	1.542	0.609	False	NaN	1.438
+3.9	0.5	4.5	3.9	1.8	1	28	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	3.1	1.8	1.282	3.652	3.815	4.885	1.428	1.558	0.789	False	NaN	1.68
+3.9	0.5	4.5	3.9	2.1	0.3	12.6	True	boast-nearest	2.7	Left>Front>Floor>Floor	3.1	2.7	1.795	1.181	1.142	1.116	0.303	1.533	0.603	False	NaN	0.556
+3.9	0.5	4.5	3.9	2.1	0.5	17	True	boast-nearest	2.1	Left>Front>Right>Floor>Floor	3.1	2.1	1.483	2.72	2.703	1.161	1.225	1.542	0.488	False	NaN	1.381
+3.9	0.5	4.5	3.9	2.1	0.75	22.5	True	boast-nearest	2.1	Left>Front>Right>Floor>Floor	3.1	2.1	1.574	4.059	4.108	3.575	1.637	1.75	0.837	False	NaN	1.71
+3.9	0.5	4.5	3.9	2.1	1	28	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	3.1	1.8	1.282	3.652	3.815	4.885	1.428	1.558	0.789	False	NaN	1.68
+3.9	0.5	4.5	3.9	2.4	0.3	12.6	True	boast-nearest	2.7	Left>Front>Floor>Floor	3.1	2.7	1.795	1.181	1.142	1.116	0.303	1.533	0.603	False	NaN	0.556
+3.9	0.5	4.5	3.9	2.4	0.5	17	True	boast-nearest	2.4	Left>Front>Right>Floor>Floor	3.1	2.4	1.758	3.659	3.658	1.4	1.607	1.733	0.66	False	NaN	1.607
+3.9	0.5	4.5	3.9	2.4	0.75	22.5	True	boast-nearest	2.1	Left>Front>Right>Floor>Floor	3.1	2.1	1.574	4.059	4.108	3.575	1.637	1.75	0.837	False	NaN	1.71
+3.9	0.5	4.5	3.9	2.4	1	28	False	boast-no-valid	2.4	-
+3.9	0.5	4.5	3	0.6	0.3	12.392	True	boast-nearest	1.8	Left>Front>Floor>Right>Floor	3	1.8	1.696	0.775	0.773	0.957	0.324	1.175	0.374	False	NaN	0.806
+3.9	0.5	4.5	3	0.6	0.5	16.799	True	boast-nearest	1.5	Left>Front>Floor>Right>Floor	3	1.5	1.467	0.946	0.939	0.193	0.528	1.067	0.178	False	NaN	0.834
+3.9	0.5	4.5	3	0.6	0.75	22.374	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3	1.2	1.222	1.151	1.133	1.19	0.856	1.042	0.194	False	NaN	1.207
+3.9	0.5	4.5	3	0.6	1	28	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	3	0.9	0.967	0.74	0.731	1.465	0.662	0.858	0.131	False	NaN	0.945
+3.9	0.5	4.5	3	0.9	0.3	12.436	True	boast-nearest	2.4	Left>Front>Floor>Floor	3	2.4	2.097	0.961	0.953	1.486	0.288	1.4	0.506	False	NaN	0.63
+3.9	0.5	4.5	3	0.9	0.5	16.842	True	boast-nearest	1.5	Left>Front>Floor>Right>Floor	3	1.5	1.468	0.961	0.945	0.169	0.539	1.067	0.171	False	NaN	0.841
+3.9	0.5	4.5	3	0.9	0.75	22.401	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	3	1.2	1.223	1.155	1.153	1.199	0.858	1.042	0.194	False	NaN	1.209
+3.9	0.5	4.5	3	0.9	1	28	True	boast	0.9	Left>Front>Right>Floor>Floor	3	0.9	0.967	0.74	0.731	1.465	0.662	0.858	0.131	False	NaN	0.945
+3.9	0.5	4.5	3	1.2	0.3	12.533	True	boast-nearest	2.4	Left>Front>Floor>Floor	3	2.4	2.104	1.068	1.037	1.413	0.325	1.408	0.512	False	NaN	0.672
+3.9	0.5	4.5	3	1.2	0.5	16.935	True	boast-nearest	1.5	Left>Front>Floor>Right>Floor	3	1.5	1.47	0.992	0.987	0.117	0.561	1.075	0.156	False	NaN	0.856
+3.9	0.5	4.5	3	1.2	0.75	22.46	True	boast	1.2	Left>Front>Right>Floor>Floor	3	1.2	1.223	1.163	1.158	1.221	0.863	1.042	0.196	False	NaN	1.215
+3.9	0.5	4.5	3	1.2	1	28	True	boast	1.2	Left>Front>Right>Floor>Floor	3	1.2	1.258	1.688	1.682	2.955	1.069	1.142	0.331	False	NaN	1.4
+3.9	0.5	4.5	3	1.5	0.3	12.6	True	boast-nearest	2.4	Left>Front>Floor>Floor	3	2.4	2.108	1.14	1.109	1.363	0.35	1.408	0.516	False	NaN	0.702
+3.9	0.5	4.5	3	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Right>Floor	3	1.5	1.472	1.013	0.996	0.081	0.577	1.075	0.146	False	NaN	0.865
+3.9	0.5	4.5	3	1.5	0.75	22.5	True	boast	1.5	Left>Front>Right>Floor>Floor	3	1.5	1.553	2.138	2.138	2.195	1.372	1.317	0.393	False	NaN	1.719
+3.9	0.5	4.5	3	1.5	1	28	True	boast	1.5	Left>Front>Right>Floor>Floor	3	1.5	1.59	2.634	2.669	3.932	1.524	1.367	0.552	False	NaN	1.869
+3.9	0.5	4.5	3	1.8	0.3	12.6	True	boast-nearest	2.4	Left>Front>Floor>Floor	3	2.4	2.108	1.14	1.109	1.363	0.35	1.408	0.516	False	NaN	0.702
+3.9	0.5	4.5	3	1.8	0.5	17	True	boast	1.8	Left>Front>Right>Floor>Floor	3	1.8	1.782	1.983	1.971	0.578	1.101	1.317	0.323	False	NaN	1.411
+3.9	0.5	4.5	3	1.8	0.75	22.5	True	boast	1.8	Left>Front>Right>Floor>Floor	3	1.8	1.862	3.082	3.086	2.851	1.838	1.542	0.604	False	NaN	2.096
+3.9	0.5	4.5	3	1.8	1	28	True	boast	1.8	Left>Front>Right>Floor>Floor	3	1.8	1.897	3.562	3.819	4.693	2.137	1.583	0.789	False	NaN	2.482
+3.9	0.5	4.5	3	2.1	0.3	12.6	True	boast-nearest	2.4	Left>Front>Floor>Floor	3	2.4	2.108	1.14	1.109	1.363	0.35	1.408	0.516	False	NaN	0.702
+3.9	0.5	4.5	3	2.1	0.5	17	True	boast	2.1	Left>Front>Right>Floor>Floor	3	2.1	2.049	2.896	2.89	0.947	1.557	1.533	0.488	False	NaN	1.737
+3.9	0.5	4.5	3	2.1	0.75	22.5	True	boast	2.1	Left>Front>Right>Floor>Floor	3	2.1	2.122	3.992	4.09	3.325	2.272	1.75	0.825	False	NaN	2.375
+3.9	0.5	4.5	3	2.1	1	28	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	3	1.8	1.897	3.562	3.819	4.693	2.137	1.583	0.789	False	NaN	2.482
+3.9	0.5	4.5	3	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	3	2.4	2.108	1.14	1.109	1.363	0.35	1.408	0.516	False	NaN	0.702
+3.9	0.5	4.5	3	2.4	0.5	17	True	boast	2.4	Left>Front>Right>Floor>Floor	3	2.4	2.267	3.751	3.749	1.164	1.948	1.717	0.653	False	NaN	1.948
+3.9	0.5	4.5	3	2.4	0.75	22.5	True	boast-nearest	2.1	Left>Front>Right>Floor>Floor	3	2.1	2.122	3.992	4.09	3.325	2.272	1.75	0.825	False	NaN	2.375
+3.9	0.5	4.5	3	2.4	1	28	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	3	1.8	1.897	3.562	3.819	4.693	2.137	1.583	0.789	False	NaN	2.482
+3.9	0.5	4.5	1.5	0.6	0.3	11.582	True	boast-nearest	1.2	Left>Front>Floor>Floor	1.5	1.2	5.475	0.969	0.967	4.758	1.179	0.933	0.227	False	NaN	1.92
+3.9	0.5	4.5	1.5	0.6	0.5	15.988	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	5.475	0.817	0.814	4.522	1.713	0.758	0.186	False	NaN	2.979
+3.9	0.5	4.5	1.5	0.6	0.75	21.852	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	5.476	0.949	0.949	3.883	2.933	0.733	0.208	False	NaN	4.97
+3.9	0.5	4.5	1.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	5.477	1.008	1.014	3.145	4.279	0.725	0.221	False	NaN	7.15
+3.9	0.5	4.5	1.5	0.9	0.3	11.61	True	boast-nearest	1.2	Left>Front>Floor>Floor	1.5	1.2	5.475	0.972	0.968	4.754	1.187	0.933	0.227	False	NaN	1.931
+3.9	0.5	4.5	1.5	0.9	0.5	16.018	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	5.475	0.818	0.814	4.519	1.719	0.758	0.186	False	NaN	2.989
+3.9	0.5	4.5	1.5	0.9	0.75	21.872	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	5.476	0.95	0.949	3.881	2.937	0.733	0.208	False	NaN	4.976
+3.9	0.5	4.5	1.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	5.477	1.008	1.014	3.145	4.279	0.725	0.221	False	NaN	7.15
+3.9	0.5	4.5	1.5	1.2	0.3	11.674	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	5.475	0.979	0.971	4.746	1.205	0.925	0.228	False	NaN	1.958
+3.9	0.5	4.5	1.5	1.2	0.5	16.083	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	5.478	1.26	1.26	4.184	2.387	0.9	0.272	False	NaN	3.764
+3.9	0.5	4.5	1.5	1.2	0.75	21.914	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	5.48	1.395	1.408	3.313	3.981	0.892	0.301	False	NaN	6.274
+3.9	0.5	4.5	1.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	5.481	1.454	1.519	2.249	5.84	0.908	0.324	False	NaN	9.145
+3.9	0.5	4.5	1.5	1.5	0.3	11.772	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	5.478	1.406	1.403	4.563	1.579	1.05	0.308	False	NaN	2.282
+3.9	0.5	4.5	1.5	1.5	0.5	16.183	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	5.483	1.701	1.702	3.892	2.968	1.033	0.361	False	NaN	4.378
+3.9	0.5	4.5	1.5	1.5	0.75	21.98	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	5.486	1.839	1.902	2.737	4.95	1.042	0.401	False	NaN	7.41
+3.9	0.5	4.5	1.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Right>Back>Floor	1.5	1.5	5.488	1.899	2.095	1.295	7.349	1.092	0.44	True	0.398	9.007
+3.9	0.5	4.5	1.5	1.8	0.3	11.904	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	5.482	1.833	1.832	4.429	1.899	1.167	0.39	False	NaN	2.507
+3.9	0.5	4.5	1.5	1.8	0.5	16.317	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	5.49	2.14	2.158	3.602	3.496	1.15	0.453	False	NaN	4.892
+3.9	0.5	4.5	1.5	1.8	0.75	22.067	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	5.495	2.282	2.441	2.117	5.887	1.2	0.51	False	NaN	8.448
+3.9	0.5	4.5	1.5	1.8	1	28	True	boast	1.8	Left>Front>Floor>Right>Back>Floor	1.5	1.8	5.497	2.344	2.758	0.252	8.847	1.283	0.402	True	0.394	8.888
+3.9	0.5	4.5	1.5	2.1	0.3	12.072	True	boast	2.1	Left>Front>Floor>Floor	1.5	2.1	5.489	2.258	2.256	4.327	2.18	1.275	0.474	False	NaN	2.661
+3.9	0.5	4.5	1.5	2.1	0.5	16.484	True	boast	2.1	Left>Front>Floor>Floor	1.5	2.1	5.499	2.578	2.63	3.289	3.996	1.275	0.549	False	NaN	5.345
+3.9	0.5	4.5	1.5	2.1	0.75	22.175	True	boast	2.1	Left>Front>Floor>Right>Floor	1.5	2.1	5.504	2.724	3.032	1.441	6.811	1.358	0.63	False	NaN	9.411
+3.9	0.5	4.5	1.5	2.1	1	28	True	boast	2.1	Left>Front>Right>Back>Floor>Floor	1.5	2.1	5.507	2.787	3.522	0.566	9.319	1.533	0.363	True	0.572	8.433
+3.9	0.5	4.5	1.5	2.4	0.3	12.275	True	boast	2.4	Left>Front>Floor>Floor	1.5	2.4	5.496	2.684	2.684	4.237	2.433	1.367	0.559	False	NaN	2.766
+3.9	0.5	4.5	1.5	2.4	0.5	16.685	True	boast	2.4	Left>Front>Floor>Floor	1.5	2.4	5.508	3.016	3.125	2.943	4.484	1.392	0.649	False	NaN	5.759
+3.9	0.5	4.5	1.5	2.4	0.75	22.302	True	boast	2.4	Left>Front>Floor>Right>Back>Floor	1.5	2.4	5.514	3.165	3.685	0.722	7.724	1.517	0.758	True	0.364	9.537
+3.9	0.5	4.5	1.5	2.4	1	28	True	boast-nearest	2.1	Left>Front>Right>Back>Floor>Floor	1.5	2.1	5.507	2.787	3.522	0.566	9.319	1.533	0.363	True	0.572	8.433
+3.9	0.5	6.5	5.9	0.6	0.3	12.6	False	boast-no-valid	0.6	-
+3.9	0.5	6.5	5.9	0.6	0.5	17	False	boast-no-valid	0.6	-
+3.9	0.5	6.5	5.9	0.6	0.75	22.5	False	boast-no-valid	0.6	-
+3.9	0.5	6.5	5.9	0.6	1	28	False	boast-no-valid	0.6	-
+3.9	0.5	6.5	5.9	0.9	0.3	12.6	False	boast-no-valid	0.9	-
+3.9	0.5	6.5	5.9	0.9	0.5	17	False	boast-no-valid	0.9	-
+3.9	0.5	6.5	5.9	0.9	0.75	22.5	False	boast-no-valid	0.9	-
+3.9	0.5	6.5	5.9	0.9	1	28	False	boast-no-valid	0.9	-
+3.9	0.5	6.5	5.9	1.2	0.3	12.6	False	boast-no-valid	1.2	-
+3.9	0.5	6.5	5.9	1.2	0.5	17	False	boast-no-valid	1.2	-
+3.9	0.5	6.5	5.9	1.2	0.75	22.5	False	boast-no-valid	1.2	-
+3.9	0.5	6.5	5.9	1.2	1	28	False	boast-no-valid	1.2	-
+3.9	0.5	6.5	5.9	1.5	0.3	12.6	False	boast-no-valid	1.5	-
+3.9	0.5	6.5	5.9	1.5	0.5	17	False	boast-no-valid	1.5	-
+3.9	0.5	6.5	5.9	1.5	0.75	22.5	False	boast-no-valid	1.5	-
+3.9	0.5	6.5	5.9	1.5	1	28	False	boast-no-valid	1.5	-
+3.9	0.5	6.5	5.9	1.8	0.3	12.6	False	boast-no-valid	1.8	-
+3.9	0.5	6.5	5.9	1.8	0.5	17	False	boast-no-valid	1.8	-
+3.9	0.5	6.5	5.9	1.8	0.75	22.5	False	boast-no-valid	1.8	-
+3.9	0.5	6.5	5.9	1.8	1	28	False	boast-no-valid	1.8	-
+3.9	0.5	6.5	5.9	2.1	0.3	12.6	False	boast-no-valid	2.1	-
+3.9	0.5	6.5	5.9	2.1	0.5	17	False	boast-no-valid	2.1	-
+3.9	0.5	6.5	5.9	2.1	0.75	22.5	False	boast-no-valid	2.1	-
+3.9	0.5	6.5	5.9	2.1	1	28	False	boast-no-valid	2.1	-
+3.9	0.5	6.5	5.9	2.4	0.3	12.6	False	boast-no-valid	2.4	-
+3.9	0.5	6.5	5.9	2.4	0.5	17	False	boast-no-valid	2.4	-
+3.9	0.5	6.5	5.9	2.4	0.75	22.5	False	boast-no-valid	2.4	-
+3.9	0.5	6.5	5.9	2.4	1	28	False	boast-no-valid	2.4	-
+3.9	0.5	6.5	5	0.6	0.3	12.6	False	boast-no-valid	0.6	-
+3.9	0.5	6.5	5	0.6	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Right>Floor	4.6	1.5	1.143	0.657	0.632	0.371	0.498	1.1	0.233	False	NaN	1.069
+3.9	0.5	6.5	5	0.6	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	4.6	1.2	1.026	1.092	1.086	0.822	1.22	1.058	0.204	False	NaN	1.879
+3.9	0.5	6.5	5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	4.6	0.9	0.915	0.712	0.708	0.908	1.127	0.85	0.138	False	NaN	1.847
+3.9	0.5	6.5	5	0.9	0.3	12.6	False	boast-no-valid	0.9	-
+3.9	0.5	6.5	5	0.9	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Right>Floor	4.6	1.5	1.143	0.657	0.632	0.371	0.498	1.1	0.233	False	NaN	1.069
+3.9	0.5	6.5	5	0.9	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	4.6	1.2	1.026	1.092	1.086	0.822	1.22	1.058	0.204	False	NaN	1.879
+3.9	0.5	6.5	5	0.9	1	28	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	4.6	0.9	0.915	0.712	0.708	0.908	1.127	0.85	0.138	False	NaN	1.847
+3.9	0.5	6.5	5	1.2	0.3	12.6	False	boast-no-valid	1.2	-
+3.9	0.5	6.5	5	1.2	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Right>Floor	4.6	1.5	1.143	0.657	0.632	0.371	0.498	1.1	0.233	False	NaN	1.069
+3.9	0.5	6.5	5	1.2	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	4.6	1.2	1.026	1.092	1.086	0.822	1.22	1.058	0.204	False	NaN	1.879
+3.9	0.5	6.5	5	1.2	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	4.6	1.2	1.045	1.741	1.739	2.278	2.11	1.158	0.348	False	NaN	3.004
+3.9	0.5	6.5	5	1.5	0.3	12.6	True	boast-nearest	3	Left>Front>Floor>Floor	4.6	3	1.775	0.768	0.733	1.422	0.245	1.633	0.621	False	NaN	0.493
+3.9	0.5	6.5	5	1.5	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Right>Floor	4.6	1.5	1.143	0.657	0.632	0.371	0.498	1.1	0.233	False	NaN	1.069
+3.9	0.5	6.5	5	1.5	0.75	22.5	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	4.6	1.5	1.193	2.115	2.114	1.664	2.008	1.325	0.404	False	NaN	2.659
+3.9	0.5	6.5	5	1.5	1	28	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	4.6	1.5	1.216	2.769	2.78	3.226	2.96	1.408	0.573	False	NaN	3.84
+3.9	0.5	6.5	5	1.8	0.3	12.6	True	boast-nearest	3	Left>Front>Floor>Floor	4.6	3	1.775	0.768	0.733	1.422	0.245	1.633	0.621	False	NaN	0.493
+3.9	0.5	6.5	5	1.8	0.5	17	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	4.6	1.8	1.318	1.631	1.614	0.332	1.153	1.333	0.304	False	NaN	1.627
+3.9	0.5	6.5	5	1.8	0.75	22.5	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	4.6	1.8	1.374	3.124	3.123	2.235	2.69	1.558	0.614	False	NaN	3.188
+3.9	0.5	6.5	5	1.8	1	28	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	4.6	1.8	1.399	3.786	3.924	3.969	3.8	1.633	0.811	False	NaN	4.564
+3.9	0.5	6.5	5	2.1	0.3	12.6	True	boast-nearest	3	Left>Front>Floor>Floor	4.6	3	1.775	0.768	0.733	1.422	0.245	1.633	0.621	False	NaN	0.493
+3.9	0.5	6.5	5	2.1	0.5	17	True	boast-nearest	2.1	Left>Front>Right>Floor>Floor	4.6	2.1	1.49	2.569	2.55	0.682	1.689	1.542	0.469	False	NaN	2.011
+3.9	0.5	6.5	5	2.1	0.75	22.5	True	boast-nearest	2.1	Left>Front>Right>Floor>Floor	4.6	2.1	1.548	4.112	4.129	2.649	3.302	1.758	0.829	False	NaN	3.547
+3.9	0.5	6.5	5	2.1	1	28	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	4.6	1.8	1.399	3.786	3.924	3.969	3.8	1.633	0.811	False	NaN	4.564
+3.9	0.5	6.5	5	2.4	0.3	12.6	True	boast-nearest	3	Left>Front>Floor>Floor	4.6	3	1.775	0.768	0.733	1.422	0.245	1.633	0.621	False	NaN	0.493
+3.9	0.5	6.5	5	2.4	0.5	17	True	boast-nearest	2.4	Left>Front>Right>Floor>Floor	4.6	2.4	1.649	3.462	3.454	0.888	2.135	1.725	0.633	False	NaN	2.22
+3.9	0.5	6.5	5	2.4	0.75	22.5	True	boast-nearest	2.1	Left>Front>Right>Floor>Floor	4.6	2.1	1.548	4.112	4.129	2.649	3.302	1.758	0.829	False	NaN	3.547
+3.9	0.5	6.5	5	2.4	1	28	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	4.6	1.8	1.399	3.786	3.924	3.969	3.8	1.633	0.811	False	NaN	4.564
+3.9	0.5	6.5	3.5	0.6	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	3.5	1.5	4.261	0.725	0.721	3.741	0.758	1.05	0.231	False	NaN	1.629
+3.9	0.5	6.5	3.5	0.6	0.5	17	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.5	1.2	4.26	1.035	1.028	3.196	1.846	0.958	0.24	False	NaN	3.321
+3.9	0.5	6.5	3.5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.5	0.9	4.255	0.827	0.824	2.953	2.353	0.783	0.19	False	NaN	4.397
+3.9	0.5	6.5	3.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.5	0.9	4.256	1.019	1.019	2.215	3.753	0.792	0.223	False	NaN	6.633
+3.9	0.5	6.5	3.5	0.9	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	3.5	1.5	4.261	0.725	0.721	3.741	0.758	1.05	0.231	False	NaN	1.629
+3.9	0.5	6.5	3.5	0.9	0.5	17	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.5	1.2	4.26	1.035	1.028	3.196	1.846	0.958	0.24	False	NaN	3.321
+3.9	0.5	6.5	3.5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Floor	3.5	0.9	4.255	0.827	0.824	2.953	2.353	0.783	0.19	False	NaN	4.397
+3.9	0.5	6.5	3.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Floor	3.5	0.9	4.256	1.019	1.019	2.215	3.753	0.792	0.223	False	NaN	6.633
+3.9	0.5	6.5	3.5	1.2	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	3.5	1.5	4.261	0.725	0.721	3.741	0.758	1.05	0.231	False	NaN	1.629
+3.9	0.5	6.5	3.5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	3.5	1.2	4.26	1.035	1.028	3.196	1.846	0.958	0.24	False	NaN	3.321
+3.9	0.5	6.5	3.5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Floor	3.5	1.2	4.264	1.463	1.462	2.286	3.667	0.983	0.313	False	NaN	6.076
+3.9	0.5	6.5	3.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Right>Floor	3.5	1.2	4.267	1.66	1.673	1.279	5.517	1	0.355	False	NaN	8.802
+3.9	0.5	6.5	3.5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	4.261	0.725	0.721	3.741	0.758	1.05	0.231	False	NaN	1.629
+3.9	0.5	6.5	3.5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	4.272	1.648	1.646	2.826	2.627	1.125	0.355	False	NaN	4.179
+3.9	0.5	6.5	3.5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	4.279	2.096	2.103	1.727	4.774	1.15	0.442	False	NaN	7.375
+3.9	0.5	6.5	3.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Right>Back>Floor	3.5	1.5	4.283	2.299	2.38	0.38	7.105	1.192	0.437	True	0.2	9.405
+3.9	0.5	6.5	3.5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	3.5	1.8	4.273	1.262	1.257	3.473	1.19	1.2	0.323	False	NaN	2.019
+3.9	0.5	6.5	3.5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	3.5	1.8	4.289	2.253	2.251	2.563	3.261	1.275	0.473	False	NaN	4.781
+3.9	0.5	6.5	3.5	1.8	0.75	22.5	True	boast	1.8	Left>Front>Floor>Right>Floor	3.5	1.8	4.299	2.723	2.768	1.197	5.749	1.317	0.577	False	NaN	8.395
+3.9	0.5	6.5	3.5	1.8	1	28	True	boast	1.8	Left>Front>Right>Floor>Back>Floor	3.5	1.8	4.303	2.935	3.151	0.38	8.573	1.4	0.517	True	0.516	8.922
+3.9	0.5	6.5	3.5	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	3.5	2.1	4.288	1.777	1.763	3.288	1.527	1.333	0.416	False	NaN	2.245
+3.9	0.5	6.5	3.5	2.1	0.5	17	True	boast	2.1	Left>Front>Floor>Floor	3.5	2.1	4.31	2.849	2.849	2.363	3.779	1.408	0.593	False	NaN	5.189
+3.9	0.5	6.5	3.5	2.1	0.75	22.5	True	boast	2.1	Left>Front>Floor>Right>Floor	3.5	2.1	4.321	3.346	3.462	0.658	6.632	1.475	0.713	False	NaN	9.014
+3.9	0.5	6.5	3.5	2.1	1	28	True	boast	2.1	Left>Front>Right>Back>Floor>Floor	3.5	2.1	4.326	3.568	3.997	0.978	9.629	1.625	0.427	True	0.179	8.777
+3.9	0.5	6.5	3.5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	3.5	2.4	4.306	2.269	2.253	3.165	1.784	1.458	0.508	False	NaN	2.343
+3.9	0.5	6.5	3.5	2.4	0.5	17	True	boast	2.4	Left>Front>Floor>Floor	3.5	2.4	4.332	3.435	3.44	2.194	4.203	1.533	0.712	False	NaN	5.444
+3.9	0.5	6.5	3.5	2.4	0.75	22.5	True	boast	2.4	Left>Front>Floor>Right>Floor	3.5	2.4	4.345	3.964	4.188	0.101	7.439	1.625	0.718	False	NaN	9.523
+3.9	0.5	6.5	3.5	2.4	1	28	True	boast-nearest	2.1	Left>Front>Right>Back>Floor>Floor	3.5	2.1	4.326	3.568	3.997	0.978	9.629	1.625	0.427	True	0.179	8.777
+3.9	0.5	6.5	1.5	0.6	0.3	12.6	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	5.904	0.59	0.583	5.671	1.396	0.892	0.142	False	NaN	2.538
+3.9	0.5	6.5	1.5	0.6	0.5	17	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	5.903	0.791	0.791	5.75	2.688	0.833	0.176	False	NaN	4.58
+3.9	0.5	6.5	1.5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	5.903	0.89	0.89	5.805	3.918	0.758	0.196	False	NaN	6.765
+3.9	0.5	6.5	1.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Floor	1.5	0.9	5.903	0.936	0.936	5.79	5.045	0.708	0.205	False	NaN	8.843
+3.9	0.5	6.5	1.5	0.9	0.3	12.6	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	5.904	0.59	0.583	5.671	1.396	0.892	0.142	False	NaN	2.538
+3.9	0.5	6.5	1.5	0.9	0.5	17	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	5.903	0.791	0.791	5.75	2.688	0.833	0.176	False	NaN	4.58
+3.9	0.5	6.5	1.5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	5.903	0.89	0.89	5.805	3.918	0.758	0.196	False	NaN	6.765
+3.9	0.5	6.5	1.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Floor	1.5	0.9	5.903	0.936	0.936	5.79	5.045	0.708	0.205	False	NaN	8.843
+3.9	0.5	6.5	1.5	1.2	0.3	12.6	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	5.903	0.965	0.961	5.634	1.966	1.017	0.214	False	NaN	3.218
+3.9	0.5	6.5	1.5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	5.903	1.175	1.175	5.794	3.345	0.942	0.254	False	NaN	5.461
+3.9	0.5	6.5	1.5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Floor	1.5	1.2	5.903	1.277	1.277	5.79	4.712	0.85	0.275	False	NaN	7.936
+3.9	0.5	6.5	1.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Back>Floor	1.5	1.2	5.903	1.324	1.324	5.699	6.063	0.8	0.284	True	0.157	8.87
+3.9	0.5	6.5	1.5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	5.903	1.336	1.335	5.645	2.407	1.125	0.288	False	NaN	3.676
+3.9	0.5	6.5	1.5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	5.903	1.557	1.557	5.818	3.84	1.025	0.331	False	NaN	6.077
+3.9	0.5	6.5	1.5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Floor>Floor	1.5	1.5	5.904	1.663	1.663	5.69	5.402	0.933	0.353	False	NaN	8.88
+3.9	0.5	6.5	1.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Back>Floor	1.5	1.5	5.904	1.711	1.714	5.483	7.054	0.892	0.363	True	0.357	8.442
+3.9	0.5	6.5	1.5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	5.903	1.705	1.704	5.683	2.748	1.225	0.362	False	NaN	3.971
+3.9	0.5	6.5	1.5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	1.5	1.8	5.904	1.939	1.938	5.79	4.244	1.1	0.408	False	NaN	6.528
+3.9	0.5	6.5	1.5	1.8	0.75	22.5	True	boast	1.8	Left>Front>Floor>Back>Floor	1.5	1.8	5.904	2.048	2.052	5.493	6.083	1.025	0.431	True	0.02	9.729
+3.9	0.5	6.5	1.5	1.8	1	28	True	boast	1.8	Left>Front>Floor>Back>Floor	1.5	1.8	5.905	2.098	2.117	5.138	8.127	1	0.389	True	0.389	8.442
+3.9	0.5	6.5	1.5	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	1.5	2.1	5.903	2.069	2.069	5.731	3.008	1.308	0.435	False	NaN	4.138
+3.9	0.5	6.5	1.5	2.1	0.5	17	True	boast	2.1	Left>Front>Floor>Floor	1.5	2.1	5.905	2.318	2.319	5.7	4.607	1.175	0.485	False	NaN	6.883
+3.9	0.5	6.5	1.5	2.1	0.75	22.5	True	boast	2.1	Left>Front>Floor>Back>Floor	1.5	2.1	5.906	2.433	2.449	5.209	6.802	1.117	0.512	True	0.357	8.879
+3.9	0.5	6.5	1.5	2.1	1	28	True	boast	2.1	Left>Front>Floor>Back>Floor	1.5	2.1	5.906	2.484	2.547	4.675	9.314	1.117	0.175	True	0.169	8.786
+3.9	0.5	6.5	1.5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	1.5	2.4	5.904	2.43	2.43	5.776	3.203	1.392	0.508	False	NaN	4.203
+3.9	0.5	6.5	1.5	2.4	0.5	17	True	boast	2.4	Left>Front>Floor>Floor	1.5	2.4	5.906	2.696	2.699	5.554	4.956	1.25	0.562	False	NaN	7.179
+3.9	0.5	6.5	1.5	2.4	0.75	22.5	True	boast	2.4	Left>Front>Floor>Back>Floor	1.5	2.4	5.907	2.816	2.864	4.857	7.562	1.225	0.596	True	0.585	8.694
+3.9	0.5	6.5	1.5	2.4	1	28	True	boast	2.4	Left>Front>Back>Floor>Floor	1.5	2.4	5.907	2.87	3.025	4.131	8.909	1.308	0.271	True	0.598	7.127
+3.9	0.5	8.5	7.9	0.6	0.3	12.6	False	boast-no-valid	0.6	-
+3.9	0.5	8.5	7.9	0.6	0.5	17	False	boast-no-valid	0.6	-
+3.9	0.5	8.5	7.9	0.6	0.75	22.5	False	boast-no-valid	0.6	-
+3.9	0.5	8.5	7.9	0.6	1	28	False	boast-no-valid	0.6	-
+3.9	0.5	8.5	7.9	0.9	0.3	12.6	False	boast-no-valid	0.9	-
+3.9	0.5	8.5	7.9	0.9	0.5	17	False	boast-no-valid	0.9	-
+3.9	0.5	8.5	7.9	0.9	0.75	22.5	False	boast-no-valid	0.9	-
+3.9	0.5	8.5	7.9	0.9	1	28	False	boast-no-valid	0.9	-
+3.9	0.5	8.5	7.9	1.2	0.3	12.6	False	boast-no-valid	1.2	-
+3.9	0.5	8.5	7.9	1.2	0.5	17	False	boast-no-valid	1.2	-
+3.9	0.5	8.5	7.9	1.2	0.75	22.5	False	boast-no-valid	1.2	-
+3.9	0.5	8.5	7.9	1.2	1	28	False	boast-no-valid	1.2	-
+3.9	0.5	8.5	7.9	1.5	0.3	12.6	False	boast-no-valid	1.5	-
+3.9	0.5	8.5	7.9	1.5	0.5	17	False	boast-no-valid	1.5	-
+3.9	0.5	8.5	7.9	1.5	0.75	22.5	False	boast-no-valid	1.5	-
+3.9	0.5	8.5	7.9	1.5	1	28	False	boast-no-valid	1.5	-
+3.9	0.5	8.5	7.9	1.8	0.3	12.6	False	boast-no-valid	1.8	-
+3.9	0.5	8.5	7.9	1.8	0.5	17	False	boast-no-valid	1.8	-
+3.9	0.5	8.5	7.9	1.8	0.75	22.5	False	boast-no-valid	1.8	-
+3.9	0.5	8.5	7.9	1.8	1	28	False	boast-no-valid	1.8	-
+3.9	0.5	8.5	7.9	2.1	0.3	12.6	False	boast-no-valid	2.1	-
+3.9	0.5	8.5	7.9	2.1	0.5	17	False	boast-no-valid	2.1	-
+3.9	0.5	8.5	7.9	2.1	0.75	22.5	False	boast-no-valid	2.1	-
+3.9	0.5	8.5	7.9	2.1	1	28	False	boast-no-valid	2.1	-
+3.9	0.5	8.5	7.9	2.4	0.3	12.6	False	boast-no-valid	2.4	-
+3.9	0.5	8.5	7.9	2.4	0.5	17	False	boast-no-valid	2.4	-
+3.9	0.5	8.5	7.9	2.4	0.75	22.5	False	boast-no-valid	2.4	-
+3.9	0.5	8.5	7.9	2.4	1	28	False	boast-no-valid	2.4	-
+3.9	0.5	8.5	7	0.6	0.3	12.6	False	boast-no-valid	0.6	-
+3.9	0.5	8.5	7	0.6	0.5	17	False	boast-no-valid	0.6	-
+3.9	0.5	8.5	7	0.6	0.75	22.5	False	boast-no-valid	0.6	-
+3.9	0.5	8.5	7	0.6	1	28	False	boast-no-valid	0.6	-
+3.9	0.5	8.5	7	0.9	0.3	12.6	False	boast-no-valid	0.9	-
+3.9	0.5	8.5	7	0.9	0.5	17	False	boast-no-valid	0.9	-
+3.9	0.5	8.5	7	0.9	0.75	22.5	False	boast-no-valid	0.9	-
+3.9	0.5	8.5	7	0.9	1	28	True	boast-nearest	0.9	Left>Front>Right>Floor>Floor	6.2	0.9	0.902	0.602	0.592	0.433	1.338	0.833	0.126	False	NaN	2.451
+3.9	0.5	8.5	7	1.2	0.3	12.6	False	boast-no-valid	1.2	-
+3.9	0.5	8.5	7	1.2	0.5	17	False	boast-no-valid	1.2	-
+3.9	0.5	8.5	7	1.2	0.75	22.5	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	6.2	1.2	0.958	0.912	0.899	0.4	1.367	1.05	0.184	False	NaN	2.346
+3.9	0.5	8.5	7	1.2	1	28	True	boast-nearest	1.2	Left>Front>Right>Floor>Floor	6.2	1.2	0.97	1.693	1.692	1.636	2.918	1.167	0.341	False	NaN	4.416
+3.9	0.5	8.5	7	1.5	0.3	12.6	False	boast-no-valid	1.5	-
+3.9	0.5	8.5	7	1.5	0.5	17	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	6.2	1.8	1.12	1.182	1.162	0.023	1.021	1.317	0.254	False	NaN	1.719
+3.9	0.5	8.5	7	1.5	0.75	22.5	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	6.2	1.5	1.05	1.977	1.968	1.147	2.484	1.333	0.387	False	NaN	3.548
+3.9	0.5	8.5	7	1.5	1	28	True	boast-nearest	1.5	Left>Front>Right>Floor>Floor	6.2	1.5	1.066	2.778	2.779	2.459	4.155	1.425	0.568	False	NaN	5.694
+3.9	0.5	8.5	7	1.8	0.3	12.6	False	boast-no-valid	1.8	-
+3.9	0.5	8.5	7	1.8	0.5	17	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	6.2	1.8	1.12	1.182	1.162	0.023	1.021	1.317	0.254	False	NaN	1.719
+3.9	0.5	8.5	7	1.8	0.75	22.5	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	6.2	1.8	1.159	3.028	3.025	1.637	3.385	1.558	0.596	False	NaN	4.315
+3.9	0.5	8.5	7	1.8	1	28	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	6.2	1.8	1.178	3.853	3.912	3.108	5.24	1.65	0.806	False	NaN	6.651
+3.9	0.5	8.5	7	2.1	0.3	12.6	False	boast-no-valid	2.1	-
+3.9	0.5	8.5	7	2.1	0.5	17	True	boast-nearest	2.1	Left>Front>Right>Floor>Floor	6.2	2.1	1.23	2.122	2.098	0.379	1.675	1.533	0.418	False	NaN	2.261
+3.9	0.5	8.5	7	2.1	0.75	22.5	True	boast-nearest	2.1	Left>Front>Right>Floor>Floor	6.2	2.1	1.274	4.058	4.058	1.983	4.152	1.767	0.809	False	NaN	4.823
+3.9	0.5	8.5	7	2.1	1	28	True	boast-nearest	1.8	Left>Front>Right>Floor>Floor	6.2	1.8	1.178	3.853	3.912	3.108	5.24	1.65	0.806	False	NaN	6.651
+3.9	0.5	8.5	7	2.4	0.3	12.6	False	boast-no-valid	2.4	-
+3.9	0.5	8.5	7	2.4	0.5	17	True	boast-nearest	2.4	Left>Front>Right>Floor>Floor	6.2	2.4	1.339	3.02	3.005	0.596	2.194	1.717	0.58	False	NaN	2.563
+3.9	0.5	8.5	7	2.4	0.75	22.5	True	boast-nearest	2.1	Left>Front>Right>Floor>Floor	6.2	2.1	1.274	4.058	4.058	1.983	4.152	1.767	0.809	False	NaN	4.823
+3.9	0.5	8.5	7	2.4	1	28	False	boast-no-valid	2.4	-
+3.9	0.5	8.5	5.5	0.6	0.3	12.6	True	boast-nearest	1.8	Left>Front>Floor>Floor	5.5	1.8	3.076	0.917	0.908	2.426	0.946	1.225	0.296	False	NaN	2.082
+3.9	0.5	8.5	5.5	0.6	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Floor	5.5	1.5	3.061	1.117	1.106	2.065	1.62	1.142	0.283	False	NaN	3.136
+3.9	0.5	8.5	5.5	0.6	0.75	22.5	True	boast-nearest	1.2	Left>Front>Floor>Floor	5.5	1.2	3.048	1.28	1.273	1.426	2.923	1.033	0.285	False	NaN	5.268
+3.9	0.5	8.5	5.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Right>Floor	5.5	0.9	3.036	0.876	0.868	1.392	2.982	0.825	0.201	False	NaN	5.729
+3.9	0.5	8.5	5.5	0.9	0.3	12.6	True	boast-nearest	2.4	Left>Front>Floor>Floor	5.5	2.4	3.114	0.786	0.78	2.719	0.516	1.408	0.386	False	NaN	1.265
+3.9	0.5	8.5	5.5	0.9	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Floor	5.5	1.5	3.061	1.117	1.106	2.065	1.62	1.142	0.283	False	NaN	3.136
+3.9	0.5	8.5	5.5	0.9	0.75	22.5	True	boast-nearest	1.2	Left>Front>Floor>Floor	5.5	1.2	3.048	1.28	1.273	1.426	2.923	1.033	0.285	False	NaN	5.268
+3.9	0.5	8.5	5.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Right>Floor	5.5	0.9	3.036	0.876	0.868	1.392	2.982	0.825	0.201	False	NaN	5.729
+3.9	0.5	8.5	5.5	1.2	0.3	12.6	True	boast-nearest	2.4	Left>Front>Floor>Floor	5.5	2.4	3.114	0.786	0.78	2.719	0.516	1.408	0.386	False	NaN	1.265
+3.9	0.5	8.5	5.5	1.2	0.5	17	True	boast-nearest	1.5	Left>Front>Floor>Floor	5.5	1.5	3.061	1.117	1.106	2.065	1.62	1.142	0.283	False	NaN	3.136
+3.9	0.5	8.5	5.5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Floor	5.5	1.2	3.048	1.28	1.273	1.426	2.923	1.033	0.285	False	NaN	5.268
+3.9	0.5	8.5	5.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Right>Floor	5.5	1.2	3.052	1.71	1.71	0.342	5.034	1.067	0.319	False	NaN	7.762
+3.9	0.5	8.5	5.5	1.5	0.3	12.6	True	boast-nearest	2.4	Left>Front>Floor>Floor	5.5	2.4	3.114	0.786	0.78	2.719	0.516	1.408	0.386	False	NaN	1.265
+3.9	0.5	8.5	5.5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	5.5	1.5	3.061	1.117	1.106	2.065	1.62	1.142	0.283	False	NaN	3.136
+3.9	0.5	8.5	5.5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Floor>Right>Floor	5.5	1.5	3.072	2.095	2.092	0.809	4.235	1.233	0.442	False	NaN	6.669
+3.9	0.5	8.5	5.5	1.5	1	28	True	boast	1.5	Left>Front>Right>Floor>Floor	5.5	1.5	3.078	2.539	2.559	0.368	6.731	1.3	0.443	False	NaN	9.548
+3.9	0.5	8.5	5.5	1.8	0.3	12.6	True	boast-nearest	2.4	Left>Front>Floor>Floor	5.5	2.4	3.114	0.786	0.78	2.719	0.516	1.408	0.386	False	NaN	1.265
+3.9	0.5	8.5	5.5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	5.5	1.8	3.088	1.874	1.867	1.661	2.439	1.325	0.419	False	NaN	3.988
+3.9	0.5	8.5	5.5	1.8	0.75	22.5	True	boast	1.8	Left>Front>Floor>Right>Floor	5.5	1.8	3.103	2.9	2.902	0.325	5.32	1.417	0.553	False	NaN	7.55
+3.9	0.5	8.5	5.5	1.8	1	28	True	boast	1.8	Left>Front>Right>Floor>Back>Floor	5.5	1.8	3.11	3.363	3.454	0.872	8.142	1.508	0.64	True	0.636	8.941
+3.9	0.5	8.5	5.5	2.1	0.3	12.6	True	boast-nearest	2.4	Left>Front>Floor>Floor	5.5	2.4	3.114	0.786	0.78	2.719	0.516	1.408	0.386	False	NaN	1.265
+3.9	0.5	8.5	5.5	2.1	0.5	17	True	boast	2.1	Left>Front>Floor>Floor	5.5	2.1	3.12	2.613	2.611	1.402	3.095	1.492	0.558	False	NaN	4.551
+3.9	0.5	8.5	5.5	2.1	0.75	22.5	True	boast	2.1	Left>Front>Right>Floor>Floor	5.5	2.1	3.138	3.696	3.717	0.097	6.24	1.583	0.635	False	NaN	8.213
+3.9	0.5	8.5	5.5	2.1	1	28	True	boast-nearest	1.8	Left>Front>Right>Floor>Back>Floor	5.5	1.8	3.11	3.363	3.454	0.872	8.142	1.508	0.64	True	0.636	8.941
+3.9	0.5	8.5	5.5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	5.5	2.4	3.114	0.786	0.78	2.719	0.516	1.408	0.386	False	NaN	1.265
+3.9	0.5	8.5	5.5	2.4	0.5	17	True	boast	2.4	Left>Front>Floor>Floor	5.5	2.4	3.155	3.33	3.328	1.245	3.617	1.642	0.697	False	NaN	4.89
+3.9	0.5	8.5	5.5	2.4	0.75	22.5	True	boast-nearest	2.1	Left>Front>Right>Floor>Floor	5.5	2.1	3.138	3.696	3.717	0.097	6.24	1.583	0.635	False	NaN	8.213
+3.9	0.5	8.5	5.5	2.4	1	28	True	boast-nearest	1.8	Left>Front>Right>Floor>Back>Floor	5.5	1.8	3.11	3.363	3.454	0.872	8.142	1.508	0.64	True	0.636	8.941
+3.9	0.5	8.5	3.5	0.6	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	3.5	1.5	5.258	0.688	0.681	4.966	1.16	1.1	0.187	False	NaN	2.349
+3.9	0.5	8.5	3.5	0.6	0.5	17	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.5	1.2	5.258	0.925	0.924	4.992	2.725	1.008	0.205	False	NaN	4.699
+3.9	0.5	8.5	3.5	0.6	0.75	22.5	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.5	0.9	5.258	0.758	0.757	5.091	3.499	0.833	0.169	False	NaN	6.172
+3.9	0.5	8.5	3.5	0.6	1	28	True	boast-nearest	0.9	Left>Front>Floor>Floor	3.5	0.9	5.258	0.908	0.908	5.131	4.92	0.792	0.2	False	NaN	8.671
+3.9	0.5	8.5	3.5	0.9	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	3.5	1.5	5.258	0.688	0.681	4.966	1.16	1.1	0.187	False	NaN	2.349
+3.9	0.5	8.5	3.5	0.9	0.5	17	True	boast-nearest	1.2	Left>Front>Floor>Floor	3.5	1.2	5.258	0.925	0.924	4.992	2.725	1.008	0.205	False	NaN	4.699
+3.9	0.5	8.5	3.5	0.9	0.75	22.5	True	boast	0.9	Left>Front>Floor>Floor	3.5	0.9	5.258	0.758	0.757	5.091	3.499	0.833	0.169	False	NaN	6.172
+3.9	0.5	8.5	3.5	0.9	1	28	True	boast	0.9	Left>Front>Floor>Floor	3.5	0.9	5.258	0.908	0.908	5.131	4.92	0.792	0.2	False	NaN	8.671
+3.9	0.5	8.5	3.5	1.2	0.3	12.6	True	boast-nearest	1.5	Left>Front>Floor>Floor	3.5	1.5	5.258	0.688	0.681	4.966	1.16	1.1	0.187	False	NaN	2.349
+3.9	0.5	8.5	3.5	1.2	0.5	17	True	boast	1.2	Left>Front>Floor>Floor	3.5	1.2	5.258	0.925	0.924	4.992	2.725	1.008	0.205	False	NaN	4.699
+3.9	0.5	8.5	3.5	1.2	0.75	22.5	True	boast	1.2	Left>Front>Floor>Floor	3.5	1.2	5.259	1.26	1.259	5.133	4.631	0.967	0.271	False	NaN	7.84
+3.9	0.5	8.5	3.5	1.2	1	28	True	boast	1.2	Left>Front>Floor>Back>Floor	3.5	1.2	5.259	1.413	1.413	5.115	6.19	0.908	0.302	True	0.203	8.747
+3.9	0.5	8.5	3.5	1.5	0.3	12.6	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	5.258	0.688	0.681	4.966	1.16	1.1	0.187	False	NaN	2.349
+3.9	0.5	8.5	3.5	1.5	0.5	17	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	5.259	1.413	1.413	5.026	3.529	1.142	0.303	False	NaN	5.716
+3.9	0.5	8.5	3.5	1.5	0.75	22.5	True	boast	1.5	Left>Front>Floor>Floor	3.5	1.5	5.26	1.759	1.759	5.14	5.473	1.067	0.372	False	NaN	9.013
+3.9	0.5	8.5	3.5	1.5	1	28	True	boast	1.5	Left>Front>Floor>Back>Floor	3.5	1.5	5.261	1.917	1.917	4.986	7.26	1.008	0.404	True	0.404	8.378
+3.9	0.5	8.5	3.5	1.8	0.3	12.6	True	boast	1.8	Left>Front>Floor>Floor	3.5	1.8	5.258	1.13	1.127	4.856	1.691	1.233	0.268	False	NaN	2.923
+3.9	0.5	8.5	3.5	1.8	0.5	17	True	boast	1.8	Left>Front>Floor>Floor	3.5	1.8	5.26	1.897	1.897	5.093	4.132	1.25	0.4	False	NaN	6.408
+3.9	0.5	8.5	3.5	1.8	0.75	22.5	True	boast	1.8	Left>Front>Floor>Back>Floor	3.5	1.8	5.262	2.257	2.257	5.06	6.18	1.158	0.473	True	0.108	9.47
+3.9	0.5	8.5	3.5	1.8	1	28	True	boast	1.8	Left>Front>Floor>Back>Floor	3.5	1.8	5.263	2.419	2.424	4.719	8.31	1.108	0.404	True	0.404	8.447
+3.9	0.5	8.5	3.5	2.1	0.3	12.6	True	boast	2.1	Left>Front>Floor>Floor	3.5	2.1	5.259	1.56	1.553	4.786	2.107	1.35	0.349	False	NaN	3.299
+3.9	0.5	8.5	3.5	2.1	0.5	17	True	boast	2.1	Left>Front>Floor>Floor	3.5	2.1	5.262	2.377	2.376	5.15	4.591	1.342	0.497	False	NaN	6.871
+3.9	0.5	8.5	3.5	2.1	0.75	22.5	True	boast	2.1	Left>Front>Floor>Back>Floor	3.5	2.1	5.264	2.752	2.754	4.88	6.847	1.25	0.574	True	0.436	8.812
+3.9	0.5	8.5	3.5	2.1	1	28	True	boast	2.1	Left>Front>Floor>Back>Floor	3.5	2.1	5.266	2.92	2.943	4.322	9.422	1.225	0.167	True	0.145	8.686
+3.9	0.5	8.5	3.5	2.4	0.3	12.6	True	boast	2.4	Left>Front>Floor>Floor	3.5	2.4	5.26	1.977	1.971	4.742	2.432	1.458	0.429	False	NaN	3.527
+3.9	0.5	8.5	3.5	2.4	0.5	17	True	boast	2.4	Left>Front>Floor>Floor	3.5	2.4	5.264	2.851	2.851	5.169	4.951	1.417	0.593	False	NaN	7.171
+3.9	0.5	8.5	3.5	2.4	0.75	22.5	True	boast	2.4	Left>Front>Floor>Back>Floor	3.5	2.4	5.267	3.245	3.254	4.612	7.518	1.342	0.675	True	0.662	8.671
+3.9	0.5	8.5	3.5	2.4	1	28	True	boast	2.4	Left>Front>Back>Floor>Floor	3.5	2.4	5.269	3.419	3.49	3.828	8.929	1.408	0.323	True	0.65	7.079
