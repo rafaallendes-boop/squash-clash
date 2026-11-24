@@ -258,7 +258,7 @@ namespace SquashClash.Runtime.Rally
                 // Auto, today's serve, while «Saque nuevo» is off.
                 LastServeType=server==PlayerId.Rival?context.ServeTypeOf(rivalBrain,box):context.ServeKindOn?humanServe??ServeType.Lob:ServeType.Auto;
                 LastServeChosen=server==PlayerId.Human&&context.ServeKindOn&&humanServe.HasValue;
-                if(server==PlayerId.Rival)LaunchToHuman(context.Serve(box,LastServeType));else LaunchToRival(context.Serve(box,LastServeType));
+                if(server==PlayerId.Rival)LaunchToHuman(context.Serve(box,LastServeType),null,true);else LaunchToRival(context.Serve(box,LastServeType));
             }
             RallyStarted?.Invoke();
         }
@@ -281,7 +281,7 @@ namespace SquashClash.Runtime.Rally
             var stance=p.Stance;
             return new VolleyCommit(true,p.Plan,body,()=>{Human.Sprint=sprint;Human.MoveTo(stance,remaining,BodyPhase.Approaching,BodyPhase.Set);HumanSprintCost=cost;},"committed");
         }
-        private void LaunchToHuman(BallState ball,double? frozenFatigue=null)
+        private void LaunchToHuman(BallState ball,double? frozenFatigue=null,bool serve=false)
         {
             Human.Sprint=1;HumanSprintCost=0;LastHumanOffer=VolleyOfferDetail.None("not-planned");
             HumanReceptionFatigue=frozenFatigue??context.Fatigue.Factor(HumanEnergy.Energy);
@@ -304,7 +304,7 @@ namespace SquashClash.Runtime.Rally
                 }
                 else controller.SetNextVolley((t,bounce)=>ctx.VolleyFor(t,rules,positions,bounce,delay,version));
             }
-            controller.SetNextReceptionFatigue(HumanReceptionFatigue);
+            controller.SetNextReceptionFatigue(HumanReceptionFatigue);controller.SetNextReceptionServe(serve);
             // The human's arm is read at its exact contact step, inside the authoritative solve, so bodies must be advanced to it.
             if(context.Fatigue.Enabled)controller.SetNextStrikerFatigue(HumanStrikerArm);
             // The fixed-body contact planner reads the human from the launch configuration, as practice already does.

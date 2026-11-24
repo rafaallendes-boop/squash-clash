@@ -25,7 +25,7 @@
 }
 
 /* Fonts: set on the player's surfaces only (the developer panel keeps the theme font). */
-.sc-header, .sc-menu-layer, .sc-pause-layer, .sc-result-layer, .sc-banner-layer, .sc-shot-note, .sc-serve-guide-hint {
+.sc-header, .sc-menu-layer, .sc-pause-layer, .sc-result-layer, .sc-banner-layer, .sc-shot-note, .sc-serve-guide-hint, .sc-ring-caption {
     -unity-font-definition: url("../../Visual/Fonts/Rubik-Regular SDF.asset");
     -unity-font-style: normal;
 }
@@ -175,6 +175,18 @@
 .sc-shot-note--valid { color: rgb(255, 255, 255); }
 .sc-shot-note--failed { color: rgb(255, 128, 112); }
 .sc-shot-note--info { font-size: 16px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); color: var(--glass-text); }
+
+/* Caption on the white ring of the rival's serve: «Espera el bote». Quiet glass pill, one line, never takes a touch. */
+.sc-ring-caption {
+    position: absolute;
+    padding-left: 10px; padding-right: 10px; padding-top: 3px; padding-bottom: 3px;
+    font-size: 14px;
+    white-space: nowrap;
+    -unity-text-align: middle-center;
+    color: var(--glass-text);
+    background-color: var(--glass);
+    border-radius: 14px; border-width: 1px; border-color: var(--glass-edge);
+}
 
 .sc-serve-guide {
     position: absolute;

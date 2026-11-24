@@ -5,10 +5,14 @@ namespace SquashClash.Runtime.Shot
     public sealed class TimingRingView : MonoBehaviour
     {
         // Option B: the converging ring fits the fixed triangle's incircle.
-        private const float FitRadius=.1f, OuterRadius=.45f, StrokePixels=2, FallbackWidth=.002f;
+        public const float OuterRadius=.45f;
+        private const float FitRadius=.1f, StrokePixels=2, FallbackWidth=.002f;
+        // Look of the two reception rings (PO, 23 nov): the amber volley ring is drawn twice as thick as the white one and has a soft halo
+        // at the same radius, so the two read apart at a glance. Only how they look; when each shows is untouched.
+        private const float AmberStrokeFactor=2, HaloStrokeFactor=4, HaloAlpha=.3f;
         private const float ValidAlpha=.35f, PerfectAlpha=.6f;
         private const int CircleSegments=96, TriangleVertices=3;
-        private LineRenderer line,triangle,validBand,perfectBand,lateValidBand,latePerfectBand;
+        private LineRenderer line,halo,triangle,validBand,perfectBand,lateValidBand,latePerfectBand;
         private Material material;
         private Transform ring;
         private TimingSettings timing;
@@ -20,6 +24,9 @@ namespace SquashClash.Runtime.Shot
         // Colour of the cue (white by default; the volley opportunity is tinted).
         public Color Tint=>tint;
         public void SetTint(Color color){tint=color;}
+        private bool Amber=>tint==ShotController.VolleyTint;
+        // Where the cue is on the court (the plan's P*), for what is written next to it.
+        public Vector3 CuePosition=>ring!=null?ring.position:Vector3.zero;
         // A new opportunity of the same reception (the bounce after the volley): the partial-aid cutoff applies to each one.
         public void BeginOpportunity(){CutoffLatched=false;CutoffTarget=0;CutoffPlanVersion=0;}
         public event System.Action CutoffActivated;
@@ -69,7 +76,7 @@ namespace SquashClash.Runtime.Shot
             {CutoffLatched=true;CutoffTarget=target;CutoffPlanVersion=planVersion;CutoffActivated?.Invoke();}
             if(ring==null)return;
             if(aidLevel==2||CutoffLatched||state.Phase==ImpactCuePhase.Hidden||state.Phase==ImpactCuePhase.Closed)
-            {line.enabled=triangle.enabled=validBand.enabled=perfectBand.enabled=lateValidBand.enabled=latePerfectBand.enabled=false;return;}
+            {if(halo!=null)halo.enabled=false;line.enabled=triangle.enabled=validBand.enabled=perfectBand.enabled=lateValidBand.enabled=latePerfectBand.enabled=false;return;}
             const float alpha=1;
             var camera=UnityEngine.Camera.main;
             float width=FallbackWidth;
@@ -80,7 +87,9 @@ namespace SquashClash.Runtime.Shot
                 if(screen.z>0)width=Vector3.Distance(camera.ScreenToWorldPoint(screen),
                     camera.ScreenToWorldPoint(screen+new Vector3(StrokePixels,0,0)));
             }
-            SetStyle(line,alpha,width);SetStyle(triangle,alpha,width);
+            // The halo exists only once the ring has been amber: a white-only cue keeps exactly the lines it always had.
+            if(Amber&&halo==null){halo=CreateLine("Volley halo",CircleSegments);halo.sortingOrder=-1;}
+            SetStyle(line,alpha,width*(Amber?AmberStrokeFactor:1));if(halo!=null)SetStyle(halo,Amber?alpha*HaloAlpha:0,width*HaloStrokeFactor);SetStyle(triangle,alpha,width);
             SetStyle(validBand,timing.ValidLimitOn?alpha*ValidAlpha:0,width);
             SetStyle(perfectBand,alpha*PerfectAlpha,width);
             SetStyle(lateValidBand,timing.ValidLimitOn?alpha*ValidAlpha:0,width);
@@ -90,7 +99,7 @@ namespace SquashClash.Runtime.Shot
             if(!state.AtOrAfterIdeal&&radius<=FitRadius)radius=FitRadius+FitRadius*1.1920929e-7f;
             double duration=System.Math.Max(0,target-System.Math.Max(presented,target-ImpactCue.ApproachMs/1000))*1000;
             if(state.AtOrAfterIdeal)radius=LateRadius(System.Math.Max(0,state.DeltaMs),duration);
-            DrawCircle(line,radius);
+            DrawCircle(line,radius);if(halo!=null)DrawCircle(halo,radius);
             DrawCircle(lateValidBand,LateRadius(timing.ValidMs,duration));
             DrawCircle(latePerfectBand,LateRadius(timing.AssistMs,duration));
             DrawCircle(validBand,WindowRadius(timing.ValidMs,duration));

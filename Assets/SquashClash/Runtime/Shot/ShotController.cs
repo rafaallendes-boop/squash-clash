@@ -29,6 +29,10 @@ namespace SquashClash.Runtime.Shot
         private Func<long,bool,FatigueArm> nextStrikerFatigue,strikerFatigue;
         // Only Rally/Match call this, so only their shot events carry f_r; practice, SL and AutoQA keep the main schema.
         public void SetNextReceptionFatigue(double factor){nextReceptionFatigue=factor;nextRecordsFatigue=true;}
+        // Presentation only: this reception is the rival's serve (the caption «Espera el bote» is shown only then).
+        public void SetNextReceptionServe(bool serve){nextServe=serve;}
+        public bool ServeReception {get;private set;}
+        private bool nextServe;
         // Only Rally/Match call this, for the human's next launch: the striker's arm as (contact step, authoritative). Authoritative is the
         // exact contact (the scheduled callback, or a contact already reached); the preview in between reads the energy as it is now.
         // Practice, SL and AutoQA never set it, so their Solve is the old one.
@@ -119,11 +123,12 @@ namespace SquashClash.Runtime.Shot
             app.Host.Launched+=OnLaunched;app.Host.ShotApplied+=OnApplied;
             ring=gameObject.AddComponent<TimingRingView>();ring.CutoffActivated+=RecordAidCutoff;notes=gameObject.AddComponent<ShotNoteView>();notes.Initialize(app);
             feedback=gameObject.AddComponent<ShotFeedback>();feedback.Initialize();PresentationDelivered+=feedback.Present;
-            gameObject.AddComponent<SwingView>().Initialize(app,this);gameObject.AddComponent<PerfectFlashView>().Initialize(app,this);gameObject.AddComponent<VolleyBurstView>().Initialize(app,this);
+            gameObject.AddComponent<SwingView>().Initialize(app,this);gameObject.AddComponent<PerfectFlashView>().Initialize(app,this);gameObject.AddComponent<VolleyBurstView>().Initialize(app,this);gameObject.AddComponent<ReceptionCaptionView>().Initialize(app,this,ring);
             OnLaunched(app.Host.ActiveConfig);
         }
         private void OnLaunched(EffectiveConfig cfg)
         {
+            ServeReception=nextServe;nextServe=false;
             strikerFatigue=nextStrikerFatigue;nextStrikerFatigue=null;
             receptionFatigue=nextReceptionFatigue;nextReceptionFatigue=0;recordsFatigue=nextRecordsFatigue;nextRecordsFatigue=false;
             CausalReference=null;LastCausal=default;causalBody=nextCausalBody;nextCausalBody=null;
