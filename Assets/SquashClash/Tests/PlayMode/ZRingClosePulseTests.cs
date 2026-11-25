@@ -161,7 +161,7 @@ namespace SquashClash.Runtime.Tests
             Assert.That(rally.StartMode(),Is.True);Assert.That(controller.Volley.Exists,Is.True,controller.Volley.Reason);
         }
         // Presentation only (25 nov). Drives a reception without touching: the amber offer closes inside its window and, once white, the waiting ring is steady.
-        private void RunUntouched(out List<float> amber,out int steadySamples)
+        private void RunUntouched(out List<float> amber,out int steadySamples,string tag="")
         {
             amber=new List<float>();steadySamples=0;double? whiteSince=null;bool wasAmber=false;
             for(int i=0;i<1500&&!controller.AttemptConsumed;i++)
@@ -174,28 +174,31 @@ namespace SquashClash.Runtime.Tests
                 else if(wasAmber&&ring.Visible&&ring.Tint==Color.white&&!controller.VolleyShown)
                 {
                     whiteSince=whiteSince??now;
-                    if(ring.CueState.Approach>=1&&now-whiteSince.Value>.5){steadySamples++;Assert.That(GameObjectLine().startColor.a,Is.EqualTo(1f).Within(1e-5f),"steady white at "+(now-whiteSince.Value));}
+                    if(ring.CueState.Approach>=1&&now-whiteSince.Value>.5){steadySamples++;Assert.That(GameObjectLine().startColor.a,Is.EqualTo(1f).Within(1e-5f),"steady white at "+(now-whiteSince.Value)+" "+tag);}
                 }
             }
         }
-        private void AssertClosesMonotonically(List<float> radii)
+        private void AssertClosesMonotonically(List<float> radii,string tag="")
         {
-            Assert.That(radii.Count,Is.GreaterThanOrEqualTo(10),"the amber ring was offered with a finite window");
-            for(int i=1;i<radii.Count;i++)Assert.That(radii[i],Is.LessThanOrEqualTo(radii[i-1]+1e-5f),"monotonic, sample "+i);
-            Assert.That(radii[radii.Count-1],Is.LessThan(radii[0]-1e-3f),"it really closes");
+            Assert.That(radii.Count,Is.GreaterThanOrEqualTo(10),"the amber ring was offered with a finite window "+tag);
+            for(int i=1;i<radii.Count;i++)Assert.That(radii[i],Is.LessThanOrEqualTo(radii[i-1]+1e-5f),"monotonic, sample "+i+" "+tag);
+            Assert.That(radii[radii.Count-1],Is.LessThan(radii[0]-1e-3f),"it really closes "+tag);
         }
         [Test] public void U1a_RivalServeReceptionWithTheServeVolley_AmberClosesAndTheWhiteIsSteadyAfterItsPulse()
         {
-            var seen=new List<string>();List<float> amber=null;int steady=0;
+            var seen=new List<string>();List<float> amber=null;int steady=0,winner=0;
             for(int seed=1;seed<=24;seed++)
             {
-                StartRivalServe(seed);RunUntouched(out amber,out steady);seen.Add(seed+":"+amber.Count);
-                if(amber.Count>=10)break;
+                StartRivalServe(seed);
+                Assert.That(controller.ServeReception,Is.True,"rival serve reception, seed="+seed);
+                Assert.That(rally.Match.Server,Is.EqualTo(PlayerId.Rival),"the rival serves, seed="+seed);Assert.That(rally.Rules.Serving,Is.True,"serving rules, seed="+seed);
+                RunUntouched(out amber,out steady,"seed="+seed);seen.Add(seed+":"+amber.Count);
+                if(amber.Count>=10){winner=seed;TestContext.WriteLine("U1a winning seed="+seed+" amber samples="+amber.Count+" steady samples="+steady);break;}
                 rally.StopMode();
             }
             Assert.That(amber.Count,Is.GreaterThanOrEqualTo(10),"no seed gave an amber serve offer: "+string.Join(" ",seen));
-            AssertClosesMonotonically(amber);
-            Assert.That(steady,Is.GreaterThanOrEqualTo(3),"waiting-white samples past the pulse");
+            AssertClosesMonotonically(amber,"seed="+winner);
+            Assert.That(steady,Is.GreaterThanOrEqualTo(3),"waiting-white samples past the pulse, seed="+winner);
         }
         [Test] public void U1b_RallyReceptionWithAnAmberOffer_AmberClosesAndTheWhiteIsSteadyAfterItsPulse()
         {
