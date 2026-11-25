@@ -9,8 +9,11 @@ namespace SquashClash.Runtime.Menu
     public readonly struct MatchSummary
     {
         public readonly bool HumanWon;public readonly AiLevel Level;public readonly int Human,Rival,LongestRally;public readonly float Seconds;
-        public MatchSummary(bool humanWon,AiLevel level,int human,int rival,int longestRally,float seconds)
-        {HumanWon=humanWon;Level=level;Human=human;Rival=rival;LongestRally=longestRally;Seconds=seconds;}
+        // Strokes of the match (spec 2026-11-25): shown on the card only; PersonalRecords.Apply never reads them.
+        public readonly int Perfects,BoastWinners,Volleys;
+        public MatchSummary(bool humanWon,AiLevel level,int human,int rival,int longestRally,float seconds,int perfects=0,int boastWinners=0,int volleys=0)
+        {HumanWon=humanWon;Level=level;Human=human;Rival=rival;LongestRally=longestRally;Seconds=seconds;Perfects=perfects;BoastWinners=boastWinners;Volleys=volleys;}
+        public string StrokeOfTheMatchLine=>StrokeOfTheMatch.Line(Perfects,BoastWinners,Volleys);
     }
     public static class PersonalRecords
     {

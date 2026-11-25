@@ -21,6 +21,8 @@ namespace SquashClash.Runtime.Rally
         public float MatchSeconds {get;private set;}
         public int LongestRally {get;private set;}
         private int countedPoints;
+        // Stroke of the match (spec 2026-11-25): the player's tally for the match on screen, read from ShotResolved and PointEnded.
+        public StrokeOfTheMatch Strokes {get;}=new StrokeOfTheMatch();
         // Personal records: set by the start menu when it begins a match, cleared when no match is active. A match that
         // ever ran on autopilot never counts. Nothing here reaches Core: it only reads what the HUD already sees.
         public bool MenuMatch {get;set;}
@@ -33,7 +35,7 @@ namespace SquashClash.Runtime.Rally
         private AppBootstrap app;
         private RallyDirector rally;
         private Label rivalName;private string rivalNameShown;
-        private Label status,humanPoints,rivalPoints,resultTitle,resultScore,resultKicker,bootTitle,fps,resultDuration,resultLongest,resultRecord;
+        private Label status,humanPoints,rivalPoints,resultTitle,resultScore,resultKicker,bootTitle,fps,resultDuration,resultLongest,resultHighlight,resultRecord;
         private Button resultRematch;
         public const string DevTitle="Squash Clash — First Ball",PlayerTitle="Squash Clash";
         private VisualElement score,humanServe,rivalServe,result;
@@ -118,6 +120,7 @@ namespace SquashClash.Runtime.Rally
             resultLast=Text("","sc-result-last");resultLast.name="match-result-last";card.Add(resultLast);
             resultDuration=Text("","sc-result-last");resultDuration.name="match-result-duration";card.Add(resultDuration);
             resultLongest=Text("","sc-result-last");resultLongest.name="match-result-longest";card.Add(resultLongest);
+            resultHighlight=Text("","sc-result-highlight");resultHighlight.name="match-result-highlight";resultHighlight.style.display=DisplayStyle.None;card.Add(resultHighlight);
             resultRecord=Text("","sc-result-record");resultRecord.name="match-result-record";card.Add(resultRecord);
             card.Add(Text("PAR a 7 · diferencia de 2","sc-result-note"));
             var actions=new VisualElement{pickingMode=PickingMode.Ignore};actions.AddToClassList("sc-result-buttons");card.Add(actions);
