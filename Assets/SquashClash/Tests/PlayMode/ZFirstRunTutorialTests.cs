@@ -101,11 +101,21 @@ namespace SquashClash.Runtime.Tests
             for (int i = 0; i < 5; i++) Click("tutorial-next");
             Assert.That(Find<Label>("tutorial-step").text, Is.EqualTo("6 de 6"));
             Assert.That(Find<Label>("tutorial-title").text, Is.EqualTo("Saque"));
-            Assert.That(Find<Label>("tutorial-body").text, Does.Contain("globo").And.Contain("drive"));
+            Assert.That(Find<Label>("tutorial-body").text, Is.EqualTo("Empiezas sacando tú. Toca el frontis: arriba de la línea, globo; abajo, drive. Si no tocas, globo. Cada rally es un punto y saca quien lo gana. Partido a 7, con 2 de ventaja."));
             Assert.That(Find<Button>("tutorial-next").text, Is.EqualTo("Listo"));
             Click("tutorial-next");
             Click("menu-howto");
             Assert.That(Find<Label>("tutorial-step").text, Is.EqualTo("1 de 5"));
+            yield return null;
+        }
+        // The target and the margin in the serve step come from the rally parameters, not from the text.
+        [UnityTest] public IEnumerator ServeStepTakesTheTargetAndMarginFromTheParameters()
+        {
+            rally.SetNewServe(true);
+            var p = rally.Params.Clone(); p.MatchTarget = 11; p.MatchMargin = 3; rally.SetParams(p);
+            Click("menu-howto");
+            for (int i = 0; i < 5; i++) Click("tutorial-next");
+            Assert.That(Find<Label>("tutorial-body").text, Does.EndWith("Partido a 11, con 3 de ventaja."));
             yield return null;
         }
 

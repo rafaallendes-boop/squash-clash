@@ -51,8 +51,11 @@ namespace SquashClash.Runtime.Menu
             "Cuando la pelota viene hacia ti aparece un triángulo donde le vas a pegar y un anillo que se achica. Suelta justo cuando el anillo calce dentro del triángulo. Tienes un solo intento por pelota.",
             SquashClash.Runtime.Shot.ReceptionRule.Full,
             "Toca la pared lateral: la pelota pega ahí y luego en el frontis (frente). Tócala bajo: si no, pega alto y puede quedar larga. Una marca muestra más o menos dónde. No en el saque.",
-            "Cuando sacas tú, toca el frontis: arriba de la línea sale globo, abajo sale drive. Si no tocas, sale globo."
+            "Empiezas sacando tú. Toca el frontis: arriba de la línea, globo; abajo, drive. Si no tocas, globo. Cada rally es un punto y saca quien lo gana. Partido a {0}, con {1} de ventaja."
         };
+        // The serve step's body is a template: the target and the margin are the rally's own (RallyParams.MatchTarget / MatchMargin), never fixed in the text.
+        private string StepBody(int step)=>step==StepTitles.Length-1
+            ?string.Format(StepBodies[step],(int)rally.Params.MatchTarget,(int)rally.Params.MatchMargin):StepBodies[step];
         private VisualElement tutorial,tutorialArt,tutorialResults;private Label tutorialStep,tutorialTitle,tutorialBody;private Button tutorialNext;
         private bool tutorialThenPlay;
         private int tutorialStepCount = TutorialSteps;
@@ -389,7 +392,7 @@ namespace SquashClash.Runtime.Menu
         private string MetricsScreen=>Screen==FirstRunScreen.Menu?"menu":Screen==FirstRunScreen.Tutorial?"tutorial":Screen==FirstRunScreen.Credits?"credits":Screen==FirstRunScreen.Records?"records":PauseVisible?"pause":"game";
         private void ShowStep()
         {
-            tutorialStep.text=(TutorialStep+1)+" de "+tutorialStepCount;tutorialTitle.text=StepTitles[TutorialStep];tutorialBody.text=StepBodies[TutorialStep];
+            tutorialStep.text=(TutorialStep+1)+" de "+tutorialStepCount;tutorialTitle.text=StepTitles[TutorialStep];tutorialBody.text=StepBody(TutorialStep);
             bool last=TutorialStep==tutorialStepCount-1;
             tutorialResults.style.display=TutorialStep==TimingStep?DisplayStyle.Flex:DisplayStyle.None;
             tutorialNext.text=!last?"Siguiente":tutorialThenPlay?"¡A jugar!":"Listo";
