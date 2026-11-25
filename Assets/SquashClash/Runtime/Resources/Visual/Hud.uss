@@ -251,6 +251,8 @@
 .sc-result-card--lost .sc-result-kicker { color: var(--line); }
 .sc-result-card--lost .sc-result-score { color: var(--ink-soft); }
 .sc-result-last { font-size: 14px; color: var(--ink); margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }
+/* Stroke of the match (25 nov): one line under the longest rally, same type as the record line but in ink. */
+.sc-result-highlight { font-size: 14px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-top: 4px; margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }
 /* Personal records (20 nov): one line in line red when the match broke a best. */
 .sc-result-record { font-size: 14px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--line-press); margin-top: 4px; margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }
 

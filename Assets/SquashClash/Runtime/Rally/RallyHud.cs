@@ -1,6 +1,7 @@
 using SquashClash.Core.Config;
 using SquashClash.Core.Court;
 using SquashClash.Core.Rally;
+using SquashClash.Core.Shot;
 using SquashClash.Runtime.App;
 using SquashClash.Runtime.Menu;
 using UnityEngine;
@@ -23,6 +24,7 @@ namespace SquashClash.Runtime.Rally
         private int countedPoints;
         // Stroke of the match (spec 2026-11-25): the player's tally for the match on screen, read from ShotResolved and PointEnded.
         public StrokeOfTheMatch Strokes {get;}=new StrokeOfTheMatch();
+        private MatchScore strokesMatch;private SquashClash.Runtime.Shot.ShotController strokesController;
         // Personal records: set by the start menu when it begins a match, cleared when no match is active. A match that
         // ever ran on autopilot never counts. Nothing here reaches Core: it only reads what the HUD already sees.
         public bool MenuMatch {get;set;}
@@ -80,6 +82,7 @@ namespace SquashClash.Runtime.Rally
         public void Initialize(AppBootstrap app,RallyDirector rally,VisualElement parent)
         {
             this.app=app;this.rally=rally;Hints=new FirstMatchHints(app,rally,app.GetComponent<SquashClash.Runtime.Shot.ShotController>());
+            strokesController=app.GetComponent<SquashClash.Runtime.Shot.ShotController>();if(strokesController!=null)strokesController.ShotResolved+=OnStrokeResolved;rally.PointEnded+=OnStrokePointEnded;
             // Art pass: palette and type scale live in one style sheet; the elements and their names are the same.
             var sheet=Resources.Load<StyleSheet>("Visual/Hud");
             var top=parent.parent??parent;if(sheet!=null)top.styleSheets.Add(sheet);
@@ -306,7 +309,18 @@ namespace SquashClash.Runtime.Rally
                 Hints.ReportGuide(visible);
             }
         }
-        private void OnDestroy() => Hints?.Dispose();
+        private void OnDestroy(){Hints?.Dispose();if(strokesController!=null)strokesController.ShotResolved-=OnStrokeResolved;if(rally!=null)rally.PointEnded-=OnStrokePointEnded;}
+        // The tally belongs to one MatchScore of an active mode: a new match, a rematch or leaving the mode starts it over (StopMode keeps Match, so Active counts).
+        private void SyncStrokes(){var current=rally.Active?rally.Match:null;if(!ReferenceEquals(strokesMatch,current)){strokesMatch=current;Strokes.Reset();}}
+        // Same gate as RallyDirector.OnResolved (the player's reception in a match). Controller state is read inside the callback.
+        private void OnStrokeResolved(ShotRecord record)
+        {
+            SyncStrokes();
+            if(!(rally.Active&&rally.Match!=null&&rally.Phase==RallyPhase.HumanReception))return;
+            bool perfect=record.Applied&&record.Result==nameof(ShotResult.Perfect),applied=perfect||(record.Applied&&record.Result==nameof(ShotResult.Valid));
+            Strokes.OnStroke(applied,perfect,applied&&strokesController.LastOpportunity==Opportunity.Volley,strokesController.LastStrokeBoast);
+        }
+        private void OnStrokePointEnded(PointResult result){SyncStrokes();if(rally.Match!=null)Strokes.OnPointEnded(result.Winner==PlayerId.Human);}
         private Button Add(VisualElement row,string name,string text,System.Action action)
         {
             var button=new Button(()=>{app.UserEvents?.Menu(rally.Phase==RallyPhase.MatchOver?"result":"game",name);action();}){name=name,text=text};
@@ -420,6 +434,7 @@ namespace SquashClash.Runtime.Rally
         // The longest rally is the largest PointResult.Shots seen as each point ends; a new match (rematch or leaving) starts both over.
         private void TrackMatch(bool active)
         {
+            SyncStrokes();
             if(!active||rally.Match==null||rally.PointsPlayed<countedPoints){MatchSeconds=0;LongestRally=0;countedPoints=0;autopilotSeen=false;if(!active||rally.Match==null){if(!active)MenuMatch=false;return;}}
             if(rally.Autopilot)autopilotSeen=true;
             if(rally.PointsPlayed!=countedPoints){countedPoints=rally.PointsPlayed;if(rally.LastPoint.HasValue)LongestRally=Mathf.Max(LongestRally,rally.LastPoint.Value.Shots);}
@@ -470,7 +485,9 @@ namespace SquashClash.Runtime.Rally
                     resultDuration.style.display=resultLongest.style.display=extended?DisplayStyle.Flex:DisplayStyle.None;
                     resultDuration.text="Duración: "+DurationText(MatchSeconds);resultLongest.text="Rally más largo: "+StrokesText(LongestRally);
                     resultRematch.text=extended?RematchText(over==1,rally.Match.Human,rally.Match.Rival):"Revancha";
-                    var broken=MenuMatch&&!autopilotSeen&&!rally.Autopilot?PersonalRecords.Apply(new MatchSummary(over==1,rally.Level,rally.Match.Human,rally.Match.Rival,LongestRally,MatchSeconds)):null;
+                    var summary=new MatchSummary(over==1,rally.Level,rally.Match.Human,rally.Match.Rival,LongestRally,MatchSeconds,Strokes.Perfects,Strokes.BoastWinners,Strokes.Volleys);
+                    var broken=MenuMatch&&!autopilotSeen&&!rally.Autopilot?PersonalRecords.Apply(summary):null;
+                    string highlight=extended?summary.StrokeOfTheMatchLine:"";resultHighlight.text=highlight;resultHighlight.style.display=highlight.Length>0?DisplayStyle.Flex:DisplayStyle.None;
                     string recordLine=PersonalRecords.CardLine(broken);resultRecord.text=recordLine;resultRecord.style.display=recordLine.Length>0?DisplayStyle.Flex:DisplayStyle.None;
                     resultAge=0;resultCard.style.opacity=0;
                 }

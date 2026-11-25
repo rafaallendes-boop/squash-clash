@@ -83,7 +83,7 @@ namespace SquashClash.Runtime.Tests
             FirstMatchHints.ResetForTests();FirstMatchHints.Now=()=>100;FirstMatchHints.ForceWindowForTests=true;
             PlayerPrefs.SetInt("sc.hints.serve",1);PlayerPrefs.SetInt("sc.hints.volley",1);PlayerPrefs.SetInt("sc.hints.boast",2);PlayerPrefs.SetInt("sc.hints.boastCross",1);
             int tries=0,won=0,lost=0;
-            foreach(long seed in new long[]{3,4,5,6})
+            foreach(long seed in new long[]{3,4,5,6,7,8})
             foreach(float dz in new[]{-.8f,-.5f,-1.1f,-1.4f,-.3f,-1.7f})
             {
                 if(won>0)break;
