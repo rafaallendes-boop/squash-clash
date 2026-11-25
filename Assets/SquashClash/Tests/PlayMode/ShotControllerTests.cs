@@ -163,20 +163,28 @@ namespace SquashClash.Runtime.Tests
             Assert.That(reticle.Aim,Is.EqualTo(new Vector2(3.2f,4.4f)));Assert.That(reticle.FeasibleVisible,Is.True);Assert.That(reticle.FeasibleAim.y,Is.LessThan(reticle.Aim.y));
         }
         // G1 A2: a hard crossed drive near the front wall; the frozen reticle shows the effective aim the ball takes.
+        // G1 A2 alone: this SL6 stroke (P 0.8, aim 0.88) is inside the front deep drive zone and, with the length ceiling of 25 nov,
+        // its intention drive bounces beyond 8.5 m, so the guard would act; the DEV switch is off to keep the intention layer isolated.
         [Test] public void IntentDrive_ShowsTheEffectiveAim_AndTheBallFollowsIt()
         {
-            app.Tuning.Set("practice.launch",5);app.LaunchCurrent();
-            var court=app.Host.ActiveConfig.Court;var from=controller.Plan.PStar;
-            float near=from.x<court.Width/2?.6f:court.Width-.6f,corner=court.Width-near;
-            var aim=new Vector2(from.x+(corner-from.x)*from.z/(from.z+court.Length),.88f);
-            var r=Submit(Star(),p:.8f,aim:aim);Assert.That(r.Applied,Is.True,r.Reason);
-            Assert.That(controller.LastSolution.Reason,Is.EqualTo("intent-drive"));
-            var reticle=app.GetComponentInChildren<AimReticleView>(true);
-            Assert.That(reticle.FeasibleVisible,Is.True);Assert.That(reticle.FeasibleAim,Is.EqualTo(new Vector2(r.TargetUsedX,r.TargetUsedY)));
-            Assert.That(r.TargetUsedX,Is.Not.EqualTo(aim.x),"the intention moved the direction");
-            var front=app.Host.Prediction.Contacts.First();Assert.That(front.Surface,Is.EqualTo(SquashClash.Core.Court.SurfaceId.FrontWall));
-            Assert.That(Vector2.Distance(new Vector2(front.Point.x,front.Point.y),reticle.FeasibleAim),Is.LessThanOrEqualTo(.05));
-            Assert.That(app.Host.PredictionMatchesBitwise,Is.True);
+            bool saved=ShotController.FrontDeepDriveOn;
+            try
+            {
+                ShotController.FrontDeepDriveOn=false;
+                app.Tuning.Set("practice.launch",5);app.LaunchCurrent();
+                var court=app.Host.ActiveConfig.Court;var from=controller.Plan.PStar;
+                float near=from.x<court.Width/2?.6f:court.Width-.6f,corner=court.Width-near;
+                var aim=new Vector2(from.x+(corner-from.x)*from.z/(from.z+court.Length),.88f);
+                var r=Submit(Star(),p:.8f,aim:aim);Assert.That(r.Applied,Is.True,r.Reason);
+                Assert.That(controller.LastSolution.Reason,Is.EqualTo("intent-drive"));
+                var reticle=app.GetComponentInChildren<AimReticleView>(true);
+                Assert.That(reticle.FeasibleVisible,Is.True);Assert.That(reticle.FeasibleAim,Is.EqualTo(new Vector2(r.TargetUsedX,r.TargetUsedY)));
+                Assert.That(r.TargetUsedX,Is.Not.EqualTo(aim.x),"the intention moved the direction");
+                var front=app.Host.Prediction.Contacts.First();Assert.That(front.Surface,Is.EqualTo(SquashClash.Core.Court.SurfaceId.FrontWall));
+                Assert.That(Vector2.Distance(new Vector2(front.Point.x,front.Point.y),reticle.FeasibleAim),Is.LessThanOrEqualTo(.05));
+                Assert.That(app.Host.PredictionMatchesBitwise,Is.True);
+            }
+            finally{ShotController.FrontDeepDriveOn=saved;}
         }
         // Front deep drive (design 2026-11-20): the same SL5 stroke into the near side wall, with the DEV switch off and on.
         private static bool SideBeforeFirstBounce(Trajectory prediction)

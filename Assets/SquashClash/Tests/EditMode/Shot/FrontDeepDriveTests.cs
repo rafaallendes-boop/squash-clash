@@ -92,18 +92,25 @@ namespace SquashClash.Core.Tests.Shot
                 (a.TargetUsed.x, b.TargetUsed.x), (a.TargetUsed.y, b.TargetUsed.y) })
                 Assert.That(BitConverter.SingleToInt32Bits(pair.Item1), Is.EqualTo(BitConverter.SingleToInt32Bits(pair.Item2)));
         }
-        private void IntoTheSideWall_BecomesDeep(in Stroke s)
+        // keepsHeight: revision 2 (25 nov) lowers Straight, because at its height no x is within the length ceiling.
+        private void IntoTheSideWall_BecomesDeep(in Stroke s, bool keepsHeight)
         {
             var ctx = Context(); var original = Primitive(ctx, s);
             Assert.That(Flight(ctx, s.From, original.Velocity).sideBeforeBounce, Is.True, "fixture: today it meets a side wall before the bounce");
             var guarded = Apply(ctx, s, original, out var info);
             Assert.That(info.Reason, Is.EqualTo(FrontDeepDrive.ReasonActed)); Assert.That(info.Acted, Is.True);
             Assert.That(guarded.Reason, Is.EqualTo(FrontDeepDrive.ReasonActed)); Assert.That(guarded.Solved, Is.True);
-            Assert.That(guarded.TargetUsed.y, Is.EqualTo(original.TargetUsed.y), "the height is kept");
+            if (keepsHeight) Assert.That(guarded.TargetUsed.y, Is.EqualTo(original.TargetUsed.y), "the height is kept");
+            else
+            {
+                Assert.That(guarded.TargetUsed.y, Is.LessThan(original.TargetUsed.y), "at its height no x is within the ceiling");
+                Assert.That(guarded.TargetUsed.y, Is.GreaterThan(ctx.Court.TinTop + ctx.Physics.BallRadius - 1e-6f), "never below the legal low");
+                Assert.That(guarded.TargetLowered, Is.True);
+            }
             Assert.That(guarded.Speed, Is.EqualTo(original.Speed), "the speed is kept");
             float lo = Math.Min(s.From.x, original.TargetUsed.x), hi = Math.Max(s.From.x, original.TargetUsed.x);
             Assert.That(guarded.TargetUsed.x, Is.InRange(lo, hi), "same direction, closed towards the contact");
-            Assert.That(guarded.TargetUsed.x, Is.Not.EqualTo(original.TargetUsed.x));
+            if (keepsHeight) Assert.That(guarded.TargetUsed.x, Is.Not.EqualTo(original.TargetUsed.x));
             Assert.That(info.T, Is.InRange(0f, 1f));
             var flight = Flight(ctx, s.From, guarded.Velocity);
             Assert.That(flight.sideBeforeBounce, Is.False, "no side wall before the first bounce");
@@ -114,26 +121,20 @@ namespace SquashClash.Core.Tests.Shot
             Assert.That(ctx.Factory.LiveInstances, Is.Zero);
         }
 
-        [Test] public void Straight_FromTheFront_IntoTheSideWall_BecomesADeepDrive() => IntoTheSideWall_BecomesDeep(Straight);
-        [Test] public void Cross_FromTheFront_IntoTheSideWall_BecomesADeepCross() => IntoTheSideWall_BecomesDeep(Cross);
+        [Test] public void Straight_FromTheFront_IntoTheSideWall_BecomesADeepDrive() => IntoTheSideWall_BecomesDeep(Straight, keepsHeight: false);
+        [Test] public void Cross_FromTheFront_IntoTheSideWall_BecomesADeepCross() => IntoTheSideWall_BecomesDeep(Cross, keepsHeight: true);
 
-        // Revision 1: when no x works at the effective height, a lower height (down to the legal low) is tried; speed kept.
+        // Revision 1 lowered the height of this stroke right at the front wall; with the length ceiling (revision 2, 25 nov) no x at any
+        // of the four heights bounces within 8.5 m and still reaches the back third at this speed, so the guard returns the original
+        // bit for bit (design section 5, step 5): the side wall before the bounce comes back for this stroke. Declared in the design.
         [Test]
-        public void VeryFront_NoDeepXAtThatHeight_LowersTheHeight_AndKeepsTheSpeed()
+        public void VeryFront_NoXWithinTheCeiling_ReturnsTheOriginal()
         {
             var ctx = Context(); var s = VeryFront; var original = Primitive(ctx, s);
             Assert.That(Flight(ctx, s.From, original.Velocity).sideBeforeBounce, Is.True, "fixture: today it meets a side wall before the bounce");
             var guarded = Apply(ctx, s, original, out var info);
-            Assert.That(info.Reason, Is.EqualTo(FrontDeepDrive.ReasonActed));
-            Assert.That(guarded.Speed, Is.EqualTo(original.Speed), "the speed is kept");
-            Assert.That(guarded.TargetUsed.y, Is.LessThan(original.TargetUsed.y), "only a lower height works this close");
-            Assert.That(guarded.TargetUsed.y, Is.GreaterThan(ctx.Court.TinTop + ctx.Physics.BallRadius - 1e-6f), "never below the legal low");
-            Assert.That(guarded.TargetLowered, Is.True);
-            float lo = Math.Min(s.From.x, original.TargetUsed.x), hi = Math.Max(s.From.x, original.TargetUsed.x);
-            Assert.That(guarded.TargetUsed.x, Is.InRange(lo, hi), "same direction, closed towards the contact");
-            var flight = Flight(ctx, s.From, guarded.Velocity);
-            Assert.That(flight.sideBeforeBounce, Is.False); Assert.That(flight.reachedBack, Is.True); Assert.That(flight.legal, Is.True);
-            WithinTheCeiling(flight);
+            Assert.That(info.Reason, Is.EqualTo("no-deep-x")); Assert.That(info.Acted, Is.False);
+            Same(guarded, original);
             Assert.That(info.Evaluations, Is.LessThanOrEqualTo(FrontDeepDrive.MaxEvaluations));
             Assert.That(ctx.Factory.LiveInstances, Is.Zero);
         }
