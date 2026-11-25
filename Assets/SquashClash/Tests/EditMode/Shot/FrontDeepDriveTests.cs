@@ -31,6 +31,14 @@ namespace SquashClash.Core.Tests.Shot
         private static readonly Stroke Clean = new Stroke(new Vector3(4.59859943f, .161849082f, 5.085526f), new Vector2(5.84474754f, .9192538f), new Vector2(5.89656925f, .956363142f), 1f, 27.5670586f);
         // Launch 133: cross from (5.28; 0.77), right at the front wall: no front-wall x reaches the back at that height and speed.
         private static readonly Stroke VeryFront = new Stroke(new Vector3(5.27878428f, .281767547f, .77081424f), new Vector2(2.35104966f, 1.41037989f), new Vector2(2.36204267f, .9289416f), 1f, 27.07021f);
+        // Length ceiling (PO, 25 nov: «Sí, tope de largo a 8,5 m»): the PO's strokes of 23-24 nov (builds 90ddc7e/f306d70), rebuilt from
+        // the intention solution (target and speed) that the guard receives.
+        // 20261123T174154 launch 4: P = 1 from (5.87; 4.05); today the guard closes it and it flies into the back glass.
+        private static readonly Stroke LongFly = new Stroke(new Vector3(5.867582f, .255119741f, 4.052193f), new Vector2(1.43788755f, 1.35647869f), new Vector2(1.43788755f, 1.422827f), 1f, 27.2259369f);
+        // 20261124T230522 launch 17: P = 1 from (2.30; 5.40); today the guard closes it and it first bounces at z ~ 9.46 m, against the glass.
+        private static readonly Stroke LongBounce = new Stroke(new Vector3(2.30000019f, .310082674f, 5.40259171f), new Vector2(4.96902f, 1.46411562f), new Vector2(4.96902f, 1.55632663f), 1f, 26.9242058f);
+        // The front-wall target today's guard chose for LongBounce (t = 0.7890625): deep by the 20 nov definition, long by the ceiling.
+        private static readonly Stroke TodayLong = new Stroke(LongBounce.From, LongBounce.Aim, new Vector2(4.4060235f, 1.55632663f), 1f, 26.9242058f);
         // Launch 14: behind the short line (z 5.78), into the side wall.
         private static readonly Stroke Behind = new Stroke(new Vector3(3.729567f, .351921678f, 5.77995062f), new Vector2(5.690976f, 1.50431156f), new Vector2(5.690976f, 1.58444893f), .8630299f, 24.15234f);
 
@@ -43,11 +51,12 @@ namespace SquashClash.Core.Tests.Shot
         private static ShotSolution Apply(RallyContext ctx, in Stroke s, in ShotSolution solution, out FrontDeepInfo info, float? power = null, Vector2? aim = null)
             => FrontDeepDrive.Apply(s.From, aim ?? s.Aim, power ?? s.Power, solution, ctx.Court, ctx.Factory, ctx.Physics, ShotIntentSolver.DefaultFootprintRadius, out info);
 
-        // Independent of the product predicate: side wall before the first bounce, back third (z >= 6.5) before the second, legal end.
-        private static (bool sideBeforeBounce, bool reachedBack, bool legal) Flight(RallyContext ctx, Vector3 from, Vector3 velocity)
+        // Independent of the product predicate: side wall before the first bounce, back third (z >= 6.5) before the second, legal end,
+        // the first bounce z and the back wall before the first bounce (length ceiling, 25 nov).
+        private static (bool sideBeforeBounce, bool reachedBack, bool legal, float firstBounceZ, bool backBeforeBounce) Flight(RallyContext ctx, Vector3 from, Vector3 velocity)
         {
             var rules = new PointRules(ctx.Court, ShotIntentSolver.DefaultFootprintRadius); rules.Begin(PlayerId.Human, PlayerId.Rival);
-            bool side = false, reached = false, front = false; int floors = 0;
+            bool side = false, reached = false, front = false, back = false; int floors = 0; float z1 = float.NaN;
             using (var simulation = ctx.Factory.Create(ctx.Physics, ctx.Court))
             {
                 simulation.Reset(new BallState { Position = from, Velocity = velocity });
@@ -60,14 +69,20 @@ namespace SquashClash.Core.Tests.Shot
                         if (rules.Closed) break;
                         if (!hit.Persistent && hit.Surface == SurfaceId.FrontWall) front = true;
                         if (!hit.Persistent && front && floors == 0 && (hit.Surface == SurfaceId.LeftWall || hit.Surface == SurfaceId.RightWall)) side = true;
-                        if (!hit.Persistent && hit.Surface == SurfaceId.Floor) floors++;
+                        if (!hit.Persistent && front && floors == 0 && hit.Surface == SurfaceId.BackWall) back = true;
+                        if (!hit.Persistent && hit.Surface == SurfaceId.Floor) { floors++; if (floors == 1) z1 = hit.Point.z; }
                         rules.OnBallContact(hit);
                     }
                     if (front && floors < 2 && simulation.State.Position.z >= ctx.Court.Length * 2f / 3f) reached = true;
                     if (!rules.Closed && simulation.State.Position.y > ctx.Court.WallHeight) rules.OnOverTop();
                 }
             }
-            return (side, reached, rules.Cause == PointEndCause.DoubleBounce);
+            return (side, reached, rules.Cause == PointEndCause.DoubleBounce, z1, back);
+        }
+        private static void WithinTheCeiling((bool sideBeforeBounce, bool reachedBack, bool legal, float firstBounceZ, bool backBeforeBounce) flight)
+        {
+            Assert.That(flight.backBeforeBounce, Is.False, "no back glass before the first bounce");
+            Assert.That(flight.firstBounceZ, Is.LessThanOrEqualTo(8.5f), "first bounce at z <= 8.5 m");
         }
         private static void Same(in ShotSolution a, in ShotSolution b)
         {
@@ -77,46 +92,49 @@ namespace SquashClash.Core.Tests.Shot
                 (a.TargetUsed.x, b.TargetUsed.x), (a.TargetUsed.y, b.TargetUsed.y) })
                 Assert.That(BitConverter.SingleToInt32Bits(pair.Item1), Is.EqualTo(BitConverter.SingleToInt32Bits(pair.Item2)));
         }
-        private void IntoTheSideWall_BecomesDeep(in Stroke s)
+        // keepsHeight: revision 2 (25 nov) lowers Straight, because at its height no x is within the length ceiling.
+        private void IntoTheSideWall_BecomesDeep(in Stroke s, bool keepsHeight)
         {
             var ctx = Context(); var original = Primitive(ctx, s);
             Assert.That(Flight(ctx, s.From, original.Velocity).sideBeforeBounce, Is.True, "fixture: today it meets a side wall before the bounce");
             var guarded = Apply(ctx, s, original, out var info);
             Assert.That(info.Reason, Is.EqualTo(FrontDeepDrive.ReasonActed)); Assert.That(info.Acted, Is.True);
             Assert.That(guarded.Reason, Is.EqualTo(FrontDeepDrive.ReasonActed)); Assert.That(guarded.Solved, Is.True);
-            Assert.That(guarded.TargetUsed.y, Is.EqualTo(original.TargetUsed.y), "the height is kept");
+            if (keepsHeight) Assert.That(guarded.TargetUsed.y, Is.EqualTo(original.TargetUsed.y), "the height is kept");
+            else
+            {
+                Assert.That(guarded.TargetUsed.y, Is.LessThan(original.TargetUsed.y), "at its height no x is within the ceiling");
+                Assert.That(guarded.TargetUsed.y, Is.GreaterThan(ctx.Court.TinTop + ctx.Physics.BallRadius - 1e-6f), "never below the legal low");
+                Assert.That(guarded.TargetLowered, Is.True);
+            }
             Assert.That(guarded.Speed, Is.EqualTo(original.Speed), "the speed is kept");
             float lo = Math.Min(s.From.x, original.TargetUsed.x), hi = Math.Max(s.From.x, original.TargetUsed.x);
             Assert.That(guarded.TargetUsed.x, Is.InRange(lo, hi), "same direction, closed towards the contact");
-            Assert.That(guarded.TargetUsed.x, Is.Not.EqualTo(original.TargetUsed.x));
+            if (keepsHeight) Assert.That(guarded.TargetUsed.x, Is.Not.EqualTo(original.TargetUsed.x));
             Assert.That(info.T, Is.InRange(0f, 1f));
             var flight = Flight(ctx, s.From, guarded.Velocity);
             Assert.That(flight.sideBeforeBounce, Is.False, "no side wall before the first bounce");
             Assert.That(flight.reachedBack, Is.True, "reaches the back third");
             Assert.That(flight.legal, Is.True);
+            WithinTheCeiling(flight);
             Assert.That(info.Evaluations, Is.LessThanOrEqualTo(FrontDeepDrive.MaxEvaluations));
             Assert.That(ctx.Factory.LiveInstances, Is.Zero);
         }
 
-        [Test] public void Straight_FromTheFront_IntoTheSideWall_BecomesADeepDrive() => IntoTheSideWall_BecomesDeep(Straight);
-        [Test] public void Cross_FromTheFront_IntoTheSideWall_BecomesADeepCross() => IntoTheSideWall_BecomesDeep(Cross);
+        [Test] public void Straight_FromTheFront_IntoTheSideWall_BecomesADeepDrive() => IntoTheSideWall_BecomesDeep(Straight, keepsHeight: false);
+        [Test] public void Cross_FromTheFront_IntoTheSideWall_BecomesADeepCross() => IntoTheSideWall_BecomesDeep(Cross, keepsHeight: true);
 
-        // Revision 1: when no x works at the effective height, a lower height (down to the legal low) is tried; speed kept.
+        // Revision 1 lowered the height of this stroke right at the front wall; with the length ceiling (revision 2, 25 nov) no x at any
+        // of the four heights bounces within 8.5 m and still reaches the back third at this speed, so the guard returns the original
+        // bit for bit (design section 5, step 5): the side wall before the bounce comes back for this stroke. Declared in the design.
         [Test]
-        public void VeryFront_NoDeepXAtThatHeight_LowersTheHeight_AndKeepsTheSpeed()
+        public void VeryFront_NoXWithinTheCeiling_ReturnsTheOriginal()
         {
             var ctx = Context(); var s = VeryFront; var original = Primitive(ctx, s);
             Assert.That(Flight(ctx, s.From, original.Velocity).sideBeforeBounce, Is.True, "fixture: today it meets a side wall before the bounce");
             var guarded = Apply(ctx, s, original, out var info);
-            Assert.That(info.Reason, Is.EqualTo(FrontDeepDrive.ReasonActed));
-            Assert.That(guarded.Speed, Is.EqualTo(original.Speed), "the speed is kept");
-            Assert.That(guarded.TargetUsed.y, Is.LessThan(original.TargetUsed.y), "only a lower height works this close");
-            Assert.That(guarded.TargetUsed.y, Is.GreaterThan(ctx.Court.TinTop + ctx.Physics.BallRadius - 1e-6f), "never below the legal low");
-            Assert.That(guarded.TargetLowered, Is.True);
-            float lo = Math.Min(s.From.x, original.TargetUsed.x), hi = Math.Max(s.From.x, original.TargetUsed.x);
-            Assert.That(guarded.TargetUsed.x, Is.InRange(lo, hi), "same direction, closed towards the contact");
-            var flight = Flight(ctx, s.From, guarded.Velocity);
-            Assert.That(flight.sideBeforeBounce, Is.False); Assert.That(flight.reachedBack, Is.True); Assert.That(flight.legal, Is.True);
+            Assert.That(info.Reason, Is.EqualTo("no-deep-x")); Assert.That(info.Acted, Is.False);
+            Same(guarded, original);
             Assert.That(info.Evaluations, Is.LessThanOrEqualTo(FrontDeepDrive.MaxEvaluations));
             Assert.That(ctx.Factory.LiveInstances, Is.Zero);
         }
@@ -139,6 +157,39 @@ namespace SquashClash.Core.Tests.Shot
             Assert.That(info.Reason, Is.EqualTo("inactive")); Assert.That(info.Evaluations, Is.Zero);
             Same(guarded, original);
         }
+
+        // Length ceiling (PO, 25 nov): a strong drive from the front that today goes long (on the fly into the back glass, or a first
+        // bounce beyond 8.5 m) is brought short at the same speed, still without a side wall and still reaching the back third.
+        [TestCase("fly")][TestCase("bounce")]
+        public void TooLong_FromTheFront_IsBroughtWithinTheCeiling(string which)
+        {
+            var ctx = Context(); var s = which == "fly" ? LongFly : LongBounce; var original = Primitive(ctx, s);
+            var today = Flight(ctx, s.From, original.Velocity);
+            Assert.That(today.sideBeforeBounce || !today.reachedBack || !today.legal, Is.True, "fixture: the intention fails the 20 nov definition, so the guard acts");
+            var guarded = Apply(ctx, s, original, out var info);
+            Assert.That(info.Reason, Is.EqualTo(FrontDeepDrive.ReasonActed)); Assert.That(guarded.Reason, Is.EqualTo(FrontDeepDrive.ReasonActed));
+            Assert.That(guarded.Speed, Is.EqualTo(original.Speed), "the speed is kept");
+            float lo = Math.Min(s.From.x, original.TargetUsed.x), hi = Math.Max(s.From.x, original.TargetUsed.x);
+            Assert.That(guarded.TargetUsed.x, Is.InRange(lo, hi), "same direction, closed towards the contact");
+            var flight = Flight(ctx, s.From, guarded.Velocity);
+            Assert.That(flight.sideBeforeBounce, Is.False, "no side wall before the first bounce");
+            Assert.That(flight.reachedBack, Is.True, "reaches the back third"); Assert.That(flight.legal, Is.True);
+            WithinTheCeiling(flight);
+            Assert.That(info.Evaluations, Is.LessThanOrEqualTo(FrontDeepDrive.MaxEvaluations));
+            Assert.That(ctx.Factory.LiveInstances, Is.Zero);
+        }
+
+        [Test]
+        public void Deep_RejectsALongDrive_ThatThe20NovDefinitionAccepted()
+        {
+            var ctx = Context(); var v = Primitive(ctx, TodayLong).Velocity; var flight = Flight(ctx, TodayLong.From, v);
+            Assert.That(flight.sideBeforeBounce || !flight.reachedBack || !flight.legal, Is.False, "fixture: deep by the 20 nov definition");
+            Assert.That(flight.firstBounceZ, Is.GreaterThan(8.5f), "fixture: first bounce beyond the ceiling");
+            Assert.That(FrontDeepDrive.Deep(TodayLong.From, v, ctx.Court, ctx.Factory, ctx.Physics, ShotIntentSolver.DefaultFootprintRadius), Is.False);
+            Assert.That(ctx.Factory.LiveInstances, Is.Zero);
+        }
+
+        [Test] public void MaxFirstBounceZ_IsThePOsCeiling() => Assert.That(FrontDeepDrive.MaxFirstBounceZ, Is.EqualTo(8.5f));
 
         [Test]
         public void Active_IsTheDeclaredZone()

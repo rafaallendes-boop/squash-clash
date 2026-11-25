@@ -33,6 +33,8 @@ namespace SquashClash.Core.Shot
     {
         public const string ReasonActed = "front-deep";
         public const float MinAimHeight = .80f;
+        // Length ceiling (PO, 25 nov: «Sí, tope de largo a 8,5 m»): the first bounce of a successful stroke lands at z <= this.
+        public const float MaxFirstBounceZ = 8.5f;
         public const int CoarseSteps = 8, RefineSteps = 4, FallbackLevels = 3;
         // Revision 1 bound (design section 5): one check, 8 + 3 x 9 coarse probes and 4 bisection steps.
         public const int MaxEvaluations = 1 + CoarseSteps + FallbackLevels * (CoarseSteps + 1) + RefineSteps;
@@ -41,8 +43,9 @@ namespace SquashClash.Core.Shot
         public static bool Active(float power, Vector3 from, Vector2 requestedAim, CourtDimensions court)
             => power > .5f && requestedAim.y >= MinAimHeight && from.z < court.Length - court.ShortLineNearBackEdgeFromBack;
 
-        // Success (design section 2): legal to the second bounce, no side wall between the front wall and the first bounce,
-        // and the ball reaches the back third (z >= 2/3 of the length) before its second bounce.
+        // Success (design section 2, revision 2 of 25 nov): legal to the second bounce, no side wall and no back wall between the
+        // front wall and the first bounce, the first bounce at z <= MaxFirstBounceZ, and the ball reaches the back third
+        // (z >= 2/3 of the length) before its second bounce.
         public static bool Deep(Vector3 from, Vector3 velocity, CourtDimensions court, IBallSimulationFactory factory, PhysicsParams physics, float footprintRadius)
         {
             var rules = new PointRules(court, footprintRadius); rules.Begin(PlayerId.Human, PlayerId.Rival);
@@ -61,8 +64,8 @@ namespace SquashClash.Core.Shot
                         if (!hit.Persistent)
                         {
                             if (first) { first = false; if (hit.Surface != SurfaceId.FrontWall) return false; }
-                            else if (floors == 0 && (hit.Surface == SurfaceId.LeftWall || hit.Surface == SurfaceId.RightWall)) return false;
-                            if (hit.Surface == SurfaceId.Floor) floors++;
+                            else if (floors == 0 && (hit.Surface == SurfaceId.LeftWall || hit.Surface == SurfaceId.RightWall || hit.Surface == SurfaceId.BackWall)) return false;
+                            if (hit.Surface == SurfaceId.Floor && ++floors == 1 && !(hit.Point.z <= MaxFirstBounceZ)) return false;
                         }
                         rules.OnBallContact(hit);
                     }

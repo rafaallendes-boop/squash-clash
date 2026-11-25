@@ -110,3 +110,11 @@ Textos literales del PO (Rafael, chat de SC-PM), transmitidos por SC-PM:
 > 24 nov 12:07, directa en el chat de SC-PM, en respuesta a «¿Aceptas que M1 quede fuera de banda (93,80 %) solo en la build de prueba con 25 ms, igual que lo aceptaste con 50 ms?»: «Acepto la prueba que me mandó el lead»
 
 La propuesta del 09:38 consistía en aplicar el protocolo fijado antes de medir (`docs/validation/2026-11-23-recepcion-b-protocolo.md`, `b4cccbd`), cuya regla de elección da 25 ms: N2 frente a la base actual medida, con un máximo de 1,40 pp, y una mejora clara del novato que toca. El valor por defecto pasa a 25 ms con la medición existente, sin volver a medir y sin cambiar umbrales ni criterios. La aceptación de M1 de las 07:20 se refería a 50 ms. **Con la respuesta de las 12:07, M1 con 25 ms en Medio, 93,80 % (3615/3854), fuera de 80–90, queda aceptado SOLO para la build de prueba.** El criterio no cambia y no se acepta ninguna etapa. AGENTS §7 no se edita: la decisión para builds que no sean de prueba (TestFlight o pública) sigue pendiente del PO. [Informe](2026-11-23-recepcion-b-acotada.md).
+
+## 25 nov 2026 — Tope de largo de 8,5 m en la guardia «Drive adelante»
+
+Texto literal del PO (Rafael, 10:43, chat de SC-PM), transmitido en `/Users/rafaallendes/sc-specs/set9-tope-largo.txt`:
+
+> «Sí, tope de largo a 8,5 m»
+
+Responde a la opción 1 del diagnóstico del 25 nov ([informe](2026-11-25-golpe-adelante-largo.md)). Autoriza cambiar la definición de éxito de la guardia del 20 nov (`docs/superpowers/specs/2026-11-20-front-deep-drive-design.md`) y agregar ese umbral: el primer bote cae en z ≤ 8,5 m y la pelota no toca antes el vidrio de atrás. **No autoriza ningún otro cambio de umbral o criterio**: S1, S3a, `pullFullMm`, los defaults y los hashes de AGENTS §5 no cambian. El choque S1–guardia (opción 2) y la potencia (opción 3) siguen pendientes del PO.

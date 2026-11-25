@@ -30,6 +30,8 @@ Fuera de alcance, y parada si hiciera falta: física P2, `DefaultPreset.json`, S
 
 **Éxito** = `clean` o `side-before-back`: legal, sin lateral antes del primer bote y llegando al tercio trasero.
 
+*Revisión 2 (25 nov), decisión del PO:* el éxito de la **guardia** (§5) exige además el tope de largo de §7. Las clases y las metas M1–M6 de esta sección y de §3 son las del 20 nov y no se recalculan.
+
 ## 3. Metas predeclaradas
 
 - **M1 (puerta):** paralelas profundas desde adelante con éxito en **≥ 85 %** de la reproducción del PO. Hoy: 11/16 (68,8 %).
@@ -66,7 +68,7 @@ Atrás de la T: paralelas 15/18 y cruzadas 7/17. Es informativo y queda fuera de
 Es una capa nueva **solo del humano**, aplicada en `ShotController.Solve` después de `CausalQuality.Solve`. La clase `FrontDeepDrive` vive en Core y no la llaman ni el rival ni `RallySim` ni el pronóstico de la IA.
 
 1. **Zona:** P > 0,5, mira pedida y ≥ 0,80 m, contacto delante de la línea corta y solución resuelta. Fuera de la zona devuelve la solución bit a bit.
-2. **Sin cambio si ya sirve:** si la solución actual ya es un éxito (definición de §2, con P2 y las reglas del punto), se devuelve tal cual.
+2. **Sin cambio si ya sirve:** si la solución actual ya es un éxito (definición de §2 más el tope de largo de §7, con P2 y las reglas del punto), se devuelve tal cual.
 3. **Barrido grueso en x:** misma altura efectiva `TargetUsed.y` y velocidad congelada, con x = x_contacto + t·(TargetUsed.x − x_contacto) para t = 7/8, 6/8, … 0. Se toma el mayor t con éxito: el golpe más abierto que todavía llega limpio en la dirección pedida. Una solicitud que el solver solo resuelve bajando el objetivo no es candidata. El barrido no supone monotonía.
 4. **Refinamiento:** 4 pasos de bisección entre ese t y el siguiente octavo, con resolución 1/128.
 5. **Solo si ninguna x sirve a esa altura:** pasa sobre todo muy cerca del frontis, donde a velocidad alta la recta se va por arriba del fondo. Se repite el barrido (t = 1 … 0) en tres alturas más bajas, y = y₀ − (y₀ − y_legal)·j/3 con j = 1..3, donde y_legal es la parte superior del tin + el radio, como en el solver. Se toma la primera altura que sirve. Si ninguna sirve, devuelve la original.
@@ -85,3 +87,27 @@ No cambia la física, los defaults, el contrato de contacto, el reloj ni la velo
 - **Muestra pequeña:** 16 paralelas y 39 cruzadas de una sola sesión.
 - **Discontinuidad en la línea corta:** detrás de ella la guardia no actúa.
 - **Cruzadas muy adelante (z < 2 m):** sin x limpia a esa altura y velocidad (7/36). La altura de respaldo puede convertirlas en un golpe casi paralelo y más bajo: se da prioridad a la profundidad sobre la dirección.
+
+## 7. Revisión 2 (25 nov): tope de largo
+
+**Decisión del PO** (Rafael, 25 nov, 10:43, chat de SC-PM): «Sí, tope de largo a 8,5 m». Responde a la opción 1 del [diagnóstico del 25 nov](../../reviews/2026-11-25-golpe-adelante-largo.md) (desde adelante, con P alta, la pelota sale larga y pega en el vidrio de atrás). Autoriza cambiar la definición de éxito de esta guardia y agregar ese umbral. **No autoriza ningún otro cambio de umbral o criterio.** [Registro](../../reviews/2026-11-18-po-approvals.md#25-nov-2026--tope-de-largo-de-85-m-en-la-guardia-drive-adelante).
+
+1. **Éxito de la guardia (`FrontDeepDrive.Deep`)**: lo de §2 (legal hasta el segundo bote, primer contacto en el frontis, sin lateral entre el frontis y el primer bote, llega al tercio trasero antes del segundo bote) **y además**:
+   - el primer bote cae en **z ≤ `FrontDeepDrive.MaxFirstBounceZ` = 8,5 m**, una constante con nombre en `FrontDeepDrive` (no es clave de `DefaultPreset`);
+   - **no toca la pared trasera (el vidrio) entre el frontis y el primer bote**.
+2. Vale en los dos usos del predicado: la comprobación del paso 2 de §5 (lo que antes salía «already-deep» y era largo ahora pasa al barrido) y cada candidato del barrido (pasos 3–5).
+3. **Sin cambios:** la zona (P > 0,5, mira ≥ 0,80 m, delante de la línea corta), el barrido, la bisección, las tres alturas de respaldo, el tope de 40 evaluaciones, la velocidad congelada, el solo humano, el interruptor DEV y la línea de métricas `front-deep`. Si ninguna x ni altura cumple, se devuelve la solución original bit a bit (§5, paso 5).
+4. **Fuera de alcance, sin tocar:** S1 y S3a (diseño del 14 nov), `pullFullMm`, `DefaultPreset.json`, SimulationKey, RallyParams y los hashes de AGENTS §5. El choque S1–guardia (opción 2 del diagnóstico) y la potencia (opción 3) siguen pendientes del PO.
+
+**Medición** (experimento explícito `FrontLengthCeilingExperiment`, P2-Analytic, corridas `before01`=`before02` y `after01`=`after02` byte a byte; [informe](../../reviews/2026-11-25-tope-largo.md)):
+
+- Golpes reales del PO del 23–24 nov desde adelante con P > 0,5 (49, sin intentos a dos paredes): largos (primer bote > 8,5 m o vidrio al vuelo) **20 → 1**; vidrio al vuelo **14 → 0**; lateral antes del bote **8 → 8**. El largo que queda está fuera de la zona (mira < 0,80 m).
+- Coste por golpe dentro de la zona (39): evaluaciones media 7,97 → 11,46, mediana 8 → 9, p95 21 → 30, máximo 22 → 31 (cota 40 sin cambio). En el editor del Mac, mediana ≈ 0,13 ms por golpe, igual que antes.
+
+**Riesgos declarados de la revisión 2:**
+
+- **Muy cerca del frontis** (contacto a z ≤ 1,5 m), con P alta, puede no existir ninguna x ni altura que bote dentro del tope y llegue al tercio trasero a esa velocidad. Entonces la guardia devuelve el original y vuelve la lateral antes del bote. En la malla determinista de la zona (1458 golpes) la lateral antes del bote pasa de 7 a 21, todos `no-deep-x` con contacto a z = 1,0–1,5 m; en los golpes reales del PO no aparece. Es el caso del fixture `VeryFront` (contacto a 0,77 m). Esas 14 laterales nuevas **botan corto**, a z ≈ 0,14–2,4 m (antes la guardia las convertía en un drive largo o al vidrio), así que el drive fuerte pegado al frontis termina como una pelota corta. En la muestra S1 (810) aparecen además 6 laterales nuevas `no-deep-x` (primer bote a 1,5–4,0 m, una de ellas Out). Ninguna lateral anterior desaparece.
+- **Golpes que vuelven a salir fuera de la cancha.** Sin el rescate de la guardia (`no-deep-x`, se devuelve el original), algunos golpes que antes eran `front-deep` y legales salen **Out** sin botar: en la malla, legales en zona **1452 → 1451** (`cx 3,2 · cz 1 · mira (3,2; 2) · P 0,70`; antes botaba a 9,37 m); en la muestra S1, legales **794 → 790** (cuatro golpes `SL5/SL6-Tstar-12 · mid · mira (2,6 | 4; 2,55) · P 0,60`; antes botaban a 8,7–9,0 m). En los golpes reales del PO no ocurre (49/49 legales). Falta saber si el PO prefiere en ese caso un largo legal al vidrio o el golpe original fuera: es una decisión de producto que esta revisión no toma.
+- **El denominador de S1 baja** de 794 a 790 por esos cuatro Out, así que 74,6 % → 75,6 % no es una mejora: sobre los 810 golpes, S1 pasa de 592 a 597 (73,1 % → 73,7 %).
+- **Baja la altura más a menudo:** en los golpes reales en zona, la guardia baja la altura en 12 de 39 frente a 2 de 39; la mínima sigue en 0,63 m.
+- **Muestra pequeña** (49 golpes de cinco sesiones) y el mecanismo usa el mismo predicado que la medición del largo (el juez del experimento es independiente del código, pero mide lo mismo).
