@@ -11,7 +11,8 @@ namespace SquashClash.Runtime.Tests
     // alone and together with the personal-record line. The label is forced visible with fixed texts: this is layout, not counting.
     public sealed class ZStrokeOfTheMatchLayoutTests : ZDeviceFixture
     {
-        private const string Longest="Golpe del partido: 99 dos paredes ganadores",Record="¡Nuevo récord! Rally más largo: 23 golpes · Mayor diferencia: 7 puntos";
+        private const string Longest="Golpe del partido: 99 dos paredes ganadores",Record="¡Nuevo récord! Rally más largo: 23 golpes · Mayor diferencia: 7 puntos",RecordThree=Record+" · Victoria más rápida: 4:12";
+        private static readonly string[] Records={Record,RecordThree};
         [UnityTearDown] public IEnumerator Cleanup()=>Shutdown();
         private IEnumerator Settle(){Refresh();yield return null;yield return null;Refresh();yield return null;}
         private static float Width(Label label,string text)=>label.MeasureTextSize(text,0,VisualElement.MeasureMode.Undefined,0,VisualElement.MeasureMode.Undefined).x;
@@ -25,8 +26,8 @@ namespace SquashClash.Runtime.Tests
             Assert.That(Drive(()=>rally.Phase==RallyPhase.MatchOver,1500),Is.True);
             hud.Tick(RallyHud.ResultInSeconds);yield return Settle();
             Find<Label>("match-result-highlight").style.display=DisplayStyle.None;
-            var record=Find<Label>("match-result-record");record.style.display=DisplayStyle.Flex;record.text=Record;yield return Settle();
-            AssertFits("match-result",phone+" record line only");
+            var record=Find<Label>("match-result-record");record.style.display=DisplayStyle.Flex;
+            foreach(var text in Records){record.text=text;yield return Settle();AssertFits("match-result",phone+" record line only ("+text.Length+" chars)");}
         }
         // Diagnostic only (logs, no criterion): how far the card's last button ends below the safe area for each text plus the record line.
         [UnityTest] public IEnumerator Diagnostic_OverflowOfTheCardWithEachTextAndTheRecordLine([ValueSource(nameof(Phones))] PhoneScreen screen)
@@ -38,12 +39,13 @@ namespace SquashClash.Runtime.Tests
             Assert.That(Drive(()=>rally.Phase==RallyPhase.MatchOver,1500),Is.True);
             hud.Tick(RallyHud.ResultInSeconds);yield return Settle();
             var label=Find<Label>("match-result-highlight");var record=Find<Label>("match-result-record");var rematch=Find("match-result-rematch");var menu=Find("match-result-menu");
-            record.style.display=DisplayStyle.Flex;record.text=Record;
+            record.style.display=DisplayStyle.Flex;
+            foreach(var recordText in Records)
             foreach(var text in new[]{"","Golpe del partido: 3 voleas","Golpe del partido: 3 Perfectos","Golpe del partido: 3 dos paredes ganadores",Longest})
             {
-                label.style.display=text.Length>0?DisplayStyle.Flex:DisplayStyle.None;label.text=text;yield return Settle();
+                record.text=recordText;label.style.display=text.Length>0?DisplayStyle.Flex:DisplayStyle.None;label.text=text;yield return Settle();
                 float bottom=Mathf.Max(rematch.worldBound.yMax,menu.worldBound.yMax);
-                Debug.Log("[StrokeOfTheMatch] "+phone+" record+'"+text+"' overflowBelowSafe="+(bottom-Safe.yMax).ToString("F1")+" labelHeight="+label.worldBound.height.ToString("F1"));
+                Debug.Log("[StrokeOfTheMatch] "+phone+" record("+recordText.Length+")+'"+text+"' overflowBelowSafe="+(bottom-Safe.yMax).ToString("F1")+" labelHeight="+label.worldBound.height.ToString("F1"));
             }
         }
         [UnityTest] public IEnumerator TheLongestLine_FitsTheCardInTwoLines_AlongsideTheRecordLine([ValueSource(nameof(Phones))] PhoneScreen screen)
@@ -65,10 +67,15 @@ namespace SquashClash.Runtime.Tests
             Assert.That(b.xMin,Is.GreaterThanOrEqualTo(c.xMin-.5f));Assert.That(b.xMax,Is.LessThanOrEqualTo(c.xMax+.5f));Assert.That(b.yMin,Is.GreaterThanOrEqualTo(c.yMin-.5f));Assert.That(b.yMax,Is.LessThanOrEqualTo(c.yMax+.5f),"inside the card");
             Assert.That(b.height,Is.LessThanOrEqualTo(2*oneLine+2),"two lines at most");
             AssertFits("match-result",phone+" highlight alone");
-            record.style.display=DisplayStyle.Flex;record.text=Record;yield return Settle();
-            b=label.worldBound;c=card.worldBound;
-            Assert.That(b.yMax,Is.LessThanOrEqualTo(c.yMax+.5f),"inside the card with the record line");Assert.That(b.height,Is.LessThanOrEqualTo(2*oneLine+2));
-            AssertFits("match-result",phone+" highlight and record");
+            record.style.display=DisplayStyle.Flex;
+            foreach(var text in Records)
+            {
+                record.text=text;yield return Settle();
+                b=label.worldBound;c=card.worldBound;
+                Assert.That(b.yMax,Is.LessThanOrEqualTo(c.yMax+.5f),"inside the card with the record line");Assert.That(b.height,Is.LessThanOrEqualTo(2*oneLine+2));
+                Assert.That(c.xMin,Is.GreaterThanOrEqualTo(Safe.xMin+8),"the card does not touch the screen side");Assert.That(c.xMax,Is.LessThanOrEqualTo(Safe.xMax-8));
+                AssertFits("match-result",phone+" highlight and record ("+text.Length+" chars)");
+            }
         }
     }
 }
