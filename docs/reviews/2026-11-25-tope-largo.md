@@ -47,9 +47,19 @@ La cota sigue en 40. El predicado nuevo corta antes la misma simulación, así q
 | Lateral antes del bote | 7 | **21** |
 | Sin solución (`no-deep-x`, devuelve el original) | 17 | 32 |
 
-**Las 14 laterales nuevas de la malla** son todas `no-deep-x` con contacto a z = 1,0–1,5 m. Pegado al frontis y a esa velocidad, ninguna x ni altura bota dentro de 8,5 m y llega al tercio trasero, así que la guardia devuelve el golpe original, que va a la lateral. En los golpes reales no ocurre. Queda declarado en la spec, sin compensarlo.
+**Las 14 laterales nuevas de la malla** son todas `no-deep-x` con contacto a z = 1,0–1,5 m. Pegado al frontis y a esa velocidad, ninguna x ni altura bota dentro de 8,5 m y llega al tercio trasero, así que la guardia devuelve el golpe original, que va a la lateral. Antes la guardia las convertía en un drive largo o al vidrio; ahora tocan la lateral y **botan corto, a z ≈ 0,14–2,4 m**: el drive fuerte pegado al frontis termina como una pelota corta. En la muestra S1 (810) hay además 6 laterales nuevas `no-deep-x` (primer bote a 1,5–4,0 m, una de ellas Out). Ninguna lateral anterior desaparece. En los golpes reales no ocurre. Queda declarado en la spec, sin compensarlo.
 
-**S1, solo informativo** (no se toca): con la misma muestra y el mismo juez del diagnóstico, 592/794 (74,6 %) antes y 597/790 (75,6 %) después. Sigue bajo el 90 % por el choque S1–guardia, que es la opción 2 y sigue pendiente del PO.
+**Golpes que pasan de legales a fuera de la cancha** (lo señaló la revisión cruzada; recontado desde los TSV). Sin el rescate de la guardia (`no-deep-x`, se devuelve el original), algunos golpes que antes eran `front-deep` y legales vuelven a salir **Out** sin botar:
+
+| | Antes | Después | Golpes |
+|---|---|---|---|
+| Malla, legales en zona (1458) | 1452 | **1451** | `cx 3,2 · cz 1 · mira (3,2; 2) · P 0,70`; antes botaba a 9,37 m |
+| Muestra S1, legales (810) | 794 | **790** | `SL5/SL6-Tstar-12 · mid · mira (2,6 \| 4; 2,55) · P 0,60`; antes botaban a 8,7–9,0 m |
+| Golpes reales del PO (49) | 49 | 49 | no ocurre |
+
+Es un riesgo de producto que el PO debe ver antes de fusionar: falta saber si en ese caso prefiere un largo legal al vidrio o el golpe original fuera. Este PR no toma esa decisión.
+
+**S1, solo informativo** (no se toca): con la misma muestra y el mismo juez del diagnóstico, 592/794 (74,6 %) antes y 597/790 (75,6 %) después. **No es una mejora:** el denominador baja de 794 a 790 por los cuatro golpes que ahora salen Out; sobre los 810 golpes, S1 pasa de 592 a 597 (73,1 % → 73,7 %). Sigue bajo el 90 % por el choque S1–guardia, que es la opción 2 y sigue pendiente del PO.
 
 ## Pruebas (TDD)
 
@@ -66,7 +76,7 @@ Sin cambios de texto. El interruptor DEV «Drive adelante: sí/no», la retícul
 
 ## Puertas
 
-Sobre `0812a0f` (el código de este PR; después solo se agrega este informe), con el árbol limpio, en serie y con el lock de Unity, en el Mac del PO:
+Sobre `0812a0f` (el código de este PR; después solo se agregan este informe y, tras la revisión cruzada, declaraciones en el informe y la spec §7, sin tocar código ni pruebas), con el árbol limpio, en serie y con el lock de Unity, en el Mac del PO:
 
 | Puerta | Resultado |
 |---|---|
@@ -81,5 +91,6 @@ Sobre `0812a0f` (el código de este PR; después solo se agrega este informe), c
 
 - [ ] Desde adelante y con tirón fuerte, el drive al fondo ya no pega en el vidrio al vuelo y bota antes de llegar al vidrio.
 - [ ] El drive sigue sintiéndose fuerte y profundo, no corto ni bombeado.
-- [ ] Pegado al frontis (a menos de 1,5 m), con tirón fuerte: ¿vuelve a irse a la lateral?
+- [ ] Pegado al frontis (a menos de 1,5 m), con tirón fuerte: ¿vuelve a irse a la lateral y bota corto?
+- [ ] Desde adelante con mira alta (≈ 2–2,5 m) y P media-alta: ¿algún drive sale fuera de la cancha sin botar?
 - [ ] La retícula marca dónde pega de verdad en el frontis cuando la guardia cierra el ángulo o baja la altura.
