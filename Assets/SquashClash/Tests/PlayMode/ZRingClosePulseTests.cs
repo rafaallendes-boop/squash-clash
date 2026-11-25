@@ -77,13 +77,38 @@ namespace SquashClash.Runtime.Tests
             view.Tick(target+.001);Assert.That(Visible,Is.True);
         }
         private bool Visible=>view.Visible;
-        [Test] public void B1_TheWaitingWhiteRingPulsesBetweenOneAndPointFortyFive()
+        // B1 (the white ring breathes at 2 Hz) was replaced by P1 on 25 nov: the breathing was replaced by one pulse on entry.
+        [Test] public void P1_TheWaitingWhiteRingPulsesOnceOnEntryAndThenIsSteadyAtOne()
         {
             Show(Color.white);
             view.Tick(p);Assert.That(Alpha(),Is.EqualTo(1f).Within(.01f),"1 when it shows");
             view.Tick(p+.25);Assert.That(Alpha(),Is.EqualTo(.45f).Within(.01f),"0.45 at 0.25 s");
             view.Tick(p+.5);Assert.That(Alpha(),Is.EqualTo(1f).Within(.01f),"1 at 0.5 s");
-            for(double t=0;t<3;t+=.013){view.Tick(p+t);Assert.That(Alpha(),Is.InRange(.45f-1e-3f,1f+1e-3f));Assert.That(Line("Converging ring").enabled,Is.True,"never hidden: t="+t);}
+            for(double t=0;t<3;t+=.013)
+            {
+                view.Tick(p+t);Assert.That(Alpha(),Is.InRange(.45f-1e-3f,1f+1e-3f),"t="+t);Assert.That(Line("Converging ring").enabled,Is.True,"never hidden: t="+t);
+                if(t>=.5)Assert.That(Alpha(),Is.EqualTo(1f).Within(1e-5f),"steady after the pulse: t="+t);
+            }
+        }
+        [UnityTest] public IEnumerator P2_AReplanOfTheWhiteRingInTheSameOpportunityDoesNotRestartThePulse()
+        {
+            Show(Color.white);
+            yield return new WaitForSecondsRealtime(.3f);
+            Show(Color.white);
+            view.Tick(p+.25);Assert.That(Alpha(),Is.EqualTo(1f).Within(1e-5f),"0.25 s after the replan the pulse is long over");
+        }
+        [Test] public void P3_WhenTheAmberYieldsToWhiteThereIsANewPulse()
+        {
+            Show(ShotController.VolleyTint);view.Tick(p+.25);Assert.That(Alpha(),Is.EqualTo(1f).Within(1e-5f),"amber does not pulse");
+            view.BeginOpportunity();Show(Color.white);
+            view.Tick(p+.25);Assert.That(Alpha(),Is.EqualTo(.45f).Within(.01f),"0.45 at 0.25 s from the white entry");
+            view.Tick(p+.75);Assert.That(Alpha(),Is.EqualTo(1f).Within(1e-5f),"1 at 0.75 s");
+        }
+        [Test] public void P4_AWhiteRingThatEntersAlreadyConvergingDoesNotPulse()
+        {
+            Show(Color.white,.3);
+            Assert.That(view.CueState.Approach,Is.LessThan(1f));
+            view.Tick(p+.1);Assert.That(Alpha(),Is.EqualTo(1f).Within(1e-5f));
         }
         [Test] public void B2_TheConvergingWhiteRingIsSteadyAtOne()
         {
@@ -135,6 +160,44 @@ namespace SquashClash.Runtime.Tests
         private void StartRally()
         {
             Assert.That(rally.StartMode(),Is.True);Assert.That(controller.Volley.Exists,Is.True,controller.Volley.Reason);
+        }
+        // Presentation only (25 nov). Drives a reception without touching: the amber offer closes inside its window and, once white, the waiting ring is steady.
+        private void RunUntouched(out List<float> amber,out int steadySamples)
+        {
+            amber=new List<float>();steadySamples=0;double? whiteSince=null;bool wasAmber=false;
+            for(int i=0;i<1500&&!controller.AttemptConsumed;i++)
+            {
+                Frame();
+                if(controller.VolleyCommitted)break;
+                double now=app.Host.ObservedRealTime;
+                if(ring.Visible&&ring.Tint==ShotController.VolleyTint&&controller.VolleyShown&&controller.TryVolleyWindow(out double from,out double until)&&!double.IsInfinity(until)&&now>=from&&now<=until)
+                {amber.Add(Radius);wasAmber=true;}
+                else if(wasAmber&&ring.Visible&&ring.Tint==Color.white&&!controller.VolleyShown)
+                {
+                    whiteSince=whiteSince??now;
+                    if(ring.CueState.Approach>=1&&now-whiteSince.Value>.5){steadySamples++;Assert.That(GameObjectLine().startColor.a,Is.EqualTo(1f).Within(1e-5f),"steady white at "+(now-whiteSince.Value));}
+                }
+            }
+        }
+        private void AssertClosesMonotonically(List<float> radii)
+        {
+            Assert.That(radii.Count,Is.GreaterThanOrEqualTo(10),"the amber ring was offered with a finite window");
+            for(int i=1;i<radii.Count;i++)Assert.That(radii[i],Is.LessThanOrEqualTo(radii[i-1]+1e-5f),"monotonic, sample "+i);
+            Assert.That(radii[radii.Count-1],Is.LessThan(radii[0]-1e-3f),"it really closes");
+        }
+        [Test] public void U1a_RivalServeReceptionWithTheServeVolley_AmberClosesAndTheWhiteIsSteadyAfterItsPulse()
+        {
+            StartRivalServe();
+            RunUntouched(out var amber,out int steady);
+            AssertClosesMonotonically(amber);
+            Assert.That(steady,Is.GreaterThanOrEqualTo(3),"waiting-white samples past the pulse");
+        }
+        [Test] public void U1b_RallyReceptionWithAnAmberOffer_AmberClosesAndTheWhiteIsSteadyAfterItsPulse()
+        {
+            StartRally();
+            RunUntouched(out var amber,out int steady);
+            AssertClosesMonotonically(amber);
+            Assert.That(steady,Is.GreaterThanOrEqualTo(3),"waiting-white samples past the pulse");
         }
         [Test] public void A5_TheUnchosenAmberRingNeverGrowsInsideItsWindow_AndAChosenOneFollowsTheImpactCue()
         {
