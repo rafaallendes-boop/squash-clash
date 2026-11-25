@@ -67,8 +67,14 @@ Siempre en plural, porque nunca baja de 3. «Perfecto» va con mayúscula, como 
    - el texto de `match-result-highlight` es `StrokeOfTheMatch.Line(...)` de esos conteos;
    - la línea se ve solo si ese texto no está vacío.
 3. **PlayMode, dos paredes ganador en escena.** En un partido, un dos paredes resuelto (`LastStrokeBoast`) seguido de un punto ganado por el jugador suma 1 en `hud.Strokes.BoastWinners`. Si el punto lo gana el rival, suma 0.
+   - **Revisión 2, 25 nov.** En escena no se reprodujo ningún dos paredes ganador: 0 de 35, porque el rival los devolvió todos. Por decisión de producto, la prioridad se mantiene y esto queda como observación.
+   - El test exige al menos un dos paredes resuelto en la escena y verifica la regla en cada punto: suma 1 si el punto lo ganó el jugador y 0 si no. No exige que el caso ganado aparezca.
+   - La rama «ganó» queda probada en EditMode.
 4. **PlayMode, ocultar y reiniciar.** Con los conteos por debajo de 3 al cerrar el partido, la línea queda oculta. Con `ExtendedCardOn` en `false`, también. La revancha reinicia los conteos.
-5. **Layout.** La línea más larga posible, «Golpe del partido: 99 dos paredes ganadores», cabe en la tarjeta en dos líneas como máximo, sin salirse de la tarjeta, y la tarjeta queda dentro del área segura (`AssertFits`). Se prueba en todos los perfiles de `ZDeviceFixture`, desde el SE 16:9 hasta el Pro Max, y el test registra el ancho medido de los tres textos.
+5. **Layout.** La línea más larga posible, «Golpe del partido: 99 dos paredes ganadores», cabe en la tarjeta en dos líneas como máximo, sin salirse de la tarjeta.
+   - Con esa línea y con la línea de récord más larga que puede salir, la tarjeta queda dentro del área segura (`AssertFits`). La línea de récord más larga es la de tres récords: «¡Nuevo récord! Rally más largo: 23 golpes · Mayor diferencia: 7 puntos · Victoria más rápida: 4:12».
+   - Se prueba en todos los perfiles de `ZDeviceFixture`, desde el SE 16:9 hasta el Pro Max. El test registra el ancho medido de los tres textos.
+   - **Revisión 2, 25 nov.** La primera versión no cabía en el área segura cuando había récord. El SE ya se salía antes de este cambio. Decidieron SC-PM y SC-Lead, con consentimiento del PO, compactar la tarjeta. Solo se tocan el espaciado y los tamaños de las clases `.sc-result-*`. No cambian los textos de las otras líneas, los umbrales, las fuentes ni los colores, y los botones conservan los 46 px de alto.
 6. **Tests existentes sin editar.** `ZRecordsTests` y `ZMatchCardTests` pasan igual.
 7. **Puertas.** EditMode y PlayMode completos en verde en el Mac del PO. La AutoQA se corre como evidencia de que no cambia ninguna decisión, aunque el cambio no toca timing, gesto ni contrato. Lo mismo vale para `check-release`.
 
