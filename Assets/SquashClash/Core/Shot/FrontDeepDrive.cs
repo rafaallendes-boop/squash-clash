@@ -33,6 +33,8 @@ namespace SquashClash.Core.Shot
     {
         public const string ReasonActed = "front-deep";
         public const float MinAimHeight = .80f;
+        // Length ceiling (PO, 25 nov: «Sí, tope de largo a 8,5 m»): the first bounce of a successful stroke lands at z <= this.
+        public const float MaxFirstBounceZ = 8.5f;
         public const int CoarseSteps = 8, RefineSteps = 4, FallbackLevels = 3;
         // Revision 1 bound (design section 5): one check, 8 + 3 x 9 coarse probes and 4 bisection steps.
         public const int MaxEvaluations = 1 + CoarseSteps + FallbackLevels * (CoarseSteps + 1) + RefineSteps;
