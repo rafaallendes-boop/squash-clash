@@ -10,7 +10,7 @@ namespace SquashClash.Runtime.Shot
         // Look of the two reception rings (PO, 23 nov): the amber volley ring is drawn twice as thick as the white one and has a soft halo
         // at the same radius, so the two read apart at a glance. Only how they look; when each shows is untouched.
         private const float AmberStrokeFactor=2, HaloStrokeFactor=4, HaloAlpha=.3f;
-        // White ring waiting at the outer radius: its alpha breathes between 1 and PulseLow at 2 Hz; steady once it converges.
+        // White ring waiting at the outer radius: ONE pulse on entry (alpha 1 -> PulseLow -> 1 over PulsePeriod), then steady at 1; also 1 once it converges.
         private const float PulseLow=.45f,PulsePeriod=.5f;
         private const float ValidAlpha=.35f, PerfectAlpha=.6f;
         private const int CircleSegments=96, TriangleVertices=3;
@@ -21,6 +21,8 @@ namespace SquashClash.Runtime.Shot
         private bool shown,closing;
         private double closeFrom,closeUntil;
         private double target,presented;
+        // When the white ring was first shown visibly in this opportunity (null until then): a replan does not restart the pulse.
+        private double? whiteEnteredAt;
         private int aidLevel,planVersion;
         public int AidLevel=>aidLevel;
         private Color tint=Color.white;
@@ -31,11 +33,11 @@ namespace SquashClash.Runtime.Shot
         // Where the cue is on the court (the plan's P*), for what is written next to it.
         public Vector3 CuePosition=>ring!=null?ring.position:Vector3.zero;
         // A new opportunity of the same reception (the bounce after the volley): the partial-aid cutoff applies to each one.
-        public void BeginOpportunity(){CutoffLatched=false;CutoffTarget=0;CutoffPlanVersion=0;ClearClosingWindow();}
+        public void BeginOpportunity(){whiteEnteredAt=null;CutoffLatched=false;CutoffTarget=0;CutoffPlanVersion=0;ClearClosingWindow();}
         public event System.Action CutoffActivated;
         public void BeginReception(int level)
         {
-            aidLevel=level;CutoffLatched=false;CutoffTarget=0;CutoffPlanVersion=0;ClearClosingWindow();
+            aidLevel=level;whiteEnteredAt=null;CutoffLatched=false;CutoffTarget=0;CutoffPlanVersion=0;ClearClosingWindow();
             shown=false;if(ring!=null)Tick(Time.realtimeSinceStartupAsDouble);
         }
         // Presentation only (24 nov): the real-time tap window of the uncommitted amber offer. Over it the amber ring closes from the outer
@@ -70,6 +72,7 @@ namespace SquashClash.Runtime.Shot
                 latePerfectBand=CreateLine("Late perfect band",CircleSegments);
                 DrawCircle(triangle,FitRadius*2,Mathf.PI/2);
             }
+            if(!Amber&&!whiteEnteredAt.HasValue)whiteEnteredAt=presented;
             ring.position=plan.PStar;Tick(presented);
         }
         private LineRenderer CreateLine(string name,int count)
@@ -99,7 +102,8 @@ namespace SquashClash.Runtime.Shot
             }
             // The halo exists only once the ring has been amber: a white-only cue keeps exactly the lines it always had.
             if(Amber&&halo==null){halo=CreateLine("Volley halo",CircleSegments);halo.sortingOrder=-1;}
-            float lineAlpha=!Amber&&state.Approach>=1?1-(1-PulseLow)*(1-Mathf.Cos(2*Mathf.PI*(float)((now-presented)/PulsePeriod)))/2:alpha;
+            double sinceEntry=whiteEnteredAt.HasValue?now-whiteEnteredAt.Value:-1;
+            float lineAlpha=!Amber&&state.Approach>=1&&sinceEntry>=0&&sinceEntry<PulsePeriod?1-(1-PulseLow)*(1-Mathf.Cos(2*Mathf.PI*(float)(sinceEntry/PulsePeriod)))/2:alpha;
             SetStyle(line,lineAlpha,width*(Amber?AmberStrokeFactor:1));if(halo!=null)SetStyle(halo,Amber?alpha*HaloAlpha:0,width*HaloStrokeFactor);SetStyle(triangle,alpha,width);
             SetStyle(validBand,timing.ValidLimitOn?alpha*ValidAlpha:0,width);
             SetStyle(perfectBand,alpha*PerfectAlpha,width);
