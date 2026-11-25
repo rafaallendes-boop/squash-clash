@@ -228,9 +228,10 @@
 }
 /* A card is a piece of the wall with its out line along the top. */
 .sc-result-card {
-    width: 300px;
-    padding: 22px;
-    padding-bottom: 18px;
+    width: 340px;
+    max-width: 92%;
+    padding: 16px;
+    padding-bottom: 12px;
     align-items: center;
     background-color: var(--plaster-card);
     border-radius: 18px;
@@ -239,20 +240,22 @@
     border-color: var(--line);
 }
 .sc-result-kicker { font-size: 12px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; letter-spacing: 3px; color: var(--ink-soft); }
-.sc-result-title { font-size: 28px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-top: 6px; -unity-text-align: middle-center; white-space: normal; }
-.sc-result-score { font-size: 60px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-top: 0; margin-bottom: 0; }
-.sc-result-note { font-size: 13px; color: var(--ink-soft); margin-bottom: 16px; -unity-text-align: middle-center; white-space: normal; }
+.sc-result-title { font-size: 24px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-top: 2px; -unity-text-align: middle-center; white-space: normal; }
+.sc-result-score { font-size: 52px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-top: 0; margin-bottom: 0; }
+.sc-result-note { font-size: 13px; color: var(--ink-soft); margin-bottom: 8px; -unity-text-align: middle-center; white-space: normal; }
 .sc-result-buttons { flex-direction: row; flex-wrap: wrap; justify-content: center; }
 /* 46: still 44 or more once its edges snap to whole pixels, at any panel scale and any card position. */
-.sc-result-buttons .unity-button.sc-button { height: 46px; margin-top: 4px; margin-bottom: 4px; padding-left: 14px; padding-right: 14px; font-size: 14px; }
+.sc-result-buttons .unity-button.sc-button { height: 46px; margin-top: 2px; margin-bottom: 2px; padding-left: 14px; padding-right: 14px; font-size: 14px; }
 .sc-result-card--won { border-top-color: var(--dot); }
 .sc-result-card--lost { border-top-color: var(--rival); }
 .sc-result-card--won .sc-result-kicker { color: rgb(138, 96, 0); }
 .sc-result-card--lost .sc-result-kicker { color: var(--line); }
 .sc-result-card--lost .sc-result-score { color: var(--ink-soft); }
-.sc-result-last { font-size: 14px; color: var(--ink); margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }
+.sc-result-last { font-size: 14px; color: var(--ink); margin-bottom: 2px; -unity-text-align: middle-center; white-space: normal; }
+/* Stroke of the match (25 nov): one line under the longest rally, same type as the record line but in ink. */
+.sc-result-highlight { font-size: 14px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--ink); margin-top: 2px; margin-bottom: 2px; -unity-text-align: middle-center; white-space: normal; }
 /* Personal records (20 nov): one line in line red when the match broke a best. */
-.sc-result-record { font-size: 14px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--line-press); margin-top: 4px; margin-bottom: 4px; -unity-text-align: middle-center; white-space: normal; }
+.sc-result-record { font-size: 14px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; color: var(--line-press); margin-top: 2px; margin-bottom: 2px; -unity-text-align: middle-center; white-space: normal; }
 
 /* Start menu (redesign, 19 nov): the screen is the front wall at scale, read top to bottom as on a court. The out line
    along the top, the wordmark in the playing area above the service line (where every shot must land), the choices below
