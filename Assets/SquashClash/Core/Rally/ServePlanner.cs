@@ -13,13 +13,21 @@ namespace SquashClash.Core.Rally
     // serve that the serve rules accept, so the same box always gives the same serve.
     public static class ServePlanner
     {
+        // Serve positions (spec 2026-11-26-posiciones-saque): court geometry, not tuning.
+        public const float ServerInset=.3f,ReceiverFromSide=1.6f,ReceiverFromBack=2.1f;
+        // The server stands in the inner front corner of its box, ServerInset from the box's inner line and from the short line.
+        // The serve leaves from here.
         public static Vector2 BoxPosition(RallyContext context,ServiceBox box)
         {
-            var court=context.Court;float half=court.ServiceBoxInner*.5f;
-            return new Vector2(box==ServiceBox.Right?half:court.Width-half,court.Length-court.ShortLineNearBackEdgeFromBack+half);
+            var court=context.Court;float x=court.ServiceBoxInner-ServerInset;
+            return new Vector2(box==ServiceBox.Right?x:court.Width-x,court.Length-court.ShortLineNearBackEdgeFromBack+ServerInset);
         }
-        // RED stub: the receiver position is not implemented yet.
-        public static Vector2 ReceiverPosition(RallyContext context,ServiceBox box)=>context.T;
+        // The receiver stands in the back quarter opposite the server's box: the real start of its simulated body.
+        public static Vector2 ReceiverPosition(RallyContext context,ServiceBox box)
+        {
+            var court=context.Court;
+            return new Vector2(box==ServiceBox.Right?court.Width-ReceiverFromSide:ReceiverFromSide,court.Length-ReceiverFromBack);
+        }
         public static BallState Find(RallyContext context,ServiceBox box)
         {
             var p=context.Params;var court=context.Court;var at=BoxPosition(context,box);
