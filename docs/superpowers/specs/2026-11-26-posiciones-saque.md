@@ -40,3 +40,12 @@ La ventana de 25 ms, el timing, los umbrales, los criterios y las pruebas existe
 
 - **Tasa de recepción:** el primer golpe del restador al saque queda en `Contact` (golpe aplicado), sobre todos los saques que recibe. Se calcula por separado para el humano (recibe el saque del rival) y para el rival (recibe el del humano).
 - **Regla predeclarada:** si la tasa cambia más de 5 pp en cualquiera de los dos, se detiene el trabajo y se reporta. Aceptar esa dificultad le corresponde a Rafael.
+
+### Resultado y aceptación del PO
+
+| Restador | ANTES `32f400e` | DESPUÉS `8245996` | Cambio |
+|---|---|---|---|
+| Humano (recibe al rival) | 91,60 % (1722/1880) | 98,93 % (1936/1957) | +7,33 pp |
+| Rival (recibe al humano) | 99,93 % (1379/1380) | 100,00 % (1538/1538) | +0,07 pp |
+
+El cambio del humano supera los 5 pp y el trabajo se detuvo. Rafael lo aceptó (26 nov 16:54, vía SC-Lead), literal: «Sí, acepto que la devolución suba al 98,9 % con las nuevas posiciones de saque». Las posiciones, umbrales, criterios y pruebas quedan como estaban al detenerse.

@@ -1,4 +1,18 @@
-# Posiciones de saque · DETENIDO por recepción
+# Posiciones de saque · DETENIDO por pruebas existentes en EditMode
+
+**Actualización 26 nov, tarde (`set12b`).** Rafael aceptó el cambio de recepción (26 nov 16:54, vía SC-Lead), literal: «Sí, acepto que la devolución suba al 98,9 % con las nuevas posiciones de saque». Seguí desde el paso 4 sobre `ae97194`, con el worktree limpio y `device.env` copiado sin cambios (SHA-256 `0b0c94db…cec2f`, igual al origen, sin agregarlo a git y borrado al terminar). Tomé el lock de Unity a las 17:10:51.
+
+`scripts/test.sh editmode`: **total=1080 passed=1074 failed=6 skipped=0** (XML SHA-256 `cf6f17bf…9072`). Por la regla, no reintenté. PlayMode, AutoQA y check-release **no se corrieron**. No hay PR. [Fallos textuales](../validation/evidence/2026-11-26-posiciones-saque/editmode-failures.txt).
+
+Las seis pruebas son existentes y fallan por la nueva posición de partida del saque (`BoxPosition`):
+
+- **Firma congelada de RallySim:** se esperaba `936646e5…0527` y salió `bb6fb109…4199`. Fallan `FatigueArmRallyTests.A1_EnabledWithZeroArm_ReplaysTheFrozenF1AdjustedSignatures`, `FatigueIntegrationTests.Off_ReplaysTheFrozenMainReference_BitForBit` y `RivalAiTests.Fondista_WithVolleyAndCoverOff_ReplaysTheFrozenRallySimSignatures`.
+- **`ServeTests.Lob_IsHighOnTheFrontWall_TouchesTheSideWall_AndDiesInTheBackCorner`**, aserción «next to the receiver's side wall» (< 0,5): da 0,7135 en Right y 0,5442 en Left.
+- **`ServeTests.Drive_IsLowAndFast_WithoutTheSideWall_AndLandsShorterThanTheLob(Right)`**, aserción «two landing zones»: se esperaba < 9,0521 y salió 9,1408.
+
+Para seguir, las posiciones, las pruebas existentes o la referencia congelada tienen que cambiar, y el encargo prohíbe las tres cosas. La decisión es de Rafael o de SC-Lead. Algunas opciones: re-congelar la firma de RallySim y aceptar el bote nuevo del globo y del drive (cambiar pruebas existentes); ajustar las miras `ServeKind*` a la posición nueva (cambia RallyParams); o volver a otra posición del sacador.
+
+## Primera parada (mañana): recepción
 
 26 nov 2026. Encargo `set12-posiciones-saque`, rama `rafaallendes-boop/sc-posiciones-saque` rebasada sobre `origin/main` `253ea44`. [Spec](../superpowers/specs/2026-11-26-posiciones-saque.md). Implementación de Claude (Opus): la revisión de Claude no es independiente. Sin PR, sin fusión y sin instalación.
 
