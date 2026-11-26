@@ -34,6 +34,7 @@ Audio y voz; cambiar reglas, puntajes, umbrales, oráculos o pruebas existentes;
   - `RallyHud` agrega una capa propia, `rally-referee`, con una pastilla `rally-referee-card` y tres etiquetas: `rally-referee-tin`, `rally-referee-matchball` y `rally-referee-score`.
   - La pastilla se ve en toda la pausa entre puntos de un partido que no terminó. Eso incluye la pausa del saque del jugador, donde el cartel del punto no se muestra. Se oculta al reanudar el juego o al terminar el partido.
   - Va centrada en el hueco de 28 px que ya existe entre la cabecera y el cartel del punto (`top = header.yMax + 3`, como máximo 22 px de alto). No mueve el cartel ni la guía de saque.
+  - **Revisión 1, 26 nov.** En la pausa del saque del jugador, el texto «Toca arriba: globo» de la guía queda pegado bajo la cabecera en Mini, Pro y Pro Max. La primera corrida de layout lo mostró: la pastilla se cruzaba con `serve-guide-lob` en 3 de los 4 perfiles. Por eso, en esa pausa la pastilla va 6 px bajo `serve-guide-drive`, centrada, sin salir del área segura. En las demás pausas sigue bajo la cabecera. La guía no se mueve.
   - Hay un interruptor DEV `RallyHud.RefereeOn`, encendido por defecto, y la propiedad de lectura `RefereeShown`, que es el texto que hay en pantalla.
 - **Estilo.**
   - La pastilla usa el vidrio de la cancha, como `.sc-ring-caption`.
