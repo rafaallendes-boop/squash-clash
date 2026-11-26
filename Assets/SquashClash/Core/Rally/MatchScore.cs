@@ -14,6 +14,11 @@ namespace SquashClash.Core.Rally
         public ServiceBox Box {get;private set;}
         public int PointsPlayed {get;private set;}
         public bool Finished=>Math.Max(Human,Rival)>=target&&Math.Abs(Human-Rival)>=margin;
+        public int Target=>target;
+        public int Margin=>margin;
+        // True when one more point by either player would end the game (target and margin are the match's own).
+        public bool MatchBall=>!Finished&&(Closes(Human+1,Rival)||Closes(Rival+1,Human));
+        private bool Closes(int a,int b)=>a>=target&&a-b>=margin;
         public PlayerId? Winner=>!Finished?(PlayerId?)null:Human>Rival?PlayerId.Human:PlayerId.Rival;
         public MatchScore(int target,int margin,PlayerId firstServer)
         {

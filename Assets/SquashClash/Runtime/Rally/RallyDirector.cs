@@ -16,7 +16,9 @@ namespace SquashClash.Runtime.Rally
         public readonly PlayerId? Winner;public readonly PointEndCause Cause;public readonly int Shots;
         // Why the loser did not return the ball on a double bounce (Air, Late, Unreachable, NoSwing...).
         public readonly ReceptionResult? Reception;
-        public PointResult(PlayerId? winner,PointEndCause cause,int shots,ReceptionResult? reception){Winner=winner;Cause=cause;Shots=shots;Reception=reception;}
+        // The point ended on the tin (rally Tin, or a serve fault the line judge calls tin): drives the referee's "¡Tin!".
+        public readonly bool TinTouched;
+        public PointResult(PlayerId? winner,PointEndCause cause,int shots,ReceptionResult? reception,bool tinTouched=false){Winner=winner;Cause=cause;Shots=shots;Reception=reception;TinTouched=tinTouched;}
     }
     // First Rally loop on top of the existing practice shot. The host stays the only ball authority: the director
     // never moves the ball, it only asks the host to launch (neutral feed and every rival stroke). The human's stroke
@@ -597,7 +599,7 @@ namespace SquashClash.Runtime.Rally
             // A point with no winner is replayed from the same box; the game ends once and stays ended.
             if(Match!=null&&rules.Winner.HasValue)Match.PointWon(rules.Winner.Value);
             if(Match!=null&&Match.Finished)Phase=RallyPhase.MatchOver;
-            var result=new PointResult(rules.Winner,rules.Cause,rules.Shots,rules.Cause==PointEndCause.DoubleBounce?reception:null);
+            var result=new PointResult(rules.Winner,rules.Cause,rules.Shots,rules.Cause==PointEndCause.DoubleBounce?reception:null,rules.TinTouched);
             LastPoint=result;RefreshServeAim();
             Human.MoveTo(context.WaitPosition(PlayerId.Human),0,BodyPhase.Recovering,BodyPhase.Waiting);
             Rival.MoveTo(RivalWait(),0,BodyPhase.Recovering,BodyPhase.Waiting);

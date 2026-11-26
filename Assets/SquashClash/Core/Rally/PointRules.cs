@@ -95,6 +95,8 @@ namespace SquashClash.Core.Rally
         public int RejectedContacts {get;private set;}
         public SurfaceId TerminalSurface {get;private set;}
         public Vector3 TerminalPoint {get;private set;}
+        // The closed point ended on the tin: a rally Tin, or a serve fault whose front-wall contact the line judge calls tin (read-only view of the recorded closure).
+        public bool TinTouched=>Closed&&(Cause==PointEndCause.Tin||Cause==PointEndCause.ServiceFault&&TerminalSurface==SurfaceId.FrontWall&&judge.Judge(SurfaceId.FrontWall,TerminalPoint)==LineVerdict.Tin);
         public PointRules(CourtDimensions court,float footprintRadius,bool volleyAllowed=false,PlayerId? serveVolley=null)
         {
             this.court=court??throw new ArgumentNullException(nameof(court));radius=footprintRadius;this.volleyAllowed=volleyAllowed;this.serveVolley=volleyAllowed?serveVolley:null;

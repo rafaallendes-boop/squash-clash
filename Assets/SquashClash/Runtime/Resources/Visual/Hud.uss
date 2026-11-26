@@ -25,10 +25,18 @@
 }
 
 /* Fonts: set on the player's surfaces only (the developer panel keeps the theme font). */
-.sc-header, .sc-menu-layer, .sc-pause-layer, .sc-result-layer, .sc-banner-layer, .sc-shot-note, .sc-serve-guide-hint, .sc-ring-caption {
+.sc-header, .sc-menu-layer, .sc-pause-layer, .sc-result-layer, .sc-banner-layer, .sc-referee-layer, .sc-shot-note, .sc-serve-guide-hint, .sc-ring-caption {
     -unity-font-definition: url("../../Visual/Fonts/Rubik-Regular SDF.asset");
     -unity-font-style: normal;
 }
+
+/* Referee (spec 2026-11-26): the call between points, in the 28 px gap between the header and the point banner. */
+.sc-referee-layer { position: absolute; left: 0; right: 0; top: 0; align-items: center; }
+.sc-referee { flex-direction: row; align-items: center; height: 22px; padding-left: 10px; padding-right: 10px; background-color: var(--glass); border-radius: 11px; border-width: 1px; border-color: var(--glass-edge); }
+.sc-referee-tin, .sc-referee-matchball { font-size: 13px; -unity-font-definition: url("../../Visual/Fonts/Rubik-Bold SDF.asset"); -unity-font-style: normal; margin: 0; margin-right: 8px; white-space: nowrap; padding: 0; -unity-text-align: middle-center; }
+.sc-referee-tin { color: rgb(255, 128, 112); }
+.sc-referee-matchball { color: var(--dot); }
+.sc-referee-score { font-size: 16px; -unity-font-definition: url("../../Visual/Fonts/Rubik-BoldItalic SDF.asset"); -unity-font-style: normal; color: rgb(255, 255, 255); white-space: nowrap; margin: 0; padding: 0; -unity-text-align: middle-center; }
 
 /* ---------- On the court: glass ---------- */
 .sc-header {
