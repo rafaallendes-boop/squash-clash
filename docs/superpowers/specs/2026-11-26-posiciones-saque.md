@@ -22,9 +22,17 @@ Coordenadas de AX-1: `x` desde la pared lateral derecha (x=0) hasta la izquierda
 - **Después del saque, como hoy:** el sacador parte hacia su posición de espera en cuanto saca (sin retardo) y el restador va a su postura de recepción. Después de la devolución, los dos vuelven a la T por la recuperación de siempre.
 - Las figuras que se dibujan antes del saque (el humano colocado antes en su cuadro y el ritual del rival) ya usan `BoxPosition`, así que muestran la esquina nueva sin otro cambio.
 
+## Miras del saque (opción 1 del PO, 26 nov)
+
+Con las posiciones, las pruebas existentes `ServeTests.Lob` y `ServeTests.Drive(Right)` fallaban, y la firma congelada de RallySim cambiaba. Rafael eligió (26 nov 17:44, vía SC-Lead), literal: «Opción 1: congela de nuevo las 3 firmas y ajusta las miras del saque en RallyParams para cumplir los criterios actuales, sin aflojarlos; luego mide de nuevo la recepción».
+
+- **Miras.** `ServeAimsSearch` (explícito) busca en una rejilla de 5 cm, con las posiciones de `ae97194` y las velocidades actuales, la mira más cercana a la de hoy que cumple, sin cambiarlos, los criterios de `ServeTests` (globo: frontis a 3,4 m o más, lateral antes del bote, bote en z ≥ 9 y a menos de 0,5 m de la lateral del restador; drive: frontis a 2,6 m o menos, sin lateral, bote más de 0,4 m más corto que el globo y más rápido) y de `ServePositionsTests` (bote a 0,3 m o más dentro del cuarto, sin pasar por la cápsula del restador). Si un cuadro ya cumple, conserva su mira. Globo derecho (3,6; 3,6) → (3,5; 3,55); globo izquierdo (2,8; 3,45) → (2,8; 3,4); drive derecho (2,8; 2,55) → (2,75; 2,55); el drive izquierdo (3,6; 2,4) no cambia. [Rejilla y elección](../../validation/evidence/2026-11-26-posiciones-saque/aims/).
+- **RallyParams** `ebf8f717f8c5` → `3833bb374542` (con «Saque nuevo» apagado, `5fc9f2ff92e5` → `263dfbb4bd5d`). Las proyecciones sin `ServeKind*` no cambian.
+- **Firmas.** Las 3 pruebas de repetición leen la referencia nueva, generada por `ServeAimsSearch.WriteFatigueReplayReferences` con sus mismos contextos y semillas (el saque automático, sin miras). Solo cambia la ruta de los datos esperados.
+
 ## Fuera de alcance
 
-La ventana de 25 ms, el timing, los umbrales, los criterios y las pruebas existentes. No cambian `DefaultPreset.json`, los defaults, SimulationKey ni RallyParams (no hay parámetros nuevos: las distancias son constantes de geometría de la cancha en `ServePlanner`).
+La ventana de 25 ms, el timing, los umbrales y los criterios. No cambian `DefaultPreset.json`, los defaults ni SimulationKey. Las distancias de las posiciones son constantes de geometría de la cancha en `ServePlanner`.
 
 ## Pruebas
 
