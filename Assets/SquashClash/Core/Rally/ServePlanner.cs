@@ -18,6 +18,8 @@ namespace SquashClash.Core.Rally
             var court=context.Court;float half=court.ServiceBoxInner*.5f;
             return new Vector2(box==ServiceBox.Right?half:court.Width-half,court.Length-court.ShortLineNearBackEdgeFromBack+half);
         }
+        // RED stub: the receiver position is not implemented yet.
+        public static Vector2 ReceiverPosition(RallyContext context,ServiceBox box)=>context.T;
         public static BallState Find(RallyContext context,ServiceBox box)
         {
             var p=context.Params;var court=context.Court;var at=BoxPosition(context,box);
