@@ -1,0 +1,33 @@
+PlayMode sobre 94071d6 · total=893 passed=886 failed=7 skipped=0
+
+### SquashClash.Runtime.Tests.ZFirstMatchHintsTests.Abandon_AfterH0WasSeenInTheBanner_NeverShowsItAgain
+Expected: null
+  But was:  Volley
+
+### SquashClash.Runtime.Tests.ZFirstMatchHintsTests.Abandon_AndASceneRestart_KeepTheStoredKeysAndRestoreNothingArmed
+Expected: null
+  But was:  Volley
+
+### SquashClash.Runtime.Tests.ZFirstMatchHintsTests.Abandon_WithAnArmedHint_DoesNotBringItBack_UnlessTheTriggerRepeats
+nothing shows: the trigger did not repeat
+  Expected: null
+  But was:  Volley
+
+### SquashClash.Runtime.Tests.ZFirstMatchHintsTests.H0InTheBanner_IfItWasSeenInTheGuide_TheRivalsFirstServePauseShowsNothing
+Expected: null
+  But was:  Volley
+
+### SquashClash.Runtime.Tests.ZHandednessTests.LeftHanded_StrokesOnBothSidesStayInTheLeftHand_OnTheSwingViewPath
+the left hand stays on the grip, across the body too
+  Expected: less than 0.119999997f
+  But was:  110.000229f
+
+### SquashClash.Runtime.Tests.ZRingClosePulseMatchTests.U1a_RivalServeReceptionWithTheServeVolley_AmberClosesAndTheWhiteIsSteadyAfterItsPulse
+waiting-white samples past the pulse, seed=1
+  Expected: greater than or equal to 3
+  But was:  0
+
+### SquashClash.Runtime.Tests.ZServeReceptionMarginTests.RivalServe_AfterFirstBounce_KeepsAllowanceUntilTheOrder_ThenResetsOnTheNextFlight
+the tested release is after the bounce but before K-in
+  Expected: less than 343.87830050415192d
+  But was:  345.53215665799598d

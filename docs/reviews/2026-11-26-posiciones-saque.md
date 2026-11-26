@@ -1,4 +1,18 @@
-# Posiciones de saque · DETENIDO por pruebas existentes en EditMode
+# Posiciones de saque · DETENIDO por pruebas existentes en PlayMode
+
+**Actualización 26 nov, 18:30 (camino 2 de SC-Lead: otras miras).** `ServeAimsSearch.WriteAimSearchWithA6` busca el juego de miras más cercano al de `main` que cumple los criterios de `ServeTests` y `ServePositionsTests` sin cambiarlos, con el drive legal en los dos cuadros. También exige al menos un vector de cansancio en el partido exacto de A6, sin cambiar semilla, N ni prueba. Cumplió la primera combinación evaluada: globo derecho (3,6; 3,6) → **(3,55; 3,5)** y globo izquierdo (2,8; 3,45) → **(2,8; 3,4)**. Los dos drives quedan como en `main`. A6 da 96 vectores; como control, las miras de `main` dan 33 y las de `5143310` dan 0. [Búsqueda](../validation/evidence/2026-11-26-posiciones-saque/aims-a6/).
+
+- **RallyParams** `ebf8f717f8c5` → `249979628e7c`; con «Saque nuevo» apagado, `5fc9f2ff92e5` → `45faf866376c`. Sin `HumanServeEarlyMs`, `1063d0f6cf66` → `d39cb1b9f9c9`. La proyección histórica apagada pasa de `992d0570c9de` a `c1c3beb5e744`. Las firmas re-congeladas usan el saque automático y no dependen de las miras: punto 0/0 de `936646e5ba2a…` a `bb6fb1093201…`.
+- **Recepción** sobre `94071d6`, con las mismas semillas y N: humano **99,02 % (1917/1936)**, a +0,09 pp del 98,93 % aceptado; rival **100 % (1457/1457)**. Pasa la regla. [Tabla](../validation/evidence/2026-11-26-posiciones-saque/after-aims2-reception.tsv).
+- **EditMode** sobre `94071d6`: **1080/1080** (XML SHA-256 `18eba1fd…`).
+- **PlayMode** sobre `94071d6`: **total=893 passed=886 failed=7 skipped=0** (XML SHA-256 `7183374d…`). No reintenté. AutoQA y check-release no se corrieron. No hay PR. [Fallos textuales](../validation/evidence/2026-11-26-posiciones-saque/playmode-failures-after-aims2.txt):
+  - `ZFirstMatchHintsTests`: `Abandon_AfterH0WasSeenInTheBanner_NeverShowsItAgain`, `Abandon_AndASceneRestart_KeepTheStoredKeysAndRestoreNothingArmed`, `Abandon_WithAnArmedHint_DoesNotBringItBack_UnlessTheTriggerRepeats` y `H0InTheBanner_IfItWasSeenInTheGuide_TheRivalsFirstServePauseShowsNothing`. En los cuatro se esperaba `null` y salió `Volley`: aparece la pista de volea.
+  - `ZHandednessTests.LeftHanded_StrokesOnBothSidesStayInTheLeftHand_OnTheSwingViewPath`, aserción «the left hand stays on the grip, across the body too»: se esperaba menos de 0,12 y salió 110,000229.
+  - `ZRingClosePulseMatchTests.U1a_RivalServeReceptionWithTheServeVolley_AmberClosesAndTheWhiteIsSteadyAfterItsPulse`, aserción «waiting-white samples past the pulse, seed=1»: se esperaba 3 o más y salió 0.
+  - `ZServeReceptionMarginTests.RivalServe_AfterFirstBounce_KeepsAllowanceUntilTheOrder_ThenResetsOnTheNextFlight`, aserción «the tested release is after the bounce but before K-in»: se esperaba menos de 343,8783 y salió 345,5322.
+- **Lectura sin verificar:** PlayMode no se corrió en `ae97194`, así que no sé si estos fallos vienen de las posiciones o de las miras. Cinco tocan la recepción del saque del rival: la volea del saque y su pista, el anillo y el margen de 25 ms. Con el restador cerca del bote, la volea del saque se ofrece donde antes no. Ninguno está en la lista de fallos de entorno de AGENTS §3.
+- **Decisión pendiente** (Rafael o SC-Lead): estas pruebas dependen de dónde está el restador al recibir el saque. Para seguir hay que cambiar la posición del restador o esas pruebas, y las dos cosas quedan fuera de lo autorizado.
+
 
 **Actualización 26 nov, 18:15 (`set12b`, opción 1).** Rafael eligió (26 nov 17:44, vía SC-Lead), literal: «Opción 1: congela de nuevo las 3 firmas y ajusta las miras del saque en RallyParams para cumplir los criterios actuales, sin aflojarlos; luego mide de nuevo la recepción».
 
