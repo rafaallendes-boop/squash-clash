@@ -1,0 +1,6 @@
+Right	Lob	before 3.6,3.6	after 3.5,3.55	frontY 3.55	bounce 5.9471,9.4957	inside 2.7471	minPass 1.5549
+Right	Drive	before 2.8,2.55	after 2.75,2.55	frontY 2.55	bounce 3.6199,9.0863	inside 0.4199	minPass 1.312
+Left	Lob	before 2.8,3.45	after 2.8,3.4	frontY 3.4	bounce 0.489,9.5486	inside 2.711	minPass 1.5033
+Left	Drive	before 3.6,2.4	after 3.6,2.4	frontY 2.4	bounce 2.8054,8.6525	inside 0.3946	minPass 1.2922
+RallyParams before ebf8f717f8c5 after 3833bb374542
+RallyParams switch off before 5fc9f2ff92e5 after 263dfbb4bd5d

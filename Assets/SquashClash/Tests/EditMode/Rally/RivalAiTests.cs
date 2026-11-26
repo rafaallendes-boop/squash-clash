@@ -58,9 +58,9 @@ namespace SquashClash.Core.Tests.Rally
             // Serve (20 nov) adds the ServeKind* fields: without them the hash is still 13f88c8d1db2 (ServeTests).
             Assert.That(Projection(f=>f.Name!="HumanServeEarlyMs"&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)&&!f.Name.StartsWith("Boast",StringComparison.Ordinal)),Is.EqualTo("13f88c8d1db2"),"with the fatigue feel field");
             // Two-wall shot (20 nov) adds the Boast* fields: without them the hash is still 992d0570c9de.
-            Assert.That(Projection(f=>f.Name!="HumanServeEarlyMs"&&f.Name!="ServeKindHumanPauseSeconds"&&!f.Name.StartsWith("Boast",StringComparison.Ordinal),new RallyParams{ServeKindOn=0}),Is.EqualTo("992d0570c9de"),"historical serve kind fields, switch off");
-            Assert.That(new RallyParams{ServeKindOn=0}.Hash,Is.EqualTo("5fc9f2ff92e5"),"serve UX with the switch off");
-            Assert.That(new RallyParams().Hash,Is.EqualTo("ebf8f717f8c5"),"new serve and rival boast on by default");
+            Assert.That(Projection(f=>f.Name!="HumanServeEarlyMs"&&f.Name!="ServeKindHumanPauseSeconds"&&!f.Name.StartsWith("Boast",StringComparison.Ordinal),new RallyParams{ServeKindOn=0}),Is.EqualTo("ccea7e5eef72"),"historical serve kind fields, switch off");
+            Assert.That(new RallyParams{ServeKindOn=0}.Hash,Is.EqualTo("263dfbb4bd5d"),"serve UX with the switch off");
+            Assert.That(new RallyParams().Hash,Is.EqualTo("3833bb374542"),"new serve and rival boast on by default");
             TestContext.WriteLine("STYLE_RALLYPARAMS_HASH="+new RallyParams().Hash);
         }
         [TestCase(AiLevel.Easy)][TestCase(AiLevel.Medium)][TestCase(AiLevel.Hard)]
@@ -83,7 +83,7 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void Fondista_WithVolleyAndCoverOff_ReplaysTheFrozenRallySimSignatures()
         {
             var ctx=new RallyContext(EffectiveConfig.From(ConfigFixtures.Default().With("fatigue.enabled",0)),new RallyParams{StyleRivalVolley=0,StyleFondoCoverDepth=0,ServeKindOn=0},new AnalyticBallSimulationFactory(Physics.bounceThreshold));
-            var rows=File.ReadAllLines(Path.Combine(Application.dataPath,"..","docs/validation/evidence/2026-11-18-g1-a2-complete/fatigue-replay/off/points.tsv")).Skip(1).Select(r=>r.Split('\t')).Where(r=>int.Parse(r[0])<2).ToArray();
+            var rows=File.ReadAllLines(Path.Combine(Application.dataPath,"..","docs/validation/evidence/2026-11-26-posiciones-saque/fatigue-replay/off/points.tsv")).Skip(1).Select(r=>r.Split('\t')).Where(r=>int.Parse(r[0])<2).ToArray();
             for(int i=0;i<2;i++)
             using(var sim=new RallySim(ctx,new BotBrain(ctx,30,20261117+2*i),new RivalAi(ctx,AiDifficulty.For(ctx.Params,AiLevel.Medium),RivalStyleId.Fondista,20261118+2*i)))
             {

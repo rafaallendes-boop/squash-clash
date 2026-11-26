@@ -11,7 +11,7 @@ namespace SquashClash.Core.Tests.Rally
         [Test] public void DefaultMargin_IsChosenValue_AndItsProjectionPreservesEveryPriorParameter()
         {
             Assert.That(new RallyParams().HumanServeEarlyMs,Is.EqualTo(25d));
-            Assert.That(RivalAiTests.Projection(f=>f.Name!="HumanServeEarlyMs"),Is.EqualTo("1063d0f6cf66"));
+            Assert.That(RivalAiTests.Projection(f=>f.Name!="HumanServeEarlyMs"),Is.EqualTo("1dc6c2b3c360"));
         }
         [TestCase(25d)] [TestCase(50d)]
         public void Context_SnapshotsMargin_AndGrantsItOnlyToTheHumanAtTheRivalServeLaunch(double margin)
