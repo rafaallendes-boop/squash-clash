@@ -17,6 +17,11 @@ namespace SquashClash.Runtime.Rally
     {
         // Result card extras (view only). DEV switch, default on; off is the card as it was. Not remembered.
         public static bool ExtendedCardOn=true;
+        // Referee call between points (spec 2026-11-26). DEV switch, default on. Not remembered.
+        public static bool RefereeOn=true;
+        // The call on screen (RefereeCall.Call), "" when the card is hidden.
+        public string RefereeShown {get;private set;}="";
+        private VisualElement referee;private Label refereeTin,refereeMatchBall,refereeScore;
         // Real play time of the current match (unscaled, not counted while paused or after match point) and its longest rally in strokes,
         // both read from what the HUD already sees; nothing is added to Core.
         public float MatchSeconds {get;private set;}
@@ -140,6 +145,11 @@ namespace SquashClash.Runtime.Rally
             bannerHint=new VisualElement{name="rally-banner-hint",pickingMode=PickingMode.Ignore};bannerHint.AddToClassList("sc-banner-hint");bannerHint.style.display=DisplayStyle.None;
             bannerHintIcon=new VisualElement{name="rally-banner-hint-icon",pickingMode=PickingMode.Ignore};bannerHintIcon.AddToClassList("sc-hint-icon");bannerHint.Add(bannerHintIcon);
             bannerHintText=Text("","sc-hint-text");bannerHintText.name="rally-banner-hint-text";bannerHint.Add(bannerHintText);bannerCard.Add(bannerHint);
+            referee=new VisualElement{name="rally-referee",pickingMode=PickingMode.Ignore};referee.AddToClassList("sc-referee-layer");referee.style.display=DisplayStyle.None;top.Add(referee);
+            var refereeCard=new VisualElement{name="rally-referee-card",pickingMode=PickingMode.Ignore};refereeCard.AddToClassList("sc-referee");referee.Add(refereeCard);
+            refereeTin=Text(RefereeCall.Tin,"sc-referee-tin");refereeTin.name="rally-referee-tin";refereeCard.Add(refereeTin);
+            refereeMatchBall=Text(RefereeCall.MatchBall,"sc-referee-matchball");refereeMatchBall.name="rally-referee-matchball";refereeCard.Add(refereeMatchBall);
+            refereeScore=Text("","sc-referee-score");refereeScore.name="rally-referee-score";refereeCard.Add(refereeScore);
             BuildServeGuide(top);
             // The header grows and shrinks with its buttons ("Seguir" appears with the banner): follow it.
             header=parent;parent.RegisterCallback<GeometryChangedEvent>(_=>PlaceBanner());
@@ -387,6 +397,7 @@ namespace SquashClash.Runtime.Rally
         {
             if(banner==null||header==null||banner.parent==null||float.IsNaN(header.worldBound.yMax))return;
             banner.style.top=header.worldBound.yMax-banner.parent.worldBound.yMin+28;
+            PlaceReferee();
         }
         private static float Ease(float t){t=Mathf.Clamp01(t);return t*t*(3-2*t);}
         private static string Capital(string text)=>string.IsNullOrEmpty(text)?text:char.ToUpperInvariant(text[0])+text.Substring(1);
@@ -438,6 +449,35 @@ namespace SquashClash.Runtime.Rally
             if(!active||rally.Match==null||rally.PointsPlayed<countedPoints){MatchSeconds=0;LongestRally=0;countedPoints=0;autopilotSeen=false;if(!active||rally.Match==null){if(!active)MenuMatch=false;return;}}
             if(rally.Autopilot)autopilotSeen=true;
             if(rally.PointsPlayed!=countedPoints){countedPoints=rally.PointsPlayed;if(rally.LastPoint.HasValue)LongestRally=Mathf.Max(LongestRally,rally.LastPoint.Value.Shots);}
+        }
+        // The call between points of an unfinished match, also in the human serve pause. Touches the UI only when the text changes.
+        private void RefreshReferee(bool active)
+        {
+            bool on=RefereeOn&&active&&rally.Phase==RallyPhase.PointOver&&rally.Match!=null&&!rally.Match.Finished&&rally.LastPoint.HasValue;
+            string call=on?RefereeCall.Call(rally.Match,rally.LastPoint.Value.TinTouched):"";
+            if(call!=RefereeShown)
+            {
+                RefereeShown=call;
+                referee.style.display=on?DisplayStyle.Flex:DisplayStyle.None;
+                if(on)
+                {
+                    refereeTin.style.display=rally.LastPoint.Value.TinTouched?DisplayStyle.Flex:DisplayStyle.None;
+                    refereeMatchBall.style.display=rally.Match.MatchBall?DisplayStyle.Flex:DisplayStyle.None;
+                    refereeScore.text=RefereeCall.Score(rally.Match);
+                }
+            }
+            if(on)PlaceReferee();
+        }
+        // Under the header, or 6 px under the serve guide's lower caption in the human serve pause. The caption's layout can be NaN on the
+        // first frame the guide shows, so this runs every Refresh while shown, writes only on a change, and keeps the card invisible until valid.
+        private float refereeTop=float.NaN;
+        private void PlaceReferee()
+        {
+            if(referee==null||header==null||referee.parent==null||RefereeShown.Length==0)return;
+            float top=rally.HumanServePause?serveGuideDrive.worldBound.yMax-referee.parent.worldBound.yMin+6:header.worldBound.yMax-referee.parent.worldBound.yMin+3;
+            bool valid=!float.IsNaN(top)&&!float.IsInfinity(top)&&(!rally.HumanServePause||serveGuideDrive.worldBound.height>0);
+            referee.style.visibility=valid?Visibility.Visible:Visibility.Hidden;
+            if(valid&&!Mathf.Approximately(top,refereeTop)){refereeTop=top;referee.style.top=top;}
         }
         // Called every frame: it touches the UI only when what it shows changed, so an idle HUD costs nothing.
         public void Refresh()
@@ -512,6 +552,7 @@ namespace SquashClash.Runtime.Rally
             }
             bool showServeGuide = rally.HumanServePause;
             banner.style.display = point >= 0 && !showServeGuide ? DisplayStyle.Flex : DisplayStyle.None;
+            RefreshReferee(active);
             Hints.Observe();
             RefreshHints(point >= 0 && !showServeGuide, showServeGuide);
             RefreshServeGuide(showServeGuide);
