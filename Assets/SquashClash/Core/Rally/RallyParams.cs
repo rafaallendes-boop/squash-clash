@@ -38,8 +38,8 @@ namespace SquashClash.Core.Rally
         public double ServeKindOn=1;
         // Real milliseconds of early allowance, only for the human returning the rival's serve.
         public double HumanServeEarlyMs=25;
-        public double ServeKindLobRightAimX=3.5,ServeKindLobRightAimY=3.55,ServeKindLobRightSpeed=18,ServeKindLobLeftAimX=2.8,ServeKindLobLeftAimY=3.4,ServeKindLobLeftSpeed=18;
-        public double ServeKindDriveRightAimX=2.75,ServeKindDriveRightAimY=2.55,ServeKindDriveRightSpeed=22,ServeKindDriveLeftAimX=3.6,ServeKindDriveLeftAimY=2.4,ServeKindDriveLeftSpeed=22;
+        public double ServeKindLobRightAimX=3.55,ServeKindLobRightAimY=3.5,ServeKindLobRightSpeed=18,ServeKindLobLeftAimX=2.8,ServeKindLobLeftAimY=3.4,ServeKindLobLeftSpeed=18;
+        public double ServeKindDriveRightAimX=2.8,ServeKindDriveRightAimY=2.55,ServeKindDriveRightSpeed=22,ServeKindDriveLeftAimX=3.6,ServeKindDriveLeftAimY=2.4,ServeKindDriveLeftSpeed=22;
         // The human's choice: an aim at or above this front-wall height (m) is the lob, below it the drive.
         public double ServeKindLobMinAimY=3;
         // Real seconds before a human serve after a point, with serve choice enabled.

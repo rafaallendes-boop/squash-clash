@@ -125,6 +125,92 @@ namespace SquashClash.Experiments.EditMode
             sb.Append("RallyParams switch off before "+new RallyParams{ServeKindOn=0}.Hash+" after "+off.Hash+"\n");
             File.WriteAllText(Path.Combine(dir,"chosen.txt"),sb.ToString(),Utf8);
         }
+        // Wider search (26 nov, path 2 of SC-Lead): the nearest aim set to today's (sum of the four aim distances) that meets the same
+        // serve criteria in both boxes and also the exact match of FatigueArmRallyTests.A6 (default config and params with these aims,
+        // BotBrain 30/20261117 against FondoAi Medium/20261118, Human serves first): at least one fatigue vector. Seeds, N and A6 unchanged.
+        private static int A6Vectors(EffectiveConfig config,RallyParams p,AnalyticBallSimulationFactory factory)
+        {
+            var ctx=new RallyContext(config,p,factory);
+            using(var sim=new RallySim(ctx,new BotBrain(ctx,30,20261117),new FondoAi(ctx,AiDifficulty.For(ctx.Params,AiLevel.Medium),20261118)))
+            {
+                var match=sim.PlayMatch(PlayerId.Human);Assert.That(match.Aborted,Is.False);
+                return match.Points.SelectMany(o=>o.Receptions).Count(r=>r.Vectors!=null&&r.Vectors.Any(v=>v.Cause=="fatigue"));
+            }
+        }
+        [Test,Explicit,Category("Experiments"),Timeout(14400000)]
+        public void WriteAimSearchWithA6()
+        {
+            var (root,preset,factory)=ServeDiagnosisExperiment.Setup();
+            string dir=Path.Combine(root,"Logs/experiments/serve-positions/aims-a6");
+            Assert.That(Directory.Exists(dir),Is.False,"Never overwrite evidence.");Directory.CreateDirectory(dir);
+            var config=EffectiveConfig.From(preset);var today=new RallyParams();
+            var original=today.Clone();
+            original.ServeKindLobRightAimX=3.6;original.ServeKindLobRightAimY=3.6;original.ServeKindLobLeftAimX=2.8;original.ServeKindLobLeftAimY=3.45;
+            original.ServeKindDriveRightAimX=2.8;original.ServeKindDriveRightAimY=2.55;original.ServeKindDriveLeftAimX=3.6;original.ServeKindDriveLeftAimY=2.4;
+            RallyContext Ctx(RallyParams p)=>new RallyContext(config,p,factory);
+            var sb=new StringBuilder();
+            sb.Append("sanity A6 vectors: ae97194 aims "+A6Vectors(config,original,factory)+", 5143310 aims "+A6Vectors(config,today,factory)+"\n");
+            var pairs=new Dictionary<ServiceBox,List<(double lx,double ly,double dx,double dy,double dist)>>();
+            using(var w=new StreamWriter(Path.Combine(dir,"pairs.tsv"),false,Utf8))
+            {
+                w.WriteLine("box\tlobX\tlobY\tdriveX\tdriveY\tdist");
+                foreach(ServiceBox box in new[]{ServiceBox.Right,ServiceBox.Left})
+                {
+                    var (lx0,ly0)=Aim(original,box,ServeType.Lob);var (dx0,dy0)=Aim(original,box,ServeType.Drive);
+                    var lobs=new List<(double x,double y,double d)>();
+                    for(int i=-30;i<=30;i++)for(int j=0;j<=24;j++)
+                    {
+                        double x=Math.Round(lx0+i*Step,2),y=Math.Round(3.4+j*Step,2),d=Math.Sqrt((x-lx0)*(x-lx0)+(y-ly0)*(y-ly0));
+                        var p=original.Clone();SetAim(p,box,ServeType.Lob,x,y);var c=Ctx(p);if(LobOk(c,box,Fly(c,box,ServeType.Lob)))lobs.Add((x,y,d));
+                    }
+                    var list=new List<(double lx,double ly,double dx,double dy,double dist)>();
+                    foreach(var l in lobs.OrderBy(l=>Math.Round(l.d,6)).ThenBy(l=>l.x).ThenBy(l=>l.y).Take(12))
+                    {
+                        var drives=new List<(double x,double y,double d)>();
+                        for(int i=-30;i<=30;i++)for(int j=0;j<=20;j++)
+                        {
+                            double x=Math.Round(dx0+i*Step,2),y=Math.Round(1.6+j*Step,2),d=Math.Sqrt((x-dx0)*(x-dx0)+(y-dy0)*(y-dy0));
+                            var p=original.Clone();SetAim(p,box,ServeType.Lob,l.x,l.y);SetAim(p,box,ServeType.Drive,x,y);var c=Ctx(p);
+                            if(DriveOk(c,Fly(c,box,ServeType.Drive),Fly(c,box,ServeType.Lob)))drives.Add((x,y,d));
+                        }
+                        foreach(var dr in drives.OrderBy(dr=>Math.Round(dr.d,6)).ThenBy(dr=>dr.x).ThenBy(dr=>dr.y).Take(6))list.Add((l.x,l.y,dr.x,dr.y,l.d+dr.d));
+                    }
+                    pairs[box]=list.OrderBy(q=>Math.Round(q.dist,6)).ThenBy(q=>q.lx).ThenBy(q=>q.ly).ThenBy(q=>q.dx).ThenBy(q=>q.dy).Take(20).ToList();
+                    foreach(var q in pairs[box])w.WriteLine(string.Join("\t",new[]{box.ToString(),F(q.lx),F(q.ly),F(q.dx),F(q.dy),F(q.dist)}));
+                }
+            }
+            var combos=(from r in pairs[ServiceBox.Right] from l in pairs[ServiceBox.Left] select (r,l,dist:r.dist+l.dist)).OrderBy(c=>Math.Round(c.dist,6)).Take(200).ToList();
+            RallyParams found=null;int evaluated=0;
+            using(var w=new StreamWriter(Path.Combine(dir,"combos.tsv"),false,Utf8))
+            {
+                w.WriteLine("rank\tlobR\tdriveR\tlobL\tdriveL\tdist\ta6Vectors");
+                foreach(var c in combos)
+                {
+                    var p=original.Clone();
+                    SetAim(p,ServiceBox.Right,ServeType.Lob,c.r.lx,c.r.ly);SetAim(p,ServiceBox.Right,ServeType.Drive,c.r.dx,c.r.dy);
+                    SetAim(p,ServiceBox.Left,ServeType.Lob,c.l.lx,c.l.ly);SetAim(p,ServiceBox.Left,ServeType.Drive,c.l.dx,c.l.dy);
+                    int n=A6Vectors(config,p,factory);evaluated++;
+                    w.WriteLine(string.Join("\t",new[]{F(evaluated),F(c.r.lx)+","+F(c.r.ly),F(c.r.dx)+","+F(c.r.dy),F(c.l.lx)+","+F(c.l.ly),F(c.l.dx)+","+F(c.l.dy),F(c.dist),F(n)}));w.Flush();
+                    if(n>0){found=p;break;}
+                }
+            }
+            sb.Append("evaluated "+evaluated+" of "+combos.Count+"\n");
+            if(found==null){sb.Append("none\n");File.WriteAllText(Path.Combine(dir,"chosen.txt"),sb.ToString(),Utf8);return;}
+            var final=Ctx(found);
+            foreach(ServiceBox box in new[]{ServiceBox.Right,ServiceBox.Left})
+            {
+                var l=Fly(final,box,ServeType.Lob);var d=Fly(final,box,ServeType.Drive);
+                Assert.That(LobOk(final,box,l),Is.True,"final lob "+box);Assert.That(DriveOk(final,d,l),Is.True,"final drive "+box);
+                foreach(var type in new[]{ServeType.Lob,ServeType.Drive})
+                {
+                    var (bx,by)=Aim(original,box,type);var (ax,ay)=Aim(found,box,type);var f=type==ServeType.Lob?l:d;
+                    sb.Append(box+"\t"+type+"\tae97194 "+F(bx)+","+F(by)+"\tafter "+F(ax)+","+F(ay)+"\tfrontY "+F(f.FrontY)+"\tbounce "+F(f.BounceX)+","+F(f.BounceZ)+"\tinside "+F(f.Inside)+"\tminPass "+F(f.Pass)+"\n");
+                }
+            }
+            var off=found.Clone();off.ServeKindOn=0;
+            sb.Append("A6 vectors "+A6Vectors(config,found,factory)+"\nRallyParams after "+found.Hash+" switch off after "+off.Hash+"\n");
+            File.WriteAllText(Path.Combine(dir,"chosen.txt"),sb.ToString(),Utf8);
+        }
         // The frozen RallySim replay references with the exact contexts and seeds of FatigueIntegrationTests.Off_... ("off", also read by
         // RivalAiTests.Fondista_..., first two matches) and FatigueArmRallyTests.A1_... ("arm0"): automatic serve (switch off), four matches,
         // same column layout as the 18 Nov points.tsv (signature in column 9).

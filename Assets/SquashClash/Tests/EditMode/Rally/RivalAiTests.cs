@@ -58,9 +58,9 @@ namespace SquashClash.Core.Tests.Rally
             // Serve (20 nov) adds the ServeKind* fields: without them the hash is still 13f88c8d1db2 (ServeTests).
             Assert.That(Projection(f=>f.Name!="HumanServeEarlyMs"&&!f.Name.StartsWith("ServeKind",StringComparison.Ordinal)&&!f.Name.StartsWith("Boast",StringComparison.Ordinal)),Is.EqualTo("13f88c8d1db2"),"with the fatigue feel field");
             // Two-wall shot (20 nov) adds the Boast* fields: without them the hash is still 992d0570c9de.
-            Assert.That(Projection(f=>f.Name!="HumanServeEarlyMs"&&f.Name!="ServeKindHumanPauseSeconds"&&!f.Name.StartsWith("Boast",StringComparison.Ordinal),new RallyParams{ServeKindOn=0}),Is.EqualTo("ccea7e5eef72"),"historical serve kind fields, switch off");
-            Assert.That(new RallyParams{ServeKindOn=0}.Hash,Is.EqualTo("263dfbb4bd5d"),"serve UX with the switch off");
-            Assert.That(new RallyParams().Hash,Is.EqualTo("3833bb374542"),"new serve and rival boast on by default");
+            Assert.That(Projection(f=>f.Name!="HumanServeEarlyMs"&&f.Name!="ServeKindHumanPauseSeconds"&&!f.Name.StartsWith("Boast",StringComparison.Ordinal),new RallyParams{ServeKindOn=0}),Is.EqualTo("c1c3beb5e744"),"historical serve kind fields, switch off");
+            Assert.That(new RallyParams{ServeKindOn=0}.Hash,Is.EqualTo("45faf866376c"),"serve UX with the switch off");
+            Assert.That(new RallyParams().Hash,Is.EqualTo("249979628e7c"),"new serve and rival boast on by default");
             TestContext.WriteLine("STYLE_RALLYPARAMS_HASH="+new RallyParams().Hash);
         }
         [TestCase(AiLevel.Easy)][TestCase(AiLevel.Medium)][TestCase(AiLevel.Hard)]
