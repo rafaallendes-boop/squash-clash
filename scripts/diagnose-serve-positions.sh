@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Experimento explícito de las posiciones de saque (spec 2026-11-26-posiciones-saque), aislado de las suites de regresión.
-#   scripts/diagnose-serve-positions.sh before|after|after-aims [partidos por estilo, 100 por defecto]
+#   scripts/diagnose-serve-positions.sh before|after|after-aims|after-aims2 [partidos por estilo, 100 por defecto]
 # Un solo Unity: el llamador usa el candado global. No sobrescribe evidencia ni reintenta.
 set -euo pipefail
 case "${1:-}" in
-    before|after|after-aims) export SC_POSITIONS_RUN="$1" ;;
-    *) printf 'Uso: scripts/diagnose-serve-positions.sh before|after|after-aims [partidos]\n' >&2; exit 1 ;;
+    before|after|after-aims|after-aims2) export SC_POSITIONS_RUN="$1" ;;
+    *) printf 'Uso: scripts/diagnose-serve-positions.sh before|after|after-aims|after-aims2 [partidos]\n' >&2; exit 1 ;;
 esac
 export SC_POSITIONS_MATCHES="${2:-100}"
 source "$(dirname "$0")/unity-env.sh"
