@@ -31,7 +31,7 @@ namespace SquashClash.Experiments.EditMode
         // The positions the spec proposes, written out here so the base run can preview them before the code has them.
         internal static Vector2 ProposedServer(CourtDimensions court,ServiceBox box)
         {
-            float x=court.ServiceBoxInner-.3f,z=court.Length-court.ShortLineNearBackEdgeFromBack+.3f;
+            float x=court.ServiceBoxInner-ServePlanner.ServerFromInnerLine,z=court.Length-court.ShortLineNearBackEdgeFromBack+ServePlanner.ServerBehindShortLine;
             return new Vector2(box==ServiceBox.Right?x:court.Width-x,z);
         }
         internal static Vector2 ProposedReceiver(CourtDimensions court,ServiceBox box)
