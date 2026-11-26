@@ -28,7 +28,7 @@ Implementó un subagente Sonnet dirigido por Claude. La revisión de Claude (Opu
 | AutoQA `mvp` V / T3 / volea (`57dc6c5`, sin cambios locales) | PASS 18/0/0/0, nivel 1, en las tres |
 | check-release (`57dc6c5`) | `RELEASE-CHECK: OK`, dev y prod en la build 1236 |
 
-La falla de la corrida 1 es `SquashClash.Core.Tests.Spike.SpikeRunTests.Benchmark_DiscardsWarmup`: «Expected: less than 1, But was: 1.2267000000000001d». Es un tope de reloj real (máximo menor que 1 ms) sobre una fábrica falsa. No comparte código con este cambio. Que el equipo estuviera cargado es una **hipótesis sin verificar**: ese día otra sesión (`sc-diag-fondo`) usó Unity, pero no se comprobó que coincidiera con la corrida. XML: `Logs/editmode-results.xml`, de 14:39:51Z a 14:41:36Z.
+La falla de la corrida 1 es `SquashClash.Core.Tests.Spike.SpikeRunTests.Benchmark_DiscardsWarmup`: «Expected: less than 1, But was: 1.2267000000000001d». Es un tope de reloj real (máximo menor que 1 ms) sobre una fábrica falsa. No comparte código con este cambio. Que el equipo estuviera cargado es una **hipótesis sin verificar**: ese día otra sesión (`sc-diag-fondo`) usó Unity, pero no se comprobó que coincidiera con la corrida. La corrida 2 sobrescribió el XML de la corrida 1 (`Logs/editmode-results.xml`, ignorado); el mensaje quedó copiado arriba tal cual.
 
 Pruebas nuevas:
 
