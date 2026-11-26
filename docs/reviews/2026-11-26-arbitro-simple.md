@@ -2,7 +2,7 @@
 
 26 nov 2026. Rama `rafaallendes-boop/sc-arbitro-simple`, base `origin/main` `8a32d42` (#120). Encargo `set11-arbitro`. [Spec](../superpowers/specs/2026-11-26-arbitro-simple.md).
 
-**Estado: DETENIDO.** Hay una falla en la suite completa de EditMode, en una prueba existente que no se tocó. Según AGENTS §2, no se reintentó ni se corrigió, y no se corrió la AutoQA. No se fusiona.
+**Estado: listo para revisión.** La primera corrida completa de EditMode tuvo una falla en un benchmark de tiempo real que no se tocó, y el trabajo se detuvo según AGENTS §2. SC-PM la trató como sospecha de entorno y autorizó **una** corrida nueva con el Mac libre, que pasó entera. Abajo se reportan las dos corridas tal como salieron. La prueba no se cambió.
 
 ## Qué cambia
 
@@ -22,12 +22,13 @@ Implementó un subagente Sonnet dirigido por Claude. La revisión de Claude (Opu
 
 | Suite | Resultado |
 |---|---|
-| EditMode completo | `RESULT: total=1060 passed=1059 failed=1 skipped=0` — **no verde** |
-| PlayMode completo | `RESULT: total=891 passed=891 failed=0 skipped=0` |
-| AutoQA `mvp` | **No corrida** (detenido por la falla; el cambio no toca timing, gesto ni contrato) |
-| check-release | No corrido |
+| EditMode completo, corrida 1 (14:39:51Z–14:41:36Z, código `393ccc8`) | `RESULT: total=1060 passed=1059 failed=1 skipped=0`, **falla** |
+| EditMode completo, corrida 2 autorizada por SC-PM (16:00:14Z–16:02:06Z, head `57dc6c5`, Mac sin otro Unity) | `RESULT: total=1060 passed=1060 failed=0 skipped=0` |
+| PlayMode completo (código `393ccc8`; después solo cambiaron docs) | `RESULT: total=891 passed=891 failed=0 skipped=0` |
+| AutoQA `mvp` V / T3 / volea (`57dc6c5`, sin cambios locales) | PASS 18/0/0/0, nivel 1, en las tres |
+| check-release (`57dc6c5`) | `RELEASE-CHECK: OK`, dev y prod en la build 1236 |
 
-La falla es `SquashClash.Core.Tests.Spike.SpikeRunTests.Benchmark_DiscardsWarmup`: «Expected: less than 1, But was: 1.2267000000000001d». Es un tope de reloj real (máximo menor que 1 ms) sobre una fábrica falsa. No comparte código con este cambio. Que el equipo estuviera cargado es una **hipótesis sin verificar**: ese día otra sesión (`sc-diag-fondo`) usó Unity, pero no se comprobó que coincidiera con la corrida. XML: `Logs/editmode-results.xml`, de 14:39:51Z a 14:41:36Z.
+La falla de la corrida 1 es `SquashClash.Core.Tests.Spike.SpikeRunTests.Benchmark_DiscardsWarmup`: «Expected: less than 1, But was: 1.2267000000000001d». Es un tope de reloj real (máximo menor que 1 ms) sobre una fábrica falsa. No comparte código con este cambio. Que el equipo estuviera cargado es una **hipótesis sin verificar**: ese día otra sesión (`sc-diag-fondo`) usó Unity, pero no se comprobó que coincidiera con la corrida. XML: `Logs/editmode-results.xml`, de 14:39:51Z a 14:41:36Z.
 
 Pruebas nuevas:
 
@@ -52,6 +53,8 @@ El RED salió por error de compilación, porque faltaban los miembros nuevos. Fu
 | Pro 402×874 | 184,9 | 102,3, 307,1 | 102,3, 420,7 |
 | Pro Max 430×932 | 184,6 | 102,7, 301,8 | 102,7, 419,9 |
 
-## Qué decidir
+## Pendiente
 
-Si la falla del benchmark se trata como de entorno y se repite la suite de EditMode con el equipo sin carga. Eso exige el visto bueno de quien orquesta, porque AGENTS §2 prohíbe reintentar por cuenta propia. Después se correrían la AutoQA y check-release.
+- La revisión cruzada de Codex.
+- En el iPhone, ver un «¡Tin!» real, porque en escena automática no salió nunca.
+- El benchmark `Benchmark_DiscardsWarmup` queda anotado como sensible a la carga del equipo (1,23 ms frente a un tope de 1 ms en la corrida 1).
