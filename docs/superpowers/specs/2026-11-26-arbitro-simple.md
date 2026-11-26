@@ -75,7 +75,14 @@ El guion es el de rango (–), sin espacios. «Match ball» es el término que u
 3. **PlayMode, en escena.** Se juega un partido con piloto automático y semilla fija.
    - En cada pausa entre puntos de un partido que no terminó, `rally-referee-card` se ve y `hud.RefereeShown == RefereeCall.Call(rally.Match, rally.LastPoint.TinTouched)`.
    - La parte del tin se ve solo si `TinTouched`. La de match ball, solo si `Match.MatchBall`.
-   - El test exige que en la corrida haya al menos un punto con tin y al menos un match ball.
+   - El test exige que en la corrida haya al menos un match ball.
+   - **Revisión 2, 26 nov.** Hubo tres búsquedas deterministas con más de 50 partidos con piloto automático. Se variaron el nivel, la sigma de timing, la semilla, la línea y la potencia del piloto, el saque nuevo y el estilo del rival. Ninguna dio un punto con tin, porque el piloto y el rival nunca apuntan bajo el tin (`ShotOptions` recorta la intención al dominio entre el tin y la línea de out). Por eso el test no exige un tin en escena. Verifica la regla en cada pausa: la parte del tin se ve si y solo si `LastPoint.TinTouched`.
+   - La rama del tin queda probada así:
+     - en EditMode, por `PointRules.TinTouched` (§6.2) y `RefereeCall.Call(…, true)` (§6.1);
+     - en PlayMode, por el layout (§6.4), que muestra `rally-referee-tin` en pantalla;
+     - `RallyDirector.EndPoint` pasa `rules.TinTouched` a `PointResult` en una sola línea, revisada a mano.
+
+     Que salga en el juego real queda como observación para el iPhone.
    - Fuera de las pausas y en el fin del partido, la pastilla está oculta. Con `RefereeOn` en `false`, también.
 4. **PlayMode, layout en todos los perfiles de `ZDeviceFixture`, desde el SE 16:9 hasta el Pro Max.**
    - Se usa el texto más largo, «¡Tin!  Match ball  99–98».
