@@ -1,10 +1,10 @@
 # Por qué pegarle al fondo gana tanto
 
-26 nov 2026 · Claude (Opus) · diagnóstico en solo lectura sobre `main` `8a32d42` (build 1230). No cambia código de producto, specs, umbrales ni pruebas. Para medir se usó un experimento temporal en `Tests/Experiments/EditMode`, que se borró al terminar. Solo queda este informe, sin commit. Evidencia local, ignorada por git: `Logs/experiments/deep-win/` (`run01`, `phaseA01`, `phaseA02`, `phaseB01`, `po1230`, cada una con `source.tsv`) y `Logs/evidence/metrics-1230-20261126/`. Todas las corridas dieron Passed con defaults `207da8f2c636` y RallyParams `ebf8f717f8c5`.
+26 nov 2026 · Claude (Opus) · diagnóstico en solo lectura sobre `main` `8a32d42` (build 1230). No cambia código de producto, specs, umbrales ni pruebas. Para medir se usó un experimento temporal en `Tests/Experiments/EditMode`, que se borró al terminar. Solo queda este informe, que va en el PR #123. Evidencia local, ignorada por git: `Logs/experiments/deep-win/` (`run01`, `phaseA01`, `phaseA02`, `phaseB01`, `po1230`, cada una con `source.tsv`) y `Logs/evidence/metrics-1230-20261126/`. Todas las corridas dieron Passed con defaults `207da8f2c636` y RallyParams `ebf8f717f8c5`.
 
 ## Conclusión
 
-El drive al fondo gana ~95 % de los puntos en los **tres** niveles. Lo hace con los tres estilos, con P = 1 o con P = 0,85 y con la guardia «Drive adelante» o sin ella. El mecanismo es un circuito cerrado:
+**En simulación**, con un bot humano de σ = 30 ms que siempre llega a su pelota, el drive al fondo gana ~95 % de los puntos en los **tres** niveles. Lo hace con los tres estilos (93–97 %, §2), con P = 1 o con P = 0,85 y con la guardia «Drive adelante» o sin ella. Con σ = 110 ms baja a 54–79 %. En juego real (23–24 nov, Medio) el humano ganó 29 de 76 puntos (38 %), y 15 de esos 29 vienen de un drive al fondo (§3). El mecanismo de la simulación es un circuito cerrado:
 
 1. **El rival no alcanza la pelota a tiempo.**
 2. **Por eso entra en la defensa obligatoria.**
@@ -41,6 +41,8 @@ El humano es un bot con intención fija y σ = 30 ms (o 110 ms) contra el `Rival
 | Medio suave | 52,3 | **29,5** | 9,6 |
 | Drop | 54,8 | **42,1** | 24,8 |
 
+Por estilo, drive al fondo con P = 1 (Fondista / Definidor / Completo): Fácil 94,6 / 96,6 / 96,3; Medio 93,4 / 97,2 / 95,3; Difícil 94,9 / 96,4 / 94,6 (`run01/cells.tsv`).
+
 En Medio, con todos los golpes juntos, agrupados por dónde bota la pelota del humano:
 
 | Bote del golpe | n | Rival estirado | Defensa obligatoria (de las devueltas) | Holgura del humano después | Punto del humano |
@@ -55,7 +57,7 @@ Contrafactuales en Medio, con el drive a P = 1:
 |---|---|
 | Base | 95,3 % |
 | Rival esperando 0,75 m más atrás | 95,9 % (y el drop sube de 42 a 65 %) |
-| Cuerpos a 5,5 m/s | 97,7 % |
+| Los dos cuerpos a 5,5 m/s (`MaxSpeed` es común a humano y rival, `RallySim.cs:108–109`) | 97,7 % |
 
 No son ni la potencia 1,0 ni la guardia.
 
@@ -74,7 +76,8 @@ El playtest del 25 nov (build 1230) está medido en la §3b. Aquí van las sesio
 **Real, Medio, 23–24 nov:**
 
 - Hubo 76 puntos de partido; el humano ganó 29.
-- Los 116 golpes del humano se reparten así: largos 47 %, medios 15 %, cortos 16 % y lateral antes del bote 23 %.
+- Los 116 golpes del humano en Medio se reparten así: 54 largos (47 %), 17 medios (15 %), 18 cortos (16 %) y 27 a la lateral antes de botar a menos de 7 m (23 %). Los porcentajes redondeados suman 101 %. Otros 10 golpes también tocaron la lateral antes del bote, pero botaron a 7 m o más y cuentan como largos. En total, 37 de 116 tocaron la lateral antes del bote.
+- En todos los niveles hubo 126 golpes de partido: los 116 de Medio, 9 de Difícil y 1 de Fácil.
 - De los 29 puntos ganados, 15 salen de un drive al fondo:
 
   | Tipo | Puntos | Proporción de los 29 |
@@ -94,12 +97,17 @@ El playtest del 25 nov (build 1230) está medido en la §3b. Aquí van las sesio
 | P = 1 | 56 % | 4 % | 39 % |
 | P = 0,85 | 7 % | 28 % | 59 % |
 
+Las filas no suman 100 % por los puntos que no son (a), (b) ni (c).
+- **P = 0,85:** de 3.150 ganados, 5,9 % terminan con un golpe del humano que botó a menos de 7 m, sin drive al fondo justo antes. Otro 0,9 % son otros finales, incluido el saque.
+- **P = 1:** el resto es 0,7 %.
+
 El rival casi nunca comete faltas de golpe: de 0,1 % a 0,8 %.
 
 **Lectura:**
 
-- Antes de #120, 23 de 126 golpes reales iban al vidrio al vuelo y 40 a la lateral. En esos casos el rival devolvía casi siempre.
-- #120 convierte esos golpes en botes dentro de 8,5 m, que en la simulación son el grupo que gana el 97 % de los puntos.
+- En Medio, antes de #120, 20 de los 116 golpes reales iban al vidrio al vuelo. El rival devolvió 19 de esos 20.
+- Otros 37 tocaron la lateral antes del bote, sin ir al vidrio. El rival devolvió 29 de esos 37.
+- #120 convierte los golpes al vidrio al vuelo en botes dentro de 8,5 m, el grupo que en la simulación gana el 97 % de los puntos. Las laterales no cambian, según el informe de #120.
 - **Hipótesis:** por eso el PO lo notó recién en la 1230. La §3b no la confirma.
 
 ## 3b. Playtest del 25 nov (build 1230), medido
@@ -111,12 +119,12 @@ Métricas bajadas el 26 nov (verificación en «Límites»). Método idéntico a
 | | 23–24 nov (antes de #120) | 25 nov (1230) |
 |---|---|---|
 | Puntos, ganados por el humano | 76, 29 (38 %) | 8, 7 (88 %) |
-| Golpes del humano | 116 | 17 (15 con P = 1) |
-| Largos (≥ 7 m o vidrio al vuelo) | 47 % | 29 % (5) |
-| Medios (5,49–7 m) | 15 % | 24 % (4) |
-| Cortos (< 5,49 m) | 16 % | 35 % (6) |
-| Lateral antes del bote | 23 % | 12 % (2) |
-| Vidrio al vuelo | 23 de 126 | 0 de 17 |
+| Golpes del humano en Medio | 116 | 17 (15 con P = 1) |
+| Largos (≥ 7 m o vidrio al vuelo) | 54 (47 %) | 5 (29 %) |
+| Medios (5,49–7 m) | 17 (15 %) | 4 (24 %) |
+| Cortos (< 5,49 m) | 18 (16 %) | 6 (35 %) |
+| Lateral antes de un bote a < 7 m | 27 (23 %) | 2 (12 %) |
+| Vidrio al vuelo | 20 de 116 | 0 de 17 |
 | (a) / (b) / (c) | 3 / 10 / 2 | **1 / 0 / 0** |
 | Ganados sin drive al fondo justo antes | 14 | **6** |
 | Recepción final en los ganados | no llega 24, aire 3, tarde 1, fuera 1 | no llega 6, aire 1 |
@@ -129,29 +137,39 @@ Métricas bajadas el 26 nov (verificación en «Límites»). Método idéntico a
   - Solo el de 8,49 m cuenta como (a).
 - **2 con un golpe suave** (P ≈ 0,2) al frente: «no llega».
 - **En 3 puntos el rival solo alcanzó a devolver el saque.** El saque del humano no se registra como golpe en `shot` (en el 23–24 tampoco), así que por la definición no cuenta como drive al fondo.
-- **Antes del golpe ganador, el rival devolvió en 6 de 7 puntos un globo de defensa** (mira a 3–3,9 m), **y en los 7 la pelota quedó adelante**: el humano la golpeó a z ≤ 5,5 m.
+- **Antes del golpe ganador, el rival devolvió en 6 de 7 puntos un globo de defensa**, y **en los 7 la pelota quedó adelante**: el humano la golpeó a z ≤ 5,5 m.
+  - La mira registrada en `rally-causal` es de 2,96 a 3,88 m.
+  - `AimHigh` es 3 m y el ruido de puntería de Medio es σ 0,16 m (`RallyParams.cs:51`, k 1 en el Definidor), así que los valores cercanos a 3,9 m no se explican solo con eso.
+  - No lo investigué.
 
-**Lo que contradice la hipótesis de #120:** de los 5 drives que botaron a 7–8,5 m, el rival devolvió 4. No ganaron de inmediato; el punto se ganó después con pelotas más cortas.
+**Lo que no respalda la hipótesis de #120 (8 puntos):** de los 5 drives que botaron a 7–8,5 m, el rival devolvió 4. No ganaron de inmediato; el punto se ganó después con pelotas más cortas.
 
-**Lectura:** lo que gana en la 1230 no es la pelota que bota al fondo. Es el ciclo del §1 visto desde el otro lado:
+**26 nov en la mañana, no pedido, misma build:** Medio, rival Fondista, 5 puntos, partido en pausa 3–2. De los 3 ganados, 2 son (a) con drives que botan a 8,42 y 9,38 m (este último tocó la lateral, desde z = 7,2 m, fuera de la zona de la guardia) y 1 es un drive corto al que el rival no llega. Aquí el drive al fondo sí ganó directamente, al revés que el 25 nov.
+
+**Las dos sesiones juntas (13 puntos, 10 ganados):**
+- (a) 3, (b) 0, (c) 0, y 7 ganados sin drive al fondo justo antes.
+- 9 de los 10 terminan en «no llega».
+- Lo común a las dos no es dónde bota la pelota, sino que el rival no llega.
+
+**Lectura (inferencia sobre 13 puntos, no medida):** el ciclo del §1, visto desde el otro lado:
 
 1. El rival está atrás.
 2. Su defensa cae corta.
-3. El humano pega fuerte desde adelante.
+3. El humano pega fuerte, desde adelante o al fondo.
 4. El rival no alcanza a volver.
 
-Es el mismo mecanismo de la simulación: (a), que es alcance y cinemática, más la defensa corta que ataca la opción 4.
-
-**26 nov en la mañana, no pedido, misma build:** Medio, rival Fondista, 5 puntos, partido en pausa 3–2. De los 3 ganados, 2 son (a) con drives que botan a 8,42 y 9,38 m (este último tocó la lateral, desde z = 7,2 m, fuera de la zona de la guardia) y 1 es un drive corto al que el rival no llega.
+Es compatible con la simulación: (a), que es alcance y cinemática, más la defensa corta que ataca la opción 4.
 
 ## 4. Opciones (medidas en Medio, 100 partidos por celda; N2 con el protocolo de `ConfirmPerStyle`, 200 partidos, semillas `20261219`)
 
-El Fondista queda igual en todas. Puntos del humano: Definidor / Completo.
+El Fondista queda igual en todas. Cada par de valores es Definidor / Completo, y los resultados también son Definidor / Completo.
+- **`VolleySteal`:** son cuatro candidatos (vsA–vsD), cada uno con un par; la fila da el rango de los cuatro.
+- **atA y atB:** el primer par es `AttackBase` y el segundo `DropWeight`.
 
 | Opción | Drive al fondo, P = 1 | P = 0,85 | Medio suave | Drop | N2, novato (máx. \|Δ\|) | Tipo |
 |---|---|---|---|---|---|---|
 | Base | 97,0 / 94,7 | 96,2 / 92,8 | 32,4 / 28,0 | 25,8 / 43,6 | — | — |
-| **1. `VolleySteal`** 0,6/1,2 · 1,2/1,8 · 2/2,6 · 3/3,5 | 97,0–97,4 / 94,7–95,2 | sin cambio | sin cambio | sin cambio | no se midió (sin efecto) | IA: SC-PM y SC-Lead |
+| **1. `VolleySteal`** 0,6/1,2 · 1,2/1,8 · 2/2,6 · 3/3,5 | 97,0–97,4 / 94,7–95,2 | sin cambio | sin cambio | sin cambio | no se midió | IA: SC-PM y SC-Lead |
 | **2. `AttackBase`/`DropWeight`**, atA 1,2/0,4 · 2,0/1,5 | 97,9 / 94,0 | 97,4 / 93,7 | 31,3 / 33,8 | 31,2 / 39,1 | — | IA: SC-PM y SC-Lead |
 | atB 1,6/0,8 · 2,4/1,9 | 96,3 / 95,9 | 97,4 / 94,9 | 32,1 / **38,0** | 32,7 / 49,3 | — | IA: SC-PM y SC-Lead |
 | **3. `DefenseSlackS`** 0,03/0,06 | 97,0 / 94,7 | 95,4 / 92,1 | 31,9 / 26,7 | 24,8 / 41,8 | 2,94 pp, dentro | IA: SC-PM y SC-Lead |
@@ -173,12 +191,12 @@ El Fondista queda igual en todas. Puntos del humano: Definidor / Completo.
 
 ### 4. Fuera de lo pedido, sin medir: que la defensa sea «alta y larga» como dice §11.3
 
-Hoy el globo de defensa bota a ~5 m. La idea es que el golpe de supervivencia se elija por la profundidad de su propio pronóstico (`RallyContact.Forecast` ya da el bote) y que la volea use su propia holgura. Es IA, así que lo deciden SC-PM y SC-Lead, pero requiere código nuevo y pasar N2. Ataca (b) y (c). **No ataca (a):** en P = 1 el 56 % de los puntos son pelotas a las que el rival no llega. Eso es cinemática o alcance, del PO; la estocada de §9.1 no está implementada. Correr el cuerpo más rápido tampoco ayudó.
+Hoy el globo de defensa bota a ~5 m. La idea es que el golpe de supervivencia se elija por la profundidad de su propio pronóstico (`RallyContact.Forecast` ya da el bote) y que la volea use su propia holgura. Es IA, así que lo deciden SC-PM y SC-Lead, pero requiere código nuevo y pasar N2. Ataca (b) y (c). **No ataca (a):** en P = 1 el 56 % de los puntos son pelotas a las que el rival no llega. Eso es cinemática o alcance, del PO; la estocada de §9.1 no está implementada. El contrafactual de 5,5 m/s aceleró a los dos cuerpos, así que no dice qué pasaría con un rival más rápido solo; eso no se midió.
 
 ## Recomendación
 
-1. **No aplicar ahora** ninguno de los valores de las opciones 1–3: no mueven el drive de P = 1 y los que lo mueven rompen N2.
-2. **Las métricas de la 1230 ya están medidas (§3b).** No confirman que #120 sea la causa. Sí muestran el ciclo «defensa corta → golpe fuerte desde adelante → no llega», con 6 de 7 ganados en «no llega». Para proporciones hacen falta más partidos de prueba en la 1230.
+1. **No aplicar ahora** ninguno de los valores de las opciones 1–3. Ninguno mueve el drive de P = 1. El único que mueve el de P = 0,85, `DefenseSlackS` 0/0, rompe N2.
+2. **Las métricas de la 1230 ya están medidas (§3b).** No confirman que #120 sea la causa. Son compatibles con el ciclo «defensa corta → golpe fuerte → no llega»: con la sesión del 26 nov, 9 de 10 ganados terminan en «no llega». Para proporciones hacen falta más partidos de prueba en la 1230.
 3. **Encargar como experimento la opción 4** (defensa larga y volea con su propia holgura), como IA de SC-PM y SC-Lead, con N2 predeclarado.
 4. Para (a), si el PO quiere atacarlo, son decisiones suyas: la estocada de §9.1 o el tope de largo de #120.
 
