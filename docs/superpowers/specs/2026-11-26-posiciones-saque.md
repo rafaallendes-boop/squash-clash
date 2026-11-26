@@ -12,9 +12,10 @@ Coordenadas de AX-1: `x` desde la pared lateral derecha (x=0) hasta la izquierda
 
 | Quién | Dónde | Cuadro derecho | Cuadro izquierdo |
 |---|---|---|---|
-| Sacador | Esquina interior delantera de su cuadro, a 0,3 m de la línea interior del cuadro y de la línea corta (`ServePlanner.BoxPosition`) | (1,30; 5,79) | (5,10; 5,79) |
+| Sacador | Adelante en su cuadro, lo más cerca de la esquina interior delantera que permiten las miras actuales: a 0,70 m de la línea interior del cuadro y 0,30 m detrás de la línea corta (`ServePlanner.BoxPosition`) | (0,90; 5,79) | (5,50; 5,79) |
 | Restador | Cuarto trasero opuesto, a 1,6 m de la pared lateral y 2,1 m de la pared del fondo (`ServePlanner.ReceiverPosition`, nuevo) | (4,80; 7,65) | (1,60; 7,65) |
 
+- **Por qué no está a 0,3 m de la esquina (camino 3 de SC-PM, 26 nov).** Desde (1,30; 5,79), el drive (miras fijas `ServeKindDrive*`) bota en la mitad del propio sacador, en x=2,94 con el cuadro derecho, y es falta. `ServePositionsSearch` recorrió en una rejilla de 5 cm las posiciones dentro del cuadro (el cuerpo a 0,30 m o más de las líneas del cuadro y a 0,35 m o más de la pared). Eligió la más cercana a la esquina en la que, en los dos cuadros, drive, globo y Auto son legales y botan al menos 0,3 m dentro de lo exigido (pasada la media cancha y detrás de la línea corta) sin atravesar al restador. Resultado: a 0,70 m de la línea interior y 0,30 m de la línea corta, a 0,40 m de la esquina pedida. Lo limita el drive del cuadro izquierdo, que bota 0,39 m dentro. RallyParams no cambia. [Rejilla](../../validation/evidence/2026-11-26-posiciones-saque/search-grid.tsv).
 - **Lectura de «0,3 m de la línea de media cancha».** La línea de media cancha está en x=3,20, a 1,60 m del cuadro. Si el sacador quedara a 0,3 m de ella, estaría fuera del cuadro (pie en falta). Por eso se toma la línea del cuadro que da hacia la media cancha, coherente con «esquina interior delantera de su cuadro». La prueba existente `AutomaticServe_IsValid_AndLandsInTheReceiversQuarter` ya exige que el sacador esté dentro del cuadro.
 - `BoxPosition` sigue siendo el punto de partida del saque: la pelota sale de ahí a `ServeHandHeight`, igual que hoy. Por eso cambian las trayectorias del saque. Las miras fijas del frontis (`ServeKind*`) y el saque automático (`Find`) no cambian, y cada saque se valida con las reglas del saque como hoy.
 - `ReceiverPosition(box)` es la posición **real** del cuerpo simulado del restador al empezar el punto: `RallyDirector.BeginPoint` (juego) y `RallySim.PlayPoint` (simulación sin pantalla) teletransportan al restador ahí antes de planificar su recepción. No es solo un dibujo.
@@ -27,7 +28,8 @@ La ventana de 25 ms, el timing, los umbrales, los criterios y las pruebas existe
 
 ## Pruebas
 
-- `BoxPosition` da la esquina interior delantera en los dos cuadros y `ReceiverPosition` el cuarto trasero opuesto.
+- `BoxPosition` da la posición elegida en los dos cuadros y `ReceiverPosition` el cuarto trasero opuesto.
+- Desde esa posición, los tres saques son legales y botan al menos 0,3 m dentro de lo exigido.
 - `RallySim.PlayPoint`: al empezar la recepción del saque, el restador está en `ReceiverPosition` (humano y rival).
 - **El saque cruzado no atraviesa al restador:** con los tres saques del producto (Auto con «Saque nuevo» apagado, globo y drive) desde los dos cuadros, la pelota, antes de su primer bote, nunca pasa por dentro de la cápsula de referencia del jugador puesta en `ReceiverPosition`. La cápsula es la de `PlaceholderPlayers`: 1,80 m de alto y 0,28 m de radio, más el radio de la pelota.
 - Regresión completa: EditMode, PlayMode (incluido `TimingAidTests`) y AutoQA `mvp`.
