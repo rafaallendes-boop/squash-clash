@@ -272,10 +272,12 @@ namespace SquashClash.Experiments.EditMode
             using(var defW=new StreamWriter(Path.Combine(dir,"defense.tsv"),false,Utf8))
             using(var prevW=new StreamWriter(Path.Combine(dir,"prev-ball.tsv"),false,Utf8))
             using(var dcW=new StreamWriter(Path.Combine(dir,"defense-cells.tsv"),false,Utf8))
+            using(var srW=new StreamWriter(Path.Combine(dir,"swing-read.tsv"),false,Utf8))
             {
                 defW.WriteLine("level\tstyle\tintent\tmatch\tk\tresult\tline\theight\tpower\tvolley\tdefensive\tshotClass\trivalSlackS\tplanReason\treachMargin\twindowMs\treleaseMarginMs\tbounceX\tbounceZ\tsideDist\tbackFly\tbackAfter\tlengthClass\ttightClass\thumanSlackS\thumanResult\thumanContactSideDist\tpointWinner\tlostNow\treceptionsAfter");
                 prevW.WriteLine("level\tstyle\tintent\tmatch\tk\tresult\torigin\tprevBounceX\tprevBounceZ\ttargetX\ttargetZ\twaitX\twaitZ\tshifted\tdriveBounceX\tdriveBounceZ\tsameSide\tbodyX\tbodyZ\tdistToTarget\tbodySpeed\tlateBaseS\tlateAtTargetS\tlateDriveSideS\tdiagClass");
                 dcW.WriteLine("level\tstyle\tintent\tdefenseRows\tprevBallRows\tnewMismatch");
+                srW.WriteLine("level\tstyle\tintent\tmatch\tk\thumanLine\thumanHeight\thumanPower\thumanVolley\tkind\tplanned\tleadSteps\tleadMs\tstanceX\tstanceZ\tbodyX\tbodyZ\trivalResult\trivalSlackS\trivalPlanReason\tpointWinner\tlostNow\treceptionsAfter");
                 times.WriteLine("level\tstyle\tintent\tmatch\tresult\tdrive\tserve\tv0\tv0Toward\tdistance\tuntilS\treactSteps\tperceptionSteps\textraSteps\tlateBaseS\tlateNoReactS\tlateNoPerceptionS\tlateNoDelayS\tlateRestS\tlateRestInstantS\tlateCoreS\tcruiseS\tnoiselessReason\tstanceError\tplanReason");
                 cells.WriteLine("level\tstyle\tintent\tpoints\thuman\tshare\trivalContacts\tdefensiveContacts\tdefBounceN\tdefBounceMedianZ\tdefGlassFly\thumanSlackMedianS\trivalVolleys\trivalDefensiveVolleys\tmismatch\tseconds\trivalReceptions\trivalNoReach\thumanWinsNoReach\trivalLunges");
                 foreach(var level in levels)foreach(var style in new[]{RivalStyleId.Fondista,RivalStyleId.Definidor,RivalStyleId.Completo})foreach(var intent in Intents)
@@ -353,6 +355,26 @@ namespace SquashClash.Experiments.EditMode
                                         defW.WriteLine(level+"\t"+style+"\t"+intent.name+"\t"+m+"\t"+k+"\t"+DefenseRow(ctx,o,k,rv,next));defRows++;
                                     }
                                 }
+                                // set21: one row per read of the rival (the human's swing), aligned like the rows above.
+                                if(ok)
+                                {
+                                    int rivals=o.Receptions.Count(x=>x.Who==PlayerId.Rival);
+                                    foreach(var read in sim.SwingReads)
+                                    {
+                                        int k=read.RivalReception;string hl="none\tnone\tnone\tnone";
+                                        if(k-1>=0&&k-1<o.Receptions.Count){var hx=o.Receptions[k-1];hl=hx.Line+"\t"+hx.Height+"\t"+hx.Power+"\t"+(hx.Volley?"1":"0");}
+                                        string rr="none",rs="nan",rp="none";
+                                        if(k<o.Receptions.Count&&o.Receptions[k].Who==PlayerId.Rival)
+                                        {
+                                            rr=o.Receptions[k].Result.ToString();
+                                            int before=o.Receptions.Take(k).Count(x=>x.Who==PlayerId.Rival);
+                                            if(r.Calls.Count==rivals&&before<r.Calls.Count){rs=N(r.Calls[before].Plan.SlackS);rp=r.Calls[before].Plan.Reason;}
+                                        }
+                                        string pw=o.Winner.HasValue?o.Winner.Value.ToString():"none";int lost=o.Winner==PlayerId.Human&&o.Receptions.Count-1<=k+2?1:0;
+                                        srW.WriteLine(level+"\t"+style+"\t"+intent.name+"\t"+m+"\t"+k+"\t"+hl+"\t"+read.Kind+"\t"+(read.Planned?"1":"0")+"\t"+read.LeadSteps+"\t"+F(read.LeadSteps*1000/(ctx.StepHz*ctx.Tempo))
+                                            +"\t"+(read.Planned?N(read.Stance.x):"nan")+"\t"+(read.Planned?N(read.Stance.y):"nan")+"\t"+N(read.BodyAtRead.x)+"\t"+N(read.BodyAtRead.y)+"\t"+rr+"\t"+rs+"\t"+rp+"\t"+pw+"\t"+lost+"\t"+(o.Receptions.Count-1-k));
+                                    }
+                                }
                                 if(o.Winner==PlayerId.Human&&o.Receptions.Count>0){var last=o.Receptions[o.Receptions.Count-1];if(last.Who==PlayerId.Rival&&(last.Result==ReceptionResult.Unreachable||last.Result==ReceptionResult.NoSwing))winsNoReach++;}
                                 if(o.Winner.HasValue){score.PointWon(o.Winner.Value);points++;if(o.Winner==PlayerId.Human)human++;}
                                 else if(++replays>50)break;
@@ -362,7 +384,7 @@ namespace SquashClash.Experiments.EditMode
                     }
                     cells.WriteLine(level+"\t"+style+"\t"+intent.name+"\t"+points+"\t"+human+"\t"+F(points==0?0:human/(double)points)+"\t"+contacts+"\t"+defensive+"\t"+bounce.Count+"\t"+F(Median(bounce))+"\t"+glass+"\t"+F(Median(slack))+"\t"+volleys+"\t"+defVolleys+"\t"+mismatch+"\t"+F(watch.Elapsed.TotalSeconds)+"\t"+rivalReceptions+"\t"+noReach+"\t"+winsNoReach+"\t"+lunges);
                     dcW.WriteLine(level+"\t"+style+"\t"+intent.name+"\t"+defRows+"\t"+prevRows+"\t"+newMismatch);
-                    cells.Flush();times.Flush();defW.Flush();prevW.Flush();dcW.Flush();
+                    cells.Flush();times.Flush();defW.Flush();prevW.Flush();dcW.Flush();srW.Flush();
                 }
             }
         }
