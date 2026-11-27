@@ -1,0 +1,25 @@
+Pruebas (scripts/rival-time-tests.sh, EditMode, ensamblado SquashClash.Core.Tests). Resumen de results.xml.
+
+red head 449aaf564027adac26e7f5d5818ccedd647f433a {'result': 'Failed(Child)', 'total': '5', 'passed': '1', 'failed': '4'}
+   Failed RivalLongSwingReadExperimentTests.Kind_ManyTimingErrors_SameContact_MisreadRateIsNearP_BothKindsHalf | Expected: 0.25d +/- 0.029999999999999999d
+   Failed RivalLongSwingReadExperimentTests.LongOnly_DropOnlyHuman_GivesTheSamePointsAsNoRead | Expected: <empty>
+   Failed RivalLongSwingReadExperimentTests.LongOnly_Lead200_NoMisread_EachLongHumanStrokeHasOneRead_AndNoShortOne | stroke 9 Drop
+   Failed RivalLongSwingReadExperimentTests.LongSwing_DrivesMediumAndLobsAreLong_DropsAndBoastsAreShort | drop Low Medium
+  error CS en unity.log: 0
+
+green head c56773fbfd34833a6b8fe2af0373a611c9fa0c5d {'result': 'Failed(Child)', 'total': '317', 'passed': '305', 'failed': '12'}
+   Failed BoastRivalTests.On_RallySim_AppliesRivalBoastsFromTheBackQuarterOnly | Expected: greater than or equal to 6.8125f
+   Failed FatigueFeelTests.RallyParams_ProjectionWithoutTheSprintFatigueField_IsTheCurrentHash | String lengths are both 12. Strings differ at index 0.
+   Failed RivalAiTests.Fondista_WithVolleyAndCoverOff_ReplaysTheFrozenRallySimSignatures | 0/0
+   Failed RivalAiTests.RallyParams_ProjectionWithoutStyleFields_IsTheCurrentHash | String lengths are both 12. Strings differ at index 0.
+   Failed RivalAiTests.Recovery_AfterAnOwnShortShot_FollowsTheStyle_AndAfterALongOne_IsTheStyleWait | Expected: (3.60, 5.97)
+   Failed RivalRecoverySideExperimentTests.Default_IsZero_AndTheRecoveryAfterADeepBallIsTheStyleWait | Expected: 0
+   Failed ServeReceptionMarginTests.DefaultMargin_IsChosenValue_AndItsProjectionPreservesEveryPriorParameter | String lengths are both 12. Strings differ at index 0.
+   Failed ServeTests.HumanServePauseDefaultsToThreeSeconds | String lengths are both 12. Strings differ at index 0.
+   Failed VolleyEnergyTests.RallyParams_VolleyEnergyCost_IsTwoPoints_AndOnlyTheRallyParamsHashMoves | without the new field the hash is the volley v1 one
+   Failed VolleyRallyTests.RallyParams_ProjectionWithoutVolleyFields_IsTheCurrentHash | String lengths are both 12. Strings differ at index 0.
+   Failed VolleyV21Tests.RallyReceptions_ATouchAtSOrSPrime_AlwaysKeepsTheOfferedStance | offers whose own deadline touch lost the offered stance (of 56)
+   Failed VolleyV2Tests.Defaults_AreV2WithTheServeVolley_AndOnlyTheRallyParamsHashMoves | without the v2 fields the hash is the current one
+  error CS en unity.log: 0
+
+Las 12 que fallan en green son las mismas 12 que fallan en la base (lista en docs/validation/evidence/2026-11-27-lectura-swing/tests.txt).

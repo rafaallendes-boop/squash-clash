@@ -1,0 +1,5 @@
+Diagnóstico de solo lectura de las lecturas k=1 (devolución del saque). Hipótesis, no prueba.
+l1: n k=1 = 3877; partidos con la primera lectura k=1 en varias celdas: 100 (media 8.4 celdas); con el mismo resultado en todas: 53
+l2: n k=1 = 4042; partidos con la primera lectura k=1 en varias celdas: 100 (media 8.7 celdas); con el mismo resultado en todas: 48
+Con monedas independientes y ~9 celdas, que todas coincidan pasaría en ~8 % de los partidos (0,75^9 + 0,25^9...); coincide en ~50 %:
+las celdas comparten las semillas del humano y la situación del saque, así que las lecturas k=1 no son independientes entre celdas y el n efectivo es menor que el nominal.

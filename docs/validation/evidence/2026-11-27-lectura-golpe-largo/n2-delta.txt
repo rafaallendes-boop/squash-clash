@@ -1,0 +1,8 @@
+Δ del novato (fase confirm), pp, frente a n2-before01-from-6086074.tsv (main) y n2-b2b.tsv (sc-posicion-espera). Banda: > 5 pp = parada.
+## l1
+main max|Δ|=23.46 ('Easy', 'Definidor')
+  E/Com -23.31 E/Def -23.46 E/Fon -19.03 H/Com -10.53 H/Def -22.87 H/Fon -6.04 M/Com -17.25 M/Def -23.27 M/Fon -16.72
+b2b max|Δ|=26.25 ('Easy', 'Definidor')
+  E/Com -24.64 E/Def -26.25 E/Fon -19.44 H/Com -15.13 H/Def -25.30 H/Fon -9.42 M/Com -21.65 M/Def -24.71 M/Fon -18.58
+## l2
+no medido: detenido por la verificación de la moneda (k=1 FUERA) antes del N2 de l2, como se declaró

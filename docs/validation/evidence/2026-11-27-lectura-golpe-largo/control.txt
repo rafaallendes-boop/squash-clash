@@ -1,0 +1,10 @@
+control lg00 (head 35a9f05, campos en 0, RallyParams c932fc94ec91) frente a q01 de sc-calidad-defensa (scripts/compare-control.py):
+cells.tsv (sin seconds): DIFF 0
+rival-time.tsv: idéntico
+prev-ball.tsv: idéntico
+defense.tsv (30 primeras columnas): DIFF 0
+columnas de defense.tsv: A 30, B 30
+swing-read.tsv: vacío
+CONTROL OK
+defense-cells.tsv: idéntico
+defense.tsv: idéntico byte a byte (por eso no se guarda defense-lg00; es defense-q01.tsv.gz de calidad-defensa)

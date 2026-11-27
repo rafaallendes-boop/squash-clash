@@ -1,0 +1,48 @@
+== Logs/experiments/deep-defense/l1 (100809 lecturas) ==
+(a) Por tipo de golpe (línea, altura, potencia):
+  grupo                                                  n  % errado  % Dirección  % Largo
+  ('Straight', 'Mid', 'Medium')                      29278      24,9         12,4     12,5
+  ('Straight', 'Mid', 'Strong')                      71531      25,0         12,6     12,5
+(b) Por posición:
+  grupo                                                  n  % errado  % Dirección  % Largo
+  k=1 devolución del saque                            3877      23,7         10,7     13,0
+  k=2 primer golpe tras el saque propio               4291      25,1         12,7     12,4
+  k>2 resto del rally                                92641      25,0         12,6     12,4
+(b) Por posición e intención:
+  grupo                                                  n  % errado  % Dirección  % Largo
+  ('k=1 devolución del saque', 'fondo-085')           1475      23,4         10,9     12,5
+  ('k=1 devolución del saque', 'fondo-max')            455      25,3          9,7     15,6
+  ('k=1 devolución del saque', 'medio-suave')         1947      23,5         10,8     12,7
+  ('k=2 primer golpe tras el saque propio', 'fondo-085')    1813      25,8         12,2     13,5
+  ('k=2 primer golpe tras el saque propio', 'fondo-max')    1849      24,1         12,7     11,4
+  ('k=2 primer golpe tras el saque propio', 'medio-suave')     629      26,1         14,1     11,9
+  ('k>2 resto del rally', 'fondo-085')               51254      25,1         12,6     12,5
+  ('k>2 resto del rally', 'fondo-max')               14685      25,2         12,9     12,3
+  ('k>2 resto del rally', 'medio-suave')             26702      24,9         12,5     12,5
+Banda: grupos con n>=500 dentro de 0.25 ± 3*sqrt(p(1-p)/n).
+MONEDA OK
+
+== Logs/experiments/deep-defense/l2 (97715 lecturas) ==
+(a) Por tipo de golpe (línea, altura, potencia):
+  grupo                                                  n  % errado  % Dirección  % Largo
+  ('Straight', 'Mid', 'Medium')                      28978      24,8         12,3     12,5
+  ('Straight', 'Mid', 'Strong')                      68737      25,1         12,5     12,6
+(b) Por posición:
+  grupo                                                  n  % errado  % Dirección  % Largo
+  k=1 devolución del saque                            4042      22,5         10,1     12,3 FUERA
+  k=2 primer golpe tras el saque propio               4330      25,1         13,5     11,7
+  k>2 resto del rally                                89343      25,1         12,5     12,6
+(b) Por posición e intención:
+  grupo                                                  n  % errado  % Dirección  % Largo
+  ('k=1 devolución del saque', 'fondo-085')           1407      22,7         10,8     11,9
+  ('k=1 devolución del saque', 'fondo-max')            682      22,7          8,4     14,4
+  ('k=1 devolución del saque', 'medio-suave')         1953      22,2         10,3     11,9
+  ('k=2 primer golpe tras el saque propio', 'fondo-085')    1872      24,8         13,1     11,6
+  ('k=2 primer golpe tras el saque propio', 'fondo-max')    1832      25,8         13,5     12,2
+  ('k=2 primer golpe tras el saque propio', 'medio-suave')     626      24,3         14,2     10,1
+  ('k>2 resto del rally', 'fondo-085')               47448      25,2         12,6     12,7
+  ('k>2 resto del rally', 'fondo-max')               15496      24,9         12,4     12,5
+  ('k>2 resto del rally', 'medio-suave')             26399      25,0         12,4     12,6
+Banda: grupos con n>=500 dentro de 0.25 ± 3*sqrt(p(1-p)/n).
+MONEDA FUERA ((b) k=1 devolución del saque)
+

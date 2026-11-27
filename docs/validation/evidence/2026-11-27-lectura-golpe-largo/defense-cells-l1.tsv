@@ -1,0 +1,13 @@
+level	style	intent	defenseRows	prevBallRows	newMismatch
+Medium	Fondista	fondo-max	5660	322	0
+Medium	Fondista	fondo-085	15492	145	0
+Medium	Fondista	medio-suave	0	0	0
+Medium	Fondista	corto-drop	0	0	0
+Medium	Definidor	fondo-max	5456	411	0
+Medium	Definidor	fondo-085	20198	172	0
+Medium	Definidor	medio-suave	0	0	0
+Medium	Definidor	corto-drop	0	0	0
+Medium	Completo	fondo-max	4789	351	0
+Medium	Completo	fondo-085	18411	124	0
+Medium	Completo	medio-suave	0	0	0
+Medium	Completo	corto-drop	0	0	0

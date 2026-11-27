@@ -98,3 +98,79 @@ Ruido: una celda con P = 1 tiene ~740 puntos, así que los % de puntos varían ~
 ### Salida
 
 Una tabla con una fila por valor (antes, l1, l2), la conclusión y los riesgos. Si alguna variante queda en la banda, redacto la pregunta de sí o no para Rafael sobre adoptarla.
+
+## Resultados
+
+Medido el 27 nov de 15:40 a 16:22 Chile, en el orden declarado, una corrida por paso y sin reintentos de medición. **Detenido antes del N2 de l2:** la verificación de la moneda de l2 salió fuera del criterio declarado en la devolución del saque (ver abajo). El N2 de l2 no se corrió. Evidencia en [`docs/validation/evidence/2026-11-27-lectura-golpe-largo/`](../validation/evidence/2026-11-27-lectura-golpe-largo/):
+- `metrics-<corrida>.tsv` con su `-source.tsv` y su `-head.txt`;
+- `defense-<corrida>.tsv.gz` (l1 y l2), `defense-cells-<corrida>.tsv` y `swing-read-<corrida>.tsv.gz`. El `defense.tsv` de `lg00` es idéntico byte a byte al de `q01`, así que no se duplica;
+- `n2-l1.tsv` con su `-source.tsv` y su `-head.txt`, y `n2-delta.txt`;
+- `swing-read-summary.md` (`summarize-swing-read.py lg00 l1 l2`), `misread-by-shot.txt` (`misread-by-shot.py`), `coin-k1-diagnostic.txt`, `control.txt` y `tests.txt`.
+
+**Control (ANTES = b2b): en verde.** `lg00` (head `35a9f05`, campos nuevos en 0, RallyParams `c932fc94ec91`) reproduce `q01` con 0 diferencias (`control.txt`):
+- `cells.tsv`, en todas las columnas salvo `seconds`;
+- `rival-time.tsv`, `prev-ball.tsv`, `defense.tsv` y `defense-cells.tsv`, byte a byte;
+- `swing-read.tsv` vacío.
+
+**Pruebas** (`tests.txt`):
+- RED en `449aaf5`: fallan 4 de 5, por aserción y sin errores CS. La que pasa es la del default en 0.
+- GREEN en `c56773f`: la suite `SquashClash.Core.Tests.Rally` da 305/317. Las 5 nuevas y las 7 de set21 pasan, y las 12 que fallan son las mismas 12 de la base. No las toqué.
+
+### Tabla (Fondista / Definidor / Completo)
+
+Defensa: las recepciones del rival a las que llega tras un drive al fondo, con P = 1 y P = 0,85 juntas. Lecturas: la recepción del rival que sigue a cada golpe leído; «no llega / pierde en el acto», en %.
+
+| Valor (head, RallyParams) | Drive al fondo P = 1, % | P = 0,85, % | Rival no llega (P = 1), % | Holgura del rival (s) · estirado, % | Holgura del humano (s) | **Drop del humano, %** | Pierde en el acto, % | Lecturas erradas, % (drive / drop) | Lee bien → no llega / pierde en el acto (drive al fondo) | **Lee mal** → no llega / pierde en el acto (drive al fondo) | **N2 máx \|Δ\| frente a main / b2b (pp)** | ¿En la banda? |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Antes: b2b** (`lg00`, `35a9f05`, `c932fc94ec91`) | 90,4 / 96,4 / 93,8 | 92,1 / 96,7 / 94,6 | 11,6 / 9,9 / 12,3 | 0,01 / 0,00 / 0,00 · 39 / 83 / 62 | 0,82 / 0,85 / 0,84 | **48,6 / 22,8 / 34,8** | 25,7 / 16,4 / 22,1 | — | — | — | **4,60 / —** (`sc-posicion-espera`) | Sí |
+| **l1:** X = 100 ms, p = 0,25, solo largos (`4384296`, `0cbb811942de`) | 80,7 / 90,4 / 91,6 | 63,1 / 53,5 / 58,4 | 4,9 / 6,3 / 6,1 | 0,17 / 0,06 / 0,10 · 15 / 17 / 16 | 0,58 / 0,54 / 0,63 | **48,6 / 22,8 / 34,8** | 10,5 / 6,8 / 9,1 | 25 / 25 / 25 · no lee | 1,2/10,1 · 1,3/7,1 · 1,1/8,6 | 4,9/19,2 · 5,0/14,4 · 4,6/17,6 | **23,46 / 26,25** (Definidor, Fácil) | **No** |
+| **l2:** X = 200 ms, p = 0,25, solo largos (`df70e80`, `46308cf9a0b9`) | 75,4 / 80,3 / 84,1 | 59,0 / 60,5 / 63,8 | 4,3 / 6,0 / 4,8 | 0,23 / 0,11 / 0,16 · 14 / 14 / 15 | 0,53 / 0,44 / 0,54 | **48,6 / 22,8 / 34,8** | 10,0 / 7,5 / 9,1 | 25 / 25 / 25 · no lee | 0,9/8,9 · 1,4/8,2 · 1,0/8,3 | 5,9/20,9 · 9,0/17,6 · 6,2/19,8 | **no medido** (detenido) | — |
+
+Como referencia, set21 con lectura en todos los golpes: drop del humano 6,0 / 2,2 / 4,4 (s1) y 6,5 / 2,8 / 4,5 (s2); N2 24,28 / 26,34 (s1) y 23,35 / 26,14 (s2).
+
+El drive medio suave (`medio-suave`) sí se lee: el humano gana 28,5 / 32,7 / 32,3 % con b2b, 28,5 / 7,7 / 20,7 % con l1 y 27,6 / 10,5 / 18,8 % con l2. El 28,5 del Fondista en l1 es una coincidencia: las filas cambian (964 puntos frente a 969).
+
+### Tasa de error por tipo de golpe (`misread-by-shot.txt`)
+
+Declarado: p = 0,25. Criterio: cada grupo con n ≥ 500 dentro de 0,25 ± 3·√(0,25·0,75/n).
+
+| Grupo | l1: n · % erradas | l2: n · % erradas |
+|---|---|---|
+| Recto, medio, medio (`medio-suave`) | 29 278 · 24,9 | 28 978 · 24,8 |
+| Recto, medio, fuerte (drive al fondo) | 71 531 · 25,0 | 68 737 · 25,1 |
+| Drop (cualquiera) | 0 · no lee | 0 · no lee |
+| k = 1, devolución del saque | 3 877 · 23,7 (banda ± 2,1) | 4 042 · **22,5 (banda ± 2,0): FUERA** |
+| k = 2, primer golpe tras el saque propio | 4 291 · 25,1 | 4 330 · 25,1 |
+| k > 2, resto del rally | 92 641 · 25,0 | 89 343 · 25,1 |
+| Veredicto | **MONEDA OK** | **MONEDA FUERA** (k = 1) |
+
+- En set21 (moneda vieja) la devolución del saque daba 50,2 % (s1, mismo script). La corrección baja el sesgo de 25 pp a 1–2,5 pp, y ahora el error va del lado contrario (el rival lee mal un poco menos).
+- Por intención, cada subgrupo de k = 1 de l2 (22,2–22,7 %) queda dentro de su banda; solo el grupo k = 1 completo queda fuera.
+- **Hipótesis, no probada** (`coin-k1-diagnostic.txt`, de solo lectura): las lecturas k = 1 no son independientes entre celdas. Las nueve celdas (3 estilos × 3 intenciones que leen) comparten las semillas del humano y la situación del saque. En ~50 % de los partidos, la primera lectura k = 1 da el mismo resultado en todas las celdas, cuando con monedas independientes pasaría en ~8 %. Así, el n efectivo de k = 1 es varias veces menor que el nominal, y la banda declarada, que supone independencia, es más estrecha de lo que corresponde. Pasa igual en l1, que sí quedó dentro. No lo corregí: el criterio estaba declarado y me detuve, como dice.
+
+### Lectura
+
+- **El drop del humano vuelve entero.** Con l1 y l2 el drop gana lo mismo que con b2b (48,6 / 22,8 / 34,8 %), punto por punto: el rival no lee ningún drop, así que esas celdas reproducen el control exacto. En set21 el drop había caído al 2–7 %.
+- **En los golpes largos, el rival gana lo mismo que en set21.** Llega con holgura (0,06–0,23 s), solo llega estirado el 14–17 % de las veces (39–83 % en b2b), no llega con P = 1 el 4–6 % (10–12 %) y pierde en el acto el 7–11 % (16–26 %). El drive al fondo con P = 1 sigue ganando el 75–92 %, pero con P = 0,85 cae al 54–64 % (92–97 % en b2b). El drive medio suave también pierde fuerza en el Definidor y el Completo.
+- **Leer mal cuesta como en set21.** Con una lectura errada en el drive al fondo, el rival pierde en el acto el 14–21 %, frente al 7–10 % cuando acierta. El error de largo, que ahora siempre es «leer drop», es el más caro.
+- **X pesa poco**, como en set21: de 100 a 200 ms, el drive con P = 1 baja 1–10 pp más; con P = 0,85 no hay una diferencia clara.
+- **N2 (l1): rompe la banda, por lo mismo que set21.** El novato pierde entre 6,0 y 23,5 pp frente a `main`, y entre 9,4 y 26,3 pp frente a b2b, en las 9 celdas (`n2-delta.txt`). Es lo que se esperaba antes de medir: el novato nunca hace drops, así que todos sus golpes se leen. Por la banda vigente es **parada y reporte, sin recalibrar**.
+
+**Conclusión.**
+- Leer solo los golpes largos hace lo que pedía SC-Lead en la batería: el rival anticipa el drive y el globo, y el drop del humano queda como hoy.
+- Para el novato de N2 no cambia nada frente a set21: l1 endurece al rival 23–26 pp, cinco veces lo que permite la banda (≤ 5). La lectura de golpes largos castiga justo al jugador que solo pega largo, que es el novato.
+- Ninguna variante medida queda en la banda (l1 fuera; l2 sin N2, detenida), así que no redacto la pregunta de sí o no para Rafael.
+- Si se quisiera seguir, las palancas no son X: que la lectura le ahorre al rival solo parte de su reacción, o que dependa del nivel (por ejemplo, apagada en Fácil). Serían otro experimento, con otros valores, y no los hago aquí.
+
+### Riesgos y lo que elegí yo
+
+- **Detención.** Me detuve por el criterio de la moneda que yo mismo declaré. La causa probable es que el criterio supone muestras independientes (ver la hipótesis), no un defecto de la moneda, pero no está probado. Si SC-PM o Rafael dan por buena la explicación, el N2 de l2 se corre desde `df70e80` con el árbol limpio (`scripts/measure-deep-defense.sh l2 n2`). Por cómo salió l1, lo esperable es que l2 también rompa la banda.
+- **Señal del swing elegida por mí:** `P` ≥ `PowerMedium` y que no sea un boast. En la batería y en N2 da lo mismo que clasificar por la línea (el humano no hace boasts ni rectos bajos fuertes). En el juego real, un drop con el tirón largo contaría como largo, y un drive con el tirón corto, como corto. Eso es parte del juego («disimular»), pero no está medido.
+- **Moneda nueva:** el error de timing del humano siembra la moneda. Con un humano sin ruido de timing (`DeltaMs` = 0) vuelve el sesgo de set21. En el juego real el timing siempre varía.
+- **Lo demás de set21 sigue igual:** el rival sale sin reacción, lee la intención ideal (sin el error de timing), y el plan vacío lo deja quieto. Todo está solo en `RallySim`: el juego real (`RallyDirector`) no lo lee. El bot solo juega recto.
+- **Hashes.**
+  - RallyParams: `c932fc94ec91` con los campos neutros (en la cabeza final, `1c72619`, el código es idéntico a `35a9f05`), `0cbb811942de` en l1 y `46308cf9a0b9` en l2. En `main` es `ebf8f717f8c5`.
+  - Defaults `207da8f2c636` y SimulationKey sin cambios.
+- **Revisión.** El código lo implementó un subagente Sonnet dirigido por mí, así que la revisión no es independiente. Falta la revisión cruzada de Codex.
+- **Excepción de la regla.** La lectura del swing rompe «el rival lee solo la pelota» por la excepción de Rafael para este experimento. La rama no se fusiona y `main` no cambia.
+- **Lo que faltó del encargo:** el N2 de l2 (detenido). La pregunta para Rafael no va porque ninguna variante medida quedó en la banda.
