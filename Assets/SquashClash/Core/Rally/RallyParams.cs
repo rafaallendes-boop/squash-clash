@@ -106,7 +106,7 @@ namespace SquashClash.Core.Rally
         // [EXPERIMENTO] set21 (27 nov; local branch, never shipped). The rival reads the human's swing: RivalSwingReadLeadMs (real ms; 0 = off,
         // today's behaviour) before the human's contact it runs to where the intended shot will land; RivalSwingMisreadP is the probability
         // that read is wrong (direction or length), only used when the lead is > 0.
-        public double RivalSwingReadLeadMs=0,RivalSwingMisreadP=0;
+        public double RivalSwingReadLeadMs=100,RivalSwingMisreadP=.25;
         public string Hash
         {
             get
