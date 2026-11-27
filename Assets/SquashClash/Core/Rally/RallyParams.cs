@@ -102,7 +102,7 @@ namespace SquashClash.Core.Rally
         public double BoastWeightFondo=0,BoastWeightShooter=-.5,BoastWeightAllRound=0;
         // [EXPERIMENTO] set17 (27 nov; local branch, never shipped). Metres: when > 0, after its own stroke the rival whose ball bounces deep
         // (z >= StyleCoverBounceZ) recovers to T.x -/+ shift towards the side of that bounce, at its style's wait depth. 0 = today's behaviour.
-        public double RivalRecoverySideShift=1.6;
+        public double RivalRecoverySideShift=0;
         public string Hash
         {
             get
