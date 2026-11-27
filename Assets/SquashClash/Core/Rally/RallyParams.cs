@@ -21,7 +21,7 @@ namespace SquashClash.Core.Rally
         public double WeightWindow=1.5,WindowMarginCapS=.09;
         public double BodyWallMargin=.35,PlanAttempts=6;
         // Waiting positions (spec 9.2, 11.4). The lateral offset only keeps both bodies readable at the T.
-        public double HumanWaitBehindT=0,RivalWaitBehindT=.5,WaitLateralOffset=.4;
+        public double HumanWaitBehindT=0,RivalWaitBehindT=1.25,WaitLateralOffset=.4;
         // Neutral launch (spec 15): a soft feed to the front wall that comes back to the receiver's side.
         public double LaunchHeight=1.2,LaunchZ=6.5,LaunchLateral=.9,LaunchTargetHeight=2.3,LaunchHorizontalSpeed=13;
         // Rally loop.
@@ -83,7 +83,7 @@ namespace SquashClash.Core.Rally
         public double StyleFondoVolleyBias=-1,StyleFondoVolleyMinKS=.1,StyleFondoCoverDepth=-1;
         public double StyleShooterLongWeight=.5,StyleShooterAwayWeight=.8,StyleShooterTimeWeight=.3,StyleShooterDropWeight=1.6,StyleShooterRiskAversion=.6;
         public double StyleShooterDefenseSlackS=.06,StyleShooterDropMinSlackS=.3,StyleShooterDropZoneAhead=1,StyleShooterAttackBase=.8,StyleShooterAttackAhead=.4;
-        public double StyleShooterVolleyBias=.8,StyleShooterVolleyMinKS=.05,StyleShooterVolleySteal=0,StyleShooterWaitBehindT=0,StyleShooterCoverDepth=-1;
+        public double StyleShooterVolleyBias=.8,StyleShooterVolleyMinKS=.05,StyleShooterVolleySteal=0,StyleShooterWaitBehindT=.75,StyleShooterCoverDepth=-1;
         public double StyleAllRoundLongWeight=1,StyleAllRoundAwayWeight=.8,StyleAllRoundTimeWeight=.6,StyleAllRoundDropWeight=1.1,StyleAllRoundRiskAversion=1.1;
         public double StyleAllRoundDefenseSlackS=.12,StyleAllRoundDropMinSlackS=.3,StyleAllRoundDropZoneAhead=0,StyleAllRoundAttackBase=0,StyleAllRoundAttackAhead=1;
         // Difficulty per style (Claude, 19 nov, after search02): the styles differ in strength, so each (style, level) scales the
@@ -92,7 +92,7 @@ namespace SquashClash.Core.Rally
         public double StyleNoiseKFondoEasy=1.5,StyleNoiseKFondoMedium=1.75,StyleNoiseKFondoHard=2.5;
         public double StyleNoiseKShooterEasy=1.25,StyleNoiseKShooterMedium=1,StyleNoiseKShooterHard=1;
         public double StyleNoiseKAllRoundEasy=1.5,StyleNoiseKAllRoundMedium=1.5,StyleNoiseKAllRoundHard=1.25;
-        public double StyleAllRoundVolleyBias=-.8,StyleAllRoundVolleyMinKS=.08,StyleAllRoundVolleySteal=.6,StyleAllRoundWaitBehindT=.2,StyleAllRoundCoverDepth=-1;
+        public double StyleAllRoundVolleyBias=-.8,StyleAllRoundVolleyMinKS=.08,StyleAllRoundVolleySteal=.6,StyleAllRoundWaitBehindT=.95,StyleAllRoundCoverDepth=-1;
         // Two-wall shot (design 2026-11-20-boast-predeclaration, section 5). BoastRival: the rival may boast (DEV «Dos paredes», on by default
         // since round two: M4 within 3 pp with new seeds; the human's
         // gesture is always on). Open from the back quarter (contact z at or beyond BoastBackFraction of the length) with the contact within
