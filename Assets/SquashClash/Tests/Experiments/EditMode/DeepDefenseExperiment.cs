@@ -46,9 +46,13 @@ namespace SquashClash.Experiments.EditMode
             private int Distance(ShotOption o)=>(o.Line==line?0:o.Line==ShotLine.Drop||line==ShotLine.Drop?8:4)+2*Math.Abs((int)o.Height-(int)height)+(o.Power==power?0:1);
         }
         // What a receiver sees when it decides: the incoming ball's own first bounce (z), glass on the fly before it, and its plan slack.
+        private struct Call{public BallState Ball;public ReceptionPlan Plan;public AiShot Shot;}
+        private struct Rec{public BallState Ball;public Vector2 Target,Wait;}
         private class Tap : IRallyBrain
         {
             public readonly List<(double bz,bool glass,double slack)> Rows=new List<(double,bool,double)>();public int Lunges;
+            // set19: what each Decide saw and returned (recorded only, nothing is changed).
+            public readonly List<Call> Calls=new List<Call>();
             private readonly IRallyBrain inner;private readonly RallyContext ctx;
             public Tap(IRallyBrain inner,RallyContext ctx){this.inner=inner;this.ctx=ctx;}
             public int PerceptionSteps=>inner.PerceptionSteps;
@@ -56,7 +60,8 @@ namespace SquashClash.Experiments.EditMode
             public virtual AiShot Decide(in AiObservation o,in ReceptionPlan own)
             {
                 var (bz,glass)=Bounce(ctx,o.Ball);Rows.Add((bz,glass,own.SlackS));if(own.Reason=="lunge")Lunges++;
-                return inner.Decide(o,own);
+                var shot=inner.Decide(o,own);Calls.Add(new Call{Ball=o.Ball,Plan=own,Shot=shot});
+                return shot;
             }
         }
         // set15 rival time: what the rival had at the human's contact (t0), copied without touching the sim (its body, rules and energy).
@@ -67,7 +72,7 @@ namespace SquashClash.Experiments.EditMode
         private sealed class RivalTap : Tap,IRallyPositioning,IRallyServer
         {
             private readonly RivalAi rival;private readonly RallyContext context;
-            public RallySim Sim;public bool Snapping;public readonly List<Snap> Snaps=new List<Snap>();
+            public RallySim Sim;public bool Snapping;public readonly List<Snap> Snaps=new List<Snap>();public readonly List<Rec> Recoveries=new List<Rec>();
             public RivalTap(RivalAi rival,RallyContext ctx):base(rival,ctx){this.rival=rival;context=ctx;}
             public override AiShot Decide(in AiObservation o,in ReceptionPlan own)
             {
@@ -77,7 +82,7 @@ namespace SquashClash.Experiments.EditMode
                 return base.Decide(o,own);
             }
             public Vector2 Wait=>rival.Wait;
-            public Vector2 Recovery(in AiObservation a)=>rival.Recovery(a);
+            public Vector2 Recovery(in AiObservation a){var target=rival.Recovery(a);Recoveries.Add(new Rec{Ball=a.Ball,Target=target,Wait=rival.Wait});return target;}
             public ServeType ChooseServe(ServiceBox box)=>rival.ChooseServe(box);
         }
         private static (double z,bool glass) Bounce(RallyContext ctx,BallState ball)
@@ -166,6 +171,80 @@ namespace SquashClash.Experiments.EditMode
                 +"\t"+S(ctx,lBase)+"\t"+S(ctx,lNoReact)+"\t"+S(ctx,lNoPerc)+"\t"+S(ctx,lNoDelay)+"\t"+S(ctx,lRest)+"\t"+S(ctx,lRestInst)+"\t"+S(ctx,lCore)
                 +"\t"+F(lCore.Distance/vmax)+"\t"+noiseless.Reason+"\t"+F(Vector2.Distance(x.Plan.Stance,noiseless.Stance))+"\t"+x.Plan.Reason;
         }
+        // set19: the first bounce of a ball after the front wall (Persistent contacts skipped) and whether it touched the back wall on the fly or after it.
+        private struct Land{public bool Found;public double X,Z;public bool BackFly,BackAfter;}
+        private static Land Landing(Trajectory t)
+        {
+            var l=new Land{X=double.NaN,Z=double.NaN};bool front=false;int floors=0;
+            foreach(var c in t.Contacts)
+            {
+                if(c.Persistent)continue;
+                if(c.Surface==SurfaceId.FrontWall){front=true;continue;}
+                if(!front)continue;
+                if(c.Surface==SurfaceId.BackWall){if(floors==0)l.BackFly=true;else if(floors==1)l.BackAfter=true;}
+                else if(c.Surface==SurfaceId.Floor){if(++floors==1){l.Found=true;l.X=c.Point.x;l.Z=c.Point.z;}else break;}
+            }
+            return l;
+        }
+        private static string N(double v)=>double.IsNaN(v)?"nan":F(v);
+        private static string ShotClass(ShotLine line,ShotHeight height)=>line==ShotLine.Boast?"boast":line==ShotLine.Drop?"drop":height==ShotHeight.High?"globo":line==ShotLine.Straight?"drive-recto":line==ShotLine.Cross?"cruzado":"otro";
+        // One rival reception that reached a drive: the rows after "level style intent match k" of defense.tsv.
+        private static string DefenseRow(RallyContext ctx,RallyOutcome o,int k,Call rv,Call? next)
+        {
+            var x=o.Receptions[k];var plan=rv.Plan;var shot=rv.Shot;
+            bool vol=shot.Volley&&plan.Volley.Exists;var cp=vol?plan.Volley.Plan:plan.Contact;
+            double reach=double.NaN,window=double.NaN,release=double.NaN;
+            if(cp.Exists&&cp.TStarStep>=0)
+            {
+                double rate=ctx.StepHz*ctx.Tempo;
+                reach=cp.Body.Reach-(cp.PStar-new Vector3(plan.BodyAtContact.x,cp.Body.ReferenceHeight,plan.BodyAtContact.y)).magnitude;
+                window=(cp.KOut.Steps-cp.KIn.Steps)*1000/rate;
+                double lower=(cp.KIn.Steps-cp.TStarStep)*1000/rate,upper=(cp.KOut.Steps-cp.TStarStep)*1000/rate;
+                release=Math.Min(shot.DeltaMs-lower,upper-shot.DeltaMs);
+            }
+            string bx="nan",bz="nan",sd="nan",bf="nan",ba="nan",len="none",tight="none",hs="nan",hr="none",hside="nan";
+            if(x.Result==ReceptionResult.Contact&&next.HasValue)
+            {
+                var l=Landing(ctx.Predict(next.Value.Ball));var hl=o.Receptions[k+1];
+                bf=l.BackFly?"1":"0";ba=l.BackAfter?"1":"0";hs=N(next.Value.Plan.SlackS);hr=hl.Result.ToString();
+                if(l.Found)
+                {
+                    double side=Math.Min(l.X,ctx.Court.Width-l.X);bx=N(l.X);bz=N(l.Z);sd=N(side);
+                    len=l.Z<ctx.T.y?"corto":l.BackFly?"fondo-vuelo":l.BackAfter?"largo":"medio";
+                    tight=side<=0.5?"pegado":side<=1.0?"intermedio":"suelto";
+                }
+                if(hl.Who==PlayerId.Human&&hl.Result==ReceptionResult.Contact)hside=N(Math.Min(hl.ContactPoint.x,ctx.Court.Width-hl.ContactPoint.x));
+            }
+            string winner=o.Winner.HasValue?o.Winner.Value.ToString():"none";
+            int lostNow=o.Winner==PlayerId.Human&&o.Receptions.Count-1<=k+2?1:0;
+            return string.Join("\t",new[]{x.Result.ToString(),x.Line.ToString(),x.Height.ToString(),x.Power.ToString(),x.Volley?"1":"0",x.Defensive?"1":"0",ShotClass(x.Line,x.Height),
+                N(plan.SlackS),plan.Reason,N(reach),N(window),N(release),bx,bz,sd,bf,ba,len,tight,hs,hr,hside,winner,lostNow.ToString(C),(o.Receptions.Count-1-k).ToString(C)});
+        }
+        // One rival reception that did not reach a drive (set15 population): the rival's previous ball, where Recovery sent it and what that left.
+        private static string PrevRow(RallyContext ctx,RallyOutcome o,int k,Snap snap,List<Rec> recs,int[] recIdx,Vector2 wait)
+        {
+            string origin=k==1&&o.Server==PlayerId.Rival?"serve":k>=2&&recIdx[k-2]>=0?"stroke":"other";
+            double pbx=double.NaN,pbz=double.NaN;Vector2? target=null;
+            if(origin=="stroke")
+            {
+                var rec=recs[recIdx[k-2]];target=rec.Target;
+                foreach(var c in ctx.Predict(rec.Ball).Contacts)if(c.Surface==SurfaceId.Floor){pbx=c.Point.x;pbz=c.Point.z;break;}
+            }
+            else if(origin=="serve")target=wait;
+            var land=Landing(snap.Trajectory);
+            bool shifted=origin=="stroke"&&!double.IsNaN(pbz)&&pbz>=ctx.Params.StyleCoverBounceZ&&ctx.Params.RivalRecoverySideShift>0;
+            int sameSide=-1;
+            if(shifted&&land.Found)sameSide=Math.Sign(target.Value.x-ctx.T.x)==Math.Sign(land.X-ctx.T.x)?1:0;
+            double dist=target.HasValue?Vector2.Distance(snap.Body.Position,target.Value):double.NaN;
+            int full=snap.React+snap.Perception+snap.Extra;
+            string LateAt(Vector2 at)=>S(ctx,Deficit(ctx,snap.Trajectory,snap.Rules,new PlayerBody(PlayerId.Rival,at,ctx.Move){MovementFactor=snap.Body.MovementFactor},full));
+            string lateBase=S(ctx,Deficit(ctx,snap.Trajectory,snap.Rules,snap.Body,full));
+            string lateTarget=target.HasValue?LateAt(target.Value):"nan";
+            string lateSide=land.Found?LateAt(ctx.ClampBody(new Vector2(ctx.T.x+(land.X<ctx.T.x?-1f:1f)*(float)ctx.Params.RivalRecoverySideShift,wait.y))):"nan";
+            string diag=origin=="serve"?"serve":origin=="other"?"other":!shifted?"short":sameSide==0?"other-side":dist>0.25?"not-arrived":"arrived-short";
+            return string.Join("\t",new[]{origin,N(pbx),N(pbz),target.HasValue?N(target.Value.x):"nan",target.HasValue?N(target.Value.y):"nan",N(wait.x),N(wait.y),shifted?"1":"0",N(land.X),N(land.Z),
+                sameSide<0?"nan":sameSide.ToString(C),N(snap.Body.Position.x),N(snap.Body.Position.y),N(dist),N(snap.Body.Speed),lateBase,lateTarget,lateSide,diag});
+        }
         private static readonly (string name,ShotLine line,ShotHeight height,ShotPower power,float? p)[] Intents=
         {
             ("fondo-max",ShotLine.Straight,ShotHeight.Mid,ShotPower.Strong,1f),
@@ -190,12 +269,18 @@ namespace SquashClash.Experiments.EditMode
             File.WriteAllText(Path.Combine(dir,"source.tsv"),"defaults\trallyParams\tunity\tmatches\tseeds\n"+preset.Hash+"\t"+ctx.Params.Hash+"\t"+Application.unityVersion+"\t"+matches+"\t"+seeds+"\n",Utf8);
             using(var times=new StreamWriter(Path.Combine(dir,"rival-time.tsv"),false,Utf8))
             using(var cells=new StreamWriter(Path.Combine(dir,"cells.tsv"),false,Utf8))
+            using(var defW=new StreamWriter(Path.Combine(dir,"defense.tsv"),false,Utf8))
+            using(var prevW=new StreamWriter(Path.Combine(dir,"prev-ball.tsv"),false,Utf8))
+            using(var dcW=new StreamWriter(Path.Combine(dir,"defense-cells.tsv"),false,Utf8))
             {
+                defW.WriteLine("level\tstyle\tintent\tmatch\tk\tresult\tline\theight\tpower\tvolley\tdefensive\tshotClass\trivalSlackS\tplanReason\treachMargin\twindowMs\treleaseMarginMs\tbounceX\tbounceZ\tsideDist\tbackFly\tbackAfter\tlengthClass\ttightClass\thumanSlackS\thumanResult\thumanContactSideDist\tpointWinner\tlostNow\treceptionsAfter");
+                prevW.WriteLine("level\tstyle\tintent\tmatch\tk\tresult\torigin\tprevBounceX\tprevBounceZ\ttargetX\ttargetZ\twaitX\twaitZ\tshifted\tdriveBounceX\tdriveBounceZ\tsameSide\tbodyX\tbodyZ\tdistToTarget\tbodySpeed\tlateBaseS\tlateAtTargetS\tlateDriveSideS\tdiagClass");
+                dcW.WriteLine("level\tstyle\tintent\tdefenseRows\tprevBallRows\tnewMismatch");
                 times.WriteLine("level\tstyle\tintent\tmatch\tresult\tdrive\tserve\tv0\tv0Toward\tdistance\tuntilS\treactSteps\tperceptionSteps\textraSteps\tlateBaseS\tlateNoReactS\tlateNoPerceptionS\tlateNoDelayS\tlateRestS\tlateRestInstantS\tlateCoreS\tcruiseS\tnoiselessReason\tstanceError\tplanReason");
                 cells.WriteLine("level\tstyle\tintent\tpoints\thuman\tshare\trivalContacts\tdefensiveContacts\tdefBounceN\tdefBounceMedianZ\tdefGlassFly\thumanSlackMedianS\trivalVolleys\trivalDefensiveVolleys\tmismatch\tseconds\trivalReceptions\trivalNoReach\thumanWinsNoReach\trivalLunges");
                 foreach(var level in levels)foreach(var style in new[]{RivalStyleId.Fondista,RivalStyleId.Definidor,RivalStyleId.Completo})foreach(var intent in Intents)
                 {
-                    var watch=Stopwatch.StartNew();int points=0,human=0,mismatch=0,contacts=0,defensive=0,glass=0,volleys=0,defVolleys=0,rivalReceptions=0,noReach=0,winsNoReach=0,lunges=0;
+                    var watch=Stopwatch.StartNew();int points=0,human=0,mismatch=0,contacts=0,defensive=0,glass=0,volleys=0,defVolleys=0,rivalReceptions=0,noReach=0,winsNoReach=0,lunges=0,defRows=0,prevRows=0,newMismatch=0;
                     var bounce=new List<double>();var slack=new List<double>();
                     for(int m=0;m<matches;m++)
                     {
@@ -207,13 +292,27 @@ namespace SquashClash.Experiments.EditMode
                             var score=new MatchScore(7,2,m%2==0?PlayerId.Human:PlayerId.Rival);int replays=0;
                             while(!score.Finished)
                             {
-                                h.Rows.Clear();r.Rows.Clear();r.Snaps.Clear();
+                                h.Rows.Clear();r.Rows.Clear();r.Snaps.Clear();h.Calls.Clear();r.Calls.Clear();r.Recoveries.Clear();
                                 var o=sim.PlayPoint(score.Server,score.Box);
                                 // The receivers alternate from the serve's receiver; a human row k+1 describes the rival's ball k.
                                 var seen=new List<(double bz,bool glass,double slack)?>();int hi=0,ri=0;var who=o.FirstReceiver;
                                 for(int k=0;k<o.Receptions.Count;k++){if(who==PlayerId.Human)seen.Add(hi<h.Rows.Count?h.Rows[hi]:((double,bool,double)?)null);else seen.Add(null);if(who==PlayerId.Human)hi++;else ri++;who=who.Other();}
                                 bool ok=hi==h.Rows.Count&&ri==r.Rows.Count&&o.Receptions.Select((x,k)=>x.Who==(k%2==0?o.FirstReceiver:o.FirstReceiver.Other())).All(b=>b);
                                 if(!ok)mismatch++;
+                                // set19: Decide calls align with each brain's receptions, Recovery calls with the rival's Contact receptions.
+                                bool aligned=false;int[] hIdx=null,recIdx=null;
+                                if(ok)
+                                {
+                                    int nHum=0,nRec=0;hIdx=new int[o.Receptions.Count];recIdx=new int[o.Receptions.Count];
+                                    for(int k=0;k<o.Receptions.Count;k++)
+                                    {
+                                        hIdx[k]=-1;recIdx[k]=-1;
+                                        if(o.Receptions[k].Who==PlayerId.Human)hIdx[k]=nHum++;
+                                        else if(o.Receptions[k].Result==ReceptionResult.Contact)recIdx[k]=nRec++;
+                                    }
+                                    aligned=nRec==r.Recoveries.Count&&nHum==h.Calls.Count&&r.Calls.Count==r.Rows.Count;
+                                    if(!aligned)newMismatch++;
+                                }
                                 else for(int k=0;k<o.Receptions.Count;k++)
                                 {
                                     var x=o.Receptions[k];
@@ -237,6 +336,21 @@ namespace SquashClash.Experiments.EditMode
                                         bool serve=k==0&&o.Server==PlayerId.Human;
                                         bool drive=k>0&&o.Receptions[k-1].Who==PlayerId.Human&&o.Receptions[k-1].Result==ReceptionResult.Contact&&o.Receptions[k-1].Line==ShotLine.Straight&&o.Receptions[k-1].Height==ShotHeight.Mid&&o.Receptions[k-1].Power==ShotPower.Strong;
                                         times.WriteLine(level+"\t"+style+"\t"+intent.name+"\t"+m+"\t"+x.Result+"\t"+(drive?1:0)+"\t"+(serve?1:0)+"\t"+TimeRow(ctx,snap));
+                                        if(aligned&&drive){prevW.WriteLine(level+"\t"+style+"\t"+intent.name+"\t"+m+"\t"+k+"\t"+x.Result+"\t"+PrevRow(ctx,o,k,snap,r.Recoveries,recIdx,r.Wait));prevRows++;}
+                                    }
+                                }
+                                // set19: the rival's receptions that reached a drive to the back: how it defended.
+                                if(aligned&&r.Snapping)
+                                {
+                                    int rj=0;
+                                    for(int k=0;k<o.Receptions.Count;k++)
+                                    {
+                                        var x=o.Receptions[k];if(x.Who!=PlayerId.Rival)continue;var rv=r.Calls[rj++];
+                                        if(k==0||x.Result==ReceptionResult.Unreachable||x.Result==ReceptionResult.NoSwing)continue;
+                                        var pv=o.Receptions[k-1];
+                                        if(pv.Who!=PlayerId.Human||pv.Result!=ReceptionResult.Contact||pv.Line!=ShotLine.Straight||pv.Height!=ShotHeight.Mid||pv.Power!=ShotPower.Strong)continue;
+                                        Call? next=k+1<o.Receptions.Count?h.Calls[hIdx[k+1]]:(Call?)null;
+                                        defW.WriteLine(level+"\t"+style+"\t"+intent.name+"\t"+m+"\t"+k+"\t"+DefenseRow(ctx,o,k,rv,next));defRows++;
                                     }
                                 }
                                 if(o.Winner==PlayerId.Human&&o.Receptions.Count>0){var last=o.Receptions[o.Receptions.Count-1];if(last.Who==PlayerId.Rival&&(last.Result==ReceptionResult.Unreachable||last.Result==ReceptionResult.NoSwing))winsNoReach++;}
@@ -247,7 +361,8 @@ namespace SquashClash.Experiments.EditMode
                         }
                     }
                     cells.WriteLine(level+"\t"+style+"\t"+intent.name+"\t"+points+"\t"+human+"\t"+F(points==0?0:human/(double)points)+"\t"+contacts+"\t"+defensive+"\t"+bounce.Count+"\t"+F(Median(bounce))+"\t"+glass+"\t"+F(Median(slack))+"\t"+volleys+"\t"+defVolleys+"\t"+mismatch+"\t"+F(watch.Elapsed.TotalSeconds)+"\t"+rivalReceptions+"\t"+noReach+"\t"+winsNoReach+"\t"+lunges);
-                    cells.Flush();times.Flush();
+                    dcW.WriteLine(level+"\t"+style+"\t"+intent.name+"\t"+defRows+"\t"+prevRows+"\t"+newMismatch);
+                    cells.Flush();times.Flush();defW.Flush();prevW.Flush();dcW.Flush();
                 }
             }
         }
