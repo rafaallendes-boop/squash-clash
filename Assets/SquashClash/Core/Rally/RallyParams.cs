@@ -103,6 +103,10 @@ namespace SquashClash.Core.Rally
         // [EXPERIMENTO] set17 (27 nov; local branch, never shipped). Metres: when > 0, after its own stroke the rival whose ball bounces deep
         // (z >= StyleCoverBounceZ) recovers to T.x -/+ shift towards the side of that bounce, at its style's wait depth. 0 = today's behaviour.
         public double RivalRecoverySideShift=1.6;
+        // [EXPERIMENTO] set21 (27 nov; local branch, never shipped). The rival reads the human's swing: RivalSwingReadLeadMs (real ms; 0 = off,
+        // today's behaviour) before the human's contact it runs to where the intended shot will land; RivalSwingMisreadP is the probability
+        // that read is wrong (direction or length), only used when the lead is > 0.
+        public double RivalSwingReadLeadMs=0,RivalSwingMisreadP=0;
         public string Hash
         {
             get

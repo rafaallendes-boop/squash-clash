@@ -98,6 +98,8 @@ namespace SquashClash.Core.Rally
         public PlayerBody Rival {get;}
         public BallState Ball=>ball.State;
         public ReceptionPlan LastPlan {get;private set;}
+        // [EXPERIMENTO] set21: one entry per read human stroke (empty while RivalSwingReadLeadMs is 0); cleared at the start of every Run.
+        public readonly List<SwingRead> SwingReads=new List<SwingRead>();
         public RallySim(RallyContext context,IRallyBrain human,IRallyBrain rival)
         {
             this.context=context??throw new ArgumentNullException(nameof(context));
@@ -158,6 +160,7 @@ namespace SquashClash.Core.Rally
         private RallyOutcome Run(RallyOutcome outcome,PlayerId firstReceiver)
         {
             hasPending=false;hasRedirect=false;pendingSprintCost=0;Human.Sprint=1;
+            SwingReads.Clear();
             long cap=context.Steps(context.Params.MaxRallySeconds),steps=0;long stall=context.Steps(context.Params.StallSeconds),flight=0;int shots=0;
             BeginReception(firstReceiver,outcome);
             while(!Rules.Closed)
