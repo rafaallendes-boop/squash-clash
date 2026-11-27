@@ -44,4 +44,65 @@ Geometría de hoy (Medio). El T está en z = 5,465 m (la pared del fondo está e
 
 ## Resultados
 
-Pendiente.
+Medido el 27 nov hasta las 12:35 Chile, en el orden declarado. Evidencia en [`docs/validation/evidence/2026-11-27-posicion-espera/`](../validation/evidence/2026-11-27-posicion-espera/):
+- `metrics-<corrida>.tsv`, con su `-source.tsv` y su `-head.txt`;
+- `rival-time-<corrida>.tsv`;
+- `n2-<variante>.tsv`, con su `-source.tsv` y su `-head.txt`;
+- `reach-summary.md` y `rival-time-summary.md`, que salen de `summarize-rival-reach.py` y `summarize-rival-time.py`;
+- `tests.txt`.
+
+**ANTES.** El arnés corrió en esta rama con los defaults neutros (`base01`, head `13307c1`, RallyParams `1c0f918ad1a0` con el campo nuevo en 0). Reproduce `metrics-base01.tsv` de `sc-tiempo-rival` en las 12 celdas, en todas las columnas salvo la del tiempo de reloj. `rival-time.tsv` también sale idéntico byte a byte. Por eso N2 ANTES es `n2-before01-from-6086074.tsv`, como estaba declarado.
+
+**Ruido.** Una celda con P = 1 tiene ~740 puntos, así que el error estándar ronda 0,8 pp y las diferencias de hasta ±2 pp son ruido.
+
+### Tabla
+
+Antes (Fondista / Definidor / Completo):
+- Fondo con P = 1: 94,0 / 97,0 / 94,7.
+- Fondo con P = 0,85: 94,0 / 96,2 / 92,8.
+- El rival no llega (P = 1): 12,9 / 21,2 / 18,6 %.
+- Holgura del humano: 0,89 / 0,85 / 0,89 s.
+- **Drop del humano: 53,1 / 25,8 / 43,6 %.**
+
+| Variante (head) | Drive al fondo P = 1, después | P = 0,85, después | Rival no llega (P = 1), % | Holgura del humano (s) | **Drop del humano %** | N2 máx \|Δ\| (pp) | ¿Dentro de la banda? |
+|---|---|---|---|---|---|---|---|
+| **b1a** +0,75 m atrás (`ac7bb6a`) | 94,6 / 99,2 / 93,1 | 77,1 / 82,4 / 91,3 | 10,8 / 21,7 / 12,6 | 0,85 / 0,88 / 0,86 | **65,9 / 58,8 / 71,3** | 14,54 (Definidor Difícil) | No |
+| **b1b** +1,5 m atrás (`ebba25e`) | 86,1 / 96,6 / 91,7 | 60,6 / 62,4 / 62,2 | 8,3 / 16,4 / 11,9 | 0,77 / 0,81 / 0,76 | **82,1 / 83,5 / 77,5** | 16,44 (Definidor Difícil) | No |
+| **b2a** 0,8 m hacia el lado (`2af18ae`) | 94,0 / 96,0 / 94,2 | 93,7 / 95,9 / 92,5 | 11,8 / 11,0 / 12,6 | 0,90 / 0,78 / 0,88 | 55,0 / 25,5 / 38,6 | 2,13 (Fondista Fácil) | Sí |
+| **b2b** 1,6 m hacia el lado (`5b10a9f`) | 90,4 / 96,4 / 93,8 | 92,1 / 96,7 / 94,6 | 11,6 / 9,9 / 12,3 | 0,88 / 0,68 / 0,88 | 48,6 / 22,8 / 34,8 | 4,60 (Completo Difícil) | Sí |
+
+### Lectura
+
+- **Ninguna variante baja de forma clara el drive al fondo con P = 1.** Los únicos cambios fuera del ruido son el del Fondista en b1b (−7,9 pp) y en b2b (−3,6 pp). El Definidor sigue en 96–99 % con las cuatro variantes.
+- **b1, esperar más atrás, dispara el drop del humano.** El Definidor pasa de 25,8 a 58,8 % con b1a y a 83,5 % con b1b. El Completo pasa de 43,6 a 71,3 % y a 77,5 %. Además rompe N2: el novato pierde hasta 14,5 y 16,4 pp. Lo único que baja con b1 es el drive con P = 0,85, a ~61 % con b1b. Esa baja no viene de que el rival llegue más (con P = 0,85 el rival ya casi siempre llegaba, ~1 % no llega), sino de que devuelve mejor desde atrás. Hay un estilo que no cumple el patrón: el Completo en b1a, que se queda en 91,3 %.
+- **b2, recuperarse hacia el lado, es la única dentro de la banda, y no dispara el drop** (incluso lo baja algo en el Completo, de 43,6 a 34,8 % con b2b). El rival llega bastante más (el Definidor no llega en un 9,9 %, frente al 21,2 % de antes), pero el humano gana el punto igual. La holgura del humano tras la defensa del rival casi no baja (0,85→0,68 s en el Definidor con b2b; en el resto, ±0,03 s). **El rival llega, pero su defensa no complica al humano.**
+- **Las recepciones que siguen sin llegar no se acercan.** Con b2b, la distancia mediana sigue en 3,8–3,9 m y el déficit en ~0,6 s, igual que antes (`rival-time-summary.md`). Mi hipótesis, no verificada: en esas recepciones el desplazamiento no se aplica o no alcanza (por ejemplo, si la pelota anterior del rival fue corta, si picó del otro lado o si venía del saque). El arnés no registra la pelota anterior, así que no lo puedo confirmar.
+- **El novato en N2 gana un poco con b2** (hasta +4,6 pp en el Completo en Difícil). Es coherente con que el rival deje abierta la otra mitad: el novato no juega solo recto como el bot.
+
+**Conclusión.** Cambiar dónde espera o se recupera el rival no basta para que llegue al drive al fondo con P = 1, al menos en estos valores. b1 no sirve: abre el drop y rompe N2. b2 está en la banda y el rival llega más, pero el humano sigue ganando esos puntos, porque la defensa a la que llega es pobre. Solo en el Fondista con b2b el drive baja algo (−3,6 pp).
+
+### Preguntas para Rafael (no implementadas)
+
+1. **Calidad de la defensa.** Con b2 el rival llega, pero pierde el punto igual. ¿Quieres medir por qué la defensa a la que llega le deja al humano ~0,9 s de holgura? Por ejemplo, el golpe que elige o la calidad del contacto cuando llega justo. Se mediría sobre b2, sin leer al humano.
+2. **Las recepciones que no se acercan.** ¿Instrumento la pelota anterior del rival en las recepciones que siguen sin llegar? Serviría para saber si el desplazamiento de b2 no se aplicó o si no alcanza.
+
+### Riesgos y lo que elegí yo
+
+- **b2 abre el cruzado.** La batería no lo prueba porque el bot solo juega recto. En N2 el novato gana hasta +4,6 pp (dentro de la banda). Con un jugador real que cruce, el efecto puede ser mayor.
+- **b1 también mueve la espera del saque.** `RivalWaitBehindT` es además la espera común del rival para los cerebros sin estilo. No afecta a la batería, pero sí cambiaría el juego si se adoptara.
+- **Hashes.** `RivalRecoverySideShift` cambia el hash de RallyParams aunque esté en 0 (`1c0f918ad1a0` frente a `ebf8f717f8c5` en `main`). En esta rama fallan las 7 pruebas existentes que anclan proyecciones del hash. No las toqué. Defaults `207da8f2c636` y SimulationKey sin cambios.
+- **Pruebas** (`tests.txt`):
+  - RED en `4ac9983`: 2 de 5 fallan por aserción. GREEN: 5/5.
+  - El GREEN corrió con la implementación todavía sin commitear sobre `4ac9983`. Se commiteó igual en `c65edd7`.
+  - La suite `SquashClash.Core.Tests.Rally` en `c65edd7` da 298/305: fallan solo las 7 anclas de hash.
+  - El commit final `12e55d7` vuelve a los defaults neutros y tiene el mismo código que `c65edd7`.
+- **Mismatch.** En b1b, una celda (Fondista, `fondo-085`) tiene 2 puntos con mismatch de alineación, de 1 131. Quedan fuera solo de las estadísticas de contacto; el % de puntos no cambia.
+- **Valores que elegí yo** (justificados en la declaración):
+  - b1a +0,75 m, una espera habitual.
+  - b1b +1,5 m, una cota.
+  - b2a 0,8 m.
+  - b2b 1,6 m, una cota.
+  - En b2 el desplazamiento se mide desde T.x, sin el desfase de 0,4 m que solo sirve para que no se superpongan los cuerpos, para que sea simétrico en los dos lados.
+- **Revisión.** El código lo implementó un subagente Sonnet dirigido por mí, así que la revisión no es independiente. Falta la revisión cruzada de Codex.
+- **Un fallo mío, sin efecto.** El primer lanzamiento de mi script de variantes falló antes de aplicar ni medir nada, porque el bash de macOS no tiene arreglos asociativos. Lo corregí y lo relancé. No es un reintento de una medición.
+- **Lo que faltó:** nada del encargo.
