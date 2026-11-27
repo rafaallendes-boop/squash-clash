@@ -299,6 +299,16 @@ namespace SquashClash.Experiments.EditMode
                                 for(int k=0;k<o.Receptions.Count;k++){if(who==PlayerId.Human)seen.Add(hi<h.Rows.Count?h.Rows[hi]:((double,bool,double)?)null);else seen.Add(null);if(who==PlayerId.Human)hi++;else ri++;who=who.Other();}
                                 bool ok=hi==h.Rows.Count&&ri==r.Rows.Count&&o.Receptions.Select((x,k)=>x.Who==(k%2==0?o.FirstReceiver:o.FirstReceiver.Other())).All(b=>b);
                                 if(!ok)mismatch++;
+                                else for(int k=0;k<o.Receptions.Count;k++)
+                                {
+                                    var x=o.Receptions[k];
+                                    if(x.Who!=PlayerId.Rival||x.Result!=ReceptionResult.Contact)continue;
+                                    contacts++;if(x.Volley){volleys++;if(x.Defensive)defVolleys++;}
+                                    if(!x.Defensive)continue;
+                                    defensive++;
+                                    if(k+1<o.Receptions.Count&&seen[k+1].HasValue&&!double.IsNaN(seen[k+1].Value.bz))
+                                    {var row=seen[k+1].Value;bounce.Add(row.bz);slack.Add(row.slack);if(row.glass)glass++;}
+                                }
                                 // set19: Decide calls align with each brain's receptions, Recovery calls with the rival's Contact receptions.
                                 bool aligned=false;int[] hIdx=null,recIdx=null;
                                 if(ok)
@@ -312,16 +322,6 @@ namespace SquashClash.Experiments.EditMode
                                     }
                                     aligned=nRec==r.Recoveries.Count&&nHum==h.Calls.Count&&r.Calls.Count==r.Rows.Count;
                                     if(!aligned)newMismatch++;
-                                }
-                                else for(int k=0;k<o.Receptions.Count;k++)
-                                {
-                                    var x=o.Receptions[k];
-                                    if(x.Who!=PlayerId.Rival||x.Result!=ReceptionResult.Contact)continue;
-                                    contacts++;if(x.Volley){volleys++;if(x.Defensive)defVolleys++;}
-                                    if(!x.Defensive)continue;
-                                    defensive++;
-                                    if(k+1<o.Receptions.Count&&seen[k+1].HasValue&&!double.IsNaN(seen[k+1].Value.bz))
-                                    {var row=seen[k+1].Value;bounce.Add(row.bz);slack.Add(row.slack);if(row.glass)glass++;}
                                 }
                                 // Case (a): the rival did not get to the ball (Unreachable or NoSwing), counted over every reception of the rival.
                                 foreach(var x in o.Receptions)if(x.Who==PlayerId.Rival){rivalReceptions++;if(x.Result==ReceptionResult.Unreachable||x.Result==ReceptionResult.NoSwing)noReach++;}

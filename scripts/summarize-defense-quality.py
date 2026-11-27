@@ -70,7 +70,7 @@ def tight(r):
 
 
 def healthy(r):
-    return (r['shotClass'] == 'globo' and r['lengthClass'] in ('largo', 'medio')) or (r['shotClass'] == 'drive-recto' and r['lengthClass'] == 'largo' and r['tightClass'] == 'pegado')
+    return (r['shotClass'] == 'globo' and r['lengthClass'] == 'largo') or (r['shotClass'] == 'drive-recto' and r['lengthClass'] == 'largo' and r['tightClass'] == 'pegado')
 
 
 def lost(r):
@@ -117,7 +117,7 @@ def main(run):
     table(["Estilo", "Golpe", "n", "% de contactos", "holgura humano med (s)", "% perdidos", "% en el acto", "% corto", "% largo", "% pegado"], body)
 
     print("## 3. Sano frente a resto (solo contactos, ambas intenciones)\n")
-    print("Sano: globo que bota medio o largo, o drive recto largo y pegado.\n")
+    print("Sano: globo que bota largo (llega al fondo tras botar), o drive recto largo y pegado.\n")
     body = []
     for s in STYLES:
         c = [r for r in dfn if r['style'] == s and r['result'] == 'Contact']
