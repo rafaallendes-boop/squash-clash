@@ -253,7 +253,7 @@ namespace SquashClash.Core.Rally
             var log=new ReceptionLog(who,result,decision.Result==ShotResult.Perfect,plan.Reachable,shot.Defensive,decision.DeltaMs,plan.SlackS,shot.Option,decision.ContactStep,decision.Reason,fatigueReception:f,volley:useVolley,volleyOffered:offeredLog,volleySprintFactor:chosenSprint);
             if(result!=ReceptionResult.Contact){outcome.Receptions.Add(log);return;}
             hasPending=true;pendingStep=decision.ContactStep;pendingShot=shot;pendingWho=who;pendingLog=log;
-            int lead=who==PlayerId.Human?RivalSwingRead.LeadSteps(context):0;long at=decision.ContactStep-trajectory.States[0].Step;
+            int lead=who==PlayerId.Human&&(context.Params.RivalSwingReadLongOnly<=0||RivalSwingRead.LongSwing(context,shot))?RivalSwingRead.LeadSteps(context):0;long at=decision.ContactStep-trajectory.States[0].Step;
             if(lead>0&&at>=0&&at<trajectory.States.Count)
             {
                 readContactStep=decision.ContactStep;readContactPoint=trajectory.States[(int)at].Position;readShot=shot;readStep=Math.Max(state.Step,decision.ContactStep-lead);

@@ -25,12 +25,14 @@ namespace SquashClash.Core.Rally
         public static SwingReadKind Kind(RallyContext c,long contactStep,Vector3 contactPoint,double deltaMs)
         {
             long seed=unchecked(contactStep*0x9E3779B1L+Bits(contactPoint.x)*73856093L^Bits(contactPoint.y)*19349663L^Bits(contactPoint.z)*83492791L);
+            // [EXPERIMENTO] set22: the human stroke's timing error also seeds the coin, so a repeated situation no longer draws the same coin.
+            seed^=unchecked(BitConverter.DoubleToInt64Bits(deltaMs)*0x2545F4914F6CDD1DL);
             var rng=new RallyRng(seed);
             if(rng.NextDouble()>=c.Params.RivalSwingMisreadP)return SwingReadKind.Right;
             return rng.NextDouble()<.5?SwingReadKind.Direction:SwingReadKind.Length;
         }
-        // [EXPERIMENTO] set22: the swing signal (RED stub: everything is long).
-        public static bool LongSwing(RallyContext c,in AiShot shot)=>true;
+        // [EXPERIMENTO] set22: the swing signal, from the stroke's own size P and its aim at the front wall (a boast is short); never the predicted ball.
+        public static bool LongSwing(RallyContext c,in AiShot shot)=>shot.Option.Line!=ShotLine.Boast&&!shot.Option.Side.Exists&&shot.P>=c.Params.PowerMedium;
         public static bool IsLong(in AiShot shot)=>shot.Option.Line!=ShotLine.Drop&&shot.Option.Line!=ShotLine.Boast&&shot.Option.Height!=ShotHeight.Low;
         // Where the rival runs for the read intention; null when that shot cannot be solved. stepsUntilContact: steps left before the human contact.
         public static Vector2? Stance(RallyContext c,Vector3 contact,in AiShot shot,SwingReadKind kind,PlayerBody rival,long contactStep,int stepsUntilContact)
@@ -38,7 +40,7 @@ namespace SquashClash.Core.Rally
             ShotSolution solution;
             if(kind==SwingReadKind.Length)
             {
-                bool isLong=IsLong(shot);ShotOption? read=null;
+                bool isLong=c.Params.RivalSwingReadLongOnly>0||IsLong(shot);ShotOption? read=null;
                 foreach(var o in ShotOptions.Build(c,contact))
                     if(isLong?o.Line==ShotLine.Drop&&o.Height==ShotHeight.Low&&o.Power==ShotPower.Medium:o.Line==ShotLine.Straight&&o.Height==ShotHeight.Mid&&o.Power==ShotPower.Strong){read=o;break;}
                 if(!read.HasValue)return null;
