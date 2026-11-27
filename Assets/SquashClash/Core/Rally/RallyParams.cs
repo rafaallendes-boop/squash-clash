@@ -100,6 +100,9 @@ namespace SquashClash.Core.Rally
         // weight per style (Fondista least, Definidor most).
         public double BoastRival=1,BoastBackFraction=.75,BoastWallMax=2,BoastAheadZ=1,BoastAimLow=.9,BoastAimMid=1.5;
         public double BoastWeightFondo=0,BoastWeightShooter=-.5,BoastWeightAllRound=0;
+        // [EXPERIMENTO] set17 (27 nov; local branch, never shipped). Metres: when > 0, after its own stroke the rival whose ball bounces deep
+        // (z >= StyleCoverBounceZ) recovers to T.x -/+ shift towards the side of that bounce, at its style's wait depth. 0 = today's behaviour.
+        public double RivalRecoverySideShift=0;
         public string Hash
         {
             get
