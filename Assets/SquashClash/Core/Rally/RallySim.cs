@@ -86,6 +86,8 @@ namespace SquashClash.Core.Rally
         private CausalReference pendingCausal;
         private bool hasPending;private long pendingStep;private AiShot pendingShot;private PlayerId pendingWho;private ReceptionLog pendingLog;
         private int planVersion;private long launchId;
+        // [EXPERIMENTO] set21: the one scheduled read of the rival (the human's swing); never set while RivalSwingReadLeadMs is 0.
+        private bool hasRead;private long readStep,readContactStep;private Vector3 readContactPoint;private AiShot readShot;
         // Volley v2.x for a touching human brain (IRallyVolleyToucher): the body turns to the chosen stance at the touch step.
         private bool hasRedirect;private long redirectStep;private Vector2 redirectStance;private int redirectDelay;private float redirectSprint=1;private double pendingSprintCost;
         public FatigueState HumanEnergy {get;private set;}
@@ -160,13 +162,14 @@ namespace SquashClash.Core.Rally
         private RallyOutcome Run(RallyOutcome outcome,PlayerId firstReceiver)
         {
             hasPending=false;hasRedirect=false;pendingSprintCost=0;Human.Sprint=1;
-            SwingReads.Clear();
+            SwingReads.Clear();hasRead=false;
             long cap=context.Steps(context.Params.MaxRallySeconds),steps=0;long stall=context.Steps(context.Params.StallSeconds),flight=0;int shots=0;
             BeginReception(firstReceiver,outcome);
             while(!Rules.Closed)
             {
                 if(steps>=cap){outcome.End=RallyEnd.StepCap;break;}
                 if(Rules.Shots>=context.Params.MaxShots){outcome.End=RallyEnd.ShotCap;break;}
+                if(hasRead&&ball.State.Step==readStep)Read(outcome,ball.State.Step);
                 if(hasPending&&ball.State.Step==pendingStep)Strike(outcome);
                 if(hasRedirect&&ball.State.Step==redirectStep)
                 {hasRedirect=false;Human.Sprint=redirectSprint;Human.MoveTo(redirectStance,redirectDelay,BodyPhase.Approaching,BodyPhase.Set);}
@@ -250,6 +253,20 @@ namespace SquashClash.Core.Rally
             var log=new ReceptionLog(who,result,decision.Result==ShotResult.Perfect,plan.Reachable,shot.Defensive,decision.DeltaMs,plan.SlackS,shot.Option,decision.ContactStep,decision.Reason,fatigueReception:f,volley:useVolley,volleyOffered:offeredLog,volleySprintFactor:chosenSprint);
             if(result!=ReceptionResult.Contact){outcome.Receptions.Add(log);return;}
             hasPending=true;pendingStep=decision.ContactStep;pendingShot=shot;pendingWho=who;pendingLog=log;
+            int lead=who==PlayerId.Human?RivalSwingRead.LeadSteps(context):0;long at=decision.ContactStep-trajectory.States[0].Step;
+            if(lead>0&&at>=0&&at<trajectory.States.Count)
+            {
+                readContactStep=decision.ContactStep;readContactPoint=trajectory.States[(int)at].Position;readShot=shot;readStep=Math.Max(state.Step,decision.ContactStep-lead);
+                if(readStep<=state.Step)Read(outcome,state.Step);else hasRead=true;
+            }
+        }
+        // [EXPERIMENTO] set21: the rival reads the human's swing and runs to where the intended shot will land, with no reaction delay.
+        private void Read(RallyOutcome outcome,long now)
+        {
+            hasRead=false;var kind=RivalSwingRead.Kind(context,readContactStep,readContactPoint);var before=Rival.Position;
+            var stance=RivalSwingRead.Stance(context,readContactPoint,readShot,kind,Rival,readContactStep,(int)(readContactStep-now));
+            if(stance.HasValue)Rival.MoveTo(stance.Value,0,BodyPhase.Approaching,BodyPhase.Set);
+            SwingReads.Add(new SwingRead(outcome.Receptions.Count+1,kind,(int)(readContactStep-now),now,readContactStep,stance.HasValue,stance??default,before));
         }
         private void Strike(RallyOutcome outcome)
         {

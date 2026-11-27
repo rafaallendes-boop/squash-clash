@@ -19,10 +19,37 @@ namespace SquashClash.Core.Rally
     }
     public static class RivalSwingRead
     {
-        // RED stubs: the real bodies come in the next commit.
-        public static int LeadSteps(RallyContext c)=>0;
-        public static SwingReadKind Kind(RallyContext c,long contactStep,Vector3 contactPoint)=>SwingReadKind.Right;
+        public static int LeadSteps(RallyContext c)=>c.Params.RivalSwingReadLeadMs<=0?0:(int)Math.Round(c.Params.RivalSwingReadLeadMs/1000*c.Tempo*c.StepHz);
+        private static int Bits(float f)=>BitConverter.ToInt32(BitConverter.GetBytes(f),0);
+        // Own generator seeded by the contact, so no brain's RNG is ever consumed.
+        public static SwingReadKind Kind(RallyContext c,long contactStep,Vector3 contactPoint)
+        {
+            long seed=unchecked(contactStep*0x9E3779B1L+Bits(contactPoint.x)*73856093L^Bits(contactPoint.y)*19349663L^Bits(contactPoint.z)*83492791L);
+            var rng=new RallyRng(seed);
+            if(rng.NextDouble()>=c.Params.RivalSwingMisreadP)return SwingReadKind.Right;
+            return rng.NextDouble()<.5?SwingReadKind.Direction:SwingReadKind.Length;
+        }
         public static bool IsLong(in AiShot shot)=>shot.Option.Line!=ShotLine.Drop&&shot.Option.Line!=ShotLine.Boast&&shot.Option.Height!=ShotHeight.Low;
-        public static Vector2? Stance(RallyContext c,Vector3 contact,in AiShot shot,SwingReadKind kind,PlayerBody rival,long contactStep,int stepsUntilContact)=>null;
+        // Where the rival runs for the read intention; null when that shot cannot be solved. stepsUntilContact: steps left before the human contact.
+        public static Vector2? Stance(RallyContext c,Vector3 contact,in AiShot shot,SwingReadKind kind,PlayerBody rival,long contactStep,int stepsUntilContact)
+        {
+            ShotSolution solution;
+            if(kind==SwingReadKind.Length)
+            {
+                bool isLong=IsLong(shot);ShotOption? read=null;
+                foreach(var o in ShotOptions.Build(c,contact))
+                    if(isLong?o.Line==ShotLine.Drop&&o.Height==ShotHeight.Low&&o.Power==ShotPower.Medium:o.Line==ShotLine.Straight&&o.Height==ShotHeight.Mid&&o.Power==ShotPower.Strong){read=o;break;}
+                if(!read.HasValue)return null;
+                solution=RallyContact.SolveIntention(c,contact,read.Value.Aim,read.Value.P);
+            }
+            else solution=shot.Option.Side.Exists?RallyContact.SolveBoastIntention(c,contact,shot.Option.Side,shot.P,out _):RallyContact.SolveIntention(c,contact,shot.Aim,shot.P);
+            if(!solution.Solved)return null;
+            var t=c.Predict(new BallState{Position=contact,Velocity=solution.Velocity,Step=contactStep});
+            var rules=c.NewRules();rules.Begin(PlayerId.Human,PlayerId.Rival);
+            // A negative elapsedSteps is the time still left before the trajectory starts.
+            var plan=ReceptionPlanner.Plan(c,t,rules,rival,0,0,default,-stepsUntilContact);
+            var stance=plan.Stance;
+            return kind==SwingReadKind.Direction?c.ClampBody(new Vector2(c.Court.Width-stance.x,stance.y)):stance;
+        }
     }
 }
