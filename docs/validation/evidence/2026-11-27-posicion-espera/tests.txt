@@ -1,0 +1,12 @@
+set17-red head 4ac9983970a6c35022212982e57398987b08efdd {'result': 'Failed(Child)', 'total': '5', 'passed': '3', 'failed': '2'}
+  FAILED SquashClash.Core.Tests.Rally.RivalRecoverySideExperimentTests.WithShift_ADeepBallOnTheLeftOfTheT_RecoversToTheLeftAtTheStyleWaitDepth
+  FAILED SquashClash.Core.Tests.Rally.RivalRecoverySideExperimentTests.WithShift_ADeepBallOnTheRightOfTheT_RecoversToTheRightAtTheStyleWaitDepth
+set17-green head 4ac9983970a6c35022212982e57398987b08efdd {'result': 'Passed', 'total': '5', 'passed': '5', 'failed': '0'}
+set17-suite head c65edd790148d8a9c3f38aa1b42bd15ec7c37994 {'result': 'Failed(Child)', 'total': '305', 'passed': '298', 'failed': '7'}
+  FAILED SquashClash.Core.Tests.Rally.FatigueFeelTests.RallyParams_ProjectionWithoutTheSprintFatigueField_IsTheCurrentHash
+  FAILED SquashClash.Core.Tests.Rally.RivalAiTests.RallyParams_ProjectionWithoutStyleFields_IsTheCurrentHash
+  FAILED SquashClash.Core.Tests.Rally.ServeReceptionMarginTests.DefaultMargin_IsChosenValue_AndItsProjectionPreservesEveryPriorParameter
+  FAILED SquashClash.Core.Tests.Rally.ServeTests.HumanServePauseDefaultsToThreeSeconds
+  FAILED SquashClash.Core.Tests.Rally.VolleyEnergyTests.RallyParams_VolleyEnergyCost_IsTwoPoints_AndOnlyTheRallyParamsHashMoves
+  FAILED SquashClash.Core.Tests.Rally.VolleyRallyTests.RallyParams_ProjectionWithoutVolleyFields_IsTheCurrentHash
+  FAILED SquashClash.Core.Tests.Rally.VolleyV2Tests.Defaults_AreV2WithTheServeVolley_AndOnlyTheRallyParamsHashMoves
