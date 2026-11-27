@@ -153,7 +153,7 @@ Declarado: p = 0,25. Criterio: cada grupo con n ≥ 500 dentro de 0,25 ± 3·√
 - **El drop del humano vuelve entero.** Con l1 y l2 el drop gana lo mismo que con b2b (48,6 / 22,8 / 34,8 %), punto por punto: el rival no lee ningún drop, así que esas celdas reproducen el control exacto. En set21 el drop había caído al 2–7 %.
 - **En los golpes largos, el rival gana lo mismo que en set21.** Llega con holgura (0,06–0,23 s), solo llega estirado el 14–17 % de las veces (39–83 % en b2b), no llega con P = 1 el 4–6 % (10–12 %) y pierde en el acto el 7–11 % (16–26 %). El drive al fondo con P = 1 sigue ganando el 75–92 %, pero con P = 0,85 cae al 54–64 % (92–97 % en b2b). El drive medio suave también pierde fuerza en el Definidor y el Completo.
 - **Leer mal cuesta como en set21.** Con una lectura errada en el drive al fondo, el rival pierde en el acto el 14–21 %, frente al 7–10 % cuando acierta. El error de largo, que ahora siempre es «leer drop», es el más caro.
-- **X pesa poco**, como en set21: de 100 a 200 ms, el drive con P = 1 baja 1–10 pp más; con P = 0,85 no hay una diferencia clara.
+- **X pesa poco**, como en set21: de 100 a 200 ms, el drive con P = 1 baja 5–10 pp más; con P = 0,85 no hay una diferencia clara.
 - **N2 (l1): rompe la banda, por lo mismo que set21.** El novato pierde entre 6,0 y 23,5 pp frente a `main`, y entre 9,4 y 26,3 pp frente a b2b, en las 9 celdas (`n2-delta.txt`). Es lo que se esperaba antes de medir: el novato nunca hace drops, así que todos sus golpes se leen. Por la banda vigente es **parada y reporte, sin recalibrar**.
 
 **Conclusión.**
