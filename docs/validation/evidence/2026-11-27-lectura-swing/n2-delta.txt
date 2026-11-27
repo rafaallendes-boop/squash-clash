@@ -1,0 +1,11 @@
+Δ del novato (fase confirm), pp, frente a n2-before01-from-6086074.tsv (main) y n2-b2b.tsv (sc-posicion-espera). Banda: > 5 pp = parada.
+## s1
+main max|Δ|=24.28 ('Medium', 'Definidor')
+  E/Com -23.89 E/Def -22.22 E/Fon -19.06 H/Com -9.68 H/Def -23.91 H/Fon -6.64 M/Com -16.94 M/Def -24.28 M/Fon -16.97
+b2b max|Δ|=26.34 ('Hard', 'Definidor')
+  E/Com -25.22 E/Def -25.01 E/Fon -19.48 H/Com -14.28 H/Def -26.34 H/Fon -10.02 M/Com -21.33 M/Def -25.73 M/Fon -18.82
+## s2
+main max|Δ|=23.35 ('Easy', 'Definidor')
+  E/Com -21.43 E/Def -23.35 E/Fon -18.56 H/Com -9.44 H/Def -22.65 H/Fon -6.73 M/Com -16.64 M/Def -21.19 M/Fon -18.25
+b2b max|Δ|=26.14 ('Easy', 'Definidor')
+  E/Com -22.76 E/Def -26.14 E/Fon -18.98 H/Com -14.04 H/Def -25.08 H/Fon -10.11 M/Com -21.03 M/Def -22.63 M/Fon -20.11

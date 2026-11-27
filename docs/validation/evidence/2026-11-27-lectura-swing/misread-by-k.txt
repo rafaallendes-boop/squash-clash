@@ -1,0 +1,21 @@
+% de lecturas erradas por posición del golpe en el punto (k = índice de la recepción del rival que sigue). Declarado: p = 0,25.
+## s1
+k<=2 (devolución del saque)  corto-drop   n=  2184 erradas=45.6 %
+k<=2 (devolución del saque)  fondo-085    n=  3387 erradas=36.4 %
+k<=2 (devolución del saque)  fondo-max    n=  2259 erradas=31.3 %
+k<=2 (devolución del saque)  medio-suave  n=  2575 erradas=41.9 %
+k>2 (resto del rally)        corto-drop   n=  2133 erradas=24.0 %
+k>2 (resto del rally)        fondo-085    n= 53182 erradas=24.9 %
+k>2 (resto del rally)        fondo-max    n= 13417 erradas=25.4 %
+k>2 (resto del rally)        medio-suave  n= 26976 erradas=25.0 %
+lecturas en situaciones repetidas (misma intención, k y cuerpo): 72100 de 106113
+## s2
+k<=2 (devolución del saque)  corto-drop   n=  2193 erradas=45.7 %
+k<=2 (devolución del saque)  fondo-085    n=  3386 erradas=36.7 %
+k<=2 (devolución del saque)  fondo-max    n=  2507 erradas=32.2 %
+k<=2 (devolución del saque)  medio-suave  n=  2611 erradas=43.4 %
+k>2 (resto del rally)        corto-drop   n=  2195 erradas=25.5 %
+k>2 (resto del rally)        fondo-085    n= 51056 erradas=24.7 %
+k>2 (resto del rally)        fondo-max    n= 14863 erradas=25.0 %
+k>2 (resto del rally)        medio-suave  n= 25930 erradas=25.1 %
+lecturas en situaciones repetidas (misma intención, k y cuerpo): 64536 de 104741

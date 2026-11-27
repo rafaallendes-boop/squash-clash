@@ -1,0 +1,27 @@
+Pruebas (scripts/rival-time-tests.sh, EditMode, ensamblado SquashClash.Core.Tests). Salida copiada de la consola.
+
+red head b77cce7e4024fb94426affc7a84a441636d205c9 (filtro SquashClash.Core.Tests.Rally.RivalSwingReadExperimentTests), sin errores CS
+RESULT {'result': 'Failed(Child)', 'total': '7', 'passed': '1', 'failed': '6'}
+  Failed APlannedRead_TurnsTheRivalBodyToTheReadStance_UntilItsOwnReactionEnds | Expected: greater than 0
+  Failed DirectionRead_IsTheMirrorOfTheRightRead | Expected: greater than 0
+  Failed Lead200_AlwaysMisread_OnlyDirectionAndLengthAppear_BothKinds | Expected: not <empty>
+  Failed Lead200_NoMisread_EveryReadHumanStrokeHasOneRightRead | stroke 1
+  Failed LeadSteps_FollowTheDeclaredFormula | Expected: 8
+  Failed SameSeeds_GiveTheSameReads | Expected: not <empty>
+
+green head 6da123e001ec75050c60c1ce586aced3a33438ae (filtro SquashClash.Core.Tests.Rally, la suite completa), sin errores CS
+RESULT {'result': 'Failed(Child)', 'total': '312', 'passed': '300', 'failed': '12'}
+  Las 7 pruebas nuevas pasan. Las 12 que fallan son las mismas 12 que fallan en la base 1fb50c7 (293/305; lista en
+  docs/validation/evidence/2026-11-27-globo-fuerte/tests.txt de la rama sc-globo-fuerte):
+  BoastRivalTests.On_RallySim_AppliesRivalBoastsFromTheBackQuarterOnly
+  FatigueFeelTests.RallyParams_ProjectionWithoutTheSprintFatigueField_IsTheCurrentHash
+  RivalAiTests.Fondista_WithVolleyAndCoverOff_ReplaysTheFrozenRallySimSignatures
+  RivalAiTests.RallyParams_ProjectionWithoutStyleFields_IsTheCurrentHash
+  RivalAiTests.Recovery_AfterAnOwnShortShot_FollowsTheStyle_AndAfterALongOne_IsTheStyleWait
+  RivalRecoverySideExperimentTests.Default_IsZero_AndTheRecoveryAfterADeepBallIsTheStyleWait
+  ServeReceptionMarginTests.DefaultMargin_IsChosenValue_AndItsProjectionPreservesEveryPriorParameter
+  ServeTests.HumanServePauseDefaultsToThreeSeconds
+  VolleyEnergyTests.RallyParams_VolleyEnergyCost_IsTwoPoints_AndOnlyTheRallyParamsHashMoves
+  VolleyRallyTests.RallyParams_ProjectionWithoutVolleyFields_IsTheCurrentHash
+  VolleyV21Tests.RallyReceptions_ATouchAtSOrSPrime_AlwaysKeepsTheOfferedStance
+  VolleyV2Tests.Defaults_AreV2WithTheServeVolley_AndOnlyTheRallyParamsHashMoves
