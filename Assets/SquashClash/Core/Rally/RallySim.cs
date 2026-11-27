@@ -263,7 +263,7 @@ namespace SquashClash.Core.Rally
         // [EXPERIMENTO] set21: the rival reads the human's swing and runs to where the intended shot will land, with no reaction delay.
         private void Read(RallyOutcome outcome,long now)
         {
-            hasRead=false;var kind=RivalSwingRead.Kind(context,readContactStep,readContactPoint);var before=Rival.Position;
+            hasRead=false;var kind=RivalSwingRead.Kind(context,readContactStep,readContactPoint,readShot.DeltaMs);var before=Rival.Position;
             var stance=RivalSwingRead.Stance(context,readContactPoint,readShot,kind,Rival,readContactStep,(int)(readContactStep-now));
             if(stance.HasValue)Rival.MoveTo(stance.Value,0,BodyPhase.Approaching,BodyPhase.Set);
             SwingReads.Add(new SwingRead(outcome.Receptions.Count+1,kind,(int)(readContactStep-now),now,readContactStep,stance.HasValue,stance??default,before));

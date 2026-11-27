@@ -22,13 +22,15 @@ namespace SquashClash.Core.Rally
         public static int LeadSteps(RallyContext c)=>c.Params.RivalSwingReadLeadMs<=0?0:(int)Math.Round(c.Params.RivalSwingReadLeadMs/1000*c.Tempo*c.StepHz);
         private static int Bits(float f)=>BitConverter.ToInt32(BitConverter.GetBytes(f),0);
         // Own generator seeded by the contact, so no brain's RNG is ever consumed.
-        public static SwingReadKind Kind(RallyContext c,long contactStep,Vector3 contactPoint)
+        public static SwingReadKind Kind(RallyContext c,long contactStep,Vector3 contactPoint,double deltaMs)
         {
             long seed=unchecked(contactStep*0x9E3779B1L+Bits(contactPoint.x)*73856093L^Bits(contactPoint.y)*19349663L^Bits(contactPoint.z)*83492791L);
             var rng=new RallyRng(seed);
             if(rng.NextDouble()>=c.Params.RivalSwingMisreadP)return SwingReadKind.Right;
             return rng.NextDouble()<.5?SwingReadKind.Direction:SwingReadKind.Length;
         }
+        // [EXPERIMENTO] set22: the swing signal (RED stub: everything is long).
+        public static bool LongSwing(RallyContext c,in AiShot shot)=>true;
         public static bool IsLong(in AiShot shot)=>shot.Option.Line!=ShotLine.Drop&&shot.Option.Line!=ShotLine.Boast&&shot.Option.Height!=ShotHeight.Low;
         // Where the rival runs for the read intention; null when that shot cannot be solved. stepsUntilContact: steps left before the human contact.
         public static Vector2? Stance(RallyContext c,Vector3 contact,in AiShot shot,SwingReadKind kind,PlayerBody rival,long contactStep,int stepsUntilContact)
