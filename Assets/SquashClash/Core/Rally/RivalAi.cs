@@ -88,14 +88,17 @@ namespace SquashClash.Core.Rally
         public Vector2 Wait=>context.ClampBody(context.T+new Vector2((float)context.Params.WaitLateralOffset,(float)Style.WaitBehindT));
         public Vector2 Recovery(in AiObservation afterOwnStroke)
         {
-            var wait=Wait;double depth=Style.CoverDepth;
-            if(depth==0)return wait;
+            var wait=Wait;double depth=Style.CoverDepth,shift=context.Params.RivalRecoverySideShift;
+            if(depth==0&&shift==0)return wait;
             // The shared predictor from the ball just struck (symmetric with the human's planner); no opponent intention is read.
             var trajectory=context.Predict(afterOwnStroke.Ball);
             foreach(var c in trajectory.Contacts)
             {
                 if(c.Surface!=SurfaceId.Floor)continue;
-                if(c.Point.z>=context.Params.StyleCoverBounceZ)return wait;
+                // [EXPERIMENTO] set17: a deep own ball sends the rival to the side of its bounce (reads only that ball).
+                if(c.Point.z>=context.Params.StyleCoverBounceZ)
+                    return shift==0?wait:context.ClampBody(new Vector2(context.T.x+(c.Point.x<context.T.x?-1f:1f)*(float)shift,wait.y));
+                if(depth==0)return wait;
                 float x=Mathf.Lerp(context.T.x,c.Point.x,.3f);
                 return context.ClampBody(new Vector2(x,depth<0?context.T.y:Mathf.Min(wait.y,c.Point.z+(float)depth)));
             }
