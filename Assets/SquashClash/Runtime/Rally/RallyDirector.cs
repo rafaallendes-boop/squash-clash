@@ -273,6 +273,8 @@ namespace SquashClash.Runtime.Rally
                 var server=Match.Server;var box=Match.Box;var body=server==PlayerId.Human?Human:Rival;served=server;servedBox=box;
                 committed.BeginServe(server,box);(server==PlayerId.Human?HumanEnergy:RivalEnergy).Strike(0);body.Teleport(ServePlanner.BoxPosition(context,box));
                 body.MoveTo(server==PlayerId.Rival?RivalWait():context.WaitPosition(server),0,BodyPhase.Recovering,BodyPhase.Waiting);
+                // Serve positions (spec 2026-11-26): the receiver's simulated body starts in the opposite back quarter.
+                (server==PlayerId.Human?Rival:Human).Teleport(ServePlanner.ReceiverPosition(context,box));
                 // Serve kinds (design 2026-11-20-serve): the rival by its style, the human by its touch in the pause (the lob without one);
                 // Auto, today's serve, while «Saque nuevo» is off.
                 LastServeType=server==PlayerId.Rival?context.ServeTypeOf(rivalBrain,box):context.ServeKindOn?humanServe??ServeType.Lob:ServeType.Auto;

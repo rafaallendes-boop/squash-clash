@@ -46,11 +46,11 @@ namespace SquashClash.Runtime.Tests
         }
         // Everything seen except the volley: only H1 can show.
         private static void OnlyVolleyLeft()=>Preset(serve:1,boast:2,cross:1);
-        private void StartHints(bool autopilot,long seed=3)
+        private void StartHints(bool autopilot,long seed=3,double volleyEnabled=1)
         {
             flow.ClosePractice();
             rally.Autopilot=autopilot;rally.AutopilotTimingSigmaMs=0;rally.Level=AiLevel.Easy;rally.Seed=seed;rally.StyleOverride=RivalStyleId.Fondista;
-            rally.SetParams(new RallyParams{ServeKindOn=1});
+            rally.SetParams(new RallyParams{ServeKindOn=1,VolleyEnabled=volleyEnabled});
             Assert.That(rally.StartMatch(),Is.True);hud.Hints.BeginMatch();
         }
         private bool ReachGuide()=>Drive(()=>rally.HumanServePause,900);
@@ -263,21 +263,23 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator Abandon_WithAnArmedHint_DoesNotBringItBack_UnlessTheTriggerRepeats()
         {
-            OnlyVolleyLeft();StartHints(false);hud.Hints.ArmForTests(HintId.Volley);rally.StopMode();Refresh();
+            // PO approval, 28 nov: VolleyEnabled=0 in this test's configuration.
+            OnlyVolleyLeft();StartHints(false,volleyEnabled:0);hud.Hints.ArmForTests(HintId.Volley);rally.StopMode();Refresh();
             Assert.That(AnyKey(),Is.True,"only the preset keys");Assert.That(PlayerPrefs.HasKey("sc.hints.volley"),Is.False);
-            StartHints(false);Assert.That(hud.Hints.State(HintId.Volley),Is.EqualTo(HintState.Unseen),"armed hints are not restored");
+            StartHints(false,volleyEnabled:0);Assert.That(hud.Hints.State(HintId.Volley),Is.EqualTo(HintState.Unseen),"armed hints are not restored");
             Assert.That(ReachRivalFirstPause(),Is.True);yield return Settle();Assert.That(hud.Hints.Shown,Is.Null,"nothing shows: the trigger did not repeat");
             Assert.That(Shown(Find("rally-banner-hint")),Is.False);
             hud.Hints.ArmForTests(HintId.Volley);Assert.That(Drive(()=>hud.Hints.Shown==HintId.Volley&&Ordinary,900),Is.True,"when it repeats it arms and shows in the next ordinary pause");
         }
         [UnityTest] public IEnumerator Abandon_AndASceneRestart_KeepTheStoredKeysAndRestoreNothingArmed()
         {
-            Preset(serve:1,boast:2,cross:1);StartHints(false);hud.Hints.ArmForTests(HintId.Volley);
+            // PO approval, 28 nov: VolleyEnabled=0 in this test's configuration.
+            Preset(serve:1,boast:2,cross:1);StartHints(false,volleyEnabled:0);hud.Hints.ArmForTests(HintId.Volley);
             var kept=AllHintKeys.Where(PlayerPrefs.HasKey).ToDictionary(k=>k,k=>PlayerPrefs.GetInt(k));
             yield return Shutdown();yield return Boot(true);
             clock=100;FirstMatchHints.Now=()=>clock;FirstMatchHints.ForceWindowForTests=true;
             foreach(var pair in kept)PlayerPrefs.SetInt(pair.Key,pair.Value);
-            StartHints(false);
+            StartHints(false,volleyEnabled:0);
             Assert.That(hud.Hints.State(HintId.Serve),Is.EqualTo(HintState.Seen));Assert.That(hud.Hints.State(HintId.Boast),Is.EqualTo(HintState.Retired));
             Assert.That(hud.Hints.State(HintId.Volley),Is.EqualTo(HintState.Unseen),"lo armado no se restaura");
             Assert.That(ReachRivalFirstPause(),Is.True);yield return Settle();Assert.That(hud.Hints.Shown,Is.Null);
@@ -285,10 +287,11 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator Abandon_AfterH0WasSeenInTheBanner_NeverShowsItAgain()
         {
-            StartHints(false);Assert.That(ReachRivalFirstPause(),Is.True);yield return Settle();
+            // PO approval, 28 nov: VolleyEnabled=0 in this test's configuration.
+            StartHints(false,volleyEnabled:0);Assert.That(ReachRivalFirstPause(),Is.True);yield return Settle();
             Assert.That(hud.Hints.Shown,Is.EqualTo(HintId.Serve));yield return FadeBannerIn();Assert.That(PlayerPrefs.GetInt("sc.hints.serve"),Is.EqualTo(1));
             rally.StopMode();Refresh();
-            StartHints(false);Assert.That(ReachRivalFirstPause(),Is.True);yield return Settle();
+            StartHints(false,volleyEnabled:0);Assert.That(ReachRivalFirstPause(),Is.True);yield return Settle();
             Assert.That(hud.Hints.Shown,Is.Null);Assert.That(Shown(Find("rally-banner-hint")),Is.False,"not in the banner");
             rally.Autopilot=true;Assert.That(ReachGuide(),Is.True);yield return ShowGuide();Assert.That(Shown(Find("serve-guide-hint")),Is.False,"nor in the guide");
         }
@@ -449,7 +452,8 @@ namespace SquashClash.Runtime.Tests
         }
         [UnityTest] public IEnumerator H0InTheBanner_IfItWasSeenInTheGuide_TheRivalsFirstServePauseShowsNothing()
         {
-            Preset(serve:1);StartHints(false);Assert.That(ReachRivalFirstPause(),Is.True);yield return Settle();
+            // PO approval, 28 nov: VolleyEnabled=0 in this test's configuration.
+            Preset(serve:1);StartHints(false,volleyEnabled:0);Assert.That(ReachRivalFirstPause(),Is.True);yield return Settle();
             Assert.That(hud.Hints.Shown,Is.Null);Assert.That(Shown(Find("rally-banner-hint")),Is.False);
         }
         [UnityTest] public IEnumerator H0InTheBanner_GoesBeforeAnArmedVolley_WhichWaitsForTheNextOrdinaryPause()

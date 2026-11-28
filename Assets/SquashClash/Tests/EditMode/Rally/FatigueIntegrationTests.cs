@@ -20,7 +20,7 @@ namespace SquashClash.Core.Tests.Rally
         {var p=typeof(RallySim).GetProperty(who==PlayerId.Human?"HumanEnergy":"RivalEnergy");Assert.That(p,Is.Not.Null,"RallySim must integrate fatigue");return (FatigueState)p.GetValue(sim);}
         [Test] public void Off_ReplaysTheFrozenMainReference_BitForBit()
         {
-            var ctx=Context(false,new RallyParams{ServeKindOn=0});var rows=File.ReadAllLines(Path.Combine(Application.dataPath,"..","docs/validation/evidence/2026-11-18-g1-a2-complete/fatigue-replay/off/points.tsv")).Skip(1).Select(r=>r.Split('\t')).Where(r=>int.Parse(r[0])<4).ToArray();
+            var ctx=Context(false,new RallyParams{ServeKindOn=0});var rows=File.ReadAllLines(Path.Combine(Application.dataPath,"..","docs/validation/evidence/2026-11-26-posiciones-saque/fatigue-replay/off/points.tsv")).Skip(1).Select(r=>r.Split('\t')).Where(r=>int.Parse(r[0])<4).ToArray();
             for(int i=0;i<4;i++)
             using(var sim=new RallySim(ctx,new BotBrain(ctx,30,20261117+2*i),new FondoAi(ctx,AiDifficulty.For(ctx.Params,AiLevel.Medium),20261118+2*i)))
             {

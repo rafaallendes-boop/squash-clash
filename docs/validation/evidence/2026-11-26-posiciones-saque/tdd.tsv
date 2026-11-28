@@ -1,0 +1,75 @@
+phase	suite	test	result	message
+red	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Right,Auto)	Passed	
+red	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Left,Auto)	Passed	
+red	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Right,Lob)	Passed	
+red	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Left,Lob)	Passed	
+red	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Right,Drive)	Failed	step 90 at height 1.755144   Expected: greater than or equal to 0.300000012f   But was:  0.247692123f
+red	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Left,Drive)	Failed	step 90 at height 1.542299   Expected: greater than or equal to 0.300000012f   But was:  0.259205043f
+red	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Human,Right)	Failed	Expected: less than 9.99999975E-06f   But was:  0.640312493f
+red	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Human,Left)	Failed	Expected: less than 9.99999975E-06f   But was:  0.640312493f
+red	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Rival,Right)	Failed	Expected: less than 9.99999975E-06f   But was:  0.400000095f
+red	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Rival,Left)	Failed	Expected: less than 9.99999975E-06f   But was:  0.400000095f
+red	editmode	Receiver_StandsInTheOppositeBackQuarter(Right,4.8f,7.65f)	Failed	Expected: 4.80000019f +/- 9.99999975E-05f   But was:  3.20000005f
+red	editmode	Receiver_StandsInTheOppositeBackQuarter(Left,1.6f,7.65f)	Failed	Expected: 1.60000002f +/- 9.99999975E-05f   But was:  3.20000005f
+red	editmode	Server_StandsInTheInnerFrontCornerOfItsBox(Right,1.3f,5.79f)	Failed	Expected: 1.29999995f +/- 9.99999975E-05f   But was:  0.800000012f
+red	editmode	Server_StandsInTheInnerFrontCornerOfItsBox(Left,5.1f,5.79f)	Failed	Expected: 5.0999999f +/- 9.99999975E-05f   But was:  5.5999999f
+red	playmode	HumanServes_TheRivalBodyStartsInTheOppositeBackQuarter	Failed	the simulated rival body   Expected: less than 9.99999975E-06f   But was:  0.640312493f
+red	playmode	RivalServes_TheHumanBodyStartsInTheOppositeBackQuarter	Failed	the simulated human body   Expected: less than 9.99999975E-06f   But was:  2.53783894f
+green	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Right,Auto)	Passed	
+green	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Left,Auto)	Passed	
+green	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Right,Lob)	Passed	
+green	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Left,Lob)	Passed	
+green	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Right,Drive)	Failed	System.InvalidOperationException : The Drive serve from the Right box is not valid for this court and physics.
+green	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Left,Drive)	Failed	System.InvalidOperationException : The Drive serve from the Left box is not valid for this court and physics.
+green	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Human,Right)	Passed	
+green	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Human,Left)	Passed	
+green	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Rival,Right)	Passed	
+green	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Rival,Left)	Passed	
+green	editmode	Receiver_StandsInTheOppositeBackQuarter(Right,4.8f,7.65f)	Passed	
+green	editmode	Receiver_StandsInTheOppositeBackQuarter(Left,1.6f,7.65f)	Passed	
+green	editmode	Server_StandsInTheInnerFrontCornerOfItsBox(Right,1.3f,5.79f)	Passed	
+green	editmode	Server_StandsInTheInnerFrontCornerOfItsBox(Left,5.1f,5.79f)	Passed	
+green	playmode	HumanServes_TheRivalBodyStartsInTheOppositeBackQuarter	Passed	
+green	playmode	RivalServes_TheHumanBodyStartsInTheOppositeBackQuarter	Passed	
+red2	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Right,Auto)	Passed	
+red2	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Left,Auto)	Passed	
+red2	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Right,Lob)	Passed	
+red2	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Left,Lob)	Passed	
+red2	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Right,Drive)	Failed	System.InvalidOperationException : The Drive serve from the Right box is not valid for this court and physics.
+red2	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Left,Drive)	Failed	System.InvalidOperationException : The Drive serve from the Left box is not valid for this court and physics.
+red2	editmode	EveryServe_FromTheServerPosition_BouncesWellInsideTheQuarter(Right,Auto)	Passed	
+red2	editmode	EveryServe_FromTheServerPosition_BouncesWellInsideTheQuarter(Left,Auto)	Passed	
+red2	editmode	EveryServe_FromTheServerPosition_BouncesWellInsideTheQuarter(Right,Lob)	Passed	
+red2	editmode	EveryServe_FromTheServerPosition_BouncesWellInsideTheQuarter(Left,Lob)	Passed	
+red2	editmode	EveryServe_FromTheServerPosition_BouncesWellInsideTheQuarter(Right,Drive)	Failed	System.InvalidOperationException : The Drive serve from the Right box is not valid for this court and physics.
+red2	editmode	EveryServe_FromTheServerPosition_BouncesWellInsideTheQuarter(Left,Drive)	Failed	System.InvalidOperationException : The Drive serve from the Left box is not valid for this court and physics.
+red2	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Human,Right)	Passed	
+red2	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Human,Left)	Passed	
+red2	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Rival,Right)	Passed	
+red2	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Rival,Left)	Passed	
+red2	editmode	Receiver_StandsInTheOppositeBackQuarter(Right,4.8f,7.65f)	Passed	
+red2	editmode	Receiver_StandsInTheOppositeBackQuarter(Left,1.6f,7.65f)	Passed	
+red2	editmode	Server_StandsAtTheFrontOfItsBox_NearTheInnerCorner(Right,0.9f,5.79f)	Failed	Expected: 0.899999976f +/- 9.99999975E-05f   But was:  1.29999995f
+red2	editmode	Server_StandsAtTheFrontOfItsBox_NearTheInnerCorner(Left,5.5f,5.79f)	Failed	Expected: 5.5f +/- 9.99999975E-05f   But was:  5.10000038f
+green2	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Right,Auto)	Passed	
+green2	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Left,Auto)	Passed	
+green2	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Right,Lob)	Passed	
+green2	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Left,Lob)	Passed	
+green2	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Right,Drive)	Passed	
+green2	editmode	CrossCourtServe_DoesNotGoThroughTheReceiver(Left,Drive)	Passed	
+green2	editmode	EveryServe_FromTheServerPosition_BouncesWellInsideTheQuarter(Right,Auto)	Passed	
+green2	editmode	EveryServe_FromTheServerPosition_BouncesWellInsideTheQuarter(Left,Auto)	Passed	
+green2	editmode	EveryServe_FromTheServerPosition_BouncesWellInsideTheQuarter(Right,Lob)	Passed	
+green2	editmode	EveryServe_FromTheServerPosition_BouncesWellInsideTheQuarter(Left,Lob)	Passed	
+green2	editmode	EveryServe_FromTheServerPosition_BouncesWellInsideTheQuarter(Right,Drive)	Passed	
+green2	editmode	EveryServe_FromTheServerPosition_BouncesWellInsideTheQuarter(Left,Drive)	Passed	
+green2	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Human,Right)	Passed	
+green2	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Human,Left)	Passed	
+green2	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Rival,Right)	Passed	
+green2	editmode	PlayPoint_TheReceiverStartsTheServeReceptionFromItsPosition(Rival,Left)	Passed	
+green2	editmode	Receiver_StandsInTheOppositeBackQuarter(Right,4.8f,7.65f)	Passed	
+green2	editmode	Receiver_StandsInTheOppositeBackQuarter(Left,1.6f,7.65f)	Passed	
+green2	editmode	Server_StandsAtTheFrontOfItsBox_NearTheInnerCorner(Right,0.9f,5.79f)	Passed	
+green2	editmode	Server_StandsAtTheFrontOfItsBox_NearTheInnerCorner(Left,5.5f,5.79f)	Passed	
+green2	playmode	HumanServes_TheRivalBodyStartsInTheOppositeBackQuarter	Passed	
+green2	playmode	RivalServes_TheHumanBodyStartsInTheOppositeBackQuarter	Passed	

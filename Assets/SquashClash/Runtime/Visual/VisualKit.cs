@@ -181,8 +181,8 @@ namespace SquashClash.Runtime.Visual
         public static Vector3 Joint(Vector3 root,Vector3 target,float l1,float l2,Vector3 hint,out Vector3 end)
         {
             var to=target-root;float d=to.magnitude;
-            if(d<1e-4f){to=Vector3.down;d=1e-4f;}
-            var dir=to/d;float reach=Mathf.Clamp(d,Mathf.Abs(l1-l2)+1e-3f,l1+l2-1e-3f);
+            var dir=d<1e-4f?Vector3.down:to/d;d=Mathf.Max(d,1e-4f);
+            float reach=Mathf.Clamp(d,Mathf.Abs(l1-l2)+1e-3f,l1+l2-1e-3f);
             float a=(l1*l1-l2*l2+reach*reach)/(2*reach),h=Mathf.Sqrt(Mathf.Max(0,l1*l1-a*a));
             var perp=hint-Vector3.Dot(hint,dir)*dir;
             if(perp.sqrMagnitude<1e-8f)perp=Vector3.Cross(dir,Vector3.right);

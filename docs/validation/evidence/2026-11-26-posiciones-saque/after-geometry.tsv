@@ -1,0 +1,11 @@
+origin	box	type	serverX	serverZ	receiverX	receiverZ	minInsideM	heightAtMinM	clearM	through
+code	Right	Auto	0.9	5.79	4.8	7.65	0.6677	0.0419	0.3	0
+code	Right	Lob	0.9	5.79	4.8	7.65	1.4312	1.7994	0.3	0
+proposed	Right	Lob	0.9	5.79	4.8	7.65	1.4312	1.7994	0.3	0
+code	Right	Drive	0.9	5.79	4.8	7.65	1.1672	0.7974	0.3	0
+proposed	Right	Drive	0.9	5.79	4.8	7.65	1.1672	0.7974	0.3	0
+code	Left	Auto	5.5	5.79	1.6	7.65	0.6677	0.0419	0.3	0
+code	Left	Lob	5.5	5.79	1.6	7.65	1.4841	1.499	0.3	0
+proposed	Left	Lob	5.5	5.79	1.6	7.65	1.4841	1.499	0.3	0
+code	Left	Drive	5.5	5.79	1.6	7.65	1.2922	0.52	0.3	0
+proposed	Left	Drive	5.5	5.79	1.6	7.65	1.2922	0.52	0.3	0

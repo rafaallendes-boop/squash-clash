@@ -13,14 +13,27 @@ namespace SquashClash.Core.Rally
     // serve that the serve rules accept, so the same box always gives the same serve.
     public static class ServePlanner
     {
+        // Serve positions (spec 2026-11-26-posiciones-saque): court geometry, not tuning.
+        // The server stands at the front of its box, as close to the inner front corner as the current serve aims allow: from 0.30 m
+        // the drive is a fault; ServePositionsSearch chose the nearest position where Drive, Lob and Auto bounce at least 0.3 m inside
+        // the required quarter in both boxes. The serve leaves from here.
+        public const float ServerFromInnerLine=.7f,ServerBehindShortLine=.3f,ReceiverFromSide=1.6f,ReceiverFromBack=2.1f;
         public static Vector2 BoxPosition(RallyContext context,ServiceBox box)
         {
-            var court=context.Court;float half=court.ServiceBoxInner*.5f;
-            return new Vector2(box==ServiceBox.Right?half:court.Width-half,court.Length-court.ShortLineNearBackEdgeFromBack+half);
+            var court=context.Court;float x=court.ServiceBoxInner-ServerFromInnerLine;
+            return new Vector2(box==ServiceBox.Right?x:court.Width-x,court.Length-court.ShortLineNearBackEdgeFromBack+ServerBehindShortLine);
         }
-        public static BallState Find(RallyContext context,ServiceBox box)
+        // The receiver stands in the back quarter opposite the server's box: the real start of its simulated body.
+        public static Vector2 ReceiverPosition(RallyContext context,ServiceBox box)
         {
-            var p=context.Params;var court=context.Court;var at=BoxPosition(context,box);
+            var court=context.Court;
+            return new Vector2(box==ServiceBox.Right?court.Width-ReceiverFromSide:ReceiverFromSide,court.Length-ReceiverFromBack);
+        }
+        public static BallState Find(RallyContext context,ServiceBox box)=>Find(context,box,BoxPosition(context,box));
+        // The same search from any server position (the serve positions search measures candidate corners with it).
+        public static BallState Find(RallyContext context,ServiceBox box,Vector2 at)
+        {
+            var p=context.Params;var court=context.Court;
             var from=new Vector3(at.x,(float)p.ServeHandHeight,at.y);
             float landX=box==ServiceBox.Right?court.Width-(float)p.ServeLandingFromWall:(float)p.ServeLandingFromWall,depth=(float)p.ServeLandingDepth;
             bool found=false;float best=float.PositiveInfinity;BallState chosen=default;
@@ -40,10 +53,11 @@ namespace SquashClash.Core.Rally
             return chosen;
         }
         // The fixed serve of a kind from a box (RallyParams ServeKind*), checked against the serve rules like Find.
-        public static BallState Typed(RallyContext context,ServiceBox box,ServeType type)
+        public static BallState Typed(RallyContext context,ServiceBox box,ServeType type)=>Typed(context,box,type,BoxPosition(context,box));
+        public static BallState Typed(RallyContext context,ServiceBox box,ServeType type,Vector2 at)
         {
             if(type!=ServeType.Lob&&type!=ServeType.Drive)throw new ArgumentOutOfRangeException(nameof(type));
-            var p=context.Params;var at=BoxPosition(context,box);var from=new Vector3(at.x,(float)p.ServeHandHeight,at.y);
+            var p=context.Params;var from=new Vector3(at.x,(float)p.ServeHandHeight,at.y);
             bool right=box==ServiceBox.Right,lob=type==ServeType.Lob;
             double x=lob?(right?p.ServeKindLobRightAimX:p.ServeKindLobLeftAimX):(right?p.ServeKindDriveRightAimX:p.ServeKindDriveLeftAimX);
             double y=lob?(right?p.ServeKindLobRightAimY:p.ServeKindLobLeftAimY):(right?p.ServeKindDriveRightAimY:p.ServeKindDriveLeftAimY);
