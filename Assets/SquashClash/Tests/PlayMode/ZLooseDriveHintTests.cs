@@ -496,9 +496,12 @@ namespace SquashClash.Runtime.Tests
         }
 
         // Criterion 6. Same rally inputs as front-2 criterion 9. ForceForTests is on in both runs; only Enabled changes.
+        // O3: the on run must actually show the hint. The seed and the cuts stay as they are. No positive means fail.
         private sealed class Trace
         {
             public readonly List<string> Points = new List<string>(), Waits = new List<string>(), Starts = new List<string>();
+            public int LooseDrives;
+            public bool HintShown;
         }
         private Trace RunCompare(bool enabled)
         {
@@ -514,26 +517,70 @@ namespace SquashClash.Runtime.Tests
             rally.RandomStyles = false;
             rally.StyleOverride = RivalStyleId.Fondista;
             rally.SetParams(new RallyParams { ServeKindOn = 1 });
+            bool have = false, volley = false, side = false;
+            float power = 0, aimY = 0;
+            int rivals = 0;
+            long contact = 0;
+            Vector3? bounce = null;
+            Action<ShotRecord> onShot = r =>
+            {
+                bool applied = r.Applied && (r.Result == nameof(ShotResult.Perfect) || r.Result == nameof(ShotResult.Valid));
+                if (!applied) return;
+                have = true;
+                volley = controller.LastOpportunity == Opportunity.Volley;
+                side = controller.LastStrokeSideAimed;
+                power = r.Power;
+                aimY = r.AimY;
+                rivals = 0;
+                bounce = null;
+                contact = r.ContactStep;
+            };
+            Action<StrokeSide, bool> onSwing = (_, made) =>
+            {
+                if (!made || !have) return;
+                rivals++;
+                if (rivals == 1) bounce = FirstFloorAfter(contact);
+            };
             Action<PointResult> ended = r =>
             {
                 trace.Points.Add(r.Winner + "/" + r.Cause + "/" + r.Shots + "/" + r.Reception);
                 trace.Waits.Add(rally.WaitBetweenPoints.ToString("R"));
+                var kind = LooseDrive.Judge(
+                    have, volley, side, power, aimY, (float)rally.Params.ServeKindLobMinAimY,
+                    have, rivals, r.Winner, r.Cause, r.Reception, bounce, CourtDimensions.Standard(),
+                    rally.HumanServePause, rally.Phase == RallyPhase.MatchOver, rally.Match != null,
+                    rally.Autopilot, true, true);
+                if (kind != LooseDriveKind.None) trace.LooseDrives++;
+                have = false;
+                rivals = 0;
+                bounce = null;
             };
             Action started = () => trace.Starts.Add(steps + "/" + rally.LastServeType + "/" + rally.Match.Server);
+            controller.ShotResolved += onShot;
+            rally.RivalSwing += onSwing;
             rally.PointEnded += ended;
             rally.RallyStarted += started;
-            Assert.That(rally.StartMatch(), Is.True);
-            while (steps < 400000 && rally.PointsPlayed < 6 && rally.Phase != RallyPhase.MatchOver)
+            try
             {
-                app.Host.Advance(StepReal);
-                controller.ProcessPending();
-                rally.Tick();
-                scape.Tick((float)StepReal);
-                Refresh();
-                steps++;
+                Assert.That(rally.StartMatch(), Is.True);
+                while (steps < 400000 && rally.PointsPlayed < 6 && rally.Phase != RallyPhase.MatchOver)
+                {
+                    app.Host.Advance(StepReal);
+                    controller.ProcessPending();
+                    rally.Tick();
+                    scape.Tick((float)StepReal);
+                    Refresh();
+                    if (enabled && Ordinary() && DriveSentence(RowText())) trace.HintShown = true;
+                    steps++;
+                }
             }
-            rally.PointEnded -= ended;
-            rally.RallyStarted -= started;
+            finally
+            {
+                controller.ShotResolved -= onShot;
+                rally.RivalSwing -= onSwing;
+                rally.PointEnded -= ended;
+                rally.RallyStarted -= started;
+            }
             return trace;
         }
         [UnityTest] public IEnumerator NoAddedTime_OnMatchesOff()
@@ -541,6 +588,9 @@ namespace SquashClash.Runtime.Tests
             flow.ClosePractice();
             var on = RunCompare(true);
             var off = RunCompare(false);
+            Assert.That(on.LooseDrives, Is.GreaterThan(0),
+                "seed 5 / Easy / sigma 25 / Fondista / ServeKindOn 1: independent recount found no loose drive. Stop. Do not loosen and do not change the seed.");
+            Assert.That(on.HintShown, Is.True, "the on run never showed the loose-drive hint, so the comparison is vacuous");
             Assert.That(on.Points.Count, Is.GreaterThanOrEqualTo(5));
             Assert.That(on.Starts.Count, Is.GreaterThanOrEqualTo(5));
             Assert.That(on.Points, Is.EqualTo(off.Points));
