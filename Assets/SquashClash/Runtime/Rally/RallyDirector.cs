@@ -609,6 +609,10 @@ namespace SquashClash.Runtime.Rally
             WriteMetrics(result);
             PointEnded?.Invoke(result);
         }
+        // The point-end freeze as the simulation sees it: the pause's own elapsed host time, never the real clock the views read
+        // (PointEndFreeze.Active), so a run stepped by the host places the bodies at the same step every time. Same length as the
+        // view freeze: the smaller of PointEndFreeze.Seconds and the pause; off when the freeze is off.
+        private bool InPointEndFreeze => PointEndFreeze.Enabled && waited < Math.Min(PointEndFreeze.Seconds, WaitBetweenPoints);
         private void TickPointOver(double elapsed)
         {
             waited += elapsed;
@@ -619,14 +623,14 @@ namespace SquashClash.Runtime.Rally
                 return;
             }
             if (HumanServePause && PlaceHumanInServeBoxEarly && !humanInServeBox &&
-                !app.Clock.Paused && !PointEndFreeze.Active)
+                !app.Clock.Paused && !InPointEndFreeze)
             {
                 Human.Teleport(ServePlanner.BoxPosition(context, Match.Box));
                 humanInServeBox = true;
             }
             // Rival ritual: the rival FIGURE is drawn in its box (the simulated body keeps its own path); nothing moves.
             if (RivalServePause && RivalServeRitual.Enabled && RivalServeRitual.Fits(WaitBetweenPoints) &&
-                !app.Clock.Paused && !PointEndFreeze.Active)
+                !app.Clock.Paused && !InPointEndFreeze)
                 rivalDrawnInBox = true;
         }
         private void PlaceBodies(){if(players!=null&&Human!=null)players.Place(Human.Position,RivalWaitingToServe?RivalServeBox:Rival.Position);}
