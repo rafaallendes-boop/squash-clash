@@ -1,0 +1,12 @@
+box	type	fromX	fromZ	step	surface	x	y	z	persistent	serving	closed	cause
+Right	Lob	1.3	5.79	42	FrontWall	3.6	3.6	0	0	1	0	None
+Right	Lob	1.3	5.79	166	LeftWall	6.4	0.6474	9.5508	0	1	0	None
+Right	Lob	1.3	5.79	169	BackWall	6.3491	0.4907	9.75	0	1	0	None
+Right	Lob	1.3	5.79	179	Floor	6.2649	0	9.3204	0	0	0	None
+Right	Drive	1.3	5.79	33	FrontWall	2.8	2.55	0	0	1	0	None
+Right	Drive	1.3	5.79	121	Floor	2.9431	0	8.6016	0	1	1	ServiceFault
+Left	Lob	5.1	5.79	42	FrontWall	2.8	3.45	0	0	1	0	None
+Left	Lob	5.1	5.79	169	BackWall	0.1037	0.0519	9.75	0	1	0	None
+Left	Lob	5.1	5.79	169	Floor	0.094	0	9.7016	0	0	0	None
+Left	Drive	5.1	5.79	33	FrontWall	3.6	2.4	0	0	1	0	None
+Left	Drive	5.1	5.79	117	Floor	3.6	0	8.1774	0	1	1	ServiceFault

@@ -136,6 +136,7 @@ namespace SquashClash.Core.Rally
             Human.Teleport(WaitOf(PlayerId.Human));Rival.Teleport(WaitOf(PlayerId.Rival));
             Body(server).Teleport(ServePlanner.BoxPosition(context,box));
             Body(server).MoveTo(WaitOf(server),0,BodyPhase.Recovering,BodyPhase.Waiting);
+            Body(server.Other()).Teleport(ServePlanner.ReceiverPosition(context,box)); // Serve positions (spec 2026-11-26).
             // Serve kinds (design 2026-11-20-serve): Auto, today's serve, while the switch is off.
             outcome.ServeType=context.ServeTypeOf(brains[(int)server],box);
             ball.Reset(context.Serve(box,outcome.ServeType));Rules.BeginServe(server,box);

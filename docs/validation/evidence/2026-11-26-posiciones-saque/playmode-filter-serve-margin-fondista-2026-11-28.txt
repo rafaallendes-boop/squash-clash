@@ -1,0 +1,7 @@
+PlayMode filtro SquashClash.Runtime.Tests.ZServeReceptionMarginTests, sobre 10fbd20 (cambio 3: RivalServe_AfterFirstBounce contra el Fondista, minHeight 0,25 igual), 28 nov. Una sola corrida, con el candado.
+total=3 passed=3 failed=0 skipped=0
+NeutralPracticeLaunch_HasNoAllowance_EvenWithTheRallyParameterSet Passed
+RivalServe_AfterFirstBounce_KeepsAllowanceUntilTheOrder_ThenResetsOnTheNextFlight Passed
+RivalServe_ChosenVolleyKeepsTheSameAllowance_AndTheVolleyRemainsOptional Passed
+Sin fallas.
+XML SHA-256 dbe4160b1c7d785d389fbc591c5d75698bcefcec88c6d0d236e01b84be67664f

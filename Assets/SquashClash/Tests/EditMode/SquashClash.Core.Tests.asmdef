@@ -3,7 +3,8 @@
   "rootNamespace": "SquashClash.Core.Tests",
   "references": [
     "SquashClash.Core",
-    "SquashClash.Editor"
+    "SquashClash.Editor",
+    "SquashClash.Runtime"
   ],
   "includePlatforms": [
     "Editor"

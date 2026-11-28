@@ -1,0 +1,37 @@
+EditMode sobre ae97194 · total=1080 passed=1074 failed=6 skipped=0
+
+### SquashClash.Core.Tests.Rally.FatigueArmRallyTests.A1_EnabledWithZeroArm_ReplaysTheFrozenF1AdjustedSignatures
+0/0
+  String lengths are both 64. Strings differ at index 0.
+  Expected: "936646e5ba2a5df5f0f2e3d14e32138008fdaf81574b2fde8ade6cf054bf0527"
+  But was:  "bb6fb10932014c656bc9dab08cf2753a22392d410ab421d1a6734b41bc704199"
+  -----------^
+
+### SquashClash.Core.Tests.Rally.FatigueIntegrationTests.Off_ReplaysTheFrozenMainReference_BitForBit
+0/0
+  String lengths are both 64. Strings differ at index 0.
+  Expected: "936646e5ba2a5df5f0f2e3d14e32138008fdaf81574b2fde8ade6cf054bf0527"
+  But was:  "bb6fb10932014c656bc9dab08cf2753a22392d410ab421d1a6734b41bc704199"
+  -----------^
+
+### SquashClash.Core.Tests.Rally.RivalAiTests.Fondista_WithVolleyAndCoverOff_ReplaysTheFrozenRallySimSignatures
+0/0
+  String lengths are both 64. Strings differ at index 0.
+  Expected: "936646e5ba2a5df5f0f2e3d14e32138008fdaf81574b2fde8ade6cf054bf0527"
+  But was:  "bb6fb10932014c656bc9dab08cf2753a22392d410ab421d1a6734b41bc704199"
+  -----------^
+
+### SquashClash.Core.Tests.Rally.ServeTests.Drive_IsLowAndFast_WithoutTheSideWall_AndLandsShorterThanTheLob(Right)
+two landing zones
+  Expected: less than 9.05213165f
+  But was:  9.14084244f
+
+### SquashClash.Core.Tests.Rally.ServeTests.Lob_IsHighOnTheFrontWall_TouchesTheSideWall_AndDiesInTheBackCorner(Right)
+next to the receiver's side wall
+  Expected: less than 0.5f
+  But was:  0.713540077f
+
+### SquashClash.Core.Tests.Rally.ServeTests.Lob_IsHighOnTheFrontWall_TouchesTheSideWall_AndDiesInTheBackCorner(Left)
+next to the receiver's side wall
+  Expected: less than 0.5f
+  But was:  0.544229269f

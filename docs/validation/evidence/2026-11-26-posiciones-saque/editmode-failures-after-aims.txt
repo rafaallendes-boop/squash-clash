@@ -1,0 +1,6 @@
+EditMode sobre 5143310 · total=1080 passed=1079 failed=1 skipped=0
+
+### SquashClash.Core.Tests.Rally.FatigueArmRallyTests.A6_AllActive_TwoRunsAreIdentical_AndTheArmIsExercised
+at least one fatigue vector in a whole match
+  Expected: greater than 0
+  But was:  0
