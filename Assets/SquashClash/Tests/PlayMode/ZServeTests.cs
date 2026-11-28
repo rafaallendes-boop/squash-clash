@@ -68,14 +68,14 @@ namespace SquashClash.Runtime.Tests
             Assert.That(PointEndFreeze.Active, Is.True);
             var box = ServiceBoxPosition();
             Assert.That(rally.Human.Position, Is.Not.EqualTo(box), "keep the point-end pose through the freeze");
-            now += PointEndFreeze.Seconds + .001;
-            rally.Tick();
+            double pointEnd = app.Host.ObservedRealTime;
+            // The freeze the simulation sees runs on the game clock: advance the host until it has passed.
+            Assert.That(Drive(() => rally.HumanServePauseElapsed >= PointEndFreeze.Seconds + .001, 1), Is.True);
             Assert.That(rally.Human.Position, Is.EqualTo(box));
             Assert.That(rally.Human.Velocity, Is.EqualTo(Vector2.zero));
             Assert.That(rally.Human.Phase, Is.EqualTo(BodyPhase.Waiting));
 
             long launch = app.Host.LaunchId;
-            double pointEnd = app.Host.ObservedRealTime;
             Assert.That(Drive(() => app.Host.ObservedRealTime >= pointEnd + 2.97, 3), Is.True);
             Assert.That(app.Host.LaunchId, Is.EqualTo(launch));
             Assert.That(rally.Human.Position, Is.EqualTo(box), "the server stays still until the serve");
@@ -93,6 +93,25 @@ namespace SquashClash.Runtime.Tests
             yield return null;
         }
 
+        // The point-end freeze the simulation sees runs on the game clock (the pause's own elapsed host time), never on the real clock
+        // the views read: with PointEndFreeze.Now stopped, the human reaches the box as soon as the game clock passes the freeze.
+        [UnityTest] public IEnumerator On_ThePointEndFreezeFollowsTheGameClock_NotTheRealClock()
+        {
+            double now = 10;
+            PointEndFreeze.Now = () => now;
+            ReachHumanServePause(true);
+            double freeze = System.Math.Min(PointEndFreeze.Seconds, rally.WaitBetweenPoints);
+            var box = ServiceBoxPosition();
+            Assert.That(rally.Human.Position, Is.Not.EqualTo(box), "keep the point-end pose at the start of the pause");
+            Assert.That(Drive(() => rally.HumanServePauseElapsed >= freeze - 2 * StepReal, 1), Is.True);
+            Assert.That(rally.HumanServePauseElapsed, Is.LessThan(freeze), "the game clock has not passed the freeze yet");
+            Assert.That(rally.Human.Position, Is.Not.EqualTo(box), "still in the freeze: the game clock has not passed it");
+            Assert.That(Drive(() => rally.HumanServePauseElapsed >= freeze + StepReal, 1), Is.True);
+            Assert.That(rally.Human.Position, Is.EqualTo(box), "the game clock passed the freeze: the human is in the box with the real clock stopped");
+            Assert.That(rally.Human.Phase, Is.EqualTo(BodyPhase.Waiting));
+            yield return null;
+        }
+
         [UnityTest] public IEnumerator On_TheServeStartsWithIdenticalStateWithAndWithoutEarlyPlacement()
         {
             var placement = typeof(RallyDirector).GetField("PlaceHumanInServeBoxEarly",
@@ -106,8 +125,7 @@ namespace SquashClash.Runtime.Tests
                 placement.SetValue(rally, early);
                 ReachHumanServePause(true);
                 var before = rally.Human.Position;
-                now += PointEndFreeze.Seconds + .001;
-                rally.Tick();
+                Assert.That(Drive(() => rally.HumanServePauseElapsed >= PointEndFreeze.Seconds + .001, 1), Is.True);
                 Assert.That(rally.Human.Position, Is.EqualTo(early ? ServiceBoxPosition() : before));
                 rally.SetTestEnergy(72);
                 long launch = app.Host.LaunchId;
