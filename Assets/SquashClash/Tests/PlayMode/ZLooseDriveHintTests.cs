@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 using SquashClash.Core.Court;
 using SquashClash.Core.Rally;
 using SquashClash.Core.Shot;
+using SquashClash.Runtime.App;
 using SquashClash.Runtime.Menu;
 using SquashClash.Runtime.Rally;
 using SquashClash.Runtime.Shot;
@@ -97,6 +99,26 @@ namespace SquashClash.Runtime.Tests
             rally.StyleOverride = RivalStyleId.Fondista;
             rally.AutopilotPower = power;
             Assert.That(rally.StartMatch(), Is.True);
+        }
+        // AppBootstrap writes the score on PointEnded without a null check. The same-match rally start does not.
+        // Drop those two handlers so a missing metric can be observed through the next pause.
+        private void DropUserEvents()
+        {
+            UnhookBootstrap(typeof(RallyDirector).GetField(nameof(RallyDirector.PointEnded), BindingFlags.Instance | BindingFlags.NonPublic));
+            UnhookBootstrap(typeof(RallyDirector).GetField(nameof(RallyDirector.ModeChanged), BindingFlags.Instance | BindingFlags.NonPublic));
+            var set = typeof(AppBootstrap).GetProperty(nameof(AppBootstrap.UserEvents)).GetSetMethod(true);
+            Assert.That(set, Is.Not.Null, "UserEvents has no setter to clear");
+            set.Invoke(app, new object[] { null });
+            Assert.That(app.UserEvents, Is.Null);
+        }
+        private void UnhookBootstrap(FieldInfo field)
+        {
+            Assert.That(field, Is.Not.Null, "missing rally event field");
+            var del = field.GetValue(rally) as Delegate;
+            if (del == null) return;
+            foreach (var handler in del.GetInvocationList())
+                if (handler.Target is AppBootstrap)
+                    field.SetValue(rally, Delegate.Remove((Delegate)field.GetValue(rally), handler));
         }
 
         private sealed class Attempt
@@ -337,6 +359,27 @@ namespace SquashClash.Runtime.Tests
             yield return Inject(LooseDriveKind.ShortAndWide, 3.2f, 5.4f, RallyHud.BannerInSeconds);
             Assert.That(RowText(), Is.EqualTo(BothText), "a new match can show it again");
             Assert.That(hud.Drive.Shown, Is.EqualTo(LooseDriveKind.ShortAndWide));
+        }
+
+        // O1. The once-per-match cap is the view, not the metric line. UserEvents is null for the view and the next point.
+        [UnityTest] public IEnumerator SeenOnce_BlocksTheNextPoint_WhenUserEventsIsNull()
+        {
+            StartLoose(3, AiLevel.Easy, 0, ShotPower.Medium);
+            Assert.That(ReachOrdinary(), Is.True);
+            var match = rally.Match;
+            DropUserEvents();
+            yield return Inject(LooseDriveKind.Short, .8f, 5.4f, RallyHud.BannerInSeconds);
+            Assert.That(hud.BannerOpacity, Is.EqualTo(1f));
+            Assert.That(Find("rally-banner-hint").layout.height, Is.GreaterThan(0f));
+            Assert.That(RowText(), Is.EqualTo(ShortText));
+            Assert.That(hud.Drive.Shown, Is.EqualTo(LooseDriveKind.Short));
+            Assert.That(LeavePause(), Is.True);
+            Assert.That(ReachOrdinary(), Is.True);
+            Assert.That(rally.Match, Is.SameAs(match), "still the same match");
+            Assert.That(app.UserEvents, Is.Null);
+            yield return Inject(LooseDriveKind.Wide, 3.2f, 8f, RallyHud.BannerInSeconds);
+            Assert.That(hud.Drive.Shown, Is.EqualTo(LooseDriveKind.None));
+            Assert.That(DriveSentence(RowText()), Is.False, "a seen hint blocks the next qualified point even when UserEvents is null");
         }
 
         [UnityTest] public IEnumerator SeguirBeforeOpacityOne_DoesNotCount_AndTheNextPauseCanShowIt()
