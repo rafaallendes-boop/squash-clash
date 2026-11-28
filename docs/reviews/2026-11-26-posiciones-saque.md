@@ -1,4 +1,25 @@
-# Posiciones de saque · DETENIDO por pruebas existentes en PlayMode
+# Posiciones de saque · puertas en verde, PR abierto
+
+**Actualización 28 nov (`set23`–`set23d`, cierre del PR).** Cambios de prueba aprobados por Rafael (28 nov, vía SC-Lead), cada uno en su commit, sin tocar producción, umbrales ni otras pruebas:
+
+- **Q1** (9:20), literal: «1: Sí, VolleyEnabled=0 en la configuración de las 4 pruebas de ZFirstMatchHints» (`59eb557`). Las 4 pasan.
+- **Q2** (9:20), literal: «2: Sí, que ZRingClosePulse U1a elija la primera semilla del 1 al 24 que cumpla, con los mismos umbrales». **Corregida** (10:33), literal: «Sí, U1a elige la primera semilla del 1 al 24 que cumpla los umbrales que la prueba ya tiene ámbar ≥10 y ≥3 muestras de blanco fijo pasado 0,5 s y falla si ninguna cumple» (`c3f2583`; el «≥1 s antes del contacto» de `eb2b6a2` fue un error de SC-PM y se quitó). Con esa regla ninguna semilla cumplía (blanco fijo 0 en las 24).
+- **U1a** (12:48), literal: «1: Sí, U1a deja de exigir ≥3 muestras de blanco fijo en la recepción del saque, U1b lo sigue exigiendo en el peloteo, y lo reviso en el iPhone» (`27e99d5`). U1a conserva ámbar ≥10 (también como condición de la semilla), el cierre monótono y las aserciones de recepción, sacador y reglas. U1b no cambia. Filtro `ZRingClosePulseMatchTests` 3/3, U1a con la semilla 1 (ámbar 137) (XML SHA-256 `50a0a856…5785`).
+- **Q3** (9:20), literal: «3: Sí, que ZServeReceptionMargin.RivalServe juegue contra el Fondista, con minHeight 0,25 igual» (`10fbd20`). Filtro 3/3.
+
+Diagnósticos (evidencia fuera del repo en `sc-specs/set23*`):
+
+- **NoAddedTime** (intermitente): depende del reloj real vía `PointEndFreeze.Active` en `RallyDirector.cs:621-629`. Sola, sin sustitución 4/5 fallos; con `PointEndFreeze.Now` atado al paso, 0/5. Rafael aprobó el arreglo (pausa entre puntos con reloj del juego, más dos pruebas de `ZServeTests` que avanzan ese reloj sin cambiar sus aserciones) **para el PR siguiente**; aquí no se aplica.
+- **U1a:** la posición del restador de la spec (`RallyDirector.cs:272`, `ServePlanner.ReceiverPosition`) hace que el ámbar dure hasta T*−0,974 s en vez de T*−1,231 s. El blanco empieza a cerrarse 0,487 s antes de T*, así que su pulso de 0,5 s pasa directo al cierre. La bisección lo sitúa en `fea4d87`; sin esa línea, U1a vuelve a 16 muestras.
+- **`ZServeTests.cs:160` (UiBlocker):** falla previa a la rama, de aislamiento. Corrida sola, la clase falla igual en `main` (a 640x480 el toque bajo cae sobre el botón `rally-next`); en la suite completa pasa. Queda registrada y no se toca.
+
+Puertas sobre `27e99d5`, con el candado, sin reintentos y con el árbol limpio:
+
+- EditMode **1082/1082** (XML SHA-256 `cecc7406f4872034e0aa5455ecc7764e4fd93c50186dbda182eb813a36b64e59`).
+- PlayMode **893/893** (XML SHA-256 `2a87f88fdd97dabd72cb10752ddead441ed3fb52375a480e6e9af73fac2beef4`). Ninguna falla conocida apareció, NoAddedTime incluida, así que no hubo repetición.
+- check-release **OK** (build 1263, dev y prod).
+- AutoQA V, T3 y volea: **PASS, nivel 1**, 102/102 cada una, 18 PASS y 0 FAIL/INCONCLUSIVE/NOT_EVALUATED, canario FAIL esperado, determinismo idéntico y `dirty=false`. Aplica porque la rama cambia la trayectoria del saque y la posición de partida del restador, que alimentan el plan de recepción.
+
 
 **Actualización 27 nov, 13:10 (`set16d`, arreglo clase A de `VisualKit.Joint`).** Causa en `set16c`, sección 7: cuando la mano cae sobre el hombro (`d < 1e-4`), la guarda dejaba `dir = to/d` con largo 10 000 y la muñeca quedaba 110 m abajo.
 
