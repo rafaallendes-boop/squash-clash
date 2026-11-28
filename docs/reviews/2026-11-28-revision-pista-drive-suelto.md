@@ -2,9 +2,9 @@
 
 28 nov 2026. Encargo `set27-revision-pista-drive-suelto` de SC-PM. Revisión de solo lectura, sin Unity. No se corrieron `scripts/test.sh`, AutoQA ni `check-release`. No se tocaron `sc-unity.lock` ni `scripts/device.env`.
 
-- **Head revisado:** primero `30fd0c4355dc8fae0353e8fafc1b2c5a2827da24` (§1–§8). Después, el delta hasta `37f776792bc0321da4b984884958201ea77c79a7` (§9). Por último, el merge de `main` **`980cf39f0cc9db36228b685bdf01eff92716a22b`** (§10), igual a `origin/sc-pista-drive-suelto` tras el fetch. Base `origin/main` `99b4306` (merge-base). El delta de la spec contra `654d243` es solo la sección «Decisiones del PO».
+- **Head revisado:** primero `30fd0c4355dc8fae0353e8fafc1b2c5a2827da24` (§1–§8). Después, el delta hasta `37f776792bc0321da4b984884958201ea77c79a7` (§9). Luego, el merge de `main` `980cf39f0cc9db36228b685bdf01eff92716a22b` (§10). Por último, el delta hasta **`bd61d6d03e2894ed0f02db1e0f00ad9f222a4e80`** (§11), igual a `origin/sc-pista-drive-suelto` tras el fetch. Base `origin/main` `99b4306` (merge-base). El delta de la spec contra `654d243` es solo la sección «Decisiones del PO».
 - **Autor:** Grok, por la excepción de Rafael del 28 nov 11:44. Revisor: Claude (Opus), que no escribió el código.
-- **Veredicto actualizado (head `980cf39`): APROBADO CON OBSERVACIONES.** El merge de `main` es limpio y no cambia la pista (§10); se suma O8. Veredicto anterior (head `37f7767`): APROBADO CON OBSERVACIONES. No hay cambios solicitados. O1 y O4 quedan cerradas. O3 queda cerrada en código, con una observación nueva, O3b (§9). Las observaciones no bloquean. La fusión sigue pendiente de las puertas en el Mac del PO (§6 punto 9 de la spec y AGENTS §2). Este informe no aprueba nada en nombre del PO.
+- **Veredicto actualizado (head `bd61d6d`): APROBADO CON OBSERVACIONES.** El merge de #125 es limpio y solo trae `InPointEndFreeze`. Los cambios A–E del arnés cumplen las cuatro citas del PO de las 15:21 y la decisión A de SC-PM (§11). O3b queda cerrada en código; se suman O9–O12. Veredicto para `980cf39`: APROBADO CON OBSERVACIONES; el merge de `main` es limpio y no cambia la pista (§10), y se sumó O8. Veredicto anterior (head `37f7767`): APROBADO CON OBSERVACIONES. No hay cambios solicitados. O1 y O4 quedan cerradas. O3 queda cerrada en código, con una observación nueva, O3b (§9). Las observaciones no bloquean. La fusión sigue pendiente de las puertas en el Mac del PO (§6 punto 9 de la spec y AGENTS §2). Este informe no aprueba nada en nombre del PO.
 
 ## 1. Criterios (P2–P13)
 
@@ -184,3 +184,54 @@ Se revisó sin mezclar código en esta rama: `git fetch origin sc-pista-drive-su
 - Las puertas (EditMode y PlayMode completos en el Mac del PO, `check-release` y AutoQA si aplica) se corren sobre `980cf39`. No sirve ningún resultado de `37f7767`.
 
 **Veredicto para `980cf39`: APROBADO CON OBSERVACIONES.** No hay cambios solicitados. Quedan abiertas O2, O3b, O5, O6, O7 y O8. Faltan las puertas de Unity. Este informe no aprueba nada en nombre del PO.
+
+## 11. Delta `980cf39..bd61d6d` (28 nov, encargo `set31`)
+
+Se revisó sin mezclar código en esta rama: `git fetch origin sc-pista-drive-suelto`, `git diff 980cf39..bd61d6d`, `git show bd61d6d` y `git show bd61d6d:<archivo>`. Sin Unity, sin `test.sh`, AutoQA ni `check-release`, y sin tocar el candado ni `scripts/device.env`. Las líneas citadas son de `bd61d6d:Assets/SquashClash/Tests/PlayMode/ZLooseDriveHintTests.cs` salvo que se diga otra cosa.
+
+- **Dos commits.** `9b091f2` es el merge de `origin/main` `1adb5ad` (PR #125). `bd61d6d` es el arnés.
+- **Tres archivos.** `RallyDirector.cs` (+6/−2) y `ZServeTests.cs` (+23/−5) llegan por el merge. `ZLooseDriveHintTests.cs` (+97/−19) es el único archivo de `bd61d6d` (`git diff 9b091f2 bd61d6d --name-only`).
+
+### 11.1 Merge de #125 (`9b091f2`)
+
+- **Padres:** `980cf39` (la pista) y `1adb5ad`, que es `origin/main` tras el fetch. Merge-base `967797a`.
+- **Sin resolución a mano.** `git merge-tree --write-tree 980cf39 1adb5ad` da el árbol `4dcefc9d6b14…`, idéntico al de `9b091f2`. `git show --cc 9b091f2` no muestra ningún hunk combinado.
+- **Es solo #125.** El parche `980cf39..9b091f2` es el mismo que `967797a..1adb5ad`, línea a línea. Solo cambian la cabecera `index` y los números de hunk (+19 líneas, por la pista).
+  - `RallyDirector.cs:631-634` agrega `InPointEndFreeze`.
+  - `:645` y `:652` cambian `!PointEndFreeze.Active` por `!InPointEndFreeze` en `TickPointOver`.
+  - `ZServeTests.cs` es la prueba propia de #125, en `main`. No es una prueba de esta rama.
+- **`LastReturnedBounce` y `Evaluate` no cambian.**
+  - Las cinco apariciones de `LastReturnedBounce`/`FirstReturnedBounce` (`RallyDirector.cs:93,246,444,581,596`) están en las mismas líneas y con el mismo texto en `980cf39` y en `bd61d6d`.
+  - El bloque de `Evaluate` tiene el mismo SHA (`07c5a9c67e0c`) en `99b4306`, `980cf39`, `9b091f2` y `bd61d6d`.
+  - `LooseDriveHint.Showable` (`LooseDriveHint.cs:157-158`) no usa la congelación. #125 no cambia cuándo puede salir la pista.
+
+### 11.2 Arnés (`bd61d6d`) contra las citas del PO de las 15:21 y la decisión A de SC-PM
+
+| Cambio | Cita o decisión | Dónde | Estado |
+|---|---|---|---|
+| A | SC-PM: `LastStrokeSideAimed` llama a `flow.ClosePractice()` antes del swing | `:163-164`, antes del primer `Swing` (`:165`). El resto de la prueba no cambia | OK |
+| B | 1: «las 4 pruebas que inyectan la pista juegan con el piloto automático apagado» | `StartLoose` toma `autopilot = true` por defecto (`:88,94`). Las cuatro que inyectan con `Inject` pasan `autopilot: false`: `OncePerMatch` (`:397`), `SeenOnce` (`:436`), `SeguirBeforeOpacityOne` (`:457`) y `FirstMatchHint` (`:484`). No queda otro `Inject(` en el archivo. Las demás llamadas (`:196`, `:254`, `:314`, `:511`) conservan el piloto encendido | OK |
+| C | 2: «usa el piloto hasta una pausa en que saca el humano, lo apaga y exige al menos una pausa» | `:511` con el piloto encendido. `:520-527` cuenta cada entrada a `PointOver` con `HumanServePause` y apaga el piloto en la primera. `:534` exige `servePauses >= 1` y falla si no hubo ninguna. Las aserciones de «nunca fuera de una pausa ordinaria» (`:530`) y `ever` (`:535`) no cambian | OK, ver O9 |
+| D | 3: «inyecta un punto que califica en las dos corridas, con las mismas entradas y condición de igualdad» | `:643-645` inyecta en `RunCompare` para las dos corridas. En la apagada, `QualifyForTests` vuelve sin hacer nada porque `Enabled` es false (`LooseDriveHint.cs:74`). Las entradas no cambian: Fácil, σ 25, semilla 5, Fondista y `ServeKindOn` 1 (`:590-596`). La igualdad tampoco: `Points`, `Waits` y `Starts` (`:674-676`). Se exige `HintShown` solo en la corrida encendida (`:671`) | OK, ver O10 |
+| E | 4: «elige la primera semilla del 1 al 24 con drive suelto natural (Medio, σ 0, Strong) y falla si ninguna lo tiene» | `:250-309` recorre las semillas 1 a 24 en orden. Cada una arranca con `StartLoose(seed, Medium, 0, Strong)`, con Fondista fijo (`:99`). El bucle se corta en la primera semilla en que el `Judge` independiente da positivo (`:251,309`). `:311-312` exige `chosen > 0`. Después repite el partido con esa semilla (`:313-314`) y mantiene `positives > 0` (`:391`) | OK |
+
+- **Si ninguna semilla tiene drive suelto, la prueba falla y no se esconde.** Con `chosen == 0`, `Assert.That(chosen, Is.GreaterThan(0), "… Stop. Do not loosen the criterion.")` falla antes de repetir el partido. El archivo no tiene `Assume`, `Ignore`, `Inconclusive`, `Assert.Pass` ni `LogAssert` (grep). La búsqueda usa el mismo `Judge` y los mismos hechos que la prueba de escena (`:281-286` frente a `:344-349`).
+- **Nada más cambió.**
+  - `git diff 980cf39 bd61d6d` no toca `Core/`, `LooseDrive.cs`, `LooseDriveHint.cs`, `RallyParams.cs`, `DefaultPreset.json`, asmdef ni `.meta`.
+  - Los cortes P2–P6, la potencia (`AutopilotPower`, sin cambios fuera de la propia prueba), los textos y los umbrales siguen como en `37f7767`.
+  - Defaults `207da8f2c636`, SimulationKey `166a96e319c7` y RallyParams (`249979628e7c` tras #124, §10) quedan intactos por construcción. No se recalcularon.
+  - En el archivo de la pista, `LastReturnedBounce_…` (`:194-…`), `DevButton_TogglesTheDriveHint` y los helpers siguen igual. No se editó ninguna prueba ajena a la pista.
+- **O3b: cerrada en código.** D es exactamente la salida que proponía §9: las mismas entradas que front 2, una inyección en las dos corridas, `HintShown` solo en la encendida y el positivo natural solo en la prueba de escena. Ahora esa prueba lo busca entre 24 semillas.
+- **O8: se reduce.** `RunCompare` ya no depende de un positivo natural, y la prueba de escena ya no depende de la semilla 11. Sigue dependiendo de la semilla 11 `LastReturnedBounce_IsTheFirstFloorAfterTheHumanStroke_…` (`:196`), que no es parte de este delta.
+
+### 11.3 Observaciones nuevas (no bloquean)
+
+- **O9. C hace dos cambios más que la cita, y el commit no los menciona.** Ninguno afloja la prueba, pero conviene declararlos en la nota.
+  - La inyección pasa de la primera pausa ordinaria al arranque del partido (`:512-513`). Queda pendiente hasta la primera pausa que puede mostrarla (`LooseDriveHint.cs:91-95`). Solo se borra si cambia el partido (`:196`). Si antes llega una pausa de saque humano, esa pausa se recorre con la inyección pendiente, y eso refuerza la prueba.
+  - La mitad con `Enabled = false` pasa de piloto encendido a apagado y agrega `flow.ClosePractice()` (`:542-543`). Es coherente con «lo apaga», y sus aserciones (`:567-571`) no cambian. Con el piloto apagado el rival gana, así que hay más pausas ordinarias que revisar.
+- **O10. Queda un contador sin uso.** `Trace.LooseDrives` se sigue calculando (`:580,630`), pero ya nadie lo exige. El comentario `:576` («No positive means fail») ahora se refiere a `HintShown` con la inyección. Es cosmético.
+- **O11. Las aprobaciones de las 15:21 no están en el repositorio.** `git grep "15:21"` en `docs/` no las encuentra, ni en `bd61d6d` ni en `origin/main`. Esta revisión coteja las citas tal como vienen en el encargo de SC-PM. Antes de fusionar hay que registrarlas en el registro del PO o en la nota (AGENTS §1).
+- **O12. La prueba de escena puede jugar hasta 25 partidos.** Son la búsqueda de 24 semillas y la repetición. Ninguna prueba del repositorio tiene `[Timeout]`. Si el runner corta por tiempo, o si la repetición no da el mismo partido, la prueba sale roja: con un corte por tiempo, o con «no loose drive after it was selected» y la semilla en el mensaje (`:391`). No da un falso verde.
+- **No verificable sin Unity:** que compile; que alguna semilla de 1 a 24 tenga drive suelto con el saque de #124; que la repetición sea determinista; que en `RunCompare` llegue una pausa ordinaria en los primeros 6 puntos; que las cuatro pruebas de B lleguen a `ReachOrdinary` en 900 s con el piloto apagado. Por lectura, el saque es automático con `AutoRestart` (`RallyDirector.cs:638-643`) y el piloto solo decide el golpe de recepción (`:342-347`). Todos estos riesgos saldrían en rojo.
+
+**Veredicto para `bd61d6d`: APROBADO CON OBSERVACIONES.** No hay cambios solicitados. Quedan abiertas O2, O5, O6, O7, O8 (reducida) y O9–O12. Están cerradas O1, O3, O3b y O4. Faltan las puertas sobre `bd61d6d`: EditMode y PlayMode completos en el Mac del PO, `check-release` y AutoQA si aplica. No sirve ningún resultado anterior. Este informe no aprueba nada en nombre del PO.
