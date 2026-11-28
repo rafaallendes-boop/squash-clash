@@ -252,42 +252,42 @@ namespace SquashClash.Runtime.Tests
             {
                 rally.StopMode();
                 StartLoose(seed, AiLevel.Medium, 0, ShotPower.Strong);
-                bool have = false, volley = false, side = false;
-                float power = 0, aimY = 0;
-                int rivals = 0;
-                long contact = 0;
-                Vector3? bounce = null;
+                bool seed_have = false, seed_volley = false, seed_side = false;
+                float seed_power = 0, seed_aimY = 0;
+                int seed_rivals = 0;
+                long seed_contact = 0;
+                Vector3? seed_bounce = null;
                 bool found = false;
                 Action<ShotRecord> scanShot = r =>
                 {
                     bool applied = r.Applied && (r.Result == nameof(ShotResult.Perfect) || r.Result == nameof(ShotResult.Valid));
                     if (!applied) return;
-                    have = true;
-                    volley = controller.LastOpportunity == Opportunity.Volley;
-                    side = controller.LastStrokeSideAimed;
-                    power = r.Power;
-                    aimY = r.AimY;
-                    rivals = 0;
-                    bounce = null;
-                    contact = r.ContactStep;
+                    seed_have = true;
+                    seed_volley = controller.LastOpportunity == Opportunity.Volley;
+                    seed_side = controller.LastStrokeSideAimed;
+                    seed_power = r.Power;
+                    seed_aimY = r.AimY;
+                    seed_rivals = 0;
+                    seed_bounce = null;
+                    seed_contact = r.ContactStep;
                 };
                 Action<StrokeSide, bool> scanSwing = (_, made) =>
                 {
-                    if (!made || !have) return;
-                    rivals++;
-                    if (rivals == 1) bounce = FirstFloorAfter(contact);
+                    if (!made || !seed_have) return;
+                    seed_rivals++;
+                    if (seed_rivals == 1) seed_bounce = FirstFloorAfter(seed_contact);
                 };
                 Action<PointResult> scanPoint = result =>
                 {
                     var kind = LooseDrive.Judge(
-                        have, volley, side, power, aimY, (float)rally.Params.ServeKindLobMinAimY,
-                        have, rivals, result.Winner, result.Cause, result.Reception, bounce, CourtDimensions.Standard(),
+                        seed_have, seed_volley, seed_side, seed_power, seed_aimY, (float)rally.Params.ServeKindLobMinAimY,
+                        seed_have, seed_rivals, result.Winner, result.Cause, result.Reception, seed_bounce, CourtDimensions.Standard(),
                         rally.HumanServePause, rally.Phase == RallyPhase.MatchOver, rally.Match != null,
                         rally.Autopilot, true, true);
                     if (kind != LooseDriveKind.None) found = true;
-                    have = false;
-                    rivals = 0;
-                    bounce = null;
+                    seed_have = false;
+                    seed_rivals = 0;
+                    seed_bounce = null;
                 };
                 controller.ShotResolved += scanShot;
                 rally.RivalSwing += scanSwing;
