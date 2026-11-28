@@ -1,0 +1,8 @@
+N2 (ConfirmPerStyle), Δ del novato en pp frente a n2-before01-from-6086074.tsv (main) y n2-b2b.tsv (sc-posicion-espera). Banda: > 5 pp = parada.
+## m1
+no medido: DETENIDO por la moneda (k = 1 de Difícil 22,51 %, fuera de 23,0–27,0) antes del N2 de m1, como se declaró. Lecturas (a) y (b): no medidas.
+## m2
+no medido: la moneda de m1 cayó fuera, así que m2 no se mide (encargo).
+## referencia, ya medida antes de este encargo: b2b frente a main (lo que dice si Fácil de b2b es igual a main)
+main max|Δ|=4.60 ('Hard', 'Completo')
+  E/Com +1.33 E/Def +2.79 E/Fon +0.42 H/Com +4.60 H/Def +2.44 H/Fon +3.38 M/Com +4.40 M/Def +1.45 M/Fon +1.86

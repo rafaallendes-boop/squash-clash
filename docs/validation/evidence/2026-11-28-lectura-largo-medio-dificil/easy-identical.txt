@@ -1,0 +1,24 @@
+Fácil de m1 (head 75241e1, slice-level.py) frente a Fácil de mr00 (head e40b502, campos neutros), scripts/compare-control.py:
+cells.tsv (sin seconds): DIFF 0
+rival-time.tsv: idéntico
+prev-ball.tsv: idéntico
+defense.tsv (30 primeras columnas): DIFF 0
+columnas de defense.tsv: A 30, B 30
+swing-read.tsv: vacío
+CONTROL OK
+rival-time.tsv: idéntico byte a byte (1314 filas)
+prev-ball.tsv: idéntico byte a byte (1314 filas)
+defense.tsv: idéntico byte a byte (15510 filas)
+defense-cells.tsv: idéntico byte a byte (12 filas)
+swing-read.tsv de Fácil en m1: 0 filas
+Fácil: idéntico a hoy (b2b) = sí
+
+Además (no es criterio): Medio de m1 frente a l1 de set22 (sc-lectura-golpe-largo, head 4384296):
+rival-time.tsv: idéntico byte a byte
+prev-ball.tsv: idéntico byte a byte
+defense.tsv: idéntico byte a byte
+defense-cells.tsv: idéntico byte a byte
+swing-read.tsv: idéntico byte a byte
+cells.tsv (sin seconds): idéntico
+Por eso no se guardan defense ni swing-read de m1 en Medio: son defense-l1.tsv.gz y swing-read-l1.tsv.gz de 2026-11-27-lectura-golpe-largo.
+Fácil de m1 es idéntico al de mr00 (defense-mr00.tsv.gz); Difícil de m1: defense-m1-Hard.tsv.gz y swing-read-m1-Hard.tsv.gz.

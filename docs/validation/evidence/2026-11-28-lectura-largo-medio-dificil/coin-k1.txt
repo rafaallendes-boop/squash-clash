@@ -1,0 +1,7 @@
+Moneda de m1 (head 75241e1), k = 1 (devolución del saque). Criterio del encargo y de la declaración: 23,0–27,0 % en Medio+Difícil, en Medio y en Difícil; si alguna queda fuera, DETENIDO sin N2 ni m2.
+Medio+Difícil: n 8195, erradas 1890, 23.06 % -> dentro de 25 ± 2,0
+Medio: n 3877, erradas 918, 23.68 % -> dentro de 25 ± 2,0
+Difícil: n 4318, erradas 972, 22.51 % -> FUERA de 25 ± 2,0
+Fácil: n 0 (sin lecturas)
+MONEDA m1: FUERA (Difícil)
+Detalle por tipo de golpe y por posición: misread-by-shot.txt (su veredicto MONEDA OK/FUERA es el criterio de set22, informativo).

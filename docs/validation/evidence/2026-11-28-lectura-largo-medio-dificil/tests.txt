@@ -1,0 +1,26 @@
+Pruebas (scripts/rival-time-tests.sh, EditMode, ensamblado SquashClash.Core.Tests). Resumen de results.xml.
+
+red head 81a09d27d66a33a46745423ba7ea886093440b2e  status: 0 archivos sucios
+   {'result': 'Failed(Child)', 'total': '6', 'passed': '3', 'failed': '3'}
+   Failed RivalLevelSwingReadExperimentTests.Level_FromTheConfiguredDifficulty | Easy Fondista
+   Failed RivalLevelSwingReadExperimentTests.MinLevel1_Easy_NoReads_AndThePointsAreThoseWithTheReadOff | Expected: <empty>
+   Failed RivalLevelSwingReadExperimentTests.MinLevel1_RivalWithoutLevel_NoReads | Expected: 0
+  error CS en unity.log: 0
+
+green head 59295a40713943c193e7f14885aed2608824f712  status: 0 archivos sucios
+   {'result': 'Failed(Child)', 'total': '323', 'passed': '311', 'failed': '12'}
+   Failed BoastRivalTests.On_RallySim_AppliesRivalBoastsFromTheBackQuarterOnly | Expected: greater than or equal to 6.8125f
+   Failed FatigueFeelTests.RallyParams_ProjectionWithoutTheSprintFatigueField_IsTheCurrentHash | String lengths are both 12. Strings differ at index 0.
+   Failed RivalAiTests.Fondista_WithVolleyAndCoverOff_ReplaysTheFrozenRallySimSignatures | 0/0
+   Failed RivalAiTests.RallyParams_ProjectionWithoutStyleFields_IsTheCurrentHash | String lengths are both 12. Strings differ at index 0.
+   Failed RivalAiTests.Recovery_AfterAnOwnShortShot_FollowsTheStyle_AndAfterALongOne_IsTheStyleWait | Expected: (3.60, 5.97)
+   Failed RivalRecoverySideExperimentTests.Default_IsZero_AndTheRecoveryAfterADeepBallIsTheStyleWait | Expected: 0
+   Failed ServeReceptionMarginTests.DefaultMargin_IsChosenValue_AndItsProjectionPreservesEveryPriorParameter | String lengths are both 12. Strings differ at index 0.
+   Failed ServeTests.HumanServePauseDefaultsToThreeSeconds | String lengths are both 12. Strings differ at index 0.
+   Failed VolleyEnergyTests.RallyParams_VolleyEnergyCost_IsTwoPoints_AndOnlyTheRallyParamsHashMoves | without the new field the hash is the volley v1 one
+   Failed VolleyRallyTests.RallyParams_ProjectionWithoutVolleyFields_IsTheCurrentHash | String lengths are both 12. Strings differ at index 0.
+   Failed VolleyV21Tests.RallyReceptions_ATouchAtSOrSPrime_AlwaysKeepsTheOfferedStance | offers whose own deadline touch lost the offered stance (of 56)
+   Failed VolleyV2Tests.Defaults_AreV2WithTheServeVolley_AndOnlyTheRallyParamsHashMoves | without the v2 fields the hash is the current one
+  error CS en unity.log: 0
+
+Las 12 que fallan en green son las mismas 12 que fallan en la base (lista en docs/validation/evidence/2026-11-27-lectura-golpe-largo/tests.txt). Las 6 nuevas pasan.
