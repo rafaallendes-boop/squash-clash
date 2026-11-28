@@ -175,13 +175,16 @@ namespace SquashClash.Runtime.Rally
             armed = false;
             bool seen = seenThisPause;
             bool occupied = occupiedByFirstMatch;
+            bool already = usedThisMatch;
             seenThisPause = false;
             occupiedByFirstMatch = false;
+            // The cap is the view (BannerSeen), not the metric. A missing UserEvents must not allow a second show.
+            if (seen && !occupied) usedThisMatch = true;
             if (!Enabled || app.UserEvents == null) return;
             string reason;
             if (occupied) reason = "firstMatchHint";
-            else if (usedThisMatch) reason = "limit";
-            else if (seen) { reason = ""; usedThisMatch = true; }
+            else if (already) reason = "limit";
+            else if (seen) reason = "";
             else reason = "notSeen";
             app.UserEvents.DriveHint(matchId, armedKind.ToString(), bounceX, bounceZ, reason.Length == 0, reason);
         }
