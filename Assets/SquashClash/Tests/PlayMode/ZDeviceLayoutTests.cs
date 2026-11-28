@@ -157,5 +157,55 @@ namespace SquashClash.Runtime.Tests
             for(int i=0;i<2000;i++)layout.Apply();
             Assert.That(System.GC.GetAllocatedBytesForCurrentThread()-before,Is.EqualTo(0),"bytes for 2000 checks");
         }
+        // Loose-drive hint, criterion 7. The longest sentence, on the existing banner row. Statics are reset here:
+        // Cleanup above is shared and stays as it is.
+        [UnityTest] public IEnumerator LooseDriveHint_Fits([ValueSource(nameof(Phones))] PhoneScreen screen)
+        {
+            LooseDriveHint.ResetForTests();
+            SquashClash.Runtime.Menu.FirstMatchHints.ResetForTests();
+            try
+            {
+                yield return Boot(screen, false);
+                app.Tuning.Set("fatigue.enabled", 0);
+                app.Clock.Paused = false;
+                LooseDriveHint.ForceForTests = true;
+                rally.Autopilot = true;
+                rally.AutopilotTimingSigmaMs = 0;
+                rally.Level = AiLevel.Easy;
+                rally.Seed = 3;
+                rally.RandomStyles = false;
+                rally.StyleOverride = RivalStyleId.Fondista;
+                rally.AutopilotPower = ShotPower.Medium;
+                Assert.That(rally.StartMatch(), Is.True);
+                Assert.That(Drive(() => rally.Phase == RallyPhase.PointOver && !rally.HumanServePause && rally.Match != null && !rally.Match.Finished, 900), Is.True);
+                hud.Drive.QualifyForTests(LooseDriveKind.ShortAndWide, 3.2f, 5.4f);
+                Refresh();
+                yield return null;
+                yield return null;
+                hud.Tick(RallyHud.BannerInSeconds);
+                yield return Settle();
+                var label = Find<Label>("rally-banner-hint-text");
+                const string text = "Tu drive botó corto y lejos de la pared lateral: el rival lo aprovechó.";
+                Assert.That(label.text, Is.EqualTo(text));
+                Assert.That(Shown(Find("rally-banner-hint")), Is.True, phone + " the row is on screen");
+                Assert.That(Shown(Find("rally-banner-hint-icon")), Is.False, phone + " the icon stays hidden");
+                AssertFits("rally-banner", phone + " loose drive");
+                float one = label.MeasureTextSize("Mg", 0, VisualElement.MeasureMode.Undefined, 0, VisualElement.MeasureMode.Undefined).y;
+                Assert.That(label.contentRect.height, Is.LessThanOrEqualTo(2f * one + 2f), phone + ": at most two lines (" + label.text + ")");
+                Assert.That(label.resolvedStyle.textOverflow, Is.Not.EqualTo(TextOverflow.Ellipsis), phone + ": no ellipsis");
+                Assert.That(Find("rally-banner-card").worldBound.yMin, Is.GreaterThanOrEqualTo(Find("boot-header").worldBound.yMax), phone + ": the banner does not cover the header");
+                Assert.That(Shown(Find("rally-referee-card")), Is.True, phone + " the referee card is up during the pause");
+                var hint = Find("rally-banner-hint").worldBound;
+                var card = Find("rally-referee-card").worldBound;
+                bool apart = hint.xMax <= card.xMin + .5f || card.xMax <= hint.xMin + .5f || hint.yMax <= card.yMin + .5f || card.yMax <= hint.yMin + .5f;
+                Assert.That(apart, Is.True, phone + ": the hint overlaps rally-referee-card");
+            }
+            finally
+            {
+                LooseDriveHint.ResetForTests();
+                SquashClash.Runtime.Menu.FirstMatchHints.ResetForTests();
+                SquashClash.Runtime.Visual.PointEndFreeze.Reset();
+            }
+        }
     }
 }
