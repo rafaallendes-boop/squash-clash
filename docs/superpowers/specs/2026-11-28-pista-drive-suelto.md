@@ -296,4 +296,16 @@ Registradas al encargar el código. No cambian el resto de esta spec.
 
 **28 nov 2026, 11:44.** Autorización, cita literal de Rafael (vía SC-Lead): «Sí, que Grok escriba el código de la pista del drive suelto, solo por hoy y con revisión de Claude antes del merge». Vale solo para esta pista y solo hoy. La revisión cruzada la hace un Claude aparte antes del merge. Con este encargo queda aprobada la adopción (pregunta 1).
 
+**28 nov 2026, 15:21.** Aprobaciones del arnés de PlayMode, citas literales de Rafael:
+
+«1: Sí, las 4 pruebas que inyectan la pista juegan con el piloto automático apagado»
+
+«2: Sí, la prueba «nunca fuera de una pausa normal» usa el piloto hasta una pausa en que saca el humano, lo apaga y exige al menos una pausa»
+
+«3: Sí, la prueba de pista encendida contra apagada inyecta un punto que califica en las dos corridas, con las mismas entradas y condición de igualdad»
+
+«4: Sí, la prueba de escena elige la primera semilla del 1 al 24 con drive suelto natural (Medio, σ 0, Strong) y falla si ninguna lo tiene»
+
+Y la decisión de SC-PM: A, `LastStrokeSideAimed` llama a `flow.ClosePractice()` antes del swing.
+
 **P4, P8, P9, P10, P11, P12 y P13** quedan como recomienda esta spec: todas sí.
