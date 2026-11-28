@@ -12,6 +12,7 @@ namespace SquashClash.Core.Diagnostics
         [Serializable] private sealed class PauseLine {public string reason;}
         [Serializable] private sealed class HintLine {public string matchId,id,action,where;}
         [Serializable] private sealed class ServeChoiceLine {public string matchId,kind;public bool chosen,hintSeen;}
+        [Serializable] private sealed class DriveHintLine {public string matchId,kind;public float bounceX,bounceZ;public bool seen;public string reason;}
         private readonly Action<string,string> write;private readonly Func<double> readTime;
         private bool sessionOpen,background,paused,focused=true,matchOpen;
         private double sessionAt,phaseAt,stepAt,matchAt;private int step,human,rival;
@@ -62,7 +63,9 @@ namespace SquashClash.Core.Diagnostics
         public void ServeChoice(bool chosen,string kind,bool hintSeen)=>Emit("serve-choice",new ServeChoiceLine{matchId=matchId,chosen=chosen,kind=kind,hintSeen=hintSeen});
         // The id of the open match, so a line written after the next match has started can still name the previous one.
         public string OpenMatchId=>matchId??"";
-        // Loose-drive hint (spec 2026-11-28, P13). Placeholder: writes nothing yet, so the new test fails by assertion.
-        public void DriveHint(string match,string kind,float bounceX,float bounceZ,bool seen,string reason){}
+        // Loose-drive hint (spec 2026-11-28, P13). Additive: the lines above are not changed.
+        // «match» is the caller's snapshot, because the pause can end as the next match starts.
+        public void DriveHint(string match,string kind,float bounceX,float bounceZ,bool seen,string reason)
+            =>Emit("drive-hint",new DriveHintLine{matchId=match??"",kind=kind??"",bounceX=bounceX,bounceZ=bounceZ,seen=seen,reason=reason??""});
     }
 }
