@@ -1,0 +1,10 @@
+PlayMode filtro SquashClash.Runtime.Tests.ZRingClosePulseMatchTests, sobre c3f2583 (U1a con los umbrales que la prueba ya tiene, decisión del PO del 28 nov 10:33), 28 nov. Una sola corrida, con el candado, sin reintento.
+Selección: primera semilla 1..24 con amber >= 10 Y steady >= 3 (blanco fijo, Approach >= 1, pasado 0,5 s). whiteLead solo como dato.
+start-time 2026-11-28 15:01:58Z
+total=3 passed=2 failed=1 skipped=0
+A5_TheUnchosenAmberRingNeverGrowsInsideItsWindow_AndAChosenOneFollowsTheImpactCue Passed
+U1a_RivalServeReceptionWithTheServeVolley_AmberClosesAndTheWhiteIsSteadyAfterItsPulse Failed
+  no seed from 1 to 24 gave amber >= 10 samples and >= 3 steady-white samples past 0.5 s: 1:amber=137,steady=0,whiteLead=0.910 2:amber=67,steady=0,whiteLead=0.974 3:amber=137,steady=0,whiteLead=0.910 4:amber=137,steady=0,whiteLead=0.910 5:amber=137,steady=0,whiteLead=0.910 6:amber=137,steady=0,whiteLead=0.910 7:amber=137,steady=0,whiteLead=0.910 8:amber=137,steady=0,whiteLead=0.910 9:amber=137,steady=0,whiteLead=0.910 10:amber=137,steady=0,whiteLead=0.910 11:amber=137,steady=0,whiteLead=0.910 12:amber=137,steady=0,whiteLead=0.910 13:amber=137,steady=0,whiteLead=0.910 14:amber=137,steady=0,whiteLead=0.910 15:amber=137,steady=0,whiteLead=0.910 16:amber=137,steady=0,whiteLead=0.910 17:amber=137,steady=0,whiteLead=0.910 18:amber=137,steady=0,whiteLead=0.910 19:amber=137,steady=0,whiteLead=0.910 20:amber=137,steady=0,whiteLead=0.910 21:amber=137,steady=0,whiteLead=0.910 22:amber=67,steady=0,whiteLead=0.974 23:amber=137,steady=0,whiteLead=0.910 24:amber=137,steady=0,whiteLead=0.910
+U1b_RallyReceptionWithAnAmberOffer_AmberClosesAndTheWhiteIsSteadyAfterItsPulse Passed
+Semilla elegida: ninguna (steady=0 en las 24 semillas; amber 137 o 67).
+XML SHA-256 03f526cd209c300e2e1419c44da6adfca511cb1fd9fbc9b498e648d8943aa8ae
