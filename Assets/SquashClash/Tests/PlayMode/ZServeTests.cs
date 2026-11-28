@@ -68,14 +68,14 @@ namespace SquashClash.Runtime.Tests
             Assert.That(PointEndFreeze.Active, Is.True);
             var box = ServiceBoxPosition();
             Assert.That(rally.Human.Position, Is.Not.EqualTo(box), "keep the point-end pose through the freeze");
-            now += PointEndFreeze.Seconds + .001;
-            rally.Tick();
+            double pointEnd = app.Host.ObservedRealTime;
+            // The freeze the simulation sees runs on the game clock: advance the host until it has passed.
+            Assert.That(Drive(() => rally.HumanServePauseElapsed >= PointEndFreeze.Seconds + .001, 1), Is.True);
             Assert.That(rally.Human.Position, Is.EqualTo(box));
             Assert.That(rally.Human.Velocity, Is.EqualTo(Vector2.zero));
             Assert.That(rally.Human.Phase, Is.EqualTo(BodyPhase.Waiting));
 
             long launch = app.Host.LaunchId;
-            double pointEnd = app.Host.ObservedRealTime;
             Assert.That(Drive(() => app.Host.ObservedRealTime >= pointEnd + 2.97, 3), Is.True);
             Assert.That(app.Host.LaunchId, Is.EqualTo(launch));
             Assert.That(rally.Human.Position, Is.EqualTo(box), "the server stays still until the serve");
@@ -125,8 +125,7 @@ namespace SquashClash.Runtime.Tests
                 placement.SetValue(rally, early);
                 ReachHumanServePause(true);
                 var before = rally.Human.Position;
-                now += PointEndFreeze.Seconds + .001;
-                rally.Tick();
+                Assert.That(Drive(() => rally.HumanServePauseElapsed >= PointEndFreeze.Seconds + .001, 1), Is.True);
                 Assert.That(rally.Human.Position, Is.EqualTo(early ? ServiceBoxPosition() : before));
                 rally.SetTestEnergy(72);
                 long launch = app.Host.LaunchId;
