@@ -13,3 +13,11 @@ objetivo: H0InTheBanner_IfItWasSeenInTheGuide_TheRivalsFirstServePauseShowsNothi
   But was:  "4915/2.5"
   --------------^
 XML SHA-256 970e6f1aac635c61ad95c2ee4e49e7f7b3d2a9579d17c92628ad5de460ab8f9a
+
+Control diagnóstico (pedido de SC-PM, 28 nov; no es reintento): ZFirstMatchHintsTests.cs restaurado temporalmente a 55d2959, sin commit; mismo filtro, una vez.
+total=32 passed=28 failed=4 skipped=0
+Fallan solo las 4 esperadas (Abandon_AfterH0…, Abandon_AndAScene…, Abandon_WithAnArmed…, H0InTheBanner_IfItWas…: «Expected: null / But was: Volley»).
+NoAddedTime_EachPointStartsAtTheSameContinuousStep_OnAndOff Passed; NoAddedTime_OnMatchesOff Passed.
+XML SHA-256 a30093bce50cfa42ce2a9db75a7e2b1057edcee861d5d67b68964d45ee73c5ca
+Archivo devuelto a 59eb557 con git checkout; git status limpio.
+Lectura: con el cambio 1, NoAddedTime falla en la corrida filtrada; sin él, pasa. NoAddedTime no llama a StartHints (usa RunStepped), así que el efecto no es directo; hipótesis sin verificar: estado que queda de una prueba anterior de la clase.
