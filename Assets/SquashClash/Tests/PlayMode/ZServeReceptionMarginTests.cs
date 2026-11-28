@@ -39,10 +39,10 @@ namespace SquashClash.Runtime.Tests
         {while(app.Host.ObservedRealTime+StepReal<time)Step(StepReal);double left=time-app.Host.ObservedRealTime;if(left>0)Step(left);}
         private double Real(SimTime time)
         {Assert.That(app.Host.ClockMap.TrySimToReal(time.Step,time.Fraction,out double real),Is.True);return real;}
-        private void RivalServe()
+        private void RivalServe(RivalStyleId style=RivalStyleId.Definidor)
         {
             rally.Autopilot=false;rally.RandomStyles=false;rally.Seed=1;rally.Level=AiLevel.Medium;
-            rally.StyleOverride=RivalStyleId.Definidor;
+            rally.StyleOverride=style;
             // Keep the production pause so the receiver can recover before the next serve's volley offer.
             rally.SetParams(new RallyParams{HumanServeEarlyMs=25});
             Assert.That(rally.StartMatch(),Is.True);
@@ -61,7 +61,8 @@ namespace SquashClash.Runtime.Tests
             // Keep K-in after the step that reports the bounce, so this specifically exercises Serving=false at release.
             // .25 stays below the real post-bounce peak (.2989 m); .3 left the plan unreachable.
             app.Tuning.Set("legal.minHeight",.25);
-            RivalServe();Assert.That(controller.ServeReceptionEarlyMs,Is.EqualTo(25));
+            // PO approval, 28 nov: this test plays against the Fondista; minHeight .25 and every assertion unchanged.
+            RivalServe(RivalStyleId.Fondista);Assert.That(controller.ServeReceptionEarlyMs,Is.EqualTo(25));
             // Observe the actual first bounce, then read the currently presented bounce plan.
             Assert.That(Drive(()=>rally.Phase==RallyPhase.HumanReception&&!rally.Rules.Serving&&rally.Rules.FloorBounces==1),Is.True);
             var plan=controller.Plan;double kin=Real(plan.KIn);
