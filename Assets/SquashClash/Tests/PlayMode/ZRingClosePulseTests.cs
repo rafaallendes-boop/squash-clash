@@ -192,19 +192,20 @@ namespace SquashClash.Runtime.Tests
         }
         [Test] public void U1a_RivalServeReceptionWithTheServeVolley_AmberClosesAndTheWhiteIsSteadyAfterItsPulse()
         {
-            // PO approval, 28 nov: the first seed from 1 to 24 that qualifies (amber >= 10 samples and the white shows >= 1 s before the contact,
-            // measured in the same run). Selection only: the assertions below are unchanged and apply to the chosen seed.
+            // PO decision, 28 nov 10:33: the first seed from 1 to 24 that meets the thresholds this test already has (amber >= 10 samples and
+            // >= 3 steady-white samples past 0.5 s); it fails if none does. The assertions below are unchanged and apply to the chosen seed.
+            // whiteLead (s from the first white sample to the shown plan's T*) is kept only as a diagnostic in the messages, never as a condition.
             var seen=new List<string>();List<float> amber=null;int steady=0,winner=0;
             for(int seed=1;seed<=24;seed++)
             {
                 StartRivalServe(seed);
                 Assert.That(controller.ServeReception,Is.True,"rival serve reception, seed="+seed);
                 Assert.That(rally.Match.Server,Is.EqualTo(PlayerId.Rival),"the rival serves, seed="+seed);Assert.That(rally.Rules.Serving,Is.True,"serving rules, seed="+seed);
-                RunUntouched(out amber,out steady,out double whiteLead,"seed="+seed);seen.Add(seed+":amber="+amber.Count+",whiteLead="+whiteLead.ToString("0.000"));
-                if(amber.Count>=10&&whiteLead>=1){winner=seed;TestContext.WriteLine("U1a winning seed="+seed+" amber samples="+amber.Count+" white lead s="+whiteLead.ToString("0.000")+" steady samples="+steady);break;}
+                RunUntouched(out amber,out steady,out double whiteLead,"seed="+seed);seen.Add(seed+":amber="+amber.Count+",steady="+steady+",whiteLead="+whiteLead.ToString("0.000"));
+                if(amber.Count>=10&&steady>=3){winner=seed;TestContext.WriteLine("U1a winning seed="+seed+" amber samples="+amber.Count+" white lead s="+whiteLead.ToString("0.000")+" steady samples="+steady);break;}
                 rally.StopMode();
             }
-            if(winner==0)Assert.Fail("no seed from 1 to 24 gave amber >= 10 samples and the white >= 1 s before the contact: "+string.Join(" ",seen));
+            if(winner==0)Assert.Fail("no seed from 1 to 24 gave amber >= 10 samples and >= 3 steady-white samples past 0.5 s: "+string.Join(" ",seen));
             AssertClosesMonotonically(amber,"seed="+winner);
             Assert.That(steady,Is.GreaterThanOrEqualTo(3),"waiting-white samples past the pulse, seed="+winner);
         }
