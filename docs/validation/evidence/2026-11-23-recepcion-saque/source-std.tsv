@@ -1,0 +1,7 @@
+variant	defaults	rallyParams	simulationKey	earlySoft	unity	matches	levels	humans
+base	207da8f2c636	1063d0f6cf66	166a96e319c7	0	6000.3.27f1	200	Medium,Easy	std
+driveHalf	207da8f2c636	178fae835db3	166a96e319c7	0	6000.3.27f1	200	Medium,Easy	std
+driveZero	207da8f2c636	95b99006230e	166a96e319c7	0	6000.3.27f1	200	Medium,Easy	std
+earlySoft	11191fc66880	1063d0f6cf66	166a96e319c7	1	6000.3.27f1	200	Medium,Easy	std
+noServeVolley	207da8f2c636	fd5cd7772125	166a96e319c7	0	6000.3.27f1	200	Medium,Easy	std
+elapsed	1702.738
