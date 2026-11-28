@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Experimento explícito «defensa alta y larga» (26 nov), aislado de las suites de regresión.
 #   scripts/measure-deep-defense.sh <run> [metrics|n2|both]
-# metrics: DeepDefenseExperiment.WriteDeepDefense (Logs/experiments/deep-defense/<run>).
+# metrics: DeepDefenseExperiment.WriteDeepDefense (Logs/experiments/deep-defense/<run>); niveles en SC_DD_LEVELS (por defecto Medium), guardados en <run>-runner/levels.txt.
 # n2: RivalStylesCalibrationExperiment.ConfirmPerStyle sin cambios (Logs/experiments/rival-styles-calibration/<run>-n2).
 # Toma el candado global de Unity; un solo Unity. No sobrescribe evidencia ni reintenta.
 set -euo pipefail
@@ -23,6 +23,7 @@ one() {
     local name="$1" filter="$2" evidence="$3"
     [[ ! -e "$evidence" ]] || { printf 'STOP: ya existe evidencia: %s\n' "$evidence" >&2; exit 2; }
     mkdir -p "$evidence"; printf '%s\n' "$head" > "$evidence/head.txt"
+    [[ "$name" != metrics ]] || printf '%s\n' "${SC_DD_LEVELS:-Medium}" > "$evidence/levels.txt"
     if pgrep -f '[U]nity.app/Contents/MacOS/Unity' >/dev/null; then printf 'STOP: ya hay un Editor Unity.\n' >&2; exit 3; fi
     local started_ns status=0
     started_ns="$(python3 -c 'import time; print(time.time_ns())')"
