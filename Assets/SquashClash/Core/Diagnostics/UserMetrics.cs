@@ -60,5 +60,9 @@ namespace SquashClash.Core.Diagnostics
         // First-match hints (spec front 2, sections 1.4 and 1.5). Additive lines: the current ones do not change. «where» is empty for a retired hint.
         public void Hint(string id,string action,string where)=>Emit("hint",new HintLine{matchId=matchId,id=id,action=action,where=where??""});
         public void ServeChoice(bool chosen,string kind,bool hintSeen)=>Emit("serve-choice",new ServeChoiceLine{matchId=matchId,chosen=chosen,kind=kind,hintSeen=hintSeen});
+        // The id of the open match, so a line written after the next match has started can still name the previous one.
+        public string OpenMatchId=>matchId??"";
+        // Loose-drive hint (spec 2026-11-28, P13). Placeholder: writes nothing yet, so the new test fails by assertion.
+        public void DriveHint(string match,string kind,float bounceX,float bounceZ,bool seen,string reason){}
     }
 }
