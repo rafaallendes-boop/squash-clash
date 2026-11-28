@@ -287,3 +287,13 @@ Cada una se responde con sí o no. Va la recomendación de Claude con su razón.
 11. **P11. ¿Sale en todo partido sin piloto automático, revancha y «Partido» DEV incluidos?** Recomiendo **sí**: es una ayuda de juego, no de bienvenida.
 12. **P12. ¿El texto usa «drive» (y no «recta» ni «suelto»), con los textos de la §8?** Recomiendo **sí**: «drive» cubre la recta y la cruzada, y es el término del encargo. SC-Lead puede corregirlo.
 13. **P13. ¿Se agrega la métrica aditiva `drive-hint` por punto calificado?** Recomiendo **sí**: sin ella, en el iPhone no se puede medir cuántas veces sale ni si se vio.
+
+## Decisiones del PO
+
+Registradas al encargar el código. No cambian el resto de esta spec.
+
+**28 nov 2026, 10:33.** Criterios, cita literal de Rafael: «drive con potencia >0,5 y mira <3 m, corto si bota delante de la línea corta (5,49 m), lejos si bota a más de 1,60 m de la lateral, y solo si el rival lo devolvió de un golpe y no llegué». Cubre P2, P3, P5, P6 y P7.
+
+**28 nov 2026, 11:44.** Autorización, cita literal de Rafael (vía SC-Lead): «Sí, que Grok escriba el código de la pista del drive suelto, solo por hoy y con revisión de Claude antes del merge». Vale solo para esta pista y solo hoy. La revisión cruzada la hace un Claude aparte antes del merge. Con este encargo queda aprobada la adopción (pregunta 1).
+
+**P4, P8, P9, P10, P11, P12 y P13** quedan como recomienda esta spec: todas sí.
