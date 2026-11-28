@@ -161,9 +161,11 @@ namespace SquashClash.Runtime.Tests
             Assert.That(rally.StartMode(),Is.True);Assert.That(controller.Volley.Exists,Is.True,controller.Volley.Reason);
         }
         // Presentation only (25 nov). Drives a reception without touching: the amber offer closes inside its window and, once white, the waiting ring is steady.
-        private void RunUntouched(out List<float> amber,out int steadySamples,string tag="")
+        private void RunUntouched(out List<float> amber,out int steadySamples,string tag="")=>RunUntouched(out amber,out steadySamples,out _,tag);
+        // whiteLead: seconds from the first white sample after the amber to the shown plan's contact step (T*), read at that sample; NaN if there is none.
+        private void RunUntouched(out List<float> amber,out int steadySamples,out double whiteLead,string tag="")
         {
-            amber=new List<float>();steadySamples=0;double? whiteSince=null;bool wasAmber=false;
+            amber=new List<float>();steadySamples=0;double? whiteSince=null;bool wasAmber=false;whiteLead=double.NaN;
             for(int i=0;i<1500&&!controller.AttemptConsumed;i++)
             {
                 Frame();
@@ -173,7 +175,11 @@ namespace SquashClash.Runtime.Tests
                 {amber.Add(Radius);wasAmber=true;}
                 else if(wasAmber&&ring.Visible&&ring.Tint==Color.white&&!controller.VolleyShown)
                 {
-                    whiteSince=whiteSince??now;
+                    if(!whiteSince.HasValue)
+                    {
+                        whiteSince=now;var plan=controller.ShownPlan;
+                        if(plan.Exists&&plan.TStarStep>=0&&app.Host.ClockMap.TrySimToReal(plan.TStarStep,0,out double contact))whiteLead=contact-now;
+                    }
                     if(ring.CueState.Approach>=1&&now-whiteSince.Value>.5){steadySamples++;Assert.That(GameObjectLine().startColor.a,Is.EqualTo(1f).Within(1e-5f),"steady white at "+(now-whiteSince.Value)+" "+tag);}
                 }
             }
@@ -186,17 +192,19 @@ namespace SquashClash.Runtime.Tests
         }
         [Test] public void U1a_RivalServeReceptionWithTheServeVolley_AmberClosesAndTheWhiteIsSteadyAfterItsPulse()
         {
+            // PO approval, 28 nov: the first seed from 1 to 24 that qualifies (amber >= 10 samples and the white shows >= 1 s before the contact,
+            // measured in the same run). Selection only: the assertions below are unchanged and apply to the chosen seed.
             var seen=new List<string>();List<float> amber=null;int steady=0,winner=0;
             for(int seed=1;seed<=24;seed++)
             {
                 StartRivalServe(seed);
                 Assert.That(controller.ServeReception,Is.True,"rival serve reception, seed="+seed);
                 Assert.That(rally.Match.Server,Is.EqualTo(PlayerId.Rival),"the rival serves, seed="+seed);Assert.That(rally.Rules.Serving,Is.True,"serving rules, seed="+seed);
-                RunUntouched(out amber,out steady,"seed="+seed);seen.Add(seed+":"+amber.Count);
-                if(amber.Count>=10){winner=seed;TestContext.WriteLine("U1a winning seed="+seed+" amber samples="+amber.Count+" steady samples="+steady);break;}
+                RunUntouched(out amber,out steady,out double whiteLead,"seed="+seed);seen.Add(seed+":amber="+amber.Count+",whiteLead="+whiteLead.ToString("0.000"));
+                if(amber.Count>=10&&whiteLead>=1){winner=seed;TestContext.WriteLine("U1a winning seed="+seed+" amber samples="+amber.Count+" white lead s="+whiteLead.ToString("0.000")+" steady samples="+steady);break;}
                 rally.StopMode();
             }
-            Assert.That(amber.Count,Is.GreaterThanOrEqualTo(10),"no seed gave an amber serve offer: "+string.Join(" ",seen));
+            if(winner==0)Assert.Fail("no seed from 1 to 24 gave amber >= 10 samples and the white >= 1 s before the contact: "+string.Join(" ",seen));
             AssertClosesMonotonically(amber,"seed="+winner);
             Assert.That(steady,Is.GreaterThanOrEqualTo(3),"waiting-white samples past the pulse, seed="+winner);
         }
