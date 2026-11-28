@@ -1,0 +1,15 @@
+PlayMode filtro SquashClash.Runtime.Tests.ZFirstMatchHintsTests, sobre 55d2959 + cambio 1 (VolleyEnabled=0 en las 4 pruebas), 28 nov
+total=32 passed=31 failed=1 skipped=0
+objetivo: Abandon_AfterH0WasSeenInTheBanner_NeverShowsItAgain Passed
+objetivo: Abandon_AndASceneRestart_KeepTheStoredKeysAndRestoreNothingArmed Passed
+objetivo: Abandon_WithAnArmedHint_DoesNotBringItBack_UnlessTheTriggerRepeats Passed
+objetivo: H0InTheBanner_IfItWasSeenInTheGuide_TheRivalsFirstServePauseShowsNothing Passed
+### SquashClash.Runtime.Tests.ZFirstMatchHintsTests.NoAddedTime_EachPointStartsAtTheSameContinuousStep_OnAndOff Failed
+  the step at which each point ended and its WaitBetweenPoints
+  Expected and actual are both <System.Collections.Generic.List`1[System.String]> with 6 elements
+  Values differ at index [1]
+  String lengths are both 8. Strings differ at index 3.
+  Expected: "4916/2.5"
+  But was:  "4915/2.5"
+  --------------^
+XML SHA-256 970e6f1aac635c61ad95c2ee4e49e7f7b3d2a9579d17c92628ad5de460ab8f9a
