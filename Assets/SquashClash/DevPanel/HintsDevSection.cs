@@ -1,5 +1,6 @@
 using SquashClash.Runtime.App;
 using SquashClash.Runtime.Menu;
+using SquashClash.Runtime.Rally;
 using UnityEngine.UIElements;
 namespace SquashClash.DevPanel
 {
@@ -17,6 +18,11 @@ namespace SquashClash.DevPanel
             toggle.style.minHeight=44;toggle.style.whiteSpace=WhiteSpace.Normal;Root.Add(toggle);
             var reset=new Button(()=>DevControlLog.Run(app,"hints-reset",FirstMatchHints.Clear)){name="hints-reset",text="Reiniciar pistas"};
             reset.style.minHeight=44;reset.style.whiteSpace=WhiteSpace.Normal;Root.Add(reset);
+            // Same gate as this assembly (SQUASH_DEV || UNITY_EDITOR). No extra define: the editor that runs the tests does not set SQUASH_DEV.
+            Button drive=null;
+            string DriveText()=>"Pista del drive: "+(LooseDriveHint.Enabled?"sí":"no");
+            drive=new Button(()=>DevControlLog.Run(app,"drive-hint-toggle",()=>{LooseDriveHint.Enabled=!LooseDriveHint.Enabled;drive.text=DriveText();})){name="drive-hint-toggle",text=DriveText()};
+            drive.style.minHeight=44;drive.style.whiteSpace=WhiteSpace.Normal;Root.Add(drive);
         }
     }
 }

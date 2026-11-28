@@ -35,6 +35,9 @@ namespace SquashClash.Runtime.Rally
         public bool MenuMatch {get;set;}
         // First-match hints (spec front 2): the adapter that decides which hint the pause shows and remembers the ones already seen.
         public FirstMatchHints Hints {get;private set;}
+        // Loose-drive hint (spec 2026-11-28). Same row as the first-match banner hint; that one wins when both want the pause.
+        public LooseDriveHint Drive {get;private set;}
+        private LooseDriveKind driveShown;
         private bool autopilotSeen;
         public static string DurationText(float seconds){int s=Mathf.Max(0,(int)seconds);return (s/60)+":"+(s%60).ToString("D2");}
         public static string RematchText(bool humanWon,int human,int rival)=>humanWon?"Revancha":"Revancha "+human+"–"+rival;
@@ -86,8 +89,9 @@ namespace SquashClash.Runtime.Rally
         private RallyPhase phase=(RallyPhase)(-1);
         public void Initialize(AppBootstrap app,RallyDirector rally,VisualElement parent)
         {
-            this.app=app;this.rally=rally;Hints=new FirstMatchHints(app,rally,app.GetComponent<SquashClash.Runtime.Shot.ShotController>());
-            strokesController=app.GetComponent<SquashClash.Runtime.Shot.ShotController>();if(strokesController!=null)strokesController.ShotResolved+=OnStrokeResolved;rally.PointEnded+=OnStrokePointEnded;
+            this.app=app;this.rally=rally;strokesController=app.GetComponent<SquashClash.Runtime.Shot.ShotController>();
+            Hints=new FirstMatchHints(app,rally,strokesController);Drive=new LooseDriveHint(app,rally,strokesController);
+            if(strokesController!=null)strokesController.ShotResolved+=OnStrokeResolved;rally.PointEnded+=OnStrokePointEnded;
             // Art pass: palette and type scale live in one style sheet; the elements and their names are the same.
             var sheet=Resources.Load<StyleSheet>("Visual/Hud");
             var top=parent.parent??parent;if(sheet!=null)top.styleSheets.Add(sheet);
@@ -303,23 +307,52 @@ namespace SquashClash.Runtime.Rally
         {
             var id = Hints.Shown;
             var where = Hints.ShownWhere;
-            SetHintRow(bannerHint, bannerHintIcon, bannerHintText, bannerOn && id.HasValue && where == HintWhere.Banner ? id : null, HintWhere.Banner, ref bannerHintShown);
+            bool firstBanner = bannerOn && id.HasValue && where == HintWhere.Banner;
+            var drive = bannerOn && !firstBanner && Drive != null ? Drive.Shown : LooseDriveKind.None;
+            if (drive != LooseDriveKind.None)
+            {
+                // SetHintRow returns early when the id did not change, so the drive row is drawn here and the first-match cache is cleared.
+                if (driveShown != drive || bannerHintShown.HasValue || bannerHintText.text != LooseDrive.Text(drive))
+                {
+                    bannerHintShown = null;
+                    bannerHintText.text = LooseDrive.Text(drive);
+                    bannerHintIcon.style.display = DisplayStyle.None;
+                    driveShown = drive;
+                }
+                bannerHint.style.display = DisplayStyle.Flex;
+            }
+            else
+            {
+                if (driveShown != LooseDriveKind.None)
+                {
+                    bannerHintIcon.style.display = DisplayStyle.Flex;
+                    bannerHintText.text = "";
+                    bannerHint.style.display = DisplayStyle.None;
+                    bannerHintShown = null;
+                    driveShown = LooseDriveKind.None;
+                }
+                SetHintRow(bannerHint, bannerHintIcon, bannerHintText, firstBanner ? id : null, HintWhere.Banner, ref bannerHintShown);
+            }
             SetHintRow(guideHint, guideHintIcon, guideHintText, guideOn && id.HasValue && where == HintWhere.Guide ? id : null, HintWhere.Guide, ref guideHintShown);
         }
         // The two oracles of «seen»: tells the adapter what was really on screen this frame.
         private void ReportHints()
         {
-            if (Hints == null || !Hints.Shown.HasValue) return;
-            if (Hints.ShownWhere == HintWhere.Banner)
-                Hints.ReportBanner(banner.style.display.value == DisplayStyle.Flex, bannerHint.style.display.value == DisplayStyle.Flex, bannerHint.layout.height, BannerOpacity);
-            else
+            if (Hints != null && Hints.Shown.HasValue)
             {
-                float h = guideHint.layout.height;
-                bool visible = serveGuide.style.display.value == DisplayStyle.Flex && serveGuide.style.opacity.value > 0 && guideHint.style.display.value == DisplayStyle.Flex && !float.IsNaN(h) && h > 0;
-                Hints.ReportGuide(visible);
+                if (Hints.ShownWhere == HintWhere.Banner)
+                    Hints.ReportBanner(banner.style.display.value == DisplayStyle.Flex, bannerHint.style.display.value == DisplayStyle.Flex, bannerHint.layout.height, BannerOpacity);
+                else
+                {
+                    float h = guideHint.layout.height;
+                    bool visible = serveGuide.style.display.value == DisplayStyle.Flex && serveGuide.style.opacity.value > 0 && guideHint.style.display.value == DisplayStyle.Flex && !float.IsNaN(h) && h > 0;
+                    Hints.ReportGuide(visible);
+                }
             }
+            if (Drive != null && Drive.Shown != LooseDriveKind.None)
+                Drive.ReportBanner(banner.style.display.value == DisplayStyle.Flex, bannerHint.style.display.value == DisplayStyle.Flex, bannerHint.layout.height, BannerOpacity);
         }
-        private void OnDestroy(){Hints?.Dispose();if(strokesController!=null)strokesController.ShotResolved-=OnStrokeResolved;if(rally!=null)rally.PointEnded-=OnStrokePointEnded;}
+        private void OnDestroy(){Hints?.Dispose();Drive?.Dispose();if(strokesController!=null)strokesController.ShotResolved-=OnStrokeResolved;if(rally!=null)rally.PointEnded-=OnStrokePointEnded;}
         // The tally belongs to one MatchScore of an active mode: a new match, a rematch or leaving the mode starts it over (StopMode keeps Match, so Active counts).
         private void SyncStrokes(){var current=rally.Active?rally.Match:null;if(!ReferenceEquals(strokesMatch,current)){strokesMatch=current;Strokes.Reset();}}
         // Same gate as RallyDirector.OnResolved (the player's reception in a match). Controller state is read inside the callback.
@@ -554,6 +587,8 @@ namespace SquashClash.Runtime.Rally
             banner.style.display = point >= 0 && !showServeGuide ? DisplayStyle.Flex : DisplayStyle.None;
             RefreshReferee(active);
             Hints.Observe();
+            bool firstBanner = Hints.Shown.HasValue && Hints.ShownWhere == HintWhere.Banner;
+            Drive.Observe(point >= 0 && !showServeGuide && firstBanner);
             RefreshHints(point >= 0 && !showServeGuide, showServeGuide);
             RefreshServeGuide(showServeGuide);
             ReportHints();
