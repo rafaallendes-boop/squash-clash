@@ -2,9 +2,9 @@
 
 28 nov 2026. Encargo `set27-revision-pista-drive-suelto` de SC-PM. Revisión de solo lectura, sin Unity. No se corrieron `scripts/test.sh`, AutoQA ni `check-release`. No se tocaron `sc-unity.lock` ni `scripts/device.env`.
 
-- **Head revisado:** `30fd0c4355dc8fae0353e8fafc1b2c5a2827da24`, igual a `origin/sc-pista-drive-suelto`. Base `origin/main` `99b4306` (merge-base). El delta de la spec contra `654d243` es solo la sección «Decisiones del PO».
+- **Head revisado:** primero `30fd0c4355dc8fae0353e8fafc1b2c5a2827da24` (§1–§8). Después, el delta hasta **`37f776792bc0321da4b984884958201ea77c79a7`** (§9), igual a `origin/sc-pista-drive-suelto` tras el fetch. Base `origin/main` `99b4306` (merge-base). El delta de la spec contra `654d243` es solo la sección «Decisiones del PO».
 - **Autor:** Grok, por la excepción de Rafael del 28 nov 11:44. Revisor: Claude (Opus), que no escribió el código.
-- **Veredicto preliminar: APROBADO CON OBSERVACIONES.** No hay cambios solicitados. Las observaciones no bloquean. La fusión sigue pendiente de las puertas en el Mac del PO (§6 punto 9 de la spec y AGENTS §2). Este informe no aprueba nada en nombre del PO.
+- **Veredicto preliminar actualizado (head `37f7767`): APROBADO CON OBSERVACIONES.** No hay cambios solicitados. O1 y O4 quedan cerradas. O3 queda cerrada en código, con una observación nueva, O3b (§9). Las observaciones no bloquean. La fusión sigue pendiente de las puertas en el Mac del PO (§6 punto 9 de la spec y AGENTS §2). Este informe no aprueba nada en nombre del PO.
 
 ## 1. Criterios (P2–P13)
 
@@ -103,3 +103,53 @@ Se cotejaron byte a byte con la spec (grep `-F`). «Drive» está aprobado por P
 - El interruptor DEV queda protegido por el asmdef (`SQUASH_DEV || UNITY_EDITOR`) y no por un `#if SQUASH_DEV`. Es igual que «Pistas» y «Reiniciar pistas».
 - Para la prueba en el iPhone: con P7, si el jugador no hace swing ante una pelota que no alcanza, la recepción es `NoSwing` y no sale la pista. Sirve para leer la métrica `drive-hint`.
 - Faltan las puertas antes de fusionar: EditMode y PlayMode completos en el Mac del PO, `check-release` y AutoQA (spec §6.9).
+
+## 9. Delta `30fd0c4..37f7767` (28 nov, encargo `set27c`)
+
+Se revisó sin mezclar código en esta rama: `git fetch origin sc-pista-drive-suelto`, `git diff 30fd0c4..37f7767` y `git show origin/sc-pista-drive-suelto:<archivo>`.
+
+- **Cinco commits:** `f8cc892` (test O1), `5464559` (fix O1), `ac395a2` (test O3), `e1931e6` (O4) y `37f7767` (nota).
+- **Cuatro archivos:** `LooseDriveHint.cs` (+5/−2), `LooseDriveTests.cs`, `ZLooseDriveHintTests.cs` y la nota del autor.
+- **Nada más cambió:** ni producción fuera de `ClosePause`, ni física, IA, contrato, `RallyParams`, `DefaultPreset.json`, SimulationKey, asmdef, `.meta`, textos ni pruebas existentes. O2, O5, O6 y O7 quedan tal como estaban.
+
+**O1: cerrada.**
+- `LooseDriveHint.cs:178-182`: `already = usedThisMatch` se guarda primero. Después, `if (seen && !occupied) usedThisMatch = true;` corre antes del `return` por `UserEvents == null` (`:183`).
+- La métrica no cambia de significado: `firstMatchHint`, después `limit` (con el valor previo, `:186`), después `""` y `notSeen`. Es la misma tabla de antes.
+- La prueba `SeenOnce_BlocksTheNextPoint_WhenUserEventsIsNull` (`ZLooseDriveHintTests.cs:365-382`) cubre el caso de verdad:
+  - `DropUserEvents` (`:105-122`) quita por reflexión solo los handlers de `AppBootstrap` en `PointEnded` y `ModeChanged`, que usan `UserEvents` sin null (`AppBootstrap.cs:368-374`);
+  - el de `RallyStarted` sale antes de usarlo cuando el partido es el mismo (`:362`);
+  - luego deja `UserEvents` en null con el setter privado (`AppBootstrap.cs:32`).
+  
+  Con el código de `30fd0c4`, la segunda inyección se habría mostrado y la aserción de `:382` falla. Con el arreglo pasa. RED y GREEN no se ejecutaron.
+- Los otros usos de `UserEvents` en producción tienen null o un chequeo previo (`FirstMatchHints.cs:253` está dentro del `if`).
+
+**O3: cerrada en código, con O3b.**
+- `RunCompare` vuelve a contar de forma independiente con `Judge` (`:520-557`) y exige dos cosas (`:591-593`):
+  - `on.LooseDrives > 0`;
+  - `on.HintShown`, es decir, que una de las tres frases se vio en una pausa ordinaria (`:573`).
+- Sin positivo, la prueba falla con «Stop. Do not loosen», y no se esconde.
+- Las entradas no cambian: semilla 5, Fácil, σ 25, Fondista y `ServeKindOn` 1 (`:514-519`). Los cortes (`LooseDrive.cs`) son los mismos. No se fabricó un positivo.
+- **La prueba no es estructuralmente roja.**
+  - `RunCompare` no fija la potencia, así que queda la de fábrica, `Medium` (`RallyDirector.cs:77`). Esa opción tiene P = `PowerMedium` 0,5 (`RallyParams.cs:59`, `ShotOptions.cs:51`), que por P2 no es drive.
+  - Pero `BotBrain.Decide` (`Core/Rally/RallySim.cs:70-74`) recorre las 18 opciones ordenadas por `Distance` (`:76`). Elige la primera cuyo pronóstico es bueno.
+  - La segunda en ese orden es Recta/Media/**Strong** (distancia 1), con P = `PowerStrong` 0,85 y mira `AimMid` 1,7 m. Esa opción es un drive.
+  - `ShotRecord.Power` es la P de la orden (`ShotController.cs:431`). Así que cada vez que la Recta/Media/Medium no tiene un pronóstico bueno, el piloto pega un drive válido.
+  - Que con la semilla 5 salga un drive suelto que además califique (corto o abierto, una devolución, `Unreachable`) **no se puede saber sin correrlo**.
+  - La nota del autor dice «lo esperado es el fallo», sin evidencia en ningún sentido.
+- O4 y el recuento no cambian la igualdad. Los mismos handlers de prueba están en las dos corridas y solo leen.
+
+**O3b (observación, no bloquea).** Esta puerta puede salir roja en el Mac.
+- Si sale roja, AGENTS §2 manda registrar y detenerse. No se cambia semilla ni potencia, porque el criterio 6 fija las entradas del criterio 9 de front 2.
+- Una salida que no toca el juego, para que decidan SC-PM y el PO:
+  - mantener las entradas de front 2;
+  - en las dos corridas, inyectar un punto calificado con `QualifyForTests`, que no devuelve nada al juego;
+  - exigir `HintShown` solo en la corrida encendida;
+  - dejar la exigencia del positivo natural en la prueba de escena (semilla 11, `Strong`, `:218,302`), que ya la tiene.
+- Es un cambio de prueba. Según la regla, solo se hace tras registrar el resultado.
+
+**O4: cerrada sin perder cobertura.**
+- `TwoWallOrder_…` (`LooseDriveTests.cs:98-101`) queda con una aserción. Las dos que había eran idénticas.
+- `NotApplied_IsNone` (`:123-127`) queda en un solo `[Test]`. El parámetro nunca entraba a `Judge`.
+- La cobertura del respaldo a drive sigue en PlayMode (`ZLooseDriveHintTests.cs:162-166`).
+
+**Pendiente:** las puertas de Unity. Son EditMode y PlayMode completos en el Mac del PO, `check-release` y AutoQA. Nada de esto se corrió en esta revisión.
