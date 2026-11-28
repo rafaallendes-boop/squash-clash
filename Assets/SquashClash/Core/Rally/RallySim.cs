@@ -86,6 +86,8 @@ namespace SquashClash.Core.Rally
         private CausalReference pendingCausal;
         private bool hasPending;private long pendingStep;private AiShot pendingShot;private PlayerId pendingWho;private ReceptionLog pendingLog;
         private int planVersion;private long launchId;
+        // [EXPERIMENTO] set25: the rival's configured level (null when its brain does not say), read once.
+        private readonly AiLevel? rivalLevel;
         // [EXPERIMENTO] set21: the one scheduled read of the rival (the human's swing); never set while RivalSwingReadLeadMs is 0.
         private bool hasRead;private long readStep,readContactStep;private Vector3 readContactPoint;private AiShot readShot;
         // Volley v2.x for a touching human brain (IRallyVolleyToucher): the body turns to the chosen stance at the touch step.
@@ -106,7 +108,7 @@ namespace SquashClash.Core.Rally
         {
             this.context=context??throw new ArgumentNullException(nameof(context));
             brains[0]=human??throw new ArgumentNullException(nameof(human));brains[1]=rival??throw new ArgumentNullException(nameof(rival));
-            HumanEnergy=new FatigueState(context.Fatigue);RivalEnergy=new FatigueState(context.Fatigue);
+            HumanEnergy=new FatigueState(context.Fatigue);RivalEnergy=new FatigueState(context.Fatigue);rivalLevel=(rival as IRallyLevel)?.Level;
             ball=context.Factory.Create(context.Physics,context.Court);
             Rules=context.NewRules();
             Human=new PlayerBody(PlayerId.Human,WaitOf(PlayerId.Human),context.Move);
@@ -253,7 +255,7 @@ namespace SquashClash.Core.Rally
             var log=new ReceptionLog(who,result,decision.Result==ShotResult.Perfect,plan.Reachable,shot.Defensive,decision.DeltaMs,plan.SlackS,shot.Option,decision.ContactStep,decision.Reason,fatigueReception:f,volley:useVolley,volleyOffered:offeredLog,volleySprintFactor:chosenSprint);
             if(result!=ReceptionResult.Contact){outcome.Receptions.Add(log);return;}
             hasPending=true;pendingStep=decision.ContactStep;pendingShot=shot;pendingWho=who;pendingLog=log;
-            int lead=who==PlayerId.Human&&(context.Params.RivalSwingReadLongOnly<=0||RivalSwingRead.LongSwing(context,shot))?RivalSwingRead.LeadSteps(context):0;long at=decision.ContactStep-trajectory.States[0].Step;
+            int lead=who==PlayerId.Human&&(context.Params.RivalSwingReadLongOnly<=0||RivalSwingRead.LongSwing(context,shot))&&RivalSwingRead.LevelReads(context,rivalLevel)?RivalSwingRead.LeadSteps(context):0;long at=decision.ContactStep-trajectory.States[0].Step;
             if(lead>0&&at>=0&&at<trajectory.States.Count)
             {
                 readContactStep=decision.ContactStep;readContactPoint=trajectory.States[(int)at].Position;readShot=shot;readStep=Math.Max(state.Step,decision.ContactStep-lead);

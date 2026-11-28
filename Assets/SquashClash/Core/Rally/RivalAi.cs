@@ -83,12 +83,21 @@ namespace SquashClash.Core.Rally
         private readonly ShotOption[] all=new ShotOption[44];
         private readonly bool[] atVolley=new bool[44];
         public RivalStyle Style {get;}
-        public AiLevel? Level=>null;
+        // [EXPERIMENTO] set25: the configured level, from the difficulty's temperature (the style factor never scales it); null when it matches none or several.
+        public AiLevel? Level {get;}
+        public static AiLevel? LevelOf(RallyParams p,in AiDifficulty d)
+        {
+            AiLevel? found=null;int n=0;
+            if(d.Temperature==p.EasyTemperature){found=AiLevel.Easy;n++;}
+            if(d.Temperature==p.MediumTemperature){found=AiLevel.Medium;n++;}
+            if(d.Temperature==p.HardTemperature){found=AiLevel.Hard;n++;}
+            return n==1?found:null;
+        }
         // The game's rival: the level's shared noise scaled by the (style, level) factor.
         public static RivalAi For(RallyContext context,AiLevel level,RivalStyleId style,long seed)
             =>new RivalAi(context,RivalStyle.Difficulty(context.Params,style,level),style,seed);
         public RivalAi(RallyContext context,AiDifficulty difficulty,RivalStyleId style,long seed)
-        {this.context=context??throw new ArgumentNullException(nameof(context));this.difficulty=difficulty;Style=RivalStyle.For(context.Params,style);random=new RallyRng(seed);serveRandom=new RallyRng(unchecked(seed*7919L+20261120L));}
+        {this.context=context??throw new ArgumentNullException(nameof(context));this.difficulty=difficulty;Level=LevelOf(context.Params,difficulty);Style=RivalStyle.For(context.Params,style);random=new RallyRng(seed);serveRandom=new RallyRng(unchecked(seed*7919L+20261120L));}
         public int PerceptionSteps=>context.Steps(difficulty.PerceptionS);
         public Vector2 StanceNoise()=>new Vector2((float)random.NextGaussian(difficulty.StanceSigma),(float)random.NextGaussian(difficulty.StanceSigma));
         public Vector2 Wait=>context.ClampBody(context.T+new Vector2((float)context.Params.WaitLateralOffset,(float)Style.WaitBehindT));
