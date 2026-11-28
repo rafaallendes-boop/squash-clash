@@ -2,9 +2,9 @@
 
 28 nov 2026. Encargo `set27-revision-pista-drive-suelto` de SC-PM. Revisión de solo lectura, sin Unity. No se corrieron `scripts/test.sh`, AutoQA ni `check-release`. No se tocaron `sc-unity.lock` ni `scripts/device.env`.
 
-- **Head revisado:** primero `30fd0c4355dc8fae0353e8fafc1b2c5a2827da24` (§1–§8). Después, el delta hasta **`37f776792bc0321da4b984884958201ea77c79a7`** (§9), igual a `origin/sc-pista-drive-suelto` tras el fetch. Base `origin/main` `99b4306` (merge-base). El delta de la spec contra `654d243` es solo la sección «Decisiones del PO».
+- **Head revisado:** primero `30fd0c4355dc8fae0353e8fafc1b2c5a2827da24` (§1–§8). Después, el delta hasta `37f776792bc0321da4b984884958201ea77c79a7` (§9). Por último, el merge de `main` **`980cf39f0cc9db36228b685bdf01eff92716a22b`** (§10), igual a `origin/sc-pista-drive-suelto` tras el fetch. Base `origin/main` `99b4306` (merge-base). El delta de la spec contra `654d243` es solo la sección «Decisiones del PO».
 - **Autor:** Grok, por la excepción de Rafael del 28 nov 11:44. Revisor: Claude (Opus), que no escribió el código.
-- **Veredicto preliminar actualizado (head `37f7767`): APROBADO CON OBSERVACIONES.** No hay cambios solicitados. O1 y O4 quedan cerradas. O3 queda cerrada en código, con una observación nueva, O3b (§9). Las observaciones no bloquean. La fusión sigue pendiente de las puertas en el Mac del PO (§6 punto 9 de la spec y AGENTS §2). Este informe no aprueba nada en nombre del PO.
+- **Veredicto actualizado (head `980cf39`): APROBADO CON OBSERVACIONES.** El merge de `main` es limpio y no cambia la pista (§10); se suma O8. Veredicto anterior (head `37f7767`): APROBADO CON OBSERVACIONES. No hay cambios solicitados. O1 y O4 quedan cerradas. O3 queda cerrada en código, con una observación nueva, O3b (§9). Las observaciones no bloquean. La fusión sigue pendiente de las puertas en el Mac del PO (§6 punto 9 de la spec y AGENTS §2). Este informe no aprueba nada en nombre del PO.
 
 ## 1. Criterios (P2–P13)
 
@@ -153,3 +153,34 @@ Se revisó sin mezclar código en esta rama: `git fetch origin sc-pista-drive-su
 - La cobertura del respaldo a drive sigue en PlayMode (`ZLooseDriveHintTests.cs:162-166`).
 
 **Pendiente:** las puertas de Unity. Son EditMode y PlayMode completos en el Mac del PO, `check-release` y AutoQA. Nada de esto se corrió en esta revisión.
+
+## 10. Merge de `main` en `980cf39` (28 nov, encargo `set28`)
+
+Se revisó sin mezclar código en esta rama: `git fetch origin sc-pista-drive-suelto main`, `git diff 37f7767...980cf39` y `git show 980cf39:Assets/SquashClash/Runtime/Rally/RallyDirector.cs` frente a `37f7767` y `967797a`. Sin Unity.
+
+- **Commit:** `980cf39` tiene padres `37f7767` (pista) y `967797a` (`origin/main`, merge de la PR #124 de posiciones de saque). Merge-base `99b4306`, la misma base de §1–§9.
+- **Sin resolución a mano.** `git merge-tree --write-tree 37f7767 967797a` da el árbol `1ec1c92829fb…`, idéntico al de `980cf39`. El merge es exactamente la fusión automática.
+- **Sin cambios extra.**
+  - `git diff 37f7767 980cf39` y `git diff 99b4306 967797a` tocan los mismos 62 archivos con el mismo `--stat` (+7030/−37).
+  - Los 61 archivos que solo cambió `main` quedan byte a byte como en `967797a`.
+  - Los 17 que solo cambió la pista quedan byte a byte como en `37f7767`: `LooseDrive.cs`, `LooseDriveHint.cs`, `RallyHud.cs`, `ShotController.cs`, `UserMetrics.cs`, `HintsDevSection.cs`, las pruebas de la pista, `ZDeviceLayoutTests.cs`, la nota y la spec.
+  - El único archivo de los dos lados es `RallyDirector.cs`.
+- **`RallyDirector.cs` conserva las dos aportaciones, sin mezcla.**
+  - Los hunks no se solapan. La pista agrega el `using SquashClash.Core.Court`, la propiedad, el borrado en `BeginPoint`, `FirstReturnedBounce` y la asignación. `main` agrega dos líneas en el saque de `BeginPoint`.
+  - `git patch-id --stable`: `967797a..980cf39` da el mismo id que `99b4306..37f7767` (`56ac73ff…`), y `37f7767..980cf39` el mismo que `99b4306..967797a` (`d1a21b0c…`).
+- **El Teleport del receptor de #124 está:** `RallyDirector.cs:276-277`, `(server==PlayerId.Human?Rival:Human).Teleport(ServePlanner.ReceiverPosition(context,box));`, con `ServePlanner.ReceiverPosition` en `Core/Rally/ServePlanner.cs:27`. Va después de `body.MoveTo(...)` del sacador, como en `main`.
+- **`LastReturnedBounce` sigue siendo solo lectura.**
+  - En producción solo aparece en `RallyDirector.cs:93` (propiedad con setter privado), `:246` (null en `BeginPoint`), `:444` (`FirstReturnedBounce`), `:581` (lectura antes de `Evaluate`) y `:596` (asignación tras el contacto del rival). Fuera del director, solo la lee `LooseDriveHint.cs:128`.
+  - El cuerpo de `Evaluate` es idéntico en `99b4306`, `37f7767` y `980cf39` (mismo SHA del bloque, `07c5a9c67e0c`). Ninguna decisión del punto lee el valor.
+  - Las líneas que §1 y §3 citan del director se corren +2 desde la línea 273 (por ejemplo, `:579→:581`, `:594→:596`). El contenido es el mismo.
+- **Criterios, textos, pruebas y hashes de la pista: sin cambios por esta rama.** `LooseDrive.cs`, los textos de §5 y las pruebas de la pista son los de `37f7767`. `ServeKindLobMinAimY` sigue en 3 (`RallyParams.cs:44`), que es el corte de P3.
+- **Hashes que trae `main` (no son de esta rama).** #124 cambia las miras `ServeKindLob*` en `RallyParams.cs:41`. RallyParams pasa de `ebf8f717f8c5` a `249979628e7c` (`RivalAiTests.cs:63`), según el informe de #124 (`docs/reviews/2026-11-26-posiciones-saque.md:34`). Con «Saque nuevo» apagado, `5fc9f2ff92e5` → `45faf866376c`. Esta rama no toca `RallyParams.cs`, `DefaultPreset.json` ni SimulationKey. No se recalcularon.
+
+**O8 (observación nueva, no bloquea). Las pruebas con semilla de la pista nunca corrieron con el saque de #124.**
+- #124 mueve al sacador (`ServePlanner.BoxPosition`), coloca al receptor (`ReceiverPosition`) y cambia las miras del globo. Desde el primer punto, las trayectorias, los contactos y las decisiones de los bots son otras.
+- Las pruebas de escena de la pista dependen de un positivo natural con entradas fijas: la semilla 11 / Medio / `Strong` (`ZLooseDriveHintTests.cs:218,302`) y `RunCompare` con la semilla 5 (O3b). Esos positivos se buscaron sobre la base `99b4306`, sin el saque nuevo. Con `980cf39` pueden aparecer o desaparecer.
+- O7 sigue igual. #124 además edita `ZFirstMatchHintsTests.cs`, `ZRingClosePulseTests.cs` y `ZServeReceptionMarginTests.cs`, con la pista encendida.
+- Si alguna sale roja en el Mac, rige AGENTS §2: registrar y detenerse, sin cambiar semilla, potencia ni criterio.
+- Las puertas (EditMode y PlayMode completos en el Mac del PO, `check-release` y AutoQA si aplica) se corren sobre `980cf39`. No sirve ningún resultado de `37f7767`.
+
+**Veredicto para `980cf39`: APROBADO CON OBSERVACIONES.** No hay cambios solicitados. Quedan abiertas O2, O3b, O5, O6, O7 y O8. Faltan las puertas de Unity. Este informe no aprueba nada en nombre del PO.
