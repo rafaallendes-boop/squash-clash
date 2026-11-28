@@ -66,9 +66,14 @@ namespace SquashClash.Core.Rally
         // afterOwnStroke: the observable state right after the brain's own contact (the ball as just struck).
         Vector2 Recovery(in AiObservation afterOwnStroke);
     }
+    // Optional for a brain: the level it was configured with (null when unknown). [EXPERIMENTO] set25.
+    public interface IRallyLevel
+    {
+        AiLevel? Level {get;}
+    }
     // The rival with a style (spec 11.3-11.4). FondoAi stays the historical reference; Fondista with the volley and cover off decides
     // exactly like it (same options, same draws in the same order).
-    public sealed class RivalAi : IRallyBrain,IRallyPositioning,IRallyServer
+    public sealed class RivalAi : IRallyBrain,IRallyPositioning,IRallyServer,IRallyLevel
     {
         private readonly RallyContext context;
         private readonly AiDifficulty difficulty;
@@ -78,6 +83,7 @@ namespace SquashClash.Core.Rally
         private readonly ShotOption[] all=new ShotOption[44];
         private readonly bool[] atVolley=new bool[44];
         public RivalStyle Style {get;}
+        public AiLevel? Level=>null;
         // The game's rival: the level's shared noise scaled by the (style, level) factor.
         public static RivalAi For(RallyContext context,AiLevel level,RivalStyleId style,long seed)
             =>new RivalAi(context,RivalStyle.Difficulty(context.Params,style,level),style,seed);

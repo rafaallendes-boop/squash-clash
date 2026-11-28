@@ -69,7 +69,7 @@ namespace SquashClash.Experiments.EditMode
         {
             public Trajectory Trajectory;public PointRules Rules;public PlayerBody Body;public int React,Perception,Extra;public ReceptionPlan Plan;
         }
-        private sealed class RivalTap : Tap,IRallyPositioning,IRallyServer
+        private sealed class RivalTap : Tap,IRallyPositioning,IRallyServer,IRallyLevel
         {
             private readonly RivalAi rival;private readonly RallyContext context;
             public RallySim Sim;public bool Snapping;public readonly List<Snap> Snaps=new List<Snap>();public readonly List<Rec> Recoveries=new List<Rec>();
@@ -81,6 +81,7 @@ namespace SquashClash.Experiments.EditMode
                 else Snaps.Add(null);
                 return base.Decide(o,own);
             }
+            public AiLevel? Level=>rival.Level;
             public Vector2 Wait=>rival.Wait;
             public Vector2 Recovery(in AiObservation a){var target=rival.Recovery(a);Recoveries.Add(new Rec{Ball=a.Ball,Target=target,Wait=rival.Wait});return target;}
             public ServeType ChooseServe(ServiceBox box)=>rival.ChooseServe(box);

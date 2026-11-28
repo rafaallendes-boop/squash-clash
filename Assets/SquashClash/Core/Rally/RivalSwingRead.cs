@@ -19,6 +19,8 @@ namespace SquashClash.Core.Rally
     }
     public static class RivalSwingRead
     {
+        // [EXPERIMENTO] set25: with RivalSwingReadMinLevel at 1 only a Medium or Hard rival reads.
+        public static bool LevelReads(RallyContext c,AiLevel? level)=>true;
         public static int LeadSteps(RallyContext c)=>c.Params.RivalSwingReadLeadMs<=0?0:(int)Math.Round(c.Params.RivalSwingReadLeadMs/1000*c.Tempo*c.StepHz);
         private static int Bits(float f)=>BitConverter.ToInt32(BitConverter.GetBytes(f),0);
         // Own generator seeded by the contact, so no brain's RNG is ever consumed.

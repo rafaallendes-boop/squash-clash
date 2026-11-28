@@ -109,6 +109,8 @@ namespace SquashClash.Core.Rally
         public double RivalSwingReadLeadMs=0,RivalSwingMisreadP=0;
         // [EXPERIMENTO] set22 (27 nov; local branch, never shipped). 1 = the rival reads only long swings (RivalSwingRead.LongSwing) and a Length misread is always the drop; 0 = set21.
         public double RivalSwingReadLongOnly=0;
+        // [EXPERIMENTO] set25 (28 nov; local branch, never shipped). 1 = the rival reads the swing only when its level (IRallyLevel) is Medium or Hard; Easy or unknown: no read. 0 = set22 (no level distinction).
+        public double RivalSwingReadMinLevel=0;
         public string Hash
         {
             get
