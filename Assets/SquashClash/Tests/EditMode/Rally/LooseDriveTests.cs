@@ -97,8 +97,7 @@ namespace SquashClash.Core.Tests.Rally
         [Test]
         public void TwoWallOrder_AndAFallbackToTheDrive_AreNone_BecauseTheOrderAimedAtTheSide()
         {
-            Assert.That(new Facts { SideAimed = true }.Judge(), Is.EqualTo(LooseDriveKind.None), "two-wall order");
-            Assert.That(new Facts { SideAimed = true }.Judge(), Is.EqualTo(LooseDriveKind.None), "the same read when the boast falls back to a drive");
+            Assert.That(new Facts { SideAimed = true }.Judge(), Is.EqualTo(LooseDriveKind.None), "a side aim is not a drive, including a boast that fell back");
         }
 
         [Test]
@@ -121,13 +120,10 @@ namespace SquashClash.Core.Tests.Rally
             Assert.That(new Facts { AimY = Lob + 1f }.Judge(), Is.EqualTo(LooseDriveKind.None));
         }
 
-        [TestCase("Failed")]
-        [TestCase("Unreachable")]
-        [TestCase("NoOrder")]
-        [TestCase("SystemFault")]
-        public void NotApplied_IsNone(string result)
+        [Test]
+        public void NotApplied_IsNone()
         {
-            Assert.That(new Facts { Applied = false }.Judge(), Is.EqualTo(LooseDriveKind.None), result);
+            Assert.That(new Facts { Applied = false }.Judge(), Is.EqualTo(LooseDriveKind.None));
         }
 
         [Test]
