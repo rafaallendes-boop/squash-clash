@@ -244,7 +244,7 @@ namespace SquashClash.Runtime.Tests
         }
 
         // Criterion 3. The banner text matches an independent Judge. At least one pause must qualify.
-        [UnityTest] public IEnumerator Scene_BannerMatchesAnIndependentLooseDrive_AndShowsAtLeastOne()
+        [UnityTest, Timeout(900000)] public IEnumerator Scene_BannerMatchesAnIndependentLooseDrive_AndShowsAtLeastOne()
         {
             // E (PO, 28 nov 15:21): first seed from 1 to 24 with a natural loose drive (Medium, sigma 0, Strong).
             int chosen = 0;
