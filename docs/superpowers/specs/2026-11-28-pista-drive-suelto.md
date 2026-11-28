@@ -308,4 +308,6 @@ Registradas al encargar el código. No cambian el resto de esta spec.
 
 Y la decisión de SC-PM: A, `LastStrokeSideAimed` llama a `flow.ClosePractice()` antes del swing.
 
+**28 nov 2026, 17:58.** Límite de tiempo de la prueba de escena, cita literal de Rafael: «Sí, subir el límite de tiempo solo de esa prueba de escena de 180 s a 900 s, sin cambiar semillas, umbrales ni criterios; si ninguna semilla cumple, sigue en rojo».
+
 **P4, P8, P9, P10, P11, P12 y P13** quedan como recomienda esta spec: todas sí.
