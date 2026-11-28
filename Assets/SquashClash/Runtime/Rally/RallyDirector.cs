@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SquashClash.Core.Config;
+using SquashClash.Core.Court;
 using SquashClash.Core.Rally;
 using SquashClash.Core.Shot;
 using SquashClash.Core.Simulation;
@@ -87,6 +88,9 @@ namespace SquashClash.Runtime.Rally
         public int PointsPlayed {get;private set;}
         public int SystemFaults {get;private set;}
         public PointResult? LastPoint {get;private set;}
+        // First floor bounce of the human's shot, read when the rival's stroke is committed and before that contact.
+        // Cleared at the start of the next point. Nothing in the rally decides from it.
+        public Vector3? LastReturnedBounce {get;private set;}
         // Null in the plain rally (neutral launch, open score). Set in match mode: serve, rotation, game to 7 by 2.
         public MatchScore Match {get;private set;}
         public double WaitBetweenPoints => HumanServePause ? Params.ServeKindHumanPauseSeconds :
@@ -239,6 +243,7 @@ namespace SquashClash.Runtime.Rally
         public void Rematch(){if(!Active)return;ResetScore();if(Match!=null)Match=NewMatch();BeginPoint();}
         private void BeginPoint()
         {
+            LastReturnedBounce=null;
             rivalDrawnInBox=false;
             pointCausal.Clear();
             if(pendingSprintFatigue.HasValue){var p=Params.Clone();p.HumanVolleySprintFatigue=pendingSprintFatigue.Value?1:0;Params=p;pendingSprintFatigue=null;}
@@ -433,6 +438,17 @@ namespace SquashClash.Runtime.Rally
                 }
             }
         }
+        // The first non-persistent floor contact of this flight, up to the rival's contact step. Same walk as Evaluate, read only.
+        private Vector3? FirstReturnedBounce(long upToStep)
+        {
+            foreach(var e in app.Host.CanonicalContacts)
+            {
+                if(e.Step<=flightStartStep)continue;
+                if(e.Step>upToStep)break;
+                if(e.Surface==SurfaceId.Floor&&!e.Persistent)return e.Point;
+            }
+            return null;
+        }
         private PointRules Evaluate(long upToStep)
         {
             var host=app.Host;var rules=committed.Clone();
@@ -559,7 +575,9 @@ namespace SquashClash.Runtime.Rally
             if(needDecision)DecideRival();
             if(hasPending&&host.Current.Step>=pendingStep)
             {
-                hasPending=false;var at=Evaluate(pendingStep);var state=host.Current;
+                hasPending=false;
+                var returnedBounce=FirstReturnedBounce(pendingStep);
+                var at=Evaluate(pendingStep);var state=host.Current;
                 bool have=state.Step==pendingStep||host.TryGetHistoricalState(pendingStep,out state);
                 // The arm is the rival's own energy at its contact step, read before this stroke is charged below.
                 var causal=have&&at.CanHit(PlayerId.Rival)&&rivalCausal!=null?RallyContact.Solve(context,rivalCausal,rivalCausal.BodyAt(pendingStep),state.Position,pendingShot,context.Fatigue.Arm(RivalEnergy.EnergyAt(pendingStep))):default;
@@ -573,6 +591,7 @@ namespace SquashClash.Runtime.Rally
                 double rivalVolleyCost=context.VolleyEnergyCost(at);
                 if(solution.Solved&&at.RacketContact(PlayerId.Rival))
                 {
+                    LastReturnedBounce=returnedBounce;
                     double humanFatigue=context.Fatigue.Factor(HumanEnergy.EnergyAt(pendingStep));
                     RivalEnergy.StrikeAt(pendingStep,pendingShot.P,rivalVolleyCost);
                     WriteRivalShot(pendingStep,causal);

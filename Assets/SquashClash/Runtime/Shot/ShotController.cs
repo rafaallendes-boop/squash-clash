@@ -94,6 +94,10 @@ namespace SquashClash.Runtime.Shot
         // to the front wall. Read it inside the ShotResolved callback; cleared at every launch. Not derived from LastBoast.
         public bool LastStrokeBoast {get;private set;}
         private bool authoritativeBoast;
+        // The order of the stroke leaving through ShotResolved aimed at a side wall (order.Side.Exists), including a boast that
+        // fell back to a drive. Read inside the ShotResolved callback; cleared at every launch. It does not enter the contact contract.
+        public bool LastStrokeSideAimed {get;private set;}
+        private bool strokeSideAimed;
         // Serve kinds (design 2026-11-20-serve): set by the director only in the pause before the human's own serve with «Saque nuevo» on. While
         // set, a touch may begin, the volley choice is skipped and the closed gesture goes here instead of the stroke path (no shot record, no timing).
         public Func<ClosedGesture,bool> ServeAim {get;set;}
@@ -136,7 +140,7 @@ namespace SquashClash.Runtime.Shot
             strikerFatigue=nextStrikerFatigue;nextStrikerFatigue=null;
             receptionFatigue=nextReceptionFatigue;nextReceptionFatigue=0;recordsFatigue=nextRecordsFatigue;nextRecordsFatigue=false;
             CausalReference=null;LastCausal=default;causalBody=nextCausalBody;nextCausalBody=null;
-            volleyPlanner=nextVolley;nextVolley=null;volleyCommitter=nextVolleyCommit;nextVolleyCommit=null;VolleyCommitted=false;VolleyChoice=null;volleyHapticFired=false;receptionBody=causalBody;volleySwitched=false;Volley=default;VolleyPresented=null;VolleyCausalReference=null;UsedCausalReference=null;LastOpportunity=Opportunity.Bounce;LastStrokeBoast=authoritativeBoast=false;
+            volleyPlanner=nextVolley;nextVolley=null;volleyCommitter=nextVolleyCommit;nextVolleyCommit=null;VolleyCommitted=false;VolleyChoice=null;volleyHapticFired=false;receptionBody=causalBody;volleySwitched=false;Volley=default;VolleyPresented=null;VolleyCausalReference=null;UsedCausalReference=null;LastOpportunity=Opportunity.Bounce;LastStrokeBoast=authoritativeBoast=false;LastStrokeSideAimed=strokeSideAimed=false;
             Snapshot=new ShotConfig(cfg.Source);ring.BeginReception(Snapshot.Reception.GetInt("timing.aidLevel"));Haptics.Enabled=Snapshot.Reception.GetBool("feedback.haptics");seen.Clear();Presented=new PresentedPlans();AttemptConsumed=WaitingForContact=false;
             LastRecord=LastClosureRecord=pendingContact=null;gate.Reset(app.Host.LaunchId);LastPresentation=null;PresentationCount=0;LastDiscardReason=null;LastSolution=default;closedAt=null;recordVersion=0;
             double start=Stopwatch.GetTimestamp();
@@ -272,7 +276,7 @@ namespace SquashClash.Runtime.Shot
             {Discard(order,"invalid-order");return;}
             if(!CanBegin(order.BeganAt,out var reason)){Discard(order,reason);return;}
             // Reserve before any callback or solver. Failed timing / no plan / system failure never reopens it.
-            AttemptConsumed=true;authoritativeBoast=false;var shot=Snapshot.WithGesture(order.Source);
+            AttemptConsumed=true;authoritativeBoast=false;strokeSideAimed=order.Side.Exists;var shot=Snapshot.WithGesture(order.Source);
             // The opportunity whose segment holds the release (spec 7.1.3 case 14); always the bounce one without a volley.
             // v2: an offered volley that no touch chose is never taken (autopilot orders have no touch).
             var offered=volleyCommitter!=null&&!VolleyCommitted?VolleyOpportunity.None("not-chosen"):Volley;
@@ -398,6 +402,7 @@ namespace SquashClash.Runtime.Shot
         {
             record.Version=++recordVersion;LastRecord=record;Write("shot",record);notes.Show(record);
             LastStrokeBoast=authoritativeBoast&&record.Applied&&(record.Result==nameof(ShotResult.Perfect)||record.Result==nameof(ShotResult.Valid));
+            LastStrokeSideAimed=strokeSideAimed;
             Present(record);
             ShotResolved?.Invoke(record);
         }
