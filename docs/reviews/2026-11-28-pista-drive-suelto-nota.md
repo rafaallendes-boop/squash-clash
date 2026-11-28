@@ -156,3 +156,17 @@ scripts/autoqa.sh mvp
 AutoQA no lo pide AGENTS §3 (este cambio no toca timing, gesto ni contrato). La spec §6.9 lo pide como evidencia de que ninguna decisión cambió. Si el criterio 3 o la prueba del bote no encuentran un positivo con la semilla 11, se registra y se detiene.
 
 Este encargo no corrió ninguno de esos comandos. No tocó `/Users/rafaallendes/sc-unity.lock`. No tocó ni copió `scripts/device.env`.
+
+## Cierre O1 y O3 (28 nov, sobre `30fd0c4`)
+
+O2, O5, O6 y O7 quedan sin cambio de código.
+
+**O1.** `usedThisMatch` se marca en `ClosePause` cuando la vista fue real (`seen` y no ocupada por una pista de primeros partidos), antes de mirar si hay `UserEvents`. Sin métrica, la segunda pausa del mismo partido no vuelve a mostrar la pista. La línea, si existe, sigue igual: `""`, `limit`, `firstMatchHint` o `notSeen`.
+
+Prueba nueva, antes del arreglo (`f8cc892`) y arreglo en `5464559`: `SeenOnce_BlocksTheNextPoint_WhenUserEventsIsNull`. Deja `UserEvents` en null y suelta los handlers de `AppBootstrap` en `PointEnded` y `ModeChanged`, porque esos llaman a la métrica sin null. El arranque del punto siguiente, en el mismo partido, no la usa. RED esperado: la segunda inyección se ve. GREEN esperado: `Shown` queda en `None`. No se corrió.
+
+**O3.** `NoAddedTime_OnMatchesOff` ahora exige, en la corrida encendida, un recuento independiente mayor que cero y que la fila haya mostrado una de las tres frases (`ac395a2`). La semilla sigue en 5, con Fácil, σ 25, Fondista y `ServeKindOn` 1. No se tocó la potencia: el piloto queda en Medium, y `PowerMedium` es 0,5, que no es drive. Si ese recuento da cero, la prueba falla con el mensaje de parar y no aflojar. No se fabricó un positivo. No se corrió, así que no se sabe el resultado; con estas entradas lo esperado es el fallo.
+
+**O4.** Sí. En `LooseDriveTests` se quitó la aserción repetida de mira lateral (las dos llamaban igual) y `NotApplied_IsNone` quedó en un solo caso: el `string` no entraba a `Judge`. La cobertura de `Judge` no cambia. `e1931e6`.
+
+Esta pasada no abrió Unity, no corrió `scripts/test.sh`, AutoQA ni `check-release`, y no tocó el candado ni `scripts/device.env`.
