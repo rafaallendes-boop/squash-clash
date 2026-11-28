@@ -85,13 +85,13 @@ namespace SquashClash.Runtime.Tests
             }
             return null;
         }
-        private void StartLoose(long seed, AiLevel level, double sigma, ShotPower power)
+        private void StartLoose(long seed, AiLevel level, double sigma, ShotPower power, bool autopilot = true)
         {
             LooseDriveHint.ResetForTests();
             LooseDriveHint.ForceForTests = true;
             FirstMatchHints.ResetForTests();
             flow.ClosePractice();
-            rally.Autopilot = true;
+            rally.Autopilot = autopilot;
             rally.AutopilotTimingSigmaMs = sigma;
             rally.Level = level;
             rally.Seed = seed;
@@ -160,6 +160,8 @@ namespace SquashClash.Runtime.Tests
 
         [UnityTest] public IEnumerator LastStrokeSideAimed_IsTheOrdersSideInsideShotResolved_AndClearsOnTheNextLaunch()
         {
+            // A (SC-PM, diagnosis set30): close the menu so the clock is running; otherwise TrySimToReal fails.
+            flow.ClosePractice();
             var front = Swing(_ => null);
             Assert.That(front.Resolved, Is.True);
             Assert.That(front.Result, Is.EqualTo("Perfect").Or.EqualTo("Valid"));
@@ -244,7 +246,72 @@ namespace SquashClash.Runtime.Tests
         // Criterion 3. The banner text matches an independent Judge. At least one pause must qualify.
         [UnityTest] public IEnumerator Scene_BannerMatchesAnIndependentLooseDrive_AndShowsAtLeastOne()
         {
-            StartLoose(11, AiLevel.Medium, 0, ShotPower.Strong);
+            // E (PO, 28 nov 15:21): first seed from 1 to 24 with a natural loose drive (Medium, sigma 0, Strong).
+            int chosen = 0;
+            for (int seed = 1; seed <= 24 && chosen == 0; seed++)
+            {
+                rally.StopMode();
+                StartLoose(seed, AiLevel.Medium, 0, ShotPower.Strong);
+                bool have = false, volley = false, side = false;
+                float power = 0, aimY = 0;
+                int rivals = 0;
+                long contact = 0;
+                Vector3? bounce = null;
+                bool found = false;
+                Action<ShotRecord> scanShot = r =>
+                {
+                    bool applied = r.Applied && (r.Result == nameof(ShotResult.Perfect) || r.Result == nameof(ShotResult.Valid));
+                    if (!applied) return;
+                    have = true;
+                    volley = controller.LastOpportunity == Opportunity.Volley;
+                    side = controller.LastStrokeSideAimed;
+                    power = r.Power;
+                    aimY = r.AimY;
+                    rivals = 0;
+                    bounce = null;
+                    contact = r.ContactStep;
+                };
+                Action<StrokeSide, bool> scanSwing = (_, made) =>
+                {
+                    if (!made || !have) return;
+                    rivals++;
+                    if (rivals == 1) bounce = FirstFloorAfter(contact);
+                };
+                Action<PointResult> scanPoint = result =>
+                {
+                    var kind = LooseDrive.Judge(
+                        have, volley, side, power, aimY, (float)rally.Params.ServeKindLobMinAimY,
+                        have, rivals, result.Winner, result.Cause, result.Reception, bounce, CourtDimensions.Standard(),
+                        rally.HumanServePause, rally.Phase == RallyPhase.MatchOver, rally.Match != null,
+                        rally.Autopilot, true, true);
+                    if (kind != LooseDriveKind.None) found = true;
+                    have = false;
+                    rivals = 0;
+                    bounce = null;
+                };
+                controller.ShotResolved += scanShot;
+                rally.RivalSwing += scanSwing;
+                rally.PointEnded += scanPoint;
+                try
+                {
+                    for (int i = 0; i < 400000 && rally.Phase != RallyPhase.MatchOver && !found; i++)
+                    {
+                        Step();
+                        if (i % 12 == 0) yield return null;
+                    }
+                }
+                finally
+                {
+                    controller.ShotResolved -= scanShot;
+                    rally.RivalSwing -= scanSwing;
+                    rally.PointEnded -= scanPoint;
+                }
+                if (found) chosen = seed;
+            }
+            Assert.That(chosen, Is.GreaterThan(0),
+                "no seed from 1 to 24 has a natural loose drive (Medium / sigma 0 / Strong / Fondista). Stop. Do not loosen the criterion.");
+            rally.StopMode();
+            StartLoose(chosen, AiLevel.Medium, 0, ShotPower.Strong);
             bool have = false, volley = false, side = false;
             float power = 0, aimY = 0;
             int rivals = 0;
@@ -321,12 +388,13 @@ namespace SquashClash.Runtime.Tests
             }
             Assert.That(rally.Phase, Is.EqualTo(RallyPhase.MatchOver));
             Assert.That(pauses, Is.GreaterThan(0));
-            Assert.That(positives, Is.GreaterThan(0), "seed 11 / Medium / sigma 0 / Strong / Fondista: no loose drive. Stop. Do not loosen the criterion.");
+            Assert.That(positives, Is.GreaterThan(0), "seed " + chosen + " / Medium / sigma 0 / Strong / Fondista: no loose drive after it was selected. Stop. Do not loosen the criterion.");
         }
 
         [UnityTest] public IEnumerator OncePerMatch_ASeenHintBlocksTheNext_AndARematchAllowsIt()
         {
-            StartLoose(3, AiLevel.Easy, 0, ShotPower.Medium);
+            // B (PO, 28 nov 15:21): injection tests play with autopilot off, so the rival wins and an ordinary pause arrives.
+            StartLoose(3, AiLevel.Easy, 0, ShotPower.Medium, autopilot: false);
             Assert.That(ReachOrdinary(), Is.True);
             string match = app.UserEvents.OpenMatchId;
             yield return Inject(LooseDriveKind.Short, .8f, 5.4f, RallyHud.BannerInSeconds);
@@ -364,7 +432,8 @@ namespace SquashClash.Runtime.Tests
         // O1. The once-per-match cap is the view, not the metric line. UserEvents is null for the view and the next point.
         [UnityTest] public IEnumerator SeenOnce_BlocksTheNextPoint_WhenUserEventsIsNull()
         {
-            StartLoose(3, AiLevel.Easy, 0, ShotPower.Medium);
+            // B (PO, 28 nov 15:21): injection tests play with autopilot off.
+            StartLoose(3, AiLevel.Easy, 0, ShotPower.Medium, autopilot: false);
             Assert.That(ReachOrdinary(), Is.True);
             var match = rally.Match;
             DropUserEvents();
@@ -384,7 +453,8 @@ namespace SquashClash.Runtime.Tests
 
         [UnityTest] public IEnumerator SeguirBeforeOpacityOne_DoesNotCount_AndTheNextPauseCanShowIt()
         {
-            StartLoose(4, AiLevel.Easy, 0, ShotPower.Medium);
+            // B (PO, 28 nov 15:21): injection tests play with autopilot off.
+            StartLoose(4, AiLevel.Easy, 0, ShotPower.Medium, autopilot: false);
             Assert.That(ReachOrdinary(), Is.True);
             yield return Inject(LooseDriveKind.Wide, 3.2f, 8f, .05f);
             Assert.That(hud.BannerOpacity, Is.LessThan(1f));
@@ -410,7 +480,8 @@ namespace SquashClash.Runtime.Tests
 
         [UnityTest] public IEnumerator FirstMatchHint_WinsThePause_AndTheDriveDoesNotCarry()
         {
-            StartLoose(5, AiLevel.Easy, 0, ShotPower.Medium);
+            // B (PO, 28 nov 15:21): injection tests play with autopilot off.
+            StartLoose(5, AiLevel.Easy, 0, ShotPower.Medium, autopilot: false);
             FirstMatchHints.ForceWindowForTests = true;
             FirstMatchHints.Now = () => 100;
             hud.Hints.BeginMatch();
@@ -436,18 +507,23 @@ namespace SquashClash.Runtime.Tests
 
         [UnityTest] public IEnumerator NeverOutsideAnOrdinaryPause_AndOffShowsAndWritesNothing()
         {
+            // C (PO, 28 nov 15:21): autopilot on until a human-serve pause, then off; require at least one such pause.
             StartLoose(6, AiLevel.Easy, 0, ShotPower.Medium);
-            bool injected = false, ever = false;
-            int frames = 0;
+            hud.Drive.QualifyForTests(LooseDriveKind.Short, .8f, 5.4f);
+            Refresh();
+            bool ever = false, wasHumanServe = false, turnedOff = false;
+            int frames = 0, servePauses = 0;
             for (int i = 0; i < 400000 && rally.Phase != RallyPhase.MatchOver; i++)
             {
                 Step();
                 frames++;
-                if (!injected && Ordinary())
+                bool humanServe = rally.Phase == RallyPhase.PointOver && rally.HumanServePause;
+                if (humanServe && !wasHumanServe) servePauses++;
+                wasHumanServe = humanServe;
+                if (servePauses >= 1 && !turnedOff)
                 {
-                    hud.Drive.QualifyForTests(LooseDriveKind.Short, .8f, 5.4f);
-                    Refresh();
-                    injected = true;
+                    rally.Autopilot = false;
+                    turnedOff = true;
                 }
                 bool driveText = DriveSentence(RowText());
                 if (driveText) ever = true;
@@ -455,7 +531,7 @@ namespace SquashClash.Runtime.Tests
                 if (i % 8 == 0) yield return null;
             }
             Assert.That(frames, Is.GreaterThan(100));
-            Assert.That(injected, Is.True);
+            Assert.That(servePauses, Is.GreaterThanOrEqualTo(1), "never walked a human-serve pause, so the walk is vacuous");
             Assert.That(ever, Is.True, "the injected hint never appeared, so the walk is vacuous");
             int written = DriveLines().Length;
 
@@ -463,7 +539,8 @@ namespace SquashClash.Runtime.Tests
             LooseDriveHint.ForceForTests = true;
             LooseDriveHint.Enabled = false;
             rally.StopMode();
-            rally.Autopilot = true;
+            flow.ClosePractice();
+            rally.Autopilot = false;
             rally.AutopilotTimingSigmaMs = 0;
             rally.Level = AiLevel.Easy;
             rally.Seed = 6;
@@ -563,6 +640,9 @@ namespace SquashClash.Runtime.Tests
             try
             {
                 Assert.That(rally.StartMatch(), Is.True);
+                // D (PO, 28 nov 15:21): inject a qualified point in both runs; the off run ignores it by design.
+                hud.Drive.QualifyForTests(LooseDriveKind.Short, .8f, 5.4f);
+                Refresh();
                 while (steps < 400000 && rally.PointsPlayed < 6 && rally.Phase != RallyPhase.MatchOver)
                 {
                     app.Host.Advance(StepReal);
@@ -588,9 +668,7 @@ namespace SquashClash.Runtime.Tests
             flow.ClosePractice();
             var on = RunCompare(true);
             var off = RunCompare(false);
-            Assert.That(on.LooseDrives, Is.GreaterThan(0),
-                "seed 5 / Easy / sigma 25 / Fondista / ServeKindOn 1: independent recount found no loose drive. Stop. Do not loosen and do not change the seed.");
-            Assert.That(on.HintShown, Is.True, "the on run never showed the loose-drive hint, so the comparison is vacuous");
+            Assert.That(on.HintShown, Is.True, "the on run never showed the injected loose-drive hint, so the comparison is vacuous");
             Assert.That(on.Points.Count, Is.GreaterThanOrEqualTo(5));
             Assert.That(on.Starts.Count, Is.GreaterThanOrEqualTo(5));
             Assert.That(on.Points, Is.EqualTo(off.Points));
